@@ -103,7 +103,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /YX /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /YX /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /YX /FD /MDd /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -259,7 +259,9 @@ DEP_CPP_AST_A=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_A=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -355,7 +357,9 @@ DEP_CPP_AST_A=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_A=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -462,7 +466,9 @@ DEP_CPP_AST_AR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_AR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -558,7 +564,9 @@ DEP_CPP_AST_AR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_AR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -665,7 +673,9 @@ DEP_CPP_AST_AT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_AT=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -761,7 +771,9 @@ DEP_CPP_AST_AT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_AT=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -868,7 +880,9 @@ DEP_CPP_AST_C=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_C=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -964,7 +978,9 @@ DEP_CPP_AST_C=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_C=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -1071,7 +1087,9 @@ DEP_CPP_AST_CO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_CO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -1167,7 +1185,9 @@ DEP_CPP_AST_CO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_CO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -1274,7 +1294,9 @@ DEP_CPP_AST_CON=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_CON=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -1370,7 +1392,9 @@ DEP_CPP_AST_CON=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_CON=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -1477,7 +1501,9 @@ DEP_CPP_AST_D=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_D=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -1573,7 +1599,9 @@ DEP_CPP_AST_D=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_D=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -1680,7 +1708,9 @@ DEP_CPP_AST_E=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_E=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -1776,7 +1806,9 @@ DEP_CPP_AST_E=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_E=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -1883,7 +1915,9 @@ DEP_CPP_AST_EN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_EN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -1979,7 +2013,9 @@ DEP_CPP_AST_EN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_EN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -2086,7 +2122,9 @@ DEP_CPP_AST_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_EX=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -2182,7 +2220,9 @@ DEP_CPP_AST_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_EX=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -2289,7 +2329,9 @@ DEP_CPP_AST_EXP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_EXP=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -2385,7 +2427,9 @@ DEP_CPP_AST_EXP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_EXP=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -2492,7 +2536,9 @@ DEP_CPP_AST_F=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_F=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -2588,7 +2634,9 @@ DEP_CPP_AST_F=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_F=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -2695,7 +2743,9 @@ DEP_CPP_AST_G=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_G=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -2791,7 +2841,9 @@ DEP_CPP_AST_G=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_G=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -2898,7 +2950,9 @@ DEP_CPP_AST_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_I=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -2994,7 +3048,9 @@ DEP_CPP_AST_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_I=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -3101,7 +3157,9 @@ DEP_CPP_AST_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_IN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -3197,7 +3255,9 @@ DEP_CPP_AST_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_IN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -3304,7 +3364,9 @@ DEP_CPP_AST_M=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_M=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -3400,7 +3462,9 @@ DEP_CPP_AST_M=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_M=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -3507,7 +3571,9 @@ DEP_CPP_AST_N=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_N=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -3603,7 +3669,9 @@ DEP_CPP_AST_N=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_N=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -3710,7 +3778,9 @@ DEP_CPP_AST_O=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_O=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -3806,7 +3876,9 @@ DEP_CPP_AST_O=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_O=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -3913,7 +3985,9 @@ DEP_CPP_AST_P=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_P=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -4009,7 +4083,9 @@ DEP_CPP_AST_P=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_P=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -4116,7 +4192,9 @@ DEP_CPP_AST_R=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_R=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -4212,7 +4290,9 @@ DEP_CPP_AST_R=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_R=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -4319,7 +4399,9 @@ DEP_CPP_AST_RE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_RE=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -4415,7 +4497,9 @@ DEP_CPP_AST_RE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_RE=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -4522,7 +4606,9 @@ DEP_CPP_AST_RO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_RO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -4618,7 +4704,9 @@ DEP_CPP_AST_RO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_RO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -4725,7 +4813,9 @@ DEP_CPP_AST_S=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_S=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -4821,7 +4911,9 @@ DEP_CPP_AST_S=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_S=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -4928,7 +5020,9 @@ DEP_CPP_AST_ST=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_ST=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -5024,7 +5118,9 @@ DEP_CPP_AST_ST=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_ST=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -5131,7 +5227,9 @@ DEP_CPP_AST_STR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_STR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -5227,7 +5325,9 @@ DEP_CPP_AST_STR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_STR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -5334,7 +5434,9 @@ DEP_CPP_AST_T=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_T=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -5430,7 +5532,9 @@ DEP_CPP_AST_T=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_T=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -5537,7 +5641,9 @@ DEP_CPP_AST_TY=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_TY=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -5633,7 +5739,9 @@ DEP_CPP_AST_TY=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_TY=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -5740,7 +5848,9 @@ DEP_CPP_AST_U=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_U=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -5836,7 +5946,9 @@ DEP_CPP_AST_U=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_U=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -5943,7 +6055,9 @@ DEP_CPP_AST_UN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_UN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -6039,7 +6153,9 @@ DEP_CPP_AST_UN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_UN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -6146,7 +6262,9 @@ DEP_CPP_AST_UNI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_UNI=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -6242,7 +6360,9 @@ DEP_CPP_AST_UNI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_AST_UNI=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -6418,7 +6538,9 @@ DEP_CPP_BE_AR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_AR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -6583,7 +6705,9 @@ DEP_CPP_BE_AR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_AR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -6759,7 +6883,9 @@ DEP_CPP_BE_ARG=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_ARG=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -6924,7 +7050,9 @@ DEP_CPP_BE_ARG=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_ARG=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -7100,7 +7228,9 @@ DEP_CPP_BE_ARR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_ARR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -7265,7 +7395,9 @@ DEP_CPP_BE_ARR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_ARR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -7441,7 +7573,9 @@ DEP_CPP_BE_AT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_AT=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -7606,7 +7740,9 @@ DEP_CPP_BE_AT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_AT=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -7782,7 +7918,9 @@ DEP_CPP_BE_CO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_CO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -7947,7 +8085,9 @@ DEP_CPP_BE_CO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_CO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -8123,7 +8263,9 @@ DEP_CPP_BE_CON=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_CON=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -8288,7 +8430,9 @@ DEP_CPP_BE_CON=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_CON=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -8464,7 +8608,9 @@ DEP_CPP_BE_DE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_DE=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -8629,7 +8775,9 @@ DEP_CPP_BE_DE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_DE=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -8805,7 +8953,9 @@ DEP_CPP_BE_EN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_EN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -8970,7 +9120,9 @@ DEP_CPP_BE_EN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_EN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -9146,7 +9298,9 @@ DEP_CPP_BE_ENU=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_ENU=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -9311,7 +9465,9 @@ DEP_CPP_BE_ENU=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_ENU=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -9487,7 +9643,9 @@ DEP_CPP_BE_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_EX=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -9652,7 +9810,9 @@ DEP_CPP_BE_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_EX=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -9828,7 +9988,9 @@ DEP_CPP_BE_EXP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_EXP=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -9993,7 +10155,9 @@ DEP_CPP_BE_EXP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_EXP=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -10170,7 +10334,9 @@ DEP_CPP_BE_FA=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_FA=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -10336,7 +10502,9 @@ DEP_CPP_BE_FA=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_FA=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -10512,7 +10680,9 @@ DEP_CPP_BE_FI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_FI=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -10677,7 +10847,9 @@ DEP_CPP_BE_FI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_FI=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -10853,7 +11025,9 @@ DEP_CPP_BE_GE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_GE=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -11018,7 +11192,9 @@ DEP_CPP_BE_GE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_GE=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -11194,7 +11370,9 @@ DEP_CPP_BE_HE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_HE=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -11359,7 +11537,9 @@ DEP_CPP_BE_HE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_HE=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -11535,7 +11715,9 @@ DEP_CPP_BE_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_IN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -11700,7 +11882,9 @@ DEP_CPP_BE_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_IN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -11892,7 +12076,9 @@ DEP_CPP_BE_INT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_INT=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -12073,7 +12259,9 @@ DEP_CPP_BE_INT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_INT=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -12249,7 +12437,9 @@ DEP_CPP_BE_INTE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_INTE=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -12414,7 +12604,9 @@ DEP_CPP_BE_INTE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_INTE=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -12732,7 +12924,9 @@ DEP_CPP_BE_INTER=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_INTER=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -13039,7 +13233,9 @@ DEP_CPP_BE_INTER=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_INTER=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -13215,7 +13411,9 @@ DEP_CPP_BE_MO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_MO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -13380,7 +13578,9 @@ DEP_CPP_BE_MO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_MO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -13556,7 +13756,9 @@ DEP_CPP_BE_NA=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_NA=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -13721,7 +13923,9 @@ DEP_CPP_BE_NA=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_NA=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -13897,7 +14101,9 @@ DEP_CPP_BE_OP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_OP=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -14062,7 +14268,9 @@ DEP_CPP_BE_OP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_OP=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -14238,7 +14446,9 @@ DEP_CPP_BE_PR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_PR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -14403,7 +14613,9 @@ DEP_CPP_BE_PR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_PR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -14580,7 +14792,9 @@ DEP_CPP_BE_PRO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_PRO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -14746,7 +14960,9 @@ DEP_CPP_BE_PRO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_PRO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -14922,7 +15138,9 @@ DEP_CPP_BE_RO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_RO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -15087,7 +15305,9 @@ DEP_CPP_BE_RO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_RO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -15263,7 +15483,9 @@ DEP_CPP_BE_SC=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_SC=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -15428,7 +15650,9 @@ DEP_CPP_BE_SC=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_SC=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -15614,7 +15838,9 @@ DEP_CPP_BE_SE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_SE=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -15789,7 +16015,9 @@ DEP_CPP_BE_SE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_SE=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -15965,7 +16193,9 @@ DEP_CPP_BE_ST=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_ST=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -16130,7 +16360,9 @@ DEP_CPP_BE_ST=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_ST=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -16306,7 +16538,9 @@ DEP_CPP_BE_STR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_STR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -16471,7 +16705,9 @@ DEP_CPP_BE_STR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_STR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -16648,7 +16884,9 @@ DEP_CPP_BE_SU=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_SU=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -16814,7 +17052,9 @@ DEP_CPP_BE_SU=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_SU=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -16990,7 +17230,9 @@ DEP_CPP_BE_TY=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_TY=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -17155,7 +17397,9 @@ DEP_CPP_BE_TY=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_TY=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -17331,7 +17575,9 @@ DEP_CPP_BE_TYP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_TYP=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -17496,7 +17742,9 @@ DEP_CPP_BE_TYP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_TYP=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -17672,7 +17920,9 @@ DEP_CPP_BE_UN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_UN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -17837,7 +18087,9 @@ DEP_CPP_BE_UN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_UN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -18013,7 +18265,9 @@ DEP_CPP_BE_UNI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_UNI=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -18178,7 +18432,9 @@ DEP_CPP_BE_UNI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_UNI=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -18354,7 +18610,9 @@ DEP_CPP_BE_UNIO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_UNIO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -18519,7 +18777,9 @@ DEP_CPP_BE_UNIO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_UNIO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -18688,7 +18948,9 @@ DEP_CPP_BE_VI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VI=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -18846,7 +19108,9 @@ DEP_CPP_BE_VI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VI=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -19039,7 +19303,9 @@ DEP_CPP_BE_VIS=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VIS=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -19221,7 +19487,9 @@ DEP_CPP_BE_VIS=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VIS=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -19411,7 +19679,9 @@ DEP_CPP_BE_VISI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISI=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -19590,7 +19860,9 @@ DEP_CPP_BE_VISI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISI=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -19771,7 +20043,9 @@ DEP_CPP_BE_VISIT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISIT=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -19941,7 +20215,9 @@ DEP_CPP_BE_VISIT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISIT=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -20124,7 +20400,9 @@ DEP_CPP_BE_VISITO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -20296,7 +20574,9 @@ DEP_CPP_BE_VISITO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -20472,7 +20752,9 @@ DEP_CPP_BE_VISITOR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -20637,7 +20919,9 @@ DEP_CPP_BE_VISITOR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -20814,7 +21098,9 @@ DEP_CPP_BE_VISITOR_=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -20980,7 +21266,9 @@ DEP_CPP_BE_VISITOR_=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -21167,7 +21455,9 @@ DEP_CPP_BE_VISITOR_E=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_E=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -21343,7 +21633,9 @@ DEP_CPP_BE_VISITOR_E=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_E=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -21538,7 +21830,9 @@ DEP_CPP_BE_VISITOR_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_EX=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -21722,7 +22016,9 @@ DEP_CPP_BE_VISITOR_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_EX=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -21906,7 +22202,9 @@ DEP_CPP_BE_VISITOR_F=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_F=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -22079,7 +22377,9 @@ DEP_CPP_BE_VISITOR_F=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_F=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -22284,7 +22584,9 @@ DEP_CPP_BE_VISITOR_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_I=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -22478,7 +22780,9 @@ DEP_CPP_BE_VISITOR_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_I=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -22661,7 +22965,9 @@ DEP_CPP_BE_VISITOR_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_IN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -22833,7 +23139,9 @@ DEP_CPP_BE_VISITOR_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_IN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -23020,7 +23328,9 @@ DEP_CPP_BE_VISITOR_M=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_M=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -23196,7 +23506,9 @@ DEP_CPP_BE_VISITOR_M=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_M=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -23417,7 +23729,9 @@ DEP_CPP_BE_VISITOR_O=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_O=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -23627,7 +23941,9 @@ DEP_CPP_BE_VISITOR_O=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_O=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -23822,7 +24138,9 @@ DEP_CPP_BE_VISITOR_R=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_R=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -24006,7 +24324,9 @@ DEP_CPP_BE_VISITOR_R=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_R=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -24184,7 +24504,9 @@ DEP_CPP_BE_VISITOR_S=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_S=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -24351,7 +24673,9 @@ DEP_CPP_BE_VISITOR_S=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_S=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -24551,7 +24875,9 @@ DEP_CPP_BE_VISITOR_SE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_SE=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -24740,7 +25066,9 @@ DEP_CPP_BE_VISITOR_SE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_SE=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -24931,7 +25259,9 @@ DEP_CPP_BE_VISITOR_ST=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_ST=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -25111,7 +25441,9 @@ DEP_CPP_BE_VISITOR_ST=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_ST=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -25293,7 +25625,9 @@ DEP_CPP_BE_VISITOR_T=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_T=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -25464,7 +25798,9 @@ DEP_CPP_BE_VISITOR_T=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_T=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -25655,7 +25991,9 @@ DEP_CPP_BE_VISITOR_TY=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_TY=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -25835,7 +26173,9 @@ DEP_CPP_BE_VISITOR_TY=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_TY=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -26032,7 +26372,9 @@ DEP_CPP_BE_VISITOR_U=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_U=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -26218,7 +26560,9 @@ DEP_CPP_BE_VISITOR_U=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_U=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -26410,7 +26754,9 @@ DEP_CPP_BE_VISITOR_UN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_UN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -26591,7 +26937,9 @@ DEP_CPP_BE_VISITOR_UN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_BE_VISITOR_UN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -26769,7 +27117,9 @@ DEP_CPP_DRV_A=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_A=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -26936,7 +27286,9 @@ DEP_CPP_DRV_A=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_A=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -27062,7 +27414,9 @@ DEP_CPP_DRV_F=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_F=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -27177,7 +27531,9 @@ DEP_CPP_DRV_F=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_F=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -27286,7 +27642,9 @@ DEP_CPP_DRV_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_I=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -27384,7 +27742,9 @@ DEP_CPP_DRV_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_I=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -27493,7 +27853,9 @@ DEP_CPP_DRV_L=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_L=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -27591,7 +27953,9 @@ DEP_CPP_DRV_L=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_L=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -27721,7 +28085,9 @@ DEP_CPP_DRV_P=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_P=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -27840,7 +28206,9 @@ DEP_CPP_DRV_P=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_P=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -27948,7 +28316,9 @@ DEP_CPP_DRV_PR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_PR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -28045,7 +28415,9 @@ DEP_CPP_DRV_PR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_DRV_PR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -28155,7 +28527,9 @@ DEP_CPP_FE_DE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_DE=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -28254,7 +28628,9 @@ DEP_CPP_FE_DE=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_DE=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -28364,7 +28740,9 @@ DEP_CPP_FE_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_EX=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -28463,7 +28841,9 @@ DEP_CPP_FE_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_EX=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -28573,7 +28953,9 @@ DEP_CPP_FE_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_IN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -28672,7 +29054,9 @@ DEP_CPP_FE_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_IN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -28782,7 +29166,9 @@ DEP_CPP_FE_INT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_INT=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -28881,8 +29267,25 @@ DEP_CPP_FE_INT=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
 	
+NODEP_CPP_FE_INT=\
+	".\ys\types.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\fe\fe_lookup.cpp
+
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ENDIF 
 
@@ -28991,7 +29394,9 @@ DEP_CPP_FE_PR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_PR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -29090,7 +29495,9 @@ DEP_CPP_FE_PR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_FE_PR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -29201,7 +29608,9 @@ DEP_CPP_LEX_Y=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_LEX_Y=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -29301,7 +29710,9 @@ DEP_CPP_LEX_Y=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_LEX_Y=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -29408,7 +29819,9 @@ DEP_CPP_NARRO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_NARRO=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -29504,7 +29917,9 @@ DEP_CPP_NARRO=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_NARRO=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -29613,7 +30028,9 @@ DEP_CPP_TAO_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_TAO_I=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -29711,7 +30128,9 @@ DEP_CPP_TAO_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_TAO_I=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -29818,7 +30237,9 @@ DEP_CPP_UTL_D=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_D=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -29914,7 +30335,9 @@ DEP_CPP_UTL_D=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_D=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -30021,7 +30444,9 @@ DEP_CPP_UTL_E=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_E=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -30117,7 +30542,9 @@ DEP_CPP_UTL_E=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_E=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -30224,7 +30651,9 @@ DEP_CPP_UTL_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_EX=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -30320,7 +30749,9 @@ DEP_CPP_UTL_EX=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_EX=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -30427,7 +30858,9 @@ DEP_CPP_UTL_EXP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_EXP=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -30523,7 +30956,9 @@ DEP_CPP_UTL_EXP=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_EXP=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -30630,7 +31065,9 @@ DEP_CPP_UTL_G=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_G=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -30726,7 +31163,9 @@ DEP_CPP_UTL_G=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_G=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -30833,7 +31272,9 @@ DEP_CPP_UTL_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_I=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -30929,7 +31370,9 @@ DEP_CPP_UTL_I=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_I=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -31036,7 +31479,9 @@ DEP_CPP_UTL_ID=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_ID=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -31132,7 +31577,9 @@ DEP_CPP_UTL_ID=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_ID=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -31239,7 +31686,9 @@ DEP_CPP_UTL_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_IN=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -31335,7 +31784,9 @@ DEP_CPP_UTL_IN=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_IN=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -31442,7 +31893,9 @@ DEP_CPP_UTL_L=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_L=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -31538,7 +31991,9 @@ DEP_CPP_UTL_L=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_L=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -31645,7 +32100,9 @@ DEP_CPP_UTL_LI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_LI=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -31741,7 +32198,9 @@ DEP_CPP_UTL_LI=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_LI=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -31848,7 +32307,9 @@ DEP_CPP_UTL_N=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_N=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -31944,7 +32405,9 @@ DEP_CPP_UTL_N=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_N=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -32051,7 +32514,9 @@ DEP_CPP_UTL_S=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_S=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -32147,7 +32612,9 @@ DEP_CPP_UTL_S=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_S=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -32254,7 +32721,9 @@ DEP_CPP_UTL_ST=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_ST=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -32350,7 +32819,9 @@ DEP_CPP_UTL_ST=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_ST=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -32457,7 +32928,9 @@ DEP_CPP_UTL_STR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_STR=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -32553,7 +33026,9 @@ DEP_CPP_UTL_STR=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_STR=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -32660,7 +33135,9 @@ DEP_CPP_UTL_STRL=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_STRL=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -32756,7 +33233,9 @@ DEP_CPP_UTL_STRL=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_UTL_STRL=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
@@ -32866,7 +33345,9 @@ DEP_CPP_Y_TAB=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_Y_TAB=\
+	".\ys\types.h"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
@@ -32965,7 +33446,9 @@ DEP_CPP_Y_TAB=\
 	".\include\utl_stack.h"\
 	".\include\utl_string.h"\
 	".\include\utl_strlist.h"\
-	{$(INCLUDE)}"sys\types.h"\
+	
+NODEP_CPP_Y_TAB=\
+	".\ys\types.h"\
 	
 
 !ENDIF 
