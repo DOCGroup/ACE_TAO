@@ -118,7 +118,8 @@ EXPAND_ONLY_PREDEF    = NO
 SEARCH_INCLUDES       = YES
 INCLUDE_PATH          = .
 PREDEFINED            = 
-EXPAND_AS_DEFINED     = 
+EXPAND_AS_DEFINED     = ACE_RCSID \
+			ACE_UNIMPLEMENTED_FUNC
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references   

@@ -449,8 +449,8 @@ if ($dont_run == 0) {
     }
 
     $date = localtime;
-    print LOG "\n\n$CMD: =============================================\n";
-    print LOG "$CMD: running $program in $directory at ", $date, "\n";
+    print LOG "\n\n$CMD: ================  $date ================\n";
+    print LOG "auto_run_tests: $i\n";
     local $subdir =
         $CHECKOUT .'/'. $MODULE .'/build/'. $BUILD .'/'. $directory;
     chdir ($subdir)
