@@ -6,13 +6,13 @@
 #include "ace/Sched_Params.h"
 
 #if defined (ACE_WIN32)
-#include "ace/ARGV.h"
+# include "ace/ARGV.h"
 #endif /* ACE_WIN32 */
 
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-#include "ace/OS.i"
+# include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #include "ace/Task.h"
@@ -22,9 +22,9 @@
 #include "ace/streams.h"
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#include "ace/Object_Manager.h"
+# include "ace/Object_Manager.h"
 
-#if defined (ACE_HAS_WINCE)
+# if defined (ACE_HAS_WINCE)
 const wchar_t *ACE_OS::day_of_week_name[] = {__TEXT ("Sun"), __TEXT ("Mon"),
                                              __TEXT ("Tue"), __TEXT ("Wed"),
                                              __TEXT ("Thr"), __TEXT ("Fri"),
@@ -37,9 +37,9 @@ const wchar_t *ACE_OS::month_name[] = {__TEXT ("Jan"), __TEXT ("Feb"),
                                        __TEXT ("Nov"), __TEXT ("Dec") };
 
 static const ASYS_TCHAR *ACE_OS_CTIME_R_FMTSTR = __TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
-#endif /* ACE_HAS_WINCE */
+# endif /* ACE_HAS_WINCE */
 
-#if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+# if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 int
 ACE_OS::netdb_acquire (void)
 {
@@ -57,7 +57,7 @@ ACE_OS::netdb_release (void)
       (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
   return ace_os_monitor_lock->release ();
 }
-#endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+# endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
 #endif /* defined (ACE_MT_SAFE) */
 
 // Static constant representing `zero-time'.
@@ -107,13 +107,13 @@ ACE_Time_Value::operator FILETIME () const
 		     ACE_Time_Value::FILETIME_to_timval_skew);
   FILETIME file_time;
 
-#if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
-#define LOWPART(x) x.u.LowPart
-#define HIGHPART(x) x.u.HighPart
-#else
-#define LOWPART(x) x.LowPart
-#define HIGHPART(x) x.HighPart
-#endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+# if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+#   define LOWPART(x) x.u.LowPart
+#   define HIGHPART(x) x.u.HighPart
+# else
+#   define LOWPART(x) x.LowPart
+#   define HIGHPART(x) x.HighPart
+# endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
 
   file_time.dwLowDateTime = LOWPART(_100ns);
   file_time.dwHighDateTime = HIGHPART(_100ns);
@@ -271,7 +271,7 @@ int
 ACE_OS::uname (struct utsname *name)
 {
   // ACE_TRACE ("ACE_OS::uname");
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, __TEXT ("Win32"));
 
@@ -288,11 +288,11 @@ ACE_OS::uname (struct utsname *name)
   {
     // Get information from the two structures
     ACE_OS::sprintf (name->release,
-#if defined (ACE_HAS_WINCE)
+#   if defined (ACE_HAS_WINCE)
                      __TEXT ("Windows CE %d.%d"),
-#else
+#   else
                      __TEXT ("Windows NT %d.%d"),
-#endif /* ACE_HAS_WINCE */
+#   endif /* ACE_HAS_WINCE */
                      vinfo.dwMajorVersion,
                      vinfo.dwMinorVersion);
     ACE_OS::sprintf (name->version,
@@ -309,11 +309,11 @@ ACE_OS::uname (struct utsname *name)
     TCHAR processor[bufsize] = __TEXT ("Unknown");
     TCHAR subtype[bufsize] = __TEXT ("Unknown");
 
-#if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0500 && __BORLANDC__ < 0x0530)
-#define PROCARCH(x) x.s.wProcessorArchitecture
-#else
-#define PROCARCH(x) x.wProcessorArchitecture
-#endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0500 &&  __BORLANDC__ < 0x0530) */
+#   if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0500 && __BORLANDC__ < 0x0530)
+#     define PROCARCH(x) x.s.wProcessorArchitecture
+#   else
+#     define PROCARCH(x) x.wProcessorArchitecture
+#   endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0500 &&  __BORLANDC__ < 0x0530) */
 
     switch (PROCARCH(sinfo))
     {
@@ -384,7 +384,7 @@ ACE_OS::uname (struct utsname *name)
   }
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
-#elif defined (VXWORKS)
+# elif defined (VXWORKS)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "VxWorks");
   ACE_OS::strcpy (name->release, "???");
@@ -392,7 +392,7 @@ ACE_OS::uname (struct utsname *name)
   ACE_OS::strcpy (name->machine, sysModel ());
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
-#elif defined (CHORUS)
+# elif defined (CHORUS)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "CHORUS/ClassiX");
   ACE_OS::strcpy (name->release, "???");
@@ -400,7 +400,7 @@ ACE_OS::uname (struct utsname *name)
   ACE_OS::strcpy (name->machine, "???");
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
 }
 #endif /* ACE_WIN32 || VXWORKS */
 
@@ -597,12 +597,12 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 {
 // ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_mutex_t *p_lock = (ACE_mutex_t *) mutex;
   ACE_OS::mutex_unlock (p_lock);
-#else
+# else
   ACE_UNUSED_ARG (mutex);
-#endif /* ACE_HAS_DCETHREADS */
+# endif /* ACE_HAS_DCETHREADS */
 #else
   ACE_UNUSED_ARG (mutex);
 #endif /* ACE_HAS_THREADS */
@@ -647,7 +647,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   return result;
 }
 
-#if defined (ACE_LACKS_GETS)
+# if defined (ACE_LACKS_GETS)
 char *
 ACE_OS::gets (char *str, int n)
 {
@@ -662,10 +662,10 @@ ACE_OS::gets (char *str, int n)
   while ((c = getchar ()) != '\n')
     {
 
-#if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
+#   if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
       if (c == EOF && errno == EINTR && ACE_LOG_MSG->restart ())
         continue;
-#endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
+#   endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
 
       if (c == EOF)
         break;
@@ -678,7 +678,7 @@ ACE_OS::gets (char *str, int n)
   // ACE_OSCALL_RETURN (::gets (str), char *, 0);
   return (c == EOF) ? 0 : str;
 }
-#endif /* ACE_LACKS_GETS */
+# endif /* ACE_LACKS_GETS */
 
 #else
 int
@@ -690,22 +690,22 @@ fprintf (FILE *fp, char *format, const char *msg)
 #endif /* ! ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_UNICODE)
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
 
 int
 ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
   // ACE_TRACE ("ACE_OS::fprintf");
-#if defined (ACE_HAS_WINCE)
+#   if defined (ACE_HAS_WINCE)
   ACE_NOTSUP_RETURN (-1);
-#else
+#   else
   int result = 0;
   va_list ap;
   va_start (ap, format);
   ACE_OSCALL (::vfwprintf (fp, format, ap), int, -1, result);
   va_end (ap);
   return result;
-#endif /* ACE_HAS_WINCE */
+#   endif /* ACE_HAS_WINCE */
 }
 
 int
@@ -720,7 +720,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   return result;
 }
 
-#if 0
+#   if 0
 int
 ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
 {
@@ -733,11 +733,11 @@ ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
   va_end (ap);
   return result;
 }
-#endif /* 0 */
+#   endif /* 0 */
 
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
 
-#if defined (ACE_LACKS_MKTEMP)
+# if defined (ACE_LACKS_MKTEMP)
 wchar_t *
 ACE_OS::mktemp (wchar_t *s)
 {
@@ -779,7 +779,7 @@ ACE_OS::mktemp (wchar_t *s)
       return s;
     }
 }
-#endif /* ACE_LACKS_MKTEMP */
+# endif /* ACE_LACKS_MKTEMP */
 #endif /* ACE_HAS_UNICODE */
 
 int
@@ -822,8 +822,8 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 }
 
 #if defined (ACE_HAS_PRIOCNTL)
-#include /**/ <sys/rtpriocntl.h>
-#include /**/ <sys/tspriocntl.h>
+# include /**/ <sys/rtpriocntl.h>
+# include /**/ <sys/tspriocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
 
 int
@@ -1032,25 +1032,25 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       int result = ::sched_setscheduler(0, // this process
                                         sched_params.policy (),
                                         &param) == -1 ? -1 : 0;
-#     if defined DIGITAL_UNIX
+# if defined DIGITAL_UNIX
         return result == 0
           ? // Use priocntl (2) to set the process in the RT class,
             // if using an RT policy.
             ACE_OS::set_scheduling_params (sched_params)
           : result;
-#     else  /* ! DIGITAL_UNIX */
+# else  /* ! DIGITAL_UNIX */
         return result;
-#     endif /* ! DIGITAL_UNIX */
+# endif /* ! DIGITAL_UNIX */
     }
   else if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
       ACE_thread_t thr_id = ACE_OS::thr_self ();
 
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)
       return (::pthread_setscheduler(thr_id,
                                      sched_params.policy (),
                                      sched_params.priority()) == -1 ? -1 : 0);
-#   else
+# else
       int result;
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
                                              thr_id,
@@ -1058,7 +1058,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                                              &param),
                                            result),
                          int, -1);
-#   endif  /* ACE_HAS_DCE_DRAFT4_THREADS */
+# endif  /* ACE_HAS_DCE_DRAFT4_THREADS */
 
     }
   else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
@@ -1138,7 +1138,7 @@ int ACE_OS::socket_initialized_;
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 
-#include "ace/Array.h"
+# include "ace/Array.h"
 
 class ACE_TSS_Ref
   // = TITLE
@@ -1262,7 +1262,7 @@ ACE_TSS_Info::ACE_TSS_Info (void)
 // ACE_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
 }
 
-#if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
+# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
   static inline int operator== (const ACE_thread_key_t &lhs,
                                 const ACE_thread_key_t &rhs)
   {
@@ -1274,7 +1274,7 @@ ACE_TSS_Info::ACE_TSS_Info (void)
   {
     return ! (lhs == rhs);
   }
-#endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
 
 // Check for equality.
 int
@@ -1336,13 +1336,13 @@ private:
 
   enum
     {
-#if ACE_SIZEOF_LONG == 8
+# if ACE_SIZEOF_LONG == 8
       ACE_BITS_PER_WORD = 64,
-#elif ACE_SIZEOF_LONG == 4
+# elif ACE_SIZEOF_LONG == 4
       ACE_BITS_PER_WORD = 32,
-#else
-#error ACE_TSS_Keys only supports 32 or 64 bit longs.
-#endif /* ACE_SIZEOF_LONG == 8 */
+# else
+#   error ACE_TSS_Keys only supports 32 or 64 bit longs.
+# endif /* ACE_SIZEOF_LONG == 8 */
       ACE_WORDS = (ACE_DEFAULT_THREAD_KEYS - 1) / ACE_BITS_PER_WORD + 1
     };
 
@@ -1545,7 +1545,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
         (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
       ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *lock));
 
-#if 0
+# if 0
     // We shouldn't free the key and remove it from the table here
     // because if we do and some thread ends before other threads
     // even get started (or their TSS object haven't been created yet,)
@@ -1556,14 +1556,14 @@ ACE_TSS_Cleanup::exit (void * /* status */)
     // persistant system wide.
     for (int i = 0; i < index; i++)
       {
-#if defined (ACE_WIN32)
+#   if defined (ACE_WIN32)
         ::TlsFree (key_arr[i]);
-#else
+#   else
         // don't bother to free the key
-#endif /* ACE_WIN32 */
+#   endif /* ACE_WIN32 */
         this->table_.remove (ACE_TSS_Info (key_arr[i]));
       }
-#endif /* 0 */
+# endif /* 0 */
   }
 }
 
@@ -1694,11 +1694,11 @@ ACE_TSS_Cleanup::detach (void *inst)
       // Mark the key as no longer being used.
       key_info->key_in_use (0);
 
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
       ::TlsFree (key_info->key_);
-#else
+# else
       // don't bother to free the key
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
       return this->remove (key_info->key_);
     }
 
@@ -1749,14 +1749,14 @@ ACE_TSS_Emulation::tss_destructor_ [ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX] 
 void *
 ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 {
-#if ! defined (VXWORKS)
+#   if ! defined (VXWORKS)
   // On VxWorks, don't check to see if the field is 0.  It isn't always,
   // specifically, when a program is run directly by the shell (without
   // spawning a new task) after another program has been run.
 
   if (tss_base () == 0)
     {
-#endif /* VXWORKS */
+#   endif /* VXWORKS */
       // Use the supplied array for this thread's TSS.
       tss_base () = ts_storage;
 
@@ -1769,33 +1769,33 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
         }
 
       return tss_base ();
-#if ! defined (VXWORKS)
+#   if ! defined (VXWORKS)
     }
   else
     {
       return 0;
     }
-#endif /* VXWORKS */
+#   endif /* VXWORKS */
 }
 
-#if !defined (VXWORKS)
+#   if !defined (VXWORKS)
 // FOR TESTING ONLY!
 void **
 ACE_TSS_Emulation::tss_collection_ [ACE_TSS_Emulation::ACE_TSS_THREADS_MAX] = { 0 };
-#endif /* VXWORKS */
-#endif /* ACE_HAS_TSS_EMULATION */
+#   endif /* VXWORKS */
+# endif /* ACE_HAS_TSS_EMULATION */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array<ACE_TSS_Info>;
 template class ACE_Array_Iterator<ACE_TSS_Info>;
 template class ACE_Node<ACE_TSS_Ref>;
 template class ACE_TSS<ACE_TSS_Keys>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array<ACE_TSS_Info>
-#pragma instantiate ACE_Array_Iterator<ACE_TSS_Info>
-#pragma instantiate ACE_Node<ACE_TSS_Ref>
-#pragma instantiate ACE_TSS<ACE_TSS_Keys>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#   pragma instantiate ACE_Array<ACE_TSS_Info>
+#   pragma instantiate ACE_Array_Iterator<ACE_TSS_Info>
+#   pragma instantiate ACE_Node<ACE_TSS_Ref>
+#   pragma instantiate ACE_TSS<ACE_TSS_Keys>
+# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
 
@@ -1846,10 +1846,10 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 
       new_log->restart (this->restart_);
       new_log->trace_depth (this->trace_depth_);
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
       new_log->seh_except_selector (this->seh_except_selector_);
       new_log->seh_except_handler (this->seh_except_handler_);
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
     }
 
   // @@ Now the TSS Log_Mesg has been created, cache my thread
@@ -1873,9 +1873,9 @@ ACE_Thread_Adapter::invoke (void)
   // Extract the arguments.
   ACE_THR_FUNC func = this->user_func_;
   void *arg = this->arg_;
-# if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+#if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   ACE_Thread_Descriptor *thr_desc = this->thr_desc_;
-# endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
+#endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
   // not to access <this> anywhere below this point.
@@ -1937,7 +1937,7 @@ ACE_Thread_Adapter::invoke (void)
           // invoked from AfxEndThread.  _endthreadex will be called
           // from AfxEndThread so don't exit the thread now if we are
           // running an MFC thread.
-#  if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+#   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
           if (using_afx != -1)
             {
               if (using_afx)
@@ -1958,9 +1958,9 @@ ACE_Thread_Adapter::invoke (void)
               else
                 ::AfxEndThread ((DWORD)status);
             }
-#  else
+#   else
           ::_endthreadex ((DWORD) status);
-#  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
+#   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
 
 # endif /* ACE_WIN32 */
@@ -2044,10 +2044,10 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
     tracing_enabled_ (0),
     restart_ (1),
     trace_depth_ (0)
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
     , seh_except_selector_ (selector),
     seh_except_handler_ (handler)
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 {
 // ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
@@ -2060,10 +2060,10 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
       this->tracing_enabled_ = inherit_log_->tracing_enabled ();
       this->restart_ = inherit_log_->restart ();
       this->trace_depth_ = inherit_log_->trace_depth ();
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
       this->seh_except_selector_ = selector;
       this->seh_except_handler_ = handler;
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
     }
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 }
@@ -2089,7 +2089,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #if defined (ACE_HAS_THREADS)
 
-#if !defined (VXWORKS)
+# if !defined (VXWORKS)
   // On VxWorks, the OS will provide a task name if the user doesn't.
   // So, we don't need to create a tmp_thr.  If the caller of this
   // member function is the Thread_Manager, than thr_id will be non-zero
@@ -2098,34 +2098,34 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (thr_id == 0)
     thr_id = &tmp_thr;
-#endif /* ! VXWORKS */
+# endif /* ! VXWORKS */
 
   ACE_hthread_t tmp_handle;
   if (thr_handle == 0)
     thr_handle = &tmp_handle;
 
-#  if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 
   int result;
   pthread_attr_t attr;
-#    if defined (ACE_HAS_DCETHREADS)
+#   if defined (ACE_HAS_DCETHREADS)
   if (::pthread_attr_create (&attr) != 0)
-#    else /* ACE_HAS_DCETHREADS */
+#   else /* ACE_HAS_DCETHREADS */
   if (::pthread_attr_init (&attr) != 0)
-#    endif /* ACE_HAS_DCETHREADS */
+#   endif /* ACE_HAS_DCETHREADS */
       return -1;
-#    if !defined (ACE_LACKS_SETSCHED)
+#   if !defined (ACE_LACKS_SETSCHED)
   // The PRIORITY stuff used to be here...-cjc
-#    endif /* ACE_LACKS_SETSCHED */
+#   endif /* ACE_LACKS_SETSCHED */
 
 
   // *** Set Stack Size
-#    if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+#   if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
   if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
     stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
-#    endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+#   endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
-#     if defined (CHORUS)
+#   if defined (CHORUS)
   // If it is a super actor, we can't set stacksize.  But for the time
   // being we are all non-super actors.  Should be fixed to take care
   // of super actors!!!
@@ -2133,55 +2133,55 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
   else if (stacksize < ACE_CHORUS_DEFAULT_MIN_STACK_SIZE)
     stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
-#     endif /*CHORUS */
+#   endif /*CHORUS */
 
   if (stacksize != 0)
     {
       size_t size = stacksize;
 
-#    if defined (PTHREAD_STACK_MIN)
+#   if defined (PTHREAD_STACK_MIN)
       if (size < PTHREAD_STACK_MIN)
         size = PTHREAD_STACK_MIN;
-#    endif /* PTHREAD_STACK_MIN */
+#   endif /* PTHREAD_STACK_MIN */
 
-#    if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
+#   if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
       if (::pthread_attr_setstacksize (&attr, size) != 0)
         {
-#      if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_DCETHREADS)
           ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_DCETHREADS */
           ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_DCETHREADS */
           return -1;
         }
-#    else
+#   else
       ACE_UNUSED_ARG (size);
-#    endif /* !ACE_LACKS_THREAD_STACK_SIZE */
+#   endif /* !ACE_LACKS_THREAD_STACK_SIZE */
     }
 
   // *** Set Stack Address
-#    if !defined (ACE_LACKS_THREAD_STACK_ADDR)
+#   if !defined (ACE_LACKS_THREAD_STACK_ADDR)
   if (stack != 0)
     {
       if (::pthread_attr_setstackaddr (&attr, stack) != 0)
         {
-#      if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_DCETHREADS)
           ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_DCETHREADS */
           ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_DCETHREADS */
           return -1;
         }
     }
-#    else
+#   else
   ACE_UNUSED_ARG (stack);
-#    endif /* !ACE_LACKS_THREAD_STACK_ADDR */
+#   endif /* !ACE_LACKS_THREAD_STACK_ADDR */
 
   // *** Deal with various attributes
   if (flags != 0)
     {
       // *** Set Detach state
-#    if !defined (ACE_LACKS_SETDETACH)
+#   if !defined (ACE_LACKS_SETDETACH)
       if (ACE_BIT_ENABLED (flags, THR_DETACHED)
           || ACE_BIT_ENABLED (flags, THR_JOINABLE))
         {
@@ -2190,28 +2190,28 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           if (ACE_BIT_ENABLED (flags, THR_DETACHED))
             dstate = PTHREAD_CREATE_DETACHED;
 
-#      if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_DCETHREADS)
           if (::pthread_attr_setdetach_np (&attr, dstate) != 0)
-#      else /* ACE_HAS_DCETHREADS */
-#        if defined (ACE_HAS_PTHREAD_DSTATE_PTR)
+#     else /* ACE_HAS_DCETHREADS */
+#       if defined (ACE_HAS_PTHREAD_DSTATE_PTR)
           if (::pthread_attr_setdetachstate (&attr, &dstate) != 0)
-#        else
+#       else
           if (::pthread_attr_setdetachstate (&attr, dstate) != 0)
-#        endif /* ACE_HAS_PTHREAD_DSTATE_PTR */
-#      endif /* ACE_HAS_DCETHREADS */
+#       endif /* ACE_HAS_PTHREAD_DSTATE_PTR */
+#     endif /* ACE_HAS_DCETHREADS */
                 {
-#      if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_DCETHREADS)
             ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_DCETHREADS */
             ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_DCETHREADS */
             return -1;
           }
         }
-#    endif /* ACE_LACKS_SETDETACH */
+#   endif /* ACE_LACKS_SETDETACH */
 
       // *** Set Policy
-#    if !defined (ACE_LACKS_SETSCHED) || defined (ACE_HAS_DCETHREADS)
+#   if !defined (ACE_LACKS_SETSCHED) || defined (ACE_HAS_DCETHREADS)
       // If we wish to set the priority explicitly, we have to enable
       // explicit scheduling, and a policy, too.
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
@@ -2229,10 +2229,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         {
           int spolicy;
 
-#      if defined (ACE_HAS_ONLY_SCHED_OTHER)
+#     if defined (ACE_HAS_ONLY_SCHED_OTHER)
             // Solaris, thru version 2.6, only supports SCHED_OTHER.
             spolicy = SCHED_OTHER;
-#      else
+#     else
           // Make sure to enable explicit scheduling, in case we didn't
           // enable it above (for non-default priority).
           ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
@@ -2241,38 +2241,38 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             spolicy = SCHED_OTHER;
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
             spolicy = SCHED_FIFO;
-#if defined (SCHED_IO)
+#       if defined (SCHED_IO)
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
             spolicy = SCHED_IO;
-#else
+#       else
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
             {
               errno = ENOSYS;
               return -1;
             }
-#endif /* SCHED_IO */
+#       endif /* SCHED_IO */
           else
             spolicy = SCHED_RR;
-#      endif /* ACE_HAS_ONLY_SCHED_OTHER */
+#     endif /* ACE_HAS_ONLY_SCHED_OTHER */
 
-#      if !defined (ACE_HAS_FSU_PTHREADS)
-#        if defined (ACE_HAS_DCETHREADS)
+#     if !defined (ACE_HAS_FSU_PTHREADS)
+#       if defined (ACE_HAS_DCETHREADS)
           result = ::pthread_attr_setsched (&attr, spolicy);
-#        else /* ACE_HAS_DCETHREADS */
+#       else /* ACE_HAS_DCETHREADS */
           result = ::pthread_attr_setschedpolicy (&attr, spolicy);
-#        endif /* ACE_HAS_DCETHREADS */
+#       endif /* ACE_HAS_DCETHREADS */
           if (result != 0)
               {
                 // Preserve the errno value.
                 errno = result;
-#        if defined (ACE_HAS_DCETHREADS)
+#       if defined (ACE_HAS_DCETHREADS)
                 ::pthread_attr_delete (&attr);
-#        else /* ACE_HAS_DCETHREADS */
+#       else /* ACE_HAS_DCETHREADS */
                 ::pthread_attr_destroy (&attr);
-#        endif /* ACE_HAS_DCETHREADS */
+#       endif /* ACE_HAS_DCETHREADS */
                 return -1;
               }
-#      else
+#     else
           int ret;
           switch (spolicy)
             {
@@ -2286,18 +2286,18 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             }
           if (ret != 0)
             {
-#        if defined (ACE_HAS_DCETHREADS)
+#       if defined (ACE_HAS_DCETHREADS)
               ::pthread_attr_delete (&attr);
-#        else /* ACE_HAS_DCETHREADS */
+#       else /* ACE_HAS_DCETHREADS */
               ::pthread_attr_destroy (&attr);
-#        endif /* ACE_HAS_DCETHREADS */
+#       endif /* ACE_HAS_DCETHREADS */
               return -1;
             }
-#      endif    /*  ACE_HAS_FSU_PTHREADS */
+#     endif    /*  ACE_HAS_FSU_PTHREADS */
         }
 
       // *** Set Priority (use reasonable default priorities)
-#      if defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+#     if defined(ACE_HAS_PTHREADS_1003_DOT_1C)
       // If we wish to explicitly set a scheduling policy, we also
       // have to specify a priority.  We choose a "middle" priority as
       // default.  Maybe this is also necessary on other POSIX'ish
@@ -2314,20 +2314,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           else // THR_SCHED_DEFAULT
             priority = ACE_THR_PRI_OTHER_DEF;
         }
-#      endif //ACE_HAS_PTHREADS_1003_DOT_1C
+#     endif //ACE_HAS_PTHREADS_1003_DOT_1C
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
         {
           struct sched_param sparam;
           ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
 
-#      if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#     if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_DCE_DRAFT4_THREADS)
           sparam.sched_priority = ACE_MIN (priority, PRIORITY_MAX);
-#      elif defined(ACE_HAS_IRIX62_THREADS)
+#     elif defined(ACE_HAS_IRIX62_THREADS)
           sparam.sched_priority = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
-#      elif defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+#     elif defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS_1003_DOT_1C)
           /* For MIT pthreads... */
           sparam.prio = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
-#      elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+#     elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
           // The following code forces priority into range.
           if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
             sparam.sched_priority =
@@ -2338,11 +2338,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           else // Default policy, whether set or not
             sparam.sched_priority =
               ACE_MIN (ACE_THR_PRI_OTHER_MAX, ACE_MAX (ACE_THR_PRI_OTHER_MIN, priority));
-#      else
+#     else
           sparam.sched_priority = priority;
-#      endif
+#     endif
 
-#      if defined (ACE_HAS_FSU_PTHREADS)
+#     if defined (ACE_HAS_FSU_PTHREADS)
          if (sparam.sched_priority >= PTHREAD_MIN_PRIORITY
              && sparam.sched_priority <= PTHREAD_MAX_PRIORITY)
            attr.prio = sparam.sched_priority;
@@ -2352,62 +2352,64 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
              errno = EINVAL;
              return -1;
            }
-#      else
+#     else
          {
-#        if defined (ACE_HAS_STHREADS)
+#       if defined (ACE_HAS_STHREADS)
            // Solaris POSIX only allows priorities > 0 to
            // ::pthread_attr_setschedparam.  If a priority of 0 was
            // requested, set the thread priority after creating it, below.
            if (priority > 0)
-#        endif /* STHREADS */
+#       endif /* STHREADS */
              {
-#        if defined (ACE_HAS_DCETHREADS)
+#       if defined (ACE_HAS_DCETHREADS)
                result = ::pthread_attr_setprio (&attr,
                                                 sparam.sched_priority);
-#        else /* ACE_HAS_DCETHREADS */
+#       else /* ACE_HAS_DCETHREADS */
                result = ::pthread_attr_setschedparam (&attr, &sparam);
-#        endif /* ACE_HAS_DCETHREADS */
+#       endif /* ACE_HAS_DCETHREADS */
                if (result != 0)
                  {
-#        if defined (ACE_HAS_DCETHREADS)
+#       if defined (ACE_HAS_DCETHREADS)
                    ::pthread_attr_delete (&attr);
-#        else /* ACE_HAS_DCETHREADS */
+#       else /* ACE_HAS_DCETHREADS */
                    ::pthread_attr_destroy (&attr);
-#        endif /* ACE_HAS_DCETHREADS */
+#       endif /* ACE_HAS_DCETHREADS */
                    errno = result;
                    return -1;
                  }
              }
          }
-#      endif    /* ACE_HAS_FSU_PTHREADS */
+#     endif    /* ACE_HAS_FSU_PTHREADS */
         }
 
       // *** Set scheduling explicit or inherited
       if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
           || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
         {
-#      if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_DCETHREADS)
           int sched = PTHREAD_DEFAULT_SCHED;
-#      else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_DCETHREADS */
           int sched = PTHREAD_EXPLICIT_SCHED;
-#      endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_DCETHREADS */
           if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
             sched = PTHREAD_INHERIT_SCHED;
           if (::pthread_attr_setinheritsched (&attr, sched) != 0)
             {
-#      if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_DCETHREADS)
               ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_DCETHREADS */
               ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_DCETHREADS */
               return -1;
             }
         }
-#    endif /* ACE_LACKS_SETSCHED || ACE_HAS_DCETHREADS */
+#   else /* ACE_LACKS_SETSCHED || ACE_HAS_DCETHREADS */
+      ACE_UNUSED_ARG (priority);
+#   endif /* ACE_LACKS_SETSCHED || ACE_HAS_DCETHREADS */
 
 
       // *** Set Scope
-#    if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
+#   if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
       if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
           || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
         {
@@ -2417,15 +2419,15 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
           if (::pthread_attr_setscope (&attr, scope) != 0)
             {
-#      if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_DCETHREADS)
               ::pthread_attr_delete (&attr);
-#      else /* ACE_HAS_DCETHREADS */
+#     else /* ACE_HAS_DCETHREADS */
               ::pthread_attr_destroy (&attr);
-#      endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_DCETHREADS */
               return -1;
             }
         }
-#    endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
+#   endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
 
       if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
         {
@@ -2464,21 +2466,21 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
     }
 
-#    if defined (ACE_HAS_DCETHREADS)
-#       if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL (::pthread_create (thr_id, attr,
                                 thread_args->entry_point (),
                                 thread_args),
               int, -1, result);
-#       else
+#     else
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr,
                                                   thread_args->entry_point (),
                                                   thread_args),
                                 result),
               int, -1, result);
-#       endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#     endif /* ACE_HAS_DCE_DRAFT4_THREADS */
   ::pthread_attr_delete (&attr);
-#    else /* !ACE_HAS_DCETHREADS */
+#   else /* !ACE_HAS_DCETHREADS */
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id,
                                                   &attr,
                                                   thread_args->entry_point (),
@@ -2486,7 +2488,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                 result),
               int, -1, result);
   ::pthread_attr_destroy (&attr);
-#    endif /* ACE_HAS_DCETHREADS */
+#   endif /* ACE_HAS_DCETHREADS */
 
   // This is a Solaris, POSIX, or DCE implementation of pthreads,
   // where we assume that ACE_thread_t and ACE_hthread_t are the same.
@@ -2494,7 +2496,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (result != -1)
     *thr_handle = *thr_id;
 
-#    if defined (ACE_HAS_STHREADS)
+#   if defined (ACE_HAS_STHREADS)
   // If the priority is 0, then we might have to set it now because we
   // couldn't set it with ::pthread_attr_setschedparam, as noted
   // above.  This doesn't provide strictly correct behavior, because
@@ -2536,8 +2538,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
     }
 
-#if defined (ACE_NEEDS_LWP_PRIO_SET)
-#if 0
+#     if defined (ACE_NEEDS_LWP_PRIO_SET)
+#       if 0
   // It would be useful if we could make this work.  But, it requires
   // a mechanism for determining the ID of an LWP to which another
   // thread is bound.  Is there a way to do that?  Instead, just rely
@@ -2555,12 +2557,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                       /* ? How do we find the ID of the LWP
                                            to which *thr_id is bound? */);
     }
-#endif /* 0 */
-#endif /* ACE_NEEDS_LWP_PRIO_SET */
+#       endif /* 0 */
+#     endif /* ACE_NEEDS_LWP_PRIO_SET */
 
-#    endif /* ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_STHREADS */
   return result;
-#  elif defined (ACE_HAS_STHREADS)
+# elif defined (ACE_HAS_STHREADS)
   int result;
   int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
@@ -2602,9 +2604,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
     }
   return result;
-#  elif defined (ACE_HAS_WTHREADS)
+# elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (stack);
-#    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+#   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
     {
       CWinThread *cwin_thread =
@@ -2613,7 +2615,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                           flags | THR_SUSPENDED);
       // Have to duplicate the handle because
       // CWinThread::~CWinThread() closes the original handle.
-#if !defined (ACE_HAS_WINCE)
+#     if !defined (ACE_HAS_WINCE)
       (void) ::DuplicateHandle (::GetCurrentProcess (),
                                 cwin_thread->m_hThread,
                                 ::GetCurrentProcess (),
@@ -2621,7 +2623,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                 0,
                                 TRUE,
                                 DUPLICATE_SAME_ACCESS);
-#endif /* ! ACE_HAS_WINCE */
+#     endif /* ! ACE_HAS_WINCE */
       *thr_id = cwin_thread->m_nThreadID;
 
       if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
@@ -2631,7 +2633,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // thread, ACE_TSS_Cleanup->exit() never gets called !
     }
   else
-#    endif /* ACE_HAS_MFC */
+#   endif /* ACE_HAS_MFC */
     {
       int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
@@ -2659,7 +2661,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             ACE_OS::thr_continue (*thr_handle);
         }
     }
-#    if 0
+#   if 0
   *thr_handle = ::CreateThread
     (0,
      stacksize,
@@ -2667,7 +2669,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
      thread_args,
      flags,
      thr_id);
-#    endif /* 0 */
+#   endif /* 0 */
 
   // Close down the handle if no one wants to use it.
   if (thr_handle == &tmp_handle)
@@ -2678,7 +2680,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   else
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
-#  elif defined (VXWORKS)
+# elif defined (VXWORKS)
   // The hard-coded values below are what ::sp () would use.  (::sp ()
   // hardcodes priority to 100, flags to VX_FP_TASK, and stacksize to
   // 20,000.)  stacksize should be an even integer.  If a stack is not
@@ -2698,12 +2700,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                            9);
 
   ACE_hthread_t tid;
-#if 0 /* Don't support setting of stack, because it doesn't seem to work. */
+#   if 0 /* Don't support setting of stack, because it doesn't seem to work. */
   if (stack == 0)
     {
-#else
+#   else
   ACE_UNUSED_ARG (stack);
-#endif /* 0 */
+#   endif /* 0 */
       // The call below to ::taskSpawn () causes VxWorks to assign a
       // unique task name of the form: "t" + an integer, because the
       // first argument is 0.
@@ -2714,7 +2716,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                          thread_args->entry_point (),
                          (int) thread_args,
                          0, 0, 0, 0, 0, 0, 0, 0, 0);
-#if 0 /* Don't support setting of stack, because it doesn't seem to work. */
+#   if 0 /* Don't support setting of stack, because it doesn't seem to work. */
     }
   else
     {
@@ -2744,7 +2746,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       tid = status == OK  ?  (ACE_hthread_t) tcb  :  ERROR;
     }
-#endif /* 0 */
+#   endif /* 0 */
 
   if (tid == ERROR)
     return -1;
@@ -2766,7 +2768,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       return 0;
     }
 
-#  endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (func);
   ACE_UNUSED_ARG (args);
@@ -2794,12 +2796,12 @@ ACE_OS::thr_exit (void *status)
     // directly by ACE_Thread_Adapter::invoke ().
     //   ACE_TSS_Cleanup::instance ()->exit (status);
 
-# if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+#   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
     int using_afx = -1;
     ACE_Thread_Descriptor *td = ACE_Log_Msg::instance ()->thr_desc ();
     if (td)
       using_afx = ACE_BIT_ENABLED (td->flags (), THR_USE_AFX);
-# endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
+#   endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
     // Call TSS destructors.
     ACE_OS::cleanup_tss (0 /* not main thread */);
@@ -2808,7 +2810,7 @@ ACE_OS::thr_exit (void *status)
     // Allow CWinThread-destructor to be invoked from AfxEndThread.
     // _endthreadex will be called from AfxEndThread so don't exit the
     // thread now if we are running an MFC thread.
-#  if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+#   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
     if (using_afx != -1)
       {
         if (using_afx)
@@ -2827,9 +2829,9 @@ ACE_OS::thr_exit (void *status)
         else
           ::AfxEndThread ((DWORD)status);
       }
-#  else
+#   else
           ::_endthreadex ((DWORD) status);
-#  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
+#   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
 # elif defined (VXWORKS)
     ACE_hthread_t tid;
@@ -3104,7 +3106,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
   if (argv_buf.buf () != 0)
     {
       PROCESS_INFORMATION process_info;
-#if !defined (ACE_HAS_WINCE)
+# if !defined (ACE_HAS_WINCE)
       STARTUPINFO startup_info;
       ACE_OS::memset ((void *) &startup_info, 0, sizeof startup_info);
       startup_info.cb = sizeof startup_info;
@@ -3120,7 +3122,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            0, // No current directory.
                            &startup_info,
                            &process_info))
-#else
+# else
       if (::CreateProcess (0,
                            (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ()),
                            0, // No process attributes.
@@ -3132,7 +3134,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            0, // No current directory.
                            0, // Can't use startup info on CE
                            &process_info))
-#endif /* ! ACE_HAS_WINCE */
+# endif /* ! ACE_HAS_WINCE */
         {
           // Free resources allocated in kernel.
           ACE_OS::close (process_info.hThread);
@@ -3192,11 +3194,11 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 
   char *buf;
 
-#if defined (ACE_HAS_ALLOCA)
+# if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
-#else
+# else
   ACE_NEW_RETURN (buf, char[length], -1);
-#endif /* !defined (ACE_HAS_ALLOCA) */
+# endif /* !defined (ACE_HAS_ALLOCA) */
 
   char *ptr = buf;
 
@@ -3207,9 +3209,9 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
     }
 
   ssize_t result = ACE::send_n (handle, buf, length);
-#if !defined (ACE_HAS_ALLOCA)
+# if !defined (ACE_HAS_ALLOCA)
   delete [] buf;
-#endif /* !defined (ACE_HAS_ALLOCA) */
+# endif /* !defined (ACE_HAS_ALLOCA) */
   return result;
 }
 #endif /* ACE_NEEDS_WRITEV */
@@ -3236,11 +3238,11 @@ readv (ACE_HANDLE handle,
       length += iov[i].iov_len;
 
   char *buf;
-#if defined (ACE_HAS_ALLOCA)
+# if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
-#else
+# else
   ACE_NEW_RETURN (buf, char[length], -1);
-#endif /* !defined (ACE_HAS_ALLOCA) */
+# endif /* !defined (ACE_HAS_ALLOCA) */
 
   length = ACE::recv_n (handle, buf, length);
 
@@ -3263,9 +3265,9 @@ readv (ACE_HANDLE handle,
         }
     }
 
-#if !defined (ACE_HAS_ALLOCA)
+# if !defined (ACE_HAS_ALLOCA)
   delete [] buf;
-#endif /* !defined (ACE_HAS_ALLOCA) */
+# endif /* !defined (ACE_HAS_ALLOCA) */
   return length;
 }
 #endif /* ACE_NEEDS_READV */
@@ -3340,16 +3342,16 @@ ACE_OS::socket_init (int version_high, int version_low)
       int error = WSAStartup (version_requested, &wsa_data);
 
       if (error != 0)
-#if defined (ACE_HAS_WINCE)
+# if defined (ACE_HAS_WINCE)
         {
           wchar_t fmt[] = __TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
           ACE_OS::sprintf (buf, fmt, __TEXT ("WSAStartup"), error);
           ::MessageBox (NULL, buf, __TEXT ("WSAStartup failed!"), MB_OK);
         }
-#else
+# else
         cerr << "WSAStartup failed, WSAGetLastError returned " << error << endl;
-#endif /* ACE_HAS_WINCE */
+# endif /* ACE_HAS_WINCE */
 
       ACE_OS::socket_initialized_ = 1;
     }
@@ -3370,14 +3372,14 @@ ACE_OS::socket_fini (void)
       if (WSACleanup () != 0)
         {
           int error = ::WSAGetLastError ();
-#if defined (ACE_HAS_WINCE)
+# if defined (ACE_HAS_WINCE)
           wchar_t fmt[] = __TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
           ACE_OS::sprintf (buf, fmt, __TEXT ("WSACleanup"), error);
           ::MessageBox (NULL, buf , __TEXT ("WSACleanup failed!"), MB_OK);
-#else
+# else
           cerr << "WSACleanup failed, WSAGetLastError returned " << error << endl;
-#endif /* ACE_HAS_WINCE */
+# endif /* ACE_HAS_WINCE */
         }
       ACE_OS::socket_initialized_ = 0;
     }
@@ -3390,7 +3392,7 @@ int sys_nerr = ERRMAX + 1;
 #endif /* ACE_LACKS_SYS_NERR */
 
 #if defined (VXWORKS)
-#include /**/ <usrLib.h>   /* for ::sp() */
+# include /**/ <usrLib.h>   /* for ::sp() */
 
 // This global function can be used from the VxWorks shell to pass
 // arguments to a C main () function.
@@ -3567,7 +3569,7 @@ ACE_OS::pread (ACE_HANDLE handle,
                off_t offset)
 {
 #if defined (ACE_HAS_P_READ_WRITE)
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
   // This will work irrespective of whether the <handle> is in
   // OVERLAPPED mode or not.
   OVERLAPPED overlapped;
@@ -3586,9 +3588,9 @@ ACE_OS::pread (ACE_HANDLE handle,
       return (ssize_t) bytes_written;
 
   return -1;
-#else
+# else
   return ::pread (handle, buf, nbytes, offset);
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
 #else
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
@@ -3609,7 +3611,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                 off_t offset)
 {
 #if defined (ACE_HAS_P_READ_WRITE)
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
   // This will work irrespective of whether the <handle> is in
   // OVERLAPPED mode or not.
   OVERLAPPED overlapped;
@@ -3628,9 +3630,9 @@ ACE_OS::pwrite (ACE_HANDLE handle,
       return (ssize_t) bytes_written;
 
   return -1;
-#else
+# else
   return ::pwrite (handle, buf, nbytes, offset);
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
 #else
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
@@ -3702,7 +3704,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
       tms[0].tm_hour = 0;
       tms[0].tm_yday += 1;
 
-#define ISLEAPYEAR(y) ((y)&3u?0:(y)%25u?1:(y)/25u&12?0:1)
+# define ISLEAPYEAR(y) ((y)&3u?0:(y)%25u?1:(y)/25u&12?0:1)
 
       if (ISLEAPYEAR(tms[0].tm_year))
         seconds += 60*60*24 * (366 - tms[0].tm_yday);
@@ -3722,7 +3724,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
           tms[0].tm_year += 1;
         }
 
-#undef ISLEAPYEAR
+# undef ISLEAPYEAR
 
     }
   else
@@ -3803,15 +3805,15 @@ ACE_OS::ctime_r (const time_t *clock,
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
 
-#if 1
+# if 1
   FILETIME localtime;
   SYSTEMTIME systime;
   FileTimeToLocalFileTime (&file_time, &localtime);
   FileTimeToSystemTime (&localtime, &systime);
-#else
+# else
   SYSTEMTIME systime;
   FileTimeToSystemTime ((FILETIME *) &file_time, &systime);
-#endif /* 0 */
+# endif /* 0 */
   ACE_OS::sprintf (buf, ACE_OS_CTIME_R_FMTSTR,
                    ACE_OS::day_of_week_name[systime.wDayOfWeek],
                    ACE_OS::month_name[systime.wMonth - 1],
@@ -3829,16 +3831,16 @@ time_t
 ACE_OS::mktime (struct tm *t)
 {
   // ACE_TRACE ("ACE_OS::asctime");
-#if defined (ACE_HAS_MT_SAFE_MKTIME) || !defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_MT_SAFE_MKTIME) || !defined (ACE_HAS_THREADS)
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
-#else
+# else
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ace_os_monitor_lock, (time_t) -1));
 
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
-#endif /* ACE_HAS_MT_SAFE_MKTIME */
+# endif /* ACE_HAS_MT_SAFE_MKTIME */
 }
 #endif /* !ACE_HAS_WINCE */
 
@@ -3853,7 +3855,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   // ACE_TRACE ("ACE_OS::rwlock_init");
   type = type;
   name = name;
-#if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_RWLOCK_T)
+# if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_RWLOCK_T)
   // NT, POSIX, and VxWorks don't support this natively.
   ACE_UNUSED_ARG (name);
   int result = -1;
@@ -3902,13 +3904,13 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
       errno = error;
     }
   return result;
-#else
+# else
   ACE_UNUSED_ARG (rw);
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_THREADS */
 }
 #endif /* ! ACE_HAS_THREADS || !ACE_HAS_STHREADS || ACE_LACKS_RWLOCK_T */
 
@@ -4037,7 +4039,7 @@ ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
 {
   u_long ret_val = 0;
 
-#if defined (ACE_PSOSIM) // system time is broken in simulator.
+# if defined (ACE_PSOSIM) // system time is broken in simulator.
   timeval tv;
   int result = 0;
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
@@ -4052,9 +4054,9 @@ ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
   t.date_ = pt.date_;
   t.time_ = pt.time_;
   t.ticks_ = pt.ticks_;
-#else
+# else
   ret_val = tm_get (&(t.date_), &(t.time_), &(t.ticks_));
-#endif  /* ACE_PSOSIM */
+# endif  /* ACE_PSOSIM */
   return ret_val;
 }
 
@@ -4069,7 +4071,7 @@ ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
 
 // Static member function to set current system time.
 
-#if defined (ACE_PSOSIM)
+# if defined (ACE_PSOSIM)
 
 ACE_INLINE u_long
 ACE_PSOS_Time_t::init_simulator_time (void)
@@ -4098,7 +4100,7 @@ ACE_PSOS_Time_t::init_simulator_time (void)
 
 // Static member function to initialize system time, using UNIX calls.
 
-#endif /* ACE_PSOSIM */
+# endif /* ACE_PSOSIM */
 #endif /* ACE_PSOS */
 
 #if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
