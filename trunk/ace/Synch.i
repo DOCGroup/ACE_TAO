@@ -805,6 +805,18 @@ ACE_Null_Mutex::dump (void) const
 {
 }
 
+ACE_INLINE int
+ACE_Noop_Token::renew (int, ACE_Time_Value *)
+{
+  return 0;
+}
+
+ACE_INLINE void
+ACE_Noop_Token::dump (void) const
+{
+}
+
+
 ACE_INLINE
 ACE_Null_Condition::ACE_Null_Condition (ACE_Null_Mutex &m, int,
                                         LPCTSTR, void*)
@@ -912,7 +924,7 @@ ACE_Auto_Event::~ACE_Auto_Event (void)
 }
 
 #if defined (ACE_HAS_THREADS)
-ACE_INLINE 
+ACE_INLINE
 ACE_RW_Thread_Mutex::~ACE_RW_Thread_Mutex (void)
 {
 }
