@@ -1,3 +1,27 @@
+Tue Jun 19 12:27:39 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tests/Endpoint_Per_Priority/Makefile.bor:
+	* tests/Endpoint_Per_Priority/client.conf:
+	* tests/Endpoint_Per_Priority/run_test.pl:
+	* tests/Endpoint_Per_Priority/server.cpp:
+	* tests/Endpoint_Per_Priority/test_i.cpp:
+	* tests/Endpoint_Per_Priority/Endpoint_Per_Priority.dsw:
+	* tests/Endpoint_Per_Priority/README:
+	* tests/Endpoint_Per_Priority/client.cpp:
+	* tests/Endpoint_Per_Priority/server.bor:
+	* tests/Endpoint_Per_Priority/server.dsp:
+	* tests/Endpoint_Per_Priority/test_i.h:
+	* tests/Endpoint_Per_Priority/Makefile:
+	* tests/Endpoint_Per_Priority/client.bor:
+	* tests/Endpoint_Per_Priority/client.dsp:
+	* tests/Endpoint_Per_Priority/server.conf:
+	* tests/Endpoint_Per_Priority/test.idl:
+	* tests/Endpoint_Per_Priority/test_i.i:
+	* tests/Endpoint_Per_Priority:
+	  Removed test. The feature it was testing (which was deprecated) 
+	  has now been removed from TAO as a result of the RTCORBA
+	  subsetting.
+
 Tue Jun 19 12:25:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/ORB_Core.cpp:
@@ -17,6 +41,7 @@ Tue Jun 19 12:25:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
           Added RTCORBA includes and added the RTCORBA library to
           client.dsp.
 
+>>>>>>> 1.3796
 Tue Jun 19 10:38:07 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tests/RTCORBA/Server_Protocol/client.cpp:
