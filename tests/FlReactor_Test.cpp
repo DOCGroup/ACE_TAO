@@ -13,9 +13,12 @@
 //   A simple test that ilustrates the integration of the fast-light
 //   toolkit (http://fltk.easysw.org/) with ACE, it uses FL to create
 //   an OpenGL window and display a polygon, it uses ACE to open an
-//   acceptor. Every time there is a connection the number of polygons 
-//   is increased, a little widget can be used to change the number of 
+//   acceptor. Every time there is a connection the number of polygons
+//   is increased, a little widget can be used to change the number of
 //   polygons too.
+//
+// = AUTHOR
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -25,7 +28,8 @@ ACE_RCSID(tests, FlReactor_Test, "$Id$")
 
 #if !defined (ACE_HAS_FL)
 
-int main (int, char*[])
+int 
+main (int, char*[])
 {
   ACE_START_TEST (ASYS_TEXT ("FlReactor_Test"));
 
@@ -58,7 +62,7 @@ class Test_Window : public Fl_Gl_Window
 {
 public:
   Test_Window (int x, int y, int w, int h,
-             const char * l = 0);
+               const char * l = 0);
   // Constructor
 
   int sides (void) const;
@@ -107,33 +111,36 @@ Test_Window::draw (void)
 {
   // the valid() property may be used to avoid reinitializing your
   // GL transformation for each redraw:
-  if (!this->valid())
+  if (!this->valid ())
     {
-      this->valid(1);
-      glLoadIdentity();
-      glViewport(0, 0, this->w(), this->h());
+      this->valid (1);
+      glLoadIdentity ();
+      glViewport (0, 0, this->w (), this->h ());
     }
   // draw an amazing but slow graphic:
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear (GL_COLOR_BUFFER_BIT);
 
-  glBegin(GL_POLYGON);
+  glBegin (GL_POLYGON);
   int s = this->sides_;
-  for (int i=0; i != s; ++i)
+
+  for (int i = 0; i != s; ++i)
     {
       double ang = i * 2 * M_PI / s;
-      glColor3f (float(i) / s,
-                 float(i) / s,
-                 float(i) / s);
-      glVertex3f(cos(ang), sin(ang), 0);
+      glColor3f (float (i) / s,
+                 float (i) / s,
+                 float (i) / s);
+      glVertex3f (cos (ang), sin (ang), 0);
     }
-  glEnd();
+  glEnd ();
 }
 
-// when you change the data, as in this callback, you must call redraw():
+// when you change the data, as in this callback, you must call redraw ():
 void sides_cb (Fl_Widget *o, void *p)
 {
-  Test_Window *tw = ACE_reinterpret_cast(Test_Window *,p);
-  Fl_Slider *slider = ACE_dynamic_cast (Fl_Slider*,o);
+  Test_Window *tw =
+    ACE_reinterpret_cast (Test_Window *,p);
+  Fl_Slider *slider =
+    ACE_dynamic_cast (Fl_Slider*,o);
   tw->sides (ACE_static_cast (int, slider->value ()));
 }
 
@@ -147,7 +154,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
 
 private:
-  Test_Window* w_;
+  Test_Window *w_;
   Fl_Box *box_;
 };
 
@@ -226,17 +233,17 @@ int main (int argc, char *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("FlReactor_Test"));
 
-  Fl_Window window(300, 370);
+  Fl_Window window (300, 370);
 
-  Test_Window tw(10, 75, window.w() - 20, window.h()-90);
-  window.resizable(&tw);
+  Test_Window tw (10, 75, window.w () - 20, window.h ()-90);
+  window.resizable (&tw);
 
-  Fl_Hor_Slider slider(60, 5, window.w() - 70, 30, "Sides:");
-  slider.align(FL_ALIGN_LEFT);
-  slider.callback(sides_cb, &tw);
-  slider.value(tw.sides ());
-  slider.step(1);
-  slider.bounds(3, 10);
+  Fl_Hor_Slider slider (60, 5, window.w () - 70, 30, "Sides:");
+  slider.align (FL_ALIGN_LEFT);
+  slider.callback (sides_cb, &tw);
+  slider.value (tw.sides ());
+  slider.step (1);
+  slider.bounds (3, 10);
 
   ACE_FlReactor reactor;
   ACE_Reactor r (&reactor);
@@ -249,8 +256,12 @@ int main (int argc, char *argv[])
   Acceptor acceptor (&tw, box);
 
   ACE_INET_Addr address;
+
   if (acceptor.open (address, &r) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open acceptor"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open acceptor"),
+                      -1);
 
   acceptor.acceptor ().get_local_addr (address);
 
@@ -259,17 +270,17 @@ int main (int argc, char *argv[])
 
   address.addr_to_string (buf, bufsiz, 0);
 
-  char msg[2*bufsiz];
+  char msg[2 * bufsiz];
   ACE_OS::sprintf (msg, "Listening on <%s>\n", buf);
 
   box->label (msg);
   box->redraw ();
 
-  window.end();
-  window.show(argc,argv);
-  tw.show();
+  window.end ();
+  window.show (argc, argv);
+  tw.show ();
 
-  return Fl::run();
+  return Fl::run ();
 
   ACE_END_TEST;
 }
