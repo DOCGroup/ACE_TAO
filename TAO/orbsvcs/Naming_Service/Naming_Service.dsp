@@ -356,7 +356,6 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\object.i"\
 	"..\..\tao\Object_KeyC.h"\
 	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Object_Table.h"\
 	"..\..\tao\Operation_Table.h"\
 	"..\..\tao\orb.h"\
 	"..\..\tao\ORB.i"\
@@ -417,6 +416,7 @@ DEP_CPP_NAMIN=\
 	
 NODEP_CPP_NAMIN=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\Object_Table.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
