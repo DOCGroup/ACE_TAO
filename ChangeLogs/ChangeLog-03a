@@ -1,5 +1,12 @@
 Tue Jun 26 17:56:05 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* tests/Message_Block_Test.cpp: Changed the test to use
+	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY and
+ 	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1 rather than priorities 0
+ 	  and 1.  Thus, the test works properly when users override the
+ 	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY in config.h.  Thanks to Ivan
+ 	  Murphy for reporting this.
+
 	* examples/Connection/blocking/SPIPE-acceptor.cpp: Added several
 	  fixes so that this stuff runs correct when called by multiple
  	  clients.  Thanks to Rich Newman <RNewman@directv.com> for

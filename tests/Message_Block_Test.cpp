@@ -134,7 +134,7 @@ Worker_Task::svc (void)
               // to the "front" of the queue, i.e., ahead of all the
               // other messages that are being enqueued by other
               // threads.
-              dup->msg_priority (1);
+              dup->msg_priority (ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
 
               ACE_ASSERT (this->msg_queue ()->enqueue_prio
                           (dup,
@@ -152,7 +152,7 @@ Worker_Task::svc (void)
               ACE_ASSERT (this->msg_queue ()->dequeue_head (dup) != -1);
               ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (dup->rd_ptr ())));
               ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
-              ACE_ASSERT (dup->msg_priority () == 1);
+              ACE_ASSERT (dup->msg_priority () == ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
               dup->release ();
             }
 
@@ -213,7 +213,7 @@ produce (Worker_Task &worker_task,
                                          0, // data
                                          alloc_strategy, // allocator
                                          &lock_adapter_, // locking strategy
-                                         0), // priority
+                                         ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY), // priority
                       -1);
 
       // Copy buf into the Message_Block and update the wr_ptr ().
