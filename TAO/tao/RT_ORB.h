@@ -5,10 +5,9 @@
  *
  *  $Id$
  *
- *  @author Marina Spivak (marina@cs.wustl.edu)
+ *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_RT_ORB_H
 #define TAO_RT_ORB_H
@@ -53,24 +52,27 @@ public:
   /// Destructor.
   ~TAO_Named_RT_Mutex_Manager (void);
 
-  /// Looks up a mutex based on its name
+  /// @@ Frank, please make these APIs "Unicode friendly".  Irfan or Nanbor can help with this.
+
+  /// Looks up a mutex based on its name.
   TAO_RT_Mutex *find_mutex (const char *name);
 
-  /// Registers a mutex based on its name
+  /// Registers a mutex based on its name.
   int register_mutex (const char *name,
                       TAO_RT_Mutex *mutex);
 
   /// Unregisters a mutex based on its name
   void unregister_mutex (const char *name);
 
-
 protected:
 
   /// Hash map for named RT Mutexes
-  ACE_Hash_Map_Manager_Ex<const char *, TAO_RT_Mutex *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX> mutex_map_;
-
+  ACE_Hash_Map_Manager_Ex<const char *,
+                          TAO_RT_Mutex *,
+                          ACE_Hash<const char *>,
+                          ACE_Equal_To<const char *>,
+                          TAO_SYNCH_MUTEX> mutex_map_;
 };
-
 
 /**
  * @class TAO_RT_ORB
@@ -81,12 +83,8 @@ protected:
  * threadpools, mutexes.
  */
 
-class TAO_Export TAO_RT_ORB :
-  public RTCORBA::RTORB,
-  public CORBA::LocalObject
-
+class TAO_Export TAO_RT_ORB : public RTCORBA::RTORB, public CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_RT_ORB (void);
@@ -94,16 +92,19 @@ public:
   /// Destructor.
   virtual ~TAO_RT_ORB (void);
 
+  /// @@@ Frank, please add a comment here explaining what this doe.
   virtual RTCORBA::Mutex_ptr create_mutex (CORBA::Environment
                                            &ACE_TRY_ENV =
                                            TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// @@@ Frank, please add a comment here explaining what this doe.
   virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex,
                               CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// @@@ Frank, please add a comment here explaining what this does.  Also, please make this operation "Unicode friendly". 
   virtual RTCORBA::Mutex_ptr create_named_mutex (const char *name,
                                                  CORBA::Boolean_out created_flag,
                                                  CORBA::Environment
@@ -111,6 +112,7 @@ public:
                                                  TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// @@@ Frank, please add a comment here explaining what this does.  Also, please make this operation "Unicode friendly". 
    virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name,
                                                 CORBA::Environment &ACE_TRY_ENV =
                                                 TAO_default_environment () )
@@ -118,6 +120,7 @@ public:
                       RTCORBA::RTORB::MutexNotFound
                       ));
 
+  /// @@@ Frank, please add a comment here explaining what this does.
   virtual RTCORBA::ThreadpoolId
   create_threadpool (CORBA::ULong stacksize,
                      CORBA::ULong static_threads,
@@ -130,6 +133,7 @@ public:
                      &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// @@@ Frank, please add a comment here explaining what this does.
   virtual RTCORBA::ThreadpoolId
   create_threadpool_with_lanes (CORBA::ULong stacksize,
                                 const RTCORBA::ThreadpoolLanes & lanes,
@@ -141,6 +145,7 @@ public:
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// @@@ Frank, please add a comment here explaining what this does.  Yadda/yadda
   virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool,
                                    CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
@@ -185,14 +190,10 @@ public:
                                  TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-
 protected:
-
+  /// @@@ Frank, please add a comment here explaining what this does.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
-
 };
-
-
 
 #if defined (__ACE_INLINE__)
 #include "tao/RT_ORB.i"

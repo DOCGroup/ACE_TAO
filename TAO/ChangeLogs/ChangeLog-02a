@@ -1,3 +1,8 @@
+Fri Feb  2 08:01:48 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tao/RT_ORB.{h,cpp}
+  	* tao/RT_Mutex.{h,cpp}: Made some minor cosmetic changes.
+
 Thu Feb  1 22:57:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/RT_Mutex.h: 

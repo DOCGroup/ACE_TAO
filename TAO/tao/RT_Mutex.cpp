@@ -36,15 +36,12 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (wait_time == 0)
-    {
-      // no wait
-      return (this->mu_.tryacquire () != -1);
-    }
+    // no wait
+    return this->mu_.tryacquire () != -1;
   else
     {
-      // Wait for the specified amount of time before
-      // giving up.  (wait_time units are 100ns.  See
-      // TimeBase.pidl)
+      // Wait for the specified amount of time before giving up.
+      // (wait_time units are 100ns.  See TimeBase.pidl)
 
       TimeBase::TimeT seconds = wait_time / 10000000u;
       TimeBase::TimeT microseconds = (wait_time % 10000000u) / 10;
@@ -54,10 +51,9 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time,
 
       ACE_Time_Value absolute_time = relative_time + ACE_OS::gettimeofday ();
 
-      return (this->mu_.acquire (absolute_time) != -1);
+      return this->mu_.acquire (absolute_time) != -1;
     }
 }
-
 
 TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name,
                                         TAO_Named_RT_Mutex_Manager &mutex_mgr)
@@ -68,9 +64,8 @@ TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name,
 
 TAO_Named_RT_Mutex::~TAO_Named_RT_Mutex (void)
 {
-  // Since the last reference to this mutex is
-  // being destroyed, unregister ourself from
-  // the mutex manager
+  // Since the last reference to this mutex is being destroyed,
+  // unregister ourself from the mutex manager
   this->mutex_mgr_.unregister_mutex (name_);
 
   CORBA::string_free (name_);
