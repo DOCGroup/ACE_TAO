@@ -21,7 +21,8 @@ struct Navigation {
 	double overhead;
 	unsigned long arrival_time;
 	unsigned long deadline_time;
-	unsigned long dispatch_time;	
+	unsigned long completion_time;	
+	unsigned long computation_time;
 };
 
 
@@ -42,7 +43,8 @@ struct Weapons {
 	double overhead;
 	unsigned long arrival_time;
 	unsigned long deadline_time;
-	unsigned long dispatch_time;		
+	unsigned long completion_time;		
+	unsigned long computation_time;
 }; 
 
 

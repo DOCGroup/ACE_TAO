@@ -90,7 +90,8 @@ public class Display_Push_Consumer extends RtecEventComm._sk_PushConsumer
 						     navigation_.overhead,
 						     navigation_.arrival_time,
 						     navigation_.deadline_time,
-						     navigation_.dispatch_time);
+						     navigation_.completion_time,
+						     navigation_.computation_time);
 			    display_.update_simulation (Display_Object_Factory.ART_HORIZON_ENUM, this);
 			}
 		      else if (events[i].data_.any_value.type().equal (WeaponsHelper.type()))
@@ -100,7 +101,8 @@ public class Display_Push_Consumer extends RtecEventComm._sk_PushConsumer
 						   weapons_.overhead,
 						   weapons_.arrival_time,
 						   weapons_.deadline_time,
-						   weapons_.dispatch_time);
+						   weapons_.completion_time,
+						   weapons_.computation_time);
 			    display_.update_simulation (Display_Object_Factory.WEAPONS_ENUM, this);			    
 			}
 		      else 
