@@ -4,7 +4,7 @@
 int main (int argc, char *argv[])
 {
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
-  char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  const char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short server_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_IOStream_T<ACE_SOCK_Stream> server;
