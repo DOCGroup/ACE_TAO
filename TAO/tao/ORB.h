@@ -159,7 +159,13 @@ class TAO_ServantBase;
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
-typedef u_char CORBA_Boolean;
+#if defined (ghs) && defined (CHORUS)
+  // This is non-compliant, but a nasty but with Green Hills C++68000 1.8.8
+  // forces us into it.  TAO/tests/POA/RootPOA/RootPOA reveals the problem.
+  typedef ACE_UINT32 CORBA_Boolean;
+#else  /* ! (ghs && CHORUS) */
+  typedef u_char CORBA_Boolean;
+#endif /* ! (ghs && CHORUS) */
 
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
