@@ -1,8 +1,13 @@
+Tue Mar  9 09:03:04 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/msvc_static_order.lst:
+          Added an other dsp to build first
+
 Tue Mar  9 08:25:15 2004  Olli Savia  <ops@iki.fi>
 
 	* ace/config-lynxos.h
           Readded ALIGNBYTES and ALIGN macros. LSOCK.cpp uses these
-	  which I missed due to macro expansion. 
+	  which I missed due to macro expansion.
 
 Mon Mar  8 18:03:41 2004  Steve Huston  <shuston@riverace.com>
 
