@@ -74,7 +74,7 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 && !defined (HPUX)) \
      && !(defined (ACE_WIN32) \
-	  && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)))
+          && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)))
 # define CHILD_ADDR_DELTA (1024*1024)
 #else
 # define CHILD_ADDR_DELTA 0
@@ -363,16 +363,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
       ACE_Process p;
       pid_t pid = p.spawn (options);
       if (pid == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("spawn")), 1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("spawn")), 1);
 
       parent (data);
 
       // Synchronize on the exit of the child.
       result = p.wait ();
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("wait")), 1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("wait")), 1);
       ACE_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
       ACE_END_TEST;
