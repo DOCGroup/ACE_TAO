@@ -1,3 +1,11 @@
+Wed Apr 21 14:59:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (ACE_OS_Object_Manager::fini): disabled
+          ACE_{recursive/thread}_mutex_destroy () calls, because
+          the failed on LynxOS in forked children.  The prevents
+          the failure message from being printed, with no apparent
+          ill effect.
+
 Wed Apr 21 10:06:11 1999  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU: Moved -lthread from
