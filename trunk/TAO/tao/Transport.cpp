@@ -57,7 +57,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , buffering_queue_ (0)
   , buffering_timer_id_ (0)
   , bidirectional_flag_ (-1)
-  , id_ ((int) this)
+  , id_ ((long) this)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
