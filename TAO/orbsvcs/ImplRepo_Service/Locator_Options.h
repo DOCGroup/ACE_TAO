@@ -62,7 +62,7 @@ public:
   unsigned int debug (void) const;
 
   /// Returns the file where the IOR should be stored.
-  const ACE_CString& ior_filename (void) const;
+  const ACE_TString& ior_filename (void) const;
 
   /// Will we listen for multicast location requests?
   bool multicast (void) const;
@@ -72,11 +72,11 @@ public:
 
   int save_registry_options();
 
-  const ACE_CString& cmdline(void) const;
+  const ACE_TString& cmdline(void) const;
 
   /// File that contains the activator related information
   /// that the persistent locator has to save.
-  const ACE_CString& persist_file_name(void) const;
+  const ACE_TString& persist_file_name(void) const;
 
   /// Do we allow modifications to the servers?
   bool readonly (void) const;
@@ -99,7 +99,7 @@ private:
   void print_usage (void) const;
 
   /// Run a service command.
-  int run_service_command (const ACE_CString& cmdline);
+  int run_service_command (const ACE_TString& cmdline);
 
   int load_registry_options();
 private:
@@ -111,7 +111,7 @@ private:
   unsigned int debug_;
 
   /// File where the IOR of the server object is stored.
-  ACE_CString ior_output_file_;
+  ACE_TString ior_output_file_;
 
   /// Will we listen for multicast location requests?
   bool multicast_;
@@ -135,7 +135,7 @@ private:
   ACE_CString cmdline_;
 
   /// The persistent XML file name.
-  ACE_CString persist_file_name_;
+  ACE_TString persist_file_name_;
 };
 
 #endif

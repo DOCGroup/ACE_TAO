@@ -1,3 +1,8 @@
+Wed Sep 29 12:09:40 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+          Changed to handle wide characters.
+
 Wed Sep 29 13:12:27 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
