@@ -136,6 +136,7 @@ TAO_EC_SupplierAdmin::shutdown (CORBA::Environment &ACE_TRY_ENV)
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_EC_SupplierAdmin::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_EC_ProxyPushConsumer* consumer =
     this->event_channel_->create_proxy_push_consumer ();

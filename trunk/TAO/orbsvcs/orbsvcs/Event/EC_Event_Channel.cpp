@@ -171,18 +171,21 @@ TAO_EC_Event_Channel::disconnected (TAO_EC_ProxyPushSupplier* supplier,
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 TAO_EC_Event_Channel::for_consumers (CORBA::Environment& ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->consumer_admin_->_this (ACE_TRY_ENV);
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
 TAO_EC_Event_Channel::for_suppliers (CORBA::Environment& ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->supplier_admin_->_this (ACE_TRY_ENV);
 }
 
 void
 TAO_EC_Event_Channel::destroy (CORBA::Environment &TAO_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown (TAO_TRY_ENV);
 }
@@ -191,9 +194,10 @@ RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Event_Channel::append_observer (
        RtecEventChannelAdmin::Observer_ptr observer,
        CORBA::Environment &ACE_IN_ENV)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
-                     RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER))
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   return this->observer_strategy_->append_observer (observer, ACE_IN_ENV);
 }
@@ -202,9 +206,10 @@ void
 TAO_EC_Event_Channel::remove_observer (
        RtecEventChannelAdmin::Observer_Handle handle,
        CORBA::Environment &ACE_IN_ENV)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
-                     RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER))
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   this->observer_strategy_->remove_observer (handle, ACE_IN_ENV);
 }

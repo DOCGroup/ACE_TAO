@@ -292,9 +292,12 @@ ACE_Push_Supplier_Proxy::ACE_Push_Supplier_Proxy (ACE_ES_Supplier_Module *sm)
 }
 
 void
-ACE_Push_Supplier_Proxy::connect_push_supplier (RtecEventComm::PushSupplier_ptr push_supplier,
-                                                const RtecEventChannelAdmin::SupplierQOS &qos,
-                                                CORBA::Environment &ACE_TRY_ENV)
+ACE_Push_Supplier_Proxy::connect_push_supplier (
+    RtecEventComm::PushSupplier_ptr push_supplier,
+    const RtecEventChannelAdmin::SupplierQOS &qos,
+    CORBA::Environment &ACE_TRY_ENV)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         RtecEventChannelAdmin::AlreadyConnected))
 {
   if (this->connected ())
     ACE_THROW (RtecEventChannelAdmin::AlreadyConnected());
@@ -321,6 +324,7 @@ ACE_Push_Supplier_Proxy::connect_push_supplier (RtecEventComm::PushSupplier_ptr 
 void
 ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
                                CORBA::Environment &TAO_IN_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_PUSH_SUPPLIER_PROXY_PUSH);
 
@@ -358,7 +362,9 @@ ACE_Push_Supplier_Proxy::time_stamp (RtecEventComm::EventSet& event)
 }
 
 void
-ACE_Push_Supplier_Proxy::disconnect_push_consumer (CORBA::Environment &TAO_IN_ENV)
+ACE_Push_Supplier_Proxy::disconnect_push_consumer (
+    CORBA::Environment &TAO_IN_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TIMEPROBE_PRINT;
   if (this->connected ())
@@ -417,6 +423,9 @@ ACE_Push_Consumer_Proxy::connect_push_consumer (
     RtecEventComm::PushConsumer_ptr push_consumer,
     const RtecEventChannelAdmin::ConsumerQOS &qos,
     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannelAdmin::AlreadyConnected,
+                       RtecEventChannelAdmin::TypeError))
 {
   if (this->connected ())
     ACE_THROW (RtecEventChannelAdmin::AlreadyConnected());
@@ -440,6 +449,7 @@ ACE_Push_Consumer_Proxy::connect_push_consumer (
 void
 ACE_Push_Consumer_Proxy::disconnect_push_supplier (
     CORBA::Environment &TAO_IN_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TIMEPROBE_PRINT;
   this->push_consumer_ = RtecEventComm::PushConsumer::_nil ();
@@ -448,12 +458,14 @@ ACE_Push_Consumer_Proxy::disconnect_push_supplier (
 
 void
 ACE_Push_Consumer_Proxy::suspend_connection (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   correlation_.suspend ();
 }
 
 void
 ACE_Push_Consumer_Proxy::resume_connection (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   correlation_.resume ();
 }
@@ -581,6 +593,7 @@ ACE_EventChannel::~ACE_EventChannel (void)
 
 void
 ACE_EventChannel::destroy (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
     ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
@@ -765,8 +778,10 @@ ACE_EventChannel::update_supplier_gwys (CORBA::Environment& TAO_IN_ENV)
 RtecEventChannelAdmin::Observer_Handle
 ACE_EventChannel::append_observer (RtecEventChannelAdmin::Observer_ptr obs,
                                    CORBA::Environment &TAO_IN_ENV)
-  TAO_THROW_SPEC ((CORBA::SystemException,
-                   RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR))
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   TAO_GUARD_THROW_RETURN (ACE_ES_MUTEX, ace_mon, this->lock_, 0, TAO_IN_ENV,
                           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
@@ -795,6 +810,10 @@ ACE_EventChannel::append_observer (RtecEventChannelAdmin::Observer_ptr obs,
 void
 ACE_EventChannel::remove_observer (RtecEventChannelAdmin::Observer_Handle h,
                                    CORBA::Environment &TAO_IN_ENV)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   TAO_GUARD_THROW (ACE_ES_MUTEX, ace_mon, this->lock_, TAO_IN_ENV,
                    RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
@@ -1323,7 +1342,9 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
-ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+ACE_ES_Consumer_Module::obtain_push_supplier (
+    CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
@@ -1654,8 +1675,9 @@ ACE_ES_Consumer_Correlation::~ACE_ES_Consumer_Correlation (void)
 
 void
 ACE_ES_Consumer_Correlation::disconnect_push_supplier (CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  connected_ = 0;
+  this->connected_ = 0;
 }
 
 int
@@ -3205,6 +3227,7 @@ ACE_ES_Supplier_Module::shutdown (void)
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
