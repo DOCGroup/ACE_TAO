@@ -65,9 +65,6 @@ protected:
   BasicLogFactory_i basic_log_factory_;
   // The Basic Log Factory.
 
-  const char* basic_log_factory_name_;
-  // The Basic Log Factory name we use to register with the Naming Service.
-
   CORBA::ORB_var orb_;
   // The ORB that we use.
 
