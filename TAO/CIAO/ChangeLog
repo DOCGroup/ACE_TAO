@@ -1,3 +1,14 @@
+Wed Jun 16 11:24:13 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+	* DnC/Config_Handlers/RUK_Handler.h: 
+	* DnC/Config_Handlers/NIA_Handler.h: 
+	* DnC/Config_Handlers/MID_Handler.h: 
+	* DnC/Config_Handlers/IR_Handler.h: 
+	* DnC/Config_Handlers/IAD_Handler.h: 
+	* DnC/Config_Handlers/DnC_Dump.h: 
+	* DnC/Config_Handlers/Basic_Handler.h: 
+
+	Comments, etc.
+
 Tue Jun 15 20:53:28 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tools\ServerActivator\ServerActivator_test_client.cpp: 

@@ -27,6 +27,17 @@ using xercesc::DOMNode;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
+/**
+ * @class Basic_Handler
+ *
+ * @brief The base class for all the Handler classes
+ *
+ * This class provides the functionalities common to all handler classes.
+ * Keeps variables for basic XML document handling,
+ *       initialization/uninitialization,
+ *       and required get/set methods.
+ */
+
 class Config_Handler_Export Basic_Handler {
 public:
   typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;

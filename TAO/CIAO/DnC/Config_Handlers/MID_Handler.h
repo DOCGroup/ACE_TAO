@@ -51,6 +51,17 @@ using xercesc::DOMNamedNodeMap;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
+/**
+ * @class MID_Handler
+ *
+ * @brief Handler class for <MonolithicImplementationDescription> type
+ *
+ * This class defines handler methods to parse Monolithic Implementation
+ * Descroption types in the descriptor files. The corresponding
+ * CORBA IDL type for the schema element is returned.
+ *
+ */
+
 class Config_Handler_Export MID_Handler: public Basic_Handler
 {
 public:

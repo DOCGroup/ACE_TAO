@@ -47,6 +47,18 @@ namespace CIAO
 {
   namespace Config_Handler
   {
+
+    /**
+     * @class RUK_Handler
+     *
+     * @brief Handler class for <ResourceUsageKind> type
+     *
+     * This class defines handler methods to parse ResourceUsage
+     * Kind types in the descriptor files. The corresponding
+     * CORBA IDL type for the schema element is returned.
+     *
+     */
+
     class Config_Handler_Export RUK_Handler {
     public:
 
