@@ -1,3 +1,13 @@
+Tue Dec 12 11:57:59 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+        * TAO/tao/GIOP_Message_Generator_Parser_11.inl:
+        * TAO/tao/IORTable/Table_Adapter.cpp:
+
+          Fixed miscellaneous Fuzz reported erros (missing CVS id
+          strings, not ending with newline, and mismatched @file
+          comments).
+
 Tue Dec 12 13:49:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* docs/rtcorba/reactor-per-lane.gif
@@ -28,19 +38,19 @@ Tue Dec 12 13:49:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 Tue Dec 12  1:28:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
-		* tao/tests/DynAny_Test/test_dynunion.cpp:
+	* tao/tests/DynAny_Test/test_dynunion.cpp:
 
-		  Commented out test of an unimplemented function.
+	  Commented out test of an unimplemented function.
 
 Tue Dec 12 11:03:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
-		* tao/Dynamic_Adapter.cpp:
+	* tao/Dynamic_Adapter.cpp:
 
-		  In the CORBA::release methods, replaced the hard-coded
-		  string "Dynamic_Adapter" in the instantiation of the
-		  service object with the call to the string value set
-		  in the ORB core. This was causing a null pointer to
-		  be returned for the service object instance.
+	  In the CORBA::release methods, replaced the hard-coded
+	  string "Dynamic_Adapter" in the instantiation of the
+	  service object with the call to the string value set
+	  in the ORB core. This was causing a null pointer to
+	  be returned for the service object instance.
 
 Mon Dec 11 15:36:54 2000  Carlos O'Ryan  <coryan@uci.edu>
 
