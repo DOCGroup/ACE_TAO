@@ -15,7 +15,7 @@ ifdef BIN
     $(VBIN): $(IDL_SRC)
   endif
   ifdef VLIBS
-    $(VBIN): $(VLIBS)
+    $(VBIN): $(LIB_INSTALL) $(VLIBS)
   endif
 else # !BIN
   ifndef BIN_UNCHECKED
