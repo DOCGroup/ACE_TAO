@@ -511,7 +511,7 @@ private:
 };
 
 // Define a TAO_Stub auto_ptr class
-class TAO_Stub_Auto_Ptr
+class TAO_Export TAO_Stub_Auto_Ptr
 {
   // = TITLE
   //     Implements the draft C++ standard auto_ptr abstraction.
