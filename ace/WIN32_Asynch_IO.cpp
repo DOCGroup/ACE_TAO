@@ -228,7 +228,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::handle (void) const
 }
 
 ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (
-  ACE_Handler::Proxy_Ptr &handler_proxy,
+  const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_read,
@@ -660,7 +660,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::handle (void) const
 }
 
 ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (
-  ACE_Handler::Proxy_Ptr &handler_proxy,
+  const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_write,
@@ -1060,7 +1060,7 @@ ACE_WIN32_Asynch_Write_Stream::proactor (void) const
 }
 
 ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (
-  ACE_Handler::Proxy_Ptr &handler_proxy,
+  const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_read,
@@ -1462,7 +1462,7 @@ ACE_WIN32_Asynch_Read_File::proactor (void) const
 }
 
 ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (
-  ACE_Handler::Proxy_Ptr &handler_proxy,
+  const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_write,
@@ -1893,7 +1893,7 @@ ACE_WIN32_Asynch_Accept_Result::accept_handle (void) const
 }
 
 ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (
-  ACE_Handler::Proxy_Ptr &handler_proxy,
+  const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE listen_handle,
   ACE_HANDLE accept_handle,
   ACE_Message_Block &message_block,
@@ -1932,6 +1932,12 @@ ACE_WIN32_Asynch_Accept_Result::complete (size_t bytes_transferred,
 
   // Appropriately move the pointers in the message block.
   this->message_block_.wr_ptr (bytes_transferred);
+
+  if (!success && this->accept_handle_ != ACE_INVALID_HANDLE)
+    {
+      ACE_OS::closesocket (this->accept_handle_);
+      this->accept_handle_ = ACE_INVALID_HANDLE;
+    }
 
   // Create the interface result class.
   ACE_Asynch_Accept::Result result (this);
@@ -2131,7 +2137,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
         {
           ACE_DEBUG ((LM_ERROR,
                       ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("ReadFile")));
+                      ACE_LIB_TEXT ("AcceptEx")));
         }
       return -1;
     }
@@ -2194,7 +2200,7 @@ void ACE_WIN32_Asynch_Connect_Result::connect_handle ( ACE_HANDLE handle )
 
 
 ACE_WIN32_Asynch_Connect_Result::ACE_WIN32_Asynch_Connect_Result
-            (ACE_Handler::Proxy_Ptr &handler_proxy,
+            (const ACE_Handler::Proxy_Ptr &handler_proxy,
              ACE_HANDLE connect_handle,
              const void* act,
              ACE_HANDLE event,
@@ -2445,7 +2451,8 @@ ACE_WIN32_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 
     int post_enable = 1;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
       {
         post_enable = 0;
         task.unlock_finish ();
@@ -2683,7 +2690,8 @@ ACE_WIN32_Asynch_Connect::cancel (void)
 
     this->task_lock_count_--;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
        task.unlock_finish ();
   }
 
@@ -2721,7 +2729,8 @@ ACE_WIN32_Asynch_Connect::close (void)
 
     this->task_lock_count_--;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
        task.unlock_finish ();
 
     this->flg_open_ = 0;
@@ -2861,7 +2870,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::flags (void) const
 }
 
 ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (
-  ACE_Handler::Proxy_Ptr &handler_proxy,
+  const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE socket,
   ACE_HANDLE file,
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -3251,7 +3260,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::post_completion (ACE_Proactor_Impl *proactor
 }
 
 ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (
-  ACE_Handler::Proxy_Ptr &handler_proxy,
+  const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block *message_block,
   size_t bytes_to_read,
@@ -3584,7 +3593,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::post_completion (ACE_Proactor_Impl *proacto
 }
 
 ACE_WIN32_Asynch_Write_Dgram_Result::ACE_WIN32_Asynch_Write_Dgram_Result (
-  ACE_Handler::Proxy_Ptr &handler_proxy,
+  const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block *message_block,
   size_t bytes_to_write,

@@ -2,6 +2,7 @@
 
 #include "ace/Asynch_Pseudo_Task.h"
 
+#include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_signal.h"
 
 ACE_RCSID(ace, Asynch_Pseudo_Task, "$Id$")
@@ -33,10 +34,7 @@ ACE_Asynch_Pseudo_Task::start (void)
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:%p\n"),
-                       ACE_LIB_TEXT ("ACE_Asynch_Pseudo_Task::start already started")),
-                       -1);
+    return 0;
 
   if (this->reactor_.initialized () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -45,11 +43,8 @@ ACE_Asynch_Pseudo_Task::start (void)
                        -1);
 
 
-  if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:%p\n"),
-                       ACE_LIB_TEXT ("ACE_Asynch_Pseudo_Task::start failed")),
-                       -1);
+  if (this->activate () != 0)
+    return -1;
 
   this->flg_active_ = 1;
   return 0;
@@ -67,22 +62,16 @@ ACE_Asynch_Pseudo_Task::stop (void)
     reactor_.end_reactor_event_loop ();
   }
 
-  int rc = this->wait ();
-
-  if  (rc != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:%p\n"),
-                       ACE_LIB_TEXT ("ACE_Asynch_Pseudo_Task::stop failed")),
-                       -1);
+  if (-1 == this->wait ())
+    return -1;
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
     this->flg_active_ = 0;
 
-    if (this->reactor_.initialized ())
-      this->reactor_.close ();
+    this->reactor_.close ();
 
-    while (finish_count_ > 0)
+    while (this->finish_count_ > 0)
       {
         ACE_MT (ace_mon.release ());
         finish_event_.wait ();
@@ -92,7 +81,7 @@ ACE_Asynch_Pseudo_Task::stop (void)
       }
   }
 
-  return rc;
+  return 0;
 }
 
 int
@@ -290,26 +279,13 @@ ACE_Asynch_Pseudo_Task::suspend_io_handler (ACE_HANDLE handle)
 int
 ACE_Asynch_Pseudo_Task::resume_io_handler (ACE_HANDLE handle)
 {
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-  //  -2  task not active 
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->token_, -1));
 
   if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::resume_io_handler \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
+    {
+      ACE_OS::last_error (ESHUTDOWN);
+      return -1;
+    }
     
-  int retval = this->reactor_.resume_handler (handle);
-
-  if (retval == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_Asynch_Pseudo_Task::resume_io_handler \n")
-                       ACE_LIB_TEXT ("resume_handler failed \n")),
-                      -1);
-
-  return 0;
+  return this->reactor_.resume_handler (handle);
 }

@@ -10,6 +10,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_Pseudo_Task.h"
 #include "ace/POSIX_Proactor.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_sys_stat.h"
 
@@ -112,7 +113,7 @@ ACE_POSIX_Asynch_Result::~ACE_POSIX_Asynch_Result (void)
 ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
   (const ACE_Handler::Proxy_Ptr &handler_proxy,
    const void* act,
-   ACE_HANDLE event,
+   ACE_HANDLE /* event */,      // Event is not used on POSIX.
    u_long offset,
    u_long offset_high,
    int priority,
@@ -130,9 +131,6 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
   aio_reqprio = priority;
   aio_sigevent.sigev_signo = signal_number;
 
-  // Event is not used on POSIX.
-  ACE_UNUSED_ARG (event);
-
   //
   // @@ Support offset_high with aiocb64.
   //
@@ -147,7 +145,7 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
 int
 ACE_POSIX_Asynch_Operation::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE handle,
-                                  const void *completion_key,
+                                  const void * /* completion_key */,
                                   ACE_Proactor *proactor)
 {
   this->proactor_ = proactor;
@@ -180,8 +178,6 @@ ACE_POSIX_Asynch_Operation::open (ACE_Handler::Proxy_Ptr &handler_proxy,
     }
 #endif /* 0 */
 
-  // AIO stuff is present. So no registering.
-  ACE_UNUSED_ARG (completion_key);
   return 0;
 }
 
@@ -237,7 +233,7 @@ ACE_POSIX_Asynch_Read_Stream_Result::handle (void) const
 }
 
 ACE_POSIX_Asynch_Read_Stream_Result::ACE_POSIX_Asynch_Read_Stream_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
@@ -254,7 +250,6 @@ ACE_POSIX_Asynch_Read_Stream_Result::ACE_POSIX_Asynch_Read_Stream_Result
   this->aio_fildes = handle;
   this->aio_buf = message_block.wr_ptr ();
   this->aio_nbytes = bytes_to_read;
-  ACE_UNUSED_ARG (event);
 }
 
 void
@@ -359,7 +354,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::handle (void) const
 }
 
 ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
@@ -376,7 +371,6 @@ ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
   this->aio_fildes = handle;
   this->aio_buf = message_block.rd_ptr ();
   this->aio_nbytes = bytes_to_write;
-  ACE_UNUSED_ARG (event);
 }
 
 void
@@ -464,7 +458,7 @@ ACE_POSIX_Asynch_Write_Stream::~ACE_POSIX_Asynch_Write_Stream (void)
 // *********************************************************************
 
 ACE_POSIX_Asynch_Read_File_Result::ACE_POSIX_Asynch_Read_File_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
@@ -597,7 +591,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
 // ************************************************************
 
 ACE_POSIX_Asynch_Write_File_Result::ACE_POSIX_Asynch_Write_File_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
@@ -755,7 +749,7 @@ ACE_POSIX_Asynch_Accept_Result::accept_handle (void) const
 }
 
 ACE_POSIX_Asynch_Accept_Result::ACE_POSIX_Asynch_Accept_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE listen_handle,
    ACE_HANDLE accept_handle,
    ACE_Message_Block &message_block,
@@ -840,7 +834,7 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                const void *completion_key,
                                ACE_Proactor *proactor)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::open\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept::open");
 
   int result=0;
 
@@ -864,7 +858,7 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler::Proxy_Ptr &handler_proxy,
 
   flg_open_ = 1;
 
-  task_lock_count_++;
+  this->task_lock_count_++;
 
   // At this moment asynch_accept_task does not know about us,
   // so we can lock task's token with our lock_ locked.
@@ -878,7 +872,7 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_Event_Handler::ACCEPT_MASK,
                                      1);  // suspend after register
 
-  task_lock_count_-- ;
+  this->task_lock_count_-- ;
 
   if (result < 0)
     {
@@ -899,7 +893,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                  int signal_number,
                                  int addr_family)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::accept\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept::accept");
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
@@ -922,10 +916,11 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     size_t available_space = message_block.space ();
     size_t space_needed = bytes_to_read + 2 * address_size;
 
-    if (available_space < space_needed)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("Buffer too small\n")),
-                        -1);
+     if (available_space < space_needed)
+       {
+         ACE_OS::last_error (ENOBUFS);
+         return -1;
+       }
 
     // Common code for both WIN and POSIX.
     // Create future Asynch_Accept_Result
@@ -945,22 +940,21 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     // Enqueue result
     if (this->result_queue_.enqueue_tail (result) == -1)
       {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("ACE_POSIX_Asynch_Accept::accept: %p\n")
+                    ACE_LIB_TEXT ("enqueue_tail")));
         delete result;  // to avoid memory  leak
-
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept:")
-                           ACE_LIB_TEXT("enqueue accept call failed\n")),
-                          -1);
+        return -1;
       }
 
     if (this->result_queue_.size () > 1)
       return 0;
 
-    task_lock_count_ ++;
+    this->task_lock_count_ ++;
   }
 
   // If this is the only item, then it means there the set was empty
-  // before. So enable the <handle> in the reactor.
+  // before. So enable the accept handle in the reactor.
 
   ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor ()->get_asynch_pseudo_task ();
@@ -970,9 +964,10 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    task_lock_count_ --;
+    this->task_lock_count_ --;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
       task.unlock_finish ();
   }
 
@@ -997,7 +992,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
 int
 ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::cancel_uncompleted\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept::cancel_uncompleted");
 
   int retval = 0;
 
@@ -1033,7 +1028,7 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
 int
 ACE_POSIX_Asynch_Accept::cancel (void)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::cancel\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept::cancel");
 
   //We are not really ACE_POSIX_Asynch_Operation
   //so we could not call ::aiocancel ()
@@ -1056,7 +1051,7 @@ ACE_POSIX_Asynch_Accept::cancel (void)
     if (this->flg_open_ == 0)
        return rc ;
 
-    task_lock_count_++;
+    this->task_lock_count_++;
   }
 
   ACE_Asynch_Pseudo_Task & task =
@@ -1067,9 +1062,10 @@ ACE_POSIX_Asynch_Accept::cancel (void)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    task_lock_count_--;
+    this->task_lock_count_--;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
        task.unlock_finish ();
   }
 
@@ -1079,7 +1075,7 @@ ACE_POSIX_Asynch_Accept::cancel (void)
 int
 ACE_POSIX_Asynch_Accept::close ()
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::close\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept::close");
 
   // 1. It performs cancellation of all pending requests
   // 2. Removes itself from Reactor ( ACE_Asynch_Pseudo_Task)
@@ -1109,7 +1105,7 @@ ACE_POSIX_Asynch_Accept::close ()
         return 0;
       }
 
-    task_lock_count_++;
+    this->task_lock_count_++;
   }
 
   ACE_Asynch_Pseudo_Task & task =
@@ -1120,9 +1116,10 @@ ACE_POSIX_Asynch_Accept::close ()
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    task_lock_count_--;
+    this->task_lock_count_--;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
       task.unlock_finish ();
 
     if (this->handle_ != ACE_INVALID_HANDLE)
@@ -1138,27 +1135,26 @@ ACE_POSIX_Asynch_Accept::close ()
 }
 
 int
-ACE_POSIX_Asynch_Accept::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
+ACE_POSIX_Asynch_Accept::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (close_mask);
-
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_close\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept::handle_close");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
 
-  // handle_close is called only in one case :
-  //  when Asynch_accept_task is closing ( i.e. proactor destructor )
-
+  // handle_close is called only in two cases:
+  //  1. Pseudo task is closing (i.e. proactor destructor)
+  //  2. The listen handle is closed (we don't have exclusive access to this)
+  //
   // In all other cases we deregister ourself
   // with ACE_Event_Handler::DONT_CALL mask
 
   this->cancel_uncompleted (0);
 
   this->flg_open_ = 0;
+  this->handle_ = ACE_INVALID_HANDLE;
 
   // it means other thread is waiting for reactor token_
-  if (task_lock_count_ > 0)
+  if (this->task_lock_count_ > 0)
     {
       ACE_Asynch_Pseudo_Task & task =
          this->posix_proactor ()->get_asynch_pseudo_task ();
@@ -1172,7 +1168,7 @@ ACE_POSIX_Asynch_Accept::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close
 int
 ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_input\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept::handle_input");
 
   // An <accept> has been sensed on the <listen_handle>. We should be
   // able to just go ahead and do the <accept> now on this <fd>. This
@@ -1255,7 +1251,7 @@ void ACE_POSIX_Asynch_Connect_Result::connect_handle (ACE_HANDLE handle)
 
 
 ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE connect_handle,
    const void* act,
    ACE_HANDLE event,
@@ -1333,7 +1329,7 @@ ACE_POSIX_Asynch_Connect::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                 const void *completion_key,
                                 ACE_Proactor *proactor)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::open\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::open");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
@@ -1370,7 +1366,7 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                    int priority,
                                    int signal_number)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::connect\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::connect");
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
@@ -1416,7 +1412,7 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
         return post_result (result, 1);
       }
 
-    task_lock_count_ ++;
+    this->task_lock_count_ ++;
   }
 
   ACE_Asynch_Pseudo_Task & task =
@@ -1433,7 +1429,8 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 
     int post_enable = 1;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
       {
         post_enable = 0;
         task.unlock_finish ();
@@ -1603,7 +1600,7 @@ int
 ACE_POSIX_Asynch_Connect::cancel_uncompleted (int flg_notify,
                                               ACE_Handle_Set & set)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::cancel_uncompleted\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::cancel_uncompleted");
 
   int retval = 0;
 
@@ -1632,7 +1629,7 @@ ACE_POSIX_Asynch_Connect::cancel_uncompleted (int flg_notify,
 int
 ACE_POSIX_Asynch_Connect::cancel (void)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::cancel\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::cancel");
 
   //We are not really ACE_POSIX_Asynch_Operation
   //so we could not call ::aiocancel ()
@@ -1670,7 +1667,8 @@ ACE_POSIX_Asynch_Connect::cancel (void)
 
     this->task_lock_count_--;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
       task.unlock_finish ();
   }
 
@@ -1680,7 +1678,7 @@ ACE_POSIX_Asynch_Connect::cancel (void)
 int
 ACE_POSIX_Asynch_Connect::close (void)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::close\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::close");
 
   ACE_Handle_Set set ;
 
@@ -1708,7 +1706,8 @@ ACE_POSIX_Asynch_Connect::close (void)
 
     this->task_lock_count_--;
 
-    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+    if (rc_task == -1 && ACE_OS::last_error () == ESHUTDOWN &&
+        this->task_lock_count_ == 0)  // task is closing
       task.unlock_finish ();
 
     this->flg_open_ = 0;
@@ -1720,14 +1719,14 @@ ACE_POSIX_Asynch_Connect::close (void)
 int
 ACE_POSIX_Asynch_Connect::handle_exception (ACE_HANDLE fd)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::handle_exception\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::handle_exception");
   return handle_input (fd);
 }
 
 int
 ACE_POSIX_Asynch_Connect::handle_input (ACE_HANDLE fd)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::handle_input\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::handle_input");
 
   return handle_input (fd);
 }
@@ -1735,7 +1734,7 @@ ACE_POSIX_Asynch_Connect::handle_input (ACE_HANDLE fd)
 int
 ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::handle_output\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::handle_output");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
 
@@ -1770,7 +1769,7 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
 int
 ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
-  ACE_TRACE (ACE_LIB_TEXT ("ACE_POSIX_Asynch_Connect::handle_close\n"));
+  ACE_TRACE ("ACE_POSIX_Asynch_Connect::handle_close");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
 
@@ -1784,7 +1783,7 @@ ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
           this->flg_open_ = 0;
 
           // it means other thread is waiting for reactor token_
-          if (task_lock_count_ > 0)
+          if (this->task_lock_count_ > 0)
             task.lock_finish ();
         }
 
@@ -1849,7 +1848,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::flags (void) const
 }
 
 ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE socket,
    ACE_HANDLE file,
    ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -2383,7 +2382,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::message_block () const
 }
 
 ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_read,
@@ -2469,7 +2468,7 @@ ACE_POSIX_Asynch_Write_Dgram_Result::message_block () const
 }
 
 ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result
-  (ACE_Handler::Proxy_Ptr &handler_proxy,
+  (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_write,
