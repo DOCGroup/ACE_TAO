@@ -1,3 +1,9 @@
+Mon Jun 14 19:36:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/GIOP.cpp (process_server_request): Fixed a couple of
+ 	  "unused" arg warnings caused by various #ifdef paths through the
+ 	  code.  Thanks to Marina for reporting this.
+
 Mon Jun 14 16:55:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Server_Strategy_Factory.cpp (create_servant_lock):

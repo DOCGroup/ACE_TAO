@@ -4602,6 +4602,10 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
                        ACE_HANDLE,
 		       ACE_INVALID_HANDLE);
 #else
+  ACE_UNUSED_ARG (socket);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (namelen);
+  ACE_UNUSED_ARG (qos_params);
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 #endif /* ACE_HAS_WINSOCK2 */
 }
@@ -4630,6 +4634,15 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                        int,
 		       SOCKET_ERROR);
 #else
+  ACE_UNUSED_ARG (socket);
+  ACE_UNUSED_ARG (io_control_code);
+  ACE_UNUSED_ARG (in_buffer_p);
+  ACE_UNUSED_ARG (in_buffer);
+  ACE_UNUSED_ARG (out_buffer_p);
+  ACE_UNUSED_ARG (out_buffer);
+  ACE_UNUSED_ARG (bytes_returned);
+  ACE_UNUSED_ARG (overlapped);
+  ACE_UNUSED_ARG (func);
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 #endif /* ACE_HAS_WINSOCK2 */
 }
