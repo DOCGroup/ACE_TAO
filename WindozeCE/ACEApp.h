@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (ACE_APP_H)
+#ifndef ACE_APP_H
 #define ACE_APP_H
 
 #if !defined (NC_ACE_NOTIRY)

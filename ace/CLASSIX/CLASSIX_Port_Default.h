@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined ACE_CLASSIX_PORT_DEFAULT_H
+#ifndef  ACE_CLASSIX_PORT_DEFAULT_H
 #define ACE_CLASSIX_PORT_DEFAULT_H
 
 #include "ace/Singleton.h"

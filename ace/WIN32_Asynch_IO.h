@@ -27,7 +27,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_WIN32_ASYNCH_IO_H)
+#ifndef ACE_WIN32_ASYNCH_IO_H
 #define ACE_WIN32_ASYNCH_IO_H
 
 #include "ace/OS.h"
