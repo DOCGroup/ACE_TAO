@@ -640,14 +640,21 @@ public:
   int at_exit (void *object,
                ACE_CLEANUP_FUNC cleanup_hook,
                void *param);
-  // Register an object (or array) for cleanup at thread termination.
-  // "cleanup_hook" points to a (global, or static member) function
-  // that is called for the object or array when it to be destroyed.
-  // It may perform any necessary cleanup specific for that object or
-  // its class.  "param" is passed as the second parameter to the
-  // "cleanup_hook" function; the first parameter is the object (or
-  // array) to be destroyed.  "cleanup_hook", for example, may delete
-  // the object (or array).
+  // *** This function is deprecated.  Please use the previous two
+  // *** at_exit method.  Notice that you should avoid mixing this method
+  // *** with the previous two at_exit methods.
+  //
+  // Register an object (or array) for cleanup at
+  // thread termination.  "cleanup_hook" points to a (global, or
+  // static member) function that is called for the object or array
+  // when it to be destroyed.  It may perform any necessary cleanup
+  // specific for that object or its class.  "param" is passed as the
+  // second parameter to the "cleanup_hook" function; the first
+  // parameter is the object (or array) to be destroyed.
+  // "cleanup_hook", for example, may delete the object (or array).
+  // If <cleanup_hook> == 0, the <object> will _NOT_ get cleanup at
+  // thread exit.  You can use this to cancel the previously added
+  // at_exit.
 
   void wait_on_exit (int dowait);
   int  wait_on_exit (void);
