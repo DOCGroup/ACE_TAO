@@ -96,7 +96,8 @@ public:
                             UTL_StrList *p);
 
   // Create a node representing a module
-  virtual AST_Module    *create_module(UTL_ScopedName *n,
+  virtual AST_Module    *create_module(UTL_Scope *s,
+                                       UTL_ScopedName *n,
                                        UTL_StrList *p);
 
   // Create a node representing a module which is the root of an AST

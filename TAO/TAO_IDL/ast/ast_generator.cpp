@@ -108,7 +108,9 @@ AST_Generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
  * Construct an AST_Module node (a module)
  */
 AST_Module      *
-AST_Generator::create_module(UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_module (UTL_Scope *,
+                              UTL_ScopedName *n, 
+                              UTL_StrList *p)
 {
   return new AST_Module(n, p);
 }
@@ -118,7 +120,7 @@ AST_Generator::create_module(UTL_ScopedName *n, UTL_StrList *p)
  */
 AST_Root *
 AST_Generator::create_root(UTL_ScopedName *n,
-                          UTL_StrList *p)
+                           UTL_StrList *p)
 {
     return new AST_Root(n, p);
 }
