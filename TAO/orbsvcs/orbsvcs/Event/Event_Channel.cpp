@@ -15,6 +15,68 @@
 #include "Event_Channel.i"
 #endif /* __ACE_INLINE__ */
 
+#include "tao/Timeprobe.h"
+
+static const char *TAO_Event_Channel_Timeprobe_Description[] = 
+{ 
+  "Preemption_Priority - priority requested",
+  "connected - priority obtained",
+  "enter Push_Supplier_Proxy::push",
+  "enter ES_Consumer_Module::push",
+  "leave ES_Consumer_Module::push",
+  "enter ACE_ES_Correlation_Module::push",
+  "pushed to Correlation_Module",
+  "push_source_type: Dispatch Module enqueuing",
+  "ACE_ES_Consumer_Correlation::push, enter",
+  "Consumer_Correlation::push, determine NO CORR.",
+  "Consumer_Correlation::push, NO_CORR: alloc",
+  "Consumer_Rep_Timeout::execute",
+  "deliver to Subscription Module",
+  "begin push_source_type",
+  "end push_source_type",
+  "deliver to Supplier Module (thru Supplier Proxy)",
+  "connected - priority requested",
+  "ES_Priority_Queue - start execute",
+  "ES_Priority_Queue - end execute",
+  "Consumer_Name - priority requested",
+  "Consumer_Name - priority obtained",
+  "deliver event to consumer proxy",
+  "enter ACE_ES_Subscription_Module::push",
+  "push_source_type"
+};
+
+enum 
+{
+  TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED = 5100,
+  TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_OBTAINED,
+  TAO_EVENT_CHANNEL_ENTER_PUSH_SUPPLIER_PROXY_PUSH,
+  TAO_EVENT_CHANNEL_ENTER_ES_CONSUMER_MODULE_PUSH,
+  TAO_EVENT_CHANNEL_LEAVE_ES_CONSUMER_MODULE_PUSH,
+  TAO_EVENT_CHANNEL_ENTER_ACE_ES_CORRELATION_MODULE_PUSH,
+  TAO_EVENT_CHANNEL_PUSHED_TO_CORRELATION_MODULE,
+  TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE_DISPATCH_MODULE_ENQUEUING,
+  TAO_EVENT_CHANNEL_ACE_ES_CONSUMER_CORRELATION_PUSH_ENTER,
+  TAO_EVENT_CHANNEL_CONSUMER_CORRELATION_PUSH_DETERMINE_NO_CORR,
+  TAO_EVENT_CHANNEL_CONSUMER_CORRELATION_PUSH_NO_CORR_ALLOC,
+  TAO_EVENT_CHANNEL_CONSUMER_REP_TIMEOUT_EXECUTE,
+  TAO_EVENT_CHANNEL_DELIVER_TO_SUBSCRIPTION_MODULE,
+  TAO_EVENT_CHANNEL_BEGIN_PUSH_SOURCE_TYPE,
+  TAO_EVENT_CHANNEL_END_PUSH_SOURCE_TYPE,
+  TAO_EVENT_CHANNEL_DELIVER_TO_SUPPLIER_MODULE_THRU_SUPPLIER_PROXY,
+  TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_REQUESTED,
+  TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_START_EXECUTE,
+  TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_END_EXECUTE,
+  TAO_EVENT_CHANNEL_CONSUMER_NAME_PRIORITY_REQUESTED,
+  TAO_EVENT_CHANNEL_CONSUMER_NAME_PRIORITY_OBTAINED,
+  TAO_EVENT_CHANNEL_DELIVER_EVENT_TO_CONSUMER_PROXY,
+  TAO_EVENT_CHANNEL_ENTER_ACE_ES_SUBSCRIPTION_MODULE_PUSH,
+  TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Event_Channel_Timeprobe_Description, 
+                                  TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED);
+
 // ************************************************************
 
 static RtecScheduler::OS_Priority
@@ -26,7 +88,7 @@ Preemption_Priority (RtecScheduler::handle_t rtinfo)
 
   TAO_TRY
     {
-      ACE_TIMEPROBE ("  Preemption_Priority - priority requested");
+      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED);
       ACE_Scheduler_Factory::server ()->priority
         (rtinfo,
          thread_priority,
@@ -34,7 +96,7 @@ Preemption_Priority (RtecScheduler::handle_t rtinfo)
          preemption_priority,
          TAO_TRY_ENV);
       TAO_CHECK_ENV
-      ACE_TIMEPROBE ("  connected - priority obtained");
+      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_OBTAINED);
     }
   TAO_CATCH (RtecScheduler::UNKNOWN_TASK, ex_ut)
     {
@@ -398,7 +460,7 @@ void
 ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
                                CORBA::Environment &_env)
 {
-  ACE_TIMEPROBE ("  enter Push_Supplier_Proxy::push");
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_PUSH_SUPPLIER_PROXY_PUSH);
 
   // @@ TOTAL HACK
   ACE_hrtime_t ec_recv = ACE_OS::gethrtime ();
@@ -449,6 +511,32 @@ ACE_Push_Consumer_Proxy::~ACE_Push_Consumer_Proxy (void)
 {
 }
 
+void
+ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
+			       CORBA::Environment &_env)
+{
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_DELIVER_EVENT_TO_CONSUMER_PROXY);
+
+  if (push_consumer_ == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Push to disconnected consumer %s\n",
+		  ::ACE_ES_Consumer_Name (this->qos ())));
+      // ACE_ES_DEBUG_ST (::dump_sequence (events));
+      return;
+    }
+
+  TAO_TRY
+    {
+      push_consumer_->push (events, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCH (CORBA::SystemException, se)
+    {
+      ACE_ERROR ((LM_ERROR, "system exception.\n"));
+      TAO_RETHROW;
+    }
+  TAO_ENDTRY;
+}
 
 void
 ACE_Push_Consumer_Proxy::connect_push_consumer (RtecEventComm::PushConsumer_ptr push_consumer,
@@ -1024,7 +1112,7 @@ void
 ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
                               CORBA::Environment &_env)
 {
-  ACE_TIMEPROBE ("  enter ES_Consumer_Module::push");
+  ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_ES_CONSUMER_MODULE_PUSH);
   // We'll create a temporary event set with the size of the incoming
   // request.
   RtecEventComm::EventSet event_set (request->number_of_events ());
@@ -1039,7 +1127,6 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
       ORBSVCS_Time::hrtime_to_TimeT (ev.ec_send_time_, ec_send);
     }
   request->consumer ()->push (event_set, _env);
-  ACE_TIMEPROBE ("  leave ES_Consumer_Module::push");
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
@@ -1124,17 +1211,17 @@ ACE_ES_Correlation_Module::push (ACE_ES_Consumer_Rep *consumer,
                                  ACE_ES_Event_Container *event,
                                  CORBA::Environment &_env)
 {
-  ACE_TIMEPROBE ("  enter ACE_ES_Correlation_Module::push");
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_ACE_ES_CORRELATION_MODULE_PUSH);
   ACE_ES_Dispatch_Request *request =
     consumer->correlation ()->push (consumer, event);
-  ACE_TIMEPROBE ("  pushed to Correlation_Module");
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSHED_TO_CORRELATION_MODULE);
 
   // If request == 0, then the event was queued for later.  Otherwise,
   // we need to push the event now.
   if (request != 0)
     up_->push (request, _env);
 
-  ACE_TIMEPROBE ("  push_source_type: Dispatch Module enqueuing");
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE_DISPATCH_MODULE_ENQUEUING);
 }
 
 // Must check consumer->qos ().use_timeout () before calling this.
@@ -1633,7 +1720,7 @@ ACE_ES_Dispatch_Request *
 ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
                                    ACE_ES_Event_Container *event)
 {
-  ACE_TIMEPROBE ("  ACE_ES_Consumer_Correlation::push, enter");
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ACE_ES_CONSUMER_CORRELATION_PUSH_ENTER);
 
   // Check if this event needs any correlating, or if it should just
   // be forwarded real fast-like.
@@ -1644,10 +1731,10 @@ ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
         // Calls reschedule on all disjunction groups it belongs to.
         cr->reschedule_deadlines ();
 
-        ACE_TIMEPROBE ("  Consumer_Correlation::push, determine NO CORR.");
+        ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_CORRELATION_PUSH_DETERMINE_NO_CORR);
         ACE_ES_Dispatch_Request *request =
           new ACE_ES_Dispatch_Request (consumer_, event, cr->dependency ()->rt_info);
-        ACE_TIMEPROBE ("  Consumer_Correlation::push, NO_CORR: alloc");
+        ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_CORRELATION_PUSH_NO_CORR_ALLOC);
 
         if (request == 0)
           ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
@@ -1760,7 +1847,7 @@ ACE_ES_Consumer_Rep::execute (void)
 void
 ACE_ES_Consumer_Rep_Timeout::execute (void)
 {
-  ACE_TIMEPROBE (" Consumer_Rep_Timeout::execute");
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_REP_TIMEOUT_EXECUTE);
   if (this->receiving_events ())
     {
       CORBA::Environment __env;
@@ -1980,6 +2067,193 @@ ACE_ES_Subscription_Module::subscribe_all (ACE_ES_Consumer_Rep *)
 {
   ACE_ERROR_RETURN ((LM_ERROR, "Consumer tried to register for all"
                      "events!  This is not implemented.\n"), -1);
+}
+
+// Forward <events> to all consumers subscribed to <source> only.
+int
+ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
+					 ACE_ES_Event_Container *event)
+{
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_ACE_ES_SUBSCRIPTION_MODULE_PUSH);
+  // If there are now source-based subscribers for this supplier,
+  // return.
+  if (source->subscription_info ().source_subscribers_.size () == 0)
+    return 0;
+
+  ACE_ES_Subscription_Info::Subscriber_Set &set =
+    source->subscription_info ().source_subscribers_;
+
+  // List of consumers that need to be disconnected.
+  ACE_ES_CRSet disconnect_list;
+
+  {
+    // Acquire a read lock.
+    ACE_ES_RGUARD ace_mon (source->subscription_info ().lock_);
+    if (ace_mon.locked () == 0)
+      ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Subscription_Module::push_source.\n"), -1);
+
+    ACE_ES_Subscription_Info::Subscriber_Set_Iterator iter (set);
+
+    TAO_TRY
+      {
+	// Iterate through all subscribers.
+	for (ACE_ES_Consumer_Rep **consumer = 0;
+	     iter.next (consumer) != 0;
+	     iter.advance ())
+	  {
+	    // Only push the event if the consumer is not suspended
+	    // and not disconnected.
+	    if ((*consumer)->receiving_events ())
+	      {
+		up_->push (*consumer, event, TAO_TRY_ENV);
+		TAO_CHECK_ENV;
+	      }
+	    // If the consumer has disconnected, schedule it for
+	    // disconnection.  We can not modify our list now.  It
+	    // would mess up the iterator.
+	    if ((*consumer)->disconnected ())
+	      disconnect_list.insert (*consumer);
+	  }
+      }
+    TAO_CATCHANY
+      {
+	return -1;
+      }
+    TAO_ENDTRY;
+
+    // Release the read lock.
+  }
+
+  // If there are consumers scheduled for disconnect, acquire a write
+  // lock and disconnect them.
+  if (disconnect_list.size () != 0)
+    {
+      ACE_ES_WGUARD ace_mon (source->subscription_info ().lock_);
+      if (ace_mon.locked () == 0)
+	ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Subscription_Module::push_source.\n"), -1);
+
+      ACE_ES_CRSet_Iterator iter (disconnect_list.data (), disconnect_list.size ());
+
+      // Iterate through the disconnecting consumers.
+      for (ACE_ES_Consumer_Rep **consumer = 0;
+	   iter.next (consumer) != 0;
+	   iter.advance ())
+	{
+	  // Remove the consumer from subscriber list.
+	  if (set.remove (*consumer) == -1)
+	    ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
+			"ACE_ES_Subscription_Module::push_source.\n"));
+	  else
+	    // Decrement the consumer rep's reference count.
+	    (*consumer)->_release ();
+	}
+    }
+
+  return 0;
+}
+
+// 1. figure out why we're going through the subscription module,
+// instead of just passing through.
+// 2. where is lock_?  Is there only one per module!?
+
+int
+ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
+					      ACE_ES_Event_Container *event)
+{
+  // Step through each event in the set.  For each event type, find
+  // the corresponding set in the type collection.  Push the single
+  // event to each consumer in the set.
+
+  ACE_ES_Subscription_Info::Subscriber_Map &supplier_map =
+    source->subscription_info ().type_subscribers_;
+
+  ACE_ES_CRSet disconnect_list;
+
+  ACE_ES_Subscription_Info::Subscriber_Set *set;
+
+  {
+    ACE_ES_RGUARD ace_mon (source->subscription_info ().lock_);
+    if (ace_mon.locked () == 0)
+    {
+      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
+      ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Subscription_Module::push_source_type.\n"), -1);
+    }
+
+    ACE_ES_Subscription_Info::Type_Subscribers *subscribers;
+
+    if (supplier_map.current_size () == 0)
+    {
+      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
+      return 0;
+    }
+
+    if (supplier_map.find (event->type_, subscribers) == -1)
+      {
+	ACE_DEBUG ((LM_ERROR, "ACE_ES_Subscription_Module::push_source_type"
+		    " Warning: event type %d not registered.\n",
+		    event->type_));
+        ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
+	return 0; // continue anyway
+      }
+
+    if (subscribers->consumers_.size () == 0)
+    {
+      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
+      return 0;
+    }
+
+    set = &subscribers->consumers_;
+
+    // We've found the set of consumers subscribed to this type
+    // of event from this supplier.  Forward the event to each.
+    ACE_ES_Subscription_Info::Subscriber_Set_Iterator iter (*set);
+
+    TAO_TRY
+      {
+	for (ACE_ES_Consumer_Rep **consumer = 0;
+	     iter.next (consumer) != 0;
+	     iter.advance ())
+	  {
+	    if ((*consumer)->receiving_events ())
+	      {
+		up_->push (*consumer, event, TAO_TRY_ENV);
+		TAO_CHECK_ENV;
+	      }
+	    if ((*consumer)->disconnected ())
+	      disconnect_list.insert (*consumer);
+	  }
+      }
+    TAO_CATCHANY
+      {
+	ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
+	return -1;
+      }
+    TAO_ENDTRY;
+  }
+
+  if (disconnect_list.size () != 0)
+    // Acquire a write lock and remove all disconnected consumers.
+    {
+      ACE_ES_WGUARD ace_mon (source->subscription_info ().lock_);
+      if (ace_mon.locked () == 0)
+	ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Subscription_Module::push_source.\n"), -1);
+
+      ACE_ES_CRSet_Iterator iter (disconnect_list.data (), disconnect_list.size ());
+
+      for (ACE_ES_Consumer_Rep **consumer = 0;
+	   iter.next (consumer) != 0;
+	   iter.advance ())
+	{
+	  if (set->remove (*consumer) == -1)
+	    ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
+			"ACE_ES_Subscription_Module::push_source.\n"));
+	  else
+	    (*consumer)->_release ();
+	}
+    }
+
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
+  return 0;
 }
 
 int
@@ -2390,17 +2664,17 @@ ACE_ES_Subscription_Module::push (ACE_Push_Supplier_Proxy *source,
                                   ACE_ES_Event_Container *event,
                                   CORBA::Environment &)
 {
-  ACE_TIMEPROBE ("  deliver to Subscription Module");
+  ACE_TIMEPROBE (TAO_EVENT_CHANNEL_DELIVER_TO_SUBSCRIPTION_MODULE);
   // These are all inline function calls.
   if (this->push_source (source, event) == -1)
     return;
 
-  ACE_TIMEPROBE ("  begin push_source_type");
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_BEGIN_PUSH_SOURCE_TYPE);
 
-  if (this->push_source_type (source, event) == -1)
-    return;
-
-  ACE_TIMEPROBE ("  end push_source_type");
+    if (this->push_source_type (source, event) == -1)
+      return;
+  }
 }
 
 void
@@ -2576,7 +2850,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
           // the scope.
           ACE_ES_Event_Container_var event_copy (temp);
           temp->_release ();
-          ACE_TIMEPROBE ("  deliver to Supplier Module (thru Supplier Proxy)");
+          ACE_TIMEPROBE (TAO_EVENT_CHANNEL_DELIVER_TO_SUPPLIER_MODULE_THRU_SUPPLIER_PROXY);
           up_->push (proxy, event_copy, TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
@@ -2623,12 +2897,12 @@ ACE_ES_Priority_Timer::connected (RtecScheduler::handle_t rt_info)
 
   TAO_TRY
     {
-      ACE_TIMEPROBE ("  connected - priority requested");
+      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_REQUESTED);
       ACE_Scheduler_Factory::server ()->priority
         (rt_info, thread_priority,
          subpriority, preemption_priority, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      ACE_TIMEPROBE ("  connected - priority obtained");
+      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_OBTAINED);
 #if 0
       ACE_ERROR_RETURN ((LM_ERROR, "%p RtecScheduler::Scheduler::priority failed.\n",
                          "ACE_ES_Priority_Timer::connected"), -1);
@@ -2660,11 +2934,11 @@ ACE_ES_Priority_Timer::handle_timeout (const ACE_Time_Value &,
     ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Priority_Timer::handle_timeout: "
                        "received act == 0!!!.\n"), 0);
 
-  ACE_TIMEPROBE ("ES_Priority_Queue - start execute");
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_START_EXECUTE);
 
-  act->execute ();
-
-  ACE_TIMEPROBE ("ES_Priority_Queue - end execute");
+    act->execute ();
+  }
 
   return 0;
 }
@@ -2678,11 +2952,10 @@ ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos)
 
   TAO_TRY
     {
-      ACE_TIMEPROBE ("  Consumer_Name - priority requested");
+      ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_NAME_PRIORITY_REQUESTED);
       RtecScheduler::RT_Info* rt_info = ACE_Scheduler_Factory::server ()->get
         (qos.dependencies[1].rt_info, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      ACE_TIMEPROBE ("  Consumer_Name - priority obtained");
 
       return rt_info->entry_point;
     }
