@@ -1,3 +1,10 @@
+Sun Jun 20 12:33:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ftrteventchannel.mpb:
+
+	  The FTRT_EventChannel requires CORBA messaging support.  Added
+	  missing "requires += corba_messaging" to this base project.
+
 Sun Jun 20 12:17:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/event.mpb:
