@@ -73,11 +73,11 @@ This document describes how to compile/run the HUDisplay example with the new Dn
   <LI> Start daemons by running <code> NodeDaemon.pl </code>
   
   <LI> Start the execution manager:
-  <code>../../ExecutionManager/Execution_Manager.exe -o EM.ior -i deployment.dat </code>
+  <code>../../ExecutionManager/Execution_Manager -o EM.ior -i deployment.dat </code>
   </LI>
 
   <LI> Start the executor:
-  <code> ../../RepositoryManager/executor.exe -p http://www.dre.vanderbilt.edu/~jai/test/package.tpd -d http://www.dre.vanderbilt.edu/~jai/test/HUDisplay.cdp -k file://EM.ior </code>
+  <code> ../../RepositoryManager/executor -p http://www.dre.vanderbilt.edu/~jai/test/package.tpd -d http://www.dre.vanderbilt.edu/~jai/test/HUDisplay.cdp -k file://EM.ior </code>
 
   <BR/>
 
