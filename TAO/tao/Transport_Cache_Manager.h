@@ -24,6 +24,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Cache_Entries.h"
+#include "tao/debug.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
