@@ -98,3 +98,10 @@ ACE_Log_Record::msg_data (void)
   ACE_TRACE ("ACE_Log_Record::msg_data");
   return this->msg_data_;
 }
+
+ASYS_INLINE size_t
+ACE_Log_Record::msg_data_len (void) const
+{
+  ACE_TRACE ("ACE_Log_Record::msg_data_len");
+  return ACE_OS::strlen (this->msg_data_) + 1;
+}

@@ -1,3 +1,9 @@
+Wed Aug  1 15:00:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Log_Record.{h,i}: Changed msg_data_len() from a "setter"
+	  to a "getter" method, which makes more sense.  Thanks to Patrick
+ 	  Rabau <Patrick.Rabau@htc.com> for reporting this.
+
 Wed Aug  1 12:43:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Svc_Conf_l.cpp:
