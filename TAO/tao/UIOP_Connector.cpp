@@ -5,7 +5,6 @@
 #if defined (TAO_HAS_UIOP)
 
 #include "tao/UIOP_Profile.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"

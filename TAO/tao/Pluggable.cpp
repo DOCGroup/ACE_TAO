@@ -3,7 +3,6 @@
 #include "tao/Pluggable.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
-#include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Wait_Strategy.h"
@@ -218,7 +217,7 @@ TAO_Transport::leader_follower_condition_variable (void)
 
 void
 TAO_Transport::start_request (TAO_ORB_Core *,
-                              const TAO_Profile *,
+                              TAO_Stub * ,
                               TAO_OutputCDR &,
                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -228,7 +227,8 @@ TAO_Transport::start_request (TAO_ORB_Core *,
 
 void
 TAO_Transport::start_locate (TAO_ORB_Core *,
-                             const TAO_Profile *,
+                             TAO_Stub * /*stub*/,
+                             const short ,
                              CORBA::ULong,
                              TAO_OutputCDR &,
                              CORBA::Environment &ACE_TRY_ENV)

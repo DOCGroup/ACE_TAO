@@ -551,7 +551,7 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   this->stub_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -944,7 +944,7 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   this->stub_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -1145,7 +1145,8 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   this->transport_->start_locate (this->orb_core_,
-                                  this->profile_,
+                                  this->stub_,
+                                  TAO_GIOP_Invocation::Key_Addr,
                                   this->request_id_,
                                   this->out_stream_,
                                   ACE_TRY_ENV);

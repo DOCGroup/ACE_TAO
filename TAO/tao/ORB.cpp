@@ -27,7 +27,6 @@
 #include "tao/CDR.h"
 #include "tao/Marshal.h"
 #include "tao/IOR_LookupTable.h"
-#include "tao/GIOP.h"
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/Request.h"

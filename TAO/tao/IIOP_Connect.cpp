@@ -7,7 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
-#include "tao/GIOP.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"
@@ -87,6 +86,12 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
     tss_resources_ (orb_core->get_tss_resources ()),
     refcount_ (1)
 {
+  // OK, Here is a small twist. By now the all the objecs cached in
+  // this class would have been constructed. But we would like to make
+  // the one of the objects, precisely the transport object a pointer
+  // to the Messaging object. So, we set this up properly by calling
+  // the messaging_init method on the transport. 
+  this->transport_.messaging_init (& this->acceptor_factory_);
 }
 
 TAO_IIOP_Server_Connection_Handler::~TAO_IIOP_Server_Connection_Handler (void)
@@ -264,10 +269,10 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 {
   this->refcount_++;
 
-  int result = TAO_GIOP::handle_input (this->transport (),
-                                       this->orb_core_,
-                                       this->transport_.message_state_,
-                                       max_wait_time);
+  int result = this->acceptor_factory_.handle_input (this->transport (),
+                                                     this->orb_core_,
+                                                     this->transport_.message_state_,
+                                                     max_wait_time);
 
   if (result == -1 && TAO_debug_level > 0)
     {
@@ -308,11 +313,12 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   // Reset the message state.
   this->transport_.message_state_.reset (0);
 
-  result = TAO_GIOP::process_server_message (this->transport (),
-                                             this->orb_core_,
-                                             input_cdr,
-                                             message_type,
-                                             giop_version);
+  result = 
+    this->acceptor_factory_.process_connector_messages (this->transport (),
+                                                        this->orb_core_,
+                                                        input_cdr,
+                                                        message_type);
+  
   if (result != -1)
     result = 0;
 

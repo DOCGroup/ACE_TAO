@@ -3,7 +3,6 @@
 
 #include "tao/IIOP_Connector.h"
 #include "tao/IIOP_Profile.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"

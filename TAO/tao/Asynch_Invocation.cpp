@@ -121,7 +121,7 @@ TAO_GIOP_DII_Deferred_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   this->stub_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
   ACE_CHECK;

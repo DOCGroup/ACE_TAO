@@ -23,7 +23,6 @@
 #include "tao/UIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
-#include "tao/GIOP.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 

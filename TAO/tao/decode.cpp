@@ -26,7 +26,6 @@
 #include "tao/Marshal.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
-#include "tao/GIOP.h"
 #include "tao/Any.h"
 #include "tao/Principal.h"
 #include "tao/MProfile.h"
