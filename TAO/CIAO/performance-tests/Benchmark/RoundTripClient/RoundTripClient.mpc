@@ -59,8 +59,7 @@ project(RoundTripClient_exec) : ciao_component {
 }
 
 
-
-project (RoundTripClient_client) : ciao_client, valuetype {
+project (*client) : ciao_client {
   exename = client
   after += RoundTripClient_stub
   libs += RoundTripClient_stub Benchmark_stub
@@ -75,7 +74,7 @@ project (RoundTripClient_client) : ciao_client, valuetype {
 }
 
 
-//project (RoundTripClient_controller) : ciao_client, valuetype {
+//project (RoundTripClient_controller) : ciao_client {
 //  exename = controller
 //  after += RoundTripClient_stub
 //  libs += RoundTripClient_stub Benchmark_stub
@@ -88,4 +87,3 @@ project (RoundTripClient_client) : ciao_client, valuetype {
 //    controller.cpp
 //  }
 //}
-
