@@ -42,8 +42,11 @@ endif # PACE_SYSNAME == Linux
 # AIX               AIX
 
 ifeq ($(PACE_SYSNAME),SunOS)
-  # Hard code special cases for SunOS 5.6 and 5.7 since we
-  # need a 3 digit version number for comparison purposes.
+  # Hard code special cases for SunOS 5.6, 5.7, and 5.8 since
+  # we need a 3 digit version number for comparison purposes.
+  ifeq ($(PACE_SYSVER),58)
+    PACE_SYSVER := $(PACE_SYSVER)0
+  endif # PACE_SYSVER == 58
   ifeq ($(PACE_SYSVER),57)
     PACE_SYSVER := $(PACE_SYSVER)0
   endif # PACE_SYSVER == 57
