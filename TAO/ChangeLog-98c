@@ -1,3 +1,33 @@
+Mo Jun 1  14:37:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RtecScheduler.idl
+	  orbsvcs/orbsvcs/Runtime_Scheduler.{cpp, h}
+	  orbsvcs/orbsvcs/Scheduler_Factory.{cpp, h}
+	  orbsvcs/orbsvcs/Event/Dispatching_Modules.{cpp, h, i}
+          orbsvcs/orbsvcs/Event/Event_Channel.cpp
+	  orbsvcs/orbsvcs/Event/RT_Task.cpp
+	  orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp, h}
+	  orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
+	  orbsvcs/orbsvcs/Sched/SchedEntry.h
+	  orbsvcs/orbsvcs/Sched/Scheduler.{cpp, h}
+
+	  Removed Dynamic Subpriority from RtecScheduler IDL
+	  interface: both static and dynamic subpriorities
+	  now map into a single preemption subpriority value
+
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+	  orbsvcs/tests/Sched_Conf/Sched_Conf.{dsp, dsw}
+	  orbsvcs/tests/Sched_Conf/Makefile
+
+          Added a "test" program that simulates a configuration
+	  run and generates a runtime scheduler header: to use
+	  the strategized scheduler for static RMS scheduling,
+	  put the following at the beginning of ace/config.h:
+
+	  #define TAO_USES_STRATEGY_SCHEDULER
+	  #define TAO_USES_RMS_SCHEDULING
+          #define TAO_MIN_CRITICAL_PRIORITY 3
+	
 Mo Jun 1  10:16:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* docs/orbsvcs.html: Added the LifeCycle Service to the list
