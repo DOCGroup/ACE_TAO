@@ -1,3 +1,35 @@
+Thu Jan  1 15:30:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/Domain/TAO_Domain_Static.dsp:
+	* tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
+	* tao/IFR_Client/TAO_IFR_Client_Static.dsp:
+	* tao/IORInterceptor/TAO_IORInterceptor_Static.dsp:
+	* tao/ObjRefTemplate/TAO_ObjRefTemplate_Static.dsp:
+	* tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
+	* tao/SmartProxies/SmartProxies_Static.dsp:
+	* tao/Valuetype/TAO_Valuetype_Static.dsp:
+	* orbsvcs/orbsvcs/AV_Static.dsp:
+	* orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+	* orbsvcs/orbsvcs/CosEvent_Static.dsp:
+	* orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
+	* orbsvcs/orbsvcs/CosNaming_Static.dsp:
+	* orbsvcs/orbsvcs/CosProperty_Static.dsp:
+	* orbsvcs/orbsvcs/CosTime_Static.dsp:
+	* orbsvcs/orbsvcs/CosTrading_Static.dsp:
+	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+	* orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+	* orbsvcs/orbsvcs/RTCORBAEvent_Static.dsp:
+	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
+	* orbsvcs/orbsvcs/RTKokyuEvent_Static.dsp:
+	* orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
+	* orbsvcs/orbsvcs/RTSched_Static.dsp:
+	* orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
+	* orbsvcs/orbsvcs/Security_Static.dsp:
+	* orbsvcs/orbsvcs/SSLIOP_Static.dsp:
+	* orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+	  Enabled rtti
+
 Thu Jan  1 15:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Simple/time-date/Simple_time_date.mpc:
