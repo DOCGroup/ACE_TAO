@@ -1,0 +1,306 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+<!DOCTYPE componentassembly SYSTEM "http://www.dre.vanderbilt.edu/CIAO/DTD/componentassembly.dtd">
+
+<componentassembly id="Collocated component test">
+  <componentfiles>
+    <componentfile id="com-Satellite">
+      <fileinarchive name="Satellite.csd"/>
+    </componentfile>
+    <componentfile id="com-CAOC">
+      <fileinarchive name="CAOC.csd"/>
+    </componentfile>
+    <componentfile id="com-UAV_GS">
+      <fileinarchive name="UAV_GS.csd"/>
+    </componentfile>
+    <componentfile id="com-UAV">
+      <fileinarchive name="UAV.csd"/>
+    </componentfile>
+    <componentfile id="com-Engagement">
+      <fileinarchive name="Engagement.csd"/>
+    </componentfile>
+    <componentfile id="com-Battle">
+      <fileinarchive name="Battle.csd"/>
+    </componentfile>
+    <componentfile id="com-UCAV_GS">
+      <fileinarchive name="UCAV_GS.csd"/>
+    </componentfile>
+    <componentfile id="com-UCAV">
+      <fileinarchive name="UCAV.csd"/>
+    </componentfile>    
+  </componentfiles>
+
+  <partitioning>
+
+    <processcollocation>
+      <homeplacement id="a_SatelliteHome">
+        <componentfileref idref="com-Satellite"/>
+          <componentinstantiation id="a_Satellite">
+          <registercomponent>
+            <!-- writeiortofile is a non-standard CIAO extension.  -->
+            <writeiortofile name="sat.ior"/>
+          </registercomponent>
+        </componentinstantiation>
+      </homeplacement>
+     <destination>SatelliteHost</destination>
+    </processcollocation>
+
+
+    <processcollocation>
+      <homeplacement id="a_CAOCHome">
+        <componentfileref idref="com-CAOC"/>
+          <componentinstantiation id="a_CAOC">
+        </componentinstantiation>
+      </homeplacement>
+     <destination>CAOCHost</destination>
+    </processcollocation>
+
+
+    <processcollocation>
+      <homeplacement id="a_UAV_GSHome">
+        <componentfileref idref="com-UAV_GS"/>
+          <componentinstantiation id="a_UAV_GS">
+        </componentinstantiation>
+      </homeplacement>
+     <destination>UAVGSHost</destination>
+    </processcollocation>
+  
+  
+    <processcollocation>    
+      <homeplacement id="a_UAVHome">
+        <componentfileref idref="com-UAV"/>
+          <componentinstantiation id="a_UAV">
+        </componentinstantiation>
+      </homeplacement>
+      <destination>UAVHost</destination>
+
+      <homeplacement id="b_UAVHome">
+        <componentfileref idref="com-UAV"/>
+          <componentinstantiation id="b_UAV">
+        </componentinstantiation>
+      </homeplacement>
+      <destination>UAVHost</destination>
+      
+      <homeplacement id="c_UAVHome">
+        <componentfileref idref="com-UAV"/>
+          <componentinstantiation id="c_UAV">
+        </componentinstantiation>
+      </homeplacement>
+     <destination>UAVHost</destination>
+    </processcollocation>
+         
+         
+    <processcollocation>              
+      <homeplacement id="a_EngagementHome">
+        <componentfileref idref="com-Engagement"/>
+          <componentinstantiation id="a_Engagement">
+        </componentinstantiation>
+      </homeplacement>
+     <destination>EngagementBattleHost</destination>
+           
+      <homeplacement id="a_Battle">
+        <componentfileref idref="com-Battle"/>
+          <componentinstantiation id="a_Battle">
+        </componentinstantiation>
+      </homeplacement>
+     <destination>EngagementBattleHost</destination>
+    </processcollocation>
+
+
+    <processcollocation>  
+      <homeplacement id="a_UCAV_GSHome">
+        <componentfileref idref="com-UCAV_GS"/>
+          <componentinstantiation id="a_UCAV_GS">
+        </componentinstantiation>
+      </homeplacement>
+     <destination>UCAVGSHost</destination>
+    </processcollocation>                  
+                  
+                  
+    <processcollocation>                    
+      <homeplacement id="a_UCAVHome">
+        <componentfileref idref="com-UCAV"/>
+          <componentinstantiation id="a_UCAV">
+        </componentinstantiation>
+      </homeplacement>
+      <destination>UAVHost</destination>
+
+      <homeplacement id="b_UCAVHome">
+        <componentfileref idref="com-UCAV"/>
+          <componentinstantiation id="b_UCAV">
+        </componentinstantiation>
+      </homeplacement>
+      <destination>UAVHost</destination>
+      
+      <homeplacement id="c_UCAVHome">
+        <componentfileref idref="com-UCAV"/>
+          <componentinstantiation id="c_UCAV">
+        </componentinstantiation>
+      </homeplacement>      
+     <destination>UAVHost</destination>
+    </processcollocation>               
+  <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
+
+  </partitioning>
+	
+  <connections>
+
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>target_located</consumesidentifier>
+        <componentinstantiationref idref="a_CAOC"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>target_located</publishesidentifier>
+        <componentinstantiationref idref="a_Satellite"/>
+      </publishesport>
+    </connectevent>
+
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>prepare_capture</consumesidentifier>
+        <componentinstantiationref idref="a_UAV_GS"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>prepare_capture</publishesidentifier>
+        <componentinstantiationref idref="a_CAOC"/>
+      </publishesport>
+    </connectevent>
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>prepare_engage</consumesidentifier>
+        <componentinstantiationref idref="a_Engagement"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>prepare_engage</publishesidentifier>
+        <componentinstantiationref idref="a_CAOC"/>
+      </publishesport>
+    </connectevent>
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>start_capture</consumesidentifier>
+        <componentinstantiationref idref="a_UAV"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>start_capture</publishesidentifier>
+        <componentinstantiationref idref="a_UAV_GS"/>
+      </publishesport>
+    </connectevent>
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>start_capture</consumesidentifier>
+        <componentinstantiationref idref="b_UAV"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>start_capture</publishesidentifier>
+        <componentinstantiationref idref="a_UAV_GS"/>
+      </publishesport>
+    </connectevent>
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>start_capture</consumesidentifier>
+        <componentinstantiationref idref="c_UAV"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>start_capture</publishesidentifier>
+        <componentinstantiationref idref="a_UAV_GS"/>
+      </publishesport>
+    </connectevent>
+            
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>start_engage</consumesidentifier>
+        <componentinstantiationref idref="a_Battle"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>start_engage</publishesidentifier>
+        <componentinstantiationref idref="a_Engagement"/>
+      </publishesport>
+    </connectevent>
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>prepare_move</consumesidentifier>
+        <componentinstantiationref idref="a_UCAV_GS"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>prepare_move</publishesidentifier>
+        <componentinstantiationref idref="a_Engagement"/>
+      </publishesport>
+    </connectevent>
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>start_move</consumesidentifier>
+        <componentinstantiationref idref="a_UCAV"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>start_move</publishesidentifier>
+        <componentinstantiationref idref="a_UCAV_GS"/>
+      </publishesport>
+    </connectevent>
+
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>start_move</consumesidentifier>
+        <componentinstantiationref idref="b_UCAV"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>start_move</publishesidentifier>
+        <componentinstantiationref idref="a_UCAV_GS"/>
+      </publishesport>
+    </connectevent>
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>start_move</consumesidentifier>
+        <componentinstantiationref idref="c_UCAV"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>start_move</publishesidentifier>
+        <componentinstantiationref idref="a_UCAV_GS"/>
+      </publishesport>
+    </connectevent>     
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>uav_ready</consumesidentifier>
+        <componentinstantiationref idref="a_Satellite"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>uav_ready</publishesidentifier>
+        <componentinstantiationref idref="a_UAV"/>
+      </publishesport>
+    </connectevent>    
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>ucav_ready</consumesidentifier>
+        <componentinstantiationref idref="a_Satellite"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>ucav_ready</publishesidentifier>
+        <componentinstantiationref idref="a_UCAV"/>
+      </publishesport>
+    </connectevent>       
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>battle_ready</consumesidentifier>
+        <componentinstantiationref idref="a_Satellite"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>battle_ready</publishesidentifier>
+        <componentinstantiationref idref="a_Battle"/>
+      </publishesport>
+    </connectevent>       
+
+  </connections>
+
+</componentassembly>
