@@ -55,17 +55,17 @@ class TAO_InputCDR;
 
 enum TAO_AMI_Reply_Status
 {
+  /// Reply is normal.
   TAO_AMI_REPLY_OK,
-  // Reply is normal.
 
+  /// Reply is not normal and no exceptions
   TAO_AMI_REPLY_NOT_OK,
-  // Reply is not normal and no exceptions
 
+  /// An user exception was raised.
   TAO_AMI_REPLY_USER_EXCEPTION,
-  // An user exception was raised.
 
+  /// An system exception was raised.
   TAO_AMI_REPLY_SYSTEM_EXCEPTION
-  // An system exception was raised.
 };
 
 
