@@ -1,3 +1,14 @@
+Fri Jan 23 10:55:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/objtable.cpp: 
+	  Linear object tables were not using the initial size to
+	  pre-allocate a buffer.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_state_argument.cpp: 
+	  Fixed the mapping for native as OUT or INOUT parameters, also
+	  fixed the name for the _dispatch() method.
+
 Fri Jan 23 01:12:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/poaS.cpp: Added ACE_NESTED_CLASS macro to constructors.

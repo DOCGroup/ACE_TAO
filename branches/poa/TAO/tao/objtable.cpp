@@ -386,11 +386,11 @@ TAO_Array_ObjTable_Iterator::done (const TAO_Object_Table_Iterator_Impl *end) co
 
 
 TAO_Linear_ObjTable::
-TAO_Linear_ObjTable (CORBA::ULong /*size*/)
+TAO_Linear_ObjTable (CORBA::ULong size)
   :  next_ (0),
-     tablesize_ (0),
-     table_ (0)
+     tablesize_ (size)
 {
+  ACE_NEW (table_, TAO_Object_Table_Entry[this->tablesize_]);
 }
 
 TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)

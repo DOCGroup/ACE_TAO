@@ -357,6 +357,12 @@ be_interface::gen_client_header (void)
       *ch << "static " << this->local_name () << "_ptr _bind (const char *host, "
 	  << "CORBA::UShort port, const char *key, CORBA::Environment &env);\n\n";
 
+      // the _is_a method
+      ch->indent ();
+      *ch << "virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, "
+	  << "CORBA::Environment &env);\n" << be_nl
+	  << "// = user methods\n";
+
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
       // that only legal syntactic elements appear in our scope.
@@ -367,16 +373,10 @@ be_interface::gen_client_header (void)
 	  return -1;
 	}
 
-      // the _is_a method
-      ch->indent ();
-      *ch << "virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, "
-	  << "CORBA::Environment &env);\n";
-
       // generate the "protected" constructor so that users cannot instantiate
       // us
-      ch->decr_indent ();
-      *ch << "protected:\n";
-      ch->incr_indent ();
+      *ch << be_uidt_nl
+	  << "protected:" << be_idt_nl
       *ch << this->local_name () << " (" << be_idt << be_idt_nl
 	  << "STUB_Object *objref = 0," << be_nl
 	  << "TAO_ServantBase *servant = 0," << be_nl
@@ -757,7 +757,7 @@ int be_interface::gen_server_header (void)
 
   // add the dispatch method
   sh->indent ();
-  *sh << "virtual void dispatch (CORBA::ServerRequest &req, " <<
+  *sh << "virtual void _dispatch (CORBA::ServerRequest &req, " <<
     "void *context, CORBA::Environment &env);\n\n";
 
   // Print out the _this() method.
@@ -918,7 +918,7 @@ int be_interface::gen_server_skeletons (void)
   // now the dispatch method
   ss->indent ();
   *ss << "void " << this->full_skel_name () <<
-    "::dispatch (CORBA::ServerRequest &req, " <<
+    "::_dispatch (CORBA::ServerRequest &req, " <<
     "void *context, CORBA::Environment &env)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
