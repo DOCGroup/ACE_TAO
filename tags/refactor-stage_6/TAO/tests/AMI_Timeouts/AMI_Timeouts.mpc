@@ -1,0 +1,23 @@
+project(*Server): messaging, taoserver {
+  idlflags -= -Sc
+  idlflags += -GC
+
+  Source_Files {
+    timeout_i.cpp
+    timeout_client.cpp
+    server.cpp
+  }  
+}
+ 
+project(*Client): messaging, taoserver {
+  exename   = client
+  idlflags -= -Sc
+  idlflags += -GC
+
+  Source_Files {
+    timeout_i.cpp
+    timeout_client.cpp
+    client.cpp
+  }  
+}
+

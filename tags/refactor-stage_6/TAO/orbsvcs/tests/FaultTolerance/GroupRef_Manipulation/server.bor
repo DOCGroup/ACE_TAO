@@ -1,0 +1,86 @@
+#
+# $Id$
+#
+# Makefile for building the GroupRef_Manipulation test client
+#
+
+NAME = server
+
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
+
+OBJFILES = \
+   $(OBJDIR)\Server_ORBInitializer.obj \
+   $(OBJDIR)\Server_Request_Interceptor.obj \
+   $(OBJDIR)\server.obj \
+   $(OBJDIR)\testC.obj \
+   $(OBJDIR)\testS.obj \
+   $(OBJDIR)\test_i.obj
+
+LFLAGS = \
+   -j..\..\..\..\..\lib\$(CONFIG_SUBDIR) -j..\..\..\..\..\lib \
+   -L..\..\..\..\..\lib\$(CONFIG_SUBDIR) -L..\..\..\..\..\lib \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+   TAO_FTORB$(LIB_DECORATOR).lib \
+   TAO_IORManip$(LIB_DECORATOR).lib \
+   TAO_PortableServer$(LIB_DECORATOR).lib \
+   TAO_IORInterceptor$(LIB_DECORATOR).lib \
+   TAO_Valuetype$(LIB_DECORATOR).lib \
+   TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
+   TAO$(LIB_DECORATOR).lib \
+   ACE$(LIB_DECORATOR).lib \
+
+
+IDLFILES = \
+   $(IDLDIR)\test.idl
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS =
+!endif
+
+CFLAGS = \
+   -I..\..\..\..\orbsvcs \
+   -I..\..\..\.. \
+   -I..\..\..\..\tao \
+   -I..\..\..\..\.. \
+   $(LIB_FLAGS) \
+   $(DLL_FLAGS)
+
+CPPDIR = .
+
+IDLDIR = .
+
+INCLUDES = \
+   Server_ORBInitializer.h \
+   Server_Request_Interceptor.h \
+   testC.h \
+   testS.h \
+   testS_T.h \
+   test_i.h \
+   testS_T.cpp \
+   testC.i \
+   testS.i \
+   testS_T.i \
+   test.idl
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+# IDL File Directory: .
+$(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
+   $(TAO_IDL) -Gv -DCORBA3 -I..\..\..\.. -Gv -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $**
+

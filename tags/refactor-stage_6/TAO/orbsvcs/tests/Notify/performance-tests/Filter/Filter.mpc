@@ -1,0 +1,38 @@
+project(*notify perf Structured Supplier): notifytest {
+  exename = Structured_Supplier
+
+  Source_Files {
+    Structured_Supplier.cpp
+  }
+}
+
+project(*notify perf Structured Consumer): notifytest {
+  exename = Structured_Consumer
+
+  Source_Files {
+    goC.cpp
+    common.cpp
+    Notify_Structured_Push_Consumer.cpp
+    Structured_Consumer.cpp
+  }
+}
+
+project(*notify perf Sequence Supplier): notifytest {
+  exename = Sequence_Supplier
+
+  Source_Files {
+    Sequence_Supplier.cpp
+  }
+}
+
+project(*notify perf Sequence Consumer): notifytest {
+  exename = Sequence_Consumer
+
+  Source_Files {
+    goC.cpp
+    common.cpp
+    Notify_Sequence_Push_Consumer.cpp
+    Sequence_Consumer.cpp
+  }
+}
+
