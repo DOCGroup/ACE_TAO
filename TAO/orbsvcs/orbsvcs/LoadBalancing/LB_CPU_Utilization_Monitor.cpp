@@ -148,7 +148,7 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
   load_list->length (1);
 
-  load_list[0].id = CosLoadBalancing::CPU;
+  load_list[0].id = CosLoadBalancing::LoadAverage;
   load_list[0].value = load;
 
   ACE_DEBUG ((LM_DEBUG, "%2f\n", load_list[0].value));
