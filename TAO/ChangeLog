@@ -1,3 +1,8 @@
+Tue Jun 25 11:00:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+          Fixed typo that caused error in some builds.
+
 Tue Jun 24 18:40:08 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
@@ -6,7 +11,7 @@ Tue Jun 24 18:40:08 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/Basic/run_test.pl:
 	  Added build option for RT Notification.
 
-	* orbsvcs/tests/Notify/Basic/notify.rt.conf:  
+	* orbsvcs/tests/Notify/Basic/notify.rt.conf:
 	  Conf file for RT Notification.
 
 Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
