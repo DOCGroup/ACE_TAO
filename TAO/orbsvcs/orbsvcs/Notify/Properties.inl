@@ -48,30 +48,6 @@ TAO_NS_Properties::default_poa (PortableServer::POA_ptr default_poa)
   this->default_poa_ = PortableServer::POA::_duplicate (default_poa);
 }
 
-ACE_INLINE long
-TAO_NS_Properties::scope_policy (void)
-{
-  return thr_scope_policy_;
-}
-
-ACE_INLINE void
-TAO_NS_Properties::scope_policy (long scope_policy)
-{
-  thr_scope_policy_ = scope_policy;
-}
-
-ACE_INLINE long
-TAO_NS_Properties::sched_policy (void)
-{
-  return thr_sched_policy_;
-}
-
-ACE_INLINE void
-TAO_NS_Properties::sched_policy (long sched_policy)
-{
-  thr_sched_policy_ = sched_policy;
-}
-
 ACE_INLINE CORBA::Boolean
 TAO_NS_Properties::asynch_updates (void)
 {
