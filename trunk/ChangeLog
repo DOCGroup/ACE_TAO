@@ -1,3 +1,11 @@
+Mon Feb  9 10:31:40 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/Preprocessor.pm:
+
+          If the file for which dependencies are being generated contains a
+          directory name, then we need to look for include files in that
+          directory.
+
 Mon Feb  9 07:00:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bmake.mpd:
