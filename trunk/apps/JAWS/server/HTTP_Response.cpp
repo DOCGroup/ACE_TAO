@@ -130,7 +130,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
                          buf2);
       buf = buf1;
     }
-          
+
   this->io_.send_error_message (buf, length);
 }
 
@@ -148,10 +148,10 @@ HTTP_Response::normal_response (void)
     case HTTP_Request::GET :
 
       this->build_headers ();
-      this->io_.transmit_file (this->request_.path (), 
+      this->io_.transmit_file (this->request_.path (),
                                this->HTTP_HEADER,
                                this->HTTP_HEADER_LENGTH,
-                               this->HTTP_TRAILER, 
+                               this->HTTP_TRAILER,
                                this->HTTP_TRAILER_LENGTH);
       break;
 
@@ -176,7 +176,7 @@ HTTP_Response::normal_response (void)
 
       // if there is no Authentication: header on the incoming request,
       // deny it
-      hv = this->request_.headers ()["Authorization"];
+      hv = this->request_.headers ()["Authorization"].value ();
       if (hv == 0 || *hv == '\0')
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                               "Unauthorized to use PUT method");
@@ -193,7 +193,7 @@ HTTP_Response::normal_response (void)
           char *auth
             = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));
 
-          if (mmapfile.map ("jaws.auth") != -1 
+          if (mmapfile.map ("jaws.auth") != -1
 	      && auth != 0
               && ACE_OS::strstr((const char *) mmapfile.addr (), auth) != 0)
             this->io_.receive_file (this->request_.path (),
@@ -340,7 +340,7 @@ HTTP_Response::build_headers (void)
 
       if (! this->request_.cgi ())
 	HTTP_HEADER_LENGTH +=
-	  ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH, 
+	  ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
                            "Content-type: %s\r\n\r\n",
                            "text/html");
 #else
