@@ -1,3 +1,8 @@
+Mon Oct 21 23:17:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsp (RSC): Fixed
+	  the project file to prevent compile errors on Win32.
+
 Mon Oct 21 22:45:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	Bug fix for [BUGID 1269]. Thanks to Carlos O'Ryan for donating
