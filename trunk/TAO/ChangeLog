@@ -1,3 +1,11 @@
+Sun Jan  9 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+          Fixed incorrect ACE_RCSID
+
+        * tao/PortableServer/Default_Acceptor_Filter.h:
+          Removed not needed push/pop for msvc
+
 Sun Jan  9 10:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.{h,cpp,i}:
