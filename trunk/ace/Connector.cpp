@@ -142,6 +142,11 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open (ACE_Reactor *r, int flag
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Connector (ACE_Reactor *r, int flags)
+  : handler_map_ (ACE_CONNECTOR_HANDLER_MAP_SIZE)
+    , connector_ ()
+    , closing_ (0)
+    , flags_ (0)
+    , mutex_ ()
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Connector");
   (void) this->open (r, flags);
