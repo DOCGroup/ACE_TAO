@@ -28,13 +28,13 @@
 // Forward declaration.
 class ACE_Allocator;
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
+template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator;
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
+template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Reverse_Iterator;
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class MAP, class CACHING_STRATEGY, class ATTRIBUTES>
+template <class KEY, class VALUE,  class MAP, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Manager
 {
   // = TITLE
@@ -63,12 +63,12 @@ public:
   // are used by the strategy and is transparent to the user of this
   // class.
 
-  friend class ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
-  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> ITERATOR;
-  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> REVERSE_ITERATOR;
+  typedef ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> ITERATOR;
+  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> REVERSE_ITERATOR;
 
    // = STL-style iterator typedefs.
   typedef ITERATOR iterator;
@@ -198,7 +198,7 @@ protected:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
+template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator
 {
   // = TITLE
@@ -220,18 +220,18 @@ public:
 
   ACE_Cache_Map_Iterator (const IMPLEMENTATION &iterator_impl);
 
-  ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
+  ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
   // Copy constructor.
 
   virtual ~ACE_Cache_Map_Iterator (void);
 
   // = Iteration methods.
 
-  ACE_Cache_Map_Iterator &operator= (const ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
+  ACE_Cache_Map_Iterator &operator= (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
   // assignment operator.
 
-  int operator== (const ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
-  int operator!= (const ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
+  int operator== (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
+  int operator!= (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
   // Comparision operators.
 
   ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
@@ -240,16 +240,16 @@ public:
 
   // = STL styled iteration, compare, and reference functions.
 
-  ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ (void);
+  ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ (void);
   // Prefix advance
 
-  ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator++ (int);
+  ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator++ (int);
   // Postfix advance.
 
-  ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- (void);
+  ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- (void);
   // Prefix reverse.
 
-  ACE_Cache_Map_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
+  ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
   // Postfix reverse.
 
   IMPLEMENTATION &iterator_implementation (void);
@@ -269,7 +269,7 @@ protected:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
+template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Reverse_Iterator
 {
   // = TITLE
@@ -291,18 +291,18 @@ public:
 
   ACE_Cache_Map_Reverse_Iterator (const REVERSE_IMPLEMENTATION &iterator_impl);
 
-  ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
+  ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
   // Copy constructor.
 
   ~ACE_Cache_Map_Reverse_Iterator (void);
 
   // = Iteration methods.
 
-  ACE_Cache_Map_Reverse_Iterator &operator= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
+  ACE_Cache_Map_Reverse_Iterator &operator= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
   // Assignment operator.
 
-  int operator== (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
-  int operator!= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
+  int operator== (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
+  int operator!= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
   // Comparision operators.
 
   ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
@@ -311,16 +311,16 @@ public:
 
   // = STL styled iteration, compare, and reference functions.
 
-  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ (void);
+  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ (void);
   // Prefix advance
 
-  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator++ (int);
+  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator++ (int);
   // Postfix advance.
 
-  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- (void);
+  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- (void);
   // Prefix reverse.
 
-  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_KEY, COMPARE_KEYS, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
+  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
   // Postfix reverse.
 
   REVERSE_IMPLEMENTATION &iterator_implementation (void); 
