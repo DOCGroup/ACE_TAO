@@ -278,6 +278,10 @@ SOURCE=..\errno.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\errno.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\fcntl.h
 # End Source File
 # Begin Source File
