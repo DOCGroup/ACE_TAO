@@ -15,7 +15,11 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Ben Eng <ben@jetpen.com> for this update.
 
         * ace/Profile_Timer.cpp (elapsed_time): changed
-          ACE_ONE_SECOND_IN_USECS to ACE_ONE_SECOND_IN_NSECS.
+          ACE_ONE_SECOND_IN_USECS to ACE_ONE_SECOND_IN_NSECS.  Thanks
+          to Wei for noticing this.
+
+        * ace/OS.cpp (inet_aton): removed CHORUS specialization.
+          Thanks to Wei for reporting this.
 
         * include/makeinclude/platform_chorus.GNU: added CHORUS = 1,
           for use by individual Makefiles.
