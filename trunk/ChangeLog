@@ -1,3 +1,10 @@
+Thu Apr 17 16:37:05 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* m4/acinclude.m4 (ACE_CHECK_FUNC):
+
+	  Improved warning message to explicitly state which function
+	  failed detection.
+
 Thu Apr 17 16:15:24 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Merged "autotools" branch.  ChangeLog entries from that branch
