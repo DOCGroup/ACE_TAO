@@ -1,4 +1,3 @@
-// Message_Queue.cpp
 // $Id$
 
 #if !defined (ACE_MESSAGE_QUEUE_C)
@@ -60,8 +59,8 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::dump (void) const
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Iterator)
 
 template <ACE_SYNCH_DECL>
-ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue)
-  : queue_ (queue),
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &q)
+  : queue_ (q),
     curr_ (queue_.tail_)
 {
 }
@@ -381,10 +380,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
       for (temp = this->tail_;
            temp != 0;
            temp = temp->prev ())
-	if (temp->msg_priority () >= new_item->msg_priority ())
-	  // Break out when we've located an item that has higher
-	  // priority that <new_item>.
-	  break;
+        if (temp->msg_priority () >= new_item->msg_priority ())
+          // Break out when we've located an item that has higher
+          // priority that <new_item>.
+          break;
 
       if (temp == 0)
         // Check for simple case of inserting at the head of the queue,
@@ -483,7 +482,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-						    ACE_Time_Value *tv)
+                                                    ACE_Time_Value *tv)
 {
   int result = 0;
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
