@@ -1,10 +1,16 @@
+Thu Jan  8 18:35:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/bor.mpd:
+	  Just set the four xx_DIRS we overrule always to . independent of the
+	  configuration that the we always output to the same directory
+
 Thu Jan  8 12:20:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_servant.mpb:
-        
+
           Changed the default command line from '--lem-file-suffix E.idl'
           (since this is now the default suffix) to one that includes
-          the four include paths required by the inclusion of 
+          the four include paths required by the inclusion of
           Components.idl, which is needed by every .cidl file.
 
 Thu Jan  8 12:03:22 2004  Steve Huston  <shuston@riverace.com>

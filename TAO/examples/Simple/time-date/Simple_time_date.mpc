@@ -6,6 +6,7 @@ project(*lib): portableserver {
   // The svc conf files assume that the dll is in the current directory
   libout        = .
   dynamicflags += ACE_BUILD_SVC_DLL Alt_Resource_Factory_BUILD_DLL
+  idlflags     += -Wb,export_macro=Alt_Resource_Factory_Export -Wb,export_include=Alt_Resource_Factory.h
   Source_Files {
     Time_Date.cpp
     Time_Date_i.cpp
