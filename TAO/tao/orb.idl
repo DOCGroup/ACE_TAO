@@ -13,6 +13,46 @@
 
 module CORBA
 {
+  enum TCKind
+  {
+    tk_null,
+    tk_void,
+    tk_short,
+    tk_long,
+    tk_ushort,
+    tk_ulong,
+    tk_float,
+    tk_double,
+    tk_boolean,
+    tk_char,
+    tk_octet,
+    tk_any,
+    tk_TypeCode,
+    tk_Principal,
+    tk_objref,
+    tk_struct,
+    tk_union,
+    tk_enum,
+    tk_string,
+    tk_sequence,
+    tk_array,
+    tk_alias,
+    tk_except,
+    tk_longlong,
+    tk_ulonglong,
+    tk_longdouble,
+    tk_wchar,
+    tk_wstring,
+    tk_fixed,
+    tk_value,
+    tk_value_box,
+    tk_native,
+    tk_abstract_interface,
+    tk_local_interface,
+    tk_component,
+    tk_home
+  };
+
   typedef string  ORBid;
   typedef unsigned long Flags;
   typedef string Identifier;
@@ -63,9 +103,6 @@ module CORBA
   typedef sequence<string> StringSeq;
   typedef sequence<wstring> WStringSeq;
   typedef sequence<octet> OctetSeq;
-
 };
-
-#pragma prefix ""
 
 #endif /* TAO_ORB_IDL */

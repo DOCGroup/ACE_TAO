@@ -1794,6 +1794,12 @@ operator<< (TAO_OutputCDR&, const TAO_opaque&);
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_opaque&);
 
+TAO_Export CORBA::Boolean 
+operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
+
+TAO_Export CORBA::Boolean 
+operator>> (TAO_InputCDR &, CORBA::TCKind &);
+
 class TAO_ObjectKey;
 class TAO_ObjectKey_var;
 class TAO_ObjectKey_out;
