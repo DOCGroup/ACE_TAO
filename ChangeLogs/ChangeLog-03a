@@ -1,3 +1,28 @@
+Sat May 27 14:17:35 2000  Ossama Othman  <ossama@uci.edu>
+
+	* apps/JAWS2/HTTPU/parse_url.cpp:
+	* examples/Web_Crawler/URL_Addr.cpp:
+	* examples/Reactor/Multicast/client.cpp:
+	* examples/OS/Process/process.cpp:
+	* examples/IPC_SAP/ATM_SAP/CPP-client.cpp:
+	* examples/IPC_SAP/ATM_SAP/CPP-server.cpp:
+	* examples/DLL/Newsweek.cpp:
+	* examples/DLL/Today.cpp:
+	* examples/DLL/test_dll.cpp:
+	* websvcs/tests/Test_URL_Addr.cpp:
+
+	  Added missing `ace/Log_Msg.h' include.
+
+	* examples/Web_Crawler/URL_Addr.cpp (ACE_URL_Addr):
+
+	  Fixed warning about missing base class initialization in copy
+	  constructor base member initializer list.
+
+	  (~ACE_URL_Addr, addr_to_string):
+
+	  Changed use of "LPTSTR" to "ACE_TCHAR *".  This fixes an error
+	  on UNIX builds.
+
 Sat May 27 14:59:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SOCK_Stream.h: Improved the documentation of recv_n() et al.
