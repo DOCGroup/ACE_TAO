@@ -90,18 +90,21 @@ typedef size_t KEY;
 
 #define ACE_START_TEST(NAME) \
   const char *program = NAME; \
+  ACE_NEW_RETURN (ace_file_stream, ACE_Test_Output, -1); \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
-  if (ace_file_stream.set_output (program) != 0) \
+  if (ace_file_stream->set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %T\n", program));
 
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n", program)); \
-  ace_file_stream.close ();
+  ace_file_stream->close (); \
+  delete ace_file_stream; \
+  ace_file_stream = 0;
 
 #define ACE_NEW_THREAD \
 do {\
-  ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()); \
+  ACE_LOG_MSG->msg_ostream (ace_file_stream->output_file ()); \
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); \
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM); \
 } while (0)
@@ -109,13 +112,13 @@ do {\
 #define ACE_APPEND_LOG(NAME) \
   const char *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
-  if (ace_file_stream.set_output (program, 1) != 0) \
+  if (ace_file_stream->set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting %s test at %T\n", program));
 
 #define ACE_END_LOG \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n\n", program)); \
-  ace_file_stream.close ();
+  ace_file_stream->close ();
 
 #define ACE_INIT_LOG(NAME) \
   char temp[BUFSIZ]; \
@@ -150,7 +153,7 @@ private:
   ofstream output_file_;
 };
 
-static ACE_Test_Output ace_file_stream;
+static ACE_Test_Output *ace_file_stream;
 
 ACE_Test_Output::ACE_Test_Output (void)
 { 
@@ -175,11 +178,15 @@ ACE_Test_Output::set_output (const char *filename, int append)
   if (append)
     flags |= ios::app;
 
+  // VxWorks won't open the file if it already exists.  It
+  // shouldn't hurt to delete it on all platforms.
+  ACE_OS::unlink (temp);
+
   this->output_file_.open (temp, flags);
   if (this->output_file_.bad ())
     return -1;
 
-  ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()); 
+  ACE_LOG_MSG->msg_ostream (ace_file_stream->output_file ()); 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM); 
 
