@@ -37,6 +37,10 @@ Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
           to tell ACE_OS::readdir_r () to use the three-arg
           ::readdir_r ().
 
+        * ace/config-vxworks.h: added ACE_HAS_DIRENT, though
+          links will fail at this point.  VxWorks only has
+          a few opendir-related functions.
+
 Mon Sep  7 01:02:58 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/ACE.i: Changed ACE_INLINE to ASYS_INLINE.
