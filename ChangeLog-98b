@@ -1,3 +1,8 @@
+Mon Jun  8 12:12:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/UPIPE_SAP_Test.cpp: 
+	  Template instantiation was not using the ACE_SYNCH macros.
+
 Mon Jun  8 02:17:54 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
         * ACE-INSTALL.html:
