@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Repository_Manager): ciao_deployment_svnt, taoexe {
+project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe {
   requires += dnc
   exename = rep
   idlflags += -I ../Core

@@ -1,6 +1,22 @@
+Wed Jun  2 15:50:12 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager.mpc
+
+          Added Config_Handlers library to fix linking probelm in Windows.
+
+        * DnC/ExecutionManager/ExecutionManager.mpc
+
+          Added ciao_deployment_stub and CIAO_Server libraries to fix 
+          linking probelm in Windows.
+
+        * DnC/RepositoryManager/RepositoryManager.mpc
+
+          Added ciao_deployment_stub library to fix linking probelm in Windows.
+
+
 Wed Jun  2 15:07:56 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-        * DnC/DomainApplicationManager_Impl.cpp
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
 
           Fixed errors in split_plan() function to make it work.
 
