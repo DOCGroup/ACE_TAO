@@ -181,8 +181,8 @@ Task_State::Task_State (int argc, char **argv)
            u_int [thread_count_]);
 }
 
-Client::Client (ACE_Thread_Manager &thread_manager, Task_State *ts, u_int id)
-  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (&thread_manager)),
+Client::Client (ACE_Thread_Manager *thread_manager, Task_State *ts, u_int id)
+  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thread_manager)),
     ts_ (ts),
     id_ (id)
 {
@@ -628,7 +628,7 @@ Client::run_tests (Cubit_ptr cb,
   u_int low_priority_client_count = ts_->thread_count_ - 1;
   double *my_jitter_array;
 
-  if (id_ == 0)
+  if (id_ == 0 && ts_->thread_count_ > 1)
     ACE_NEW_RETURN (my_jitter_array,
                     double [(loop_count/ts_->granularity_)*30], // magic number, for now.
                     -1);
@@ -906,6 +906,7 @@ Client::run_tests (Cubit_ptr cb,
  double tmp = (double)delta_t.sec ();
  double tmp2 = (double)delta_t.usec ();
  if (tmp > 100000) {tmp=0.0; tmp2 = 2000.0; fprintf(stderr, "tmp > 100000!, delta_t.usec ()=%f\n", (double)delta_t.usec ());}
+ if (tmp2 < 100 && tmp == 0) {tmp=0.0; tmp2 = 2000.0; /*fprintf(stderr, "tmp2 < 100!, delta_t.usec ()=%d , delta_t.usec ()=%d\n", delta_t.sec (), delta_t.usec ());*/ }
 
  real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
  //          real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;

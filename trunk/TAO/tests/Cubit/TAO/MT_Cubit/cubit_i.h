@@ -45,6 +45,7 @@ public:
   virtual void shutdown (CORBA::Environment &env);
 private:
   Task_State *ts_;
+  u_int util_started_;
 };
 
 #endif /* _CUBIT_I_HH */

@@ -44,7 +44,7 @@ public:
 #define ACE_Barrier NOOP_ACE_Barrier
 #endif /* ACE_HAS_THREADS */
 
-class Cubit_Task : public ACE_Task<ACE_NULL_SYNCH>
+class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
 {
   // = TITLE
   //    Encapsulates an ORB for the Cubit application.
@@ -54,6 +54,7 @@ class Cubit_Task : public ACE_Task<ACE_NULL_SYNCH>
               u_int num_of_objs,
 	      ACE_Barrier *barrier,
 	      Task_State *ts,
+	      ACE_Thread_Manager *thr_mgr,
 	      u_int task_id);
   // Constructor.
 

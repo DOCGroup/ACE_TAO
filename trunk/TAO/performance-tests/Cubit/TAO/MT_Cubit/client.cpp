@@ -146,8 +146,8 @@ output_latency (Task_State &ts)
 }
 
 int
-do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
-                            Task_State &ts)
+do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
+                            Task_State *ts)
 {
   int i;
   u_int j, k;
@@ -175,13 +175,13 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   double total_util_task_duration = 0.0;
 
   // Create the clients.
-  Client high_priority_client (thread_manager, &ts, 0);
+  Client high_priority_client (thread_manager, ts, 0);
 
   // Create an array to hold pointers to the low priority tasks.
   Client **low_priority_client;
 
   ACE_NEW_RETURN (low_priority_client,
-                  Client *[ts.thread_count_],
+                  Client *[ts->thread_count_],
                   -1);
 
   // hack to make sure we have something in this pointer, when
@@ -191,7 +191,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager util_thr_mgr;
 
-  Util_Thread util_thread (&ts, &util_thr_mgr);
+  Util_Thread util_thread (ts, &util_thr_mgr);
 
   //
   // Time the utilization thread' "computation" to get %IdleCPU at the end of the test.
@@ -216,7 +216,9 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   timer_.stop ();
   timer_.elapsed_time (delta_t);
   // Store the time in milli-seconds.
-  util_task_duration = delta_t.sec () * ACE_ONE_SECOND_IN_MSECS + (double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS;
+  util_task_duration = (delta_t.sec () * 
+			ACE_ONE_SECOND_IN_MSECS + 
+			(double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS);
 #endif /* !CHORUS */
 
   // The thread priority 
@@ -266,9 +268,9 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   u_int grain = 0;
   u_int counter = 0;
 
-  number_of_low_priority_client = ts.thread_count_ - 1;
+  number_of_low_priority_client = ts->thread_count_ - 1;
 
-  if (ts.use_multiple_priority_ == 1)
+  if (ts->use_multiple_priority_ == 1)
     {    
       ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
 						     ACE_SCOPE_THREAD);
@@ -284,7 +286,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
       number_of_priorities --;
 
       // if utilization thread is present, reduce in 1 the available priorities.
-      if (ts.use_utilization_test_ == 1)
+      if (ts->use_utilization_test_ == 1)
 	{
 	  number_of_priorities --;
 	}
@@ -302,7 +304,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
       // to have the same priority.
       if ( priority == ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
 						       ACE_SCOPE_THREAD) &&
-	   ts.use_utilization_test_ == 1)
+	   ts->use_utilization_test_ == 1)
 	priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                     priority,
                                                     ACE_SCOPE_THREAD);
@@ -327,13 +329,13 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d clients at priority %d\n",
-              ts.thread_count_ - 1,
+              ts->thread_count_ - 1,
               priority));
   
   for (i = number_of_low_priority_client; i > 0; i--)
     {
       ACE_NEW_RETURN (low_priority_client [i - 1],
-                      Client (thread_manager, &ts, i),
+                      Client (thread_manager, ts, i),
                       -1);
       
 #if defined (VXWORKS)
@@ -373,7 +375,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 	            "activate failed",
 	            priority));
 
-      if (ts.use_multiple_priority_ == 1)
+      if (ts->use_multiple_priority_ == 1)
         {    
           counter = (counter + 1) % grain;
           if ( (counter == 0) && 
@@ -389,7 +391,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
         }          
     } /* end of for () */
 
-  if (ts.use_utilization_test_ == 1)
+  if (ts->use_utilization_test_ == 1)
     // activate the utilization thread only if specified.  See
     // description of this variable in header file.
     {
@@ -414,7 +416,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 
   // Wait for all the client threads to be initialized before going
   // any further.
-  ts.barrier_->wait ();
+  ts->barrier_->wait ();
 
 #if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
@@ -425,7 +427,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   ACE_Profile_Timer timer_for_context_switch;
   ACE_Profile_Timer::Rusage usage;
 
-  if (ts.context_switch_test_ == 1)
+  if (ts->context_switch_test_ == 1)
     {
       timer_for_context_switch.start ();
       timer_for_context_switch.get_rusage (usage);
@@ -438,7 +440,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 #endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
 #if defined (VXWORKS) 
-  if (ts.context_switch_test_ == 1)
+  if (ts->context_switch_test_ == 1)
     {
      fprintf(stderr, "Adding the context switch hook!\n");
      taskSwitchHookAdd ((FUNCPTR)&switchHook);
@@ -446,7 +448,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 #endif
   
   // Wait for all the client threads to exit (except the utilization thread).
-  thread_manager.wait ();
+  thread_manager->wait ();
 
 #if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
@@ -454,7 +456,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) >>>>>>> ending test on %D\n"));
 
-  if (ts.use_utilization_test_ == 1)
+  if (ts->use_utilization_test_ == 1)
     // signal the utilization thread to finish with its work..
     // only if utilization test was specified.  See
     // description of this variable in header file.
@@ -468,7 +470,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
   ACE_DEBUG ((LM_DEBUG, 
 	      "-------------------------- Stats -------------------------------\n"));
 
-  if (ts.context_switch_test_ == 1)
+  if (ts->context_switch_test_ == 1)
     {
 #if defined (ACE_HAS_PRUSAGE_T)
       timer_for_context_switch.stop ();
@@ -538,10 +540,10 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 #endif /* !VXWORKS && !CHORUS */
 
 
-  if (ts.use_utilization_test_ == 1)
+  if (ts->use_utilization_test_ == 1)
   {
-    for (j = 0; j < ts.loop_count_/ts.granularity_; j ++)
-      total_latency_high += (ts.global_jitter_array_[0][j] * ts.granularity_);
+    for (j = 0; j < ts->loop_count_/ts->granularity_; j ++)
+      total_latency_high += (ts->global_jitter_array_[0][j] * ts->granularity_);
     
     total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
     
@@ -550,10 +552,10 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
     // Calc and print the CPU percentage. I add 0.5 to round to the
     // nearest integer before casting it to int.
     ACE_DEBUG ((LM_DEBUG, 
-  		"\t%% ORB Client CPU utilization: %d %%\n"
-  		"\t%% Idle time: %d %%\n",
-  		(int) (total_latency_high * 100 / total_latency + 0.5),
-  		(int) (total_util_task_duration * 100 / total_latency + 0.5) ));
+  		"\t%% ORB Client CPU utilization: %u %%\n"
+  		"\t%% Idle time: %u %%\n",
+  		(u_int) (total_latency_high * 100 / total_latency + 0.5),
+  		(u_int) (total_util_task_duration * 100 / total_latency + 0.5) ));
     
   #if defined (ACE_LACKS_FLOATING_POINT)
     ACE_DEBUG ((LM_DEBUG,
@@ -579,13 +581,13 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 }
 
 int
-do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
-                         Task_State &ts)
+do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
+                         Task_State *ts)
 {
-  Client CB_20Hz_client (thread_manager, &ts, CB_20HZ_CONSUMER);
-  Client CB_10Hz_client (thread_manager, &ts, CB_10HZ_CONSUMER);
-  Client CB_5Hz_client (thread_manager, &ts, CB_5HZ_CONSUMER);
-  Client CB_1Hz_client (thread_manager, &ts, CB_1HZ_CONSUMER);
+  Client CB_20Hz_client (thread_manager, ts, CB_20HZ_CONSUMER);
+  Client CB_10Hz_client (thread_manager, ts, CB_10HZ_CONSUMER);
+  Client CB_5Hz_client (thread_manager, ts, CB_5HZ_CONSUMER);
+  Client CB_1Hz_client (thread_manager, ts, CB_1HZ_CONSUMER);
 
   ACE_Sched_Priority priority;
 
@@ -605,6 +607,10 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
     ACE_ERROR ((LM_ERROR,
 		"%p\n",
 		"activate failed"));
+
+  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+						  priority,
+						  ACE_SCOPE_THREAD);
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
 						  priority,
@@ -640,7 +646,7 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
 		"activate failed"));
 
   // Wait for all the threads to exit.
-  thread_manager.wait ();
+  thread_manager->wait ();
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
@@ -704,7 +710,7 @@ main (int argc, char *argv[])
 #elif defined (VXWORKS) /* ! __Lynx__ */
 	  6,
 #else
-	  ACE_THR_PRI_FIFO_DEF,
+	  ACE_THR_PRI_FIFO_DEF + 25,
 #endif /* ! __Lynx__ */
           ACE_SCOPE_PROCESS)) != 0)
     {
@@ -760,9 +766,9 @@ main (int argc, char *argv[])
   ACE_Thread_Manager client_thread_manager;
 
   if (ts.thread_per_rate_ == 0)
-    do_priority_inversion_test (client_thread_manager, ts);
+    do_priority_inversion_test (&client_thread_manager, &ts);
   else
-    do_thread_per_rate_test (client_thread_manager, ts);
+    do_thread_per_rate_test (&client_thread_manager, &ts);
 
 #if defined (CHORUS)
   if(pccTimer(PCC2_TIMER1_STOP,&pTime) !=K_OK)

@@ -40,8 +40,10 @@ Cubit_Task::Cubit_Task (const char *args,
                         u_int num_of_objs,
                         ACE_Barrier *barrier,
 			Task_State *ts,
+			ACE_Thread_Manager *thr_mgr,
                         u_int task_id)
-  : key_ ("Cubit"),
+  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thr_mgr)),
+    key_ ("Cubit"),
     orbname_ ((char *) orbname),
     orbargs_ ((char *) args),
     num_of_objs_ (num_of_objs),
@@ -472,7 +474,7 @@ initialize (int argc, char **argv)
 // than kept as a stand-alone function.
 
 static int
-start_servants (ACE_Barrier &start_barrier, Task_State &ts)
+start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Task_State *ts)
 {
   char *args1;
 
@@ -504,7 +506,8 @@ start_servants (ACE_Barrier &start_barrier, Task_State &ts)
                               "internet",
                               1,
                               &start_barrier,
-			      &ts,
+			      ts,
+			      serv_thr_mgr,
                               0), //task id 0.
                   -1);
 
@@ -564,7 +567,7 @@ start_servants (ACE_Barrier &start_barrier, Task_State &ts)
 
       // Drop the priority, so that the priority of clients will increase
       // with increasing client number.
-      for (i = 0; i < number_of_low_priority_servants; i++)
+      for (i = 0; i < number_of_low_priority_servants + 1; i++)
         priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                         priority,
                                                         ACE_SCOPE_THREAD);
@@ -616,7 +619,8 @@ start_servants (ACE_Barrier &start_barrier, Task_State &ts)
 				  "internet", 
 				  1, 
 				  &start_barrier, 
-				  &ts,
+				  ts,
+				  serv_thr_mgr,
 				  i),
                       -1);
 
@@ -654,7 +658,6 @@ start_servants (ACE_Barrier &start_barrier, Task_State &ts)
 
   start_barrier.wait ();
 
-
   // Write the ior's to a file so the client can read them.
   {
     cubits[0] = high_priority_task->get_servant_ior (0);
@@ -682,20 +685,21 @@ start_servants (ACE_Barrier &start_barrier, Task_State &ts)
       ACE_OS::fclose (ior_f);
   }
   return 0;
+
 }
 
 Util_Thread *
-start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State &ts)
+start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 {
   Util_Thread *util_task;
 
   ACE_NEW_RETURN (util_task,
-                  Util_Thread (&ts,
+                  Util_Thread (ts,
 			       util_thr_mgr),
 		  0);
 
   ACE_Sched_Priority priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                                ACE_SCOPE_THREAD);
+								ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating Utilization Task with priority %d\n",
@@ -736,11 +740,11 @@ main (int argc, char *argv[])
         ACE_Sched_Params (
           ACE_SCHED_FIFO,
 #if defined (__Lynx__)
-          30,
+          ACE_THR_PRI_FIFO_DEF + 50,//30,
 #elif defined (VXWORKS) /* ! __Lynx__ */
           6,
 #else
-          ACE_THR_PRI_FIFO_DEF,
+          ACE_THR_PRI_FIFO_DEF + 25,
 #endif /* ! __Lynx__ */
           ACE_SCOPE_PROCESS)) != 0)
     {
@@ -763,9 +767,13 @@ main (int argc, char *argv[])
 
   Task_State ts ( _argc, _argv);
 
+  if (run_utilization_test == 1)
+    ts.run_server_utilization_test_ = 1;
+
   Util_Thread * util_task = 0;
 
   // Create the daemon thread in its own <ACE_Thread_Manager>.
+  ACE_Thread_Manager servant_thread_manager;
   ACE_Thread_Manager util_thr_mgr;
   ACE_Time_Value total_elapsed;
   double util_task_duration = 0.0;
@@ -775,7 +783,7 @@ main (int argc, char *argv[])
 
   if (run_utilization_test == 1)
     {
-      if ((util_task = start_utilization (&util_thr_mgr, ts)) == 0)
+      if ((util_task = start_utilization (&util_thr_mgr, &ts)) == 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "Error creating the utilization thread!\n"),
 			  1);
@@ -799,15 +807,15 @@ main (int argc, char *argv[])
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
       timer_.start ();
-      // execute one computation.
-      for (int i=0; i< 1000; i++)
+      // execute computation.
+            for (int k=0; k < 1000; k++)
 	util_task->computation ();
       timer_.stop ();
       timer_.elapsed_time (delta_t);
       // Store the time in milli-seconds.
       util_task_duration = (delta_t.sec () * 
-			    ACE_ONE_SECOND_IN_MSECS + 
-			    (double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS) / 1000;
+			    ACE_ONE_SECOND_IN_USECS + 
+			    (double)delta_t.usec ())/ 1000;
 #endif /* !CHORUS */
     }
   // Barrier for the multiple clients to synchronize after binding to
@@ -820,7 +828,7 @@ main (int argc, char *argv[])
   quantify_start_recording_data();
 #endif /* NO_ACE_QUANTIFY */
 
-  if (start_servants (start_barrier, ts) != 0)
+  if (start_servants (&servant_thread_manager, start_barrier, &ts) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
                       1);
@@ -829,7 +837,8 @@ main (int argc, char *argv[])
               "Wait for all the threads to exit\n"));
 
   // Wait for all the threads to exit.
-  ACE_Thread_Manager::instance ()->wait ();
+  servant_thread_manager.wait ();
+  //  ACE_Thread_Manager::instance ()->wait ();
 
   if (run_utilization_test == 1)
     {
@@ -841,24 +850,24 @@ main (int argc, char *argv[])
       ts.timer_.elapsed_time (total_elapsed);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) utilization task performed %g computations"
-		  "(%t) each computation had a duration of %u msecs\n",
+		  "(%t) utilization task performed %g computations\n"
+		  "(%t) each computation had a duration of %f msecs\n",
 		  util_task->get_number_of_computations (),
-		  util_task_duration));    
+		  util_task_duration/1000));    
 
       total_util_task_duration = util_task_duration * util_task->get_number_of_computations ();
     
       total_latency = (total_elapsed.sec () * 
-		       ACE_ONE_SECOND_IN_MSECS + 
-		       (double)total_elapsed.usec () / ACE_ONE_SECOND_IN_MSECS);
+		       ACE_ONE_SECOND_IN_USECS + 
+		       (double)total_elapsed.usec ());
 			      
       total_latency_servants = total_latency - total_util_task_duration;
     
       // Calc and print the CPU percentage. I add 0.5 to round to the
       // nearest integer before casting it to int.
       ACE_DEBUG ((LM_DEBUG, 
-		  "\t%% ORB Servant CPU utilization: %u %%\n"
-		  "\t%% Idle time: %u %%\n",
+		  "\t%% ORB Servant CPU utilization: %d %%\n"
+		  "\t%% Idle time: %d %%\n",
 		  (int) (total_latency_servants * 100 / total_latency + 0.5),
 		  (int) (total_util_task_duration * 100 / total_latency + 0.5) ));    
     }
