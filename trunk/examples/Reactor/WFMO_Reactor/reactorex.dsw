@@ -3,6 +3,30 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
+Project: "APC"=.\APC.DSP - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Abondoned"=.\Abondoned.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Console_Input"=.\Console_Input.dsp - Package Owner=<4>
 
 Package=<5>

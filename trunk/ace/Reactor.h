@@ -67,11 +67,15 @@ public:
 
   // = Reactor event loop management methods.
   static int run_event_loop (void);
-  // Run the event loop until the <ACE_Reactor::handle_events> method
-  // returns -1 or the <end_event_loop> method is invoked.
+  static int run_alertable_event_loop (void);
+  // Run the event loop until the
+  // <ACE_Reactor::handle_events/ACE_Reactor::alertable_handle_events>
+  // method returns -1 or the <end_event_loop> method is invoked.
 
   static int run_event_loop (ACE_Time_Value &tv);
-  // Run the event loop until the <ACE_Reactor::handle_events> method
+  static int run_alertable_event_loop (ACE_Time_Value &tv);
+  // Run the event loop until the
+  // <ACE_Reactor::handle_events/ACE_Reactor::alertable_handle_events>
   // returns -1, the <end_event_loop> method is invoked, or the
   // <ACE_Time_Value> expires.
 

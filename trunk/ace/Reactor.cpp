@@ -158,6 +158,57 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
   return 0;
 }
 
+// Run the event loop until the <ACE_Reactor::alertable_handle_events> method
+// returns -1 or the <end_event_loop> method is invoked.
+
+int
+ACE_Reactor::run_alertable_event_loop (void)
+{
+  ACE_TRACE ("ACE_Reactor::run_event_loop");
+
+  while (ACE_Reactor::end_event_loop_ == 0)
+    {
+      int result = ACE_Reactor::instance ()->alertable_handle_events ();
+
+#if !defined (ACE_HAS_WINCE)
+      if (ACE_Service_Config::reconfig_occurred ())
+	ACE_Service_Config::reconfigure ();
+      else
+#endif /* !ACE_HAS_WINCE */
+
+        if (result == -1)
+          return -1;
+    }
+  /* NOTREACHED */
+  return 0;
+}
+
+// Run the event loop until the <ACE_Reactor::alertable_handle_events>
+// method returns -1, the <end_event_loop> method
+// is invoked, or the <ACE_Time_Value> expires.
+
+int
+ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
+{
+  ACE_TRACE ("ACE_Reactor::run_event_loop");
+
+  while (ACE_Reactor::end_event_loop_ == 0)
+    {
+      int result = ACE_Reactor::instance ()->alertable_handle_events (tv);
+
+#if !defined (ACE_HAS_WINCE)
+      if (ACE_Service_Config::reconfig_occurred ())
+	ACE_Service_Config::reconfigure ();
+      else 
+#endif /* !ACE_HAS_WINCE */
+        if (result <= 0)
+          return result;
+    }
+
+  /* NOTREACHED */
+  return 0;
+}
+
 void
 ACE_Reactor::reset_event_loop (void)
 {

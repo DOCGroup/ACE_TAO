@@ -1205,11 +1205,17 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   int timeout = max_wait_time == 0 ? INFINITE : max_wait_time->msec ();
 
   // Atomically wait for both the <lock_> and <ok_to_wait_> event
-  int result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
+  int result = 0;
+  while (1)
+    {
+      result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
 					   this->atomic_wait_array_,
 					   TRUE,
 					   timeout,
 					   alertable);
+      if (result != WAIT_IO_COMPLETION)
+        break;
+    }
 
   switch (result)
     {
@@ -1293,13 +1299,17 @@ ACE_WFMO_Reactor::dispatch (int wait_status)
     case WAIT_FAILED: // Failure.
       errno = ::GetLastError ();
       return -1;
+
     case WAIT_TIMEOUT: // Timeout.
       errno = ETIME;
       return handlers_dispatched;
-    case WAIT_ABANDONED_0:
-      // We'll let dispatch worry about abandoned mutes.
+
+    case WAIT_IO_COMPLETION: // APC.
+      return handlers_dispatched;
+
     default:  // Dispatch.
-      handlers_dispatched += this->dispatch_handles (wait_status - WAIT_OBJECT_0);
+      // We'll let dispatch worry about abandoned mutes.
+      handlers_dispatched += this->dispatch_handles (wait_status);
       return handlers_dispatched;
     }
 }
@@ -1308,23 +1318,46 @@ ACE_WFMO_Reactor::dispatch (int wait_status)
 // <handles_[max_handlep1_]>, polling through our handle set looking
 // for active handles.
 int
-ACE_WFMO_Reactor::dispatch_handles (size_t index)
+ACE_WFMO_Reactor::dispatch_handles (size_t wait_status)
 {
+  // dispatch_index is the absolute index.  Only += is used to
+  // increment it.
+  int dispatch_index = 0;
+
+  // Cache this value, this is the absolute value.
+  size_t max_handlep1 = this->handler_rep_.max_handlep1 ();
+
+  // nCount starts off at <max_handlep1>, this is a transient count of
+  // handles last waited on.
+  size_t nCount = max_handlep1;
+
   for (int number_of_handlers_dispatched = 1;
        ;
        number_of_handlers_dispatched++)
     {
-      size_t max_handlep1 = this->handler_rep_.max_handlep1 ();
+      if (wait_status >= WAIT_OBJECT_0 &&
+          wait_status <= (WAIT_OBJECT_0 + nCount))
+        dispatch_index += wait_status - WAIT_OBJECT_0;
+      else
+        // Otherwise, a handle was abandoned.
+        dispatch_index += wait_status - WAIT_ABANDONED_0;
 
-      if (this->dispatch_handler (index++, max_handlep1) == -1)
+      // Dispatch handler
+      if (this->dispatch_handler (dispatch_index, max_handlep1) == -1)
         return -1;
+      
+      // Increment index
+      dispatch_index++;
 
       // We're done.
-      if (index >= max_handlep1)
+      if (dispatch_index >= max_handlep1)
 	return number_of_handlers_dispatched;
       
+      // Readjust nCount
+      nCount -= dispatch_index;
+
       // Check the remaining handles
-      DWORD wait_status = this->poll_remaining_handles (index);
+      wait_status = this->poll_remaining_handles (dispatch_index);
       switch (wait_status)
 	{
 	case WAIT_FAILED: // Failure.
@@ -1333,14 +1366,6 @@ ACE_WFMO_Reactor::dispatch_handles (size_t index)
 	case WAIT_TIMEOUT:
 	  // There are no more handles ready, we can return.
 	  return number_of_handlers_dispatched;
-	default: // Dispatch.
-	  // Check if a handle successfully became signaled.
-	  if (wait_status >= WAIT_OBJECT_0 &&
-	      wait_status <= (WAIT_OBJECT_0 + max_handlep1 - index))
-	    index += wait_status - WAIT_OBJECT_0;
-	  else
-	    // Otherwise, a handle was abandoned.
-	    index += wait_status - WAIT_ABANDONED_0;
 	}
     }
 }
