@@ -1,42 +1,50 @@
+Tue Oct 19 06:17:24 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Removed TAO/orbsvcs/tests/Notify/Lanes/run_test.pl from the list.
+          It requires root privileges and shouldn't be run in a nightly
+          build.
+
 Mon Oct 18 19:21:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
 
-	  Fixed typo setting ACE_ROOT environment variable in the TAO_IDL
-	  definition.
+          Fixed typo setting ACE_ROOT environment variable in the TAO_IDL
+          definition.
 
 Mon Oct 18 21:13:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Logging_Strategy.cpp: Fixed the init() method so that it doesn't
-	  leak memory if it's called more than once.  Thanks to Kobi
- 	  <kobi.cohenarazi@gmail.com> for this fix.
+        * ace/Logging_Strategy.cpp: Fixed the init() method so that it doesn't
+          leak memory if it's called more than once.  Thanks to Kobi
+          <kobi.cohenarazi@gmail.com> for this fix.
 
-	* ace/Pagefile_Memory_Pool.cpp: Fixed two bugs with the
-	  ACE_Pagefile_Memory_Pool constructor:
+        * ace/Pagefile_Memory_Pool.cpp: Fixed two bugs with the
+          ACE_Pagefile_Memory_Pool constructor:
 
           1. In the constructor is called with options=0, then the
-	     internal meber local_cb_ is never initialised.  Thus there is
-	     no way of using it with ACE_Malloc.
+             internal meber local_cb_ is never initialised.  Thus there is
+             no way of using it with ACE_Malloc.
 
           2. When used for ACE_Malloc in the following way
 
-	    : ACE_Malloc<ACE_PAGEFILE_MEMORY_POOL,ACE_Process_Mutex>
- 	      Malloc1 ("NAME_TEST" )
+            : ACE_Malloc<ACE_PAGEFILE_MEMORY_POOL,ACE_Process_Mutex>
+              Malloc1 ("NAME_TEST" )
 
             as a mutex is created with the name given, the internal call
-	    to CreateFileMapping (CreateFileMappingEx) fails because a
-	    system object of the same name already exists (the mutex).
-	    Thanks to Domingos Monteiro <d.monteiro@netia.net>
-	    for reporting these problems and providing the fixes.
+            to CreateFileMapping (CreateFileMappingEx) fails because a
+            system object of the same name already exists (the mutex).
+            Thanks to Domingos Monteiro <d.monteiro@netia.net>
+            for reporting these problems and providing the fixes.
 
 Mon Oct 18 17:45:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Naming/Graph.cpp:
-	* examples/APG/Naming/Temperature_Grapher.cpp: Don't attempt to
-	  compile the few parts of this that use std::list (the
-	  Graphable_Element_List typedef) without implicit template
-	  instantiation. It's too much trouble to try to follow the
-	  various platforms' incantations.
+        * examples/APG/Naming/Graph.cpp:
+        * examples/APG/Naming/Temperature_Grapher.cpp: Don't attempt to
+          compile the few parts of this that use std::list (the
+          Graphable_Element_List typedef) without implicit template
+          instantiation. It's too much trouble to try to follow the
+          various platforms' incantations.
 
 Mon Oct 18 17:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -45,7 +53,7 @@ Mon Oct 18 17:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 18 12:15:14 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv2/display_logfile.cpp: Wide-char fixes.
+        * examples/C++NPv2/display_logfile.cpp: Wide-char fixes.
 
 Mon Oct 18 18:34:55 2004  Olli Savia  <ops@iki.fi>
 
