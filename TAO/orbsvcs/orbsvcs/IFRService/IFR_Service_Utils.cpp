@@ -12,6 +12,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/Stub.h"
+#include "tao/Profile.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFR_Service,
@@ -1034,7 +1036,8 @@ char *
 TAO_IFR_Service_Utils::reference_to_path (CORBA::IRObject_ptr obj)
 {
   PortableServer::ObjectId object_id;
-  TAO::ObjectKey object_key = obj->_object_key ();
+  TAO::ObjectKey object_key = 
+    obj->_stubobj ()->profile_in_use ()->object_key ();
   int status = TAO_POA::parse_ir_object_key (object_key,
                                              object_id);
   if (status != 0)
