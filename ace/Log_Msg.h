@@ -288,9 +288,9 @@ public:
   // into the ACE mechanism.
 
   int log_hexdump (ACE_Log_Priority log_priority, 
-		   char *buffer, 
+		   const char *buffer, 
 		   int size,
-		   char *text = 0);
+		   const char *text = 0);
   // Method to log hex dump.  This is useful for debugging.  Calls
   // <log> to do the actual print, but formats first to make the chars
   // printable.
