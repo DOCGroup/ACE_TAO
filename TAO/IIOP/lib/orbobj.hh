@@ -9,7 +9,6 @@
 #if !defined(ACE_ROA_ORBOBJ_H)
 #  define ACE_ROA_ORBOBJ_H
 
-typedef class CORBA_ORB		*CORBA_ORB_ptr;
 void				CORBA_release (CORBA_ORB_ptr orb);
 CORBA_Boolean			CORBA_is_nil (CORBA_ORB_ptr orb);
 
@@ -32,6 +31,7 @@ CORBA_ORB_init (
 class _EXPCLASS CORBA_ORB : public IUnknown
 {
 public:
+  CORBA_BOA_ptr BOA_init(int &argc, char **argv, const char *boa_identifier=0);
   static CORBA_ORB_ptr	_duplicate (CORBA_ORB_ptr orb);
   static CORBA_ORB_ptr	_nil ();
 

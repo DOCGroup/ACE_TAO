@@ -14,13 +14,14 @@
 #include	<signal.h>
 #include	<string.h>
 
-#include	<orb.hh>
-#include	<stub.hh>
-
+#include	"orb.hh"
+#include	"stub.hh"
 #include	"debug.hh"
-
 #include	"iioporb.hh"		// XXX
 
+#include        "params.hh"
+#include        "boa.hh"
+#include        "roa.hh"
 #include	<initguid.h>
 
 extern void __TC_init_table ();
@@ -308,4 +309,124 @@ CORBA_ORB_ptr
 _orb ()
 {
     return the_orb;
+}
+
+CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identifier)
+{
+  // parse the arguments looking for options starting with -OA. After
+  // processing these options, move all these to the end of the argv list and
+  // decrement argc appropriately.
+
+  ROA_Parameters *params = ROA_PARAMS::instance();  //should have been BOA_Parameters
+  CORBA_BOA_ptr rp;
+  CORBA_String_var id = boa_identifier;
+  CORBA_String_var host = CORBA_string_dup("");
+  CORBA_String_var demux = CORBA_string_dup("dynamic_hash"); // default atleast for now
+  CORBA_UShort port = 5001;  // some default port -- needs to be a #defined value
+  CORBA_Boolean numeric = CORBA_B_FALSE;
+  CORBA_Boolean use_threads = CORBA_B_FALSE;
+  const char* ior = 0;
+  int i, j;
+  ACE_INET_Addr rendezvous;
+  CORBA_Environment env;
+
+  i = 0;
+  while(i < argc)
+    {
+      if(strcmp(argv[i], "-OAid") == 0)
+        {
+	  if(i + 1 < argc)
+	    id = CORBA_string_dup(argv[i + 1]);
+	  else
+            {
+            }
+
+	  for(int j = i ; j + 2 < argc ; j++)
+	    argv[j] = argv[j + 2];
+
+	  argc -= 2;
+        }
+      else if (strcmp(argv[i], "-OAhost") == 0)
+	{
+	  if (i + 1 < argc)
+	    host = CORBA_string_dup(argv[i + 1]);
+	  else
+            {
+            }
+
+	  for(int j = i ; j + 2 < argc ; j++)
+	    argv[j] = argv[j + 2];
+
+	  argc -= 2;
+	}
+      else if (strcmp(argv[i], "-OAport") == 0)
+	{
+	  if (i + 1 < argc)
+	    port = ACE_OS::atoi(argv[i + 1]);
+	  else
+            {
+            }
+
+	  for(int j = i ; j + 2 < argc ; j++)
+	    argv[j] = argv[j + 2];
+
+	  argc -= 2;
+	}
+      else if (strcmp(argv[i], "-OAobjdemux") == 0)
+	{
+	  if (i + 1 < argc)
+	    demux = CORBA_string_dup(argv[i+1]);
+	  else
+            {
+            }
+
+	  for(int j = i ; j + 2 < argc ; j++)
+	    argv[j] = argv[j + 2];
+
+	  argc -= 2;
+	}
+      else if (strcmp(argv[i], "-OArcvsock") == 0)
+	{
+	}
+      else if (strcmp(argv[i], "-OAsndsock") == 0)
+	{
+	}
+      else if (strcmp(argv[i], "-OAthread") == 0)
+	{
+	  use_threads = CORBA_B_TRUE;
+	  for(int j = i ; j + 1 < argc ; j++)
+	    argv[j] = argv[j + 1];
+
+	  argc -= 1;
+	}
+    }
+  
+  // create a INET_Addr
+  if (ACE_OS::strlen(host) > 0){
+    rendezvous.set(port, host);
+  } else {
+    rendezvous.set(port);
+  }
+  
+  //    ACE_MT(ACE_GUARD(ACE_Thread_Mutex, roa_mon, lock_));
+
+  if (params->oa())
+    {
+      env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
+      return 0;
+    }
+
+  // set all parameters
+  params->using_threads(use_threads?1:0);
+  params->demux_strategy(demux);
+  params->addr(rendezvous);
+  params->upcall(CORBA_BOA::dispatch);
+
+#if defined(ROA_NEED_REQ_KEY)
+  (void) ACE_Thread::keycreate(&req_key_);
+#endif
+    
+  ACE_NEW_RETURN (rp, ROA(this, env), 0);
+
+  return rp;
 }

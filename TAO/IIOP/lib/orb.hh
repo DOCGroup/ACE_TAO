@@ -109,22 +109,55 @@ Mountain View, California  94043
 //
 // Forward declarations of some data types are needed.
 //
-typedef class CORBA_TypeCode		*CORBA_TypeCode_ptr;
+class CORBA_Any;
 typedef class CORBA_Any 		*CORBA_Any_ptr;
+
+class CORBA_TypeCode;
+typedef class CORBA_TypeCode		*CORBA_TypeCode_ptr;
+
+class CORBA_BOA;
+typedef class CORBA_BOA                  *CORBA_BOA_ptr;
+
+class CORBA_Exception;
+typedef class CORBA_Exception           *CORBA_Exception_ptr;
+
+class CORBA_Request;
+typedef class CORBA_Request 		*CORBA_Request_ptr;
+
+class CORBA_NamedValue;
+typedef class CORBA_NamedValue          *CORBA_NamedValue_ptr;
+
+class CORBA_NVList;
+typedef class CORBA_NVList              *CORBA_NVList_ptr;
+
+class CORBA_ORB;
+typedef class CORBA_ORB                 *CORBA_ORB_ptr;
+
+class CORBA_Object;
+typedef class CORBA_Object              *CORBA_Object_ptr;
+
+class CORBA_ServerRequest;
+typedef class CORBA_ServerRequest 	*CORBA_ServerRequest_ptr;
+
+class CORBA_Environment;
+typedef class CORBA_Environment 	*CORBA_Environment_ptr;
+
+class CORBA_Principal;
+typedef class CORBA_Principal 	        *CORBA_Principal_ptr;
+
 
 typedef class CORBA_ImplementationDef 	*CORBA_ImplementationDef_ptr;
 
 typedef class CORBA_InterfaceDef 	*CORBA_InterfaceDef_ptr;
 
-typedef class CORBA_Request 		*CORBA_Request_ptr;
-
-typedef class CORBA_NamedValue          *CORBA_NamedValue_ptr;
-
-typedef class CORBA_NVList              *CORBA_NVList_ptr;
+class CORBA_String_var;
 
 typedef unsigned CORBA_Flags;	        // enum values defined in nvlist.hh,
                                         // bitwise ORed
 
+
+
+typedef void (*skeleton)(CORBA_ServerRequest &, CORBA_Object_ptr &, CORBA_Environment &);
 //
 // Basic types used in the CORBA 2.0 runtime
 //
@@ -138,6 +171,7 @@ typedef unsigned CORBA_Flags;	        // enum values defined in nvlist.hh,
 #include	"nvlist.hh"
 #include	"request.hh"
 #include	"svrrqst.hh"
+#include        "boa.hh"
 
 //
 // Bootstrapping, etc

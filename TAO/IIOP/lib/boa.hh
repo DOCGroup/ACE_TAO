@@ -12,17 +12,34 @@
 #if !defined(ACE_ROA_BOA_HH)
 #  define ACE_ROA_BOA_HH
 
+#  include <ace/SOCK_Stream.h>
 #  include "orb.hh"
 #  include "corbacom.hh"
 
-typedef class BOA* BOA_ptr;
-
-CORBA_Boolean is_nil (BOA_ptr obj);
-void release (BOA_ptr obj);
+CORBA_Boolean is_nil (CORBA_BOA_ptr obj);
+void release (CORBA_BOA_ptr obj);
 
 extern const IID IID_BOA;
 
-class BOA : public IUnknown
+class TAO_Object_Table
+  // = TITLE
+  //     Abstract class for maintaining and lookup of CORBA Object keys
+{
+public:
+  // = 
+
+  virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key) = 0;
+  // CORBA Object key lookup strategy
+
+  virtual void register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj)=0; 
+  // registers a CORBA_Object into the object table and associates the key with
+  // it
+
+  virtual ~TAO_Object_Table();
+};
+
+struct Dispatch_Context;
+class CORBA_BOA : public IUnknown
 // = TITLE
 //    The <{TAO}> Basic Object Adapter
 {
@@ -51,12 +68,19 @@ public:
   // to help distinguish different incarnations of the BOA.  "Named BOA"
   // objects won't want those semantics as much as "Anonymous" ones.
 
-  typedef void (*dsi_handler) ( // DIR
+  typedef void (CORBA_BOA::*dsi_handler) ( // DIR
 			       CORBA_OctetSeq		&obj_id,
 			       CORBA_ServerRequest	&request,
 			       void			*context,
 			       CORBA_Environment	&env
 			       );
+
+  virtual int handle_message (Dispatch_Context& context,
+		      CORBA_Environment& env) = 0;
+				// Reads incoming GIOP messages,
+				// dispatches them, and sends back any
+				// required replies.  Returns 1 for
+				// success, 0==EOF, -1==error.
 
   virtual void 	register_dir (dsi_handler skeleton,
 			      void* context,
@@ -153,7 +177,7 @@ public:
 
   //
   //
-  static BOA_ptr get_boa (CORBA_ORB_ptr orb,
+  static CORBA_BOA_ptr get_boa (CORBA_ORB_ptr orb,
 			  CORBA_Environment& env);
   // Get an "anonymous" BOA
   // pseudo-objref ... this is the API
@@ -169,7 +193,7 @@ public:
   // type IDs.  This is not true for two
   // different BOAs.
 
-  static BOA_ptr get_named_boa (CORBA_ORB_ptr orb,
+  static CORBA_BOA_ptr get_named_boa (CORBA_ORB_ptr orb,
 				CORBA_String name,
 				CORBA_Environment& env);
   // Get a "named" BOA ... most
@@ -186,7 +210,50 @@ public:
   // system-specific mechanisms and
   // policies.
 
+  void dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
+			*context, CORBA_Environment &env);
+  virtual CORBA_Object_ptr lookup(CORBA_OctetSeq &key) { return
+							   objtable_->lookup(key);}
+  virtual CORBA_ORB_ptr orb() const = 0;
+protected:
+  TAO_Object_Table  *objtable_;
 private:
 };
 
+struct Dispatch_Context
+// = TITLE
+//    Structure holding information necessary for GIOP functionality.
+// = DESCRIPTION
+// Data structure passed as "context" to the GIOP code, which then
+// calls back one of the two helper routines as part of handling any
+// particular incoming request.
+{
+  CORBA_BOA::dsi_handler	skeleton;
+				// Function pointer to skeleton glue
+				// function.
+  void (*check_forward) (CORBA_OctetSeq& key,
+			 CORBA_Object_ptr& fwd_ref,
+			 void* context,
+			 CORBA_Environment& env);
+				// Function to check if the request
+				// should be forwarded (whatever that
+				// means)
+  void* context;
+				// Who knows...another overloading of
+				// the word "context"
+  CORBA_BOA_ptr oa;
+				// This should really be a BOA_ptr,
+				// but currently it doesn't support
+				// the one call we need to make
+				// through here: <handle_message()>.
+  ACE_SOCK_Stream endpoint;
+				// The communication endpoint from
+				// which the data needs to be read.
+				// NOTE!!!  This type MUST match that
+				// used for ROA_Handler!
+};
+
 #endif	// _BOA_HH
+
+
+

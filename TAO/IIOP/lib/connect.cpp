@@ -32,8 +32,8 @@ ROA_Handler::open(void*)
 
   ACE_DEBUG ((LM_DEBUG, 
              "(%P|%t) %sconnection from client %s\n", 
-             params_->using_threads() ? "threaded " : "" 
-             addr.get_host_name())); 
+             params_->using_threads() ? "threaded " : "",
+	      addr.get_host_name())); 
 
   return 0;
 }
