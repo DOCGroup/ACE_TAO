@@ -96,7 +96,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "// Assignment operator.  " << be_nl;
 
   // destructor
-  *os << "~" << class_name << " (void); // Dtor." << be_nl;
+  *os << "virtual ~" << class_name << " (void); // Dtor." << be_nl;
 
   // Accessors
   // operator[]

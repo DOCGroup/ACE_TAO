@@ -44,6 +44,11 @@
 #include "be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp"
 #include "be_visitor_sequence/gen_bounded_str_sequence_ci.cpp"
 #include "be_visitor_sequence/gen_object_manager_ci.cpp"
+#include "be_visitor_sequence/gen_unbounded_sequence_cs.cpp"
+#include "be_visitor_sequence/gen_bounded_sequence_cs.cpp"
+#include "be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp"
+#include "be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp"
+#include "be_visitor_sequence/gen_bounded_str_sequence_cs.cpp"
 
 ACE_RCSID(be, be_visitor_sequence, "$Id$")
 

@@ -134,29 +134,6 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
 
-  // allocate_buffer
-  *os << "ACE_INLINE void" << be_nl
-      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
-      << "{" << be_idt_nl
-      << "// For this class memory is never reallocated so the implementation" << be_nl
-      << "// is *really* simple." << be_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (" 
-      << node->max_size () << ");" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
-  // deallocate_buffer
-  *os << "ACE_INLINE void" << be_nl
-      << full_class_name << "::_deallocate_buffer (void)" << be_nl
-      << "{" << be_idt_nl
-      << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
-      << "return;" << be_uidt_nl
-      << "char **tmp = ACE_reinterpret_cast (char **, this->buffer_);" << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_nl
-      << "this->buffer_ = 0;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
   // constructor
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (void)" << be_nl
@@ -223,14 +200,6 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
 
-  // destructor
-  *os << "ACE_INLINE" << be_nl
-      << full_class_name << "::~" << class_name << " (void)" << be_nl
-      << "{" << be_idt_nl
-      << "this->_deallocate_buffer ();" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
   // operator[]
   *os << "ACE_INLINE TAO_String_Manager " << be_nl
       << full_class_name << "::operator[] (CORBA::ULong index) const" << be_nl
@@ -284,19 +253,6 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << "return ACE_reinterpret_cast (const char ** ACE_CAST_CONST, this->buffer_);" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
-
-  // shrink_buffer
-  *os << "ACE_INLINE void" << be_nl
-      << full_class_name << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
-      << "{" << be_idt_nl
-      << "char **tmp = ACE_reinterpret_cast (char **,this->buffer_);" << be_nl
-      << be_nl
-      << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::string_free (tmp[i]);" << be_nl
-      << "tmp[i] = 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "}" << be_nl;
 
   os->gen_endif (); // endif macro
 

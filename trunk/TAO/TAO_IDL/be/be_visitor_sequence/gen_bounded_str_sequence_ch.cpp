@@ -103,7 +103,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl;
 
   // destructor
-  *os << "~" << class_name << " (void);" << be_nl;
+  *os << "virtual ~" << class_name << " (void);" << be_nl;
 
   // operator[]
   *os << "TAO_String_Manager operator[] (CORBA::ULong index) const;" << be_nl

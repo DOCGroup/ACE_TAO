@@ -126,33 +126,6 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
   
-  // allocate_buffer
-  *os << "ACE_INLINE void " << be_nl
-      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
-      << "// allocate a buffer of the requested length. The buffer is allocated for the" << be_nl
-      << "// right type" << be_nl
-      << "{" << be_idt_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (" 
-      << node->max_size () << ");" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
-  // deallocate_buffer
-  *os << "ACE_INLINE void " << be_nl
-      << full_class_name << "::_deallocate_buffer (void)" << be_nl
-      << "// deallocate the buffer" << be_nl
-      << "{" << be_idt_nl
-      << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
-      << "return;" << be_uidt_nl;
-  pt->accept(visitor); 
-  *os <<" *tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor); 
-  *os << " *, this->buffer_);" << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_nl
-      << "this->buffer_ = 0;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-  
   // Constructor
   *os << "ACE_INLINE" << be_nl
       << full_class_name << "::" << class_name << " (void)" << be_nl
@@ -232,14 +205,6 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
   
-  // destructor
-  *os << "ACE_INLINE " << be_nl
-      << full_class_name << "::~" << class_name << " (void) // Dtor." << be_nl
-      << "{" << be_idt_nl
-      << "this->_deallocate_buffer ();" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
   // Accessors
   *os << "// = Accessors." << be_nl;
   *os << "ACE_INLINE ";
