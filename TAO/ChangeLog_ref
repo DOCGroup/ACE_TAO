@@ -1,3 +1,21 @@
+Fri Sep  5 11:37:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CORBANAME_Parser.cpp: Provided a new implementation for
+	  parse_string_dynamic_request_helper (). The implementation uses
+	  the new invocation mechanism.
+
+	* tao/Object.h:
+	* tao/Object.cpp: Specialized Ret_Object_Argument_T for
+	  CORBA::Object. Please refer to the documentation in the header
+	  file for details on the motivation for this.
+	
+	* tao/PortableServer/ImplRepoS.h: 
+	* tao/PortableServer/ImR_LocatorS.h:
+	* tao/PortableServer/ImR_ActivatorS.h:
+	* tao/PortableServer/PolicyS.h: Removed references to the old
+	  implementations of thruPOA and direct POA collocation
+	  mechanisms. 
+
 Fri Sep  5 09:46:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CORBANAME_Parser.cpp:

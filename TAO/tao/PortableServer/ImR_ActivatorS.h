@@ -42,8 +42,6 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -57,7 +55,7 @@
 #endif /* __BORLANDC__ */
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_codegen.cpp:1038
 
 #include "ImR_ActivatorS_T.h"
