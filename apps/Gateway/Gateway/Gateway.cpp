@@ -93,9 +93,9 @@ Gateway::init (int argc, char *argv[])
 
   // Register this handler to receive events on stdin.  We use this to
   // shutdown the Gateway gracefully.
-  if (ACE::register_stdin_handler (this,
-				   ACE_Reactor::instance (),
-				   ACE_Thread_Manager::instance ()) == -1)
+  if (ACE_Event_Handler::register_stdin_handler (this,
+						 ACE_Reactor::instance (),
+						 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t) %p\n",
                        "register_stdin_handler"),
@@ -140,8 +140,8 @@ Gateway::fini (void)
 {
   // Remove the handler that receive events on stdin.  Otherwise, we
   // will crash on shutdown.
-  ACE::remove_stdin_handler (ACE_Reactor::instance (),
-                             ACE_Thread_Manager::instance ());
+  ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
+					   ACE_Thread_Manager::instance ());
 
   // Close down the event channel.
   this->event_channel_.close ();

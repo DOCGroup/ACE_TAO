@@ -29,9 +29,9 @@ Quit_Handler::Quit_Handler (void)
   : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {  
   // Register to trap input from the user.
-  if (ACE::register_stdin_handler (this,
-				   ACE_Reactor::instance (),
-				   ACE_Thread_Manager::instance ()) == -1)
+  if (ACE_Event_Handler::register_stdin_handler (this,
+						 ACE_Reactor::instance (),
+						 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
   // Register to trap the SIGINT signal.
   else if (ACE_Reactor::instance ()->register_handler 
