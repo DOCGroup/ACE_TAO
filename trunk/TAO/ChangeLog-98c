@@ -1,12 +1,24 @@
 Sun Jul 26 09:17:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * EC_Multiple.h: increased MAX_CONSUMERS and MAX_SUPPLIERS to 100.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h: increased
+          MAX_CONSUMERS and MAX_SUPPLIERS to 100.
 
-        * EC_Multiple.cpp: 1) added support for dynamic scheduling test
-          (ECM3).  2) In config runs, dump the schedule before shutting
-          the test down.  An exception is usually thrown when shutting
-          the test down, for all but the first EC.  This change allows
-          the schedule to still be dumped.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 1) added support
+          for dynamic scheduling test (ECM3).  2) In config runs, dump
+          the schedule before shutting the test down.  An exception is
+          usually thrown when shutting the test down, for all but the
+          first EC.  This change allows the schedule to still be dumped.
+
+        * orbsvcs/tests/EC_Multiple/{Scheduler_Runtime_Dynamic.h,
+          run_dynamic,gen_dynamic}: added support for dynamic
+          scheduling test.  Currently, it requires that TAO
+          be build with the CCFLAGS: -DTAO_USES_STRATEGY_SCHEDULER
+          -DTAO_USES_MUF_SCHEDULING -DTAO_MIN_CRITICAL_PRIORITY=0.
+
+        * orbsvcs/tests/EC_Multiple/run_{latency,overhead,schedule,
+          throughput,utilization}: use ORBport 0 instead of hard-coded port.
+          For NameService, use $NameServicePort if it is defined in the
+          user's environment.
 
 Sat Jul 25 15:21:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
