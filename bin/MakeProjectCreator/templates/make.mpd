@@ -59,12 +59,12 @@ CPPFLAGS      = $(PICFLAGS) $(GENFLAGS)<%if(cppflags)%> <%cppflags%><%endif%><%f
 <%if(arflags)%>
 ARFLAGS       = <%arflags%>
 <%endif%>
-SRC           =<%foreach(source_files)%> <%source_file%><%endfor%>
-OBJS          =<%foreach(source_files)%> <%noextension(source_file)%>.o<%endfor%><%foreach(platforms)%><%if(rc)%><%foreach(resource_files)%> <%resource_file%>.o<%endfor%><%endif%><%endfor%>
+SRC           = <%source_files%>
+OBJS          =<%foreach(source_files)%> <%basenoextension(source_file)%>.o<%endfor%><%foreach(platforms)%><%if(rc)%><%foreach(resource_files)%> <%resource_file%>.o<%endfor%><%endif%><%endfor%>
 LDFLAGS       =<%if(libpaths)%><%foreach(libpaths)%> -L<%libpath%><%endfor%><%endif%><%foreach(configurations)%><%if(linkflags)%> <%linkflags%><%endif%><%endfor%>
 LDLIBS        =<%foreach(libs lit_libs)%> -l<%lib%><%endfor%><%foreach(platforms)%> <%ldlibs%><%endfor%>
 LINK.cc       = $(LD) $(LDFLAGS)
-COMPILE.cc    = $(CXX) $(CCFLAGS) $(CPPFLAGS)  -c
+COMPILE.cc    = $(CXX) $(CCFLAGS) $(CPPFLAGS) -c
 RM            = rm -f
 OUTPUT_OPTION = -o $@
 <%if(dynamicflags)%>
@@ -97,14 +97,14 @@ specialscript:
 	@specialscript $(NM) "$(OBJS)" "$(LDLIBS)" "<%if(libpaths)%><%libpaths%><%else%>.<%endif%>" <%prelink%>
 	@$(RM) specialscript
 
-<%noextension(prelink)%>.o: <%prelink%>
+<%basenoextension(prelink)%>.o: <%prelink%>
 	$(COMPILE.cc) <%prelink%> $(OUTPUT_OPTION)
 	@$(RM) <%prelink%>
 
 <%endif%>
 <%endfor%>
 <%endfor%>
-$(BIN): $(OBJS) <%foreach(configurations)%><%foreach(platforms)%><%if(prelink)%><%noextension(prelink)%>.o<%endif%><%endfor%><%endfor%>
+$(BIN): $(OBJS) <%foreach(configurations)%><%foreach(platforms)%><%if(prelink)%><%basenoextension(prelink)%>.o<%endif%><%endfor%><%endfor%>
 	$(LINK.cc) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
 
 <%endif%>
@@ -140,7 +140,7 @@ $(LIB): $(OBJS)
 
 <%endif%>
 <%if(custom_types)%>
-GENERATED_DIRTY =<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%><%endif%><%endfor%><%endfor%>
+GENERATED_DIRTY    =<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%><%endif%><%endfor%><%endfor%>
 <%foreach(custom_types)%>
 <%if(custom_types->libpath)%>
 DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
@@ -152,11 +152,9 @@ PATH              := $(PATH):<%custom_type->libpath%>
 <%endif%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
-<%foreach(custom_type->input_file->output_files)%>
-<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>: <%custom_type->input_file%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%>
 	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
 
-<%endfor%>
 <%endif%>
 <%endfor%>
 <%endfor%>
@@ -174,7 +172,7 @@ $(TEMPINCDIR):
 <%endif%>
 <%endfor%>
 <%foreach(source_files)%>
-<%noextension(source_file)%>.o: <%source_file%>
+<%basenoextension(source_file)%>.o: <%source_file%>
 	$(COMPILE.cc) $(EXPORTFLAGS) <%source_file%> $(OUTPUT_OPTION)
 
 <%endfor%>
