@@ -38,8 +38,8 @@ main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Enum_Interfaces_Test"));
 
-  struct utsname uname;
-  ACE_OS::uname(&uname);
+  ACE_utsname uname;
+  ACE_OS::uname (&uname);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Machine: %s running on %s\n"),
               uname.nodename, uname.machine ));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Platform: %s, %s, %s\n"),

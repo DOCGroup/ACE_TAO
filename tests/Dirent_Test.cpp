@@ -31,7 +31,7 @@ main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Dirent_Test"));
   int status = 0;
 
-  DIR *directory = ACE_OS::opendir (ACE_TEXT ("../tests"));
+  ACE_DIR *directory = ACE_OS::opendir (ACE_TEXT ("../tests"));
 
   int entrycount = 0;
   for (; ACE_OS::readdir(directory) != 0; entrycount++);

@@ -94,7 +94,12 @@ else  # ! 4.2
     #### CC 5.0 or later
     #### Inlining appears to cause link problems with early releases of
     #### CC 5.0.
-    inline = 0
+    ifeq (C++ 5.2,$(findstring C++ 5.2,$(CC_VERSION)))
+        inline = 1
+        exceptions = 1
+    else
+        inline = 0
+    endif
 
     CCFLAGS += $(CFLAGS)
 

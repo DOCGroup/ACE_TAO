@@ -555,7 +555,7 @@ main (int argc, char *argv[])
   if (get_options (argc, argv))
     ACE_OS::exit (-1);
 
-  struct utsname name;
+  ACE_utsname name;
 
   if (ACE_OS::uname (&name) != -1)
     ACE_DEBUG ((LM_INFO, "%s (%s), %s %s at %T\n",

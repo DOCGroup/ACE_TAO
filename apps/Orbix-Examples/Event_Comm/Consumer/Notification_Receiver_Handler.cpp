@@ -58,7 +58,7 @@ Notification_Receiver_Handler::Notification_Receiver_Handler (int argc, char *ar
 
   CORBA::Orbix.setDiagnostics (0);
 
-  utsname name;
+  ACE_utsname name;
 
   // Make the marker name be the "/hostname/processid"
   ACE_OS::uname (&name);

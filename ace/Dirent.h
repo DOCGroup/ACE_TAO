@@ -46,7 +46,7 @@ public:
   /// Destructor calls <closedir>.
   ~ACE_Dirent (void);
 
-  /// Closes the directory stream and frees the DIR structure.
+  /// Closes the directory stream and frees the <ACE_DIR> structure.
   void close (void);
 
   // = Iterator methods.
@@ -87,7 +87,7 @@ public:
    * directory stream.  The new position reverts to the position
    * associated with the directory stream at the time the <telldir>
    * operation that provides loc was performed.  Values returned by
-   * <telldir> are good only for the lifetime of the DIR pointer from
+   * <telldir> are good only for the lifetime of the <ACE_DIR> pointer from
    * which they are derived.  If the directory is closed and then
    * reopened, the <telldir> value may be invalidated due to
    * undetected directory compaction.  It is safe to use a previous
@@ -106,7 +106,7 @@ public:
 
 private:
   /// Pointer to the directory stream.
-  DIR *dirp_;
+  ACE_DIR *dirp_;
 };
 
 #if defined (__ACE_INLINE__)
