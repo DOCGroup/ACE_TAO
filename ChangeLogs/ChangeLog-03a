@@ -1,3 +1,8 @@
+Tue Jan  2 11:39:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/OS.i:
+          Added missing ACE_UNUSED_ARG in ACE_OS::event_timedwait
+
 Tue Jan  1 15:36:39 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU: Added support
