@@ -559,18 +559,14 @@ sub both_ir_test
         return 1;
     }
 
-    $TAO_IMR->Arguments (" -ORBInitRef ImplRepoService=file://$imr_locator_ior"
-                         . " add nestea_server"
-			 . " -c \"" . $N_SVR->Executable ()
-			 . " -ORBUseIMR 1"
-			 . " $refstyle -o $nestea_ior -ORBInitRef ImplRepoService=file://imr_locator_ior\"");
+    $TAO_IMR->Arguments (" add nestea_server -ORBInitRef ImplRepoService=file://$imr_locator_ior -c \""
+			 . $N_SVR->Executable ()
+			 . " -ORBUseIMR 1 $refstyle -o $nestea_ior -ORBInitRef ImplRepoService=file://$imr_locator_ior\"");
     $TAO_IMR->SpawnWaitKill (30);
 
-    $TAO_IMR->Arguments (" -ORBInitRef ImplRepoService=file://$imr_locator_ior"
-			 . " add airplane_server"
-			 . " -c \"" . $A_SVR->Executable ()
-			 . " -ORBUseIMR 1"
-			 . " $refstyle -o $airplane_ior -ORBInitRef ImplRepoService=file://imr_locator_ior\"");
+    $TAO_IMR->Arguments (" -ORBInitRef ImplRepoService=file://$imr_locator_ior add airplane_server -c \"" 
+			 . $A_SVR->Executable ()
+			 . " -ORBUseIMR 1 $refstyle -o $airplane_ior -ORBInitRef ImplRepoService=file://$imr_locator_ior\"");
     $TAO_IMR->SpawnWaitKill (30);
 
     $N_SVR->Arguments (" -o $nestea_ior -ORBUseIMR 1 $refstyle -ORBInitRef ImplRepoService=file://$imr_locator_ior");

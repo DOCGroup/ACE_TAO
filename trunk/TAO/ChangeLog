@@ -1,3 +1,14 @@
+Fri Dec 27 14:01:28 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
+	  Decrementing the reference count for object references 
+	  when unbinding it from the map. Thanks to Carlos for pointing
+	  it out.
+	
+	* orbsvcs/tests/ImplRepo/run_test.pl: 
+	  Fixed the typo in passing the name of the file to the ORBInitRef
+	  option. Did some minor indentation modifications.
+	
 Fri Dec 27 15:03:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/ior_corbaloc: Removed.
