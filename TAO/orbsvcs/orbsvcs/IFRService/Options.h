@@ -10,7 +10,7 @@
 //    Options.h
 //
 // = DESCRIPTION
-//    This class implements the Options container for the Interface 
+//    This class implements the Options container for the Interface
 //    Repository.
 //
 // = AUTHOR
@@ -30,7 +30,7 @@ class TAO_IFRService_Export Options
   //   Maintains the global options.
   //
   // = DESCRIPTION
-  //   This class is converted into a Singleton by the 
+  //   This class is converted into a Singleton by the
   //   <ACE_Singleton> template.
 public:
   Options ();
@@ -39,7 +39,7 @@ public:
   ~Options();
   // dtor
 
-  int parse_args (int argc, 
+  int parse_args (int argc,
                   ACE_TCHAR *argv[]);
   // Parse the command-line arguments and initialize the options.
 
@@ -81,7 +81,7 @@ private:
   // If not zero multicast is enabled.
 };
 
-// Typedef an Options Singleton. 
+// Typedef an Options Singleton.
 typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
 
 #endif /* OPTIONS_H */

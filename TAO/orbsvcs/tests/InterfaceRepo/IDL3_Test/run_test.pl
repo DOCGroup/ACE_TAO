@@ -12,7 +12,7 @@ $status = 0;
 
 $ifr_iorfile= "if_repo.ior";
 $test_idl = PerlACE::LocalFile ("test.idl");
- 
+
 # find the tao_ifr executable.
 # Its placement is dependent upon the OS and if MPC generated makefiles are used.
 my $exec_extn="";
@@ -23,9 +23,9 @@ if ($^O eq "MSWin32") {
 $tao_ifr = "../../../../../bin/tao_ifr";
 if (! -e $tao_ifr . $exec_extn ) {
     $tao_ifr = "../../../IFR_Service/tao_ifr";
-	if (! -e $tao_ifr . $exec_extn ) {
-        print STDERR "ERROR: tao_ifr compiler not found.\n";
-	    exit 1;
+        if (! -e $tao_ifr . $exec_extn ) {
+            print STDERR "ERROR: tao_ifr compiler not found.\n";
+            exit 1;
     }
 }
 
