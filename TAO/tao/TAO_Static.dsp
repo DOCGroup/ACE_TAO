@@ -843,6 +843,10 @@ SOURCE=.\Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Per_Connection_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -1808,6 +1812,10 @@ SOURCE=.\Thread_Lane_Resources.h
 # Begin Source File
 
 SOURCE=.\Thread_Lane_Resources_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Per_Connection_Handler.h
 # End Source File
 # Begin Source File
 
