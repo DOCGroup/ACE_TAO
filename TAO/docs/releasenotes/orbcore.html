@@ -52,21 +52,6 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
 <a name="issues"><h3>Known issues:</h3></a>
 
 <ul>
-  <li><p>Since collocated objects run in the client thread's context,
-      calling <code>CORBA::ORB::shutdown()</code> does <em>not</em>
-      actually close down the target ORB but instead on the client
-      side ORB.  This issue will be addressed in the new ORB Core
-      architecture.</p>
-
-      <p>Also, since the collocated invocations circumvent POA
-      completely, POA Current won't get set up, LOCATION_FORWARD will
-      not work, race condition may occur when several threads invoke
-      operations on an objects registered with POAs with SINGLE_THREAD
-      policy, operation invocations will still get thru even the POA
-      is in holding state, or invoking operations on a servant that
-      has already been deactivated.</p>
-  </li>
-
   <li><p>When using the thread-per-connection concurrency model, if
       some client leave the socket connection open without sending any
       request, the server will crash on NT.  This is because we are
@@ -435,6 +420,14 @@ new ORB Core structure.
   <li><p>We implemented <CODE>GIOP 1.1</CODE>, including the support
 	  for tagged components in IIOP profiles.
 	</p>
+  </li>
+
+  <li><p>Added CORBA compliant collocated stubs implementation.  The new
+      implementation now query POA for permission to proceed thus fixed 
+      many potentially subtle problems.  The original collocation implementation 
+      is still supported using by specifying the -ORBCollocationStrategy direct
+      command option (because the original scheme has slightly less method 
+      invocation overhead.)
   </li>
 
 </ul>
