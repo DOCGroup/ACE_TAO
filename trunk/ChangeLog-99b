@@ -10,6 +10,9 @@ Thu Mar 18 14:31:29 1999  Steve Huston  <shuston@riverace.com>
         * docs/tutorials/006/client_handler.cpp (Client_Handler::open): Changed
           arg name to void_acceptor to avoid redefining it inside the function.
 
+        * docs/tutorials/007/client_acceptor.cpp (Client_Acceptor(Thread_Pool&)
+          Fixed initialization of concurrency_.
+
 Thu Mar 18 14:30:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (timezone): Removed the leading '::' to cope with VC
