@@ -53,15 +53,9 @@ catiiop (CORBA::String string,
     }
   else
     {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return 0;
-    }
-
-  if (iiop_version_major != IIOP::MY_MAJOR
-      || iiop_version_minor > IIOP::MY_MINOR)
-    {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return 0;
+      iiop_version_major = 0;
+      iiop_version_minor = 0;
+      string += 2;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -157,8 +151,8 @@ catior (CORBA::String str,
 
   if (tmp [0] && !isspace (tmp [0]))
     {
-      ACE_DEBUG ((LM_DEBUG,
-		  "Badly terminated IOR string (%s)\n", tmp));
+      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
+      return  0;
     }
 
   // Create deencapsulation stream ... then unmarshal objref from that
@@ -376,10 +370,16 @@ catior (CORBA::String str,
         objKey[i] = '\0';
 
         ACE_DEBUG ((LM_DEBUG,
-                    "\nThe Object Key as string:\n%s\n",
-                    objKey));
+                    "\nThe Object Key as string:\n"));
+
+        for (i = 0; i < objKeyLength; i++)
+          ACE_DEBUG ((LM_DEBUG,
+                      "%c",
+                      objKey[i]));
 
         CORBA::string_free (objKey);
+        ACE_DEBUG ((LM_DEBUG,
+                    "\n"));
       }
   return 1;
 }
