@@ -1,7 +1,7 @@
 //$Id$
 
 project(CodeGenerationKit) {
-  requires += cidl
+  requires += cidl exceptions
   sharedname =
   staticname = CodeGenerationKit
   includes += ../..

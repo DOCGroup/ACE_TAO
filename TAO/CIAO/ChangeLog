@@ -1,3 +1,23 @@
+Tue Jul  6 14:22:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CCF/CCF/CIDL/CIDL.mpc:
+	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+	* CCF/CCF/CompilerElements/CompilerElements.mpc:
+	* CCF/CCF/IDL2/IDL2.mpc:
+	* CCF/CCF/IDL3/IDL3.mpc:
+	* CIDLC/CIDLC.mpc:
+
+	  All of them require exceptions to be available. Therefore added
+	  requires += exceptions. 
+
+	* CCF/CCF/CodeGenerationKit/IndentationXML.hpp:	
+
+	  Remove the comma at the end of the enum declaration. 
+
+
+	  All teh above should fix compilation errors in Full_Reactors
+	  builds. 
+
 Tue Jul  6 10:17:06 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
  	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
