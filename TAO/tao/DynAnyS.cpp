@@ -68,9 +68,9 @@ POA_CORBA::DynAny::_downcast (const char* logical_type_id)
   return 0;
 }
 
-void POA_CORBA::DynAny::_dispatch (CORBA::ServerRequest &req, 
-                                   void *context, 
-                                   CORBA::Environment &env)
+void POA_CORBA::DynAny::_dispatch (CORBA::ServerRequest &, 
+                                   void *, 
+                                   CORBA::Environment &)
 {
 }
 
@@ -636,9 +636,9 @@ POA_CORBA::DynEnum::_downcast (
 }
 
 void 
-POA_CORBA::DynEnum::_dispatch (CORBA::ServerRequest &req, 
-                               void *context, 
-                               CORBA::Environment &env)
+POA_CORBA::DynEnum::_dispatch (CORBA::ServerRequest &, 
+                               void *, 
+                               CORBA::Environment &)
 {
 }
 
@@ -789,9 +789,9 @@ POA_CORBA::DynStruct::_downcast (
 }
 
 void 
-POA_CORBA::DynStruct::_dispatch (CORBA::ServerRequest &req, 
-                                 void *context, 
-                                 CORBA::Environment &env)
+POA_CORBA::DynStruct::_dispatch (CORBA::ServerRequest &, 
+                                 void *, 
+                                 CORBA::Environment &)
 {
 }
 
@@ -939,9 +939,9 @@ POA_CORBA::DynUnion::_downcast (
   return 0;
 }
 
-void POA_CORBA::DynUnion::_dispatch (CORBA::ServerRequest &req, 
-                                    void *context, 
-                                    CORBA::Environment &env)
+void POA_CORBA::DynUnion::_dispatch (CORBA::ServerRequest &, 
+                                    void *, 
+                                    CORBA::Environment &)
 {
 }
 
@@ -1129,9 +1129,9 @@ POA_CORBA::DynSequence::_downcast (
 }
 
 void 
-POA_CORBA::DynSequence::_dispatch (CORBA::ServerRequest &req, 
-                                   void *context, 
-                                   CORBA::Environment &env)
+POA_CORBA::DynSequence::_dispatch (CORBA::ServerRequest &, 
+                                   void *, 
+                                   CORBA::Environment &)
 {
 }
 
@@ -1280,9 +1280,9 @@ POA_CORBA::DynArray::_downcast (
 }
 
 void 
-POA_CORBA::DynArray::_dispatch (CORBA::ServerRequest &req, 
-                                void *context, 
-                                CORBA::Environment &env)
+POA_CORBA::DynArray::_dispatch (CORBA::ServerRequest &, 
+                                void *, 
+                                CORBA::Environment &)
 {
 }
 

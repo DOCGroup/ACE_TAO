@@ -104,7 +104,7 @@ TAO_DynSequence_i::length (CORBA::Environment &)
 // and copy back, even if the result is only to decrease the size.
 void
 TAO_DynSequence_i::length (CORBA::ULong length,
-                           CORBA::Environment& env)
+                           CORBA::Environment &)
 {
   this->da_members_.size (length);
 }

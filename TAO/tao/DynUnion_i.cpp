@@ -91,7 +91,7 @@ TAO_DynUnion_i::set_as_default (CORBA::Boolean set_as_default,
 }
 
 CORBA_DynAny_ptr
-TAO_DynUnion_i::discriminator (CORBA::Environment&)
+TAO_DynUnion_i::discriminator (CORBA::Environment &)
 {
   return this->discriminator_.in ();
 }
@@ -104,7 +104,7 @@ TAO_DynUnion_i::discriminator_kind (CORBA::Environment& env)
 }
 
 CORBA_DynAny_ptr
-TAO_DynUnion_i::member (CORBA::Environment& env)
+TAO_DynUnion_i::member (CORBA::Environment &)
 {
   return this->member_.in ();
 }
@@ -270,7 +270,7 @@ TAO_DynUnion_i::type (CORBA::Environment &)
 }
 
 CORBA_DynAny_ptr
-TAO_DynUnion_i::current_component (CORBA::Environment &env)
+TAO_DynUnion_i::current_component (CORBA::Environment &)
 {
   return this->member_.in ();
 }
