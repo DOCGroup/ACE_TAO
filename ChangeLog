@@ -1,3 +1,13 @@
+Wed Feb 18 07:04:55 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tests/Dirent_Test.cpp (dirent_count): Rearranged some
+	  code so the test would work.  Thanks to Zvika Ashani
+ 	  <zvika@aspectusvi.com> for reporting this and testing it.
+
+	* ace/os_include/sys/os_stat.h: Changed S_IFLNK to 0200000.
+	  Thanks to Zvika Ashani <zvika@aspectusvi.com> for reporting
+ 	  this and testing it.
+
 Tue Feb 17 19:55:56 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/SOCK_SEQPACK_Connector.cpp:
