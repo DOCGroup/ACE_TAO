@@ -53,7 +53,7 @@ my  $perl_path = '/usr/bin/perl';
 &can_run($perl_path.' -V') ||
   die "$0: perl path is incorrect, please fix the script\n";
 
-my $dot_path = '/project/deuce/gv1.5/bin';
+my $dot_path = '/usr/bin';
 
 &can_run($dot_path.'/dot -V') ||
   die "$0: dot path is incorrect, please fix the script\n";
@@ -71,7 +71,7 @@ my $hostname;
 chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
 unless ("$hostname" eq 'deuce.doc.wustl.edu') {
   #### For efficiency sake . . .
-  die "$0: must run on host deuce.doc\n";
+  die "$0: must run on host deuce.doc.wustl.edu\n";
 }
 
 
