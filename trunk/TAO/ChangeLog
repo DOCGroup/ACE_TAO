@@ -22,6 +22,34 @@ Sat Jul 12 17:43:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  Updated Makefile dependencies.
 
+Sat Jul 12 17:31:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
+
+	* tao/RTScheduling/RTSchedulerC.h:
+	  
+	  Forced the inclusion of RTScheduler.h file instead of directly
+	  including RTSchedulerC.h. This is to ensure RTScheduler is
+	  initialized when the application starts up.
+
+	* tao/RTScheduling/RTScheduler_Loader.cpp:
+
+	  Added debug messages.
+
+	* tao/RTScheduling/RTScheduler_Initializer.cpp:	 
+
+	  Removed unnecessary printf statement. 
+
+	* tao/RTScheduling/Request_Interceptor.cpp:	 	  
+
+	  Added a check to see if the service context received in a
+	  request is what was expected.
+
+  	* tao/RTScheduling/RTScheduler_Initializer.cpp:
+	* tao/RTScheduling/Request_Interceptor.h:	 	  	
+	* tao/RTScheduling/RTScheduler_Manager.h:	 	  		
+	* tao/RTScheduling/Distributable_Thread.h:	 	  			
+
+	  Included RTScheduler.h instead of RTSchedulerC.h.
+	
 Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and pradeep@oomworks.com>
 
 	* RTCORBA thread pools are assigned a single endpoint. When bands are
@@ -154,6 +182,7 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
           - tests/RTCORBA/RTCORBA_tests.dsw
           - $ACE_ROOT/bin/tao_orb_tests.lst	 
 
+	
 Sat Jul 12 11:08:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_constant.cpp:
@@ -808,7 +837,6 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  is Reactor_RefCount_2.
 
 Mon Jul 07 07:46:00 2003  Justin Michel  <michel_j@ociweb.com>
-	
 	* examples/RTCORBA/Activity/Activity.cpp
 	* examples/RTCORBA/Activity/Activity.mpc
 	* examples/RTCORBA/Activity/main.cpp
@@ -1030,7 +1058,9 @@ Thu Jul  3 11:22:47 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	  get rid of warnings regarding which conversion the G++ compiler
 	  was going to choose.
 
+	
 Thu Jul 03 18:53:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 
         * orbsvcs/tests/Event/lib/Consumer.h:
         * orbsvcs/tests/Event/lib/Supplier.h:
