@@ -94,7 +94,7 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
 {
   // Peer hostname is in the <mblk> and the log record data
   // is in its continuation.
-  if (log_file_.send_n (mblk) == -1)
+  if (log_file_->send_n (mblk) == -1)
     return -1;
   if (ACE::debug ()) {
     // Build a CDR stream from the log record data.
