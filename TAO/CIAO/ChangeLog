@@ -1,3 +1,11 @@
+Fri Jan  9 12:25:37 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Union.hpp:
+
+	  Fixed a bug with union member handling in semantic
+	  actions.
+
 Fri Jan  9 12:20:32 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Config.rules:
