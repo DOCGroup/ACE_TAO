@@ -29,7 +29,7 @@ class ACE_Export ACE_Log_Record
 public:
   enum 
   {
-    MAXLOGMSGLEN = BUFSIZ * 4,	
+    MAXLOGMSGLEN = ACE_MAXLOGMSGLEN,
     // Maximum size of a logging message. 
 
     ALIGN_WORDB	 = 8,

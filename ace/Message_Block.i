@@ -10,13 +10,6 @@ ACE_Message_Block::data_block (void) const
   return this->data_block_;
 }
 
-ACE_INLINE void
-ACE_Message_Block::data_block (ACE_Data_Block *db)
-{
-  ACE_TRACE ("ACE_Data_Block::data_block");
-  this->data_block_ = db;
-}
-
 ACE_INLINE char *
 ACE_Data_Block::base (void) const
 { 
@@ -306,22 +299,6 @@ ACE_Message_Block::prev (void) const
 }
 
 ACE_INLINE ACE_Lock *
-ACE_Message_Block::locking_strategy (void) 
-{
-  ACE_TRACE ("ACE_Message_Block::locking_strategy");
-  return this->data_block ()->locking_strategy ();
-}
-
-ACE_INLINE ACE_Lock *
-ACE_Message_Block::locking_strategy (ACE_Lock *nls)
-{
-  ACE_TRACE ("ACE_Message_Block::locking_strategy");
-  ACE_Lock *ols = this->data_block ()->locking_strategy ();
-  this->data_block ()->locking_strategy (nls);
-  return ols;
-}
-
-ACE_INLINE ACE_Lock *
 ACE_Data_Block::locking_strategy (void) 
 {
   ACE_TRACE ("ACE_Data_Block::locking_strategy");
@@ -337,4 +314,21 @@ ACE_Data_Block::locking_strategy (ACE_Lock *nls)
   this->locking_strategy_ = nls;
   return ols;
 }
+
+ACE_INLINE ACE_Lock *
+ACE_Message_Block::locking_strategy (void) 
+{
+  ACE_TRACE ("ACE_Message_Block::locking_strategy");
+  return this->data_block ()->locking_strategy ();
+}
+
+ACE_INLINE ACE_Lock *
+ACE_Message_Block::locking_strategy (ACE_Lock *nls)
+{
+  ACE_TRACE ("ACE_Message_Block::locking_strategy");
+  ACE_Lock *ols = this->data_block ()->locking_strategy ();
+  this->data_block ()->locking_strategy (nls);
+  return ols;
+}
+
 

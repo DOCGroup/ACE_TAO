@@ -17,7 +17,7 @@ operator<< (ostream &stream, const ACE_Time_Value &tv)
 }
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   ACE_Time_Value tv1;
   ACE_Time_Value tv2 (2);

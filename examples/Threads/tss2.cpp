@@ -9,11 +9,8 @@
 //    TSS_Test.cpp
 //
 // = DESCRIPTION
-//     This program tests thread specific storage of data. The ACE_TSS
-//     wrapper transparently ensures that the objects of this class
-//     will be placed in thread-specific storage. All calls on
-//     ACE_TSS::operator->() are delegated to the appropriate method
-//     in the Errno class. 
+//     This program tests various features of ACE_Thread and thread
+//     specific storage of data. 
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
@@ -25,35 +22,33 @@
 
 #if defined (ACE_HAS_THREADS)
 
+const int MAX_TASKS = 4;
+const int MAX_ITERATIONS = 10;
+
 class TSS_Obj
+  // = TITLE
+  //     This object is stored in thread-specific storage.
 {
 public:
-
   TSS_Obj (void);
   ~TSS_Obj (void);
 
 private:
-  static int count_;
-  static ACE_Thread_Mutex  lock_;
+  static ACE_Atomic_Op<ACE_Thread_Mutex, int> count_;
 };
 
-int TSS_Obj::count_ = 0;
-ACE_Thread_Mutex TSS_Obj::lock_;
+ACE_Atomic_Op<ACE_Thread_Mutex, int> TSS_Obj::count_ = 0;
 
 TSS_Obj::TSS_Obj (void)
 {
-  ACE_GUARD (ACE_Thread_Mutex, ace_mon, lock_);
-
-  count_++;
-  cout << "TO+ : " << count_ << endl;
+  TSS_Obj::count_++;
+  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj+: %d\n", (int) TSS_Obj::count_));
 }
 
 TSS_Obj::~TSS_Obj (void)
 {
-  ACE_GUARD (ACE_Thread_Mutex, ace_mon, lock_);
-
-  count_--;
-  cout << "TO- : " << count_ << endl;
+  TSS_Obj::count_--;
+  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj-: %d\n", (int) TSS_Obj::count_));
 }
 
 class Test_Task
@@ -66,78 +61,59 @@ public:
   int open (void *arg);
 
   static void *svc (void *arg);
-  static int wait_count_;
-  static int max_count_;
+
+  static ACE_Atomic_Op<ACE_Token, int> wait_count_;
+  static ACE_Atomic_Op<ACE_Token, int> max_count_;
 
 private:
-  static int count_;
+  static ACE_Atomic_Op<ACE_Token, int> count_;
 };
 
-int Test_Task::count_ = 0;
-int Test_Task::wait_count_ = 0;
-int Test_Task::max_count_ = 0;
-int num_threads_ = 0;
+ACE_Atomic_Op<ACE_Token, int> Test_Task::count_ (0);
+ACE_Atomic_Op<ACE_Token, int> Test_Task::wait_count_ (0);
+ACE_Atomic_Op<ACE_Token, int> Test_Task::max_count_ (0);
+int num_tasks = 0;
 
-ACE_Token token;
+// ACE synchronization object.
+static ACE_Token token;
 
 Test_Task::Test_Task (void)
 {
-  ACE_GUARD (ACE_Token, ace_mon, token);
-
-  count_++;
-  cout << "Test_Task+ : " 
-       << count_ << " (" 
-       << ACE_OS::thr_self () 
-       << ")" << endl;
+  Test_Task::count_++;
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%t) Test_Task+: %d\n", (int) Test_Task::count_));
 }
 
 Test_Task::~Test_Task (void)
 {
-  ACE_GUARD (ACE_Token, ace_mon, token);
+  Test_Task::count_--;
 
-  count_--;
-  cout << "Test_Task- : " 
-       << count_ << " (" 
-       << ACE_OS::thr_self () 
-       << ")" << endl;
-
-  wait_count_--;
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%t) Test_Task-: %d\n", (int) Test_Task::count_));
+  Test_Task::wait_count_--;
 }
 
 void *
 Test_Task::svc (void *arg)
 {
+  // When the thread exits this thread-specific object will be deleted
+  // automatically.
   ACE_TSS<TSS_Obj> tss (new TSS_Obj);
 
-  {
-    ACE_GUARD_RETURN (ACE_Token, ace_mon, token, 0);
+  Test_Task::wait_count_++;
+  Test_Task::max_count_++;
 
-    wait_count_++;
-    max_count_++;
-    cout << "svc: waiting (" << ACE_OS::thr_self () << ")" << endl;
-  }
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting\n"));
 
   while (1)
     {   
-      {
-	ACE_GUARD_RETURN (ACE_Token, ace_mon, token, 0);
-
-	if (max_count_ >= num_threads_)
-	  break;
-	else
-	  {
-	    ace_mon.release ();
-	    ACE_Thread::yield ();
-	    ace_mon.acquire ();
-	  }
-      }
-
-      {
-	ACE_GUARD_RETURN (ACE_Token, ace_mon, token, 0);
-
-	cout << "svc: waiting (" << ACE_OS::thr_self () << ") finished" << endl;
-      }
+      if (Test_Task::max_count_ >= num_tasks)
+	break;
+      else
+	ACE_Thread::yield ();
     }
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished\n"));
 
   delete (Test_Task *) arg;
 
@@ -154,89 +130,59 @@ Test_Task::open (void *arg)
 }
 
 int 
-main (int argc, char **argv)
+main (int argc, char *argv[])
 {
-  if (argc != 2)
+  num_tasks = argc > 1 ? atoi (argv[1]) : MAX_TASKS;
+
+  Test_Task **task_arr;
+  
+  ACE_NEW_RETURN (task_arr, Test_Task *[num_tasks], -1);
+
+  for (int i = 0; i < MAX_ITERATIONS; i++)
     {
-      cout << "Missing parameters!" << endl;
-      return 1;
-    }
+      ACE_DEBUG ((LM_DEBUG, 
+		  "(%t) ********* iteration %d **********\n"
+		  "Test_Task::max_count_ %d\n",
+		  i,
+		  (int) Test_Task::max_count_));
+      Test_Task::max_count_ = 0;
 
-  int num_Tasks = atoi (argv[1]);
-
-  num_threads_ = num_Tasks;
-
-  Test_Task **task_arr = (Test_Task**) new char[sizeof (Test_Task*) * num_Tasks];
-
-  while (1)
-    {
-      {
-	ACE_GUARD_RETURN (ACE_Token, ace_mon, token, -1);
-
-	cout << "ReseTest_Tasking Test_Task::max_count_ from: " 
-	     << Test_Task::max_count_ << endl;
-
-	Test_Task::max_count_ = 0;
-      }
-
-      for (int i = 0; i < num_Tasks; i++)
+      for (int j = 0; j < num_tasks; j++)
 	{
-          task_arr[i] = new Test_Task;
-	  task_arr[i]->open (task_arr[i]);
+          ACE_NEW_RETURN (task_arr[j], Test_Task, -1);
+	  task_arr[j]->open (task_arr[j]);
 	}
 
-      cout << "Waiting for first thread started..." << endl;
+      ACE_DEBUG ((LM_DEBUG, "(%t) waiting for first thread started\n"));
 
       for (;;)
 	{
-	  ACE_GUARD_RETURN (ACE_Token, ace_mon, token, -1);
+	  ACE_Thread::yield ();
 
 	  if (Test_Task::max_count_ != 0 )
-	    {
-	      ace_mon.release ();
-	      ACE_Thread::yield ();
-	      ace_mon.acquire ();
-	      break;
-	    }
-	  ace_mon.release ();
-	  ACE_Thread::yield ();
-	  ace_mon.acquire ();
+	    break;
 	}
 
-      {
-	ACE_GUARD_RETURN (ACE_Token, ace_mon, token, -1);
-
-	cout << "First thread started!" << endl 
-	     << "Waiting for all threads finished..." << endl;
-      }
+      ACE_DEBUG ((LM_DEBUG, "(%t) First thread started\n"
+		  "Waiting for all threads finished\n"));
 
       for (;;)
 	{
-	  ACE_GUARD_RETURN (ACE_Token, ace_mon, token, -1);
-
-	  if (!(Test_Task::max_count_ == num_threads_ 
+	  if (!(Test_Task::max_count_ == num_tasks 
 		&& Test_Task::wait_count_ == 0))
 	    {
-	      ace_mon.release ();
 	      ACE_Thread::yield ();
-	      ace_mon.acquire ();
 	      continue;
 	    }
-
-	  cout << "Test_Task::max_count_ = " 
-	       << Test_Task::max_count_ 
-	       << " Test_Task::wait_count_ = " 
-	       << Test_Task::wait_count_ 
-	       << endl;
+	  ACE_DEBUG ((LM_DEBUG, 
+		      "(%t) Test_Task::max_count_ = %d,"
+		      " Test_Task::wait_count_ = %d",
+		      (int) Test_Task::max_count_,
+		      (int) Test_Task::wait_count_)); 
 	  break;
 	}
 
-      {
-	ACE_GUARD_RETURN (ACE_Token, ace_mon, token, -1);
-	cout << "All threads finished..." << endl;
-      }
-
-      ACE_OS::sleep (2);
+      ACE_DEBUG ((LM_DEBUG, "(%t) all threads finished\n"));
     }
 
   return 0;
@@ -250,3 +196,7 @@ main (int, char *[])
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Atomic_Op<ACE_Token, int>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -28,4 +28,28 @@ ACE_ReactorEx::handle_events (ACE_Time_Value &how_long,
 			      wait_all_callback, alertable);
 }
 
+ACE_INLINE ACE_HANDLE *
+ACE_ReactorEx::handles (void) const
+{
+  return this->handles_;
+}
+
+ACE_INLINE size_t
+ACE_ReactorEx_Handler_Repository::max_handlep1 (void)
+{
+  return this->max_handlep1_;
+}
+
+ACE_INLINE ACE_Event_Handler *
+ACE_ReactorEx_Handler_Repository::find (size_t index)
+{
+  if (this->handle_in_range (index))
+    return this->event_handlers_[i];
+  else
+    {
+      errno = ENOENT;
+      return 0;
+    }
+}
+
 #endif /* ACE_WIN32 */

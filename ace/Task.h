@@ -148,7 +148,7 @@ public:
   // ACE_Task flags.
 
   int grp_id_;
-  // This maintains the group id of the 
+  // This maintains the group id of the Task.
 
 #if defined (ACE_MT_SAFE)
   ACE_Thread_Mutex lock_;

@@ -31,12 +31,11 @@ ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle)
 }
 
 int
-ACE_ReactorEx_Handler_Repository::handle_in_range (ACE_HANDLE handle)
+ACE_ReactorEx_Handler_Repository::handle_in_range (size_t handle_index)
 {
   ACE_TRACE ("ACE_Reactor_Handler_Repository::handle_in_range");
-  // It's too expensive to perform more exhaustive validity checks on
-  // Win32 due to the way that they implement SOCKET HANDLEs.
-  if (handle != ACE_INVALID_HANDLE)
+  if (handle_index >= 0 
+      && handle_index < this->max_size_)
     return 1;
   else
     {
@@ -51,7 +50,7 @@ ACE_ReactorEx_Handler_Repository::open (size_t size)
   this->max_size_ = size;
   this->max_handlep1_ = 0;
   ACE_NEW_RETURN (this->handles_, ACE_HANDLE[size], -1);
-  ACE_NEW_RETURN (this->event_handlers_, ACE_Event_Handler[size], -1);
+  ACE_NEW_RETURN (this->event_handlers_, ACE_Event_Handler *[size], -1);
 
   for (size_t i = 0; i < size; i++)
     {
@@ -62,68 +61,14 @@ ACE_ReactorEx_Handler_Repository::open (size_t size)
   return 0;
 }
 
-int
-ACE_ReactorEx_Handler_Repository::close (void)
-{
-  this->unbind_all ();
-  delete [] this->handles_;
-  delete [] this->event_handlers_;
-  return 0;
-}
-
-int
-ACE_ReactorEx_Handler_Repository::max_handlep1 (void)
-{
-  return this->max_handlep1_;
-}
-
-ACE_Event_Handler *
-ACE_ReactorEx_Handler_Repository::find (size_t index)
-{
-  if (this->handle_in_range (index))
-    return this->event_handlers_[i];
-  else
-    {
-      errno = ENOENT;
-      return 0;
-    }
-}
-
-int
-ACE_ReactorEx_Handler_Repository::bind (ACE_HANDLE handle,
-					ACE_Event_Handler *event_handler)
-{
-  int result = 0;
-
-  if (handle == ACE_INVALID_HANDLE)
-    handle = event_handler->get_handle ();
-
-  // Make sure that the <handle> is valid and that there's room in the
-  // table.
-  if (this->invalid_handle (handle) == 0
-      && this->handle_in_range (this->max_handlep1_))
-    {
-      this->handles_[this->max_handle_] = handle;
-      this->event_handlers_[this->max_handle_] = event_handler;
-      this->max_handlep1_++;
-    }
-  else
-    result = -1;
-
-  // Assign *this* <ReactorEx> to the <Event_Handler>.
-  event_handler->reactorEx (&this->reactor_);
-    
-  return result;
-}
-
 int 
-ACE_ReactorEx_Handler_Repository::remove_handler (int index,
+ACE_ReactorEx_Handler_Repository::remove_handler (size_t index,
 						  ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
     this->event_handlers_[index]->handle_close 
       (this->event_handlers_[index]->get_handle (),
-       ACE_Event_Handler::NULL_MASK);
+       mask);
 
   // If there was only one handle, reset the pointer to 0.
   if (this->max_handlep1_ == 1)
@@ -146,6 +91,56 @@ ACE_ReactorEx_Handler_Repository::remove_handler (int index,
   return 0;
 }
 
+void
+ACE_ReactorEx_Handler_Repository::unbind_all (void)
+{
+  // Remove all the handlers except the 0th one (i.e., the "notify
+  // hook").
+
+  while (this->max_handlep1_ > 1)
+    // Every time this method is called it removes the 2nd handler (in
+    // the 1st slot, starting from 0) and decrements <max_handlep1_>
+    // by 1.  We don't want to remove the first handler, however,
+    // since it's used as the "notify hook."  Therefore, we stop when
+    // <max_handlep1_> == 1.
+    this->remove_handler (1, ACE_Event_Handler::NULL_MASK);
+}
+
+int
+ACE_ReactorEx_Handler_Repository::close (void)
+{
+  this->unbind_all ();
+  delete [] this->handles_;
+  delete [] this->event_handlers_;
+  return 0;
+}
+
+int
+ACE_ReactorEx_Handler_Repository::bind (ACE_HANDLE handle,
+					ACE_Event_Handler *event_handler)
+{
+  int result = 0;
+
+  if (handle == ACE_INVALID_HANDLE)
+    handle = event_handler->get_handle ();
+
+  // Make sure that the <handle> is valid and that there's room in the
+  // table.
+  if (this->invalid_handle (handle) == 0
+      && this->max_handlep1_ < this->max_size_)
+    {
+      this->handles_[this->max_handlep1_] = handle;
+      this->event_handlers_[this->max_handlep1_] = event_handler;
+      this->max_handlep1_++;
+      // Assign *this* <ReactorEx> to the <Event_Handler>.
+      event_handler->reactorEx (&this->reactorEx_);
+    }
+  else
+    result = -1;
+
+  return result;
+}
+
 int
 ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
 					  ACE_Reactor_Mask mask)
@@ -165,6 +160,8 @@ ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
       else
 	i++;
     }
+
+  return 0;
 }
 
 ACE_ReactorEx::ACE_ReactorEx (ACE_Sig_Handler *sh,
@@ -315,7 +312,7 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
 				    wait_all,
 				    alertable);
 
-  return this->dispatch (wait_status, dispatch_set);
+  return this->dispatch (wait_status, wait_all, wait_all_callback, dispatch_set);
 }
 
 int
@@ -331,14 +328,12 @@ ACE_ReactorEx::wait_for_multiple_events (ACE_ReactorEx_Handle_Set &wait_set,
   // Translate into Win32 time value.
   int timeout = wait_time == 0 ? INFINITE : wait_time->msec ();
 
-  DWORD wait_status;
   // Wait for any of handles_ to be active, or until timeout expires.
-  // If wait_all is true, then wait for all handles_ to be active.
-
-  // If <alertable> is enabled allow asynchronous completion of
+  // If wait_all is true, then wait for all handles_ to be active.  If
+  // <alertable> is enabled allow asynchronous completion of
   // ReadFileEx and WriteFileEx operations.
-  return ::WaitForMultipleObjectsEx (this->active_handles_,
-				     this->handles_,
+  return ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
+				     this->handler_rep_.handles (),
 				     wait_all,
 				     timeout,
 				     alertable);
@@ -346,6 +341,7 @@ ACE_ReactorEx::wait_for_multiple_events (ACE_ReactorEx_Handle_Set &wait_set,
 
 int
 ACE_ReactorEx::dispatch (int wait_status,
+			 int wait_all,
 			 ACE_ReactorEx_Handle_Set &dispatch_set)
 {
   // Expire all pending timers.
@@ -374,7 +370,7 @@ ACE_ReactorEx::dispatch_callbacks (ACE_Event_Handler *wait_all_callback)
 {
   if (wait_all_callback != 0)
     {
-      siginfo_t handles (this->handles_);
+      siginfo_t handles (this->handler_rep.handles ());
 
       if (wait_all_callback->handle_signal (0, &handles) == -1)
 	{
@@ -387,7 +383,7 @@ ACE_ReactorEx::dispatch_callbacks (ACE_Event_Handler *wait_all_callback)
     {
       int result = 0;
 
-      for (int i = 0; i < this->active_handles_; i++)
+      for (int i = 0; i < this->max_handlep1_; i++)
 	if (this->dispatch_handler (i) == -1)
 	  result--;
 
@@ -400,12 +396,13 @@ ACE_ReactorEx::dispatch_callbacks (ACE_Event_Handler *wait_all_callback)
 }
 
 // Dispatches any active handles from handles_[-index-] to
-// handles_[active_handles_] using WaitForMultipleObjects to poll
+// handles_[max_handlep1_] using WaitForMultipleObjects to poll
 // through our handle set looking for active handles.
 
 int
 ACE_ReactorEx::dispatch_handles (size_t index)
 {
+
   for (;;)
     {
       // If dispatch_handler returns -1 then a handler was removed and
@@ -414,14 +411,13 @@ ACE_ReactorEx::dispatch_handles (size_t index)
 	index++;
 
       // We're done.
-      if (index >= this->active_handles_)
+      if (index >= this->handler_rep_.max_handlep1 ())
 	return 0;
 
       DWORD wait_status = 
-	::WaitForMultipleObjects (active_handles_ - index,
-				  &handles_[index],
+	::WaitForMultipleObjects (this->handler_rep_.max_handlep1 () - index,
+				  this->handler_rep_.handles () + index,
 				  FALSE, 0); // We're polling.
-
       switch (wait_status)
 	{
 	case WAIT_FAILED: // Failure.
@@ -432,8 +428,9 @@ ACE_ReactorEx::dispatch_handles (size_t index)
 	  return 0;
 	default:  // Dispatch.
 	  // Check if a handle successfully became signaled.
-	  if (wait_status >= WAIT_OBJECT_0 &&
-	      wait_status < WAIT_OBJECT_0 + active_handles_)
+	  if (wait_status >= WAIT_OBJECT_0 
+	      && wait_status < WAIT_OBJECT_0 
+	      + this->handler_rep_.max_handlep1 ())
 	    index += wait_status - WAIT_OBJECT_0;
 	  else
 	    // Otherwise, a handle was abandoned.
@@ -450,12 +447,13 @@ ACE_ReactorEx::dispatch_handler (int index)
 {
   // Assign the ``signaled'' HANDLE so that callers can get
   // it.
-  siginfo_t sig (handles_[index]);
+  ACE_HANDLE handle = *(this->handler_rep_.handles () + index);
+  siginfo_t sig (handle);
 
   // Dispatch the handler.
-  if (event_handlers_[index]->handle_signal (0, &sig) == -1)
+  if (this->handler_rep_.find (index)->handle_signal (0, &sig) == -1)
     {
-      this->remove_handler (event_handlers_[index]);
+      this->handler_rep_.unbind (handle);
       return -1;
     }
   else
@@ -589,7 +587,7 @@ ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh,
       // current time of day.  This is what <ACE_Message_Queue>
       // expects.
       if (timeout != 0)
-	timeout += ACE_OS::gettimeofday ();
+	*timeout += ACE_OS::gettimeofday ();
 
       if (this->message_queue_.enqueue_tail 
 	  (mb, timeout) == -1)

@@ -13,7 +13,8 @@
 //     wrapper transparently ensures that the objects of this class
 //     will be placed in thread-specific storage. All calls on
 //     ACE_TSS::operator->() are delegated to the appropriate method
-//     in the Errno class. 
+//     in the Errno class.  Note that each thread of control has its
+//     own unique TSS object.
 //
 // = AUTHOR
 //    Detlef Becker
@@ -94,25 +95,44 @@ public:
   Tester (void) {}
   ~Tester (void) {}
 
-  virtual int open (void *theArgs = 0);
-  virtual int close (u_long theArg = 0);
+  virtual int svc (void);
+
+  virtual int open (void *args = 0);
+  // Activate the thread.
+
+  virtual int close (u_long args = 0);
 };
+
+template <ACE_SYNCH_1> int 
+Tester<ACE_SYNCH_2>::svc (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: setting error code to 1\n"));
+  TSS_Error->error (1);
+
+  for (int i = 0; i < iterations; i++)
+    // Print out every tenth iteration.
+    if ((i % 10) == 1)
+      ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));  
+
+  return 0;
+}
 
 template <ACE_SYNCH_1> int 
 Tester<ACE_SYNCH_2>::open (void *)
 {
+  // Make this an Active Object.
   return this->activate ();
 }
 
 template <ACE_SYNCH_1>
 int Tester<ACE_SYNCH_2>::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "close running\n!"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) close running\n"));
   close_started = 1;
-  ACE_OS::sleep (2);
-  ACE_DEBUG ((LM_DEBUG, "close: trying to log error code 7!\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) close: setting error code to 7\n"));
   TSS_Error->error (7);
-  ACE_DEBUG ((LM_DEBUG, "close: logging succeeded!\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) close: error = %d\n", TSS_Error->error ()));
+  close_started = 0;
   return 0;
 }
 
@@ -121,16 +141,25 @@ main (int, char *[])
 {
   Tester<ACE_MT_SYNCH> tester;
 
+  ACE_DEBUG ((LM_DEBUG, "(%t) main: setting error code to 3\n"));
+  TSS_Error->error (3);
+  ACE_DEBUG ((LM_DEBUG, "(%t) main: error = %d\n", TSS_Error->error ()));
+
+  // Spawn off a thread and make test an Active Object.
   tester.open ();
 
+  // Keep looping until <Tester::close> is called.
   while (!close_started)
-    continue;
+    ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));
 
-  ACE_DEBUG ((LM_DEBUG, "main: trying to log error code 7!\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) main: setting error code to 4\n"));
+  TSS_Error->error (4);
+  ACE_DEBUG ((LM_DEBUG, "(%t) main: error = %d\n", TSS_Error->error ()));
 
-  TSS_Error->error (3);
+  // Keep looping until <Tester::close> finishes.
+  while (close_started != 0)
+    ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));
 
-  ACE_DEBUG ((LM_DEBUG, "main: logging succeeded!\n"));
   return 0;
 }
 

@@ -24,6 +24,7 @@ ACE_STATIC_SVC_DEFINE (ACE_Naming_Context,
 		       "ACE_Naming_Context", ACE_SVC_OBJ_T, &ACE_SVC_NAME (ACE_Naming_Context),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ, 0)
 
+// Add this to the list of statically configured services.
 ACE_STATIC_SVC_REQUIRE (ACE_Naming_Context)
 
 int
