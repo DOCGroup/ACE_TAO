@@ -173,7 +173,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue (ACE_MESSAGE_TYPE
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue");
 
-  return this->queue_.dequeue (first_item, timeout);
+  return this->dequeue_head (first_item, timeout);
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE ACE_Notification_Strategy *
