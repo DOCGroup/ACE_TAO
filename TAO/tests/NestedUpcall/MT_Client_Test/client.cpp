@@ -25,7 +25,7 @@
 ACE_RCSID(MT_Client_Test, client, "$Id$")
 
 MT_Client_Task::MT_Client_Task (int argc, char **argv,
-				int client_number)
+                                int client_number)
   : argc_ (argc),
     argv_ (argv),
     client_number_ (client_number)
@@ -37,7 +37,7 @@ MT_Client_Task::svc (void)
 {
   if (this->mT_Client_.init (this->argc_,
                              this->argv_,
-			     this->client_number_) == -1)
+                             this->client_number_) == -1)
     return 1;
   else
     return this->mT_Client_.run ();
@@ -183,7 +183,7 @@ MT_Client::~MT_Client (void)
 
 int
 MT_Client::init (int argc, char **argv,
-		 int client_number)
+                 int client_number)
 {
 
   // Make a copy of argv since ORB_init will change it.
@@ -280,7 +280,8 @@ main (int argc, char **argv)
                                                argc,
                                                argv,
                                                &orb_manager);
-  server->activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
+  server->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
+                    ACE_DEFAULT_THREAD_PRIORITY);
 
   // starting the client threads
   MT_Client_Task **clients = new MT_Client_Task*[threads];
@@ -289,7 +290,8 @@ main (int argc, char **argv)
     clients[i] = new MT_Client_Task (argc, argv, i);
 
   for (i = 0; i < threads; i++)
-    clients[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
+    clients[i]->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
+                          ACE_DEFAULT_THREAD_PRIORITY);
 
   int result = ACE_Thread_Manager::instance ()->wait ();
 
@@ -307,4 +309,3 @@ main (int argc, char **argv)
 
   return result;
 }
-
