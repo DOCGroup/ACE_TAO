@@ -12,10 +12,14 @@
 //      ACE_LOG_MSG->msg_ostream (out_stream);
 //    }
 
-#include "ace/stdcpp.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
+#include "ace/stdcpp.h"
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+# include <fstream.h>
+# include <iostream.h>
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 #if defined (ACE_HAS_THREADS)
 
