@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-
+//$Id$
 
 ACE_INLINE ACE_Event_Handler *
 ACE_Notification_Strategy::event_handler (void)
