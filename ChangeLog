@@ -1,3 +1,9 @@
+Wed Jan  1 14:26:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/topinfo_stats.sh: Forgot that we run this scripts in cron
+	  environment. Set the path and other details that would help to
+	  ease things.
+
 Tue Dec 31 21:21:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/generate_topinfo_charts.sh:
