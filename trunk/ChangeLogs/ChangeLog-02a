@@ -1,17 +1,33 @@
+Thu Jun 15 13:15:06 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: fixed 3.1.0 support.  Rely on the
+          GNU compiler version instead of __LYNXOS_SDK_VERSION,
+          because that's not defined with 3.1.0.  And added a
+          declaration of pthread_sigmask (), because that's missing
+          from the system headers.
+
+        * include/makeinclude/platform_lynxos.GNU: fixed 3.1.0 support.
+          Removed the extra $(LYNXTARGET) from the PATH, and
+          added a -I/usr/lynx/$(VERSION)/usr/include (which shouldn't
+          be necessary, but apparently is).
+
+        * ace/OS.i (thr_sigsetmask): don't call ::pthread_sigmask ()
+          if ACE_LACKS_PTHREAD_SIGMASK is defined.
+
 Thu Jun 15 10:28:05 2000  Martin Stack <mstack@cambertx.com>
 
-	* ace/TTY_IO.cpp (control): Added
-  
+        * ace/TTY_IO.cpp (control): Added
+
           dcb.fDtrControl = DTR_CONTROL_ENABLE;
-	  
-	  for Win32 so that it will have the same default semantics as
- 	  Linux.
 
-Thu Jun 15 07:35:57 2000  Roger Larsson <larssoro@hotmail.com> 
+          for Win32 so that it will have the same default semantics as
+          Linux.
 
-	* ace/Process_Manager.cpp: Make sure to grab the lock inside the
-	  terminate() methods and also call remove_proc() rather than
- 	  remove().
+Thu Jun 15 07:35:57 2000  Roger Larsson <larssoro@hotmail.com>
+
+        * ace/Process_Manager.cpp: Make sure to grab the lock inside the
+          terminate() methods and also call remove_proc() rather than
+          remove().
 
 Thu Jun 15 12:41:05 2000  yamuna  <yamuna@cs.wustl.edu>
 
@@ -19,74 +35,74 @@ Thu Jun 15 12:41:05 2000  yamuna  <yamuna@cs.wustl.edu>
 
 Wed Jun 14 18:15:43 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in (ACE_HAS_UCONTEXT_T):
+        * configure.in (ACE_HAS_UCONTEXT_T):
 
-	  Check if ucontext_t gets defined by including <signal.h>, if the
-	  check in <ucontext.h> fails.  Some platforms define ucontext_t
-	  in <sys/ucontext.h>, but ACE doesn't explicitly include that
-	  header.  However, it is very likely that <signal.h> does, either
-	  directly or indirectly.  This should fix a configuration problem
-	  that was occuring on FreeBSD 4.0.
+          Check if ucontext_t gets defined by including <signal.h>, if the
+          check in <ucontext.h> fails.  Some platforms define ucontext_t
+          in <sys/ucontext.h>, but ACE doesn't explicitly include that
+          header.  However, it is very likely that <signal.h> does, either
+          directly or indirectly.  This should fix a configuration problem
+          that was occuring on FreeBSD 4.0.
 
 Wed Jun 14 17:54:18 2000  Ossama Othman  <ossama@uci.edu>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Moved generation of aceConf.sh and ace-config.1 to configure
-	  script.  There was no reason for them to be generated in the
-	  Makefile.  This also fixes a problem where the Solaris sed
-	  command didn't understand a substitution.
+          Moved generation of aceConf.sh and ace-config.1 to configure
+          script.  There was no reason for them to be generated in the
+          Makefile.  This also fixes a problem where the Solaris sed
+          command didn't understand a substitution.
 
-	* acconfig.h (PTHREAD_MIN_PRIORITY, PTHREAD_MAX_PRIORITY):
+        * acconfig.h (PTHREAD_MIN_PRIORITY, PTHREAD_MAX_PRIORITY):
 
-	  Removed macros related to these macros.  The configure script
-	  will automatically add them.
+          Removed macros related to these macros.  The configure script
+          will automatically add them.
 
-	* configure.in:
+        * configure.in:
 
-	  Generate aceConf.sh and ace-config.1 at configure time, rather
-	  than make time.  See above entry for details.
+          Generate aceConf.sh and ace-config.1 at configure time, rather
+          than make time.  See above entry for details.
 
-	  Fixed tests for PTHREAD_MAX_PRIORITY and PTHREAD_MIN_PRIORITY.
-	  These macros should only be used if the sched_get_priority_max()
-	  and sched_get_priority_min() functions are not available.  If
-	  PTHREAD_{MAX,MIN}_PRIORITY isn't available, then check if
-	  PX_PRIO_{MAX,MIN} is available.  If so, then define
-	  PTHREAD_{MAX,MIN}_PRIORITY to be those values.  These changes
-	  fix some configuration problems experienced IRIX.
+          Fixed tests for PTHREAD_MAX_PRIORITY and PTHREAD_MIN_PRIORITY.
+          These macros should only be used if the sched_get_priority_max()
+          and sched_get_priority_min() functions are not available.  If
+          PTHREAD_{MAX,MIN}_PRIORITY isn't available, then check if
+          PX_PRIO_{MAX,MIN} is available.  If so, then define
+          PTHREAD_{MAX,MIN}_PRIORITY to be those values.  These changes
+          fix some configuration problems experienced IRIX.
 
-	  Improved test for ACE_Addr::sap_any support.  ACE_Addr:sap_any
-	  is now passed as an argument to the ACE_FILE_Addr constructor.
+          Improved test for ACE_Addr::sap_any support.  ACE_Addr:sap_any
+          is now passed as an argument to the ACE_FILE_Addr constructor.
 
-	* ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
 
-	  This file was still including a file that was removed from the
-	  distribution, i.e. `ace/Cached_Connect_Strategy_T.i', which
-	  caused compile-time errors to occur when building with inlining
-	  disabled.
+          This file was still including a file that was removed from the
+          distribution, i.e. `ace/Cached_Connect_Strategy_T.i', which
+          caused compile-time errors to occur when building with inlining
+          disabled.
 
 Wed Jun 14 11:55:56 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Cleanup_Strategies_T.cpp:
+        * ace/Cleanup_Strategies_T.cpp:
 
-	  This file was still including a file that was removed from the
-	  distribution, i.e. `ace/Cleanup_Strategies_T.i', which caused
-	  compile-time errors to occur when building with inlining
-	  disabled.
+          This file was still including a file that was removed from the
+          distribution, i.e. `ace/Cleanup_Strategies_T.i', which caused
+          compile-time errors to occur when building with inlining
+          disabled.
 
 Wed Jun 14 10:24:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Logging_Strategy.cpp (handle_timeout): Removed a
-	  couple of non-referenced parameters.  Thanks to David and Yamuna
- 	  for reporting this.
+        * netsvcs/lib/Logging_Strategy.cpp (handle_timeout): Removed a
+          couple of non-referenced parameters.  Thanks to David and Yamuna
+          for reporting this.
 
 Wed Jun 14 07:43:27 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp: Added ACE_TEXT macros
-	  to the appropriate places in this file.
+        * netsvcs/lib/Client_Logging_Handler.cpp: Added ACE_TEXT macros
+          to the appropriate places in this file.
 
-	* netsvcs/lib/Logging_Strategy.cpp: Removed the legacy
-	  ASYS_TEXT and replaced them with ACE_TEXT.
+        * netsvcs/lib/Logging_Strategy.cpp: Removed the legacy
+          ASYS_TEXT and replaced them with ACE_TEXT.
 
 Wed Jun 14 08:30:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -96,42 +112,42 @@ Wed Jun 14 08:30:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Jun 13 17:46:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Connector.cpp:
+        * ace/Connector.cpp:
 
-	  - handle_close(): cleanup_AST() will unbind an entry from the
-	  map.  This change of state in the map invalidates any iterators
-	  currently iterating over the map.  Therefore, the code in
-	  handle_close() was changed such that a new iterator is created
-	  after every call to cleanup_AST().
+          - handle_close(): cleanup_AST() will unbind an entry from the
+          map.  This change of state in the map invalidates any iterators
+          currently iterating over the map.  Therefore, the code in
+          handle_close() was changed such that a new iterator is created
+          after every call to cleanup_AST().
 
-	  - cancel(): Cannot use the <entry> after cleanup_AST() is called
-	  as cleanup_AST() will unbind the <entry> from the map.
+          - cancel(): Cannot use the <entry> after cleanup_AST() is called
+          as cleanup_AST() will unbind the <entry> from the map.
 
-	  Thanks to Roland Fischer <roli@gugus.com> for pointing out this
-	  bug.
+          Thanks to Roland Fischer <roli@gugus.com> for pointing out this
+          bug.
 
 Tue Jun 13 15:31:21 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ltcf-c.sh:
-	* ltcf-cxx.sh:
-	* ltconfig:
-	* ltmain.sh:
+        * ltcf-c.sh:
+        * ltcf-cxx.sh:
+        * ltconfig:
+        * ltmain.sh:
 
-	  Updated to latest upstream versions.
+          Updated to latest upstream versions.
 
 Tue Jun 13 15:51:33 2000  Jerry D. De Master <jdemaste@rite-solutions.com>
 
-	* netsvcs/lib/Logging_Strategy: Enhanced the Logging Strategy so
-	  it can be used to limit log file size at any logging point
- 	  (i.e., application, client logging daemon, or server logging
- 	  daemon) by specifying the -i <sample_interval_in_secs> and -m
- 	  <max_size_in_KB> options for the Logging_Strategy class in a
- 	  svc.conf file.
+        * netsvcs/lib/Logging_Strategy: Enhanced the Logging Strategy so
+          it can be used to limit log file size at any logging point
+          (i.e., application, client logging daemon, or server logging
+          daemon) by specifying the -i <sample_interval_in_secs> and -m
+          <max_size_in_KB> options for the Logging_Strategy class in a
+          svc.conf file.
 
 Tue Jun 13 12:56:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* */Makefile:
-	  Updated dependencies.
+        * */Makefile:
+          Updated dependencies.
 
 Tue Jun 13 09:47:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -264,7 +280,7 @@ Mon Jun 12 18:17:42 2000  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sun Jun 11 18:12:12 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* examples/QOS/QoSEvent.h: Removed a warning on Win2K.
+        * examples/QOS/QoSEvent.h: Removed a warning on Win2K.
 
 Sat Jun 10 23:34:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -289,16 +305,16 @@ Sat Jun 10 20:51:56 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Jun 10 17:33:55 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/Configuration.cpp:
-	  Fixed warnings under Linux/KCC
+        * ace/Configuration.cpp:
+          Fixed warnings under Linux/KCC
 
-	* bin/auto_compile:
-	  Add separators between the different sections of the log.
-	  Darrell script would be able to generate nice color coded
-	  summaries based on that.
+        * bin/auto_compile:
+          Add separators between the different sections of the log.
+          Darrell script would be able to generate nice color coded
+          summaries based on that.
 
-	* include/makeinclude/platform_linux_kcc.GNU:
-	  Add support for the math library.
+        * include/makeinclude/platform_linux_kcc.GNU:
+          Add support for the math library.
 
 Fri Jun 09 11:31:24 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 

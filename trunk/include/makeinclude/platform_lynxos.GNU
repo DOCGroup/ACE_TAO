@@ -51,8 +51,13 @@ ifneq ($(shell uname -s),LynxOS)
   endif # HOST_OS
 
   ifeq (,$(findstring /usr/lynx/$(VERSION)/$(LYNXTARGET),$(PATH)))
-    PATH:=\
+    ifeq ($(VERSION),3.0.0)
+      PATH:=\
 /usr/lynx/$(VERSION)/$(LYNXTARGET)/cdk/$(HOST_OS)-$(LYNXTARGET)/bin:/usr/lynx/$(VERSION)/$(LYNXTARGET)/cdk/$(HOST_OS)-$(LYNXTARGET)/usr/bin:$(PATH)
+    else  # > 3.0.0
+      PATH:=\
+/usr/lynx/$(VERSION)/cdk/$(HOST_OS)-$(LYNXTARGET)/bin:/usr/lynx/$(VERSION)/cdk/$(HOST_OS)-$(LYNXTARGET)/usr/bin:$(PATH)
+    endif # > 3.0.0
   endif # PATH
 endif # ! LynxOS
 
@@ -68,6 +73,10 @@ else
   #### classes, so it can build the TAO tests.
   ACE_HAS_GNUG_PRE_2_8 = 0
 endif # VERSION
+
+ifeq (3.1.0,$(VERSION))
+  CFLAGS += -I/usr/lynx/$(VERSION)/usr/include
+endif # 3.1.0
 
 CC              = gcc
 CXX             = g++
