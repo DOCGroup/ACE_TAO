@@ -30,7 +30,7 @@
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 #define ACE_DEV_CONNECTOR ACE_DEV_Connector
-#define ACE_DEV_STREAM ACE_DEV_Stream
+#define ACE_DEV_STREAM ACE_DEV_IO
 #else /* TEMPLATES are broken (must be a cfront-based compiler...) */
 #define ACE_DEV_CONNECTOR ACE_DEV_Connector, ACE_DEV_Addr
 #define ACE_DEV_STREAM ACE_DEV_Stream, ACE_DEV_Addr
