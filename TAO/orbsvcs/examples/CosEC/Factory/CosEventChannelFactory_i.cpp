@@ -51,9 +51,9 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
   CORBA::PolicyList policy_list;
   policy_list.length (2);
   policy_list [0] =
-    PortableServer::IdUniquenessPolicy::_duplicate (idpolicy);
+    PortableServer::IdUniquenessPolicy::_duplicate (idpolicy.in ());
   policy_list [1] =
-    PortableServer::IdAssignmentPolicy::_duplicate (assignpolicy);
+    PortableServer::IdAssignmentPolicy::_duplicate (assignpolicy.in ());
 
   // Create the child POA.
   this->poa_ = poa->create_POA (child_poa_name,
@@ -225,7 +225,7 @@ TAO_CosEventChannelFactory_i::destroy
         TAO_POA::string_to_ObjectId (channel_id);
 
       CORBA::Object_var obj =
-        this->poa_->id_to_reference (oid,
+        this->poa_->id_to_reference (oid.in (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -288,7 +288,7 @@ TAO_CosEventChannelFactory_i::find
         TAO_POA::string_to_ObjectId (channel_id);
 
       CORBA::Object_var obj =
-        this->poa_->id_to_reference (oid,
+        this->poa_->id_to_reference (oid.in (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
@@ -320,7 +320,7 @@ TAO_CosEventChannelFactory_i::find_channel_id
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      return TAO_POA::ObjectId_to_string (oid);
+      return TAO_POA::ObjectId_to_string (oid.in ());
     }
   ACE_CATCH (CORBA::UserException, ue) // Translate any user exception.
     {
