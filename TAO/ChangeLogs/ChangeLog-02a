@@ -1,3 +1,12 @@
+Mon Nov 20 15:04:34 2000  DOC Group CVS Access  <doccvs@ace.cs.wustl.edu>
+
+	* tests/RTCORBA/Server_Declared/server.conf: 
+	  Updated to provide the right arguments.
+	
+	* tests/RTCORBA/Client_Propagated/svc.conf: 
+	  Not needed. Removed.
+	  (Priyanka)
+  	
 Mon Nov 20 14:54:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/NVList.h:
