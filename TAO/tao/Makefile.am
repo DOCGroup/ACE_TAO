@@ -1037,6 +1037,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/PortableServerC.cpp \
   PortableServer/PortableServer_ORBInitializer.cpp \
   PortableServer/PortableServer_PolicyFactory.cpp \
+  PortableServer/Local_Servant_Base.cpp \
   PortableServer/Servant_Base.cpp \
   PortableServer/Servant_Dispatcher.cpp \
   PortableServer/ServerInterceptorAdapter.cpp \
@@ -1083,6 +1084,7 @@ nobase_include_HEADERS += \
   PortableServer/PortableServer_ORBInitializer.h \
   PortableServer/PortableServer_PolicyFactory.h \
   PortableServer/Servant_Base.h \
+  PortableServer/Local_Servant_Base.h \
   PortableServer/Servant_Dispatcher.h \
   PortableServer/ServerInterceptorAdapter.h \
   PortableServer/ServerRequestInfo.h \
@@ -1103,6 +1105,7 @@ nobase_include_HEADERS += \
   PortableServer/PolicyS_T.inl \
   PortableServer/PortableServerC.inl \
   PortableServer/Servant_Base.i \
+  PortableServer/Local_Servant_Base.inl \
   PortableServer/ServerInterceptorAdapter.inl \
   PortableServer/ServerRequestInfo.inl \
   PortableServer/PolicyS_T.cpp \
