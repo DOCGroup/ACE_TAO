@@ -19,13 +19,15 @@
 #define ACE_FLREACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Select_Reactor.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_FL)
+
+#include "ace/Select_Reactor.h"
 
 /**
  * @class ACE_FlReactor

@@ -14,7 +14,7 @@
 #define ACE_ASYNCH_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +23,7 @@
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
+#include "ace/OS.h"
 #include "ace/Asynch_IO.h"
 
 // Forward declarations

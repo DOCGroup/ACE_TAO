@@ -15,15 +15,17 @@
 #define ACE_UNIX_ADDR_H
 #include "ace/pre.h"
 
-#include "ace/Addr.h"
-#include "ace/Log_Msg.h"
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+
+#include "ace/Addr.h"
+#include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 /**
  * @class ACE_UNIX_Addr

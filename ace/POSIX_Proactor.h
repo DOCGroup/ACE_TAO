@@ -17,12 +17,17 @@
 #ifndef ACE_POSIX_PROACTOR_H
 #define ACE_POSIX_PROACTOR_H
 
-#include "ace/Proactor_Impl.h"
+#include "ace/config-all.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_AIO_CALLS)
 // POSIX implementation of Proactor depends on the <aio_> family of
 // system calls.
 
+#include "ace/Proactor_Impl.h"
 #include "ace/Free_List.h"
 #include "ace/Pipe.h"
 #include "ace/POSIX_Asynch_IO.h"

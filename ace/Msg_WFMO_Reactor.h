@@ -16,13 +16,15 @@
 #define ACE_MSG_WFMO_REACTOR_H
 #include "ace/pre.h"
 
-#include "ace/WFMO_Reactor.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
+
+#include "ace/WFMO_Reactor.h"
 
 /**
  * @class ACE_Msg_WFMO_Reactor

@@ -15,14 +15,16 @@
 #define ACE_XTI_ATM_MCAST_H
 #include "ace/pre.h"
 
-#include "ace/TLI_Connector.h"
-#include "ace/ATM_Addr.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_XTI_ATM)
+
+#include "ace/TLI_Connector.h"
+#include "ace/ATM_Addr.h"
 
 /**
  * @class ACE_XTI_ATM_Mcast
