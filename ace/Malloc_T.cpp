@@ -202,8 +202,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
-                                              LPCTSTR lock_name,
-                                              const ACE_MEM_POOL_OPTIONS *options)
+                                                  LPCTSTR lock_name,
+                                                  const ACE_MEM_POOL_OPTIONS *options)
   : memory_pool_ (pool_name, options),
     lock_ (lock_name != 0 ? lock_name : ACE::basename (pool_name,
                                                        ACE_DIRECTORY_SEPARATOR_CHAR))
@@ -215,8 +215,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
-                                              LPCTSTR lock_name,
-                                              const void *options)
+                                                  LPCTSTR lock_name,
+                                                  const void *options)
   : memory_pool_ (pool_name, (const ACE_MEM_POOL_OPTIONS *) options),
     lock_ (lock_name)
 {
