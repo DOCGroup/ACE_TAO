@@ -1,3 +1,15 @@
+Tue Nov 11 12:20:14 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a bug in the implicitly generated dependencies where actual
+          inter-project dependencies would be abandoned in favor of
+          implicitly generated dependencies.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Make sure that PWD is set before it is used.
+
 Tue Nov 11 17:09:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:
@@ -37,52 +49,52 @@ Mon Nov 10 17:02:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Nov 10 16:43:19 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Acceptor.cpp: Add #include "ace/OS_NS_stdio.h" to get sprintf()
-	  and "ace/OS_NS_string.h" to get strdup().
+        * ace/Acceptor.cpp: Add #include "ace/OS_NS_stdio.h" to get sprintf()
+          and "ace/OS_NS_string.h" to get strdup().
 
-	* ace/Svc_Conf_l.cpp: Add #include "ace/OS_NS_string.h" for strrchr().
+        * ace/Svc_Conf_l.cpp: Add #include "ace/OS_NS_string.h" for strrchr().
 
-	* ace/Synch_Traits.h: Add #include "ace/config-all.h" to find the
-	  template and threads config settings.
+        * ace/Synch_Traits.h: Add #include "ace/config-all.h" to find the
+          template and threads config settings.
 
-	* ace/RMCast/RMCast_UDP_Proxy.cpp:
-	* ace/RMCast/RMCast_IO_UDP.i: Added #include "ace/OS_Memory.h" to
-	  get ACE_NEW_RETURN.
+        * ace/RMCast/RMCast_UDP_Proxy.cpp:
+        * ace/RMCast/RMCast_IO_UDP.i: Added #include "ace/OS_Memory.h" to
+          get ACE_NEW_RETURN.
 
-	* netsvcs/lib/Log_Message_Receiver.h: Add #include of either
-	  "ace/Thread_Mutex.h" or "ace/Null_Mutex.h" for the ACE_Guard
-	  template arg (ACE_SYNCH_MUTEX_T).
+        * netsvcs/lib/Log_Message_Receiver.h: Add #include of either
+          "ace/Thread_Mutex.h" or "ace/Null_Mutex.h" for the ACE_Guard
+          template arg (ACE_SYNCH_MUTEX_T).
 
-	* netsvcs/lib/TS_Clerk_Handler.h: Add #include
-	  "ace/os_include/os_dirent.h" to get MAXNAMLEN.
+        * netsvcs/lib/TS_Clerk_Handler.h: Add #include
+          "ace/os_include/os_dirent.h" to get MAXNAMLEN.
 
-	* netsvcs/lib/TS_Clerk_Handler.cpp: Add #include
-	  "ace/OS_NS_string.h" to get strcat() and "ace/OS_NS_stdio.h" to
-	  get sprintf().
+        * netsvcs/lib/TS_Clerk_Handler.cpp: Add #include
+          "ace/OS_NS_string.h" to get strcat() and "ace/OS_NS_stdio.h" to
+          get sprintf().
 
-	* netsvcs/lib/Client_Logging_Handler.cpp: Add #include
-	  "ace/OS_NS_stdio.h" to get ACE_OS::sprintf().
+        * netsvcs/lib/Client_Logging_Handler.cpp: Add #include
+          "ace/OS_NS_stdio.h" to get ACE_OS::sprintf().
 
-	* netsvcs/lib/Name_Handler.cpp: Add #include "ace/OS_NS_string.h" to
-	  get ACE_OS::strlen().
+        * netsvcs/lib/Name_Handler.cpp: Add #include "ace/OS_NS_string.h" to
+          get ACE_OS::strlen().
 
-	* netsvcs/clients/Naming/Client/Client_Test.cpp: Add #include
-	  "ace/OS_NS_stdio.h" for ACE_OS::fgets(), "ace/OS_NS_unistd.h"
-	  for ACE_OS::getpid(), "ace/OS_NS_string.h" for strtok(), and
-	  "ace/os_include/os_ctype.h" for isupper()/tolower().
+        * netsvcs/clients/Naming/Client/Client_Test.cpp: Add #include
+          "ace/OS_NS_stdio.h" for ACE_OS::fgets(), "ace/OS_NS_unistd.h"
+          for ACE_OS::getpid(), "ace/OS_NS_string.h" for strtok(), and
+          "ace/os_include/os_ctype.h" for isupper()/tolower().
 
-	* netsvcs/client/Naming/Dump_Restore/Dump_Restore.cpp: Add #include
-	  "ace/OS_NS_string.h", "ace/OS_NS_stdio.h", and "ace/OS_NS_unistd.h"
-	  to get missing ACE_OS functions.
+        * netsvcs/client/Naming/Dump_Restore/Dump_Restore.cpp: Add #include
+          "ace/OS_NS_string.h", "ace/OS_NS_stdio.h", and "ace/OS_NS_unistd.h"
+          to get missing ACE_OS functions.
 
-	* tests/Service_Config_DLL.cpp: Add #include "ace/OS_NS_string.h" and
-	  "ace/OS_NS_stdio.h" to get missing ACE_OS functions.
+        * tests/Service_Config_DLL.cpp: Add #include "ace/OS_NS_string.h" and
+          "ace/OS_NS_stdio.h" to get missing ACE_OS functions.
 
 Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi  <kobi@mivzak.com>
 
-	* ace/TSS_T.cpp:
-	  Fix ts_get and ts_object functions to check ts_init() return value,
-	  and return 0 when ts_init failed.
+        * ace/TSS_T.cpp:
+          Fix ts_get and ts_object functions to check ts_init() return value,
+          and return 0 when ts_init failed.
 
 Mon Nov 10 20:15:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -98,8 +110,8 @@ Mon Nov 10 20:15:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Nov 10 16:37:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Reactor/WFMO_Reactor/Removals.cpp:
-	  Added #include ace/Event.h to get ACE_Event
+        * examples/Reactor/WFMO_Reactor/Removals.cpp:
+          Added #include ace/Event.h to get ACE_Event
 
 Mon Nov 10 04:37:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -372,19 +384,19 @@ Sun Nov  9 16:32:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Nov  9 13:27:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-win32-borland.h:
-	  Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+        * ace/config-win32-borland.h:
+          Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 
 Sun Nov  9 13:14:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Makefile.bor:
-	  Added OS_main
+        * ace/Makefile.bor:
+          Added OS_main
 
 Sun Nov  9 00:01:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/fuzz.pl:
+        * bin/fuzz.pl:
 
-	  Fixed a typo. "streams" was spelt as "steams".
+          Fixed a typo. "streams" was spelt as "steams".
 
 Sun Nov  9 04:37:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -396,9 +408,9 @@ Sun Nov  9 04:37:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sat Nov  8 22:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/TkReactor_Test.cpp:
+        * tests/TkReactor_Test.cpp:
 
-	  Fixed a compile error by removing cerr.
+          Fixed a compile error by removing cerr.
 
 Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -579,14 +591,14 @@ Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Nov  9 00:25:57 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/QoS/QoS_Session_Impl.cpp: Add include of OS_NS_arpa_inet.h
-	  to unbreak build.
+        * ace/QoS/QoS_Session_Impl.cpp: Add include of OS_NS_arpa_inet.h
+          to unbreak build.
 
 Sat Nov  8 20:54:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:
           Added the following new fuzz checks:
-        
+
           check_for_dependency_file:  Checks to see if the Makefile uses
           the DEPENDENCY_FILE variable.  If it does, check to see if the
           dependency file is in cvs.  If not, flag it as an error, since
@@ -600,7 +612,7 @@ Sat Nov  8 20:54:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           included.  This files is maintained for backward
           compatibility but should not be included within ACE+TAO since
           it is expensive and often unneeded--include the OS_NS*.h files
-          instead. 
+          instead.
 
           check_for_synch_include: Checks to see if ace/Synch.h or
           ace/Synch_T.h have been included.  These files are maintained
@@ -614,7 +626,7 @@ Sat Nov  8 20:54:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Sat Nov  8 04:52:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * apps/soreduce/Library.h:
-          Added #include streams.h 
+          Added #include streams.h
 
 Sat Nov  8 04:11:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -635,8 +647,8 @@ Fri Nov  7 23:29:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 2003-11-07  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* ace/config-win32-msvc.h:
-	  Added QT_DLL definition.
+        * ace/config-win32-msvc.h:
+          Added QT_DLL definition.
 
 Fri Nov  7 21:09:01 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -651,61 +663,61 @@ Fri Nov  7 21:09:01 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Nov  7 15:21:49 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Connector.cpp: Added #include "ace/os_include/os_fcntl.h" to
-	  get ACE_NONBLOCK, "ace/OS_NS_stdio.h" to get ACE_OS::sprintf(), and
-	  "ace/OS_NS_string.h" to get ACE_OS::strdup().
+        * ace/Connector.cpp: Added #include "ace/os_include/os_fcntl.h" to
+          get ACE_NONBLOCK, "ace/OS_NS_stdio.h" to get ACE_OS::sprintf(), and
+          "ace/OS_NS_string.h" to get ACE_OS::strdup().
 
-	* ace/Service_Config.h:
-	* ACEXML/common/URL_Addr.h: Added #include "ace/Default_Constants.h" to
-	  see ACE_DEFAULT_SERVICE_REPOSITORY_SIZE.
+        * ace/Service_Config.h:
+        * ACEXML/common/URL_Addr.h: Added #include "ace/Default_Constants.h" to
+          see ACE_DEFAULT_SERVICE_REPOSITORY_SIZE.
 
-	* ace/Codeset_Registry.cpp:
-	* ace/Local_Name_Space.cpp:
-	* ace/Local_Name_Space_T.cpp:
-	* ace/Module.i:
-	* ace/Name_Space.cpp:
-	* ace/Naming_Context.cpp:
-	* ace/Obstack_T.cpp:
-	* ace/Parse_Node.cpp:
-	* ace/Remote_Name_Space.cpp:
-	* ace/Service_Config.i:
-	* ace/Service_Manager.cpp:
-	* ace/Service_Types.cpp:
-	* ace/Stream.cpp:
-	* ace/Svc_Conf_y.cpp:
-	* ace/UUID.cpp:
-	* ace/RMCast/RMCast_Partial_Message.cpp:
-	* ACEXML/common/AttributesImpl.i:
-	* ACEXML/common/Encoding.cpp:
-	* ACEXML/common/Exception.cpp:
-	* ACEXML/common/HttpCharStream.cpp:
-	* ACEXML/common/NamespaceSupport.cpp:
-	* ACEXML/common/SAXExceptions.cpp:
-	* ACEXML/common/StrCharStream.cpp:
-	* ACEXML/common/StreamFactory.cpp:
-	* ACEXML/common/Transcode.cpp:
-	* ACEXML/common/URL_Addr.{inl cpp}:
-	* ACEXML/common/XML_Codecs.cpp:
-	* ACEXML/parser/parser/Parser.cpp:
-	* ACEXML/tests/ContentHandler_Test.cpp:
-	* ACEXML/tests/Transcorder_Test.cpp: Add #include "ace/OS_NS_string.h"
-	  to see ACE_OS::strcmp() and friends.
+        * ace/Codeset_Registry.cpp:
+        * ace/Local_Name_Space.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Module.i:
+        * ace/Name_Space.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/Obstack_T.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Service_Config.i:
+        * ace/Service_Manager.cpp:
+        * ace/Service_Types.cpp:
+        * ace/Stream.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * ace/UUID.cpp:
+        * ace/RMCast/RMCast_Partial_Message.cpp:
+        * ACEXML/common/AttributesImpl.i:
+        * ACEXML/common/Encoding.cpp:
+        * ACEXML/common/Exception.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/NamespaceSupport.cpp:
+        * ACEXML/common/SAXExceptions.cpp:
+        * ACEXML/common/StrCharStream.cpp:
+        * ACEXML/common/StreamFactory.cpp:
+        * ACEXML/common/Transcode.cpp:
+        * ACEXML/common/URL_Addr.{inl cpp}:
+        * ACEXML/common/XML_Codecs.cpp:
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/tests/ContentHandler_Test.cpp:
+        * ACEXML/tests/Transcorder_Test.cpp: Add #include "ace/OS_NS_string.h"
+          to see ACE_OS::strcmp() and friends.
 
-	* ace/RMCast/RMCast_Reordering.cpp: Added #include "ace/Guard_T.h" to
-	  see ACE_Guard.
+        * ace/RMCast/RMCast_Reordering.cpp: Added #include "ace/Guard_T.h" to
+          see ACE_Guard.
 
-	* ACEXML/tests/HttpCharStream_Test.cpp:
-	  Added #include "ace/OS_NS_stdio.h" to get ACE_OS::printf().
+        * ACEXML/tests/HttpCharStream_Test.cpp:
+          Added #include "ace/OS_NS_stdio.h" to get ACE_OS::printf().
 
 Fri Nov  7 11:21:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.cpp:
 
-	  Fixed a typo in the comments.
-	
-	* ace/Message_Block.cpp: 
+          Fixed a typo in the comments.
 
-	  Removed unnecessary lines.
+        * ace/Message_Block.cpp:
+
+          Removed unnecessary lines.
 
 Fri Nov  7 17:11:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -721,8 +733,8 @@ Fri Nov  7 17:11:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Nov  7 11:28:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/Vector_Test.cpp: Added tests of the equality and inequality
-	  operators.
+        * tests/Vector_Test.cpp: Added tests of the equality and inequality
+          operators.
 
 Fri Nov  7 06:50:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -826,16 +838,16 @@ Fri Nov  7 00:51:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Nov  6 17:04:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/INET_Addr.cpp (set_address): 
- 
-	  Applied patches from Bryan Buesker which basically just changes
-	  the semantics of ACE_INET_Addr::set_address when map is set to
-	  1. Previously, if map was non-zero, len was 4, and the  type was
-	  already set to AF_INET for the ACE_INET_Addr, then the address
-	  would not be set to an IPv4-mapped IPv6 address. It is probably
-	  more desirable for the map argument to force the  address to be
-	  an IPv4  mapped IPv6 address in this case (regardless of the
-	  current type of  the address). 
+        * ace/INET_Addr.cpp (set_address):
+
+          Applied patches from Bryan Buesker which basically just changes
+          the semantics of ACE_INET_Addr::set_address when map is set to
+          1. Previously, if map was non-zero, len was 4, and the  type was
+          already set to AF_INET for the ACE_INET_Addr, then the address
+          would not be set to an IPv4-mapped IPv6 address. It is probably
+          more desirable for the map argument to force the  address to be
+          an IPv4  mapped IPv6 address in this case (regardless of the
+          current type of  the address).
 
 Thu Nov  6 17:57:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -886,10 +898,10 @@ Thu Nov  6 16:40:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Nov  6 10:12:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/INET_Addr.cpp:
+        * ace/INET_Addr.cpp:
 
           Added patch from Bryan Bruesker to use ACE_OS::if_nametoindex ()
-	  instead of plain if_nametoindex ().
+          instead of plain if_nametoindex ().
 
 Thu Nov  6 09:50:34 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -3320,10 +3332,10 @@ Thu Oct 16 17:56:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 16 15:36:22 2003  Steve Huston  <shuston@riverace.com>
 
-	* bin/PerlACE/Process_Win32.pm: For testing using Pocket Controller,
-	  use "start/wait" instead of running the command and sleeping. Gets
-	  the tests run quicker and more reliably. Requires Pocket Controller
-	  Enterprise V4.01 or higher.
+        * bin/PerlACE/Process_Win32.pm: For testing using Pocket Controller,
+          use "start/wait" instead of running the command and sleeping. Gets
+          the tests run quicker and more reliably. Requires Pocket Controller
+          Enterprise V4.01 or higher.
 
 Thu Oct 16 09:03:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -938,7 +938,8 @@ sub add_implicit_project_dependencies {
           my($append) = $generator->translate_value('after', $key);
           my($file)   = $self->{'project_file_list'}->{$ikey}->[0];
           my($dir)    = $self->{'project_file_list'}->{$ikey}->[1];
-
+          my($cfile)  = $self->escape_regex_special(
+                              $generator->translate_value('after', $ikey));
           ## Remove our starting directory from the projects directory
           ## to get the right part of the directory to prepend.
           $dir =~ s/^$cwd[\/\\]*//;
@@ -946,8 +947,22 @@ sub add_implicit_project_dependencies {
             $file = "$dir/$file";
           }
 
-          ## Append the dependency
-          $self->{'project_info'}->{$file}->[1] .= " $append";
+          ## Turn the append value into a key for 'project_info'
+          my($ccheck) = $append;
+          $ccheck =~ s/"//g;
+          if ($dir ne '') {
+            $ccheck = "$dir/$ccheck";
+          }
+
+          ## If the append value key contains a reference to the project
+          ## that we were going to append the dependency value, then
+          ## ignore the generated dependency.  It is redundant and
+          ## quite possibly wrong.
+          if (defined $self->{'project_info'}->{$ccheck} &&
+              $self->{'project_info'}->{$ccheck}->[1] !~ /$cfile/) {
+            ## Append the dependency
+            $self->{'project_info'}->{$file}->[1] .= " $append";
+          }
         }
       }
     }
