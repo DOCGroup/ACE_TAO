@@ -1,3 +1,8 @@
+Wed Jun 17 17:07:12 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/README: Updated the options and
+ 	explanation of the options.
+
 Wed Jun 17 16:58:26 1998 Michael Kircher <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/start_services: Moved this file form 
