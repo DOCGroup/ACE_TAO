@@ -50,8 +50,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
 .obj/LoadBalancer.o .obj/LoadBalancer.so .shobj/LoadBalancer.o .shobj/LoadBalancer.so: LoadBalancer.cpp LoadBalancer.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -360,7 +360,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h \
@@ -370,8 +370,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
 .obj/LoadBalancer_Service.o .obj/LoadBalancer_Service.so .shobj/LoadBalancer_Service.o .shobj/LoadBalancer_Service.so: LoadBalancer_Service.cpp LoadBalancer.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -680,7 +680,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h \
