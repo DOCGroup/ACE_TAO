@@ -6,12 +6,13 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/Log_Msg.h"
-#include "ace/OS.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/MEM_Addr.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (ace,
 	   MEM_Addr,

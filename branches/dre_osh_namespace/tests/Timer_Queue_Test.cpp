@@ -33,6 +33,7 @@
 #include "ace/Timer_Queue.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Timer_Queue_Test, "$Id$")
 

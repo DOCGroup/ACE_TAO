@@ -24,8 +24,7 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
-#include "ace/OS_String.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Dirent.h"
 #include "ace/Dirent_Selector.h"
 
@@ -47,13 +46,13 @@ static int entrycount = 0;
 static int
 selector (const dirent *d)
 {
-  return ACE_OS_String::strcmp (d->d_name, ACE_TEXT (TEST_ENTRY)) == 0;
+  return ACE_OS::strcmp (d->d_name, ACE_TEXT (TEST_ENTRY)) == 0;
 }
 
 static int
 comparator (const dirent **d1, const dirent **d2)
 {
-  return ACE_OS_String::strcmp ((*d1)->d_name, (*d2)->d_name);
+  return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
 
 static int

@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
-
 /**
  * @class ACE_IO_Cntl_Msg
  *
@@ -48,7 +46,7 @@ public:
     MOD_UNLINK = 6 
   };
 
-  typedef u_short ACE_IO_Cntl_Cmds;
+  typedef unsigned short ACE_IO_Cntl_Cmds;
 
   // = Initialization method.
   /// Initialize the control message.

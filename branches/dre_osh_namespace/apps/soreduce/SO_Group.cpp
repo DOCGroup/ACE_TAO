@@ -1,9 +1,8 @@
 
-#include <ace/OS.h>
-#include <ace/Log_Msg.h>
+#include "ace/Log_Msg.h"
 
-#include <ace/Process.h>
-#include <ace/Pipe.h>
+#include "ace/Process.h"
+#include "ace/Pipe.h"
 
 #include "Library.h"
 #include "SO_Group.h"

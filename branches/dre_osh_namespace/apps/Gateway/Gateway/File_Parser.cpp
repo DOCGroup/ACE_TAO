@@ -4,7 +4,7 @@
 
 #define FILE_PARSER_C
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

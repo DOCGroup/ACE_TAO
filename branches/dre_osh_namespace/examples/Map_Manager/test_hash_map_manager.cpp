@@ -1,9 +1,11 @@
 // $Id$
 
+#include "ace/OS_main.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/ACE.h"
 #include "ace/SString.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Map_Manager, test_hash_map_manager, "$Id$")
 

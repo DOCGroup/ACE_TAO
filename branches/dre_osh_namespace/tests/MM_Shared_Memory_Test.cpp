@@ -23,11 +23,11 @@
 
 #include "test_config.h"
 #include "ace/Shared_Memory_MM.h"
-#include "ace/Synch.h"
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/Process_Semaphore.h"
 #include "ace/Thread_Manager.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
 
@@ -202,7 +202,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Temporary path too long\n")), -1);
 
   // Add the filename to the end
-  ACE_OS_String::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
+  ACE_OS::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
 
   // Store in the global variable.
   shm_key = temp_file;

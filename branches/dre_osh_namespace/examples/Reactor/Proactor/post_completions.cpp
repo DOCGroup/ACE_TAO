@@ -31,6 +31,7 @@
 //
 // =====================================================================
 
+#include "ace/OS_main.h"
 #include "ace/Proactor.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"

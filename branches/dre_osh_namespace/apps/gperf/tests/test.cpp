@@ -5,7 +5,8 @@
 // The -v option prints diagnostics as to whether a word is in the set
 // or not.  Without -v the program is useful for timing.
   
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(tests, test, "$Id$")
 
@@ -25,9 +26,9 @@ main (int argc, char *argv[])
       int len = ACE_OS::strlen (buf) - 1;
       buf[len] = '\0';
       if (in_word_set (buf, len) && verbose)
-        printf ("in word set %s\n", buf);
+        ACE_OS::printf ("in word set %s\n", buf);
       else if (verbose) 
-        printf ("NOT in word set %s\n", buf);
+        ACE_OS::printf ("NOT in word set %s\n", buf);
     }
 
   return 0;

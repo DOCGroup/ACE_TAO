@@ -20,7 +20,8 @@
 
 #ifdef __cplusplus
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/Object_Manager.h"
 
 /* Use prototypes in function declarations. */

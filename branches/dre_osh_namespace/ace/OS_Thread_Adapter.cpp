@@ -1,8 +1,6 @@
 // $Id$
 
 #include "ace/OS_Thread_Adapter.h"
-#include "ace/Thread_Hook.h"
-#include "ace/OS.h"
 
 ACE_RCSID (ace,
            OS_Thread_Adapter,
@@ -11,6 +9,10 @@ ACE_RCSID (ace,
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
+
+#include "ace/Thread_Hook.h"
+#include "ace/Object_Manager_Base.h"
+#include "ace/Global_Macros.h"
 
 ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
      ACE_THR_FUNC user_func

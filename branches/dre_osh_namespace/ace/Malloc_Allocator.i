@@ -1,9 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/OS.h"
 #include "ace/os_include/os_errno.h"
 #include "ace/Log_Msg.h"  // for ACE_ASSERT
+#include "ace/OS_NS_string.h"
 
 ACE_INLINE void *
 ACE_New_Allocator::calloc (size_t n_elem, size_t elem_size, char initial_value)

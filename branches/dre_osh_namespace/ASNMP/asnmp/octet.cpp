@@ -33,8 +33,12 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-#include "ace/OS.h"
 #include "asnmp/octet.h"    // include definition for octet class
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
+#include "ace/os_include/os_ctype.h"
 
 ACE_RCSID(asnmp, octet, "$Id$")
 
@@ -477,7 +481,7 @@ const char  * OctetStr::to_string()
   for ( unsigned long i=0; i < smival.value.string.len; i++) {
     if (( smival.value.string.ptr[i] != '\r')&&
                 ( smival.value.string.ptr[i] != '\n')&&
-                (isprint((int) (smival.value.string.ptr[i]))==0))
+                (ACE_OS::ace_isprint((int) (smival.value.string.ptr[i]))==0))
          return(to_string_hex());
   }
 
@@ -587,7 +591,7 @@ const char *OctetStr::to_string_hex()
 #endif // _WIN32
 
     ACE_OS::sprintf(line_ptr, fmt, char_buf);
-    line_ptr += 3 + strlen(char_buf);
+    line_ptr += 3 + ACE_OS::strlen(char_buf);
   }
 
   return output_buffer;

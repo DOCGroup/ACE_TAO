@@ -21,7 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/os_include/sys/os_ipc.h"
+#include "ace/os_include/sys/os_sem.h"
+#include "ace/Default_Constants.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_PSOS)
    // Default semaphore key and mutex name

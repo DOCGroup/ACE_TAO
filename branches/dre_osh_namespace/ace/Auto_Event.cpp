@@ -9,6 +9,18 @@
 
 ACE_RCSID(ace, Auto_Event, "$Id$")
 
+ACE_Auto_Event::ACE_Auto_Event (int initial_state,
+                                int type,
+                                const char *name,
+                                void *arg)
+  : ACE_Event (0,
+               initial_state,
+               type,
+               ACE_TEXT_CHAR_TO_TCHAR (name),
+               arg)
+{
+}
+
 #if defined (ACE_HAS_WCHAR)
 ACE_Auto_Event::ACE_Auto_Event (int initial_state,
                                 int type,

@@ -2,6 +2,7 @@
 
 // Tests out the Internet domain IPC-SAP dgram abstraction.
 
+#include "ace/OS_main.h"
 #include "ace/Mem_Map.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"

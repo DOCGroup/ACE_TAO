@@ -29,7 +29,7 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_sys_utsname.h"
 #include "ace/INET_Addr.h"
 
 ACE_RCSID(tests, Enum_Interfaces_Test, "$Id$")

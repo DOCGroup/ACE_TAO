@@ -34,7 +34,6 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#include "ace/OS.h"
 #include "ace/streams.h"
 
 #if defined (ACE_HAS_STRING_CLASS)

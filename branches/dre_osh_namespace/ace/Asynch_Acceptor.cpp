@@ -15,7 +15,6 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"

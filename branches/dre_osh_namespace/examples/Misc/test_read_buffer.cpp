@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_main.h"
 #include "ace/Malloc_Base.h"
 #include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"

@@ -17,7 +17,7 @@
 #ifndef _FILE_PARSER
 #define _FILE_PARSER
 
-#include "ace/OS.h"
+#include "ace/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

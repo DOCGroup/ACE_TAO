@@ -1,6 +1,13 @@
 // $Id$
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/Default_Constants.h"
 
 ACE_RCSID(SOCK_SAP, C_inclient, "$Id$")
 

@@ -122,7 +122,22 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Atomic_Op.cpp
       Process.cpp
       Process_Manager.cpp
-      Synch.cpp
+      //Synch.cpp
+      TSS_Adapter.cpp
+      Auto_Event.cpp
+      Manual_Event.cpp
+      Barrier.cpp
+      Condition_Thread_Mutex.cpp
+      Condition_Recursive_Thread_Mutex.cpp
+      Event.cpp
+      Lock.cpp
+      Mutex.cpp
+      RW_Mutex.cpp
+      RW_Thread_Mutex.cpp
+      Recursive_Thread_Mutex.cpp
+      Semaphore.cpp
+      Thread_Mutex.cpp
+      Thread_Semaphore.cpp
       Synch_Options.cpp
       Process_Semaphore.cpp
       Process_Mutex.cpp

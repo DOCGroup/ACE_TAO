@@ -1,6 +1,10 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_Thread.h"
+#include "ace/os_include/os_ctype.h"
+
 // Wrappers for methods that have been moved to ACE_OS.
 
 ASYS_INLINE ssize_t

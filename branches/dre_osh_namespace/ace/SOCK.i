@@ -3,6 +3,8 @@
 
 // SOCK.i
 
+#include "OS_NS_sys_socket.h"
+
 ASYS_INLINE
 ACE_SOCK::~ACE_SOCK (void)
 {

@@ -4,7 +4,6 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/OS.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Asynch_IO.h"
@@ -386,7 +385,7 @@ int AIO_Client_Logging_Daemon::init
   u_short cld_port = ACE_DEFAULT_SERVICE_PORT;
   u_short sld_port = ACE_DEFAULT_LOGGING_SERVER_PORT;
   ACE_TCHAR sld_host[MAXHOSTNAMELEN];
-  ACE_OS_String::strcpy (sld_host, ACE_LOCALHOST);
+  ACE_OS::strcpy (sld_host, ACE_LOCALHOST);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:r:s:"), 0);
   get_opt.long_option (ACE_TEXT ("client_port"), 'p',
@@ -407,7 +406,7 @@ int AIO_Client_Logging_Daemon::init
         (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 's': // Server logging daemon hostname.
-      ACE_OS_String::strsncpy
+      ACE_OS::strsncpy
         (sld_host, get_opt.opt_arg (), MAXHOSTNAMELEN);
       break;
     }

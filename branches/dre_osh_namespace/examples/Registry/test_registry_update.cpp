@@ -13,7 +13,7 @@
 // Note that this application will not work with remote registries
 // if used with the CURRENT_USER predefined registry.
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
 

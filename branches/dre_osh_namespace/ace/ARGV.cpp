@@ -10,7 +10,9 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID(ace, ARGV, "$Id$")
 

@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/os_include/os_ctype.h"
+
 ACE_INLINE int
 ACE_OS::ace_isprint (const ACE_TCHAR c)
 {

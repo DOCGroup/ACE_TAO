@@ -23,7 +23,7 @@
 
 #include "ACEXML/common/XML_Types.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
+#include "ace/Null_Mutex.h"
 
 typedef ACE_Hash_Map_Entry<ACEXML_String,
                            ACEXML_String> ACEXML_ENTITY_ENTRY;

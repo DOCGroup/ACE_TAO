@@ -124,14 +124,14 @@ ACE_OS::uname (ACE_utsname *name)
           break;
 #     if defined PROCESSOR_ARCHITECTURE_IA64
         case PROCESSOR_ARCHITECTURE_IA64:
-          ACE_OS_String::strcpy (processor, ACE_LIB_TEXT ("Itanium"));
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("Itanium"));
           ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"),
                            sinfo.wProcessorLevel);
           break;
 #     endif
 #     if defined PROCESSOR_ARCHITECTURE_ARM
         case PROCESSOR_ARCHITECTURE_ARM:
-          ACE_OS_String::strcpy (processor, ACE_LIB_TEXT ("ARM"));
+          ACE_OS::strcpy (processor, ACE_LIB_TEXT ("ARM"));
           ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"),
                            sinfo.wProcessorLevel);
           break;

@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if 0
+
 /* All the classes have been moved out into their own headers as part of
    the compile-time and footprint reduction effort. */
 
@@ -59,6 +61,8 @@
 # include "ace/RW_Process_Mutex.h"
 # include "ace/Test_and_Set.h"
 #endif  /* ACE_LEGACY_MODE */
+
+#endif /* 0 */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SYNCH_H */

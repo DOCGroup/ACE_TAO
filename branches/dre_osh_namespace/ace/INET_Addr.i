@@ -3,7 +3,8 @@
 
 // INET_Addr.i
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
+#include "ace/Global_Macros.h"
 
 // Default dtor.
 ACE_INLINE

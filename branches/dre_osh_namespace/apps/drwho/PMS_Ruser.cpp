@@ -5,6 +5,8 @@
 #include "PMS_Ruser.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_pwd.h"
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on
@@ -86,7 +88,7 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
     np->set_real_name ("");
   else
     {
-      passwd *pwent = getpwnam (np->get_login_name ());
+      passwd *pwent = ACE_OS::getpwnam (np->get_login_name ());
       char *cp =
         (char *) ACE_OS::strchr (np->set_real_name (pwent == 0
                                                     ? np->get_login_name ()

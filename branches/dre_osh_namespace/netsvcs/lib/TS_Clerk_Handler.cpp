@@ -4,6 +4,7 @@
 
 #include "ace/Get_Opt.h"
 #include "TS_Clerk_Handler.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(lib, TS_Clerk_Handler, "$Id$")
 

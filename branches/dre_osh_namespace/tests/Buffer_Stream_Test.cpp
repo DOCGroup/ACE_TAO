@@ -26,6 +26,7 @@
 #include "ace/Stream.h"
 #include "ace/Module.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(tests, Buffer_Stream_Test, "$Id$")
 

@@ -39,6 +39,9 @@
 #include "asnmp/oid.h"         // include oid class defs
 #include "asnmp/vb.h"                  // include vb class defs
 #include "asnmp/snmperrs.h"      // error codes
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID(asnmp, vb, "$Id$")
 
@@ -385,7 +388,7 @@ int operator==( const Vb &lhs, const Vb &rhs)
        return 0;
 
   if (lhs.iv_vb_value_ != 0 && rhs.iv_vb_value_ != 0) {
-     int val = strcmp(lhs.iv_vb_value_->to_string(),
+     int val = ACE_OS::strcmp(lhs.iv_vb_value_->to_string(),
               rhs.iv_vb_value_->to_string());
      return !val;
    }

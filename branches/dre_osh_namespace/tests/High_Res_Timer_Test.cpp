@@ -20,6 +20,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, High_Res_Timer_Test, "High_Res_Timer_Test.cpp,v 4.6 2000/04/23 04:43:58 brunsch Exp")
 

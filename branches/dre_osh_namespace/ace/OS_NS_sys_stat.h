@@ -25,7 +25,7 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_stat.h"
+#include "ace/os_include/sys/os_types.h"
 #include "ace/Default_Constants.h" // for ACE_DEFAULT_DIR_PERMS
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)

@@ -26,7 +26,9 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Message_Queue.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Null_Condition.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Message_Block.h"
 #include "Message_Queue_Test_Ex.h"    // Declares User_Class

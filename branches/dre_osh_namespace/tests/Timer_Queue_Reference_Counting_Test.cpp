@@ -27,6 +27,7 @@
 #include "ace/Reactor.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Timer_Queue_Reference_Counting_Test, "$Id$")
 

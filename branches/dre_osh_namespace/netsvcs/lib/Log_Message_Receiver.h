@@ -23,7 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Guard_T.h"
 
 // ==========================================================================//
 //------------- General Requirements on a Log Message Receiver --------------//

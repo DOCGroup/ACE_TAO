@@ -25,7 +25,6 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_string.h"
 #include "ace/Basic_Types.h" // to get ACE_WCHAR_T,
                             // should be in os_stddef.h or not used like this.
 

@@ -14,6 +14,11 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Stats.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 

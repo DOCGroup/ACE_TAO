@@ -10,7 +10,7 @@ ACE_RCSID (ace,
            Argv_Type_Converter,
            "$Id$")
 
-#include "ace/OS_String.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_Errno.h"
 
 #if defined (ACE_USES_WCHAR)
@@ -28,7 +28,7 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter(int &argc, wchar_t** argv)
   for (int i = 0; i < argc; ++i)
     {
       this->char_argv_[i] =
-        ACE_OS_String::strdup (ACE_TEXT_ALWAYS_CHAR (argv[i]));
+        ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (argv[i]));
     }
 }
 #endif  // ACE_USES_WCHAR
@@ -49,7 +49,7 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter(int &argc, char** argv)
   for (int i = 0; i < argc; ++i)
     {
       this->wchar_argv_[i] =
-        ACE_OS_String::strdup (ACE_TEXT_ANTI_TO_TCHAR (argv[i]));
+        ACE_OS::strdup (ACE_TEXT_ANTI_TO_TCHAR (argv[i]));
     }
 }
 #else
@@ -117,14 +117,14 @@ ACE_Argv_Type_Converter::align_char_with_wchar (void)
   while (wchar_argv_index < this->saved_argc_)
     {
       // if n'th entries of both argv lists are different
-      if (ACE_OS_String::strcmp(this->char_argv_[wchar_argv_index],
+      if (ACE_OS::strcmp(this->char_argv_[wchar_argv_index],
                                 ACE_TEXT_ALWAYS_CHAR (match_argv)) != 0)
         {
           // loop through the wchar argv list entries that are after
           // wchar_argv_index
           for (int i = wchar_argv_index + 1; i < before_pass_argc_; ++i)
             {
-              if (ACE_OS_String::strcmp (this->char_argv_[i],
+              if (ACE_OS::strcmp (this->char_argv_[i],
                                          ACE_TEXT_ALWAYS_CHAR (match_argv))
                   == 0)
                 {
@@ -153,7 +153,7 @@ ACE_Argv_Type_Converter::align_wchar_with_char (void)
   while (char_argv_index < saved_argc_)
     {
       // if n'th entries of both argv lists are different
-      if (ACE_OS_String::strcmp (
+      if (ACE_OS::strcmp (
             ACE_TEXT_ALWAYS_CHAR (this->wchar_argv_[char_argv_index]),
             match_argv) != 0)
         {
@@ -161,7 +161,7 @@ ACE_Argv_Type_Converter::align_wchar_with_char (void)
           // wchar_argv_index
           for (int i = char_argv_index + 1; i < this->before_pass_argc_; ++i)
             {
-              if (ACE_OS_String::strcmp (
+              if (ACE_OS::strcmp (
                     ACE_TEXT_ALWAYS_CHAR(this->wchar_argv_[i]),
                     match_argv) == 0) {
                 // swap the pointers in the char argv list

@@ -22,8 +22,9 @@
 #include "basic_func.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_utsname.h"
 
 ACE_RCSID(Misc, basic_perf, "$Id$")
 

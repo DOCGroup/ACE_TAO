@@ -6,6 +6,7 @@
 #include "PMC_All.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 // This function is pretty much a no-op that just sets up the
 // appropriate lookup function to use.

@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "ace/OS_main.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
@@ -23,6 +24,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS_NS_string.h"
 // FUZZ: disable check_for_math_include
 #include <math.h>
 

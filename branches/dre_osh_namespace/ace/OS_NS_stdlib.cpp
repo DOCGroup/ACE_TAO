@@ -9,6 +9,8 @@ ACE_RCSID(ace, OS_NS_stdlib, "$Id$")
 # include "ace/OS_NS_stdlib.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#include "ace/OS_Memory.h"
+
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
 
 void *
