@@ -1,3 +1,19 @@
+Wed Nov 27 22:38:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Connector.h:
+	* ace/Connector.cpp: Fix for BUG 1361. Please see 
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361 for
+	  more details on the problem.
+
+	  The fix is based on the assumption that ACE_Connector need not
+	  be resumed by the TP_Reactor when used for asynch connects.
+	  The supporting reason for this assumption is that during
+	  connection completion or connection closure, the  handler
+	  ie. the ACE_Connector in this case is removed from the
+	  Reactor. Hence this fix, which essentially implements the
+	  virtual function resume_handler () and prevents itself from
+	  being resumed. Thaks to Irfan for reviewing the fix.
+	  
 Wed Nov 27 20:35:49 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_ibm.GNU: Add Visual Age C++ 6 to

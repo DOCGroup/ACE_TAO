@@ -362,6 +362,12 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_output (ACE_HANDLE hand
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
+ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::resume_handler (void)
+{
+  return ACE_Event_Handler::ACE_EVENT_HANDLER_NOT_RESUMED;
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
 ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_exception (ACE_HANDLE h)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_exception");

@@ -293,6 +293,8 @@ protected:
   /// Called by ACE_Reactor when asynchronous connections succeed.
   virtual int handle_output (ACE_HANDLE);
 
+  virtual int resume_handler (void);
+
   /// Called by ACE_Reactor when asynchronous connections complete (on
   /// some platforms only).
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
