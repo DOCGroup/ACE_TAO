@@ -1,3 +1,11 @@
+Fri May 18 10:50:55 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * Configuration.cpp:
+
+          Reverted a change made to the validate_name() function that
+          added '/' as an illegal character. This breaks the Interface
+          Repository completely.
+
 Fri May 18 06:11:49 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/config-cxx-common.h: Changed
