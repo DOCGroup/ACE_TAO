@@ -1,3 +1,7 @@
+Wed Sep 23 02:39:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.14 released.
+
 Wed Sep 23 01:24:09 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB.h (struct TAO_Leader_Follower_Info): Added constructor
