@@ -35,7 +35,6 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
   // Read the message from the transport. The size of the message read
   // is the maximum size of the buffer that we have less the amount of
   // data that has already been read in to the buffer.
-  size_t sp = this->current_buffer_.space ();
   ssize_t n = transport->read (this->current_buffer_.wr_ptr (),
                                this->current_buffer_.space ());
 
@@ -319,7 +318,7 @@ TAO_GIOP_Message_Handler::more_messages (void)
         return this->parse_header ();
       else
         {
-          // We have some message but it is not of suffcieint length
+          // We have some message but it is not of sufficient length
           // for us to process. We copy that left over piece to the
           // start of the <current_buffer_> and align the rd_ptr &
           // wr_ptr.
