@@ -3,7 +3,7 @@
 
 // High_Res_Timer.i
 
-#if defined (ACE_HAS_HI_RES_TIMER)
+#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HIRES_TIMER)
 
 ACE_INLINE
 ACE_High_Res_Timer::ACE_High_Res_Timer (void)
@@ -40,14 +40,14 @@ ACE_High_Res_Timer::stop_incr (void)
 #if defined (ACE_HAS_LONGLONG_T)
   this->total_ += (ACE_OS::gethrtime () - this->temp_);
 #else
-# error must have ACE_HAS_LONGLONG_T with ACE_HAS_HI_RES_TIMER
+# error must have ACE_HAS_LONGLONG_T with ACE_High_Res_Timer
 #endif /* ACE_HAS_LONGLONG_T */
 }
 
-ACE_INLINE unsigned long
-ACE_High_Res_Timer::get_time (void) const
+ACE_INLINE void
+ACE_High_Res_Timer::elapsed_microseconds (hrtime_t &usecs) const;
 {
-  return (this->end_ - this->start_) / 1000;
+  usecs = (this->end_ - this->start_) / 1000;
 }
 
-#endif /* ACE_HAS_HI_RES_TIMER */
+#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_AIX_HIRES_TIMER */
