@@ -37,9 +37,10 @@ ACE_Stream_Node::apply (void)
                                       this->node_->parameters ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("did stream on %s, error = %d\n"),
-              this->node_->name (),
-              ace_yyerrno));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("did stream on %s, error = %d\n"),
+                this->node_->name (),
+                ace_yyerrno));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Parse_Node)
@@ -107,9 +108,10 @@ ACE_Parse_Node::print (void) const
 {
   ACE_TRACE ("ACE_Parse_Node::print");
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("svc = %s\n"),
-              this->name ()));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("svc = %s\n"),
+                this->name ()));
 
   if (this->next_)
     this->next_->print ();
@@ -158,9 +160,10 @@ ACE_Suspend_Node::apply (void)
   if (ACE_Service_Config::suspend (this->name ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("did suspend on %s, error = %d\n"),
-              this->name (), ace_yyerrno));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("did suspend on %s, error = %d\n"),
+                this->name (), ace_yyerrno));
 }
 
 void
@@ -170,10 +173,11 @@ ACE_Resume_Node::apply (void)
   if (ACE_Service_Config::resume (this->name ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("did resume on %s, error = %d\n"),
-             this->name (),
-              ace_yyerrno));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("did resume on %s, error = %d\n"),
+                this->name (),
+                ace_yyerrno));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Remove_Node)
@@ -197,10 +201,11 @@ ACE_Remove_Node::apply (void)
   if (ACE_Service_Config::remove (this->name ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("did remove on %s, error = %d\n"),
-             this->name (),
-              ace_yyerrno));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("did remove on %s, error = %d\n"),
+                this->name (),
+                ace_yyerrno));
 
 }
 
@@ -228,10 +233,11 @@ ACE_Dynamic_Node::apply (void)
                                       this->parameters ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("did dynamic on %s, error = %d\n"),
-             this->name (),
-              ace_yyerrno));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("did dynamic on %s, error = %d\n"),
+                this->name (),
+                ace_yyerrno));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic_Node)
@@ -291,10 +297,11 @@ ACE_Static_Node::apply (void)
                                       this->parameters ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("did static on %s, error = %d\n"),
-              this->name (),
-              ace_yyerrno));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("did static on %s, error = %d\n"),
+                this->name (),
+                ace_yyerrno));
 }
 
 
@@ -576,10 +583,11 @@ void
 ACE_Dummy_Node::apply (void)
 {
   ACE_TRACE ("ACE_Dummy_Node::apply");
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("did operations on stream %s, error = %d\n"),
-             this->name (),
-              ace_yyerrno));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("did operations on stream %s, error = %d\n"),
+                this->name (),
+                ace_yyerrno));
 }
 
 ACE_Dummy_Node::~ACE_Dummy_Node (void)
