@@ -181,9 +181,21 @@ ACE_Task_Base::svc_run (void *args)
 #endif /* ACE_HAS_SIG_C_FUNC */
 
   // Call the Task's svc() hook method.
-  return (void *) t->svc ();
+  void * status = (void *) t->svc ();
 
-  /* NOTREACHED */
+// If we changed this zero change the other if in OS.cpp Thread_Adapter::invoke
+#if 1
+  // Call the <Task->close> hook.
+  ACE_Thread_Manager *thr_mgr_ptr = t->thr_mgr ();
+
+  // This calls the Task->close () hook.
+  t->cleanup (t, 0);
+
+  // This prevents a second invocation of the cleanup code
+  // (called later by <ACE_Thread_Manager::exit>.
+  thr_mgr_ptr->at_exit (t, 0, 0);
+#endif
+  return status;
 }
 
 // Forward the call to close() so that existing applications don't
