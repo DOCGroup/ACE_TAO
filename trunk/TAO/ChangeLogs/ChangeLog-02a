@@ -1,3 +1,9 @@
+Mon Mar 27 19:27:00 2000  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* tao/ORB.cpp (ORB_init): Replace CORBA::Environment with
+	  CORBA_Environment to be consistent.  Thanks to Yangfen Qiu
+ 	  <yqiu@thomas.com> for motivating this change.
+
 Mon Mar 27 16:11:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: The following changes allows the user finer grain control

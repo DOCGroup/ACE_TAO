@@ -1410,7 +1410,7 @@ void CORBA_ORB::_tao_unexpected_exception (void)
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
                  char *argv[],
-                 const char * orb_name)
+                 const char *orb_name)
 {
   return CORBA::ORB_init (argc,
                           argv,
@@ -1421,8 +1421,8 @@ CORBA::ORB_init (int &argc,
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
                  char *argv[],
-                 const char * orbid,
-                 CORBA::Environment &ACE_TRY_ENV)
+                 const char *orbid,
+                 CORBA_Environment &ACE_TRY_ENV)
 {
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
   // from being called within a static object CTOR.
