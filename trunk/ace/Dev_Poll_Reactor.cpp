@@ -1162,8 +1162,8 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
      || (this_timeout != 0 && max_wait_time != 0
          && *this_timeout != *max_wait_time) ? 1 : 0);
 
-  // If timers are pending, override any error condition from the
-  // poll.
+  // If timers are pending, override any error condition or timeout
+  // from the poll.
   return (nfds <= 0 && timers_pending != 0 ? 1 : nfds);
 }
 
