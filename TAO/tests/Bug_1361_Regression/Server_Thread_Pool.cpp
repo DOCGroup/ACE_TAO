@@ -132,7 +132,6 @@ Thread_Pool::svc (void)
       // Keep calling a few times after receiving exceptions
       for(int exception_count = 50; exception_count; --exception_count)
         {
-
           ACE_TRY_NEW_ENV
             {
               // keep calling until get an exception
@@ -140,9 +139,9 @@ Thread_Pool::svc (void)
                 {
                   if (0)
                     {
-                      Test::Payload pload(10);
-                      pload.length(10);
-                      ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
+                      Test::Payload pload (10);
+                      pload.length (10);
+                      ACE_OS::memset (pload.get_buffer(), pload.length(), 0);
                       echo->echo_payload (pload
                                           ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
@@ -155,7 +154,7 @@ Thread_Pool::svc (void)
                                               ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
-                      time_t last_success = ACE_OS::time();
+                      // time_t last_success = ACE_OS::time();
                     }
               }
             }
