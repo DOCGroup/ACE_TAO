@@ -1,3 +1,10 @@
+Tue Feb  9 17:53:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO/docs/configurations.html:
+          Changed the first entry under Homogeneous Systems to reflect the
+          move of tao/orbconf.h/TAO_DISABLE_SWAP_ON_READ to
+          ace/OS.h/ACE_DISABLE_SWAP_ON_READ.
+
 Tue Feb  9 16:52:41 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be/be_exception.cpp (gen_typecode): Thanks to
