@@ -138,7 +138,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                        ACE_TEXT ("mutex acquire")),
                       1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) signaling condition...\n")));
-  if (condition_.signal () == -1)
+  if (condition_.broadcast () == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("signal")));
   mutex_.release ();
   ACE_Thread_Manager::instance ()->wait ();
