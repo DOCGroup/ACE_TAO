@@ -1,3 +1,9 @@
+Mon May 15 14:55:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+	  Filled in empty method bodies create_native_tc and 
+	  create_value_box_tc.
+
 Mon May 15 11:08:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/tutorials/Quoter/RT_Event_Service/Makefile:
