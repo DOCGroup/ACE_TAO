@@ -1,3 +1,9 @@
+Mon Dec 23 12:16:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_Fragment.cpp:
+          Use ACE_IOV_MAX instead of IOV_MAX.
+
 Mon Dec 23 12:02:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ace_ld:
