@@ -1,3 +1,12 @@
+Tue Oct 31 12:15:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/DSI_Gateway/DSI_Gateway.dsw:
+	* tests/DSI_Gateway/DSI_Gateway_Client.dsp:
+	* tests/DSI_Gateway/DSI_Gateway_Server.dsp:
+	* tests/DSI_Gateway/DSI_Gateway_Service.dsp:
+
+	  Added MSVC workspace and projects for this test.
+
 Tue Oct 31 12:01:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynamicInterface/Context.cpp:
