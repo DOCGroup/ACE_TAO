@@ -1,11 +1,10 @@
 // $Id$
 
 #include "ECG_CDR_Message_Sender.h"
-#include "CRC.h"
-
 #include "tao/CDR.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
+#include "ace/ACE.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_CDR_Message_Sender.i"
@@ -227,7 +226,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
      unsigned char *crc_parts = (unsigned char *)(&crc);
      if (iovcnt > 1)
        {
-         crc = TAO_Event_CRC::compute_crc (iov, iovcnt);
+         crc = ACE::crc32 (iov, iovcnt);
          crc = htonl (crc);
        }
      for (int cnt=0; cnt<4; ++cnt)

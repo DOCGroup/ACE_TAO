@@ -1,3 +1,14 @@
+Mon Jun 23 22:28:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp: Removed the
+	  usage of TAO_Event_CRC. Used ACE::crc32 () instead. Thanks to
+	  Carlos for pointing it out. 
+	
+	* orbsvcs/orbsvcs/Makefile.RTEvent: 
+	* orbsvcs/orbsvcs/RTEvent.bor: Removed CRC.{h,cpp} from the
+	  library.
+
 Mon Jun 23 19:35:58 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ObjRefTemplate/ObjRefTemplate.mpc: Changed parent project

@@ -2,9 +2,9 @@
 
 #include "ECG_CDR_Message_Receiver.h"
 #include "ECG_CDR_Message_Sender.h"
-#include "CRC.h"
 #include "tao/Exception.h"
 #include "ace/SOCK_Dgram.h"
+#include "ace/ACE.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_CDR_Message_Receiver.i"
@@ -286,9 +286,8 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
     {
       iov[0].iov_len -= 4;  // don't include crc
 
-      crc = TAO_Event_CRC::compute_crc (iov, 2);
-
-   }
+      crc = ACE::crc32 (iov, 2);
+    }
   // Check whether the message is a loopback message.
   if (this->ignore_from_.get () != 0
       && this->ignore_from_->is_loopback (from))
