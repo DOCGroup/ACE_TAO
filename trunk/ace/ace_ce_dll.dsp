@@ -36,6 +36,7 @@ CFG=ace_ce_dll - Win32 (WCE x86em) Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
 
@@ -64,7 +65,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /machine:I386 /nodefaultlib:"msvcrt.lib" /windowsce:emulation
-# ADD LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"ace.dll" /windowsce:emulation
+# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /dll /machine:I386 /nodefaultlib:"msvcrt.lib" /out:"ace.dll" /windowsce:emulation
 EMPFILE=empfile.exe
 # ADD BASE EMPFILE -COPY
 # ADD EMPFILE -COPY
@@ -96,7 +97,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /nodefaultlib:"msvcrtd.lib" /windowsce:emulation
-# ADD LINK32 commctrl.lib coredll.lib advapi32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /nodefaultlib:"msvcrtd.lib" /out:"aced.dll" /windowsce:emulation
+# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /dll /debug /machine:I386 /nodefaultlib:"msvcrtd.lib" /out:"aced.dll" /windowsce:emulation
 EMPFILE=empfile.exe
 # ADD BASE EMPFILE -COPY
 # ADD EMPFILE -COPY
@@ -127,10 +128,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /machine:MIPS
-# SUBTRACT BASE LINK32 /fixed:no /pdb:none /nodefaultlib
-# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /machine:MIPS /nodefaultlib:"wsock32.lib" /out:"ace.dll"
-# SUBTRACT LINK32 /fixed:no /pdb:none /nodefaultlib
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /dll /machine:MIPS /subsystem:windowsce,2.0 /windowsce:noconvert
+# SUBTRACT BASE LINK32 /pdb:none /nodefaultlib
+# ADD LINK32 commctrl.lib coredll.lib /nologo /dll /machine:MIPS /nodefaultlib:"wsock32.lib" /out:"ace.dll" /subsystem:windowsce,2.0 /windowsce:noconvert
+# SUBTRACT LINK32 /pdb:none /nodefaultlib
 PFILE=pfile.exe
 # ADD BASE PFILE COPY
 # ADD PFILE COPY
@@ -161,10 +162,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /debug /machine:MIPS
-# SUBTRACT BASE LINK32 /fixed:no /pdb:none /nodefaultlib
-# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /debug /machine:MIPS /nodefaultlib:"wsock32.lib" /out:"aced.dll"
-# SUBTRACT LINK32 /fixed:no /pdb:none /nodefaultlib
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /dll /debug /machine:MIPS /subsystem:windowsce,2.0 /windowsce:noconvert
+# SUBTRACT BASE LINK32 /pdb:none /nodefaultlib
+# ADD LINK32 commctrl.lib coredll.lib /nologo /dll /debug /machine:MIPS /nodefaultlib:"wsock32.lib" /out:"aced.dll" /subsystem:windowsce,2.0 /windowsce:noconvert
+# SUBTRACT LINK32 /pdb:none /nodefaultlib
 PFILE=pfile.exe
 # ADD BASE PFILE COPY
 # ADD PFILE COPY
@@ -195,10 +196,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /machine:SH3
-# SUBTRACT BASE LINK32 /fixed:no /pdb:none /nodefaultlib
-# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /machine:SH3 /nodefaultlib:"wsock32.lib" /out:"WCE\sh\ace.dll"
-# SUBTRACT LINK32 /fixed:no /pdb:none /nodefaultlib
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /dll /machine:SH3 /subsystem:windowsce,2.0 /windowsce:noconvert
+# SUBTRACT BASE LINK32 /pdb:none /nodefaultlib
+# ADD LINK32 commctrl.lib coredll.lib /nologo /dll /machine:SH3 /nodefaultlib:"wsock32.lib" /out:"WCE\sh\ace.dll" /subsystem:windowsce,2.0
+# SUBTRACT LINK32 /pdb:none
 PFILE=pfile.exe
 # ADD BASE PFILE COPY
 # ADD PFILE COPY
@@ -218,7 +219,7 @@ PFILE=pfile.exe
 # PROP Target_Dir ""
 CPP=shcl.exe
 # ADD BASE CPP /nologo /MLd /W3 /Zi /Od /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D _WIN32_WCE=200 /YX /c
-# ADD CPP /nologo /MTd /W3 /GX- /Zi /Od /Gy /I "..\\" /I "..\STL\\" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /D ACE_HAS_DLL=1 /D "_AFXDLL" /YX /c
+# ADD CPP /nologo /MTd /W3 /Zi /Od /Gy /I "..\\" /I "..\STL\\" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /D ACE_HAS_DLL=1 /D "_AFXDLL" /YX /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
 # ADD RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200 /d "_AFXDLL"
@@ -229,10 +230,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /debug /machine:SH3
-# SUBTRACT BASE LINK32 /fixed:no /pdb:none /nodefaultlib
-# ADD LINK32 /nologo /subsystem:windowsce,2.0 /windowsce:noconvert /dll /incremental:no /debug /machine:SH3 /out:"WCE\SH\aced.dll"
-# SUBTRACT LINK32 /fixed:no /pdb:none /map /nodefaultlib
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /dll /debug /machine:SH3 /subsystem:windowsce,2.0 /windowsce:noconvert
+# SUBTRACT BASE LINK32 /pdb:none /nodefaultlib
+# ADD LINK32 /nologo /dll /incremental:no /debug /machine:SH3 /out:"WCE\SH\aced.dll" /subsystem:windowsce,2.0
+# SUBTRACT LINK32 /pdb:none
 PFILE=pfile.exe
 # ADD BASE PFILE COPY
 # ADD PFILE COPY
@@ -623,7 +624,6 @@ DEP_CPP_ACTIV=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -835,7 +835,6 @@ DEP_CPP_ACTIV=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -884,7 +883,6 @@ DEP_CPP_ADDR_=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -964,7 +962,6 @@ DEP_CPP_ADDR_=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1042,7 +1039,6 @@ DEP_CPP_ARGV_=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1184,7 +1180,6 @@ DEP_CPP_ARGV_=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1231,7 +1226,6 @@ DEP_CPP_ARRAY=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1311,7 +1305,6 @@ DEP_CPP_ARRAY=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1426,7 +1419,6 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.cpp"\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1642,7 +1634,6 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.cpp"\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1687,7 +1678,6 @@ DEP_CPP_BASIC=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1763,7 +1753,6 @@ DEP_CPP_BASIC=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1825,7 +1814,6 @@ DEP_CPP_DUMP_=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1935,7 +1923,6 @@ DEP_CPP_DUMP_=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -1982,7 +1969,6 @@ DEP_CPP_DYNAM=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2062,7 +2048,6 @@ DEP_CPP_DYNAM=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2140,7 +2125,6 @@ DEP_CPP_EVENT=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2282,7 +2266,6 @@ DEP_CPP_EVENT=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2329,7 +2312,6 @@ DEP_CPP_GET_O=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2409,7 +2391,6 @@ DEP_CPP_GET_O=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2456,7 +2437,6 @@ DEP_CPP_HANDL=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2536,7 +2516,6 @@ DEP_CPP_HANDL=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2583,7 +2562,6 @@ DEP_CPP_HIGH_=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2663,7 +2641,6 @@ DEP_CPP_HIGH_=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2712,7 +2689,6 @@ DEP_CPP_INET_=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2796,7 +2772,6 @@ DEP_CPP_INET_=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2862,7 +2837,6 @@ DEP_CPP_IO_SA=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2942,7 +2916,6 @@ DEP_CPP_IO_SA=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -2989,7 +2962,6 @@ DEP_CPP_IPC_S=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3069,7 +3041,6 @@ DEP_CPP_IPC_S=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3169,7 +3140,6 @@ DEP_CPP_LOCAL=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3355,7 +3325,6 @@ DEP_CPP_LOCAL=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3456,7 +3425,6 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3644,7 +3612,6 @@ DEP_CPP_LOG_M=\
 	".\Thread_Manager.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3689,7 +3656,6 @@ DEP_CPP_LOG_R=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3765,7 +3731,6 @@ DEP_CPP_LOG_R=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3841,7 +3806,6 @@ DEP_CPP_MALLO=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -3979,7 +3943,6 @@ DEP_CPP_MALLO=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4026,7 +3989,6 @@ DEP_CPP_MEM_M=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4106,7 +4068,6 @@ DEP_CPP_MEM_M=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4182,7 +4143,6 @@ DEP_CPP_MEMOR=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4320,7 +4280,6 @@ DEP_CPP_MEMOR=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4398,7 +4357,6 @@ DEP_CPP_MESSA=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4540,7 +4498,6 @@ DEP_CPP_MESSA=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4586,7 +4543,6 @@ DEP_CPP_METHO=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4664,7 +4620,6 @@ DEP_CPP_METHO=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -4790,7 +4745,6 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -5028,7 +4982,6 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -5105,7 +5058,6 @@ DEP_CPP_OBSTA=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -5245,7 +5197,6 @@ DEP_CPP_OBSTA=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -5373,7 +5324,6 @@ DEP_CPP_OS_CP=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -5617,7 +5567,6 @@ DEP_CPP_OS_CP=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -5742,7 +5691,6 @@ DEP_CPP_PARSE=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -5978,7 +5926,6 @@ DEP_CPP_PARSE=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -6044,7 +5991,6 @@ DEP_CPP_PIPE_=\
 	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -6158,7 +6104,6 @@ DEP_CPP_PIPE_=\
 	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -6238,7 +6183,6 @@ DEP_CPP_PROCE=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -6384,7 +6328,6 @@ DEP_CPP_PROCE=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -6447,7 +6390,6 @@ DEP_CPP_PROCES=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -6559,7 +6501,6 @@ DEP_CPP_PROCES=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -6609,7 +6550,6 @@ DEP_CPP_PROFI=\
 	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -6695,7 +6635,6 @@ DEP_CPP_PROFI=\
 	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -6818,7 +6757,6 @@ DEP_CPP_REACT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -7050,7 +6988,6 @@ DEP_CPP_REACT=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -7099,7 +7036,6 @@ DEP_CPP_SCHED=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -7179,7 +7115,6 @@ DEP_CPP_SCHED=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -7303,7 +7238,6 @@ DEP_CPP_SELEC=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -7537,7 +7471,6 @@ DEP_CPP_SELEC=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -7675,7 +7608,6 @@ DEP_CPP_SERVI=\
 	".\Timer_Wheel_T.cpp"\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -7937,7 +7869,6 @@ DEP_CPP_SERVI=\
 	".\Timer_Wheel_T.cpp"\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -8066,7 +7997,6 @@ DEP_CPP_SERVIC=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -8314,7 +8244,6 @@ DEP_CPP_SERVIC=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -8381,7 +8310,6 @@ DEP_CPP_SERVICE=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -8497,7 +8425,6 @@ DEP_CPP_SERVICE=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -8564,7 +8491,6 @@ DEP_CPP_SERVICE_=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -8684,7 +8610,6 @@ DEP_CPP_SERVICE_=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -8809,7 +8734,6 @@ DEP_CPP_SERVICE_T=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -9047,7 +8971,6 @@ DEP_CPP_SERVICE_T=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -9096,7 +9019,6 @@ DEP_CPP_SHARE=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9176,7 +9098,6 @@ DEP_CPP_SHARE=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9252,7 +9173,6 @@ DEP_CPP_SIGNA=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9390,7 +9310,6 @@ DEP_CPP_SIGNA=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9441,7 +9360,6 @@ DEP_CPP_SOCK_=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9529,7 +9447,6 @@ DEP_CPP_SOCK_=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9603,7 +9520,6 @@ DEP_CPP_SOCK_A=\
 	".\Thread.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9737,7 +9653,6 @@ DEP_CPP_SOCK_A=\
 	".\Thread.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9792,7 +9707,6 @@ DEP_CPP_SOCK_C=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9888,7 +9802,6 @@ DEP_CPP_SOCK_C=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -9950,7 +9863,6 @@ DEP_CPP_SOCK_CO=\
 	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10060,7 +9972,6 @@ DEP_CPP_SOCK_CO=\
 	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10129,7 +10040,6 @@ DEP_CPP_SOCK_D=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10253,7 +10163,6 @@ DEP_CPP_SOCK_D=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10310,7 +10219,6 @@ DEP_CPP_SOCK_DG=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10410,7 +10318,6 @@ DEP_CPP_SOCK_DG=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10467,7 +10374,6 @@ DEP_CPP_SOCK_DGR=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10567,7 +10473,6 @@ DEP_CPP_SOCK_DGR=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10620,7 +10525,6 @@ DEP_CPP_SOCK_I=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10712,7 +10616,6 @@ DEP_CPP_SOCK_I=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10769,7 +10672,6 @@ DEP_CPP_SOCK_S=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10869,7 +10771,6 @@ DEP_CPP_SOCK_S=\
 	".\streams.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -10961,7 +10862,6 @@ DEP_CPP_SSTRI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -11131,7 +11031,6 @@ DEP_CPP_SSTRI=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -11241,7 +11140,6 @@ DEP_CPP_STRAT=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -11449,7 +11347,6 @@ DEP_CPP_STRAT=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -11549,7 +11446,6 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -11731,7 +11627,6 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -11862,7 +11757,6 @@ DEP_CPP_SVC_CO=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -12112,7 +12006,6 @@ DEP_CPP_SVC_CO=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -12173,7 +12066,6 @@ DEP_CPP_SYNCH=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -12277,7 +12169,6 @@ DEP_CPP_SYNCH=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -12323,7 +12214,6 @@ DEP_CPP_SYNCH_=\
 	".\Synch_Options.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -12401,7 +12291,6 @@ DEP_CPP_SYNCH_=\
 	".\Synch_Options.h"\
 	".\sys_conf.h"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -12478,7 +12367,6 @@ DEP_CPP_SYSTE=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -12618,7 +12506,6 @@ DEP_CPP_SYSTE=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -12739,7 +12626,6 @@ DEP_CPP_TASK_=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -12969,7 +12855,6 @@ DEP_CPP_TASK_=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -13018,7 +12903,6 @@ DEP_CPP_THREA=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13098,7 +12982,6 @@ DEP_CPP_THREA=\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13181,7 +13064,6 @@ DEP_CPP_THREAD=\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13333,7 +13215,6 @@ DEP_CPP_THREAD=\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13394,7 +13275,6 @@ DEP_CPP_TOKEN=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13502,7 +13382,6 @@ DEP_CPP_TOKEN=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13602,7 +13481,6 @@ DEP_CPP_TOKEN_=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13788,7 +13666,6 @@ DEP_CPP_TOKEN_=\
 	".\Token_Manager.h"\
 	".\Token_Manager.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13834,7 +13711,6 @@ DEP_CPP_TRACE=\
 	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Trace.i"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -13912,7 +13788,6 @@ DEP_CPP_TRACE=\
 	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Trace.i"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	
 
@@ -14025,7 +13900,6 @@ DEP_CPP_WFMO_=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -14239,7 +14113,6 @@ DEP_CPP_WFMO_=\
 	".\Timer_Queue_T.h"\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
@@ -14362,7 +14235,6 @@ DEP_CPP_XTREA=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	".\XtReactor.h"\
 	
@@ -14592,7 +14464,6 @@ DEP_CPP_XTREA=\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
-	".\Version.h"\
 	".\ws2tcpip.h"\
 	".\XtReactor.h"\
 	
