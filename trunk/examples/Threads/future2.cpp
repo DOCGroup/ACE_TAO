@@ -18,8 +18,8 @@
 // Modification History
 // Aug. 96; A.Kruse; dev.
 // Aug. 96; D.Schmidt; complete workover
-// 08/27/96; A.Kruse; - the friends of Scheduler are "Method_Object_name"
-//                      and "Method_Object_work".
+// 08/27/96; A.Kruse; - the friends of Scheduler are "Method_Request_name"
+//                      and "Method_Request_work".
 //                    - make the methods "work_i" and "name_i" private
 // 09/2/96; D.Schmidt; Integrate with new ACE_Future API and rearrange
 //                     the tests so they are more modular.
@@ -30,7 +30,7 @@
 #include "ace/Synch.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"
-#include "ace/Method_Object.h"
+#include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Auto_Ptr.h"
 
@@ -44,8 +44,8 @@ typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
 static ATOMIC_INT scheduler_open_count (0);
 
 // forward declarations
-class Method_Object_work;
-class Method_Object_name;
+class Method_Request_work;
+class Method_Request_name;
 
 class Scheduler : public ACE_Task_Base
   // = TITLE
@@ -53,9 +53,9 @@ class Scheduler : public ACE_Task_Base
 {
   // Every method object has to be able to access the private methods.
 
-  friend class Method_Object_work;
-  friend class Method_Object_name;
-  friend class Method_Object_end;
+  friend class Method_Request_work;
+  friend class Method_Request_name;
+  friend class Method_Request_end;
 public:
 
   Scheduler (const char *, Scheduler * = 0);
@@ -86,13 +86,13 @@ private:
   Scheduler *scheduler_;
 };
 
-class Method_Object_work : public ACE_Method_Object
+class Method_Request_work : public ACE_Method_Request
   // = TITLE
   //     Reification of the <work> method.
 {
 public:
-  Method_Object_work (Scheduler *, u_long, int, ACE_Future<u_long> &);
-  virtual ~Method_Object_work (void);
+  Method_Request_work (Scheduler *, u_long, int, ACE_Future<u_long> &);
+  virtual ~Method_Request_work (void);
   virtual int call (void);
 
 private:
@@ -102,7 +102,7 @@ private:
   ACE_Future<u_long> future_result_;
 };
 
-Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
+Method_Request_work::Method_Request_work (Scheduler* new_Scheduler,
                                         u_long new_param,
                                         int new_count,
                                         ACE_Future<u_long> &new_result)
@@ -113,23 +113,23 @@ Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
 {
 }
 
-Method_Object_work::~Method_Object_work (void)
+Method_Request_work::~Method_Request_work (void)
 {
 }
 
 int
-Method_Object_work::call (void)
+Method_Request_work::call (void)
 {
   return this->future_result_.set (this->scheduler_->work_i (this->param_, this->count_));
 }
 
-class Method_Object_name : public ACE_Method_Object
+class Method_Request_name : public ACE_Method_Request
   // = TITLE
   //     Reification of the <name> method.
 {
 public:
-  Method_Object_name (Scheduler *, ACE_Future<char*> &);
-  virtual ~Method_Object_name (void);
+  Method_Request_name (Scheduler *, ACE_Future<char*> &);
+  virtual ~Method_Request_name (void);
   virtual int call (void);
 
 private:
@@ -138,34 +138,34 @@ private:
 };
 
 
-Method_Object_name::Method_Object_name (Scheduler *new_scheduler,
+Method_Request_name::Method_Request_name (Scheduler *new_scheduler,
                                         ACE_Future<char*> &new_result)
   : scheduler_ (new_scheduler),
     future_result_ (new_result)
 {
   ACE_DEBUG ((LM_DEBUG,
-              " (%t) Method_Object_name created\n"));
+              " (%t) Method_Request_name created\n"));
 }
 
-Method_Object_name::~Method_Object_name (void)
+Method_Request_name::~Method_Request_name (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              " (%t) Method_Object_name will be deleted.\n"));
+              " (%t) Method_Request_name will be deleted.\n"));
 }
 
 int
-Method_Object_name::call (void)
+Method_Request_name::call (void)
 {
   return future_result_.set (scheduler_->name_i ());
 }
 
-class Method_Object_end : public ACE_Method_Object
+class Method_Request_end : public ACE_Method_Request
   // = TITLE
   //     Reification of the <end> method.
 {
 public:
-  Method_Object_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
-  virtual ~Method_Object_end (void) {}
+  Method_Request_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
+  virtual ~Method_Request_end (void) {}
   virtual int call (void) { return -1; }
 
 private:
@@ -212,7 +212,7 @@ Scheduler::svc (void)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
-      auto_ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
+      auto_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG, " (%t) calling method object\n"));
       // Call it.
@@ -228,7 +228,7 @@ Scheduler::svc (void)
 void
 Scheduler::end (void)
 {
-  this->activation_queue_.enqueue (new Method_Object_end (this));
+  this->activation_queue_.enqueue (new Method_Request_end (this));
 }
 
 // Here's where the Work takes place.
@@ -267,7 +267,7 @@ Scheduler::name (void)
           // This scheduler is inactive... so we execute the user
           // request right away...
 
-          auto_ptr<ACE_Method_Object> mo (new Method_Object_name (this, new_future));
+          auto_ptr<ACE_Method_Request> mo (new Method_Request_name (this, new_future));
 
           mo->call ();
           // Smart pointer destructor automatically deletes mo.
@@ -275,7 +275,7 @@ Scheduler::name (void)
       else
         // @@ What happens if new fails here?
         this->activation_queue_.enqueue
-          (new Method_Object_name (this, new_future));
+          (new Method_Request_name (this, new_future));
 
       return new_future;
     }
@@ -292,14 +292,14 @@ Scheduler::work (u_long newparam, int newcount)
 
       if (this->thr_count () == 0)
         {
-          auto_ptr<ACE_Method_Object> mo
-            (new Method_Object_work (this, newparam, newcount, new_future));
+          auto_ptr<ACE_Method_Request> mo
+            (new Method_Request_work (this, newparam, newcount, new_future));
           mo->call ();
           // Smart pointer destructor automatically deletes it.
         }
       else
         this->activation_queue_.enqueue
-          (new Method_Object_work (this, newparam, newcount, new_future));
+          (new Method_Request_work (this, newparam, newcount, new_future));
 
       return new_future;
     }
@@ -518,16 +518,16 @@ template class ACE_Future<char *>;
 template class ACE_Future<u_long>;
 template class ACE_Future_Rep<char *>;
 template class ACE_Future_Rep<u_long>;
-template class auto_ptr<ACE_Method_Object>;
-template class ACE_Auto_Basic_Ptr<ACE_Method_Object>;
+template class auto_ptr<ACE_Method_Request>;
+template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Future<char *>
 #pragma instantiate ACE_Future<u_long>
 #pragma instantiate ACE_Future_Rep<char *>
 #pragma instantiate ACE_Future_Rep<u_long>
-#pragma instantiate auto_ptr<ACE_Method_Object>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Object>
+#pragma instantiate auto_ptr<ACE_Method_Request>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
