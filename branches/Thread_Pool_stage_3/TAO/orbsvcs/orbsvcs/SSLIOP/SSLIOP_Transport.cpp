@@ -296,17 +296,17 @@ TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 {
 
   // Get a handle on to the acceptor registry
-  TAO_Acceptor_Registry * ar =
-    this->orb_core ()->acceptor_registry ();
+  TAO_Acceptor_Registry &ar =
+    this->orb_core ()->lane_resources ().acceptor_registry ();
 
 
   // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar->begin ();
+  TAO_AcceptorSetIterator acceptor = ar.begin ();
 
   IIOP::ListenPointList listen_point_list;
 
   for (;
-       acceptor != ar->end ();
+       acceptor != ar.end ();
        acceptor++)
     {
       // Check whether it is a IIOP acceptor

@@ -400,7 +400,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ().lane_resources ().transport_cache ().find_transport (
+  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
         desc,
         base_transport) == 0)
     {
@@ -418,7 +418,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                     ACE_TEXT ("making a new connection \n")));
 
       // Purge connections (if necessary)
-      this->orb_core ()->lane_resource ().transport_cache ().purge ();
+      this->orb_core ()->lane_resources ().transport_cache ().purge ();
 
       // Setup the establishment of trust connection properties, if
       // any.
