@@ -1775,6 +1775,11 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #elif defined (ACE_HAS_WTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
+#elif defined (VXWORKS)
+  int result;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::semDelete (s->sema_), result), int, -1, result);
+  s->sema_ = 0;
+  return result;
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -1846,6 +1851,15 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   else
     return 0;
 #endif /* ACE_HAS_STHREADS */
+#elif defined (VXWORKS)
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (max);
+  s->name_ = 0;
+  s->sema_ = ::semCCreate (SEM_Q_FIFO, count);
+  
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (s-> sema_ = ::semCCreate (SEM_Q_FIFO, count), 
+                                       ace_result_), 
+		     int, -1);
 #else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (count);
@@ -1886,6 +1900,8 @@ ACE_OS::sema_post (ACE_sema_t *s)
 				       ace_result_), 
 		     int, -1);
 #endif /* ACE_HAS_STHREADS */
+#elif defined (VXWORKS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semGive (s->sema_), ace_result_), int, -1);
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -1953,6 +1969,9 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     }
 
 #endif /* ACE_HAS_STHREADS */
+#elif defined (VXWORKS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, NO_WAIT), ace_result_), 
+		     int, -1);
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2015,11 +2034,49 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     }
   /* NOTREACHED */
 #endif /* ACE_HAS_STHREADS */
+#elif defined (VXWORKS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, WAIT_FOREVER), ace_result_), int, -1);
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
+
+ACE_INLINE int 
+ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
+{
+  // ACE_TRACE ("ACE_OS::sema_wait");
+#if defined (ACE_HAS_POSIX_SEM)
+#elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_STHREADS)
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#elif defined (ACE_HAS_WTHREADS)
+  switch (::WaitForSingleObject (*s, tv.sec () * 1000 + tv.usec () / 1000))
+    {
+    case WAIT_OBJECT_0:
+      return 0;
+    case WAIT_ABANDONED:
+      errno = WAIT_ABANDONED;
+      return -1;
+    default:
+      // This is a hack, we need to find an appropriate mapping...
+      errno = ::GetLastError ();
+      return -1;
+    }
+  /* NOTREACHED */
+#endif /* ACE_HAS_STHREADS */
+#elif defined (VXWORKS)
+  int ticks = tv.sec() * ::sysClkRateGet () + tv.usec () * ::sysClkRateGet / 1000000;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, ticks), ace_result_), int, -1);
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_POSIX_SEM */
+}
+
+
+
+
 
 #if defined (ACE_WIN32) || defined (VXWORKS)
 //
