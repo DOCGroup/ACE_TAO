@@ -1,3 +1,9 @@
+Thu Jun 13 14:45:13 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast_T.cpp: Added wchar support - remove
+	  warnings in MSVC when #define ACE_USES_WCHAR used in config.h.
+	  Thanks to Bill Fulton for this fix.
+
 Wed Jun 12 21:28:29 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Framework_Component_DLL.cpp (Server_T): Add template
