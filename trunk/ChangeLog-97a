@@ -1,5 +1,12 @@
 Tue May 13 18:08:32 1997    <irfan@TWOSTEP>
 
+	* ace/OS.i (kill): The error result for ::OpenProcess() is null
+	  and *not* invalid handle.
+
+	* ace/Process.i (kill): Changed the implementation to remove the
+ 	  ACE_OS::kill() code from ACE_Process::kill() for Win32. This
+	  allows us to avoid calling ::OpenProcess() unnecessarily.
+
 	* tests: For Win32, added Reactor_Exceptions_Test and
 	  Priority_Tasks_Tests. Files changes include run_tests.bat,
 	  tests.mak, and tests.mdp.

@@ -23,7 +23,12 @@ ACE_Process::getpid (void)
 ACE_INLINE int
 ACE_Process::kill (int signum)
 {
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (signum);
+  return (int) ::TerminateProcess (this->process_info_.hProcess, 0);
+#else
   return ACE_OS::kill (this->getpid (), signum);
+#endif /* ACE_WIN32 */
 }
 
 // ************************************************************
@@ -41,7 +46,12 @@ ACE_Process_Old::getpid (void)
 ACE_INLINE int
 ACE_Process_Old::kill (int signum)
 {
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (signum);
+  return (int) ::TerminateProcess (this->process_info_.hProcess, 0);
+#else
   return ACE_OS::kill (this->getpid (), signum);
+#endif /* ACE_WIN32 */
 }
 
 // ************************************************************
