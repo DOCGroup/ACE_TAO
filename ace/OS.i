@@ -1377,8 +1377,8 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   return ACE_OS::mutex_trylock (m);
 #elif defined (ACE_HAS_WTHREADS)
 #if defined (ACE_HAS_WIN32_TRYLOCK)
-  ::TryEnterCriticalSection (m);
-  return 0;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::TryEnterCriticalSection (m), ace_result_),
+		     int, -1) ;
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
