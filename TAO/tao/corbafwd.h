@@ -214,13 +214,13 @@ typedef class CORBA_Environment *CORBA_Environment_ptr;
 
 // = Service Forward declaration
 struct CORBA_ServiceDetail;
-struct CORBA_ServiceDetail_var;
-struct CORBA_ServiceDetail_out;
+class CORBA_ServiceDetail_var;
+class CORBA_ServiceDetail_out;
 typedef CORBA_ServiceDetail * CORBA_ServiceDetail_ptr;
 
 struct CORBA_ServiceInformation;
-struct CORBA_ServiceInformation_var;
-struct CORBA_ServiceInformation_out;
+class CORBA_ServiceInformation_var;
+class CORBA_ServiceInformation_out;
 typedef CORBA_ServiceInformation * CORBA_ServiceInformation_ptr;
 
 class CORBA_Principal;

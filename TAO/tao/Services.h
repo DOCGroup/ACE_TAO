@@ -378,7 +378,7 @@ struct  CORBA_ServiceInformation
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<ServiceDetail>
+  TAO_Unbounded_Sequence<CORBA_ServiceDetail>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
