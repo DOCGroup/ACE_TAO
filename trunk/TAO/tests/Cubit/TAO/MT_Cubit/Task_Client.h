@@ -37,7 +37,7 @@
 #define double ACE_UINT32
 #define fabs(X) ((X) >= 0 ? (X) : -(X))
 // the following is just temporal, until we finish the sqrt()  implementation.
-#define sqrt (X) (1)
+#define sqrt(X) (1)
 #endif /* ACE_LACKS_FLOATING_POINT */
 
 #if !defined (ACE_HAS_THREADS)
