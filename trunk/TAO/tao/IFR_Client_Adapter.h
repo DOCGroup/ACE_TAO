@@ -48,7 +48,7 @@ namespace CORBA
   typedef NVList *NVList_ptr;
 
   class Environment;
-};
+}
 
 /**
  * @class TAO_IFR_Client_Adapter

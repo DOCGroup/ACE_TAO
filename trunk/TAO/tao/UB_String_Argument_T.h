@@ -143,7 +143,7 @@ namespace TAO
 
     typedef UB_String_Tag                               idl_tag;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/UB_String_Argument_T.inl"

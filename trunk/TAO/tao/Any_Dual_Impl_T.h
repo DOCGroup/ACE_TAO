@@ -50,7 +50,7 @@ namespace TAO
                         _tao_destructor,
                         CORBA::TypeCode_ptr,
                         T * const);
-    static void insert_copy (CORBA::Any &, 
+    static void insert_copy (CORBA::Any &,
                              _tao_destructor destructor,
                              CORBA::TypeCode_ptr,
                              const T &);
@@ -72,7 +72,7 @@ namespace TAO
 
     T * value_;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "tao/Any_Dual_Impl_T.inl"
