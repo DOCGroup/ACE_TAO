@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
+#include "tao/TAO_Singleton_Manager.h"
 
 #include "Test_Client_Module.h"
 
