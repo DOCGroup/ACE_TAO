@@ -1,3 +1,9 @@
+Sun Aug 30 21:27:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp: Added explicit template instantiation
+	  for ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token>>.
+	  Thanks to Eric C. Newton <ecn@smart.net> for reporting this.
+
 Sun Aug 30 07:44:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h,ace/README,
