@@ -3946,7 +3946,7 @@ public:
 #else  /* ! CHORUS */
       ACE_HRTIMER_START = 0x0,  // Only use these if you can stand
       ACE_HRTIMER_INCR = 0x1,   // for interrupts to be disabled during
-      ACE_HRTIMER_STOP = 0x2    // the timed interval!!!!
+      ACE_HRTIMER_STOP = 0x2,   // the timed interval!!!!
       ACE_HRTIMER_GETTIME = 0xFFFF
 #endif /* ! CHORUS */
     };
