@@ -63,7 +63,7 @@ AAL_CP::handle_timeout (const ACE_Time_Value &, const void *)
   return 0;
 }
 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   /* Estabish call backs, and socket names */
   if (argc != 4)
