@@ -78,14 +78,8 @@ namespace TAO
                                                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      // If the argument is nil, or does not support the required interface,
-      // then the OBJ_ADAPTER system exception with standard minor code 4 is
-      // raised.
-      if (CORBA::is_nil (this->servant_activator_.in ()))
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4,
-                                         CORBA::COMPLETED_NO));
-        }
+      this->validate_servant_manager (this->servant_activator_.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
     }
 
     TAO_SERVANT_LOCATION
@@ -137,11 +131,9 @@ namespace TAO
       // ForwardRequest exception. This exception includes an object
       // reference.
       //
-      if (CORBA::is_nil (this->servant_activator_.in ()))
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
+
+      this->validate_servant_manager (this->servant_activator_.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       PortableServer::Servant servant = this->incarnate_servant (poa_current_impl.object_id ());
       ACE_CHECK_RETURN (0);
@@ -271,8 +263,9 @@ namespace TAO
 
       if (servant == 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7,
+                                                CORBA::COMPLETED_NO),
+                                                0);
         }
       else
         {

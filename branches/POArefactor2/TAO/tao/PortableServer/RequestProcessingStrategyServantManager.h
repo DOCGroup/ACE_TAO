@@ -49,6 +49,11 @@ namespace TAO
                    ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
+
+      void
+      validate_servant_manager (
+        PortableServer::ServantManager_ptr servant_manager
+        ACE_ENV_ARG_DECL);
     };
   }
 }

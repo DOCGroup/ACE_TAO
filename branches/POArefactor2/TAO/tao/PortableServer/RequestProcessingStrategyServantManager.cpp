@@ -10,6 +10,8 @@
 //=============================================================================
 
 #include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
+#include "tao/PortableServer/ServantManagerC.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
@@ -47,6 +49,19 @@ namespace TAO
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
+    void
+    Servant_Manager_Request_Processing_Strategy::validate_servant_manager (
+      PortableServer::ServantManager_ptr servant_manager
+      ACE_ENV_ARG_DECL)
+    {
+      // When no servant manager is set, give an exception with minor code 4,
+      // see 11.3.8.6 of the corba spec
+      if (CORBA::is_nil (servant_manager))
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4,
+                                         CORBA::COMPLETED_NO));
+        }
+    }
   }
 }
 

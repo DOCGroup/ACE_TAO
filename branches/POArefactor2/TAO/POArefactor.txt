@@ -1,3 +1,13 @@
+Thu Nov 11 11:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessingStrategyServantManager.{h,cpp}:
+          Added validate_servant_manager
+
+        * tao/PortableSErver/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableSErver/RequestProcessingStrategyServantLocator.cpp:
+          Use the new validate_servant_manager to check for nil servant
+          managers and throw the correct exception
+
 Thu Nov 11 09:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.{cpp,h,i}:
