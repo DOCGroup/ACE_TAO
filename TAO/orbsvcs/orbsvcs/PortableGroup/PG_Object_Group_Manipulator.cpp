@@ -14,6 +14,7 @@
 #include "PG_Utils.h"
 
 #include "tao/debug.h"
+#include <ace/OS_NS_stdio.h>
 
 ACE_RCSID (PortableGroup,
            PG_Object_Group_Manipulator,

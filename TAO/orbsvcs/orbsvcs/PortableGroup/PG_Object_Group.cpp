@@ -7,6 +7,7 @@
 
 #include <ace/Get_Opt.h>
 #include <ace/Vector_T.h>
+#include <tao/debug.h>
 #include <tao/PortableServer/ORB_Manager.h>
 #include <orbsvcs/PortableGroup/PG_Operators.h> // Borrow operator == on CosNaming::Name
 #include <orbsvcs/PortableGroup/PG_Utils.h>
