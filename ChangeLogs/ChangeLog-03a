@@ -1,3 +1,10 @@
+Wed Oct 16 18:47:44 2002  Stephen Torri <storri@cse.wustl.edu>
+
+	* examples/C++NPv1/Makefile:
+
+	  Replaced Makefile with non-for-loop version provided by
+	  Craig Rodrigues. 
+
 Wed Oct 16 16:52:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_SAP.cpp (close_shm_malloc): Fixed a memory leak that I
