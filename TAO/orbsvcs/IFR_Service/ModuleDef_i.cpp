@@ -76,7 +76,7 @@ TAO_ModuleDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
   md.name = this->name_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  md.id = this->id (ACE_TRY_ENV);
+  md.id = this->id_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   ACE_TString container_id;
@@ -87,7 +87,7 @@ TAO_ModuleDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
 
   md.defined_in = container_id.c_str ();
 
-  md.version = this->id_i (ACE_TRY_ENV);
+  md.version = this->version_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   retval->value <<= md;
