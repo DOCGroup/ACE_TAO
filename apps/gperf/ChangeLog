@@ -1,3 +1,8 @@
+Mon Nov  9 23:37:09 1998  Vishal Kachroo <vishal@cs.wustl.edu>
+
+	* src/Key_List.cpp: Fixed the problem with Binary and Linear
+	Search code. 
+
 Sat Oct 10 18:40:56 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* tests/test-6.exp (Usage): copied the output of gperf -h option
