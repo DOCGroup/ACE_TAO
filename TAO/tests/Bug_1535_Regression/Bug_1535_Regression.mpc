@@ -2,6 +2,7 @@
 // $Id$
 
 project(bug_1535_regression) : taoexe, utils, portableserver {
+  avoids += minimum_corba
   Source_Files {
     bug_1535_regression.cpp
   }
