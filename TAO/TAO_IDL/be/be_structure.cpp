@@ -39,46 +39,8 @@ be_structure::be_structure (UTL_ScopedName *n,
                             idl_bool abstract)
   : AST_Decl (AST_Decl::NT_struct, n, p),
     UTL_Scope (AST_Decl::NT_struct),
-    COMMON_Base (local, abstract),
-    member_count_ (-1)
+    COMMON_Base (local, abstract)
 {
-}
-
-// compute total number of members
-int
-be_structure::compute_member_count (void)
-{
-  UTL_ScopeActiveIterator *si;  // iterator
-
-  this->member_count_ = 0;
-
-  // if there are elements in this scope
-  if (this->nmembers () > 0)
-    {
-      // instantiate a scope iterator.
-      si = new UTL_ScopeActiveIterator (this,
-                                        UTL_Scope::IK_decls);
-
-      while (!(si->is_done ()))
-        {
-          this->member_count_++;
-          si->next ();
-        } // end of while
-
-      delete si; // free the iterator object
-    }
-
-  return 0;
-}
-
-// return the member count
-int
-be_structure::member_count (void)
-{
-  if (this->member_count_ == -1)
-    this->compute_member_count ();
-
-  return this->member_count_;
 }
 
 // generate the _var definition for ourself

@@ -528,6 +528,8 @@ be_visitor_ami_pre_proc::create_raise_operation (be_decl *node,
   be_operation *operation = new be_operation (rt,
                                               AST_Operation::OP_noflags,
                                               op_name,
+                                              0,
+                                              0,
                                               0);
   operation->set_name (op_name);
   operation->set_defined_in (excep_holder);
@@ -588,6 +590,8 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
   be_operation * op = new be_operation (rt,
                                         AST_Operation::OP_noflags,
                                         op_name,
+                                        0,
+                                        0,
                                         0);
 
   // Create the first argument, which is a Reply Handler
@@ -720,6 +724,8 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
   be_operation *operation = new be_operation (rt,
                                               AST_Operation::OP_noflags,
                                               op_name,
+                                              0,
+                                              0,
                                               0);
   operation->set_name (op_name);
 
@@ -839,15 +845,17 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   ACE_CString new_op_name = original_op_name + ACE_CString ("_excep");
 
   UTL_ScopedName *op_name = ACE_static_cast (UTL_ScopedName *, reply_handler->name ()-> copy ());
-  op_name->nconc (new UTL_ScopedName (
-                    new Identifier (
-                      new_op_name.rep (), 1, 0, I_FALSE),
-                    0));
+  op_name->nconc (new UTL_ScopedName
+                  (new Identifier
+                   (new_op_name.rep (), 1, 0, I_FALSE),
+                   0));
 
   // create the operation
   be_operation *operation = new be_operation (rt,
                                               AST_Operation::OP_noflags,
                                               op_name,
+                                              0,
+                                              0,
                                               0);
   operation->set_name (op_name);
   operation->add_argument_to_scope (arg);
@@ -986,6 +994,8 @@ be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
     new be_operation (node->field_type (),
                       AST_Operation::OP_noflags,
                       get_name,
+                      0,
+                      0,
                       0);
   operation->set_name (get_name);
   operation->set_defined_in (node->defined_in ());
@@ -1024,6 +1034,8 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   be_operation *operation = new be_operation (rt,
                                               AST_Operation::OP_noflags,
                                               set_name,
+                                              0,
+                                              0,
                                               0);
   operation->set_name (set_name);
   operation->set_defined_in (node->defined_in ());

@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 ACE_RCSID(be, be_typedef, "$Id$")
 
@@ -35,7 +35,7 @@ be_typedef::be_typedef (AST_Type *bt,
                         UTL_StrList *p,
                         idl_bool local,
                         idl_bool abstract)
-  : AST_Typedef (bt, n, p, local, abstract),
+  : AST_Typedef (bt, n, p, bt->is_local () || local, abstract),
     AST_Decl (AST_Decl::NT_typedef, n, p),
     COMMON_Base (local, abstract)
 {

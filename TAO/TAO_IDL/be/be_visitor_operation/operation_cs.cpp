@@ -64,7 +64,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node for future use
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_LOCAL_OPERATION_S)
+  if (node->is_local ())
     return 0;
 
   os->indent (); // start with the current indentation level

@@ -64,9 +64,6 @@ public:
                             char *full_name = 0);
   // generate the _out implementation
 
-  virtual int member_count (void);
-  // return the count of members
-
   virtual int default_index (void);
   // return the default index used
 
@@ -115,17 +112,11 @@ protected:
 private:
   //=helper
 
-  int compute_member_count (void);
-  // count the number of members
-
   int compute_default_index (void);
   // count the default index
 
   virtual int compute_default_value (void);
   // compute the implicit default value (if any)
-
-  int member_count_;
-  // number of members
 
   int default_index_;
   // default label index (zero based indexing)

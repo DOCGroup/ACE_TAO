@@ -46,7 +46,9 @@ int
 be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
 {
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_inline_cdr_op_gen () || node->imported ())
+  if (node->cli_inline_cdr_op_gen () ||
+      node->imported () ||
+      node->is_local ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -133,7 +135,7 @@ be_visitor_structure_cdr_op_ci::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!this->last_node (bd) 
+  if (!this->last_node (bd)
       && bd->node_type () != AST_Decl::NT_enum_val)
     {
       switch (this->ctx_->sub_state ())

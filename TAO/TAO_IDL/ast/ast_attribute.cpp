@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -74,8 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * readonly.
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(ast, ast_attribute, "$Id$")
 
@@ -83,17 +83,20 @@ ACE_RCSID(ast, ast_attribute, "$Id$")
  * Constructor(s) and destructor
  */
 AST_Attribute::AST_Attribute()
-	     : pd_readonly(I_TRUE)
+             : pd_readonly(I_TRUE)
 {
 }
 
 AST_Attribute::AST_Attribute(idl_bool ro,
-			     AST_Type *ft,
-			     UTL_ScopedName *n,
-			     UTL_StrList *p)
-	     : AST_Field(AST_Decl::NT_attr, ft, n, p),
-	       AST_Decl(AST_Decl::NT_attr, n, p),
-	       pd_readonly(ro)
+                             AST_Type *ft,
+                             UTL_ScopedName *n,
+                             UTL_StrList *p,
+                             idl_bool local,
+                             idl_bool abstract)
+             : AST_Field(AST_Decl::NT_attr, ft, n, p),
+               AST_Decl(AST_Decl::NT_attr, n, p),
+               COMMON_Base (local, abstract),
+               pd_readonly(ro)
 {
 }
 

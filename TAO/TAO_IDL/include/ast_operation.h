@@ -101,7 +101,9 @@ public:
   AST_Operation (AST_Type *return_type,
                  Flags flags,
                  UTL_ScopedName *n,
-                 UTL_StrList *p);
+                 UTL_StrList *p,
+                 idl_bool local,
+                 idl_bool abstract);
 
   virtual ~AST_Operation (void);
 

@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 ACE_RCSID(be, be_union_branch, "$Id$")
 
@@ -33,13 +33,14 @@ be_union_branch::be_union_branch (void)
 {
 }
 
-be_union_branch::be_union_branch (UTL_LabelList *ll, 
+be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,
-                                  UTL_ScopedName *n, 
+                                  UTL_ScopedName *n,
                                   UTL_StrList *p)
   : AST_UnionBranch (ll, ft, n, p),
     AST_Field (AST_Decl::NT_union_branch, ft, n, p),
-    AST_Decl (AST_Decl::NT_union_branch, n, p)
+    AST_Decl (AST_Decl::NT_union_branch, n, p),
+    COMMON_Base (ft->is_local (), ft->is_abstract ())
 {
 }
 

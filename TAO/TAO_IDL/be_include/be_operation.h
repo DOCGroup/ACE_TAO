@@ -45,8 +45,12 @@ public:
   be_operation (void);
   // default constructor
 
-  be_operation (AST_Type *rt, AST_Operation::Flags fl, UTL_ScopedName *n,
-                UTL_StrList *p);
+  be_operation (AST_Type *rt,
+                AST_Operation::Flags fl,
+                UTL_ScopedName *n,
+                UTL_StrList *p,
+                idl_bool local,
+                idl_bool abstract);
   // constructor
 
   ~be_operation ();
@@ -70,7 +74,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   be_operation_strategy *set_strategy (be_operation_strategy *new_strategy);
-  
+
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
   // decide on the next state

@@ -44,7 +44,9 @@ be_visitor_union_cdr_op_ch::~be_visitor_union_cdr_op_ch (void)
 int
 be_visitor_union_cdr_op_ch::visit_union (be_union *node)
 {
-  if (node->cli_hdr_cdr_op_gen () || node->imported ())
+  if (node->cli_hdr_cdr_op_gen () ||
+      node->imported () ||
+      node->is_local ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();

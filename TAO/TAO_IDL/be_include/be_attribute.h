@@ -42,7 +42,12 @@ public:
   be_attribute (void);
   // default constructor
 
-  be_attribute (idl_bool ro, AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p);
+  be_attribute (idl_bool ro,
+                AST_Type *ft,
+                UTL_ScopedName *n,
+                UTL_StrList *p,
+                idl_bool local,
+                idl_bool abstract);
   // constructor
 
   // Visiting
