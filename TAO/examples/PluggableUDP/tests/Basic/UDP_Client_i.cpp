@@ -67,7 +67,7 @@ UDP_Client_i::svc (void)
       udp_->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (0, 50); // 50ms
+      ACE_Time_Value tv (0, 500); // 50ms
       ACE_OS::sleep (tv);  // let the previous request go through
 
       // Shut down local ORB, trigger the end of the ORB event loop

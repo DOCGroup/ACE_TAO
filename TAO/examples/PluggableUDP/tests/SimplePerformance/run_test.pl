@@ -9,7 +9,7 @@ use lib '../../../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("time.ior");
+$iorfile = PerlACE::LocalFile ("test.ior");
 
 $SV = new PerlACE::Process ("server", "-o $iorfile");
 $CL = new PerlACE::Process ("client", "-k file://$iorfile");
