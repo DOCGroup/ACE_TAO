@@ -19,7 +19,7 @@
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
-class Handle_L_SPIPE : public ACE_Service_Object, public ACE_SPIPE_Acceptor
+class ACE_Svc_Export Handle_L_SPIPE : public ACE_Service_Object, public ACE_SPIPE_Acceptor
 {
 public:
   Handle_L_SPIPE (void);

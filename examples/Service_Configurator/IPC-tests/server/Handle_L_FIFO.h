@@ -17,7 +17,7 @@
 #include "ace/FIFO_Recv_Msg.h"
 #include "ace/Log_Msg.h"
 
-class Handle_L_FIFO : public ACE_Service_Object, public ACE_FIFO_Recv_Msg
+class ACE_Svc_Export Handle_L_FIFO : public ACE_Service_Object, public ACE_FIFO_Recv_Msg
 {
 public:
   Handle_L_FIFO (void);
@@ -44,5 +44,3 @@ extern ACE_Service_Object_Type lf;
 #endif /* __ACE_INLINE__ */
 
 #endif /* _HANDLE_L_FIFO_H */
-
-
