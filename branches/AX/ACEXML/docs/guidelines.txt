@@ -1,9 +1,19 @@
-// -*- HTML-Helper -*-
+// -*- HTML-Helper -*- $Id$
 
 /**
 @page acexml_guides ACEXML Programming Guidelines
 
 <ul>
+  <li>Character encoding:  The default character encoding for ACEXML
+      can be set at compile time.   ACEXML uses UTF-8 encoding in most
+      platforms where <code>ACEXML_Char</code> maps to
+      <code>char</code> in this case.  When ACE is configured to use
+      <CODE>wchar</CODE> and <CODE>UNICODE</CODE>,  ACEXML uses UTF-16
+      encoding and <code>ACEXML_Char</code> maps to
+      <code>wchar_t</code>.  Notice that ACEXML assume
+      <code>sizeof (wchar_t)</code> is of 2-byte long.  For platforms
+      using 4-byte <code>wchar_t</code>, ACEXML will not work
+      correctly but it should be trivial to fix.<p>
 
   <li>Currently, there's only an example showing how to use the parser
       under @c $(ACE_ROOT)/XML/examples/SAXPrint/.

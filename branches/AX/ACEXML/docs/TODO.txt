@@ -25,6 +25,10 @@
   <li>A char stream should be able to differentiate the file encoding
       and perform the correct transcoding automatically.
 
+  <li>Add a new FileCharStream class that understand UTF-16 encoded files.
+
+  <li>Add a class to determine the encoding of an XML file automatically.
+
   <li>Need to support ACEXML_Locator in the parser.  There's currently
       no way to tell the location where the parser is parsing or where
       an error occurred.
