@@ -1,3 +1,10 @@
+Mon Dec  8 16:14:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/todo.html:
+	* docs/RT-Extension.html:
+
+	  Updated files.
+
 2003-12-08  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/Hello/Receiver/Receiver_svnt.h:
