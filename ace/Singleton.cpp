@@ -40,13 +40,13 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance_i (void)
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
-template <class TYPE, class ACE_LOCK> LOCK &
+template <class TYPE, class ACE_LOCK> ACE_LOCK &
 ACE_Singleton<TYPE, ACE_LOCK>::singleton_lock_i (void)
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Lock the creation of the singleton.  This works around a
   // "feature" of G++... ;-)
-  static LOCK ace_singleton_lock_;
+  static ACE_LOCK ace_singleton_lock_;
 
   return ace_singleton_lock_;
 #else
@@ -91,7 +91,7 @@ template <class TYPE, class ACE_LOCK> ACE_Singleton<TYPE, ACE_LOCK> *
 ACE_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
 
 // Lock the creation of the singleton.  
-template <class TYPE, class ACE_LOCK> LOCK
+template <class TYPE, class ACE_LOCK> ACE_LOCK
 ACE_Singleton<TYPE, ACE_LOCK>::ace_singleton_lock_;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
@@ -119,7 +119,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
 
   // Lock the creation of the singleton.  This works around a
   // "feature" of G++... ;-)
-  static LOCK ace_singleton_lock_;
+  static ACE_LOCK ace_singleton_lock_;
 
   // Perform the Double-Check pattern...                                        
   if (singleton_ == 0)
@@ -174,7 +174,7 @@ template <class TYPE, class ACE_LOCK> ACE_TSS_Singleton <TYPE, ACE_LOCK> *
 ACE_TSS_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
 
 // Lock the creation of the singleton.
-template <class TYPE, class ACE_LOCK> LOCK
+template <class TYPE, class ACE_LOCK> ACE_LOCK
 ACE_TSS_Singleton<TYPE, ACE_LOCK>::ace_singleton_lock_;                
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
