@@ -94,6 +94,7 @@ be_interface::compute_fullskelname (void)
       delete i;
 
       this->full_skel_name_ = new char [namelen+1];
+      this->full_skel_name_[0] = '\0';
       first = I_TRUE;
       second - I_FALSE;
       ACE_OS::strcat (this->full_skel_name_, "POA_");

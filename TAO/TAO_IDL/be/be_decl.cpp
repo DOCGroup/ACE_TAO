@@ -298,6 +298,7 @@ be_decl::compute_repoID (void)
       delete i;
 
       this->repoID_ = new char [namelen+1];
+      this->repoID_[0] = '\0';
       ACE_OS::sprintf (this->repoID_, "%s", "IDL:");
       i = new UTL_IdListActiveIterator (this->name ());
       first = I_TRUE;
