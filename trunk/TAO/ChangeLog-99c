@@ -1,3 +1,10 @@
+Thu Feb 25 23:38:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/decode.cpp:
+	  Fixed another confusion between an Any's value and
+	  its message block. This one was in TAO_Marshal_Union.
+	  Maybe unions will work a little better now ;-).
+
 Thu Feb 25 20:19:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.h:

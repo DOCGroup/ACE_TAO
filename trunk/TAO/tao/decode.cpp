@@ -1026,8 +1026,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                                   {
                                     CORBA::Long l;
                                     TAO_InputCDR stream ((ACE_Message_Block *)
-                                                         member_label->value
-                                                         ());
+                                                         member_label->_tao_get_cdr ());
                                     (void)stream.decode (discrim_tc, &l, 0, env);
                                     if (l == *(CORBA::Long *) discrim_val)
                                       discrim_matched = 1;
