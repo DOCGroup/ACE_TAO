@@ -1,3 +1,15 @@
+Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * examples/PluggableUDP/tests/Basic/client.dsp:
+        * examples/PluggableUDP/tests/Basic/server.dsp:
+        * examples/PluggableUDP/tests/Performance/client.dsp:
+        * examples/PluggableUDP/tests/Performance/server.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+          Changed to use tao_idl_static in the static builds and made sure
+          that all builds linked against TAO_DIOPx.lib.  This should fix
+          the errors in the automatic builds.
+
 Thu May 17 08:56:59 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/RT_Protocols_Hooks.cpp: Moved explicit template instantiation
@@ -179,7 +191,6 @@ Wed May 16 20:59:15 2001  Ossama Othman  <ossama@uci.edu>
 	  by the allocation rather than the one that was set indirectly.
 	  It wasn't obvious what was happening otherwise.
 
->>>>>>> 1.3550
 Wed May 16 20:58:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
