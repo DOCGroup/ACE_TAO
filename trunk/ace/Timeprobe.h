@@ -38,6 +38,7 @@
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H
 #include /**/ "ace/pre.h"
+
 #include "ace/ACE_export.h"
 #include "ace/OS.h"
 #include "ace/Malloc_Allocator.h"

@@ -7,6 +7,8 @@
 #include "ace/Handle_Set.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS.h"
+
 ACE_RCSID(ace, Handle_Set, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)

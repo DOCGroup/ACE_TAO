@@ -2,7 +2,6 @@
 
 // Process_Manager.cpp
 #include "ace/ACE.h"
-#include "ace/Synch_T.h"
 #include "ace/Process.h"
 #include "ace/Signal.h"
 #include "ace/Process_Manager.h"

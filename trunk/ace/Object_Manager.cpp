@@ -12,7 +12,6 @@
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
 #include "ace/Containers.h"
-#include "ace/Synch.h"
 #include "ace/Malloc.h"
 #include "ace/Signal.h"
 #include "ace/Framework_Component.h"
@@ -21,6 +20,10 @@
 #if !defined (__ACE_INLINE__)
 # include "ace/Object_Manager.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Null_Mutex.h"
+#include "ace/Mutex.h"
+#include "ace/RW_Thread_Mutex.h"
 
 ACE_RCSID(ace, Object_Manager, "$Id$")
 

@@ -2,6 +2,8 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Based_Pointer_Repository.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Synch_Traits.h"
 
 /**
  * @class ACE_Based_Pointer_Repository_Rep

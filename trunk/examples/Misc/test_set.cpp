@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "ace/Containers.h"
 #include "ace/Log_Msg.h"
 

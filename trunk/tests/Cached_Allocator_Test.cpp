@@ -22,6 +22,9 @@
 
 ACE_RCSID(tests, Cached_Allocator_Test, "$Id$")
 
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
+
 typedef ACE_Dynamic_Cached_Allocator<ACE_SYNCH_NULL_MUTEX> DYNAMIC_ALLOCATOR;
 
 static int

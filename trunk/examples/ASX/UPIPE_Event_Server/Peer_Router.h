@@ -20,6 +20,7 @@
 #include "ace/Map_Manager.h"
 
 #if defined (ACE_HAS_THREADS)
+#include "ace/RW_Mutex.h"
 
 // Forward declaration.
 template <class PEER_HANDLER, class KEY>

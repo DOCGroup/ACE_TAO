@@ -16,6 +16,8 @@
 #include "ace/RB_Tree.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID(ace, RB_Tree, "$Id$")
 
 // Constructor.

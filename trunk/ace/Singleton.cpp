@@ -13,7 +13,6 @@
 #include "ace/Singleton.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_T.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Framework_Component.h"

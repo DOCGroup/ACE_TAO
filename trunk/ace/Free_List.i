@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Guard_T.h"
 
 // Inserts an element onto the free list (if we are allowed to manage
 // elements withing and it pasts the high water mark, delete the

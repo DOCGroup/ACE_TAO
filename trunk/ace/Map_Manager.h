@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
 #include "ace/Log_Msg.h"
+#include "ace/Basic_Types.h"
 
 // Forward declaration.
 class ACE_Allocator;

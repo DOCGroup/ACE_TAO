@@ -18,7 +18,7 @@
 # error ace/Signal.h was #included instead of signal.h by ace/OS.h:  fix!!!!
 #endif /* ACE_DONT_INCLUDE_ACE_SIGNAL_H */
 
-#include "ace/Synch.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

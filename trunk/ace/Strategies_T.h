@@ -27,7 +27,7 @@
 #include "ace/Refcountable.h"
 #include "ace/Hashable.h"
 #include "ace/Recyclable.h"
-
+#include "ace/Reverse_Lock_T.h"
 
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR

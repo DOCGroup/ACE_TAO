@@ -1,7 +1,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
-#include "ace/Synch_T.h"
+#include "ace/Guard_T.h"
 
 //#define ACE_ENABLE_TIMEPROBES
 #include "ace/Timeprobe.h"

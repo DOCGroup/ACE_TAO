@@ -6,6 +6,11 @@
 // Returns a count of the number of currently valid entries (counting
 // both resumed and suspended entries).
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#include "ace/Guard_T.h"
+#include "ace/Thread_Mutex.h"
+#endif /* ACE_MT_SAFE */
+
 ACE_INLINE int
 ACE_Service_Repository::current_size (void) const
 {

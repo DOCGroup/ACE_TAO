@@ -23,6 +23,7 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Task.h"
+#include "ace/Manual_Event.h"
 
 
 /**

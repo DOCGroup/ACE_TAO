@@ -1,7 +1,7 @@
 #include "ace/Name_Request_Reply.h"
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
-
+#include "ace/OS.h"
 
 ACE_RCSID (ace,
            Name_Request_Reply,

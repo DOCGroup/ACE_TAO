@@ -24,6 +24,7 @@
 #include "PortableInterceptorC.h"
 #include "PolicyC.h"
 #include "ace/Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 class TAO_ORB_Core;
 

@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Lock_Adapter_T.h"
+
 /**
  * @class ACE_Select_Reactor_Token_T
  *

@@ -15,13 +15,14 @@
 #define ACE_ACTIVATION_QUEUE_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch_T.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Message_Queue.h"
+#include "ace/Condition_Thread_Mutex.h"
 #include "ace/Method_Request.h"
 
 // Be compatible with the terminology in the POSA2 book!

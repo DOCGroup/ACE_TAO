@@ -7,7 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
-
+#include "ace/Lock_Adapter_T.h"
 
 // The number of messages that is being processed
 static size_t number_of_messages = 100;

@@ -3,7 +3,9 @@
 
 #include "ace/Dynamic.h"
 #include "ace/Singleton.h"
-#include "ace/Synch_T.h"
+#include "ace/TSS_T.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Dynamic.i"

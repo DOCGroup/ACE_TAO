@@ -11,7 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Module.h"
-//#include "ace/Service_Config.h"
+#include "ace/Null_Condition.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Task_T.i"

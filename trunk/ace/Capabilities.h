@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"

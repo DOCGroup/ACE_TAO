@@ -6,6 +6,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
+#include "ace/Lock_Adapter_T.h"
 #include "../Latency_Stats.h"
 
 static size_t number_of_messages = 100;

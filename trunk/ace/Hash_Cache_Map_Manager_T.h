@@ -17,11 +17,12 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Cache_Map_Manager_T.h"
-#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Null_Mutex.h"
 
 // Forward declaration.
 class ACE_Allocator;

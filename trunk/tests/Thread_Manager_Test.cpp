@@ -28,6 +28,7 @@
 ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+#include "ace/Barrier.h"
 
 // Each thread keeps track of whether it has been signalled by using a
 // global array.  It must be dynamically allocated to allow sizing at

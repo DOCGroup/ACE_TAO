@@ -15,7 +15,7 @@
 #define ACE_TIMER_QUEUE_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

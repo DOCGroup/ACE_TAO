@@ -9,6 +9,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"
+#include "ace/RW_Thread_Mutex.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"

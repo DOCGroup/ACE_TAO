@@ -11,6 +11,7 @@
 #include "ace/Lib_Find.h"
 #include "ace/Object_Manager.h"
 #include "ace/SString.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
 

@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Default_Constants.h"
-#include "ace/Synch.h"
+#include "ace/Thread_Mutex.h"
 
 
 class ACE_Service_Type;

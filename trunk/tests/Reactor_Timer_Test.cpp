@@ -25,6 +25,7 @@
 #include "ace/Reactor.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Trace.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
 

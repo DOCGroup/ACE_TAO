@@ -22,7 +22,7 @@
 
 #include "ace/SString.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
 namespace ACE_Utils
 {

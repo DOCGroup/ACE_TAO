@@ -14,6 +14,9 @@
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
 
+// For timer_queue_
+#include "ace/Recursive_Thread_Mutex.h"
+
 // @@ The latest version of SunCC can't grok the code if we put inline
 // function here.  Therefore, we temporarily disable the code here.
 // We shall turn this back on once we know the problem gets fixed.
