@@ -1,3 +1,14 @@
+Sat Dec  6 13:52:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/RTEvent.dsp:
+	* docs/tutorials/Quoter/RT_Event_Service/server.dsp:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp:
+	* docs/tutorials/Quoter/Simple/Server/server.dsp:
+	* docs/tutorials/Quoter/AMI/server.dsp:
+	* examples/AMH/Sink_Server/client.dsp:
+	* examples/AMH/Sink_Server/server.dsp:
+	  Another set of project setting fixes
+
 Sat Dec  6 13:27:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAOACE.dsw:
