@@ -626,6 +626,13 @@ project(Reader Writer Test) : acetest {
   }
 }
 
+project(Recursive Condition Bug Test) : acetest {
+  exename = Recursive_Condition_Bug_Test
+  Source_Files {
+    Recursive_Condition_Bug_Test.cpp
+  }
+}
+
 project(Recursive Condition Test) : acetest {
   exename = Recursive_Condition_Test
   Source_Files {
@@ -819,6 +826,13 @@ project(UPIPE SAP Test) : acetest {
   exename = UPIPE_SAP_Test
   Source_Files {
     UPIPE_SAP_Test.cpp
+  }
+}
+
+project(Unbounded Set Test Ex) : acetest {
+  exename = Unbounded_Set_Test_Ex
+  Source_Files {
+    Unbounded_Set_Test_Ex.cpp
   }
 }
 
