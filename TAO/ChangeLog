@@ -14,7 +14,7 @@ Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sat Jun 21 22:29:16 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs\tests\Notify\lib\Makefile.bor:
+	* orbsvcs/tests/Notify/lib/Makefile.bor:
 	  Corrected bad syntax.
 
 Sat Jun 21 11:22:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
