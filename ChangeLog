@@ -1,3 +1,12 @@
+Wed Mar 31 14:22:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cygwin32.GNU:
+        * include/makeinclude/platform_mingw32.GNU:
+          Instead of that people when they need to have a different TCPU
+          need to edit these files, made it so that we only default to
+          TCPU=pentiumpro when it is not set yet. In the platform_macros.GNU
+          people can now overrule this default.
+
 Wed Mar 31 09:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted our change of
