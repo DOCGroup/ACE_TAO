@@ -77,7 +77,7 @@ Logger::log (ACE_Log_Record &log_record)
     }
   else
     {
-      char verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
+      ACE_TCHAR verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
       int result = log_record.format_msg (ACE_LOG_MSG->local_host (),
                                           ACE_LOG_MSG->flags (),
                                           verbose_msg);
@@ -99,7 +99,7 @@ Logger::log (ACE_Log_Record &log_record)
 }
 
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   // This message should show up in stderr.
   ACE_DEBUG ((LM_DEBUG,
