@@ -88,47 +88,7 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\BCU.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CORBA_Utils_T.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Dispatching_Modules.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event_Channel.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event_Service.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GPlot_File.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Local_ESTypes.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Memory_Pools.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ReactorTask.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Task.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Task_Manager.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"

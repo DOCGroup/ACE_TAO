@@ -88,15 +88,7 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\CosNaming_i.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Naming_Service.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\NS_CosNaming.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
