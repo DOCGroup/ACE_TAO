@@ -211,6 +211,7 @@ ACE has been deeply influenced and improved by the following members
 of my research group at Washington University:
 
 Alexander Babu Arulanthu <alex@cs.wustl.edu>
+Matt Braun <mjb2@cs.wustl.edu>
 Darrell Brunsch <brunsch@cs.wustl.edu>
 Chris Cleeland <chris@cs.wustl.edu>
 Sergio Flores-Gaitan <sergio@cs.wustl.edu>
@@ -222,11 +223,13 @@ Prashant Jain <pjain@cs.wustl.edu>
 Michael Kircher <mk1@cs.wustl.edu>
 David Levine <levine@cs.wustl.edu>
 Carlos O'Ryan <coryan@cs.wustl.edu>
+Jeff Parsons <jp4@cs.wustl.edu>
 Irfan Pyarali <irfan@cs.wustl.edu>
 Marina Spivak <marina@cs.wustl.edu>
 Nagarajan Surendran <naga@cs.wustl.edu>
 Nanbor Wang <nanbor@cs.wustl.edu>
 Seth Widoff <sbw1@cs.wustl.edu>
+Torben Worm <tworm@cs.wustl.edu>
 
 I would also like to thank all the following people who have also
 contributed to ACE and TAO over the years:
@@ -562,6 +565,17 @@ Kent Watsen <kent@watsen.net>
 Chris Healey <chealey@entera.com>
 Philippe Klein <Philippe_Klein@vocaltec.com>
 William S. Lear <rael@dejanews.com>
+John Geiss <jtgb@eci-esyst.com>
+Ernesto Guisado <eguisado@saincotrafico.com>
+Stuart Myles <smyles@wsj.dowjones.com>
+Lothar Werzinger <lwerzinger@krones.de>
+Andrew Harbick <aharbick@opentext.com>
+Pavel Motuzenko <p_motuzenko@hotmail.com>
+Ross J. Lillie <lillie@rsch.comm.mot.com>
+Sam Hauer <shauer@nmo.gtegsc.com>
+Frank. J. Hodum <fhdum@std.saic.com>
+David Miron <dxm@crapper.dsto.defence.gov.au>
+Anton van Straaten <anton@appsolutions.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
