@@ -1123,6 +1123,7 @@ invocation when building them.  When they are loaded onto the target,
 the should load against the symbols from the ACE library from the
 first executable that was loaded.<p>
 
+<h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
 ACE now supports shared libraries for VxWorks, but only with the
 g++ compiler.  To build shared libraries instead of the default
 static libraries, added <code>static_libs_only=1</code> to either
@@ -1130,6 +1131,21 @@ your <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
 or your <code>make</code> invocation.  Then, be sure to load
 the ACE (and any other) shared library before loading your
 executable(s).<p>
+
+A shared library for VxWorks uses the same code as for a static
+(non-shared) library.  However, calls to static constructors/
+destructors are added.  The code in the shared library <strong>must</strong>
+be reentrant if you shared it between programs (tasks).  The
+ACE library meets this requirement.<p>
+
+Shared libraries reduce build time, executable size, and load
+time of the executable.  But, you must manually load the shared
+library before loading your executable(s) with a command such as:
+<pre><code>
+-&gt; ld &lt; libACE.so
+</code></pre>
+Shared libraries can be unloaded the same way an executable
+(module) is unloaded.<p>
 
 <h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
 The following, very useful information was contributed by
