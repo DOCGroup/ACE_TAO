@@ -610,15 +610,15 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor;
   be_visitor_context ctx;
-  
+
   // Setup parameters for marshaling and marshal them into the
   // outgoing stream.
   // The code below this is for 2way operations only.
-  
+
   // We will be here only if we are 2way
   // first initialize a reply message
   *os << "_tao_server_request.init_reply ();" << be_nl << be_nl;
-  
+
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type.
   if (this->void_return_type (bt) &&
@@ -627,19 +627,19 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
     {
       return 0;
     }
-  
+
   // Create temporary variables for the out and return parameters.
   if (!this->void_return_type (bt))
     {
       ctx = *this->ctx_;
-      
+
       be_visitor_context *new_ctx = 0;
       ACE_NEW_RETURN (new_ctx,
                       be_visitor_context (ctx),
                       0);
 
       be_visitor_operation_rettype_post_upcall_ss visitor (new_ctx);
-      
+
       if (bt->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -649,7 +649,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                             -1);
         }
     }
-  
+
   // Generate any temporary variables to demarshal the arguments.
   ctx = *this->ctx_;
   be_visitor_args_post_upcall_ss vis1 (new be_visitor_context (ctx));
@@ -727,66 +727,6 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
     }
 
   *os << be_uidt_nl;
-
-  return 0;
-}
-
-int
-be_visitor_operation_ss::gen_raise_exception (be_type *,
-                                              const char *excep,
-                                              const char *completion_status,
-                                              const char * /* env */)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << "throw ";
-    }
-  else
-    {
-      *os << "ACE_THROW (";
-    }
-
-  *os << excep << "(" << completion_status << ")";
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << ";\n";
-    }
-  else
-    {
-      *os << ");\n";
-    }
-
-  return 0;
-}
-
-int
-be_visitor_operation_ss::gen_check_exception (be_type *,
-                                              const char * /* env */)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-
-  // Check if there is an exception.
-  *os << "ACE_CHECK;\n";
-
-  return 0;
-}
-
-int
-be_visitor_operation_ss::gen_check_interceptor_exception (be_type *, const char * /* env */)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-
-  // Check if there is an exception.
-  *os << "TAO_INTERCEPTOR_CHECK;\n";
 
   return 0;
 }

@@ -1,13 +1,13 @@
 //=============================================================================
 /**
-*  @file   amh_rh_ss.cpp
-*
-*  $Id$
-*
-*  Creates code for AMH-RH operations.
-*
-*  @author Mayur Deshpande <mayur@ics.uci.edu>
-*/
+ *  @file   amh_rh_ss.cpp
+ *
+ *  $Id$
+ *
+ *  Creates code for AMH-RH operations.
+ *
+ *  @author Mayur Deshpande <mayur@ics.uci.edu>
+ */
 //=============================================================================
 
 #include "idl.h"
@@ -37,10 +37,10 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
 
-   be_interface *intf;
-  intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  be_interface *intf =
+    be_interface::narrow_from_scope (node->defined_in ());
+  if (this->ctx_->attribute () != 0)
+    intf = be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ());
 
   if (!intf)
     {
@@ -51,10 +51,15 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
+  char *buf;
+  intf->compute_full_name ("TAO_", "", buf);
+  ACE_CString response_handler_implementation_name ("POA_");
+  response_handler_implementation_name += buf;
+  delete[] buf;
+
   // Step 1 : Generate return type: always void
-  os->indent ();
-  *os << "virtual void "
-      << "TAO_" << intf->full_skel_name () << "::";
+  *os << be_nl << "void" << be_nl
+      << response_handler_implementation_name.c_str () << "::";
 
   // Check if we are an attribute node in disguise
   if (this->ctx_->attribute ())
@@ -96,11 +101,11 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
   // Step 3: Generate actual code for the method
   *os << "{" << be_idt_nl
-      << "init_reply ();" << be_nl << be_nl;
+      << "this->init_reply ();" << be_nl << be_nl;
 
   marshal_params (node);
 
-  *os << "send_reply ();" << be_uidt_nl
+  *os << "this->send_reply ();" << be_uidt_nl
       << "}" << be_nl;
 
   return 0;
@@ -141,9 +146,20 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                             -1);
         }
 
-      *os << be_uidt_nl << "))"
-          << "ACE_THROW (CORBA::MARSHAL());" << be_nl << be_nl;
-    };
+      *os << be_uidt_nl << "))\n" << be_idt;
+
+      // If marshaling fails, raise exception.
+      if (this->gen_raise_exception (0,
+                                     "CORBA::MARSHAL",
+                                     "",
+                                     "") == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) gen_raise_exception failed\n"),
+                            -1);
+        }
+      *os << be_uidt << "\n";
+    }
 
   return 0;
 }

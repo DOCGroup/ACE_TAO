@@ -126,17 +126,25 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
 
   if (node->argument_count () > 0)
     {
-      *os << ",";
+      *os << "," << be_nl;
     }
 
-  be_visitor_operation_arglist arglist_visitor (this->ctx_);
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
+
+  be_visitor_operation_arglist arglist_visitor (&ctx);
   if (arglist_visitor.visit_scope (node) == -1)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) - visit_scope failed\n"), -1);
+
   if (arglist_visitor.gen_environment_decl (1, node) == -1)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) - gen_environment_decl failed\n"), -1);
+
   *os << be_uidt_nl << ")" << be_uidt;
   if (arglist_visitor.gen_throw_spec (node) == -1)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) - gen_throe_spec failed\n"), -1);
   *os << " = 0;\n" << be_nl;
 
   return 0;

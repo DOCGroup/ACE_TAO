@@ -236,3 +236,65 @@ be_visitor_operation::gen_environment_var ()
       return null_env_decl;
     }
 }
+
+int
+be_visitor_operation::gen_raise_exception (be_type *,
+                                           const char *excep,
+                                           const char *completion_status,
+                                           const char * /* env */)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  os->indent ();
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << "throw ";
+    }
+  else
+    {
+      *os << "ACE_THROW (";
+    }
+
+  *os << excep << "(" << completion_status << ")";
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << ";\n";
+    }
+  else
+    {
+      *os << ");\n";
+    }
+
+  return 0;
+}
+
+int
+be_visitor_operation::gen_check_exception (be_type *,
+                                           const char * /* env */)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  os->indent ();
+
+  // Check if there is an exception.
+  *os << "ACE_CHECK;\n";
+
+  return 0;
+}
+
+int
+be_visitor_operation::gen_check_interceptor_exception (be_type *,
+                                                       const char * /* env */)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  os->indent ();
+
+  // Check if there is an exception.
+  *os << "TAO_INTERCEPTOR_CHECK;\n";
+
+  return 0;
+}
+
