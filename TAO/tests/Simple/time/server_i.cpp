@@ -1,17 +1,18 @@
 // $Id$
 
-#include "server_impl.h"
+#include "server_i.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Time, server_impl, "$Id$")
+ACE_RCSID(Time, server_i, "$Id$")
 
-Server_Impl::Server_Impl (void)
-  : ior_output_file_ (0)
+server_i::server_i (void)
+  : ior_output_file_ (0),
+    servant_ (0)
 {
 }
 
 int
-Server_Impl::parse_args (void)
+server_i::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
   int c;
@@ -44,7 +45,7 @@ Server_Impl::parse_args (void)
 }
 
 int
-Server_Impl::init (int argc, char *argv[], CORBA::Environment& env)
+server_i::init (int argc, char *argv[], CORBA::Environment &env)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
@@ -66,13 +67,17 @@ Server_Impl::init (int argc, char *argv[], CORBA::Environment& env)
   if (retval != 0)
     return retval;
    
+  CORBA::ORB_var orb = this->orb_manager_.orb ();
+  this->servant_ = new Time_i (orb.in ());
+
   CORBA::String_var str  =
-    this->orb_manager_.activate_under_child_poa ("server",
-                                                 &this->server_impl,
+    this->orb_manager_.activate_under_child_poa ("time",
+                                                 this->servant_,
                                                  env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
+
   if (this->ior_output_file_)
     {
       ACE_OS::fprintf (this->ior_output_file_,
@@ -85,16 +90,17 @@ Server_Impl::init (int argc, char *argv[], CORBA::Environment& env)
 }
 
 int
-Server_Impl::run (CORBA::Environment& env)
+server_i::run (CORBA::Environment &env)
 {
   if (this->orb_manager_.run (env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Server_Impl::run"),
+                       "server_i::run"),
                       -1);
 
   return 0;
 }
 
-Server_Impl::~Server_Impl (void)
+server_i::~server_i (void)
 {
+  delete this->servant_;
 }
