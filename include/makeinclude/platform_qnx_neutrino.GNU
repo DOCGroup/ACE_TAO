@@ -7,6 +7,8 @@
 #       way to do that is to set "optimize = 0", either below or on
 #       your make command line.
 
+CROSS-COMPILE = 1
+
 ifeq (,$(debug))
   debug = 1
 endif # ! debug
