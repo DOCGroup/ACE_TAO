@@ -121,7 +121,7 @@ typedef size_t KEY;
                    ACE_LOG_DIRECTORY_A, \
                    ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
                    ".log"); \
-  ACE_DEBUG ((LM_DEBUG, "Deleting old log file %s (if any)\n\n", temp)); \
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
   ACE_OS::unlink (temp);
 
 const int ACE_NS_MAX_ENTRIES = 1000;

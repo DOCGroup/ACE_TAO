@@ -126,6 +126,7 @@ ACE_SOCK_IOStream &
 operator<< (ACE_SOCK_IOStream &stream, qchar *buf)
 {
   stream.put ('"');
+
   while (*buf)
     {
       if (*buf == '"')
@@ -133,6 +134,7 @@ operator<< (ACE_SOCK_IOStream &stream, qchar *buf)
 
       stream.put ((char) *buf++);
     }
+
   stream.put ('"');
 
   return stream;
@@ -261,10 +263,10 @@ static void *
 server (void *arg = 0)
 {
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
-  // But if we don't, it doesn't get destroyed on some platforms, e.g.,
-  // g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does work on
-  // Linux, so the code seems fine.)  If we manage the
-  // storage ourselves, we _will_ destroy it at the end of this function.
+  // But if we don't, it doesn't get destroyed on some platforms,
+  // e.g., g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does
+  // work on Linux, so the code seems fine.)  If we manage the storage
+  // ourselves, we _will_ destroy it at the end of this function.
   ACE_SOCK_IOStream client_handler;
 
   ACE_INET_Addr server_addr;
@@ -292,6 +294,7 @@ server (void *arg = 0)
   qchar qbuf[BUFSIZ];
   ACE_OS::memset (qbuf, 0, sizeof qbuf);
   client_handler >> qbuf;
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Server Received: (\"%s\")\n",
               qbuf));
@@ -311,10 +314,9 @@ server (void *arg = 0)
          (buf.length() == 0 || buf[buf.length() - 1] != '"'))
     {
       client_handler >> buf;
-	  if (buf.length() > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG, "%s ", buf.c_str()));
-        }
+
+      if (buf.length() > 0)
+        ACE_DEBUG ((LM_DEBUG, "%s ", buf.c_str()));
     }
 
   ACE_DEBUG ((LM_DEBUG, ")\n"));
@@ -403,12 +405,14 @@ spawn (void)
       ACE_OS::_exit (-1);
     case 0: // In child
       {
+        ACE_APPEND_LOG ("Process_Mutex_Test-children");      
         ACE_INET_Addr server_addr;
 
         if (acceptor.get_local_addr (server_addr) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
+          ACE_ERROR ((LM_ERROR, "%p\n", "get_local_addr"));
         else
           client ((void *) &server_addr);
+        ACE_END_LOG;      
         break;
       }
     default: // In parent
@@ -436,6 +440,7 @@ main (int, char *[])
   ACE_START_TEST ("IOStream_Test");
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
+  ACE_INIT_LOG ("IOStream_Test-children");
   spawn ();
 #else
   ACE_ERROR ((LM_ERROR, "ACE_IOSTREAM not supported on this platform\n"));
