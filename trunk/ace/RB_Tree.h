@@ -49,9 +49,18 @@ public:
   /// Search result enumeration.
   enum RB_SearchResult {LEFT, EXACT, RIGHT};
 
-  /// get the allocator;
-  ACE_Allocator * allocator () const;
-  
+  /// Get the allocator;
+  /**
+   * @note This method is inlined here rather than in RB_Tree.inl
+   *       since that file may be included multiple times when
+   *       inlining is disabled and on platforms where
+   *       @c ACE_TEMPLATES_REQUIRE_SOURCE is defined.  In those
+   *       platform/configuration combinations, multiple definitions
+   *       of this method occured.  Placing the definition inline in
+   *       the header avoids such errors.
+   */
+  ACE_Allocator * allocator (void) const { return this->allocator_; }
+
 protected:
   // = Protected members.
 
@@ -125,7 +134,7 @@ private:
 
   /// Pointer to node's right child.
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *right_;
-  
+
   /// Pointer to tree base (to get the allocator).
   const ACE_RB_Tree_Base *tree_;
 };
