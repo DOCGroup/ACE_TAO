@@ -48,6 +48,9 @@ class FOO_ClientRequestInterceptor
 {
 public:
 
+  /// Constructor
+  FOO_ClientRequestInterceptor (IOP::Codec_ptr codec);
+
   /**
    * @name Methods Required by the Client Request Interceptor
    * Interface
@@ -92,6 +95,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
   //@}
+
+private:
+
+  /// The CDR encapsulation coder/decoder used to retrieve data
+  /// from the CDR encapsulation in the tagged component.
+  IOP::Codec_var codec_;
 
 };
 
