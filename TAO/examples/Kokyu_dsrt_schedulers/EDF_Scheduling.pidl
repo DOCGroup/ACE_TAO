@@ -45,7 +45,8 @@ module EDF_Scheduling
   {
     TimeBase::TimeT deadline;
     long importance;
-    TimeBase::TimeT period;
+    TimeBase::TimeT period; 
+    TimeBase::TimeT remain_exe;
     long task_id;
   };
 

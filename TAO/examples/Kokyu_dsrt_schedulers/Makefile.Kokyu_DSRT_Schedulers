@@ -23,10 +23,12 @@ endif
 
 FILES = \
   EDF_Scheduler \
+  MLF_Scheduler \
   Task_Stats \
   utils \
   Kokyu_qosC \
-  EDF_SchedulingC 
+  EDF_SchedulingC \
+  MLF_SchedulingC 
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -117,6 +119,8 @@ ifeq ($(static_libs),1)
 endif
 
 CPPFLAGS += -DKOKYU_DSRT_LOGGING
+CPPFLAGS += -DMY_KOKYU_DSRT_LOGGING
+#CPPFLAGS += -DACE_HAS_DUMP
 CPPFLAGS += -DKOKYU_HAS_RELEASE_GUARD
 CPPFLAGS += -I$(DATASTREAM_ROOT)/include
 LDFLAGS	+= -L../../../lib -L$(DATASTREAM_ROOT)/lib
