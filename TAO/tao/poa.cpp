@@ -2592,7 +2592,7 @@ TAO_POA::wstring_to_ObjectId (const wchar_t *id)
   CORBA::ULong id_length = ACE_OS::strlen (id) + 1;
 
   // Create the buffer for the Id
-  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (id_length * sizeof CORBA::WChar);
+  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (id_length * sizeof (CORBA::WChar));
 
   // Copy contents
   ACE_OS::strcpy ((CORBA::WString) buffer, id);
