@@ -163,6 +163,9 @@ typedef ACE_ES_Dispatching_Base ACE_ES_Dispatching_Module;
 class TAO_EC_Gateway;
 // Forward declare the class used to connect several EC together.
 
+class TAO_Module_Factory;
+// Factory class for the modules in the EC.
+
 // ec..
 class TAO_ORBSVCS_Export ACE_EventChannel : public POA_RtecEventChannelAdmin::EventChannel
 // = TITLE
@@ -178,7 +181,8 @@ public:
          SHUTDOWN = CONSUMER | SUPPLIER };
 
   ACE_EventChannel (CORBA::Boolean activate_threads = CORBA::B_TRUE,
-		    u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE);
+		    u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+		    TAO_Module_Factory* factory = 0);
   // Construction of the given <type>.  Check the **_CHANNEL
   // enumerations defined below.
   // By default we activate the threads on construction, but it is
@@ -275,6 +279,57 @@ private:
   // @@ TODO: change that class and object name.
   // This object handles the threads related to timers, is a bad name,
   // but this is not the opportunity to change it.
+
+  int own_factory_;
+  // If 1 then we created the factory, thus we have to destroy it.
+
+  TAO_Module_Factory* module_factory_;
+  // This is the factory we use to create and destroy the Event
+  // Channel modules.
+};
+
+// ************************************************************
+
+class ACE_ES_Timer_ACT;
+
+class TAO_ORBSVCS_Export ACE_ES_Priority_Timer : public ACE_Event_Handler
+// = TITLE
+//    Event Service Timer
+//
+// = DESCRIPTION
+//    Manages a thread per priority, each of which sits on its own
+//    ReactorEx dispatching the timers for its given priority.
+{
+public:
+  ACE_ES_Priority_Timer (ACE_Task_Manager* task_manager);
+  // Default construction.
+
+  int connected (RtecScheduler::handle_t rt_info);
+  // This allows the Priority Timer to prespawn threads.  Returns 0 on
+  // success, -1 on failure.
+
+  int schedule_timer (RtecScheduler::handle_t rt_info,
+                      const ACE_ES_Timer_ACT *act,
+                      RtecScheduler::OS_Priority preemption_priority,
+                      const RtecScheduler::Time& delta,
+                      const RtecScheduler::Time& interval = ORBSVCS_Time::zero);
+  // Schedule a timer at the appropriate priority for <preemption_priority>.
+  // Returns the preemption priority used on success, -1 on failure.
+
+  int cancel_timer (RtecScheduler::OS_Priority preemption_priority,
+                    int id, ACE_ES_Timer_ACT *&act);
+  // Cancel the timer associated with the priority of
+  // <preemption_priority> and <id>.  <act> is filled in with the
+  // Timer_ACT used when scheduling the timer.  Returns 0 on success,
+  // -1 on failure.
+
+private:
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *act);
+  // Casts <act> to ACE_ES_Timer_ACT and calls execute.
+
+  ACE_Task_Manager* task_manager_;
+  // The pointer to the manager for the timer threads.
 };
 
 // ************************************************************

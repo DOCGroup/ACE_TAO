@@ -23,6 +23,8 @@
 #endif /* ACE_OLD_STYLE_REACTOR */
 //## end module.includes
 
+#include "orbsvcs/orbsvcs_export.h"
+
 class TAO_ORBSVCS_Export ACE_ES_Fast_Reactor : public ACE_ES_FAST_REACTOR_BASE
 {
 public:
