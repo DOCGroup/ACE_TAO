@@ -1,3 +1,8 @@
+Mon Apr 29 20:28:49 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* bin/nightlybuild/builds.lst: Move SunOS_SunCC51, SunOS_GCC_2_95,
+	  Solaris8_FORTE_UP_1 to new scoreboard.
+
 Sun Apr 28 18:03:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the new tests to our daily list of 
