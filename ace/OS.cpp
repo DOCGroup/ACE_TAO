@@ -3503,11 +3503,11 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
 
       // Account for environment variables.
       if (substitute_env_args
-	  && (argv[i][0] == '$'
+          && (argv[i][0] == '$'
               && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
-	buf_len += ACE_OS::strlen (temp);
+        buf_len += ACE_OS::strlen (temp);
       else
-	buf_len += ACE_OS::strlen (argv[i]);
+        buf_len += ACE_OS::strlen (argv[i]);
 
       // Add one for the extra space between each string.
       buf_len++;
@@ -3531,11 +3531,11 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
 
       // Account for environment variables.
       if (substitute_env_args
-	  && (argv[j][0] == '$'
+      && (argv[j][0] == '$'
               && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
-	end = ACE::strecpy (end, temp);
+        end = ACE::strecpy (end, temp);
       else
-	end = ACE::strecpy (end, argv[j]);
+        end = ACE::strecpy (end, argv[j]);
 
       // Replace the null char that strecpy put there with white
       // space.
