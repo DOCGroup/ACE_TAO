@@ -2,6 +2,12 @@
 # Makefile for building ACE
 #
 
+!ifndef	BUILD
+BUILD =	all
+!endif
+
+!if $(BUILD) ==	all
+
 DIRS = \
         ace \
         examples \
@@ -9,5 +15,23 @@ DIRS = \
         tests \
         ACEXML \
         ACEXML\tests
+
+!elif $(BUILD) == nightlybuild
+
+DIRS = \
+	ace \
+	apps	\
+	netsvcs \
+	tests \
+        examples \
+        performance-tests \
+        ACEXML \
+        ACEXML\tests \
+        TAO
+
+!else
+!error Please set your BUILD variable to either "nightlybuild" or "all".
+!endif
+
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
