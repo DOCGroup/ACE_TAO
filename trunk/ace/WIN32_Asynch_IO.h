@@ -116,7 +116,7 @@ public:
 
 protected:
   /// Constructor.
-  ACE_WIN32_Asynch_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                            const void* act,
                            ACE_HANDLE event,
                            u_long offset,
@@ -125,7 +125,7 @@ protected:
                            int signal_number = 0);
 
   /// Proxy for the ACE_Handler that will be called back.
-  ACE_Handler::Proxy_Ptr &handler_proxy_;
+  ACE_Handler::Proxy_Ptr handler_proxy_;
 
   /// ACT for this operation.
   const void *act_;
