@@ -35,9 +35,11 @@ public:
   // Destructor.
 
   virtual void foo (Initiator_ptr initiator_ptr,
-                    CORBA::Environment &env);
+                    CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void finish (CORBA::Environment &env);
+  virtual void finish (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   unsigned long finish_two_way_call_;
 };

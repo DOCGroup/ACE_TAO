@@ -18,18 +18,22 @@ public:
   // Destructor.
 
   virtual CORBA::Long register_handler(EventHandler_ptr eh,
-                                       CORBA::Environment &env);
+                                       CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Register (with nothing...it's an example!)
 
-  virtual void set_value (CORBA::Environment &env);
+  virtual void set_value (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::UShort decrement (EventHandler_ptr eh,
                                    CORBA::UShort num,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // deccrement <num> by calling decrement thru <eh> until zero is
   // reached, then return.
 
-  virtual void stop (CORBA::Environment &env);
+  virtual void stop (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Stops the reactor.
 };
 

@@ -1,3 +1,37 @@
+Sun Jun 13 21:46:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/NestedUpcall/Triangle_Test/run_test.pl:
+	* tests/NestedUpcall/MT_Client_Test/run_test.pl:
+	  More scripts changed to use timeouts.
+
+	* tests/MT_Client/test.idl:
+	* tests/MT_Client/test_i.cpp:
+	* tests/MT_Client/test_i.h:
+	* tests/NestedUpcall/MT_Client_Test/MT_Object_i.cpp:
+	* tests/NestedUpcall/MT_Client_Test/MT_Object_i.h:
+	* tests/NestedUpcall/Reactor/Reactor.idl:
+	* tests/NestedUpcall/Reactor/eh_i.cpp:
+	* tests/NestedUpcall/Reactor/eh_i.h:
+	* tests/NestedUpcall/Reactor/reactor_i.cpp:
+	* tests/NestedUpcall/Reactor/reactor_i.h:
+	* tests/NestedUpcall/Triangle_Test/Initiator_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/Initiator_i.h:
+	* tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/Object_A_i.h:
+	* tests/NestedUpcall/Triangle_Test/Object_B_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/Object_B_i.h:
+	* tests/Param_Test/param_test_i.cpp:
+	* tests/Param_Test/param_test_i.h:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/Event_Service/Event_Service.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+	  More throw specs added
+
 Sun Jun 13 16:18:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/orbcore.html:

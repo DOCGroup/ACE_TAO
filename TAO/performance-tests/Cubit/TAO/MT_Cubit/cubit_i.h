@@ -30,20 +30,26 @@ public:
   ~Cubit_i (void);
 
   virtual CORBA::Octet cube_octet (CORBA::Octet o,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Short cube_short (CORBA::Short s,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Long cube_long (CORBA::Long l,
-                                 CORBA::Environment &env);
+                                 CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Cubit::Many cube_struct (const Cubit::Many &values,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void noop (CORBA::Environment &env);
+  virtual void noop (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableServer::POA_ptr
       _default_POA (CORBA::Environment &ACE_TRY_ENV);

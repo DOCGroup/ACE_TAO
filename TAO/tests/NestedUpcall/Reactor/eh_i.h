@@ -17,13 +17,15 @@ public:
   virtual ~EventHandler_i (void);
   // Destructor.
 
-  virtual CORBA::Long peer (CORBA::Environment &env);
+  virtual CORBA::Long peer (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Return some value...doesn't matter what.
 
   virtual CORBA::UShort decrement (Reactor_ptr eh,
                                    CORBA::UShort num,
-                                   CORBA::Environment &env);
-  // deccrement <num> by calling decrement thru <eh> until zero is
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // decrement <num> by calling decrement thru <eh> until zero is
   // reached, then return.
 };
 

@@ -39,6 +39,7 @@ CORBA::Long
 MT_Object_i::yadda (CORBA::Long hop_count,
                        MT_Object_ptr partner,
                        CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) MT_Object_i::yadda () hop count = %d\n",
