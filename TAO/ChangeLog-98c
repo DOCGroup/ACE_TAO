@@ -1,5 +1,8 @@
 Fri Dec 26 12:05:41 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Correctly modified the
+ 	make_cubit() method to properly access the underlying object key.
+
 	* tao/objkeyC.cpp: Added this crucial file that I somehow missed
  	adding in the last round of changes.
 
