@@ -1666,7 +1666,7 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
 
   // Calculate the size of the POA name.
   CORBA::ULong poa_name_size = 0;
-  if (is_persistent)
+  if (!is_persistent)
     {
       // Transient POAs have fixed size.
       poa_name_size = TAO_Object_Adapter::transient_poa_name_size ();
