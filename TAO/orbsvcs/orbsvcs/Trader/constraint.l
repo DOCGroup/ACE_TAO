@@ -67,12 +67,12 @@ in		{ TAO_YY_LEX_DEBUG; return TAO_IN; }
 ")"             { TAO_YY_LEX_DEBUG; return TAO_RPAREN; }
 TRUE		{ 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint(CORBA::B_TRUE);
+		    new TAO_Literal_Constraint((CORBA::Boolean) 1);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 FALSE		{ 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint(CORBA::B_FALSE);
+		    new TAO_Literal_Constraint((CORBA::Boolean) 0);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 {integer}	{ 
