@@ -1720,7 +1720,6 @@ ACE_TSS_Emulation_cleanup (void *ptr)
    // cleanup
 }
 
-ACE_INLINE
 void **
 ACE_TSS_Emulation::tss_base (void* ts_storage[])
 {
@@ -4520,7 +4519,7 @@ ACE_PSOS_Time_t::operator timespec_t (void)
 
 // type cast operator (to a timespec_t)
 
-ACE_INLINE u_long
+u_long
 ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
 {
   u_long ret_val = 0;
@@ -4548,7 +4547,7 @@ ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
 
 // Static member function to get current system time.
 
-ACE_INLINE u_long
+u_long
 ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
 {
   u_long ret_val = tm_set (t.date_, t.time_, t.ticks_);
@@ -4559,7 +4558,7 @@ ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
 
 #   if defined (ACE_PSOSIM)
 
-ACE_INLINE u_long
+u_long
 ACE_PSOS_Time_t::init_simulator_time (void)
 {
   // This is a hack using a direct UNIX system call, because the
