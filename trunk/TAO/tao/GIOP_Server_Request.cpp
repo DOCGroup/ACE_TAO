@@ -192,23 +192,13 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-    // Try to narrow to ForwardRequest
-    PortableServer::ForwardRequest *forward_request =
-      (PortableServer::ForwardRequest *)0;
+    const PortableServer::ForwardRequest *forward_request = 0;
 
-    if (value.value ())
-      {
-        forward_request =
-          PortableServer::ForwardRequest::_narrow (
-              (CORBA::Exception *) value.value ()
-            );
-      }
-
-    // If narrowing of exception succeeded
-    if (forward_request != 0)
+    // If extraction of exception succeeded
+    if ((value >>= forward_request) != 0)
       {
         this->forward_location_ = forward_request->forward_reference;
-        this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+        this->exception_type_ = TAO_GIOP_LOCATION_FORWARD;
       }
     // Normal exception
     else
