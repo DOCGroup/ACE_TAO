@@ -1,3 +1,8 @@
+Mon Sep 21 21:32:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp,
+	  Removed the extra args after init().
+
 Mon Sep 21 18:20:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Added compile time option
