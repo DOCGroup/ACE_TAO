@@ -5,6 +5,8 @@
 #include "RT_Mutex.h"
 #include "Priority_Mapping_Manager.h"
 #include "tao/ORB_Core.h"
+#include "RTCORBA/Thread_Pool.h"
+#include "RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_ORB.i"
@@ -71,12 +73,21 @@ TAO_RT_CORBA_Priority_Normalizer::normalize (CORBA::Short corba_priority,
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (*orb_core)
+    tp_manager_ (0)
 {
   TAO_RT_CORBA_Priority_Normalizer *corba_priority_normalizer = 0;
   ACE_NEW (corba_priority_normalizer,
            TAO_RT_CORBA_Priority_Normalizer (orb_core));
   orb_core->corba_priority_normalizer (corba_priority_normalizer);
+
+  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager =
+    &this->orb_core_->thread_lane_resources_manager ();
+
+  TAO_RT_Thread_Lane_Resources_Manager *rt_thread_lane_resources_manager =
+    (TAO_RT_Thread_Lane_Resources_Manager *) thread_lane_resources_manager;
+
+  this->tp_manager_ =
+    &rt_thread_lane_resources_manager->tp_manager ();
 }
 
 TAO_RT_ORB::~TAO_RT_ORB (void)
@@ -313,15 +324,15 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->tp_manager_.create_threadpool (stacksize,
-                                              static_threads,
-                                              dynamic_threads,
-                                              default_priority,
-                                              allow_request_buffering,
-                                              max_buffered_requests,
-                                              max_request_buffer_size,
-                                              1,
-                                              ACE_TRY_ENV);
+  return this->tp_manager_->create_threadpool (stacksize,
+                                               static_threads,
+                                               dynamic_threads,
+                                               default_priority,
+                                               allow_request_buffering,
+                                               max_buffered_requests,
+                                               max_request_buffer_size,
+                                               1,
+                                               ACE_TRY_ENV);
 }
 
 RTCORBA::ThreadpoolId
@@ -334,14 +345,14 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->tp_manager_.create_threadpool_with_lanes (stacksize,
-                                                         lanes,
-                                                         allow_borrowing,
-                                                         allow_request_buffering,
-                                                         max_buffered_requests,
-                                                         max_request_buffer_size,
-                                                         1,
-                                                         ACE_TRY_ENV);
+  return this->tp_manager_->create_threadpool_with_lanes (stacksize,
+                                                          lanes,
+                                                          allow_borrowing,
+                                                          allow_request_buffering,
+                                                          max_buffered_requests,
+                                                          max_request_buffer_size,
+                                                          1,
+                                                          ACE_TRY_ENV);
 }
 
 void
@@ -350,8 +361,8 @@ TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId threadpool,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {
-  this->tp_manager_.destroy_threadpool (threadpool,
-                                        ACE_TRY_ENV);
+  this->tp_manager_->destroy_threadpool (threadpool,
+                                         ACE_TRY_ENV);
 }
 
 RTCORBA::PriorityModelPolicy_ptr
@@ -448,7 +459,7 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
 TAO_Thread_Pool_Manager &
 TAO_RT_ORB::tp_manager (void)
 {
-  return this->tp_manager_;
+  return *this->tp_manager_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

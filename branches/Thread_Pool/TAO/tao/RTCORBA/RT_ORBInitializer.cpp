@@ -15,6 +15,7 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 #include "RT_ORB_Loader.h"
 #include "RT_Stub_Factory.h"
 #include "RT_Endpoint_Selector_Factory.h"
+#include "RT_Thread_Lane_Resources_Manager.h"
 
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
@@ -35,10 +36,25 @@ TAO_RT_ORBInitializer::pre_init (
 {
   TAO_ENV_ARG_DEFN;
 
+  //
   // Register all of the RT related services.
+  //
+
+  // Set the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
+  TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Protocols_Hooks);
+
+  // Set the name of the stub factory to be the RT_Stub_Factory.
+  TAO_ORB_Core::set_stub_factory ("RT_Stub_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Stub_Factory);
+
+  // Set the name of the stub factory to be the RT_Stub_Factory.
+  TAO_ORB_Core::set_endpoint_selector_factory ("RT_Endpoint_Selector_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_RT_Endpoint_Selector_Factory);
+
+  // Set the name of the thread lane resources manager to be the RT_Thread_Lane_Resources_Manager.
+  TAO_ORB_Core::set_thread_lane_resources_manager ("RT_Thread_Lane_Resources_Manager");
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Thread_Lane_Resources_Manager);
 
   // If the application resolves the root POA, make sure we load the RT POA.
   TAO_ORB_Core::set_poa_factory (rt_poa_factory_name,
@@ -46,15 +62,6 @@ TAO_RT_ORBInitializer::pre_init (
 
 //  @@ RTCORBA Subsetting: service gets automatically loaded now by using a static initializer.
 //  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_ORB_Loader);
-
-  // Set the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
-  TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
-
-  // Set the name of the stub factory to be the RT_Stub_Factory.
-  TAO_ORB_Core::set_stub_factory ("RT_Stub_Factory");
-
-  // Set the name of the stub factory to be the RT_Stub_Factory.
-  TAO_ORB_Core::set_endpoint_selector_factory ("RT_Endpoint_Selector_Factory");
 
   // Set the Priority_Mapping_Manager
   TAO_Priority_Mapping_Manager *manager = 0;
@@ -131,4 +138,3 @@ TAO_RT_ORBInitializer::register_policy_factories (
                                  ACE_TRY_ENV);
   ACE_CHECK;
 }
-
