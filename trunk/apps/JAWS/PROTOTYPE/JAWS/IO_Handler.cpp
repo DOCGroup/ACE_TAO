@@ -9,6 +9,7 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
+#include "JAWS/Waiter.h"
 
 JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler (void)
 {
@@ -329,10 +330,14 @@ JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
   // into our Data Block and then return.
 
   JAWS_Data_Block *db = this->handler ()->message_block ();
+  ACE_Message_Block &mb = result.message_block ();
 
-  db->
+  ACE_OS::memcpy(db->base (), mb.base (), mb.size ());
 
+  db->rd_ptr (mb.rd_ptr () - mb.base ());
+  db->wr_ptr (mb.wr_ptr () - mb.base ());
 
+  mb.release ();
 }
 
 void

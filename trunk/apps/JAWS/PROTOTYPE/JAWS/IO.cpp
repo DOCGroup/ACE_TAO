@@ -232,7 +232,6 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh)
 {
   // Since each thread will call into this function, just do nothing.
   // Assume that the framework has initialized the Asynch_Acceptor already.
-  ioh->state (JAWS_IO_Handler::IDLE);
 }
 
 void
