@@ -79,7 +79,7 @@ public:
   const ACE_TCHAR *get_current (void) const;
 
   /**
-   * If the <flag> matches the current_arg of arg shifter
+   * If the @a flag matches the current_arg of arg shifter
    * this method will attempt to return the associated
    * parameter value
    *
@@ -90,7 +90,7 @@ public:
    * eg: main -foobar value, main -FooBar value
    *     main -FOOBARvalue
    *
-   *     all of the above will all match the <flag> == -FooBar
+   *     all of the above will all match the @a flag == -FooBar
    *     and will return a char* to "value"
    *
    *     main -foobar 4 would succeed and return a char* to "4"

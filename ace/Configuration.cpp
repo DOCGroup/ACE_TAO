@@ -1439,7 +1439,7 @@ ACE_Configuration_Heap::create_index (void)
         {
           // Attempt to clean up.
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("create_index\n")));
+                      ACE_LIB_TEXT ("create_index failed\n")));
           this->allocator_->remove ();
           return -1;
         }

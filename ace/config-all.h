@@ -38,8 +38,6 @@
     // before the #include of time.h.
 #     include "ace/os_include/os_stdarg.h"
 #   endif /* ghs */
-
-#   include /**/ <vxWorks.h>
 # endif /* VXWORKS */
 
 // This is used to indicate that a platform doesn't support a
@@ -47,11 +45,7 @@
 #if defined ACE_HAS_VERBOSE_NOTSUP
   // Print a console message with the file and line number of the
   // unsupported function.
-# if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-#   include /**/ <cstdio>
-# else
-#   include "ace/OS_NS_stdio.h"
-# endif
+# include "ace/OS_NS_stdio.h"
 # define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_LIB_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
 # define ACE_NOTSUP do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_LIB_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return; } while (0)
 #else /* ! ACE_HAS_VERBOSE_NOTSUP */

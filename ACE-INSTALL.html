@@ -159,7 +159,7 @@ document</a>.</p><p>
         Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
         Macintosh OS X;
         Chorus; OS/9; PharLap TNT Embedded ToolSuite 9.1;
-        QNX RTP and Neutrino 2.0; VxWorks; LynxOS; RTEMS; Interix 
+        QNX RTP and Neutrino 2.0; LynxOS; RTEMS; Interix 
         (Windows Services for Unix)
     </td>
   </tr><tr>
@@ -226,13 +226,13 @@ global.features</a> file.
       a static (LIB) and dynamic (DLL) library, using the Win32 installation
       process described below.</p><p>
 
-      Please see the <a href="#Non-static%20Object%20Manager">Non-static
+      Please see the <a href="#NonStaticObjectManager">Non-static
       ACE_Object_Manager</a> discussion below.</p><p>
 
       We've also added some support for
       <a href="#mingw">GNU g++ with MinGW</a>,
-      <a href="#cygwin">GNU g++ with Cygwin</a>
-      <a href="#borland">Borland C++ 5.5, Borland C++ Builder 6.0
+      <a href="#cygwin">GNU g++ with Cygwin</a>,
+      <a href="#borland">Borland C++ Builder 6.0
       and Borland C++ BuilderX</a>, 
       <a href="#interix">Interix (Windows Services for Unix)</a>, 
       and IBM's VisualAge C++ compiler.
@@ -594,7 +594,7 @@ global.features</a> file.
       <a href="http://www.cs.wustl.edu/%7Elevine/">David Levine</a>
       &lt;<a href="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</a>&gt; has
       ported ACE to VxWorks 5.2/5.3/5.3.1/5.4 with the GreenHills
-      1.8.8/1.8.9 and g++ compilers that are distributed with
+      1.8.8/1.8.9, g++ and diab compilers that are distributed with
       VxWorks/Tornado. It is not possible to use VxWorks 5.4
       and earlier with ACE anymore because the compilers delivered with
       5.4 and earlier don't support the C++ features ACE needs.</p><p>
@@ -606,11 +606,9 @@ global.features</a> file.
       <code>ace/config.h</code>.</p><p>
 
       In addition to all of the other benefits of ACE, it helps work
-      around some deficiencies with VxWorks 5.3/5.3.1.  Some of these
-      apply only with g++, at least thru version 2.7.2.  That is the
-      version that is shipped with Tornado 1.0.1/ VxWorks 5.3.1.  The
-      problems are:</p><p>
+      around some deficiencies with VxWorks. The problems are:</p>
 
+      <p>
       </p><ol>
         <li>The program entry point cannot be called "main" with g++.  ACE
             renames it to "ace_main" (configurable via ACE_MAIN) on VxWorks.
@@ -629,18 +627,7 @@ global.features</a> file.
             that it doesn't work.  ACE provides its own 64-bit unsigned integer
             type, ACE_hrtime_t, so you don't even have to worry about this
             problem if you use it.<p>
-
-        </p></li><li>There a gory problem with munch that is severely aggravated
-            by the presence of a static in the Wind River/g++ iostream.h.
-            ACE hides this and provides an easy-to-use workaround in the
-            very unlikely situation where it becomes a problem.
-            Please see ace/config-vxworks5.x.h for more information.<p>
       </p></li></ol>
-
-      In addition, as noted <a href="#g++">below</a> following the
-      discussion of the g++ -fno-implicit-templates option,
-      -fno-implicit-templates is broken for x86 targets.  And, -O2
-      is not supported on some targets.<p>
 
       Please note that ACE uses one of the spare fields in the Wind
       River task control block, spare4, for thread- specific storage.
@@ -648,7 +635,7 @@ global.features</a> file.
       can easily be changed to one of the other spare fields, if
       necessary.</p><p>
 
-      Versions of ACE from 4.3.3 and beyond destroy dynamically
+      ACE destroys dynamically
       allocated singletons in the ACE library.  But, they may not
       properly destroy some static objects.  If you have trouble
       running a program multiple times, it may be necessary to unload
@@ -781,12 +768,7 @@ If you use the GNU GCC g++ compiler please note the following:
       We don't know what causes the link problem, though the
       workaround solves it.<p>
 
-  </p></li><li>ACE/TAO don't seem to build well with g++ 2.8.*.  We routinely
-      use g++ 2.95.x and g++ 3.x, and recommend those versions or better.<p>
-
-  </p></li><li>Earlier (prior to 2.95.2) versions of g++ may not compile
-      certain parts of ACE correctly due to compiler bugs.  Please
-      upgrade to g++ 2.95.2 or greater.<p>
+  </p></li><li>ACE/TAO needs g++ 2.95.x or better. Older versions are not usable anymore<p>
 
   </p></li><li>Make sure to update your gcc <code>config.status</code>
       file.  This file is produced when installing gcc; it specifies
@@ -819,10 +801,6 @@ If you use the GNU GCC g++ compiler please note the following:
       that initializes static objects.  Please see gcc's
       documentation for using <code>collect2</code>.<p>
 
-  </p></li><li>On VxWorks only, g++ (thru version 2.9.6, distributed
-      with Tornado 2.2/VxWorks 5.5), for x86 targets,
-      -fno-implicit-templates is broken.  In addition, -O2
-      is not supported on some targets.<p>
 </p></li></ul>
 
 
@@ -1853,7 +1831,7 @@ for these notes):</p><p>
 
 You'll have to let ACE know the target type at compile time.  There
 are several ways to do this; please see the
-<code>$ACE_ROOT/include/makeinclude/platform_vxworks5.x_g++.GNU</code>
+<code>$ACE_ROOT/include/makeinclude/platform_vxworks5.5.x.GNU</code>
 platform file for detailed information.<p>
 
 The VxWorks platform_vxworks*.GNU files are set up so that shared
@@ -1926,7 +1904,7 @@ Please note that the <code>main</code> entry point is renamed to
 to comply with its restriction against using <code>main</code>.
 In addition, ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled by default
 to cleanly support construction and destruction of static objects.
-Please see the <a href="#Non-static%20Object%20Manager">Non-static
+Please see the <a href="#NonStaticObjectManager">Non-static
 ACE_Object_Manager</a> discussion for the important implication
 of this feature.</p><p>
 
@@ -1944,34 +1922,16 @@ to <code>ace_main</code>.  Its usage is:
 spa ace_main, "arg1" [, ...]
 </code></pre>
 
-All arguments must be quoted, even numbers.<p>
+All arguments must be quoted, even numbers. You can start also ace_main
+without spawning another thread by using:<p>
 
-The ACE tests write their output files in a
-directory named <code>log/</code>, below the current
-(<code>tests</code>) directory.  If you don't have NFS included in
-your VxWorks kernel, you can use these steps, provided by
-<a href="mailto:clarence_m_weaver@md.northgrum.com">Clarence M. Weaver</a>,
-to run the tests and capture their output:</p><p>
-</p><ol>
-  <li>What I did was create a log directory on the boot NT host of my vxworks
-    target.<p>
-  </p></li><li>I copied all the test applications and the run_tests.vxworks script to
-    the parent of the log directory.<p>
-  </p></li><li>Using the target shell not the host shell, I "cd" to the directory
-    containing the script and test programs.<p>
-  </p></li><li>Invoked the script &lt; run_tests.vxworks from this target shell.<p>
-</p></li></ol>
+</p><pre><code>
+spaef ace_main, "arg1" [, ...]
+</code></pre>
 
-<a href="mailto:Kirk.Davies@pobox.com">Kirk Davies</a> provided this
-approach for running the ACE tests on Tornado II:
-
-<ul>
-  <li>Under Tornado II, I set up the Target Server File System (TSFS), and
-    the test logs get written to the log subdirectory under that.<p>
-  </p></li><li>You have to set an environment variable before running the tests:
-<pre>putenv("ACE_TEST_DIR=/tgtsvr")
-</pre><p>
-</p></li></ul>
+Be aware of the fact that when you execute <code>ace_main</code> that argc 
+will be zero and argv* will also be zero. Using argv[0] will then not return
+the program name, but will result in a crash.</p>
 
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
 
@@ -2026,6 +1986,39 @@ After building the shared lib, link it into the kernel by setting
 the <code>MACH_EXTRA</code> make variable in the kernel configuration
 Makefile.  Then, build the kernel using <code>make exe</code>.<p>
 
+</p><h5><a name="VxWorksTestScript">Using the one-button ACE tests with VxWorks</a>.</h5>
+
+It is possible to generate a script to execute all ACE tests. You can do this by executing
+       </a></p><blockquote><code></code><pre><a name="vxworksscript">       % perl run_test.pl -v > run_test.vxworks
+       </a></pre></blockquote>
+
+The ACE tests write their output files in a
+directory named <code>log/</code>, below the current
+(<code>tests</code>) directory.  If you don't have NFS included in
+your VxWorks kernel, you can use these steps, provided by
+<a href="mailto:clarence_m_weaver@md.northgrum.com">Clarence M. Weaver</a>,
+to run the tests and capture their output:</p><p>
+</p><ol>
+  <li>What I did was create a log directory on the boot NT host of my VxWorks
+    target.<p>
+  </p></li><li>I copied all the test applications and the run_test.vxworks script to
+    the parent of the log directory.<p>
+  </p></li><li>Using the target shell not the host shell, I "cd" to the directory
+    containing the script and test programs.<p>
+  </p></li><li>Invoked the script using <code>&lt; run_test.vxworks</code> from this target shell.<p>
+</p></li></ol>
+
+<a href="mailto:Kirk.Davies@pobox.com">Kirk Davies</a> provided this
+approach for running the ACE tests on Tornado II:
+
+<ul>
+  <li>Under Tornado II, I set up the Target Server File System (TSFS), and
+    the test logs get written to the log subdirectory under that.<p>
+  </p></li><li>You have to set an environment variable before running the tests:
+<pre>putenv("ACE_TEST_DIR=/tgtsvr")
+</pre><p>
+</p></li></ul>
+
 </p><h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
 The following, very useful information was contributed by
 <a href="http://people.qualcomm.com/cryan">Chris Ryan</a>
@@ -2034,14 +2027,12 @@ Please submit corrections, additions, or clarifications to the
 the <a href="mailto:ace-users@cs.wustl.edu">ACE mailing list</a>.<p>
 
 <strong>NOTE:</strong>The make (version 3.74) that is provided with
-Tornado II cannot be used to build ACE.  Use Cygnus' make (version 3.75)
-instead.)</p><p>
-
-<strong>NOTE:</strong>Optimization is enabled be default in
-<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_vxworks5.x_g++.GNU">platform_vxworks5.x_g++.GNU</a>.  However, the compiler that is shipped with Tornado II has
-trouble compiling some files with -O2.  To disable optimization
-for an individual file, just add <code>optimize=0</code> to your
-make invocation when compiling that file.</p><p>
+Tornado 2.2 cannot be used to build ACE. A working version is available
+from the WindRiver support site, download the 
+<a href="https://secure.windriver.com/cgi-bin/windsurf/downloads/view_binary.cgi?binaryid=838">
+make3_80.gvk_patches</a> and the
+<a href="https://secure.windriver.com/cgi-bin/windsurf/downloads/view_binary.cgi?binaryid=100340">
+make3_80.tor2_2.new_dependency_rules</a> package and install them.</p><p>
 
 Using the Cygnus tools, this approach works:
 </p><ul>
@@ -2052,7 +2043,7 @@ Using the Cygnus tools, this approach works:
   </p></li><li>Set up your
     <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
     as usual for VxWorks.  See
-    <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_vxworks5.x_g++.GNU">the
+    <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_vxworks5.5.x.GNU">the
     g++/VxWorks platform file</a> for more information.<p>
   </p></li><li>Create an <code>ACE_wrappers/ace/config.h</code> file that looks
     something like the following.  tao_idl should be built to not support
@@ -2077,7 +2068,7 @@ A few additional Windows Notes, from Paul von Behren:<p>
       large collection of GNU tools to WinNT/95 - including a port of
       gcc/g++.  See <a href="http://www.cygnus.com/misc/gnu-win32/">http://www.cygnus.com/misc/gnu-win32/</a>
       A related link is <a href="ftp://ftp.cygnus.com/pub/gnu-win32/latest/">ftp://ftp.cygnus.com/pub/gnu-win32/latest/</a><p>
-  </p></li><li>To set up the command-prompt build environemnt, run
+  </p></li><li>To set up the command-prompt build environment, run
       <code>Tornado\host\x86-win32\bin\TorVars.bat</code>.  This is done
       implicitly within the Tornado IDE.<p>
   </p></li><li>To run <code>ace_ld</code>, you still need perl installed -
@@ -2135,7 +2126,7 @@ on Windows NT hosts:
       </pre>
 
       <code>aced.dll</code> is produced in an ACE NT source tree according to
-      documented procedure for NT VC++5.0 ACE build.
+      documented procedure for NT VC++ 6.0 ACE build.
 
       <code>cygwin.dll</code> is from the Cygnus GNU software download and install.
 
@@ -2148,10 +2139,11 @@ on Windows NT hosts:
       And create a
       <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>
       that looks like:<p>
-      </p><pre>      WIND_BASE = /tornado
+      </p><pre>   
+      WIND_BASE = /tornado
       WIND_HOST_TYPE = x86-win32
       CPU = I80486
-      include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU
+      include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.5.x.GNU
       </pre>
 
  </li><li>When using cygnus windows GNUTools on WinNT you have to start
@@ -2164,8 +2156,7 @@ on Windows NT hosts:
 <h5>TAO on NT Tornado host, VxWorks target.</h5>
 
 <ol>
-  <li>Build ACE and TAO_IDL in the NT tree as already documented. As
-      mentioned above, I put <code>aced.dll</code> in <code>/bin</code>.
+  <li>Build ACE and TAO_IDL in the NT tree as already documented. 
       Be sure to build ACE's gperf on NT, in
       <code>ACE_wrappers/apps/gperf/src</code>.<p>
 
@@ -2195,16 +2186,14 @@ host based card.</p>
 </b><p>NT 4.0 workstation with 128 M RAM, 266MHz Pentium.</p>
 
 <b><p>Software Needed For Building TAO</p>
-</b><p>1) PERL: Active State's ActivePerl 5.6.0.618 for NT available as
-freeware from
-http://www.ActiveState.com/download/contrib/Microsoft/NT/InstMsi.exe
+</b><p>1) Active State's ActivePerl from
+<a href="http://www.activestate.com/software/default.htm">http://www.activestate.com/software/default.htm</a>
 </p>
 
-<p>2) Tornado II .Release V 9904 from Windriver.</p>
+<p>2) Tornado 2.2.1 from Windriver.</p>
 
 <p>3) Cygwin GNU to build TAO. It is available for NT as a freeware
-from </p>
-<p>http://www.cygwin.com/</p>
+from the <a href="http://www.cygwin.com">Cygwin</a> site</p>
 <p>The Cygwin Make (version 3.75) can only build the TAO not the
 Tornado II make (version 3.74)</p>
 
@@ -2265,7 +2254,7 @@ Control Panel-&gt; System -&gt; Environment)</p>
 <p>WIND_BASE = /tornado</p>
 <p>WIND_HOST_TYPE = x86-win32</p>
 <p>include
-$(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU</p>
+$(ACE_ROOT)/include/makeinclude/platform_vxworks5.5.x.GNU</p>
 <p>ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE
 library that supports TAO)</p>
 
@@ -2652,17 +2641,16 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 
 <ul>
   <li><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</a>
-  </li><li><a href="#Non-static%20Object%20Manager">Non-static ACE_Object_Manager</a>
+  </li><li><a href="#NonStaticObjectManager">Non-static ACE_Object_Manager</a>
   </li><li><a href="#cloning">Cloning the Source Tree</a>
   </li><li><a href="#mvs">Additional Build Tips for MVS</a>
   </li><li><a href="#flags">Makefile Flags</a>
   </li><li><a href="http://www.cs.wustl.edu/%7Elevine/CVS.html">Version Control</a>
-  </li><li><a href="http://www.cs.wustl.edu/%7Ecleeland/ace/makefile-hints.html">ACE Makefile hints</a>
-  </li><li><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-SSL.html">ACE SSL effort</a>
+  </li><li><a href="docs/ACE-SSL.html">ACE SSL effort</a>
 </li></ul>
 
 <p></p><hr align="left" width="50%"><p>
-</p><h4><a name="Non-static Object Manager">Non-static
+</p><h4><a name="NonStaticObjectManager">Non-static
 ACE_Object_Manager</a></h4> The ACE_Object_Manager can be instantiated
 as a static object, can be instantiated on the stack of the main
 program thread, or can be explicitly instantiated and destroyed by the
@@ -2918,8 +2906,8 @@ quickly.
   vc71</code> to generate VC71 project and solution files.
 
   </p></li><li>If you want to build TAO+CIAO and its associated libraries
-  please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and 
-  </a><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html">CIAO-INSTALL</a> for details.
+  please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and 
+  </a><a href="TAO/CIAO/CIAO-INSTALL.html">CIAO-INSTALL</a> for details.
 </li></ul>
 
 <hr><p>
