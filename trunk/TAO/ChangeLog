@@ -1,3 +1,12 @@
+Thu Oct 09 01:45:51 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.inl
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i
+        * orbsvcs/orbsvcs/Makefile.FTORB
+          Replaced FT_IOGR_Property.i with FT_IOGR_Property.inl
+
 Wed Oct	 8 23:24:12 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/Kokyu_dsrt_schedulers/Makefile: Added subdirectories

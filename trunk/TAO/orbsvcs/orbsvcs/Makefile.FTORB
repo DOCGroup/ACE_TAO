@@ -388,7 +388,7 @@ realclean: clean
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
   FT_CORBA_ORBC.i \
-  FaultTolerance/fault_tol_export.h FaultTolerance/FT_IOGR_Property.i \
+  FaultTolerance/fault_tol_export.h FaultTolerance/FT_IOGR_Property.inl \
   $(TAO_ROOT)/tao/MProfile.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
