@@ -56,33 +56,33 @@
 #define IDL_WCHAR_LITERAL 311
 #define IDL_WSTRING_LITERAL 312
 typedef union {
-  AST_Decl		*dcval;		/* Decl value		*/
-  UTL_StrList		*slval;		/* String list		*/
-  UTL_NameList		*nlval;		/* Name list		*/
-  UTL_ExprList		*elval;		/* Expression list	*/
-  UTL_LabelList		*llval;		/* Label list		*/
-  UTL_DeclList		*dlval;		/* Declaration list	*/
-  FE_InterfaceHeader	*ihval;		/* Interface header	*/
-  FE_obv_header         *vhval;         /* Valuetype header     */
-  AST_Expression	*exval;		/* Expression value	*/
-  AST_UnionLabel	*ulval;		/* Union label		*/
-  AST_Field		*ffval;		/* Field value		*/
-  AST_Field::Visibility  vival;         /* N/A, pub or priv     */
-  AST_Expression::ExprType etval;	/* Expression type	*/
-  AST_Argument::Direction dival;	/* Argument direction	*/
-  AST_Operation::Flags	ofval;		/* Operation flags	*/
-  FE_Declarator		*deval;		/* Declarator value	*/
-  idl_bool		bval;		/* Boolean value	*/
-  long			ival;		/* Long value		*/
-  unsigned long		uival;		/* Unsigned long value	*/
-  double		dval;		/* Double value		*/
-  float			fval;		/* Float value		*/
-  char			cval;		/* Char value		*/
-  ACE_CDR::WChar	wcval;		/* WChar value		*/
-
-  UTL_String		*sval;		/* String value		*/
-  char			*strval;	/* char * value		*/
-  Identifier		*idval;		/* Identifier		*/
-  UTL_IdList		*idlist;	/* Identifier list	*/
+  AST_Decl			*dcval;		/* Decl value		*/
+  UTL_StrList			*slval;		/* String list		*/
+  UTL_NameList			*nlval;		/* Name list		*/
+  UTL_ExprList			*elval;		/* Expression list	*/
+  UTL_LabelList			*llval;		/* Label list		*/
+  UTL_DeclList			*dlval;		/* Declaration list	*/
+  FE_InterfaceHeader		*ihval;		/* Interface header	*/
+  FE_obv_header         	*vhval;         /* Valuetype header     */
+  AST_Expression		*exval;		/* Expression value	*/
+  AST_UnionLabel		*ulval;		/* Union label		*/
+  AST_Field			*ffval;		/* Field value		*/
+  AST_Field::Visibility  	vival;         	/* N/A, pub or priv     */
+  AST_Expression::ExprType 	etval;		/* Expression type	*/
+  AST_Argument::Direction 	dival;		/* Argument direction	*/
+  AST_Operation::Flags		ofval;		/* Operation flags	*/
+  FE_Declarator			*deval;		/* Declarator value	*/
+  idl_bool			bval;		/* Boolean value	*/
+  long				ival;		/* Long value		*/
+  unsigned long			uival;		/* Unsigned long value	*/
+  double			dval;		/* Double value		*/
+  float				fval;		/* Float value		*/
+  char				cval;		/* Char value		*/
+  ACE_CDR::WChar		wcval;		/* WChar value		*/
+  UTL_String			*sval;		/* String value		*/
+  char				*wsval;		/* WString value	*/
+  char				*strval;	/* char * value		*/
+  Identifier			*idval;		/* Identifier		*/
+  UTL_IdList			*idlist;	/* Identifier list	*/
 } TAO_YYSTYPE;
 extern TAO_YYSTYPE tao_yylval;
