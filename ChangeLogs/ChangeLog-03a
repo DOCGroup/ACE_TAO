@@ -1,3 +1,8 @@
+Fri May 26 14:25:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	  Added OS_String.h to project for convenience.
+
 Fri May 26 12:23:55 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/TLI_Acceptor.cpp:
@@ -5,6 +10,7 @@ Fri May 26 12:23:55 2000  Ossama Othman  <ossama@uci.edu>
 
 	  *sigh* These files also needed to include "ace/Log_Msg.h."
 
+>>>>>>> 4.566
 Fri May 26 12:13:26 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Singleton.cpp:
