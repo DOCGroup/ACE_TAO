@@ -15,6 +15,12 @@ typedef ACE_HANDLE ROUTING_KEY;
 class Peer_Router;
 class Peer_Router_Context;
 
+#if defined (ACE_MT_SAFE)
+typedef ACE_RW_Mutex ROUTER_MUTEX;
+#else
+typedef ACE_Null_Mutex ROUTER_MUTEX;
+#endif /* ACE_MT_SAFE */
+
 class Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
   // = TITLE
   //     Receive input from a Peer and forward to the appropriate
@@ -78,8 +84,8 @@ private:
   // Pointer to the <Peer_Router> that we are accepting for.
 
   // = Useful typedefs
-  typedef ACE_Map_Manager <ROUTING_KEY, Peer_Handler *, ACE_RW_Mutex> PEER_MAP;
-  typedef ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_RW_Mutex> PEER_ITERATOR;
+  typedef ACE_Map_Manager <ROUTING_KEY, Peer_Handler *, ROUTER_MUTEX> PEER_MAP;
+  typedef ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ROUTER_MUTEX> PEER_ITERATOR;
   typedef ACE_Map_Entry<ROUTING_KEY, Peer_Handler *> PEER_ENTRY;
 
   PEER_MAP peer_map_;

@@ -128,12 +128,17 @@ Consumer_Router::info (char **strp, size_t length) const
 
 #endif /* ACE_HAS_THREADS */
 
+#if defined (ACE_MT_SAFE)
+typedef ACE_RW_Mutex RW_MUTEX;
+#else
+typedef ACE_Null_Mutex RW_MUTEX;
+#endif /* ACE_MT_SAFE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Acceptor<Consumer_Handler, ACE_UPIPE_ACCEPTOR>;
-template class ACE_Map_Iterator<long, Consumer_Handler *, ACE_RW_Mutex>;
-template class ACE_Map_Manager<long, Consumer_Handler *, ACE_RW_Mutex>;
 template class Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>;
 template class Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>;
 template class Peer_Router<Consumer_Handler, CONSUMER_KEY>;
+template class ACE_Map_Iterator<long, Consumer_Handler *, RW_MUTEX>;
+template class ACE_Map_Manager<long, Consumer_Handler *, RW_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

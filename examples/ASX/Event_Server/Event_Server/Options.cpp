@@ -41,14 +41,15 @@ void Options::print_results (void)
 {
 #if !defined (ACE_WIN32)
   ACE_Profile_Timer::ACE_Elapsed_Time et;
-  ACE_Profile_Timer::Rusage rusage;
 
   this->itimer_.elapsed_time (et);
-  this->itimer_.get_rusage (rusage);
 
   if (this->verbose ())
     {
 #if defined (ACE_HAS_PRUSAGE_T)
+      ACE_Profile_Timer::Rusage rusage;
+      this->itimer_.get_rusage (rusage);
+
       ACE_OS::printf ("final concurrency hint = %d\n", ACE_Thread::getconcurrency ());
       ACE_OS::printf ("%8d = lwpid\n"
 		"%8d = lwp count\n"
