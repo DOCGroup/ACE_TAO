@@ -1,3 +1,8 @@
+Fri Sep 14 11:39:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Added Mahes Varadarajan and Kevin Clien to the hall of
+	  fame.  
+
 Thu Sep 13 22:43:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the new Cache_Growth_Test to the
