@@ -97,6 +97,9 @@ public:
   char  *get_string ();
   // get the underlying string
 
+  void replace_string (const char * s);
+  // replace the underlying string and free the old one
+
   long  compare (Identifier *other);
   // compare with other Identifier
 
