@@ -380,6 +380,7 @@ main (int argc, ACE_TCHAR *[])
                   data));
       myalloc->dump ();
       child ();
+      myalloc->release ();
       ACE_END_LOG;
       return 0;
     }
