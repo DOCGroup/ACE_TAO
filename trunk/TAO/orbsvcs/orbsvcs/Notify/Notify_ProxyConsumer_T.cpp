@@ -35,7 +35,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
   // Create the task to forward filtering commands to:
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
-    TAO_Notify_Factory::get_event_manager_objects_factory ();
+    event_manager_->resource_factory ();
 
   this->filter_eval_task_ =
     event_manager_objects_factory->create_source_eval_task (ACE_TRY_ENV);
@@ -68,7 +68,10 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer (void)
   this->filter_eval_task_->shutdown (ACE_TRY_ENV);
   ACE_CHECK;
 
-  delete this->filter_eval_task_;
+  TAO_Notify_EMO_Factory* event_manager_objects_factory =
+    event_manager_->resource_factory ();
+
+  event_manager_objects_factory->destroy_listener_eval_task (this->filter_eval_task_);
 }
 
 template <class SERVANT_TYPE> CORBA::Boolean

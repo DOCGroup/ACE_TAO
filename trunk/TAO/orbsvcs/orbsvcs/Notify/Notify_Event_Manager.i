@@ -73,3 +73,9 @@ TAO_Notify_Event_Manager::admin_properties (void)
 {
   return this->admin_properties_;
 }
+
+ACE_INLINE TAO_Notify_EMO_Factory*
+TAO_Notify_Event_Manager::resource_factory (void)
+{
+  return this->emo_factory_;
+}

@@ -27,7 +27,8 @@ TAO_Notify_SupplierAdmin_i::TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_
 // Implementation skeleton destructor
 TAO_Notify_SupplierAdmin_i::~TAO_Notify_SupplierAdmin_i ()
 {
-  ACE_DEBUG ((LM_DEBUG,"in SA dtor\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,"in SA dtor\n"));
   // Cleanup all resources..
 
   ACE_DECLARE_NEW_CORBA_ENV;
