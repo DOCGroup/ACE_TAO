@@ -225,10 +225,18 @@ endif
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)
 endif
-INSBIN          = $(ACE_ROOT)/bin
-INSINC          = $(ACE_ROOT)/ace
-INSLIB          = $(ACE_ROOT)/ace
-INSMAN          = $(ACE_ROOT)/man
+ifndef INSBIN
+  INSBIN          = $(ACE_ROOT)/bin
+endif
+ifndef INSINC
+  INSINC          = $(ACE_ROOT)/ace
+endif
+ifndef INSLIB
+  INSLIB          = $(ACE_ROOT)/ace
+endif
+ifndef INSMAN
+  INSMAN          = $(ACE_ROOT)/man
+endif
 ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
   LDFLAGS         += -L$(ACE_ROOT)/ace -L./
 endif
