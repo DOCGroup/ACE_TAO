@@ -1,3 +1,9 @@
+Fri Apr 05 08:24:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport_Cache_Manager.cpp: Added a missing template
+	  instantiation. Too bad. Looks like it has been too long since I
+	  have checked in stuff for TAO!
+
 Fri Apr 05 08:16:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MT_BiDir/client.dsp (RSC): 
