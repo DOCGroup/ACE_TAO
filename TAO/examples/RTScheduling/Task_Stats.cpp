@@ -109,4 +109,8 @@ template class ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX>;
 #pragma instantiate ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX>
 
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template ACE_Singleton<Task_Stats, ACE_Thread_Mutex> *ACE_Singleton<Task_Stats, ACE_Thread_Mutex>::singleton_;
+
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
