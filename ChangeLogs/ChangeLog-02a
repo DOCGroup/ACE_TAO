@@ -1,3 +1,9 @@
+Thu Jun 22 17:58:21 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Handle_Set.cpp: Added pSOS-specific changes to deal with pSOS's
+          ordering of fd_set bits reversed from all other platforms. Thanks
+          to Matt Emerson <memerson@escient.com> for figuring this out.
+
 Thu Jun 22 15:16:31 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.cpp: Added pSOS implementation for ACE_OS::uname.
