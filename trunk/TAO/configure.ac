@@ -45,8 +45,8 @@ AC_CONFIG_MACRO_DIR([../m4])
 dnl Check what platform we are running on.
 AC_CANONICAL_TARGET([])
 
-dnl Initialize GNU Automake, and require Automake 1.7 or better.
-AM_INIT_AUTOMAKE([1.7])
+dnl Initialize GNU Automake, and require Automake 1.9 or better.
+AM_INIT_AUTOMAKE([1.9])
 
 
 dnl Add maintainer mode option to the option list.
