@@ -216,7 +216,7 @@ main (int argc, char *argv[])
                                 1);
             }
         }
-
+//      TAO_debug_level = 1;
       worker.wait ();
 
       ACE_DEBUG ((LM_DEBUG, "shutting down scheduler\n"));

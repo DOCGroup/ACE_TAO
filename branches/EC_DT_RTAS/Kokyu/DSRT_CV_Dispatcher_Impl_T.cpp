@@ -79,6 +79,10 @@ schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 
   Object_ID tmp;
   tmp.guid = int_guid;
+  tmp.id = qos.id;
+  tmp.tid = qos.tid;
+  tmp.pid = qos.pid;
+  tmp.task_id = qos.task_id;
   DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, SCHEDULE_ENTER, 0, sizeof(Object_ID), (char*)&tmp);
   DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
   ACE_hthread_t thr_handle;
@@ -330,6 +334,11 @@ update_schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 
   Object_ID tmp;
   tmp.guid = int_guid;
+  tmp.id = qos.id;
+  tmp.tid = qos.tid;
+  tmp.pid = qos.pid;
+  tmp.task_id = qos.task_id;
+
   DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, UPDATE_SCHEDULE_START, 0, sizeof(Object_ID), (char*)&tmp);
   return this->schedule_i (guid, qos);
 }

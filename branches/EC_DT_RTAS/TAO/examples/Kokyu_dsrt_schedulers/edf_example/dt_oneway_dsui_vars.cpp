@@ -1,4 +1,4 @@
-/* $Id$*/
+//$Id$
 #include <datastream_common.h>
 #include <dsui_types.h>
 #include "dt_oneway_dsui_families.h"

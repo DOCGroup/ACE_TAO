@@ -32,7 +32,12 @@ template <class DSRT_Scheduler_Traits>
 int
 DSRT_Dispatcher<DSRT_Scheduler_Traits>::schedule (Guid_t guid, const DSRT_QoSDescriptor& qos)
 {
-  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, SCHEDULE, 9999, 0, NULL);
+  Object_ID oid;
+  oid.id = qos.id;
+  oid.pid = oid.pid;
+  oid.tid = oid.tid;
+  oid.task_id = oid.task_id;
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, SCHEDULE, 0,  sizeof(Object_ID), (char*)&oid);
   return dispatcher_impl_->schedule (guid, qos);
 }
 
@@ -76,7 +81,7 @@ DSRT_Dispatcher_Factory<DSRT_Scheduler_Traits>::
 create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
 {
   ACE_UNUSED_ARG ((config_info));
-  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, CREATE_DSRT_DISPATCH_SCHED_START, 9998, 0, NULL);
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, CREATE_DSRT_DISPATCH_SCHED_START, 0, 0, NULL);
 
   DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>* tmp;
   DSRT_Dispatcher<DSRT_Scheduler_Traits>* disp;
@@ -115,7 +120,7 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
   disp->implementation (tmp);
   tmp->init (config_info);
 
-  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, CREATE_DSRT_DISPATCH_SCHED_END, 9997, 0, NULL);
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, CREATE_DSRT_DISPATCH_SCHED_END, 0, 0, NULL);
 
   return disp_auto_ptr;
 }
