@@ -52,6 +52,8 @@
 #  define ACE_LACKS_DIRENT_H
 #endif
 
+#undef ACE_LACKS_SIGSET
+
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_NETINET_TCP_H
