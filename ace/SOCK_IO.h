@@ -138,9 +138,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/SOCK_IO.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

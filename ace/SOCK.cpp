@@ -4,9 +4,9 @@
 #include "ace/SOCK.h"
 #include "ace/Log_Msg.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/SOCK.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK, "$Id$")
 

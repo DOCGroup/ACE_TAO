@@ -57,11 +57,6 @@ int ACE_Sock_Connect::ipv6_enabled_ = -1;
 static ACE_Auto_Array_Ptr<sockaddr> force_compiler_to_include_socket_h;
 #endif /* AIX && __IBMCPP__ >= 500 */
 
-
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Sock_Connect.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 ACE_RCSID(ace, Sock_Connect, "$Id$")
 
 #if defined (ACE_WIN32) && \

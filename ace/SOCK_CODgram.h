@@ -65,9 +65,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/SOCK_CODgram.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SOCK_CODGRAM_H */

@@ -9,9 +9,9 @@
 #include "ace/OS_QoS.h"
 #endif  // ACE_HAS_WINCE
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/SOCK_Connector.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_Connector, "$Id$")
 

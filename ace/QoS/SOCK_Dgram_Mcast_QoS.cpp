@@ -2,6 +2,7 @@
 
 #include "SOCK_Dgram_Mcast_QoS.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_socket.h"
 
 #if defined (ACE_WIN32)
 #include "ace/Sock_Connect.h"  // needed for subscribe_ifs()
