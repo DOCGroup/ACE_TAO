@@ -1,3 +1,9 @@
+Fri Jun 11 17:16:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/README.tutorials:
+
+	  New README file pointing users to C++NPv{1,2} and APG examples.
+
 Fri Jun 11 14:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl:
