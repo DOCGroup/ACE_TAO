@@ -34,18 +34,7 @@ public:
   {
   }
 
-  int recursive (size_t depth)
-  {
-    ACE_Trace _ ("int recursive (size_t depth)",
-                 __LINE__,
-                 __FILE__);
-
-    if (depth > 0)
-      return recursive (depth - 1);
-    else
-      return 0;
-    // Destructor of <ACE_Trace> automatically called.
-  }
+  int recursive (size_t depth);
 
   virtual int svc (void)
   {
@@ -56,6 +45,21 @@ private:
   size_t depth_;
   // Depth of the recursion.
 };
+
+
+int
+My_Task::recursive (size_t depth)
+{
+  ACE_Trace _ ("int recursive (size_t depth)",
+               __LINE__,
+               __FILE__);
+
+  if (depth > 0)
+    return recursive (depth - 1);
+  else
+    return 0;
+  // Destructor of <ACE_Trace> automatically called.
+}
 
 extern "C"
 void
