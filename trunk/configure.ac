@@ -7476,12 +7476,14 @@ if test -d $srcdir/Kokyu; then
     Kokyu/tests/EDF/Makefile
     Kokyu/tests/FIFO/Makefile
   ])
+  AC_SUBST([KOKYU],[Kokyu])
 fi
 AM_CONDITIONAL([BUILD_KOKYU],
                [test -d $srcdir/Kokyu])
 
 if test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes; then
   AC_CONFIG_SUBDIRS([TAO])
+  AC_SUBST([TAO],[TAO])
 fi
 AM_CONDITIONAL([BUILD_TAO],
                [test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes])
