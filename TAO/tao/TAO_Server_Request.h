@@ -44,6 +44,8 @@ namespace CORBA
   typedef ORB *ORB_ptr;
 }
 
+class TAO_Operation_Details;
+
 /**
  * @class TAO_ServerRequest
  *
