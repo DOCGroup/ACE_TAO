@@ -92,8 +92,7 @@ public:
   // Close down the Channel.
 
   // = Proxy management methods.
-  int initiate_proxy_connection (Proxy_Handler *, 
-				 ACE_Synch_Options & = ACE_Synch_Options::synch);
+  int initiate_proxy_connection (Proxy_Handler *);
   // Initiate the connection of the <Proxy_Handler> to its peer.
 
   int complete_proxy_connection (Proxy_Handler *);

@@ -151,6 +151,9 @@ public:
   ACE_PEER_CONNECTOR &connector (void) const;
   // Return the underlying PEER_CONNECTOR object.
 
+  virtual int close (void);
+  // Close down the Connector
+
   void dump (void) const;
   // Dump the state of an object.
 

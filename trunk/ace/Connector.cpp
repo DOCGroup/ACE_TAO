@@ -479,6 +479,13 @@ fail1:
 // recursively!
 
 template <class SH, PR_CO_1> int
+ACE_Connector<SH, PR_CO_2>::close (void)
+{
+  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::close");
+  return this->handle_close ();
+}
+
+template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::handle_close");

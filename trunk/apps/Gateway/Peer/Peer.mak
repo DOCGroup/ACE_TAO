@@ -31,6 +31,7 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
+# PROP Target_Last_Scanned "Peer - Win32 Debug"
 
 !IF  "$(CFG)" == "peerd - Win32 Debug"
 
@@ -226,9 +227,6 @@ LINK32_OBJS= \
 # Begin Source File
 
 SOURCE=.\peerd.cpp
-
-!IF  "$(CFG)" == "peerd - Win32 Debug"
-
 DEP_CPP_PEERD=\
 	".\Peer.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -344,8 +342,6 @@ DEP_CPP_PEERD=\
 "$(INTDIR)\peerd.obj" : $(SOURCE) $(DEP_CPP_PEERD) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -357,6 +353,7 @@ DEP_CPP_PEERD=\
 
 SOURCE=.\Peer.cpp
 DEP_CPP_PEER_=\
+	"..\Gateway\Event.h"\
 	".\Peer.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
@@ -489,9 +486,6 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-NODEP_CPP_PEER_=\
-	".\Event.h"\
 	
 
 "$(INTDIR)\Peer.obj" : $(SOURCE) $(DEP_CPP_PEER_) "$(INTDIR)"

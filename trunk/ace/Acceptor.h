@@ -83,6 +83,9 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   // Returns the listening acceptor's <ACE_HANDLE>.
 
+  virtual int close (void);
+  // Close down the Acceptor
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -380,6 +383,9 @@ public:
 
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
   // Return the underlying PEER_ACCEPTOR object.
+
+  virtual int close (void);
+  // Close down the Acceptor
 
   void dump (void) const;
   // Dump the state of an object.
