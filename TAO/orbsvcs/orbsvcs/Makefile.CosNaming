@@ -7,7 +7,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-MAKEFILE = Makefile
+MAKEFILE = Makefile.CosNaming
 LIBNAME  = libTAO_CosNaming
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
