@@ -12,10 +12,9 @@ Mon Dec 16 12:56:43 1996  David L. Levine  <levine@cs.wustl.edu>
 	  match declaration order.
 
 	* examples/Threads/Makefile, performance-tests/Misc/Makefile,
-	  tests/Makefile, include/makeinclude/platform_*.GNU (except for
-	  platform_vxworks*.GNU):
-	  moved "LIBS += -lm" out of individual Makefiles and into
-	  platform_*.GNU include files.
+	  tests/Makefile:
+	  Removed "LIBS += -lm" from these Makefiles because it doesn't
+	  appear to be necessary, and not all platforms have a libm.
 
 	* netsvcs/lib/Makefile: removed /pkg/gnu/lib dependencies.  Thanks
 	  to Per Andersson for pointing this out.
