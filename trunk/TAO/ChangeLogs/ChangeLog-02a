@@ -1,3 +1,15 @@
+Sun Mar  5 16:36:25 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+	  dereference via .in in method MyFactory.
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+	  get_event_channel: translate any exception to ChannelNotFound.
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+	  corrected spelling mistake.
+	* orbsvcs/orbsvcs/Notify/Notify_PushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_PushSupplier.cpp:
+	  added missing ACE_THROW_SPEC
+
 Sun Mar  5 15:34:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/IORManipulation/IORTest.cpp (main): Added a work around
