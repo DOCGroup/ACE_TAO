@@ -32,7 +32,7 @@ RSC=rc.exe
 
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Static_Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Static_Release"
 # PROP Target_Dir ""
 LINK32=link.exe -lib
@@ -49,7 +49,7 @@ LIB32=link.exe -lib
 
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Static_Debug"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Static_Debug"
 # PROP Target_Dir ""
 LINK32=link.exe -lib
@@ -368,7 +368,7 @@ SOURCE=.\Activation_Manager.idl
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-OutDir=.\Static_Release
+OutDir=.
 InputPath=.\Activation_Manager.idl
 InputName=Activation_Manager
 
@@ -398,7 +398,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-OutDir=.\Static_Debug
+OutDir=.
 InputPath=.\Activation_Manager.idl
 InputName=Activation_Manager
 
