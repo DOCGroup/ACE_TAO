@@ -47,9 +47,9 @@ size_t
 ACE_WString_Helper::encode (void *buf, ACE_WString *wstr)
 {
   ACE_USHORT16 *wptr = (ACE_USHORT16 *) buf;
-  size_t i = 0;
+  size_t i;
 
-  for (; i <= wstr->length (); i++)
+  for (i= 0; i <= wstr->length (); i++)
     wptr[i] = htons ((*wstr)[i]);
   return i * sizeof (ACE_USHORT16);
 }
@@ -58,8 +58,9 @@ size_t
 ACE_WString_Helper::decode (void *buf)
 {
   ACE_USHORT16 *wptr = (ACE_USHORT16 *) buf;
+  size_t i;
   
-  for (size_t i = 0; wptr[i] != 0; i++)
+  for (i = 0; wptr[i] != 0; i++)
     wptr[i] = ntohs (wptr[i]);
   return (i + 1) * sizeof (ACE_USHORT16);
 }
