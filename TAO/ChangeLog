@@ -1,3 +1,29 @@
+Mon Aug 12 17:53:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAOACE.dsw:
+
+	  Added new LoadManager and LoadMonitor projects to this
+	  workspace.
+
+	* TAOACE_Static.dsw:
+
+	  Removed old LoadBalancer project from this workspace.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
+
+	  Include "LoadBalancing_export.h" to pull Windows librar export
+	  macros.
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+
+	  Added new sources to this project file.
+
+	* orbsvcs/orbsvcs/LoadBalancing.dsp:
+	* orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
+
+	  Removed these project files.  They were used for the old load
+	  balancer prototype.
+
 Mon Aug 12 17:27:30 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadBalancer_Service.dsp:

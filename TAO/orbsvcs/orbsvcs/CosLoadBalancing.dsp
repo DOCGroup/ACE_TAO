@@ -163,7 +163,19 @@ SOURCE=.\CosLoadBalancingS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_ClientRequestInterceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Component.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_CPU_Monitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_IORInterceptor.cpp
 # End Source File
 # Begin Source File
 
@@ -207,7 +219,15 @@ SOURCE=.\LoadBalancing\LB_MonitorMap.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_ObjectReferenceFactory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LB_ORTC.cpp
 # End Source File
 # Begin Source File
 
@@ -243,11 +263,23 @@ SOURCE=.\CosLoadBalancingS_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_ClientRequestInterceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Component.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_conf.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\LoadBalancing\LB_CPU_Monitor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_IORInterceptor.h
 # End Source File
 # Begin Source File
 
@@ -291,7 +323,15 @@ SOURCE=.\LoadBalancing\LB_MonitorMap.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_ObjectReferenceFactory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_ORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LB_ORTC.h
 # End Source File
 # Begin Source File
 
@@ -412,6 +452,93 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=.\LB_ORT.idl
+
+!IF  "$(CFG)" == "CosLoadBalancing - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LB_ORT.idl
+InputName=LB_ORT
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -Gv -DCORBA3 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LB_ORT.idl
+InputName=LB_ORT
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -Gv -DCORBA3 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -435,6 +562,10 @@ SOURCE=.\LoadBalancing\LB_LeastLoaded.inl
 # Begin Source File
 
 SOURCE=.\LoadBalancing\LB_LoadAlert.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LB_ORTC.i
 # End Source File
 # End Group
 # Begin Group "Template Files"
