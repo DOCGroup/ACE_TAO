@@ -266,13 +266,11 @@ public:
                              CORBA::ULong request_id);
   // default copy ctor, dtor and operator=
 
-  u_long hash(void) const;
+  ACE_INLINE u_long hash (void) const;
   // Return a hash value...
 
-  friend int operator==(const TAO_ECG_UDP_Request_Index& lhs,
-                        const TAO_ECG_UDP_Request_Index& rhs);
-  friend int operator!=(const TAO_ECG_UDP_Request_Index& lhs,
-                        const TAO_ECG_UDP_Request_Index& rhs);
+  ACE_INLINE int operator== (const TAO_ECG_UDP_Request_Index& rhs) const;
+  ACE_INLINE int operator!= (const TAO_ECG_UDP_Request_Index& rhs) const;
   // Compare
   
   ACE_INET_Addr from;
