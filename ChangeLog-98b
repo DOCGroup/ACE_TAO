@@ -1,5 +1,8 @@
 Thu Nov  5 07:02:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Stream.h: Clarified some subtleties with subclassing from
+ 	  ACE_Stream.  Thanks to Stephen Coy for reminding me of this.
+
 	* include/makeinclude: Updated the platform_linux_kcc.GNU file.
   	  Thanks to Joseph Weihs <joseph-w@Orbotech.Co.IL> for reporting
  	  this.
