@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Addr.h"
+#include "tao/Basic_Types.h"
 #include "orbsvcs/AV/AV_export.h"
 
 struct TAO_AV_frame_info
