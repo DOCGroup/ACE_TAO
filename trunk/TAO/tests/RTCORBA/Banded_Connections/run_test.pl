@@ -20,21 +20,21 @@ unlink $iorfile2;
 print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
 
 
-# CORBA priorities 66, 75 and 80, etc. are for the SCHED_OTHER class on
+# CORBA priorities 37, 45 and 50, etc. are for the SCHED_OTHER class on
 # Solaris.  May need to use different values for other platforms
 # depending on their native priorities scheme, i.e., based on the
 # available range.
 
 $server_args =
     "-n $iorfile1 -o $iorfile2 -b bands.unix -ORBSvcConf $server_conf "
-   ."-p 67 -w 81 "
-   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=69 "
-   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=76 "
-   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=80 ";
+   ."-p 37 -w 51 "
+   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=39 "
+   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=46 "
+   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=50 ";
 
 $client_args =
     "-n file://$iorfile1 -o file://$iorfile2 "
-   ."-a 67 -b 75 -c 90";
+   ."-a 37 -b 45 -c 56";
 
 if ($^O eq "MSWin32") {
     $server_args =
