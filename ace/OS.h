@@ -827,6 +827,10 @@ typedef struct
 #   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
 
+// Define the name of the environment variable that defines the temp
+// directory.  
+#   define ACE_DEFAULT_TEMP_DIR_ENV "TMP"
+
 #   define ACE_DLL_SUFFIX ".so"
 #   define ACE_DLL_PREFIX "lib"
 #   define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
@@ -2881,6 +2885,10 @@ typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 #   define ACE_DLL_SUFFIX ".dll"
 #   define ACE_DLL_PREFIX ""
 
+// Define the name of the environment variable that defines the temp
+// directory.  
+#   define ACE_DEFAULT_TEMP_DIR_ENV "TEMP"
+
 // This will help until we figure out everything:
 #   define NFDBITS 32 /* only used in unused functions... */
 // These two may be used for internal flags soon:
@@ -3127,6 +3135,10 @@ typedef char TCHAR;
 // Define the pathname separator characters for UNIX.
 #   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+
+// Define the name of the environment variable that defines the temp
+// directory.  
+#   define ACE_DEFAULT_TEMP_DIR_ENV "TMP"
 
 // We're some kind of UNIX...
 #   define ACE_PLATFORM_A "UNIX"
@@ -6961,7 +6973,7 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #   else /* not _POSIX_RTSIG_MAX */
   // POSIX-4 compilant system has to provide atleast 8 RT signals.
   // @@ Make sure the platform does *not* define this constant with
-  // some other name. If yes, use that instead of 8.(Alex)
+  // some other name. If yes, use that instead of 8.
 #     define ACE_RTSIG_MAX 8
 #   endif /* _POSIX_RTSIG_MAX */
 
