@@ -1,3 +1,8 @@
+Wed Oct  8 23:24:12 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/Kokyu_dsrt_schedulers/Makefile: Added subdirectories
+	  fp_example, mif_example and muf_example to the Makefile.
+
 Wed Oct  8 23:18:46 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ChangeLog: Fixed formatting errors in some of the ChangeLog

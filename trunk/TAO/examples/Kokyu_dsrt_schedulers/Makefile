@@ -10,6 +10,8 @@
 #
 #----------------------------------------------------------------------------
 
+DIRS = fp_example mif_example muf_example
+
 TARGETS_NESTED = all debug profile optimize install deinstall clean realclean clobber depend rcs_info idl_stubs
 
 $(TARGETS_NESTED):
