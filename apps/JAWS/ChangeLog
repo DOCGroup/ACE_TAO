@@ -1,3 +1,8 @@
+Sun Feb 18 09:33:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* server/IO.cpp (handle): Added a const to the handle() method
+	  to make compilers happy.  Thanks to Kitty for reporting this.
+
 Mon Jun 12 14:22:35 PDT 2000 James Hu <jxh@entera.com>
 
         * server/HTTP_Response.cpp: Added content length support.

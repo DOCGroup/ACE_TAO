@@ -34,7 +34,7 @@ JAWS_Synch_IO::~JAWS_Synch_IO (void)
 }
 
 ACE_HANDLE
-JAWS_Synch_IO::handle (void)
+JAWS_Synch_IO::handle (void) const
 {
   return this->handle_;
 }
