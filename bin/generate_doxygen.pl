@@ -23,7 +23,8 @@ $is_release = 0;
              'tao_iormanip',
              'tao_iortable',
              'tao_esf',
-             'tao_rtevent');
+             'tao_rtevent',
+             'tao_implrepo');
 
 # Modify defaults using the command line arguments
 &parse_args ();
