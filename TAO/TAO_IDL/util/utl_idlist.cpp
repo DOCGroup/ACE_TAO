@@ -89,28 +89,23 @@ UTL_IdList::UTL_IdList (Identifier *s,
 
 // Public operations
 
-// Copy a list
+// Copy a list.
 UTL_List *
-UTL_IdList::copy ()
+UTL_IdList::copy (void)
 {
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier (this->head ()->get_string ()),
-                  0);
-
   UTL_IdList *retval = 0;
 
   if (this->tail () == 0)
     {
       ACE_NEW_RETURN (retval,
-                      UTL_IdList (id,
+                      UTL_IdList (this->head ()->copy (),
                                   0),
                       0);
     }
   else
     {
       ACE_NEW_RETURN (retval,
-                      UTL_IdList (id,
+                      UTL_IdList (this->head ()->copy (),
                                   (UTL_IdList *) this->tail ()->copy ()),
                       0);
     }
@@ -118,64 +113,72 @@ UTL_IdList::copy ()
   return (UTL_List *) retval;
 }
 
-// Get list item
+// Get list item.
 Identifier *
-UTL_IdList::head ()
+UTL_IdList::head (void)
 {
   return pd_car_data;
 }
 
-// Get last item of this list
+// Get last item of this list.
 Identifier *
-UTL_IdList::last_component ()
+UTL_IdList::last_component (void)
 {
   if (this->tail ()== 0)
-    return this->head ();
+    {
+      return this->head ();
+    }
+
   return ((UTL_IdList *) this->tail ())->last_component ();
 }
 
-// AST Dumping
+// AST Dumping.
 void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
-  UTL_IdListActiveIterator *i = 0;
-  ACE_NEW (i,
-           UTL_IdListActiveIterator (this));
+  UTL_IdListActiveIterator i (this);
 
   long first = I_TRUE;
   long second = I_FALSE;
 
-  while (!(i->is_done ()))
+  while (!(i.is_done ()))
     {
       if (!first)
-        o << "::";
+        {
+          o << "::";
+        }
       else if (second)
-        first = second = I_FALSE;
-      i->item ()->dump (o);
+        {
+          first = second = I_FALSE;
+        }
+
+      i.item ()->dump (o);
+
       if (first)
         {
-          if (ACE_OS::strcmp (i->item ()->get_string (), "::") != 0)
-            first = I_FALSE;
+          if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+            {
+              first = I_FALSE;
+            }
           else
-            second = I_TRUE;
+            {
+              second = I_TRUE;
+            }
         }
-      i->next ();
-    }
 
-  delete i;
+      i.next ();
+    }
 }
 
 void
 UTL_IdList::destroy (void)
 {
   Identifier *id = 0;
-  UTL_IdListActiveIterator *i = 0;
-  ACE_NEW (i,
-           UTL_IdListActiveIterator (this));
+  UTL_IdListActiveIterator i (this);
 
-  while (!(i->is_done ()))
+  while (!(i.is_done ()))
     {
-      id = i->item ();
+      id = i.item ();
 
       if (id != 0)
         {
@@ -184,27 +187,28 @@ UTL_IdList::destroy (void)
           id = 0;
         }
 
-      i->next ();
+      i.next ();
     }
-
-  delete i;
 }
 
-// UTL_IdList active iterator
+// UTL_IdList active iterator.
 
 // Constructor
 UTL_IdListActiveIterator::UTL_IdListActiveIterator (UTL_IdList *s)
-    : UTL_ListActiveIterator (s)
+  : UTL_ListActiveIterator (s)
 {
 }
 
-// Public operations
+// Public operations.
 
-// Get current item
+// Get current item.
 Identifier *
-UTL_IdListActiveIterator::item ()
+UTL_IdListActiveIterator::item (void)
 {
-    if (source == NULL)
-        return NULL;
+    if (this->source == 0)
+      {
+        return 0;
+      }
+
     return ((UTL_IdList *) source)->head ();
 }

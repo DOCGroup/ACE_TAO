@@ -1727,8 +1727,10 @@ UTL_Scope::add_to_scope (AST_Decl *e,
 
           return;
         }
-      // If the spellings differ only by case, it's also an error.
-      else if (decl_name->case_compare_quiet (ref_name) == I_TRUE)
+      // If the spellings differ only by case, it's also an error,
+      // unless one, but not both of the identifiers were escaped.
+      else if (decl_name->case_compare_quiet (ref_name) == I_TRUE
+               && !(decl_name->escaped () ^ ref_name->escaped ()))
         {
           if (idl_global->case_diff_error ())
             {
@@ -1907,7 +1909,7 @@ UTL_Scope::referenced (AST_Decl *e,
         {
           // If we are a module, there is no clash, if we
           // are an interface, this is not the right place to
-          // catch a clash, and if it wasnt' defined in this
+          // catch a clash, and if it wasn't defined in this
           // scope, then it's a type name for something else
           // that was, and it can appear any number of times
           // in this scope without a clash.
@@ -1920,7 +1922,9 @@ UTL_Scope::referenced (AST_Decl *e,
 
               return I_TRUE;
             }
-          else if (id->case_compare_quiet (*name_tmp) == I_TRUE)
+          // No clash if one or the other of the identifiers was escaped.
+          else if (id->case_compare_quiet (*name_tmp) == I_TRUE
+                   && !(id->escaped () ^ (*name_tmp)->escaped ()))
             {
               if (idl_global->case_diff_error ())
                 {
