@@ -28,7 +28,7 @@
 #include "tao/corbafwd.h"
 
 class TAO_ServantBase;
-class STUB_Object;
+class TAO_Stub;
 class TAO_Context;
 typedef TAO_Context *TAO_Context_ptr;
 
@@ -122,7 +122,7 @@ public:
   CORBA::ULong _decr_refcnt (void);
   // Decrement the reference count.
 
-  CORBA_Object (STUB_Object *p = 0,
+  CORBA_Object (TAO_Stub *p = 0,
                 TAO_ServantBase *servant = 0,
                 CORBA::Boolean collocated = 0);
   // constructor
@@ -134,7 +134,7 @@ public:
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
-  virtual STUB_Object *_stubobj (void) const;
+  virtual TAO_Stub *_stubobj (void) const;
   // get the underlying stub object
 
   virtual void _use_locate_requests (CORBA::Boolean use_it);
@@ -150,7 +150,7 @@ protected:
   // objects.
 
 private:
-  STUB_Object *protocol_proxy_;
+  TAO_Stub *protocol_proxy_;
   // Pointer to the protocol-specific "object" containing important
   // profiling information regarding this proxy.
   // The protocol proxy is (potentially) shared among several

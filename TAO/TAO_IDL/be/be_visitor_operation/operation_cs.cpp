@@ -165,7 +165,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       // Generate code that retrieves the underlying stub object and then
       // invokes do_static_call on it.
       *os << be_nl
-          << "STUB_Object *istub = this->_stubobj ();" << be_nl
+          << "TAO_Stub *istub = this->_stubobj ();" << be_nl
           << "if (istub == 0)" << be_idt_nl;
 
       // if the stub object was bad, then we raise a system exception
@@ -769,7 +769,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                          "codegen for checking exception failed\n"),
                         -1);
     }
-  
+
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "continue;" << be_uidt_nl

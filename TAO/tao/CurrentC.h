@@ -123,7 +123,7 @@ class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
   virtual const char* _interface_repository_id (void) const;
  protected:
   CORBA_Current (void); // default constructor
-  CORBA_Current (STUB_Object *objref,
+  CORBA_Current (TAO_Stub *objref,
            TAO_ServantBase *_tao_servant = 0,
            CORBA::Boolean _tao_collocated = 0
            );

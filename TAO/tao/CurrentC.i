@@ -12,7 +12,7 @@ CORBA_Current::CORBA_Current (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_Current::CORBA_Current (STUB_Object *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+CORBA_Current::CORBA_Current (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 

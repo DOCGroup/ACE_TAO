@@ -59,7 +59,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   *os << "ACE_INLINE" << be_nl;
   *os << node->name () << "::" << node->local_name () <<
-    " (STUB_Object *objref, TAO_ServantBase *_tao_servant, "
+    " (TAO_Stub *objref, TAO_ServantBase *_tao_servant, "
       << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
   *os << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)" << be_nl;
   *os << "{}" << be_nl << be_nl;
@@ -68,6 +68,25 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   *os << node->name () << "::~" << node->local_name () <<
     " (void) // destructor" << be_nl;
   *os << "{}\n\n";
+
+  // The _duplicate method
+  *os << "ACE_INLINE "
+      << node->name () << "_ptr " << be_nl
+      << node->name () << "::_duplicate ("
+      << node->name () << "_ptr obj)" << be_nl
+      << "{" << be_idt_nl
+      << "if (!CORBA::is_nil (obj))" << be_idt_nl
+      << "obj->_incr_refcnt ();" << be_uidt_nl
+      << "return obj;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  // _nil method
+  *os << "ACE_INLINE "
+      << node->name () << "_ptr" << be_nl
+      << node->name () << "::_nil (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return (" << node->name () << "_ptr)0;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // generate the ifdefined macro for  the _var type
   os->gen_ifdef_macro (node->flatname (), "_var");

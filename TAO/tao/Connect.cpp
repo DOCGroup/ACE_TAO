@@ -688,8 +688,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
             default:                                    // Unknown message
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) Illegal message received by server\n"));
-              ACE_TRY_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-              // FALLTHROUGH
+              ACE_TRY_THROW (CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+              // NOTREACHED
 
             case TAO_GIOP::CommunicationError:
             case TAO_GIOP::MessageError:
@@ -729,7 +729,13 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   ACE_CATCHALL
     {
       // @@ TODO some c++ exception or another, but what do we do with
-      // it? BTW, this cannot be detected if using the <env> mapping.
+      //    it?
+      // We are supposed to map it into a CORBA::UNKNOWN exception.
+      // BTW, this cannot be detected if using the <env> mapping.
+      //   If we have native exceptions but no support for them
+      //   in the ORB we should still be able to catch it.
+      //   If we don't have native exceptions it couldn't have been
+      //   raised in the first place!
 
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) closing conn %d after fault %p\n",
@@ -774,7 +780,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   return result;
 }
 
-// @@ For pluggable protocols, added a reference to the corresponding transport obj.
+// @@ For pluggable protocols, added a reference to the corresponding
+//    transport obj. 
 TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t),
     expecting_response_ (0),
@@ -908,11 +915,13 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
       // 0 is a graceful shutdown
       // -1 is a somewhat ugly shutdown
       //
-      // Both will result in us returning -1 and this connection getting closed
+      // Both will result in us returning -1 and this connection
+      // getting closed 
       //
       if (TAO_orbdebug)
         ACE_DEBUG ((LM_WARNING,
-                    "Client_Connection_Handler::handle_input: closing connection on fd %d\n",
+                    "Client_Connection_Handler::handle_input: "
+                    "closing connection on fd %d\n",
                     this->peer().get_handle ()));
       break;
 
@@ -924,7 +933,8 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
       // handle this yet, log an error, and close the connection.
       ACE_ERROR ((LM_WARNING,
                   "Client_Connection_Handler::handle_input received "
-                  "input while not expecting a response; closing connection on fd %d\n",
+                  "input while not expecting a response; "
+                  "closing connection on fd %d\n",
                   this->peer().get_handle ()));
       break;
     }

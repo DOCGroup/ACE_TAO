@@ -332,7 +332,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << node->full_skel_name ()
       << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
       << "{" << be_idt_nl
-      << "STUB_Object *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
+      << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl
     //      << "if (ACE_TRY_ENV.exception () != 0)" << be_idt_nl
     //      << "return 0;" << be_uidt_nl

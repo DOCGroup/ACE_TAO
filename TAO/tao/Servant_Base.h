@@ -46,7 +46,7 @@ public:
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
 
-  virtual STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual TAO_Stub *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This is an auxiliar method for _this() and _narrow().
 
 protected:
@@ -97,7 +97,7 @@ class TAO_Export TAO_Local_ServantBase : public TAO_ServantBase
   // = TITLE
   //   Base class for local skeletons and servants.
 protected:
-  STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  TAO_Stub *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This is an auxiliar method for _this().  Make sure *not* to
   // register with the default POA
 };
@@ -139,7 +139,7 @@ protected:
   virtual void *_downcast (const char *repository_id);
   // Simply returns "this"
 
-  virtual STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual TAO_Stub *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This is an auxiliar method for _this() and _narrow().
 
   virtual void _dispatch (CORBA::ServerRequest &request,

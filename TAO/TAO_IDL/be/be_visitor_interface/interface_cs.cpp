@@ -54,20 +54,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // first generate the code for the static methods
 
-  // The _duplicate method
-  *os << node->name () << "_ptr " << node->name () << "::_duplicate ("
-      << node->name () << "_ptr obj)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "if (!CORBA::is_nil (obj))\n";
-  os->incr_indent ();
-  *os << "obj->_incr_refcnt ();\n";
-  os->decr_indent ();
-  *os << be_nl;
-  *os << "return obj;\n";
-  os->decr_indent ();
-  *os << "} // end of _duplicate" << be_nl << be_nl;
-
   // The _narrow method
   *os << node->name () << "_ptr " << node->name ()
       << "::_narrow (" << be_idt << be_idt_nl
@@ -81,39 +67,57 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << be_idt_nl
       << "return " << node->name () << "::_nil ();" << be_uidt_nl;
 
-  *os << "STUB_Object* stub = obj->_stubobj ();" << be_nl
-      << "stub->_incr_refcnt ();" << be_nl;
-  *os << "if (!obj->_is_collocated ()" << be_idt << be_idt << be_idt_nl
-      << " || !obj->_servant()" << be_nl
-      << " || obj->_servant()->_downcast (\""
-      << node->repoID () << "\") == 0" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << "{" << be_idt_nl;
-  *os << "return new "
-      << node->name () << "(stub);" << be_uidt_nl
-      << "}" << be_nl;
-
-  *os << "void* servant = obj->_servant ()->_downcast (\""
-      << node->repoID () << "\");" << be_nl
-      << "return new ";
-
   // This may be necessary to work around a GCC compiler bug!
   const char *skel_name = node->full_skel_name ();
   const char *coll_name = node->full_coll_name ();
   assert (coll_name != 0);
 
-  *os << coll_name << "(" << be_idt << be_idt_nl
+  *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
+      << "stub->_incr_refcnt ();" << be_nl;
+  *os << "void* servant = 0;" << be_nl;
+  *os << "if (obj->_is_collocated () "
+      << "&& obj->_servant() != 0)" << be_idt_nl
+      << "servant = obj->_servant()->_downcast (\""
+      << node->repoID () << "\");" << be_uidt_nl;
+           
+  *os << "if (servant == 0)" << be_idt_nl
+      << "return new " << node->name () << "(stub);" << be_uidt_nl;
+
+  *os << "return new "
+      << coll_name << "(" << be_idt << be_idt_nl
       << "ACE_reinterpret_cast(" << skel_name
       << "_ptr, servant)," << be_nl
       << "stub" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // _nil method
-  *os << node->name () << "_ptr "
-      << node->name () << "::_nil (void)" << be_nl
+  // The _unchecked_narrow method
+  *os << node->name () << "_ptr " << node->name ()
+      << "::_unchecked_narrow (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj," << be_nl
+      << "CORBA::Environment &env" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return (" << node->name () << "_ptr)0;" << be_uidt_nl
+      << "if (CORBA::is_nil (obj))" << be_idt_nl
+      << "return " << node->name () << "::_nil ();" << be_uidt_nl;
+
+  *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
+      << "stub->_incr_refcnt ();" << be_nl;
+  *os << "void* servant = 0;" << be_nl;
+  *os << "if (obj->_is_collocated () "
+      << "&& obj->_servant() != 0)" << be_idt_nl
+      << "servant = obj->_servant()->_downcast (\""
+      << node->repoID () << "\");" << be_uidt_nl;
+           
+  *os << "if (servant == 0)" << be_idt_nl
+      << "return new " << node->name () << "(stub);" << be_uidt_nl;
+
+  *os << "return new "
+      << coll_name << "(" << be_idt << be_idt_nl
+      << "ACE_reinterpret_cast(" << skel_name
+      << "_ptr, servant)," << be_nl
+      << "stub" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // generate code for the elements of the interface

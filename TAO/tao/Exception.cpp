@@ -423,7 +423,10 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     TAO_SYSTEM_EXCEPTION (INTF_REPOS) \
     TAO_SYSTEM_EXCEPTION (BAD_CONTEXT) \
     TAO_SYSTEM_EXCEPTION (OBJ_ADAPTER) \
-    TAO_SYSTEM_EXCEPTION (DATA_CONVERSION)
+    TAO_SYSTEM_EXCEPTION (DATA_CONVERSION) \
+    TAO_SYSTEM_EXCEPTION (INV_POLICY) \
+    TAO_SYSTEM_EXCEPTION (REBIND) \
+    TAO_SYSTEM_EXCEPTION (TIMEOUT)
 
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.

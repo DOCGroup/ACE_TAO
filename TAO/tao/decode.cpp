@@ -160,7 +160,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   // actual buffer. Hence it makes no sense keeping pointers to stack
   // memory.
   //
-  // See STUB_Object.cpp::do_static_call in which a GIOP_Invocation is
+  // See TAO_Stub.cpp::do_static_call in which a GIOP_Invocation is
   // allocated on stack
 #if 0
   any->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)

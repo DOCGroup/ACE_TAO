@@ -312,7 +312,7 @@ public:
     virtual ThreadPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
-    ThreadPolicy (STUB_Object *objref = 0,
+    ThreadPolicy (TAO_Stub *objref = 0,
                   TAO_ServantBase *servant = 0,
                   CORBA::Boolean collocated = 0);
   public:
@@ -417,7 +417,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     LifespanPolicy (
-                    STUB_Object *objref = 0,
+                    TAO_Stub *objref = 0,
                     TAO_ServantBase *servant = 0,
                     CORBA::Boolean collocated = 0
                     );
@@ -521,7 +521,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     IdUniquenessPolicy (
-                        STUB_Object *objref = 0,
+                        TAO_Stub *objref = 0,
                         TAO_ServantBase *servant = 0,
                         CORBA::Boolean collocated = 0
                         );
@@ -625,7 +625,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     IdAssignmentPolicy (
-                        STUB_Object *objref = 0,
+                        TAO_Stub *objref = 0,
                         TAO_ServantBase *servant = 0,
                         CORBA::Boolean collocated = 0
                         );
@@ -732,7 +732,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ImplicitActivationPolicy (
-                              STUB_Object *objref = 0,
+                              TAO_Stub *objref = 0,
                               TAO_ServantBase *servant = 0,
                               CORBA::Boolean collocated = 0
                               );
@@ -841,7 +841,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ServantRetentionPolicy (
-                            STUB_Object *objref = 0,
+                            TAO_Stub *objref = 0,
                             TAO_ServantBase *servant = 0,
                             CORBA::Boolean collocated = 0
                             );
@@ -951,7 +951,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     RequestProcessingPolicy (
-                             STUB_Object *objref = 0,
+                             TAO_Stub *objref = 0,
                              TAO_ServantBase *servant = 0,
                              CORBA::Boolean collocated = 0
                              );
@@ -1090,7 +1090,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     POAManager (
-                STUB_Object *objref = 0,
+                TAO_Stub *objref = 0,
                 TAO_ServantBase *servant = 0,
                 CORBA::Boolean collocated = 0
                 );
@@ -1187,7 +1187,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     AdapterActivator (
-                      STUB_Object *objref = 0,
+                      TAO_Stub *objref = 0,
                       TAO_ServantBase *servant = 0,
                       CORBA::Boolean collocated = 0
                       );
@@ -1283,7 +1283,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ServantManager (
-                    STUB_Object *objref = 0,
+                    TAO_Stub *objref = 0,
                     TAO_ServantBase *servant = 0,
                     CORBA::Boolean collocated = 0
                     );
@@ -1380,7 +1380,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ServantActivator (
-                      STUB_Object *objref = 0,
+                      TAO_Stub *objref = 0,
                       TAO_ServantBase *servant = 0,
                       CORBA::Boolean collocated = 0
                       );
@@ -1480,7 +1480,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ServantLocator (
-                    STUB_Object *objref = 0,
+                    TAO_Stub *objref = 0,
                     TAO_ServantBase *servant = 0,
                     CORBA::Boolean collocated = 0
                     );
@@ -1991,7 +1991,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     POA (
-         STUB_Object *objref = 0,
+         TAO_Stub *objref = 0,
          TAO_ServantBase *servant = 0,
          CORBA::Boolean collocated = 0
          );
@@ -2121,7 +2121,7 @@ public:
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     Current (
-             STUB_Object *objref = 0,
+             TAO_Stub *objref = 0,
              TAO_ServantBase *servant = 0,
              CORBA::Boolean collocated = 0
              );

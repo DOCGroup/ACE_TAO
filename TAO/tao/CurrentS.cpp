@@ -115,7 +115,7 @@ const char* POA_CORBA::Current::_interface_repository_id (void) const
 
 POA_CORBA::_tao_collocated_Current::_tao_collocated_Current (
     POA_CORBA::Current_ptr  servant,
-    STUB_Object *stub
+    TAO_Stub *stub
   )
   : CORBA_Current (stub, servant, 1),
     CORBA_Object (stub, servant, 1),
@@ -143,7 +143,7 @@ CORBA::Boolean POA_CORBA::_tao_collocated_Current::_is_a (
 CORBA::Current*
 POA_CORBA::Current::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_CORBA::_tao_collocated_Current (this, stub);

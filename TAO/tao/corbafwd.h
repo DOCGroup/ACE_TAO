@@ -128,7 +128,10 @@ typedef class CORBA_Exception *CORBA_Exception_ptr;
   TAO_SYSTEM_EXCEPTION(INTF_REPOS); \
   TAO_SYSTEM_EXCEPTION(BAD_CONTEXT); \
   TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER); \
-  TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
+  TAO_SYSTEM_EXCEPTION(DATA_CONVERSION); \
+  TAO_SYSTEM_EXCEPTION(INV_POLICY); \
+  TAO_SYSTEM_EXCEPTION(REBIND); \
+  TAO_SYSTEM_EXCEPTION(TIMEOUT);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   class CORBA_ ## name
@@ -204,8 +207,8 @@ class CORBA_ExceptionList;
 
 class TAO_InputCDR;
 class TAO_OutputCDR;
-// @@ TODO This should be TAO_STUB_Object
-class STUB_Object;
+// @@ TODO This should be TAO_TAO_Stub
+class TAO_Stub;
 
 // enum values defined in tao/NVList.h, bitwise ORed.
 typedef u_int CORBA_Flags;

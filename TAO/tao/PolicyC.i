@@ -14,7 +14,7 @@ CORBA_Policy::CORBA_Policy (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_Policy::CORBA_Policy (STUB_Object *objref,
+CORBA_Policy::CORBA_Policy (TAO_Stub *objref,
                             TAO_ServantBase *_tao_servant,
                             CORBA::Boolean _tao_collocated)
   : CORBA_Object (objref, _tao_servant, _tao_collocated)

@@ -54,7 +54,7 @@ public:
   int _tao_find_in_IOR_table (ACE_CString object_id, CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
 
-  TAO_ServantBase *_get_collocated_servant (STUB_Object *sobj);
+  TAO_ServantBase *_get_collocated_servant (TAO_Stub *sobj);
   // Return the object pointer of an collocated object it there is
   // one, otherwise, return 0.
 
