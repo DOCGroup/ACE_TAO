@@ -65,6 +65,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "// Traits specializations for " << node->name () << ".";
 
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
           << be_idt << be_idt_nl
@@ -75,6 +76,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << "void" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
           << be_idt << be_idt_nl
@@ -85,6 +87,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
           << be_nl
@@ -93,6 +96,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << "CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
           << be_idt << be_idt_nl
@@ -107,6 +111,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->has_mixed_parentage ())
     {
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << "void" << be_nl
           << "CORBA::release ("
           << node->name ()
@@ -117,6 +122,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
+          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION "
           << "CORBA::Boolean" << be_nl
           << "CORBA::is_nil ("
           << node->name ()
@@ -183,7 +189,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "::" << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_function_pointer (";
-      
+
        if (node->is_abstract ())
           {
             *os << be_idt << be_idt_nl
@@ -195,7 +201,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
             *os << "this);";
           }
 
-      *os << be_uidt << be_uidt_nl 
+      *os << be_uidt << be_uidt_nl
           << "}" << be_uidt;
 
       // Now we setup the immediate parents.
@@ -225,7 +231,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_uidt_nl << "}";
     }
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
@@ -286,19 +292,19 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return " << node->local_name () << "::_duplicate (proxy);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
-  else 
+  else
     {
       *os << "return" << be_idt_nl;
 
       if (!node->is_abstract ())
-	{
-          *os << "TAO::Narrow_Utils<" 
-	      << node->local_name () << ">::narrow (";
+        {
+          *os << "TAO::Narrow_Utils<"
+              << node->local_name () << ">::narrow (";
         }
       else
         {
-          *os << "TAO::AbstractBase_Narrow_Utils<" 
-	      << node->local_name () << ">::narrow (";
+          *os << "TAO::AbstractBase_Narrow_Utils<"
+              << node->local_name () << ">::narrow (";
         }
 
       *os << be_idt << be_idt_nl

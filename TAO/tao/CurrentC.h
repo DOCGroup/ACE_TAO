@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be/be_codegen.cpp:150
 
 #ifndef _TAO_IDL_ORIG_CURRENTC_H_
 #define _TAO_IDL_ORIG_CURRENTC_H_
@@ -62,37 +62,38 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_ch.cpp:63
+// TAO_IDL - Generated from 
+// be/be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
+  template<typename T> class AbstractBase_Narrow_Utils;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be/be_visitor_module/module_ch.cpp:48
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:601
+  // be/be_interface.cpp:610
 
 #if !defined (_CORBA_CURRENT__VAR_OUT_CH_)
 #define _CORBA_CURRENT__VAR_OUT_CH_
-
+  
   class Current;
   typedef Current *Current_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         Current
       >
     Current_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         Current
@@ -100,87 +101,112 @@ namespace CORBA
     Current_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_CURRENT_CH_)
 #define _CORBA_CURRENT_CH_
-
+  
   class TAO_Export Current
     : public virtual CORBA::Object
   {
   public:
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
-
+    
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
-
+    
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Current_ptr _nil (void)
-      {
-        return (Current_ptr)0;
-      }
-
-
-
+    {
+      return (Current_ptr)0;
+    }
+    
+    
+    
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:185
-
+    // be/be_visitor_interface/interface_ch.cpp:192
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
+    // Abstract or local interface only.
     Current (void);
+    
     virtual ~Current (void);
-
+  
   private:
+    // Private and unimplemented for concrete interfaces.
     Current (const Current &);
+    
     void operator= (const Current &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
+// be/be_visitor_module/module_ch.cpp:66
 
 } // module CORBA
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+// be/be_visitor_traits.cpp:48
 
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_CORBA_CURRENT__TRAITS_CH_)
+#define _CORBA_CURRENT__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<CORBA::Current>
+  {
+    static CORBA::Current_ptr tao_duplicate (
+        CORBA::Current_ptr
+      );
+    static void tao_release (
+        CORBA::Current_ptr
+      );
+    static CORBA::Current_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        CORBA::Current_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+// be/be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
+// be/be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
+// be/be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
 #include "CurrentC.i"
@@ -195,4 +221,6 @@ namespace TAO
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */
+
