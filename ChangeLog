@@ -1,3 +1,11 @@
+Mon Jun 16 22:24:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Priority_Reactor.h: Fixed typos in the operator= and copy
+	  constructor. Thanks to Douglas A Stuart
+	  <douglas.a.stuart@boeing.com> for reporting the problem.
+
+	* THANKS: Added Doug A Stuart to the hall of fame.
+
 Mon Jun 16 11:13:22 2003  Chris Cleeland  <cleeland@ociweb.com>
 
         * ACE version 5.3.3 released.

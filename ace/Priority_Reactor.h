@@ -81,8 +81,8 @@ private:
   ACE_Allocator* tuple_allocator_;
 
   /// Deny access since member-wise won't work...
-  ACE_Priority_Reactor (const ACE_Select_Reactor &);
-  ACE_Priority_Reactor &operator = (const ACE_Select_Reactor &);
+  ACE_Priority_Reactor (const ACE_Priority_Reactor &);
+  ACE_Priority_Reactor &operator = (const ACE_Priority_Reactor &);
 };
 
 #include "ace/post.h"
