@@ -27,7 +27,7 @@
 
 #ifdef IDL_HAS_VALUETYPE
 
-ACE_RCSID(be, be_interface_fwd, "$Id$")
+ACE_RCSID(be, be_valuetype_fwd, "$Id$")
 
 /*
  * BE_ValuetypeFwd

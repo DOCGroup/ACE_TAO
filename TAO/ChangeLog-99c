@@ -1,7 +1,43 @@
+Fri Dec 10 01:27:39 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Active_Object_Map.cpp:
+	* tao/Object_Adapter.cpp:
+	* TAO_IDL/be/be_valuetype_fwd.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+
+	  Fixed the ACE_RCSID macro.
+
+	* tao/IIOP_Connector.cpp:
+	* tao/UIOP_Connector.cpp:
+
+	  Removed extra semicolons from two #pragma instantiates.
+
+	  Thanks to Dennis D Noll <Dennis.Noll@MW.Boeing.com> for
+	  reporting the above two problems.
+
+	* tao/Messaging_Policy_i.i (synchronization):
+	* tao/Buffering_Constraint_Policy.i (buffering_constraint):
+	* tao/ORB_Core (miscellaneous):
+	* tao/Pluggable.i (miscellaneous):
+
+	  Inlined some accessors.
+
+	* tao/TAOS.h (_tao_direct_collocated_BufferingConstraintPolicy::buffering_constraint):
+	* tao/MessagingS.h
+	  (_tao_collocated_SyncScopePolicy::synchronization and
+	  SyncScopePolicy_tie::synchronization):
+
+	  When the TAO specific extension were made in:
+
+	  ChangeLogTag: Wed Dec 08 19:53:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	  the derived classes must also overwrite all the overloaded
+	  methods.
+
 Thu Dec  9 18:47:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	  Fixed code generation of CDR operatorsfor a certain 
+	  Fixed code generation of CDR operatorsfor a certain
 	  use case of nested anonymous sequences. IDL file
 	  would build correctly, but would give rise to
 	  marshaling errors at runtime. Also fixed

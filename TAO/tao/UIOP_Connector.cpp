@@ -225,8 +225,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_UNIX_Addr>
 
 #if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-#pragma instantiate CACHED_CONNECT_STRATEGY;
-#pragma instantiate TAO_ADDR;
+#pragma instantiate CACHED_CONNECT_STRATEGY
+#pragma instantiate TAO_ADDR
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
