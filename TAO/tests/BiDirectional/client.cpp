@@ -11,7 +11,7 @@ int do_shutdown = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:x:");
+  ACE_Get_Opt get_opts (argc, argv, "k:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -28,7 +28,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
-                           "-i <niterations> "
+                           "-x <shutdown> "
                            "\n",
                            argv [0]),
                           -1);
@@ -134,8 +134,8 @@ main (int argc, char *argv[])
       if (r != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) unexpected result = %d for %d",
-                      r, i));
+                      "(%P|%t) unexpected result = %d ",
+                      r));
         }
 
       if (do_shutdown)

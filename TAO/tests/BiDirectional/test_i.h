@@ -53,7 +53,7 @@ class Simple_Server_i : public POA_Simple_Server
   //   Implements the Simple_Server interface in test.idl
   //
 public:
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
   // ctor
 
   // = The Simple_Server methods.

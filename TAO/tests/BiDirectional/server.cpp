@@ -21,7 +21,7 @@ parse_args (int argc, char *argv[])
         ior_output_file = get_opts.optarg;
         break;
       case 'i':
-        no_iterations = get_opts.optarg;
+        no_iterations = ACE_OS::atoi (get_opts.optarg);
         break;
       case '?':
       default:
