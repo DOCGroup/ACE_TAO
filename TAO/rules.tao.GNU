@@ -36,7 +36,7 @@ ifdef COMSPEC
       TAO_IDL_PREPROCESSOR := $(shell type $(CXX) | sed 's/.* is //')
     else
       TAO_IDL_PREPROCESSOR := \
-        $(shell cygpath -w $(shell type $(CXX) | sed 's/.* is //'))
+	$(shell cygpath -w $(shell type $(CXX) | sed 's/.* is //'))
     endif # !mingw32
   endif # ! TAO_IDL_PREPROCESSOR
 endif # COMSPEC
@@ -177,22 +177,22 @@ ifneq ($(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS),)
 endif
 
 TAO_IDLFLAGS += \
-        $(TAO_LACKS_EVENT_CHANNEL_ANY) \
-        $(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
-        $(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
+	$(TAO_LACKS_EVENT_CHANNEL_ANY) \
+	$(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
+	$(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
 
 CPPFLAGS += \
-        $(TAO_LACKS_EVENT_CHANNEL_ANY) \
-        $(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
-        $(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
+	$(TAO_LACKS_EVENT_CHANNEL_ANY) \
+	$(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
+	$(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
 
 ####
 #### Build rules.
 ####
 IDL_EXT_MINUS=$(IDL_CLIENT_INL_EXT) $(IDL_CLIENT_SRC_EXT) \
-        $(IDL_SERVER_HDR_EXT) $(IDL_SERVER_INL_EXT) \
-        $(IDL_SERVER_SRC_EXT) $(IDL_SERVER_THDR_EXT) \
-        $(IDL_SERVER_TINL_EXT) $(IDL_SERVER_TSRC_EXT)
+	$(IDL_SERVER_HDR_EXT) $(IDL_SERVER_INL_EXT) \
+	$(IDL_SERVER_SRC_EXT) $(IDL_SERVER_THDR_EXT) \
+	$(IDL_SERVER_TINL_EXT) $(IDL_SERVER_TSRC_EXT)
 IDL_EXT=$(IDL_CLIENT_HDR_EXT) $(IDL_EXT_MINUS)
 IDL_EXT2_MINUS=Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
 IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
@@ -201,19 +201,19 @@ IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 ifneq ($(use_flick),1)
 $(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %$(IDL_CLIENT_HDR_EXT)
-        @
+	@
 
 ifneq ($(tao_dont_use_idl_make_rule),1)
 %C.h: %.idl $(TAO_IDL_DEP)
-        $(TAO_IDL) $(TAO_IDLFLAGS) $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
 
 $(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
-        @
+	@
 
 ifneq ($(tao_dont_use_idl_make_rule),1)
 %Cli.h: %.idl $(TAO_IDL_DEP)
-        $(TAO_IDL) $(TAO_IDLFLAGS) $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
 
 else
@@ -234,17 +234,17 @@ CORBA_BE=$(FLICK_OBJDIR)/bin/flick-c-pbe-iiopxx
 
 ifneq ($(tao_dont_use_idl_make_rule),1)
 $(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl
-        $(CORBA_FE) $< && \
-        $(CORBA_PG) -c -o $*-client.prc $*.aoi && \
-        $(CORBA_BE) $*-client.prc -o $*$(IDL_CLIENT_SRC_EXT) -h $*$(IDL_CLIENT_HDR_EXT) -f $*$(IDL_SERVER_HDR_EXT) --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
-        echo > $*$(IDL_CLIENT_INL_EXT)
-        $(CORBA_FE) $< && \
-        $(CORBA_PG) -s -o $*-server.prc $*.aoi && \
-        $(CORBA_BE) $*-server.prc --no_mu_stubs -o $*$(IDL_SERVER_SRC_EXT) -h $*$(IDL_SERVER_HDR_EXT) -F $*$(IDL_CLIENT_HDR_EXT) --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
-        echo > $*$(IDL_SERVER_INL_EXT) && \
-        echo > $*$(IDL_SERVER_THDR_EXT) && \
-        echo > $*$(IDL_SERVER_TINL_EXT) && \
-        echo > $*$(IDL_SERVER_TSRC_EXT)
+	$(CORBA_FE) $< && \
+	$(CORBA_PG) -c -o $*-client.prc $*.aoi && \
+	$(CORBA_BE) $*-client.prc -o $*$(IDL_CLIENT_SRC_EXT) -h $*$(IDL_CLIENT_HDR_EXT) -f $*$(IDL_SERVER_HDR_EXT) --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
+	echo > $*$(IDL_CLIENT_INL_EXT)
+	$(CORBA_FE) $< && \
+	$(CORBA_PG) -s -o $*-server.prc $*.aoi && \
+	$(CORBA_BE) $*-server.prc --no_mu_stubs -o $*$(IDL_SERVER_SRC_EXT) -h $*$(IDL_SERVER_HDR_EXT) -F $*$(IDL_CLIENT_HDR_EXT) --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
+	echo > $*$(IDL_SERVER_INL_EXT) && \
+	echo > $*$(IDL_SERVER_THDR_EXT) && \
+	echo > $*$(IDL_SERVER_TINL_EXT) && \
+	echo > $*$(IDL_SERVER_TSRC_EXT)
 endif # tao_dont_use_idl_make_rule
 
 endif # use_flick = 1
