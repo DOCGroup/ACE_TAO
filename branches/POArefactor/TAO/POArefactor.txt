@@ -1,3 +1,21 @@
+Thu Sep  9 13:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/GOA.{h,cpp}:
+          First version, still here, move it later, just making sure the GOA
+          stuff doesn't get lost.
+
+Thu Sep  9 10:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Endpoints.pid:
+          No need to include orb.idl
+
+        * tao/IIOP_EndpointsC.{h,cpp,i,inl}:
+        * tao/IIOP_EndpointsA.cpp:
+          Regenerated
+
+        * tao/diffs/IIOP_Endpoints.diff:
+          Zapped this file, no diffs needed anymore
+
 Thu Sep  9 10:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IOP_IOR.pid:
