@@ -217,7 +217,7 @@ ifneq ($(xt_reactor),)
 endif # xt_reactor
 
 ifdef exceptions
-  CCFLAGS += -DACE_HAS_EXCEPTIONS
+  CPPFLAGS += -DACE_HAS_EXCEPTIONS
 else
   ifeq ($(CXX),g++)
     #### Disable the default exception handling of g++ >= 2.8.0.
