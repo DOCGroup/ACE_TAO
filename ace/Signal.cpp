@@ -285,7 +285,11 @@ ACE_Sig_Handler::remove_handler (int signum,
 
   if (ACE_Sig_Handler::in_range (signum))
     {
+#if defined (ACE_PSOS)
+      ACE_Sig_Action sa ((ACE_SignalHandler) 0, (sigset_t *) 0);
+#else
       ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0); // Define the default disposition.
+#endif /* defined (ACE_PSOS) */
 
       if (new_disp == 0)
         new_disp = &sa;
@@ -331,7 +335,11 @@ ACE_Sig_Handler::dispatch (int signum,
   if (eh != 0 && eh->handle_signal (signum, siginfo, ucontext) == -1)
     {
       // Define the default disposition.
+#if defined (ACE_PSOS)
+      ACE_Sig_Action sa ((ACE_SignalHandler) 0, (sigset_t *) 0);
+#else
       ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
+#endif /* defined (ACE_PSOS) */
 
       ACE_Sig_Handler::signal_handlers_[signum] = 0;
 
@@ -639,7 +647,11 @@ ACE_Sig_Handlers::remove_handler (int signum,
           // register the new disposition or restore the default
           // disposition.
 
+#if defined (ACE_PSOS)
+          ACE_Sig_Action sa ((ACE_SignalHandler) 0, (sigset_t *) 0);
+#else
           ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
+#endif /* defined (ACE_PSOS) */
 
           if (new_disp == 0)
             new_disp = &sa;

@@ -49,7 +49,7 @@ ACE_Remote_Name_Space::bind (const ACE_WString &name,
 			    type, 
                             ACE_OS::strlen (type));
   int result = this->ns_proxy_.request_reply (request);
-  return result == ACE_Name_Reply::SUCCESS ? 0 : result;
+  return result == ACE_Name_Reply::ACE_SUCCESS ? 0 : result;
 }
 
 int 
@@ -65,7 +65,7 @@ ACE_Remote_Name_Space::rebind (const ACE_WString &name,
 			    type, 
                             ACE_OS::strlen (type));
   int result = this->ns_proxy_.request_reply (request);
-  return result == ACE_Name_Reply::SUCCESS ? 0 : result;
+  return result == ACE_Name_Reply::ACE_SUCCESS ? 0 : result;
 }
 
 int 
@@ -103,7 +103,7 @@ ACE_Remote_Name_Space::unbind (const ACE_WString &name)
 			    0, 0, 0, 0);
 
   int result = this->ns_proxy_.request_reply (request);
-  return result == ACE_Name_Reply::SUCCESS ? 0 : result;
+  return result == ACE_Name_Reply::ACE_SUCCESS ? 0 : result;
 }
 
 int 

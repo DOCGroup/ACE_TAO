@@ -413,7 +413,6 @@ template class ACE_Thru_Task<ACE_SYNCH>;
 #pragma instantiate ACE_Stream_Tail<ACE_SYNCH>
 #pragma instantiate ACE_Task<ACE_SYNCH>
 #pragma instantiate ACE_Thru_Task<ACE_SYNCH>
-
 // Even with threads, these ACE_NULL_SYNCH specializations are necessary.
 #if defined (ACE_HAS_THREADS)
   #pragma instantiate ACE_Message_Queue<ACE_NULL_SYNCH>

@@ -174,7 +174,7 @@ class ACE_Export ACE_Token_Reply
 public:
   enum Constants
   {
-    SUCCESS = 0 // this MUST be zero!!!
+    ACE_SUCCESS = 0 // this MUST be zero!!!
   };
 
   ACE_Token_Reply (void);

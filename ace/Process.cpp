@@ -85,7 +85,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
         // If we must, set the working directory for the child process.
         if (options.working_directory () != 0)
-          ::chdir (options.working_directory ());
+          ACE_OS::chdir (options.working_directory ());
 
         // Child process executes the command.
         int result;
@@ -112,7 +112,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (result == -1)
           {
             // If the execv fails, this child needs to exit.
-            
+
             // Exit with the errno so that the calling process can
             // catch this and figure out what went wrong.
             ACE_OS::exit (errno);

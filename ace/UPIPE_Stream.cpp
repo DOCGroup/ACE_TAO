@@ -222,6 +222,15 @@ ACE_UPIPE_Stream::recv_n (char *buf,
 
   return bytes_read;      
 }
+  
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Module<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Module<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
-  
