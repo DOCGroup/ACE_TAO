@@ -168,6 +168,33 @@ bgcolor="#ffffff">
         file once per compilation unit.  Thanks to Eric C. Newton
         &lt;ecn@smart.net&gt; for pointing that out.<p>
 
+        If the header <code>#includes</code> an ACE library header,
+        then it's a good idea to include the <code>#pragma once</code>
+        directive:
+        <pre>
+        #ifndef FOO_H
+        #define FOO_H
+
+        #include "ace/ACE.h"
+        #if !defined (ACE_LACKS_PRAGMA_ONCE)
+        # pragma once
+        #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+        [contents of header file]
+
+        #endif /* FOO_H */
+        </pre><p>
+
+        <code>#pragma once</code> must be protected, because some
+        compilers complain about it.  The protection depends on
+        <code>ACE_LACKS_PRAGMA_ONCE</code>, which is defined in
+        some ACE config headers.  Therefore, the protected
+        <code>#pragma once</code> construct should only be used after
+        an <code>#include</code> of an ACE library header.  Note that
+        many compilers enable the optimization if the <code>#ifndef</code>
+        protection construct is used, so for them, <code>#pragm once</code>
+        is superflous.<p>
+
         <strong>No</strong> code can appear after the final
         <code>#endif</code> for the optimization to be effective and
         correct.<p>
