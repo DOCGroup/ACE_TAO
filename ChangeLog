@@ -1,3 +1,10 @@
+Thu Jul 22 14:11:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Log_Msg/Log_Msg_MFC/MFC_Log.cpp (log):
+
+	  Fixed Unicode build errors caused by use of raw "char" string
+	  instead of an "ACE_TCHAR" string.
+
 Thu Jul 22 16:47:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Reactor/HAStatus.cpp:
