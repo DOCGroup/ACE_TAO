@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
-BIN_UNCHECKED = client server
+BIN = client server
 
 SRC = $(addsuffix .cpp, $(BIN) test_i) $(IDL_SRC)
 

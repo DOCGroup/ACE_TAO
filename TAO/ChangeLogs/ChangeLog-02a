@@ -1,3 +1,8 @@
+Thu Apr 26 15:01:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Single_Read/Makefile: Fixed a typo. Thanks to Chad for
+	  poiting this out.
+
 Thu Apr 26 09:34:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/MessagingC.cpp:
