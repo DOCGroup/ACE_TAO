@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Array_Base.h"
-#include "ciao/CIAO_Server_Export.h"
+#include "CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +25,9 @@
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
 #pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -97,10 +99,6 @@ namespace CIAO
     ACE_SYNCH_MUTEX  mutex_;
   };
 }
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /*CIAO_SERVANT_ACTIVATOR_H*/

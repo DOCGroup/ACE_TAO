@@ -4,12 +4,6 @@
 
 namespace CIAO
 {
-  Context_Impl_Base::Context_Impl_Base (void)
-  {
-    // Should not be called
-    ACE_ASSERT (0);
-  }
-
   Context_Impl_Base::Context_Impl_Base (Components::CCMHome_ptr home,
                                         Session_Container * c)
     : home_ (Components::CCMHome::_duplicate (home)),
@@ -91,3 +85,4 @@ namespace CIAO
     return this->container_;
   }
 }
+

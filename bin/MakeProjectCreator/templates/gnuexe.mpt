@@ -1,4 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-conditional_include "common"

@@ -4,6 +4,7 @@
 #define DEPLOYMENT_CORE_IDL
 
 #include "CCM_Component.idl"
+#include "CIAO_Events.idl"
 
 // *************** Packaging and Deployment ***************
 module Deployment
@@ -45,7 +46,16 @@ module Deployment
     MultiplexReceptacle,
     EventEmitter,
     EventPublisher,
-    EventConsumer
+    EventConsumer,
+	  ecEventEmitter,
+    ecEventPublisher,
+    ecEventConsumer,
+    rtecEventEmitter,
+    rtecEventPublisher,
+    rtecEventConsumer,
+    nsEventEmitter,
+    nsEventPublisher,
+    nsEventConsumer
   };
 
   // To avoid the connection info in the plan being passed to the
@@ -55,6 +65,9 @@ module Deployment
     string instanceName;
     string portName;
     CCMComponentPortKind kind;
+
+    string consumerCompName; // CIAO specific extension 
+    string consumerPortName; // CIAO specific extension 
 
     // the endpoints member is change to endpoint.
     // Since we will not have more than 1 objref in there.
@@ -176,7 +189,7 @@ module Deployment
     void remove ()
       raises (::Components::RemoveFailure);
 
-
+	::CIAO::ContainerEventService get_event_service ();
   };
 
 };

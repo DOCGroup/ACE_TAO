@@ -1,0 +1,28 @@
+//$Id$
+//=============================================================================
+/**
+ * @file Consumer.idl
+ *
+ * Definition of the Consumer component
+ *
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
+ */
+//=============================================================================
+#ifndef CIAO_CONSUMER_IDL
+#define CIAO_CONSUMER_IDL
+
+#include "../EC_Benchmark.idl"
+
+module EC_Benchmark
+{
+  component Consumer
+    {
+      consumes TimeOut timeout;
+    };
+
+  home ConsumerHome manages Consumer
+    {
+    };
+};
+
+#endif /*CIAO_CONSUMER_IDL */

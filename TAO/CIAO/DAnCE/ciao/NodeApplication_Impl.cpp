@@ -1,6 +1,10 @@
 //$Id$
 
 #include "NodeApplication_Impl.h"
+#include "ace/UUID.h"
+#include "string.h" // for debug
+
+#include "orbsvcs/CosNamingC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
@@ -40,53 +44,85 @@ CIAO::NodeApplication_Impl::finishLaunch (
           //to narrow here.
           switch (providedReference[i].kind)
             {
-            case Deployment::SimplexReceptacle:
-              comp->connect (providedReference[i].portName.in (),
-                             providedReference[i].endpoint.in ()
-                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
+              case Deployment::SimplexReceptacle:
+                comp->connect (providedReference[i].portName.in (),
+                              providedReference[i].endpoint.in ()
+                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+                break;
 
-            case Deployment::MultiplexReceptacle:
-              comp->connect(providedReference[i].portName.in (),
-                            providedReference[i].endpoint.in ()
-                            ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
+              case Deployment::MultiplexReceptacle:
+                comp->connect (providedReference[i].portName.in (),
+                              providedReference[i].endpoint.in ()
+                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+                break;
 
-            case Deployment::EventEmitter:
-              consumer = Components::EventConsumerBase::
-                _narrow (providedReference[i].endpoint.in ()
-                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+	          // @@ (GD) A place holder where the Event Channel connections
+	          //         should be set up.
+              case Deployment::EventEmitter:
+                consumer = Components::EventConsumerBase::
+                  _narrow (providedReference[i].endpoint.in ()
+                          ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
 
-              if (CORBA::is_nil (consumer.in ()))
-                {
-                  ACE_THROW (Deployment::InvalidConnection ());
-                }
+                if (CORBA::is_nil (consumer.in ()))
+                  {
+                    ACE_THROW (Deployment::InvalidConnection ());
+                  }
 
-              comp->connect_consumer(providedReference[i].portName.in (),
-                                     consumer.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
+                comp->connect_consumer(providedReference[i].portName.in (),
+                                       consumer.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+                break;
 
-            case Deployment::EventPublisher:
-              consumer = Components::EventConsumerBase::
-                _narrow (providedReference[i].endpoint.in ()
-                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              if (CORBA::is_nil (consumer.in ()))
-                ACE_THROW (Deployment::InvalidConnection ());
+              case Deployment::EventPublisher:
+                consumer = Components::EventConsumerBase::
+                  _narrow (providedReference[i].endpoint.in ()
+                          ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
 
-              comp->subscribe (providedReference[i].portName.in (),
-                               consumer.in ()
-                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
+                if (CORBA::is_nil (consumer.in ()))
+				        {              
+				          ACE_THROW (Deployment::InvalidConnection ());
+				        }
 
-            default:
-              ACE_TRY_THROW (Deployment::InvalidConnection ());
+                comp->subscribe (providedReference[i].portName.in (),
+                                consumer.in ()
+                                ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+                break;
+
+			        case Deployment::rtecEventEmitter:
+              case Deployment::rtecEventPublisher:
+                ACE_DEBUG ((LM_DEBUG, "Building real-time event channel connection.\n"));
+                this->build_event_connection (providedReference[i], 
+                                              CIAO::RTEC
+                                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+			          break;
+
+			        case Deployment::ecEventEmitter:
+              case Deployment::ecEventPublisher:
+                ACE_DEBUG ((LM_DEBUG, "Building CoS event channel connection.\n"));
+                this->build_event_connection (providedReference[i], 
+                                              CIAO::EC
+                                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+			          break;
+
+              case Deployment::nsEventEmitter:
+              case Deployment::nsEventPublisher:
+                ACE_DEBUG ((LM_DEBUG, "Building notification channel connection.\n"));
+                this->build_event_connection (providedReference[i], 
+                                              CIAO::NOTIFY
+                                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+			          break;
+
+              default:
+                ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
         }
       if (start)
@@ -207,6 +243,25 @@ CIAO::NodeApplication_Impl::install (
          comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
          ACE_TRY_CHECK;
 
+         
+         // @@ Set up a component_UUID for this component
+         /*
+         ACE_Utils::UUID_Generator uuid_gen;
+         ACE_Utils::UUID * p_uuid = uuid_gen.generateUUID ();
+
+         char* str_tmp = p_uuid->to_string ()->c_str ();
+         */
+
+         //char* str_tmp;
+         //strcpy (str_tmp, impl_infos[i].component_instance_name.in ());
+         ACE_DEBUG ((LM_DEBUG, "UUID is %s\n", impl_infos[i].component_instance_name.in ()));
+         ACE_DEBUG ((LM_DEBUG, "################ Making a remote CORBA call on component named: %s\n", 
+                    impl_infos[i].component_instance_name.in ()));
+
+         comp->component_UUID (impl_infos[i].component_instance_name.in ());
+         
+
+
          if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
                                         Components::CCMObject::_duplicate (comp.in ())))
            ACE_TRY_THROW (Deployment::InstallationFailure ());
@@ -230,7 +285,9 @@ CIAO::NodeApplication_Impl::install (
                                  "ComponentIOR") == 0)
                {
                  if (CIAO::debug_level () > 1)
-                   ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
+                  {
+                    ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
+                  }
                  const char * path;
                  impl_infos[i].component_config[prop_len].value >>= path;
 
@@ -247,6 +304,16 @@ CIAO::NodeApplication_Impl::install (
                      ACE_TRY_THROW (CORBA::INTERNAL ());
                    }
 
+                 // Also register the component with the naming service
+                 ACE_DEBUG ((LM_DEBUG, "Register component with the naming service.\n"));
+                 if (! register_with_ns (impl_infos[i].component_instance_name.in (),
+                                         this->orb_.in (),
+                                         comp.in ()
+                                         ACE_ENV_ARG_PARAMETER))
+                   {
+                     ACE_DEBUG ((LM_DEBUG, "Failed to register with the naming service.\n"));
+                   }
+                 ACE_TRY_CHECK;
                }
            }
        }
@@ -436,6 +503,15 @@ CIAO::NodeApplication_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
     if (this->home_map_.find ( (*iter).ext_id_, home) != 0)
       ACE_THROW (CORBA::BAD_PARAM ());
 
+    // Unbind the component name from the name server.
+    if (! unregister_with_ns ((*iter).ext_id_.c_str (),
+                              this->orb_.in ()
+                              ACE_ENV_ARG_PARAMETER))
+      {
+        ACE_DEBUG ((LM_DEBUG, "Failed to unregister with the naming service.\n"));
+      }
+    ACE_CHECK;
+
     // This will call ccm_passivate on the component executor.
     home->remove_component ((*iter).int_id_);
     ACE_CHECK;
@@ -455,6 +531,8 @@ CIAO::NodeApplication_Impl::remove_component (const char * comp_ins_name
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  ACE_DEBUG ((LM_DEBUG, "remove_component\n"));
+
   Components::CCMObject_ptr comp;
   Components::CCMHome_ptr home;
 
@@ -538,3 +616,209 @@ parse_config_values (const ::Deployment::Properties & properties,
   // the modeling tool will ensure the complete info to presented in the properties.
 }
 */
+
+void 
+CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection & connection,
+                                                    CIAO::EventServiceType type
+                                                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                   CORBA::SystemException))
+{
+	  ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection ()!!!\n"));
+
+    // Get the consumer port object reference and put into "consumer"
+    Components::EventConsumerBase_var consumer = 
+      Components::EventConsumerBase::_narrow (connection.endpoint.in ()
+                                              ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    if (CORBA::is_nil (consumer.in ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil consumer port object reference\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+
+    // Get the consumer component object reference.
+    ACE_CString consumer_comp_name = connection.consumerCompName.in ();
+    Components::CCMObject_ptr sink_objref;
+
+    if (this->component_map_.find (consumer_comp_name, sink_objref) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil sink component object reference\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+
+    // Get the supplier component object reference.
+    ACE_CString supplier_comp_name = connection.instanceName.in ();
+    Components::CCMObject_ptr source_objref;
+
+    if (this->component_map_.find (supplier_comp_name, source_objref) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil source component object reference\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+
+    // Get the container event service
+    CIAO::ContainerEventService_var event_service =
+      this->get_event_service (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    if (CORBA::is_nil (event_service.in ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+    
+    // supplier ID
+    //ACE_DEBUG ((LM_DEBUG, "################ Making a remote CORBA call on event SOURCE component named: %s\n", supplier_comp_name));
+    //ACE_DEBUG ((LM_DEBUG, "Nil source component object reference\n"));
+    //ACE_CString sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+
+      ACE_CString test_sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+      ACE_DEBUG ((LM_DEBUG, "The COMPONENT UUID I GOT is: %s\n", test_sid.c_str ()));
+    ACE_CString sid = supplier_comp_name;
+    ACE_DEBUG ((LM_DEBUG, "The SUPPLIER COMPONENT NAME is: %s\n", supplier_comp_name.c_str ()));
+    ACE_CHECK;
+
+    sid += "_";
+    sid += connection.portName.in ();
+    sid += "_publisher";
+
+    // consumer ID
+    //ACE_DEBUG ((LM_DEBUG, "################ Making a remote CORBA call on event SINK component named: %s\n", consumer_comp_name));
+    //ACE_CString cid = sink_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_CString cid = consumer_comp_name;
+    ACE_CHECK;
+
+    cid += "_";
+    cid += connection.consumerPortName.in ();
+    cid += "_consumer";
+
+    ACE_DEBUG ((LM_DEBUG, "Publisher: %s\n", sid.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "Subscriber: %s\n", cid.c_str ()));
+
+    if (this->connected_publishers_.find (sid) == -1)
+      {
+        CIAO::Supplier_Config_var supplier_config =
+          event_service->create_supplier_config (type ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+    
+        supplier_config->supplier_id (sid.c_str () ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        event_service->connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        this->connected_publishers_.insert (sid);
+
+        supplier_config->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
+    CIAO::Consumer_Config_var consumer_config =
+      event_service->create_consumer_config (type ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    consumer_config->supplier_id (sid.c_str () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->consumer_id (cid.c_str () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->consumer (consumer.in ()
+                                ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    event_service->connect_event_consumer (consumer_config.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    consumer_config->destroy (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection () completed!!!!\n"));
+}
+
+bool
+CIAO::NodeApplication_Impl::register_with_ns (const char * obj_name,
+                                              CORBA::ORB_ptr orb,
+                                              Components::CCMObject_ptr obj
+                                              ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+	  // Obtain the naming service
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          false);
+
+      CosNaming::NamingContextExt_var naming_context =
+        CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+  
+      // Create a Naming Sequence
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (obj_name);
+      name[0].kind = CORBA::string_dup ("");
+
+      // Register with the Name Server
+      naming_context->bind (name, obj ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      return true;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NodeApplication: failed to register with naming service.");
+      return false;
+    }
+  ACE_ENDTRY;
+  return true;
+}
+
+bool
+CIAO::NodeApplication_Impl::unregister_with_ns (const char * obj_name,
+                                                CORBA::ORB_ptr orb
+                                                ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+	  // Obtain the naming service
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          false);
+
+      CosNaming::NamingContextExt_var naming_context =
+        CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+  
+      // Create a Naming Sequence
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (obj_name);
+      name[0].kind = CORBA::string_dup ("");
+
+      // Register with the Name Server
+      ACE_DEBUG ((LM_DEBUG, "Unregister component with the name server : %s!\n", obj_name));
+      naming_context->unbind (name ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      return true;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NodeApplication: failed to unregister with naming service.");
+      return false;
+    }
+  ACE_ENDTRY;
+  return true;
+}

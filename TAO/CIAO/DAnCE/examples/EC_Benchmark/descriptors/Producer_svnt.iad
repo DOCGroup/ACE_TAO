@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>Producer Servant Library</label>
+
+  <UUID>B295CFCF-C2BF-4FB8-BF3F-48B1E84E9D16</UUID>
+
+  <location>Producer_svnt</location>
+
+  <dependsOn>
+    <name>Producer_stub</name>
+    <referencedArtifact href="Producer_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>createProducerHome_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:ImplementationArtifactDescription>

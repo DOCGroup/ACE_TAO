@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentInterfaceDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>176DDBD8-BA63-47DD-9E69-29B61CE50042</UUID>
+
+  <port>
+    <name>timeout</name>
+    <exclusiveProvider>false</exclusiveProvider>
+    <exclusiveUser>false</exclusiveUser>
+    <optional>false</optional>
+    <provider>false</provider>
+    <kind>EventConsumer</kind>
+  </port>
+
+</Deployment:ComponentInterfaceDescription>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>Consumer Servant Library</label>
+
+  <UUID>81D3CDAB-137E-450E-A300-A107AAA19ED9</UUID>
+
+  <location>Consumer_svnt</location>
+
+  <dependsOn>
+    <name>Consumer_stub</name>
+    <referencedArtifact href="Consumer_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>createConsumerHome_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:ImplementationArtifactDescription>

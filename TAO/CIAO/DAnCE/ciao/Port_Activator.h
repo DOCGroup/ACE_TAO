@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/CIAO_Server_Export.h"
+#include "CIAO_Server_Export.h"
 
 #include "tao/PortableServer/PortableServer.h"
 

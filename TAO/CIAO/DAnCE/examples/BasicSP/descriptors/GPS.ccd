@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:ComponentInterfaceDescription
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
@@ -27,7 +27,7 @@
     <provider>true</provider>
     <supportedType>IDL:BasicSP/DataAvailable:1.0</supportedType>
     <specificType>IDL:BasicSP/DataAvailable:1.0</specificType>
-    <kind>EventPublisher</kind>
+    <kind>rtecEventPublisher</kind>
   </port>
 
   <port>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>Producer Executor</label>
+
+  <UUID>ED18C18B-71ED-4769-B32C-B94C319DF52A</UUID>
+
+  <location>Producer_exec</location>
+
+  <dependsOn>
+    <name>Producer_stub</name>
+    <referencedArtifact href="Producer_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>createProducerHome_Impl</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:ImplementationArtifactDescription>

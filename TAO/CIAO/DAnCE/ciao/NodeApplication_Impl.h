@@ -6,7 +6,8 @@
  * @Brief  This file contains the implementation of
  *         the NodeApplication interface.
  *
- * @auther Tao Lu <lu@dre.vanderbilt.edu>
+ * @author Tao Lu <lu@dre.vanderbilt.edu>
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
  *========================================================*/
 
 #ifndef NODEAPPLICATION_IMPL_H
@@ -45,6 +46,9 @@ using CIAO::Utility::write_IOR;
  * 1. There is only 1 container for all components/homes associating
  *    with 1 NodeApplication
  * 2. Now the implementation is not thread safe.
+ *
+ * @@ I've added get_event_service () operation to the NodeApplication 
+ *    interface to support event channel integration. -- Gan Deng.
  **/
 
 namespace CIAO
@@ -90,6 +94,10 @@ namespace CIAO
     start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
+
+    virtual CIAO::ContainerEventService_ptr
+    get_event_service (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /*-------------  CIAO specific helper operations (idl)--------
      *
@@ -195,6 +203,31 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
+    bool
+    register_with_ns (const char * obj_name,
+                      CORBA::ORB_ptr orb,
+                      Components::CCMObject_ptr obj
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+    bool
+    unregister_with_ns (const char * obj_name,
+                        CORBA::ORB_ptr orb
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+    /*------- CIAO helper functions for building pub/sub service connection------/*
+     *
+     *---------------------------------------------------------------------------*/
+
+    void build_event_connection (const Deployment::Connection & connection,
+                                 CIAO::EventServiceType type
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                       CORBA::SystemException));
+
+    /*---------------------- member varialbe definition -------------------------/*
+     *
+    /*---------------------------------------------------------------------------*/
+
     // To store all created CCMHome object
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMHome_ptr,
@@ -227,6 +260,9 @@ namespace CIAO
 
     // And a reference to the NodeApplicationManager that created us.
     ::CORBA::Object_var node_app_manager_;
+
+    // Store the connected publishers.
+    ACE_Unbounded_Set<ACE_CString> connected_publishers_;
 
     // Synchronize access to the object set.
     // This will be needed in the case when component/home run in different thread

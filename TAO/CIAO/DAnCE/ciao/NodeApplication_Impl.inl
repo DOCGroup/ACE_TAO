@@ -19,3 +19,11 @@ NodeApplication_Impl (CORBA::ORB_ptr o,
   //         at least.
 {
 }
+
+
+ACE_INLINE CIAO::ContainerEventService_ptr
+CIAO::NodeApplication_Impl::get_event_service (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->container_->get_container_events_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
