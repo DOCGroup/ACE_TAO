@@ -3,12 +3,6 @@
 
 # if defined (TAO_HAS_UIOP)
 
-ACE_INLINE const char 
-TAO_UIOP_Profile::get_object_key_delimiter (void)
-{
-  return TAO_UIOP_Profile::object_key_delimiter;
-}
-
 ACE_INLINE const TAO_ObjectKey &
 TAO_UIOP_Profile::object_key (void) const
 {

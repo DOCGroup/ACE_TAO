@@ -29,8 +29,8 @@ TAO_Unknown_Profile::parse_string (const char *,
   return -1;
 }
 
-const char 
-TAO_Unknown_Profile::get_object_key_delimiter (void)
+char 
+TAO_Unknown_Profile::object_key_delimiter (void) const
 {
   return 0;
 }

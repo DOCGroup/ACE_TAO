@@ -10,15 +10,16 @@
 #ifndef _TAO_IDL_IMPLREPOC_H_
 #define _TAO_IDL_IMPLREPOC_H_
 
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-#include "ace/streams.h"
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+#include "ace/streams.h"
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+
 #include "tao/Object.h"
 #include "tao/Managed_Types.h"
 #include "tao/POAC.h"

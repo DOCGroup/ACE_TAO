@@ -712,5 +712,5 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
 char
 TAO_IIOP_Connector::object_key_delimiter (void) const
 {
-  return TAO_IIOP_Profile::object_key_delimiter;
+  return TAO_IIOP_Profile::object_key_delimiter_;
 }

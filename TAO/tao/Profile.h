@@ -64,7 +64,7 @@ public:
   // Access the tagged components, notice that they they could be
   // empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
 
-  virtual const char get_object_key_delimiter (void) = 0;
+  virtual char object_key_delimiter (void) const = 0;
   // The object key delimiter.
 
   virtual int parse_string (const char *string,
@@ -157,7 +157,7 @@ public:
   // = The TAO_Profile methods look above
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV);
-  virtual const char get_object_key_delimiter (void);
+  virtual char object_key_delimiter (void) const;
   virtual char* to_string (CORBA::Environment &ACE_TRY_ENV);
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
