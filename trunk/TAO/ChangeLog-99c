@@ -1,3 +1,21 @@
+Fri Jul 02 22:27:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Fixed unitiliazed variable problem in TAO_ORB_Table.
+
+	* version_test.dsw:
+	  Removed obsolete projects in
+	  $TAO_ROOT/tests/NestedUpcall/Reactor
+
+	* orbsvcs/examples/RtEC/Simple/Simple.dsw:
+	* orbsvcs/examples/RtEC/Simple/EC_Simple_Consumer.dsp:
+	* orbsvcs/examples/RtEC/Simple/EC_Simple_Service.dsp:
+	* orbsvcs/examples/RtEC/Simple/EC_Simple_Supplier.dsp:
+	  Added new project files for the simple real-time EC example.
+
+	* orbsvcs/tests/Event/Basic/BCast.dsp:
+	  Removed unnecesary libraries.
+
 Fri Jul  2 21:09:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
