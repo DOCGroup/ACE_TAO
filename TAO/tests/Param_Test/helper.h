@@ -20,7 +20,7 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 #include "tao/DynamicInterface/Request.h"
 #include "ace/Singleton.h"
 

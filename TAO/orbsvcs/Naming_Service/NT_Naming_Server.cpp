@@ -25,6 +25,8 @@
 
 #if !defined(ACE_WIN32)
 
+#include "ace/Log_Msg.h"
+
 int
 main (int, char*[])
 {

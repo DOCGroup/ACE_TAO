@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_OBJREF_H
 #define PARAM_TEST_OBJREF_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //                        test objrefs

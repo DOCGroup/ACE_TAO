@@ -13,16 +13,16 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = param_test
-IDL_SRC = param_testCli.cpp param_testSer.cpp
-IDL_HDR = param_testCli.h param_testSer.h
+IDL_SRC = param_testC.cpp param_testS.cpp
+IDL_HDR = param_testC.h param_testS.h
 
-SVR_FILES =	param_testCli	\
-		param_testSer	\
+SVR_FILES =	param_testC	\
+		param_testS	\
 		server		\
 		param_test_i	\
 		tmplinst
 
-CLI_FILES =	param_testCli	\
+CLI_FILES =	param_testC	\
 		driver		\
 		client		\
 		options		\
@@ -66,7 +66,7 @@ CLI_FILES =	param_testCli	\
 		multdim_array	\
 		complex_any
 
-ANYOP_FILES =	param_testCli	\
+ANYOP_FILES =	param_testC	\
 		anyop
 
 
@@ -106,10 +106,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-override TAO_IDLFLAGS += -hc Cli.h -cs Cli.cpp -ci Cli.i \
-			 -hs Ser.h -ss Ser.cpp -si Ser.i \
-		         -hT Ser_T.h -sT Ser_T.cpp -st Ser_T.i \
-			 -Ge 1
+TAO_IDLFLAGS += -Ge 1
 
 CPPFLAGS += -I$(TAO_ROOT)
 

@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_SHORT_H
 #define PARAM_TEST_SHORT_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //                        test shorts

@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_EXCEPTION_H
 #define PARAM_TEST_EXCEPTION_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 class Test_Exception
 {
