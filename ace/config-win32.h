@@ -1,50 +1,52 @@
 /* -*- C++ -*- */
-// $Id$
+//=============================================================================
+/**
+ *  @file   config-win32.h
+ *
+ *  $Id$
+ *
+ *  @brief  Microsoft Windows configuration file. 
+ *
+ *  This file is the ACE configuration file for all of Microsoft Windows
+ *  platforms that ACE runs on.  Based on preprocessor definitions, it 
+ *  includes other more specific configuration files.
+ *
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
+//=============================================================================
 
-// The following configuration file is designed to work for Windows
-// 9x, Windows NT 3.51, and Windows NT 4.0 platforms and supports a
-// variety of compilers.
-
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_WIN32_H
+#define ACE_CONFIG_WIN32_H
 #include "ace/pre.h"
 
-// If you wish to build ACE using PACE, you must uncomment
-// the following lines or include the following syntax in your
-// config file #included before this one!
-//# if !defined (ACE_HAS_PACE)
-//#  define ACE_HAS_PACE
-//# endif // ACE_HAS_PACE
 
-# if defined (ACE_HAS_PACE)
-#  ifndef PACE_HAS_ALL_POSIX_FUNCS
-#   define PACE_HAS_ALL_POSIX_FUNCS 1
-#  endif /* PACE_HAS_ALL_POSIX_FUNCS */
-# endif /* ACE_HAS_PACE */
+
+// NOTE: Please do not add anything besides #include's here.  Put other stuff
+//       (definitions, etc.) in the included headers
+
+
+
+// Include the platform specific config file (Windows CE is special)
 
 #if defined (_WIN32_WCE)
-# include "ace/config-WinCE.h"
+#	include "ace/config-win32-wince.h"
+#else /* _WIN32_WCE */
+#   include "ace/config-win32-common.h"
 #endif /* _WIN32_WCE */
 
-# if defined (_MSC_VER)
-#   include "ace/config-win32-msvc.h"
-# elif defined (__BORLANDC__)
-#   include "ace/config-win32-borland.h"
-# elif defined (__IBMCPP__)
-#   include "ace/config-win32-visualage.h"
-# else
-#   error "Compiler does not seem to be supported"
-# endif /* _MSC_VER */
+// Include the config-win32-* file specific to the compiler
 
-#if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#  define ACE_ENDTHREADEX(STATUS) ::_endthread ()
-#elif defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#  define ACE_ENDTHREADEX(STATUS) ::_endthread ()
-#elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
-#  define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
+#if defined (_MSC_VER)
+#    include "ace/config-win32-msvc.h"
+#elif defined (__BORLANDC__)
+#    include "ace/config-win32-borland.h"
+#elif defined (__IBMCPP__)
+#    include "ace/config-win32-visualage.h"
+#elif defined (ghs)
+#    include "ace/config-win32-ghs.h"
 #else
-#  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
-#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+#    error Compiler is not supported
+#endif
 
 #include "ace/post.h"
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_WIN32_H */
