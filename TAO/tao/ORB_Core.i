@@ -294,9 +294,7 @@ TAO_Leader_Follower::elect_new_leader (void)
 ACE_INLINE int
 TAO_Leader_Follower::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
 {
-  if (this->follower_set_.insert (follower_ptr) != 0)
-    return -1;
-  return 0;
+  return this->follower_set_.insert (follower_ptr);
 }
 
 ACE_INLINE int
