@@ -1,3 +1,11 @@
+Tue Mar 25 09:01:00 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Default_Constants.h (ACE_CONNECTOR_HANDLER_MAP_SIZE):
+
+	  Changed type of this constant from "size_t" to "unsigned int".
+	  This header does not include system headers that define "size_t"
+	  type.  Fixes a syntax error on some platforms.
+
 Tue Mar 25 17:09:22 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	From Rudolf Weber <rfweber@tesionmail.de>
