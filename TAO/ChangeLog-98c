@@ -1,3 +1,8 @@
+Mon Oct  5 18:07:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Makefile: Changed the Makefile so that it'll now also
+ 	  build the new Callback_Quoter test.
+
 Mon Oct  5 18:15:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/Makefile: 
