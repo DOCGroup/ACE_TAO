@@ -10,13 +10,13 @@
 
 // Contains all skeleton header code generated from Interface.idl
 // except that for CORBA::IRObject and CORBA::TypeCodeFactory, which
-// is included in tao/POA_CORBA.h
+// is included in tao/PortableServer/POA_CORBA.h
 
 #ifndef TAO_IDL_INTERFACES_H
 #define TAO_IDL_INTERFACES_H
 #include "ace/pre.h"
 
-#include "tao/PortableSerer/POA_CORBA.h"
+#include "tao/PortableServer/POA_CORBA.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/Stub.h"

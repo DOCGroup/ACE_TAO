@@ -48,10 +48,10 @@ include $(TAO_ROOT)/taoconfig.mk
 .PRECIOUS: FileC.h FileC.i FileC.cpp FileS.h FileS.i FileS.cpp
 
 server:	$(addprefix $(VDIR),$(FILE_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(FILE_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) FileC.* FileS.* FileS_T.*

@@ -3,6 +3,7 @@
 
 #include "CosEventChannelFactory_i.h"
 #include "orbsvcs/CosEvent_Utilities.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "ace/Auto_Ptr.h"
 
 TAO_CosEventChannelFactory_i::TAO_CosEventChannelFactory_i (void)
@@ -95,7 +96,7 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
   ACE_TRY
     {
       PortableServer::ObjectId_var oid =
-        TAO_POA::string_to_ObjectId (channel_id);
+        PortableServer::string_to_ObjectId (channel_id);
 
       CosEC_ServantBase *_ec = 0;
 
@@ -234,7 +235,7 @@ TAO_CosEventChannelFactory_i::destroy
     {
       // Get hold of the objectid first.
       PortableServer::ObjectId_var oid =
-        TAO_POA::string_to_ObjectId (channel_id);
+        PortableServer::string_to_ObjectId (channel_id);
 
       CORBA::Object_var obj =
         this->poa_->id_to_reference (oid.in (),
@@ -300,7 +301,7 @@ TAO_CosEventChannelFactory_i::find
   ACE_TRY
     {
       PortableServer::ObjectId_var oid =
-        TAO_POA::string_to_ObjectId (channel_id);
+        PortableServer::string_to_ObjectId (channel_id);
 
       CORBA::Object_var obj =
         this->poa_->id_to_reference (oid.in (),
@@ -341,7 +342,7 @@ TAO_CosEventChannelFactory_i::find_channel_id
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      str_return = TAO_POA::ObjectId_to_string (oid.in ());
+      str_return = PortableServer::ObjectId_to_string (oid.in ());
     }
   ACE_CATCH (CORBA::UserException, ue) // Translate any user exception.
     {

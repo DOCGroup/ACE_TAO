@@ -58,10 +58,10 @@ LDFLAGS += -L$(TAO_ROOT)/tao
 .PRECIOUS: PP_TestC.cpp PP_TestS.cpp PP_TestC.h PP_TestS.h
 
 server:	$(addprefix $(VDIR),$(PP_TEST_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(PP_TEST_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) PP_TestC.* PP_TestS.* PP_TestS_T.*

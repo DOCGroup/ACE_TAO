@@ -13,7 +13,7 @@ ifndef TAO_ROOT
 endif
 
 #LDLIBS = -lTAO_CosNaming -lTAO
-LDLIBS = -lTAO
+LDLIBS = -lTAO_PortableServer -lTAO
 
 IDL_FILES = Grid
 IDL_SRC = GridC.cpp GridS.cpp

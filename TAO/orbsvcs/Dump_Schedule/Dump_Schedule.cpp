@@ -21,26 +21,11 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
-      if (CORBA::is_nil(poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in(), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil(naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           " (%P|%t) Unable to find the Naming Service\n"),
                           1);
 
       CosNaming::NamingContext_var naming_context =

@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
+LDLIBS = -lTAO_PortableServer -lTAO
 CPPFLAGS += -I$(TAO_ROOT)
 
 IDL_FILES = Airplane Nestea

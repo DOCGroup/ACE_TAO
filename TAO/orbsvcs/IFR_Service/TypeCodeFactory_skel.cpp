@@ -1012,7 +1012,7 @@ POA_CORBA::TypeCodeFactory::_this (CORBA_Environment &ACE_TRY_ENV)
 POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::_tao_thru_poa_collocated_TypeCodeFactory (
   TAO_Stub *stub
 )
-  :  CORBA_Object (stub, 0, 1)
+  :  CORBA_Object (stub, 1)
 {
 }
 
@@ -1023,7 +1023,7 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1046,7 +1046,7 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::_non_existen
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1076,7 +1076,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1112,7 +1112,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1148,7 +1148,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1183,7 +1183,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1218,7 +1218,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1252,7 +1252,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1284,7 +1284,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1315,7 +1315,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1347,7 +1347,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1380,7 +1380,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1413,7 +1413,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1449,7 +1449,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1486,7 +1486,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1520,7 +1520,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1552,7 +1552,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1584,7 +1584,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1617,7 +1617,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1650,7 +1650,7 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),

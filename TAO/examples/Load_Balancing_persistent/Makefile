@@ -8,7 +8,7 @@ ifndef TAO_ROOT
 endif
 
 override TAO_IDLFLAGS += -Ge 1
-LDLIBS = -lTAO
+LDLIBS = -lTAO_PortableServer -lTAO
 
 IDL_FILES = Load_Balancer Identity
 IDL_SRC = \

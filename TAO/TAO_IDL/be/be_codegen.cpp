@@ -583,6 +583,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       *this->server_header_
         << "#include \"tao/PortableServer/PortableServer.h\"\n"
         << "#include \"tao/PortableServer/Servant_Base.h\"\n"
+        << "#include \"tao/PortableServer/Collocated_Object.h\"\n"
         << "\n";
 
       *this->server_header_ << "#if defined(_MSC_VER)\n"

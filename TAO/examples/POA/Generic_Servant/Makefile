@@ -17,7 +17,7 @@ endif # ! TAO_ROOT
 override TAO_IDLFLAGS += -Wb,export_macro=GENERIC_SERVANT_Export \
                          -Wb,export_include=generic_servant_export.h -Ge 1
 
-LDLIBS = -lTAO
+LDLIBS = -lTAO_PortableServer -lTAO
 
 SHLIB = libGeneric_Servant.$(SOEXT)
 LIB = libGeneric_Servant.a
@@ -34,7 +34,7 @@ POA_CLT_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(BINFILES)))
 
 BIN = client
 
-ACE_SHLIBS = -lTAO -lACE
+ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
 PSRC = $(addsuffix .cpp,$(BIN))
@@ -57,7 +57,7 @@ include $(TAO_ROOT)/taoconfig.mk
 .PRECIOUS: FooC.h FooC.i FooC.cpp FooS.h FooS.i FooS.cpp
 
 client: $(POA_CLT_OBJS)
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) FooC.* FooS.* FooS_T.*

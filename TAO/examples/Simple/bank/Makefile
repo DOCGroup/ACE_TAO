@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 IDL_FILES = Bank
 IDL_SRC = BankC.cpp BankS.cpp
@@ -29,7 +29,6 @@ SRC = $(IDL_SRC) $(PROG_SRCS)
 
 SIMPLE_CLT_OBJS = \
                 BankC.o \
-                BankS.o \
                 client.o \
                 ../Simple_util.o \
                 Bank_Client_i.o

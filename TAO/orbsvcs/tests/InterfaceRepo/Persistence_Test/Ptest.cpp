@@ -22,20 +22,10 @@ Ptest::init (int argc,
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (argc, 
-                                    argv, 
-                                    0, 
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
+                                    0,
                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RootPOA", 
-                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      this->root_poa_ =
-        PortableServer::POA::_narrow (object.in (), 
-                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       int retval = this->parse_args (argc,
@@ -44,7 +34,7 @@ Ptest::init (int argc,
       if (retval != 0)
         return retval;
 
-      object = 
+      CORBA::Object_var object =
         this->orb_->resolve_initial_references ("InterfaceRepository",
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -95,11 +85,6 @@ Ptest::run (void)
         {
           this->populate (ACE_TRY_ENV);
         }
-
-      this->root_poa_->destroy (1,
-                                1,
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -142,7 +127,7 @@ Ptest::parse_args (int argc,
   return 0;
 }
 
-void 
+void
 Ptest::populate (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -160,7 +145,7 @@ Ptest::populate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   members[1].name = CORBA::string_dup ("array_mem");
-  members[1].type_def = this->repo_->create_array (5, 
+  members[1].type_def = this->repo_->create_array (5,
                                                    members[0].type_def.in (),
                                                    ACE_TRY_ENV);
   ACE_CHECK;
@@ -189,7 +174,7 @@ Ptest::populate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Ptest::query (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -204,7 +189,7 @@ Ptest::query (CORBA::Environment &ACE_TRY_ENV)
     "my_enum"
   };
 
-  IR::ContainedSeq_var contents = this->repo_->contents (IR::dk_all, 
+  IR::ContainedSeq_var contents = this->repo_->contents (IR::dk_all,
                                                          0,
                                                          ACE_TRY_ENV);
   ACE_CHECK;
@@ -260,4 +245,3 @@ Ptest::query (CORBA::Environment &ACE_TRY_ENV)
   svar->destroy (ACE_TRY_ENV);
   ACE_CHECK;
 }
-

@@ -15,6 +15,7 @@
 //==========================================================================
 
 #include "tao/corba.h"
+#include "tao/PortableServer/POA.h"
 #include "MyFooServant.h"
 
 ACE_RCSID(Forwarding, MyFooServant, "$Id$")
