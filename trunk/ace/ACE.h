@@ -231,6 +231,11 @@ public:
   static const char *basename (const char *pathname, char delim);
   // Returns the "basename" of a <pathname>.
 
+#if defined (ACE_HAS_UNICODE)
+  static const wchar_t *basename (const wchar_t *pathname, wchar_t delim);
+  // Returns the "basename" of a <pathname>.
+#endif /* ACE_HAS_UNICODE */
+
   static char *timestamp (char date_and_time[], int time_len);
   // Returns the current timestamp in the form
   // "hour:minute:second:microsecond."  The month, day, and year are

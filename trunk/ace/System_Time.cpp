@@ -5,7 +5,7 @@
 #include "ace/Time_Value.h"
 #include "ace/System_Time.h"
 
-ACE_System_Time::ACE_System_Time (const char *poolname)
+ACE_System_Time::ACE_System_Time (LPCTSTR poolname)
   : delta_time_ (0)
 { 
   ACE_TRACE ("ACE_System_Time::ACE_System_Time");

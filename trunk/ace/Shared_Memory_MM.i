@@ -16,7 +16,7 @@ ACE_Shared_Memory_MM::open (ACE_HANDLE handle,
 }
 
 ACE_INLINE int	   
-ACE_Shared_Memory_MM::open (char file_name[], 
+ACE_Shared_Memory_MM::open (LPTSTR file_name, 
 			    int len, 
 			    int flags, 
 			    int mode, 

@@ -40,10 +40,10 @@ public:
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
   // = Initialization.
-  ACE_Allocator_Adapter (const char *pool_name = 0);
+  ACE_Allocator_Adapter (LPCTSTR pool_name = 0);
 
-  ACE_Allocator_Adapter (const char *pool_name,
-			 const char *lock_name,
+  ACE_Allocator_Adapter (LPCTSTR pool_name,
+			 LPCTSTR lock_name,
 			 MEMORY_POOL_OPTIONS options = 0)
       : allocator_ (pool_name, lock_name, options)
     {
@@ -157,14 +157,14 @@ public:
   typedef ACE_MEM_POOL_OPTIONS MEMORY_POOL_OPTIONS;
   
   // = Initialization and termination methods.
-  ACE_Malloc (const char *pool_name = 0);
+  ACE_Malloc (LPCTSTR pool_name = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <ACE::basename> to
   // automatically extract out the name used for the underlying lock
   // name (if necessary).
 
-  ACE_Malloc (const char *pool_name,
-	      const char *lock_name,
+  ACE_Malloc (LPCTSTR pool_name,
+	      LPCTSTR lock_name,
 	      const ACE_MEM_POOL_OPTIONS *options = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <lock_name> to automatically
@@ -173,8 +173,8 @@ public:
   // initialize the underlying memory pool.
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-  ACE_Malloc (const char *pool_name,
-	      const char *lock_name,
+  ACE_Malloc (LPCTSTR pool_name,
+	      LPCTSTR lock_name,
 	      const void *options = 0);
   // This is necessary to work around template bugs with certain C++
   // compilers.

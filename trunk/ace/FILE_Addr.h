@@ -45,7 +45,7 @@ public:
   virtual void *get_addr (void) const;
   // Return a pointer to the address. 
 
-  virtual int addr_to_string (char addr[], size_t) const;
+  virtual int addr_to_string (LPTSTR addr, size_t) const;
   // Transform the current address into string format. 
 
   virtual int operator == (const ACE_Addr &SAP) const;

@@ -264,16 +264,16 @@ public:
   const char *nameserver_host (void);
 
   // = Set/Get name space directory
-  void namespace_dir (const char *dir);
-  const char *namespace_dir (void);
+  void namespace_dir (LPCTSTR dir);
+  LPCTSTR namespace_dir (void);
 
   // = Set/Get process name
-  void process_name (const char *dir);
-  const char *process_name (void);
+  void process_name (LPCTSTR dir);
+  LPCTSTR process_name (void);
 
   // = Set/Get database name
-  void database (const char *db);
-  const char *database (void);
+  void database (LPCTSTR);
+  LPCTSTR database (void);
 
   // = Set/Get base address of the underlying allocator
   void base_address (char *address);
@@ -298,13 +298,13 @@ private:
   const char *nameserver_host_;	
   // Hostname of nameserver.
 
-  const char *namespace_dir_;	
+  LPCTSTR namespace_dir_;	
   // Directory to hold name_bindings.
 
-  const char *process_name_;         
+  LPCTSTR process_name_;         
   // Name of this process.
 
-  const char *database_;
+  LPCTSTR database_;
   // Name of the database that stores the name/value/type bindings.
 
   char *base_address_;

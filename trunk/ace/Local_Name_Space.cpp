@@ -45,7 +45,7 @@ ACE_NS_String::ACE_NS_String (void)
 
 ACE_NS_String::ACE_NS_String (const ACE_WString &s)
   : len_ ((s.length () + 1) * sizeof (ACE_USHORT16)),
-    rep_ (s.fast_rep ())
+    rep_ ((ACE_USHORT16 *) s.fast_rep ())
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }

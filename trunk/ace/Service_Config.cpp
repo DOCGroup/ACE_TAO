@@ -102,7 +102,7 @@ int ACE_Service_Config::signum_ = SIGHUP;
 const char *ACE_Service_Config::service_config_file_ = ACE_DEFAULT_SVC_CONF;
 
 // Name of file used to store messages.
-const char *ACE_Service_Config::logger_key_ = ACE_LOGGER_KEY;
+LPCTSTR ACE_Service_Config::logger_key_ = ACE_LOGGER_KEY;
 
 // Define the object that describes the service statically.
 ACE_STATIC_SVC_DEFINE (ACE_Service_Manager,

@@ -16,22 +16,6 @@ ACE_Addr::set_addr (void *, int)
 {
 }
 
-// Transform the current address into string format. 
-
-ACE_INLINE int
-ACE_Addr::addr_to_string (char [], size_t) const
-{
-  return -1;
-}
-
-// Transform the string into the current addressing format.
-
-ACE_INLINE int
-ACE_Addr::string_to_addr (const char [])
-{
-  return -1;
-}
-
 ACE_INLINE int 
 ACE_Addr::operator == (const ACE_Addr &sap) const
 {

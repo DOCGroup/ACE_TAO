@@ -44,7 +44,7 @@ public:
   virtual void set_addr (void *addr, int len);
   // Set a pointer to the underlying network address.
 
-  virtual int addr_to_string (char addr[], size_t) const;
+  virtual int addr_to_string (LPTSTR addr, size_t) const;
   // Transform the current address into string format. 
 
   virtual int string_to_addr (LPCTSTR addr);

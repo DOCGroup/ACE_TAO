@@ -5,6 +5,10 @@
 
 // Do nothing constructor.
 
+// Transform the current address into string format.
+
+#include "ace/SString.h"
+
 ACE_INLINE
 ACE_FILE_Addr::ACE_FILE_Addr (void)
   : ACE_Addr (AF_FILE, sizeof this->filename_)
@@ -49,10 +53,10 @@ ACE_FILE_Addr::ACE_FILE_Addr (LPCTSTR filename)
   this->set (filename);
 }
 
-// Transform the current address into string format.
+// Transform the current address into string format. 
 
 ACE_INLINE int
-ACE_FILE_Addr::addr_to_string (char s[], size_t len) const
+ACE_FILE_Addr::addr_to_string (LPTSTR s, size_t len) const
 {
   ACE_OS::strncpy (s, this->filename_, len);
   return 0;

@@ -443,7 +443,7 @@ ACE_Overlapped_File::ACE_Overlapped_File (void)
 {
 }
 
-ACE_Overlapped_File::ACE_Overlapped_File (const char *file_name, 
+ACE_Overlapped_File::ACE_Overlapped_File (LPCTSTR file_name, 
 					  int mode, 
 					  int perms)
   : delete_handle_ (1)
@@ -480,7 +480,7 @@ ACE_Overlapped_File::open (ACE_HANDLE handle)
 }
 
 int
-ACE_Overlapped_File::open (const char *file_name,
+ACE_Overlapped_File::open (LPCTSTR file_name,
 			   int access,
 			   int share,
 			   LPSECURITY_ATTRIBUTES security,

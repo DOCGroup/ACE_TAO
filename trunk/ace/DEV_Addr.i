@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/SString.h"
 
 ACE_INLINE void 
 ACE_DEV_Addr::set (LPCTSTR devname)
@@ -14,7 +15,7 @@ ACE_DEV_Addr::set (LPCTSTR devname)
 // Transform the current address into string format.
 
 ACE_INLINE int
-ACE_DEV_Addr::addr_to_string (char s[], size_t len) const
+ACE_DEV_Addr::addr_to_string (LPTSTR s, size_t len) const
 {
   ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
 
