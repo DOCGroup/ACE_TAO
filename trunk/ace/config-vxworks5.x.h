@@ -128,6 +128,7 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UTSNAME_T
+#define ACE_LACKS_FSYNC
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
 #endif
