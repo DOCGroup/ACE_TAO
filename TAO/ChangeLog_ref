@@ -1,3 +1,18 @@
+Fri Jun 20 17:17:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.h:
+
+          Made sure at least one significant included file appears before
+          the '#pragma once' directive.
+
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+
+          Added new files to the makefiles.
+
 Fri Jun 20 16:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Argument.cpp:

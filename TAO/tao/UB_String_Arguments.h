@@ -15,12 +15,11 @@
 #define TAO_UB_STRING_ARGUMENTS_H
 
 #include "ace/pre.h"
+#include "UB_String_Argument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "UB_String_Argument_T.h"
 
 namespace TAO
 {
