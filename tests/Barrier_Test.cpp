@@ -51,7 +51,7 @@ static void *
 tester (Tester_Args *args)
 {
 #if defined (VXWORKS)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %s stack size is %u\n"),
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %s: stack size is %u\n"),
               ACE_OS::thr_self (), ACE_OS::thr_min_stack ()));
 #endif /* VXWORKS */
 
@@ -97,8 +97,11 @@ main (int, ASYS_TCHAR *[])
 
   for (i = 0; i < n_threads; ++i)
     {
-      ACE_NEW_RETURN (thread_name[i], char[32], -1);
-      ACE_OS::sprintf (thread_name[i], ASYS_TEXT ("thread%u"), i);
+      if (i < n_threads - 1)
+        {
+          ACE_NEW_RETURN (thread_name[i], char[32], -1);
+          ACE_OS::sprintf (thread_name[i], ASYS_TEXT ("thread%u"), i);
+        }
 
       stack_size[i] = 40000;
     }
@@ -110,6 +113,12 @@ main (int, ASYS_TCHAR *[])
     {
       ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("starting iteration %d\n"),
                   iteration_count));
+
+      // Pass an ACE_thread_t pointer of 0 for the last thread name.
+      // We have to do this for each iteration, because the
+      // thread_name location gets set on each call to spawn_n () with
+      // the actual task name.
+      thread_name[n_threads - 1] = 0;
 
       if (ACE_Thread_Manager::instance ()->spawn_n
           (
@@ -135,9 +144,11 @@ main (int, ASYS_TCHAR *[])
     }
 
 #if defined (VXWORKS)
-  for (i = 0; i < n_threads; ++i)
+  for (i = 0; i < n_threads - 1; ++i)
     {
       delete [] thread_name[i];
+      // Don't delete the last thread_name, because it points
+      // to the name in the TCB.  It was initially 0.
     }
   delete [] thread_name;
   delete [] stack_size;
