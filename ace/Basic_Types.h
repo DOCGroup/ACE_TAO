@@ -60,6 +60,7 @@
 # include /**/ <limits.h>   // Integer limits
 # include /**/ <float.h>    // Floating point limits
 # include /**/ <stdlib.h>   // Other types
+# include /**/ <sys/types.h>
 
 # include "ace/ACE_export.h"
 
