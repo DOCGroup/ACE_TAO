@@ -7,6 +7,7 @@
 template<class ACE_LOCK> ACE_INLINE
 ACE_Locked_Data_Block<ACE_LOCK>::ACE_Locked_Data_Block (void)
 {
+  this->locking_strategy_ = &this->lock_;
 }
 
 template<class ACE_LOCK> ACE_INLINE
