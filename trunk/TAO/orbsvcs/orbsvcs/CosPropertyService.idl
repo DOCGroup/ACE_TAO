@@ -1,24 +1,34 @@
-// -*-c++-*- 
+// -*-c++-*-
 
 // $Id$
 
-// The property service, downloaded from
-// ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps
+// ===================================================================================
+// 
+// = LIBRARY
+//     cos 
+//
+// = FILENAME
+//     CosPropertyService.idl
+// 
+// = DESCRITION
+//     The property service, downloaded from ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps
+// 
+// = AUTHOR
+//     Copyright : OMG  ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps
+//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
+// ======================================================================================
 
-// @@ Alex, please add = TITLE and = DESCRIPTION comments to the
-// following interfaces, a la some of the other examples.
-
-module CosPropertyService 
+module CosPropertyService
+// = TITLE
+//     CosPropertyService : To support properties (that are typed
+//     named values dynamically associated with an object, outside
+//     of the type system.
+//
+// = DESCRIPTION
+//     The data types and interfaces to deal with property names, property values,
+//     property modes etc.
 {
-  // = Data Types
-  
-  typedef string PropertyName;  
-  struct Property 
-  {
-    PropertyName property_name;   
-    any property_value;  
-  };
-  
+  // Data Types
   enum PropertyModeType 
   {
     normal,    
@@ -45,14 +55,15 @@ module CosPropertyService
   typedef sequence<Property> Properties;  
   typedef sequence<PropertyDef> PropertyDefs;  
   typedef sequence<PropertyMode> PropertyModes;  
+  
   // @@ sequences of typecodes breaks the TAO IDL Compiler!!!
   // typedef sequence<TypeCode> PropertyTypes;
   typedef sequence<string> PropertyTypes;
-
-  interface PropertyNamesIterator;  
-  interface PropertiesIterator;  
-  interface PropertySetFactory;  
-  interface PropertySetDef;  
+  
+  interface PropertyNamesIterator;
+  interface PropertiesIterator;
+  interface PropertySetFactory;
+  interface PropertySetDef;
   interface PropertySet;
   
   // = Exceptions
@@ -78,15 +89,16 @@ module CosPropertyService
     fixed_property,    
     read_only_property   
   };
-
-  exception PropertyException 
+  
+  exception PropertyException
     {
-      ExceptionReason reason;    
-      PropertyName failing_property_name;   
+      ExceptionReason reason;
+      PropertyName failing_property_name;
     };
+  
   // @@
   //  typedef sequence<PropertyException> PropertyExceptions;
-
+  
   exception MultipleExceptions 
     {
       // @@
@@ -94,7 +106,6 @@ module CosPropertyService
     };
   
   // = Interface Definitions.
-
   interface PropertySetFactory  
     {
       PropertySet create_propertyset ();     
@@ -104,7 +115,7 @@ module CosPropertyService
       PropertySet create_initial_propertyset (in Properties initial_properties)
         raises (MultipleExceptions);  
     };
-
+  
   interface PropertySetDefFactory  
     {
       PropertySetDef create_propertysetdef ();     
@@ -114,94 +125,94 @@ module CosPropertyService
       PropertySetDef create_initial_propertysetdef (in PropertyDefs initial_property_defs)          
         raises (MultipleExceptions);  
     };
-
+  
   interface PropertySet  
     {
       void define_property (in PropertyName property_name,               
                             in any property_value)          
         raises (InvalidPropertyName,                 
-               ConflictingProperty,                 
-               UnsupportedTypeCode,
-               UnsupportedProperty,                 
-               ReadOnlyProperty);
+                ConflictingProperty,                 
+                UnsupportedTypeCode,
+                UnsupportedProperty,                 
+                ReadOnlyProperty);
       // Support for defining and modifying properties.
-
+      
       void define_properties (in Properties nproperties)          
         raises (MultipleExceptions);
-
+      
       unsigned long get_number_of_properties ();
       // Support for Getting Properties and their Names.
-
+      
       void get_all_property_names (in unsigned long how_many,
-                                  out PropertyNames property_names,
-                                  out PropertyNamesIterator rest);
-
+                                   out PropertyNames property_names,
+                                   out PropertyNamesIterator rest);
+      
       any  get_property_value (in  PropertyName property_name)          
         raises (PropertyNotFound,
-               InvalidPropertyName);
-
+                InvalidPropertyName);
+      
       boolean get_properties (in PropertyNames property_names,
-                             out Properties nproperties);
-
+                              out Properties nproperties);
+      
       void get_all_properties (in unsigned long how_many,
-                              out Properties nproperties,               
-                              out PropertiesIterator rest);
-
+                               out Properties nproperties,               
+                               out PropertiesIterator rest);
+      
       void delete_property (in PropertyName property_name)          
         raises (PropertyNotFound,
                 InvalidPropertyName,                 
                 FixedProperty);
       // Support for Deleting Properties.
-
+      
       void delete_properties (in PropertyNames property_names)          
         raises (MultipleExceptions);
-
+      
       boolean delete_all_properties ();
-
+      
       boolean is_property_defined (in PropertyName property_name)
         raises (InvalidPropertyName);  
       // Support for Existence Check.
     };
-
+  
   interface PropertySetDef:PropertySet  
     {
       void get_allowed_property_types (out PropertyTypes property_types);
       // Support for retrieval of PropertySet constraints.
-
+      
       void get_allowed_properties (out PropertyDefs property_defs);
-
+      
       void define_property_with_mode (in PropertyName property_name,               
-                                     in any property_value,               
-                                     in PropertyModeType property_mode)          
+                                      in any property_value,               
+                                      in PropertyModeType property_mode)          
         raises (InvalidPropertyName,
-               ConflictingProperty,                 
-               UnsupportedTypeCode,                 
-               UnsupportedProperty,                 
-               UnsupportedMode,                 
-               ReadOnlyProperty);
+                ConflictingProperty,                 
+                UnsupportedTypeCode,                 
+                UnsupportedProperty,                 
+                UnsupportedMode,                 
+                ReadOnlyProperty);
       // Support for defining and modifying properties.
-
+      
       void define_properties_with_modes (in PropertyDefs property_defs)          
         raises (MultipleExceptions);
-
+      
       PropertyModeType get_property_mode (in  PropertyName property_name)          
         raises (PropertyNotFound, 
-               InvalidPropertyName);
+                InvalidPropertyName);
       // Support for Getting and Setting Property Modes.
-
+      
       boolean get_property_modes (in PropertyNames property_names,               
                                  out PropertyModes property_modes);
-
+      
       void set_property_mode (in PropertyName property_name, 
                              in PropertyModeType property_mode)          
         raises (InvalidPropertyName, 
-               PropertyNotFound,
-               UnsupportedMode);
-
+                PropertyNotFound,
+                UnsupportedMode);
+      
       void set_property_modes (in PropertyModes property_modes)          
         raises (MultipleExceptions);  
     };
-
+  
   interface PropertyNamesIterator  
     {     
       void reset ();     
@@ -216,7 +227,7 @@ module CosPropertyService
       void reset ();     
       boolean next_one (out Property aproperty);     
       boolean next_n (in unsigned long how_many,               
-                     out Properties nproperties);     
+                      out Properties nproperties);     
       void destroy ();  
     }; 
 };
