@@ -1,0 +1,43 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+
+<!DOCTYPE softpkg SYSTEM "http://www.dre.vanderbilt.edu/CIAO/DTD/softpkg.dtd">
+
+<!-- UAV_GS's Servant Software Descriptor  -->
+<!-- This file describes various UAV_GS servant -->
+<!-- implementations. -->
+
+<softpkg name="BBN_UAV-UAV_GS-Servant" version="1.0">
+  <pkgtype>CIAO Servant</pkgtype>
+  <title>BBN_UAV::UAV_GS Servants</title>
+  <author>
+    <company>ISIS at Vanderbilt University</company>
+    <webpage href="http://www.dre.vanderbilt.edu/"/>
+  </author>
+  <description>UAV_GS test component for BBN_UAV.</description>
+  <license href="http://www.cs.wustl.edu/~schmidt/ACE-copying.html"/>
+  <idl id="IDL:BBN_UAV/UAV_GS:1.0" homeid="IDL:BBN_UAV/UAV_GSHome:1.0">
+    <fileinarchive name="UAV_GS.idl"/>
+  </idl>
+
+  <descriptor type="CORBA Component">
+    <fileinarchive name="UAV_GS.ccd"/>
+  </descriptor>
+
+  <implementation id="DCE:e3bb3bad-39dc-4808-b736-17f0f0ebad28">
+
+    <dependency type="ORB">
+      <name>TAO</name>
+    </dependency>
+
+    <code>
+      <!-- No need to specify extension below since ACE takes care of that, -->
+      <fileinarchive name="UAV_GS_svnt"/>
+      <entrypoint>createUAV_GSHome_Servant</entrypoint>
+    </code>
+
+  </implementation>
+
+</softpkg>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+
+<!DOCTYPE softpkg SYSTEM "http://www.dre.vanderbilt.edu/CIAO/DTD/softpkg.dtd">
+
+<!-- Satellite's Servant Software Descriptor  -->
+<!-- This file describes various Satellite servant -->
+<!-- implementations. -->
+
+<softpkg name="BBN_UAV-Satellite-Servant" version="1.0">
+  <pkgtype>CIAO Servant</pkgtype>
+  <title>BBN_UAV::Satellite Servants</title>
+  <author>
+    <company>ISIS at Vanderbilt University</company>
+    <webpage href="http://www.dre.vanderbilt.edu/"/>
+  </author>
+  <description>Storage Facility test component for BBN_UAV.</description>
+  <license href="http://www.cs.wustl.edu/~schmidt/ACE-copying.html"/>
+  <idl id="IDL:BBN_UAV/Satellite:1.0" homeid="IDL:BBN_UAV/SatelliteHome:1.0">
+    <fileinarchive name="Satellite.idl"/>
+  </idl>
+
+  <descriptor type="CORBA Component">
+    <fileinarchive name="Satellite.ccd"/>
+  </descriptor>
+
+  <implementation id="DCE:bea9902f-1377-4a9e-9a89-c376e2bbdc87">
+
+    <dependency type="ORB">
+      <name>TAO</name>
+    </dependency>
+
+    <code>
+      <!-- No need to specify extension below since ACE takes care of that, -->
+      <fileinarchive name="Satellite_svnt"/>
+      <entrypoint>createSatelliteHome_Servant</entrypoint>
+    </code>
+
+  </implementation>
+
+</softpkg>
