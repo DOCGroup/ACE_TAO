@@ -38,7 +38,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 
   ACE_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
   FILE* file;
-  char *id=0, *prog=0;
+  char *id_str=0, *prog=0;
 
   ACE_TRY {
 
@@ -48,17 +48,17 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 
   ACE_Read_Buffer read_buf(file);
 
-  while ((id = read_buf.read(' ')) != NULL &&
+  while ((id_str = read_buf.read(' ')) != NULL &&
     (prog = read_buf.read('\n')) != NULL) {
-      id[strlen(id)-1] = '\0';
-      if (strcmp(id, type_id) == 0) {
+      id_str[strlen(id_str)-1] = '\0';
+      if (strcmp(id_str, type_id) == 0) {
         return create_process(prog, the_criteria, factory_creation_id);
       }
     }
   }
   ACE_CATCHALL {
     if (file) fclose(file);
-    if (id) ACE_Allocator::instance()->free(id);
+    if (id_str) ACE_Allocator::instance()->free(id_str);
     if (prog) ACE_Allocator::instance()->free(prog);
     ACE_RE_THROW;
   }
@@ -132,12 +132,12 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
     const CosNaming::Name& name = the_criteria[i].nam;
     if (name.length() > 0) {
       const char* val;
-      const char* id = name[0].id.in();
+      const char* id_str = name[0].id.in();
       the_criteria[i].val >>= val;
-      if (id[0] != '-') // environment variable
-        options.setenv(id, "%s", val);
+      if (id_str[0] != '-') // environment variable
+        options.setenv(id_str, "%s", val);
       else {// command line option
-        ACE_OS::sprintf(buf, " %s %s", id, val);
+        ACE_OS::sprintf(buf, " %s %s", id_str, val);
         str += buf;
       }
     }
