@@ -7,38 +7,6 @@ ACE_RCSID(Notify_Tests, Notify_Test_Client, "$Id$")
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
-int
-Notify_Test_Client::test_main (int argc, char *argv [], Notify_Test_Client& client)
-{
-  ACE_TRY_NEW_ENV
-    {
-      client.init (argc, argv,
-                   ACE_TRY_ENV); //Init the Client
-      ACE_TRY_CHECK;
-
-      client.run_test (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      client.shutdown (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::UserException, ue)
-    {
-      ACE_PRINT_EXCEPTION (ue,
-                           "Notify_Test_Client user error: ");
-      return 1;
-    }
-  ACE_CATCH (CORBA::SystemException, se)
-    {
-      ACE_PRINT_EXCEPTION (se,
-                           "Notify_Test_Client system error: ");
-      return 1;
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
 Notify_Test_Client::Notify_Test_Client (void)
 {
   // @@ Later: accept the inter filter operator as a param.
@@ -58,10 +26,6 @@ Notify_Test_Client::init (int argc, char *argv [], CORBA::Environment &ACE_TRY_E
   ACE_CHECK;
   this->resolve_Notify_factory (ACE_TRY_ENV);
   ACE_CHECK;
-  this->create_EC (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->init_concrete (argc, argv, ACE_TRY_ENV);
 }
 
 void
@@ -133,21 +97,6 @@ Notify_Test_Client::resolve_Notify_factory (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void
-Notify_Test_Client::create_EC (CORBA::Environment &ACE_TRY_ENV)
-{
-  CosNotifyChannelAdmin::ChannelID id;
-
-  ec_ = notify_factory_->create_channel (initial_qos_,
-                                         initial_admin_,
-                                         id,
-                                         ACE_TRY_ENV);
-  ACE_CHECK;
-
-  ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
-}
-
-
 int
 Notify_Test_Client::ORB_run (void)
 {
@@ -158,11 +107,8 @@ Notify_Test_Client::ORB_run (void)
 }
 
 void
-Notify_Test_Client::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Notify_Test_Client::shutdown (CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  // Destroy the channel
-  this->ec_->destroy (ACE_TRY_ENV);
-
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown ();
