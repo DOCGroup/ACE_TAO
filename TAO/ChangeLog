@@ -1,3 +1,9 @@
+Mon Nov 10 23:56:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.cpp:
+          Added #include OS_NS_stdio.h.
+
 Mon Nov 10 23:31:20 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/ImplRepo_Service/Makefile:
