@@ -3,6 +3,7 @@
 //
 #include "Server_Task.h"
 #include "test_i.h"
+#include "ace/Streams.h"
 
 #include "ace/Manual_Event.h"
 
@@ -44,10 +45,11 @@ Server_Task::svc (void)
      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     Visual_i server_impl (sorb_.in ());
+     Visual_i * server_impl;
+     ACE_NEW_RETURN (server_impl, Visual_i (sorb_.in ()), 1);
 
      PortableServer::ObjectId_var id =
-       root_poa->activate_object (&server_impl
+       root_poa->activate_object (server_impl
                                   ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
@@ -59,7 +61,7 @@ Server_Task::svc (void)
      Test_Interceptors::Visual_var server =
        Test_Interceptors::Visual::_narrow (test_obj.in ()
                                            ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+      ACE_TRY_CHECK;
 
      CORBA::String_var ior =
        sorb_->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
@@ -77,6 +79,9 @@ Server_Task::svc (void)
          ACE_OS::fprintf (output_file, "%s", ior.in ());
          ACE_OS::fclose (output_file);
        }
+
+     // Signal the main thread before we call orb->run ();
+     this->me_.signal ();
 
      sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;

@@ -74,6 +74,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_Manual_Event me;
+
       Server_Task server_task (output,
                                sorb.in (),
                                me,
