@@ -480,6 +480,9 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
   mb->rd_ptr (tmp.rd_ptr ());
   mb->wr_ptr (tmp.wr_ptr ());
 
+  // Remove the DONT_DELETE flags from mb
+  mb->clr_self_flags (ACE_Message_Block::DONT_DELETE);
+
   return 0;
 }
 
