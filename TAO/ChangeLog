@@ -1,3 +1,36 @@
+Wed Feb 11 12:57:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation.h:
+        
+          - Fixed IDL compiler crash when anonymous bounded (w)strings
+            are used as operation parameters or return types, which,
+            unlike with anonymous sequences and arrays, is legal IDL.
+            Thanks to James Kanyok <james.kanyok@lmco.com> for
+            reporting the problem. Any number of such parameters and/or
+            return types, with identical bounds, may occur in the same
+            or multiple scopes, leading to the Arg_Traits<> specialization
+            problem addressed below.
+            
+          - Added a mechanism to generate unique type names for template
+            parameters in the specializations of Arg_Traits<>
+            corresponding to operation parameter and return types
+            described above. For operation parameters, the parameter
+            identifier's flat name is used, for return types, the
+            operation's flat name is used, to declare an empty C++
+            struct, whose type then becomes the Arg_Traits<> specialization
+            template parameter.
+            
+        * tests/IDL_Test/anonymous.idl:
+        
+          Added IDL to test the code generation for the above use cases,
+          furthere stressing the IDL compiler by making the common
+          string bound a typedef'd constant.
+
 Wed Feb 11 14:07:00 2004  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp (init): 
@@ -54,6 +87,7 @@ Wed Feb 11 14:07:00 2004  Pradeep Gore  <pradeep@oomworks.com>
 	  was not invoked which resulted in a memory leaks. Thanks to
 	  Irfan for helping to debug this memory leak.
 
+>>>>>>> 1.3696
 Wed Feb 11 11:38:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Log/RTEvent/Log_RTEvent.mpc:

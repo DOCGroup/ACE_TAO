@@ -448,7 +448,8 @@ be_visitor_operation::gen_stub_operation_body (
 
   *os << "TAO::Arg_Traits<";
 
-  this->gen_arg_template_param_name (return_type,
+  this->gen_arg_template_param_name (node,
+                                     return_type,
                                      os);
 
   *os << ">::ret_val _tao_retval;";
@@ -661,7 +662,8 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
       *os << be_nl
           << "TAO::Arg_Traits<";
 
-      this->gen_arg_template_param_name (arg->field_type (),
+      this->gen_arg_template_param_name (arg,
+                                         arg->field_type (),
                                          os);
 
       *os << ">::";
@@ -686,22 +688,48 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
 }
 
 void
-be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
+be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
+                                                   AST_Type *bt,
                                                    TAO_OutStream *os)
 {
-  AST_Decl::NodeType nt = bt->node_type ();
-
-  // If we're here, we must have a bounded string, if unbounded, it
-  // would be a predefined type.
-  if (nt == AST_Decl::NT_string)
+  AST_Typedef *alias = 0;
+  
+  if (bt->node_type () == AST_Decl::NT_typedef)
     {
-      AST_String *s = AST_String::narrow_from_decl (bt);
-      unsigned long bound = s->max_size ()->ev ()->u.ulval;
-      AST_Typedef *alias = this->ctx_->alias ();
+      alias = AST_Typedef::narrow_from_decl (bt);
+    }
+    
+  AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
 
+  if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
+    {
+      AST_String *s = AST_String::narrow_from_decl (bt->unaliased_type  ());
+      unsigned long bound = s->max_size ()->ev ()->u.ulval;
+      
+      // If the (w)string is unbounded, code is generated below by the
+      // last line of this method, whether bt is a typedef or not.
       if (bound > 0)
         {
-          *os << "TAO::" << alias->local_name () << "_" << bound;
+          *os << "TAO::";
+      
+          if (alias != 0)
+            {
+              *os << alias->local_name () << "_" << bound;
+            }
+           else
+            {
+              // If we have an unaliased, bounded (w)string parameter,
+              // we know that be_visitor_arg_traits has used an empty
+              // struct of a type constructed from the flat name of
+              // the parameter's 'enclosing scope' (the parameter
+              // identifier for parameters, and the operation identifier
+              // for return types) to get a unique type for the
+              // Arg_Traits<> template parameter. So we generate it
+              // the same way here, using the 'scope' argument's
+              // flat name.
+              *os << scope->flat_name ();
+            }
+          
           return;
         }
     }
