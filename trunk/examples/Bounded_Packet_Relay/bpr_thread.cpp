@@ -31,10 +31,7 @@ ACE_RCSID(Bounded_Packet_Relay, bpr_thread, "$Id$")
 typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
 	THREAD_BOUNDED_PACKET_RELAY_DRIVER;
 
-typedef Bounded_Packet_Relay<ACE_MT_SYNCH>
-	BOUNDED_PACKET_RELAY;
-
-typedef Command<BOUNDED_PACKET_RELAY, BOUNDED_PACKET_RELAY::ACTION>
+typedef Command<Bounded_Packet_Relay, Bounded_Packet_Relay::ACTION>
 	INPUT_CALLBACK;
 
 // A snippet from Andrew Marvell (Oliver Cromwell's poet laureate)
@@ -73,13 +70,13 @@ main (int, char *[])
 
   // Construct a new bounded packet relay.  Auto ptr ensures memory is
   // freed when we exit this scope.
-  BOUNDED_PACKET_RELAY *packet_relay;
+  Bounded_Packet_Relay *packet_relay;
   ACE_NEW_RETURN (packet_relay,
-                  BOUNDED_PACKET_RELAY (input_task_mgr,
+                  Bounded_Packet_Relay (input_task_mgr,
                                         input_device,
                                         output_device),
                   -1);
-  auto_ptr <BOUNDED_PACKET_RELAY> relay (packet_relay);
+  auto_ptr <Bounded_Packet_Relay> relay (packet_relay);
 
   // Construct a receive input callback command for the relay, and register 
   // it with the input device.  Auto ptr ensures memory is freed when we exit 
@@ -87,7 +84,7 @@ main (int, char *[])
   INPUT_CALLBACK *input_callback;
   ACE_NEW_RETURN (input_callback,
                   INPUT_CALLBACK (*packet_relay,
-                                  &BOUNDED_PACKET_RELAY::receive_input),
+                                  &Bounded_Packet_Relay::receive_input),
                   -1);
   auto_ptr <INPUT_CALLBACK> callback (input_callback);
   if (input_device->set_send_input_msg_cmd (input_callback) < 0)

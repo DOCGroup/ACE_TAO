@@ -131,7 +131,7 @@ Text_Output_Device_Wrapper::modify_device_settings (void *logging)
 
 // Constructor.
 
-User_Input_Task::User_Input_Task (Bounded_Packet_Relay<ACE_MT_SYNCH> *relay,
+User_Input_Task::User_Input_Task (Bounded_Packet_Relay *relay,
                                   Thread_Timer_Queue *queue,
                                   Thread_Bounded_Packet_Relay_Driver &tbprd)
   : ACE_Task_Base (ACE_Thread_Manager::instance ()),
@@ -154,7 +154,7 @@ User_Input_Task::svc (void)
       break;
 
   // We are done.
-  this->relay_->end_transmission (Bounded_Packet_Relay_Base::CANCELLED);
+  this->relay_->end_transmission (Bounded_Packet_Relay::CANCELLED);
   this->queue_->deactivate ();
   ACE_DEBUG ((LM_DEBUG,
               "terminating user input thread\n"));
@@ -314,7 +314,7 @@ User_Input_Task::end_transmission (void *)
 {
   if (relay_)
     {
-      switch (relay_->end_transmission (Bounded_Packet_Relay_Base::CANCELLED))
+      switch (relay_->end_transmission (Bounded_Packet_Relay::CANCELLED))
         {
           case 1:
             ACE_DEBUG ((LM_DEBUG, 
@@ -402,7 +402,7 @@ User_Input_Task::clear_all_timers (void)
 
 // Constructor.
 
-BPR_Handler_Base::BPR_Handler_Base (Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
+BPR_Handler_Base::BPR_Handler_Base (Bounded_Packet_Relay &relay,
                                     Thread_Timer_Queue &queue)
   : relay_ (relay),
     queue_ (queue)
@@ -434,7 +434,7 @@ BPR_Handler_Base::clear_all_timers (void)
 
 Send_Handler::Send_Handler (u_long send_count, 
                             const ACE_Time_Value &duration,
-                            Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
+                            Bounded_Packet_Relay &relay,
                             Thread_Timer_Queue &queue)
   : BPR_Handler_Base (relay, queue),
     send_count_ (send_count),
@@ -478,7 +478,7 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
             // All packets are sent, time to cancel any other timers,
             // end the transmission, and go away.
             this->clear_all_timers ();
-            relay_.end_transmission (Bounded_Packet_Relay_Base::COMPLETED);
+            relay_.end_transmission (Bounded_Packet_Relay::COMPLETED);
             delete this;
             return 0;
           }
@@ -499,7 +499,7 @@ Send_Handler::cancelled (void)
 
 // Constructor.
 
-Termination_Handler::Termination_Handler (Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
+Termination_Handler::Termination_Handler (Bounded_Packet_Relay &relay,
                                           Thread_Timer_Queue &queue)
   : BPR_Handler_Base (relay, queue)
 {
@@ -520,7 +520,7 @@ Termination_Handler::handle_timeout (const ACE_Time_Value &current_time,
   // Transmission timed out, so cancel any other
   // timers, end the transmission, and go away.
   this->clear_all_timers ();
-  relay_.end_transmission (Bounded_Packet_Relay_Base::TIMED_OUT);
+  relay_.end_transmission (Bounded_Packet_Relay::TIMED_OUT);
   delete this;
   return 0;
 }
@@ -536,7 +536,7 @@ Termination_Handler::cancelled (void)
 
 // Constructor.
 
-Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay<ACE_MT_SYNCH> *relay)
+Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay)
   : input_task_ (relay, &timer_queue_, *this)
 {
 }
