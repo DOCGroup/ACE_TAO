@@ -37,16 +37,15 @@ class TAO_ORBSVCS_Export TAO_EC_Negation_Filter : public TAO_EC_Filter
   //   The negation filter.
   //
   // = DESCRIPTION
-  //   This filter has a set of children (fixed at creation time), if
-  //   any of the children accepts an event then it also does.
+  //   This filter accepts all the events rejected by its child, and
+  //   rejects any events accepted by the child.
   //
   // = MEMORY MANAGMENT
-  //   It assumes ownership of the children.
+  //   It assumes ownership of its child.
   //
 public:
   TAO_EC_Negation_Filter (TAO_EC_Filter* child);
-  // Constructor. It assumes ownership of both the array and the
-  // children.
+  // Constructor. It assumes ownership of the child.
 
   virtual ~TAO_EC_Negation_Filter (void);
   // Destructor
@@ -84,7 +83,7 @@ private:
 
 private:
   TAO_EC_Filter* child_;
-  // The children
+  // The child
 };
 
 #if defined (__ACE_INLINE__)

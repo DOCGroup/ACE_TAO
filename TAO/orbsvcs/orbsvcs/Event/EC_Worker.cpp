@@ -11,8 +11,8 @@
 
 ACE_RCSID(Event, EC_Worker, "$Id$")
 
-template<class TARGET>
-TAO_EC_Worker<TARGET>::~TAO_EC_Worker (void)
+template<class Object>
+TAO_EC_Worker<Object>::~TAO_EC_Worker (void)
 {
 }
 

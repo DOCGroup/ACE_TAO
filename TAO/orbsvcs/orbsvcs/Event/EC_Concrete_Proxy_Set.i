@@ -1,12 +1,12 @@
 // $Id$
 
-template<class PROXY> ACE_INLINE TAO_EC_List_Based_Proxy_Set<PROXY>::Iterator
+template<class PROXY> ACE_INLINE ACE_Unbounded_Set_Iterator<PROXY*>
 TAO_EC_List_Based_Proxy_Set<PROXY>::begin (void)
 {
   return this->impl_.begin ();
 }
 
-template<class PROXY> ACE_INLINE TAO_EC_List_Based_Proxy_Set<PROXY>::Iterator
+template<class PROXY> ACE_INLINE ACE_Unbounded_Set_Iterator<PROXY*>
 TAO_EC_List_Based_Proxy_Set<PROXY>::end (void)
 {
   return this->impl_.end ();
@@ -64,13 +64,13 @@ TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<PROXY>::operator *(void)
 
 // ****************************************************************
 
-template<class PROXY> ACE_INLINE TAO_EC_RB_Tree_Based_Proxy_Set<PROXY>::Iterator
+template<class PROXY> ACE_INLINE TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<PROXY>
 TAO_EC_RB_Tree_Based_Proxy_Set<PROXY>::begin (void)
 {
   return Iterator (this->impl_.begin ());
 }
 
-template<class PROXY> ACE_INLINE TAO_EC_RB_Tree_Based_Proxy_Set<PROXY>::Iterator
+template<class PROXY> ACE_INLINE TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<PROXY>
 TAO_EC_RB_Tree_Based_Proxy_Set<PROXY>::end (void)
 {
   return Iterator (this->impl_.end ());
