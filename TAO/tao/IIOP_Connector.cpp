@@ -208,10 +208,18 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
               dests.push (dest);
             }
           else
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Couldn't find a ':' separator "
-                        "in '%s' spec.\n",
-                        where));
+            {
+              dest.set (9999, thost);
+              dests.push (dest);
+
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) No port specified for <%s>.  "
+                              "Using <9999> as default port.\n",
+                              where));
+                }
+            }
         }
 
       // Create an array of addresses from the stack, as well as an
