@@ -193,7 +193,6 @@ int
 ACE_Message_Block::size (size_t length)
 {
   ACE_TRACE ("ACE_Message_Block::size");
-  char *old_base = this->data_block ()->base ();
 
   // Resize the underlying <ACE_Data_Block>.
   if (this->data_block ()->size (length) == -1)
