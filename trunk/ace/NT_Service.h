@@ -113,10 +113,11 @@ public:
   // Hook called to open the service.  By default, will set the status to
   // START_PENDING, svc(), wait(), then set the status to STOPPED.
 
-  virtual int svc (void) = 0;
-  // The actual service implementation.  This function must be implemented
-  // by subclasses.  It is expected that this function will set the status
-  // to RUNNING.
+  virtual int svc (void);
+  // The actual service implementation.  This function need not be overridden
+  // by applications that are just using SCM capabilities, but must be
+  // by subclasses when actually running the service.  It is expected that
+  // this function will set the status to RUNNING.
 
   virtual void  handle_control (DWORD control_code);
   // This function is called in response to a request from the Service
