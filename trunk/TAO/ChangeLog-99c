@@ -1,3 +1,9 @@
+Fri Feb 26 13:32:35 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/grid/README: 
+	New file for the benefit of the community. Thanks to Dr.Schmidt
+	for reminding me to do this.
+
 Fri Feb 26 12:44:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/big_union.cpp: 
