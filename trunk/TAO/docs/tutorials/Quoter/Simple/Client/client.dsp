@@ -95,10 +95,6 @@ SOURCE=.\client.cpp
 
 SOURCE=.\QuoterC.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\QuoterS.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -198,10 +194,6 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\QuoterC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\QuoterS.i
 # End Source File
 # End Group
 # End Target

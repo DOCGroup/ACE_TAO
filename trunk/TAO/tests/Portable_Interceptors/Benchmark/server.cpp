@@ -12,16 +12,16 @@ int register_interceptor = 1;
 // to perform.
 // NOOP: does nothing on all interception points
 // CONTEXT: does service context manipulation
-// DYNAMIC: call upon dynamic interface methods and does extraction 
+// DYNAMIC: call upon dynamic interface methods and does extraction
 // from anys.
 enum Interceptor_Type
 {
-  NONE,
-  NOOP,
-  CONTEXT,
-  DYNAMIC
+  IT_NONE,
+  IT_NOOP,
+  IT_CONTEXT,
+  IT_DYNAMIC
 };
-static Interceptor_Type interceptor_type = NONE;
+static Interceptor_Type interceptor_type = IT_NONE;
 
 int
 parse_args (int argc, char *argv[])
@@ -36,15 +36,15 @@ parse_args (int argc, char *argv[])
         ior_output_file = get_opts.optarg;
         break;
       case 'r':
-        { 
+        {
           if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("none")) == 0)
-            interceptor_type = NONE;
+            interceptor_type = IT_NONE;
           if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("noop")) == 0)
-            interceptor_type = NOOP;
+            interceptor_type = IT_NOOP;
           if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("context")) == 0)
-            interceptor_type = CONTEXT;
+            interceptor_type = IT_CONTEXT;
           if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("dynamic")) == 0)
-            interceptor_type = DYNAMIC;
+            interceptor_type = IT_DYNAMIC;
 
           break;
         }
@@ -76,9 +76,9 @@ main (int argc, char *argv[])
 #if (TAO_HAS_INTERCEPTORS == 1)
       switch (interceptor_type)
         {
-        case NONE:
+        case IT_NONE:
           break;
-        case NOOP:
+        case IT_NOOP:
           {
             PortableInterceptor::ServerRequestInterceptor_ptr interceptor = 0;
             // Installing the Vault interceptor
@@ -88,7 +88,7 @@ main (int argc, char *argv[])
             orb->_register_server_interceptor (interceptor);
             break;
           }
-        case CONTEXT:
+        case IT_CONTEXT:
           {
             PortableInterceptor::ServerRequestInterceptor_ptr interceptor = 0;
             // Installing the Vault interceptor
@@ -98,7 +98,7 @@ main (int argc, char *argv[])
             orb->_register_server_interceptor (interceptor);
             break;
           }
-        case DYNAMIC:
+        case IT_DYNAMIC:
           {
             PortableInterceptor::ServerRequestInterceptor_ptr interceptor = 0;
             // Installing the Vault interceptor

@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_DynamicAny.lib TradingLib.lib TAO_CosTrading.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs"
+# ADD LINK32 TAO_DynamicAny.lib TradingLib.lib TAO_CosTrading.lib ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\DynamicAny" /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Import_Test - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_DynamicAnyd.lib TradingLibd.lib TAO_CosTradingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\DynamicAny" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs"
+# ADD LINK32 TAO_DynamicAnyd.lib TradingLibd.lib TAO_CosTradingd.lib aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao\DynamicAny" /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\..\ace"
 
 !ENDIF 
 

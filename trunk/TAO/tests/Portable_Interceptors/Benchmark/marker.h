@@ -7,13 +7,13 @@
 class Marker
 {
  public:
-  
-  void accumulate_into (ACE_Throughput_Stats &throughput, 
+
+  void accumulate_into (ACE_Throughput_Stats &throughput,
                         int which_method) const;
   // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const char* msg, 
-                   ACE_UINT32 gsf, 
+  void dump_stats (const char* msg,
+                   ACE_UINT32 gsf,
                    int which_method);
   // Print stats
 
@@ -22,7 +22,7 @@ class Marker
                int which_method);
   // get the sample.
 
- private:  
+ private:
   ACE_Throughput_Stats throughput_method_ready_;
   // Keep throughput statistics on a per-thread basis
   ACE_Throughput_Stats throughput_method_authenticate_;
@@ -30,4 +30,3 @@ class Marker
   ACE_Throughput_Stats throughput_method_update_records_;
   // Keep throughput statistics on a per-thread basis
 };
-

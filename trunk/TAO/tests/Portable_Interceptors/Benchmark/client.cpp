@@ -1,15 +1,11 @@
 // $Id$
+
 #include "ace/OS.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Get_Opt.h"
 #include "testC.h"
 #include "interceptors.h"
 #include "marker.h"
 #include "ace/Get_Opt.h"
+
 ACE_RCSID (Benchmark, client, "$Id$")
 
 const char *ior = "file://test.ior";
@@ -19,23 +15,23 @@ int register_interceptor = 1;
 // to perform.
 // NOOP: does nothing on all interception points
 // CONTEXT: does service context manipulation
-// DYNAMIC: call upon dynamic interface methods and does extraction 
+// DYNAMIC: call upon dynamic interface methods and does extraction
 // from anys.
 enum Interceptor_Type
 {
-  NONE,
-  NOOP,
-  CONTEXT,
-  DYNAMIC
+  IT_NONE,
+  IT_NOOP,
+  IT_CONTEXT,
+  IT_DYNAMIC
 };
-static Interceptor_Type interceptor_type = NONE;
+static Interceptor_Type interceptor_type = IT_NONE;
 
 int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "ef:n:r:");
   int c;
-  
+
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -48,15 +44,15 @@ parse_args (int argc, char *argv[])
         niterations = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'r':
-        { 
+        {
           if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("none")) == 0)
-            interceptor_type = NONE;
+            interceptor_type = IT_NONE;
           if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("noop")) == 0)
-            interceptor_type = NOOP;
+            interceptor_type = IT_NOOP;
           if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("context")) == 0)
-            interceptor_type = CONTEXT;
+            interceptor_type = IT_CONTEXT;
           if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("dynamic")) == 0)
-            interceptor_type = DYNAMIC;
+            interceptor_type = IT_DYNAMIC;
 
           break;
         }
@@ -79,14 +75,14 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
           CORBA::Environment &ACE_TRY_ENV)
 {
   int i=0;
-  const char user [BUFSIZ] = "root";  
+  const char user [BUFSIZ] = "root";
   Marker marker;
   ACE_Throughput_Stats throughput;
 
   ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
-  
+
   marker.accumulate_into (throughput, 1);
   ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
   for (i = 0; i < niterations ; ++i)
@@ -97,7 +93,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
       server->ready (ACE_TRY_ENV);
 
       // Grab timestamp again.
-      ACE_hrtime_t now = ACE_OS::gethrtime ();      
+      ACE_hrtime_t now = ACE_OS::gethrtime ();
 
       // Record statistics.
       marker.sample (now - throughput_base,
@@ -110,34 +106,34 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
     }
 
   marker.dump_stats ("Ready method  ", gsf, 1);
-      
+
   ACE_TRY
         {
           marker.accumulate_into (throughput, 2);
           throughput_base = ACE_OS::gethrtime ();
-          
+
           for (i = 0; i < niterations ; ++i)
             {
               // Record current time.
               ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
-              
+
               server->authenticate (user, ACE_TRY_ENV);
-              
+
               // Grab timestamp again.
-              ACE_hrtime_t now = ACE_OS::gethrtime ();      
-              
+              ACE_hrtime_t now = ACE_OS::gethrtime ();
+
               // Record statistics.
               marker.sample (now - throughput_base,
                              now - latency_base,
                              2);
-              
+
               ACE_CHECK;
               if (TAO_debug_level > 0 && i % 100 == 0)
                 ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-                          
+
             }
           marker.dump_stats ("Authenticate method  ", gsf, 2);
-              
+
           ACE_CHECK;
 
         }
@@ -148,41 +144,41 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
   ACE_ENDTRY;
   ACE_CHECK;
 
-     
+
   Test_Interceptors::Secure_Vault::Record record;
   record.check_num = 1;
   record.amount = 1000;
   CORBA::Long id = 1;
-  
+
   marker.accumulate_into (throughput, 3);
   throughput_base = ACE_OS::gethrtime ();
-  
+
   for (i = 0; i < niterations ; ++i)
     {
       // Record current time.
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
-  
-      CORBA::Long result = server->update_records (id, 
-                                                   record, 
+
+      CORBA::Long result = server->update_records (id,
+                                                   record,
                                                    ACE_TRY_ENV);
-     
-      
+
+
       // Grab timestamp again.
-      ACE_hrtime_t now = ACE_OS::gethrtime ();      
-      
+      ACE_hrtime_t now = ACE_OS::gethrtime ();
+
       // Record statistics.
       marker.sample (now - throughput_base,
                      now - latency_base,
                      3);
-              
+
       ACE_CHECK;
       if (TAO_debug_level > 0 && i % 100 == 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-      
+
     }
       marker.dump_stats ("update records  method  ", gsf, 3);
       ACE_CHECK;
-              
+
 }
 
 
@@ -211,7 +207,7 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -238,9 +234,9 @@ main (int argc, char *argv[])
 #if (TAO_HAS_INTERCEPTORS == 1)
       switch (interceptor_type)
         {
-        case NONE:
+        case IT_NONE:
           break;
-        case NOOP:
+        case IT_NOOP:
           {
             PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
             // Installing the Vault interceptor
@@ -250,7 +246,7 @@ main (int argc, char *argv[])
             orb->_register_client_interceptor (interceptor);
             break;
           }
-        case CONTEXT:
+        case IT_CONTEXT:
           {
             PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
             // Installing the Vault interceptor
@@ -260,7 +256,7 @@ main (int argc, char *argv[])
             orb->_register_client_interceptor (interceptor);
             break;
           }
-        case DYNAMIC:
+        case IT_DYNAMIC:
           {
             PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
             // Installing the Vault interceptor
@@ -270,13 +266,13 @@ main (int argc, char *argv[])
             orb->_register_client_interceptor (interceptor);
             break;
           }
-         
+
         }
 #endif /* (TAO_HAS_INTERCEPTORS == 1) */
-      
+
       ACE_DEBUG ((LM_DEBUG, "\nFunctionality test begins now...\n"));
 
-      // This test is useful for  benchmarking the differences when 
+      // This test is useful for  benchmarking the differences when
       // the same method is intercepted by different interceptors
       // wanting to achieve different functionality.
       run_test (server.in (), ACE_TRY_ENV);
@@ -288,7 +284,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:"); 
+                           "Catched exception:");
      return 1;
     }
   ACE_ENDTRY;
