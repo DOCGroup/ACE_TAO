@@ -856,13 +856,8 @@ High_Priority_Synchronized_Task::svc ()
 
         ACE_hrtime_t nsec;
         timer_.elapsed_time (nsec);
-        // Convert the elapsed time from 64 to 32 bits.
-        const ACE_UINT32 delta_t =
-          ACE_static_cast (ACE_UINT32,
-                           nsec / ACE_static_cast (ACE_UINT32, 1u));
-
         const ACE_UINT32 context_switch_time =
-          delta_t - mutex_acquire_release_time;
+          ACE_U64_TO_U32 (nsec) - mutex_acquire_release_time;
 
         total_time_ += context_switch_time;
 
@@ -1218,28 +1213,31 @@ main (int argc, char *argv [])
                suspend_resume_test.elapsed_time ())
             {
               context_switch_test_stats.
-                sample ((ping_suspend_resume_test.elapsed_time () -
-                         suspend_resume_test.elapsed_time ()) /
-                        ACE_static_cast (ACE_UINT32, 1u));
+                sample (ACE_U64_TO_U32 (
+                  ping_suspend_resume_test.elapsed_time () -
+                  suspend_resume_test.elapsed_time ()));
 
               ACE_DEBUG ((LM_INFO, "context switch time is (%.3f - %.3f)/2 = "
                                    "%.3f microseconds\n",
-                          (double) (ping_suspend_resume_test.elapsed_time () /
-                                      num_iterations),
-                          (double) (suspend_resume_test.elapsed_time () /
-                                      num_iterations),
-                          (double) ((ping_suspend_resume_test.elapsed_time () -
-                                      suspend_resume_test.elapsed_time ()) /
-                                    num_iterations / 2u)));
+                          (double) (ACE_UINT64_DBLCAST_ADAPTER (
+                            ping_suspend_resume_test.elapsed_time ()) /
+                              num_iterations),
+                          (double) (ACE_UINT64_DBLCAST_ADAPTER (
+                            suspend_resume_test.elapsed_time ()) /
+                              num_iterations),
+                          (double) (ACE_UINT64_DBLCAST_ADAPTER (
+                            ping_suspend_resume_test.elapsed_time () -
+                            suspend_resume_test.elapsed_time ()) /
+                              num_iterations / 2u)));
             }
           else
             {
-              ACE_DEBUG ((LM_INFO, "ping suspend/resume time of %.3f usec was "
-                                   "less than suspend/resume time of %.3f\n",
-                          (double) (ping_suspend_resume_test.elapsed_time () /
-                                      num_iterations),
-                          (double) (suspend_resume_test.elapsed_time () /
-                                      num_iterations)));
+              ACE_DEBUG ((LM_INFO, "ping suspend/resume time of %u usec was "
+                                   "less than suspend/resume time of %u\n",
+                                   ping_suspend_resume_test.elapsed_time () /
+                                      num_iterations,
+                                   suspend_resume_test.elapsed_time () /
+                                      num_iterations));
             }
         }
 
@@ -1248,8 +1246,7 @@ main (int argc, char *argv [])
       // Wait for all tasks to exit.
       ACE_Thread_Manager::instance ()->wait ();
 
-      yield_test_stats.sample (yield_test.elapsed_time () /
-                               ACE_static_cast (ACE_UINT32, 1u));
+      yield_test_stats.sample (ACE_U64_TO_U32 (yield_test.elapsed_time ()));
 
       // Try _really_ hard not to use floating point.
       ACE_DEBUG ((LM_INFO, "context switch time from yield test is %u.%03u "
