@@ -41,7 +41,7 @@ ROA_Factory::instance()
 #  if defined(linux)
 #    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
 #  elif defined(WIN32)
-#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED|THR_SCOPE_PROCESS)
+#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
 #  elif defined(sparc)
 #    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED|THR_SCOPE_PROCESS)
 #  else
@@ -62,6 +62,8 @@ ROA_Factory::concurrency_strategy()
     }
   else
     concurrency_strategy_ = 0;
+
+  return concurrency_strategy_;
 }
 
 
