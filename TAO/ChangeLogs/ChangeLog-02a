@@ -1,112 +1,122 @@
+Tue May 23 09:37:32 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Event_Service/Makefile:
+          More tweaking to avoid compilation on platforms using old
+          versions of g++
+
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+          Cosmetic fixes.
+
 Mon May 22 22:12:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/RTCORBA.pidl
-	* tao/RTPOA.pidl
-	* tao/IOP.pidl:
-	* tao/IOPC.cpp
-	* tao/RTCORBAC.cpp
-	* tao/RTCORBAC.h
-	* tao/RTCORBAC.i
-	* tao/RTCORBAS.h
-	* tao/RTCORBAS.i
-	* tao/RTCORBAS.cpp
-	* tao/RTCORBAS_T.cpp
-	* tao/RTCORBAS_T.i
-	* tao/RTCORBAS_T.h
-	  Added all idl from RT CORBA 1.0 spec and generated code for
-	  RTCORBA.pidl.
+        * tao/RTCORBA.pidl
+        * tao/RTPOA.pidl
+        * tao/IOP.pidl:
+        * tao/IOPC.cpp
+        * tao/RTCORBAC.cpp
+        * tao/RTCORBAC.h
+        * tao/RTCORBAC.i
+        * tao/RTCORBAS.h
+        * tao/RTCORBAS.i
+        * tao/RTCORBAS.cpp
+        * tao/RTCORBAS_T.cpp
+        * tao/RTCORBAS_T.i
+        * tao/RTCORBAS_T.h
+          Added all idl from RT CORBA 1.0 spec and generated code for
+          RTCORBA.pidl.
 
-	* tao/IOPC.cpp
-	* tao/IOPC.h:
-	  Modified to include RT CORBA related items.
+        * tao/IOPC.cpp
+        * tao/IOPC.h:
+          Modified to include RT CORBA related items.
 
-	* tao/diffs/RTCORBAC.h.diff
-	* tao/diffs/RTCORBAC.i.diff
-	* tao/diffs/RTCORBAC.cpp.diff:
-	  Patches to the code generated from RTCORBA.pidl (see
-	  RTCORBA.pidl for the description of why patches are needed.)
+        * tao/diffs/RTCORBAC.h.diff
+        * tao/diffs/RTCORBAC.i.diff
+        * tao/diffs/RTCORBAC.cpp.diff:
+          Patches to the code generated from RTCORBA.pidl (see
+          RTCORBA.pidl for the description of why patches are needed.)
 
-	* tests/Endpoint_Per_Priority/client.cpp
-	* tao/POA.h
-	* tao/Priority_Mapping.h:
-	  Discontinue use of rtcorbafwd.* files, use new RTCORBA* files
-	  instead.
+        * tests/Endpoint_Per_Priority/client.cpp
+        * tao/POA.h
+        * tao/Priority_Mapping.h:
+          Discontinue use of rtcorbafwd.* files, use new RTCORBA* files
+          instead.
 
-	* tao/RT_Policy_i.cpp
-	* tao/RT_Policy_i.h
-	* tao/RT_Policy_i.i
-	* tao/RT_Mutex.h
-	* tao/RT_Mutex.i
-	* tao/RT_Mutex.cpp
-	* tao/RT_ORB.h
-	* tao/RT_ORB.cpp
-	* tao/RT_ORB.i
-	  Implementations & placeholders for interfaces from
-	  RTCORBA.pidl.
+        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h
+        * tao/RT_Policy_i.i
+        * tao/RT_Mutex.h
+        * tao/RT_Mutex.i
+        * tao/RT_Mutex.cpp
+        * tao/RT_ORB.h
+        * tao/RT_ORB.cpp
+        * tao/RT_ORB.i
+          Implementations & placeholders for interfaces from
+          RTCORBA.pidl.
 
-	* tao/RT_Current.cpp
-	* tao/RT_Current.h
-	* tao/RT_Current.i
-	  Changed to incorporate RTCORBA.pidl generated code.
+        * tao/RT_Current.cpp
+        * tao/RT_Current.h
+        * tao/RT_Current.i
+          Changed to incorporate RTCORBA.pidl generated code.
 
-	* tao/orbconf.h
-	* tao/Policy_Manager.cpp
-	* tao/Policy_Manager.h
-	* tao/Policy_Manager.i
-	  1) TAO_Policy_Manager_Impl::copy_from wasn't exception-safe:
-	  fixed.  2) Added support for RT CORBA policies.
+        * tao/orbconf.h
+        * tao/Policy_Manager.cpp
+        * tao/Policy_Manager.h
+        * tao/Policy_Manager.i
+          1) TAO_Policy_Manager_Impl::copy_from wasn't exception-safe:
+          fixed.  2) Added support for RT CORBA policies.
 
-	* tao/TAO.dsp
-	* tao/TAO_Static.dsp
-	* tao/Makefile:
-	  Incorporate all addition/changes listed above.
+        * tao/TAO.dsp
+        * tao/TAO_Static.dsp
+        * tao/Makefile:
+          Incorporate all addition/changes listed above.
 
-	* tests/Endpoint_Per_Priority/run_test.pl:
-	  Turned debugging off in the script, which was mistakenly added
-	  by oci during 4/7/00 modification.
+        * tests/Endpoint_Per_Priority/run_test.pl:
+          Turned debugging off in the script, which was mistakenly added
+          by oci during 4/7/00 modification.
 
 Mon May 22 17:48:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp:
-	  Added two missing options to the 'usage' ouput -
-	  -H perfect_hash	(force perfect hashing. Even
-				 though it's the default, I
-				 guess someone might want to
-				 use it just to remind themselves)
-	  -d			(output a dump of the AST)
+        * TAO_IDL/driver/drv_args.cpp:
+          Added two missing options to the 'usage' ouput -
+          -H perfect_hash       (force perfect hashing. Even
+                                 though it's the default, I
+                                 guess someone might want to
+                                 use it just to remind themselves)
+          -d                    (output a dump of the AST)
 
-	  -Gsp			(changed existing -Gs typo to -Gsp)
+          -Gsp                  (changed existing -Gs typo to -Gsp)
 
-	* docs/compiler.html:
-	  Added -d option mentioned above and removed -Gi option
-	  (interpretive marshaling - no longer used in IDL compiler).
-	  Also added -Sv option to suppress valuetype support.
-	  Thanks to Ossama for pointing these out.
+        * docs/compiler.html:
+          Added -d option mentioned above and removed -Gi option
+          (interpretive marshaling - no longer used in IDL compiler).
+          Also added -Sv option to suppress valuetype support.
+          Thanks to Ossama for pointing these out.
 
 Mon May 22 13:57:45 2000  Ossama Othman  <ossama@uci.edu>
 
-	These changes were necessary to get the CORBA Security Service IDL
-	to compile, however they also apply to other IDL files that
-	include <orb.idl>.
+        These changes were necessary to get the CORBA Security Service IDL
+        to compile, however they also apply to other IDL files that
+        include <orb.idl>.
 
-	* tao/POA.pidl:
+        * tao/POA.pidl:
 
-	  Moved "Identifier" and "RepositoryId" typedefs to
-	  `tao/orb.idl'.  These typedefs are not specific to the POA, and
-	  they are needed by some services, such as the Security Service.
+          Moved "Identifier" and "RepositoryId" typedefs to
+          `tao/orb.idl'.  These typedefs are not specific to the POA, and
+          they are needed by some services, such as the Security Service.
 
-	  Include <orb.idl> to pull in the moved typedefs.
+          Include <orb.idl> to pull in the moved typedefs.
 
-	* tao/CORBA.pidl:
+        * tao/CORBA.pidl:
 
-	  Moved contents of this file to `tao/orb.idl' since types in this
-	  file must be available to CORBA applications that include
-	  <orb.idl>, and since CORBA.pidl is not a standard IDL file.
+          Moved contents of this file to `tao/orb.idl' since types in this
+          file must be available to CORBA applications that include
+          <orb.idl>, and since CORBA.pidl is not a standard IDL file.
 
-	* tao/orb.idl:
+        * tao/orb.idl:
 
-	  This file now contains the core CORBA typedefs necessary to
-	  compile most, CORBA IDL files that depend on them.
+          This file now contains the core CORBA typedefs necessary to
+          compile most, CORBA IDL files that depend on them.
 
 Mon May 22 14:28:03 2000  David L. Levine  <levine@cs.wustl.edu>
 
