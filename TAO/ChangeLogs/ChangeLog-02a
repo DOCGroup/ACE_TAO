@@ -37,6 +37,8 @@ Tue Jul  2 15:46:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  allocators during shutdown. This should prevent some leaks in
 	  the ORB during shutdown.
 
+	* tao/Makefile: Added the new file Notify_Handler.
+
 Tue Jul  2 14:57:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/append.cpp:
