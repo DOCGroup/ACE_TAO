@@ -1,3 +1,11 @@
+Thu Feb 24 22:49:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Upcall_Wrapper.h:
+
+	  Removed include directive for "tao/Environment.h".  Johnny's
+	  CORBA::Environment forward declaration fulfills the
+	  requirements.
+
 Thu Feb 24 22:19:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Sequence.cpp:
