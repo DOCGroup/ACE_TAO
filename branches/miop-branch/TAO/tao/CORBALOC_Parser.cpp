@@ -362,6 +362,7 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
   size_t colon_slot = ACE_OS::strchr (end_point, ':') - end_point;
   size_t len0 = ACE_OS::strlen (protocol[0]);
 
+  /*
   // Lets first check if it is a valid protocol:
   if (colon_slot != 0 &&
       !((ACE_OS::strncmp (end_point,
@@ -389,7 +390,7 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
                                           CORBA::COMPLETED_NO),
                         -1);
     }
-
+*/
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0

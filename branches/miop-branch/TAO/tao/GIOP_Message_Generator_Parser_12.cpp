@@ -287,31 +287,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   // Reserved field
   input.skip_bytes (3);
 
-  // Read the discriminant of the union.
-  CORBA::Short disc = 0;
-  hdr_status = hdr_status && input.read_short (disc);
-
-  if (hdr_status)
-    {
-      if (disc == GIOP::KeyAddr)
-          {
-            hdr_status =
-              this->unmarshall_object_key (request.object_key (),
-                                           input);
-          }
-       else if (disc == GIOP::ProfileAddr)
-          {
-            hdr_status =
-              this->unmarshall_iop_profile (request.profile (),
-                                            input);
-          }
-      else if (disc == GIOP::ReferenceAddr)
-        {
-             hdr_status =
-               this->unmarshall_ref_addr (request.profile (),
-                                          input);
-        }
-    }
+  // Unmarshal the target address field.
+  hdr_status = 
+    hdr_status && request.profile ().unmarshall_target_address(input);
 
   if (input.char_translator () == 0)
     {
@@ -392,32 +370,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   // Store it in the Locate request classes
   request.request_id (req_id);
 
-  // Read the discriminant of the union.
-  CORBA::Short disc = 0;
-  hdr_status =
-    hdr_status && msg.read_short (disc);
-
-  if (hdr_status)
-    {
-      if (disc == GIOP::KeyAddr)
-          {
-            hdr_status =
-              this->unmarshall_object_key (request.object_key (),
-                                           msg);
-          }
-       else if (disc == GIOP::ProfileAddr)
-          {
-            hdr_status =
-              this->unmarshall_iop_profile (request.profile (),
-                                            msg);
-          }
-      else if (disc == GIOP::ReferenceAddr)
-        {
-             hdr_status =
-               this->unmarshall_ref_addr (request.profile (),
-                                          msg);
-        }
-    }
+  // Unmarshal the target address field.
+  hdr_status = 
+    hdr_status && request.profile ().unmarshall_target_address(msg);
 
   // Reset the pointer to an 8-byte bouns]dary
   msg.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);

@@ -747,6 +747,10 @@ SOURCE=.\Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Request_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RequestInfo_Util.cpp
 # End Source File
 # Begin Source File
@@ -1536,6 +1540,10 @@ SOURCE=.\Remote_Object_Proxy_Impl.h
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Request_Dispatcher.h
 # End Source File
 # Begin Source File
 
