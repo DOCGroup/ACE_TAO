@@ -28,7 +28,7 @@ LIST   = http://tao.doc.wustl.edu/bugzilla/DLL_Debug/
 WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_debug
 STATUS = http://tao.doc.wustl.edu/bugzilla/DLL_Debug/status.txt
 
-[Win2000_DLL_Release]
+[WinXP_DLL_Release]
 LIST   = http://tao.doc.wustl.edu/bugzilla/DLL_Release/
 WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_release
 STATUS = http://tao.doc.wustl.edu/bugzilla/DLL_Release/status.txt
