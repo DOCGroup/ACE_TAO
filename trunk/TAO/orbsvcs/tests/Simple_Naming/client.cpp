@@ -83,6 +83,8 @@ CosNaming_Client::run (void)
         myObject._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // Run various tests of the Naming Service operations.
+
       // Bind an object to the Naming Context.
       CosNaming::Name test_name (1);
       test_name.length (1);
@@ -97,6 +99,7 @@ CosNaming_Client::run (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Bound name OK\n"));
 
+      // Resolve the object from the Naming Context.
       CORBA::Object_var resolvedobj =
         this->naming_client_->resolve (test_name,
                                        TAO_TRY_ENV);
@@ -109,6 +112,7 @@ CosNaming_Client::run (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Resolved name OK\n"));
 
+      // Unbind the object from the Naming Context.
       this->naming_client_->unbind (test_name,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;      
