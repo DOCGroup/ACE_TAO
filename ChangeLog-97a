@@ -42,7 +42,10 @@ Tue Mar 11 14:30:12 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Svc_Conf_{l,y}.cpp,Timer_{Heap,List}.cpp,config-aix-4.2.x.h,
 	  config-dgux-4.11-epc.h,config-mvs.h,config-sco-5.0.0-fsu-pthread.h,
 	  config-sco-5.0.0-mit-pthread.h,config-sco-5.0.0-nothread.h:
-	  added CVS header (// $Id$).
+	  added CVS header (Id wrapped in $).
+
+	* netsvcs/clients/Logger/indirect_logging.cpp (main): declare loop
+	  index as signed int to avoid signed/unsigned comparison.
 
 Sun Mar  9 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
