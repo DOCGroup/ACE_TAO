@@ -373,7 +373,7 @@ ACE_Location_Node::open_handle (void)
     {
       ace_yyerrno++;
 
-      ACE_ERROR ((LM_ERROR, "dlopen failed for %s", dl_pathname));
+      ACE_ERROR ((LM_ERROR, "dlopen failed for %s\n", dl_pathname));
 
       char *errmsg = ACE_OS::dlerror ();
 
@@ -417,7 +417,7 @@ ACE_Object_Node::symbol (void)
 	  ace_yyerrno++;
 
 	  ACE_ERROR ((LM_ERROR, 
-		      "dlsym failed for object %s", 
+		      "dlsym failed for object %s\n", 
 		      this->object_name_));
 
 	  char *errmsg = ACE_OS::dlerror ();
@@ -477,7 +477,7 @@ ACE_Function_Node::symbol (void)
 	    {
 	      ace_yyerrno++;
 
-	      ACE_ERROR ((LM_ERROR, "dlsym failed for function %s", 
+	      ACE_ERROR ((LM_ERROR, "dlsym failed for function %s\n", 
 			  this->function_name_));
 
 	      char *errmsg = ACE_OS::dlerror ();
