@@ -1,3 +1,9 @@
+Wed Nov 26 18:36:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/ARGV_Test.cpp:
+
+	  Fixed compile errors, mostly related to missing includes.
+
 Wed Nov 26 17:09:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Log_Msg.cpp (log): Fixed a compile error with VC6.
