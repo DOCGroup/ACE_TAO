@@ -32,9 +32,9 @@
 #include "ace/pre.h"
 
 #include "ace/ACE.h"
-#include "ace/SString.h"
-#include "ace/Hash_Map_With_Allocator_T.h"
-#include "ace/Malloc.h"
+#include "ace/Utils/SString.h"
+#include "ace/Utils/Templates/Hash_Map_With_Allocator_T.h"
+#include "ace/Memory/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

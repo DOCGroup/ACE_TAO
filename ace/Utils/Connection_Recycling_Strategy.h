@@ -13,7 +13,7 @@
 #define ACE_CONNECTION_RECYCLING_STRATEGY_H
 #include "ace/pre.h"
 
-#include "ace/Recyclable.h"
+#include "ace/Utils/Recyclable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

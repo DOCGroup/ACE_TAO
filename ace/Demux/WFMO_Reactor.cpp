@@ -1,13 +1,13 @@
 // $Id$
 
-#include "ace/WFMO_Reactor.h"
+#include "ace/Demux/WFMO_Reactor.h"
 
-#include "ace/Handle_Set.h"
-#include "ace/Timer_Heap.h"
-#include "ace/Thread.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/Timer/Timer_Heap.h"
+#include "ace/Threads/Thread.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/WFMO_Reactor.i"
+#include "ace/Demux/WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, WFMO_Reactor, "$Id$")
@@ -15,7 +15,7 @@ ACE_RCSID(ace, WFMO_Reactor, "$Id$")
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
-#include "ace/Auto_Ptr.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
 
 ACE_WFMO_Reactor_Handler_Repository::ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor)
   : wfmo_reactor_ (wfmo_reactor)

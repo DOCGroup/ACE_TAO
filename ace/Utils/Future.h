@@ -17,9 +17,9 @@
 #define ACE_FUTURE_H
 #include "ace/pre.h"
 
-#include "ace/Unbounded_Set.h"
-#include "ace/Synch.h"
-#include "ace/Strategies_T.h"
+#include "ace/Utils/Unbounded_Set.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Connection/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -359,7 +359,7 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Future.cpp"
+#include "ace/Utils/Future.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -14,7 +14,7 @@
 #define ACE_SERVICE_REPOSITORY_H
 #include "ace/pre.h"
 
-#include "ace/Service_Types.h"
+#include "ace/Svcconf/Service_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -196,7 +196,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Repository.i"
+#include "ace/Svcconf/Service_Repository.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

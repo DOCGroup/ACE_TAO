@@ -15,7 +15,7 @@
 
 // @@todo: Hate to do this. Looks like we have less luck here as
 // compilers complain for type u_long unknowns
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -57,7 +57,7 @@ protected:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Hashable.inl"
+#include "ace/Utils/Hashable.inl"
 #endif /* __ACE_INLINE __ */
 
 #include "ace/post.h"

@@ -12,7 +12,7 @@
 #define ACE_NOTIFICATION_STRATEGY_H
 #include "ace/pre.h"
 
-#include "ace/Event_Handler.h"
+#include "ace/Demux/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,7 +56,7 @@ protected:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Notification_Strategy.inl"
+#include "ace/Streams/Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
 #include "ace/post.h"

@@ -1,8 +1,11 @@
 // $Id$
 
-#include "ace/Process_Mutex.h"
-#include "ace/Synch.h"
+#include "ace/Threads/Process_Mutex.h"
+#include "ace/Threads/Synch.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process_Mutex.inl"
@@ -12,6 +15,7 @@ ACE_RCSID(ace, Process_Mutex, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Mutex)
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Process_Mutex::dump (void) const
 {
@@ -20,6 +24,7 @@ ACE_Process_Mutex::dump (void) const
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif /* ACE_SUBSET_0 */
 
 #if defined (_ACE_USE_SV_SEM)
 const ACE_TCHAR *

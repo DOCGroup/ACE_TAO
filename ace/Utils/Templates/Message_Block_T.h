@@ -15,7 +15,7 @@
 #define ACE_MESSAGE_BLOCK_T_H
 #include "ace/pre.h"
 
-#include "ace/Message_Block.h"
+#include "ace/Utils/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -68,11 +68,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Block_T.i"
+#include "ace/Utils/Templates/Message_Block_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Message_Block_T.cpp"
+#include "ace/Utils/Templates/Message_Block_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

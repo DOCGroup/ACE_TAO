@@ -16,7 +16,7 @@
 #define ACE_DIRENT_H
 #include "ace/pre.h"
 
-#include "ace/OS_Dirent.h"
+#include "ace/OS/OS_Dirent.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -108,7 +108,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Dirent.i"
+#include "ace/Utils/Dirent.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

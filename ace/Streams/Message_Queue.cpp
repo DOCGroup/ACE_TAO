@@ -3,10 +3,10 @@
 #if !defined (ACE_MESSAGE_QUEUE_C)
 #define ACE_MESSAGE_QUEUE_C
 
-#include "ace/Message_Queue.h"
+#include "ace/Streams/Message_Queue.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Queue.i"
+#include "ace/Streams/Message_Queue.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Message_Queue, "$Id$")

@@ -1,4 +1,4 @@
-#include "ace/Notification_Strategy.h"
+#include "ace/Streams/Notification_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Notification_Strategy.inl"

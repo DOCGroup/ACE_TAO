@@ -1,8 +1,8 @@
 //$Id$
-#include "ace/Hashable.h"
+#include "ace/Utils/Hashable.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Hashable.inl"
+#include "ace/Utils/Hashable.inl"
 #endif /* __ACE_INLINE __ */
 
 ACE_RCSID(ace, Hashable, "$Id$")

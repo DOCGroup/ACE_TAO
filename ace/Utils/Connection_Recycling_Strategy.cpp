@@ -1,4 +1,4 @@
-#include "ace/Connection_Recycling_Strategy.h"
+#include "ace/Utils/Connection_Recycling_Strategy.h"
 
 
 ACE_RCSID(ace, Connection_Recycling_Strategy, "$Id$")

@@ -1,12 +1,12 @@
 // Dynamic.cpp
 // $Id$
 
-#include "ace/Dynamic.h"
-#include "ace/Singleton.h"
-#include "ace/Synch_T.h"
+#include "ace/Utils/Dynamic.h"
+#include "ace/Utils/Templates/Singleton.h"
+#include "ace/Threads/Synch_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dynamic.i"
+#include "ace/Utils/Dynamic.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Dynamic, "$Id$")

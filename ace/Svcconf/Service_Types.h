@@ -14,13 +14,13 @@
 #define ACE_SERVICE_TYPE_H
 #include "ace/pre.h"
 
-#include "ace/Service_Object.h"
+#include "ace/Svcconf/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 /**
  * @class ACE_Service_Type_Impl
@@ -189,7 +189,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Types.i"
+#include "ace/Svcconf/Service_Types.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

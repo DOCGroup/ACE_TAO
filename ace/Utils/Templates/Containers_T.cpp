@@ -436,6 +436,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::do_retreat (void)
     return 0;
 }
 
+#ifdef ACE_SUBSET_0
 template <class T> void
 ACE_Double_Linked_List_Iterator_Base<T>::dump_i (void) const
 {
@@ -443,6 +444,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::dump_i (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("current_ = %x"), this->current_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 //--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator)

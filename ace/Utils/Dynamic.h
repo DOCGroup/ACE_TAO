@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
-#include "ace/Singleton.h"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Utils/Templates/Singleton.h"
 
 /**
  * @class ACE_Dynamic
@@ -67,7 +67,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Dynamic.i"
+#include "ace/Utils/Dynamic.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

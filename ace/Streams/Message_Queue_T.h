@@ -14,8 +14,8 @@
 #define ACE_MESSAGE_QUEUE_T_H
 #include "ace/pre.h"
 
-#include "ace/Message_Queue.h"
-#include "ace/Synch.h"
+#include "ace/Streams/Message_Queue.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -1038,11 +1038,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Queue_T.i"
+#include "ace/Streams/Message_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Message_Queue_T.cpp"
+#include "ace/Streams/Message_Queue_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

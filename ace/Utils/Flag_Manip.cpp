@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Flag_Manip.h"
+#include "ace/Utils/Flag_Manip.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Flag_Manip.i"
+#include "ace/Utils/Flag_Manip.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, Flag_Manip, "$Id$")

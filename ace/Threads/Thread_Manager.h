@@ -14,19 +14,22 @@
 #define ACE_THREAD_MANAGER_H
 #include "ace/pre.h"
 
-#include "ace/Thread.h"
-#include "ace/Thread_Adapter.h"
+#include "ace/Threads/Thread.h"
+#include "ace/Threads/Thread_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
-#include "ace/Unbounded_Queue.h"
-#include "ace/Containers.h"
-#include "ace/Free_List.h"
-#include "ace/Singleton.h"
-#include "ace/Log_Msg.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Utils/Unbounded_Queue.h"
+#include "ace/Utils/Containers.h"
+#include "ace/Utils/Templates/Free_List.h"
+#include "ace/Utils/Templates/Singleton.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/LoggingLog_Msg.h"
+#endif
 
 // The following macros control how a Thread Manager manages a pool of
 // Thread_Descriptor.  Currently, the default behavior is not to
@@ -1001,7 +1004,7 @@ typedef ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX> ACE_THREAD_MANAGER_SI
 #endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Thread_Manager.i"
+#include "ace/Threads/Thread_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -25,8 +25,8 @@
 #define ACE_CONFIGURATION_IMPORT_EXPORT_H
 #include "ace/pre.h"
 
-#include "ace/Configuration.h"
-#include "ace/SString.h"
+#include "ace/Utils/Configuration.h"
+#include "ace/Utils/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -59,7 +59,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Dirent_Selector.inl"
+#include "ace/Utils/Dirent_Selector.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

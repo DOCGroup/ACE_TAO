@@ -14,20 +14,20 @@
 #define ACE_STRATEGIES_T_H
 #include "ace/pre.h"
 
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Utils/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
-#include "ace/Reactor.h"
-#include "ace/Synch_Options.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Connection_Recycling_Strategy.h"
-#include "ace/Refcountable.h"
-#include "ace/Hashable.h"
-#include "ace/Recyclable.h"
+#include "ace/Svcconf/Service_Config.h"
+#include "ace/Demux/Reactor.h"
+#include "ace/Threads/Synch_Options.h"
+#include "ace/Threads/Thread_Manager.h"
+#include "ace/Utils/Connection_Recycling_Strategy.h"
+#include "ace/Utils/Refcountable.h"
+#include "ace/Utils/Hashable.h"
+#include "ace/Utils/Recyclable.h"
 
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR
@@ -956,11 +956,11 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Strategies_T.i"
+#include "ace/Connection/Strategies_T.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Strategies_T.cpp"
+#include "ace/Connection/Strategies_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
