@@ -24,6 +24,8 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, ami_exception_holder_ci, "$Id$")
+
 
 // ******************************************************
 // Interface visitor for client header
@@ -139,7 +141,7 @@ be_visitor_interface_ami_exception_holder_ci::visit_interface (be_interface *nod
               if (((AST_Operation *)op)->exceptions ())
                 {
                   UTL_ExceptList *exceptions = (UTL_ExceptList *)((AST_Operation *)op)->exceptions ()->copy ();
-                  op_vt->add_exceptions (exceptions);
+                  op_vt->add_exceptions_x (exceptions);
                 }
 
               excep_holder_vt->add_operation_x (op_vt);
