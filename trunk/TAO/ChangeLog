@@ -1,3 +1,9 @@
+Wed Mar 09 08:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/*S.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/IFRService/*S_T.{h,cpp,inl}:
+          Regenerated
+
 Tue Mar  8 22:08:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
