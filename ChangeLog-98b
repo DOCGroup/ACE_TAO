@@ -1,3 +1,8 @@
+Thu Aug 27 19:40:32 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i: Changed an erroneous ACE_HAS_PTHREAD_DRAFT6 to
+	  ACE_HAS_PTHREADS_DRAFT6.  Thanks to Chuck Gehr for catching this.
+
 Thu Aug 27 15:47:34 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Proactor.cpp (handle_signal): Fixed code for looping around
