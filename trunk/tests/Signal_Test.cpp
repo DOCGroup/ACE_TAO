@@ -280,12 +280,13 @@ worker_parent (void *)
   ACE_ASSERT (child_pid != -1);
 
   // Perform a <wait> until our child process has exited.
-  int result;
   
+  sigset_t s;
+  ACE_OS::sigemptyset (&s);
   while (shut_down == 0)
     {
       // Wait for a signal to arrive.
-      if (ACE_OS::sigsuspend () == -1)
+      if (ACE_OS::sigsuspend (&s) == -1)
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("(%P|%t) %p\n"),
                     ASYS_TEXT ("sigsuspend")));
@@ -296,9 +297,7 @@ worker_parent (void *)
   // have "reaped" the SIGCHLD already.
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) child done, result = %d, %p\n"),
-              result,
-              ASYS_TEXT ("wait")));
+              ASYS_TEXT ("(%P|%t) child done\n")));
   return 0;
 }
 
