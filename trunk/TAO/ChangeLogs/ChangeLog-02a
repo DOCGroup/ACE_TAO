@@ -1,3 +1,15 @@
+Tue Aug 28 16:56:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Put the sockets in
+	  non-blocking mode even for wait on read strategy. Need to figure
+	  out how much of performance impact does this have. If it has a
+	  penalty then we can revert this change. This solves one problem
+	  that we could have. If someone uses RW connection handler
+	  through a svc conf file, we could inadvertently turn the server
+	  sockets into blocking mode which could create problems.
+
 Tue Aug 28 11:31:58 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/DLL_ORB/client.cpp (main):
