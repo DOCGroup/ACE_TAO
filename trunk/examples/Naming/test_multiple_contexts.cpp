@@ -66,10 +66,14 @@ int main (int, char *[])
   if (i != 0) 
     return -1;
 
-  name_options1->parse_args (n_argc, n_argv);
+  name_options1->parse_args (n_argc,
+                             (char **) n_argv);
+
   i = ns_ptr1->open (ACE_Naming_Context::NODE_LOCAL);
+
   ACE_DEBUG ((LM_DEBUG,
-              "(%P) 1 opened with %d\n", i));
+              "(%P) 1 opened with %d\n",
+              i));
   if (i != 0) 
     return -1;
 

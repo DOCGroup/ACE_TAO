@@ -52,9 +52,9 @@ int main (int, char *[])
           ACE_OS::sprintf (val,
                            "Val%05d",
                            l);
-          i = ns.bind (key,
-                       val,
-                       type);  
+          i = ns_ptr->bind (key,
+                            val,
+                            type);  
           ACE_DEBUG ((LM_DEBUG,
                       "%d: bind of %s: %d\n",
                       ACE_OS::getpid (),
