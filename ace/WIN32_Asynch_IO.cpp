@@ -2315,8 +2315,7 @@ ACE_WIN32_Asynch_Connect::ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_p
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Connect_Impl (),
     ACE_WIN32_Asynch_Operation (win32_proactor),
-    flg_open_ (0),
-    task_lock_count_ (0)
+    flg_open_ (false)
 {
 }
 
