@@ -107,6 +107,9 @@ public:
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
   idl_bool ifr_added_;
+
+  // Has this node been forward declared in this IDL file?
+  idl_bool ifr_fwd_added_;
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH
