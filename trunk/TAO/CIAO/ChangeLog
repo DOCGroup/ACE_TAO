@@ -1,3 +1,25 @@
+Mon May 24 19:44:32 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/ADD_Handler.*:
+        * DnC/Config_Handlers/ACD_Handler.*:
+        * DnC/Config_Handlers/APM_Handler.*:
+        * DnC/Config_Handlers/CRDD_Handler.*:
+        * DnC/Config_Handlers/DP_Handler.*:
+        * DnC/Config_Handlers/IDD_Handler.*:
+        * DnC/Config_Handlers/IRDD_Handler.*:
+        * DnC/Config_Handlers/MDD_Handler.*:
+        * DnC/Config_Handlers/PCD_Handler.*:
+        * DnC/Config_Handlers/PPM_Handler.*:
+        * DnC/Config_Handlers/PSPE_Handler.*:
+        * DnC/Config_Handlers/PSPR_Handler.*:
+        * DnC/Config_Handlers/RDD_Handler.*:
+        * DnC/Config_Handlers/SID_Handler.*:
+        * DnC/Config_Handlers/SPE_Handler.*:
+        * DnC/Config_Handlers/SPR_Handler.*:
+
+          Removed the above mentioned handlers as they are
+          not used.
+
 Mon May 24 11:50:15 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Plan_Handler.cpp:
