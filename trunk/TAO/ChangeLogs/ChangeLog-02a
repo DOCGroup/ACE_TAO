@@ -1,3 +1,11 @@
+Tue Jan 23 13:43:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile:
+          Update dependencies in all directories.
+
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+          Fixed used of IDL_SRC the idl_stubs target was not working.
+
 Tue Jan 23 14:34:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Makefile*:

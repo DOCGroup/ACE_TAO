@@ -64,8 +64,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/DynamicAny.o .obj/DynamicAny.so .shobj/DynamicAny.o .shobj/DynamicAny.so: DynamicAny.cpp DynamicAny.h \
  $(ACE_ROOT)/ace/pre.h \
  dynamicany_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -385,10 +383,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  DynamicAnyC.i DynAnyFactory.h
 
 .obj/DynAnyFactory.o .obj/DynAnyFactory.so .shobj/DynAnyFactory.o .shobj/DynAnyFactory.so: DynAnyFactory.cpp DynAnyFactory.h \
- $(ACE_ROOT)/ace/pre.h DynamicAny.h \
- dynamicany_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ DynamicAny.h dynamicany_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -712,10 +708,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp DynAny_i.h \
- $(ACE_ROOT)/ace/pre.h DynamicAny.h \
- dynamicany_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ DynamicAny.h dynamicany_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1035,10 +1029,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  DynamicAnyC.i DynAnyFactory.h
 
 .obj/DynStruct_i.o .obj/DynStruct_i.so .shobj/DynStruct_i.o .shobj/DynStruct_i.so: DynStruct_i.cpp DynStruct_i.h \
- $(ACE_ROOT)/ace/pre.h DynamicAny.h \
- dynamicany_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ DynamicAny.h dynamicany_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1363,8 +1355,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1386,8 +1376,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i DynamicAny.h \
- dynamicany_export.h \
+ $(ACE_ROOT)/ace/OS.i \
+ DynamicAny.h dynamicany_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1685,10 +1675,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynEnum_i.o .obj/DynEnum_i.so .shobj/DynEnum_i.o .shobj/DynEnum_i.so: DynEnum_i.cpp DynEnum_i.h \
- $(ACE_ROOT)/ace/pre.h DynamicAny.h \
- dynamicany_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ DynamicAny.h dynamicany_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2008,10 +1996,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  DynamicAnyC.i DynAnyFactory.h
 
 .obj/DynArray_i.o .obj/DynArray_i.so .shobj/DynArray_i.o .shobj/DynArray_i.so: DynArray_i.cpp DynArray_i.h \
- $(ACE_ROOT)/ace/pre.h DynamicAny.h \
- dynamicany_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ DynamicAny.h dynamicany_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2333,10 +2319,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Marshal.i
 
 .obj/DynUnion_i.o .obj/DynUnion_i.so .shobj/DynUnion_i.o .shobj/DynUnion_i.so: DynUnion_i.cpp DynUnion_i.h \
- $(ACE_ROOT)/ace/pre.h DynamicAny.h \
- dynamicany_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ DynamicAny.h dynamicany_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2660,8 +2644,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/DynamicAnyC.o .obj/DynamicAnyC.so .shobj/DynamicAnyC.o .shobj/DynamicAnyC.so: DynamicAnyC.cpp DynamicAny.h \
  $(ACE_ROOT)/ace/pre.h \
  dynamicany_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

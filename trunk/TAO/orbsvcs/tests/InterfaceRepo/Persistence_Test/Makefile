@@ -58,8 +58,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/IFR_Client/ifrfwd.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -382,8 +380,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/IFR_Client/ifrfwd.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

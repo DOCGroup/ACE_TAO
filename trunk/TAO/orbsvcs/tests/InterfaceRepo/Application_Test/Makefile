@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS += -l TAO_IFR_Client -lTAO 
+LDLIBS += -l TAO_IFR_Client -lTAO
 LDFLAGS += -L$(ACE_ROOT)/bin
 
 IDL_FILES = test
@@ -72,8 +72,6 @@ realclean: clean
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -392,8 +390,6 @@ realclean: clean
 .obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -748,8 +744,6 @@ realclean: clean
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp test_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1082,8 +1076,6 @@ realclean: clean
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

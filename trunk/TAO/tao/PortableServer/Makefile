@@ -95,8 +95,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/PortableServer.o .obj/PortableServer.so .shobj/PortableServer.o .shobj/PortableServer.so: PortableServer.cpp PortableServer.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -289,8 +287,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/PortableServerC.o .obj/PortableServerC.so .shobj/PortableServerC.o .shobj/PortableServerC.so: PortableServerC.cpp PortableServerC.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -479,7 +475,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  Object_Adapter.i POAManager.h POAManager.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
- POA.i $(TAO_ROOT)/tao/ORB.h \
+ POA.i \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
@@ -489,8 +486,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/RTPortableServerC.o .obj/RTPortableServerC.so .shobj/RTPortableServerC.o .shobj/RTPortableServerC.so: RTPortableServerC.cpp RTPortableServerC.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServerC.h portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -631,8 +626,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -935,8 +928,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  Default_Acceptor_Filter.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1061,8 +1052,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Object_Adapter.o .obj/Object_Adapter.so .shobj/Object_Adapter.o .shobj/Object_Adapter.so: Object_Adapter.cpp Object_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1406,8 +1395,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Operation_Table.o .obj/Operation_Table.so .shobj/Operation_Table.o .shobj/Operation_Table.so: Operation_Table.cpp Operation_Table.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1582,8 +1569,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Key_Adapters.o .obj/Key_Adapters.so .shobj/Key_Adapters.o .shobj/Key_Adapters.so: Key_Adapters.cpp Key_Adapters.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServerC.h portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1760,8 +1745,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/POAManager.o .obj/POAManager.so .shobj/POAManager.o .shobj/POAManager.so: POAManager.cpp POAManager.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServerC.h portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1956,8 +1939,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Active_Object_Map.o .obj/Active_Object_Map.so .shobj/Active_Object_Map.o .shobj/Active_Object_Map.so: Active_Object_Map.cpp Active_Object_Map.h \
  $(ACE_ROOT)/ace/pre.h \
  Key_Adapters.h PortableServerC.h portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2139,8 +2120,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Servant_Base.o .obj/Servant_Base.so .shobj/Servant_Base.o .shobj/Servant_Base.so: Servant_Base.cpp Servant_Base.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServerC.h portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2444,8 +2423,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2732,8 +2709,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Direct_Object_Proxy_Impl.o .obj/Direct_Object_Proxy_Impl.so .shobj/Direct_Object_Proxy_Impl.o .shobj/Direct_Object_Proxy_Impl.so: Direct_Object_Proxy_Impl.cpp \
  Direct_Object_Proxy_Impl.h portableserver_export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2925,8 +2900,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Strategized_Object_Proxy_Broker.o .obj/Strategized_Object_Proxy_Broker.so .shobj/Strategized_Object_Proxy_Broker.o .shobj/Strategized_Object_Proxy_Broker.so: Strategized_Object_Proxy_Broker.cpp \
  Strategized_Object_Proxy_Broker.h portableserver_export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3245,8 +3218,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Collocated_Object.o .obj/Collocated_Object.so .shobj/Collocated_Object.o .shobj/Collocated_Object.so: Collocated_Object.cpp Collocated_Object.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3534,8 +3505,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3855,8 +3824,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/ORB_Manager.o .obj/ORB_Manager.so .shobj/ORB_Manager.o .shobj/ORB_Manager.so: ORB_Manager.cpp ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServer.h portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4003,8 +3970,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4167,8 +4132,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/ImplRepoC.o .obj/ImplRepoC.so .shobj/ImplRepoC.o .shobj/ImplRepoC.so: ImplRepoC.cpp ImplRepoC.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4456,10 +4419,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Invocation.i
 
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
- $(ACE_ROOT)/ace/pre.h ImplRepoC.h \
- portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ ImplRepoC.h portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4760,8 +4721,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4783,7 +4742,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i MessagingS.h \
+ $(ACE_ROOT)/ace/OS.i \
+ MessagingS.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5066,8 +5026,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

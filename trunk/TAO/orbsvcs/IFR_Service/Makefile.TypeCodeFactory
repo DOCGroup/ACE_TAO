@@ -48,9 +48,8 @@ realclean: clean
 
 
 .obj/TypeCodeFactoryC.o .obj/TypeCodeFactoryC.so .shobj/TypeCodeFactoryC.o .shobj/TypeCodeFactoryC.so: TypeCodeFactoryC.cpp TCF_Loader.h \
- $(ACE_ROOT)/ace/pre.h TCF_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ TCF_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -376,10 +375,8 @@ realclean: clean
  TypeCodeFactoryC.inl
 
 .obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.so .shobj/TypeCodeFactory_i.o .shobj/TypeCodeFactory_i.so: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
- $(ACE_ROOT)/ace/pre.h TCF_Loader.h \
- TCF_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ TCF_Loader.h TCF_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -707,9 +704,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.i
 
 .obj/TCF_Loader.o .obj/TCF_Loader.so .shobj/TCF_Loader.o .shobj/TCF_Loader.so: TCF_Loader.cpp TCF_Loader.h \
- $(ACE_ROOT)/ace/pre.h TCF_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ TCF_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

@@ -79,12 +79,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -166,7 +165,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Read_Buffer.i testC.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -234,71 +234,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -314,6 +257,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -322,6 +269,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -342,6 +294,21 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
@@ -349,6 +316,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
@@ -361,6 +336,32 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -373,8 +374,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -391,22 +390,22 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  testC.i
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -440,8 +439,9 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i test_i.h testS.h \
- testC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ test_i.h testS.h testC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -554,71 +554,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -634,6 +577,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -642,6 +589,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -662,6 +614,21 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
@@ -669,6 +636,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
@@ -681,6 +656,32 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -693,8 +694,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -711,14 +710,15 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  testC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -733,13 +733,12 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  testS_T.h testS_T.i testS_T.cpp testS.i test_i.i
 
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -887,71 +886,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -967,6 +909,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -975,6 +921,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -995,6 +946,21 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
@@ -1002,6 +968,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
@@ -1014,6 +988,32 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1026,8 +1026,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1044,14 +1042,15 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  testC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -1066,13 +1065,12 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  testS_T.h testS_T.i testS_T.cpp testS.i test_i.i
 
 .obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1220,71 +1218,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -1300,6 +1241,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -1308,6 +1253,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -1328,6 +1278,21 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
@@ -1335,6 +1300,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
@@ -1347,6 +1320,32 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1359,8 +1358,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1377,14 +1374,15 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  testC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -1399,6 +1397,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  testS_T.h testS_T.i testS_T.cpp testS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
@@ -1420,13 +1419,12 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1574,71 +1572,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -1654,6 +1595,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
@@ -1662,6 +1607,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -1682,6 +1632,21 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
@@ -1689,6 +1654,14 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
@@ -1701,6 +1674,32 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1713,8 +1712,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1731,14 +1728,16 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- testC.i
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ testC.i \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

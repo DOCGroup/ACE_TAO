@@ -73,8 +73,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -270,14 +268,14 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -310,6 +308,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -376,6 +376,24 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -404,14 +422,15 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -457,6 +476,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
@@ -469,6 +489,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
@@ -482,7 +503,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
@@ -506,8 +526,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -762,6 +780,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -830,6 +850,26 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -842,8 +882,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -860,14 +898,15 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -892,6 +931,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
@@ -923,6 +963,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
@@ -936,27 +977,24 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
- client.h $(ACE_ROOT)/ace/ARGV.h \
+ client.h \
+ $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i child.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
+ child.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
 .obj/child.o .obj/child.so .shobj/child.o .shobj/child.so: child.cpp child.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -965,6 +1003,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
@@ -979,6 +1019,12 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1007,17 +1053,11 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread_Adapter.h \
  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1211,6 +1251,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -1279,6 +1321,26 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1291,8 +1353,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1309,14 +1369,15 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -1341,6 +1402,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
@@ -1372,6 +1434,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
@@ -1385,25 +1448,21 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
- client.h $(ACE_ROOT)/ace/ARGV.h \
+ client.h \
+ $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i
 
 .obj/child_process.o .obj/child_process.so .shobj/child_process.o .shobj/child_process.so: child_process.cpp child.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1412,6 +1471,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
@@ -1426,6 +1487,12 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1454,17 +1521,11 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread_Adapter.h \
  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1658,6 +1719,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -1726,6 +1789,26 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1738,8 +1821,6 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1756,14 +1837,15 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -1788,6 +1870,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
@@ -1819,6 +1902,7 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
@@ -1832,14 +1916,14 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
- client.h $(ACE_ROOT)/ace/ARGV.h \
+ client.h \
+ $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i

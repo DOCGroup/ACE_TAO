@@ -50,8 +50,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -279,14 +277,14 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -321,6 +319,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -384,6 +384,24 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -412,14 +430,15 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
@@ -429,6 +448,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
@@ -444,6 +464,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
@@ -457,7 +478,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
@@ -480,8 +500,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -709,14 +727,14 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -751,6 +769,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -814,6 +834,24 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -842,14 +880,15 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
@@ -859,6 +898,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
@@ -874,6 +914,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
@@ -887,7 +928,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
@@ -910,8 +950,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1139,14 +1177,14 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -1181,6 +1219,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -1244,6 +1284,24 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/RT_Policy_i.h \
+ $(TAO_ROOT)/tao/RTCORBAS.h \
+ $(TAO_ROOT)/tao/IOPS.h \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.h \
+ $(TAO_ROOT)/tao/RTCORBAS_T.i \
+ $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
+ $(TAO_ROOT)/tao/RTCORBAS.i \
+ $(TAO_ROOT)/tao/RT_Policy_i.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1272,14 +1330,15 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
@@ -1289,6 +1348,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
@@ -1304,6 +1364,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
@@ -1317,7 +1378,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
