@@ -1,3 +1,46 @@
+Thu Dec 25 17:41:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup_Simple_DS.idl:
+
+	  Moved some of the typedefs and data structures that are used by
+	  other services into this file. For example FT_CORBA_ORB.idl just
+	  includes 3 typedefs and a struct in PortableGroup.idl which it
+	  was doing by including PortableGroup.idl. This lead to
+	  dependancy between FT_CORBA_ORB and PortableGroup. This also
+	  dependancy also lead to teh dependancies of PortableGroup being
+	  imposed on FT_CORBA_ORB, which were all nasty in the first
+	  place. This seperate IDL file will clean a bunch of things up. 
+	
+	* orbsvcs/orbsvcs/PortableGroup.idl:
+	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl:
+
+	  These IDL files include only the above IDL file. 
+
+	* orbsvcs/orbsvcs/Makefile:
+
+	  Removed the dependancy of PortableGroup on FTORB. There is no
+	  need for this. Further cleaned up the dependancy on
+	  Notification and Naming. The whole idea of splitting the
+	  FT_CORBA IDL into two pieces months before was to avoid this
+	  dependancy. Adding this dependancy defeats the purpose. A
+	  dependancy has been setup between PortableGroup and FTORB. This
+	  is just for the generated code and not a library dependancy. 
+	
+	* orbsvcs/orbsvcs/Makefile.FTORB:
+	  
+	  Added the PortableGroup_Simple_DS.idl for compilation. 
+	
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+
+	  Added the generated code from PortableGroup_Simple_DS.idl for
+	  cmpilation and linking.
+	
+	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+
+	  Does not link in Messaging library.
+
 Thu Dec 25 11:09:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
