@@ -98,7 +98,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     outgoing_ (&output),
     // transport already duplicated in
     // TAO_Transport::process_parsed_messages ()
-    transport_ (TAO_Transport::_duplicate (transport)),
+    transport_ (transport),
     response_expected_ (response_expected),
     deferred_reply_ (deferred_reply),
     sync_with_server_ (0),
