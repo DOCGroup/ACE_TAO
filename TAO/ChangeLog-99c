@@ -1,60 +1,60 @@
 Wed Jul 28 00:06:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Added a bunch of updated Makefile.bor files for BCB4.  Thanks to
-	  Christopher Kohlhoff <chris@kohlhoff.com> and Mike Gingell
- 	  <mgingell@istar.ca> for contributing these.
-  
+        * Added a bunch of updated Makefile.bor files for BCB4.  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> and Mike Gingell
+          <mgingell@istar.ca> for contributing these.
+
 Tue Jul 27 21:11:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/fe/y.tab.cpp.diff
-	  The IDL compiler was losing its list of pragma prefixes upon
-	  declaration of a typedef. Upon fixing this, and further checking
-	  I found that it was also losing them upon declaration of a
-	  contant, enum, exception and a forward interface delcaration.
-	  Had to add code to reset the list (accessing it sets it to NULL)
-	  in several places, and in some cases extract the list when it
-	  wasn't already assigned to a local variable. Thanks to
-	  Alex Hornby <alex@anvil.co.uk> for sending in the original
-	  example.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff
+          The IDL compiler was losing its list of pragma prefixes upon
+          declaration of a typedef. Upon fixing this, and further checking
+          I found that it was also losing them upon declaration of a
+          contant, enum, exception and a forward interface delcaration.
+          Had to add code to reset the list (accessing it sets it to NULL)
+          in several places, and in some cases extract the list when it
+          wasn't already assigned to a local variable. Thanks to
+          Alex Hornby <alex@anvil.co.uk> for sending in the original
+          example.
 
-	* TAO/tests/Param_Test/param_test_i.cpp:
-	  Fixed all the MSVC level 4 warnings in this file.
+        * TAO/tests/Param_Test/param_test_i.cpp:
+          Fixed all the MSVC level 4 warnings in this file.
 
 Tue Jul 27 17:45:26 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/ORB.{i, h} (CORBA_ORB_out): Added the "const" to the formal
-	  argument of the copy constructor. This would otherwise result in 
-	  warnings on using CORBA_ORB_out when compiling with SunCC5.0.
+        * tao/ORB.{i, h} (CORBA_ORB_out): Added the "const" to the formal
+          argument of the copy constructor. This would otherwise result in
+          warnings on using CORBA_ORB_out when compiling with SunCC5.0.
 
 Tue Jul 27 17:41:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/MT_Client/run_test.pl:
-	* tests/MT_Client/server.cpp:
-	  Work around problems in the thread-per-connection concurrency
-	  model: the ORB cannot wait for the server threads to exit
-	  because there is no portable way to ensure that they
-	  finish. Unfortunately if main() exits before the server threads
-	  finish doing their cleanup the program may crash. The current
-	  workaround is to sleep() before main exits, giving the server
-	  threads a chance to exit.
+        * tests/MT_Client/run_test.pl:
+        * tests/MT_Client/server.cpp:
+          Work around problems in the thread-per-connection concurrency
+          model: the ORB cannot wait for the server threads to exit
+          because there is no portable way to ensure that they
+          finish. Unfortunately if main() exits before the server threads
+          finish doing their cleanup the program may crash. The current
+          workaround is to sleep() before main exits, giving the server
+          threads a chance to exit.
 
 Tue Jul 27 13:57:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h: KCC has
-	  the fix for the struct exception name conflict so we don't need
-	  to do it here.
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h: KCC has
+          the fix for the struct exception name conflict so we don't need
+          to do it here.
 
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed broken custom build
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed broken custom build
 
 Tue Jul 27 14:28:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* version_tests.dsw: Event_Service was missing from the
-	  workspace.
+        * version_tests.dsw: Event_Service was missing from the
+          workspace.
 
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed broken custome build
-	  setting and updated source file lists.
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed broken custome build
+          setting and updated source file lists.
 
 Tue Jul 27 13:48:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -64,7 +64,7 @@ Tue Jul 27 13:48:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * examples/Quoter/Quoter_i.cpp (copy): rearranged logic
           to avoid Green Hills warning about function not returning a
- 	  value.
+          value.
 
 Tue Jul 27 11:00:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -127,8 +127,8 @@ Mon Jul 26 17:11:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
           Take out all the information from the <message_state> and reset
           it so that nested upcall on the same transport can be handled.
-	  Thanks to Geisler Andreas <Andreas.Geisler@erls.siemens.de> for
-	  sending an example showing the problem in TAO.
+          Thanks to Geisler Andreas <Andreas.Geisler@erls.siemens.de> for
+          sending an example showing the problem in TAO.
 
         * tao/GIOP.h (TAO_GIOP::process_server_message): Changed method
           interface to take message_type and giop_version instead of
