@@ -1,5 +1,5 @@
 #include "tao/default_client.h"
-#include "tao/orb_core.h"
+#include "tao/ORB_Core.h"
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 {
