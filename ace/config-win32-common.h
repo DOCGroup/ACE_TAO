@@ -219,7 +219,7 @@
 #define ACE_SIZEOF_LONG_LONG 8
 // Green Hills Native x86 does not support __int64 keyword
 // Neither does mingw32.
-#if !defined (ghs) && !defined (__MINGW32__)
+#if !defined (ACE_LACKS_LONGLONG_T) && !defined (__MINGW32__)
 typedef unsigned __int64 ACE_UINT64;
 #endif /* (ghs) */
 

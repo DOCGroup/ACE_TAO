@@ -1,3 +1,15 @@
+Sat Dec  8 09:39:48 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Profile_Timer.cpp,
+	  ace/OS.i,
+	  ace/OS.h,
+	  ace/OS.cpp,
+	  ace/High_Res_Timer.i,
+	  ace/High_Res_Timer.cpp,
+	  ace/config-win32-ghs.h,
+	  ace/config-win32-common.h: Added improved support for ACE_LACKS_LONGLONG_T.
+	  Thanks to Alain Decamps for contributing this.
+
 Fri Dec  7 07:57:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.cpp (cond_timedwait): Fixed a bug in the WinCE semaphore
