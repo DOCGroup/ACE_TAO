@@ -114,18 +114,19 @@ if ($OSNAME ne "MSWin32") {
     $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
 
     run_test_helper ();
-}
 
-print STDERR "============================================================\n";
-print STDERR "Running IDL_Cubit with the SHMIOP protocol.\n\n";
+    print STDERR "============================================================\n";
+    print STDERR "Running IDL_Cubit with the SHMIOP protocol.\n\n";
 
-$SV->Arguments ($svflags . $svnsflags
-                . " -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
-$CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
+    $SV->Arguments ($svflags . $svnsflags
+                    . " -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
+    $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
 
-run_test_helper ();
+    run_test_helper ();
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");
+
+}
 
 exit $status;
