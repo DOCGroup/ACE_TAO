@@ -39,7 +39,7 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -54,14 +54,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib /nologo /subsystem:windows /dll /machine:I386 /out:"Generic_Servant.lib" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 ace.lib tao.lib /nologo /subsystem:windows /dll /machine:I386 /out:"Generic_Servant.dll" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 # Begin Special Build Tool
 SOURCE=$(InputPath)
 PostBuild_Desc=Copying DLL to ..\Explicit_Activation and\
-      ..\On_Demand_Activation
+       ..\On_Demand_Activation
 PostBuild_Cmds=copy Generic_Servant.dll ..\Explicit_Activation	copy\
- Generic_Servant.dll ..\On_Demand_Activation
+  Generic_Servant.dll ..\On_Demand_Activation
 # End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "POA Generic Servant DLL - Win32 Debug"
@@ -95,7 +95,7 @@ LINK32=link.exe
 SOURCE=$(InputPath)
 PostBuild_Desc=Copying DLL to destinations
 PostBuild_Cmds=copy Generic_Servantd.dll ..\Explicit_Activation	copy\
- Generic_Servantd.dll ..\On_Demand_Activation
+  Generic_Servantd.dll ..\On_Demand_Activation
 # End Special Build Tool
 
 !ENDIF 
@@ -149,13 +149,14 @@ SOURCE=.\Foo.idl
 
 !IF  "$(CFG)" == "POA Generic Servant DLL - Win32 Release"
 
-# Begin Custom Build
+USERDEP__FOO_I="..\..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
-      -Wb,export_include=generic_servant_export.h $(InputName).idl
+	..\..\..\tao_idl\Release\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
+       -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -185,7 +186,7 @@ InputName=Foo
 
 BuildCmds= \
 	..\..\..\tao_idl\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
-      -Wb,export_include=generic_servant_export.h $(InputName).idl
+       -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -38,8 +38,8 @@ RSC=rc.exe
 # PROP BASE Target_Dir ".\server"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir ".\Release"
+# PROP Output_Dir "Release"
+# PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\server"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
@@ -134,12 +134,22 @@ SOURCE=.\Simple_Object.idl
 
 !IF  "$(CFG)" == "Simple Server - Win32 Release"
 
-# Begin Custom Build
+USERDEP__SIMPL="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Simple_Object.idl
 InputName=Simple_Object
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\tao_idl\Release\tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -163,7 +173,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Simple Server - Win32 Debug"
 
 USERDEP__SIMPL="..\..\tao_idl\tao_idl.exe"	
-# Begin Custom Build
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Simple_Object.idl
 InputName=Simple_Object
 

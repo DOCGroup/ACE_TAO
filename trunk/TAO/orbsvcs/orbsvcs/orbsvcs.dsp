@@ -55,11 +55,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 ace.lib TAO.lib /nologo /subsystem:windows /dll /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# Begin Special Build Tool
-SOURCE=$(InputPath)
-PostBuild_Desc=Copying DLL to $TAO_ROOT/tao
-PostBuild_Cmds=copy orbsvcs.dll ..\..\tao
-# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
@@ -684,17 +679,26 @@ SOURCE=.\Sched\Strategy_Scheduler.i
 # Begin Source File
 
 SOURCE=.\CosConcurrencyControl.idl
-USERDEP__COSCO="..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__COSCO="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -705,25 +709,26 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__COSCO="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -750,17 +755,26 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\CosLifeCycle.idl
-USERDEP__COSLI="..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__COSLI="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -771,25 +785,26 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__COSLI="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -816,17 +831,26 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\CosNaming.idl
-USERDEP__COSNA="..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__COSNA="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -837,25 +861,26 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__COSNA="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -882,17 +907,26 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\CosTimeBase.idl
-USERDEP__COSTI="..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__COSTI="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -903,25 +937,26 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__COSTI="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -948,19 +983,56 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\CosTrading.idl
-USERDEP__COSTR="..\..\tao_idl\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+USERDEP__COSTR="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\CosTrading.idl
+InputName=CosTrading
+
+BuildCmds= \
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__COSTR="..\..\tao_idl\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -996,17 +1068,26 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\LifeCycleService.idl
-USERDEP__LIFEC="..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__LIFEC="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1017,25 +1098,26 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__LIFEC="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1062,17 +1144,26 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\Logger.idl
-USERDEP__LOGGE="..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__LOGGE="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1083,25 +1174,26 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__LOGGE="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1131,14 +1223,23 @@ SOURCE=.\RtecEventChannelAdmin.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-USERDEP__RTECE="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__RTECE="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1149,13 +1250,13 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -1169,7 +1270,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1196,17 +1297,26 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\RtecEventComm.idl
-USERDEP__RTECEV="..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__RTECEV="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1217,25 +1327,26 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__RTECEV="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1262,17 +1373,26 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\RtecScheduler.idl
-USERDEP__RTECS="..\..\TAO_IDL\tao_idl.exe"	
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__RTECS="..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1283,25 +1403,26 @@ BuildCmds= \
 "$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
+USERDEP__RTECS="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                           -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                            -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
