@@ -133,6 +133,14 @@ public:
   int std_profile_components (void) const;
   void std_profile_components (int x);
 
+  /// Thread scheduling policy.
+  long sched_policy (void) const;
+  void sched_policy (long x);
+
+  /// Thread scope policy.
+  long scope_policy (void) const;
+  void scope_policy (long x);
+
 private:
   // Each "endpoint" is of the form:
   //
@@ -192,6 +200,12 @@ private:
 
   /// If true then the standard OMG components are not generated.
   int std_profile_components_;
+
+  /// Thread scheduling policy.
+  long sched_policy_;
+
+  /// Thread scope policy.
+  long scope_policy_;
 };
 
 #if defined (__ACE_INLINE__)

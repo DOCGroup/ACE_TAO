@@ -109,7 +109,7 @@ TAO_Default_Protocols_Hooks::set_default_policies (CORBA::Environment &)
 
 int
 TAO_Default_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &,
-                                                                 CORBA::Environment &ACE_TRY_ENV)
+                                                                 CORBA::Environment &)
 {
   return 0;
 }

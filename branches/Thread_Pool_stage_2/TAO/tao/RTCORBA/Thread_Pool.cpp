@@ -75,7 +75,7 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
                                   CORBA::Short lane_priority,
                                   CORBA::ULong static_threads,
                                   CORBA::ULong dynamic_threads,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::Environment &)
   : pool_ (pool),
     id_ (id),
     lane_priority_ (lane_priority),
@@ -196,8 +196,16 @@ TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
   // deleted.
   ACE_Auto_Basic_Array_Ptr<size_t> auto_stack_size_array (stack_size_array);
 
+  TAO_ORB_Core &orb_core =
+    this->pool ().manager ().orb_core ();
+
+  long flags =
+    default_flags |
+    orb_core.orb_params ()->scope_policy () |
+    orb_core.orb_params ()->sched_policy ();
+
   // Activate the threads.
-  return this->threads_.activate (default_flags,
+  return this->threads_.activate (flags,
                                   number_of_threads,
                                   force_active,
                                   this->native_priority_,

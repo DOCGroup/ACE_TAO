@@ -33,7 +33,8 @@ TAO_RT_ORB_Loader::init (int argc,
 
   // Set defaults.
   int priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
-  int sched_policy = ACE_SCHED_OTHER;
+  long sched_policy = THR_SCHED_DEFAULT;
+  long scope_policy = THR_SCOPE_PROCESS;
   int curarg = 0;
 
   // Parse any service configurator parameters.
@@ -68,17 +69,37 @@ TAO_RT_ORB_Loader::init (int argc,
 
             if (ACE_OS::strcasecmp (name,
                                     "SCHED_OTHER") == 0)
-              sched_policy = ACE_SCHED_OTHER;
+              sched_policy = THR_SCHED_DEFAULT;
             else if (ACE_OS::strcasecmp (name,
                                          "SCHED_FIFO") == 0)
-              sched_policy = ACE_SCHED_FIFO;
+              sched_policy = THR_SCHED_FIFO;
             else if (ACE_OS::strcasecmp (name,
                                          "SCHED_RR") == 0)
-              sched_policy = ACE_SCHED_RR;
+              sched_policy = THR_SCHED_RR;
             else
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("RT_ORB_Loader - unknown argument")
                           ACE_TEXT (" <%s> for -ORBSchedPolicy\n"), name));
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBScopePolicy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "SYSTEM") == 0)
+              scope_policy = THR_SCOPE_SYSTEM;
+            else if (ACE_OS::strcasecmp (name,
+                                         "PROCESS") == 0)
+              scope_policy = THR_SCOPE_PROCESS;
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("RT_ORB_Loader - unknown argument")
+                          ACE_TEXT (" <%s> for -ORBScopePolicy\n"), name));
           }
       }
     else
@@ -102,7 +123,8 @@ TAO_RT_ORB_Loader::init (int argc,
       /// Register the RTCORBA ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_RT_ORBInitializer (priority_mapping_type,
-                                               sched_policy),
+                                               sched_policy,
+                                               scope_policy),
                         CORBA::NO_MEMORY (
                           CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
