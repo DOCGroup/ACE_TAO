@@ -41,13 +41,13 @@ class ACE_Export ACE
 public:
   // = ACE version information.
   static u_int major_version ();
-  // E.g., the "4" in ACE 4.3.18.
+  // E.g., the "4" in ACE 4.3.19.
 
   static u_int minor_version ();
-  // E.g., the "3" in ACE 4.3.18.
+  // E.g., the "3" in ACE 4.3.19.
 
   static u_int beta_version ();
-  // E.g., the "18" in ACE 4.3.18.
+  // E.g., the "19" in ACE 4.3.19.
 
   // = Recv operations that factor out differences between Win32 and UNIX.
   static ssize_t recv (ACE_HANDLE handle, 
