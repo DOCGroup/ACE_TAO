@@ -1345,10 +1345,11 @@ public:
   // The hook to be set for the SyncScopePolicy
   TAO_ORB_Core::Sync_Scope_Hook sync_scope_hook_;
 
-  // Name of the protocols_hooks that needs to be instantiated.
-  // The default value is "Protocols_Hooks". If RTCORBA option is
-  // set, its value will be set to
-  // be "RT_Protocols_Hooks".
+  /**
+   * Name of the protocols_hooks that needs to be instantiated.
+   * The default value is "Protocols_Hooks". If RTCORBA option is
+   * set, its value will be set to be "RT_Protocols_Hooks".
+   */
   ACE_CString protocols_hooks_name_;
 
   /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
@@ -1357,81 +1358,105 @@ public:
   /// The hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook connection_timeout_hook_;
 
-  // Name of the endpoint selector factory that needs to be instantiated.
-  // The default value is "Default_Endpoint_Selector_Factory". If
-  // TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
-  // called to set the value to be "RT_Endpoint_Selector_Factory".
+  /**
+   * Name of the endpoint selector factory that needs to be instantiated.
+   * The default value is "Default_Endpoint_Selector_Factory". If
+   * TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
+   * called to set the value to be "RT_Endpoint_Selector_Factory".
+   */
   ACE_CString endpoint_selector_factory_name_;
 
-  // Name of the thread lane resources manager that needs to be
-  // instantiated.  The default value is
-  // "Default_Thread_Lane_Resources_Manager_Factory". If TAO_RTCORBA
-  // is linked, the set_thread_lane_resources_manager will be called
-  // to set the value to be
-  // "RT_Thread_Lane_Resources_Manager_Factory".
+  /**
+   * Name of the thread lane resources manager that needs to be
+   * instantiated.  The default value is
+   * "Default_Thread_Lane_Resources_Manager_Factory". If TAO_RTCORBA
+   * is linked, the set_thread_lane_resources_manager will be called
+   * to set the value to be
+   * "RT_Thread_Lane_Resources_Manager_Factory".
+   */
   ACE_CString thread_lane_resources_manager_factory_name_;
 
-  // Name of the collocation resolver that needs to be instantiated.
-  // The default value is "Default_Collocation_Resolver". If
-  // TAO_RTCORBA is linked, the set_collocation_resolver will be
-  // called to set the value to be "RT_Collocation_Resolver".
+  /**
+   * Name of the collocation resolver that needs to be instantiated.
+   * The default value is "Default_Collocation_Resolver". If
+   * TAO_RTCORBA is linked, the set_collocation_resolver will be
+   * called to set the value to be "RT_Collocation_Resolver".
+   */
   ACE_CString collocation_resolver_name_;
 
-  // Name of the stub factory that needs to be instantiated.
-  // The default value is "Default_Stub_Factory". If TAO_RTCORBA is
-  // linked, the set_stub_factory will be called to set the value
-  // to be "RT_Stub_Factory".
+  /**
+   * Name of the stub factory that needs to be instantiated.
+   * The default value is "Default_Stub_Factory". If TAO_RTCORBA is
+   * linked, the set_stub_factory will be called to set the value
+   * to be "RT_Stub_Factory".
+   */
   ACE_CString stub_factory_name_;
 
-  // Name of the resource factory that needs to be instantiated.
-  // The default value is "Resource_Factory". If TAO_Strategies is
-  // linked, the set_resource_factory will be called to set the value
-  // to be "Advanced_Resource_Factory".
+  /**
+   * Name of the resource factory that needs to be instantiated.
+   * The default value is "Resource_Factory". If TAO_Strategies is
+   * linked, the set_resource_factory will be called to set the value
+   * to be "Advanced_Resource_Factory".
+   */
   ACE_CString resource_factory_name_;
 
-  // Name of the service object for DII request creation that needs
-  // to be instantiated. The default value is "Dynamic_Adaper". If
-  // TAO_DynamicInterface is linked, dynamic_adapter_name() will be
-  // called to set the value to "Concrete_Dynamic_Adapter".
+  /**
+   * Name of the service object for DII request creation that needs
+   * to be instantiated. The default value is "Dynamic_Adaper". If
+   * TAO_DynamicInterface is linked, dynamic_adapter_name() will be
+   * called to set the value to "Concrete_Dynamic_Adapter".
+   */
   ACE_CString dynamic_adapter_name_;
 
-  // Name of the service object for functions that make calls on
-  // the Interface Repository. The default value is "IFR_Client_Adaper".
-  // If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
-  // called to set the value to "Concrete_IFR_Client_Adapter".
+  /**
+   * Name of the service object for functions that make calls on
+   * the Interface Repository. The default value is "IFR_Client_Adaper".
+   * If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
+   * called to set the value to "Concrete_IFR_Client_Adapter".
+   */
   ACE_CString ifr_client_adapter_name_;
 
-  // Name of the service object used by the ORB create_*_tc functions.
-  // The default value is "TypeCodeFactory_Adapter". If the
-  // TypeCodeFactory library is linked, the corresponding accessor
-  // function typecodefactory_adapter_name() will be called to set
-  // the value to "Concrete_TypeCodeFactory_Adapter".
+  /**
+   * Name of the service object used by the ORB create_*_tc functions.
+   * The default value is "TypeCodeFactory_Adapter". If the
+   * TypeCodeFactory library is linked, the corresponding accessor
+   * function typecodefactory_adapter_name() will be called to set
+   * the value to "Concrete_TypeCodeFactory_Adapter".
+   */
   ACE_CString typecodefactory_adapter_name_;
 
-  // Name of the factory object used to adapt function calls on
-  // the PortableInterceptor interfaces IORInfo and IORInterceptor.
-  // The default value is "IORInterceptor_Adapter_Factory". If the
-  // IORInterceptor library is linked, the corresponding accessor
-  // function iorinterceptor_adapter_factory_name() will be called to set
-  // the value to "Concrete_IORInterceptor_Adapter_Factory".
+  /**
+   * Name of the factory object used to adapt function calls on
+   * the PortableInterceptor interfaces IORInfo and IORInterceptor.
+   * The default value is "IORInterceptor_Adapter_Factory". If the
+   * IORInterceptor library is linked, the corresponding accessor
+   * function iorinterceptor_adapter_factory_name() will be called to set
+   * the value to "Concrete_IORInterceptor_Adapter_Factory".
+   */
   ACE_CString iorinterceptor_adapter_factory_name_;
 
-  // Name of the service object used to adapt function calls on
-  // the valuetype-related interfaces.
-  // The default value is "Valuetype_Adapter". If the
-  // Valuetype library is linked, the corresponding accessor
-  // function valuetype_adapter_name() will be called to set
-  // the value to "Concrete_Valuetype_Adapter".
+  /**
+   * Name of the service object used to adapt function calls on
+   * the valuetype-related interfaces.
+   * The default value is "Valuetype_Adapter". If the
+   * Valuetype library is linked, the corresponding accessor
+   * function valuetype_adapter_name() will be called to set
+   * the value to "Concrete_Valuetype_Adapter".
+   */
   ACE_CString valuetype_adapter_name_;
 
-  // Name of the service object used to create the RootPOA.  The
-  // default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
-  // will be changed to TAO_RT_POA so that a POA equipped with
-  // realtime extensions will be returned.
+  /**
+   * Name of the service object used to create the RootPOA.  The
+   * default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
+   * will be changed to TAO_RT_POA so that a POA equipped with
+   * realtime extensions will be returned.
+   */
   ACE_CString poa_factory_name_;
 
-  // The service configurator directive used to load
-  // poa_factory_name_ dynamically.
+  /**
+   * The service configurator directive used to load
+   * poa_factory_name_ dynamically.
+   */
   ACE_CString poa_factory_directive_;
 
 private:
