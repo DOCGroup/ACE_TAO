@@ -18,11 +18,11 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_operation.h"
+#include "be_visitor_argument.h"
 
 ACE_RCSID(be_visitor_operation, arglist, "$Id$")
 
@@ -33,8 +33,9 @@ ACE_RCSID(be_visitor_operation, arglist, "$Id$")
 //   visitors to avoid code duplication and tight coupling
 // ************************************************************
 
-be_visitor_operation_arglist::
-be_visitor_operation_arglist (be_visitor_context *ctx)
+be_visitor_operation_arglist::be_visitor_operation_arglist (
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
@@ -47,10 +48,11 @@ int
 be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << " (" << be_idt // idt = 1
-      << be_idt_nl; // idt = 2
 
-  bool arg_emitted = false;
+  *os << " (" << be_idt
+      << be_idt_nl;
+
+  int arg_emitted = 0;
 
   switch (this->ctx_->state ())
     {
@@ -58,16 +60,19 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
       *os << "CORBA_Object *_collocated_tao_target_";
-      if (node->argument_count () > 0)
-        *os << "," << be_nl;
-      arg_emitted = true;
-      break;
 
+      if (node->argument_count () > 0)
+        {
+          *os << "," << be_nl;
+        }
+
+      arg_emitted = 1;
+      break;
     default:
       break;
     }
 
-  // all we do is hand over code generation to our scope
+  // All we do is hand over code generation to our scope.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -89,7 +94,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
   *os << be_uidt_nl // idt = 1
       << ")" << be_uidt; // idt = 0
 
-  // now generate the throw specs
+  // Now generate the throw specs.
   if (this->gen_throw_spec (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -105,17 +110,21 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
       if (node->is_local ())
-        *os << " = 0;" << be_nl << be_nl;
+        {
+          *os << " = 0;" << be_nl << be_nl;
+        }
       else
-        *os << ";" << be_nl << be_nl;
-      break;
+        {
+          *os << ";" << be_nl << be_nl;
+        }
 
+      break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
       *os << ";" << be_nl << be_nl;
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-      // each method is pure virtual in the server header
+      // Each method is pure virtual in the server header.
       *os << " = 0;" << be_nl << be_nl;
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
@@ -130,15 +139,16 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 int
 be_visitor_operation_arglist::visit_argument (be_argument *node)
 {
-  // get the visitor that will dump the argument's mapping in the operation
+  // Get the visitor that will dump the argument's mapping in the operation
   // signature.
   be_visitor_context ctx (*this->ctx_);
 
-  // first grab the interface definition inside which this operation is
+  // First grab the interface definition inside which this operation is
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
   be_operation *op = this->ctx_->be_scope_as_operation ();
+
   if (!op)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -164,7 +174,9 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
                          "Bad interface\n"),
                         -1);
     }
-  ctx.scope (intf); // set new scope
+
+  // Set new scope.
+  ctx.scope (intf);
 
   switch (this->ctx_->state ())
     {
@@ -191,26 +203,18 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
       }
     }
 
-  // grab a visitor
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
+  // Create a visitor.
+  be_visitor_args_arglist visitor (&ctx);
+
+  if (visitor.visit_argument (node) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_arglist::"
-                         "visit_argument - "
-                         "Bad visitor\n"),
-                        -1);
-    }
-  if (node->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"
                          "visit_argument - "
                          "codegen for arglist failed\n"),
                         -1);
     }
-  delete visitor;
+
   return 0;
 }
 
@@ -226,5 +230,6 @@ be_visitor_operation_arglist::post_process (be_decl *bd)
     {
       *os << "," << be_nl;
     }
+
   return 0;
 }

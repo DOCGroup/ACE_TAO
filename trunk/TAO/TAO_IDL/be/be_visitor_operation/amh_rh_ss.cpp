@@ -90,6 +90,11 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // Step 2 : Generate the params of the method
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
+
+  // Set the substate because response handler operations without
+  // parameters don't use the environment parameter in the body.
+  ctx.sub_state (TAO_CodeGen::TAO_AMH_RESPONSE_HANDLER_OPERATION);
+
   be_visitor_operation_arglist visitor (&ctx);
 
   if (node->accept (&visitor) == -1)
@@ -110,8 +115,8 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // 3) The argument takes an implied valuetype generated from the
   //    original interface
   // 4) The implied valuetype ends in ExceptionHolder
-  const char *last_underbar =
-    ACE_OS::strrchr (node->full_name (), '_');
+  const char *last_underbar = ACE_OS::strrchr (node->full_name (), '_');
+
   if (last_underbar != 0
       && ACE_OS::strcmp (last_underbar, "_excep") == 0)
     {
@@ -132,6 +137,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
                 {
                   const char *last_E =
                     ACE_OS::strrchr (vt->full_name (), 'E');
+
                   if (last_E != 0
                       && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
                     {
@@ -228,6 +234,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                              "(%N:%l) gen_raise_exception failed\n"),
                             -1);
         }
+
       *os << be_uidt << be_uidt;
     }
 
