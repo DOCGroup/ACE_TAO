@@ -94,7 +94,7 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_i.cpp
+SOURCE=.\Cubit_Client.cpp
 # End Source File
 # Begin Source File
 
@@ -110,7 +110,7 @@ SOURCE=.\cubitS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\client_i.h
+SOURCE=.\Cubit_Client.h
 # End Source File
 # Begin Source File
 

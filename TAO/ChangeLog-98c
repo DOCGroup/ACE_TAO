@@ -1,3 +1,9 @@
+Mon Aug 24 10:53:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit: Renamed a number of files to be more
+ 	  consistent.  Also, integrated the RTI test operation.  Thanks to
+ 	  Dave Meyer <dmeyer@std.saic.com> for contributing this.
+
 Mon Aug 24 10:31:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* The IDL compiler support #pragma prefix
@@ -34,7 +40,9 @@ Mon Aug 24 10:31:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/CosPropertyService.idl: 
 	* orbsvcs/orbsvcs/CosTimeBase.idl: 
 	* orbsvcs/orbsvcs/CosTrading.idl: 
-	  Added the #pragma "omg.org" directive.
+	  Added the #pragma "omg.org" directive.  This should allow
+	  TAO's services to interoperate seamlessly with other standard
+	  CORBA ORBs. 
 
 Mon Aug 24 09:47:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
