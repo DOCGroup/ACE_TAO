@@ -1540,6 +1540,9 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   while (tmp [0] && tmp [1])
     {
+      // Some platforms define 'byte' as a macro, solve the problem
+      // here.
+#undef byte
       u_char byte;
 
       if (!(isxdigit (tmp [0]) && isxdigit (tmp [1])))

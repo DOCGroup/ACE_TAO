@@ -70,6 +70,9 @@ TAO_ObjectKey::encode_sequence_to_string (char * &str,
        cp < (cp + len) && i < seq.length();
        ++i)
     {
+      // Some platforms define 'byte' as a macro, solve the problem
+      // here.
+#undef byte
       u_char byte = seq[i];
       if (isprint (byte) && byte != '\\')
         {
