@@ -1,3 +1,11 @@
+Tue Aug 14 12:29:08 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (recv_i):
+
+	  Use the timeout value when attempting to read from the SSL
+	  connection.  Fixes some thread-per-connection problems.  Thanks
+	  to Bala for pointing out the problem.
+
 Tue Aug 14 14:18:36 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * tao/orbconf.h:
