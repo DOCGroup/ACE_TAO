@@ -1,3 +1,9 @@
+Fri Oct 29 09:30:37 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/HTBP/HTBP_Channel.cpp:
+
+          Remove build warning from g++.
+
 Thu Oct 28 13:12:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/SOCK_SEQPACK_SCTP_Test.cpp:
