@@ -599,18 +599,12 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
 {
   // Register a reply dispatcher for this invocation. Use the
   // preallocated reply dispatcher.
-
-  // Bind.
-  TAO_Transport_Mux_Strategy *tms =
-    this->transport_->tms ();
-
   TAO_Bind_Dispatcher_Guard dispatch_guard (
     this->op_details_.request_id (),
     &this->rd_,
-    tms);
-  int &status = dispatch_guard.status ();
+    this->transport_->tms ());
 
-  if (status == -1)
+  if (dispatch_guard.status () != 0)
     {
       // @@ What is the right way to handle this error?
       this->close_connection ();
@@ -618,6 +612,17 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
       ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
                         TAO_INVOKE_EXCEPTION);
+    }
+
+  // Do we have timeout se for the invocation?
+  if (this->max_wait_time_ != 0)
+    {
+      if (TAO_debug_level > 4)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Synch_Invocation::invoke_i, "
+                    "setting timeout in the reply dispatcher \n"));
+
+      this->rd_.has_timeout (TAO_Reply_Dispatcher::TIMEOUT);
     }
 
   // Just send the request, without trying to wait for the reply.
@@ -682,38 +687,29 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
     }
 
   // Check the reply error.
-
   if (reply_error == -1)
     {
-      // The guard automatically unbinds the dispatcher.
-      if (errno == ETIME)
-        {
-          // Just a timeout, don't close the connection or
-          // anything...
-          ACE_THROW_RETURN (CORBA::TIMEOUT (
-              CORBA_SystemException::_tao_minor_code (
-                  TAO_TIMEOUT_SEND_MINOR_CODE,
-                  errno),
-              CORBA::COMPLETED_NO),
-            TAO_INVOKE_EXCEPTION);
-        }
+      // Check whether the error that occured is really true or not.
+      reply_error =
+        this->validate_error (dispatch_guard
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (reply_error);
+    }
 
-      // As there is an error set the status flag to -1
-      // @@ This is a hack. The problem is -- when an error occurs we
-      // @@ try to close the connection. This just goes and destroys
-      // @@ the transport object and so the TMS. When the Bind
-      // @@ Dispatcher Guard goes out of scope the destructor is
-      // @@ called and it uses the TMS, which is "bad". Let us have
-      // @@ this for the time being -- Bala
-      status = -1;
-      // Call the ORB Core which would check whether we need to really
-      // raise an exception or are we going to base our decision on the
-      // loaded services.
+  // If this is still an error that needs special handing, call the
+  // ORB Core which would check whether we need to really
+  // raise an exception or are we going to base our decision on the
+  // loaded services.
+  if (reply_error == -1)
+    {
+      // An error has occured while waiting for the reply. So reset the
+      // state of the dispatcher guard so that no unbind happens when
+      // the destructor is called.
+      (void) dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
       return this->orb_core_->service_raise_comm_failure (this,
                                                           this->profile_
                                                           ACE_ENV_ARG_PARAMETER);
     }
-
   // @@ Alex: the old version of this had some error handling code,
   //    like:  this->profile_->reset_hint ()
   //    Can you make sure we don't forget to do that on exceptions
@@ -834,6 +830,53 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
     }
 
   return TAO_INVOKE_OK;
+}
+
+int
+TAO_GIOP_Synch_Invocation::validate_error (TAO_Bind_Dispatcher_Guard &guard
+                                           ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // We can check the validity of only ETIME
+  if (errno != ETIME)
+    {
+      return -1;
+    }
+
+  // Unbind the dispatcher, since its of no use at this point of
+  // time
+  if (TAO_debug_level > 3)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - Synch_Invocation::invoke_i, "
+                "unbinding dispatcher after an error \n"));
+
+  int retval =
+    guard.unbind_dispatcher ();
+
+  if (retval == 0)
+    {
+      // Just a timeout, don't close the connection or
+      // anything...
+      ACE_THROW_RETURN (CORBA::TIMEOUT (
+              CORBA_SystemException::_tao_minor_code (
+                  TAO_TIMEOUT_SEND_MINOR_CODE,
+                  errno),
+              CORBA::COMPLETED_NO),
+            TAO_INVOKE_EXCEPTION);
+    }
+
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Synch_Invocation::validate_error "
+                  "waiting for dispatching to end \n"));
+    }
+
+  // Peek into the dispatcher to see whether we need to be waiting and
+  // if so wait
+  (void) this->rd_.wait_for_dispatch_completion ();
+
+  return 0;
 }
 
 // ****************************************************************

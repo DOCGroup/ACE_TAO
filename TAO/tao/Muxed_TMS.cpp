@@ -60,6 +60,7 @@ int
 TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                                 TAO_Reply_Dispatcher *rd)
 {
+
   int result = this->dispatcher_table_.bind (request_id, rd);
 
   if (result != 0)
@@ -76,22 +77,23 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
   return 0;
 }
 
-void
+int
 TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    ace_mon,
+                    this->lock_,
+                    -1);
   TAO_Reply_Dispatcher *rd = 0;
-  (void) this->dispatcher_table_.unbind (request_id, rd);
+
+  // @@TODO: WTH are we sending the rd in? We can just unbind using
+  // the request_id
+  return this->dispatcher_table_.unbind (request_id, rd);
 }
 
 int
 TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
-  // This message state should be the same as the one we have here,
-  // which we gave to the Transport to read the message. Just a sanity
-  // check here.
-  //  ACE_ASSERT (message_state == this->message_state_);
-
   int result = 0;
   TAO_Reply_Dispatcher *rd = 0;
 
@@ -99,32 +101,41 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
     result = this->dispatcher_table_.unbind (params.request_id_, rd);
-    //ACE_DEBUG ((LM_DEBUG,
-    //            "\n(%P|%t) TAO_Muxed_TMS::dispatch_reply: id = %d\n",
-    //            params.request_id_));
+
+    if (TAO_debug_level > 8)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t)- TAO_Muxed_TMS::dispatch_reply, "
+                  "id = %d\n",
+                  params.request_id_));
+
+    if (result != 0)
+      {
+        if (TAO_debug_level > 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
+                      ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
+                      result));
+
+        // This return value means that the mux strategy was not able
+        // to find a registered reply handler, either because the reply
+        // was not our reply - just forget about it - or it was ours, but
+        // the reply timed out - just forget about the reply.
+        return 0;
+      }
+
+    // Just let the Reply_Dispatcher know that dispatching has
+    // started.
+    (void) rd->start_dispatch ();
   }
-
-  if (result != 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
-                    ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
-                    result));
-
-      // This return value means that the mux strategy was not able
-      // to find a registered reply handler, either because the reply
-      // was not our reply - just forget about it - or it was ours, but
-      // the reply timed out - just forget about the reply.
-      return 0;
-    }
 
   // Dispatch the reply.
   // They return 1 on success, and -1 on failure.
-  return rd->dispatch_reply (params);
+  int retval =  rd->dispatch_reply (params);
 
-  // No need for idling Transport, it would have got idle'd soon after
-  // sending the request.
+  // Just let the Reply_Dispatcher know that dispatching is done.
+  (void) rd->end_dispatch ();
+
+  return retval;
 }
 
 int

@@ -16,22 +16,27 @@
 #include "tao/Transport_Mux_Strategy.h"
 
 
-ACE_INLINE
-TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (
-                                         CORBA::ULong request_id,
-                                         TAO_Reply_Dispatcher* rd,
-                                         TAO_Transport_Mux_Strategy* tms)
- : status_(0),
-   request_id_(request_id),
-   rd_(rd),
-   tms_(tms)
+ACE_INLINE void
+TAO_Bind_Dispatcher_Guard::status (int s)
 {
-  this->status_ = this->tms_->bind_dispatcher (this->request_id_,
-                                               this->rd_);
+  this->status_ = s;
 }
 
-ACE_INLINE int &
-TAO_Bind_Dispatcher_Guard::status (void)
+ACE_INLINE int
+TAO_Bind_Dispatcher_Guard::status (void) const
 {
-  return status_;
+  return this->status_;
+}
+
+ACE_INLINE int
+TAO_Bind_Dispatcher_Guard::unbind_dispatcher (void)
+{
+  int retval =
+    this->tms_->unbind_dispatcher (this->request_id_);
+
+  // Already unbound and so do not try again during destruction.
+  this->status_ =
+    TAO_Bind_Dispatcher_Guard::NO_UNBIND;
+
+  return retval;
 }
