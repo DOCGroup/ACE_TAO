@@ -1,3 +1,11 @@
+Mon Jan  4 03:15:57 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Mem_Map: If we're remapping an already-mapped file
+	  (i.e., the base_addr_ != 0) && the addr parameter IS 0 (i.e.,
+ 	  the user isn't trying to respecify where to map this file), then
+ 	  we'll try to map over top of the existing region, which implies 
+	  "MAP_FIXED".
+
 Sun Jan 03 23:21:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Config.cpp (initialize): Both initialize methods now
