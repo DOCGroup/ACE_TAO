@@ -1,3 +1,24 @@
+Mon Dec 11 15:10:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Get_Opt.h:
+	  In some platforms 'optind', 'optarg' and 'opterr'
+
+	* ace/OS.h:
+	  If 'timezone' is defined as a macro in the system header files
+	  then define ACE_TIMEZONE and #undef timezone.
+	  The ACE_OS::timezone() method cannot be compiled otherwise, but
+	  unfortunately this forces us to disable support for the method
+	  under that sort of platform.
+
+	* ace/OS.h:
+	  Do not include sys/shm.h if ACE_LACKS_SYSV_SHMEM is defined,
+	  there is no reason to #include the file if we are not using it
+	  anyway.
+ 
+	* ace/ACE.cpp:
+	  Check the return value from getrlimit() before accepting its
+	  results.
+
 Mon Dec 11 00:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_wchar.h:
