@@ -341,7 +341,6 @@ DEP_CPP_ACTIV=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -429,6 +428,7 @@ DEP_CPP_ACTIV=\
 	".\varout.i"\
 	
 NODEP_CPP_ACTIV=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -603,7 +603,6 @@ DEP_CPP_ACTIV=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -691,6 +690,7 @@ DEP_CPP_ACTIV=\
 	".\varout.i"\
 	
 NODEP_CPP_ACTIV=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -876,7 +876,6 @@ DEP_CPP_ANY_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -964,6 +963,7 @@ DEP_CPP_ANY_C=\
 	".\varout.i"\
 	
 NODEP_CPP_ANY_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -1138,7 +1138,6 @@ DEP_CPP_ANY_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -1226,6 +1225,7 @@ DEP_CPP_ANY_C=\
 	".\varout.i"\
 	
 NODEP_CPP_ANY_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -1411,7 +1411,6 @@ DEP_CPP_APPEN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -1499,6 +1498,7 @@ DEP_CPP_APPEN=\
 	".\varout.i"\
 	
 NODEP_CPP_APPEN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -1673,7 +1673,6 @@ DEP_CPP_APPEN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -1761,6 +1760,7 @@ DEP_CPP_APPEN=\
 	".\varout.i"\
 	
 NODEP_CPP_APPEN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -1952,7 +1952,6 @@ DEP_CPP_CDR_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -2040,6 +2039,7 @@ DEP_CPP_CDR_C=\
 	".\varout.i"\
 	
 NODEP_CPP_CDR_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -2220,7 +2220,6 @@ DEP_CPP_CDR_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -2308,6 +2307,7 @@ DEP_CPP_CDR_C=\
 	".\varout.i"\
 	
 NODEP_CPP_CDR_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -2493,7 +2493,6 @@ DEP_CPP_CLIEN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -2581,6 +2580,7 @@ DEP_CPP_CLIEN=\
 	".\varout.i"\
 	
 NODEP_CPP_CLIEN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -2755,7 +2755,6 @@ DEP_CPP_CLIEN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -2843,6 +2842,7 @@ DEP_CPP_CLIEN=\
 	".\varout.i"\
 	
 NODEP_CPP_CLIEN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -3034,7 +3034,6 @@ DEP_CPP_CONNE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -3123,6 +3122,7 @@ DEP_CPP_CONNE=\
 	".\varout.i"\
 	
 NODEP_CPP_CONNE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -3303,7 +3303,6 @@ DEP_CPP_CONNE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -3392,6 +3391,7 @@ DEP_CPP_CONNE=\
 	".\varout.i"\
 	
 NODEP_CPP_CONNE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -3577,7 +3577,6 @@ DEP_CPP_CURRE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -3665,6 +3664,7 @@ DEP_CPP_CURRE=\
 	".\varout.i"\
 	
 NODEP_CPP_CURRE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -3839,7 +3839,6 @@ DEP_CPP_CURRE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -3927,6 +3926,7 @@ DEP_CPP_CURRE=\
 	".\varout.i"\
 	
 NODEP_CPP_CURRE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -4112,7 +4112,6 @@ DEP_CPP_CURREN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -4200,6 +4199,7 @@ DEP_CPP_CURREN=\
 	".\varout.i"\
 	
 NODEP_CPP_CURREN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -4374,7 +4374,6 @@ DEP_CPP_CURREN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -4462,6 +4461,7 @@ DEP_CPP_CURREN=\
 	".\varout.i"\
 	
 NODEP_CPP_CURREN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -4647,7 +4647,6 @@ DEP_CPP_DEBUG=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -4735,6 +4734,7 @@ DEP_CPP_DEBUG=\
 	".\varout.i"\
 	
 NODEP_CPP_DEBUG=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -4909,7 +4909,6 @@ DEP_CPP_DEBUG=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -4997,6 +4996,7 @@ DEP_CPP_DEBUG=\
 	".\varout.i"\
 	
 NODEP_CPP_DEBUG=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -5182,7 +5182,6 @@ DEP_CPP_DECOD=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -5270,6 +5269,7 @@ DEP_CPP_DECOD=\
 	".\varout.i"\
 	
 NODEP_CPP_DECOD=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -5444,7 +5444,6 @@ DEP_CPP_DECOD=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -5532,6 +5531,7 @@ DEP_CPP_DECOD=\
 	".\varout.i"\
 	
 NODEP_CPP_DECOD=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -5717,7 +5717,6 @@ DEP_CPP_DEEP_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -5805,6 +5804,7 @@ DEP_CPP_DEEP_=\
 	".\varout.i"\
 	
 NODEP_CPP_DEEP_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -5979,7 +5979,6 @@ DEP_CPP_DEEP_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -6067,6 +6066,7 @@ DEP_CPP_DEEP_=\
 	".\varout.i"\
 	
 NODEP_CPP_DEEP_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -6252,7 +6252,6 @@ DEP_CPP_DEFAU=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -6340,6 +6339,7 @@ DEP_CPP_DEFAU=\
 	".\varout.i"\
 	
 NODEP_CPP_DEFAU=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -6514,7 +6514,6 @@ DEP_CPP_DEFAU=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -6602,6 +6601,7 @@ DEP_CPP_DEFAU=\
 	".\varout.i"\
 	
 NODEP_CPP_DEFAU=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -6787,7 +6787,6 @@ DEP_CPP_DEFAUL=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -6875,6 +6874,7 @@ DEP_CPP_DEFAUL=\
 	".\varout.i"\
 	
 NODEP_CPP_DEFAUL=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -7049,7 +7049,6 @@ DEP_CPP_DEFAUL=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -7137,6 +7136,7 @@ DEP_CPP_DEFAUL=\
 	".\varout.i"\
 	
 NODEP_CPP_DEFAUL=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -7322,7 +7322,6 @@ DEP_CPP_DYNAN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -7417,6 +7416,7 @@ DEP_CPP_DYNAN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNAN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -7591,7 +7591,6 @@ DEP_CPP_DYNAN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -7686,6 +7685,7 @@ DEP_CPP_DYNAN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNAN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -7871,7 +7871,6 @@ DEP_CPP_DYNANY=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -7959,6 +7958,7 @@ DEP_CPP_DYNANY=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNANY=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -8133,7 +8133,6 @@ DEP_CPP_DYNANY=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -8221,6 +8220,7 @@ DEP_CPP_DYNANY=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNANY=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -8406,7 +8406,6 @@ DEP_CPP_DYNANYS=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -8494,6 +8493,7 @@ DEP_CPP_DYNANYS=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNANYS=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -8668,7 +8668,6 @@ DEP_CPP_DYNANYS=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -8756,6 +8755,7 @@ DEP_CPP_DYNANYS=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNANYS=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -8941,7 +8941,6 @@ DEP_CPP_DYNAR=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -9030,6 +9029,7 @@ DEP_CPP_DYNAR=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNAR=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -9204,7 +9204,6 @@ DEP_CPP_DYNAR=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -9293,6 +9292,7 @@ DEP_CPP_DYNAR=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNAR=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -9478,7 +9478,6 @@ DEP_CPP_DYNEN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -9567,6 +9566,7 @@ DEP_CPP_DYNEN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNEN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -9741,7 +9741,6 @@ DEP_CPP_DYNEN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -9830,6 +9829,7 @@ DEP_CPP_DYNEN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNEN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -10015,7 +10015,6 @@ DEP_CPP_DYNSE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -10104,6 +10103,7 @@ DEP_CPP_DYNSE=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNSE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -10278,7 +10278,6 @@ DEP_CPP_DYNSE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -10367,6 +10366,7 @@ DEP_CPP_DYNSE=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNSE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -10552,7 +10552,6 @@ DEP_CPP_DYNST=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -10641,6 +10640,7 @@ DEP_CPP_DYNST=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNST=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -10815,7 +10815,6 @@ DEP_CPP_DYNST=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -10904,6 +10903,7 @@ DEP_CPP_DYNST=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNST=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -11089,7 +11089,6 @@ DEP_CPP_DYNUN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -11180,6 +11179,7 @@ DEP_CPP_DYNUN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNUN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -11354,7 +11354,6 @@ DEP_CPP_DYNUN=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -11445,6 +11444,7 @@ DEP_CPP_DYNUN=\
 	".\varout.i"\
 	
 NODEP_CPP_DYNUN=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -11630,7 +11630,6 @@ DEP_CPP_ENCOD=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -11718,6 +11717,7 @@ DEP_CPP_ENCOD=\
 	".\varout.i"\
 	
 NODEP_CPP_ENCOD=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -11892,7 +11892,6 @@ DEP_CPP_ENCOD=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -11980,6 +11979,7 @@ DEP_CPP_ENCOD=\
 	".\varout.i"\
 	
 NODEP_CPP_ENCOD=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -12165,7 +12165,6 @@ DEP_CPP_ENVIR=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -12253,6 +12252,7 @@ DEP_CPP_ENVIR=\
 	".\varout.i"\
 	
 NODEP_CPP_ENVIR=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -12427,7 +12427,6 @@ DEP_CPP_ENVIR=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -12515,6 +12514,7 @@ DEP_CPP_ENVIR=\
 	".\varout.i"\
 	
 NODEP_CPP_ENVIR=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -12700,7 +12700,6 @@ DEP_CPP_EXCEP=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -12788,6 +12787,7 @@ DEP_CPP_EXCEP=\
 	".\varout.i"\
 	
 NODEP_CPP_EXCEP=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -12962,7 +12962,6 @@ DEP_CPP_EXCEP=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -13050,6 +13049,7 @@ DEP_CPP_EXCEP=\
 	".\varout.i"\
 	
 NODEP_CPP_EXCEP=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -13235,7 +13235,6 @@ DEP_CPP_FORWA=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -13324,6 +13323,7 @@ DEP_CPP_FORWA=\
 	".\varout.i"\
 	
 NODEP_CPP_FORWA=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -13498,7 +13498,6 @@ DEP_CPP_FORWA=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -13587,6 +13586,7 @@ DEP_CPP_FORWA=\
 	".\varout.i"\
 	
 NODEP_CPP_FORWA=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -13778,7 +13778,6 @@ DEP_CPP_GIOP_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -13867,6 +13866,7 @@ DEP_CPP_GIOP_=\
 	".\varout.i"\
 	
 NODEP_CPP_GIOP_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -14047,7 +14047,6 @@ DEP_CPP_GIOP_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -14136,6 +14135,7 @@ DEP_CPP_GIOP_=\
 	".\varout.i"\
 	
 NODEP_CPP_GIOP_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -14351,7 +14351,6 @@ DEP_CPP_IIOP_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -14439,6 +14438,7 @@ DEP_CPP_IIOP_=\
 	".\varout.i"\
 	
 NODEP_CPP_IIOP_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -14613,7 +14613,6 @@ DEP_CPP_IIOP_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -14701,6 +14700,7 @@ DEP_CPP_IIOP_=\
 	".\varout.i"\
 	
 NODEP_CPP_IIOP_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -14886,7 +14886,6 @@ DEP_CPP_IIOP_O=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -14974,6 +14973,7 @@ DEP_CPP_IIOP_O=\
 	".\varout.i"\
 	
 NODEP_CPP_IIOP_O=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -15148,7 +15148,6 @@ DEP_CPP_IIOP_O=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -15236,6 +15235,7 @@ DEP_CPP_IIOP_O=\
 	".\varout.i"\
 	
 NODEP_CPP_IIOP_O=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -15451,7 +15451,6 @@ DEP_CPP_INCON=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -15539,6 +15538,7 @@ DEP_CPP_INCON=\
 	".\varout.i"\
 	
 NODEP_CPP_INCON=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -15713,7 +15713,6 @@ DEP_CPP_INCON=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -15801,6 +15800,7 @@ DEP_CPP_INCON=\
 	".\varout.i"\
 	
 NODEP_CPP_INCON=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -15992,7 +15992,6 @@ DEP_CPP_INVOC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -16081,6 +16080,7 @@ DEP_CPP_INVOC=\
 	".\varout.i"\
 	
 NODEP_CPP_INVOC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -16261,7 +16261,6 @@ DEP_CPP_INVOC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -16350,6 +16349,7 @@ DEP_CPP_INVOC=\
 	".\varout.i"\
 	
 NODEP_CPP_INVOC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -16535,7 +16535,6 @@ DEP_CPP_MANAG=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -16623,6 +16622,7 @@ DEP_CPP_MANAG=\
 	".\varout.i"\
 	
 NODEP_CPP_MANAG=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -16797,7 +16797,6 @@ DEP_CPP_MANAG=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -16885,6 +16884,7 @@ DEP_CPP_MANAG=\
 	".\varout.i"\
 	
 NODEP_CPP_MANAG=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -17070,7 +17070,6 @@ DEP_CPP_MARSH=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -17158,6 +17157,7 @@ DEP_CPP_MARSH=\
 	".\varout.i"\
 	
 NODEP_CPP_MARSH=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -17332,7 +17332,6 @@ DEP_CPP_MARSH=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -17420,6 +17419,7 @@ DEP_CPP_MARSH=\
 	".\varout.i"\
 	
 NODEP_CPP_MARSH=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -17620,7 +17620,6 @@ DEP_CPP_NVLIS=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -17708,6 +17707,7 @@ DEP_CPP_NVLIS=\
 	".\varout.i"\
 	
 NODEP_CPP_NVLIS=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -17882,7 +17882,6 @@ DEP_CPP_NVLIS=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -17970,6 +17969,7 @@ DEP_CPP_NVLIS=\
 	".\varout.i"\
 	
 NODEP_CPP_NVLIS=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -18155,7 +18155,6 @@ DEP_CPP_OBJEC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -18243,6 +18242,7 @@ DEP_CPP_OBJEC=\
 	".\varout.i"\
 	
 NODEP_CPP_OBJEC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -18417,7 +18417,6 @@ DEP_CPP_OBJEC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -18505,6 +18504,7 @@ DEP_CPP_OBJEC=\
 	".\varout.i"\
 	
 NODEP_CPP_OBJEC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -18690,7 +18690,6 @@ DEP_CPP_OBJECT=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -18778,6 +18777,7 @@ DEP_CPP_OBJECT=\
 	".\varout.i"\
 	
 NODEP_CPP_OBJECT=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -18952,7 +18952,6 @@ DEP_CPP_OBJECT=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -19040,6 +19039,7 @@ DEP_CPP_OBJECT=\
 	".\varout.i"\
 	
 NODEP_CPP_OBJECT=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -19231,7 +19231,6 @@ DEP_CPP_OPERA=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -19320,6 +19319,7 @@ DEP_CPP_OPERA=\
 	".\varout.i"\
 	
 NODEP_CPP_OPERA=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -19500,7 +19500,6 @@ DEP_CPP_OPERA=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -19589,6 +19588,7 @@ DEP_CPP_OPERA=\
 	".\varout.i"\
 	
 NODEP_CPP_OPERA=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -19784,7 +19784,6 @@ DEP_CPP_ORB_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -19874,6 +19873,7 @@ DEP_CPP_ORB_C=\
 	".\varout.i"\
 	
 NODEP_CPP_ORB_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -20058,7 +20058,6 @@ DEP_CPP_ORB_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -20148,6 +20147,7 @@ DEP_CPP_ORB_C=\
 	".\varout.i"\
 	
 NODEP_CPP_ORB_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -20353,7 +20353,6 @@ DEP_CPP_ORB_CO=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -20442,6 +20441,7 @@ DEP_CPP_ORB_CO=\
 	".\varout.i"\
 	
 NODEP_CPP_ORB_CO=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -20636,7 +20636,6 @@ DEP_CPP_ORB_CO=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -20725,6 +20724,7 @@ DEP_CPP_ORB_CO=\
 	".\varout.i"\
 	
 NODEP_CPP_ORB_CO=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -20910,7 +20910,6 @@ DEP_CPP_PARAM=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -20998,6 +20997,7 @@ DEP_CPP_PARAM=\
 	".\varout.i"\
 	
 NODEP_CPP_PARAM=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -21172,7 +21172,6 @@ DEP_CPP_PARAM=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -21260,6 +21259,7 @@ DEP_CPP_PARAM=\
 	".\varout.i"\
 	
 NODEP_CPP_PARAM=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -21466,7 +21466,6 @@ DEP_CPP_POA_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -21556,6 +21555,7 @@ DEP_CPP_POA_C=\
 	".\varout.i"\
 	
 NODEP_CPP_POA_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -21736,7 +21736,6 @@ DEP_CPP_POA_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -21826,6 +21825,7 @@ DEP_CPP_POA_C=\
 	".\varout.i"\
 	
 NODEP_CPP_POA_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -22011,7 +22011,6 @@ DEP_CPP_POAC_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -22099,6 +22098,7 @@ DEP_CPP_POAC_=\
 	".\varout.i"\
 	
 NODEP_CPP_POAC_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -22273,7 +22273,6 @@ DEP_CPP_POAC_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -22361,9 +22360,25 @@ DEP_CPP_POAC_=\
 	".\varout.i"\
 	
 NODEP_CPP_POAC_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\POAManager.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -22546,7 +22561,6 @@ DEP_CPP_POAS_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -22634,6 +22648,7 @@ DEP_CPP_POAS_=\
 	".\varout.i"\
 	
 NODEP_CPP_POAS_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -22808,7 +22823,6 @@ DEP_CPP_POAS_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -22896,6 +22910,7 @@ DEP_CPP_POAS_=\
 	".\varout.i"\
 	
 NODEP_CPP_POAS_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -23081,7 +23096,6 @@ DEP_CPP_POLIC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -23169,6 +23183,7 @@ DEP_CPP_POLIC=\
 	".\varout.i"\
 	
 NODEP_CPP_POLIC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -23343,7 +23358,6 @@ DEP_CPP_POLIC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -23431,6 +23445,7 @@ DEP_CPP_POLIC=\
 	".\varout.i"\
 	
 NODEP_CPP_POLIC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -23616,7 +23631,6 @@ DEP_CPP_POLICY=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -23704,6 +23718,7 @@ DEP_CPP_POLICY=\
 	".\varout.i"\
 	
 NODEP_CPP_POLICY=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -23878,7 +23893,6 @@ DEP_CPP_POLICY=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -23966,6 +23980,7 @@ DEP_CPP_POLICY=\
 	".\varout.i"\
 	
 NODEP_CPP_POLICY=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -24151,7 +24166,6 @@ DEP_CPP_PRINC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -24239,6 +24253,7 @@ DEP_CPP_PRINC=\
 	".\varout.i"\
 	
 NODEP_CPP_PRINC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -24413,7 +24428,6 @@ DEP_CPP_PRINC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -24501,6 +24515,7 @@ DEP_CPP_PRINC=\
 	".\varout.i"\
 	
 NODEP_CPP_PRINC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -24686,7 +24701,6 @@ DEP_CPP_REQUE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -24774,6 +24788,7 @@ DEP_CPP_REQUE=\
 	".\varout.i"\
 	
 NODEP_CPP_REQUE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -24948,7 +24963,6 @@ DEP_CPP_REQUE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -25036,6 +25050,7 @@ DEP_CPP_REQUE=\
 	".\varout.i"\
 	
 NODEP_CPP_REQUE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -25221,7 +25236,6 @@ DEP_CPP_SEQUE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -25309,6 +25323,7 @@ DEP_CPP_SEQUE=\
 	".\varout.i"\
 	
 NODEP_CPP_SEQUE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -25483,7 +25498,6 @@ DEP_CPP_SEQUE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -25571,6 +25585,7 @@ DEP_CPP_SEQUE=\
 	".\varout.i"\
 	
 NODEP_CPP_SEQUE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -25762,7 +25777,6 @@ DEP_CPP_SERVA=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -25851,6 +25865,7 @@ DEP_CPP_SERVA=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVA=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -26031,7 +26046,6 @@ DEP_CPP_SERVA=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -26120,6 +26134,7 @@ DEP_CPP_SERVA=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVA=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -26311,7 +26326,6 @@ DEP_CPP_SERVE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -26400,6 +26414,7 @@ DEP_CPP_SERVE=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -26580,7 +26595,6 @@ DEP_CPP_SERVE=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -26669,6 +26683,7 @@ DEP_CPP_SERVE=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVE=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -26854,7 +26869,6 @@ DEP_CPP_SERVER=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -26942,6 +26956,7 @@ DEP_CPP_SERVER=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVER=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -27116,7 +27131,6 @@ DEP_CPP_SERVER=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -27204,6 +27218,7 @@ DEP_CPP_SERVER=\
 	".\varout.i"\
 	
 NODEP_CPP_SERVER=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -27389,7 +27404,6 @@ DEP_CPP_SKIP_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -27477,6 +27491,7 @@ DEP_CPP_SKIP_=\
 	".\varout.i"\
 	
 NODEP_CPP_SKIP_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -27651,7 +27666,6 @@ DEP_CPP_SKIP_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -27739,6 +27753,7 @@ DEP_CPP_SKIP_=\
 	".\varout.i"\
 	
 NODEP_CPP_SKIP_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -27924,7 +27939,6 @@ DEP_CPP_STUB_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -28012,6 +28026,7 @@ DEP_CPP_STUB_=\
 	".\varout.i"\
 	
 NODEP_CPP_STUB_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -28186,7 +28201,6 @@ DEP_CPP_STUB_=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -28274,6 +28288,7 @@ DEP_CPP_STUB_=\
 	".\varout.i"\
 	
 NODEP_CPP_STUB_=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -28459,7 +28474,6 @@ DEP_CPP_TAO_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -28548,6 +28562,7 @@ DEP_CPP_TAO_C=\
 	".\varout.i"\
 	
 NODEP_CPP_TAO_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -28722,7 +28737,6 @@ DEP_CPP_TAO_C=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -28811,6 +28825,7 @@ DEP_CPP_TAO_C=\
 	".\varout.i"\
 	
 NODEP_CPP_TAO_C=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -28996,7 +29011,6 @@ DEP_CPP_TAO_I=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -29085,6 +29099,7 @@ DEP_CPP_TAO_I=\
 	".\varout.i"\
 	
 NODEP_CPP_TAO_I=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -29259,7 +29274,6 @@ DEP_CPP_TAO_I=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -29348,6 +29362,7 @@ DEP_CPP_TAO_I=\
 	".\varout.i"\
 	
 NODEP_CPP_TAO_I=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -29533,7 +29548,6 @@ DEP_CPP_TYPEC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -29621,6 +29635,7 @@ DEP_CPP_TYPEC=\
 	".\varout.i"\
 	
 NODEP_CPP_TYPEC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -29795,7 +29810,6 @@ DEP_CPP_TYPEC=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -29883,6 +29897,7 @@ DEP_CPP_TYPEC=\
 	".\varout.i"\
 	
 NODEP_CPP_TYPEC=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -30068,7 +30083,6 @@ DEP_CPP_TYPECO=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -30156,6 +30170,7 @@ DEP_CPP_TYPECO=\
 	".\varout.i"\
 	
 NODEP_CPP_TYPECO=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -30330,7 +30345,6 @@ DEP_CPP_TYPECO=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -30418,6 +30432,7 @@ DEP_CPP_TYPECO=\
 	".\varout.i"\
 	
 NODEP_CPP_TYPECO=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -30603,7 +30618,6 @@ DEP_CPP_UNION=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -30691,6 +30705,7 @@ DEP_CPP_UNION=\
 	".\varout.i"\
 	
 NODEP_CPP_UNION=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -30865,7 +30880,6 @@ DEP_CPP_UNION=\
 	"..\..\ace\ws2tcpip.h"\
 	".\Active_Object_Map.h"\
 	".\Active_Object_Map.i"\
-	".\align.h"\
 	".\any.h"\
 	".\any.i"\
 	".\cdr.h"\
@@ -30953,6 +30967,7 @@ DEP_CPP_UNION=\
 	".\varout.i"\
 	
 NODEP_CPP_UNION=\
+	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
@@ -31154,6 +31169,10 @@ SOURCE=.\poaC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\POAManager.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\poaS.h
 # End Source File
 # Begin Source File
@@ -31307,6 +31326,10 @@ SOURCE=.\params.i
 # Begin Source File
 
 SOURCE=.\poaC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\POAManager.i
 # End Source File
 # Begin Source File
 

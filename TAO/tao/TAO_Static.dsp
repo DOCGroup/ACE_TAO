@@ -274,6 +274,10 @@ SOURCE=.\POAC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\POAManager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\POAS.cpp
 # End Source File
 # Begin Source File
@@ -530,6 +534,10 @@ SOURCE=.\poaC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\POAManager.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\poaS.h
 # End Source File
 # Begin Source File
@@ -695,6 +703,10 @@ SOURCE=.\POA.i
 # Begin Source File
 
 SOURCE=.\poaC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\POAManager.i
 # End Source File
 # Begin Source File
 
