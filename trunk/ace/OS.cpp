@@ -821,6 +821,70 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   *h_errnop = errno;
   return result;
 }
+
+// Leave this in the global scope to allow
+// users to adjust the delay value.
+int ACE_THR_JOIN_DELAY = 5;
+
+int
+ACE_OS::thr_join (ACE_hthread_t thr_handle,
+                  ACE_THR_FUNC_RETURN *status)
+{
+  // We can't get the status of the thread
+  if (status != 0)
+    {
+      *status = 0;
+    }
+
+  // This method can not support joining all threads
+  if (ACE_OS::thr_cmp (thr_handle, ACE_OS::NULL_hthread))
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
+
+  int retval = ESRCH;
+  ACE_hthread_t current;
+  ACE_OS::thr_self (current);
+
+  // Make sure we are not joining ourself
+  if (ACE_OS::thr_cmp (thr_handle, current))
+    {
+      retval = EDEADLK;
+    }
+  else
+    {
+      // Whether the task exists or not
+      // we will return a successful value
+      retval = 0;
+
+      // Verify that the task id still exists
+      while (taskIdVerify (thr_handle) == OK)
+        {
+          // Wait a bit to see if the task is still active.
+          ACE_OS::sleep (ACE_THR_JOIN_DELAY);
+        }
+    }
+
+  // Adapt the return value into errno and return value.
+  // The ACE_ADAPT_RETVAL macro doesn't exactly do what
+  // we need to do here, so we do it manually.
+  if (retval != 0)
+    {
+      errno = retval;
+      retval = -1;
+    }
+
+  return retval;
+}
+
+int
+ACE_OS::thr_join (ACE_thread_t waiter_id,
+                  ACE_thread_t *thr_id,
+                  ACE_THR_FUNC_RETURN *status)
+{
+  thr_id = 0;
+  return ACE_OS::thr_join (taskNameToId (waiter_id), status);
+}
 #endif /* VXWORKS */
 
 void

@@ -6741,6 +6741,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #endif /* ACE_HAS_THREADS */
 }
 
+#if !defined (VXWORKS)
 ACE_INLINE int
 ACE_OS::thr_join (ACE_hthread_t thr_handle,
                   ACE_THR_FUNC_RETURN *status)
@@ -6797,7 +6798,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
     }
   ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
-# elif defined (VXWORKS) || defined (ACE_PSOS)
+# elif defined (ACE_PSOS)
   ACE_UNUSED_ARG (thr_handle);
   ACE_UNUSED_ARG (status);
   ACE_NOTSUP_RETURN (-1);
@@ -6845,7 +6846,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   // This could be implemented if the DLL-Main function or the
   // task exit base class some log the threads which have exited
   ACE_NOTSUP_RETURN (-1);
-# elif defined (VXWORKS) || defined (ACE_PSOS)
+# elif defined (ACE_PSOS)
   ACE_UNUSED_ARG (waiter_id);
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (status);
@@ -6858,6 +6859,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
+#endif /* !VXWORKS */
 
 ACE_INLINE int
 ACE_OS::thr_setcancelstate (int new_state, int *old_state)
