@@ -1,5 +1,8 @@
+// @file wxNamingViewerFrame.cpp
+//
+// @author Charlie Frasch  <cfrasch@atdesk.com>
+//
 // $Id$
-// wxNamingViewerFrame.cpp
 
 #include "pch.h"
 #include "wxNamingViewerFrame.h"
@@ -37,7 +40,7 @@ WxNamingViewerFrame::WxNamingViewerFrame(
     const wxSize& size,
     CORBA::ORB_ptr pOrb):
   wxFrame(
-      (wxFrame *)NULL,
+      0,
       -1, title,
       pos,
       size),
@@ -124,9 +127,9 @@ void WxNamingViewerFrame::OnQuit( wxCommandEvent& WXUNUSED(event))
 
 void WxNamingViewerFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-  wxString msg( "wxNamingViewer Version 1.0\n"
-      "Copyright (C) 2000\n"
-      " Author: Charlie Frasch (cfrasch@spawar.navy.mil)");
+  wxString msg( 
+      "wxNamingViewer Version 1.1\n"
+      "Author: Charlie Frasch <cfrasch@atdesk.com>");
 
   wxMessageBox(
       msg.c_str(),
@@ -157,10 +160,10 @@ void WxNamingViewerFrame::onSelectNS( wxCommandEvent& WXUNUSED( event))
         serverText->SetValue( server);
         resolve();
 
-      } catch( CORBA::Exception& ex) {
+      } catch( CORBA::Exception const & ex) {
 
         wxMessageBox(
-            ex._id(),
+            ex._info().c_str(),
             "CORBA::Exception");
 
       }
