@@ -56,7 +56,7 @@ public:
   virtual int visit_union (AST_Union *node);
   // Visit union.
 
-  virtual IR::IDLType_ptr ir_current (void) const;
+  virtual IR_IDLType_ptr ir_current (void) const;
   // Lets the visitor one level above acess this value.
 
 private:
