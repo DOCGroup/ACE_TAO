@@ -1,3 +1,16 @@
+Fri Jun 04 11:37:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Simple/Simple_util (class Client): Reordered the ORB
+	  and the var instance declaration in the header file.
+	  Previously, the ORB was getting destroyed before the var was
+	  destroyed.  This was causing a free memory read when the var was
+	  cleaned up.  By reordering, the ORB gets destroyed after the
+	  var, and hence there is no problem anymore.  Thanks to Shaun
+	  Ohagan <jk13@dial.pipex.com> for pointing out this problem.
+
+	  Also, fixed the options parsing with respect to reporting
+	  problems and helping the user (-? option).
+
 Fri Jun  4 11:03:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:

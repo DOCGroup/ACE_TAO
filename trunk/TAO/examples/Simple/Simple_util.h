@@ -12,7 +12,7 @@
 //    The classe define the templates for the client and server.
 //
 // = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu> 
+//   Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -29,7 +29,7 @@ class Server
 {
   // = TITLE
   //   A set of useful class Templates for using the TAO CORBA
-  //   implementation. 
+  //   implementation.
   //
   // = DESCRIPTION
   //   A template server definition. This template can be used by
@@ -45,9 +45,9 @@ public:
   ~Server (void);
   // Destructor.
 
-  int init (const char *servant_name, 
-            int argc, 
-            char *argv[], 
+  int init (const char *servant_name,
+            int argc,
+            char *argv[],
             CORBA::Environment &env);
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
@@ -85,7 +85,7 @@ protected:
 
   int naming_;
   // Flag to indicate whether naming service could be used
-       
+
   char *ins_;
   // Used test the INS.
 
@@ -104,7 +104,7 @@ class Client
   //
   // = DESCRIPTION
   //   A template client implementation for a single server/client
-  //   model. The example usage of these usage can be found in the 
+  //   model. The example usage of these usage can be found in the
   //   sub-directories below
 public:
 
@@ -123,7 +123,7 @@ public:
 
   int shutdown (void );
   // Returns the shutdown flag.
-  
+
   void shutdown (int);
   // Fills in the shutdwon flag.
 
@@ -131,6 +131,9 @@ public:
   // Initialize naming service
 
 protected:
+  CORBA::ORB_var orb_;
+  // Remember our orb.
+
   int read_ior (char *filename);
   // Function to read the server IOR from a file.
 
@@ -139,7 +142,7 @@ protected:
 
   TAO_Naming_Client naming_client_;
   // helper class for getting access to Naming Service.
-  
+
   int argc_;
   // # of arguments on the command line.
 
@@ -163,9 +166,6 @@ protected:
 
   int shutdown_;
   // Flag for shutting down the server
-  
-  CORBA::ORB_var orb_;
-  // Remember our orb.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

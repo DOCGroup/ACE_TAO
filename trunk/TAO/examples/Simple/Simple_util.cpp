@@ -54,9 +54,11 @@ Server<Servant>::parse_args (void)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " [-d]"
+                           " [-d] [debug]"
                            " [-o] <ior_output_file>"
-                           " [-n] "
+                           " [-n] [use naming service]"
+                           " [-i] <InterOperable Naming Service simple object key>"
+                           " [-?] [help]"
                            "\n",
                            argv_ [0]),
                           -1);
@@ -244,7 +246,8 @@ Server<Servant>::register_name (void)
 
 template <class INTERFACE_OBJECT, class Var>
 Client<INTERFACE_OBJECT, Var>::Client (void)
-  : ior_ (0)
+  : ior_ (0),
+    shutdown_ (0)
 {
   //no-op
 }
@@ -311,6 +314,19 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
       case 'x': // read the flag for shutting down
         this->shutdown_ = 1;
         break;
+      case '?':  // display help for use of the client.
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " [-d] [debug]"
+                           " [-k] <ior>"
+                           " [-f] <ior_output_file>"
+                           " [-n] [use naming service]"
+                           " [-x] [shutdown server]"
+                           " [-?] [help]"
+                           "\n",
+                           argv_ [0]),
+                          -1);
       }
 
   // Indicates successful parsing of command line.
