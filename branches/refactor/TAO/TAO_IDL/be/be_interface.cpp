@@ -46,8 +46,7 @@ be_interface::be_interface (void)
     in_mult_inheritance_ (-1),
     original_interface_ (0),
     has_mixed_parentage_ (-1),
-    var_out_seq_decls_gen_ (0),
-    var_out_seq_defns_gen_ (0)
+    var_out_seq_decls_gen_ (0)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
@@ -77,11 +76,40 @@ be_interface::be_interface (UTL_ScopedName *n,
     in_mult_inheritance_ (-1),
     original_interface_ (0),
     has_mixed_parentage_ (-1),
-    var_out_seq_decls_gen_ (0),
-    var_out_seq_defns_gen_ (0)
+    var_out_seq_decls_gen_ (0)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
+
+  AST_Decl *parent = ScopeAsDecl (this->defined_in ());
+  Identifier *segment = 0;
+  char *tmp = 0;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      for (UTL_IdListActiveIterator i (parent->name ());
+           !i.is_done ();
+           i.next ())
+        {
+          segment = i.item ();
+          tmp = segment->get_string ();
+
+          if (ACE_OS::strcmp (tmp, "") == 0)
+            {
+              continue;
+            }
+
+          this->fwd_helper_name_ += tmp;
+          this->fwd_helper_name_ += "::";
+        }
+    }
+  else
+    {
+      this->fwd_helper_name_= "";
+    }
+
+  this->fwd_helper_name_ += "tao_";
+  this->fwd_helper_name_ += this->local_name ();
 }
 
 be_interface::~be_interface (void)
@@ -553,9 +581,9 @@ be_interface:: gen_var_out_seq_decls (void)
       << "typedef " << lname << " *" << lname << "_ptr;" << be_nl
       << "struct tao_" << lname << "_life;" << be_nl
       << "typedef TAO_Objref_Var_T<" << lname << ", tao_" 
-      << lname << "_life>" << lname << "_var;" << be_nl
+      << lname << "_life> " << lname << "_var;" << be_nl
       << "typedef TAO_Objref_Out_T<" << lname << ", tao_" 
-      << lname << "_life>" << lname << "_out;";
+      << lname << "_life> " << lname << "_out;";
 
   *os << be_nl << be_nl
       << "struct tao_" << lname << "_life" << be_nl
@@ -567,7 +595,7 @@ be_interface:: gen_var_out_seq_decls (void)
       << "static CORBA::Boolean tao_marshal (" << be_idt << be_idt_nl
       << lname << "_ptr," << be_nl
       << "TAO_OutputCDR &" << be_uidt_nl
-      << ");" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "};";
 
   *os << be_nl << be_nl
@@ -2001,16 +2029,10 @@ be_interface::var_out_seq_decls_gen (int val)
   this->var_out_seq_decls_gen_ = val;
 }
 
-int 
-be_interface::var_out_seq_defns_gen (void) const
+const char *
+be_interface::fwd_helper_name (void) const
 {
-  return this->var_out_seq_defns_gen_;
-}
-
-void 
-be_interface::var_out_seq_defns_gen (int val)
-{
-  this->var_out_seq_defns_gen_ = val;
+  return this->fwd_helper_name_.fast_rep ();
 }
 
 const char *

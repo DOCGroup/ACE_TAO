@@ -47,62 +47,12 @@ be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   AST_Interface *fd = node->full_definition ();
   be_valuetype *bfd = be_valuetype::narrow_from_decl (fd);
 
-  if (!fd->is_defined ())
+  if (bfd->var_out_seq_decls_gen () == 0)
     {
-      // To generate extern declarations after all modules are closed.
-      be_global->non_defined_interfaces.enqueue_tail (node);
+      bfd->gen_var_out_seq_decls ();
+      bfd->var_out_seq_decls_gen (1);
     }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // == STEP 1: Generate the class name and class names we inherit ==
-
-  // Forward declaration.
-  *os << "class " << node->local_name () << ";";
-
-  // Generate _ptr declaration
-  os->gen_ifdef_macro (node->flat_name (), "_ptr");
-
-  *os << be_nl << be_nl 
-      << "typedef " << node->local_name ()
-      << " *" << node->local_name () << "_ptr;";
-
-  os->gen_endif ();
-
-  // Generate the ifdefined macro for the _var type.
-  os->gen_ifdef_macro (node->flat_name (), "_var");
-
-  // Generate the _var declaration.
-  if (bfd->gen_var_defn () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_valuetype - "
-                         "codegen for _var failed\n"),
-                        -1);
-    }
-
-  os->gen_endif ();
-
-  // Generate the ifdef macro for the _out class.
-  os->gen_ifdef_macro (node->flat_name (), "_out");
-
-  // Generate the _out declaration
-  if (bfd->gen_out_defn () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_valuetype - "
-                         "codegen for _out failed\n"), -1);
-    }
-
-  // generate the endif macro.
-  os->gen_endif ();
 
   node->cli_hdr_gen (I_TRUE);
-
   return 0;
 }

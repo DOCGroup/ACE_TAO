@@ -627,7 +627,10 @@ private:
  * class, in charge of handling the object lifetime, examples are
  * pseudo objects, object references, valuetypes, and strings.
  */
-template<typename T, typename T_var, typename T_life, typename T_cast>
+template<typename T, 
+         typename T_var, 
+         typename T_life, 
+         typename T_cast>
 class TAO_Unbounded_Object_Sequence : public TAO_Unbounded_Base_Sequence
 {
 
@@ -822,6 +825,9 @@ public:
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
   static void freebuf (T* *buffer);
+
+  static void _tao_any_destructor (void *);
+  typedef T_var _var_type;
 
   // The Base_Sequence functions, please see "tao/sequence.h"
   /// No default to workaround egcs problem with templates and

@@ -1,13 +1,13 @@
 // $Id$
 
-#ifndef TAO_OBJREF_T_C
-#define TAO_OBJREF_T_C
+#ifndef TAO_OBJREF_VAROUT_T_C
+#define TAO_OBJREF_VAROUT_T_C
 
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Environment.h"
 
 ACE_RCSID (tao, 
-           Objref_T, 
+           Objref_VarOut_T, 
            "$Id$")
 
 template <typename T, typename T_life>
@@ -201,4 +201,4 @@ TAO_Objref_Out_T<T, T_life>::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_OBJREF_T_C */
+#endif /* TAO_OBJREF_VAROUT_T_C */

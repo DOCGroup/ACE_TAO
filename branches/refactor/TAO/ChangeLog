@@ -1,3 +1,31 @@
+Fri Mar 21 02:33:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/TAO.dsp:
+        * tao/corba.h:
+
+	  Modified code generation for sequences of object references,
+	  added conditional explicit template instantiation, template
+	  valuetype _var and _out class generation.
+
+        * tao/Value_VarOut_T.cpp:
+        * tao/Value_VarOut_T.h:
+
+	  New files for the valuetype _var and _out classes.
+
 Wed Mar 19 18:40:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:

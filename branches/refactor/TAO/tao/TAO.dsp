@@ -1527,6 +1527,10 @@ SOURCE=.\ObjectReferenceTemplateC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Objref_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
@@ -1679,6 +1683,10 @@ SOURCE=.\Resume_Handle.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Seq_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\sequence.h
 # End Source File
 # Begin Source File
@@ -1824,6 +1832,10 @@ SOURCE=.\typecode.h
 # Begin Source File
 
 SOURCE=.\TypeCodeFactory_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Value_VarOut_T.h
 # End Source File
 # Begin Source File
 
@@ -2319,6 +2331,10 @@ SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Seq_VarOut_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\sequence.i
 # End Source File
 # Begin Source File
@@ -2453,7 +2469,22 @@ SOURCE=.\Codeset_Translator_Factory_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Objref_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Seq_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sequence_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Value_VarOut_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # End Group
