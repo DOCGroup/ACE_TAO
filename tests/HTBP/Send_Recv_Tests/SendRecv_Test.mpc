@@ -2,11 +2,10 @@
 //
 // $Id$
 
-project: aceexe, htbp {
+project: htbptest {
   exename = SendRecv_Test
 
   Source_Files {
      SendRecv_Test.cpp
-     Test_Output.cpp
   }
 }

@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(*Server): aceexe, htbp {
+project(*Server): htbptest {
   exename = server
 
   Source_Files {
@@ -10,7 +10,7 @@ project(*Server): aceexe, htbp {
   }
 }
 
-project(*Client): aceexe, htbp {
+project(*Client): htbptest {
   exename = client
 
   Source_Files {

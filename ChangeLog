@@ -1,3 +1,16 @@
+Mon Nov  1 07:34:03 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/HTBP/htbptest.mpb:
+        * tests/HTBP/Reactor_Tests/Reactor_Tests.mpc:
+        * tests/HTBP/Send_Large_Msg/Send_Large_Msg.mpc:
+        * tests/HTBP/Send_Large_Msg/Test_Output.cpp:
+        * tests/HTBP/Send_Recv_Tests/SendRecv_Test.mpc:
+        * tests/HTBP/Send_Recv_Tests/Test_Output.cpp:
+        * tests/HTBP/ping/ping.mpc:
+
+          Removed duplicate Test_Output.cpp source and added a new base
+          project that includes libTest_Output.so.
+
 Mon Nov  1 07:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/FlReactor_Test.cpp:
