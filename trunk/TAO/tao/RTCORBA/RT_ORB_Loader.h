@@ -57,6 +57,13 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
+
+private:
+
+  /// Flag to indicate whether the RT_ORB_Loader has been initialized.
+  /// If it hasn't, it should give back an RTORB since not all of the
+  /// RTCORBA hooks are in place.
+  int initialized_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_ORB_Loader)
