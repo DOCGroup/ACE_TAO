@@ -316,20 +316,34 @@ int IpAddress::is_multicast() const
   return FALSE; 
 }
 
-// The old ARPA net used 10.x.x.x. But now it is not assignable in the Internet 
-// even though it is no longer used. Some companies use it 
-// internally and apply NAT to allow translation instead of paying for 
-// ip networks. Cisco IOS can provide NAT or Network Address Translation
+// Private addressess not are not assignable in the Internet, they are
+// defined in RFC 1597 as: 10, 172.16, and 192.168.0
+// Some companies use them internally and apply NAT to allow translation 
+// instead of paying for ip networks. 
+// Cisco IOS devices can provide NAT aka Network Address Translation
 // but don't expect SNMP based networks to handle cross-NAT address spaces. 
 // assumes storage in network byte order  mrm@cisco.com 7/28/97
 
-int IpAddress::is_arpanet() const
+int IpAddress::is_private() const
 {
  if (valid()) {
-   return (address_buffer[0] == 10);
+   if (address_buffer[0] == 10)
+     return TRUE;
+   if (address_buffer[0] == 172 && address_buffer[1] == 16)
+     return TRUE;
+   if (address_buffer[0] == 192 && address_buffer[1] == 168  &&
+      address_buffer[2] == 0)
+     return TRUE;
  }
   return FALSE; 
 }
+
+  // convert address into octet string format in network byte order
+void IpAddress::to_octet(OctetStr& octet) const
+{
+
+}
+ 
 
 int IpAddress::is_broadcast() const
 {
