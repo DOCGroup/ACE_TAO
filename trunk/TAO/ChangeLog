@@ -1,5 +1,12 @@
+Sun Jan 25 11:16:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Simple/time-date/Simple_time_date.mpc:
+	* tests/Smart_Proxies/Smart_Proxies.mpc:
+	  Use taoserver and taoclient so that executable names are in the
+	  way the run_test.pl scripts expects them.
+
 Fri Jan 23 11:10:00 2004  Gary Maxey <gary.maxey@hp.com>
-	
+
         * tao/ORB_Constants.h
 
         Fix for BUGID 1723
@@ -14,55 +21,55 @@ Fri Jan 23 11:43:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Var_Array_Argument_T.cpp:
         * tao/Var_Array_Argument_T.h:
         * tao/Var_Array_Argument_T.inl:
-        
+
           Added the tag template parameter introduced in
-          
+
           Thu Jan 22 16:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 		  to the necessary class signatures.
-		  
+
 		* TAO_IDL/be/be_visitor_arg_traits (visit_array):
-		
+
 		  Added code generation for the tag template parameter corresponding
 		  to the changes listed above.
 
 Thu Jan 22 19:37:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
-        
+
           Changed the output directory of the build for tao_ifr.exe
           to ACE_wrappers/bin.
-          
+
         * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
         * orbsvcs/orbsvcs/IFRService/Repository_i.h:
         * orbsvcs/orbsvcs/IFRService/concrete_classes.h:
-        
-          - Changed the servant creation code to create the most 
-            derived servant classes for abstract, local, and 
+
+          - Changed the servant creation code to create the most
+            derived servant classes for abstract, local, and
             unconstrained interfaces. These more derived classes
             inherit from the mixin class TAO_InterfaceAttrExtension_i,
             making the method create_ext_attribute() (which creates
             IFR entries for the CORBA 3 attribute that can have
             exceptions) visible. This change eliminates a BAD_OPERATION
             exception that was thrown when trying to create an
-            attribute entry in the IFR. Thanks to Cristian Ferretti 
+            attribute entry in the IFR. Thanks to Cristian Ferretti
             <cristian_ferretti@yahoo.com> for reporting the bug and
             supplying an example IDL file.
-            
+
           - Changed the POA and servant selector functions to return
             the more derived servants (or associated POAs) described above.
-            
+
           - Changed the includes file concrete_classes.h accordingly.
 
 Thu Jan 22 17:14:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
-        
+
           Changed the mutator of the member that stores the version
           to update the repository id along with a legal set of
           the version. Since the repository id is now computed
           eagerly, it must be updated if a #pragma version directive
-          is encountered in the IDL file. Thanks to Nils Sandoy 
+          is encountered in the IDL file. Thanks to Nils Sandoy
           <nils.sandoy@fast.no> for sending in the example IDL file
           that uncovered the problem.
 
@@ -80,14 +87,14 @@ Thu Jan 22 16:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Sequence_T.cpp:
         * tao/Sequence_T.h:
         * tao/Sequence_T.i:
-        
+
           Added generation of an empty struct for each array,
           anonymous or not, in an IDL file. This struct is then
           used as a tag in the parameter list for the various
           template classes associated with arrays - _var, _out,
           _forany, Array_Traits<> and bounded/unbounded array
           sequences. This added tag disambiguates the types of
-          the above classes for any two arrays in a build, even 
+          the above classes for any two arrays in a build, even
           if they have the same element type and bound. Thanks
           to John Morey <jmorey@mmintl.com> for reporting the
           problem and for sending in the example IDL that
@@ -157,17 +164,17 @@ Wed Jan 21 16:35:47 2004  Scott Harris <harris_s@ociweb.com>
         * orbsvcs/orbsvcs/IFRService/Options.cpp:
           Added "-m" option to IFR_Service to enable multicast discovery
 	  of the service.  Earlier "-m" was used to enable locking but
-	  that option has been changed to "-l". 
-	
+	  that option has been changed to "-l".
+
           Note: IFR_Service was changed to not support multicast discovery
-	  as part of a large change: 
-	
+	  as part of a large change:
+
           Wed Mar 12 09:49:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-        
+
 	  after the 1.3.1 release by changing the default value of
           the use_multicast_server parameter of
 	  TAO_IFR_Server::init_with_orb in
-	  orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h. 
+	  orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h.
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:
@@ -175,14 +182,14 @@ Wed Jan 21 16:35:47 2004  Scott Harris <harris_s@ociweb.com>
 	  %ACE_ROOT%\bin or %TAO_ROOT%\orbsvcs\IFR_Service since the
 	  *.DSPs in the repository put it in one place and the *.DSPs
 	  generated by MPC put it in another. This technique also works on
-	  Unix builds. 
+	  Unix builds.
 
         * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
           Add " -o $iorfile" to command line of IFR_Service so if $iorfile
 	  is changed from if_repo.ior in the run_test.pl script it will
-	  still work. 
+	  still work.
 
         * orbsvcs/tests/InterfaceRepo/IFR_Test/README:
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/README:
