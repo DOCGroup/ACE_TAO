@@ -54,6 +54,16 @@ TAO_Buffering_Constraint_Policy::create (PortableServer::POA_ptr poa,
   return result._retn ();
 }
 
+TAO_Buffering_Constraint_Policy *
+TAO_Buffering_Constraint_Policy::clone (void) const
+{
+  TAO_Buffering_Constraint_Policy *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  TAO_Buffering_Constraint_Policy (*this),
+                  0);
+  return copy;
+}
+
 CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
 {

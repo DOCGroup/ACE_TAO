@@ -323,13 +323,13 @@ public:
   // type.
   // If there is no default policy it returns CORBA::Policy::_nil ()
 
-  POA_Messaging::RelativeRoundtripTimeoutPolicy *default_relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *default_relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy *default_client_priority (void) const;
+  TAO_Client_Priority_Policy *default_client_priority (void) const;
 
-  POA_Messaging::SyncScopePolicy *default_sync_scope (void) const;
+  TAO_Sync_Scope_Policy *default_sync_scope (void) const;
 
-  POA_TAO::BufferingConstraintPolicy *default_buffering_constraint (void) const;
+  TAO_Buffering_Constraint_Policy *default_buffering_constraint (void) const;
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 

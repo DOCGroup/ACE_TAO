@@ -49,6 +49,16 @@ TAO_Client_Priority_Policy::create (PortableServer::POA_ptr poa,
   return result._retn ();
 }
 
+TAO_Client_Priority_Policy *
+TAO_Client_Priority_Policy::clone (void) const
+{
+  TAO_Client_Priority_Policy *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  TAO_Client_Priority_Policy (*this),
+                  0);
+  return copy;
+}
+
 CORBA::Policy_ptr
 TAO_Client_Priority_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
 {

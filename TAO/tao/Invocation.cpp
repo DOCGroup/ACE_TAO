@@ -12,6 +12,9 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
 
+#include "tao/Messaging_Policy_i.h"
+#include "tao/Client_Priority_Policy.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
 #endif /* ! __ACE_INLINE__ */
@@ -100,7 +103,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
 
 #else
 
-  POA_TAO::ClientPriorityPolicy *policy =
+  TAO_Client_Priority_Policy *policy =
     this->stub_->client_priority ();
 
   if (policy == 0)
@@ -232,7 +235,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // So the invocation Object should handle policy decisions.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
-  POA_Messaging::RelativeRoundtripTimeoutPolicy* timeout =
+  TAO_RelativeRoundtripTimeoutPolicy_i *timeout =
     this->stub_->relative_roundtrip_timeout ();
   // If max_wait_time is not zero then this is not the first attempt
   // to send the request, the timeout value includes *all* those

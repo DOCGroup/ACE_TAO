@@ -34,8 +34,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Buffering_Constraint_Policy : public virtual PortableServer::RefCountServantBase,
-                                                   public virtual POA_TAO::BufferingConstraintPolicy
+class TAO_Export TAO_Buffering_Constraint_Policy : public PortableServer::RefCountServantBase,
+                                                   public POA_TAO::BufferingConstraintPolicy
 {
   // = TITLE
   //     Implementation class for TAO-specific Buffering Constraint
@@ -54,6 +54,9 @@ public:
                                    const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of CORBA::ORB::create_policy.
+
+  virtual TAO_Buffering_Constraint_Policy *clone (void) const;
+  // Returns a copy of <this>.
 
   // = The TAO::Buffering_Constraint_Policy methods
 
