@@ -41,7 +41,7 @@ Logging_Process::prepare (ACE_Process_Options &options)
 {
   if (options.pass_handle (logging_peer_.get_handle ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "pass_handle"), -1);
-  options.process_name (prog_name_);
+  options.command_line ("%s", prog_name_);
   options.avoid_zombies (1);
   options.creation_flags (ACE_Process_Options::NO_EXEC);
   return 0;
