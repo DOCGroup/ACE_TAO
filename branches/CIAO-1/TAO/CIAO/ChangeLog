@@ -1,3 +1,12 @@
+Sat Apr 12 01:25:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* CIDLC/parser_examples/README:
+	* CIDLC/parser_examples/cidl/cidl.mpc:
+	* CIDLC/parser_examples/idl2/idl2.mpc:
+	* CIDLC/parser_examples/idl3/idl3.mpc: Added new MPC files to take
+	  advantage of MPC/MWC tool.  Updated the README to provide some
+	  minimal instructions.
+
 Tue Apr  8 23:10:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/parser_examples/README:
