@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    A client, which uses the AMI callback model and timeouts.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  A client, which uses the AMI callback model and timeouts.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -24,7 +21,9 @@
 #include "timeout_i.h"
 #include "timeout_client.h"
 
-ACE_RCSID(AMI, client, "$Id$")
+ACE_RCSID (AMI,
+           client,
+           "$Id$")
 
 const char *ior = "file://test.ior";
 unsigned int msec = 50;
@@ -65,7 +64,8 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -93,7 +93,9 @@ main (int argc, char *argv[])
       // Activate POA to handle the call back.
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -135,7 +137,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
