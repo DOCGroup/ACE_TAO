@@ -478,6 +478,8 @@ TAO_DynCommon::insert_typecode (CORBA::TypeCode_ptr value,
     }
 }
 
+#if !defined (ACE_LACKS_LONGLONG_T)
+
 void
 TAO_DynCommon::insert_longlong (CORBA::LongLong value,
                                 CORBA::Environment &ACE_TRY_ENV)
@@ -543,6 +545,8 @@ TAO_DynCommon::insert_ulonglong (CORBA::ULongLong value,
       this->any_ <<= value;
     }
 }
+
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
 void
 TAO_DynCommon::insert_longdouble (CORBA::LongDouble,
@@ -1130,6 +1134,8 @@ TAO_DynCommon::get_typecode (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
+#if !defined (ACE_LACKS_LONGLONG_T)
+
 CORBA::LongLong
 TAO_DynCommon::get_longlong (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
@@ -1199,6 +1205,8 @@ TAO_DynCommon::get_ulonglong (CORBA::Environment &ACE_TRY_ENV)
       return retval;
     }
 }
+
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
 CORBA::LongDouble
 TAO_DynCommon::get_longdouble (CORBA::Environment &ACE_TRY_ENV)
