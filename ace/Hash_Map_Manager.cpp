@@ -331,8 +331,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
                                                           INT_ID &int_id)
 {
-  ACE_UNUSED_ARG (int_id);
-
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp;
 
   u_long loc;
@@ -343,6 +341,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
       errno = ENOENT;
       return -1;
     }
+
+  int_id = temp->int_id_;
 
   return this->unbind_i (temp);
 }
