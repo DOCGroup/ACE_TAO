@@ -1,3 +1,11 @@
+Sun Sep 14 09:50:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Singleton.i (ACE_Singleton): Moved the definition of the
+ 	  ACE_Singleton default constructor into the *.i file.  In
+ 	  general, it's not a good idea to put definitions in *.h files.
+
+	* tests/test_config.h: Improved the #undef scheme for ACE_NDEBUG.
+
 Sat Sep 13 23:51:55 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* ace/ACE_Library.{mak,mdp}: Removed Service_Record.cpp and added
@@ -18,8 +26,6 @@ Sat Sep 13 23:51:55 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 	* ace/ace.dsw:
 	* ace/ace_{dll,lib}.dsp: Removed Service_Record.cpp and added
  	  Service_Type.cpp.
-
-Sat Sep 13 21:12:22 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (open): Fixed a typo.
 
