@@ -1,3 +1,7 @@
+Sun Feb 27 16:20:43 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/TP_Reactor.h: Improved the comments.
+
 Sat Feb 26 19:52:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/CDR_Stream.cpp:
