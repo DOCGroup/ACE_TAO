@@ -1,3 +1,9 @@
+Wed Mar 24 12:47:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: added note to build netsvcs on Win32
+          before running run_tests.bat.  Thanks to Jeff Franks
+          <Jeffrey_Franks@i-o.com> for suggesting this.
+
 Wed Mar 24 06:53:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (thr_create): SunOS 5.7 allows thread priority of 0,
