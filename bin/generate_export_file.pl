@@ -13,6 +13,8 @@ use Getopt::Std;
 ##############################################################################
 # Grab the options
 
+$flags = join (" ", @ARGV);
+
 if (!getopts ('df:hs') || $opt_h) {
     print "generate_export_file.pl [-d] [-f dependency] [-s] library_name\n";
     print "\n";
@@ -57,7 +59,7 @@ $prologue = '
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl
+// This file is generated automatically by generate_export_file.pl '."$flags".'
 // ------------------------------'."
 #ifndef -UC-_EXPORT_H
 #define -UC-_EXPORT_H
