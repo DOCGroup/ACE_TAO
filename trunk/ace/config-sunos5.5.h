@@ -27,7 +27,9 @@
        to work around problems with automatic template instantiation. */
 #   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #   define ACE_TEMPLATES_REQUIRE_SOURCE
-#   define ACE_LACKS_ACE_IOSTREAM
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#   define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#   define ACE_LACKS_ACE_IOSTREAM /* might not be necessary? */
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 # define ACE_CAST_CONST const
