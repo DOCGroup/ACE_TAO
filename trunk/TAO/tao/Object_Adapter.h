@@ -208,7 +208,6 @@ public:
 
   void dispatch_servant (const TAO_ObjectKey &key,
                          CORBA::ServerRequest &req,
-                         TAO_Transport *transport,
                          void *context,
                          CORBA_Environment &ACE_TRY_ENV);
 
