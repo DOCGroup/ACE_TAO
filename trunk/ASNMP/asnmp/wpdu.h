@@ -37,9 +37,9 @@ public:
 
   wpdu(const Pdu& pdu, const UdpTarget& target);
   // construct CMU data from HP SNMP++ objects
-
   wpdu(const iovec& buffer);
   // construct HP SNMP++ objects from raw buffer via CMU SNMP datatypes 
+  wpdu(); // same as using iovec?
 
   ~wpdu();
 
@@ -49,8 +49,11 @@ public:
   const iovec& get_buffer() const; 
   // return raw data stream via CMU code
 
-  int get_pdu(Pdu& pdu, snmp_version& version) const;
+  int get_pdu(Pdu& pdu, snmp_version& version);
   // return HP SNMP++ pdu 
+
+  const unsigned char *get_community() const;
+  // return community strptr
 
 private:
   int convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival );
@@ -68,6 +71,9 @@ private:
 
   snmp_version version_;	
   // snmp version 
+
+  unsigned char community_name[MAX_COMM_STR_LEN];
+  unsigned long comm_len; // = MAX_COMM_STR_LEN;
 };
 
 #endif // WPDU_H_
