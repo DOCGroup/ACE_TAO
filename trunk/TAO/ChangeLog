@@ -1,3 +1,23 @@
+Mon Aug 12 17:27:30 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadBalancer_Service.dsp:
+
+	  Removed this project file.  It was used for the old load
+	  balancer prototype.
+
+	* orbsvcs/LoadBalancer/LoadManager.bor:
+	* orbsvcs/LoadBalancer/LoadManager.dsp:
+	* orbsvcs/LoadBalancer/LoadMonitor.bor:
+	* orbsvcs/LoadBalancer/LoadMonitor.dsp:
+	* orbsvcs/LoadBalancer/Makefile:
+	* orbsvcs/LoadBalancer/Makefile.LoadManager:
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+	* orbsvcs/LoadBalancer/Makefile.bor:
+
+	  Added/fixed projects and Makefiles so that both the LoadManager
+	  and LoadMonitor binaries are built.  Previously, only the
+	  LoadManager was built.
+
 Mon Aug 12 08:31:03 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.h (TAO_LB_LoadAlert):
