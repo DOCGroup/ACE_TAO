@@ -1,3 +1,12 @@
+Sat Feb 4 20:12:37 2005  Martin Corino  <mcorino@remedy.nl>
+
+	* ace/OS_NS_Thread.cpp:
+	* ace/OS_NS_Thread.h:
+	* ace/OS_NS_Thread.inl:
+
+	  Fixed some flaws in TSS_Emulation tests for TSS key validity introduced
+	  some 3 years ago when key reuse was enabled for TSS_Emulation.
+
 Sat Feb 4 15:17:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/run_test.pl:
