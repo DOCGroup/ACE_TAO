@@ -58,10 +58,14 @@ test_active_map_manager (size_t table_size,
   TYPE j;
   ssize_t k;
 
-  ACTIVE_MAP_MANAGER::key_type *active_keys
-    = new ACTIVE_MAP_MANAGER::key_type[iterations];
+  ACTIVE_MAP_MANAGER::key_type *active_keys;
 
-  for (i = 0; i < iterations; i++)
+  ACE_NEW (active_keys,
+           ACTIVE_MAP_MANAGER::key_type[iterations]);
+
+  for (i = 0;
+       i < iterations;
+       i++)
     ACE_ASSERT (map.bind (i, active_keys[i]) != -1);
 
   if (test_iterators)
@@ -70,6 +74,7 @@ test_active_map_manager (size_t table_size,
         i = 0;
 
         ACTIVE_MAP_MANAGER::iterator end = map.end ();
+
         for (ACTIVE_MAP_MANAGER::iterator iter = map.begin ();
              iter != end;
              ++iter)

@@ -33,7 +33,7 @@
 //          <delay>:                50 usec
 //
 // = AUTHOR
-//      Irfan Pyarali <irfan@cs.wustl.edu>
+//      Irfan Pyarali <irfan@cs.wustl.edu> and
 //      Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
@@ -58,13 +58,13 @@ USELIB("..\ace\aced.lib");
 #include "tests/Thread_Pool_Reactor_Test.h"
 typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
-static ASYS_TCHAR *rendezvous = ASYS_TEXT ("127.0.0.1:10010");
-// Accepting end point.  This is actually "localhost:10010",
-// but some platform couldn't resolve the name so we use the
-// IP address directly here.
+// Accepting end point.  This is actually "localhost:10010", but some
+// platform couldn't resolve the name so we use the IP address
+// directly here.
+static LPCTSTR rendezvous = ASYS_TEXT ("127.0.0.1:10010");
 
-static size_t svr_thrno = ACE_MAX_THREADS;
 // Total number of server threads.
+static size_t svr_thrno = ACE_MAX_THREADS;
 
 #if defined (CHORUS) // Add platforms that can't handle too many
                      // connection simultaneously here.
@@ -73,19 +73,19 @@ static size_t svr_thrno = ACE_MAX_THREADS;
 #define ACE_LOAD_FACTOR
 #endif
 
-static size_t cli_thrno =  ACE_MAX_THREADS ACE_LOAD_FACTOR;
 // Total number of client threads.
+static size_t cli_thrno = ACE_MAX_THREADS ACE_LOAD_FACTOR;
 
-static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
 // Total connection attemps of a client thread.
+static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
 
-static size_t cli_req_no = ACE_MAX_THREADS ACE_LOAD_FACTOR;
 // Total requests a client thread sends.
+static size_t cli_req_no = ACE_MAX_THREADS ACE_LOAD_FACTOR;
 
-static int req_delay = 50;
 // Delay before a thread sending the next request (in msec.)
+static int req_delay = 50;
 
-void
+static void
 parse_arg (int argc, ASYS_TCHAR *argv[])
 {
   ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("r:s:c:d:i:n:"));
@@ -179,7 +179,7 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
   return 0;
 }
 
-void *
+static void *
 svr_worker (void *)
 {
   // Server thread function.
@@ -200,7 +200,7 @@ svr_worker (void *)
   return 0;
 }
 
-void *
+static void *
 cli_worker (void *arg)
 {
   // Client thread function.
@@ -226,7 +226,8 @@ cli_worker (void *arg)
                       ASYS_TEXT ("(%t) conn_worker handle 0x%x, req %d\n"),
                       stream.get_handle (),
                       j+1));
-          if (stream.send_n (arg, len + sizeof (ASYS_TCHAR)) == -1)
+          if (stream.send_n (arg,
+                             len + sizeof (ASYS_TCHAR)) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("(%t) %p\n"),
@@ -242,11 +243,11 @@ cli_worker (void *arg)
   return 0;
 }
 
-void *
+static void *
 worker (void *)
 {
   ACE_OS::sleep (3);
-  ASYS_TCHAR *msg = ASYS_TEXT ("Message from Connection worker");
+  LPCTSTR msg = ASYS_TEXT ("Message from Connection worker");
   ASYS_TCHAR buf [BUFSIZ];
   buf[0] = (ACE_OS::strlen (msg) + 1) * sizeof (ASYS_TCHAR);
   ACE_OS::strcpy (&buf[1], msg);
@@ -273,7 +274,7 @@ worker (void *)
                 ASYS_TEXT ("(%t) %p Error while connecting\n"),
                 ASYS_TEXT ("connect")));
 
-  char *sbuf = "\011shutdown";
+  const char *sbuf = "\011shutdown";
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("shutdown stream handle = %x\n"),

@@ -31,7 +31,7 @@ USELIB("..\ace\aced.lib");
 #if !defined (ACE_LACKS_FORK)
 static int release_mutex = 1;
 static int child_process = 0;
-static char *mutex_name = ACE_DEFAULT_MUTEX_A;
+static const char *mutex_name = ACE_DEFAULT_MUTEX_A;
 
 // Explain usage and exit.
 static void
@@ -72,18 +72,26 @@ static void
 acquire_release (void)
 {
   ACE_Process_Mutex mutex (ACE_WIDE_STRING (mutex_name));
+
   // Make sure the constructor succeeded
   ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
+
   // Grab the lock
   ACE_ASSERT (mutex.acquire () == 0);
-  ACE_DEBUG ((LM_DEBUG, "(%P) Mutex acquired %s\n", mutex_name));
-  ACE_DEBUG ((LM_DEBUG, "(%P) Working....\n"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P) Mutex acquired %s\n",
+              mutex_name));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P) Working....\n"));
   // work
   ACE_OS::sleep (2);
   // Check if we need to release the mutex
   if (release_mutex == 1)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P) Releasing the mutex %s\n", mutex_name));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P) Releasing the mutex %s\n",
+                  mutex_name));
       ACE_ASSERT (mutex.release () == 0);
     }
 }
@@ -119,11 +127,13 @@ main (int argc, char *argv[])
       if (release_mutex == 0)
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                               ACE_TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
-                              ACE_TEXT (" -c -n %s -d"), ACE_WIDE_STRING (mutex_name));
+                              ACE_TEXT (" -c -n %s -d"),
+                              ACE_WIDE_STRING (mutex_name));
       else
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                               ACE_TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
-                              ACE_TEXT (" -c -n %s"), ACE_WIDE_STRING (mutex_name));
+                              ACE_TEXT (" -c -n %s"),
+                              ACE_WIDE_STRING (mutex_name));
 
       // Spawn ACE_MAX_PROCESSES processes that will contend for the
       // lock.
