@@ -36,7 +36,7 @@ main (int argc, char* argv [])
 {
   CORBA::ORB_var orb;
   test_var server;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       
       orb = CORBA::ORB_init (argc,
