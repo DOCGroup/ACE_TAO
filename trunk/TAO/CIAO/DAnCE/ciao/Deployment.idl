@@ -2,6 +2,7 @@
 #include <orb.idl>
 #include "tao/ULongSeq.pidl"
 #include "Deployment_Core.idl"
+#include "Deployment_Ex.idl"
 
 module Deployment {
 
@@ -254,19 +255,6 @@ module Deployment {
     Properties infoProperty;
   };
 
-  exception ResourceNotAvailable {
-    string name;
-    string resourceType;
-    string propertyName;
-    string elementName;
-    string resourceName;
-  };
-
-  exception PlanError {
-    string name;
-    string reason;
-  };
-
   enum DomainUpdateKind {
     Add,
     Delete,
@@ -283,15 +271,6 @@ module Deployment {
     void updateDomain (in ::CORBA::StringSeq elements, in Domain domainSubset, in DomainUpdateKind updateKind);
   };
 
-  exception InvalidProperty {
-    string name;
-    string reason;
-  };
-
-  exception StopError {
-    string name;
-    string reason;
-  };
 
   interface ApplicationManager {
     Application startLaunch (in Properties configProperty, out Connections providedReference, in boolean start)
@@ -340,23 +319,6 @@ module Deployment {
       raises (StartError, PlanError);
     void destroyManager (in NodeApplicationManager appManager)
       raises (StopError);
-  };
-
-  exception NameExists {
-  };
-
-  exception PackageError {
-    string source;
-    string reason;
-  };
-
-  exception NoSuchName {
-  };
-
-  exception LastConfiguration {
-  };
-
-  exception InvalidReference {
   };
 
   struct PackageConfiguration;
