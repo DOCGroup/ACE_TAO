@@ -33,7 +33,6 @@
 #   define ACE_HAS_THR_C_DEST
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
-
 # define ACE_CAST_CONST const
 # define ACE_HAS_HI_RES_TIMER
 # define ACE_HAS_SIG_C_FUNC /* Sun CC 5.0 needs this, 4.2 doesn't mind. */
@@ -85,6 +84,15 @@
 # endif /* !ACE_MT_SAFE */
 
 #elif defined (ghs)
+# if defined (__STANDARD_CXX)
+   // Green Hills 1.8.9, but not 1.8.8.
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
+# endif /* __STANDARD_CXX */
+
+# define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+# define ACE_LACKS_LINEBUFFERED_STREAMBUF
+# define ACE_LACKS_LONGLONG_T /* It really doesn't have it.  Boo. */
+# define ACE_LACKS_SIGNED_CHAR
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
@@ -96,15 +104,9 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
-# define ACE_CONFIG_INCLUDE_GHS_COMMON
-# include "ace/config-ghs-common.h"
-
   // To avoid warning about inconsistent declaration between Sun's
   // stdlib.h and Green Hills' ctype.h.
 # include <stdlib.h>
-
-  // IOStream_Test never halts with Green Hills 1.8.9.
-# define ACE_LACKS_ACE_IOSTREAM
 
 #elif defined (__KCC) /* KAI compiler */
 
@@ -134,9 +136,6 @@
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-
-// select()'s timeval arg is not declared as const and may be modified
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
@@ -234,9 +233,7 @@
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
 
-#if defined (_REENTRANT) || \
- (defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE - 0 >= 199506L)) || \
- defined (_POSIX_PTHREAD_SEMANTICS)
+#if defined (_REENTRANT)
   // Compile using multi-thread libraries.
 # define ACE_HAS_THREADS
 
@@ -249,9 +246,7 @@
   // -D_POSIX_PTHREAD_SEMANTICS to your CFLAGS.  Or, #define it right
   // here.  See the Intro (3) man page for information on
   // -D_POSIX_PTHREAD_SEMANTICS.
-# if defined (_POSIX_PTHREAD_SEMANTICS)
-#   define ACE_LACKS_RWLOCK_T
-# else
+# if !defined (_POSIX_PTHREAD_SEMANTICS)
 #   define ACE_HAS_STHREADS
 # endif /* ! _POSIX_PTHREAD_SEMANTICS */
 
@@ -268,10 +263,10 @@
 # define ACE_HAS_REENTRANT_FUNCTIONS
 
 # define ACE_NEEDS_LWP_PRIO_SET
+# define ACE_HAS_PTHREAD_SIGMASK
 # define ACE_HAS_THR_YIELD
 # define ACE_LACKS_PTHREAD_YIELD
-#endif /* _REENTRANT || _POSIX_C_SOURCE >= 199506L || \
-          _POSIX_PTHREAD_SEMANTICS */
+#endif /* _REENTRANT */
 
 # define ACE_HAS_PRIOCNTL
 

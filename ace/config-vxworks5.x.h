@@ -41,10 +41,6 @@
   // compile, though, because of the period!  So, let g++/VxWorks users
   // include iostream.h only where they need it.
 # define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
-
-# define ACE_LACKS_LINEBUFFERED_STREAMBUF
-# define ACE_LACKS_SIGNED_CHAR
-
 #elif defined (ghs)
   // Processor type, if necessary.  Green Hills defines "ppc".
 # if defined (ppc)
@@ -60,11 +56,15 @@
 #   define ACE_HAS_PENTIUM
 # endif /* i386 */
 
-# define ACE_CONFIG_INCLUDE_GHS_COMMON
-# include "ace/config-ghs-common.h"
+# if defined (__STANDARD_CXX)
+   // Green Hills 1.8.9, but not 1.8.8.
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
+# endif /* __STANDARD_CXX */
 
+# define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+# define ACE_HAS_WCHAR_TYPEDEFS_CHAR
+# define ACE_LACKS_LONGLONG_T
 # define ACE_LACKS_UNISTD_H
-
 #else  /* ! __GNUG__ && ! ghs */
 # error unsupported compiler on VxWorks
 #endif /* ! __GNUG__ && ! ghs */
@@ -83,7 +83,6 @@
 #define ACE_HAS_DLL 0
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_MSG
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
@@ -104,6 +103,7 @@
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_GETSERVBYNAME
 #define ACE_LACKS_KEY_T
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_LSTAT
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H
@@ -123,6 +123,7 @@
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_SIGINFO_H
+#define ACE_LACKS_SIGNED_CHAR
 #define ACE_LACKS_SI_ADDR
 #define ACE_LACKS_SOCKETPAIR
 #define ACE_LACKS_STRCASECMP

@@ -144,11 +144,8 @@ main (int, ASYS_TCHAR *[])
 
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR,
-        "Caught exception during test; "
-        "ACE_bad_alloc not defined correctly, or\n"));
-      ACE_ERROR ((LM_ERROR,
-        "ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n"));
+      ACE_ERROR((LM_ERROR,
+      "Caught exception during test; ACE_bad_alloc not defined correctly.\n"));
       status = 1;        // Mark test failure
     }
 #endif /* ACE_HAS_EXCEPTIONS */

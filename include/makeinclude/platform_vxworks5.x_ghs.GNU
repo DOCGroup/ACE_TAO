@@ -1,6 +1,6 @@
 # $Id$
 #
-# VxWorks 5.2-5.3.1 with Green Hills 1.8.8 and 1.8.9
+# VxWorks 5.2-5.3.1 with Green Hills 1.8.8
 
 #### Notes:
 #### 1) This file requires that your PATH be set to include the location
@@ -58,12 +58,7 @@ ifeq ($(CPU),86)
   endif # GHS
   AR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/ar386
   ARFLAGS  = rsu
-
-  #### For GHS 1.8.8:
-  #### LIBS += $(GHS)/libedgnoe.a
-
-  #### For GHS 1.8.9:
-  LIBS += $(GHS)/libscnoe.a $(GHS)/libsedgnoe.a $(GHS)/liblockinit_sc.o
+  LIBS += $(GHS)/libedgnoe.a
 else
 ifeq ($(CPU),ppc)
   ifndef GHS

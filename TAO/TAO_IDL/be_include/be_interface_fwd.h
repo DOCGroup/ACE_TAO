@@ -56,6 +56,12 @@ public:
   virtual int gen_out_impl (void);
   // generate the _out implementation
 
+  virtual int gen_typecode (void);
+  // generate the typecode
+
+  virtual long tc_size (void);
+  // return typecode size
+
   // Visiting
   virtual int accept (be_visitor* visitor);
 

@@ -240,13 +240,10 @@ ECT_Throughput::run (int argc, char* argv[])
         }
       else
         {
-          TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
-                                                root_poa.in ());
-          attr.busy_hwm = this->ec_concurrency_hwm_;
-          attr.max_write_delay = this->ec_concurrency_hwm_;
-
           TAO_EC_Event_Channel *ec =
-            new TAO_EC_Event_Channel (attr);
+            new TAO_EC_Event_Channel (root_poa.in (),
+                                      root_poa.in ());
+          ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
 
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -651,7 +648,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_consumers_ >= ECT_Throughput::MAX_CONSUMERS)
     {
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of consumers or "
                          "suppliers out of range, "
                          "reset to default (%d)\n",
@@ -662,7 +659,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_suppliers_ >= ECT_Throughput::MAX_SUPPLIERS)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
@@ -672,7 +669,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
     {
       this->n_suppliers_ = 1;
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: no suppliers or consumers, "
                          "reset to default (%d of each)\n",
                          argv[0], 1), -1);
@@ -681,7 +678,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
   if (this->ec_concurrency_hwm_ <= 0)
     {
       this->ec_concurrency_hwm_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: invalid concurrency HWM, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);

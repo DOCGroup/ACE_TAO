@@ -79,7 +79,27 @@ int CORBA_ORB::orb_init_count_ = 0;
 // Pointer to the "default ORB."
 CORBA::ORB_ptr CORBA::instance_ = 0;
 
-// ****************************************************************
+CORBA_String_var::CORBA_String_var (char *p)
+  : ptr_ (p)
+{
+  // NOTE: According to the CORBA spec this string must *not* be
+  // copied, but it is non-compliant to use it/release it in the
+  // calling code.  argument is consumed. p should never be NULL
+}
+
+CORBA_String_var::CORBA_String_var (const CORBA_String_var& r)
+{
+  this->ptr_ = CORBA::string_dup (r.ptr_);
+}
+
+CORBA_String_var::~CORBA_String_var (void)
+{
+  if (this->ptr_ != 0)
+    {
+      CORBA::string_free (this->ptr_);
+      this->ptr_ = 0;
+    }
+}
 
 CORBA_ORB::InvalidName::InvalidName (void)
 {
@@ -108,7 +128,7 @@ CORBA_ORB::InvalidName::_is_a (const char* interface_id) const
           || CORBA_UserException::_is_a (interface_id));
 }
 
-CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
+CORBA_ORB::CORBA_ORB (TAO_ORB_Core* orb_core)
   : refcount_ (1),
     open_called_ (0),
     shutdown_lock_ (0),
@@ -303,89 +323,6 @@ CORBA_ORB::work_pending (void)
   return 1;
 }
 
-// The following functions are not implemented - they just throw
-// CORBA::NO_IMPLEMENT.
-
-void
-CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
-                                  CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::create_environment (CORBA::Environment_ptr &,
-                               CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-CORBA::Boolean
-CORBA_ORB::get_service_information (CORBA::ServiceType service_type,
-                                    CORBA::ServiceInformation_out service_information,
-                                    CORBA::Environment &ACE_TRY_ENV)
-{
-  return 0;
-}
-
-void
-CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
-                               CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::create_context_list (CORBA::ContextList_ptr &,
-                                CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::get_default_context (CORBA::Context_ptr &,
-                                CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
-                                          CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
-                                            CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-void
-CORBA_ORB::get_next_response (CORBA_Request_ptr &,
-                              CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
-CORBA::Boolean
-CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
-                    0);
-}
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 int
@@ -512,8 +449,13 @@ CORBA_ORB::resolve_root_poa (CORBA::Environment &ACE_TRY_ENV,
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa_current (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Return the pointer to the POA Current.
-  return this->orb_core_->poa_current ()._this (ACE_TRY_ENV);
+  // Return the pointer to this thread's POACurrent.
+
+  TAO_POA_Current *poa_current = this->orb_core_->poa_current ();
+  if (poa_current == 0)
+    return CORBA_Object::_nil ();
+
+  return poa_current->_this (ACE_TRY_ENV);
 }
 
 CORBA_Object_ptr
@@ -547,7 +489,7 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_service (const char *service_name,
+CORBA_ORB::resolve_service (CORBA::String service_name,
                             ACE_Time_Value *timeout,
                             CORBA::Environment& ACE_TRY_ENV)
 {
@@ -849,7 +791,7 @@ CORBA_ORB::multicast_to_service (const char * service_name,
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_initial_references (const char *name,
+CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        CORBA_Environment &TAO_IN_ENV)
 {
   return this->resolve_initial_references (name,
@@ -858,7 +800,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_initial_references (const char *name,
+CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        ACE_Time_Value *timeout,
                                        CORBA_Environment &ACE_TRY_ENV)
 {
@@ -939,15 +881,6 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return this->resolve_service (name, timeout, ACE_TRY_ENV);
 }
 
-// Unimplemented at this time.
-CORBA_ORB_ObjectIdList_ptr
-CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
-                    0);
-}
-
 TAO_Stub *
 CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                const char *type_id,
@@ -959,7 +892,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   CORBA::String id = 0;
 
   if (type_id)
-    id = CORBA::string_dup (type_id);
+    id = CORBA::string_copy (type_id);
 
   TAO_Stub *stub = 0;
 
@@ -970,7 +903,11 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   // @@ Fred, please change this code to use auto_ptr<> and
   //    automatically deallocate the temporary objects. Alternatively
   //    consider about using references ;-)
-  TAO_MProfile mp (1);
+  TAO_MProfile *mp;
+  ACE_NEW_THROW_EX (mp,
+                    TAO_MProfile (1),
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+  ACE_CHECK_RETURN (stub);
 
   TAO_ORB_Parameters *orb_params =
     this->orb_core_->orb_params ();
@@ -984,7 +921,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
 
-  mp.give_profile (pfile);
+  mp->give_profile (pfile);
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
@@ -1090,37 +1027,22 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-// ****************************************************************
-
 // String utility support; this needs to be integrated with the ORB's
 // own memory allocation subsystem.
 
-CORBA::Char*
+CORBA::String
 CORBA::string_copy (const CORBA::Char *str)
 {
-  return CORBA::string_dup (str);
-}
+  if (!str)
+    return 0;
 
-CORBA_String_var::CORBA_String_var (char *p)
-  : ptr_ (p)
-{
-  // NOTE: According to the CORBA spec this string must *not* be
-  // copied, but it is non-compliant to use it/release it in the
-  // calling code.  argument is consumed. p should never be NULL
-}
+  size_t len = ACE_OS::strlen (str);
 
-CORBA_String_var::CORBA_String_var (const CORBA_String_var& r)
-{
-  this->ptr_ = CORBA::string_dup (r.ptr_);
-}
+  // This allocates an extra byte for the '\0';
+  CORBA::String copy = CORBA::string_alloc (len);
 
-CORBA_String_var::~CORBA_String_var (void)
-{
-  if (this->ptr_ != 0)
-    {
-      CORBA::string_free (this->ptr_);
-      this->ptr_ = 0;
-    }
+  ACE_OS::memcpy (copy, str, len + 1);
+  return copy;
 }
 
 CORBA_String_var &
@@ -1157,65 +1079,30 @@ CORBA_String_var::operator= (const CORBA_String_var& r)
   return *this;
 }
 
-// ****************************************************************
+// Wide Character string utility support; this can need to be
+// integrated with the ORB's own memory allocation subsystem.
 
-CORBA_WString_var::CORBA_WString_var (CORBA::WChar *p)
-  : ptr_ (p)
+CORBA::WString
+CORBA::wstring_alloc (CORBA::ULong len)
 {
-  // NOTE: According to the CORBA spec this string must *not* be
-  // copied, but it is non-compliant to use it/release it in the
-  // calling code.  argument is consumed. p should never be NULL
+  return new CORBA::WChar [(size_t) (len + 1)];
 }
 
-CORBA_WString_var::CORBA_WString_var (const CORBA_WString_var& r)
+CORBA::WString
+CORBA::wstring_copy (const CORBA::WChar *const str)
 {
-  this->ptr_ = CORBA::wstring_dup (r.ptr_);
+  if (!str)
+    return 0;
+
+  CORBA::WString retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
+  return ACE_OS::wscpy (retval, str);
 }
 
-CORBA_WString_var::~CORBA_WString_var (void)
+void
+CORBA::wstring_free (CORBA::WChar *const str)
 {
-  if (this->ptr_ != 0)
-    {
-      CORBA::wstring_free (this->ptr_);
-      this->ptr_ = 0;
-    }
+  delete [] str;
 }
-
-CORBA_WString_var &
-CORBA_WString_var::operator= (CORBA::WChar *p)
-{
-  if (this->ptr_ != p)
-    {
-      if (this->ptr_ != 0)
-        CORBA::wstring_free (this->ptr_);
-      this->ptr_ = p;
-    }
-  return *this;
-}
-
-CORBA_WString_var &
-CORBA_WString_var::operator= (const CORBA::WChar *p)
-{
-  if (this->ptr_ != 0)
-    CORBA::wstring_free (this->ptr_);
-
-  this->ptr_ = CORBA::wstring_dup (p);
-  return *this;
-}
-
-CORBA_WString_var &
-CORBA_WString_var::operator= (const CORBA_WString_var& r)
-{
-  if (this != &r)
-    {
-      if (this->ptr_ != 0)
-        CORBA::wstring_free (this->ptr_);
-      this->ptr_ = CORBA::wstring_dup (r.ptr_);
-    }
-  return *this;
-}
-
-// ****************************************************************
 
 void
 CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
@@ -1524,7 +1411,10 @@ CORBA_ORB::iiop_string_to_object (const char *string,
   // _narrow will be required to make an expensive remote "is_a" call.
 
   // Allocate a Multiple Profile with the given no. of profiles.
-  TAO_MProfile mp (1);
+  TAO_MProfile *mp;
+  ACE_NEW_RETURN (mp,
+                  TAO_MProfile (1),
+                  obj);
 
   TAO_Profile* pfile;
   ACE_NEW_RETURN (pfile,
@@ -1533,7 +1423,7 @@ CORBA_ORB::iiop_string_to_object (const char *string,
   ACE_CHECK_RETURN (obj);
   // pfile refcount == 1
 
-  mp.give_profile (pfile);
+  mp->give_profile (pfile);
 
   // Now make the TAO_Stub ...
   TAO_Stub *data;
@@ -1618,7 +1508,7 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
   // Now make the TAO_Stub ...
   TAO_Stub *data;
   ACE_NEW_RETURN (data,
-                  TAO_Stub ((char *) 0, mp, this->orb_core_),
+                  TAO_Stub ((char *) 0, &mp, this->orb_core_),
                   CORBA::Object::_nil ());
 
   // Create the CORBA level proxy.
@@ -1830,6 +1720,81 @@ CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
   obj = this->string_to_object (ior.c_str ());
 
   return 0;
+}
+
+// The following functions are not implemented - they just throw
+// CORBA::NO_IMPLEMENT.
+
+void
+CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
+                               CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
+                                  CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::create_context_list (CORBA::ContextList_ptr &,
+                                CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::get_default_context (CORBA::Context_ptr &,
+                                CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::create_environment (CORBA::Environment_ptr &,
+                               CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
+                                          CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
+                                            CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void
+CORBA_ORB::get_next_response (CORBA_Request_ptr &,
+                              CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+CORBA::Boolean
+CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 // ****************************************************************

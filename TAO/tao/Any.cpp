@@ -70,7 +70,10 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
 const void *
 CORBA_Any::value (void) const
 {
-  return this->value_;
+  if (this->any_owns_data_)
+    return this->value_;
+  else
+    return this->cdr_;
 }
 
 // Default "Any" constructor -- initializes to nulls per the
@@ -127,7 +130,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
 CORBA_Any::CORBA_Any (const CORBA_Any &src)
   : value_ (0),
     cdr_ (0),
-    any_owns_data_ (0)
+    any_owns_data_ (1)
 {
   if (src.type_ != 0)
     this->type_ = CORBA::TypeCode::_duplicate (src.type_);
@@ -169,7 +172,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
     this->type_ = CORBA::TypeCode::_duplicate (src.type_);
   else
     this->type_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-  this->any_owns_data_ = 0;
+  this->any_owns_data_ = 1;
 
   this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
   // Simply duplicate the cdr string here.  We can save the decode operation
@@ -239,6 +242,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 void
 CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
                          const ACE_Message_Block *mb,
+                         CORBA::Boolean any_owns_data,
                          CORBA::Environment &env)
 {
   // Decrement the refcount on the Message_Block we hold, it does not
@@ -255,7 +259,7 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   CORBA::release (this->type_);
   this->type_ = tmp;
 
-  this->any_owns_data_ = 0;
+  this->any_owns_data_ = any_owns_data;
 
   this->cdr_ = ACE_Message_Block::duplicate (mb);
   // We can save the decode operation
@@ -340,7 +344,7 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
                  env);
 }
 
-// insertion of CORBA object - copying
+// insertion of CORBA object
 void
 CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
 {
@@ -348,7 +352,6 @@ CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
   (*this) <<= &objptr;
 }
 
-// insertion of CORBA object - non-copying
 void
 CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
 {

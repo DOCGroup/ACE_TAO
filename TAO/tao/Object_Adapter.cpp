@@ -261,11 +261,11 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
 
   // Setup for POA Current
   const char *operation = req.operation ();
-  TAO_POA_Current_Impl current_context (poa,
-                                        key,
-                                        0,
-                                        operation,
-                                        this->orb_core_);
+  TAO_POA_Current current_context (poa,
+                                   key,
+                                   0,
+                                   operation,
+                                   this->orb_core_);
 
   PortableServer::Servant servant = 0;
 
@@ -849,22 +849,18 @@ TAO_Object_Adapter::Single_Threaded_POA_Lock::Single_Threaded_POA_Lock (TAO_POA 
   : poa_ (poa),
     servant_ (servant)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->poa_.policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
       this->servant_->_single_threaded_poa_lock ().acquire ();
     }
-#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 TAO_Object_Adapter::Single_Threaded_POA_Lock::~Single_Threaded_POA_Lock (void)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->poa_.policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
       this->servant_->_single_threaded_poa_lock ().release ();
     }
-#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 ////////////////////////////////////////////////////////////////////////////////

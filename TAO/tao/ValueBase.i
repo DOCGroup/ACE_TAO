@@ -72,13 +72,13 @@ CORBA_DefaultValueRefCountBase::_tao_refcount_value (void)
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_null_ref (CORBA::ULong tag)
 {
-  return (tag == 0);
+  return (tag == Null_ref);
 }
 
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_value_tag (CORBA::ULong tag)
 {
-  return ((tag & Value_tag_sigbits) == 0x7FFFFF00L);
+  return ((tag & Value_tag_sigbits) == Value_tag_base);
 }
 
 ACE_INLINE CORBA::Boolean
@@ -90,7 +90,7 @@ TAO_OBV_GIOP_Flags:: has_codebase_url(CORBA::ULong tag)
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::has_no_type_info (CORBA::ULong tag)
 {
-  return ((tag & Type_info_sigbits) == Type_info_none);
+  return ((tag & Type_info_sigbits) == Type_info_no);
 }
 
 ACE_INLINE CORBA::Boolean
@@ -108,29 +108,70 @@ TAO_OBV_GIOP_Flags::has_list_type_info (CORBA::ULong tag)
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags:: is_chunked (CORBA::ULong tag)
 {
-  return (tag & 8);
+  return (tag & Chunked_encoding);
 }
 
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_indirection_tag (CORBA::ULong tag)
 {
-  return (tag == 0xFFFFFFFFL);
+  return (tag == Indirection_tag);
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_indirection (CORBA::ULong value)
+TAO_OBV_GIOP_Flags:: block_size (CORBA::ULong tag, CORBA::ULong &size)
 {
-  return (0x80000000L < value && value <= (0xFFFFFFFFL - 4));
+  if ((tag >= Block_size_tag_min) &&
+      (tag <= Block_size_tag_max))
+    {
+      size = tag;
+      return 1;
+    }
+  return 0;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_block_size (CORBA::ULong value)
+TAO_OBV_GIOP_Flags:: end_tag_depth (CORBA::ULong tag,
+                                    CORBA::ULong &depth)
 {
-  return ( 0 < value && value < 0x7fffff00L);
+  // @@ Torsten: could you please check that I did not break anything
+  //    here?  Your code was giving us all sort of headaches on NT
+  //    because the compiler insists in making 0x8000000L an unsigned
+  //    long (and IMHO it is right).
+  if (End_tag_min <= tag
+      && tag <= End_tag_max)
+    {
+      // @@ Torsten: do you think this is right? After all you are
+      //    storing things back into a ULong....
+      depth = - ACE_static_cast (CORBA::Long, tag);
+      return 1;
+    }
+  return 0;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags::is_end_tag (CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: indirection (CORBA::ULong tag,
+                                  CORBA::Long &jump)
 {
-  return (0x80000000L < tag  && tag <= 0xFFFFFFFFL);
+  if (Indirection_min <= tag
+      && tag <= Indirection_max)
+    {
+      jump = ACE_static_cast (CORBA::Long, tag);
+      return 1;
+    }
+  return 0;
 }
+
+/*
+ACE_INLINE CORBA::Boolean
+TAO_OBV_GIOP_Flags:: (CORBA::ULong tag)
+{
+  return ( );
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_OBV_GIOP_Flags:: (CORBA::ULong tag)
+{
+  return ( );
+}
+
+*/

@@ -104,7 +104,7 @@ TAO_DynArray_i::~TAO_DynArray_i (void)
 ///////////////////////////////////////////////////////////////////////
 // Functions specific to DynArray
 
-CORBA_AnySeq_ptr
+AnySeq_ptr
 TAO_DynArray_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::ULong length = this->da_members_.size ();
@@ -113,10 +113,10 @@ TAO_DynArray_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
     return 0;
 
   // Arg only sets maximum, so...
-  CORBA_AnySeq_ptr elements;
+  AnySeq_ptr elements;
 
   ACE_NEW_THROW_EX (elements,
-                    CORBA_AnySeq (length),
+                    AnySeq (length),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -134,7 +134,7 @@ TAO_DynArray_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
 }
 
 void
-TAO_DynArray_i::set_elements (const CORBA_AnySeq& value,
+TAO_DynArray_i::set_elements (const AnySeq& value,
                               CORBA::Environment& env)
 {
   CORBA::ULong length = value.length ();

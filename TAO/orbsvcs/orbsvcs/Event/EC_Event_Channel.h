@@ -35,55 +35,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "EC_Factory.h"
 
-class TAO_ORBSVCS_Export TAO_EC_Event_Channel_Attributes
-{
-  // = TITLE
-  //   Defines the construction time attributes for the Event
-  //   Channel.
-  //
-  // = DESCRIPTION
-  //   The event channel implementation is controlled by two
-  //   mechanisms:
-  //      The EC_Factory that provides the strategies for the EC
-  //      implementation.
-  //      The EC attributes that define constants and values required
-  //      by the EC construction.
-  //   This class encapsulates those constants and values, providing
-  //   an easy mechanism to extend the attributes without requiring
-  //   changes in the EC constructor.
-  //
-public:
-  TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr supplier_poa,
-                                   PortableServer::POA_ptr consumer_poa);
-  // The basic constructor.
-  // The attributes listed as arguments are *required* by the EC, and
-  // no appropiate defaults are available for them.
-
-  // Most fields are public, there is no need to protect them, in fact
-  // the user should be able to set any values she wants.
-
-  int consumer_reconnect;
-  int supplier_reconnect;
-  // Can consumers or suppliers invoke connect_push_* multiple times?
-
-  int busy_hwm;
-  int max_write_delay;
-  // Flags for the Consumer Admin
-
-  RtecScheduler::Scheduler_ptr scheduler;
-  // The scheduling service that we will use with this event channel.
-  // Notice that this is optional and will only take effect if the EC
-  // is configured with the right filtering strategies.
-
-private:
-  friend class TAO_EC_Event_Channel;
-  // Only the EC can read the private fields.
-
-  PortableServer::POA_ptr supplier_poa;
-  PortableServer::POA_ptr consumer_poa;
-  // The POAs
-};
-
 class TAO_ORBSVCS_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
 {
   // = TITLE
@@ -98,7 +49,8 @@ class TAO_ORBSVCS_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin
   //   interface to the EC_Factory.
   //
 public:
-  TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attributes,
+  TAO_EC_Event_Channel (PortableServer::POA_ptr supplier_poa,
+                        PortableServer::POA_ptr consumer_poa,
                         TAO_EC_Factory* factory = 0,
                         int own_factory = 0);
   // constructor
@@ -136,9 +88,6 @@ public:
 
   TAO_EC_Timeout_Generator* timeout_generator (void) const;
   // Access the timer module...
-
-  TAO_EC_Scheduling_Strategy* scheduling_strategy (void) const;
-  // Access the scheduling strategy
 
   // = The factory methods, they delegate on the EC_Factory.
   TAO_EC_ProxyPushSupplier* create_proxy_push_supplier (void);
@@ -185,23 +134,6 @@ public:
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
 
-  // Simple flags to control the EC behavior, set by the application
-  // at construction time.
-
-  int consumer_reconnect (void) const;
-  // Can the consumers reconnect to the EC?
-
-  int supplier_reconnect (void) const;
-  // Can the suppliers reconnect to the EC?
-
-  RtecScheduler::Scheduler_ptr scheduler (void);
-  // Obtain the scheduler, the user must release
-
-  int busy_hwm (void) const;
-  int max_write_delay (void) const;
-  // Control the concurrency of the delayed connect/disconnect
-  // operations.
-
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
       for_consumers (CORBA::Environment& env);
@@ -218,7 +150,7 @@ public:
 
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-                       CORBA::Environment &env)
+		       CORBA::Environment &env)
       TAO_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
                        RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER));
@@ -263,21 +195,6 @@ private:
 
   TAO_EC_ObserverStrategy *observer_strategy_;
   // The observer strategy
-
-  RtecScheduler::Scheduler_var scheduler_;
-  // The scheduler (may be nil)
-
-  TAO_EC_Scheduling_Strategy *scheduling_strategy_;
-  // The scheduling strategy
-
-  int consumer_reconnect_;
-  int supplier_reconnect_;
-  // Consumer/Supplier reconnection flags
-
-  int busy_hwm_;
-  int max_write_delay_;
-  // Control the level of concurrency in the supplier sets with
-  // delayed operations
 };
 
 #if defined (__ACE_INLINE__)

@@ -22,11 +22,9 @@ CFG=TAO Static - Win32 Debug
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 CPP=cl.exe
-RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO Static - Win32 Release"
 
@@ -40,11 +38,12 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
-# SUBTRACT CPP /YX
+RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
+# SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -64,10 +63,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\..\\" /I "..\\" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
+# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\..\\" /I "..\\" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -114,14 +114,6 @@ SOURCE=.\Connect.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Context.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\corbafwd.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CurrentC.cpp
 # End Source File
 # Begin Source File
@@ -151,14 +143,6 @@ SOURCE=.\default_resource.cpp
 # Begin Source File
 
 SOURCE=.\default_server.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS.cpp
 # End Source File
 # Begin Source File
 
@@ -242,14 +226,6 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOR_LookupTable.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Key_Adapters.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Managed_Types.cpp
 # End Source File
 # Begin Source File
@@ -275,10 +251,6 @@ SOURCE=.\NVList.cpp
 # Begin Source File
 
 SOURCE=.\Object.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Object_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -362,10 +334,6 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
@@ -411,10 +379,6 @@ SOURCE=.\ValueFactory.cpp
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\WrongTransactionC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -475,10 +439,6 @@ SOURCE=.\default_resource.h
 # Begin Source File
 
 SOURCE=.\default_server.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
 
@@ -582,10 +542,6 @@ SOURCE=.\object.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Adapter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
@@ -654,6 +610,10 @@ SOURCE=.\PolicyC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PolicyS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
@@ -683,10 +643,6 @@ SOURCE=.\Server_Request.h
 # Begin Source File
 
 SOURCE=.\Server_Strategy_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Services.h
 # End Source File
 # Begin Source File
 
@@ -728,10 +684,6 @@ SOURCE=.\ValueFactory_Map.h
 
 SOURCE=.\varout.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\WrongTransactionC.h
-# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -754,10 +706,6 @@ SOURCE=.\connect.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\corbafwd.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CurrentC.i
 # End Source File
 # Begin Source File
@@ -771,14 +719,6 @@ SOURCE=.\default_resource.i
 # Begin Source File
 
 SOURCE=.\default_server.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS_T.i
 # End Source File
 # Begin Source File
 
@@ -903,10 +843,6 @@ SOURCE=.\Servant_Base.i
 # Begin Source File
 
 SOURCE=.\Server_Request.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Services.i
 # End Source File
 # Begin Source File
 

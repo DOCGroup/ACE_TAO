@@ -7,7 +7,7 @@
 $(TARGETS_NESTED):
 ifneq ($(DIRS),)
 ifeq (Windows,$(findstring Windows,$(OS)))
-	@cmd /c "FOR /D %i IN ($(DIRS)) DO $(MAKE) -C %i $(@:.nested=)"
+	@FOR /D %i IN ($(DIRS)) DO $(MAKE) -C %i $(@:.nested=)
 else  # ! Windows
 	@for dir in $(DIRS); do $(MAKE) -C $$dir $(@:.nested=); done
 endif # ! Windows

@@ -251,8 +251,8 @@ make: *** [libACE.so] Error 8
       HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on both Intel
       and Alpha platforms.  If you use a RedHat 5.x distribution, it's best
       to use RedHat 5.1 or later.  ACE works without any modifications on
-      RedHat 5.1, 5.2, and 6.0, and on Debian 2.1 on both Intel and Alpha;
-      use the <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
+      RedHat 5.1, 5.2 and on Debian 2.1 on both Intel and Alpha; use the
+      <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
       and <code>ace/config-linux-lxpthreads.h</code> platform/config
       files.<p>
 
@@ -674,16 +674,9 @@ If you use the GNU GCC g++ compiler please note the following:
       and 105490-07.<p>
 
       If you need or want to use egcs' shared libraries, build it
-      with the <code>--enable-shared</code> egcs config option.  The
-      <code>--enable-shared</code> option is <strong>not</strong> an
-      egcs run-time option.  Build egcs in a way similar to the
-      following example:
-      <pre><code>
-         $ ./configure --enable-shared
-         $ make bootstrap
-      </code></pre>
-      Be sure to set your <code>LD_LIBRARY_PATH</code> environment
-      variable, if necessary, to pick up those shared libraries.<p>
+      with the <code>--enable-shared</code> egcs config option.  Be
+      sure to set your <code>LD_LIBRARY_PATH</code> environment variable,
+      if necessary, to pick up those shared libraries.<p>
 
   <li>On DEC Alpha, egcs through version 1.03a, at least, may fail
       to build ACE if debugging (-g) is enabled.  The fix is to
@@ -904,20 +897,13 @@ the STL fixes.
       before the #include statement in ACE_ROOT\ace\config.h.
       Optionally but highly recommended, you can also add the line <BR>
       <BR>
-      <CODE>#define ACE_NO_INLINE</CODE><BR>
+      <CODE>#define __ACE_INLINE__ 0</CODE><BR>
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h to disable
       inline function and reduce the size of static libraries (and your
       executables.)  Notice that you need to use DLL version of
       run-time libraries even you are using ACE as a static library.
       That's the default behavior.<BR><BR>
-
-  <li><a href="http://www.panix.com/~hoggardb/index.shtml">Barry
-      Hoggard</a> maintains a <a
-      href="http://www.panix.com/~hoggardb/corba/">CORBA Page</a>
-      which contains very helpful information on setting MSVC project
-      settings.  You'll need to filter out stuff related to TAO if you
-      only use ACE.<br><br>
 </Ol>
 
 <B>ACE TESTS</B><P>
