@@ -1,3 +1,10 @@
+Sat Nov  8 05:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/tests/Notify/lib/Makefile:
+          Removed DEPENDENCY variable and updated dependencies so that
+          realclean will actually cleanup all the objects.  This should
+          fix build errors associated with this library.
+
 Fri Nov 7 21:12:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 	
