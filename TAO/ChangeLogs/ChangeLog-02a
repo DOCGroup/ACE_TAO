@@ -1,3 +1,11 @@
+Fri Jan 26 16:39:50 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
+          Remove spurious forward declaration
+
+        * orbsvcs/IFR_Service/tmplinst.cpp:
+          Add missing template instantiations.
+
 Fri Jan 26 16:22:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/ifrfwd.h:
