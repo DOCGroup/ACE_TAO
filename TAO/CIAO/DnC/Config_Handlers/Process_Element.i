@@ -12,10 +12,10 @@
 #include "Process_Element.h"
 #include <iostream>
 
-template <typename OBJECT, typename VALUE, typename DATA>
+template <typename VALUE, typename DATA>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 DOMDocument* doc,
-                                DOMNodeIterator* iter,
+                                DOMNodeIterator*& iter,
                                 VALUE value,
                                 DATA& data,
                                 Process_Function <DATA>* func,
@@ -73,21 +73,20 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
              true);
           href_iter->nextNode ();
 
-          static_cast< Process_Member_Function<OBJECT, DATA>* > (func)->doc(href_doc);
           (*func) (href_iter, data);
         }
     }
 }
 
 // This function only works for calling static process_ methods
-template <typename OBJECT, typename DATA, typename VALUE>
- void process_element (DOMNode* node,
-                       DOMDocument* doc,
-                       DOMNodeIterator* iter,
-                       DATA& data,
-                       VALUE val,
-                       Process_Function <DATA>* func,
-                       REFMAP& id_map)
+template <typename DATA, typename VALUE>
+void process_element (DOMNode* node,
+                      DOMDocument* doc,
+                      DOMNodeIterator*& iter,
+                      DATA& data,
+                      VALUE val,
+                      Process_Function <DATA>* func,
+                      REFMAP& id_map)
 {
   // fetch attributes
   DOMNamedNodeMap* named_node_map = node->getAttributes ();
@@ -102,18 +101,18 @@ template <typename OBJECT, typename DATA, typename VALUE>
   else if (length > 1)
     {
       // Check the xmi::id & href attributes
-      process_element_attributes<OBJECT>(named_node_map, doc, iter, val, data, func, id_map);
+      process_element_attributes(named_node_map, doc, iter, val, data, func, id_map);
     }
 }
 
 // This function only works for calling static process_ methods
-template <typename OBJECT, typename SEQUENCE, typename DATA>
- void process_sequential_element (DOMNode* node,
-                                  DOMDocument* doc,
-                                  DOMNodeIterator* iter,
-                                  SEQUENCE& seq,
-                                  Process_Function <DATA>* func,
-                                  REFMAP& id_map)
+template <typename SEQUENCE, typename DATA>
+void process_sequential_element (DOMNode* node,
+                                 DOMDocument* doc,
+                                 DOMNodeIterator*& iter,
+                                 SEQUENCE& seq,
+                                 Process_Function <DATA>* func,
+                                 REFMAP& id_map)
 {
   if (node->hasAttributes ())
     {
@@ -122,6 +121,6 @@ template <typename OBJECT, typename SEQUENCE, typename DATA>
       // add 1 to the size of the sequence
       seq.length (i + 1);
       // call process only one element
-      process_element<OBJECT>(node, doc, iter, seq[i], i, func, id_map);
+      process_element(node, doc, iter, seq[i], i, func, id_map);
     }
 }
