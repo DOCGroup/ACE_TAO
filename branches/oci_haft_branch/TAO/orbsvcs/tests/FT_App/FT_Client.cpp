@@ -4,6 +4,7 @@
 #include "FT_UnitTests.h"
 // the following include is relative to $TAO_ROOT
 #include "examples/Simple/Simple_util.h"
+#include <iostream>
 #include <fstream>
 
 class FTClientMain
@@ -174,7 +175,7 @@ FTClientMain::parse_args (int argc, char *argv[])
       }
       argv[nArg+1] = fargValue_;
 
-      std::cout << "FT Client: Initial primary replica: " << fargPos_ << endl;
+      std::cout << "FT Client: Initial primary replica: " << fargPos_ << std::endl;
 
       // point fargPos at the next filename
       fargPos_ = fargPos_ + ACE_OS::strlen(fargPos_);
@@ -319,7 +320,7 @@ int FTClientMain::pass (
           }
           else
           {
-            std::cout << "FT Client: Error: Read " << value << " expecting " << operand << endl;
+            std::cout << "FT Client: Error: Read " << value << " expecting " << operand << std::endl;
           }
           echo = 0;
           break;
@@ -366,7 +367,7 @@ int FTClientMain::pass (
           }
           long attribute = ft_server->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          std::cout << "FT Client: Attribute: " << attribute << endl;
+          std::cout << "FT Client: Attribute: " << attribute << std::endl;
           echo = 0;
           break;
         }
@@ -378,7 +379,7 @@ int FTClientMain::pass (
           }
           int alive = ft_server->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          std::cout << "FT Client: Is alive?  " << alive << endl;
+          std::cout << "FT Client: Is alive?  " << alive << std::endl;
           break;
         }
         case 'd':
@@ -458,7 +459,7 @@ int FTClientMain::pass (
           }
           else
           {
-            std::cout << "FT Client: ERROR: No saved update information." << endl;
+            std::cout << "FT Client: ERROR: No saved update information." << std::endl;
           }
           break;
         }
@@ -523,12 +524,12 @@ int FTClientMain::pass (
         {
           if (verbose_ >= NORMAL)
           {
-            std::cout << "FT Client: " << counter << endl;;
+            std::cout << "FT Client: " << counter << std::endl;;
           }
         }
         else
         {
-          std::cout << "FT Client: Error: read " << value << " expecting " << counter << endl;
+          std::cout << "FT Client: Error: read " << value << " expecting " << counter << std::endl;
           result = -1;
         }
       }
@@ -629,7 +630,7 @@ int FTClientMain::run ()
   }
   else
   {
-    std::cerr << "FT Client: Can't connect to replica." << endl;
+    std::cerr << "FT Client: Can't connect to replica." << std::endl;
   }
   return result;
 }

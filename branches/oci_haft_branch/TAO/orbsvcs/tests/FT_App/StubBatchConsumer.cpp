@@ -29,7 +29,7 @@ int StubBatchConsumer::parse_args (int argc, char * argv[])
 /**
  * register this object
  */
-int StubBatchConsumer::self_register (TAO_ORB_Manager & orbManager,
+int StubBatchConsumer::init (TAO_ORB_Manager & orbManager,
     ::FT::FaultNotifier_var & notifier
     ACE_ENV_ARG_DECL)
 {
@@ -65,7 +65,7 @@ const char * StubBatchConsumer::identity () const
 /**
  * Clean house for process shut down.
  */
-void StubBatchConsumer::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
+void StubBatchConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   notifier_->disconnect_consumer(consumerId_ ACE_ENV_ARG_PARAMETER);
 }

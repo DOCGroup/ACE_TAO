@@ -12,10 +12,22 @@
  */
 //=============================================================================
 
+#include <tao/Utils/ServantMain.h>
+#include "FT_ReplicaFactory_i.h"
+
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+  TAO::Utils::ServantMain<FT_ReplicaFactory_i> servantMain("TestReplicaFactory");
+  return servantMain.Main(argc, argv);
+}
+
+
+#if 0
 #include "FT_TestReplica_i.h"
-#include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
-#include "orbsvcs/CosNamingC.h"
+#include <ace/Get_Opt.h>
+#include <tao/PortableServer/ORB_Manager.h>
+#include <orbsvcs/CosNamingC.h>
+#include <iostream>
 
 namespace {
 
@@ -200,3 +212,4 @@ int main (int argc, char * argv[] )
   ACE_ENDTRY;
   return result;
 }
+#endif

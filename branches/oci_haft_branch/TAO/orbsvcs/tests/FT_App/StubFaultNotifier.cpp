@@ -2,11 +2,11 @@
 //
 // $Id$
 
-#include "ace/pre.h"
 #include "StubFaultNotifier.h"
-#include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
-#include "orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h"
+#include <ace/Get_Opt.h>
+#include <tao/PortableServer/ORB_Manager.h>
+#include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+#include <iostream>
 
 StubFaultNotifier::StubFaultNotifier ()
   : iorOutputFile_(0)
@@ -139,9 +139,49 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
 }
 
 /**
+ * Prepare to exit.
+ */
+int StubFaultNotifier::fini ()
+{
+  if(nsName_ != 0)
+  {
+    ACE_TRY_NEW_ENV
+    {
+      CORBA::Object_var naming_obj =
+        orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil(naming_obj.in ())){
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%T %n (%P|%t) Unable to find the Naming Service\n"),
+                          1);
+      }
+
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CosNaming::Name this_name (1);
+      this_name.length (1);
+      this_name[0].id = CORBA::string_dup (nsName_);
+
+      naming_context->rebind (this_name, _this()
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+  }
+  return 0;
+}
+
+
+/**
  * Publish this objects IOR.
  */
-int StubFaultNotifier::self_register (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
+int StubFaultNotifier::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
 {
   int result = 0;
   orb_ = orbManager.orb();
@@ -476,4 +516,3 @@ int StubFaultNotifier::idle(int & result)
 # pragma instantiate ACE_Vector < FT::PullMonitorable_var >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#include "ace/post.h"
