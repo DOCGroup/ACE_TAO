@@ -144,7 +144,7 @@ main (int argc, char* argv[])
 
         std::cout << t;
       }
-      
+
       return 0;
     }
 

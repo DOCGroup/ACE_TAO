@@ -1169,7 +1169,7 @@ namespace
     bool
     has_elements (Type& m)
     {
-      bool r;
+      bool r (false);
 
       Traversal::Module module;
       Traversal::Defines defines;
