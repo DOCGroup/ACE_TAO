@@ -25,8 +25,8 @@ Wed Apr 23 18:12:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/DynamicInterface/ExceptionList.h:
 
           Changed the declaration of CORBA::is_nil and CORBA::release
-          for ContextList and ExceptionList to use 
-          TAO_NAMESPACE_INLINE_FUNCTION instead of 
+          for ContextList and ExceptionList to use
+          TAO_NAMESPACE_INLINE_FUNCTION instead of
           TAO_DynamicInterface_Export, which was causing multiple definitions
           in builds with __ACE_INLINE__ defined.
 
@@ -66,7 +66,7 @@ Wed Apr 23 17:05:10 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  now that config-win32-msvc-6.h file has been updated and the -GR
 	  flag has been added to the project files.
 
-	* tests\RTCORBA\RTCORBA-test-configurations.xls: 
+	* tests\RTCORBA\RTCORBA-test-configurations.xls:
 
 	  Updated test configuration details.
 

@@ -135,7 +135,7 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
         return safe_any._retn ();
     }
 
-  ACE_THROW_RETURN (IOP::Codec::FormatMismatch (), 
+  ACE_THROW_RETURN (IOP::Codec::FormatMismatch (),
                     0);
 }
 
@@ -166,18 +166,18 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
       ACE_Message_Block * mb = data._tao_get_cdr ();
 
       if (mb == 0)
-	{
-	  ACE_NEW_THROW_EX (mb,
-			    ACE_Message_Block,
-			    CORBA::NO_MEMORY ());
-	  ACE_CHECK_RETURN (0);
+        {
+          ACE_NEW_THROW_EX (mb,
+                            ACE_Message_Block,
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK_RETURN (0);
 
-	  TAO_OutputCDR out;
-	  CORBA::Any any (data);
-	  any.impl ()->marshal_value (out);
+          TAO_OutputCDR out;
+          CORBA::Any any (data);
+          any.impl ()->marshal_value (out);
 
-	  ACE_CDR::consolidate (mb, out.begin ());
-	}
+          ACE_CDR::consolidate (mb, out.begin ());
+        }
 
       TAO_InputCDR input (mb,
                           data._tao_byte_order (),
@@ -216,8 +216,8 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
            i = i->cont ())
         {
           size_t len = i->length ();
-          ACE_OS_String::memcpy (buf, 
-                                 i->rd_ptr (), 
+          ACE_OS_String::memcpy (buf,
+                                 i->rd_ptr (),
                                  len);
           buf += len;
         }
@@ -225,7 +225,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
       return safe_octet_seq._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (), 
+  ACE_THROW_RETURN (CORBA::MARSHAL (),
                     0);
 }
 
@@ -246,8 +246,8 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (&mb);
 
-  ACE_OS::memcpy (mb.rd_ptr (), 
-                  data.get_buffer (), 
+  ACE_OS::memcpy (mb.rd_ptr (),
+                  data.get_buffer (),
                   data.length ());
 
   // @todo How do we check for a type mismatch so that we can
@@ -320,7 +320,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
           // the data, not if it does match.
           if (size != sequence_length - 1)
             {
-              ACE_THROW_RETURN (IOP::Codec::TypeMismatch (), 
+              ACE_THROW_RETURN (IOP::Codec::TypeMismatch (),
                                 0);
             }
 
@@ -355,12 +355,12 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
         }
       else
         {
-          ACE_THROW_RETURN (IOP::Codec::TypeMismatch (), 
+          ACE_THROW_RETURN (IOP::Codec::TypeMismatch (),
                             0);
         }
     }
 
-  ACE_THROW_RETURN (IOP::Codec::FormatMismatch (), 
+  ACE_THROW_RETURN (IOP::Codec::FormatMismatch (),
                     0);
 }
 
