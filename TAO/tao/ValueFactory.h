@@ -87,9 +87,9 @@ namespace CORBA
 // elaborated --- its just a suggestion.)
 
 #ifdef TAO_HAS_OBV_COVARIANT_RETURN
-#  define TAO_OBV_CREATE_RETURN_TYPE (TYPE) TYPE *
+#  define TAO_OBV_CREATE_RETURN_TYPE(TYPE) TYPE *
 #else /*  TAO_HAS_OBV_COVARIANT_RETURN */
-#  define TAO_OBV_CREATE_RETURN_TYPE (TYPE) CORBA::ValueBase *
+#  define TAO_OBV_CREATE_RETURN_TYPE(TYPE) CORBA::ValueBase *
 #endif /* TAO_HAS_OBV_COVARIANT_RETURN */
 
 // (The obtaining of the repository id is currently not yet like the OMG way. %!)
@@ -101,7 +101,7 @@ namespace CORBA
 // to the newly created one. (A new reference could be obtained with
 // orb->lookup_value_factory (char * repo_id) .)
 
-#define TAO_OBV_REGISTER_FACTORY (FACTORY, VALUETYPE) \
+#define TAO_OBV_REGISTER_FACTORY(FACTORY, VALUETYPE) \
   { CORBA::ValueFactory factory = new FACTORY; \
     CORBA::ValueFactory prev_factory = \
     TAO_ORB_Core_instance ()->orb ()->register_value_factory (\

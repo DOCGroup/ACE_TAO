@@ -1,3 +1,11 @@
+Sat Feb 22 09:06:45 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ValueFactory.h (TAO_OBV_CREATE_RETURN_TYPE):
+	  (TAO_OBV_REGISTER_FACTORY):
+
+	  Removed space in macro definition that was incorrectly
+	  introduced, and caused syntax errors in some builds.
+
 Sat Feb 22 08:52:13 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
