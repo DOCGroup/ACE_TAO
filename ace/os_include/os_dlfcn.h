@@ -66,12 +66,10 @@ extern "C"
 #  define ACE_SHLIB_INVALID_HANDLE 0
 #  if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
 #    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
-#  elif defined (__linux__)
-     // This is needed to for dynamic_cast to work properly on objects created in
+#  else
+     // This is needed to for dynamic_cast to work properly on objects passed to
      // libraries.
 #    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GLOBAL
-#  else
-#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
 #  endif /* KCC */
 #elif defined (__hpux)
    typedef shl_t ACE_SHLIB_HANDLE;
