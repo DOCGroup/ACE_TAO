@@ -995,9 +995,9 @@ TAO_ORB_Core::I_am_the_leader_thread (void)
 {
   TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
   if (lf_info.leaders_)
-    return (lf_info.leader_thread_ID_ == ACE_Thread::self ());
-  else
-    return 0;
+    return ACE_OS::thr_equal (lf_info.leader_thread_ID_,
+			      ACE_Thread::self ());
+  return 0;
 }
 
 void
@@ -1006,8 +1006,10 @@ TAO_ORB_Core::set_leader_thread (void)
   // model
 {
   TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
-  ACE_ASSERT ((lf_info.leaders_ >= 1 && lf_info.leader_thread_ID_ == ACE_Thread::self ())
-              || lf_info.leaders_ == 0);
+  ACE_ASSERT ((lf_info.leaders_ >= 1
+	       && ACE_OS::thr_equal (lf_info.leader_thread_ID_,
+				     ACE_Thread::self ()))
+	      || lf_info.leaders_ == 0);
   lf_info.leaders_++;
   lf_info.leader_thread_ID_ = ACE_Thread::self ();
 }
@@ -1038,7 +1040,9 @@ TAO_ORB_Core::unset_leader_thread (void)
   // sets the flag in the leader-follower model to false
 {
   TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
-  ACE_ASSERT ((lf_info.leaders_ > 1 && lf_info.leader_thread_ID_ == ACE_Thread::self ())
+  ACE_ASSERT ((lf_info.leaders_ > 1
+	       && ACE_OS::thr_equal (lf_info.leader_thread_ID_,
+				     ACE_Thread::self ()))
               || lf_info.leaders_ == 1);
   lf_info.leaders_--;
 }
