@@ -1,3 +1,10 @@
+Fri Apr 16 19:34:54 1999 Alexander Babu Arulanthu <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_multiple_loops.cpp: Fixed to work
+	on the WIN32 correctly. This can work only on WIN32 (combining
+	Proactor with Reactor's event loop). So I have put a #if defined
+	around the file. 
+
 Fri Apr 16 18:09:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp (server): If we timeout on accept(), it is
