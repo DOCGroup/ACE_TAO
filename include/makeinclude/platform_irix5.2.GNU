@@ -8,7 +8,10 @@ optimize = 1
 MAKE		= gmake
 CC		= gcc
 CXX		= g++
-CCFLAGS		+= $(CFLAGS) -fno-implicit-templates
+
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS		+= $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
