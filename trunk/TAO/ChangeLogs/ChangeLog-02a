@@ -1,3 +1,36 @@
+Thu Aug 24 20:27:26 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+        * tao/Invocation.cpp:
+
+	  In TAO_GIOP_Invocation::start, IOP::ServiceContextList reference
+	  was assigned to non-reference local variable, resulting in a
+	  copy.  Changed local variable to be IOP::ServiceContextList &,
+	  so that our changes affect the original context list rather than
+	  the copy.
+	
+	* tao/default_resource.cpp:
+	 
+	  Changed the default Priority Mapping scheme for DIRECT (from
+	  LINEAR). 
+	
+	* tests/RTCORBA/Client_Propagated/server.cpp
+
+	  Updated output messages.
+
+	* tests/RTCORBA/Client_Propagated/client.cpp
+
+	  Set CORBA priority of the client thread to 0 prior to the first
+	  remote invocation.  This way output on different platforms will
+	  look the same.
+	
+	* tests/RTCORBA/Client_Propagated/README:
+	  
+	  Added expected output section.
+	
+	* tests/RTCORBA/Client_Propagated/runt_test.pl
+
+	  Changed formatting of output to improve readability.
+
 Thu Aug 24 16:26:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp:

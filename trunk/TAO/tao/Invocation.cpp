@@ -306,7 +306,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
               || (cdr << thread_priority) == 0)
             ACE_THROW (CORBA::MARSHAL ());
 
-          IOP::ServiceContextList context_list =
+          IOP::ServiceContextList &context_list =
             this->service_info ();
 
           CORBA::ULong l = context_list.length ();

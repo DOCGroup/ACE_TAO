@@ -16,7 +16,7 @@ $iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
 
 ACE::checkForTarget($cwd);
 
-print STDERR "=======RTCORBA CLIENT_PROPAGATED Priority Model Unit Test\n";
+print STDERR "\n            RTCORBA CLIENT_PROPAGATED Priority Unit Test\n\n";
 
 unlink $iorfile;
 
