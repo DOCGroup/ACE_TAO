@@ -225,8 +225,8 @@ multiple threads using the same <tt>CORBA::Object</tt> and using forwarding,
 it is necessary to protect the forwarding <tt>IIOP_Profile</tt>, which
 is part of the <tt>IIOP_Object</tt>, which is part of the CORBA::Object
 against multiple access. Therefore a mutex lock is used by default to ensure
-proper access. Using the switch <tt>-ORBiiopprofilelock</tt> this policy
-can be deactivated specifying <tt>-ORBiiopprofilelock null</tt>. A motivation
+proper access. Using the switch <tt>-ORBprofilelock</tt> this policy
+can be deactivated specifying <tt>-ORBprofilelock null</tt>. A motivation
 to do this might be performance reasons in cases, where no forwarding is
 used or no multithreading with access to shared <tt>CORBA::Object</tt>'s.
 Deactivating forces the ORB to use a null mutex, which does introduce only

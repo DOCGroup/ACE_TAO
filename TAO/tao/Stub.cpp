@@ -94,7 +94,7 @@ TAO_Stub::TAO_Stub (char *repository_id,
   this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
 
   this->profile_lock_ptr_ =
-    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
+    this->orb_core_->client_factory ()->create_profile_lock ();
 
   this->set_base_profiles (profiles);
 }
