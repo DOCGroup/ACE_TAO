@@ -120,6 +120,7 @@ ACE_Time_Value::msec (void) const
   return this->tv_.tv_sec * 1000 + this->tv_.tv_usec / 1000;
 }
 
+#if !defined (ACE_LACKS_LONGLONG_T)
 ACE_INLINE void
 ACE_Time_Value::msec (unsigned long long &ms) const
 {
@@ -128,6 +129,7 @@ ACE_Time_Value::msec (unsigned long long &ms) const
   ms *= 1000;
   ms += (this->tv_.tv_usec / 1000);
 }
+#endif /*ACE_LACKS_LONGLONG_T*/
 
 // Converts from milli-seconds format into Time_Value format.
 

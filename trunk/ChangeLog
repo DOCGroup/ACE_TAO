@@ -1,3 +1,13 @@
+Wed Sep  8 21:50:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Time_Value.h:
+	* ace/Time_Value.inl:
+         
+	  The change added in this checkin 
+       
+	  Wed Sep  8 10:17:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>  
+          should not be available on platforms that lacks long long.
+
 Wed Sep  8 17:13:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/DLL_Manager.{h cpp}: Added new private method,

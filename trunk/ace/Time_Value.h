@@ -157,6 +157,7 @@ public:
    */
   unsigned long msec (void) const;
 
+#if !defined (ACE_LACKS_LONGLONG_T)
   /**
    * @return Sum of second field (in milliseconds) and microsecond field
    *         (in milliseconds) and return them via the @param ms parameter.
@@ -166,6 +167,8 @@ public:
    *       component in an ACE_Time_Value.
    */
   void msec (unsigned long long &ms) const;
+
+#endif /*ACE_LACKS_LONLONG_T */
 
   /// Converts from milli-seconds format into ACE_Time_Value format.
   /**
