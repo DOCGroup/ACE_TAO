@@ -1,3 +1,8 @@
+Wed Sep 24 23:37:19 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/OS.i (thr_getspecific): On NT, added check whether
+	  ::GetLastError() is NO_ERROR when ::TlsGetValue() return 0. 
+
 Wed Sep 24 13:37:02 1997    <irfan@TWOSTEP>
 
 	* ace/config-win32-common.h (ACE_LACKS_FORK): Added in macro to
