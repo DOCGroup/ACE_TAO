@@ -45,7 +45,7 @@ public:
   /// Destructor
   virtual ~TAO_EC_Scheduling_Strategy (void);
 
-  /// Add all the dependencies between <supplier> and <consumer>
+  /// Add all the dependencies between @a supplier and @a consumer
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer
