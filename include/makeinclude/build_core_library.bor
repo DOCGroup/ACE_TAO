@@ -1,9 +1,0 @@
-# 
-# Makefile for building a core library. A core library
-# is one that would be part of an ACE/TAO distribution. That
-# is, you would pick it up and take it to another computer.
-#
-
-INSTALL_THIS_TARGET = 1
-
-!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
