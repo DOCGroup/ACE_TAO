@@ -145,12 +145,12 @@ public:
   virtual int open (void* = 0);
 };
 
-#if !defined (ACE_HAS_THREADS) 
-typedef u_long ACE_LOGGER_COUNTER;
-#define ACE_LOGGER_SYNCH ACE_NULL_SYNCH 
-#else
+#if defined (ACE_HAS_THREADS) 
 typedef ACE_Atomic_Op <ACE_Thread_Mutex, u_long> ACE_LOGGER_COUNTER;
 #define ACE_LOGGER_SYNCH ACE_MT_SYNCH 
+#else
+typedef u_long ACE_LOGGER_COUNTER;
+#define ACE_LOGGER_SYNCH ACE_NULL_SYNCH 
 #endif /* ACE_HAS_THREADS */
 
 template<class LOG_MESSAGE_RECEIVER> 
