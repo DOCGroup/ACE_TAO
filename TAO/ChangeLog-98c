@@ -1,3 +1,9 @@
+Wed Sep 16 18:47:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (push): Added a cast to
+ 	  (const iovec *) so that aCC can correctly disambiguate the
+ 	  send() call.  Thanks to John Mulhern for reporting this.
+
 Wed Sep 16 15:25:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h (SCHED_PRIORITY):
