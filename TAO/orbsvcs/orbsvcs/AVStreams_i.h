@@ -21,7 +21,9 @@
 
 #include "orbsvcs/AVStreamsS.h"
 
-class TAO_Basic_StreamCtrl : public POA_AVStreams::Basic_StreamCtrl
+// Implementation classes follow
+
+class TAO_Basic_StreamCtrl : public virtual POA_AVStreams::Basic_StreamCtrl
 {
 public:
   TAO_Basic_StreamCtrl (void);
@@ -57,7 +59,8 @@ public:
   virtual ~TAO_Basic_StreamCtrl (void);
 };
 
-class TAO_StreamCtrl : public POA_AVStreams::StreamCtrl
+class TAO_StreamCtrl : public virtual POA_AVStreams::StreamCtrl, 
+                         public virtual TAO_Basic_StreamCtrl
 {
 public:
   TAO_StreamCtrl (void);
@@ -77,6 +80,9 @@ public:
   virtual void unbind_party (AVStreams::StreamEndPoint_ptr the_ep, 
                              const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env);
+
+
+  virtual void unbind (CORBA::Environment &env);
 
   virtual ~TAO_StreamCtrl (void);
 
@@ -264,7 +270,6 @@ public:
   
   virtual ~TAO_MMDevice (void);
 };
-
 
 
 #endif /* AVSTREAMS_I_H */
