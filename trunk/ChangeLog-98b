@@ -1,3 +1,9 @@
+Mon Sep 21 11:24:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/ACE-categories.html (HREF): Updated the links to ace/ and
+ 	  man/ since we moved the file around.  Thanks to Byron Harris for
+ 	  reporting this.
+
 Mon Sep 21 10:22:17 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Select_Reactor_T.cpp (handle_error): Check handles for all
