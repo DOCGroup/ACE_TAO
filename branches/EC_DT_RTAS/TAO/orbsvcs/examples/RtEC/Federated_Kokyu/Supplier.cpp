@@ -5,6 +5,11 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/RtecEventCommC.h"
 
+#include <dsui.h>
+#include "federated_config.h"
+#include "federated_dsui_families.h"
+
+
 ACE_RCSID(EC_Examples, Supplier, "$Id$")
 
 Supplier::Supplier (RtecEventComm::EventSourceID id)
@@ -35,8 +40,11 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   //when event is pushed by client.
 
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, 0, NULL);
+
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, 0, NULL);
 }
 
 void
@@ -67,11 +75,13 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   //timeout occurs to trigger event push. Roughly equivalent to the
   //scheduling segments started for each one-way call of the DTs.
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, 0,NULL);
 
   supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   //@BT: Finished handling the timeout.
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, 0, NULL);
 }
 
 void

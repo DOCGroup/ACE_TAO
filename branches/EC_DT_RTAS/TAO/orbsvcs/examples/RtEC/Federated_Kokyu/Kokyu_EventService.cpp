@@ -12,6 +12,9 @@
 #include "Consumer.h"
 #include "Supplier.h"
 
+#include <dsui_types.h>
+#include "federated_dsui_families.h"
+
 namespace
 {
   int config_run = 0;
@@ -31,6 +34,7 @@ int
 main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
+  ds_control ctrl ("Federated_Test_Kokyu","federated_enabled.dsui");
 
   TAO_EC_Kokyu_Factory::init_svcs ();
 
