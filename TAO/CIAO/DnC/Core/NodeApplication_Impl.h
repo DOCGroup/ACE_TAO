@@ -93,7 +93,9 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Start install homes and components.
-    virtual void install (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Deployment::ComponentInfos *
+    install (const ::Deployment::ImplementationInfos & impl_infos
+	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       ::Deployment::UnknownImplId,
 		       ::Deployment::ImplEntryPointNotFound,

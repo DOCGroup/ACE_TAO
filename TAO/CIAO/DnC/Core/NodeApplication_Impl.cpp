@@ -50,6 +50,20 @@ properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   return retval;
 }
 
+::Deployment::ComponentInfos *
+CIAO::NodeApplication_Impl::
+install (const ::Deployment::ImplementationInfos & impl_infos
+	 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   ::Deployment::UnknownImplId,
+		   ::Deployment::ImplEntryPointNotFound,
+		   ::Deployment::InstallationFailure,
+		   ::Components::InvalidConfiguration))
+{
+  Deployment::ComponentInfos_var retv;
+  return retv._retn ();
+}
+
 ::Components::CCMHome_ptr
 CIAO::NodeApplication_Impl::
 install_home (const ::Deployment::ImplementationInfo & impl_info
