@@ -1,3 +1,52 @@
+Wed Apr 14 13:51:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        All added includes below are needed because of my regenerations
+        of stub/skeleton files in the archive. One of the changes is that tao/CDR.h
+        is not included anymore in the header file, but in the implementation
+        file, so you don't get tao/CDR.h for free anymore when you include a
+        stub file. Just committing these files now, the updated stub/skeleton
+        files will follow soon, but need to test another few builds to see if
+        I didn't miss any other files.
+
+        * tao/Any_Unknown_IDL_Type.cpp:
+        * tao/append.cpp:
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+        * tao/Connector_Registry.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Utils.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/NVList.cpp:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Tagged_Components.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.h:
+        * tao/skip.cpp:
+        * tao/Service_Context.cpp:
+        * tao/Object.cpp:
+        * tao/Profile.cpp:
+        * tao/ORB.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/AbstractBase.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
+          Added include of tao/CDR.h
+
+        * tao/Bounds.pidl:
+        * tao/Current.pidl:
+        * tao/Domain.pidl:
+        * tao/IIOP.pidl:
+        * tao/IIOP_Endpoints.pidl:
+          Updated regeneration message
+
 Wed Apr 14 12:44:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
