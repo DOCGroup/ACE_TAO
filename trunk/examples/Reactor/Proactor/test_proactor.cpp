@@ -112,7 +112,7 @@ Receiver::open (ACE_HANDLE handle,
   this->file_offset_ = 0;
 
   // Open dump file (in OVERLAPPED mode)
-  this->dump_file_ = ACE_OS::open (dump_file, _O_CREAT | O_RDWR | _O_TRUNC | FILE_FLAG_OVERLAPPED);
+  this->dump_file_ = ACE_OS::open (dump_file, O_CREAT | O_RDWR | O_TRUNC | FILE_FLAG_OVERLAPPED);
   if (this->dump_file_ == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR, "%p\n", "ACE_OS::open"));
@@ -473,7 +473,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   ACE_DEBUG ((LM_DEBUG, "handle_write_stream called\n"));
 
   // Reset pointers
-  result.message_block ().rd_ptr (result.message_block ().rd_ptr - result.bytes_transferred ());
+  result.message_block ().rd_ptr (result.message_block ().rd_ptr () - result.bytes_transferred ());
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
