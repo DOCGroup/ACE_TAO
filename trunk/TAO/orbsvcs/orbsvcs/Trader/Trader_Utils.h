@@ -742,6 +742,9 @@ class TAO_Property_Filter
 public:
 
   typedef CosTrading::Lookup::SpecifiedProps SPECIFIED_PROPS;
+
+  TAO_Property_Filter (void) : policy_ (CosTrading::Lookup::all) {}
+  // An accomplice to g++'s insane lust for copy constructors.
   
   TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
 		       CORBA::Environment& env)
@@ -753,7 +756,7 @@ public:
   TAO_Property_Filter& operator= (const TAO_Property_Filter& prop_filter);
   
   void filter_offer (CosTrading::Offer* source,
-                      CosTrading::Offer& destination);
+                     CosTrading::Offer& destination);
   // Copy the desired properties from the source offer to the
   // destination offer.
   
