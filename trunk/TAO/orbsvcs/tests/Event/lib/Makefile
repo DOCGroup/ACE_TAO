@@ -13,6 +13,12 @@ LIBNAME  = libECTests
 LIB2      = $(LIBNAME).a
 SHLIB2    = $(LIBNAME).$(SOEXT)
 
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+endif # RTEvent
+
 ACE_SHLIBS = -lTAO_RTEvent -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
 LDLIBS  = -lTAO_RTEvent -lTAO_CosNaming -lTAO_PortableServer -lTAO
 
@@ -29,15 +35,6 @@ LSRC  = $(addsuffix .cpp,$(FILES))
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
-  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    LIB = $(LIB2)
-    SHLIB = $(SHLIB2)
-  endif # ACE_HAS_GNUG_PRE_2_8
-endif # RTEvent
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
