@@ -554,8 +554,8 @@ TAO_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
 	  this->good_bit_ = 0;
 	  return CORBA::B_FALSE;
 	}
-    }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+    }
   return CORBA::B_TRUE;
 }
 

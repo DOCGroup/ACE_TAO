@@ -1,3 +1,15 @@
+Wed Aug 26 19:13:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Sequence.i: 
+	* tao/Sequence.cpp: 
+	  Moved the sequence<octet>::get_buffer method to the .i file to
+	  work around a Sun/C++ bug (apparently it only shows up on
+	  Solaris 2.6 for x86).
+
+	* tao/CDR.cpp: 
+	  Fixed syntax error when compiling without
+	  TAO_NO_COPY_OCTET_SEQUENCES.
+
 Wed Aug 26 20:37:33 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
@@ -35,6 +47,13 @@ Wed Aug 26 17:00:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include): Removed
 	  an unused local variable <nm>.
+
+Wed Aug 26 19:13:33 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* utils/catior/*: Added this little utility (which was donated
+	  by Jeff Hopper <jhopper@nosc.mil>) which will take in a
+	  stringified IOR and decode it, printing out the information
+	  contained in it.
 
 Wed Aug 26 18:15:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
