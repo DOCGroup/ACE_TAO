@@ -21,7 +21,7 @@ MKLIST = \
 	Makefile.impl \
 	Makefile.test
 
-idl_stubs all debug profile optimize install deinstall clean realclean clobber depend:
+all debug profile optimize install deinstall clean realclean clobber depend idl_stubs:
 ifeq (Windows,$(findstring Windows,$(OS)))
 	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
 else  # ! Windows
