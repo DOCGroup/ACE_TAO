@@ -45,14 +45,14 @@ intention_read         return T_IREAD;
 upgrade		       return T_UPGRADE;
 write		       return T_WRITE;
 intention_write	       return T_IWRITE;
-\".*\"		       { CC_commandlval.id = ACE_OS::strdup(&CC_commandtext[1]);
-			 CC_commandlval.id[CC_commandleng-2]='\0';
+\".*\"		       { yylval.id = ACE_OS::strdup(&yytext[1]);
+			 yylval.id[yyleng-2]='\0';
 			 return Q_STRING; }
-[0-9]+                 { CC_commandlval.num = atoi(yytext); return T_NUM; }
-[A-Za-z][A-Za-z_0-9\.:/]*  { CC_commandlval.id = ACE_OS::strdup(CC_commandtext);
+[0-9]+                 { yylval.num = atoi(yytext); return T_NUM; }
+[A-Za-z][A-Za-z_0-9\.:/]*  { yylval.id = ACE_OS::strdup(yytext);
                            return T_IDENT; }
 ^\/\/.*\n			{ }
 [ ]+			{ }
 \n.*                     { line_no ++;
-                           ACE_OS::strcpy(line_buf, CC_commandtext+1);
+                           ACE_OS::strcpy(line_buf, yytext+1);
                            yyless(1); }

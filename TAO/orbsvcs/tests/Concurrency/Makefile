@@ -51,14 +51,34 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 lex.CC_command.cpp:	CC_command.l CC_command.tab.h
-		flex -PCC_command CC_command.l
-		mv lex.CC_command.c lex.CC_command.cpp
+		$(LEX) -t -I CC_command.l > /tmp/$(USER).CC_L1
+		sed -e "s/unistd/stdio/g" \
+		-e "s/yy/ace_cc_yy/g" \
+		-e "s/YY/ACE_CC_YY/g" \
+		-e "s/free( ptr );/free( ACE_MALLOC_T (ptr) );/g" \
+		-e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" \
+		\
+		-e "s@#include <stdio\.h>@#include \"ace/OS.h\"@" \
+		-e "s@#include <@#include /**/ <@" \
+		-e "s@ECHO@ACE_CC_ECHO@" < /tmp/$(USER).CC_L1 > /tmp/$(USER).CC_L2
+		cp /tmp/$(USER).CC_L2 $@
+#		patch < ../etc/lex.CC_command.cpp.diff
+		$(RM) -f /tmp/$(USER).CC_L1 /tmp/$(USER).CC_L2
 
 CC_command.tab.cpp CC_command.tab.h:	CC_command.y
-		bison -p CC_command -d CC_command.y
-		rm -f CC_command.tab.cpp
-		sed 's/^#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi)/#if (!defined (__STDC__) \&\& defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi) || defined (__DECCXX_VER)/g' CC_command.tab.c > CC_command.tab.cpp
-		rm -f CC_command.tab.c
+		$(YACC) -d CC_command.y
+		sed -e "s/char \*getenv/char *ace_foo/g" \
+		    -e "s/= getenv/= ACE_OS::getenv/g" \
+		    -e "s/yynewerror://g" \
+		    -e "s/yy/ace_cc_yy/g" \
+		    -e "s/YY/ACE_CC_YY/g" \
+		    -e "s/y\.tab\.c/CC_command.tab.cpp/g" < y.tab.c > /tmp/$(USER).CC_Y
+		sed -e "s/yy/ace_cc_yy/g" \
+		    -e "s/YY/ACE_CC_YY/g" < y.tab.h > /tmp/$(USER).CC_YH
+		cp /tmp/$(USER).CC_Y CC_command.tab.cpp
+		cp /tmp/$(USER).CC_YH CC_command.tab.h
+#		patch < CC_command.tab.cpp.diff
+		$(RM) -f /tmp/$(USER).CC_Y  /tmp/$(USER).CC_YH y.tab.c y.tab.h
 
 CC_client:	$(addprefix $(VDIR),$(CC_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
