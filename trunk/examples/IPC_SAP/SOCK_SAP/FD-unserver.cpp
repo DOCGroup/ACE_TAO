@@ -29,7 +29,7 @@ handle_client (ACE_LSOCK_Stream &stream)
        )
     ACE_DEBUG ((LM_DEBUG, "%*s", n, buf));
       
-  ::sprintf (buf, "%d", ACE_OS::getpid ());
+  ::sprintf (buf, "%ld", ACE_OS::getpid ());
   
   ACE_DEBUG ((LM_DEBUG, "(%s, %d) ----------------------------------------\n", buf, ACE_OS::strlen (buf)));
       
