@@ -180,7 +180,7 @@ TEMPLATE_FILES = \
            Active_Map_Manager_T \
            Asynch_Acceptor \
            Auto_Ptr \
-	   Based_Pointer_Repository_T \
+	   Based_Pointer_T \
            Connector \
            Containers_T \
            Cache_Map_Manager_T \
