@@ -1,0 +1,801 @@
+[This document is also available at the following URL:
+
+http://www.cs.wustl.edu/~schmidt/ACE.html.
+
+All software and documentation is available via both anonymous ftp and
+the World Wide Web.]
+
+THE ADAPTIVE COMMUNICATION ENVIRONMENT (ACE)
+
+An Object-Oriented Network Programming Toolkit
+
+----------------------------------------
+
+Overview of ACE
+
+The ADAPTIVE Communication Environment (ACE) is an object-oriented
+(OO) toolkit that implements fundamental design patterns for
+communication software.  ACE provides a rich set of reusable C++
+wrappers and frameworks that perform common communication software
+tasks across a range of OS platforms, including Win32 (i.e., WinNT
+3.5.x/4.x, Win95, and WinCE), most versions of UNIX (e.g., SunOS 4.x
+and 5.x, SGI IRIX 5.x and 6.x, HP-UX 9.x, 10.x, and 11.x, DEC UNIX
+4.x, AIX 4.x, Linux, SCO, UnixWare, NetBSD, and FreeBSD), real-time
+operating systems (e.g., VxWorks, Chorus, LynxOS, and pSoS), and MVS
+OpenEdition.  A single source tree is used for all these platforms and
+porting ACE to other platforms is relatively easy.
+
+The communication software components provided by ACE include event
+demultiplexing and event handler dispatching, service initialization,
+interprocess communication, shared memory management, message routing,
+dynamic (re)configuration of distributed services, multi-threading,
+and concurrency control.  There are both C++ and Java versions of ACE
+available.
+
+ACE is targeted for developers of high-performance and real-time
+communication services and applications on UNIX, POSIX, and Win32
+platforms.  ACE simplifies the development of OO network applications
+and services that utilize interprocess communication, event
+demultiplexing, explicit dynamic linking, and concurrency.  ACE
+automates system configuration and reconfiguration by dynamically
+linking services into applications at run-time and executing these
+services in one or more processes or threads.
+
+ACE is currently used in commercial projects and products by dozens of
+companies including Ericsson, Bellcore, Siemens, Motorola, Kodak,
+Boeing, Lucent, DEC, Lockheed Martin, and SAIC.  Commercial support
+for ACE is available at http://www.riverace.com.
+
+----------------------------------------
+
+C++ Wrappers for OS Interfaces
+
+The lower-level portions of ACE provide a set of portable and
+type-secure C++ wrappers that encapsulate the following C language OS
+interfaces:
+
+        . IPC mechanisms
+                -- e.g., Internet- and UNIX-domain sockets, TLI, Named
+                   Pipes (for UNIX and Win32) and STREAM pipes;
+
+        . Event demultiplexing
+                -- e.g., select(), poll(), and Win32
+                   WaitForMultipleObjects and I/O completion ports;
+
+        . Multi-threading and synchronization
+                -- e.g., Solaris threads, POSIX Pthreads, and Win32
+                   threads;
+
+        . Explicit dynamic linking
+                -- e.g., dlopen/dlsym on UNIX and LoadLibrary/GetProc
+                   on Win32;
+
+        . Memory-mapped files and shared memory management
+                -- e.g., BSD mmap(), SYSV shared memory, and Win32
+                   shared memory;
+
+        . System V IPC
+                -- e.g., shared memory, semaphores, message queues.
+
+The OS Adaptation Layer shields the upper levels of ACE from platform
+dependencies associated with the underlying OS interfaces.
+
+----------------------------------------
+
+Frameworks and Class Categories
+
+ACE also contains a higher-level network programming framework that
+integrates and enhances the lower-level C++ wrappers.  This framework
+supports the dynamic configuration of concurrent distributed services
+into applications.  The framework portion of ACE contains the
+following class categories:
+
+        . The Reactor
+                -- Supports both Reactive and Proactive I/O;
+
+        . The Service Configurator
+                -- Support dynamic (re)configuration of objects;
+
+        . The ADAPTIVE Service Executive
+                -- A user-level implementation of System V STREAMS,
+                   that supports modular integration of
+                   hierarchically-related communicaion services;
+
+        . Concurrency
+                -- Various types of higher-level concurrency
+                   control and synchronization patterns (such as
+                   Polymorphic Futures and Active Objects);
+
+        . Shared Malloc
+                -- Components for managing dynamically allocation
+                   of shared and local memory;
+
+        . CORBA integration
+                -- Integrates ACE with CORBA implementations
+                   (such as single-threaded and multi-threaded
+                   Orbix and Visibroker for C++).
+
+----------------------------------------
+
+Distributed Services and Components
+
+Finally, ACE provides a standard library of distributed services that
+are packaged as components.  These service components play two roles
+in ACE:
+
+        1. They provide reusable components for common distributed
+           system tasks such as logging, naming, locking, and time
+           synchronization.
+
+        2. They illustrate how to utilize ACE features such as the
+           Reactor, Service Configurator, Service Initialization,
+           Concurrency, and IPC components.
+
+----------------------------------------
+
+Middleware Applications
+
+ACE has been used in research and development projects at many
+universities and companies.  For instance, it has been used to build
+avionics systems at Boeing, telecommunication systems at Bellcore,
+Ericsson, Motorola, and Lucent; medical imaging systems at Siemens and
+Kodak; and many academic research projects.  Two example middleware
+applications provided with the ACE release include:
+
+        1. The ACE ORB (TAO) -- TAO is a real-time implementation of
+           CORBA built using the framework components and patterns
+           provided by ACE.
+
+        2. JAWS -- JAWS is a high-performance, adaptive Web server
+           built using the components in ACE.
+
+----------------------------------------
+
+OBTAINING ACE
+
+The current ACE release is provided as a tar file that is around 3 Meg
+compressed using GNU gzip.  ACE may be obtained electronically from
+http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.  This release
+contains the source code, test drivers, and example applications
+(including JAWS) for C++ wrapper libraries and the higher-level ACE
+network programming framework developed as part of the ADAPTIVE
+project at the University of California, Irvine and at Washington
+University, St. Louis.
+
+You can get The ACE ORB (TAO) in a companion release at
+http://www.cs.wustl.edu/~schmidt/TAO.html.
+
+----------------------------------------
+
+ACE DOCUMENTATION AND TUTORIALS
+
+Many of the C++ wrappers and higher-level components have been
+described in issues of the C++ Report, as well as in proceedings of
+many journals, conferences, and workshops.
+
+A collection of white papers and tutorial handouts are included at
+ftp://wuarchive.wustl.edu/languages/c++/ACE/ACE-documentation.  This
+directory contains postscript versions of various papers that describe
+different aspects of ACE.
+
+I update these papers periodically to reflect changes to the ACE
+architecture.  Therefore, you might want to check the date on the
+files to make sure that you have read the most recent versions of
+these papers.
+
+This material is also available available via the WWW at URL:
+
+http://www.cs.wustl.edu/~schmidt/ACE.html
+
+----------------------------------------
+
+ACE MAILING LIST AND NEWSGROUP
+
+A mailing list, ace-users@cs.wustl.edu, is available for discussing
+bug fixes, enhancements, and porting issues regarding ACE.  Please
+send mail to me at the ace-users-request@cs.wustl.edu if you'd like to
+join the mailing list.  There is also a USENET newsgroup called
+comp.soft-sys.ace.
+
+----------------------------------------
+
+BUILDING AND INSTALLING ACE
+
+Please refer to the http://www.cs.wustl.edu/~schmidt/ACE-install.html
+file for information on how to build and test the ACE wrappers.  The
+BIBLIOGRAPHY file contains information on where to obtain articles
+that describe the ACE wrappers and the ADAPTIVE system in more detail.
+
+The current release has been tested extensively, but if you find any
+bugs, please report them to the ACE mailing list
+ace-users@cs.wustl.edu using the $ACE_ROOT/BUG-REPORT-FORM.
+Please use the same form to submit questions, comments, etc.
+To ensure that you see responses, please do one of the following:
+
+    1) Subscribe to the ace-users mail list, by sending email with
+       contents "subscribe ace-users" to majordomo@cs.wustl.edu.
+
+    2) Or, monitor the comp.soft-sys.ace newsgroup for responses.
+
+----------------------------------------
+
+ACKNOWLEDGEMENTS
+
+ACE has been deeply influenced and improved by the following members
+of my research group at Washington University:
+
+Everett Anderson <eea1@cec.wustl.edu>
+Alexander Babu Arulanthu <alex@cs.wustl.edu>
+Shawn Atkins <sma1@cs.wustl.edu>
+Matt Braun <mjb2@cs.wustl.edu>
+Darrell Brunsch <brunsch@cs.wustl.edu>
+Chris Cleeland <chris@cs.wustl.edu>
+Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+Chris Gill <cdgill@cs.wustl.edu>
+Aniruddha Gokhale <gokhale@cs.wustl.edu>
+Pradeep Gore <pradeep@cs.wustl.edu>
+Tim Harrison <harrison@cs.wustl.edu>
+James Hu <jxh@cs.wustl.edu>
+Prashant Jain <pjain@cs.wustl.edu>
+Vishal Kachroo <vishal@cs.wustl.edu>
+Michael Kircher <mlkirche@trick.informatik.uni-stuttgart.de>
+Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+Fred Kuhns <fredk@cs.wustl.edu>
+David Levine <levine@cs.wustl.edu>
+Balachandran Natarajan <bala@cs.wustl.edu>
+Kirthika Parameswaran <kirthika@cs.wustl.edu>
+Carlos O'Ryan <coryan@cs.wustl.edu>
+Ossama Othman <ossama@cs.wustl.edu>
+Jeff Parsons <jp4@cs.wustl.edu>
+Irfan Pyarali <irfan@cs.wustl.edu>
+Marina Spivak <marina@cs.wustl.edu>
+Nagarajan Surendran <naga@cs.wustl.edu>
+Nanbor Wang <nanbor@cs.wustl.edu>
+Seth Widoff <sbw1@cs.wustl.edu>
+Torben Worm <tworm@cs.wustl.edu>
+
+I would also like to thank all the following people who have also
+contributed to ACE and TAO over the years:
+
+Paul Stephenson <pstephenson@objectspace.com>
+Olaf Kruger <okruger@cssc-melb.tansu.com.au>
+Ed Brown <eebrown@netcom.com>
+Lee Baker <baker@ctis.af.mil>
+Alex Ranous <ranous@nsa.hp.com>
+Mark Patton <mark_patton@tx72.mot.com>
+Steffen Winther Sorensen <sts@dad.stibo.dk> for
+Troy Warner <tnw1@core01.osi.com>
+Stacy Mahlon <mcs@contour.mayo.edu>
+Charles Eads <eads@synoptics.com>
+Mark Frutig <mfrutig@fnbc.com>
+Todd Hoff <thm@ictv.com>
+George <george@truffula.fp.trw.com>
+Brad Needham <bneedham@ix.netcom.com>
+Leslee Xu <lxu@ics.uci.edu>
+Detlef Becker <detlef.becker@med.siemens.de>
+Bruce Worden <bruce@betsy.gps.caltech.edu>
+Chris Tarr <ctarr@objectspace.co>
+Bill Sears <wsears@world.std.com>
+Greg Lavendar <g.lavender@isode.com>
+Steve Warwick <sjw@aesthetic.com>
+Mats Sundvall <sundvall@perrier.embnet.se>
+Andreas Ueltschi <Andreas.Ueltschi@ska.com>
+Nigel Hooke <n.hooke@trl.oz.au>
+Medhi Tabatabai <Mehdi.Tabatabai@ed.nce.sita.int>
+Stuart Powell <stuartp@ot.com.au>
+Bin Mu <mubin@wfg.com>
+Andrew McGowan <mcgowan@wg2.waii.com>
+Ken Konecki <kenk@wfg.com>
+John P. Hearn <jph@ccrl.nj.nec.com>
+Giang Hoang Nguyen <yang@titan.com>
+Carlos Garcia Braschi <cgarcia@caramba.tid.es>
+Jam Hamidi <jh1@osi.com>
+Eric Vaughan <evaughan@arinc.com>
+Karl-Heinz Dorn <karlheinz.dorn@med.siemens.de>
+Steve Ritter <ritter@titan.com>
+Chandra Venkatapathy <cvenkat@develop.bsis.com>
+Matt Stevens <mstevens@kirk.softeng.infonautics.com>
+Bob Vistica <robertv@ims.com>
+David Trumble <trumble@cvg.enet.dec.com>
+John Morey <jmorey@crl.com>
+George Reynolds <george@dvcorp.com>
+Hans Rohnert <hans.rohnert@mchp.siemens.de>
+Alex V. Maclinovsky <alexm@teltrunk1.tait.co.nz>
+Todd Blanchard <tblancha@evolving.com>
+Rob Clairmont <rclairmo@bnr.ca>
+Christian Millour <chris@etca.fr>
+Neil Cohen <nbc@metsci.com>
+Dieter Quehl <dieter.quehl@med.siemens.de>
+Reginald S. Perry <perry@zso.dec.com>
+James Morris <jmorris@aurora.apana.org.au>
+Mark Seaborn <mseaborn@itthp1.comm.mot.com>
+Phil Brooks <phil_brooks@mentorg.com>
+E. Jason Scheck <jasons@ims.com>
+Daniel Proulx <daproulx@qc.bell.ca>
+Bill Tang <tang@tekats.com>
+John Huchinson <hutchiso@epi.syr.ge.com>
+Jack Erickson <JErickson@exchange.ml.com>
+Byron Walton <bwalton@hughes.scg.hac.com>
+Bill Lear <rael@anarchy.cybercom.net>
+Mark Zusman <marklz@topaz.technion.ac.il>
+Aurelio Nocerino <aurelio@irsipcs2-27-le0.irsip.na.cnr.it>
+Walt Akers <akers@cebaf.gov>
+Greg Baker <GBaker@p01.az15m.iac.honeywell.com>
+Alexandre Karev <karev@vxcern.cern.ch>
+Pramod Kumar Singh <pramod@saturn.miel.mot.com>
+Bryon Rigg <bryon_rigg@mail.telecorpsys.com>
+Brad Brown <bbrown@rdxsunhost.aud.alcatel.com>
+Patty Genualdi <genualdp@agcs.com>
+Eshel Liran <liran@bimacs.cs.biu.ac.il>
+Mick Adams <eeimas@eei.ericsson.se>
+Chris Eich <Chris_Eich@optilink.optilink.dsccc.com>
+Mike Flinn <mike.flinn@smtpgate.aws.waii.com>
+Audun Tornquist <Audun.Tornquist@iu.hioslo.no>
+Sandeep Joshi <sandeepj@emailbox.att.com>
+Bernd Hofner <hofner@pd.et-inf.uni-siegen.de>
+Craig Perras <craigp@wolfenet.com>
+Kirk Sinnard <kirk.sinnard@lawson.com>
+Matthew Newhook <matthew@neweast.ca>
+Gerolf Wendland <wendland@hpp015.mch2.scn.de>
+Phil Mesnier <phil@envision.com>
+Ross Dargahi <rossd@krinfo.com>
+Richard Orr <rorr@costello.den.csci.csc.com>
+Rich Ryan <rryan@mseng.kla.com>
+Jan Rychter <jwr@icm.edu.pl>
+Tom Marrs <0002104588@mcimail.com>
+Bob Olson <olson@mcs.anl.gov>
+Jean-Francois Ripouteau <Jean-Francois.Ripouteau@netsurf.org>
+Ajit Sagar <asagar@spdmail.spd.dsccc.com>
+Ashish Singhai <singhai@delirius.cs.uiuc.edu>
+David Sames <David.L.Sames.1@gsfc.nasa.gov>
+Gonzalo Diethelm <gonzo@ing.puc.cl>
+Raj <raj@itd.ssb.com>
+Darrin <darrin@jeeves.net>
+Steve Weismuller <spweismu@rsoc.rockwell.com>
+Eric C. Newton <ecn@smart.net>
+Andres Kruse <kruse@cern.ch>
+Ramesh Nagabushnam <rcn@nynexst.com>
+Antonio Tortorici <antonio@rh0011.roma.tlsoft.it>
+Nigel Lowe <nigel@nt.com>
+Tom Leith <trl@icon-stl.net>
+Michael Fortinsky <mike@vocaltec.com>
+Marco Sommerau <sommerau@matisse.informatik.uni-stuttgart.de>
+Gary Salsbery <gsalsber@simsun.atsc.allied.com>
+Eric Beser <beser@simsun.atsc.allied.com>
+Alfred Keller <kellera@pop.eunet.ch>
+John Lu <johnlu@f1.telekurs.ch>
+James Mansion <james@wgold.demon.co.uk>
+Jesper S. M|ller <Jesper.Moller@ameridata.dk>
+Chris Lahey <clahey@cccis.com>
+Michael R"uger <m_rueger@syscomp.de>
+Istvan Buki <istvan.buki@euronet.be>
+Greg Wilson <gvwilson@vnet.ibm.com>
+Garrett Conaty <gconaty@outbackinc.com>
+Brad Flood <BFLOOD@slc.unisysgsg.com>
+Marius Kjeldahl <marius@funcom.com>
+Steve Huston <shuston@riverace.com>
+Eugene K. Plaude <jec@r-style.msk.su>
+Joseph DeAngelis <bytor@faxint.com>
+Kim Gillies <gillies@noao.edu>
+Luca Priorelli <lucapri@mbox.vol.it>
+Alan Stewart <axs2@osi.com>
+Hani Yakan <hani@i-online.com>
+William L. Gerecke <gerecke@rayva.org>
+Craig Johnston <johnston@tortilla.ds.boeing.com>
+Pierre-Yves Duval <duval@cppm.in2p3.fr>
+Rochi Febo Dommarco <rocky@alter.it>
+Jonathan Biggar <jon@biggar.org>
+Scott Shupe <shupes@mitre.org>
+Chuck Gehr <gehr@sweng.stortek.com>
+Avi Nash <anash@RedBrick.COM>
+Padhu Ramalingam <padhu@magicnet.net>
+Jay Denkberg <jay_denkberg@comverse.com>
+Ayman Farahat <afarahat@CCGATE.HAC.COM>
+Tilo Christ <christ@swl.fh-heilbronn.de>
+Ari Erev <Ari_Erev@icomverse.com>
+Hamutal Yanay <Hamutal_Yanay@icomverse.com>
+Vital Aza <va3@cs.wustl.edu>
+Alex Villazon <villazon@cui.unige.ch>
+David Artus <david.artus@sbil.co.uk>
+Todd Barkalow <todd_barkalow@stortek.com>
+Alexander Smundak <sasha@migration.com>
+Thilo Kielmann <kielmann@informatik.uni-siegen.de>
+Matthias Kerkhoff <make@cs.tu-berlin.de>
+Fred LaBar <flabar@fallschurch.esys.com>
+Hanan Herzog <hanan@wallenda.stanford.edu>
+Eric Parker <eparker@credence.com>
+James Michael Dwyer <jdwyer@knox.edu>
+Arun Katkere <katkere@praja.com>
+Bob Dunmire <bobd@titan.com>
+Sandro Doro <alex@aureus.sublink.org>
+Robert Lyng <rlyng@synertech.highmark.com>
+Phil Logan <phill@in.ot.com.au>
+John Cosby <John.D.Cosby@cpmx.saic.com>
+Wayne Vucenic <wvucenic@netgate.net>
+Harry Gunnarsson <hg@carmenta.se>
+James CE Johnson <jcej@lads.com>
+Samuel_Bercovici <Samuel_Bercovici_at_EFT__AD2@mail.icomverse.com>
+Per Andersson <Per.Andersson@hfera.ericsson.se>
+Anthony McConnell <Tonym@datel.demon.co.uk>
+Mark Rabotnikov <mark@usp.elscintcorp.co.il>
+John Bossom <John.Bossom@Cognos.COM>
+Rino Simioni <sir@necsy.it>
+Slawomir Kuzniar <kuzniar@Bear.COM>
+Rob Jordan <jordan@hursley.ibm.com>
+Michael Maxie <maxie@acm.org>
+John Cosby <John.D.Cosby@cpmx.saic.com>
+Nigel Owen <Nigel@voicelink.co.nz>
+Jorn Jensen <jornj@funcom.com>
+Paul Roman <proman@npac.syr.edu>
+Dave Mayerhoefer <davem@lynx.com>
+Bert Craytor  <Bert_Craytor@peoplesoft.com>
+Joey Zhu <joey.zhu@wcom.com>
+Arthur J. Lewis <hfdh99a@prodigy.com>
+Michael R. MacFaden <mrm@yagosys.com>
+Eugene R. Somdahl <gene@endo.com>
+Paul Han <phan@CCGATE.HAC.COM>
+Jeff Morgan <jeff@audioactive.com>
+Arturo Montes <mitosys@colomsat.net.co>
+Elliot Lau <eeklau@post1.com>
+Mark Wright <markw@odi.com.au>
+Michael Newton <michaeln@in.ot.com.au>
+Kumar Neelakantan <kneelaka@painewebber.com>
+Scott Halstead <scott.halstead@gs.com>
+Jean-Marc Strauss <jms97@club-internet.fr>
+Adam Porter <aporter@cs.umd.edu>
+Hakan Kallberg <hk@simulina.se>
+Eric Dean Russell <edrusse@somnet.sandia.gov>
+Daniel Montalibet <daniel_montalibet@stortek.com>
+Norbert Rapp <norbert.rapp@nexus-informatics.de>
+Ganesh Pai <gpai@voicetek.com>
+Berni Merkle <merkle@io.freinet.de>
+Tom Wright <twright@gem-net.demon.co.uk>
+Torbjorn Lindgren <tl@funcom.no>
+Mike Bernat <sagmb@sagus.com>
+Brian Mendel <bmendel@mdc.com>
+Jeremy Buch <davinci@nortel.ca>
+Kevin Boyle <kboyle@sanwafp.com>
+Kevin Martindale <kevin_martindale@stortek.com>
+Luis Lopes <llopes@tick.rcc.Ryerson.CA>
+Adrian Salt <acsalt@magi.com>
+Hongbo Xu <hxu@mas.co.nz>
+Michael Hartman <c62nt57@ibx.com>
+Tom Dobridge <dobridge@persimmon.com>
+Rich Christy <rchristy@cccis.com>
+Satoshi Ueno <satoshi.ueno@gs.com>
+Eugene R. Somdahl <gene@endo.com>
+Robert Head <rhead@mail.virtc.com>
+Ivan Murphy <Ivan.Murphy@med.siemens.de>
+Jan Perman <jan.perman@osd.uab.ericsson.se>
+Shankar Krishnamoorthy <kshankar@lucent.com>
+Reza Roodsari <reza@sprynet.com>
+Jim Crossley <jim@lads.com>
+Johannes Gutleber <Johannes.Gutleber@cern.ch>
+Marina Spivak <marina@cs.wustl.edu>
+Yigong Liu <ygl@emailbox.lucent.com>
+Erik Urdang <erik@bhi.com>
+Mike Schweiger <mikes@bmo.com>
+Anthony Mutiso <amutiso@hughes.cg.hac.com>
+Jeff R. Hayes <Jeff.Hayes@osi.com>
+David Brackman <dbrackman@OhioEE.com>
+Dave Moore <dave.moore@gecm.com>
+Joseph Cross <joseph.k.cross@lmco.com>
+Cherif Sleiman <sleiman@research.moore.com>
+Stefan Ericsson <Stefan.Ericsson@osd.uab.ericsson.se>
+Wei Chiang <wei.chiang@horizon.ntc.nokia.com>
+Thanh Ma <tma@encore.com>
+Oleg Krivosheev <kriol@fnal.gov>
+Stephen Coy <stevec@wsa.com.au>
+Bob Laferriere <laferrie@gsao.med.ge.com>
+Satheesh Kumar MG <satheesh@india.aspectdv.com>
+Karen Amestoy <kamestoy@CCGATE.HAC.COM>
+Jeff Richard <jrichard@OhioEE.com>
+Samuel Melamed <sam@vdo.net>
+Vladimir Schipunov <vlad@staff.prodigy.com>
+Felix Popp <fxpopp@immd9.informatik.uni-erlangen.de>
+Billy Quinn <bquinn@lads.com>
+Michael McKnight <mcknight@signalsoftcorp.com>
+Huiying Shen <shen@environ.org>
+Alex Chan <Alex.Chan@Aspect.com>
+Aaron Valdivia <avaldivia@hns.com>
+Edan Ayal <edana@vdo.net>
+Jeffrey Peterson <jpeterson@fallschurch.esys.com>
+Neil Lavelle <nlavelle@imcl.com>
+Steven Wohlever <wohlever@mitre.org>
+Manojkumar Acharya <mja@cvsf325.gpt.co.uk>
+Evgeny Beskrovny <evgeny_beskrovny@icomverse.com>
+Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
+Laura Paterno <lpaterno@d0chb.fnal.gov>
+Ben Eng <ben@jetpen.com>
+Mike Kamrad <J.M.KAMRAD.II@cdev.com>
+Marios Zikos <zikos@csi.forth.gr>
+Mark L Boriack <mboriack@std.saic.com>
+Mark Hyett <mhyett@std.saic.com>
+Caleb Epstein <epstein_caleb_unix@jpmorgan.com>
+Valik Solrzano Barboza <valik@xs4all.nl>
+John Connett <jrc@skylon.demon.co.uk>
+Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de>
+Stephen Henry <shenry@mdc.com>
+Dani Flexer <danif@ivory-sw.com>
+Michael Hoffman <Hoffman_Michael@mac-mailserver.atc.ll.mit.edu>
+John Lindal <jafl@cheshire-cat.caltech.edu>
+Dustin Laurence <laurence@alice.wonderland.caltech.edu>
+Ernie Makris <emakris@ziplink.net>
+Timothy A. Brown <tabrown@montana.com>
+Patrick J. McNerthney <pat@cartia.com>
+Lori Anderson <lori@probita.com>
+Erik Margraf <erik@asgard.gud.siemens.co.at>
+Bryan Doerr <Bryan.S.Doerr@boeing.com>
+Adam Miller <adam@royalblueny.com>
+Thomas Jordan <ace@programmer.net>
+Keith Nicewarner <knicewar@sanders.com>
+Frederic Andres <andres@rd.nacsis.ac.jp>
+Achint Sandhu <sandhu@nortel.ca>
+Mitch Kuninsky <Mitch_Kuninsky@avid.com>
+Alex Chan <Alex.Chan@Aspect.com>
+Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov>
+Thomas Venturella <tventurell@mdc.com>
+Philippe O'Reilly <philippe@robot.ireq.ca>
+Stan Leeson <STANLEY.D.LEESON@cdev.com>
+Richard Keizer <RICHARD.L.KEIZER@cdev.com>
+Edgar Villanueva <edgarvil@ix.netcom.com>
+Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
+Dave Meyer <dmeyer@std.saic.com>
+Thomas Hampson <thomas.hampson@lmco.com>
+Jay Kistler <jjk@pa.dec.com>
+Scott Snyder <snyder@d0sgif.fnal.gov>
+Mark Evans <mark.evans@tandem.com>
+Todd Pack <todd@rwii.com>
+Mark Maris <maris@scgp.com>
+Jason Katz <Jason@email.rts-inc.com>
+Jim Penny <jpenny@universal-fasteners.com>
+Chris Ryan <cryan@qualcomm.com>
+J. Russell Noseworthy <rnosewor@objectsciences.com>
+Carol Sanders <csanders@mdc.com>
+Jerry Bickle <glbick@most.fw.hac.com>
+Paul von Behren <Paul_von_Behren@stortek.com>
+Sudish Joseph <sj@eng.mindspring.net>
+Loren Rittle <rittle@comm.mot.com>
+Alexander Ovsiankin <sasha@technologist.com>
+Fred Kuhns <fredk@arl.wustl.edu>
+Ravi Nagabhyru <ravi@future-minds.com>
+Tom Brusehaver <tgb@cozy.netco.com>
+Dave Tallman <tallman@acsys.com>
+Monish Rajpal <monish@cs.jhu.edu>
+Garry Brother <gmbroth@romulus.ncsc.mil>
+Andreas Schuelke <Andreas.Schuelke@med.siemens.de>
+Ganapathi <guns@fs.IConNet.NET>
+James Garrison <jhg@austx.tandem.com>
+Brad Walton <brad.walton@transnexus.com>
+Paul Motuzenko <p_motuzenko@hotmail.com>
+Kurt Sussman <kls@best.com>
+Rob Thornton <ret1@cec.wustl.edu>
+Chanaka Liyanaarachchi <chanakal@ittc.ukans.edu>
+Saneyasu <sane@sail.t.u-tokyo.ac.jp>
+Steve Kay <slk1@icore.ih.lucent.com>
+Greg White <gwhite@northlink.com>
+Ki-hyun Yoon <abird@nextware.co.kr>
+Umar Syyid <usyyid@hns.com>
+Bill Fulton <fultonb@pcnet1.ascs.aro.allied.com>
+Amancio Hasty <hasty@rah.star-gate.com>
+Zoran Ivanovic <zorani@pathcom.com>
+Sree Oggu <dharani@sutmyn.com>
+James Risinger <jrisinge@cgi.com>
+Leo Modica <lmodica@lucent.com>
+Bob Scott <bob_scott@broder.com>
+Mark Kettner <m.kettner@elsevier.nl>
+Kent Watsen <kent@watsen.net>
+Chris Healey <chealey@entera.com>
+Philippe Klein <Philippe_Klein@vocaltec.com>
+William S. Lear <rael@dejanews.com>
+John Geiss <jtgb@eci-esyst.com>
+Ernesto Guisado <eguisado@saincotrafico.com>
+Stuart Myles <smyles@wsj.dowjones.com>
+Lothar Werzinger <lwerzinger@krones.de>
+Andrew Harbick <aharbick@opentext.com>
+Pavel Motuzenko <p_motuzenko@hotmail.com>
+Ross J. Lillie <lillie@rsch.comm.mot.com>
+Sam Hauer <shauer@nmo.gtegsc.com>
+Frank. J. Hodum <fhdum@std.saic.com>
+David Miron <dxm@crapper.dsto.defence.gov.au>
+Anton van Straaten <anton@appsolutions.com>
+Joe Covalesky <joe@nowsol.com>
+Bill Backstrom <backstr@anubis.network.com>
+Jeff Franks <Jeffrey_Franks@i-o.com>
+John Mulhern <9107@mn3.lawson.lawson.com>
+Johan Lundin <johan@lundin.com>
+Eric Powers <powerg@deltanet.com>
+Zheng Han <zhan@glenvan.glenayre.com>
+Gabriel Lima <gali@enea.se>
+Doug Anderson <doug@clark.net>
+Hongyin Quan <hq1@arl.wustl.edu>
+Maximilian Hoferer <mhoferer@krones.de>
+Kevin Stanley <kstanley1@mdc.com>
+Jeff Greif <jmg@trivida.com>
+Jeff McDaniel <jsmcdani@gte.net>
+Andreas Geisler <andreas.geisler@erls.siemens.de>
+Bob McWhirter <bob@werken.com>
+Daniel Winder <Daniel.Winder@cern.ch>
+Zheng Han <zhan@glenvan.glenayre.com>
+Christa Schwanninger <christa.schwanninger@mchp.siemens.de>
+Byron Harris <harris_b@ociweb.com>
+Barney Dalton <barneyd@cyllene.uwa.edu.au>
+Peter Gorgia <Peter.Gorgia@libnet.com>
+Dirk Broer <Dirk.Broer@gsfc.nasa.gov>
+Joseph E. LaPrade <laprade@engw.ana.bna.boeing.com>
+Goran Lowkrantz <Goran.Lowkrantz@infologigruppen.se>
+Susan Liebeskind <susan.liebeskind@gtri.gatech.edu>
+Dana Hackman <upboms@network-one.com>
+Margherita Vittone Wiersma <vittone@fndaub.fnal.gov>
+Priya Narasimhan <priya@lambda.ece.ucsb.edu>
+Jeff Hopper <jhopper@nosc.mil>
+Mats Nilsson <mats.nilsson@xware.se>
+Dongwook Kim <baksoo@dbserver.kaist.ac.kr>
+Don Davis <ded@heart.jhuapl.edu>
+Alberto Villarica <Alberto.Villarica.rav@nt.com>
+XuYifeng <xuyf@pop.zg169.net>
+Ossama Othman <othman@astrosun.tn.cornell.edu>
+Tom Shields <Shields@MarsHotel.CMPU.NET>
+Krishna Padmasola <pkrishna@cybercash.co.in>
+Andre Folkers <folkers@informatik.mu-luebeck.de>
+Paul Sexton <pauls@ENTERPRISE.bt.co.uk>
+Marc Lehmann <pcg@goof.com>
+Anne Blankert <anne@geodan.nl>
+Raja Ati <rati@montereynets.com>
+Clinton Carr <ccarr@websocket.com>
+Peter Liqun Na <liqunna@cs.sunysb.edu>
+Frank Adcock <frank@bushlife.com.au>
+Xu Yifeng <xuyifeng@www.kali.com.cn>
+Valery Arkhangorodsky <avalery@geocities.com>
+Alan Scheinine <scheinin@crs4.it>
+Andrew G. Harvey <agh@cisco.com>
+Dann Corbit <DCorbit@SolutionsIQ.com>
+James <james@tsunami.com>
+Jason Milley <Jason.Milley.jcmilley@nt.com>
+Ulf Jaehrig <jaehrig@desys.com>
+Peter Nordlund <petern@nada.kth.se>
+Mark Weel <weel@lucent.com>
+Tres Seaver <tseaver@palladion.com>
+Erik Koerber <erik.koerber@siemens.at>
+Eric R. Medley <palantir@net56.net>
+David O'Farrell <dave@virgo.aersoft.ie>
+Amir Bahmanyari <abahmany@teknowledge.com>
+Ian Wright <I.Wright@elsevier.co.uk>
+David Janello <David.Janello@abnamro.com>
+Rich Wellner <rw2@wellner.org>
+Fernando D. Mato Mira <matomira@acm.org>
+Jonathan Reis <reis@minniemouse.cemax.com>
+Seung-Lee Hoon <tarjan@lgsoft.com>
+Russell L. Carter <rcarter@dnstoo.consys.com>
+Bill Hall <hts@gte.net>
+Brian Gilstrap <gilstrap_b@ociweb.com>
+Balaji Srinivasan <balaji@cplane.com>
+Anders W. Tell <anderst@toolsmiths.se>
+Larry Lachman <larry@paradigmsim.com>
+Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu>
+Rainer Blome <rainer_blome@de.ibm.com>
+Kirk Ellett <kellett@mdc.com>
+Sunil Kumar <skumar@sutmyn.com>
+T Stach <t.stach@inobis.de>
+Ron Barack <r.barack@inobis.de>
+Daniel Nieten <dnieten@bellsouth.net>
+Paul K. Fisher <pfisher@plexware.com>
+Jim Buck <jim@nowsol.com>
+Olivier Lau <olivier_lau@srtelecom.com>
+Achim Stindt <stindt@inobis.de>
+Fredrik Lindahl <fredrik.lindahl@ausys.se>
+Joseph Weihs <joseph-w@Orbotech.Co.IL>
+Serge Kolgan <skolgan@cisco.com>
+James Megquier <jmegq@bbn.com>
+Martin Krumpolec <krumpo@pobox.sk>
+Michael Thomas <Michael.Thomas@Australia.Boeing.com>
+Vicentini Emanuele <arena.sci.univr.it>
+Bob Price <Bob_Price@tssdc.saic.com>
+Ramiro Penataro Blanco <penataro@ll.iac.es>
+Sigg Pascal <pascal.sigg@zkb.ch>
+Ivan Leong <ivanl@pacific.net.sg>
+Virginie Amar<vamar@amadeus.net>
+Tom Ziomek <tomz@cc.comm.mot.com>
+Hamish Friedlander <hamishf@usa.net>
+Mark De Jong <mdj@intervu.net>
+Knut Johannessen <knutj@funcom.com>
+Leif Jakobsmeier <leif@informatik.uni-frankfurt.de>
+Jon Lindgren <jlindgren@SLK.com>
+Steve Vinoski <vinoski@iona.com>
+Christian Mueffling <cvm@aiss.de>
+Victor Yu <victor.yu@computechnics.com.au>
+Jeff Donner's <JDonner@schedsys.com>
+Joe Loyall <jloyall@bbn.com>
+Stanislav Meduna <stanom@etm.co.at>
+Christian Korn <korn@gate.qaqa.com>
+Ron Barack <rab@terminal.cz>
+Steve Totten <totten_s@ociweb.com>
+Faron Dutton <fdutton@avxus.com>
+Gary York <gfyork@ix.netcom.com>
+Patty Hair <patty@Lynx.COM>
+Ivan Pascal <pascal@info.tsu.ru>
+William A. Hoffman <hoffman@crd.ge.com>
+Mark Lucovsky <markl@microsoft.com>
+Greg Holtmeyer <gholtmeyer@mdc.com>
+Jody Hagins <jody@atdesk.com>
+Patrice Bensoussan <pbensoussan@amadeus.net>
+Keith Brown <kalbrown@ix.netcom.com>
+Barry Hoggard <hoggard@cfx.com>
+Peter J. Mason <peterm@fl.net.au>
+Jerry De Master <jdemaste@ipdinc.com>
+Greg Gallant <greg.gallant@jhuapl.edu>
+wym <wym@dekang.com>
+Karel Zuiderveld <kzuiderveld@vitalimages.com>
+Mike Goldman <whig@by.net>
+Peter Gross <pgross@signalsoftcorp.com>
+Greg Ross <gwross@west.raytheon.com>
+Stanford S. Guillory <sguillory@vignette.com>
+Peter Weat <weatp@syntron.com>
+Magnus Karlsson <magnus.karlsson@syncom.se>
+Andreas Tobler <toa@pop.agri.ch>
+John Aughey <jha@FreeBSD.ORG>
+Knut-Havard Aksnes <knut@orion.no>
+Eric Mitchell <emitchell@altaira.com>
+Tommy Andreasen <tommy.andreasen@radiometer.dk>
+Slava Galperin <galperin@teknowledge.com>
+Jeff Olszewski <jolszewski@std.saic.com>
+Sudhanshu Garg <sg2@ladybug.cec.wustl.edu>
+Jerry D. De Master <jdemaster@ipdinc.com>
+Mike Preradovic <michael_preradovic@epicdata.com>
+Greg Harrison <harrisog@erinet.com>
+Sangwoo Jin <swjinjin@sei.co.kr>
+Jacques Salerian <Jacques.Salerian@era.ericsson.se>
+Steve Coleman <Steve.Coleman@jhuapl.edu>
+Diethard Ohrt <Diethard.Ohrt@siemens.at>
+Jacob Jones <Jacob.J.Jones@notesmta.gd-is.com>
+Phil Ruelle <Phil.Ruelle@adv.sonybpe.com>
+Sush Bankapura <Sush.Bankapura@sylantro.com>
+Eric Covington <eric@nowsol.com>
+Darren Whobrey <whobrey@fecit.co.uk>
+Mason Taube <taube@westcon.prc.com>
+Rod Joseph <rodjoseph@adt.com>
+Hans Horsmann <Hans.Horsmann@icn.siemens.de>
+Kevin Royalty <kroyalty@mdc.com>
+Souhad Mcheik <mcheiks@inrs-telecom.uquebec.ca>
+Mark Little <M.C.Little@ncl.ac.uk>
+Tim Stack <stack@cs.utah.edu>
+Marc Engel <engelm@tlse.sofreavia.fr>
+Uma Markandu <umam@nortelnetworks.com>
+Henrik Nordberg <hnordberg@lbl.gov>
+Tad Jarosinski <tadj@qualcomm.com>
+Andy Marchewka <AndyM@who.net>
+Neal Norwitz <nnorwitz@arinc.com>
+Frederic Maria <fmaria@lucent.com>
+David Hooker <DHooker@uniview.net>
+Christian.Destor <Christian.Destor@alcatel.fr>
+Andrew Hobson <ahobson@eng.mindspring.net>
+Andre Folkers <folkers@informatik.mu-leubeck.de>
+Torsten Kuepper <kuepper2@uni-wuppertal.de>
+Hao Ruan <hruan@lucent.com>
+Alexander Davidovich <sasha@ms.com>
+Cristian Ferretti <cfs@mat.puc.cl>
+N Becker <nbecker@fred.net>
+Yaolong Lan <lyaolong@cs.sunysb.edu>
+Elias Sreih <sealstd1@nortelnetworks.com>
+Liang Chen <chenl@nortelnetworks.com>
+Mark Laffoon <mark.laffoon@centraxcorp.com>
+
+I would particularly like to thank Paul Stephenson, who worked with me
+at Ericsson and is now at ObjectSpace.  Paul devised the recursive
+Makefile scheme that underlies this distribution and also spent
+countless hours with me discussing object-oriented techniques for
+developing distributed application frameworks.
+
+Finally, I'd also like to thank Todd L. Montgomery <tmont@cs.wvu.edu>,
+fellow heavy metal head, for fulfilling his quest to get ACE to
+compile with GCC!
+
+In conclusion, my goal is to see ACE continue to evolve and become a
+more comprehensive, robust, and well-documented C++ class library that
+is freely available to researchers and developers.  If you have any
+improvements, suggestions, and or comments, I'd like to hear about it.
+
+        Thanks,
+
+                Douglas C. Schmidt
+                schmidt@cs.wustl.edu

@@ -1,0 +1,969 @@
+<!-- $Id$ -->
+
+<html>
+  <head>
+    <title>ACE Software Development Guidelines</title>
+    <link rev=made href="mailto:levine@cs.wustl.edu">
+  </head>
+
+<BODY text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
+<hr>
+  <h3>ACE Software Development Guidelines</h3>
+
+<ul>
+  <li><strong>General</strong><p>
+  <ul>
+    <li>Every text file must end with a newline.<p>
+
+    <li>Use spaces instead of tabs, except in Makefiles.  Emacs users
+        can add this to their <strong>.emacs</strong>:
+
+        <pre>(setq-default indent-tabs-mode nil)</pre></p>
+
+        Microsoft Visual C++ users should do the following:
+
+        <pre>
+        Choose:  Tools -- Options -- Tabs
+        Then Set:  "Tab size" to 8 and "Indent size" to 2, and
+        indent using spaces.
+        </pre><p>
+
+    <li>Try to limit the length of source code lines to less than 80
+        characters.  Users with 14 inch monitors appreciate it when
+        reading code.  And, it avoids mangling problems with email
+        and net news.<p>
+
+    <li>If you add a comment to code that is directed to, or
+        requires the attention of, a particular individual:
+        <strong>SEND EMAIL TO THAT INDIVIDUAL!</strong>.<p>
+
+    <li>Every program should have a ``usage'' message.  It should be
+        printed out if erroneous command line arguments, or a
+        <strong><code>-?</code></strong> command line argument, are
+        provided to the program.<p>
+
+    <li>The program <strong><code>main</code></strong> function must
+        always be declared with arguments, <em>e.g.</em>,
+        <pre>
+        int
+        main (int argc, char *argv[])
+        {
+          [...]
+
+          return 0;
+        }
+        </pre><p>
+
+        If you don't use the <code>argc</code> and/or <code>argv</code>
+        arguments, don't declare them, <em>e.g.</em>,
+        <pre>
+        int
+        main (int, char *[])
+        {
+          [...]
+
+          return 0;
+        }
+        </pre><p>
+
+        Please declare the second argument as <code>char *[]</code>
+        instead of <code>char **</code>.  Ancient versions of MSC
+        complained about <code>char **</code>; I've never seen a
+        C++ compiler complain about <code>char *[]</code>.<p>
+
+        <code>main</code> must also return 0 on successful
+        termination, and non-zero otherwise.<p>
+
+    <li>Avoid use of floating point types (float and double) and operations
+        unless absolutely necessary.  Not all ACE platforms support them.
+        Therefore, wherever they are used, ACE_LACKS_FLOATING_POINT
+        conditional code must be also be used.<p>
+  </ul>
+
+  <li><strong>Code Documentation</strong><p>
+  <ul>
+    <li>Use comments and whitespace (:-) liberally.  Comments
+        should consist of complete sentences, <em>i.e.</em>, start
+        with a capital letter and end with a period.<p>
+
+    <li>Insert a CVS/RCS keyword string at the top of every source file,
+        Makefile, config file, <em>etc</em>.  For C++ files, it is:
+        <pre>
+        // $<!-- -->Id$
+        </pre>
+        It is not necessary to fill in the fields of the keyword string,
+        or modify them when you edit a file that already has one.  CVS
+        does that automatically when you checkout or update the file.<p>
+
+        To insert that string at the top of a file:
+        <pre>
+        perl -pi -e \
+          'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
+        </pre><p>
+
+    <li>Comments, especially in header files, must follow the
+        <a href=http://www.dscpl.com.au>OSE</a> Tools format requirements.
+        Please see the ``Classinfo Tools'' section of the
+        <a href=http://www.dscpl.com.au>OSE</a> ``Tools Manual''
+        for these requirements.<p>
+
+  </ul>
+
+  <li><strong>Preprocessor</strong><p>
+  <ul>
+    <li>Never #include standard headers directly, except in a few
+        specific ACE files, <em>e.g.</em>, OS.h and stdcpp.h.  Let
+        those files #include the correct headers.  If you do not do
+        this, your code will not compile with the Standard C++ Library.<p>
+
+    <li>Always follow a preprocessor <strong><code>#endif</code></strong>
+        with a <strong><code>/*  */</code></strong> C-style comment.  It
+        should correspond to the condition in the matching
+        <strong><code>#if</code></strong> directive.  For example,
+        <pre>
+        #if defined (ACE_HAS_THREADS)
+        # if defined (ACE_HAS_STHREADS)
+        #   include /**/ &lt;synch.h&gt;
+        #   include /**/ &lt;thread.h&gt;
+        #   define ACE_SCOPE_PROCESS P_PID
+        #   define ACE_SCOPE_LWP P_LWPID
+        #   define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
+        # else
+        #   define ACE_SCOPE_PROCESS 0
+        #   define ACE_SCOPE_LWP 1
+        #   define ACE_SCOPE_THREAD 2
+        # endif /* ACE_HAS_STHREADS */
+        #endif /* ACE_HAS_THREADS */
+        </pre><p>
+
+    <li>Always insert a <strong><code>/**/</code></strong> between an
+        <strong><code>#include</code></strong> and
+        <strong><code>filename</code></strong>, as shown in the above
+        example.  This avoids dependency problems with Visual C++.<p>
+
+    <li>Be very careful with names of macros and enum values.  It's
+        always best to prefix them with something like <code>ACE_</code>
+        or <code>TAO_</code>.  There are too many system headers out
+        there that #define <code>OK</code>, <code>SUCCESS</code>,
+        <code>ERROR</code>, and so on.<p>
+
+    <li>Try to centralize <code>#ifdefs</code> with <code>typedefs</code>
+        and <code>#defines</code>.  For example, use this:
+        <pre>
+        #if defined(ACE_PSOS)
+          typedef long ACE_NETIF_TYPE;
+        # define ACE_DEFAULT_NETIF 0
+        #else  /* ! ACE_PSOS */
+          typedef const ASYS_TCHAR* ACE_NETIF_TYPE;
+        # define ACE_DEFAULT_NETIF ASYS_TEXT("le0")
+        #endif /* ! ACE_PSOS */
+        </pre><p>
+
+        instead of:
+
+        <pre><p>
+        #if defined (ACE_PSOS)
+          // pSOS supports numbers, not names for network interfaces
+          long net_if,
+        #else  /* ! ACE_PSOS */
+          const ASYS_TCHAR *net_if,
+        #endif /* ! ACE_PSOS */
+        </pre><p>
+
+    <li>Protect header files against multiple inclusion with this
+        construct:
+        <pre>
+        #ifndef FOO_H
+        #define FOO_H
+
+        [contents of header file]
+
+        #endif /* FOO_H */
+        </pre><p>
+
+        This exact construct (note the <code>#ifndef</code>)
+        is optimized by many compilers such they only open the
+        file once per compilation unit.  Thanks to Eric C. Newton
+        &lt;ecn@smart.net&gt; for pointing that out.<p>
+
+        If the header <code>#includes</code> an ACE library header,
+        then it's a good idea to include the <code>#pragma once</code>
+        directive:
+        <pre>
+        #ifndef FOO_H
+        #define FOO_H
+
+        #include "ace/ACE.h"
+        #if !defined (ACE_LACKS_PRAGMA_ONCE)
+        # pragma once
+        #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+        [contents of header file]
+
+        #endif /* FOO_H */
+        </pre><p>
+
+        <code>#pragma once</code> must be protected, because some
+        compilers complain about it.  The protection depends on
+        <code>ACE_LACKS_PRAGMA_ONCE</code>, which is defined in
+        some ACE config headers.  Therefore, the protected
+        <code>#pragma once</code> construct should only be used after
+        an <code>#include</code> of an ACE library header.  Note that
+        many compilers enable the optimization if the <code>#ifndef</code>
+        protection construct is used, so for them, <code>#pragma once</code>
+        is superfluous.<p>
+
+        <strong>No</strong> code can appear after the final
+        <code>#endif</code> for the optimization to be effective and
+        correct.<p>
+
+    <li><P>Files that contain parametric classes should follow this style:
+      <PRE>
+      #ifndef FOO_T_H
+      #define FOO_T_H
+
+      #include "ace/ACE.h"
+      #if !defined (ACE_LACKS_PRAGMA_ONCE)
+      # pragma once
+      #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+      // Put your template declarations here...
+
+      #if defined (__ACE_INLINE__)
+      #include "Foo_T.i"
+      #endif /* __ACE_INLINE__ */
+
+      #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+      #include "Foo_T.cpp"
+      #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+      #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+      #pragma implementation "Foo_T.cpp"
+      #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+      #endif /* FOO_T_H */
+</PRE></P>
+      <P>
+      Notice that some compilers need to see the code of the template,
+      hence the <CODE>.cpp</CODE> file must be included from the
+      header file.
+      </P>
+      <P>
+      To avoid multiple inclusions of the <CODE>.cpp</CODE> file it
+      should also be protected as in:
+      <pre>
+      #ifndef FOO_T_C
+      #define FOO_T_C
+
+      #include "Foo_T.h"
+      #if !defined (ACE_LACKS_PRAGMA_ONCE)
+      # pragma once
+      #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+      #if !defined (__ACE_INLINE__)
+      #include "ace/Active_Map_Manager_T.i"
+      #endif /* __ACE_INLINE__ */
+
+      ACE_RCSID(lib, Foo_T, "$<!-- -->Id$")
+
+      // put your template code here
+
+      #endif /* FOO_T_H */
+</pre></p>
+      <P>
+      Finally you may want to include the template header file from a
+      non-template header file (check
+      <CODE>$ACE_ROOT/ace/Synch.h</CODE>); in such a case the template
+      header should be included <strong>after</strong> the inline
+      function definitions, as in:</P>
+      <P><PRE>
+      #ifndef FOO_H
+      #define FOO_H
+
+      #include "ace/ACE.h"
+      #if !defined (ACE_LACKS_PRAGMA_ONCE)
+      # pragma once
+      #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+      // Put your non-template declarations here...
+
+      #if defined (__ACE_INLINE__)
+      #include "Foo.i"
+      #endif /* __ACE_INLINE__ */
+
+      #include "Foo_T.h"
+
+      #endif /* FOO_H */
+</PRE></P>
+    </li>
+  </ul>
+
+  <li><strong>C++ Syntax and Constructs</strong><p>
+  <ul>
+    <li><strong><code>for</code></strong> loops should look like:
+        <pre>
+        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); ++i)
+          spawn ();
+        </pre>
+        Though, I prefer to always wrap the body of the loop in braces,
+        to avoid surprises when other code or debugging statements are
+        added, and to maintain sanity when the body consists of a macro,
+        such as an ACE_ASSERT without a trailing semicolon:
+        <pre>
+        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); ++i)
+          {
+            ACE_ASSERT (spawn () == 0;)
+          }
+        </pre><p>
+
+        Similarly, <strong><code>if</code></strong> statements should have
+        a space after the ``<strong>if</strong>'', and no spaces just after
+        the opening parenthesis and just before the closing parenthesis.<p>
+
+    <li>If a loop index is used after the body of the loop, it
+        <strong>must</strong> be declared before the loop.  For example,
+
+        <pre>
+        size_t i = 0;
+        for (size_t j = 0; file_name [j] != '\0'; ++i, ++j)
+          {
+            if (file_name [j] == '\\' && file_name [j + 1] == '\\')
+              ++j;
+
+            file_name [i] = file_name [j];
+          }
+
+        // Terminate this string.
+        file_name [i] = '\0';
+        </pre><p>
+
+   <li>Prefix operators are sometimes more efficient than postfix
+       operators.  Therefore, they are preferred over their postfix
+       counterparts where the expression value is not used.<p>
+
+       Therefore, use this idiom for iterators, with prefix operator
+       on the loop index:
+       <pre>
+       ACE_Ordered_MultiSet&lt;int&gt; set;
+       ACE_Ordered_MultiSet_Iterator&lt;int&gt; iter(set);
+
+       for (i = -10; i &lt; 10; ++i)
+         set.insert (2 * i + 1);
+
+       </pre>
+       rather than the postfix operator:
+       <pre>
+       for (i = -10; i &lt; 10; i++)
+         set.insert (2 * i + 1);
+       </pre><p>
+
+    <li>When a class provides operator==, it must also provide
+        operator!=.  Also, both these operators must be const.
+
+    <li>Avoid unnecessary parenthesis.  We're not writing Lisp :-)<p>
+
+    <li>Put inline member functions in a <strong><code>.i</code></strong>
+        file.  That file is conditionally included by both the
+        <strong><code>.h</code></strong> file, for example:<p>
+
+            <pre>
+            class ACE_Export ACE_High_Res_Timer
+            {
+              [...]
+            };
+
+            #if defined (__ACE_INLINE__)
+            #include "ace/High_Res_Timer.i"
+            #endif /* __ACE_INLINE__ */
+            </pre><p>
+
+        and <strong><code>.cpp</code></strong> file:<p>
+
+            <pre>
+            #define ACE_BUILD_DLL
+            #include "ace/High_Res_Timer.h"
+
+            #if !defined (__ACE_INLINE__)
+            #include "ace/High_Res_Timer.i"
+            #endif /* __ACE_INLINE__ */
+
+            ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
+            </pre><p>
+
+        <strong>NOTE:</strong> It is very important to ensure than an
+        inline function will not be used before its definition is seen.
+        Therefore, the inline functions in the .i file should be arranged
+        properly.  Some compilers, such as <code>g++</code> with the
+        <code>-Wall</code> option, will issue warnings for violations.<p>
+
+    <li><code>ACE_Export</code> must be inserted between the
+        <code>class</code> keyword and class name for all classes that
+        are exported from libraries, as shown in the example above.
+        <strong>However</strong>, do <strong>not</strong> use
+        <code>ACE_Export</code> for template classes!<p>
+
+    <li>Mutators and accessors should be of this form:<p>
+
+        <pre>
+        void object_addr (const ACE_INET_Addr &);
+        // Sets &lt;object_addr_&gt; cache from &lt;host&gt; and &lt;port&gt;.
+
+        ACE_INET_Addr &object_addr (void);
+        // Returns the &lt;ACE_INET_Addr&gt; for this profile.
+        </pre><p>
+
+        instead of the ``set_'' and ``get_'' form.<p>
+
+    <li>Never use <strong><code>delete</code></strong> to deallocate
+        memory that was allocated with <strong><code>malloc</code></strong>.
+        Similarly, never associate <strong><code>free</code></strong> with
+        <strong><code>new</code></strong>.
+        <strong><code>ACE_NEW</code></strong> or
+        <strong><code>ACE_NEW_RETURN</code></strong> should be used to
+        allocate memory, and <strong><code>delete</code></strong> should
+        be used to deallocate it.  And be careful to use the correct form,
+        <strong><code>delete</code></strong> or
+        <strong><code>delete []</code></strong> to correspond to the
+        allocation.<p>
+
+    <li>Don't check for a pointer being 0 before deleting it.  It's
+        always safe to delete a 0 pointer.  If the pointer is visible
+        outside the local scope, it's often a good idea to 0 it
+        _after_ deleting it.  Note, the same argument applies to
+        free().<p>
+
+    <li>Always use <strong><code>ACE_NEW</code></strong> or
+        <strong><code>ACE_NEW_RETURN</code></strong> to allocate memory,
+        because they check for successful allocation and set errno
+        appropriately if it fails.<p>
+
+    <li>Never compare or assign a pointer value with <strong>NULL</strong>;
+        use <strong>0</strong> instead.  The language allows any pointer to
+        be compared or assigned with <strong>0</strong>.  The definition
+        of <strong>NULL</strong> is implementation dependent, so it is
+        difficult to use portably without casting.<p>
+
+    <li>Never cast a pointer to or from an <strong><code>int</code></strong>.
+        On all currently supported ACE platforms, it is safe to cast
+        a pointer to or from a <strong><code>long</code></strong>.<p>
+
+    <li>Be very careful when selecting an integer type that must be a
+        certain size, <em>e.g.</em>, 4 bytes.  <strong>long</strong> is
+        not 4 bytes on all platforms; it is 8 bytes on many 64-bit
+        machines.  ACE_UINT32 is always 4 bytes, and ACE_UINT64 is
+        always 8 bytes.<p>
+
+    <li>If a class has any virtual functions, and its destructor is
+        declared explicitly in the class, then the destructor should
+        <strong>always</strong> be virtual as well.  And to support
+        compiler activities such as generation of virtual tables and,
+        in some cases, template instantiation, the virtual destructor
+        should <strong>not be inline</strong>.  (Actually, any non-pure
+        virtual function could be made non-inline for this purpose.  But,
+        for convenience, if its performance is not critical, it is usually
+        easiest just to make the virtual destructor non-inline.)<p>
+
+    <li>Constructor initializers must appear in the same order as
+        the data members are declared in the class header.  This avoids
+        subtle errors, because initialization takes place in the order
+        of member declaration.<p>
+
+    <li>Initialization is usually cleaner than assignment, especially
+        in a conditional.  So, instead of writing code like this:
+
+        <pre>
+        ssize_t n_bytes;
+
+        // Send multicast of one byte, enough to wake up server.
+        if ((n_bytes = multicast.send ((char *) &reply_port,
+          sizeof reply_port)) == -1)
+        </pre>
+
+        Write it like this:
+
+        <pre>
+        ssize_t n_bytes = multicast.send ((char *) &reply_port,
+          sizeof reply_port)
+
+        // Send multicast of one byte, enough to wake up server.
+        if (n_bytes == -1)
+        </pre><p>
+
+        But, beware if the initialization is of a static variable.
+        A static variable is only initialized the first time its
+        declaration is seen.  Of course, we should avoid using
+        static variables at all.<p>
+
+    <li>It is usually clearer to write conditionals that have
+        both branches without a negated condition.  For example,<p>
+
+        <pre>
+        if (test)
+          {
+            // true branch
+          }
+        else
+          {
+            // false branch
+          }
+        </pre><p>
+
+        is preferred over:<p>
+
+        <pre>
+        if (! test)
+          {
+            // false test branch
+          }
+        else
+          {
+            // true test branch
+          }
+        </pre><p>
+
+    <li>If a cast is necessary, avoid use of function-style casts,
+        <em>e.g.</em>, <code>int (foo)</code>.  Instead, use
+        one of the ACE cast macros:
+
+        <pre>
+        return ACE_static_cast(size_t, this-&gt;count_) &gt; that-&gt;size_;
+        </pre><p>
+
+        The general usage guidelines for the four styles of casts are:<p>
+        <ul>
+          <li><strong>ACE_const_cast</strong>: use to cast away
+            constness, or volatile-ness.<p>
+          <li><strong>ACE_static_cast</strong>: use to cast between
+            compatible types, such as downcasting a pointer or narrowing
+            an integer.<p>
+          <li><strong>ACE_reinterpret_cast</strong>: use only when
+            ACE_static_cast is not suitable.<p>
+          <li><strong>ACE_dynamic_cast</strong>: avoid, unless you really
+            want to type check at run-time.<p>
+        </ul>
+
+    <li>In general, if instances of a class should not be copied,
+        then a private copy constructor and assignment operator should
+        be declared for the class, but not implemented.  For example:
+
+        <pre>
+        // Disallow copying by not implementing the following . . .
+        ACE_Object_Manager (const ACE_Object_Manager &);
+        ACE_Object_Manager &operator= (const ACE_Object_Manager &);
+        </pre><p>
+
+        If the class is a template class, then the
+        <code>ACE_UNIMPLEMENTED_FUNC</code> macro should be used:
+
+        <pre>
+        // = Disallow copying...
+        ACE_UNIMPLEMENTED_FUNC (ACE_TSS (const ACE_TSS&lt;TYPE&gt; &))
+        ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS&lt;TYPE&gt; &))
+        </pre><p>
+
+        <code>ACE_UNIMPLEMENTED_FUNC</code> can be used with non-template
+        classes as well.  Though for consistency and maximum safety, it
+        should be avoided for non-template classes.<p>
+
+    <li>Never use <code>bool</code>, <code>BOOL</code>, or similar
+        types.   (CORBA::Boolean is acceptable).  Use <code>int</code>
+        or <code>u_int</code> instead for boolean types.<p>
+
+    <li>Functions should always return -1 to indicate failure, and
+        0 or greater to indicate success.<p>
+
+    <li><P>Separate the code of your templates from the code for
+        non-parametric classes: some compilers get confused when
+        template and non-template code is mixed in the same file.
+      </P>
+    </li>
+
+  </ul>
+
+  <li><strong>I/O</strong><p>
+  <ul>
+     <li>Use <strong><code>ACE_DEBUG</code></strong> for printouts,
+         and <strong><code>ACE_OS::scanf/fprintf ()</code></strong> for
+         file I/O.  Avoid using iostreams because of implementation
+         differences across platforms.<p>
+     <li>After attempting to open an existing file, always check for success.
+         Take appropriate action if the open failed.<p>
+  </ul>
+
+  <li><strong>UNICODE conformity</strong><p>
+
+  <ul>
+    <li>Define strings as <strong><code>ASYS_TCHAR</code></strong> if
+        they need to be passed into system API.  It expands to
+        <code>wchar_t</code> only when
+        <code>ACE_HAS_MOSTLY_UNICODE_APIS</code> is defined.<p>
+
+    <li>Use <strong><code>ASYS_TEXT</code></strong> and
+        <strong><code>ASYS_WIDE_STRING</code></strong> for format
+        strings and other string arguments passed to
+        <code>ACE_DEBUG</code> or <code>ACE_ERROR</code>.  For
+        example,<p>
+        <pre>
+          void
+          ACE_FOO::ace_bar (int err, ASYS_TCHAR *astr)
+          {
+            ACE_TRACE ("ACE_FOO::ace_bar");
+
+            ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("From ACE_FOO::ace_bar")));
+
+            if (err)
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("(%P) Printing this string %s\n"),
+                          astr));
+          }
+        </pre>
+        <p>
+        This is because ACE also support platforms which use UNICODE
+        in most of their APIs.  On these platforms, ACE also uses
+        UNICODE as its system string type.<p>
+
+    <li><strong><code>ACE_TRACE</code></strong> handles conversion
+        between char strings and UNICODE strings automatically.<p>
+
+    <li>Other helper macros include
+        <strong><code>ASYS_MULTIBYTE_STRING</code></strong> and
+        <strong><code>ASYS_ONLY_MULTIBYTE_STRING</code></strong>. See
+        the end of <a href="../ace/OS.h">OS.h</a> for more details.<p>
+
+  </ul><p>
+
+  <li><strong>Exceptions</strong><p>
+
+  <ul>
+    <li>There are many ways of throwing and catching exceptions. The
+        code below gives several examples.  Note that each method has
+        different semantics and costs. Whenever possible, use the
+        first approach.<p>
+
+        <pre>
+        #include "iostream.h"
+
+        class exe_foo
+        {
+        public:
+          exe_foo (int data) : data_ (data)
+            { cerr &lt;&lt; "constructor of exception called" &lt;&lt; endl; }
+          ~exe_foo ()
+            { cerr &lt;&lt; "destructor of exception called" &lt;&lt; endl; }
+          exe_foo (const exe_foo& foo) : data_ (foo.data_)
+            { cerr &lt;&lt; "copy constructor of exception called" &lt;&lt; endl; }
+          int data_;
+        };
+
+
+        void
+        good (int a)
+        {
+          throw exe_foo (a);
+        };
+
+        void
+        bad (int a)
+        {
+          exe_foo foo (a);
+          throw foo;
+        };
+
+        int main ()
+        {
+          cout &lt;&lt; endl &lt;&lt; "First exception" &lt;&lt; endl &lt;&lt; endl;
+          try
+            {
+              good (0);
+            }
+          catch (exe_foo &foo)
+            {
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+            }
+
+          cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl &lt;&lt; endl;
+          try
+            {
+              good (0);
+            }
+          catch (exe_foo foo)
+            {
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+            }
+
+          cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl &lt;&lt; endl;
+          try
+            {
+              bad (1);
+            }
+          catch (exe_foo &foo)
+            {
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+            }
+
+          cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl &lt;&lt; endl;
+          try
+            {
+              bad (1);
+            }
+          catch (exe_foo foo)
+            {
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+            }
+
+          return 0;
+        }
+        </pre>
+
+     Output is: <p>
+
+        <pre>
+        First exception
+
+        constructor of exception called
+        exception caught: 0
+        destructor of exception called
+
+        Second exception
+
+        constructor of exception called
+        copy constructor of exception called
+        exception caught: 0
+        destructor of exception called
+        destructor of exception called
+
+        Third exception
+
+        constructor of exception called
+        copy constructor of exception called
+        destructor of exception called
+        exception caught: 1
+        destructor of exception called
+
+        Fourth exception
+
+        constructor of exception called
+        copy constructor of exception called
+        destructor of exception called
+        copy constructor of exception called
+        exception caught: 1
+        destructor of exception called
+        destructor of exception called
+
+        </pre>
+
+      </ul><p>
+
+</ul>
+
+
+<hr>
+<h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
+  Usage Guidelines</h3>
+<ul>
+  <li>Always use <strong><code>ACE_OS</code></strong> (static)
+      member functions instead of bare OS system calls.<p>
+
+  <li>As a general rule, the only functions that should go into the
+      <strong><code>ACE_OS</code></strong> class are ones that have
+      direct equivalents on some OS platform.  Functions that are
+      extensions should go in the <strong><code>ACE</code></strong> class.<p>
+
+  <li>Use the <strong><code>ACE_SYNCH_MUTEX</code></strong> macro,
+      instead of using one of the specific mutexes, such as
+      <strong><code>ACE_Thread_Mutex</code></strong>.  This provides
+      portability between threaded and non-threaded platforms.<p>
+
+  <li>Avoid creating a static instance of user-defined (class) type.
+      Instead, either create it as an
+      <strong><code>ACE_Singleton</code></strong>,
+      <strong><code>ACE_TSS_Singleton</code></strong>, or as an
+      <strong><code>ACE_Cleanup</code></strong> object.  See the
+      <strong>ACE</strong>
+      <a href="../ace/Singleton.h"><code>Singleton.h</code></a>,
+      <a href="../ace/Object_Manager.h"><code>Object_Manager.h</code></a>, and
+      <a href="../ace/Managed_Object.h"><code>Managed_Object.h</code></a>
+      header files for more information.<p>
+
+      Static instances of built-in types, such as
+      <strong><code>int</code></strong> or any pointer type, are fine.<p>
+
+      Construction of static instance of a user-defined type should
+      <em>never</em> spawn threads.  Because order of construction of
+      statics across files is not defined by the language, it is usually
+      assumed that only one thread exists during static construction.
+      This allows statics suchs as locks to be safely created.  We do not
+      want to violate this assumption.<p>
+
+  <li>Do not use run-time type identification (RTTI).  Some platforms
+      do not support it.<p>
+
+  <li>Do not use C++ exception handling directly.  Some platforms do
+      not support it.  And, it can impose an execution speed penalty.
+      Instead use the TAO/ACE try/catch macros.<p>
+
+  <li>Because ACE does not use exception handling, dealing with
+      failures requires a bit of care.  This is especially true
+      in constructors.  Consider the following approach:
+
+      <pre>
+      ACE_NEW_RETURN (this-&gt;name_space_, LOCAL_NAME_SPACE, -1);
+
+      if (ACE_LOG_MSG-&gt;op_status () != 0)
+      ....
+      </pre>
+
+      This snip of code is from
+      <a href="../ace/Naming_Context.cpp"><code>ACE_Naming_Context</code></a>.
+      All failed constructors in ACE (should) call ACE_ERROR.  This sets
+      the thread specific <strong>op_status</strong>, which can be checked
+      by the caller.  This mechanism allows the caller to check for a failed
+      constructor without the requiring the constructor to throw
+      exceptions.<p>
+
+  <li>Avoid using the C++ Standard Template Library (STL) in our
+      applications.  Some platforms do not support it yet.<p>
+
+  <li>Be <em>very</em> careful with <code>ACE_ASSERT</code>.  It
+      must only be used to check values; it may never be used to
+      wrap a function call, or contain any other side effect.  That's
+      because the statement will disappear when ACE_NDEBUG is enabled.
+      For example, this code is BAD:
+      <pre>
+      ACE_ASSERT (this-&gt;next (retv) != 0);  // BAD CODE!
+      </pre>
+
+      Instead, the above should be coded this way:
+
+      <pre>
+      int result = this-&gt;next (retv);
+      ACE_ASSERT (result != 0);
+      ACE_UNUSED_ARG (result);
+      </pre><p>
+
+  <li>Never put side effects in <code>ACE_DEBUG</code> code:
+      <pre>
+      ACE_DEBUG ((LM_DEBUG,
+                 "handling signal: %d iterations left\n",
+                 --this-&gt;iterations_));        // BAD CODE!
+      </pre>
+
+      Note that this won't work correctly if <code>ACE_NDEBUG</code> is
+      defined, for the same reason that having side-effects in
+      <code>ACE_ASSERT</code>s won't work either, <em>i.e.</em>, because
+      the code is removed.<p>
+
+  <li>Immediately after opening a temporary file, unlink it.  For
+      example:
+      <pre><code>
+      ACE_HANDLE h = open the file (filename);
+
+      ACE_OS::unlink (filename);
+      </code></pre><p>
+
+      This avoids leaving the temporary file even if the program crashes.<p>
+</ul>
+
+
+<hr>
+<h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">Other
+  ACE</a> and
+  <a href="http://www.cs.wustl.edu/~schmidt/TAO-overview.html">TAO</a>
+  Guidelines</h3>
+<ul>
+  <li>Never add copyrighted, confidential, or otherwise restricted
+      code to the ACE or TAO distributions without written permission
+      from the owner.<p>
+</ul>
+
+
+<hr>
+<h3><a href="http://www.cs.wustl.edu/~levine/CVS.html">CVS</a>
+  Usage Guidelines</h3>
+<ul>
+  <li>Always make sure that a change builds and executes correctly
+      on at least one platform before checking it into the CVS repository.<p>
+</ul>
+
+
+<hr>
+<h3>Script Guidelines</h3>
+<ul>
+  <li>In general, it's best to write scripts in Perl.  It's
+    OK to use Bourne shell.  Never, never, never use csh, ksh,
+    bash, or any other kind of shell.<p>
+
+  <li>Follow the Perl style guide guide as closely as
+    possible.  <code>man perlstyle</code> to view it.
+
+  <li>Don't specify a hard-coded path to Perl itself.  Use
+    the following code at the top of the script to pick up
+    perl from the users <code>PATH</code>:<br>
+      <pre>
+      eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+      & eval 'exec perl -S $0 $argv:q'
+      if 0;
+      </pre><p>
+
+  <li>Never, never, never start the first line of a script
+    with ``#'', unless the first line is ``#! /bin/sh''.
+    With just ``#'', t/csh users will spawn a new shell.
+    That will cause their <code>.[t]cshrc</code> to be
+    processed, possibly clobbering a necessary part of
+    their environment.<p>
+
+  <li>If your Perl script relies on features only available
+    in newer versions of Perl, include the a statement similar
+    to the following:<br>
+      <pre>
+        require 5.003;
+      </pre>
+
+  <li>Don't depend on <strong><code>.</code></strong> being
+    in the user's path.  If the script spawns another executable
+    that is supposed to be in the current directory, be sure the
+    prefix its filename with <strong><code>.</code></strong>.<p>
+</ul>
+
+
+<hr>
+<h3>Software Engineering Guidelines</h3>
+<ul>
+  <li><strong>Advise</strong>:  Keep other developers informed of problems
+      and progress.<p>
+
+  <li><strong>Authorize</strong>:  We have contractual obligations to not
+      unilaterally change interfaces.  If you need to change or remove an
+      interface, get an OK.<p>
+
+  <li><strong>Minimize</strong> risk:  Test all changes.  Solicit review of
+      changes.<p>
+
+  <li><strong>Revise</strong> only when necessary:  Every change has risk,
+      so avoid making any change unless there is a good reason for it.<p>
+
+  <li><strong>Normalize</strong>:  Factor out commonality.  For example,
+      maintain a data value in only one place.<p>
+
+  <li><strong>Synthesize</strong>:  Build stubs and scaffolding early to
+      simulate the complete system.  Maintain a checked-in version of the
+      system that cleanly builds and tests at all times.<p>
+</ul>
+
+
+<hr>
+<h3><a href="http://www.cs.wustl.edu/~schmidt/rules.html">ACE
+  Design Rules</a></h3>
+
+
+<hr> <P>
+  <font size=-1>
+    Last modified <!--#echo var="LAST_MODIFIED" -->.<p>
+  </font>
+
+</body>
+</html>
