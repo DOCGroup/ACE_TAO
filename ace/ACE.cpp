@@ -53,7 +53,8 @@ ACE::out_of_handles (int error)
        // On FreeBSD we need to check for 
        // EOPNOTSUPP (LinuxThreads) or
        // ENOSYS (libc_r threads) also.
-       error == EOPNOTSUPP || ENOSYS ||
+       error == EOPNOTSUPP ||
+       error == ENOSYS ||
 #endif /* ACE_WIN32 */
       error == ENFILE)
     return 1;
