@@ -86,8 +86,8 @@ int be_visitor_union_ci::visit_union (be_union *node)
           *os << "switch (this->disc_)" << be_idt_nl;
           *os << "{" << be_idt_nl;
 
-          AST_Decl *d;
-          be_union_branch *ub;
+          AST_Decl *d = 0;
+          be_union_branch *ub = 0;
           UTL_ScopeActiveIterator *si = 
             new UTL_ScopeActiveIterator (node,
                                          UTL_Scope::IK_decls);
