@@ -2,33 +2,54 @@
 
 # platform_netbsd.GNU
 
-# ***** Notice: This file is still under testing. *****
-# To be used on netbsd platform without pthread support.
-
-debug = 1
-optimize = 1
 versioned_so = 1
+
+ifndef exceptions
+  exceptions = 1
+endif
+
+ifeq (,$(debug))
+  debug = 1
+endif
+
+ifeq (,$(optimize))
+  optimize = 1
+endif
+
+ifeq (,$(threads))
+  threads = 1
+endif
+
+pipes ?= 1
 
 CC              = gcc
 CXX		= g++
 
-CFLAGS          += -w -fno-strict-prototypes
+CFLAGS          += -W -Wall -Wpointer-arith
 DCFLAGS         += -g
-DLD             = ld
+LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/ace
+DLD             = $(CXX)
 LD		= $(CXX)
-LIBS            += -lstdc++  #-lcompat -lresolv
-##OCFLAGS         += -O2
-PIC             = -fpic -DPIC
+LIBS            +=
+OCFLAGS         += -O2
+PIC             = -fpic
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = ranlib
 
-SOFLAGS += -Bshareable -x /usr/lib/c++rt0.o
+SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so  $<
 PRELIB = @echo
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+ifeq ($(threads),1)
+LDFLAGS         += -pthread
+CFLAGS          += -D_REENTRANT -DACE_HAS_THREADS
+endif # threads
+
+# Test for template instantiation, add to SOFLAGS if versioned_so set, 
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+
