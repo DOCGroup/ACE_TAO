@@ -1168,6 +1168,17 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
   if (timeout == 0)
     return 0;
 
+#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+
+  struct pollfd fds;
+
+  fds.fd = handle;
+  fds.events = POLLIN;
+  fds.revents = 0;
+
+  int a = ACE_OS::poll (&fds, 1, *timeout);
+
+#else
   ACE_Handle_Set handle_set;
   handle_set.set_bit (handle);
 
@@ -1177,6 +1188,8 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
                           (fd_set *) 0, // write_fds.
                           (fd_set *) 0, // exception_fds.
                           timeout);
+#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
+
    switch ( a )
    {
    case 0:  // Timer expired.  return -1
@@ -1232,6 +1245,17 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
   if (timeout==0)
     return 0;
 
+#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+
+  struct pollfd fds;
+
+  fds.fd = handle;
+  fds.events = POLLOUT;
+  fds.revents = 0;
+
+  int a = ACE_OS::poll (&fds, 1, *timeout);
+
+#else
   ACE_Handle_Set handle_set;
   handle_set.set_bit (handle);
 
@@ -1244,6 +1268,8 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
                           (fd_set *) handle_set,
                           (fd_set *) 0,
                           timeout);
+#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
+
    switch ( a )
    {
    case 0: // Timer expired.
@@ -1651,16 +1677,29 @@ ACE::handle_timed_complete (ACE_HANDLE h,
                             int is_tli)
 {
   ACE_TRACE ("ACE::handle_timed_complete");
+
+#if !defined (ACE_WIN32) && defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+
+  struct pollfd fds;
+
+  fds.fd = h;
+  fds.events = POLLIN | POLLOUT;
+  fds.revents = 0;
+
+#else
   ACE_Handle_Set rd_handles;
   ACE_Handle_Set wr_handles;
-  int need_to_check;
+
+  rd_handles.set_bit (h);
+  wr_handles.set_bit (h);
+#endif /* !ACE_WIN32 && ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
 #if defined (ACE_WIN32)
   ACE_Handle_Set ex_handles;
   ex_handles.set_bit (h);
 #endif /* ACE_WIN32 */
-  rd_handles.set_bit (h);
-  wr_handles.set_bit (h);
+
+  int need_to_check;
 
 #if defined (ACE_WIN32)
   int n = ACE_OS::select (int (h) + 1,
@@ -1669,11 +1708,17 @@ ACE::handle_timed_complete (ACE_HANDLE h,
                           ex_handles,
                           timeout);
 #else
+# if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+
+  int n = ACE_OS::poll (&fds, 1, timeout);
+
+# else
   int n = ACE_OS::select (int (h) + 1,
                           rd_handles,
                           wr_handles,
                           0,
                           timeout);
+# endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 #endif /* ACE_WIN32 */
 
   // If we failed to connect within the time period allocated by the
@@ -1700,14 +1745,24 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   need_to_check = 1;
 #else
   if (is_tli)
+
+# if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+    need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
+# else
     need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
+# endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
+
   else
 #if defined(AIX)
     // AIX is broken... both success and failed connect will set the
     // write handle only, so always check.
     need_to_check = 1;
 #else
+# if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+    need_to_check = (fds.revents & POLLIN);
+# else
     need_to_check = rd_handles.is_set (h);
+# endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 #endif /* AIX */
 #endif /* ACE_WIN32 */
 
@@ -1779,17 +1834,35 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
   if (listener == ACE_INVALID_HANDLE)
     return -1;
 
+#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+
+  struct pollfd fds;
+
+  fds.fd = listener;
+  fds.events = POLLIN;
+  fds.revents = 0;
+
+#else
   // Use the select() implementation rather than poll().
   ACE_Handle_Set rd_handle;
   rd_handle.set_bit (listener);
+#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
   // We need a loop here if <restart> is enabled.
 
   for (;;)
     {
-      switch (ACE_OS::select (int (listener) + 1,
+#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+
+      int n = ACE_OS::poll (&fds, 1, timeout);
+
+#else
+      int n = ACE_OS::select (int (listener) + 1,
                               rd_handle, 0, 0,
-                              timeout))
+                              timeout);
+#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
+
+      switch (n)
         {
         case -1:
           if (errno == EINTR && restart)
