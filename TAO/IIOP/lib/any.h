@@ -54,13 +54,13 @@ public:
   virtual ~CORBA_Any (void);
   // Destructor.
 
-  // @@ Need to put these in the *.i file.
-  void *operator new (size_t, const void *p)
-  { return (void *) p; }
-  void *operator new (size_t s)
-  { return ::operator new (s); }
-  void operator delete (void *p)
-  { ::operator delete (p); }
+  // = ALLOCATION
+  void *operator new (size_t, const void *p);
+  // Placement new.
+  void *operator new (size_t s);
+  // Default new.
+  void operator delete (void *p);
+  // Default delete
 
   // = NOTE: 94-9-14 has assignment operator plus many insertion,
 
@@ -109,10 +109,14 @@ private:
   ACE_Thread_Mutex lock_;
   // Serialize access to the reference count.
 
-  // NOT PROVIDED
+  // = NOT PROVIDED
   CORBA_Any &operator = (const CORBA_Any &a);
 
   // 94-9-14 hides unsigned char insert/extract 
 };
+
+#  if defined(__ACE_INLINE__)
+#    include "any.i"
+#  endif
 
 #endif /* TAO_ANY_H */

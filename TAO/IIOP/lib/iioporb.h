@@ -23,6 +23,8 @@
 #  define TAO_IIOPORB_H
 
 #  include "ace/OS.h"
+#  include "ace/Singleton.h"
+#  include "orbobj.h"
 
 typedef class IIOP_ORB *IIOP_ORB_ptr;
 
@@ -33,8 +35,7 @@ extern const IID IID_IIOP_ORB;
 class ACE_Svc_Export IIOP_ORB : public CORBA_ORB
 {
 public:
-  IIOP_ORB (CORBA_Boolean flag)
-  { use_omg_ior_format = flag; }
+  IIOP_ORB(void);
 
   ~IIOP_ORB (void) {}
 
@@ -46,12 +47,26 @@ public:
 
   HRESULT __stdcall QueryInterface (REFIID riid, 
 				    void **ppv);
+
+  // = ACCESSORS
+  void use_omg_ior_format(CORBA_Boolean ior);
+  // Set the IOR flag.
+  CORBA_Boolean use_omg_ior_format(void);
+  // Get the IOR flag.
+  
 private:
-  CORBA_Boolean use_omg_ior_format;
+  CORBA_Boolean use_omg_ior_format_;
 
   // These are not provided.
   IIOP_ORB (const IIOP_ORB &);
   IIOP_ORB &operator = (const IIOP_ORB &);
 };
+
+// Create a type for the singleton.
+typedef ACE_Singleton<IIOP_ORB, ACE_Thread_Mutex> TAO_ORB;
+
+#  if defined(__ACE_INLINE__)
+#    include "iioporb.i"
+#  endif
 
 #endif	/* TAO_IIOPORB_H */

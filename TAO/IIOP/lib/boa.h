@@ -28,6 +28,7 @@
 
 #  include "orb.h"
 #  include "corbacom.h"
+#  include "objtable.h"
 
 // @@ Shouldn't this go into the CORBA:: namespace?  It doesn't belong
 // at global scope!
@@ -40,29 +41,8 @@ void release (CORBA_BOA_ptr obj);
 
 extern const IID IID_BOA;
 
-class TAO_Object_Table
-  // = TITLE
-  //     Abstract class for maintaining a mapping of CORBA object keys
-  //     to pointers to CORBA objects.
-{
-public:
-  virtual int find (const CORBA_OctetSeq &key, 
-		    CORBA_Object_ptr &obj) = 0;
-  // Find object associated with <{key}>, setting <{obj}> to the
-  // pointer and returning a non-negative integer.  If not found,
-  // <{obj}> is unchanged and the value <-1> is returned.
-
-  virtual int bind (const CORBA_OctetSeq &key, 
-		    CORBA_Object_ptr obj) = 0;
-  // Associated <{key}> with <{obj}>, returning 0 if object is
-  // registered successfully, 1 if it's already registered, and -1 if
-  // a failure occurs during registration.
-
-  virtual ~TAO_Object_Table (void);
-  // Destructor.
-};
-
 struct TAO_Dispatch_Context;
+class TAO_Object_Table;
 
 // @@ Why does this inherit from IUnknown?
 
@@ -233,14 +213,14 @@ public:
   // non-negative integer on success, or -1 on failure.
 
   virtual CORBA_ORB_ptr orb (void) const = 0;
-  // @@ Please add a comment.
+  // Return the ORB with which this OA is associated.
 
   virtual ACE_INET_Addr get_addr (void) const = 0;
   // @@ Please add a comment.
 
 protected:
   TAO_Object_Table *objtable_;
-  // @@ Please add a comment.
+  // Table of objects registered with this Object Adapter.
 };
 
 struct TAO_Dispatch_Context

@@ -85,22 +85,6 @@ CORBA_ORB_init (int &argc,
   env.clear ();
 
   //
-  // Initialising is done only once.
-  //
-  // XXX Applications that can't tell if they've initialized (e.g.
-  // some library modules) must check for a particular error and ignore
-  // it if they get it.  We need a minor code to indicate this case.
-  // In general, one-time initialization is suboptimal.
-  //
-  // XXX We also need to enable initialising more than one ORB!!
-  //
-  if (the_orb)
-    {
-      env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
-      return 0;
-    }
-
-  //
   // Verify some of the basic implementation requirements.  This test
   // gets optimized away by a decent compiler (or else the rest of the
   // routine does).
@@ -128,13 +112,16 @@ CORBA_ORB_init (int &argc,
   // XXX should remove any of the "-ORB*" arguments that we know
   // about ... and report errors for the rest.
   //
+  // Parsing of these arguments should set values in a
+  // TAO_ORB_Parameters instance, likely the one contained in the
+  // newly-created ORB.
 
 #ifdef	DEBUG
   //
   // Make it a little easier to debug programs using this code.
   //
   {
-    char		*value = ACE_OS::getenv ("ORB_DEBUG");
+    char		*value = ACE_OS::getenv ("TAO_ORB_DEBUG");
 
     if (value != 0) {
       debug_level = ACE_OS::atoi (value);
@@ -168,6 +155,7 @@ CORBA_ORB_init (int &argc,
     use_ior = CORBA_B_TRUE;
 
 #ifdef	SIGPIPE
+  // @@ Is there a better way to deal with this in a portable manner? --cjc
   //
   // Impractical to have each call to the ORB protect against the
   // implementation artifact of potential writes to dead connections,
@@ -177,30 +165,7 @@ CORBA_ORB_init (int &argc,
   (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
 #endif	// SIGPIPE
 
-#if defined(ACE_INVALID_HANDLE)
   ACE_OS::socket_init(ACE_WSOCK_VERSION);
-#elif	defined (_WINSOCKAPI_)
-  // GADS!  Do we need this anymore?
-  //
-  // winsock needs explicit initialization, and applications must manage
-  // versioning problems directly.
-  //
-  WSADATA	wsadata;
-
-  if (WSAStartup (MAKEWORD (1, 1), &wsadata) != 0)
-    {
-      dsockerr ("WSAStartup");
-      env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
-      return 0;
-    }
-  if (LOBYTE (wsadata.wVersion) != 1 || HIBYTE (wsadata.wVersion != 1))
-    {
-      dmsg2 ("bad winsock version %d.%d",
-	     HIBYTE (wsadata.wVersion), LOBYTE (wsadata.wVersion));
-      env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
-      return 0;
-    }
-#endif	// _WINSOCKAPI_
 
   //
   // Call various internal initialization routines.
@@ -213,8 +178,9 @@ CORBA_ORB_init (int &argc,
   //
   // Inititalize the "ORB" pseudo-object now.
   //
-  the_orb = new IIOP_ORB (use_ior);
-
+  the_orb = TAO_ORB::instance();
+  the_orb->use_omg_ior_format(use_ior);
+  
   return the_orb;
 }
 
@@ -254,7 +220,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identi
   // processing these options, move all these to the end of the argv list and
   // decrement argc appropriately.
 
-  ROA_Parameters *params = ROA_PARAMS::instance();  //should have been BOA_Parameters
+  TAO_OA_Parameters *params = TAO_OA_PARAMS::instance();  //should have been BOA_Parameters
   CORBA_BOA_ptr rp;
   CORBA_String_var id = boa_identifier;
   CORBA_String_var host = CORBA_string_dup("");

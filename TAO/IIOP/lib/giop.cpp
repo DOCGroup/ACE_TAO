@@ -539,6 +539,7 @@ GIOP::Invocation::Invocation (
 
 GIOP::Invocation::~Invocation ()
 {
+  handle_.in_use(CORBA_B_FALSE);
 }
 
 //
@@ -658,6 +659,44 @@ GIOP::Invocation::start (
 
     ACE_GUARD(ACE_Thread_Mutex, guard, lock_);
 
+#if !defined(USE_OLD_CODE)
+    // Get a CORBA_Object_ptr from _data using QueryInterface()
+    CORBA_Object_ptr obj = 0;
+
+    (void) _data->QueryInterface (IID_CORBA_Object, (void **)&obj);
+
+    // Get a pointer to the orb from the object
+    CORBA_ORB_ptr orb = obj->orb();
+
+    // Get a reference to the client connector
+    TAO_Client_Factory::CONNECTOR* con = 0;
+    con = (orb->client_factory()).connector();
+
+    // Determine the object key and the address to which we'll need a connection
+    ACE_INET_Addr server_addr;
+    
+    if (data_->fwd_profile != 0)
+      {
+        key = &data_->fwd_profile->object_key;
+        server_addr.set(data_->fwd_profile->port, data_->fwd_profile->host);
+      }
+    else
+      {
+        key = &data_->profile.object_key;
+        server_addr.set(data_->profile.port, data_->profile.host);
+      }
+    
+    // Establish the connection and get back a Client_Connection_Handler
+    if (con->connect(handler_, server_addr) == -1)
+      {
+        // @@ Need to figure out which exception to set...this one
+        // is pretty vague.
+        env.exception (new CORBA_COMM_FAILURE (COMPLETED_NO));
+      }
+
+    // Use the ACE_SOCK_Stream from the Client_Connection_Handler
+    // for communication inplace of the endpoint used below.
+#else
     if (_data->fwd_profile != 0) {
 	key = &_data->fwd_profile->object_key;
 	endpoint = client_endpoint::lookup (
@@ -673,6 +712,7 @@ GIOP::Invocation::start (
 	dexc (env, "invoke, lookup client endpoint");
 	return;
     }
+#endif    
 
     //
     // POLICY DECISION:  If the client expects most agents to forward, then
