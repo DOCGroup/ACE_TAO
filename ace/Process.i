@@ -11,7 +11,7 @@ ACE_Process::process_info (void)
 #endif /* ACE_WIN32 */
 
 ACE_INLINE ACE_HANDLE
-ACE_Process::gethandle (void)
+ACE_Process::gethandle (void) const
 {
 #if defined (ACE_WIN32)
   return process_info_.hProcess;
@@ -22,6 +22,7 @@ ACE_Process::gethandle (void)
 
 ACE_INLINE pid_t
 ACE_Process::getpid (void)
+    const
 {
 #if defined (ACE_WIN32)
   return process_info_.dwProcessId;
@@ -31,7 +32,7 @@ ACE_Process::getpid (void)
 }
 
 ACE_INLINE pid_t
-ACE_Process::wait (int *status,
+ACE_Process::wait (ACE_exitcode *status,
                    int wait_options)
 {
   return ACE_OS::wait (this->getpid (),
@@ -50,6 +51,18 @@ ACE_INLINE int
 ACE_Process::terminate (void)
 {
   return ACE::terminate_process (this->getpid ());
+}
+
+ACE_INLINE int
+ACE_Process::exit_code (void) const
+{
+  return this->exit_code_;
+}
+
+ACE_INLINE void
+ACE_Process::exit_code (int code)
+{
+  this->exit_code_ = code;
 }
 
 ACE_INLINE u_long

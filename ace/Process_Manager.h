@@ -212,7 +212,7 @@ public:
 
   pid_t wait (pid_t pid,
               const ACE_Time_Value &timeout,
-              int *status = 0);
+              ACE_exitcode *status = 0);
   // Wait up to <timeout> for a single process to terminate.  If
   // pid==0, waits for any of the managed <Process>es (but see the
   // note in DESCRIPTION above for caveats about this -- "sloppy
@@ -221,7 +221,7 @@ public:
   // if a timeout occurred, or ACE_INVALID_PID on error.
 
   pid_t wait (pid_t pid,
-              int *status = 0);
+              ACE_exitcode *status = 0);
   // Wait indefinitely for a single process to terminate.  If pid==0,
   // waits for any of the managed <Process>es (but see the note in
   // DESCRIPTION above for caveats about this -- "sloppy Process
@@ -341,7 +341,7 @@ private:
 
   int notify_proc_handler (ACE_HANDLE proc,
                            pid_t pid,
-                           int status);
+                           ACE_exitcode status);
   // If there's a specific handler for <pid>'s exit, or a default
   // handler, call it.
 

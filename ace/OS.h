@@ -1053,6 +1053,7 @@ typedef struct
 typedef int ACE_HANDLE;
 typedef ACE_HANDLE ACE_SOCKET;
 #   define ACE_INVALID_HANDLE -1
+typedef int ACE_exitcode;
 
 typedef ACE_HANDLE ACE_SHLIB_HANDLE;
 #   define ACE_SHLIB_INVALID_HANDLE ACE_INVALID_HANDLE
@@ -1748,7 +1749,8 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 # define ACE_FACTORY_DECLARE(CLS,X) extern "C" CLS##_Export ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *);
 # define ACE_FACTORY_DEFINE(CLS,X) \
 extern "C" void _gobble_##X (void *p) { \
-  X *_p = ACE_static_cast (X *, ACE_reinterpret_cast (ACE_Service_Object *, p)); \
+  X *_p = ACE_dynamic_cast (X *, ACE_reinterpret_cast (ACE_Service_Object *, p)); \
+  ACE_ASSERT (_p != 0); \
   delete _p; } \
 extern "C" ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *gobbler) \
 { ACE_TRACE (#X); \
@@ -3307,6 +3309,7 @@ typedef HANDLE ACE_HANDLE;
 // For Win32 compatibility.
 typedef SOCKET ACE_SOCKET;
 
+typedef DWORD ACE_exitcode;
 #   define ACE_INVALID_HANDLE INVALID_HANDLE_VALUE
 #   define ACE_SYSCALL_FAILED 0xFFFFFFFF
 
@@ -3503,6 +3506,7 @@ typedef char TCHAR;
 #   define ACE_STDERR 2
 
 // Be consistent with Winsock naming
+typedef int ACE_exitcode;
 #   define ACE_INVALID_HANDLE -1
 #   define ACE_SYSCALL_FAILED -1
 
