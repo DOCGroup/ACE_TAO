@@ -15,6 +15,13 @@ Fri May 02 08:14:30 1997  David L. Levine  <levine@cs.wustl.edu>
 	  specialization to Peer.cpp so that peerd no longer needs to
 	  be linked with libGateway.
 
+	* Log_Msg.cpp (VxWorks only): fixed used of ::taskDeleteHookAdd (it
+	  should only be called once for all Log_Msg instances) and added call
+	  to ::taskDeleteHookDelete to clean up when the last task exits.
+
+	* tests/Conn_Test.cpp: changed some fprintf print specifiers to avoid
+	  g++ warnings about printing pointer values.
+
 Thu May  1 10:16:34 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-osf1-4.0.h: Added 
