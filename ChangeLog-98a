@@ -1,3 +1,11 @@
+Mon Jan 12 18:31:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Start renaming MSVC 4.2 workspace/makefile names.
+
+	* apps/Gateway/Peer/Peer4.{mdp,mak}:
+	* apps/Gateway/Gateway/Gateway4.{mdp,mak}: Made them in synch with
+ 	  VC 5.0's status.
+
 Mon Jan 12 14:18:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Reactor_Timer_Test.cpp (main): Changed long i to size_t i
