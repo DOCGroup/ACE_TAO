@@ -20,6 +20,8 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "ace/Global_Macros.h"
+#include "ace/OS_NS_stdlib.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

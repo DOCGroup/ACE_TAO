@@ -1,3 +1,67 @@
+Fri Nov 28 17:17:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Caching_Strategies_T.i: Added #include "ace/OS_Memory.h" so
+	  ACE_NEW can be found properly when inlined methods are used without
+	  the .cpp file, such as when instantiating templates in AIX Visual
+	  Age C++.
+
+	* ace/Cache_Map_Manager_T.cpp: Added #include "ace/Log_Msg.h" to
+	  find ACE_ERROR, et al.
+
+	* ace/Env_Value_T.h: Added #include "ace/Global_Macros.h" to
+	  get ACE_UNIMPLEMENTED_FUNC and "ace/OS_NS_stdlib.h" to get
+	  strtol, strtoul.
+
+	* ace/Reverse_Lock_T.inl: Added #include "ace/OS_NS_errno.h" so
+	  errno can be found properly when inlined methods are used without
+	  the .cpp file, such as when instantiating templates in AIX Visual
+	  Age C++.
+
+	* tests/Bound_Ptr_Test.{h, cpp}: Added #include "ace/Null_Mutex.h"
+	  to find ACE_Null_Mutex. Moved the Printer and Scheduler class
+	  definitions from Bound_Ptr_Test.cpp to a new file, Bound_Ptr_Test.h
+	  so AIX Visual Age C++ can find it when instantiating templates.
+
+	* tests/Buffer_Stream_Test.cpp:
+	* tests/Cached_Accept_Conn_Test.cpp:
+	* tests/Cached_Allocator_Test.cpp:
+	* tests/Cached_Conn_Test.cpp:
+	* tests/CDR_Test.cpp:
+	* tests/Config_Test.cpp:
+	* tests/Env_Value_Test.cpp:
+	* tests/Logging_Strategy_Test.cpp:
+	* tests/MT_Reactor_Upcall_Test.cpp: Added #include
+	  "ace/OS_NS_string.h" to get string functions.
+
+	* tests/Cache_Map_Manager_Test.cpp: Added #include "ace/OS_NS_stdlib.h"
+	  to get atoi() and srand(), and "ace/OS_Memory.h" for ACE_NEW.
+
+	* tests/Capabilities_Test.cpp: Added #include "ace/OS_NS_fcntl.h" to
+	  get open() and "ace/OS_NS_unistd.h" to get write().
+
+	* tests/Conn_Test.cpp: Added #include "ace/OS_NS_sys_select.h" to get
+	  select() and the proper mutex header, Thread_Mutex.h, Null_Mutex.h,
+	  or Process_Mutex.h.
+
+	* tests/Conn_Test.h: Added #include "ace/Null_Condition.h" so the
+	  template parent has it available when instantiating templates.
+
+	* tests/Env_Value_Test.cpp:
+	* tests/Get_Opt_Test.cpp:
+	* tests/Handle_Set_Test.cpp:
+	* tests/Hash_Map_Bucket_Iterator_Test.cpp: Added #include
+	  "ace/OS_NS_stdlib.h" to get itoa().
+
+	* tests/Future_Set_Test.cpp:
+	* tests/Logging_Strategy_Test.cpp: Added #include "ace/OS_NS_stdio.h"
+	  and "ace/OS_NS_unistd.h" to get missing symbols on AIX.
+
+	* tests/Future_Test.cpp: Added #include "ace/OS_NS_sys_time.h" to get
+	  gettimeofday() and "ace/OS_NS_string.h" to get strlen().
+
+	* tests/MEM_Stream_Test.cpp: Added #include "ace/OS_NS_stdio.h" to get
+	  sprintf().
+
 Fri Nov 28 11:21:05 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	The following are fixes for problems exposed by running
