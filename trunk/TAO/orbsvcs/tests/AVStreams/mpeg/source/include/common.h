@@ -56,7 +56,8 @@ extern int gethostname (char*, size_t);
 #define DEVELOPER_UID	8640
 */
 
-#define LOG_DIR "/ogi/students/scen/log/"
+/* %% this is where the logging is done.." */
+#define LOG_DIR "./"
 #define DEVELOPER_UID	1735
 
 #define SFprintf	if ((!getuid()) || getuid() == DEVELOPER_UID) fprintf

@@ -90,6 +90,7 @@ private:
   // Pointer to the Acceptor that created us so that we can remove it
   // from the <ACE_Reactor> when we <fork>.
 
+  // %% need a similar dude for audio!
   Video_Server vs_;
 };
 
@@ -121,6 +122,9 @@ private:
   // the acceptor
 
   // %% why is this here  ? this should be in video_server
+  // if you are newing the other handlers, you should new 
+  // this one also, and destroy them in the destructor
+  // for video_server
   Video_Sig_Handler vh_;
   // signal handler for SIGALRM to periodically send the video frames
   // to the client

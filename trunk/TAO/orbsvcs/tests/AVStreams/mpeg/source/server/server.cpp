@@ -1,6 +1,12 @@
 #include "server.h"
 #include "../mpeg_server/Video_Server.h"
 
+// creates a svc handler by passing "this", i.e. 
+// a reference to the acceptor that created it
+// this is needed by the svc_handler to remove the
+// acceptor handle from the reactor
+// called by the acceptor to create a new svc_handler to 
+// handle the new connection.
 int
 Mpeg_Acceptor::make_svc_handler (Mpeg_Svc_Handler *&sh)
 {
@@ -11,23 +17,29 @@ Mpeg_Acceptor::make_svc_handler (Mpeg_Svc_Handler *&sh)
   return 0;
 }
 
+// initialize the svc_handler, and the acceptor. 
 Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *reactor,
                                     Mpeg_Acceptor *acceptor)
-  : ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> (0, 0, reactor),
+  : ACE_Svc_Handler <ACE_SOCK_STREAM, 
+                     ACE_NULL_SYNCH> (0, 0, reactor),
     acceptor_ (acceptor)
 {
   
 }
 
 // Client connected to our control port
+// called by the reactor (acceptor)
 int
 Mpeg_Svc_Handler::open (void *)
 {
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Mpeg_Svc_Handler::open called\n"));
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) Mpeg_Svc_Handler::open"
+              "called\n"));
   // Lets use threads at a later point. The current scheme works fine
-  // with fork..  this will activate a thread this->activate
-  // (THR_BOUND);
+  // with fork..  
+  // this will activate a thread 
+  //  this->activate (THR_BOUND);
   switch (ACE_OS::fork ("child"))
     {
     case -1:
@@ -36,44 +48,58 @@ Mpeg_Svc_Handler::open (void *)
                          "(%P|%t) fork failed\n"),
                         -1);
     case 0:
-      // i am the child. i should go back and listen for more
-      // connections
-
-      this->destroy ();
-      return 0;
-      //      break;
-
-    default:
-      // I am the parent. i should handle this connection
-      
+      // I am the child. i should handle this connection
       // close down the "listen-mode" socket
       ACE_Reactor::instance ()->remove_handler
         (this->acceptor_->get_handle (),
          ACCEPT_MASK);
+      
+      // handle this connection in the same thread
       this->svc ();
-      ACE_DEBUG ((LM_DEBUG,
-                  "Parent returning from Mpeg_Svc_handler::open"));
-      //      ACE_OS::exit (0);
-      return 0;
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "Parent returning from Mpeg_Svc_handler::open\n"));
+      return 0;
+      
+    default:
+      // i am the parent. i should go back and listen for more
+      // connections
+
+      // (1) this will commit suicide, because this svc_handler is not required
+      // in the parent. otherwise, a new mpeg_svc_handler will be created
+      // for each connection, and will never go away, i.e. a memory leak
+      // will result. 
+      // (2) also, this closes down the "connected socket" in the
+      // parent, so that when the child closes down its connected
+      // socket the connection is actually closed. otherwise, the
+      // connection would remain open forever because the parent still
+      // has a connected socket.
+      this->destroy ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "Child Returning from Mpeg_Svc_Handler::open\n"));
+      return 0;
     }
-  ACE_DEBUG ((LM_DEBUG,
-              "Child Returning from Mpeg_Svc_Handler::open \n"));
   return 0;
 }
 
 
+// this will handle the connection
 int
 Mpeg_Svc_Handler::svc (void)
 {
   int result;
+  // %% this needs to be renamed, the name is misleading!
   result = this->handle_input ();
+
   if (result != 0)
+
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Thread exiting... "));
+              "(%P|%t) Mpeg_Svc_Handler::svc exiting\n"));
+
   return result;
 }
 
+// handles the connection
 int
 Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
 {
@@ -96,7 +122,8 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
                                0);
 
   ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) Client IP == %s, Client Port == %d\n",
+              "(%P|%t) Client IP == %s, "
+              "Client Port == %d\n",
               client_data_addr_.get_host_name (),
               client_data_addr_.get_port_number ()));
 
@@ -120,6 +147,7 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
 
   port = this->server_data_addr_.get_port_number ();
 
+  // %% we need to fix this ?
   // XXX this is a hack to get my IP address set correctly! By default,
   // get_ip_address is returning 0.0.0.0, even after calling
   // get_local_addr () !!
@@ -145,11 +173,13 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%P|%t, Command recieve failed: %p"),
                        -1);
+  // Change these CMD's to enums and put them in a "appropriate" namespace
   switch (cmd)
     {
     case CmdINITvideo:
       {
-        if (Mpeg_Global::live_audio) LeaveLiveAudio();
+        // %% what does this do ?!!
+        if (Mpeg_Global::live_audio) LeaveLiveAudio ();
         /* result = VideoServer (this->peer ().get_handle (), 
                               this->dgram_.get_handle (), 
                               Mpeg_Global::rttag, 
@@ -160,8 +190,10 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
                         this->dgram_.get_handle (),
                         Mpeg_Global::rttag,
                         -INET_SOCKET_BUFFER_SIZE);
-        
+
+        // enters the 
         result = this->vs_.run ();
+
         if (result != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) handle_input: "),
@@ -211,61 +243,78 @@ Mpeg_Server::Mpeg_Server ()
 
 //  Cluttering the code with various signal handlers here.
 
- void
-Mpeg_Server::int_handler(int sig)
+//  ctrl-c handler
+void
+Mpeg_Server::int_handler (int sig)
 {
-  /*
-  fprintf(stderr, "process %d killed by sig %d\n", getpid(), sig);
-  */
-  exit(0);
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) killed by signal %d",
+              sig));
+  exit (0);
 }
 
- void
-Mpeg_Server::on_exit_routine(void)
+void
+Mpeg_Server::on_exit_routine (void)
 {
-  if (Mpeg_Global::parentpid != getpid()) {
-    /*
-    fprintf(stderr, "process %d exiting...\n", getpid());
-    */
-    return;
-  }
-  /*
-  fprintf(stderr, "deamon exiting . . .\n");
-  */
-  if (Mpeg_Global::live_audio > 1) ExitLiveAudio();
-  if (Mpeg_Global::live_video > 1) ExitLiveVideo();
+  // %% what does the following do
+  if (Mpeg_Global::parentpid != ACE_OS::getpid ()) 
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%P|%t) exiting"));
+      return;
+    }
+  
+  // %% what does the following do
+  if (Mpeg_Global::live_audio > 1) ExitLiveAudio ();
+  if (Mpeg_Global::live_video > 1) ExitLiveVideo ();
   //  ComCloseServer();
 }
 
- void
-Mpeg_Server::clear_child(int sig)
+// SIGCHLD handler
+void
+Mpeg_Server::clear_child (int sig)
 {
   int pid;
   int status;
   
-  while ((pid = waitpid(-1, &status, WNOHANG)) > 0)
+  // reap the children
+  while ((pid = ACE_OS::waitpid (-1, 
+                                 &status, 
+                                 WNOHANG)) > 0)
   {
+    // decrement the count of number of active children
     Mpeg_Global::session_num --;
     
-    if (status == 0) {
-      continue;
-    }
-    fprintf(stderr, "VCRS: child %d (status %d) ", pid, status);
-    if (WIFEXITED(status)) {
-      fprintf(stderr, "exited with status %d\n", WEXITSTATUS(status));
-    }
-    else if (WIFSIGNALED(status)) {
-#if defined(_HPUX_SOURCE) || defined(__svr4__) || defined(IRIX)
-      fprintf(stderr, "terminated at signal %d%s.\n", WTERMSIG(status),
-	      WCOREDUMP(status) ? ", core dumped" : "");
-#else
-      fprintf(stderr, "terminated at signal %d.\n", WTERMSIG(status));
-#endif
-    }
-    else if (WIFSTOPPED(status)) {
-      fprintf(stderr, "stopped at signal %d\n", WSTOPSIG(status));
-    }
+    if (status == 0) 
+      {
+        continue;
+      }
+    
+    ACE_DEBUG ((LM_DEBUG, 
+                "(%P|%t) VCRS: child %d (status %d) ", 
+                pid, 
+                status));
 
+    // %% what does the following do
+    if (WIFEXITED(status)) 
+      {
+        fprintf(stderr, "exited with status %d\n", WEXITSTATUS(status));
+      }
+    else if (WIFSIGNALED(status)) 
+      {
+        // %% can we remove the below ?
+#if defined(_HPUX_SOURCE) || defined(__svr4__) || defined(IRIX)
+        fprintf(stderr, "terminated at signal %d%s.\n", WTERMSIG(status),
+                WCOREDUMP(status) ? ", core dumped" : "");
+#else
+        fprintf(stderr, "terminated at signal %d.\n", WTERMSIG(status));
+#endif
+      }
+    else if (WIFSTOPPED(status)) 
+      {
+        fprintf(stderr, "stopped at signal %d\n", WSTOPSIG(status));
+      }
+    
   }
 }
 
@@ -296,13 +345,16 @@ Mpeg_Server::parse_args (int argc,
         Mpeg_Global::live_audio = 1;
         break;
       case 'm':// remove flag
-        unlink(VCR_UNIX_PORT);        
+        ACE_OS::unlink (VCR_UNIX_PORT);
         break;
       case '?':
       case 'h':// help flag
-        fprintf(stderr, "Usage: %s [-rt] [-nrt] [-rm]\n", argv[0]);
-        fprintf(stderr, "          [-d#int(clock drift in ppm)]\n");
-        fprintf(stderr, "          [-s#int(limit on number of sessions)]\n");
+        ACE_DEBUG ((LM_DEBUG,
+                    "Usage: %s [-r ] [-m]\n"
+                    "          [-d#int(clock drift in ppm)]\n"
+                    "          [-s#int(limit on number of sessions)]\n"
+                    "          [-v] [-a] [-?] [-h]",
+                    argv [0]));
         return -1;
       }
   return 0;
@@ -312,11 +364,11 @@ Mpeg_Server::parse_args (int argc,
 int
 Mpeg_Server::set_signals ()
 {
-  setsignal(SIGCHLD,clear_child);
-  setsignal(SIGPIPE, SIG_IGN);
-  setsignal(SIGBUS, int_handler);
-  setsignal(SIGINT, int_handler);
-  setsignal(SIGTERM, int_handler);
+  setsignal (SIGCHLD, clear_child);
+  setsignal (SIGPIPE, SIG_IGN);    
+  setsignal (SIGBUS, int_handler); 
+  setsignal (SIGINT, int_handler); 
+  setsignal (SIGTERM, int_handler);
   //  setsignal(SIGALRM, SIG_IGN);
   return 0;
 }
@@ -333,48 +385,44 @@ Mpeg_Server::init (int argc,
   if (result < 0)
     return result;
 
-  /*
-  ACE_Reactor_Impl *impl = 0;
-  ACE_Reactor *reactor = 0;
-
-  // make the reactor *not* exit the eventloop due to signals
-  // Stick in Irfan's code here to circumvent signal error
-  
-  ACE_NEW_RETURN (impl, ACE_Select_Reactor (ACE_Select_Reactor::DEFAULT_SIZE,1),-1);
-  ACE_NEW_RETURN (reactor, ACE_Reactor (impl),-1);
-  ::delete ACE_Reactor::instance (reactor);
-  */
-
   this->set_signals ();
-  Mpeg_Global::parentpid = getpid();
-
-  atexit(on_exit_routine);
-
-  if (Mpeg_Global::live_audio) {
-    if (InitLiveAudio(argc, argv) == -1)
-      Mpeg_Global::live_audio = 0;
-    else
-      Mpeg_Global::live_audio = 2;
-  }
-
-  if (Mpeg_Global::live_video) {
-    if (InitLiveVideo(argc, argv) == -1)
-      Mpeg_Global::live_video = 0;
-    else
-      Mpeg_Global::live_video = 2;
-  }
-
-  /*  ComInitServer(VCR_TCP_PORT, VCR_UNIX_PORT, VCR_ATM_PORT); */
+  Mpeg_Global::parentpid = ACE_OS::getpid ();
   
-  /*
-  setpgrp();
-  */
-  {
-    char buf[100];
-    sprintf(buf, "%s%s", LOG_DIR, "vcrsSession.log");
-    if (freopen(buf, "a", stdout) == NULL) {
-      freopen("/dev/null", "w", stdout);
+  ::atexit (on_exit_routine);
+  
+  if (Mpeg_Global::live_audio) 
+    {
+      if (InitLiveAudio (argc, argv) == -1)
+        Mpeg_Global::live_audio = 0;
+      else
+        Mpeg_Global::live_audio = 2;
     }
+
+  if (Mpeg_Global::live_video) 
+    {
+      if (InitLiveVideo (argc, argv) == -1)
+        Mpeg_Global::live_video = 0;
+      else
+        Mpeg_Global::live_video = 2;
+    }
+  
+  // open LOG_DIR/vcrsSession.log as the stdout
+  // if not, use /dev/null
+  {
+    char buf [100];
+    ACE_OS::sprintf (buf, 
+                     "%s%s", 
+                     LOG_DIR, 
+                     "vcrsSession.log");
+
+    if (::freopen (buf, 
+                   "a", 
+                   stdout) == NULL) 
+      {
+        ::freopen ("/dev/null", 
+                   "w", 
+                   stdout);
+      }
   }
   return 0;
 }
@@ -386,34 +434,17 @@ Mpeg_Server::run ()
   int result;
   this->server_control_addr_.set (VCR_TCP_PORT);
 
-  this->server_control_addr_.dump ();
   // "listen" on the socket
   if (this->acceptor_.open (this->server_control_addr_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   ACE_Reactor::instance ()->run_event_loop ();
-  // enter the reactor event loop
-  /*  while (1)
-    {
-      ACE_Reactor::run_event_loop ();
-      if (errno==EINTR)
-        {
-          // This is needed because he starts a timer and it
-          // periodically interrupts us to send the video packets and
-          // when the stop cmd comes the timer is stopped.
-          ACE_DEBUG((LM_DEBUG,"run_event_loop:EINTR\n"));
-          result = play_send ();
-          if (result < 0)
-            break;
-          else
-          continue;
-        }
-      else
-        break;
-        }*/
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P)Mpeg_Server::run () came out of the (acceptor) event loop %p\n","run_event_loop\n"));
+              "(%P)Mpeg_Server::run () "
+              "came out of the (acceptor) "
+              "event loop %p\n",
+              "run_event_loop\n"));
 }
 
 Mpeg_Server::~Mpeg_Server (void)
@@ -423,16 +454,14 @@ Mpeg_Server::~Mpeg_Server (void)
 int
 main (int argc, char **argv)
 {
-  int result;
-
   Mpeg_Server vcr_server;
-
-  result = vcr_server.init (argc, argv);
-
-  if (result < 0)
-    exit (1);
   
+  // parses the arguments, and initializes the server
+  if (vcr_server.init (argc, argv) < 0)
+    return 1;
+  
+  // runs the reactor event loop
   vcr_server.run ();
-
+  
   return 0;
 }

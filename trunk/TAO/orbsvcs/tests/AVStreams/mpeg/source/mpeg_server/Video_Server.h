@@ -42,6 +42,7 @@
 
 
 // Function Prototypes
+// %% put them in some class maybe ?
 
 int FBread (char *buf, int size);
 int INITvideo (void);
@@ -56,6 +57,7 @@ int SendPicture (int *frame);
 int play_send (void);
 int fast_play_send (void);
 
+// %% comments
 class Video_Sig_Handler : public virtual ACE_Event_Handler
 {
 public:
@@ -111,6 +113,8 @@ private:
 
 };
 
+// %% this class needs a dtor which deletes the
+// 3 handlers - data, control, and sig
 class Video_Server
 {
 public:
@@ -138,15 +142,15 @@ public:
   static PLAYpara para;
 
 protected:
-static  int position (void);
-static  int step_video (void);
-static  int fast_forward (void);
-static  int fast_backward (void);
-static  int play (void);
+  static  int position (void);
+  static  int step_video (void);
+  static  int fast_forward (void);
+  static  int fast_backward (void);
+  static  int play (void);
   //static   int close (void);
-static  int stat_stream (void);
-static  int stat_sent (void);
-static  int fast_video_play (void);
+  static  int stat_stream (void);
+  static  int stat_sent (void);
+  static  int fast_video_play (void);
 
 private:
 

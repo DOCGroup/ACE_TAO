@@ -31,6 +31,8 @@
 
  PLAYpara Video_Server::para;
 
+// %% maybe put this in some class?
+// this sends one frame
 int
 play_send (void)
 {
@@ -139,10 +141,12 @@ fast_play_send (void)
 
 // Video_Sig_Handler methods
 // handles the timeout SIGALRM signal
-
+// %% this should *not* register itself,but it should
+// be registered by the Video_Server::run, alongwith
+// the remaining  handlers.
 Video_Sig_Handler::Video_Sig_Handler (void)
 {
-    // Assign the Sig_Handler a dummy I/O descriptor.  Note that even
+  // Assign the Sig_Handler a dummy I/O descriptor.  Note that even
   // though we open this file "Write Only" we still need to use the
   // ACE_Event_Handler::NULL_MASK when registering this with the
   // ACE_Reactor (see below).
@@ -212,10 +216,14 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       // send the frame..
       switch (VIDEO_SINGLETON::instance ()->state)
         {
+          // %% you probably dont need to use instance here
         case VIDEO_SINGLETON::instance ()->VIDEO_PLAY:
           play_send ();
           break;
+          // %% you probably dont need to use instance here
+          // %% this should probably be split into VIDEO_FAST_{FORWARD,BACKWARD}
         case VIDEO_SINGLETON::instance ()->VIDEO_FAST:
+          // this handles *both* the backward and forward play case!
           fast_play_send ();
           break;
         default:
@@ -224,7 +232,8 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       break;
     default: 
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) %S: not handled, returning to program\n", signum));
+		  "(%t) %S: not handled, returning to program\n", 
+                  signum));
       break;
     }
   return 0;
@@ -401,12 +410,21 @@ Video_Server::Video_Server (int ctr_fd,
               max_pkt_size);
 }
 
+// initialize VIDEO_SINGLETON::instance ()
+// creates a data and control handler for the video
+// server. the control handler will accept
+// commands over TCP, and the data handler will
+// send data packets and recieve feedback packets
+// from the client
+// the reactor_ also gets initialized here
 Video_Server::init (int ctr_fd,
                     int data_fd,
                     int rttag,
                     int max_pkt_size)
 {
   reactor_ = ACE_Reactor::instance ();
+
+  // %% new the sig handler also here
   data_handler_ = new Video_Data_Handler (data_fd);
   control_handler_ = new Video_Control_Handler (ctr_fd);
 
@@ -439,6 +457,11 @@ Video_Server::init (int ctr_fd,
   return 0;
 }
 
+// %% currently this only registers handlers
+// and handles the FIRST command. that needs
+// to be changed, and then maybe this 
+// needs tobe renamed to register_handles or something
+// like that
 int
 Video_Server::run (void)
 {
@@ -448,36 +471,39 @@ Video_Server::run (void)
 
   result = this->reactor_->register_handler (this->data_handler_, 
                                              ACE_Event_Handler::READ_MASK);
-  if (result == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) register_handler for data_handler failed\n"));
-      return result;
-    }
-  else
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) register_handler for data_handler (%d)\n",
-                  this->data_handler_->get_handle ()));
+  if (result < 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) register_handler for data_handler failed\n"),
+                        result);
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) registered fd for data handler = (%d)\n",
+              this->data_handler_->get_handle ()));
 
   result = this->reactor_->register_handler (this->control_handler_,
                                              ACE_Event_Handler::READ_MASK);
 
-  if (result == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) register_handler for control_handler failed\n"));
-      return result;
-    }
-  else
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) register_handler for control_handler (%d)\n",
-                  this->control_handler_->get_handle ()));
+  if (result < 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) register_handler for data_handler failed\n"),
+                        result);
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) registered fd for control handler = (%d)\n",
+              this->control_handler_->get_handle ()));
   // Read the first command and do the init for that command
   // typicallly play...
+  // %% this shouldnt be handling any commands eventually..
   this->read_cmd ();
   return 0;
 }
 
+// this is currently called by several people
+// (1) is Video_Server::run, to handle the *first* command
+// (2..n) to handle one command
+
+// %%
+// this should be probably renamed to handle_command, and
+// should be the *only* place where we do a switch
+// on the command
 int
 Video_Server::read_cmd (void)
 {
@@ -511,52 +537,51 @@ Video_Server::read_cmd (void)
         return result;
       break;
     case CmdFF:
+      // %% maybe you dont need instance here ?
       VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->VIDEO_FAST;
       Video_Server::fast_forward ();
       break;
     case CmdFB:
+      // %% maybe you dont need instance here ?
       VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->VIDEO_FAST;
       Video_Server::fast_backward ();
       break;
     case CmdPLAY:
+      // %% maybe you dont need instance here ?
       VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->VIDEO_PLAY;
       result = Video_Server::play ();
-      //          if (result != 0)
-      //            return result;
       break;
-      //          ACE_DEBUG ((LM_DEBUG,
-      //                      "  play \n"));
-      return 0;
     case CmdCLOSE:
-      /*
-        fprintf(stderr, "a session closed.\n");*/
       VIDEO_SINGLETON::instance ()->normalExit =1;
-      //      exit(0);
       ACE_Reactor::instance ()->end_event_loop ();
-      return 0;
+      break;
     case CmdSTATstream:
-      Video_Server::stat_stream();
+      Video_Server::stat_stream ();
       break;
     case CmdSTATsent:
-      Video_Server::stat_sent();
+      Video_Server::stat_sent ();
       break;
     default:
-      fprintf(stderr,
-              "VS error: video channel command %d not known.\n", VIDEO_SINGLETON::instance ()->cmd);
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%P|%t) Video_Server: Unknown command %d",
+                  VIDEO_SINGLETON::instance ()->cmd));
       VIDEO_SINGLETON::instance ()->normalExit = 0;
       return -1;
-      break;
     }
+  // one command was handled successfully
   return 0;
 }
 
+// %% rename this ?
 int
 Video_Server::play (void)
 {
   int result;
 
-  fprintf(stderr, "PLAY . . .\n");
-  
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Server::play ()"));
+
+  // this gets the parameters for the play command
   result = Video_Server::CmdRead((char *)&para, sizeof(para));
   if (result != 0)
     return result;
