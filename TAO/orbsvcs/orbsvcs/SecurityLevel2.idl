@@ -84,7 +84,7 @@ module SecurityLevel2 {
 
     boolean set_attributes (
       in Security::AttributeList   requested_attributes,
-      out Security::AttributeList  actual_privilegesactual_attributes
+      out Security::AttributeList  actual_attributes
     );
 
     Security::AttributeList get_attributes (
