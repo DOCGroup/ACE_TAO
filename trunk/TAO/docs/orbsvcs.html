@@ -6,7 +6,7 @@
 
 <BODY text = "#000000"
 link="#0000ff"
-vlink="#cc0000"
+vlink="#cc0000"`
 bgcolor="#ffffff">
 
   <body>
@@ -79,6 +79,9 @@ bgcolor="#ffffff">
       <TR>
 	<TD>LifeCycle Service</TD><TD><CODE>orbsvcs/LifeCycle</CODE></TD></TR>
       <TR>
+        <TD>Load Balancing Service</TD>
+          <TD><CODE>orbsvcs/LoadBalancing</CODE></TD></TR>
+      <TR>
 	<TD>Logging Service</TD><TD><CODE>orbsvcs/Log</CODE></TD></TR>
       <TR>
 	<TD>Naming Service</TD><TD><CODE>orbsvcs/Naming</CODE></TD></TR>
@@ -86,6 +89,12 @@ bgcolor="#ffffff">
 	<TD>Property Service</TD><TD><CODE>orbsvcs/Property</CODE></TD></TR>
       <TR>
 	<TD>Scheduling Service</TD><TD><CODE>orbsvcs/Sched</CODE></TD></TR>
+      <TR>
+	<TD>Security Service</TD>
+          <TD><CODE>orbsvcs/Security</CODE></TD></TR>
+      <TR>
+        <TD>SSLIOP Pluggable Protocol</TD>
+          <TD><CODE>orbsvcs/SSLIOP</CODE></TD></TR>
       <TR>
 	<TD>Trading Service</TD><TD><CODE>orbsvcs/Trader</CODE></TD></TR>
       <TR>
@@ -106,6 +115,7 @@ bgcolor="#ffffff">
       <LI>Concurrenty_Service</LI>
       <LI>Dump_Schedule</LI>
       <LI>LifeCycle_Service</LI>
+      <LI>LoadBalancer</LI>
       <LI>CosEvent_Service</LI>
       <LI>Event_Service</LI>
       <LI>Naming_Service</LI>
@@ -127,7 +137,7 @@ bgcolor="#ffffff">
 
     <P>Finally the tests and example programs are located in
       <CODE>$TAO_ROOT/orbsvcs/tests</CODE>;
-      once more each may involves more than a single binary,
+      once more each may involve more than a single binary,
       so each one is kept in its own directory;
       the following list describes the contents of each one:
     </P>
@@ -209,6 +219,10 @@ bgcolor="#ffffff">
         Implementation Repository Service.</TD></TR>
 
       <TR>
+        <TD><CODE>LoadBalancing</CODE></TD>
+        <TD>Test that exercises the Load Balancing service.</TD></TR>
+
+      <TR>
 	<TD><CODE>Logger</CODE></TD>
 	<TD>An example logging service using the Naming Service to
 	  locate a factory.</TD></TR>
@@ -218,9 +232,18 @@ bgcolor="#ffffff">
       <TR>
 	<TD><CODE>Property</CODE></TD>
 	<TD>Testing for the Property Service.</TD></TR>
+
       <TR>
 	<TD><CODE>Sched</CODE></TD>
 	<TD>A test of the Scheduling Service.</TD></TR>
+
+      <TR>
+        <TD><CODE>Security</CODE></TD>
+        <TD>Tests that verify that the Security Service is functioning
+            properly.  Tests for auxiliary Security Service components
+            such as the SSLIOP pluggable protocol also exist in this
+            directory.</TD></TR>
+
       <TR>
 	<TD><CODE>Simple_Naming</CODE></TD>
 	<TD>A number of Naming Service tests: from very simple to more fancy.</TD></TR>
