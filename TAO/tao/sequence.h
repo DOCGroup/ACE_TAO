@@ -75,6 +75,10 @@ protected:
   // derived classes must provided the right semantics for the buffer
   // copy, only the static fields are actually copy.
 
+  // = orbos/98-01-11 proposed extensions.
+  CORBA::Boolean release (void) const;
+  // Returns the state of the sequence release flag.
+
 protected:
   CORBA::ULong maximum_;
   // The maximum number of elements the buffer can contain.
