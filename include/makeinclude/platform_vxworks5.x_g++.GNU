@@ -15,11 +15,21 @@
 VXWORKS = 1
 CROSS-COMPILE = 1
 
-debug = 1
-optimize = 1
-rtti =
-shared_libs =
-static_libs = 1
+ifndef debug
+  debug = 1
+endif # ! debug
+ifndef optimize
+  optimize = 1
+endif # ! optimize
+ifndef rtti
+  rtti =
+endif # ! rtti
+ifndef shared_libs
+  shared_libs =
+endif # ! shared_libs
+ifndef static_libs
+  static_libs = 1
+endif # ! static_libs
 
 
 ifeq (,$(WIND_BASE))
@@ -153,7 +163,13 @@ PIC             =
 
 
 #### Tornado II uses egcs
-ifeq (egcs,$(findstring egcs,$(shell $(CC) --version)))
+ifndef ACE_CC
+  ACE_CC := $(shell PATH=${PATH} type $(CC) | sed -e 's/.* is //')
+endif # ! ACE_CC
+ifndef ACE_CC_VERSION
+  ACE_CC_VERSION := $(shell $(ACE_CC) --version)
+endif # ! ACE_CC_VERSION
+ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
   ACE_HAS_GNUG_PRE_2_8 := 0
   CFLAGS += -DACE_VXWORKS=0x540
   ifndef exceptions
