@@ -8,6 +8,8 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_P_READ_WRITE
+
 // Include XtReactor into the library.
 #define ACE_HAS_XT
 
