@@ -164,6 +164,8 @@
 
 #define ACE_LACKS_LONGLONG_T
 
+#define ACE_LACKS_LSTAT
+
 #define ACE_LACKS_MADVISE
 
 #define ACE_LACKS_MKTEMP
@@ -175,6 +177,8 @@
 #define ACE_LACKS_PARAM_H
 
 #define ACE_LACKS_PWD_FUNCTIONS
+
+#define ACE_LACKS_READLINK
 
 #define ACE_LACKS_RLIMIT
 
