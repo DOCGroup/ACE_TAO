@@ -55,13 +55,13 @@
  * minimum_id for each table.  It is up to the user to make sure
  * that multiple tables do not share the same event id range.
  */
-template <class ACE_LOCK>
-class ACE_Timeprobe
+template <class ACE_LOCK, class ALLOCATOR>
+class ACE_Timeprobe_Ex
 {
 public:
 
   /// Self
-  typedef ACE_Timeprobe<ACE_LOCK>
+  typedef ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>
           SELF;
 
   /// We can hold multiple event description tables.
@@ -69,10 +69,13 @@ public:
           EVENT_DESCRIPTIONS;
 
   /// Create Timeprobes with <size> slots
-  ACE_Timeprobe (u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
+  ACE_Timeprobe_Ex (u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
+  /// Create Timeprobes with <size> slots
+  ACE_Timeprobe_Ex (ALLOCATOR *allocator,
+                 u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
   /// Destructor.
-  ~ACE_Timeprobe (void);
+  ~ACE_Timeprobe_Ex (void);
 
   /// Record a time. <event> is used to describe this time probe.
   void timeprobe (u_long event);
@@ -93,8 +96,10 @@ public:
   /// Reset the slots.  All old time probes will be lost.
   void reset (void);
 
+  void increase_size (u_long size);
+
   /// Not implemented (stupid MSVC won't let it be protected).
-  ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &);
+  ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> &);
 
   // = (Somewhat private) Accessors
 
@@ -103,9 +108,6 @@ public:
 
   /// Sorted Event Descriptions.
   ACE_Unbounded_Set<ACE_Event_Descriptions> &sorted_event_descriptions (void);
-
-  /// VME slot address.
-  u_int *current_slot_vme_address (void);
 
   /// Find description of event \<i\>
   const char *find_description_i (u_long i);
@@ -127,15 +129,15 @@ public:
 
 protected:
 
+  /// Obtain an allocator pointer.  If there is no allocator stored in
+  /// the instance, the singleton allocator in the current process is used.
+  ALLOCATOR * allocator (void);
+
   /// Event Descriptions
   EVENT_DESCRIPTIONS event_descriptions_;
 
   /// Sorted Event Descriptions.
   EVENT_DESCRIPTIONS sorted_event_descriptions_;
-
-  /// Added sections below here to make compatible with the VMETRO
-  /// board test.
-  u_int *current_slot_vme_address_;
 
   /// Time probe slots
   ACE_timeprobe_t *timeprobes_;
@@ -148,6 +150,28 @@ protected:
 
   /// Current size of timestamp table
   u_long current_size_;
+
+  /// flag indicating the report buffer has filled up, and is now
+  /// acting as a ring-buffer using modulus arithmetic: this saves the
+  /// max_size_ most recent time stamps and loses earlier ones until
+  /// drained.
+  u_short report_buffer_full_;
+
+
+private:
+   ALLOCATOR *   allocator_;
+};
+
+template <class ACE_LOCK>
+class ACE_Timeprobe : public ACE_Timeprobe_Ex <ACE_LOCK, ACE_Allocator>
+{
+public:
+  // Initialize a ACE_Timeprobe with default size
+  ACE_Timeprobe (ACE_Allocator *allocator = 0);
+
+  /// Create Timeprobes with <size> slots
+  ACE_Timeprobe (ACE_Allocator *allocator = 0,
+                 u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
 };
 
 /**

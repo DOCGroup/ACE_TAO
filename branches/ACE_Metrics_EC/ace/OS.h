@@ -7055,5 +7055,34 @@ extern ACE_OS_Export int sys_nerr;
 # include "ace/Thread_Control.h"
 #endif  /* ACE_LEGACY_MODE */
 
+/* ACE_Metrics */
+#if defined ACE_LACKS_ARRAY_PLACEMENT_NEW
+# define ACE_NEW_MALLOC_ARRAY_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     else { for (u_int i = 0; i < COUNT; ++i) \
+              {new (POINTER) CONSTRUCTOR; ++POINTER;} \
+            POINTER -= COUNT;} \
+   } while (0)
+# define ACE_NEW_MALLOC_ARRAY(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { for (u_int i = 0; i < COUNT; ++i) \
+              {new (POINTER) CONSTRUCTOR; ++POINTER;} \
+            POINTER -= COUNT;} \
+   } while (0)
+#else /* ! defined ACE_LACKS_ARRAY_PLACEMENT_NEW */
+# define ACE_NEW_MALLOC_ARRAY_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     else { new (POINTER) CONSTRUCTOR [COUNT]; } \
+   } while (0)
+# define ACE_NEW_MALLOC_ARRAY(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { new (POINTER) CONSTRUCTOR [COUNT]; } \
+   } while (0)
+#endif /* defined ACE_LACKS_ARRAY_PLACEMENT_NEW */
+
 #include "ace/post.h"
 #endif  /* ACE_OS_H */
