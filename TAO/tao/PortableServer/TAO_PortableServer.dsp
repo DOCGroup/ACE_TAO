@@ -515,6 +515,10 @@ SOURCE=.\Strategized_Object_Proxy_Broker.h
 
 SOURCE=.\ThruPOA_Object_Proxy_Impl.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\Upcall_Wrapper.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
