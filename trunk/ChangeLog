@@ -1,3 +1,10 @@
+Thu Jan  8 17:05:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* apps/JAWS/server/HTTP_Server.{h,cpp}:
+	* apps/JAWS/server/server.mpc:
+	  Made this app compiling with CBX and MPC. Set the correct defines
+	  and use the correct export macros.
+
 Thu Jan  8 17:02:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/templates/bor.mpd:
