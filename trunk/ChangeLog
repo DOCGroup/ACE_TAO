@@ -1,3 +1,46 @@
+Wed Oct 25 11:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * ace/adapter/README:  (removed)
+        * ace/adapter/ace/ACE.h:  (removed)
+        * ace/adapter/ace/ARGV.h:  (removed)
+        * ace/adapter/ace/ATM_Addr.h:  (removed)
+        * ace/adapter/ace/Arg_Shifter.h:  (removed)
+        * ace/adapter/ace/Capabilities.h:  (removed)
+        * ace/adapter/ace/DEV_Addr.h:  (removed)
+        * ace/adapter/ace/DLL.h:  (removed)
+        * ace/adapter/ace/Dirent.h:  (removed)
+        * ace/adapter/ace/Dynamic_Service.h:  (removed)
+        * ace/adapter/ace/FIFO.h:  (removed)
+        * ace/adapter/ace/FIFO_Recv.h:  (removed)
+        * ace/adapter/ace/FIFO_Recv_Msg.h:  (removed)
+        * ace/adapter/ace/FIFO_Send.h:  (removed)
+        * ace/adapter/ace/FIFO_Send_Msg.h:  (removed)
+        * ace/adapter/ace/FILE_Addr.h:  (removed)
+        * ace/adapter/ace/Functor.h:  (removed)
+        * ace/adapter/ace/High_Res_Timer.h:  (removed)
+        * ace/adapter/ace/INET_Addr.h:  (removed)
+        * ace/adapter/ace/MEM_Addr.h:  (removed)
+        * ace/adapter/ace/Malloc_T.h:  (removed)
+        * ace/adapter/ace/Memory_Pool.h:  (removed)
+        * ace/adapter/ace/OS.h:  (removed)
+        * ace/adapter/ace/OS_Dirent.h:  (removed)
+        * ace/adapter/ace/OS_String.h:  (removed)
+        * ace/adapter/ace/SOCK_Dgram_Bcast.h:  (removed)
+        * ace/adapter/ace/SOCK_Dgram_Mcast.h:  (removed)
+        * ace/adapter/ace/SOCK_Dgram_Mcast_QoS.h:  (removed)
+        * ace/adapter/ace/SPIPE_Addr.h:  (removed)
+        * ace/adapter/ace/Service_Config.h:  (removed)
+        * ace/adapter/ace/Service_Object.h:  (removed)
+        * ace/adapter/ace/Stats.h:  (removed)
+        * ace/adapter/ace/System_Time.h:  (removed)
+        * ace/adapter/ace/Task_T.h:  (removed)
+        * ace/adapter/ace/Trace.h:  (removed)
+
+          The adapter classes were removed since they were
+          not ready for prime time and their main focus was
+          removed.  If need be, they can be resurrected in
+          the future.
+
 Wed Oct 25 12:26:25 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/RMCast/RMCast_UDP_Reliable_Sender.cpp:
