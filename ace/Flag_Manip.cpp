@@ -2,10 +2,10 @@
 
 #include "ace/Flag_Manip.h"
 
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
+#if defined (ACE_LACKS_FCNTL)
 #  include "ace/OS_NS_stropts.h"
 #  include "ace/OS_NS_errno.h"
-#endif /* ACE_WIN32 || VXWORKS || ACE_LACKS_FCNTL */
+#endif /* ACE_LACKS_FCNTL */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Flag_Manip.inl"
@@ -25,7 +25,7 @@ int
 ACE::set_flags (ACE_HANDLE handle, int flags)
 {
   ACE_TRACE ("ACE::set_flags");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
+#if defined (ACE_LACKS_FCNTL)
   switch (flags)
     {
     case ACE_NONBLOCK:
@@ -51,7 +51,7 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
     return -1;
   else
     return 0;
-#endif /* ACE_WIN32 || ACE_LACKS_FCNTL */
+#endif /* ACE_LACKS_FCNTL */
 }
 
 // Flags are the file status flags to turn off.
@@ -61,7 +61,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
 {
   ACE_TRACE ("ACE::clr_flags");
 
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
+#if defined (ACE_LACKS_FCNTL)
   switch (flags)
     {
     case ACE_NONBLOCK:
@@ -87,5 +87,5 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
     return -1;
   else
     return 0;
-#endif /* ACE_WIN32 || ACE_LACKS_FCNTL */
+#endif /* ACE_LACKS_FCNTL */
 }
