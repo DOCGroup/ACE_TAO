@@ -24,6 +24,8 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
+my($wsext) = 'mwc';
+
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -105,12 +107,12 @@ sub parse_line {
         if (defined $parents) {
           foreach my $parent (@$parents) {
             ## Read in the parent onto ourself
-            my($file) = $self->search_include_path("$parent.mwc");
+            my($file) = $self->search_include_path("$parent.$wsext");
 
             if (defined $file) {
               my($rp) = $self->{'reading_parent'};
               push(@$rp, 1);
-              $self->parse_file("$parent.mwc");
+              $self->parse_file("$parent.$wsext");
               pop(@$rp);
               if (!$status) {
                 $errorString = "ERROR: Invalid parent: $parent";
@@ -467,6 +469,12 @@ sub get_modified_workspace_name {
                   $self->{'current_workspace_name'} : "$name$ext");
 }
 
+
+sub generate_recursive_input_list {
+  my($self) = shift;
+  my($dir)  = shift;
+  return $self->extension_recursive_input_list($dir, $wsext);
+}
 
 # ************************************************************
 # Virtual Methods To Be Overridden

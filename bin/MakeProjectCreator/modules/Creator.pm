@@ -411,9 +411,40 @@ sub get_files_written {
   return $self->{'files_written'};
 }
 
+
+sub extension_recursive_input_list {
+  my($self)  = shift;
+  my($dir)   = shift;
+  my($ext)   = shift;
+  my($fh)    = new FileHandle();
+  my(@files) = ();
+
+  if (opendir($fh, $dir)) {
+    foreach my $file (grep(!/^\.\.?$/, readdir($fh))) {
+      my($full) = ($dir ne '.' ? "$dir/" : '') . $file;
+      if (-d $full) {
+        push(@files, $self->extension_recursive_input_list($full, $ext));
+      }
+      elsif ($full =~ /$ext$/) {
+        push(@files, $full);
+      }
+    }
+    closedir($fh);
+  }
+
+  return @files;
+}
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub generate_recursive_input_list {
+  #my($self) = shift;
+  #my($dir)  = shift;
+  return ();
+}
+
 
 sub crlf {
   #my($self) = shift;
