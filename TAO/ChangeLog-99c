@@ -1,3 +1,16 @@
+Sun Nov 28 23:27:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/index.html:
+	* docs/tutorials/Quoter/Naming_Service/index.html:
+	* docs/tutorials/Quoter/Naming_Service/Makefile:
+	* docs/tutorials/Quoter/Naming_Service/client.cpp:
+	* docs/tutorials/Quoter/Naming_Service/server.cpp:
+	  New tutorial that discusses how to use the naming service,
+	  including TAO's Interoperable Naming Service support.
+
+	* docs/tutorials/Quoter/Simple/index.html:
+	  Use re-direction to go to the general index.
+
 Sun Nov 28 19:00:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.cpp:
