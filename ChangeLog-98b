@@ -1,3 +1,21 @@
+Wed Jul 29 14:04:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.cpp (open): Added
+ 	  <number_of_initial_accepts> as an extra parameter to
+ 	  open(). <number_of_initial_accepts> is the number of
+ 	  asynchronous accepts that are started at the end of <open>.  If
+ 	  <number_of_initial_accepts> is -1, then
+ 	  <number_of_initial_accepts> is set to <backlog> and hence
+ 	  <backlog> number of asynchronous accepts are started.
+
+	  (get_handle): New method to get the underlying handle.
+
+	  (set_handle): New method to set the underlying listen handle. It
+ 	  is the user's responsibility to make sure that the old listen
+ 	  handle has been appropriately closed and the all outstanding
+ 	  asynchronous operations have either completed or have been
+ 	  canceled on the old listen handle.
+
 Wed Jul 29 12:49:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Makefile (FILES): Added TP_Reactor to the build list.
