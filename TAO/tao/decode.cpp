@@ -209,7 +209,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
     DEEP_FREE (any->type_, any->value_, 0, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-  any->byte_order_ = stream->byte_order ();
+  any->byte_order_ = TAO_ENCAP_BYTE_ORDER;
   any->cdr_ = ACE_Message_Block::duplicate (out.begin ());
   any->value_ = 0;
 
