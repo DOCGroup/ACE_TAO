@@ -1,3 +1,16 @@
+Wed May 12 02:38:52 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	  Code review changes and additions for the CosEC Factory.
+	  Added the following files:
+	* orbsvcs/examples/CosEC/Factory/main.cpp
+	* orbsvcs/examples/CosEC/Factory/FactoryDriver.{h,cpp}
+	  modified the following:
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+	  completed the test code for the factory.
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.{h,cpp}:
+	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.{h,cpp}:
+	  code review corrections.
+
 Tue May 11 22:39:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
@@ -13,12 +26,12 @@ Tue May 11 21:46:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	* tao/ObjectIDList.h
 	* tao/ObjectIDList.i
 	Added the above files.
-	
+
 	Included the declaration of ObjectIDList in the CORBA_ORB class.
 	* tao/ORB.h
 
 	Included ObjectIDList into the makefile.
-	* tao/Makefile 
+	* tao/Makefile
 
 Tue May 11 21:46:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -35,12 +48,12 @@ Tue May 11 20:40:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  fail.
 
 	* tao/Any.cpp:
-	  Removed the branch from value() that returns (void *)cdr_. 
-	  After checking through all the code in the TAO directory, 
-	  there seems to be nothing that this endangers. Also ran the 
-	  DII param_tests before and after committing the change - 
+	  Removed the branch from value() that returns (void *)cdr_.
+	  After checking through all the code in the TAO directory,
+	  there seems to be nothing that this endangers. Also ran the
+	  DII param_tests before and after committing the change -
 	  the results were the same. So now the functionality is
-	  cleanly divided: Any::value() for the void* and 
+	  cleanly divided: Any::value() for the void* and
 	  Any::_tao_get_cdr() for the cdr_.
 
 Tue May 11 18:06:40 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -93,12 +106,12 @@ Tue May 11 16:03:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/corbafwd.h:
 	  Added some flags to the enum containing the ones
 	  for NVList. The new ones are:
-	  DEPENDENT_LIST  
+	  DEPENDENT_LIST
 	     If a sublist is added as a single item,
 	     this indicates that it should be freed
 	     when the parent list is freed.
 	  CTX_RESTRICT_SCOPE
-	     Used in Context::get_values to limit the scope of 
+	     Used in Context::get_values to limit the scope of
 	     the search to the supplied scope arg.
 	  CTX_DELETE_DESCENDENTS
 	     Deletes child Context objects along with the parent.
