@@ -1,61 +1,62 @@
+Thu Jul  7 08:09:00 2000  Bruce Trask   <brucetrask@aol.com>
+
+      * tao/Object_Adapter.h:
+        Changed the signature of dispatch_servant to remove the transport
+        parameter.
+
 Thu Jul  6 21:42:00 2000  Bruce Trask  <brucetrask@aol.com>
-      
+
       * tao/GIOP_Message_Acceptors.cpp:
-        Removed   CORBA::Boolean sync_with_server and 
+        Removed   CORBA::Boolean sync_with_server and
         CORBA::Boolean location_forward from TAO_GIOP_Message_Acceptors::
         process_client_request()as they are no longer used there.
-        Removed transport parameter in call to 
+        Removed transport parameter in call to
         orb_core->object_adapter ()->dispatch_servant(...)
-      
+
       * tao/GIOP_Message_Lite.cpp:
-        Removed   CORBA::Boolean sync_with_server and 
+        Removed   CORBA::Boolean sync_with_server and
         CORBA::Boolean location_forward from TAO_GIOP_Message_Lite::
-        process_client_request()as they are no longer used there.    
-        Removed transport parameter in call to 
+        process_client_request()as they are no longer used there.
+        Removed transport parameter in call to
         orb_core->object_adapter ()->dispatch_servant(...)
 
       * tao/Servant_Base.cpp:
-        Added an ACE_TRY_CHECK to TAO_ServantBase::synchronous_upcall_dispatch 
+        Added an ACE_TRY_CHECK to TAO_ServantBase::synchronous_upcall_dispatch
         to get rid of a compiler warning.   Did the same in
         TAO_DynamicImplementation::_dispatch function.
-      
-      * tao/Object_Adapter.cpp,.h:
-        Remove transport from the paramter list of TAO_Object_Adapter::dispatch_servant
-        as it is no longer used in the function.  
 
-Thu Jul  7 08:09:00 2000  Bruce Trask   <brucetrask@aol.com>
-  
-      * tao/Object_Adapter.h
-         
-        Changed the signature of dispatch_servant to remove the transport parameter
+      * tao/Object_Adapter.cpp,.h:
+        Remove transport from the paramter list of
+        TAO_Object_Adapter::dispatch_servant as it is no longer used in the
+        function.
 
 Thu Jul  6 21:15:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
 
-	  Signature for create_alias_tc was not consistent with
-	  the header file. Also commented out an unused parameter
-	  name.
+          Signature for create_alias_tc was not consistent with
+          the header file. Also commented out an unused parameter
+          name.
 
-	* orbsvcs/IFR_Service/TCF_Loader.h:
-	* orbsvcs/IFR_Service/TCF_Loader.cpp:
+        * orbsvcs/IFR_Service/TCF_Loader.h:
+        * orbsvcs/IFR_Service/TCF_Loader.cpp:
 
-	  Throw spec was inconsistent with base class 
-	  TAO_Object_Loader.
+          Throw spec was inconsistent with base class
+          TAO_Object_Loader.
 
 Thu Jul  6 20:46:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.i:
+        * tao/InterfaceC.i:
 
-	  Moved code for interface IDLType up to where it is
-	  forward declared in Interface.pidl. Digital Unix,
-	  when building TAO with TAO_HAS_INTERFACE_REPOSITORY=1,
-	  complained that IDLType_var constructors and destructor
-	  was used before declared inline.
+          Moved code for interface IDLType up to where it is
+          forward declared in Interface.pidl. Digital Unix,
+          when building TAO with TAO_HAS_INTERFACE_REPOSITORY=1,
+          complained that IDLType_var constructors and destructor
+          was used before declared inline.
 
 Thu Jul  6 17:46:24 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Makefile: Updated dependencies.
+        * tao/Makefile: Updated dependencies.
 
 Thu Jul 06 16:57:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -95,228 +96,267 @@ Thu Jul 06 16:57:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/orbconf.h:
-	* tao/ORB.h:
-	* tao/ORB.cpp:
+        * tao/orbconf.h:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
 
-	  Additions to enable resolve_initial_references ("InterfaceRepository")
-	  and acquisition of IFR IOR via multicast.
+          Additions to enable
+          resolve_initial_references ("InterfaceRepository")
+          and acquisition of IFR IOR via multicast.
 
-	* TAOACE.dsw:
+        * TAOACE.dsw:
 
-	  Added IFR_Service.dsp and TypeCodeFactory.dsp to the workspace,
-	  along with their dependencies.
+          Added IFR_Service.dsp and TypeCodeFactory.dsp to the workspace,
+          along with their dependencies.
 
-	* orbsvcs/IFR_Service/IFR.dsw:
+        * orbsvcs/IFR_Service/IFR.dsw:
 
-	  Added IFR_Service.dsp to the workspace.
+          Added IFR_Service.dsp to the workspace.
 
-	* orbsvcs/IFR_Service/AliasDef_i.cpp:
-	* orbsvcs/IFR_Service/AliasDef_i.h:
-	* orbsvcs/IFR_Service/ArrayDef_i.cpp:
-	* orbsvcs/IFR_Service/ArrayDef_i.h:
-	* orbsvcs/IFR_Service/AttributeDef_i.cpp:
-	* orbsvcs/IFR_Service/AttributeDef_i.h:
-	* orbsvcs/IFR_Service/ComponentDef_i.cpp:
-	* orbsvcs/IFR_Service/ComponentDef_i.h:
-	* orbsvcs/IFR_Service/ComponentRepository_i.cpp:
-	* orbsvcs/IFR_Service/ComponentRepository_i.h:
-	* orbsvcs/IFR_Service/ConstantDef_i.cpp:
-	* orbsvcs/IFR_Service/ConstantDef_i.h:
-	* orbsvcs/IFR_Service/ConsumesDef_i.cpp:
-	* orbsvcs/IFR_Service/ConsumesDef_i.h:
-	* orbsvcs/IFR_Service/Contained_i.cpp:
-	* orbsvcs/IFR_Service/Contained_i.h:
-	* orbsvcs/IFR_Service/Container_i.cpp:
-	* orbsvcs/IFR_Service/Container_i.h:
-	* orbsvcs/IFR_Service/EmitsDef_i.cpp:
-	* orbsvcs/IFR_Service/EmitsDef_i.h:
-	* orbsvcs/IFR_Service/EnumDef_i.cpp:
-	* orbsvcs/IFR_Service/EnumDef_i.h:
-	* orbsvcs/IFR_Service/EventDef_i.cpp:
-	* orbsvcs/IFR_Service/EventDef_i.h:
-	* orbsvcs/IFR_Service/ExceptionDef_i.cpp:
-	* orbsvcs/IFR_Service/ExceptionDef_i.h:
-	* orbsvcs/IFR_Service/FactoryDef_i.cpp:
-	* orbsvcs/IFR_Service/FactoryDef_i.h:
-	* orbsvcs/IFR_Service/FinderDef_i.cpp:
-	* orbsvcs/IFR_Service/FinderDef_i.h:
-	* orbsvcs/IFR_Service/FixedDef_i.cpp:
-	* orbsvcs/IFR_Service/FixedDef_i.h:
-	* orbsvcs/IFR_Service/HomeDef_i.cpp:
-	* orbsvcs/IFR_Service/HomeDef_i.h:
-	* orbsvcs/IFR_Service/DLType_i.cpp:
-	* orbsvcs/IFR_Service/IDLType_i.h:
-	* orbsvcs/IFR_Service/IRObject_i.cpp:
-	* orbsvcs/IFR_Service/IRObject_i.h:
-	* orbsvcs/IFR_Service/InterfaceDef_i.cpp:
-	* orbsvcs/IFR_Service/InterfaceDef_i.h:
-	* orbsvcs/IFR_Service/ModuleDef_i.cpp:
-	* orbsvcs/IFR_Service/ModuleDef_i.h:
-	* orbsvcs/IFR_Service/NativeDef_i.cpp:
-	* orbsvcs/IFR_Service/NativeDef_i.h:
-	* orbsvcs/IFR_Service/OperationDef_i.cpp:
-	* orbsvcs/IFR_Service/OperationDef_i.h:
-	* orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
-	* orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
-	* orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
-	* orbsvcs/IFR_Service/PrimitiveDef_i.h:
-	* orbsvcs/IFR_Service/ProvidesDef_i.cpp:
-	* orbsvcs/IFR_Service/ProvidesDef_i.h:
-	* orbsvcs/IFR_Service/PublishesDef_i.cpp:
-	* orbsvcs/IFR_Service/PublishesDef_i.h:
-	* orbsvcs/IFR_Service/Repository_i.cpp:
-	* orbsvcs/IFR_Service/Repository_i.h:
-	* orbsvcs/IFR_Service/SequenceDef_i.cpp:
-	* orbsvcs/IFR_Service/SequenceDef_i.h:
-	* orbsvcs/IFR_Service/StringDef_i.cpp:
-	* orbsvcs/IFR_Service/StringDef_i.h:
-	* orbsvcs/IFR_Service/StructDef_i.cpp:
-	* orbsvcs/IFR_Service/StructDef_i.h:
-	* orbsvcs/IFR_Service/TypedefDef_i.cpp:
-	* orbsvcs/IFR_Service/TypedefDef_i.h:
-	* orbsvcs/IFR_Service/UnionDef_i.cpp:
-	* orbsvcs/IFR_Service/UnionDef_i.h:
-	* orbsvcs/IFR_Service/UsesDef_i.cpp:
-	* orbsvcs/IFR_Service/UsesDef_i.h:
-	* orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueBoxDef_i.h:
-	* orbsvcs/IFR_Service/ValueDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueDef_i.h:
-	* orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueMemberDef_i.h:
-	* orbsvcs/IFR_Service/WstringDef_i.cpp:
-	* orbsvcs/IFR_Service/WstringDef_i.h:
+        * orbsvcs/IFR_Service/AliasDef_i.cpp:
+        * orbsvcs/IFR_Service/AliasDef_i.h:
+        * orbsvcs/IFR_Service/ArrayDef_i.cpp:
+        * orbsvcs/IFR_Service/ArrayDef_i.h:
+        * orbsvcs/IFR_Service/AttributeDef_i.cpp:
+        * orbsvcs/IFR_Service/AttributeDef_i.h:
+        * orbsvcs/IFR_Service/ComponentDef_i.cpp:
+        * orbsvcs/IFR_Service/ComponentDef_i.h:
+        * orbsvcs/IFR_Service/ComponentRepository_i.cpp:
+        * orbsvcs/IFR_Service/ComponentRepository_i.h:
+        * orbsvcs/IFR_Service/ConstantDef_i.cpp:
+        * orbsvcs/IFR_Service/ConstantDef_i.h:
+        * orbsvcs/IFR_Service/ConsumesDef_i.cpp:
+        * orbsvcs/IFR_Service/ConsumesDef_i.h:
+        * orbsvcs/IFR_Service/Contained_i.cpp:
+        * orbsvcs/IFR_Service/Contained_i.h:
+        * orbsvcs/IFR_Service/Container_i.cpp:
+        * orbsvcs/IFR_Service/Container_i.h:
+        * orbsvcs/IFR_Service/EmitsDef_i.cpp:
+        * orbsvcs/IFR_Service/EmitsDef_i.h:
+        * orbsvcs/IFR_Service/EnumDef_i.cpp:
+        * orbsvcs/IFR_Service/EnumDef_i.h:
+        * orbsvcs/IFR_Service/EventDef_i.cpp:
+        * orbsvcs/IFR_Service/EventDef_i.h:
+        * orbsvcs/IFR_Service/ExceptionDef_i.cpp:
+        * orbsvcs/IFR_Service/ExceptionDef_i.h:
+        * orbsvcs/IFR_Service/FactoryDef_i.cpp:
+        * orbsvcs/IFR_Service/FactoryDef_i.h:
+        * orbsvcs/IFR_Service/FinderDef_i.cpp:
+        * orbsvcs/IFR_Service/FinderDef_i.h:
+        * orbsvcs/IFR_Service/FixedDef_i.cpp:
+        * orbsvcs/IFR_Service/FixedDef_i.h:
+        * orbsvcs/IFR_Service/HomeDef_i.cpp:
+        * orbsvcs/IFR_Service/HomeDef_i.h:
+        * orbsvcs/IFR_Service/DLType_i.cpp:
+        * orbsvcs/IFR_Service/IDLType_i.h:
+        * orbsvcs/IFR_Service/IRObject_i.cpp:
+        * orbsvcs/IFR_Service/IRObject_i.h:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/InterfaceDef_i.h:
+        * orbsvcs/IFR_Service/ModuleDef_i.cpp:
+        * orbsvcs/IFR_Service/ModuleDef_i.h:
+        * orbsvcs/IFR_Service/NativeDef_i.cpp:
+        * orbsvcs/IFR_Service/NativeDef_i.h:
+        * orbsvcs/IFR_Service/OperationDef_i.cpp:
+        * orbsvcs/IFR_Service/OperationDef_i.h:
+        * orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
+        * orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
+        * orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
+        * orbsvcs/IFR_Service/PrimitiveDef_i.h:
+        * orbsvcs/IFR_Service/ProvidesDef_i.cpp:
+        * orbsvcs/IFR_Service/ProvidesDef_i.h:
+        * orbsvcs/IFR_Service/PublishesDef_i.cpp:
+        * orbsvcs/IFR_Service/PublishesDef_i.h:
+        * orbsvcs/IFR_Service/Repository_i.cpp:
+        * orbsvcs/IFR_Service/Repository_i.h:
+        * orbsvcs/IFR_Service/SequenceDef_i.cpp:
+        * orbsvcs/IFR_Service/SequenceDef_i.h:
+        * orbsvcs/IFR_Service/StringDef_i.cpp:
+        * orbsvcs/IFR_Service/StringDef_i.h:
+        * orbsvcs/IFR_Service/StructDef_i.cpp:
+        * orbsvcs/IFR_Service/StructDef_i.h:
+        * orbsvcs/IFR_Service/TypedefDef_i.cpp:
+        * orbsvcs/IFR_Service/TypedefDef_i.h:
+        * orbsvcs/IFR_Service/UnionDef_i.cpp:
+        * orbsvcs/IFR_Service/UnionDef_i.h:
+        * orbsvcs/IFR_Service/UsesDef_i.cpp:
+        * orbsvcs/IFR_Service/UsesDef_i.h:
+        * orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueBoxDef_i.h:
+        * orbsvcs/IFR_Service/ValueDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueDef_i.h:
+        * orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueMemberDef_i.h:
+        * orbsvcs/IFR_Service/WstringDef_i.cpp:
+        * orbsvcs/IFR_Service/WstringDef_i.h:
 
-	  New files that implement Interface.idl.
+          New files that implement Interface.idl.
 
-	* orbsvcs/IFR_Service/concrete_classes.h:
-	* orbsvcs/IFR_Service/tmplinst.cpp:
+        * orbsvcs/IFR_Service/concrete_classes.h:
+        * orbsvcs/IFR_Service/tmplinst.cpp:
 
-	  Collections of #includes and template instantiations.
+          Collections of #includes and template instantiations.
 
-	* orbsvcs/IFR_Service/Servant_Factory.cpp:
-	* orbsvcs/IFR_Service/Servant_Factory.h:
-	* orbsvcs/IFR_Service/Servant_Locator.cpp:
-	* orbsvcs/IFR_Service/Servant_Locator.h:
+        * orbsvcs/IFR_Service/Servant_Factory.cpp:
+        * orbsvcs/IFR_Service/Servant_Factory.h:
+        * orbsvcs/IFR_Service/Servant_Locator.cpp:
+        * orbsvcs/IFR_Service/Servant_Locator.h:
 
-	  Servant_Factory produces _i servants for internal use
-	  when the type is not known, _tie servants for the servant
-	  locator, and object references for request return values.
-	  Servant_Locator contains a subclass of the servant locator
-	  base class. The servant locator is used for all calls on IFR object
-	  references, except those on the Repository itself, which has
-	  a different POA (and policy list) than the IFR objects it contains.
+          Servant_Factory produces _i servants for internal use
+          when the type is not known, _tie servants for the servant
+          locator, and object references for request return values.
+          Servant_Locator contains a subclass of the servant locator
+          base class. The servant locator is used for all calls on IFR object
+          references, except those on the Repository itself, which has
+          a different POA (and policy list) than the IFR objects it contains.
 
-	* orbsvcs/IFR_Service/IFR_Server.cpp:
-	* orbsvcs/IFR_Service/IFR_Service.cpp:
-	* orbsvcs/IFR_Service/IFR_Service.dsp:
-	* orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/IFR_Service/IFR_Service.h:
 
-	  Contains classes to encapsulate the initialization and startup
-	  of the IFR service.
+          Contains classes to encapsulate the initialization and startup
+          of the IFR service.
 
-	* orbsvcs/IFR_Service/InterfaceS.cpp:
-	* orbsvcs/IFR_Service/InterfaceS.h:
-	* orbsvcs/IFR_Service/InterfaceS.i:
-	* orbsvcs/IFR_Service/InterfaceS_T.cpp:
-	* orbsvcs/IFR_Service/InterfaceS_T.h:
-	* orbsvcs/IFR_Service/InterfaceS_T.i:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/InterfaceS.i:
+        * orbsvcs/IFR_Service/InterfaceS_T.cpp:
+        * orbsvcs/IFR_Service/InterfaceS_T.h:
+        * orbsvcs/IFR_Service/InterfaceS_T.i:
 
-	  Generated files. Since the IFR implementation classes form an
-	  inheritance tree, the tie classes are used to decouple this
-	  inheritance from that of the object classes.
+          Generated files. Since the IFR implementation classes form an
+          inheritance tree, the tie classes are used to decouple this
+          inheritance from that of the object classes.
 
-	* orbsvcs/IFR_Service/Makefile:
-	* orbsvcs/IFR_Service/README:
-	* orbsvcs/IFR_Service/Options.cpp:
-	* orbsvcs/IFR_Service/Options.h:
+        * orbsvcs/IFR_Service/Makefile:
+        * orbsvcs/IFR_Service/README:
+        * orbsvcs/IFR_Service/Options.cpp:
+        * orbsvcs/IFR_Service/Options.h:
 
-	  The usual Makefile and README files, plus a singleton class
-	  that handles the comman line options passed to the IFR service.
+          The usual Makefile and README files, plus a singleton class
+          that handles the comman line options passed to the IFR service.
 
-	* orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/README:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/client.cpp:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/README:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
 
-	  The beginnings of an IFR test suite.
+          The beginnings of an IFR test suite.
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Update added for the Interface Repository section of
-	  the ReleaseNotes.
+          Update added for the Interface Repository section of
+          the ReleaseNotes.
 
 Thu Jul  6 11:46:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp (main):
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp (main):
 
-	  Fixed compiler warning regarding potential use of uninitialized
-	  variable.
+          Fixed compiler warning regarding potential use of uninitialized
+          variable.
 
 Thu Jul  6 11:04:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Sservice/TypeCodeFactory_i.cpp:
+        * orbsvcs/IFR_Sservice/TypeCodeFactory_i.cpp:
 
-	  Added .in () to accesses of a TypeCode struct member,
-	  which is generated as a _var.
+          Added .in () to accesses of a TypeCode struct member,
+          which is generated as a _var.
 
-	  Commented out the argument names in the functions that
-	  are stil marked TODO.
+          Commented out the argument names in the functions that
+          are stil marked TODO.
 
-	  Added a union member initialization to prevent egcs warnings.
+          Added a union member initialization to prevent egcs warnings.
+
+Wed Jul  5 20:00:00 2000  Bruce Trask  <brucetrask@aol.com>
+
+        * tao/GIOP_Message_Acceptors.cpp:
+          Modified TAO_GIOP_Message_Acceptors::process_client_request
+          function so that it does not make the reply to the request.
+          The reply send is being moved up to allow for the later addition
+          of the asynch server.
+
+        * tao/GIOP_Message_Acceptors.h:
+          Moved send_reply_exception into the public interface.
+
+        * tao/GIOP_Message_Lite.cpp:
+          Made identical changes as to
+          GIOP_Message_Acceptors::process_client_request
+          to move the reply send.
+
+        * tao/GIOP_Server_Request.cpp,.h:
+          Added a transport member variable to TAO_GIOP_ServerRequest class
+          and initialization of this member variable in the constructor.
+          Also removed the transport param from
+          TAO_GIOP_ServerRequest::send_no_exception_reply
+          function as this is it no longer required to be passed in as a
+          parameter.
+
+        * tao/GIOP_Server_Request.cpp,.h:
+          Added two new functions: TAO_GIOP_ServerRequest::tao_send_reply()
+          and TAO_GIOP_ServerRequest::tao_send_reply_exception.  These are the
+          new functions that will initiate the reply send.
+
+        * tao/Servant_Base.cpp:
+          Added TAO_ServantBase::synchronous_upcall_dispatch() to do the
+          reply send.  Changed TAO_DynamicImplementation::_dispatch so
+          that it send the reply after the upcall.
+
+        * tao_idl\be\be_visitor_interface\interface_ss.cpp:
+          Added call to synchronous_upcall_dispatch which will initiate
+          the reply for synchronous calls.
 
 Sun Jul  2 18:29:10 2000  Marina Spivak  <marina@cs.wustl.edu>
 
         * peformance-tests/RTCorba/Orb_Per_Priority/client.cpp:
 
-	  Fixed compile error.
+          Fixed compile error.
 
 Sun Jul  2 17:58:47 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/RT_Policy_i.cpp:
+        * tao/RT_Policy_i.cpp:
 
           Fixed warning about not initializing superclass in copy
-	  constructor.
+          constructor.
 
 Sun Jul  2 14:44:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
 
-	  In the case where an operation has one or more OUT
-	  parameters which are a sequence, or a struct or array
-	  of dynamic element type, we allocate memory for that
-	  argument to demarshal into. If the operation also has
-	  a non-void return type, the TAO IDL compiler does this
-	  by generating ACE_NEW_RETURN (...., ....., _tao_retval);
-	  in the stub operation body. For some return types,
-	  _tao_safe_retval (which may be a _var) is defined
-	  instead of _tao_retval, so _tao_retval has been replaced
-	  in the ACE_NEW_RETURN statement with 0. Thanks to
-	  Matej Sekoranja <matej.sekoranja@ijs.si> for reporting
-	  this bug.
+          In the case where an operation has one or more OUT
+          parameters which are a sequence, or a struct or array
+          of dynamic element type, we allocate memory for that
+          argument to demarshal into. If the operation also has
+          a non-void return type, the TAO IDL compiler does this
+          by generating ACE_NEW_RETURN (...., ....., _tao_retval);
+          in the stub operation body. For some return types,
+          _tao_safe_retval (which may be a _var) is defined
+          instead of _tao_retval, so _tao_retval has been replaced
+          in the ACE_NEW_RETURN statement with 0. Thanks to
+          Matej Sekoranja <matej.sekoranja@ijs.si> for reporting
+          this bug.
 
 Fri Jun 30 12:28:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_scope.cpp:
-	* tests/IDL_Test/included.idl:
-	* tests/IDL_Test/including.idl:
+        * TAO_IDL/util/utl_scope.cpp:
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/including.idl:
 
-	  Xavier MONTET <montet@cena.fr> sent in a bug report and
-	  example reporting a lookup error. I didn't find that
-	  (he may be using an older version of the IDL compiler),
-	  but I did a different problem. According to the spec, a
-	  type defined inside a scope which is itself defined
-	  inside an interface or valuetype should be added to the
-	  list of types referenced in the interface's scope. This
-	  was being done even for types not defined but referenced
-	  inside the inner scope, leading to incorrect name clashes.
-	  Parts of the example idl files sent in were also added to
-	  IDL_Test.
+          Xavier MONTET <montet@cena.fr> sent in a bug report and
+          example reporting a lookup error. I didn't find that
+          (he may be using an older version of the IDL compiler),
+          but I did a different problem. According to the spec, a
+          type defined inside a scope which is itself defined
+          inside an interface or valuetype should be added to the
+          list of types referenced in the interface's scope. This
+          was being done even for types not defined but referenced
+          inside the inner scope, leading to incorrect name clashes.
+          Parts of the example idl files sent in were also added to
+          IDL_Test.
 
 Fri Jun 30 07:49:51 2000  Anders Olsson <epkanol@s1.epk.ericsson.se>
 

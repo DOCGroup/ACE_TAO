@@ -28,44 +28,6 @@ Wed Jul  5 23:36:12 2000  John Heitmann  <jwh1@cs.wustl.edu>
           Added PACE functionality to functions whose counterparts were
           recent additions to PACE.
 
-Wed Jul  5 20:00:00 2000  Bruce Trask  <brucetrask@aol.com>
-
-        * tao/GIOP_Message_Acceptors.cpp:
-          Modified TAO_GIOP_Message_Acceptors::process_client_request
-          function so that it does not make the reply to the request.
-          The reply send is being moved up to allow for the later addition
-          of the asynch server.
-
-        * tao/GIOP_Message_Acceptors.h:
-          Moved send_reply_exception into the public interface.
-
-        * tao/GIOP_Message_Lite.cpp:
-          Made identical changes as to
-          GIOP_Message_Acceptors::process_client_request
-          to move the reply send.
-
-        * tao/GIOP_Server_Request.cpp,.h:
-          Added a transport member variable to TAO_GIOP_ServerRequest class
-          and initialization of this member variable in the constructor.
-          Also removed the transport param from
-          TAO_GIOP_ServerRequest::send_no_exception_reply
-          function as this is it no longer required to be passed in as a
-          parameter.
-
-        * tao/GIOP_Server_Request.cpp,.h:
-          Added two new functions: TAO_GIOP_ServerRequest::tao_send_reply()
-          and TAO_GIOP_ServerRequest::tao_send_reply_exception.  These are the
-          new functions that will initiate the reply send.
-
-        * tao/Servant_Base.cpp:
-          Added TAO_ServantBase::synchronous_upcall_dispatch() to do the
-          reply send.  Changed TAO_DynamicImplementation::_dispatch so
-          that it send the reply after the upcall.
-
-        * tao_idl\be\be_visitor_interface\interface_ss.cpp:
-          Added call to synchronous_upcall_dispatch which will initiate
-          the reply for synchronous calls.
-
 Wed Jul  5 14:04:50 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/SUN_Proactor: Added yet another handle_events() method to keep
