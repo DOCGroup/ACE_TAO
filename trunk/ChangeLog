@@ -1,3 +1,12 @@
+Tue Jun 22 12:33:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_macros.h (ACE_SOCKCALL_RETURN):
+
+	  Reverted my change that turned the C style cast into a
+	  static_cast<> in the Win32 case.   ACE uses Win32 HANDLES (a
+	  void * type), and MSVC++ 6 won't accept a static_cast<> from a
+	  pointer type to an integral type.
+
 Tue Jun 22 07:27:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
