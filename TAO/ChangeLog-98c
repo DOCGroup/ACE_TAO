@@ -1,3 +1,7 @@
+Sun Aug 30 01:57:51 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/GIOP.cpp (recv_request): Fixed type mismatch.
+
 Sat Aug 29 23:23:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/GIOP.cpp (close_connection): We realized that use of
