@@ -2133,7 +2133,7 @@ TAO_ORB_Core::resolve_rir (const char *name
   return CORBA::Object::_nil ();
 }
 
-CORBA::ORB::ObjectIdList_ptr
+CORBA::ORB::ObjectIdList *
 TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Unsupported initial services should NOT be included in the below list!
@@ -2149,7 +2149,7 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
     + this->init_ref_map_.current_size ()
     + this->object_ref_table_.current_size ();
 
-  CORBA::ORB::ObjectIdList_ptr tmp = 0;
+  CORBA::ORB::ObjectIdList *tmp = 0;
 
   ACE_NEW_THROW_EX (tmp,
                     CORBA_ORB_ObjectIdList (total_size),

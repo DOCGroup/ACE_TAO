@@ -1,3 +1,15 @@
+Fri Jan 10 09:53:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/corbafwd.h:
+
+          Removed typedef of ObjectIdList * to ObjectIdList_ptr.
+          Only interfaces and some well-known pseudo-objects
+          should have the _ptr typedef.
+
 Fri Jan 10 09:30:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ObjectIDList.cpp:

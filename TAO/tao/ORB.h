@@ -426,7 +426,7 @@ public:
 
   /// Returns a sequence of ObjectIds that lists which objects have
   /// references available via the initial references mechanism.
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (
+  CORBA_ORB_ObjectIdList *list_initial_services (
               ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
