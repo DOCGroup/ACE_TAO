@@ -59,12 +59,11 @@
 //
 // ============================================================================
 
-#if defined (ACE_HAS_THREADS)
-
-static const char usage [] = "[-? |\n"
-                             "       [-c <repeat count, 0 means forever>]\n"
-                             "       [-n to spawn a new LWP with each thread\n"
-                             "[<iterations>]]";
+static const char usage [] =
+  "[-? |\n"
+  "       [-c <repeat count, 0 means forever>]\n"
+  "       [-n to spawn a new LWP with each thread]\n"
+  "       [<iterations>]]";
 
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"
@@ -74,31 +73,22 @@ static const char usage [] = "[-? |\n"
 #include "ace/Get_Opt.h"
 #include <iomanip.h>
 
+#if defined (ACE_HAS_THREADS)
+
 #if !defined (DEBUG)
 #define DEBUG 0
 #endif /* DEBUG */
-
-#if defined (__sun)
-// Solaris priority values range from low to high with increasing
-// priority.
-static const u_int LOW_PRIORITY = 1;
-static const u_int HIGH_PRIORITY = 2;
-#else
-// VxWorks and Win32 priority values range from high to low with
-// increasing priority.
-static const u_int LOW_PRIORITY = 2;
-static const u_int HIGH_PRIORITY = 1;
-#endif 
 
 // global test configuration parameters.
 static u_long count = 1;
 static u_long num_iterations = 1000;
 static u_int new_lwp = 0;
 
+
 class Low_Priority_Null_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Low_Priority_Null_Task (void);
+  Low_Priority_Null_Task (const int priority);
   virtual ~Low_Priority_Null_Task (void);
 
   virtual int svc (void);
@@ -117,12 +107,13 @@ private:
   ACE_Semaphore blocked_semaphore_;
 
   // force proper construction of independent instances
+  Low_Priority_Null_Task (void);
   Low_Priority_Null_Task (const Low_Priority_Null_Task &);
   Low_Priority_Null_Task &operator= (const Low_Priority_Null_Task &);
 };
 
 inline
-Low_Priority_Null_Task::Low_Priority_Null_Task (void) 
+Low_Priority_Null_Task::Low_Priority_Null_Task (const int priority)
   : ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ()),
     initialized_ (0),  // initialize to locked, then unlock when ready
     blocked_semaphore_ (0)
@@ -131,7 +122,7 @@ Low_Priority_Null_Task::Low_Priority_Null_Task (void)
   cout << "Low_Priority_Null_Task ctor" << endl;
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED | new_lwp, 1, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED | new_lwp, 1, 0, priority);
 
 #if DEBUG > 0
   cout << "Low_Priority_Null_Task ctor, activated" << endl;
@@ -173,10 +164,13 @@ Low_Priority_Null_Task::done (void)
   blocked_semaphore_.release ();
 }
 
+
 class Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Suspend_Resume_Test (const u_long iterations);
+  Suspend_Resume_Test (const u_long iterations,
+                       const int low_priority,
+                       const int high_priority);
   virtual ~Suspend_Resume_Test (void);
 
   virtual int svc (void);
@@ -197,14 +191,17 @@ private:
   Suspend_Resume_Test &operator= (const Suspend_Resume_Test &);
 };
 
-Suspend_Resume_Test::Suspend_Resume_Test (const u_long iterations) 
-  : iterations_ (iterations)
+Suspend_Resume_Test::Suspend_Resume_Test (const u_long iterations,
+                                          const int low_priority,
+                                          const int high_priority)
+  : iterations_ (iterations),
+    low_ (low_priority)
 {
 #if DEBUG > 0
   cout << "Suspend_Resume_Test ctor" << endl;
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, HIGH_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, high_priority);
 }
 
 Suspend_Resume_Test::~Suspend_Resume_Test (void)
@@ -255,10 +252,11 @@ Suspend_Resume_Test::svc (void)
   return 0;
 }
 
+
 class High_Priority_Simple_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  High_Priority_Simple_Task (void);
+  High_Priority_Simple_Task (const int priority);
   virtual ~High_Priority_Simple_Task (void);
 
   virtual int svc (void);
@@ -278,12 +276,13 @@ private:
   u_long iterations_;
 
   // force proper construction of independent instances
+  High_Priority_Simple_Task (void);
   High_Priority_Simple_Task (const High_Priority_Simple_Task &);
   High_Priority_Simple_Task &operator= (const High_Priority_Simple_Task &);
 };
 
 inline
-High_Priority_Simple_Task::High_Priority_Simple_Task (void) 
+High_Priority_Simple_Task::High_Priority_Simple_Task (const int priority)
   : initialized_ (0),  // initialize to locked, then unlock when ready
     terminate_ (0),
     iterations_ (0)
@@ -292,7 +291,7 @@ High_Priority_Simple_Task::High_Priority_Simple_Task (void)
   cout << "High_Priority_Simple_Task ctor" << endl;
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, HIGH_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, priority);
 
 #if DEBUG > 0
   cout << "High_Priority_Simple_Task ctor, activated" << endl;
@@ -348,10 +347,13 @@ High_Priority_Simple_Task::done (void)
   terminate_ = 1;
 }
 
+
 class Ping_Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Ping_Suspend_Resume_Test (const u_long iterations);
+  Ping_Suspend_Resume_Test (const u_long iterations,
+                            const int low_priority,
+                            const int high_priority);
   virtual ~Ping_Suspend_Resume_Test (void);
 
   virtual int svc (void);
@@ -372,17 +374,18 @@ private:
   Ping_Suspend_Resume_Test &operator= (const Ping_Suspend_Resume_Test &);
 };
 
-Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (const u_long
-                                                    iterations) 
+Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (const u_long iterations,
+                                                    const int low_priority,
+                                                    const int high_priority)
   : iterations_ (iterations),
-    high_ (),
+    high_ (high_priority),
     timer_ ()
 {
 #if DEBUG > 0
   cout << "Ping_Suspend_Resume_Test ctor" << endl;
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, low_priority);
 }
 
 Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test (void)
@@ -460,10 +463,12 @@ Ping_Suspend_Resume_Test::svc (void)
   return 0;
 }
 
+
 class Yield_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Yield_Test (const u_long iterations);
+  Yield_Test (const u_long iterations,
+              const int priority);
   virtual ~Yield_Test (void);
 
   virtual int svc (void);
@@ -482,14 +487,15 @@ private:
   Yield_Test &operator= (const Yield_Test &);
 };
 
-Yield_Test::Yield_Test (const u_long iterations) 
+Yield_Test::Yield_Test (const u_long iterations,
+                        const int priority)
   : iterations_ (iterations)
 {
 #if DEBUG > 0
   cout << "Yield_Test ctor" << endl;
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 2, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 2, 0, priority);
 }
 
 Yield_Test::~Yield_Test (void)
@@ -542,9 +548,9 @@ parse_args (int argc, char *argv [])
   ACE_Get_Opt get_opt (argc, argv, "c:n?");
   int opt;
 
-  while ((opt = get_opt ()) != EOF) 
+  while ((opt = get_opt ()) != EOF)
     {
-      switch (opt) 
+      switch (opt)
 	{
 	case 'c':
 	  if (ACE_OS::atoi (get_opt.optarg) >= 0)
@@ -569,7 +575,7 @@ parse_args (int argc, char *argv [])
 	}
     }
 
-  switch (argc - get_opt.optind) 
+  switch (argc - get_opt.optind)
     {
     case 0:
       // use default number of iterations
@@ -592,6 +598,7 @@ parse_args (int argc, char *argv [])
   return 0;
 }
 
+
 int
 main (int argc, char *argv [])
 {
@@ -599,7 +606,7 @@ main (int argc, char *argv [])
     ACE_OS::fprintf (stderr, "%s: high-resolution time is not supported "
 		     "by ACE on this platform.\n", argv[0]);
 
-  if (parse_args (argc, argv)) 
+  if (parse_args (argc, argv))
     ACE_OS::exit (-1);
 
   if (ACE_OS::sched_params (
@@ -618,18 +625,30 @@ main (int argc, char *argv [])
         }
     }
 
+  static const int LOW_PRIORITY = ACE_Sched_Params::priority_min (
+    ACE_SCHED_FIFO,
+    ACE_SCOPE_PROCESS);
+  static const int HIGH_PRIORITY = ACE_Sched_Params::next_priority (
+    ACE_SCHED_FIFO,
+    LOW_PRIORITY,
+    ACE_SCOPE_PROCESS);
+
   int forever = count == 0;
 
   while (forever || count-- > 0)
     {
       // Run suspend/resume test first . . .
-      Suspend_Resume_Test suspend_resume_test (num_iterations);
+      Suspend_Resume_Test suspend_resume_test (num_iterations,
+                                               LOW_PRIORITY,
+                                               HIGH_PRIORITY);
 
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
       // Then Ping Suspend/Resume test.
-      Ping_Suspend_Resume_Test ping_suspend_resume_test (num_iterations);
+      Ping_Suspend_Resume_Test ping_suspend_resume_test (num_iterations,
+                                                         LOW_PRIORITY,
+                                                         HIGH_PRIORITY);
 
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
@@ -662,7 +681,7 @@ main (int argc, char *argv [])
         }
 
       // Then Yield test.
-      Yield_Test yield_test (num_iterations);
+      Yield_Test yield_test (num_iterations, LOW_PRIORITY);
 
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
@@ -675,11 +694,10 @@ main (int argc, char *argv [])
   return 0;
 }
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
-
