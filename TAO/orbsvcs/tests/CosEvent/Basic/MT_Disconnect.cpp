@@ -98,7 +98,7 @@ run_test (PortableServer::POA_ptr poa,
     ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  Task task (event_channel.in (), use_callbacks);
+  MTD_Task task (event_channel.in (), use_callbacks);
 
   if (task.activate (THR_BOUND|THR_NEW_LWP, 1) != 0)
     {
@@ -115,7 +115,7 @@ run_test (PortableServer::POA_ptr poa,
   ACE_CHECK;
 }
 
-Task::Task (CosEventChannelAdmin::EventChannel_ptr ec,
+MTD_Task::MTD_Task (CosEventChannelAdmin::EventChannel_ptr ec,
             int callbacks)
   :  event_channel (CosEventChannelAdmin::EventChannel::_duplicate (ec)),
      use_callbacks (callbacks)
@@ -124,7 +124,7 @@ Task::Task (CosEventChannelAdmin::EventChannel_ptr ec,
 
 
 int
-Task::svc ()
+MTD_Task::svc ()
 {
   for (int i = 0; i < 10; ++i)
     {
@@ -143,7 +143,7 @@ Task::svc ()
 }
 
 void
-Task::run_iteration (ACE_ENV_SINGLE_ARG_DECL)
+MTD_Task::run_iteration (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Obtain the consumer admin..
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =

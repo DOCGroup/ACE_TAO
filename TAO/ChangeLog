@@ -1,36 +1,44 @@
+Mon Oct  4 12:52:21 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.h:
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.cpp:
+
+          Prefixed Task class with MTD_ to avoid name collisions with
+          Integrity system header files.
+
 Mon Oct  4 12:32:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Transport_Cache_Manager.cpp:
-	 
-	  Use the ORBConnectionCacheMax value within the transport cache
-	  manager. Added an extra check to disallow setting the value to
-	  0. Thanks to Vladislav Zverev <vladislav at gtss dot spb dot ru>
-	  for reporting the problem.
-	
-	* tao/default_resource.cpp:
+        * tao/Transport_Cache_Manager.cpp:
 
-	  Cosmetic fix. 
+          Use the ORBConnectionCacheMax value within the transport cache
+          manager. Added an extra check to disallow setting the value to
+          0. Thanks to Vladislav Zverev <vladislav at gtss dot spb dot ru>
+          for reporting the problem.
+
+        * tao/default_resource.cpp:
+
+          Cosmetic fix.
 
 Mon Oct  4 11:59:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
 
-	  Replicated the changes mentioned below to the above wait
-	  strategy. 
+          Replicated the changes mentioned below to the above wait
+          strategy.
 
 Sun Oct  3 20:24:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Wait_On_Leader_Follower.cpp:
-	* tao/Wait_On_Leader_Follower.h:
-	* tao/Wait_On_Reactor.cpp:
-	* tao/Wait_On_Reactor.h:
-	* tao/Wait_On_Read.cpp:
-	* tao/Wait_On_Read.h:
-	* tao/Wait_Strategy.h:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_Strategy.h:
 
-	  Changed the method non_blocking () to return a boolean and
-	  improved its const correctness.
+          Changed the method non_blocking () to return a boolean and
+          improved its const correctness.
 
 Sun Oct  3 19:28:08 2004  Olli Savia  <ops@iki.fi>
 
