@@ -1,3 +1,10 @@
+Tue Dec 21 04:52:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* Release:
+	* bin/make_release:
+
+	  Udated them to add the correct versions of files.
+
 Mon Dec 20 17:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
