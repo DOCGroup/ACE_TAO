@@ -1,3 +1,13 @@
+Thu Mar 13 10:09:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+
+          Removed unused arguments.
+
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          Commented out unused argument.
+
 Thu Mar 13 09:05:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
