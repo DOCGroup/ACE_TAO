@@ -1,3 +1,8 @@
+Sat Apr  2 13:06:02 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/ciao/Container_Base.cpp: Added more debug print out
+	  statements in install_home method.  
+
 Sat Apr 02 11:45:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/Plan_Launcher/Plan_Launcher.mpc:
