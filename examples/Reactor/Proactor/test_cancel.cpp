@@ -47,7 +47,6 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 ACE_RCSID (Proactor, test_proactor, "$Id$")
 

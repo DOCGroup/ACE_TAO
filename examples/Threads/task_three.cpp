@@ -15,7 +15,10 @@
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Signal.h"
 
 ACE_RCSID(Threads, task_three, "$Id$")

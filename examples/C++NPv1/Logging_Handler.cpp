@@ -11,7 +11,10 @@
 #include "ace/Message_Block.h"
 
 #include "Logging_Handler.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/os_include/os_netdb.h"
 
 int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record)

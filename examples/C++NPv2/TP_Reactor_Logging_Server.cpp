@@ -4,7 +4,9 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"

@@ -17,7 +17,6 @@
 #include "RMCast_Module.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
 

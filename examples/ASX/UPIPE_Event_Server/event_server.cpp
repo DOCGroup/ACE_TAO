@@ -6,7 +6,10 @@
 #include "ace/Service_Config.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "Options.h"
 #include "Consumer_Router.h"
 #include "Event_Analyzer.h"

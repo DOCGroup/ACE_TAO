@@ -1,8 +1,7 @@
 // $Id$
 
+// FUZZ: disable check_for_OS_h_include
 #include "ace/OS.h"
-//#include "ace/Sched_Params.h"
-//#include "ace/OS_Thread_Adapter.h"
 
 #if !defined (ACE_HAS_WINCE)
 # include "ace/OS_QoS.h"

@@ -33,7 +33,6 @@ ACE_RCSID (tests,
 #include "ace/SOCK_Stream.h"
 #include "ace/Object_Manager.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 #include "ace/Proactor.h"
 #include "ace/Asynch_Acceptor.h"

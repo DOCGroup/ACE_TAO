@@ -13,7 +13,6 @@
 
 #include "ace/OS_NS_dirent.h"
 #include "ace/Log_Msg.h"
-#include "ace/streams.h"
 #include "ace/OS_NS_sys_stat.h"
 
 #include "Library.h"

@@ -18,7 +18,10 @@
 // ============================================================================
 
 #include "ace/OS_main.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"

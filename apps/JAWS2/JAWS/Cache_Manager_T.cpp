@@ -6,6 +6,8 @@
 #include "JAWS/Cache_Manager_T.h"
 #include "JAWS/Cache_Hash_T.h"
 #include "JAWS/Cache_List_T.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 class Cache_Manager;
