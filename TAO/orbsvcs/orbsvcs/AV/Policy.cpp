@@ -104,6 +104,18 @@ TAO_AV_Callback::handle_end_stream (void)
   return -1;
 }
 
+TAO_AV_Transport*
+TAO_AV_Callback::transport (void)
+{
+  return this->transport_;
+}
+
+void
+TAO_AV_Callback::transport (TAO_AV_Transport *transport)
+{
+  this->transport_ = transport;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Unbounded_Sequence<TAO_AV_Policy*>;

@@ -29,7 +29,8 @@ TAO_AV_TCP_Object::~TAO_AV_TCP_Object (void)
 int
 TAO_AV_TCP_Object::end_stream (void)
 {
-  return -1;
+  this->callback_->handle_end_stream ();
+  return 0;
 }
 
 //------------------------------------------------------------
@@ -61,7 +62,8 @@ TAO_AV_UDP_Object::~TAO_AV_UDP_Object (void)
 int
 TAO_AV_UDP_Object::end_stream (void)
 {
-  return -1;
+  this->callback_->handle_end_stream ();
+  return 0;
 }
 
 //------------------------------------------------------------
@@ -93,7 +95,8 @@ TAO_AV_UDP_MCast_Object::send_frame (ACE_Message_Block *frame,
 int
 TAO_AV_UDP_MCast_Object::end_stream (void)
 {
-  return -1;
+  this->callback_->handle_end_stream ();
+  return 0;
 }
 
 

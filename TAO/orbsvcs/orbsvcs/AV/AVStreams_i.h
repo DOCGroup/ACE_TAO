@@ -130,6 +130,7 @@ public:
             char **argv,
             CORBA::Environment &env);
   int run (void);
+  int stop_run (void);
   int init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                           TAO_AV_FlowSpecSet &flow_spec_set,
                           EndPoint direction,
@@ -169,6 +170,7 @@ protected:
   ACE_Reactor *reactor_;
   CORBA::ORB_var orb_;
   TAO_ORB_Manager orb_manager_;
+  CORBA::Boolean stop_run_;
 };
 
 typedef ACE_Singleton <TAO_AV_Core,ACE_Null_Mutex> TAO_AV_CORE;
@@ -565,15 +567,6 @@ public:
                                                       CORBA::Environment &env = CORBA::Environment::default_environment ());
   // Application needs to define this
 
-//   virtual int make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler);
-//   // call to make a new flow handler for a tcp connection.
-
-//   virtual int make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&handler);
-//   // call to make a new flow handler for a dgram flow.
-
-//   virtual int make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
-//   // call to make a new flow handler for a mcast dgram flow.
-
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
 
@@ -709,16 +702,6 @@ public:
 
   virtual ~TAO_StreamEndPoint (void);
   // Destructor
-
-//   virtual CORBA::Boolean handle_preconnect (AVStreams::flowSpec &the_spec);
-//   // Defined for backward compatibility.
-
-//   virtual CORBA::Boolean handle_postconnect (AVStreams::flowSpec &the_spec);
-//   // Defined for backward compatibility.
-
-//   virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,
-//                                                       CORBA::Environment &env = CORBA::Environment::default_environment ());
-//   // Defined for backward compatibility.
 
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                AVStreams::flowSpec &the_spec,

@@ -52,9 +52,18 @@ TAO_AV_Core::init (int &argc,
 }
 
 int
+TAO_AV_Core::stop_run (void)
+{
+  this->stop_run_ = 1;
+  return 0;
+}
+
+int
 TAO_AV_Core::run (void)
 {
-  while (this->orb_->work_pending ())
+  this->stop_run_ = 0;
+  this->orb_manager_.activate_poa_manager ();
+  while (!this->stop_run_ && this->orb_->work_pending ())
     this->orb_->perform_work ();
   return 0;
 }
@@ -734,6 +743,12 @@ TAO_AV_Transport::~TAO_AV_Transport (void)
 {
 }
 
+ACE_Addr*
+TAO_AV_Transport::get_local_addr (void)
+{
+  return 0;
+}
+
 // TAO_AV_Flow_Handler
 TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (TAO_AV_Callback *callback)
   :transport_ (0),
@@ -836,10 +851,10 @@ TAO_AV_UDP_Transport::mtu (void)
   return ACE_MAX_DGRAM_SIZE;
 }
 
-int
-TAO_AV_UDP_Transport::get_peer_addr (ACE_Addr &/*addr*/)
+ACE_Addr*
+TAO_AV_UDP_Transport::get_peer_addr (void)
 {
-  return -1;
+  return 0;
 }
 
 ssize_t
@@ -990,10 +1005,10 @@ TAO_AV_TCP_Transport::mtu (void)
   return -1;
 }
 
-int
-TAO_AV_TCP_Transport::get_peer_addr (ACE_Addr &/*addr*/)
+ACE_Addr*
+TAO_AV_TCP_Transport::get_peer_addr (void)
 {
-  return -1;
+  return 0;
 }
 
 ssize_t
@@ -1073,18 +1088,18 @@ TAO_AV_TCP_Transport::recv (char *buf,
                           size_t len,
                           ACE_Time_Value *)
 {
-  return this->handler_->peer ().recv_n (buf, len);
+  return this->handler_->peer ().recv (buf, len);
 }
 
 ssize_t
 TAO_AV_TCP_Transport::recv (char *buf,
-                          size_t len,
-                          int flags,
-                          ACE_Time_Value *)
+                            size_t len,
+                            int flags,
+                            ACE_Time_Value *)
 {
-  return this->handler_->peer ().recv_n (buf,
-                                         len,
-                                         flags);
+  return this->handler_->peer ().recv (buf,
+                                       len,
+                                       flags);
 }
 
 ssize_t
@@ -1129,6 +1144,7 @@ TAO_AV_UDP_Acceptor::make_svc_handler (TAO_AV_UDP_Flow_Handler *&udp_handler)
       ACE_NEW_RETURN (udp_handler,
                       TAO_AV_UDP_Flow_Handler (callback),
                       -1);
+      callback->transport (udp_handler->transport ());
       TAO_AV_Protocol_Object *object =0;
       ACE_NEW_RETURN (object,
                       TAO_AV_UDP_Object (callback,
@@ -1439,6 +1455,7 @@ TAO_AV_UDP_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&udp_handler)
       ACE_NEW_RETURN (udp_handler,
                       TAO_AV_UDP_Flow_Handler (callback),
                       -1);
+      callback->transport (udp_handler->transport ());
       TAO_AV_Protocol_Object *object =0;
       ACE_NEW_RETURN (object,
                       TAO_AV_UDP_Object (callback,
@@ -1637,6 +1654,7 @@ TAO_AV_TCP_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
       ACE_NEW_RETURN (tcp_handler,
                       TAO_AV_TCP_Flow_Handler (callback),
                       -1);
+      callback->transport (tcp_handler->transport ());
       TAO_AV_Protocol_Object *object =0;
       ACE_NEW_RETURN (object,
                       TAO_AV_TCP_Object (callback,
@@ -1739,6 +1757,7 @@ TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
       ACE_NEW_RETURN (tcp_handler,
                       TAO_AV_TCP_Flow_Handler (callback),
                       -1);
+      callback->transport (tcp_handler->transport ());
       TAO_AV_Protocol_Object *object =0;
       ACE_NEW_RETURN (object,
                       TAO_AV_TCP_Object (callback,
@@ -1834,6 +1853,50 @@ TAO_AV_TCP_Flow_Handler::transport (void)
 }
 
 int
+TAO_AV_TCP_Flow_Handler::open (void *arg)
+{
+
+  int nodelay = 1;
+
+#if defined (TCP_NODELAY)
+  if (this->peer ().set_option (IPPROTO_TCP,
+                                TCP_NODELAY,
+                                (void *) &nodelay,
+                                sizeof (nodelay)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "NODELAY failed\n"),
+                      -1);
+#endif /* TCP_NODELAY */
+
+  // Called by the <Strategy_Acceptor> when the handler is completely
+  // connected.
+  ACE_INET_Addr addr;
+
+  if (this->peer ().get_remote_addr (addr) == -1)
+    return -1;
+
+  char server[MAXHOSTNAMELEN + 16];
+
+  (void) addr.addr_to_string (server, sizeof (server));
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) connection to server <%s> on %d\n",
+                server, this->peer ().get_handle ()));
+
+  this->peer ().enable (ACE_NONBLOCK);
+  // Register the handler with the reactor.
+  if (this->reactor ()
+      && this->reactor ()->register_handler
+      (this,
+       ACE_Event_Handler::READ_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("unable to register client handler")),
+                      -1);
+}
+
+int
 TAO_AV_TCP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   size_t size = BUFSIZ;
@@ -1845,7 +1908,7 @@ TAO_AV_TCP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
                                   size);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input recv failed\n"),-1);
-  if (n == -1)
+  if (n == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input connection closed\n"),-1);
   frame->wr_ptr (n);
   this->callback_->receive_frame (frame);

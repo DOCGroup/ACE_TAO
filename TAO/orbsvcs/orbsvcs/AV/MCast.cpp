@@ -26,6 +26,7 @@ TAO_AV_UDP_MCast_Acceptor::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&mca
       ACE_NEW_RETURN (mcast_handler,
                       TAO_AV_UDP_MCast_Flow_Handler (callback),
                       -1);
+      callback->transport (mcast_handler->transport ());
       TAO_AV_Protocol_Object *object =0;
       ACE_NEW_RETURN (object,
                       TAO_AV_UDP_MCast_Object (callback,
@@ -52,6 +53,26 @@ TAO_AV_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   int result = handler->get_mcast_socket ()->subscribe (*mcast_addr);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_connector::open failed\n"),-1);
+  // Now disable Multicast loopback.
+  // @@Should we make this a policy?
+  if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP,
+                                            0) < 0)
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
+  // @@ This should also be policies.
+  int bufsize = 80 * 1024;
+  if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET, 
+                                                          SO_RCVBUF, 
+                                                          (char *)&bufsize,
+                                                          sizeof(bufsize)) < 0) 
+    {
+      bufsize = 32 * 1024;
+      if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET, 
+                                                              SO_RCVBUF, 
+                                                              (char *)&bufsize,
+                                                              sizeof(bufsize)) < 0)
+      perror("SO_RCVBUF");
+    }
+
   result = this->activate_svc_handler (handler);
   if (result < 0)
     return result;
@@ -114,6 +135,7 @@ TAO_AV_UDP_MCast_Connector::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&mc
       ACE_NEW_RETURN (mcast_handler,
                       TAO_AV_UDP_MCast_Flow_Handler (callback),
                       -1);
+      callback->transport (mcast_handler->transport ());
       TAO_AV_Protocol_Object *object =0;
       ACE_NEW_RETURN (object,
                       TAO_AV_UDP_MCast_Object (callback,
@@ -147,6 +169,25 @@ TAO_AV_UDP_MCast_Connector::connect (TAO_FlowSpec_Entry *entry,
   int result = handler->get_mcast_socket ()->subscribe (*mcast_addr);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_connector::open failed\n"),-1);
+  // Now disable Multicast loopback.
+  // @@Should we make this a policy?
+  if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP,
+                                            0) < 0)
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
+  int bufsize = 80 * 1024;
+  if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET, 
+                                                          SO_RCVBUF, 
+                                                          (char *)&bufsize,
+                                                          sizeof(bufsize)) < 0) 
+    {
+      bufsize = 32 * 1024;
+      if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET, 
+                                                              SO_RCVBUF, 
+                                                              (char *)&bufsize,
+                                                              sizeof(bufsize)) < 0)
+      perror("SO_RCVBUF");
+    }
+
   result = this->activate_svc_handler (handler);
   if (result < 0)
     return result;
@@ -257,10 +298,17 @@ TAO_AV_UDP_MCast_Transport::close (void)
 }
 
 
-int
-TAO_AV_UDP_MCast_Transport::get_peer_addr (ACE_Addr &/*addr*/)
+ACE_Addr*
+TAO_AV_UDP_MCast_Transport::get_peer_addr (void)
 {
-  return -1;
+  return &this->peer_addr_;
+}
+
+ACE_Addr*
+TAO_AV_UDP_MCast_Transport::get_local_addr (void)
+{
+  this->handler_->get_mcast_socket ()->get_local_addr (this->local_addr_);
+  return &this->local_addr_;
 }
 
 ssize_t
