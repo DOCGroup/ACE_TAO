@@ -70,7 +70,7 @@ TAO_SSLIOP_TargetCredentials::association_options_used (
 
 TAO_SSLIOP_TargetCredentials_ptr
 TAO_SSLIOP_TargetCredentials::_narrow (CORBA::Object_ptr obj
-                                       ACE_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
   return  TAO_SSLIOP_TargetCredentials::_duplicate (
               dynamic_cast<TAO_SSLIOP_TargetCredentials *> (obj));
