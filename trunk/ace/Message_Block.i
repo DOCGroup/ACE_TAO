@@ -315,6 +315,12 @@ ACE_Data_Block::locking_strategy (ACE_Lock *nls)
   return ols;
 }
 
+ACE_INLINE int
+ACE_Data_Block::reference_count (void) const
+{
+  return reference_count_;
+}
+
 ACE_INLINE ACE_Lock *
 ACE_Message_Block::locking_strategy (void) 
 {

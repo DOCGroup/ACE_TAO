@@ -1,3 +1,9 @@
+Tue Jan 27 20:32:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block: Added an accessor to retrieve the reference
+ 	  count on an ACE_Data_Block.  Thanks to Dave Meyer
+ 	  <dmeyer@std.saic.com> for contributing this.
+
 Tue Jan 27 15:09:08 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.i,
