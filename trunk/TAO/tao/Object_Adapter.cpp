@@ -1027,11 +1027,10 @@ TAO_POA_Current_Impl::setup (TAO_POA *p,
   this->servant_ = servant;
 
   // Set the current context and remember the old one.
-  TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
+  this->tss_resources_ = TAO_TSS_RESOURCES::instance ();
 
-  this->previous_current_impl_ = tss->poa_current_impl_;
-  tss->poa_current_impl_ = this;
+  this->previous_current_impl_ = this->tss_resources_->poa_current_impl_;
+  this->tss_resources_->poa_current_impl_ = this;
 
   // Setup is complete.
   this->setup_done_ = 1;
@@ -1042,11 +1041,8 @@ TAO_POA_Current_Impl::teardown (void)
 {
   if (this->setup_done_)
     {
-      TAO_TSS_Resources *tss =
-        TAO_TSS_RESOURCES::instance ();
-
       // Reset the old context.
-      tss->poa_current_impl_ = this->previous_current_impl_;
+      this->tss_resources_->poa_current_impl_ = this->previous_current_impl_;
     }
 }
 

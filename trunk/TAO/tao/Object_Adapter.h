@@ -44,6 +44,7 @@ class TAO_POA;
 class TAO_POA_Manager;
 class TAO_Temporary_Creation_Time;
 class TAO_POA_Current_Impl;
+class TAO_TSS_Resources;
 
 class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
@@ -161,6 +162,9 @@ protected:
 
   int setup_done_;
   // Is setup complete?
+
+  TAO_TSS_Resources *tss_resources_;
+  // Pointer to tss resources.
 
   // = Hidden because we don't allow these
   TAO_POA_Current_Impl (const TAO_POA_Current_Impl &);
