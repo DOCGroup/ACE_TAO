@@ -151,12 +151,7 @@ catior (CORBA::String str,
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
 
-  CORBA::Boolean byteOrder;
-
-  {
-    TAO_InputCDR encapStream (&mb);
-    continue_decoding = encapStream.read_boolean (byteOrder);
-  }
+  int byteOrder = *(mb.rd_ptr ());
 
   mb.rd_ptr (1);
   mb.wr_ptr (2 * len - 1);
