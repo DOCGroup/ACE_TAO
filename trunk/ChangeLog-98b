@@ -3,6 +3,12 @@ Tue Jul 07 09:26:22 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Thread_Manager.h: updated comments that describe
           ACE_thread_t * argument to spawn () family.
 
+        * ace/OS.{h,cpp},Thread_Manager.cpp: on VxWorks only, instead
+          of using a string to mark an ACE_thread_t as being allocated
+          by the ACE_Thread_Manager, use a single character (ASCII DC2).
+
+        * tests/run_tests.vxworks: added Dynamic_Priority_Test.
+
 Tue Jul  7 10:48:42 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 
         * tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
