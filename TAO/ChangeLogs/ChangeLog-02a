@@ -1,3 +1,23 @@
+Fri Mar  8 09:06:05 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+
+	  Include "tao/ORB_Core.h" to pull in TAO_ORB_Core class
+	  declaration.  Necessitated by the inter-header dependency
+	  reductions.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
+
+	  Forward declare TAO_Profile to fix a compile-time error.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: 
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: 
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+
+	  Include "tao/Profile.h" to pull in TAO_Profile class
+	  declaration.  Necessitated by the inter-header dependency
+	  reductions.
+
 Thu Mar  7 21:39:17 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/MProfile.cpp (add_profile, grow):
