@@ -1058,6 +1058,19 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                         CORBA::COMPLETED_NO),
                       -1);
 
+  // Open the Transport Cache
+  // @@ This seems to be a nice place to configure the transport
+  // cache for the number of allowed entries
+  if (this->transport_cache_->open (this) == -1)
+    {
+      ACE_THROW_RETURN (CORBA::INITIALIZE (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
+                        -1);
+    }
+
   // Initialize the connector registry and create a connector for each
   // configured protocol.
   if (this->connector_registry ()->open (this) != 0)
@@ -1074,18 +1087,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
             this,
             this->orb_params ()->preconnects ());
 
-  // Open the Transport Cache
-  // @@ This seems to be a nice place to configure the transport
-  // cache for the number of allowed entries
-  if (this->transport_cache_->open (this) == -1)
-    {
-      ACE_THROW_RETURN (CORBA::INITIALIZE (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
