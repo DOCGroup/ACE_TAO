@@ -1,3 +1,11 @@
+Wed Aug 08 11:30:26 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Service_Config_Test.cpp (run_test):
+
+	  Don't check if "ACE_USES_WCHAR == 1" since some configurations
+	  neglect to set it an integer value.  Instead, just check if it
+	  is defined.
+
 Wed Aug  8 12:31:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp: Changed a ACE_DEBUG statment with an
