@@ -11,10 +11,9 @@
 // = DESCRIPTION
 //    This example tests the IDL Cubit server and client
 //    components. The test forks and execs two processes to run both
-//    the client and the time server. The clerk and the server
-//    communicate for a short duration after which the main process
-//    kills both the processes. No command line arguments are needed
-//    to run the test.
+//    the cubit client and the cubit server. The client makes calls on
+//    the cubit server object and shutdowns the server in the end.
+//    No command line arguments are needed to run the test.
 //
 // = AUTHOR
 //    Nagarajan Surendran (naga@cs.wustl.edu)
