@@ -199,6 +199,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_O
 .PRECIOUS: CosNamingC.cpp CosNamingS.cpp CosNamingC.h CosNamingS.h
 .PRECIOUS: CosTimeBaseC.cpp CosTimeBaseS.cpp CosTimeBaseC.h CosTimeBaseS.h
 .PRECIOUS: CosTradingC.cpp CosTradingS.cpp CosTradingC.h CosTradingS.h
+.PRECIOUS: CosLifeCycleC.cpp CosLifeCycleS.cpp CosLifeCycleC.h CosLifeCycleS.h
 .PRECIOUS: RtecSchedulerC.cpp RtecSchedulerS.cpp RtecSchedulerC.h RtecSchedulerS.h
 .PRECIOUS: RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h
 .PRECIOUS: RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h
