@@ -96,12 +96,6 @@ be_visitor_field_ch::visit_array (be_array *node)
     {
       // This is the case for anonymous arrays.
 
-      AST_Type *elem = node->base_type ();
-
-      if (elem->is_child (this->ctx_->scope ()))
-        {
-        }
-
       // Instantiate a visitor context with a copy of our context. This info
       // will be modified based on what type of node we are visiting
       be_visitor_context ctx (*this->ctx_);
@@ -123,7 +117,7 @@ be_visitor_field_ch::visit_array (be_array *node)
 
       // Having defined all array type and its supporting operations, now
       // generate the actual variable that is a field of the structure.
-      *os << "_" << bt->local_name ();
+      *os << be_nl << be_nl << "_" << bt->local_name ();
     }
   else
     {
