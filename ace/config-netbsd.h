@@ -36,7 +36,12 @@
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_CHARPTR_DL
 #define ACE_USES_ASM_SYMBOL_IN_DLSYM
-#define ACE_LACKS_SIGSET
+
+// NetBSD appears to have dirent support.
+#define ACE_HAS_DIRENT
+
+// NetBSD appears to have a sigset_t type.
+// #define ACE_LACKS_SIGSET
 
 // This is for 2.1.x only.  By default, gcc defines __FreeBSD__ automatically
 #if defined(FreeBSD_2_1)
