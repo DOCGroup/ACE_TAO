@@ -1,10 +1,11 @@
 Wed Apr 28 03:20:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Exception.{h,i,cpp}: Added a new class
-	  CORBA_ExceptionList_var and changed the class
-	  CORBA_ExceptionList to enable reference counting.
-	  Fixed the constructor's signature of all CORBA_SystemException's
-	  derived classes.  Thanks to
+ 	  CORBA_ExceptionList_var and changed the class
+ 	  CORBA_ExceptionList to enable reference counting.  Fixed the
+ 	  constructor's signature of all CORBA_SystemException's derived
+ 	  classes.  Thanks to Ian Pepper <ian@aptest.ie> for reporting
+ 	  this.
 
 	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Added a typedef
 	  TAO_EC_Unlock to avoid MSVC errors.
