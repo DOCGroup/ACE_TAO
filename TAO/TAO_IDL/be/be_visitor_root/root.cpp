@@ -1669,6 +1669,8 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
       if (be_global->gen_anyop_files ())
         {
           tao_cg->anyop_source ()->gen_endif_AHETI ();
+          
+          *tao_cg->anyop_source () << "\n";
         }
     }
   else if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS)
