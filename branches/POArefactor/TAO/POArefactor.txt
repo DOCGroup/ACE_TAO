@@ -1,3 +1,8 @@
+Thu Sep 30 13:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter_Factory.h:
+          Removed msvc push/pop, no need for it in this file
+
 Thu Sep 30 13:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Cached_Policies.h:
