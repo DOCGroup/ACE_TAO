@@ -976,7 +976,7 @@ _TAO_ConstructionPolicy_Strategized_Proxy_Broker::~_TAO_ConstructionPolicy_Strat
 
 _TAO_CORBA_ConstructionPolicy_Proxy_Impl&
 _TAO_ConstructionPolicy_Strategized_Proxy_Broker::select_proxy (
-    ::CORBA::ConstructionPolicy *object,
+    ::CORBA_ConstructionPolicy *object,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
@@ -1335,7 +1335,7 @@ const char* POA_CORBA_ConstructionPolicy::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/ConstructionPolicy:1.0";
 }
 
-CORBA::ConstructionPolicy*
+CORBA_ConstructionPolicy*
 POA_CORBA_ConstructionPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
@@ -1354,7 +1354,7 @@ POA_CORBA_ConstructionPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
   (void) safe_stub.release ();
 
-  return ::CORBA::ConstructionPolicy::_unchecked_narrow (obj.in ());
+  return CORBA_ConstructionPolicy::_unchecked_narrow (obj.in ());
 }
 
 

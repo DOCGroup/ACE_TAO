@@ -257,7 +257,7 @@
         CORBA::Environment &ACE_TRY_ENV
       );
 
-    ::CORBA::ConstructionPolicy *_this (
+    CORBA_ConstructionPolicy *_this (
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
@@ -321,7 +321,7 @@
     virtual ~_TAO_ConstructionPolicy_Strategized_Proxy_Broker (void);
 
     virtual _TAO_CORBA_ConstructionPolicy_Proxy_Impl &select_proxy (
-      ::CORBA::ConstructionPolicy *object,
+      CORBA_ConstructionPolicy *object,
       CORBA_Environment &ACE_TRY_ENV
     );
 
