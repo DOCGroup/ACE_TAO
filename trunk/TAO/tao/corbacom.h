@@ -170,7 +170,7 @@ struct CORBA_SEQUENCE
 #endif /* SIZEOF_LONG */
   T *buffer;
   CORBA_Boolean release; // Only here to make it compliant with IDL-generated layout
-  
+
   CORBA_SEQUENCE (void)
     : maximum (0), length (0), buffer (0), release(CORBA::B_FALSE) { }
 
@@ -212,14 +212,8 @@ public:
   // CORBA "Long" (and its unsigned cousin) are 32 bits, just like on
   // almost all C/C++ compilers.
 
-#  if   SIZEOF_LONG == 4
-  typedef long Long;
-  typedef u_long ULong;
-#  else
-  // just assume "int" is 4 bytes long ...
-  typedef int Long;
-  typedef u_int ULong;
-#  endif        /* SIZEOF_LONG != 4 */
+  typedef ACE_INT32 Long;
+  typedef ACE_UINT32 ULong;
 
   // 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that 64
   // bit integers are "LongLong".
@@ -229,15 +223,21 @@ public:
   //
   // NOTE:  those are IDL extensions, not yet standard.
 
+  typedef ACE_UINT64 ULongLong;
 #  if   SIZEOF_LONG_LONG == 8
-  typedef long long LongLong;
-  typedef unsigned long long ULongLong;
+#    if defined (sun)
+       // sun #defines u_longlong_t, maybe other platforms do also.
+       // Use it, at least with g++, so that its -pedantic doesn't
+       // complain about no ANSI C++ long long.
+       typedef longlong_t LongLong;
+#    else
+       // LynxOS 2.5.0 and Linux don't have u_longlong_t.
+       typedef long long LongLong;
+#    endif /* sun */
 #  elif SIZEOF_LONG == 8
   typedef long LongLong;
-  typedef u_long ULongLong;
 #  elif defined (_MSC_VER) && _MSC_VER >= 900
   typedef __int64 LongLong;
-  typedef unsigned __int64 ULongLong;
 #  else
 
   // If "long long" isn't native, programs can't use these data types
@@ -248,10 +248,8 @@ public:
 #    define     NONNATIVE_LONGLONG
 #    if defined (TAO_WORDS_BIGENDIAN)
   struct LongLong { Long h, l; };
-  struct ULongLong { Long h, l; };
 #    else
   struct LongLong { Long l, h; };
-  struct ULongLong { ULong l, h; };
 #    endif /* !TAO_WORDS_BIGENDIAN */
 #  endif /* no native 64 bit integer type */
 
