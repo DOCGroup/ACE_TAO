@@ -11,6 +11,9 @@ Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
           config-irix{5.3,6.x}-g++.h,config-osf1-4.0.h:
           migrated to config-g++-common.h.
 
+        * ace/config-sunos5.5-egcs*.h: removed.  config-sunos5.5-g++.h
+          now supports egcs, via config-g++-common.h.
+
         * examples/Reactor/Misc/test_event_handler_t.cpp: renamed
           ACE_Sig_Handler to ACE_Test_Sig_Handler to avoid collision
           with ACE_Sig_Handler in ACE library.
