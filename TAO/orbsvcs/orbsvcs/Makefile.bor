@@ -17,6 +17,7 @@ MAKEFILES = \
 	CosConcurrency.bor \
 	CosLifeCycle.bor \
 	CosTime.bor \
-	DsLogAdmin.bor
+	DsLogAdmin.bor \
+	LoadBalancing.bor
 
 !include <$(ACE_ROOT)/include/makeinclude/recurse.bor>

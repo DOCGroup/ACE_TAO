@@ -38,8 +38,8 @@ OBJFILES = \
 	$(OBJDIR)\DynSequence_i.obj \
 	$(OBJDIR)\DynStruct_i.obj \
 	$(OBJDIR)\DynUnion_i.obj \
-	$(OBJDIR)\Environment.obj \
 	$(OBJDIR)\Encodable.obj \
+	$(OBJDIR)\Environment.obj \
 	$(OBJDIR)\Exception.obj \
 	$(OBJDIR)\Forwarding_Servant.obj \
 	$(OBJDIR)\GIOP_Message_Accept_State.obj \
@@ -100,6 +100,7 @@ OBJFILES = \
 	$(OBJDIR)\POAC.obj \
 	$(OBJDIR)\POAManager.obj \
 	$(OBJDIR)\POAS.obj \
+        $(OBJDIR)\Policy_Factory.obj \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\PolicyC.obj \
 	$(OBJDIR)\PolicyS.obj \
