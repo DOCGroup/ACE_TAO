@@ -12,8 +12,6 @@ Client_Strategy_Factory.cpp
 	C++
 Connect.cpp
 	C++
-CORBA.cpp
-	C++
 debug.cpp
 	C++
 decode.cpp
@@ -32,11 +30,11 @@ Exception.cpp
 	C++
 GIOP.cpp
 	C++
+IIOP_Interpreter.cpp
+	C++
 IIOP_Object.cpp
 	C++
 IIOP_ORB.cpp
-	C++
-interp.cpp
 	C++
 Marshal.cpp
 	C++
@@ -70,13 +68,21 @@ Sequence.cpp
 	C++
 Servant_Base.cpp
 	C++
-server_factory.cpp
-	C++
 Server_Request.cpp
 	C++
-Tao_Internal.cpp
+Server_Strategy_Factory.cpp
+	C++
+Stub.cpp
+	C++
+TAO.cpp
+	C++
+TAO_Internal.cpp
+	C++
+Timeprobe.cpp
+	C++
+Typecode.cpp
 	C++
 Typecode_Constants.cpp
 	C++
-Typecode.cpp
+timetest.cpp
 	C++
