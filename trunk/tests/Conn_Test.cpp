@@ -28,6 +28,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
 #include "ace/Strategies.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "Conn_Test.h"
 
@@ -154,19 +155,40 @@ ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 
 // ****************************************
 
+// The following works around bugs with some operating systems, which
+// don't allow multiple threads/process to call accept() on the same
+// listen-mode port/socket.
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-typedef ACE_SYNCH_NULL_MUTEX ACCEPTOR_LOCKING;
+typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+#elif (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
+typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
 #else
-typedef ACE_SYNCH_MUTEX ACCEPTOR_LOCKING;
+typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
 #endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 
-typedef ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING> SOCK_ACCEPTOR;
-typedef ACE_Oneshot_Acceptor<Svc_Handler, SOCK_ACCEPTOR> ACCEPTOR;
-typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
-typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> STRAT_CONNECTOR;
-typedef ACE_NOOP_Creation_Strategy<Svc_Handler> NULL_CREATION_STRATEGY;
-typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler> NULL_ACTIVATION_STRATEGY;
-typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX> CACHED_CONNECT_STRATEGY;
+#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
+#else
+#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>, ACE_INET_Addr
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
+typedef ACE_Oneshot_Acceptor<Svc_Handler,
+                             LOCK_SOCK_ACCEPTOR>
+        ACCEPTOR;
+typedef ACE_Connector<Svc_Handler,
+                      ACE_SOCK_CONNECTOR> 
+        CONNECTOR;
+typedef ACE_Strategy_Connector<Svc_Handler,
+                               ACE_SOCK_CONNECTOR> 
+        STRAT_CONNECTOR;
+typedef ACE_NOOP_Creation_Strategy<Svc_Handler> 
+        NULL_CREATION_STRATEGY;
+typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler> 
+        NULL_ACTIVATION_STRATEGY;
+typedef ACE_Cached_Connect_Strategy<Svc_Handler,
+                                    ACE_SOCK_CONNECTOR,
+                                    ACE_SYNCH_RW_MUTEX> 
+        CACHED_CONNECT_STRATEGY;
 
 // ****************************************
 
@@ -412,11 +434,13 @@ handler (int signum)
 
 // Spawn threads.
 
-static void
+static int
 spawn_processes (ACCEPTOR *acceptor,
                  ACE_INET_Addr *server_addr)
 {
-  pid_t children[n_servers];
+  pid_t *children_ptr;
+  ACE_NEW_RETURN (children_ptr, pid_t[n_servers], -1);
+  ACE_Auto_Basic_Array_Ptr<pid_t> children (children_ptr);
   int i;
 
   // Spawn off a number of server processes all of which will listen
@@ -437,7 +461,7 @@ spawn_processes (ACCEPTOR *acceptor,
             ACE_UNUSED_ARG (sa);
 
             server ((void *) acceptor);
-            return;
+            return 0;
             /* NOTREACHED */
           }
         default:          // In the parent.
@@ -461,6 +485,9 @@ spawn_processes (ACCEPTOR *acceptor,
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping %d\n", child));
     }
   while (child != -1);
+  
+  // Remove the lock so we don't have process semaphores lying around.
+  return acceptor->acceptor ().lock ().remove ();
 }
 #endif /* ! ACE_WIN32 ! VXWORKS */
 
@@ -523,7 +550,8 @@ main (int argc, char *argv[])
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
-      spawn_processes (&acceptor, &server_addr);
+      if (spawn_processes (&acceptor, &server_addr) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%r) %p\n", "spawn_processes"), 1);
 #elif defined (ACE_HAS_THREADS)
       spawn_threads (&acceptor, &server_addr);
 #else
@@ -558,6 +586,7 @@ template class ACE_Recycling_Strategy<Svc_Handler>;
 template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Svc_Handler>;
+template class ACE_Auto_Basic_Array_Ptr<pid_t>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Addr<ACE_INET_Addr>
@@ -580,4 +609,5 @@ template class ACE_Svc_Tuple<Svc_Handler>;
 #pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Svc_Tuple<Svc_Handler>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

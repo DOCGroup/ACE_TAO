@@ -1,3 +1,9 @@
+Wed Oct 29 01:25:54 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/LOCK_SOCK_Acceptor.cpp (lock): Added a lock() accessor
+ 	  method to the new ACE_LOCK_SOCK_Acceptor so that we can remove
+ 	  the lock (somehow).
+
 Wed Oct 29 00:29:52 1997    <irfan@TWOSTEP>
 
 	* apps/JAWS/server: Fixed Win32 related compilation errors.

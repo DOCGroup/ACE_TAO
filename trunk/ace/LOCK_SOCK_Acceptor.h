@@ -18,11 +18,17 @@
 
 #include "ace/SOCK_Acceptor.h"
 
-template <class LOCK>
+template <class ACE_LOCK>
 class ACE_LOCK_SOCK_Acceptor : public ACE_SOCK_Acceptor
   // = TITLE
-  // 
   //     Specialize ACE_SOCK_Acceptor to lock around <accept>;
+  // 
+  // = DESCRIPTION
+  //     This class is necessary since some OS platforms (e.g.,
+  //     Solaris 2.5) do not allow multiple threads/processes to
+  //     simultaneously call <accept> on the same listen-mode
+  //     port/socket.  Thus, we need to protect against multiple
+  //     concurrent accesses by using the appropriate type of lock.
 {
 public:
   virtual int accept (ACE_SOCK_Stream &new_stream,
@@ -30,11 +36,16 @@ public:
                       ACE_Time_Value *timeout = 0,
                       int restart = 1,
                       int reset_new_handle = 0) const;
+  // Accept the connection under the control of the <ACE_LOCK>. 
+
+  ACE_LOCK &lock (void);
+  // Return a reference to the lock.
+
 protected:
   typedef ACE_SOCK_Acceptor SUPER;
   // Useful typedef
 
-  LOCK lock_;
+  ACE_LOCK lock_;
   // Type of locking mechanism.
 };
 
