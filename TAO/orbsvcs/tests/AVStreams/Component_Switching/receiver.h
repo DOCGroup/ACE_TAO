@@ -79,7 +79,7 @@ public:
   Receiver (void);
   /// Constructor
 
-  ~Receiver (void);
+  virtual ~Receiver (void);
   /// Destructor.
 
   int init (int argc,
@@ -93,6 +93,11 @@ public:
 
   ACE_CString output_file_name (void);
   /// Name of the output file.
+  
+  ACE_CString sender_name (void);
+  ACE_CString receiver_name (void);
+
+  void unbind (CORBA::Environment &);
 
 protected:
   Connection_Manager connection_manager_;
