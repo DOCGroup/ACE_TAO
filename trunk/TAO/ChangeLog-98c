@@ -1,118 +1,124 @@
+Mon May 04 09:05:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp,Util_Thread.cpp,server.cpp:
+          removed ACE_OS::thr_setprio class to set LWP priority, now that ACE
+          handles that internally.
+
 Sun May 03 02:05:21 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.18 released.
 
 1998-05-02  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Updated the status information for
-	PropertyService.
+        * docs/releasenotes/index.html: Updated the status information for
+        PropertyService.
 
 Sat May  2 14:28:41 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): There was a bug
- 	  in Ross' code that was failing to initialize the
- 	  naming_context_var_.  This is now fixed.  Thanks to Andy for
- 	  noticing this.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): There was a bug
+          in Ross' code that was failing to initialize the
+          naming_context_var_.  This is now fixed.  Thanks to Andy for
+          noticing this.
 
 Sat May  2 09:58:41 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_exception.cpp: We now make the *_alloc
-	method as a static method of the generated Exception class. The
-	reason for doing this was that some exceptions get borrowed from
-	included files. Now if we make the _alloc method as a static
-	method in the generated *C.cpp file, we don't see it in other
-	files where it is needed. The best way to do this was to make a
-	_alloc method as a static method on the generated exception class.
+        * TAO_IDL/be/be_visitor_exception.cpp: We now make the *_alloc
+        method as a static method of the generated Exception class. The
+        reason for doing this was that some exceptions get borrowed from
+        included files. Now if we make the _alloc method as a static
+        method in the generated *C.cpp file, we don't see it in other
+        files where it is needed. The best way to do this was to make a
+        _alloc method as a static method on the generated exception class.
 
-	* TAO_IDL/be/be_visitor_operation.cpp: Changes made above required
-	some trivial modifications. However, it remains to be see if
-	MSVC++ accepts the generated code or not OR whether it needs the
-	ACE_NESTED_CLASS macro. I am waiting for reports on this.
+        * TAO_IDL/be/be_visitor_operation.cpp: Changes made above required
+        some trivial modifications. However, it remains to be see if
+        MSVC++ accepts the generated code or not OR whether it needs the
+        ACE_NESTED_CLASS macro. I am waiting for reports on this.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}:(init): Due to
-	application of patches, the signature of the
-	TAO_Naming_Server::init got reverted to the older and buggy
-	version. This is now fixed.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}:(init): Due to
+        application of patches, the signature of the
+        TAO_Naming_Server::init got reverted to the older and buggy
+        version. This is now fixed.
 
 Fri May 01 17:56:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved #include of
- 	  Arg_Shifter.h after #include of tao/corba.h so that ACE_Export
- 	  is properly defined.
+        * tao/orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved #include of
+          Arg_Shifter.h after #include of tao/corba.h so that ACE_Export
+          is properly defined.
 
-	* tao/TAO.dsp: Removed Arg_Shifter.cpp from the project.
+        * tao/TAO.dsp: Removed Arg_Shifter.cpp from the project.
 
 Fri May  1 17:26:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (init): Added support
- 	  for the -NScontextname option.  Thanks to Ross J. Lillie
- 	  <lillie@rsch.comm.mot.com> for this feature.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (init): Added support
+          for the -NScontextname option.  Thanks to Ross J. Lillie
+          <lillie@rsch.comm.mot.com> for this feature.
 
-	* orbsvcs/orbsvcs/Naming_Utils.h: Added "argv/argc" parameters to
- 	  the TAO_Naming_Server::init() and constructor methods.  Thanks
- 	  to Ross J. Lillie <lillie@rsch.comm.mot.com> for this feature.
+        * orbsvcs/orbsvcs/Naming_Utils.h: Added "argv/argc" parameters to
+          the TAO_Naming_Server::init() and constructor methods.  Thanks
+          to Ross J. Lillie <lillie@rsch.comm.mot.com> for this feature.
 
-	* tao/Makefile: Moved the Arg_Shifter from TAO to ACE since it is
- 	  generic and not TAO-specific.
+        * tao/Makefile: Moved the Arg_Shifter from TAO to ACE since it is
+          generic and not TAO-specific.
 
 Fri May  1 13:05:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/Stub.h: Added a new structure called TAO_Exception_Data that
-	holds the typecode and pointer to a function for the user
-	exception we are dealing with. This was necessary since the
-	interpreter had no clue of how to allocate storage for the
-	exception we are dealing with and how to decode it.
+        * tao/Stub.h: Added a new structure called TAO_Exception_Data that
+        holds the typecode and pointer to a function for the user
+        exception we are dealing with. This was necessary since the
+        interpreter had no clue of how to allocate storage for the
+        exception we are dealing with and how to decode it.
 
-	* tao/GIOP.{h, cpp}: Affected by the above change is the "invoke"
-	method which takes the list of exceptions. It is this method that
-	is responsible for allocating the right amount of storage for the
-	exceptions and decode it.
+        * tao/GIOP.{h, cpp}: Affected by the above change is the "invoke"
+        method which takes the list of exceptions. It is this method that
+        is responsible for allocating the right amount of storage for the
+        exceptions and decode it.
 
-	We kept the original invoke method as it is because the newer
-	signature cannot work with DII. This still needs work.
+        We kept the original invoke method as it is because the newer
+        signature cannot work with DII. This still needs work.
 
-	* tao/IIOP_Object.cpp:(do_static_call) - When "invoke" is called,
-	we now pass the TAO_Exception_Data table.
+        * tao/IIOP_Object.cpp:(do_static_call) - When "invoke" is called,
+        we now pass the TAO_Exception_Data table.
 
-	* TAO_IDL/be/be_visitor_operation.cpp: The exceptionlist table
-	that gets generated is now an array of TAO_Exception_Data. In
-	addition, it is made static.
+        * TAO_IDL/be/be_visitor_operation.cpp: The exceptionlist table
+        that gets generated is now an array of TAO_Exception_Data. In
+        addition, it is made static.
 
-	* TAO_IDL/be/be_visitor_exception.cpp: Added code to generate the
-	*_alloc function that allocates memory for the exception.
+        * TAO_IDL/be/be_visitor_exception.cpp: Added code to generate the
+        *_alloc function that allocates memory for the exception.
 
 Fri May  1 09:55:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/POAS.cpp: In the initialization section of constructors for
-	some of the collocated classes, we had forgotten to use the
-	ACE_NESTED_CLASS macro. This is now fixed.
+        * tao/POAS.cpp: In the initialization section of constructors for
+        some of the collocated classes, we had forgotten to use the
+        ACE_NESTED_CLASS macro. This is now fixed.
 
 Fri May  1 06:19:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface.cpp: Modified the generated code
-	for <<= and >>= operators. It involves more memory allocation. The
-	previous version was buggy because it was holding pointers to data
-	allocated on function call stacks.
+        * TAO_IDL/be/be_visitor_interface.cpp: Modified the generated code
+        for <<= and >>= operators. It involves more memory allocation. The
+        previous version was buggy because it was holding pointers to data
+        allocated on function call stacks.
 
-	* Makefiles: A few Makefiles have been updated with the .PRECIOUS
-	clause. Otherwise the make was deleting some IDL compiler
-	generated files.
+        * Makefiles: A few Makefiles have been updated with the .PRECIOUS
+        clause. Otherwise the make was deleting some IDL compiler
+        generated files.
 
-	* tao/Marshal.i: trivial changes. Probably not even required to
-	do. Instead of casting the void pointer at the time of passing the
-	parameter to release, we do it prior to it and then pass the local
-	variable.
+        * tao/Marshal.i: trivial changes. Probably not even required to
+        do. Instead of casting the void pointer at the time of passing the
+        parameter to release, we do it prior to it and then pass the local
+        variable.
 
-	Added the $Id$ CVS string.
+        Added the $Id$ CVS string.
 
-	* tests/Param_Test: Added support to handle Anys of Object
-	references (In our case Anys of Coffee objects).
+        * tests/Param_Test: Added support to handle Anys of Object
+        references (In our case Anys of Coffee objects).
 
 Thu Apr 30 20:18:44 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/CosPropertyService/client.{h, cpp}, server.{h,
-	cpp}: The client and server programs exclusively for testing
-	CosPropertyService.
+        * orbsvcs/tests/CosPropertyService/client.{h, cpp}, server.{h,
+        cpp}: The client and server programs exclusively for testing
+        CosPropertyService.
 
 Thu Apr 30 15:35:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
