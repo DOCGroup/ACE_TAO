@@ -245,9 +245,8 @@ TAO_IIOP_Connection_Handler::handle_close_i (void)
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_LIB_TEXT ("TAO (%P|%t) ")
-                 ACE_LIB_TEXT ("IIOP_Connection_Handler::handle_close_i ")
-                 ACE_LIB_TEXT ("(%d)\n"),
+                 "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_close_i, "
+                 "\n",
                  this->transport ()->id ()));
 
   if (this->transport ()->wait_strategy ()->is_registered ())
@@ -359,10 +358,20 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
   // Increase the reference count on the upcall that have passed us.
   long upcalls = this->incr_pending_upcalls ();
+
+  if (TAO_debug_level > 6)
+    {
+      ACE_HANDLE handle = this->get_handle();
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_input, "
+                  "handle = %d/%d, upcalls = %d\n",
+                  this->transport()->id(), handle, h, upcalls));
+    }
+  ACE_ASSERT (upcalls > 0);
 
   TAO_Resume_Handle resume_handle (this->orb_core (),
                                    this->get_handle ());
@@ -371,6 +380,16 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 
   // The upcall is done. Bump down the reference count
   upcalls = this->decr_pending_upcalls ();
+
+  if (TAO_debug_level > 6)
+    {
+      ACE_HANDLE handle = this->get_handle();
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_input, "
+                  "handle = %d/%d, upcalls = %d, retval = %d\n",
+                  this->transport()->id(), handle, h, upcalls, retval));
+    }
+  ACE_ASSERT (upcalls >= 0);
 
   if (upcalls == 0)
     {
@@ -381,16 +400,8 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
       // call handle_close () which could be harmful.
       retval = 0;
     }
-  else if (upcalls < 0)
-    {
-      // As we have already performed the handle closing we dont want
-      // to return a  -1. Doing so would make the reactor call
-      // handle_close () which could be harmful.
-      retval = 0;
-    }
 
-
-  if (retval == -1)
+  if (retval == -1 || upcalls == 0)
     {
       // This is really a odd case. We could have a race condition if
       // we dont do this. Looks like this what happens
