@@ -36,7 +36,7 @@ namespace TAO_Notify
   Topology_Object::init (Topology_Parent * parent)
   {
     this->topology_parent_ = parent;
-    TAO_Notify_Object::init (parent);
+    TAO_Notify_Object::initialize (parent);
   }
 
   Topology_Parent *

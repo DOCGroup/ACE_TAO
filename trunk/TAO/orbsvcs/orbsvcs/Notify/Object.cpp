@@ -44,7 +44,7 @@ TAO_Notify_Object::~TAO_Notify_Object ()
 }
 
 void
-TAO_Notify_Object::init (TAO_Notify_Object* parent)
+TAO_Notify_Object::initialize (TAO_Notify_Object* parent)
 {
   this->event_manager_ = parent->event_manager_;
   this->admin_properties_ = parent->admin_properties_;

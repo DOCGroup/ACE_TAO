@@ -124,7 +124,7 @@ public:
 
 protected:
   /// Init this object with data from <rhs>.
-  void init (TAO_Notify_Object* parent);
+  void initialize (TAO_Notify_Object* parent);
 
   /// Shutdown the current worker task and delete it if we own it.
   void shutdown_worker_task (void);
