@@ -45,10 +45,15 @@ add these two entries when we want to load the event service.
 dynamic CEC_Factory Service_Object * \
 	TAO_CosEvent:_make_TAO_CEC_Default_Factory () ""
 
-# Dynamically configure the naming service into the application process.
+# Dynamically configure the event service into the application process.
 dynamic TAO_CEC_Event_Loader Service_Object * \
         TAO_CosEvent:_make_TAO_CEC_Event_Loader () "dummy -o foo.ref"
 
+To load Trading Service dynamically:
+---------------------------------
+
+#  Dynamically configure the trading service into the application process.
+dynamic TAO_Trading_Loader Service_Object * TAO_CosTrading:_make_TAO_Trading_Loader () "dummy -TSdumpior foo.ref"
 
 To Remove a Service
 *******************
@@ -75,6 +80,11 @@ To Unload Event Service :
 # Dynamically remove the Event Service from the application process.
 remove TAO_Event_Loader
 
+To Unload Trading Service :
+------------------------
+
+# Dynamically remove the Event Service from the application process.
+remove TAO_Trading_Loader
 
 To Run TAO_Service :
 ==================
