@@ -1,3 +1,11 @@
+Sat Dec  2 16:15:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAOACE.dsw:
+
+	  This was left out of a previous checkin.
+
+	  Fri Dec  1 13:16:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
 Sat Dec  2 00:23:10 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Explicit_Binding/Makefile:
