@@ -6,6 +6,8 @@
 
 #include "CIAO/DnC/Config_Handlers/DnC_Dump.h"
 
+#include "NodeManager/NodeDaemonC.h"
+
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -529,9 +531,9 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
             ACE_THROW (Deployment::StopError ()); // Should never happen!
 
           ::Deployment::NodeApplicationManager_ptr my_node_application_manager =
-	      (entry->int_id_).node_application_manager_.in ();
+	          (entry->int_id_).node_application_manager_.in ();
 
-          // Invoke destoryManager() operation on the NodeManger.
+          // Invoke destoryApplication() operation on the NodeApplicationManger.
 	        // Since we have the first arg is not used by NAM anyway.
           my_node_application_manager->destroyApplication (0
 							   ACE_ENV_ARG_PARAMETER);
@@ -569,13 +571,21 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
                                         entry) != 0)
             ACE_THROW (Deployment::StopError ()); // Should never happen!
 
-          ::Deployment::NodeManager_ptr my_node_manager =
-    	      (entry->int_id_).node_manager_.in ();
+          ::Deployment::NodeManager_var my_node_manager =
+    	      (entry->int_id_).node_manager_;
 
 	        // Since we have the first arg is not used by NM anyway.
-          my_node_manager->destroyManager (0
-					   ACE_ENV_ARG_PARAMETER);
+          my_node_manager->destroyManager (0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          // Narrow down to NodeDaemon object for Purify purpose.
+          //CIAO::NodeDaemon_var node_daemon =
+          //  CIAO::NodeDaemon::_narrow (my_node_manager.in () ACE_ENV_ARG_PARAMETER);
+          //ACE_TRY_CHECK;
+
+          // Shutdown the NodeDaemon process for Purify purpose.
+          //node_daemon->shutdown (ACE_ENV_ARG_PARAMETER);
+          //ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

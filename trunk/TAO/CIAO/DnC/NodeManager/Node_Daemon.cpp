@@ -185,17 +185,19 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (adapter.in ()))
           ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
 
+
       // Create and install the CIAO Daemon servant
       CIAO::NodeDaemon_Impl *daemon_servant = 0;
       ACE_NEW_RETURN (daemon_servant,
                       CIAO::NodeDaemon_Impl("NodeDaemon",
-					    orb.in (),
-					    poa.in (),
-                                            nodeapp_location_,
-                                            spawn_delay),
+                      orb.in (),
+                      poa.in (),
+                      nodeapp_location_,
+                      spawn_delay),
                       -1);
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
       // Implicit activation
+
       CIAO::NodeDaemon_var daemon = daemon_servant->_this ();
 
       CORBA::String_var str = orb->object_to_string (daemon.in ()
@@ -236,7 +238,13 @@ main (int argc, char *argv[])
 
       // Run the main event loop for the ORB.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK
+      ACE_TRY_CHECK;
+
+      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

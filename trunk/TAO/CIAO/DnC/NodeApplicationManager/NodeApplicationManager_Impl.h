@@ -89,9 +89,9 @@ namespace CIAO
      *
      * @param callback_poa contains child poa created for the callback interface.
      *
-     * @return void.
+     * @return NodeApplicationManager_ptr.
      **/
-    virtual void
+    virtual Deployment::NodeApplicationManager_ptr
     init (const char *nodeapp_location,
 	  const CORBA::ULong delay,
 	  const Deployment::DeploymentPlan & plan,
@@ -140,7 +140,7 @@ namespace CIAO
     PortableServer::POA_var poa_;
 
     // ObjectRef of ourself which will be needed by the callback
-    Deployment::NodeApplicationManager_ptr objref_;
+    Deployment::NodeApplicationManager_var objref_;
 
     // Child poa that uses active object map.
     PortableServer::POA_var callback_poa_;
