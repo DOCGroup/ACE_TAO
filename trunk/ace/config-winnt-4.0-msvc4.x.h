@@ -244,4 +244,7 @@
 // Platform support linebuffered streaming is broken
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
+// iostream header lacks ipfx (), isfx (), etc., declarations
+#define ACE_LACKS_IOSTREAM_FX
+
 #endif /* ACE_CONFIG_H */

@@ -149,6 +149,9 @@
 // Platform doesn't have pthread_condattr_setpshared()
 #define ACE_LACKS_CONDATTR_PSHARED
 
+// iostream header lacks ipfx (), isfx (), etc., declarations
+#define ACE_LACKS_IOSTREAM_FX
+
 // Platform doesn't have pthread_key_delete()
 #define ACE_LACKS_KEYDELETE
 
