@@ -6,7 +6,7 @@ Sat Mar 26 02:34:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Removed these attributes and methods.  Standard CORBA exception
 	  TypeCodes are no longer instantiated dynamically, and are now
 	  available prior to calling CORBA::ORB_init().
-	  
+
 	* tao/ORB.cpp (init_orb_globals):
 
 	  Removed function calls that initialized standard CORBA exception
