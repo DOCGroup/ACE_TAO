@@ -29,6 +29,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "cubitC.h"
+#include "cubit_i.h"
 
 #if defined (CHORUS)
 #include "pccTimer.h"
@@ -59,6 +60,16 @@ public:
 };
 #define ACE_Barrier NOOP_ACE_Barrier
 #endif /* ACE_HAS_THREADS */
+
+#if defined (NO_ACE_QUANTIFY)
+#define START_QUANTIFY \
+quantify_start_recording_data ();
+#define STOP_QUANTIFY \
+quantify_stop_recording_data();
+#else /*!NO_ACE_QUANTIFY */
+#define START_QUANTIFY 
+#define STOP_QUANTIFY 
+#endif /* !NO_ACE_QUANTIFY */
 
 // Arbitrary generator used by the client to create the numbers to be
 // cubed.
@@ -265,7 +276,22 @@ private:
                  u_int,
                  Cubit_Datatypes,
                  double frequency);
-  // Makes the calls to the servant.
+  // run the various tests.
+
+  int make_calls (void);
+  // make calls depending on the datatype.
+
+  int cube_octet (void);
+  // call cube_octet method on the cubit object.
+
+  int cube_short (void);
+  // call cube short on the cubit object.
+  
+  int cube_long (void);
+  // call cube long on the cubit object.
+
+  int cube_struct (void);
+  // call cube struct on the cubit object.
 
   void put_latency (double *jitter,
                     double latency,
@@ -276,14 +302,26 @@ private:
   int parse_args (int, char **);
   // Parses the arguments.
 
+  Cubit_ptr cubit_;
+  // pointer to the cubit object.
+
+  Cubit_i *cubit_impl_;
+  // cubit implementation object.
+
   Task_State *ts_;
   // Pointer to shared state.
+
+  u_int num_;
+  // number used for cubing.
 
   u_int id_;
   // unique id of the task
 
-  //  CosNaming::NamingContext_var naming_context_;
-  // Object reference to the naming service.
+  u_int call_count_;
+  // count of the number of calls made.
+
+  u_int error_count_;
+  // number of calls that failed.
 
   CosNaming::NamingContext_var mt_cubit_context_;
   // Object reference to the cubit context "MT_Cubit".

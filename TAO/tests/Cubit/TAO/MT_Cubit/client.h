@@ -33,3 +33,23 @@ extern "C" STATUS vmeDrv (void);
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* defined (VME_DRIVER) */
 
+// class Client
+// {
+// public:
+//   Client (void);
+//   //constructor.
+//   int do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
+//                                   Task_State *ts);
+//   int do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
+//                                Task_State *ts);
+//   int start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager);
+
+//   void output_latency (Task_State *ts);
+
+// #if defined (VXWORKS)
+//   void output_taskinfo (void);
+// #endif /* VXWORKS */
+//   int initialize (void);
+// };
+
+

@@ -24,6 +24,7 @@
   "-ORBtablesize", "128" }
 #endif
 
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/ARGV.h"
@@ -128,17 +129,80 @@ private:
 class Server
 {
   // = TITLE
-  //   @@ Naga, can you please fill in here?
+  //     A multithreaded cubit server class.
   // = DESCRIPTION
-  //   @@ Naga, can you please fill in here?
+  //     This class encapsulates the functionality of a multi-threaded
+  //     cubit server. To use this ,call initialize and then
+  //     start_servants method.
 public:
   // default constructor
   int initialize (int argc, char **argv);
+  // initialize the server state.
+
   int start_servants (ACE_Thread_Manager *serv_thr_mgr);
+  // start the high and low priority servants.
+
 private:
+  void prelim_args_process (void);
+  // preliminary argument processing code.
+
+  void init_high_priority (void);
+  // sets the priority of the high priority servant.
+
+  void init_low_priority (void);
+  // sets the priority to be used for the low priority servants.
+
+  void write_iors (void);
+  // writes the iors of the servants to a file
+
+  int activate_high_servant (ACE_Thread_Manager *serv_thr_mgr);
+  // activates the high priority servant.
+
+  int activate_low_servants (ACE_Thread_Manager *serv_thr_mgr);
+  // activates the low priority servants.
+
   int argc_;
+  // number of arguments for the servant.
+
   char **argv_;
+  // arguments for the ORB.
+
+  CORBA::String *cubits_;
+  // array to hold pointers to the Cubit objects.
+
+  Cubit_Task *high_priority_task_;
+  // pointer to the high priority task
+
+  Cubit_Task **low_priority_tasks_;
+  // array to hold pointers to the low priority tasks.
+
+  ACE_Sched_Priority high_priority_;
+  // priority used for the high priority servant.
+
+  ACE_Sched_Priority low_priority_;
+  // priority used by the low priority servants.
+  
+  u_int num_low_priority_;
+  // number of low priority servants
+
+  u_int num_priorities_;
+  // number of priorities used.
+
+  u_int grain_;
+  // Granularity of the assignment of the priorities.  Some OSs
+  // have fewer levels of priorities than we have threads in our
+  // test, so with this mechanism we assign priorities to groups
+  // of threads when there are more threads than priorities.
+
+  u_int counter_;
+
+  ACE_ARGV *high_argv_;
+  // argv passed to the high priority servant.
+
+  ACE_ARGV *low_argv_;
+  // argv passed to the low priority servants.
 };
+
 #endif /* SERVER_H */
 
 
