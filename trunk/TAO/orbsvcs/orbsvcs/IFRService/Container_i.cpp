@@ -5,6 +5,9 @@
 #include "InterfaceDef_i.h"
 #include "ValueDef_i.h"
 #include "IFR_Service_Utils.h"
+
+#include "tao/IFR_Client/IFR_ComponentsC.h"
+
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
@@ -755,8 +758,8 @@ TAO_Container_i::create_module_i (const char *id,
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ModuleDef::_nil ());
 
-  return CORBA::ModuleDef::_narrow (obj.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+  return CORBA::ComponentIR::ModuleDef::_narrow (obj.in ()
+                                                 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ConstantDef_ptr
@@ -853,7 +856,7 @@ TAO_Container_i::create_constant_i (const char *id,
   ACE_CHECK_RETURN (CORBA::ConstantDef::_nil ());
 
   return CORBA::ConstantDef::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::StructDef_ptr

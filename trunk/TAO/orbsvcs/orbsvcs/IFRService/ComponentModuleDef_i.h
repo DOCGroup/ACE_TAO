@@ -27,8 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ModuleDef_i.h"
-
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -37,8 +35,7 @@
 #endif /* _MSC_VER */
 
 class TAO_IFRService_Export TAO_ComponentModuleDef_i 
-  : public virtual TAO_ComponentContainer_i,
-    public virtual TAO_ModuleDef_i
+  : public virtual TAO_ComponentContainer_i
 {
   // = TITLE
   //    TAO_ComponentModuleDef_i

@@ -212,7 +212,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
               this->in_reopened_ = 1;
 
               new_def =
-                CORBA::Container::_narrow (prev_def.in ()
+                CORBA::ComponentIR::Container::_narrow (prev_def.in ()
                                                         ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
@@ -2019,7 +2019,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
       ACE_TRY_CHECK;
 
       CORBA::ExceptionDefSeq set_exceptions;
-      this->fill_set_exceptions (get_exceptions,
+      this->fill_set_exceptions (set_exceptions,
                                  node
                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -2445,12 +2445,7 @@ ifr_adding_visitor::visit_root (AST_Root *node)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::Container_var new_scope =
-        CORBA::Container::_narrow (be_global->repository ()
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
+      if (be_global->ifr_scopes ().push (be_global->repository ()) != 0)
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,
@@ -3120,13 +3115,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node
 
       node->ifr_added (1);
 
-      // Push the new IR object onto the scope stack.
-      CORBA::Container_var new_scope =
-        CORBA::Container::_narrow (new_def.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-
-      if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
+      if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,

@@ -109,7 +109,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
   CORBA::ExcDescriptionSeq_var safe_retval = retval;
 
   this->fill_exceptions (*retval,
-                         "set_excepts"
+                         "put_excepts"
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -139,7 +139,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->exceptions ("set_excepts",
+  this->exceptions ("put_excepts",
                     set_exceptions);
 }
 
@@ -232,6 +232,11 @@ TAO_ExtAttributeDef_i::exceptions (const char *sub_section,
                                         sub_section,
                                         1,
                                         excepts_key);
+
+  this->repo_->config ()->set_integer_value (excepts_key,
+                                             "count",
+                                             length);
+
   char *type_path = 0;
 
   for (CORBA::ULong i = 0; i < length; ++i)

@@ -3429,7 +3429,7 @@ attribute_readwrite :
 
                   if ($7 != 0)
                     {
-                      (void) a->fe_add_get_exceptions ($9);
+                      (void) a->fe_add_get_exceptions ($7);
                     }
 
                   if ($9 != 0)

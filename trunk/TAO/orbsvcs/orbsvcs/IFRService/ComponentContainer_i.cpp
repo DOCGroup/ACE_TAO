@@ -119,17 +119,19 @@ TAO_ComponentContainer_i::create_component_i (
                                                  "count",
                                                  count);
 
-      const char *supported_id = 0;
+      const char *supported_path = 0;
       char *stringified = 0;
 
       for (i = 0; i < count; ++i)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          supported_id = 
-            supports_interfaces[i]->_interface_repository_id ();
+          supported_path = 
+            TAO_IFR_Service_Utils::reference_to_path (
+                supports_interfaces[i].in ()
+              );
           this->repo_->config ()->set_string_value (supports_key,
                                                     stringified,
-                                                    supported_id);
+                                                    supported_path);
         }
     }
 
