@@ -19,6 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#if defined (ACE_HAS_USING_KEYWORD)
+
 template <class T> ACE_INLINE
 POA_CORBA_IRObject_tie<T>::POA_CORBA_IRObject_tie (T &t)
 	: ptr_ (&t),
@@ -1227,3 +1229,4 @@ ACE_TRY_ENV
   );
 }
 
+#endif /* ACE_HAS_USING_KEYWORD */

@@ -108,6 +108,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Now the interface definition itself.
   os->gen_ifdef_macro (node->flat_name ());
+  os->indent ();
 
   if (!node->is_local ())
     {

@@ -402,6 +402,7 @@ public:
     TAO_ROOT_SH,
     TAO_ROOT_SI,
     TAO_ROOT_SS,
+    TAO_ROOT_TIE_SH,
     TAO_ROOT_IH,
     TAO_ROOT_IS,
     TAO_ROOT_ANY_OP_CH,
@@ -599,6 +600,9 @@ public:
   // Put a last #endif in the server header.
 
   int end_server_template_header (void);
+  // Put a last #endif in the server template header.
+
+  int end_server_template_inline (void);
   // Put a last #endif in the server template header.
 
   int end_server_template_skeletons (void);

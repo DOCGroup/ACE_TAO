@@ -26,8 +26,6 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
 
-  os->indent (); // start with the current indentation level
-
   // every operation is declared virtual in the client code
   *os << "virtual ";
 

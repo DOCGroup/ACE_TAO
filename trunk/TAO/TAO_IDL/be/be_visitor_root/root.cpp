@@ -64,7 +64,6 @@ int be_visitor_root::visit_root (be_root *node)
                          "codegen for scope failed\n"), -1);
     }
 
-
   // If we are generating the client header file, this is the place to
   // generate the proxy broker factory function pointer declarations
   // and the extern declarations for non-defined interfaces.
@@ -214,20 +213,18 @@ int be_visitor_root::visit_root (be_root *node)
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
       (void) tao_cg->end_server_header ();
-
-      if (be_global->gen_tie_classes ())
-        {
-          (void) tao_cg->end_server_template_header ();
-        }
-
       return 0;
-
     case TAO_CodeGen::TAO_ROOT_CI:
       break;
     case TAO_CodeGen::TAO_ROOT_IS:
       break;
     case TAO_CodeGen::TAO_ROOT_SI:
-      return 0; // nothing to be done
+      if (be_global->gen_tie_classes ())
+        {
+          (void) tao_cg->end_server_template_inline ();
+        }
+
+      return 0;
     case TAO_CodeGen::TAO_ROOT_SS:
       if (be_global->gen_tie_classes ())
         {
@@ -235,7 +232,14 @@ int be_visitor_root::visit_root (be_root *node)
         }
 
       (void) tao_cg->end_server_skeletons ();
-      return 0; // nothing to be done
+      return 0;
+    case TAO_CodeGen::TAO_ROOT_TIE_SH:
+      if (be_global->gen_tie_classes ())
+        {
+          (void) tao_cg->end_server_template_header ();
+        }
+
+      return 0;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -296,6 +300,7 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_IS:
+    case TAO_CodeGen::TAO_ROOT_TIE_SH:
       return 0; // nothing to be done
     default:
       {
@@ -798,6 +803,7 @@ be_visitor_root::visit_valuetype (be_valuetype *node)
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_IS:
+    case TAO_CodeGen::TAO_ROOT_TIE_SH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       return 0;    // nothing to do, resp. not yet impl.

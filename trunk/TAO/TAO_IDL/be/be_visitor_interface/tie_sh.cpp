@@ -44,46 +44,49 @@ be_visitor_interface_tie_sh::~be_visitor_interface_tie_sh (void)
 int
 be_visitor_interface_tie_sh::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
-  static char namebuf [NAMEBUFSIZE]; // holds the class name
-  static char tiename [NAMEBUFSIZE]; // holds the tie name
+  static char namebuf [NAMEBUFSIZE];
+  static char tiename [NAMEBUFSIZE];
 
-  if (node->srv_hdr_gen () || node->imported ())
-    return 0;
-
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (tiename, '\0', NAMEBUFSIZE);
-
-  os = this->ctx_->stream ();
-
-  // generate the skeleton class name which will be used to determine the TIE
-  // class name
-
-  // we shall have a POA_ prefix only if we are at the topmost level
-  if (!node->is_nested ())
+  if (node->imported ())
     {
-      // we are outermost
-      ACE_OS::sprintf (namebuf, "POA_%s", node->local_name ());
-      ACE_OS::sprintf (tiename, "POA_%s_tie",
+      return 0;
+    }
+
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (tiename, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Generate the skeleton class name which will be used to determine the TIE
+  // class name.
+
+  // We shall have a POA_ prefix only if we are at the topmost level.
+  if (node->is_nested ())
+    {
+      ACE_OS::sprintf (namebuf, 
+                       "%s", 
+                       node->local_name ());
+      ACE_OS::sprintf (tiename, 
+                       "%s_tie",
                        node->local_name ());
     }
   else
     {
-      ACE_OS::sprintf (namebuf, "%s", node->local_name ());
-      ACE_OS::sprintf (tiename, "%s_tie",
+      // We are outermost.
+      ACE_OS::sprintf (namebuf, 
+                       "POA_%s", 
+                       node->local_name ());
+      ACE_OS::sprintf (tiename, 
+                       "POA_%s_tie",
                        node->local_name ());
     }
 
-  // now generate the class definition
-  os->indent (); // start with whatever indentation level we are at
-
-  // Since templates nested inside of classes are broken on most C++ compilers,
-  // we generate code for this inside a conditional macro. The code is
-  // activated only if "namespaces" are supported on the platform
-  if (node->is_nested ())
-    {
-      *os << "\n#if defined (ACE_HAS_USING_KEYWORD)" << be_nl;
-    }
+  // Now generate the class definition.
+  os->indent ();
 
   *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
   *os << "template <class T>" << be_nl;
@@ -120,19 +123,20 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << be_uidt << be_uidt_nl
       << ");" << be_uidt << "\n";
 
+  if (node->traverse_inheritance_graph (
+                be_visitor_interface_tie_sh::method_helper, 
+                os
+              ) == -1)
     {
-      if (node->traverse_inheritance_graph (be_visitor_interface_tie_sh::method_helper, os) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_tie_sh_ss::"
-                             "visit_interface - "
-                             "traversal of inhertance graph failed\n"),
-                            -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_tie_sh_ss::"
+                         "visit_interface - "
+                         "traversal of inhertance graph failed\n"),
+                        -1);
     }
 
-
-  *os << be_uidt << "private:" << be_idt_nl
+  os->decr_indent (1);
+  *os << "private:" << be_idt_nl
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
       << "CORBA::Boolean rel_;" << be_nl << be_nl
@@ -141,24 +145,20 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "void operator= (const " << tiename << " &);" << be_uidt_nl
       << "};\n\n";
 
-  if (node->is_nested ())
-    {
-      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n";
-    }
-
   return 0;
 }
 
 int
 be_visitor_interface_tie_sh::method_helper (be_interface *,
-					    be_interface *node,
-					    TAO_OutStream *os)
+					                                  be_interface *node,
+					                                  TAO_OutStream *os)
 {
   be_visitor_context ctx;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
 
   ctx.stream (os);
   be_visitor* visitor = tao_cg->make_visitor (&ctx);
+
   if (visitor == 0 || visitor->visit_scope (node) == -1)
     {
       delete visitor;
@@ -166,6 +166,7 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
 			 "be_visitor_interface_tie_sh::"
 			 "method_helper\n"), -1);
     }
+
   delete visitor;
   return 0;
 }
