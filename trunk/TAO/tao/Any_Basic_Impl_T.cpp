@@ -5,7 +5,7 @@
 
 #include "tao/Any_Basic_Impl_T.h"
 #include "tao/Marshal.h"
-#include "tao/debug.h"
+#include "tao/Environment.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 
@@ -31,7 +31,7 @@ TAO::Any_Basic_Impl_T<T>::~Any_Basic_Impl_T (void)
 {
 }
 
-template<typename T> 
+template<typename T>
 void
 TAO::Any_Basic_Impl_T<T>::insert (CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
@@ -44,7 +44,7 @@ TAO::Any_Basic_Impl_T<T>::insert (CORBA::Any & any,
   any.replace (new_impl);
 }
 
-template<typename T> 
+template<typename T>
 CORBA::Boolean
 TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
                                    CORBA::TypeCode_ptr tc,
@@ -80,9 +80,9 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
           return 1;
         }
 
-      TAO::Any_Basic_Impl_T<T> *replacement = 
+      TAO::Any_Basic_Impl_T<T> *replacement =
         TAO::Any_Basic_Impl_T<T>::create_empty (any_tc);
-                      
+
       auto_ptr<TAO::Any_Basic_Impl_T<T> > replacement_safety (replacement);
 
       TAO_InputCDR cdr (mb->data_block (),
@@ -110,11 +110,11 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
     {
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
-template<typename T> 
+template<typename T>
 TAO::Any_Basic_Impl_T<T> *
 TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
 {
@@ -126,8 +126,8 @@ TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
   return retval;
 }
 
-template<typename T> 
-void 
+template<typename T>
+void
 TAO::Any_Basic_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
                                        ACE_ENV_ARG_DECL)
 {
@@ -138,4 +138,3 @@ TAO::Any_Basic_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
 }
 
 #endif /* TAO_ANY_BASIC_IMPL_T_C */
-

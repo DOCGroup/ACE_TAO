@@ -1,11 +1,11 @@
-Thu Aug 28 18:31:02 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Thu Aug 28 18:35:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Acceptor_Impl.cpp:
 
 	  Include "tao/debug.h" for TAO_debug_level global variable.
 
 	* tao/Any_Impl_T.cpp:
-	* tao/Any_Basic_Impl_T.cpp: 
+	* tao/Any_Basic_Impl_T.cpp:
 	* tao/Any_Special_Impl_T.cpp:
 
 	  Include "tao/Environment.h" for CORBA::Environment class.
