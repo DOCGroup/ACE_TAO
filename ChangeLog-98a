@@ -13,6 +13,9 @@ Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/Basic_Types.h: look for ULONGLONG_MAX, which Irix 6.x uses.
           Thanks to Carlos for reporting this.
 
+        * ace/High_Res_Timer.cpp,Profile_Timer.cpp: removed dependence
+          on ACE_U_LongLong.  Thanks to Carlos for reporting this.
+
         * tests/Time_Value_Test.cpp: fixed #ifdefs so that ACE_ULongLong
           isn't tested on Irix 6.x, etc.  Thanks to Carlos for tripping
           over this.
