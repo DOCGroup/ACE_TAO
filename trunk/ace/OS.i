@@ -851,7 +851,7 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
 }
 
 #if defined (ACE_HAS_SHM_OPEN) && defined(INTEGRITY)
-#include <sys/mman.h>
+#include /**/ <sys/mman.h>
 #endif
 
 ACE_INLINE ACE_HANDLE
@@ -11156,17 +11156,3 @@ ACE_OS::set_win32_resource_module (HINSTANCE instance)
   ACE_OS::win32_resource_module_ = instance;
 }
 #endif /* ACE_WIN32 */
-
-#if defined (ACE_HAS_WINCE)
-ACE_INLINE int
-ACE_CE_ARGV::argc()
-{
-    return ce_argc_;
-}
-
-ACE_INLINE ACE_TCHAR** const
-ACE_CE_ARGV::argv()
-{
-    return ce_argv_;
-}
-#endif  // ACE_HAS_WINCE
