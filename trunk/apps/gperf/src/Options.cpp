@@ -706,7 +706,7 @@ Options::asso_max (void)
 
 // Returns total distinct key positions.
 
-int
+u_int
 Options::max_keysig_size (void)
 {
   return total_keysig_size_;
@@ -715,7 +715,7 @@ Options::max_keysig_size (void)
 // Sets total distinct key positions.
 
 void
-Options::keysig_size (int a_size)
+Options::keysig_size (u_int a_size)
 {
   total_keysig_size_ = a_size;
 }
