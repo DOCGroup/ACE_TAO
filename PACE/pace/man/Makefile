@@ -5,8 +5,9 @@
 #       The man pages are generated from the POSIX header files.
 #----------------------------------------------------------------------------
 
+PACE_DOC++ = /project/doc/pkg/bin/doc++
 index.html:
-	/project/doc/pkg/bin/doc++ -H -F -B banner ../posix/*.h
+	$(PACE_DOC++) -H -F -B banner ../posix/*.h
 
 clean:
 	$(RM) *.html *.gif *.class *.tex *.db .html
