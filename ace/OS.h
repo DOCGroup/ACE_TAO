@@ -3527,7 +3527,9 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     include /**/ <sys/uio.h>
 #     include /**/ <sys/ipc.h>
 #     include /**/ <sys/shm.h>
-#     include /**/ <sys/sem.h>
+#     if ! defined (__MACOSX__)
+#       include /**/ <sys/sem.h>
+#     endif /* ! defined (__MACOSX__) */
 #     include /**/ <sys/file.h>
 #     include /**/ <sys/time.h>
 #     include /**/ <sys/resource.h>
