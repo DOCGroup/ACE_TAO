@@ -33,29 +33,8 @@ private:
 
 // ****************************************************************
 
-//! Implement a read guard for a reference counted collection
 template<class COLLECTION, class ITERATOR>
-class ACE_RMCast_Copy_On_Write_Read_Guard
-{
-public:
-  typedef ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
-
-  //! Constructor
-  ACE_RMCast_Copy_On_Write_Read_Guard (ACE_SYNCH_MUTEX &mutex,
-                                       Collection *&collection);
-
-  //! Destructor
-  ~ACE_RMCast_Copy_On_Write_Read_Guard (void);
-
-  //! A reference to the collection
-  Collection *collection;
-
-private:
-  //! Synchronization
-  ACE_SYNCH_MUTEX &mutex_;
-};
-
-// ****************************************************************
+class ACE_RMCast_Copy_On_Write_Read_Guard;
 
 template<class COLLECTION, class ITERATOR>
 class ACE_RMCast_Copy_On_Write_Write_Guard;
@@ -71,6 +50,9 @@ public:
 
   //! Let the Write_Guard access the internal fields.
   friend ACE_RMCast_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR>;
+
+  //! Let the Read_Guard access the internal fields.
+  friend ACE_RMCast_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR>;
 
   //! A shorter name for the actual collection type
   typedef ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
@@ -98,6 +80,30 @@ protected:
 
 // ****************************************************************
 
+//! Implement a read guard for a reference counted collection
+template<class COLLECTION, class ITERATOR>
+class ACE_RMCast_Copy_On_Write_Read_Guard
+{
+public:
+  typedef ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+  typedef ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR> Container;
+
+  //! Constructor
+  ACE_RMCast_Copy_On_Write_Read_Guard (Container &container);
+
+  //! Destructor
+  ~ACE_RMCast_Copy_On_Write_Read_Guard (void);
+
+  //! A reference to the collection
+  Collection *collection;
+
+private:
+  //! Synchronization
+  ACE_SYNCH_MUTEX &mutex_;
+};
+
+// ****************************************************************
+
 //! Implement the write guard for a reference counted collecion
 /*!
  * This helper class atomically increments the reference count of a
@@ -109,9 +115,10 @@ class ACE_RMCast_Copy_On_Write_Write_Guard
 {
 public:
   typedef ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+  typedef ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR> Container;
 
   //! Constructor
-  ACE_RMCast_Copy_On_Write_Write_Guard (ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR> &container);
+  ACE_RMCast_Copy_On_Write_Write_Guard (Container &container);
 
   //! Destructor
   ~ACE_RMCast_Copy_On_Write_Write_Guard (void);
@@ -170,6 +177,9 @@ public:
 
   //! Iterate over all the elements invoking \param worker on each one.
   int for_each (ACE_RMCast_Worker<KEY,ITEM> *worker);
+
+  //! Get the first key
+  KEY first_key (void);
 
   //! Add a new element
   int bind (KEY const & key, ITEM const & item);

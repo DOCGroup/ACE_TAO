@@ -60,7 +60,7 @@ template<class KEY, class ITEM, class COLLECTION, class ITERATOR> int
 ACE_RMCast_Copy_On_Write<KEY,ITEM,COLLECTION,ITERATOR>::
     for_each (ACE_RMCast_Worker<KEY,ITEM> *worker)
 {
-  Read_Guard ace_mon (this->mutex_, this->collection_);
+  Read_Guard ace_mon (*this);
 
   ITERATOR end = ace_mon.collection->collection.end ();
   for (ITERATOR i = ace_mon.collection->collection.begin (); i != end; ++i)
@@ -72,6 +72,19 @@ ACE_RMCast_Copy_On_Write<KEY,ITEM,COLLECTION,ITERATOR>::
         return -1;
     }
   return 0;
+}
+
+template<class KEY, class ITEM, class C, class ITERATOR> KEY
+ACE_RMCast_Copy_On_Write<KEY,ITEM,C,ITERATOR>::first_key (void)
+{
+  Read_Guard ace_mon (*this);
+  ITERATOR end = ace_mon.collection->collection.end ();
+  ITERATOR begin = ace_mon.collection->collection.begin ();
+  if (begin == end)
+    {
+      return KEY ();
+    }
+  return (*begin).key ();
 }
 
 template<class KEY, class ITEM, class C, class I> int
@@ -121,7 +134,7 @@ ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR>::ACE_RMCast_Copy_On_Writ
 
 template<class COLLECTION, class ITERATOR>
 ACE_RMCast_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR>::
-  ACE_RMCast_Copy_On_Write_Write_Guard (ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR> &container)
+  ACE_RMCast_Copy_On_Write_Write_Guard (Container &container)
   : copy (0)
   , mutex (container.mutex_)
   , cond (container.cond_)

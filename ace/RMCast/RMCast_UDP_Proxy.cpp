@@ -147,9 +147,10 @@ ACE_RMCast_UDP_Proxy::reply_poll (ACE_RMCast::Poll &poll)
 }
 
 int
-ACE_RMCast_UDP_Proxy::reply_ack_join (ACE_RMCast::Ack_Join &ack)
+ACE_RMCast_UDP_Proxy::reply_ack_join (ACE_RMCast::Ack_Join &ack_join)
 {
-  return this->io_udp_->send_ack_join (ack, this->peer_addr_);
+  (void) this->ACE_RMCast_Proxy::reply_ack_join (ack_join);
+  return this->io_udp_->send_ack_join (ack_join, this->peer_addr_);
 }
 
 int

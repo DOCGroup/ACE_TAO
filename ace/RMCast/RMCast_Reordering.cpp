@@ -52,14 +52,14 @@ ACE_RMCast_Reordering::data (ACE_RMCast::Data &data)
         // is "old".
 
         this->next_expected_++;
-            
+
         // Right message, process as many messages as possible from
         // the queue, then ack the right level...
 
         // NOTE: we cannot release the mutex while dispatching
         // events, otherwise: how do we stop other threads from
         // delivering messages out of order?  I.E. what if the
-        // next thread receives the next message? 
+        // next thread receives the next message?
         if (this->next () != 0)
           (void) this->next ()->data (data);
 
@@ -83,7 +83,9 @@ ACE_RMCast_Reordering::data (ACE_RMCast::Data &data)
           {
             this->highest_received_ = data.sequence_number;
           }
-        (void) this->messages_.bind (data.sequence_number, data);
+        ACE_RMCast::Data new_data = data;
+        new_data.payload = ACE_Message_Block::duplicate (data.payload);
+        (void) this->messages_.bind (data.sequence_number, new_data);
         // re-ack, otherwise save it and ack.
       }
 
@@ -109,10 +111,11 @@ ACE_RMCast_Reordering::ack_join (ACE_RMCast::Ack_Join &ack_join)
 
     Messages_Iterator i = this->messages_.begin ();
     Messages_Iterator end = this->messages_.end ();
-    
+
     while (i != end
            && (*i).key () < ack_join.next_sequence_number)
       {
+        ACE_Message_Block::release ((*i).item ().payload);
         this->messages_.unbind ((*i).key ());
         i = this->messages_.begin ();
       }
@@ -123,7 +126,7 @@ ACE_RMCast_Reordering::ack_join (ACE_RMCast::Ack_Join &ack_join)
 
     this->push_queued_messages ();
   }
-  
+
   return 0;
 }
 
@@ -132,7 +135,7 @@ ACE_RMCast_Reordering::push_queued_messages (void)
 {
   Messages_Iterator i = this->messages_.begin ();
   Messages_Iterator end = this->messages_.end ();
-    
+
   while (i != end
          && (*i).key () == this->next_expected_)
     {
@@ -142,6 +145,7 @@ ACE_RMCast_Reordering::push_queued_messages (void)
           this->next ()->data (data);
         }
 
+      ACE_Message_Block::release ((*i).item ().payload);
       this->messages_.unbind ((*i).key ());
       i = this->messages_.begin ();
       this->next_expected_++;
