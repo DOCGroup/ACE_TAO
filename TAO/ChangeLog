@@ -1,3 +1,14 @@
+Tue Aug  3 13:10:04 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* orbsvcs/Makefile.am:
+	  Added orbsvcs to list of SUBDIRS.
+
+	* configure.ac:
+	  Added orbsvcs/orbsvcs/Makefile to list of config files.
+
 Tue Aug  3 08:05:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/PSS/PSDL_Datastore.cpp:
@@ -23,7 +34,6 @@ Tue Aug  3 08:05:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	* configure.ac:
 	  Added orbsvcs/{,PSS/,TAO_Service/}Makefile to list of
 	  config files.
-
 
 Tue Aug  3 13:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

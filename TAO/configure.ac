@@ -170,6 +170,7 @@ AC_CONFIG_FILES([
   orbsvcs/Makefile
   orbsvcs/PSS/Makefile
   orbsvcs/TAO_Service/Makefile
+  orbsvcs/orbsvcs/Makefile
  ])
 
 dnl Note that the "TAO_VERSION" in the message below is an M4 macro
