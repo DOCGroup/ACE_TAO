@@ -1,6 +1,7 @@
 
 // $Id$
 
+#include "ace/OS_NS_stdio.h"
 #include "TestS.h"
 
 /***************************/
