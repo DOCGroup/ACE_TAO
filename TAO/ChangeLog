@@ -1,3 +1,10 @@
+Fri Jul 26 17:07:01 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (decode):
+
+	  Verify that the SSLIOP::TAG_SSL_SEC_TRANS tagged component was
+	  successfully extracted from the CDR stream before continuing.
+
 Fri Jul 26 18:32:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	Merged from branch allocators_lanes. This merge basically moves
