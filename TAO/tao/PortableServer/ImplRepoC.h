@@ -99,14 +99,14 @@ TAO_NAMESPACE  ImplementationRepository
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServerObject_ptr duplicate (ServerObject_ptr);
-    static void release (ServerObject_ptr);
-    static ServerObject_ptr nil (void);
-    static ServerObject_ptr narrow (
+    static ServerObject_ptr tao_duplicate (ServerObject_ptr);
+    static void tao_release (ServerObject_ptr);
+    static ServerObject_ptr tao_nil (void);
+    static ServerObject_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ServerObject_ptr ptr_;
@@ -961,14 +961,14 @@ TAO_NAMESPACE  ImplementationRepository
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServerInformationIterator_ptr duplicate (ServerInformationIterator_ptr);
-    static void release (ServerInformationIterator_ptr);
-    static ServerInformationIterator_ptr nil (void);
-    static ServerInformationIterator_ptr narrow (
+    static ServerInformationIterator_ptr tao_duplicate (ServerInformationIterator_ptr);
+    static void tao_release (ServerInformationIterator_ptr);
+    static ServerInformationIterator_ptr tao_nil (void);
+    static ServerInformationIterator_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ServerInformationIterator_ptr ptr_;
@@ -1040,14 +1040,14 @@ TAO_NAMESPACE  ImplementationRepository
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Administration_ptr duplicate (Administration_ptr);
-    static void release (Administration_ptr);
-    static Administration_ptr nil (void);
-    static Administration_ptr narrow (
+    static Administration_ptr tao_duplicate (Administration_ptr);
+    static void tao_release (Administration_ptr);
+    static Administration_ptr tao_nil (void);
+    static Administration_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     Administration_ptr ptr_;

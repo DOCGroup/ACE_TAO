@@ -97,11 +97,11 @@ TAO_NAMESPACE  PortableInterceptor
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Interceptor_ptr duplicate (Interceptor_ptr);
-    static void release (Interceptor_ptr);
-    static Interceptor_ptr nil (void);
-    static Interceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static Interceptor_ptr tao_duplicate (Interceptor_ptr);
+    static void tao_release (Interceptor_ptr);
+    static Interceptor_ptr tao_nil (void);
+    static Interceptor_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     Interceptor_ptr ptr_;
@@ -148,6 +148,8 @@ class TAO_Export Interceptor : public virtual CORBA_Object
     typedef Interceptor_ptr _ptr_type;
     typedef Interceptor_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static Interceptor_ptr _duplicate (Interceptor_ptr obj);
@@ -350,11 +352,11 @@ class TAO_Export Interceptor : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Current_ptr duplicate (Current_ptr);
-    static void release (Current_ptr);
-    static Current_ptr nil (void);
-    static Current_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static Current_ptr tao_duplicate (Current_ptr);
+    static void tao_release (Current_ptr);
+    static Current_ptr tao_nil (void);
+    static Current_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     Current_ptr ptr_;
@@ -401,6 +403,8 @@ class TAO_Export Current: public virtual CORBA::Current
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static Current_ptr _duplicate (Current_ptr obj);
@@ -492,11 +496,11 @@ class TAO_Export Current: public virtual CORBA::Current
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RequestInfo_ptr duplicate (RequestInfo_ptr);
-    static void release (RequestInfo_ptr);
-    static RequestInfo_ptr nil (void);
-    static RequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RequestInfo_ptr tao_duplicate (RequestInfo_ptr);
+    static void tao_release (RequestInfo_ptr);
+    static RequestInfo_ptr tao_nil (void);
+    static RequestInfo_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RequestInfo_ptr ptr_;
@@ -543,6 +547,8 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
     typedef RequestInfo_ptr _ptr_type;
     typedef RequestInfo_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RequestInfo_ptr _duplicate (RequestInfo_ptr obj);
@@ -733,11 +739,11 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ClientRequestInfo_ptr duplicate (ClientRequestInfo_ptr);
-    static void release (ClientRequestInfo_ptr);
-    static ClientRequestInfo_ptr nil (void);
-    static ClientRequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ClientRequestInfo_ptr tao_duplicate (ClientRequestInfo_ptr);
+    static void tao_release (ClientRequestInfo_ptr);
+    static ClientRequestInfo_ptr tao_nil (void);
+    static ClientRequestInfo_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ClientRequestInfo_ptr ptr_;
@@ -784,6 +790,8 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
     typedef ClientRequestInfo_ptr _ptr_type;
     typedef ClientRequestInfo_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ClientRequestInfo_ptr _duplicate (ClientRequestInfo_ptr obj);
@@ -931,11 +939,11 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServerRequestInfo_ptr duplicate (ServerRequestInfo_ptr);
-    static void release (ServerRequestInfo_ptr);
-    static ServerRequestInfo_ptr nil (void);
-    static ServerRequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ServerRequestInfo_ptr tao_duplicate (ServerRequestInfo_ptr);
+    static void tao_release (ServerRequestInfo_ptr);
+    static ServerRequestInfo_ptr tao_nil (void);
+    static ServerRequestInfo_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ServerRequestInfo_ptr ptr_;
@@ -982,6 +990,8 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     typedef ServerRequestInfo_ptr _ptr_type;
     typedef ServerRequestInfo_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ServerRequestInfo_ptr _duplicate (ServerRequestInfo_ptr obj);
@@ -1123,11 +1133,11 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ClientRequestInterceptor_ptr duplicate (ClientRequestInterceptor_ptr);
-    static void release (ClientRequestInterceptor_ptr);
-    static ClientRequestInterceptor_ptr nil (void);
-    static ClientRequestInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ClientRequestInterceptor_ptr tao_duplicate (ClientRequestInterceptor_ptr);
+    static void tao_release (ClientRequestInterceptor_ptr);
+    static ClientRequestInterceptor_ptr tao_nil (void);
+    static ClientRequestInterceptor_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ClientRequestInterceptor_ptr ptr_;
@@ -1174,6 +1184,8 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     typedef ClientRequestInterceptor_ptr _ptr_type;
     typedef ClientRequestInterceptor_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ClientRequestInterceptor_ptr _duplicate (ClientRequestInterceptor_ptr obj);
@@ -1287,11 +1299,11 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServerRequestInterceptor_ptr duplicate (ServerRequestInterceptor_ptr);
-    static void release (ServerRequestInterceptor_ptr);
-    static ServerRequestInterceptor_ptr nil (void);
-    static ServerRequestInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ServerRequestInterceptor_ptr tao_duplicate (ServerRequestInterceptor_ptr);
+    static void tao_release (ServerRequestInterceptor_ptr);
+    static ServerRequestInterceptor_ptr tao_nil (void);
+    static ServerRequestInterceptor_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ServerRequestInterceptor_ptr ptr_;
@@ -1338,6 +1350,8 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     typedef ServerRequestInterceptor_ptr _ptr_type;
     typedef ServerRequestInterceptor_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ServerRequestInterceptor_ptr _duplicate (ServerRequestInterceptor_ptr obj);
@@ -1452,11 +1466,11 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static IORInfo_ptr duplicate (IORInfo_ptr);
-    static void release (IORInfo_ptr);
-    static IORInfo_ptr nil (void);
-    static IORInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static IORInfo_ptr tao_duplicate (IORInfo_ptr);
+    static void tao_release (IORInfo_ptr);
+    static IORInfo_ptr tao_nil (void);
+    static IORInfo_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     IORInfo_ptr ptr_;
@@ -1503,6 +1517,8 @@ class TAO_Export IORInfo : public virtual CORBA_Object
     typedef IORInfo_ptr _ptr_type;
     typedef IORInfo_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static IORInfo_ptr _duplicate (IORInfo_ptr obj);
@@ -1601,11 +1617,11 @@ class TAO_Export IORInfo : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static IORInterceptor_ptr duplicate (IORInterceptor_ptr);
-    static void release (IORInterceptor_ptr);
-    static IORInterceptor_ptr nil (void);
-    static IORInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static IORInterceptor_ptr tao_duplicate (IORInterceptor_ptr);
+    static void tao_release (IORInterceptor_ptr);
+    static IORInterceptor_ptr tao_nil (void);
+    static IORInterceptor_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     IORInterceptor_ptr ptr_;
@@ -1652,6 +1668,8 @@ class TAO_Export IORInterceptor: public virtual Interceptor
     typedef IORInterceptor_ptr _ptr_type;
     typedef IORInterceptor_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static IORInterceptor_ptr _duplicate (IORInterceptor_ptr obj);
@@ -1730,11 +1748,11 @@ class TAO_Export IORInterceptor: public virtual Interceptor
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static PolicyFactory_ptr duplicate (PolicyFactory_ptr);
-    static void release (PolicyFactory_ptr);
-    static PolicyFactory_ptr nil (void);
-    static PolicyFactory_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static PolicyFactory_ptr tao_duplicate (PolicyFactory_ptr);
+    static void tao_release (PolicyFactory_ptr);
+    static PolicyFactory_ptr tao_nil (void);
+    static PolicyFactory_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     PolicyFactory_ptr ptr_;
@@ -1781,6 +1799,8 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
     typedef PolicyFactory_ptr _ptr_type;
     typedef PolicyFactory_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static PolicyFactory_ptr _duplicate (PolicyFactory_ptr obj);
@@ -1861,11 +1881,11 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ORBInitInfo_ptr duplicate (ORBInitInfo_ptr);
-    static void release (ORBInitInfo_ptr);
-    static ORBInitInfo_ptr nil (void);
-    static ORBInitInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ORBInitInfo_ptr tao_duplicate (ORBInitInfo_ptr);
+    static void tao_release (ORBInitInfo_ptr);
+    static ORBInitInfo_ptr tao_nil (void);
+    static ORBInitInfo_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ORBInitInfo_ptr ptr_;
@@ -1912,6 +1932,8 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
     typedef ORBInitInfo_ptr _ptr_type;
     typedef ORBInitInfo_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ORBInitInfo_ptr _duplicate (ORBInitInfo_ptr obj);
@@ -2164,11 +2186,11 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ORBInitializer_ptr duplicate (ORBInitializer_ptr);
-    static void release (ORBInitializer_ptr);
-    static ORBInitializer_ptr nil (void);
-    static ORBInitializer_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ORBInitializer_ptr tao_duplicate (ORBInitializer_ptr);
+    static void tao_release (ORBInitializer_ptr);
+    static ORBInitializer_ptr tao_nil (void);
+    static ORBInitializer_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ORBInitializer_ptr ptr_;
@@ -2216,7 +2238,9 @@ class TAO_Export ORBInitializer : public virtual CORBA_Object
     typedef ORBInitializer_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-    // the static operations
+  static int _tao_class_id;
+
+   // the static operations
     static ORBInitializer_ptr _duplicate (ORBInitializer_ptr obj);
     static ORBInitializer_ptr _narrow (
         CORBA::Object_ptr obj,

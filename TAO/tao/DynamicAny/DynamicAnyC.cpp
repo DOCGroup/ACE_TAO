@@ -29,6 +29,8 @@
 #include "DynamicAnyC.i"
 #endif /* !defined INLINE */
 
+int DynamicAny::DynAny::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class DynamicAny::DynAny_var
 // *************************************************************
@@ -118,25 +120,25 @@ DynamicAny::DynAny_var::_retn (void)
 }
 
 ::DynamicAny::DynAny_ptr
-DynamicAny::DynAny_var::duplicate (DynAny_ptr p)
+DynamicAny::DynAny_var::tao_duplicate (DynAny_ptr p)
 {
   return ::DynamicAny::DynAny::_duplicate (p);
 }
 
 void
-DynamicAny::DynAny_var::release (DynAny_ptr p)
+DynamicAny::DynAny_var::tao_release (DynAny_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynAny_ptr
-DynamicAny::DynAny_var::nil (void)
+DynamicAny::DynAny_var::tao_nil (void)
 {
   return ::DynamicAny::DynAny::_nil ();
 }
 
 ::DynamicAny::DynAny_ptr
-DynamicAny::DynAny_var::narrow (
+DynamicAny::DynAny_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -145,7 +147,7 @@ DynamicAny::DynAny_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynAny_var::upcast (void *src)
+DynamicAny::DynAny_var::tao_upcast (void *src)
 {
   DynAny **tmp =
     ACE_static_cast (DynAny **, src);
@@ -245,7 +247,7 @@ DynamicAny::DynAny_ptr DynamicAny::DynAny::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynAny::_narrow
+                    &DynAny::_tao_class_id
                   )
               )
         );
@@ -264,9 +266,9 @@ void *DynamicAny::DynAny::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -416,6 +418,8 @@ CORBA::Exception *DynamicAny::DynAny::TypeMismatch::_alloc (void)
   return retval;
 }
 
+int DynamicAny::DynFixed::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class DynamicAny::DynFixed_var
 // *************************************************************
@@ -505,25 +509,25 @@ DynamicAny::DynFixed_var::_retn (void)
 }
 
 ::DynamicAny::DynFixed_ptr
-DynamicAny::DynFixed_var::duplicate (DynFixed_ptr p)
+DynamicAny::DynFixed_var::tao_duplicate (DynFixed_ptr p)
 {
   return ::DynamicAny::DynFixed::_duplicate (p);
 }
 
 void
-DynamicAny::DynFixed_var::release (DynFixed_ptr p)
+DynamicAny::DynFixed_var::tao_release (DynFixed_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynFixed_ptr
-DynamicAny::DynFixed_var::nil (void)
+DynamicAny::DynFixed_var::tao_nil (void)
 {
   return ::DynamicAny::DynFixed::_nil ();
 }
 
 ::DynamicAny::DynFixed_ptr
-DynamicAny::DynFixed_var::narrow (
+DynamicAny::DynFixed_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -532,7 +536,7 @@ DynamicAny::DynFixed_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynFixed_var::upcast (void *src)
+DynamicAny::DynFixed_var::tao_upcast (void *src)
 {
   DynFixed **tmp =
     ACE_static_cast (DynFixed **, src);
@@ -632,7 +636,7 @@ DynamicAny::DynFixed_ptr DynamicAny::DynFixed::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynFixed::_narrow
+                    &DynFixed::_tao_class_id
                   )
               )
         );
@@ -651,11 +655,11 @@ void *DynamicAny::DynFixed::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynFixed)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynFixed)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -665,7 +669,7 @@ void *DynamicAny::DynFixed::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -678,6 +682,8 @@ const char* DynamicAny::DynFixed::_interface_repository_id (void) const
 {
   return "IDL:DynamicAny/DynFixed:1.0";
 }
+
+int DynamicAny::DynEnum::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class DynamicAny::DynEnum_var
@@ -768,25 +774,25 @@ DynamicAny::DynEnum_var::_retn (void)
 }
 
 ::DynamicAny::DynEnum_ptr
-DynamicAny::DynEnum_var::duplicate (DynEnum_ptr p)
+DynamicAny::DynEnum_var::tao_duplicate (DynEnum_ptr p)
 {
   return ::DynamicAny::DynEnum::_duplicate (p);
 }
 
 void
-DynamicAny::DynEnum_var::release (DynEnum_ptr p)
+DynamicAny::DynEnum_var::tao_release (DynEnum_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynEnum_ptr
-DynamicAny::DynEnum_var::nil (void)
+DynamicAny::DynEnum_var::tao_nil (void)
 {
   return ::DynamicAny::DynEnum::_nil ();
 }
 
 ::DynamicAny::DynEnum_ptr
-DynamicAny::DynEnum_var::narrow (
+DynamicAny::DynEnum_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -795,7 +801,7 @@ DynamicAny::DynEnum_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynEnum_var::upcast (void *src)
+DynamicAny::DynEnum_var::tao_upcast (void *src)
 {
   DynEnum **tmp =
     ACE_static_cast (DynEnum **, src);
@@ -895,7 +901,7 @@ DynamicAny::DynEnum_ptr DynamicAny::DynEnum::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynEnum::_narrow
+                    &DynEnum::_tao_class_id
                   )
               )
         );
@@ -914,11 +920,11 @@ void *DynamicAny::DynEnum::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynEnum)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynEnum)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -928,7 +934,7 @@ void *DynamicAny::DynEnum::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -1318,6 +1324,8 @@ void DynamicAny::NameDynAnyPairSeq::_tao_any_destructor (void *x)
 
 #endif /* end #if !defined */
 
+int DynamicAny::DynStruct::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class DynamicAny::DynStruct_var
 // *************************************************************
@@ -1407,25 +1415,25 @@ DynamicAny::DynStruct_var::_retn (void)
 }
 
 ::DynamicAny::DynStruct_ptr
-DynamicAny::DynStruct_var::duplicate (DynStruct_ptr p)
+DynamicAny::DynStruct_var::tao_duplicate (DynStruct_ptr p)
 {
   return ::DynamicAny::DynStruct::_duplicate (p);
 }
 
 void
-DynamicAny::DynStruct_var::release (DynStruct_ptr p)
+DynamicAny::DynStruct_var::tao_release (DynStruct_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynStruct_ptr
-DynamicAny::DynStruct_var::nil (void)
+DynamicAny::DynStruct_var::tao_nil (void)
 {
   return ::DynamicAny::DynStruct::_nil ();
 }
 
 ::DynamicAny::DynStruct_ptr
-DynamicAny::DynStruct_var::narrow (
+DynamicAny::DynStruct_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1434,7 +1442,7 @@ DynamicAny::DynStruct_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynStruct_var::upcast (void *src)
+DynamicAny::DynStruct_var::tao_upcast (void *src)
 {
   DynStruct **tmp =
     ACE_static_cast (DynStruct **, src);
@@ -1534,7 +1542,7 @@ DynamicAny::DynStruct_ptr DynamicAny::DynStruct::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynStruct::_narrow
+                    &DynStruct::_tao_class_id
                   )
               )
         );
@@ -1553,11 +1561,11 @@ void *DynamicAny::DynStruct::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynStruct)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynStruct)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1567,7 +1575,7 @@ void *DynamicAny::DynStruct::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -1580,6 +1588,8 @@ const char* DynamicAny::DynStruct::_interface_repository_id (void) const
 {
   return "IDL:DynamicAny/DynStruct:1.0";
 }
+
+int DynamicAny::DynUnion::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class DynamicAny::DynUnion_var
@@ -1670,25 +1680,25 @@ DynamicAny::DynUnion_var::_retn (void)
 }
 
 ::DynamicAny::DynUnion_ptr
-DynamicAny::DynUnion_var::duplicate (DynUnion_ptr p)
+DynamicAny::DynUnion_var::tao_duplicate (DynUnion_ptr p)
 {
   return ::DynamicAny::DynUnion::_duplicate (p);
 }
 
 void
-DynamicAny::DynUnion_var::release (DynUnion_ptr p)
+DynamicAny::DynUnion_var::tao_release (DynUnion_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynUnion_ptr
-DynamicAny::DynUnion_var::nil (void)
+DynamicAny::DynUnion_var::tao_nil (void)
 {
   return ::DynamicAny::DynUnion::_nil ();
 }
 
 ::DynamicAny::DynUnion_ptr
-DynamicAny::DynUnion_var::narrow (
+DynamicAny::DynUnion_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1697,7 +1707,7 @@ DynamicAny::DynUnion_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynUnion_var::upcast (void *src)
+DynamicAny::DynUnion_var::tao_upcast (void *src)
 {
   DynUnion **tmp =
     ACE_static_cast (DynUnion **, src);
@@ -1797,7 +1807,7 @@ DynamicAny::DynUnion_ptr DynamicAny::DynUnion::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynUnion::_narrow
+                    &DynUnion::_tao_class_id
                   )
               )
         );
@@ -1816,11 +1826,11 @@ void *DynamicAny::DynUnion::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynUnion)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynUnion)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1830,7 +1840,7 @@ void *DynamicAny::DynUnion::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -2117,6 +2127,8 @@ void DynamicAny::DynAnySeq::_tao_any_destructor (void *x)
 
 #endif /* end #if !defined */
 
+int DynamicAny::DynSequence::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class DynamicAny::DynSequence_var
 // *************************************************************
@@ -2206,25 +2218,25 @@ DynamicAny::DynSequence_var::_retn (void)
 }
 
 ::DynamicAny::DynSequence_ptr
-DynamicAny::DynSequence_var::duplicate (DynSequence_ptr p)
+DynamicAny::DynSequence_var::tao_duplicate (DynSequence_ptr p)
 {
   return ::DynamicAny::DynSequence::_duplicate (p);
 }
 
 void
-DynamicAny::DynSequence_var::release (DynSequence_ptr p)
+DynamicAny::DynSequence_var::tao_release (DynSequence_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynSequence_ptr
-DynamicAny::DynSequence_var::nil (void)
+DynamicAny::DynSequence_var::tao_nil (void)
 {
   return ::DynamicAny::DynSequence::_nil ();
 }
 
 ::DynamicAny::DynSequence_ptr
-DynamicAny::DynSequence_var::narrow (
+DynamicAny::DynSequence_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2233,7 +2245,7 @@ DynamicAny::DynSequence_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynSequence_var::upcast (void *src)
+DynamicAny::DynSequence_var::tao_upcast (void *src)
 {
   DynSequence **tmp =
     ACE_static_cast (DynSequence **, src);
@@ -2333,7 +2345,7 @@ DynamicAny::DynSequence_ptr DynamicAny::DynSequence::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynSequence::_narrow
+                    &DynSequence::_tao_class_id
                   )
               )
         );
@@ -2352,11 +2364,11 @@ void *DynamicAny::DynSequence::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynSequence)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynSequence)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2366,7 +2378,7 @@ void *DynamicAny::DynSequence::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -2379,6 +2391,8 @@ const char* DynamicAny::DynSequence::_interface_repository_id (void) const
 {
   return "IDL:DynamicAny/DynSequence:1.0";
 }
+
+int DynamicAny::DynArray::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class DynamicAny::DynArray_var
@@ -2469,25 +2483,25 @@ DynamicAny::DynArray_var::_retn (void)
 }
 
 ::DynamicAny::DynArray_ptr
-DynamicAny::DynArray_var::duplicate (DynArray_ptr p)
+DynamicAny::DynArray_var::tao_duplicate (DynArray_ptr p)
 {
   return ::DynamicAny::DynArray::_duplicate (p);
 }
 
 void
-DynamicAny::DynArray_var::release (DynArray_ptr p)
+DynamicAny::DynArray_var::tao_release (DynArray_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynArray_ptr
-DynamicAny::DynArray_var::nil (void)
+DynamicAny::DynArray_var::tao_nil (void)
 {
   return ::DynamicAny::DynArray::_nil ();
 }
 
 ::DynamicAny::DynArray_ptr
-DynamicAny::DynArray_var::narrow (
+DynamicAny::DynArray_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2496,7 +2510,7 @@ DynamicAny::DynArray_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynArray_var::upcast (void *src)
+DynamicAny::DynArray_var::tao_upcast (void *src)
 {
   DynArray **tmp =
     ACE_static_cast (DynArray **, src);
@@ -2596,7 +2610,7 @@ DynamicAny::DynArray_ptr DynamicAny::DynArray::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynArray::_narrow
+                    &DynArray::_tao_class_id
                   )
               )
         );
@@ -2615,11 +2629,11 @@ void *DynamicAny::DynArray::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynArray)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynArray)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2629,7 +2643,7 @@ void *DynamicAny::DynArray::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -2642,6 +2656,8 @@ const char* DynamicAny::DynArray::_interface_repository_id (void) const
 {
   return "IDL:DynamicAny/DynArray:1.0";
 }
+
+int DynamicAny::DynValue::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class DynamicAny::DynValue_var
@@ -2732,25 +2748,25 @@ DynamicAny::DynValue_var::_retn (void)
 }
 
 ::DynamicAny::DynValue_ptr
-DynamicAny::DynValue_var::duplicate (DynValue_ptr p)
+DynamicAny::DynValue_var::tao_duplicate (DynValue_ptr p)
 {
   return ::DynamicAny::DynValue::_duplicate (p);
 }
 
 void
-DynamicAny::DynValue_var::release (DynValue_ptr p)
+DynamicAny::DynValue_var::tao_release (DynValue_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynValue_ptr
-DynamicAny::DynValue_var::nil (void)
+DynamicAny::DynValue_var::tao_nil (void)
 {
   return ::DynamicAny::DynValue::_nil ();
 }
 
 ::DynamicAny::DynValue_ptr
-DynamicAny::DynValue_var::narrow (
+DynamicAny::DynValue_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2759,7 +2775,7 @@ DynamicAny::DynValue_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynValue_var::upcast (void *src)
+DynamicAny::DynValue_var::tao_upcast (void *src)
 {
   DynValue **tmp =
     ACE_static_cast (DynValue **, src);
@@ -2859,7 +2875,7 @@ DynamicAny::DynValue_ptr DynamicAny::DynValue::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynValue::_narrow
+                    &DynValue::_tao_class_id
                   )
               )
         );
@@ -2878,11 +2894,11 @@ void *DynamicAny::DynValue::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynValue)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynValue)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2892,7 +2908,7 @@ void *DynamicAny::DynValue::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -2905,6 +2921,8 @@ const char* DynamicAny::DynValue::_interface_repository_id (void) const
 {
   return "IDL:DynamicAny/DynValue:1.0";
 }
+
+int DynamicAny::DynAnyFactory::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class DynamicAny::DynAnyFactory_var
@@ -2995,25 +3013,25 @@ DynamicAny::DynAnyFactory_var::_retn (void)
 }
 
 ::DynamicAny::DynAnyFactory_ptr
-DynamicAny::DynAnyFactory_var::duplicate (DynAnyFactory_ptr p)
+DynamicAny::DynAnyFactory_var::tao_duplicate (DynAnyFactory_ptr p)
 {
   return ::DynamicAny::DynAnyFactory::_duplicate (p);
 }
 
 void
-DynamicAny::DynAnyFactory_var::release (DynAnyFactory_ptr p)
+DynamicAny::DynAnyFactory_var::tao_release (DynAnyFactory_ptr p)
 {
   CORBA::release (p);
 }
 
 ::DynamicAny::DynAnyFactory_ptr
-DynamicAny::DynAnyFactory_var::nil (void)
+DynamicAny::DynAnyFactory_var::tao_nil (void)
 {
   return ::DynamicAny::DynAnyFactory::_nil ();
 }
 
 ::DynamicAny::DynAnyFactory_ptr
-DynamicAny::DynAnyFactory_var::narrow (
+DynamicAny::DynAnyFactory_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3022,7 +3040,7 @@ DynamicAny::DynAnyFactory_var::narrow (
 }
 
 CORBA::Object *
-DynamicAny::DynAnyFactory_var::upcast (void *src)
+DynamicAny::DynAnyFactory_var::tao_upcast (void *src)
 {
   DynAnyFactory **tmp =
     ACE_static_cast (DynAnyFactory **, src);
@@ -3122,7 +3140,7 @@ DynamicAny::DynAnyFactory_ptr DynamicAny::DynAnyFactory::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &DynAnyFactory::_narrow
+                    &DynAnyFactory::_tao_class_id
                   )
               )
         );
@@ -3141,9 +3159,9 @@ void *DynamicAny::DynAnyFactory::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::DynamicAny, DynAnyFactory)::_narrow))
+      &ACE_NESTED_CLASS (::DynamicAny, DynAnyFactory)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     

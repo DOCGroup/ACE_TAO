@@ -96,11 +96,11 @@ TAO_NAMESPACE  DynamicAny
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynAny_ptr duplicate (DynAny_ptr);
-    static void release (DynAny_ptr);
-    static DynAny_ptr nil (void);
-    static DynAny_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynAny_ptr tao_duplicate (DynAny_ptr);
+    static void tao_release (DynAny_ptr);
+    static DynAny_ptr tao_nil (void);
+    static DynAny_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynAny_ptr ptr_;
@@ -147,6 +147,8 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
     typedef DynAny_ptr _ptr_type;
     typedef DynAny_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynAny_ptr _duplicate (DynAny_ptr obj);
@@ -823,11 +825,11 @@ class TAO_DynamicAny_Export DynAny : public virtual CORBA_Object
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynFixed_ptr duplicate (DynFixed_ptr);
-    static void release (DynFixed_ptr);
-    static DynFixed_ptr nil (void);
-    static DynFixed_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynFixed_ptr tao_duplicate (DynFixed_ptr);
+    static void tao_release (DynFixed_ptr);
+    static DynFixed_ptr tao_nil (void);
+    static DynFixed_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynFixed_ptr ptr_;
@@ -874,6 +876,8 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
     typedef DynFixed_ptr _ptr_type;
     typedef DynFixed_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynFixed_ptr _duplicate (DynFixed_ptr obj);
@@ -963,11 +967,11 @@ class TAO_DynamicAny_Export DynFixed: public virtual DynAny
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynEnum_ptr duplicate (DynEnum_ptr);
-    static void release (DynEnum_ptr);
-    static DynEnum_ptr nil (void);
-    static DynEnum_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynEnum_ptr tao_duplicate (DynEnum_ptr);
+    static void tao_release (DynEnum_ptr);
+    static DynEnum_ptr tao_nil (void);
+    static DynEnum_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynEnum_ptr ptr_;
@@ -1014,6 +1018,8 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     typedef DynEnum_ptr _ptr_type;
     typedef DynEnum_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynEnum_ptr _duplicate (DynEnum_ptr obj);
@@ -1553,11 +1559,11 @@ class TAO_DynamicAny_Export DynEnum: public virtual DynAny
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynStruct_ptr duplicate (DynStruct_ptr);
-    static void release (DynStruct_ptr);
-    static DynStruct_ptr nil (void);
-    static DynStruct_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynStruct_ptr tao_duplicate (DynStruct_ptr);
+    static void tao_release (DynStruct_ptr);
+    static DynStruct_ptr tao_nil (void);
+    static DynStruct_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynStruct_ptr ptr_;
@@ -1604,6 +1610,8 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
     typedef DynStruct_ptr _ptr_type;
     typedef DynStruct_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynStruct_ptr _duplicate (DynStruct_ptr obj);
@@ -1732,11 +1740,11 @@ class TAO_DynamicAny_Export DynStruct: public virtual DynAny
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynUnion_ptr duplicate (DynUnion_ptr);
-    static void release (DynUnion_ptr);
-    static DynUnion_ptr nil (void);
-    static DynUnion_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynUnion_ptr tao_duplicate (DynUnion_ptr);
+    static void tao_release (DynUnion_ptr);
+    static DynUnion_ptr tao_nil (void);
+    static DynUnion_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynUnion_ptr ptr_;
@@ -1783,6 +1791,8 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
     typedef DynUnion_ptr _ptr_type;
     typedef DynUnion_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynUnion_ptr _duplicate (DynUnion_ptr obj);
@@ -2234,11 +2244,11 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynSequence_ptr duplicate (DynSequence_ptr);
-    static void release (DynSequence_ptr);
-    static DynSequence_ptr nil (void);
-    static DynSequence_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynSequence_ptr tao_duplicate (DynSequence_ptr);
+    static void tao_release (DynSequence_ptr);
+    static DynSequence_ptr tao_nil (void);
+    static DynSequence_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynSequence_ptr ptr_;
@@ -2285,6 +2295,8 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
     typedef DynSequence_ptr _ptr_type;
     typedef DynSequence_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynSequence_ptr _duplicate (DynSequence_ptr obj);
@@ -2411,11 +2423,11 @@ class TAO_DynamicAny_Export DynSequence: public virtual DynAny
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynArray_ptr duplicate (DynArray_ptr);
-    static void release (DynArray_ptr);
-    static DynArray_ptr nil (void);
-    static DynArray_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynArray_ptr tao_duplicate (DynArray_ptr);
+    static void tao_release (DynArray_ptr);
+    static DynArray_ptr tao_nil (void);
+    static DynArray_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynArray_ptr ptr_;
@@ -2462,6 +2474,8 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
     typedef DynArray_ptr _ptr_type;
     typedef DynArray_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynArray_ptr _duplicate (DynArray_ptr obj);
@@ -2570,11 +2584,11 @@ class TAO_DynamicAny_Export DynArray: public virtual DynAny
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynValue_ptr duplicate (DynValue_ptr);
-    static void release (DynValue_ptr);
-    static DynValue_ptr nil (void);
-    static DynValue_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynValue_ptr tao_duplicate (DynValue_ptr);
+    static void tao_release (DynValue_ptr);
+    static DynValue_ptr tao_nil (void);
+    static DynValue_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynValue_ptr ptr_;
@@ -2621,6 +2635,8 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
     typedef DynValue_ptr _ptr_type;
     typedef DynValue_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynValue_ptr _duplicate (DynValue_ptr obj);
@@ -2749,11 +2765,11 @@ class TAO_DynamicAny_Export DynValue: public virtual DynAny
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static DynAnyFactory_ptr duplicate (DynAnyFactory_ptr);
-    static void release (DynAnyFactory_ptr);
-    static DynAnyFactory_ptr nil (void);
-    static DynAnyFactory_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static DynAnyFactory_ptr tao_duplicate (DynAnyFactory_ptr);
+    static void tao_release (DynAnyFactory_ptr);
+    static DynAnyFactory_ptr tao_nil (void);
+    static DynAnyFactory_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     DynAnyFactory_ptr ptr_;
@@ -2800,6 +2816,8 @@ class TAO_DynamicAny_Export DynAnyFactory : public virtual CORBA_Object
     typedef DynAnyFactory_ptr _ptr_type;
     typedef DynAnyFactory_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static DynAnyFactory_ptr _duplicate (DynAnyFactory_ptr obj);

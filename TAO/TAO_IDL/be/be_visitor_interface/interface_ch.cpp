@@ -256,7 +256,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << node->local_name () << " (int collocated = 0);" 
           << be_nl << be_nl;
 
-      *os << "// This methods travese the inheritance tree and set the" 
+      *os << "// These methods travese the inheritance tree and set the" 
           << be_nl
           << "// parents piece of the given class in the right mode" 
           << be_nl
@@ -265,7 +265,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
   else
     {
-      *os << node->local_name () << " ();" << be_nl << be_nl;
+      *os << node->local_name () << " (void);" << be_nl << be_nl;
     }
 
   // Local interfaces don't support stub objects.

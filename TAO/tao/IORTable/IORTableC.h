@@ -92,11 +92,11 @@ TAO_NAMESPACE  IORTable
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Locator_ptr duplicate (Locator_ptr);
-    static void release (Locator_ptr);
-    static Locator_ptr nil (void);
-    static Locator_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static Locator_ptr tao_duplicate (Locator_ptr);
+    static void tao_release (Locator_ptr);
+    static Locator_ptr tao_nil (void);
+    static Locator_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     Locator_ptr ptr_;
@@ -254,11 +254,11 @@ TAO_NAMESPACE  IORTable
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Table_ptr duplicate (Table_ptr);
-    static void release (Table_ptr);
-    static Table_ptr nil (void);
-    static Table_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static Table_ptr tao_duplicate (Table_ptr);
+    static void tao_release (Table_ptr);
+    static Table_ptr tao_nil (void);
+    static Table_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     Table_ptr ptr_;
@@ -305,6 +305,8 @@ class TAO_IORTable_Export Table : public virtual CORBA_Object
     typedef Table_ptr _ptr_type;
     typedef Table_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static Table_ptr _duplicate (Table_ptr obj);
@@ -390,6 +392,8 @@ class TAO_IORTable_Export Locator : public virtual CORBA_Object
     typedef Locator_ptr _ptr_type;
     typedef Locator_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static Locator_ptr _duplicate (Locator_ptr obj);

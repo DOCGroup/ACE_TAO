@@ -500,6 +500,8 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ThreadPolicyValue, &_tc_TAO_tc_PortableServer_ThreadPolicyValue)
 TAO_NAMESPACE_END
 
+int PortableServer::ThreadPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class PortableServer::ThreadPolicy_var
 // *************************************************************
@@ -589,25 +591,25 @@ PortableServer::ThreadPolicy_var::_retn (void)
 }
 
 ::PortableServer::ThreadPolicy_ptr
-PortableServer::ThreadPolicy_var::duplicate (ThreadPolicy_ptr p)
+PortableServer::ThreadPolicy_var::tao_duplicate (ThreadPolicy_ptr p)
 {
   return ::PortableServer::ThreadPolicy::_duplicate (p);
 }
 
 void
-PortableServer::ThreadPolicy_var::release (ThreadPolicy_ptr p)
+PortableServer::ThreadPolicy_var::tao_release (ThreadPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::ThreadPolicy_ptr
-PortableServer::ThreadPolicy_var::nil (void)
+PortableServer::ThreadPolicy_var::tao_nil (void)
 {
   return ::PortableServer::ThreadPolicy::_nil ();
 }
 
 ::PortableServer::ThreadPolicy_ptr
-PortableServer::ThreadPolicy_var::narrow (
+PortableServer::ThreadPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -616,7 +618,7 @@ PortableServer::ThreadPolicy_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::ThreadPolicy_var::upcast (void *src)
+PortableServer::ThreadPolicy_var::tao_upcast (void *src)
 {
   ThreadPolicy **tmp =
     ACE_static_cast (ThreadPolicy **, src);
@@ -716,7 +718,7 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_unchecked_narrow
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ThreadPolicy::_narrow
+                    &ThreadPolicy::_tao_class_id
                   )
               )
         );
@@ -735,11 +737,11 @@ void *PortableServer::ThreadPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, ThreadPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, ThreadPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -749,7 +751,7 @@ void *PortableServer::ThreadPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -809,6 +811,8 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_LifespanPolicyValue, &_tc_TAO_tc_PortableServer_LifespanPolicyValue)
 TAO_NAMESPACE_END
+
+int PortableServer::LifespanPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::LifespanPolicy_var
@@ -899,25 +903,25 @@ PortableServer::LifespanPolicy_var::_retn (void)
 }
 
 ::PortableServer::LifespanPolicy_ptr
-PortableServer::LifespanPolicy_var::duplicate (LifespanPolicy_ptr p)
+PortableServer::LifespanPolicy_var::tao_duplicate (LifespanPolicy_ptr p)
 {
   return ::PortableServer::LifespanPolicy::_duplicate (p);
 }
 
 void
-PortableServer::LifespanPolicy_var::release (LifespanPolicy_ptr p)
+PortableServer::LifespanPolicy_var::tao_release (LifespanPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::LifespanPolicy_ptr
-PortableServer::LifespanPolicy_var::nil (void)
+PortableServer::LifespanPolicy_var::tao_nil (void)
 {
   return ::PortableServer::LifespanPolicy::_nil ();
 }
 
 ::PortableServer::LifespanPolicy_ptr
-PortableServer::LifespanPolicy_var::narrow (
+PortableServer::LifespanPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -926,7 +930,7 @@ PortableServer::LifespanPolicy_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::LifespanPolicy_var::upcast (void *src)
+PortableServer::LifespanPolicy_var::tao_upcast (void *src)
 {
   LifespanPolicy **tmp =
     ACE_static_cast (LifespanPolicy **, src);
@@ -1026,7 +1030,7 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_unchecked_na
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &LifespanPolicy::_narrow
+                    &LifespanPolicy::_tao_class_id
                   )
               )
         );
@@ -1045,11 +1049,11 @@ void *PortableServer::LifespanPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, LifespanPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, LifespanPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1059,7 +1063,7 @@ void *PortableServer::LifespanPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1119,6 +1123,8 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IdUniquenessPolicyValue, &_tc_TAO_tc_PortableServer_IdUniquenessPolicyValue)
 TAO_NAMESPACE_END
+
+int PortableServer::IdUniquenessPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::IdUniquenessPolicy_var
@@ -1209,25 +1215,25 @@ PortableServer::IdUniquenessPolicy_var::_retn (void)
 }
 
 ::PortableServer::IdUniquenessPolicy_ptr
-PortableServer::IdUniquenessPolicy_var::duplicate (IdUniquenessPolicy_ptr p)
+PortableServer::IdUniquenessPolicy_var::tao_duplicate (IdUniquenessPolicy_ptr p)
 {
   return ::PortableServer::IdUniquenessPolicy::_duplicate (p);
 }
 
 void
-PortableServer::IdUniquenessPolicy_var::release (IdUniquenessPolicy_ptr p)
+PortableServer::IdUniquenessPolicy_var::tao_release (IdUniquenessPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::IdUniquenessPolicy_ptr
-PortableServer::IdUniquenessPolicy_var::nil (void)
+PortableServer::IdUniquenessPolicy_var::tao_nil (void)
 {
   return ::PortableServer::IdUniquenessPolicy::_nil ();
 }
 
 ::PortableServer::IdUniquenessPolicy_ptr
-PortableServer::IdUniquenessPolicy_var::narrow (
+PortableServer::IdUniquenessPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1236,7 +1242,7 @@ PortableServer::IdUniquenessPolicy_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::IdUniquenessPolicy_var::upcast (void *src)
+PortableServer::IdUniquenessPolicy_var::tao_upcast (void *src)
 {
   IdUniquenessPolicy **tmp =
     ACE_static_cast (IdUniquenessPolicy **, src);
@@ -1336,7 +1342,7 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_unch
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &IdUniquenessPolicy::_narrow
+                    &IdUniquenessPolicy::_tao_class_id
                   )
               )
         );
@@ -1355,11 +1361,11 @@ void *PortableServer::IdUniquenessPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, IdUniquenessPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, IdUniquenessPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1369,7 +1375,7 @@ void *PortableServer::IdUniquenessPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1428,6 +1434,8 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IdAssignmentPolicyValue, &_tc_TAO_tc_PortableServer_IdAssignmentPolicyValue)
 TAO_NAMESPACE_END
+
+int PortableServer::IdAssignmentPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::IdAssignmentPolicy_var
@@ -1518,25 +1526,25 @@ PortableServer::IdAssignmentPolicy_var::_retn (void)
 }
 
 ::PortableServer::IdAssignmentPolicy_ptr
-PortableServer::IdAssignmentPolicy_var::duplicate (IdAssignmentPolicy_ptr p)
+PortableServer::IdAssignmentPolicy_var::tao_duplicate (IdAssignmentPolicy_ptr p)
 {
   return ::PortableServer::IdAssignmentPolicy::_duplicate (p);
 }
 
 void
-PortableServer::IdAssignmentPolicy_var::release (IdAssignmentPolicy_ptr p)
+PortableServer::IdAssignmentPolicy_var::tao_release (IdAssignmentPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::IdAssignmentPolicy_ptr
-PortableServer::IdAssignmentPolicy_var::nil (void)
+PortableServer::IdAssignmentPolicy_var::tao_nil (void)
 {
   return ::PortableServer::IdAssignmentPolicy::_nil ();
 }
 
 ::PortableServer::IdAssignmentPolicy_ptr
-PortableServer::IdAssignmentPolicy_var::narrow (
+PortableServer::IdAssignmentPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1545,7 +1553,7 @@ PortableServer::IdAssignmentPolicy_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::IdAssignmentPolicy_var::upcast (void *src)
+PortableServer::IdAssignmentPolicy_var::tao_upcast (void *src)
 {
   IdAssignmentPolicy **tmp =
     ACE_static_cast (IdAssignmentPolicy **, src);
@@ -1645,7 +1653,7 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_unch
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &IdAssignmentPolicy::_narrow
+                    &IdAssignmentPolicy::_tao_class_id
                   )
               )
         );
@@ -1664,11 +1672,11 @@ void *PortableServer::IdAssignmentPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, IdAssignmentPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, IdAssignmentPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1678,7 +1686,7 @@ void *PortableServer::IdAssignmentPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1749,6 +1757,8 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ImplicitActivationPolicyValue, &_tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue)
 TAO_NAMESPACE_END
+
+int PortableServer::ImplicitActivationPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::ImplicitActivationPolicy_var
@@ -1839,25 +1849,25 @@ PortableServer::ImplicitActivationPolicy_var::_retn (void)
 }
 
 ::PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::ImplicitActivationPolicy_var::duplicate (ImplicitActivationPolicy_ptr p)
+PortableServer::ImplicitActivationPolicy_var::tao_duplicate (ImplicitActivationPolicy_ptr p)
 {
   return ::PortableServer::ImplicitActivationPolicy::_duplicate (p);
 }
 
 void
-PortableServer::ImplicitActivationPolicy_var::release (ImplicitActivationPolicy_ptr p)
+PortableServer::ImplicitActivationPolicy_var::tao_release (ImplicitActivationPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::ImplicitActivationPolicy_var::nil (void)
+PortableServer::ImplicitActivationPolicy_var::tao_nil (void)
 {
   return ::PortableServer::ImplicitActivationPolicy::_nil ();
 }
 
 ::PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::ImplicitActivationPolicy_var::narrow (
+PortableServer::ImplicitActivationPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1866,7 +1876,7 @@ PortableServer::ImplicitActivationPolicy_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::ImplicitActivationPolicy_var::upcast (void *src)
+PortableServer::ImplicitActivationPolicy_var::tao_upcast (void *src)
 {
   ImplicitActivationPolicy **tmp =
     ACE_static_cast (ImplicitActivationPolicy **, src);
@@ -1966,7 +1976,7 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ImplicitActivationPolicy::_narrow
+                    &ImplicitActivationPolicy::_tao_class_id
                   )
               )
         );
@@ -1985,11 +1995,11 @@ void *PortableServer::ImplicitActivationPolicy::_tao_QueryInterface (ptr_arith_t
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, ImplicitActivationPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, ImplicitActivationPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1999,7 +2009,7 @@ void *PortableServer::ImplicitActivationPolicy::_tao_QueryInterface (ptr_arith_t
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2060,6 +2070,8 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServantRetentionPolicyValue, &_tc_TAO_tc_PortableServer_ServantRetentionPolicyValue)
 TAO_NAMESPACE_END
+
+int PortableServer::ServantRetentionPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::ServantRetentionPolicy_var
@@ -2150,25 +2162,25 @@ PortableServer::ServantRetentionPolicy_var::_retn (void)
 }
 
 ::PortableServer::ServantRetentionPolicy_ptr
-PortableServer::ServantRetentionPolicy_var::duplicate (ServantRetentionPolicy_ptr p)
+PortableServer::ServantRetentionPolicy_var::tao_duplicate (ServantRetentionPolicy_ptr p)
 {
   return ::PortableServer::ServantRetentionPolicy::_duplicate (p);
 }
 
 void
-PortableServer::ServantRetentionPolicy_var::release (ServantRetentionPolicy_ptr p)
+PortableServer::ServantRetentionPolicy_var::tao_release (ServantRetentionPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::ServantRetentionPolicy_ptr
-PortableServer::ServantRetentionPolicy_var::nil (void)
+PortableServer::ServantRetentionPolicy_var::tao_nil (void)
 {
   return ::PortableServer::ServantRetentionPolicy::_nil ();
 }
 
 ::PortableServer::ServantRetentionPolicy_ptr
-PortableServer::ServantRetentionPolicy_var::narrow (
+PortableServer::ServantRetentionPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2177,7 +2189,7 @@ PortableServer::ServantRetentionPolicy_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::ServantRetentionPolicy_var::upcast (void *src)
+PortableServer::ServantRetentionPolicy_var::tao_upcast (void *src)
 {
   ServantRetentionPolicy **tmp =
     ACE_static_cast (ServantRetentionPolicy **, src);
@@ -2277,7 +2289,7 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ServantRetentionPolicy::_narrow
+                    &ServantRetentionPolicy::_tao_class_id
                   )
               )
         );
@@ -2296,11 +2308,11 @@ void *PortableServer::ServantRetentionPolicy::_tao_QueryInterface (ptr_arith_t t
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, ServantRetentionPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, ServantRetentionPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2310,7 +2322,7 @@ void *PortableServer::ServantRetentionPolicy::_tao_QueryInterface (ptr_arith_t t
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2385,6 +2397,8 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestProcessingPolicyValue, &_tc_TAO_tc_PortableServer_RequestProcessingPolicyValue)
 TAO_NAMESPACE_END
+
+int PortableServer::RequestProcessingPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::RequestProcessingPolicy_var
@@ -2475,25 +2489,25 @@ PortableServer::RequestProcessingPolicy_var::_retn (void)
 }
 
 ::PortableServer::RequestProcessingPolicy_ptr
-PortableServer::RequestProcessingPolicy_var::duplicate (RequestProcessingPolicy_ptr p)
+PortableServer::RequestProcessingPolicy_var::tao_duplicate (RequestProcessingPolicy_ptr p)
 {
   return ::PortableServer::RequestProcessingPolicy::_duplicate (p);
 }
 
 void
-PortableServer::RequestProcessingPolicy_var::release (RequestProcessingPolicy_ptr p)
+PortableServer::RequestProcessingPolicy_var::tao_release (RequestProcessingPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::RequestProcessingPolicy_ptr
-PortableServer::RequestProcessingPolicy_var::nil (void)
+PortableServer::RequestProcessingPolicy_var::tao_nil (void)
 {
   return ::PortableServer::RequestProcessingPolicy::_nil ();
 }
 
 ::PortableServer::RequestProcessingPolicy_ptr
-PortableServer::RequestProcessingPolicy_var::narrow (
+PortableServer::RequestProcessingPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2502,7 +2516,7 @@ PortableServer::RequestProcessingPolicy_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::RequestProcessingPolicy_var::upcast (void *src)
+PortableServer::RequestProcessingPolicy_var::tao_upcast (void *src)
 {
   RequestProcessingPolicy **tmp =
     ACE_static_cast (RequestProcessingPolicy **, src);
@@ -2602,7 +2616,7 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RequestProcessingPolicy::_narrow
+                    &RequestProcessingPolicy::_tao_class_id
                   )
               )
         );
@@ -2621,11 +2635,11 @@ void *PortableServer::RequestProcessingPolicy::_tao_QueryInterface (ptr_arith_t 
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, RequestProcessingPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, RequestProcessingPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2635,7 +2649,7 @@ void *PortableServer::RequestProcessingPolicy::_tao_QueryInterface (ptr_arith_t 
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2650,6 +2664,8 @@ const char* PortableServer::RequestProcessingPolicy::_interface_repository_id (v
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+int PortableServer::POAManager::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::POAManager_var
@@ -2740,25 +2756,25 @@ PortableServer::POAManager_var::_retn (void)
 }
 
 ::PortableServer::POAManager_ptr
-PortableServer::POAManager_var::duplicate (POAManager_ptr p)
+PortableServer::POAManager_var::tao_duplicate (POAManager_ptr p)
 {
   return ::PortableServer::POAManager::_duplicate (p);
 }
 
 void
-PortableServer::POAManager_var::release (POAManager_ptr p)
+PortableServer::POAManager_var::tao_release (POAManager_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::POAManager_ptr
-PortableServer::POAManager_var::nil (void)
+PortableServer::POAManager_var::tao_nil (void)
 {
   return ::PortableServer::POAManager::_nil ();
 }
 
 ::PortableServer::POAManager_ptr
-PortableServer::POAManager_var::narrow (
+PortableServer::POAManager_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2767,7 +2783,7 @@ PortableServer::POAManager_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::POAManager_var::upcast (void *src)
+PortableServer::POAManager_var::tao_upcast (void *src)
 {
   POAManager **tmp =
     ACE_static_cast (POAManager **, src);
@@ -2867,7 +2883,7 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &POAManager::_narrow
+                    &POAManager::_tao_class_id
                   )
               )
         );
@@ -2886,9 +2902,9 @@ void *PortableServer::POAManager::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, POAManager)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, POAManager)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2971,6 +2987,8 @@ CORBA::Exception *PortableServer::POAManager::AdapterInactive::_alloc (void)
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+int PortableServer::AdapterActivator::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::AdapterActivator_var
@@ -3061,25 +3079,25 @@ PortableServer::AdapterActivator_var::_retn (void)
 }
 
 ::PortableServer::AdapterActivator_ptr
-PortableServer::AdapterActivator_var::duplicate (AdapterActivator_ptr p)
+PortableServer::AdapterActivator_var::tao_duplicate (AdapterActivator_ptr p)
 {
   return ::PortableServer::AdapterActivator::_duplicate (p);
 }
 
 void
-PortableServer::AdapterActivator_var::release (AdapterActivator_ptr p)
+PortableServer::AdapterActivator_var::tao_release (AdapterActivator_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::AdapterActivator_ptr
-PortableServer::AdapterActivator_var::nil (void)
+PortableServer::AdapterActivator_var::tao_nil (void)
 {
   return ::PortableServer::AdapterActivator::_nil ();
 }
 
 ::PortableServer::AdapterActivator_ptr
-PortableServer::AdapterActivator_var::narrow (
+PortableServer::AdapterActivator_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3088,7 +3106,7 @@ PortableServer::AdapterActivator_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::AdapterActivator_var::upcast (void *src)
+PortableServer::AdapterActivator_var::tao_upcast (void *src)
 {
   AdapterActivator **tmp =
     ACE_static_cast (AdapterActivator **, src);
@@ -3188,7 +3206,7 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_unchecke
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &AdapterActivator::_narrow
+                    &AdapterActivator::_tao_class_id
                   )
               )
         );
@@ -3207,9 +3225,9 @@ void *PortableServer::AdapterActivator::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, AdapterActivator)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, AdapterActivator)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3222,6 +3240,8 @@ const char* PortableServer::AdapterActivator::_interface_repository_id (void) co
 {
   return "IDL:PortableServer/AdapterActivator:1.0";
 }
+
+int PortableServer::ServantManager::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::ServantManager_var
@@ -3312,25 +3332,25 @@ PortableServer::ServantManager_var::_retn (void)
 }
 
 ::PortableServer::ServantManager_ptr
-PortableServer::ServantManager_var::duplicate (ServantManager_ptr p)
+PortableServer::ServantManager_var::tao_duplicate (ServantManager_ptr p)
 {
   return ::PortableServer::ServantManager::_duplicate (p);
 }
 
 void
-PortableServer::ServantManager_var::release (ServantManager_ptr p)
+PortableServer::ServantManager_var::tao_release (ServantManager_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::ServantManager_ptr
-PortableServer::ServantManager_var::nil (void)
+PortableServer::ServantManager_var::tao_nil (void)
 {
   return ::PortableServer::ServantManager::_nil ();
 }
 
 ::PortableServer::ServantManager_ptr
-PortableServer::ServantManager_var::narrow (
+PortableServer::ServantManager_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3339,7 +3359,7 @@ PortableServer::ServantManager_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::ServantManager_var::upcast (void *src)
+PortableServer::ServantManager_var::tao_upcast (void *src)
 {
   ServantManager **tmp =
     ACE_static_cast (ServantManager **, src);
@@ -3439,7 +3459,7 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_unchecked_na
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ServantManager::_narrow
+                    &ServantManager::_tao_class_id
                   )
               )
         );
@@ -3458,9 +3478,9 @@ void *PortableServer::ServantManager::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, ServantManager)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, ServantManager)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3473,6 +3493,8 @@ const char* PortableServer::ServantManager::_interface_repository_id (void) cons
 {
   return "IDL:PortableServer/ServantManager:1.0";
 }
+
+int PortableServer::ServantActivator::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::ServantActivator_var
@@ -3563,25 +3585,25 @@ PortableServer::ServantActivator_var::_retn (void)
 }
 
 ::PortableServer::ServantActivator_ptr
-PortableServer::ServantActivator_var::duplicate (ServantActivator_ptr p)
+PortableServer::ServantActivator_var::tao_duplicate (ServantActivator_ptr p)
 {
   return ::PortableServer::ServantActivator::_duplicate (p);
 }
 
 void
-PortableServer::ServantActivator_var::release (ServantActivator_ptr p)
+PortableServer::ServantActivator_var::tao_release (ServantActivator_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::ServantActivator_ptr
-PortableServer::ServantActivator_var::nil (void)
+PortableServer::ServantActivator_var::tao_nil (void)
 {
   return ::PortableServer::ServantActivator::_nil ();
 }
 
 ::PortableServer::ServantActivator_ptr
-PortableServer::ServantActivator_var::narrow (
+PortableServer::ServantActivator_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3590,7 +3612,7 @@ PortableServer::ServantActivator_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::ServantActivator_var::upcast (void *src)
+PortableServer::ServantActivator_var::tao_upcast (void *src)
 {
   ServantActivator **tmp =
     ACE_static_cast (ServantActivator **, src);
@@ -3690,7 +3712,7 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_unchecke
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ServantActivator::_narrow
+                    &ServantActivator::_tao_class_id
                   )
               )
         );
@@ -3709,11 +3731,11 @@ void *PortableServer::ServantActivator::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, ServantActivator)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, ServantActivator)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, ServantManager)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, ServantManager)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3723,7 +3745,7 @@ void *PortableServer::ServantActivator::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3736,6 +3758,8 @@ const char* PortableServer::ServantActivator::_interface_repository_id (void) co
 {
   return "IDL:PortableServer/ServantActivator:1.0";
 }
+
+int PortableServer::ServantLocator::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::ServantLocator_var
@@ -3826,25 +3850,25 @@ PortableServer::ServantLocator_var::_retn (void)
 }
 
 ::PortableServer::ServantLocator_ptr
-PortableServer::ServantLocator_var::duplicate (ServantLocator_ptr p)
+PortableServer::ServantLocator_var::tao_duplicate (ServantLocator_ptr p)
 {
   return ::PortableServer::ServantLocator::_duplicate (p);
 }
 
 void
-PortableServer::ServantLocator_var::release (ServantLocator_ptr p)
+PortableServer::ServantLocator_var::tao_release (ServantLocator_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::ServantLocator_ptr
-PortableServer::ServantLocator_var::nil (void)
+PortableServer::ServantLocator_var::tao_nil (void)
 {
   return ::PortableServer::ServantLocator::_nil ();
 }
 
 ::PortableServer::ServantLocator_ptr
-PortableServer::ServantLocator_var::narrow (
+PortableServer::ServantLocator_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3853,7 +3877,7 @@ PortableServer::ServantLocator_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::ServantLocator_var::upcast (void *src)
+PortableServer::ServantLocator_var::tao_upcast (void *src)
 {
   ServantLocator **tmp =
     ACE_static_cast (ServantLocator **, src);
@@ -3953,7 +3977,7 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_unchecked_na
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ServantLocator::_narrow
+                    &ServantLocator::_tao_class_id
                   )
               )
         );
@@ -3972,11 +3996,11 @@ void *PortableServer::ServantLocator::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, ServantLocator)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, ServantLocator)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, ServantManager)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, ServantManager)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3986,7 +4010,7 @@ void *PortableServer::ServantLocator::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -4001,6 +4025,8 @@ const char* PortableServer::ServantLocator::_interface_repository_id (void) cons
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+int PortableServer::POA::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableServer::POA_var
@@ -4091,25 +4117,25 @@ PortableServer::POA_var::_retn (void)
 }
 
 ::PortableServer::POA_ptr
-PortableServer::POA_var::duplicate (POA_ptr p)
+PortableServer::POA_var::tao_duplicate (POA_ptr p)
 {
   return ::PortableServer::POA::_duplicate (p);
 }
 
 void
-PortableServer::POA_var::release (POA_ptr p)
+PortableServer::POA_var::tao_release (POA_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::POA_ptr
-PortableServer::POA_var::nil (void)
+PortableServer::POA_var::tao_nil (void)
 {
   return ::PortableServer::POA::_nil ();
 }
 
 ::PortableServer::POA_ptr
-PortableServer::POA_var::narrow (
+PortableServer::POA_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4118,7 +4144,7 @@ PortableServer::POA_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::POA_var::upcast (void *src)
+PortableServer::POA_var::tao_upcast (void *src)
 {
   POA **tmp =
     ACE_static_cast (POA **, src);
@@ -4218,7 +4244,7 @@ PortableServer::POA_ptr PortableServer::POA::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &POA::_narrow
+                    &POA::_tao_class_id
                   )
               )
         );
@@ -4237,9 +4263,9 @@ void *PortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, POA)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, POA)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -4947,6 +4973,8 @@ CORBA::Exception *PortableServer::POA::WrongPolicy::_alloc (void)
   return retval;
 }
 
+int PortableServer::Current::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class PortableServer::Current_var
 // *************************************************************
@@ -5036,25 +5064,25 @@ PortableServer::Current_var::_retn (void)
 }
 
 ::PortableServer::Current_ptr
-PortableServer::Current_var::duplicate (Current_ptr p)
+PortableServer::Current_var::tao_duplicate (Current_ptr p)
 {
   return ::PortableServer::Current::_duplicate (p);
 }
 
 void
-PortableServer::Current_var::release (Current_ptr p)
+PortableServer::Current_var::tao_release (Current_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableServer::Current_ptr
-PortableServer::Current_var::nil (void)
+PortableServer::Current_var::tao_nil (void)
 {
   return ::PortableServer::Current::_nil ();
 }
 
 ::PortableServer::Current_ptr
-PortableServer::Current_var::narrow (
+PortableServer::Current_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -5063,7 +5091,7 @@ PortableServer::Current_var::narrow (
 }
 
 CORBA::Object *
-PortableServer::Current_var::upcast (void *src)
+PortableServer::Current_var::tao_upcast (void *src)
 {
   Current **tmp =
     ACE_static_cast (Current **, src);
@@ -5163,7 +5191,7 @@ PortableServer::Current_ptr PortableServer::Current::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &Current::_narrow
+                    &Current::_tao_class_id
                   )
               )
         );
@@ -5182,11 +5210,11 @@ void *PortableServer::Current::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, Current)::_narrow))
+      &ACE_NESTED_CLASS (::PortableServer, Current)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Current::_narrow))
+      &::CORBA::Current::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -5196,7 +5224,7 @@ void *PortableServer::Current::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

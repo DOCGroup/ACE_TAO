@@ -267,11 +267,11 @@ public:
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static CORBA_Policy_ptr duplicate (CORBA_Policy_ptr);
-    static void release (CORBA_Policy_ptr);
-    static CORBA_Policy_ptr nil (void);
-    static CORBA_Policy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static CORBA_Policy_ptr tao_duplicate (CORBA_Policy_ptr);
+    static void tao_release (CORBA_Policy_ptr);
+    static CORBA_Policy_ptr tao_nil (void);
+    static CORBA_Policy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     CORBA_Policy_ptr ptr_;
@@ -326,6 +326,8 @@ class TAO_Export CORBA_Policy
     typedef CORBA_Policy_ptr _ptr_type;
     typedef CORBA_Policy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static CORBA_Policy_ptr _duplicate (CORBA_Policy_ptr obj);
@@ -896,11 +898,11 @@ public:
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
-  static CORBA_PolicyManager_ptr duplicate (CORBA_PolicyManager_ptr);
-  static void release (CORBA_PolicyManager_ptr);
-  static CORBA_PolicyManager_ptr nil (void);
-  static CORBA_PolicyManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
-  static CORBA::Object * upcast (void *);
+  static CORBA_PolicyManager_ptr tao_duplicate (CORBA_PolicyManager_ptr);
+  static void tao_release (CORBA_PolicyManager_ptr);
+  static CORBA_PolicyManager_ptr tao_nil (void);
+  static CORBA_PolicyManager_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA_PolicyManager_ptr ptr_;
@@ -947,6 +949,8 @@ public:
   typedef CORBA_PolicyManager_ptr _ptr_type;
   typedef CORBA_PolicyManager_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
   // the static operations
   static CORBA_PolicyManager_ptr _duplicate (CORBA_PolicyManager_ptr obj);
@@ -1028,11 +1032,11 @@ public:
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
-  static CORBA_PolicyCurrent_ptr duplicate (CORBA_PolicyCurrent_ptr);
-  static void release (CORBA_PolicyCurrent_ptr);
-  static CORBA_PolicyCurrent_ptr nil (void);
-  static CORBA_PolicyCurrent_ptr narrow (CORBA::Object *, CORBA::Environment &);
-  static CORBA::Object * upcast (void *);
+  static CORBA_PolicyCurrent_ptr tao_duplicate (CORBA_PolicyCurrent_ptr);
+  static void tao_release (CORBA_PolicyCurrent_ptr);
+  static CORBA_PolicyCurrent_ptr tao_nil (void);
+  static CORBA_PolicyCurrent_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA_PolicyCurrent_ptr ptr_;
@@ -1079,6 +1083,8 @@ public:
   typedef CORBA_PolicyCurrent_ptr _ptr_type;
   typedef CORBA_PolicyCurrent_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
   // the static operations
   static CORBA_PolicyCurrent_ptr _duplicate (CORBA_PolicyCurrent_ptr obj);

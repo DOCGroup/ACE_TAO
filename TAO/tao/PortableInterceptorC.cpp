@@ -31,6 +31,8 @@
 
 #include "CORBA_String.h"
 
+int PortableInterceptor::Interceptor::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class PortableInterceptor::Interceptor_var
 // *************************************************************
@@ -120,25 +122,25 @@ PortableInterceptor::Interceptor_var::_retn (void)
 }
 
 ::PortableInterceptor::Interceptor_ptr
-PortableInterceptor::Interceptor_var::duplicate (PortableInterceptor::Interceptor_ptr p)
+PortableInterceptor::Interceptor_var::tao_duplicate (PortableInterceptor::Interceptor_ptr p)
 {
   return ::PortableInterceptor::Interceptor::_duplicate (p);
 }
 
 void
-PortableInterceptor::Interceptor_var::release (PortableInterceptor::Interceptor_ptr p)
+PortableInterceptor::Interceptor_var::tao_release (PortableInterceptor::Interceptor_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::Interceptor_ptr
-PortableInterceptor::Interceptor_var::nil (void)
+PortableInterceptor::Interceptor_var::tao_nil (void)
 {
   return ::PortableInterceptor::Interceptor::_nil ();
 }
 
 ::PortableInterceptor::Interceptor_ptr
-PortableInterceptor::Interceptor_var::narrow (
+PortableInterceptor::Interceptor_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -147,7 +149,7 @@ PortableInterceptor::Interceptor_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::Interceptor_var::upcast (void *src)
+PortableInterceptor::Interceptor_var::tao_upcast (void *src)
 {
   PortableInterceptor::Interceptor **tmp =
     ACE_static_cast (PortableInterceptor::Interceptor **, src);
@@ -246,7 +248,7 @@ PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_unchecke
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &Interceptor::_narrow
+                    &Interceptor::_tao_class_id
                   )
               )
         );
@@ -265,9 +267,9 @@ void *PortableInterceptor::Interceptor::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -662,6 +664,8 @@ CORBA::TypeCode_ptr PortableInterceptor::InvalidSlot::_type (void) const
 }
 
 
+int PortableInterceptor::Current::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class PortableInterceptor::Current_var
 // *************************************************************
@@ -751,25 +755,25 @@ PortableInterceptor::Current_var::_retn (void)
 }
 
 ::PortableInterceptor::Current_ptr
-PortableInterceptor::Current_var::duplicate (PortableInterceptor::Current_ptr p)
+PortableInterceptor::Current_var::tao_duplicate (PortableInterceptor::Current_ptr p)
 {
   return ::PortableInterceptor::Current::_duplicate (p);
 }
 
 void
-PortableInterceptor::Current_var::release (PortableInterceptor::Current_ptr p)
+PortableInterceptor::Current_var::tao_release (PortableInterceptor::Current_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::Current_ptr
-PortableInterceptor::Current_var::nil (void)
+PortableInterceptor::Current_var::tao_nil (void)
 {
   return ::PortableInterceptor::Current::_nil ();
 }
 
 ::PortableInterceptor::Current_ptr
-PortableInterceptor::Current_var::narrow (
+PortableInterceptor::Current_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -778,7 +782,7 @@ PortableInterceptor::Current_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::Current_var::upcast (void *src)
+PortableInterceptor::Current_var::tao_upcast (void *src)
 {
   PortableInterceptor::Current **tmp =
     ACE_static_cast (PortableInterceptor::Current **, src);
@@ -877,7 +881,7 @@ PortableInterceptor::Current_ptr PortableInterceptor::Current::_unchecked_narrow
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &Current::_narrow
+                    &Current::_tao_class_id
                   )
               )
         );
@@ -896,11 +900,11 @@ void *PortableInterceptor::Current::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, Current)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Current)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Current::_narrow))
+      &::CORBA::Current::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -910,7 +914,7 @@ void *PortableInterceptor::Current::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -924,6 +928,8 @@ const char* PortableInterceptor::Current::_interface_repository_id (void) const
   return "IDL:PortableInterceptor/Current:1.0";
 }
 
+
+int PortableInterceptor::RequestInfo::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::RequestInfo_var
@@ -1014,25 +1020,25 @@ PortableInterceptor::RequestInfo_var::_retn (void)
 }
 
 ::PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::duplicate (PortableInterceptor::RequestInfo_ptr p)
+PortableInterceptor::RequestInfo_var::tao_duplicate (PortableInterceptor::RequestInfo_ptr p)
 {
   return ::PortableInterceptor::RequestInfo::_duplicate (p);
 }
 
 void
-PortableInterceptor::RequestInfo_var::release (PortableInterceptor::RequestInfo_ptr p)
+PortableInterceptor::RequestInfo_var::tao_release (PortableInterceptor::RequestInfo_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::nil (void)
+PortableInterceptor::RequestInfo_var::tao_nil (void)
 {
   return ::PortableInterceptor::RequestInfo::_nil ();
 }
 
 ::PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::RequestInfo_var::narrow (
+PortableInterceptor::RequestInfo_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1041,7 +1047,7 @@ PortableInterceptor::RequestInfo_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::RequestInfo_var::upcast (void *src)
+PortableInterceptor::RequestInfo_var::tao_upcast (void *src)
 {
   PortableInterceptor::RequestInfo **tmp =
     ACE_static_cast (PortableInterceptor::RequestInfo **, src);
@@ -1140,7 +1146,7 @@ PortableInterceptor::RequestInfo_ptr PortableInterceptor::RequestInfo::_unchecke
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RequestInfo::_narrow
+                    &RequestInfo::_tao_class_id
                   )
               )
         );
@@ -1159,9 +1165,9 @@ void *PortableInterceptor::RequestInfo::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1175,6 +1181,8 @@ const char* PortableInterceptor::RequestInfo::_interface_repository_id (void) co
   return "IDL:PortableInterceptor/RequestInfo:1.0";
 }
 
+
+int PortableInterceptor::ClientRequestInfo::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::ClientRequestInfo_var
@@ -1265,25 +1273,25 @@ PortableInterceptor::ClientRequestInfo_var::_retn (void)
 }
 
 ::PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::ClientRequestInfo_var::duplicate (PortableInterceptor::ClientRequestInfo_ptr p)
+PortableInterceptor::ClientRequestInfo_var::tao_duplicate (PortableInterceptor::ClientRequestInfo_ptr p)
 {
   return ::PortableInterceptor::ClientRequestInfo::_duplicate (p);
 }
 
 void
-PortableInterceptor::ClientRequestInfo_var::release (PortableInterceptor::ClientRequestInfo_ptr p)
+PortableInterceptor::ClientRequestInfo_var::tao_release (PortableInterceptor::ClientRequestInfo_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::ClientRequestInfo_var::nil (void)
+PortableInterceptor::ClientRequestInfo_var::tao_nil (void)
 {
   return ::PortableInterceptor::ClientRequestInfo::_nil ();
 }
 
 ::PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::ClientRequestInfo_var::narrow (
+PortableInterceptor::ClientRequestInfo_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1292,7 +1300,7 @@ PortableInterceptor::ClientRequestInfo_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::ClientRequestInfo_var::upcast (void *src)
+PortableInterceptor::ClientRequestInfo_var::tao_upcast (void *src)
 {
   PortableInterceptor::ClientRequestInfo **tmp =
     ACE_static_cast (PortableInterceptor::ClientRequestInfo **, src);
@@ -1391,7 +1399,7 @@ PortableInterceptor::ClientRequestInfo_ptr PortableInterceptor::ClientRequestInf
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ClientRequestInfo::_narrow
+                    &ClientRequestInfo::_tao_class_id
                   )
               )
         );
@@ -1410,11 +1418,11 @@ void *PortableInterceptor::ClientRequestInfo::_tao_QueryInterface (ptr_arith_t t
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, ClientRequestInfo)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, ClientRequestInfo)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1424,7 +1432,7 @@ void *PortableInterceptor::ClientRequestInfo::_tao_QueryInterface (ptr_arith_t t
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1438,6 +1446,8 @@ const char* PortableInterceptor::ClientRequestInfo::_interface_repository_id (vo
   return "IDL:PortableInterceptor/ClientRequestInfo:1.0";
 }
 
+
+int PortableInterceptor::ServerRequestInfo::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::ServerRequestInfo_var
@@ -1528,25 +1538,25 @@ PortableInterceptor::ServerRequestInfo_var::_retn (void)
 }
 
 ::PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::ServerRequestInfo_var::duplicate (PortableInterceptor::ServerRequestInfo_ptr p)
+PortableInterceptor::ServerRequestInfo_var::tao_duplicate (PortableInterceptor::ServerRequestInfo_ptr p)
 {
   return ::PortableInterceptor::ServerRequestInfo::_duplicate (p);
 }
 
 void
-PortableInterceptor::ServerRequestInfo_var::release (PortableInterceptor::ServerRequestInfo_ptr p)
+PortableInterceptor::ServerRequestInfo_var::tao_release (PortableInterceptor::ServerRequestInfo_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::ServerRequestInfo_var::nil (void)
+PortableInterceptor::ServerRequestInfo_var::tao_nil (void)
 {
   return ::PortableInterceptor::ServerRequestInfo::_nil ();
 }
 
 ::PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::ServerRequestInfo_var::narrow (
+PortableInterceptor::ServerRequestInfo_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1555,7 +1565,7 @@ PortableInterceptor::ServerRequestInfo_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::ServerRequestInfo_var::upcast (void *src)
+PortableInterceptor::ServerRequestInfo_var::tao_upcast (void *src)
 {
   PortableInterceptor::ServerRequestInfo **tmp =
     ACE_static_cast (PortableInterceptor::ServerRequestInfo **, src);
@@ -1654,7 +1664,7 @@ PortableInterceptor::ServerRequestInfo_ptr PortableInterceptor::ServerRequestInf
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ServerRequestInfo::_narrow
+                    &ServerRequestInfo::_tao_class_id
                   )
               )
         );
@@ -1673,11 +1683,11 @@ void *PortableInterceptor::ServerRequestInfo::_tao_QueryInterface (ptr_arith_t t
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, ServerRequestInfo)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, ServerRequestInfo)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1687,7 +1697,7 @@ void *PortableInterceptor::ServerRequestInfo::_tao_QueryInterface (ptr_arith_t t
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1701,6 +1711,8 @@ const char* PortableInterceptor::ServerRequestInfo::_interface_repository_id (vo
   return "IDL:PortableInterceptor/ServerRequestInfo:1.0";
 }
 
+
+int PortableInterceptor::ClientRequestInterceptor::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::ClientRequestInterceptor_var
@@ -1791,25 +1803,25 @@ PortableInterceptor::ClientRequestInterceptor_var::_retn (void)
 }
 
 ::PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::ClientRequestInterceptor_var::duplicate (PortableInterceptor::ClientRequestInterceptor_ptr p)
+PortableInterceptor::ClientRequestInterceptor_var::tao_duplicate (PortableInterceptor::ClientRequestInterceptor_ptr p)
 {
   return ::PortableInterceptor::ClientRequestInterceptor::_duplicate (p);
 }
 
 void
-PortableInterceptor::ClientRequestInterceptor_var::release (PortableInterceptor::ClientRequestInterceptor_ptr p)
+PortableInterceptor::ClientRequestInterceptor_var::tao_release (PortableInterceptor::ClientRequestInterceptor_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::ClientRequestInterceptor_var::nil (void)
+PortableInterceptor::ClientRequestInterceptor_var::tao_nil (void)
 {
   return ::PortableInterceptor::ClientRequestInterceptor::_nil ();
 }
 
 ::PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::ClientRequestInterceptor_var::narrow (
+PortableInterceptor::ClientRequestInterceptor_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1818,7 +1830,7 @@ PortableInterceptor::ClientRequestInterceptor_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::ClientRequestInterceptor_var::upcast (void *src)
+PortableInterceptor::ClientRequestInterceptor_var::tao_upcast (void *src)
 {
   PortableInterceptor::ClientRequestInterceptor **tmp =
     ACE_static_cast (PortableInterceptor::ClientRequestInterceptor **, src);
@@ -1917,7 +1929,7 @@ PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientReq
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ClientRequestInterceptor::_narrow
+                    &ClientRequestInterceptor::_tao_class_id
                   )
               )
         );
@@ -1936,11 +1948,11 @@ void *PortableInterceptor::ClientRequestInterceptor::_tao_QueryInterface (ptr_ar
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, ClientRequestInterceptor)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, ClientRequestInterceptor)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1950,7 +1962,7 @@ void *PortableInterceptor::ClientRequestInterceptor::_tao_QueryInterface (ptr_ar
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1964,6 +1976,8 @@ const char* PortableInterceptor::ClientRequestInterceptor::_interface_repository
   return "IDL:PortableInterceptor/ClientRequestInterceptor:1.0";
 }
 
+
+int PortableInterceptor::ServerRequestInterceptor::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::ServerRequestInterceptor_var
@@ -2054,25 +2068,25 @@ PortableInterceptor::ServerRequestInterceptor_var::_retn (void)
 }
 
 ::PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::ServerRequestInterceptor_var::duplicate (PortableInterceptor::ServerRequestInterceptor_ptr p)
+PortableInterceptor::ServerRequestInterceptor_var::tao_duplicate (PortableInterceptor::ServerRequestInterceptor_ptr p)
 {
   return ::PortableInterceptor::ServerRequestInterceptor::_duplicate (p);
 }
 
 void
-PortableInterceptor::ServerRequestInterceptor_var::release (PortableInterceptor::ServerRequestInterceptor_ptr p)
+PortableInterceptor::ServerRequestInterceptor_var::tao_release (PortableInterceptor::ServerRequestInterceptor_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::ServerRequestInterceptor_var::nil (void)
+PortableInterceptor::ServerRequestInterceptor_var::tao_nil (void)
 {
   return ::PortableInterceptor::ServerRequestInterceptor::_nil ();
 }
 
 ::PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::ServerRequestInterceptor_var::narrow (
+PortableInterceptor::ServerRequestInterceptor_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2081,7 +2095,7 @@ PortableInterceptor::ServerRequestInterceptor_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::ServerRequestInterceptor_var::upcast (void *src)
+PortableInterceptor::ServerRequestInterceptor_var::tao_upcast (void *src)
 {
   PortableInterceptor::ServerRequestInterceptor **tmp =
     ACE_static_cast (PortableInterceptor::ServerRequestInterceptor **, src);
@@ -2180,7 +2194,7 @@ PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerReq
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ServerRequestInterceptor::_narrow
+                    &ServerRequestInterceptor::_tao_class_id
                   )
               )
         );
@@ -2199,11 +2213,11 @@ void *PortableInterceptor::ServerRequestInterceptor::_tao_QueryInterface (ptr_ar
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, ServerRequestInterceptor)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, ServerRequestInterceptor)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2213,7 +2227,7 @@ void *PortableInterceptor::ServerRequestInterceptor::_tao_QueryInterface (ptr_ar
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2227,6 +2241,8 @@ const char* PortableInterceptor::ServerRequestInterceptor::_interface_repository
   return "IDL:PortableInterceptor/ServerRequestInterceptor:1.0";
 }
 
+
+int PortableInterceptor::IORInfo::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::IORInfo_var
@@ -2317,25 +2333,25 @@ PortableInterceptor::IORInfo_var::_retn (void)
 }
 
 ::PortableInterceptor::IORInfo_ptr
-PortableInterceptor::IORInfo_var::duplicate (PortableInterceptor::IORInfo_ptr p)
+PortableInterceptor::IORInfo_var::tao_duplicate (PortableInterceptor::IORInfo_ptr p)
 {
   return ::PortableInterceptor::IORInfo::_duplicate (p);
 }
 
 void
-PortableInterceptor::IORInfo_var::release (PortableInterceptor::IORInfo_ptr p)
+PortableInterceptor::IORInfo_var::tao_release (PortableInterceptor::IORInfo_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::IORInfo_ptr
-PortableInterceptor::IORInfo_var::nil (void)
+PortableInterceptor::IORInfo_var::tao_nil (void)
 {
   return ::PortableInterceptor::IORInfo::_nil ();
 }
 
 ::PortableInterceptor::IORInfo_ptr
-PortableInterceptor::IORInfo_var::narrow (
+PortableInterceptor::IORInfo_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2344,7 +2360,7 @@ PortableInterceptor::IORInfo_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::IORInfo_var::upcast (void *src)
+PortableInterceptor::IORInfo_var::tao_upcast (void *src)
 {
   PortableInterceptor::IORInfo **tmp =
     ACE_static_cast (PortableInterceptor::IORInfo **, src);
@@ -2443,7 +2459,7 @@ PortableInterceptor::IORInfo_ptr PortableInterceptor::IORInfo::_unchecked_narrow
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &IORInfo::_narrow
+                    &IORInfo::_tao_class_id
                   )
               )
         );
@@ -2462,9 +2478,9 @@ void *PortableInterceptor::IORInfo::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, IORInfo)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, IORInfo)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2478,6 +2494,8 @@ const char* PortableInterceptor::IORInfo::_interface_repository_id (void) const
   return "IDL:PortableInterceptor/IORInfo:1.0";
 }
 
+
+int PortableInterceptor::IORInterceptor::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::IORInterceptor_var
@@ -2568,25 +2586,25 @@ PortableInterceptor::IORInterceptor_var::_retn (void)
 }
 
 ::PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::IORInterceptor_var::duplicate (PortableInterceptor::IORInterceptor_ptr p)
+PortableInterceptor::IORInterceptor_var::tao_duplicate (PortableInterceptor::IORInterceptor_ptr p)
 {
   return ::PortableInterceptor::IORInterceptor::_duplicate (p);
 }
 
 void
-PortableInterceptor::IORInterceptor_var::release (PortableInterceptor::IORInterceptor_ptr p)
+PortableInterceptor::IORInterceptor_var::tao_release (PortableInterceptor::IORInterceptor_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::IORInterceptor_var::nil (void)
+PortableInterceptor::IORInterceptor_var::tao_nil (void)
 {
   return ::PortableInterceptor::IORInterceptor::_nil ();
 }
 
 ::PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::IORInterceptor_var::narrow (
+PortableInterceptor::IORInterceptor_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2595,7 +2613,7 @@ PortableInterceptor::IORInterceptor_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::IORInterceptor_var::upcast (void *src)
+PortableInterceptor::IORInterceptor_var::tao_upcast (void *src)
 {
   PortableInterceptor::IORInterceptor **tmp =
     ACE_static_cast (PortableInterceptor::IORInterceptor **, src);
@@ -2694,7 +2712,7 @@ PortableInterceptor::IORInterceptor_ptr PortableInterceptor::IORInterceptor::_un
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &IORInterceptor::_narrow
+                    &IORInterceptor::_tao_class_id
                   )
               )
         );
@@ -2713,11 +2731,11 @@ void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptr_arith_t type
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, IORInterceptor)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, IORInterceptor)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2727,7 +2745,7 @@ void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptr_arith_t type
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2741,6 +2759,8 @@ const char* PortableInterceptor::IORInterceptor::_interface_repository_id (void)
   return "IDL:PortableInterceptor/IORInterceptor:1.0";
 }
 
+
+int PortableInterceptor::PolicyFactory::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::PolicyFactory_var
@@ -2831,25 +2851,25 @@ PortableInterceptor::PolicyFactory_var::_retn (void)
 }
 
 ::PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory_var::duplicate (PortableInterceptor::PolicyFactory_ptr p)
+PortableInterceptor::PolicyFactory_var::tao_duplicate (PortableInterceptor::PolicyFactory_ptr p)
 {
   return ::PortableInterceptor::PolicyFactory::_duplicate (p);
 }
 
 void
-PortableInterceptor::PolicyFactory_var::release (PortableInterceptor::PolicyFactory_ptr p)
+PortableInterceptor::PolicyFactory_var::tao_release (PortableInterceptor::PolicyFactory_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory_var::nil (void)
+PortableInterceptor::PolicyFactory_var::tao_nil (void)
 {
   return ::PortableInterceptor::PolicyFactory::_nil ();
 }
 
 ::PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::PolicyFactory_var::narrow (
+PortableInterceptor::PolicyFactory_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2858,7 +2878,7 @@ PortableInterceptor::PolicyFactory_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::PolicyFactory_var::upcast (void *src)
+PortableInterceptor::PolicyFactory_var::tao_upcast (void *src)
 {
   PortableInterceptor::PolicyFactory **tmp =
     ACE_static_cast (PortableInterceptor::PolicyFactory **, src);
@@ -2957,7 +2977,7 @@ PortableInterceptor::PolicyFactory_ptr PortableInterceptor::PolicyFactory::_unch
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &PolicyFactory::_narrow
+                    &PolicyFactory::_tao_class_id
                   )
               )
         );
@@ -2976,9 +2996,9 @@ void *PortableInterceptor::PolicyFactory::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, PolicyFactory)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, PolicyFactory)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2992,6 +3012,8 @@ const char* PortableInterceptor::PolicyFactory::_interface_repository_id (void) 
   return "IDL:PortableInterceptor/PolicyFactory:1.0";
 }
 
+
+int PortableInterceptor::ORBInitInfo::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::ORBInitInfo_var
@@ -3082,25 +3104,25 @@ PortableInterceptor::ORBInitInfo_var::_retn (void)
 }
 
 ::PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo_var::duplicate (PortableInterceptor::ORBInitInfo_ptr p)
+PortableInterceptor::ORBInitInfo_var::tao_duplicate (PortableInterceptor::ORBInitInfo_ptr p)
 {
   return ::PortableInterceptor::ORBInitInfo::_duplicate (p);
 }
 
 void
-PortableInterceptor::ORBInitInfo_var::release (PortableInterceptor::ORBInitInfo_ptr p)
+PortableInterceptor::ORBInitInfo_var::tao_release (PortableInterceptor::ORBInitInfo_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo_var::nil (void)
+PortableInterceptor::ORBInitInfo_var::tao_nil (void)
 {
   return ::PortableInterceptor::ORBInitInfo::_nil ();
 }
 
 ::PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::ORBInitInfo_var::narrow (
+PortableInterceptor::ORBInitInfo_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3109,7 +3131,7 @@ PortableInterceptor::ORBInitInfo_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::ORBInitInfo_var::upcast (void *src)
+PortableInterceptor::ORBInitInfo_var::tao_upcast (void *src)
 {
   PortableInterceptor::ORBInitInfo **tmp =
     ACE_static_cast (PortableInterceptor::ORBInitInfo **, src);
@@ -3208,7 +3230,7 @@ PortableInterceptor::ORBInitInfo_ptr PortableInterceptor::ORBInitInfo::_unchecke
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ORBInitInfo::_narrow
+                    &ORBInitInfo::_tao_class_id
                   )
               )
         );
@@ -3227,9 +3249,9 @@ void *PortableInterceptor::ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, ORBInitInfo)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, ORBInitInfo)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3390,6 +3412,8 @@ CORBA::Exception *PortableInterceptor::ORBInitInfo::InvalidName::_alloc (void)
 }
 
 
+int PortableInterceptor::ORBInitializer::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class PortableInterceptor::ORBInitializer_var
 // *************************************************************
@@ -3479,25 +3503,25 @@ PortableInterceptor::ORBInitializer_var::_retn (void)
 }
 
 ::PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::ORBInitializer_var::duplicate (PortableInterceptor::ORBInitializer_ptr p)
+PortableInterceptor::ORBInitializer_var::tao_duplicate (PortableInterceptor::ORBInitializer_ptr p)
 {
   return ::PortableInterceptor::ORBInitializer::_duplicate (p);
 }
 
 void
-PortableInterceptor::ORBInitializer_var::release (PortableInterceptor::ORBInitializer_ptr p)
+PortableInterceptor::ORBInitializer_var::tao_release (PortableInterceptor::ORBInitializer_ptr p)
 {
   CORBA::release (p);
 }
 
 ::PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::ORBInitializer_var::nil (void)
+PortableInterceptor::ORBInitializer_var::tao_nil (void)
 {
   return ::PortableInterceptor::ORBInitializer::_nil ();
 }
 
 ::PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::ORBInitializer_var::narrow (
+PortableInterceptor::ORBInitializer_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3506,7 +3530,7 @@ PortableInterceptor::ORBInitializer_var::narrow (
 }
 
 CORBA::Object *
-PortableInterceptor::ORBInitializer_var::upcast (void *src)
+PortableInterceptor::ORBInitializer_var::tao_upcast (void *src)
 {
   PortableInterceptor::ORBInitializer **tmp =
     ACE_static_cast (PortableInterceptor::ORBInitializer **, src);
@@ -3605,7 +3629,7 @@ PortableInterceptor::ORBInitializer_ptr PortableInterceptor::ORBInitializer::_un
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ORBInitializer::_narrow
+                    &ORBInitializer::_tao_class_id
                   )
               )
         );
@@ -3624,9 +3648,9 @@ void *PortableInterceptor::ORBInitializer::_tao_QueryInterface (ptr_arith_t type
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableInterceptor, ORBInitializer)::_narrow))
+      &ACE_NESTED_CLASS (::PortableInterceptor, ORBInitializer)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

@@ -106,11 +106,11 @@ TAO_NAMESPACE  BiDirPolicy
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static BidirectionalPolicy_ptr duplicate (BidirectionalPolicy_ptr);
-    static void release (BidirectionalPolicy_ptr);
-    static BidirectionalPolicy_ptr nil (void);
-    static BidirectionalPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static BidirectionalPolicy_ptr tao_duplicate (BidirectionalPolicy_ptr);
+    static void tao_release (BidirectionalPolicy_ptr);
+    static BidirectionalPolicy_ptr tao_nil (void);
+    static BidirectionalPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     BidirectionalPolicy_ptr ptr_;
@@ -157,6 +157,8 @@ class TAO_BiDirGIOP_Export BidirectionalPolicy: public virtual CORBA::Policy
     typedef BidirectionalPolicy_ptr _ptr_type;
     typedef BidirectionalPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static BidirectionalPolicy_ptr _duplicate (BidirectionalPolicy_ptr obj);

@@ -88,14 +88,14 @@ public:
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
-  static CORBA_FixedDef_ptr duplicate (CORBA_FixedDef_ptr);
-  static void release (CORBA_FixedDef_ptr);
-  static CORBA_FixedDef_ptr nil (void);
-  static CORBA_FixedDef_ptr narrow (
+  static CORBA_FixedDef_ptr tao_duplicate (CORBA_FixedDef_ptr);
+  static void tao_release (CORBA_FixedDef_ptr);
+  static CORBA_FixedDef_ptr tao_nil (void);
+  static CORBA_FixedDef_ptr tao_narrow (
       CORBA::Object *,
       CORBA::Environment &
     );
-  static CORBA::Object * upcast (void *);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA_FixedDef_ptr ptr_;
@@ -149,6 +149,8 @@ public:
   typedef CORBA_FixedDef_ptr _ptr_type;
   typedef CORBA_FixedDef_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
   // the static operations
   static CORBA_FixedDef_ptr _duplicate (CORBA_FixedDef_ptr obj);
@@ -685,14 +687,14 @@ public:
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static CORBA_ValueMemberDef_ptr duplicate (CORBA_ValueMemberDef_ptr);
-    static void release (CORBA_ValueMemberDef_ptr);
-    static CORBA_ValueMemberDef_ptr nil (void);
-    static CORBA_ValueMemberDef_ptr narrow (
+    static CORBA_ValueMemberDef_ptr tao_duplicate (CORBA_ValueMemberDef_ptr);
+    static void tao_release (CORBA_ValueMemberDef_ptr);
+    static CORBA_ValueMemberDef_ptr tao_nil (void);
+    static CORBA_ValueMemberDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     CORBA_ValueMemberDef_ptr ptr_;
@@ -746,6 +748,8 @@ public:
     typedef CORBA_ValueMemberDef_ptr _ptr_type;
     typedef CORBA_ValueMemberDef_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static CORBA_ValueMemberDef_ptr _duplicate (CORBA_ValueMemberDef_ptr obj);
@@ -1075,14 +1079,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_ValueDef_ptr duplicate (CORBA_ValueDef_ptr);
-      static void release (CORBA_ValueDef_ptr);
-      static CORBA_ValueDef_ptr nil (void);
-      static CORBA_ValueDef_ptr narrow (
+      static CORBA_ValueDef_ptr tao_duplicate (CORBA_ValueDef_ptr);
+      static void tao_release (CORBA_ValueDef_ptr);
+      static CORBA_ValueDef_ptr tao_nil (void);
+      static CORBA_ValueDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_ValueDef_ptr ptr_;
@@ -1138,6 +1142,8 @@ public:
       typedef CORBA_ValueDef_ptr _ptr_type;
       typedef CORBA_ValueDef_var _var_type;
     #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
       // the static operations
       static CORBA_ValueDef_ptr _duplicate (CORBA_ValueDef_ptr obj);
@@ -2032,14 +2038,14 @@ public:
 
         // Hooks used by template sequence and object manager classes
         // for non-defined forward declared interfaces.
-        static CORBA_ValueBoxDef_ptr duplicate (CORBA_ValueBoxDef_ptr);
-        static void release (CORBA_ValueBoxDef_ptr);
-        static CORBA_ValueBoxDef_ptr nil (void);
-        static CORBA_ValueBoxDef_ptr narrow (
+        static CORBA_ValueBoxDef_ptr tao_duplicate (CORBA_ValueBoxDef_ptr);
+        static void tao_release (CORBA_ValueBoxDef_ptr);
+        static CORBA_ValueBoxDef_ptr tao_nil (void);
+        static CORBA_ValueBoxDef_ptr tao_narrow (
             CORBA::Object *,
             CORBA::Environment &
           );
-        static CORBA::Object * upcast (void *);
+        static CORBA::Object * tao_upcast (void *);
 
       private:
         CORBA_ValueBoxDef_ptr ptr_;
@@ -2093,6 +2099,8 @@ public:
         typedef CORBA_ValueBoxDef_ptr _ptr_type;
         typedef CORBA_ValueBoxDef_var _var_type;
       #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
         // the static operations
         static CORBA_ValueBoxDef_ptr _duplicate (CORBA_ValueBoxDef_ptr obj);
