@@ -48,14 +48,13 @@
 #if !defined (PEER_H)
 #define PEER_H
 
-#include "ace/OS.h"
-#include "ace/INET_Addr.h"
-#include "ace/Message_Block.h"
-#include "ace/Svc_Handler.h"
-#include "ace/Synch.h"
-#include "ace/SOCK_Stream.h"
+#include "ace/Service_Config.h"
+#include "ace/Acceptor.h"
+#include "ace/Connector.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/SOCK_Connector.h"
 
-ACE_SVC_FACTORY_DECLARE (Peer_Acceptor)
+ACE_SVC_FACTORY_DECLARE (Peer_Factory)
 
 class ACE_Svc_Export Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
@@ -93,14 +92,6 @@ public:
 
 protected:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> inherited;
-
-  enum 
-  { 
-    MAX_QUEUE_SIZE = 1024 * 1024 * 16,
-    // We'll allow up to 16 megabytes to be queued per-output
-    // channel!!!!  This is clearly a policy in search of
-    // refinement...
-  };
 
   virtual int recv (ACE_Message_Block *&);
   // Receive an Peer event from gatewayd.
@@ -142,31 +133,22 @@ protected:
 class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
 {
   // = TITLE
-  //     A factory class that accept connections from gatewayd and
-  //     dynamically creates a new <Peer_Handler> object to
-  //     communicate with the gatewayd.
+  //     Passively accept connections from gatewayd and dynamically
+  //     create a new <Peer_Handler> object to communicate with the
+  //     gatewayd.
 public:
   // = Initialization and termination methods.
   Peer_Acceptor (void);
-  // Create the Peer.
+  // Initialization the <Peer_Acceptor>.
 
-  virtual int init (int argc, char *argv[]);
-  // Initialize the acceptor.
-
-  virtual int info (char **, size_t) const;
-  // Return info about this service.
-
-  virtual int fini (void);
-  // Perform termination activities.
+  int open (void);
+  // Initialize the <Peer_Acceptor>.
+  
+  int close (void);
+  // Terminate the <Peer_Acceptor>.
 
   virtual int make_svc_handler (Peer_Handler *&);
   // Factory method that creates a <Peer_Handler> just once.
-
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Handle various signals (e.g., SIGPIPE, SIGINT, and SIGQUIT).
-
-  void parse_args (int argc, char *argv[]);
-  // Parse the command-line arguments.
 
 private:
   Peer_Handler *peer_handler_;
@@ -178,5 +160,50 @@ private:
   typedef ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR> inherited;
 };
 
-#endif /* PEER_H */
+class ACE_Svc_Export Peer_Connector : public ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>
+{
+  // = TITLE
+  //     Actively establish connections with gatewayd and dynamically
+  //     create a new <Peer_Handler> object to communicate with the
+  //     gatewayd.
+public:
+  // = Initialization and termination methods.
+  Peer_Connector (void);
+  // Initialization the <Peer_Connector>.
 
+private:
+  Peer_Handler peer_handler_;
+  // <Peer_Handler> that is connected to the client.
+
+  typedef ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR> inherited;
+};
+
+class ACE_Svc_Export Peer_Factory : public ACE_Service_Object
+{
+  // = TITLE
+  //     A factory class that actively and/or passively establishes
+  //     connections with the gatewayd.
+public:
+  // = Dynamic initialization and termination hooks from <ACE_Service_Object>. 
+
+  virtual int init (int argc, char *argv[]);
+  // Initialize the acceptor and connector.
+
+  virtual int fini (void);
+  // Perform termination activities.
+
+  virtual int info (char **, size_t) const;
+  // Return info about this service.
+
+  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  // Handle various signals (e.g., SIGPIPE, SIGINT, and SIGQUIT).
+
+private:
+  Peer_Acceptor acceptor_;
+  // Pointer to an instance of our <Peer_Acceptor>.
+
+  Peer_Connector connector_;
+  // An instance of our <Peer_Connector>.
+};
+
+#endif /* PEER_H */
