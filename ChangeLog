@@ -1,3 +1,12 @@
+Wed Jan 28 06:46:55 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/ACE.h:
+	* ace/config-cygwin32.h:
+	  Moved os_math.h include from config-cygwin32.h to ACE.h. When
+	  ACE_NTRACE is set we got include problems. Cygwin defines log2
+	  as macro and we have ACE::log2. The include of os_math.h is only
+	  done for Cygwin.
+
 Tue Jan 27 20:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/msvc_static_order.lst:
