@@ -222,13 +222,10 @@ main (int argc, char *argv[])
   barrier.wait ();
 
 #else
-  pid_t pid = ACE_OS::fork ();
+  pid_t pid = ACE_OS::fork (argv[0]);
 
   if (pid == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "fork", 1));
-
-  // Resync the ACE_Log_Msg notion of process id and program name.
-  ACE_LOG_MSG->sync (argv[0]); 
 
   run_svc (handles[pid == 0]);
 

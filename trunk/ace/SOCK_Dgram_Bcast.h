@@ -44,12 +44,14 @@ public:
 
   ACE_SOCK_Dgram_Bcast (const ACE_Addr &local, 
 			int protocol_family = PF_INET, 
-			int protocol = 0);
+			int protocol = 0,
+			int reuse_addr = 0);
   // Initiate a connectionless datagram broadcast endpoint.
 
   int open (const ACE_Addr &local, 
 	    int protocol_family = PF_INET, 
-	    int protocol = 0);
+	    int protocol = 0,
+	    int reuse_addr = 0);
   // Initiate a connectionless datagram broadcast endpoint.
 
   int close (void);

@@ -60,11 +60,23 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
 int
 ACE_SOCK::open (int type, 
 		int protocol_family, 
-		int protocol)
+		int protocol,
+		int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK::open");
+  int one = 1;
+
   this->set_handle (ACE_OS::socket (protocol_family, type, protocol));
-  return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
+
+  if (this->get_handle () == ACE_INVALID_HANDLE)
+    return -1;
+  else if (reuse_addr && this->set_option (SOL_SOCKET, SO_REUSEADDR,
+					   &one, sizeof one)) 
+    {
+      this->close ();
+      return -1;
+    }
+  return 0;
 }
 
 // Close down a ACE_SOCK.
@@ -88,9 +100,11 @@ ACE_SOCK::close (void)
 
 ACE_SOCK::ACE_SOCK (int type, 
 		    int protocol_family, 
-		    int protocol)
+		    int protocol,
+		    int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK::ACE_SOCK");
-  if (this->open (type, protocol_family, protocol) == -1)
+  if (this->open (type, protocol_family, 
+		  protocol, reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK::ACE_SOCK"));
 }

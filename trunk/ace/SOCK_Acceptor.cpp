@@ -59,15 +59,10 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
 			 int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::open");
-  int one = 1;
   int error = 0;
 
-  if (ACE_SOCK::open (SOCK_STREAM, protocol_family, protocol) 
-      == -1)
-    error = 1;
-  else if (reuse_addr && 
-	   this->set_option (SOL_SOCKET, SO_REUSEADDR, 
-			     &one, sizeof one) == -1)
+  if (ACE_SOCK::open (SOCK_STREAM, protocol_family, 
+		      protocol, reuse_addr) == -1)
     error = 1;
   else if (&local_sap == &ACE_Addr::sap_any 
 	   && protocol_family == PF_INET)

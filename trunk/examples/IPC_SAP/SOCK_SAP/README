@@ -23,9 +23,9 @@ describes each set of tests in more detail:
 	  UNIX domain sockets.
 
 	. FD-unclient.cpp/FD-inclient.cpp -- This test illustrates
-	  how to pass file descriptors between two processes on the
-	  same machine using the ACE C++ wrappers for UNIX domain
-	  sockets.
+	  how to pass file descriptors between a client and a
+	  concurrent server process on the same machine using the ACE
+	  C++ wrappers for UNIX domain sockets.
 
 	. CPP-inserver-poll.cpp -- This test illustrates how to
 	  write single-threaded concurrent servers using UNIX SVR4

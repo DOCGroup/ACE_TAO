@@ -1,9 +1,31 @@
-Fri Feb 28 12:13:09 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/OS.h: fixed definition of ACE_TIMER_SKEW.  Thanks
-	  to Chuck Gehr <gehr@sweng.stortek.com> for pointing this out.
-
 Fri Feb 28 02:22:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SOCK_*: There were problems starting UDP broadcast servers
+	  (all using the same well known port number) multiple times on
+ 	  one machine (this is very useful test distributed applications
+ 	  on one single machine).  Setting the SO_REUSEADDR option for the
+ 	  broadcast socket allows binding of a socket that is already in
+ 	  use and thus allows us to start more than one broadcast servers
+ 	  in parallel on one machine.  Thanks to Dieter Quehl
+ 	  <dietrich.quehl@med.siemens.de> for this fix.
+
+	  Therefore, I patched ACE_SOCK_Dgram_Bcast, ACE_SOCK_Dgram and
+ 	  ACE_SOCK to include this feature.  In addition, I also changed
+ 	  ACE_SOCK_Connector/ACE_SOCK_Acceptor to use this feature instead
+ 	  of calling setsockopt() there explicitly.
+
+	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp (main): Fixed up the
+ 	  use of ACE_OS::fork() here to use the new "named" version.
+
+	* ace/OS.h: Added a clever new wrapper function called fork (const
+ 	  char *program_name), which calls fork() and then automatically
+ 	  calls ACE_LOG_MSG->sync (program_name) to sync up the program
+ 	  name.  This eliminates a common source of error when forking
+ 	  children and using ACE_Log_Msg::log().
+
+	* examples/IPC_SAP/SOCK_SAP/FD-un{client,server}.cpp: Updated the
+ 	  FD client and FD server programs so that it is now a concurrent
+ 	  server.
 
 	* ace/config-mvs.h: Added #define ACE_LACKS_TCP_H for MVS.  Thanks
  	  to Chuck Gehr for pointing this out.
@@ -34,6 +56,12 @@ Fri Feb 28 02:22:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  in reverse order.  This makes more sense when services are
  	  related, i.e., one service has to be started before another.
   	  Thanks to Karlheinz for this suggestion.
+
+
+Fri Feb 28 12:13:09 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: fixed definition of ACE_TIMER_SKEW.  Thanks
+	  to Chuck Gehr <gehr@sweng.stortek.com> for pointing this out.
 
 Thu Feb 27 21:36:28 1997  David L. Levine  <levine@cs.wustl.edu>
 

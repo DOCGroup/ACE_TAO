@@ -32,12 +32,14 @@ public:
 
   ACE_SOCK_Dgram (const ACE_Addr &local, 
 		  int protocol_family = PF_INET, 
-		  int protocol = 0);
+		  int protocol = 0,
+		  int reuse_addr = 0);
   // Initiate a socket dgram.
 
   int open (const ACE_Addr &local, 
 	    int protocol_family = PF_INET, 
-	    int protocol = 0);
+	    int protocol = 0,
+	    int reuse_addr = 0);
   // Initiate a socket dgram.
 
   // = Data transfer routines.

@@ -90,43 +90,38 @@ spawn (void)
 #endif /* ACE_HAS_THREADS */	
     }
 #if !defined (ACE_WIN32)
-  else
+  else if (ACE_OS::fork (Options::instance ()->program_name ()) == 0)
     {
-      if (ACE_OS::fork () == 0)
+      if (Options::instance ()->exec_slave ())
 	{
-	  if (Options::instance ()->exec_slave ())
-	    {
-	      char iterations[20];
-	      char msg_size[20];
+	  char iterations[20];
+	  char msg_size[20];
 	      
-	      ACE_OS::sprintf (iterations, "%d", Options::instance ()->iteration_count ());
-	      ACE_OS::sprintf (msg_size, "%d", Options::instance ()->max_msg_size ());
+	  ACE_OS::sprintf (iterations, "%d", Options::instance ()->iteration_count ());
+	  ACE_OS::sprintf (msg_size, "%d", Options::instance ()->max_msg_size ());
 
-	      char *argv[8];
-	      argv[0] = (char *) Options::instance ()->slave_name ();
-	      argv[1] = "-p";
-	      argv[2] = "-n";
-	      argv[3] = iterations;
-	      argv[4] = "-L";
-	      argv[5] = msg_size;
-	      argv[6] = Options::instance ()->debug () ? "-d" : "";
-	      argv[7] = (char *) 0;
+	  char *argv[8];
+	  argv[0] = (char *) Options::instance ()->slave_name ();
+	  argv[1] = "-p";
+	  argv[2] = "-n";
+	  argv[3] = iterations;
+	  argv[4] = "-L";
+	  argv[5] = msg_size;
+	  argv[6] = Options::instance ()->debug () ? "-d" : "";
+	  argv[7] = (char *) 0;
 
-	      if (ACE_OS::execv (Options::instance ()->program_name (), argv) == -1)
-		ACE_ERROR ((LM_ERROR, "%p\n", "exec failed"));
-	      ACE_OS::_exit (1);
-	    }
-	  else
-	    {
-	      ACE_LOG_MSG->sync (Options::instance ()->program_name ());
+	  if (ACE_OS::execv (Options::instance ()->program_name (), argv) == -1)
+	    ACE_ERROR ((LM_ERROR, "%p\n", "exec failed"));
+	  ACE_OS::_exit (1);
+	}
+      else
+	{
+	  ACE_DEBUG ((LM_INFO,
+		      "(%P|%t) about to recurse with iteration count = %d\n",
+		      Options::instance ()->iteration_count ()));
 
-	      ACE_DEBUG ((LM_INFO,
-			  "(%P|%t) about to recurse with iteration count = %d\n",
-			  Options::instance ()->iteration_count ()));
-
-	      malloc_recurse (Options::instance ()->iteration_count ());
-	      ACE_OS::exit (0);
-	    }
+	  malloc_recurse (Options::instance ()->iteration_count ());
+	  ACE_OS::exit (0);
 	}
     }
 #endif /* ACE_WIN32 */

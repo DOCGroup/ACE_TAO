@@ -102,14 +102,12 @@ main (int, char *[])
 #if defined (ACE_HAS_SYSV_IPC)
   char *shm = (char *) allocator.malloc (27);
 
-  switch (ACE_OS::fork ())
+  switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P) fork failed\n"), -1);
       /* NOTREACHED */
     case 0:
-      // Child.
-      ACE_LOG_MSG->sync ("SV_Shared_Memory_Test.cpp");
       child (shm);
       break;
     default:
