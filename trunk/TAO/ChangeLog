@@ -1,3 +1,67 @@
+Tue Aug 26 15:16:30 2003  Yamuna Krishnamurthy <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/AV/UDP.cpp: 
+
+	  Set the local control address to the appropriate address for RTP
+	  flow protocols in TAO_AV_UDP_Connector::connect.
+
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i: 	
+
+	  In TAO_FlowSpec_Entry::parse_flow_protocol_string checked if
+	  flow_string was null string.
+
+	* orbsvcs/orbsvcs/AV/RTP.cpp: 
+
+	  Copied the data received into host_byte_order_payload_ when not
+	  required to correct the network byte ordering.
+
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 
+
+	  Removed the signal handler.
+	
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+
+	  Took care of '\r' and '\n' characters terminating the endpoint
+	  info strings in the address file.
+
+	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile: 
+
+	  Updated dependencies.
+	
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 	
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.h: 		
+
+	  Added local and peer addresses to be specified through command
+	  line arguments.
+
+	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: 			
+	 
+	  Added test for TCP protocol.
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 	
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.h: 		
+
+	  Added local and peer addresses to be specified through command
+	  line arguments.
+
+	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl: 			
+	 
+	  Added test for TCP and RTP/UDP protocol.
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp: 	
+
+	  Added default local address. Set the peer address.
+	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: 		
+	
+	  Added test for TCP and RTP/UDP protocol.
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp: 	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h  : 	
+
+  	  Added local and peer addresses to be specified through command
+	  line arguments.
+
 Tue Aug 26 14:13:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTSched: Updated dependencies.
@@ -151,7 +215,6 @@ Mon Aug 25 18:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Thanks to Charlie Frasch <cfrasch@spawar.navy.mil> for reporting
           this. This fixes bugzilla [1575].
 
->>>>>>> 1.2419
 Mon Aug 25 11:18:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAOACE.mwc:
