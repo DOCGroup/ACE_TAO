@@ -705,7 +705,7 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
 
       // else Process terminated...wait for more...
     }
-  return ACE_static_cast (int, this->current_count_);
+  return static_cast<int> (this->current_count_);
 }
 
 // Collect a single child process' exit status.  Store the exit code
@@ -775,7 +775,7 @@ ACE_Process_Manager::wait (pid_t pid,
         handles[i] =
           process_table_[i].process_->gethandle ();
 
-      DWORD handle_count = ACE_static_cast (DWORD, this->current_count_);
+      DWORD handle_count = static_cast<DWORD> (this->current_count_);
       DWORD result = ::WaitForMultipleObjects (handle_count,
                                                handles,
                                                FALSE,

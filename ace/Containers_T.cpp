@@ -252,8 +252,7 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
   ACE_Node<T> *temp;
 
   ACE_NEW_MALLOC_RETURN (temp,
-                         ACE_static_cast(ACE_Node<T> *,
-                                         this->allocator_->malloc (sizeof (ACE_Node<T>))),
+                         static_cast<ACE_Node<T> *> (this->allocator_->malloc (sizeof (ACE_Node<T>))),
                          ACE_Node<T> (new_item, this->head_->next_),
                          -1);
   this->head_->next_ = temp;
@@ -398,14 +397,14 @@ ACE_Double_Linked_List_Iterator_Base<T>::reset (ACE_Double_Linked_List<T> &dll)
  template <class T> int
 ACE_Double_Linked_List_Iterator_Base<T>::go_head (void)
 {
-  this->current_ = ACE_static_cast (T*, dllist_->head_->next_);
+  this->current_ = static_cast<T*> (dllist_->head_->next_);
   return this->current_ ? 1 : 0;
 }
 
 template <class T> int
 ACE_Double_Linked_List_Iterator_Base<T>::go_tail (void)
 {
-  this->current_ = ACE_static_cast (T*, dllist_->head_->prev_);
+  this->current_ = static_cast<T*> (dllist_->head_->prev_);
   return this->current_ ? 1 : 0;
 }
 
@@ -423,7 +422,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::do_advance (void)
 {
   if (this->not_done ())
     {
-      this->current_ = ACE_static_cast (T*, this->current_->next_);
+      this->current_ = static_cast<T*> (this->current_->next_);
       return this->not_done ();
     }
   else
@@ -435,7 +434,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::do_retreat (void)
 {
   if (this->not_done ())
     {
-      this->current_ = ACE_static_cast (T*, this->current_->prev_);
+      this->current_ = static_cast<T*> (this->current_->prev_);
       return this->not_done ();
     }
   else
@@ -457,7 +456,7 @@ template <class T>
 ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (const ACE_Double_Linked_List<T> &dll)
   : ACE_Double_Linked_List_Iterator_Base <T> (dll)
 {
-  this->current_ = ACE_static_cast (T*, dll.head_->next_);
+  this->current_ = static_cast<T*> (dll.head_->next_);
   // Advance current_ out of the null area and onto the first item in
   // the list
 }
@@ -466,7 +465,7 @@ template <class T> void
 ACE_Double_Linked_List_Iterator<T>::reset (ACE_Double_Linked_List<T> &dll)
 {
   this->ACE_Double_Linked_List_Iterator_Base <T>::reset (dll);
-  this->current_ = ACE_static_cast (T*, dll.head_->next_);
+  this->current_ = static_cast<T*> (dll.head_->next_);
   // Advance current_ out of the null area and onto the first item in
   // the list
 }
@@ -494,7 +493,8 @@ ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
       item = this->next ();
       this->do_advance ();
       // It seems dangerous to remove nodes in an iterator, but so it goes...
-      ACE_Double_Linked_List<T> *dllist = ACE_const_cast (ACE_Double_Linked_List<T> *, this->dllist_);
+      ACE_Double_Linked_List<T> *dllist =
+        const_cast<ACE_Double_Linked_List<T> *> (this->dllist_);
       dllist->remove (item);
     }
   return item;
@@ -561,7 +561,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Reverse_Iterator)
 ACE_Double_Linked_List_Reverse_Iterator<T>::ACE_Double_Linked_List_Reverse_Iterator (ACE_Double_Linked_List<T> &dll)
   : ACE_Double_Linked_List_Iterator_Base <T> (dll)
 {
-  this->current_ = ACE_static_cast (T*, dll.head_->prev_);
+  this->current_ = static_cast<T*> (dll.head_->prev_);
   // Advance current_ out of the null area and onto the last item in
   // the list
 }
@@ -570,7 +570,7 @@ template <class T> void
 ACE_Double_Linked_List_Reverse_Iterator<T>::reset (ACE_Double_Linked_List<T> &dll)
 {
   this->ACE_Double_Linked_List_Iterator_Base <T>::reset (dll);
-  this->current_ = ACE_static_cast (T*, dll.head_->prev_);
+  this->current_ = static_cast<T*> (dll.head_->prev_);
   // Advance current_ out of the null area and onto the last item in
   // the list
 }
@@ -598,7 +598,8 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (int dont_remove)
       item = this->next ();
       this->do_retreat ();
       // It seems dangerous to remove nodes in an iterator, but so it goes...
-      ACE_Double_Linked_List<T> *dllist = ACE_const_cast (ACE_Double_Linked_List<T> *, this->dllist_);
+      ACE_Double_Linked_List<T> *dllist =
+        const_cast<ACE_Double_Linked_List<T> *> (this->dllist_);
       dllist->remove (item);
     }
   return item;
@@ -745,8 +746,7 @@ ACE_Double_Linked_List<T>::delete_head (void)
   if (this->is_empty ())
     return 0;
 
-  temp = ACE_static_cast (T *,
-                          this->head_->next_);
+  temp = static_cast<T *> (this->head_->next_);
   // Detach it from the list.
   this->remove_element (temp);
   return temp;
@@ -760,8 +760,7 @@ ACE_Double_Linked_List<T>::delete_tail (void)
   if (this->is_empty ())
     return 0;
 
-  temp = ACE_static_cast (T *,
-                          this->head_->prev_);
+  temp = static_cast <T *> (this->head_->prev_);
   // Detach it from the list.
   this->remove_element (temp);
   return temp;
@@ -841,7 +840,7 @@ ACE_Double_Linked_List<T>::delete_nodes (void)
 {
   while (! this->is_empty ())
     {
-      T * temp = ACE_static_cast (T*, this->head_->next_);
+      T * temp = static_cast<T*> (this->head_->next_);
       this->remove_element (temp);
       ACE_DES_FREE (temp,
                     this->allocator_->free,
@@ -880,8 +879,7 @@ ACE_Double_Linked_List<T>::insert_element (T *new_item,
     old_item = this->head_;
 
   if (before)
-    old_item = ACE_static_cast (T *,
-                                old_item->prev_);
+    old_item = static_cast<T *> (old_item->prev_);
 
   new_item->next_ = old_item->next_;
   new_item->next_->prev_ = new_item;
@@ -1082,12 +1080,12 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::advance (void)
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::advance");
 
   for (++this->next_;
-       ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
+       static_cast<size_t> (this->next_) < this->s_.cur_size_
          && this->s_.search_structure_[this->next_].is_free_;
        ++this->next_)
     continue;
 
-  return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
+  return static_cast<size_t> (this->next_) < this->s_.cur_size_;
 }
 
 template <class T, size_t ACE_SIZE> int
@@ -1104,7 +1102,7 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::done (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::done");
 
-  return ACE_static_cast (ACE_CAST_CONST size_t, this->next_) >=
+  return static_cast<ACE_CAST_CONST size_t> (this->next_) >=
     this->s_.cur_size_;
 }
 
@@ -1112,7 +1110,7 @@ template <class T, size_t ACE_SIZE> int
 ACE_Fixed_Set_Iterator<T, ACE_SIZE>::next (T *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::next");
-  if (ACE_static_cast (size_t, this->next_) < this->s_.cur_size_)
+  if (static_cast<size_t> (this->next_) < this->s_.cur_size_)
     {
       item = &this->s_.search_structure_[this->next_].item_;
       return 1;
@@ -1146,12 +1144,12 @@ ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::advance (void)
   ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::advance");
 
   for (++this->next_;
-       ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
+       static_cast<size_t> (this->next_) < this->s_.cur_size_
          && this->s_.search_structure_[this->next_].is_free_;
        ++this->next_)
     continue;
 
-  return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
+  return static_cast<size_t> (this->next_) < this->s_.cur_size_;
 }
 
 template <class T, size_t ACE_SIZE> int
@@ -1168,7 +1166,7 @@ ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::done (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::done");
 
-  return ACE_static_cast (ACE_CAST_CONST size_t, this->next_) >=
+  return static_cast<ACE_CAST_CONST size_t> (this->next_) >=
     this->s_.cur_size_;
 }
 
@@ -1176,7 +1174,7 @@ template <class T, size_t ACE_SIZE> int
 ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next (T *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next");
-  if (ACE_static_cast (size_t, this->next_) < this->s_.cur_size_)
+  if (static_cast<size_t> (this->next_) < this->s_.cur_size_)
     {
       item = &this->s_.search_structure_[this->next_].item_;
       return 1;
@@ -1205,14 +1203,14 @@ ACE_Bounded_Set<T>::~ACE_Bounded_Set (void)
 template <class T>
 ACE_Bounded_Set<T>::ACE_Bounded_Set (void)
   : cur_size_ (0),
-    max_size_ (ACE_static_cast(size_t, ACE_Bounded_Set<T>::DEFAULT_SIZE))
+    max_size_ (static_cast<size_t> (ACE_Bounded_Set<T>::DEFAULT_SIZE))
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
 
   ACE_NEW (this->search_structure_,
            ACE_TYPENAME ACE_Bounded_Set<T>::Search_Structure[this->max_size_]);
 
-  for (size_t i = 0; i < this->max_size_; i++)
+  for (size_t i = 0; i < this->max_size_; ++i)
     this->search_structure_[i].is_free_ = 1;
 }
 
@@ -1292,7 +1290,7 @@ ACE_Bounded_Set<T>::insert (const T &item)
         && this->search_structure_[i].is_free_ == 0)
       return 1;
     else if (this->search_structure_[i].is_free_ && first_free == -1)
-      first_free = ACE_static_cast (int, i);
+      first_free = static_cast<int> (i);
 
   if (first_free > -1)   // If we found a free spot let's reuse it.
     {
@@ -1367,12 +1365,12 @@ ACE_Bounded_Set_Iterator<T>::advance (void)
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::advance");
 
   for (++this->next_;
-       ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
+       static_cast<size_t> (this->next_) < this->s_.cur_size_
          && this->s_.search_structure_[this->next_].is_free_;
        ++this->next_)
     continue;
 
-  return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
+  return static_cast<size_t> (this->next_) < this->s_.cur_size_;
 }
 
 template <class T> int
@@ -1389,7 +1387,7 @@ ACE_Bounded_Set_Iterator<T>::done (void) const
 {
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::done");
 
-  return ACE_static_cast (ACE_CAST_CONST size_t, this->next_) >=
+  return static_cast<ACE_CAST_CONST size_t> (this->next_) >=
     this->s_.cur_size_;
 }
 
@@ -1397,7 +1395,7 @@ template <class T> int
 ACE_Bounded_Set_Iterator<T>::next (T *&item)
 {
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::next");
-  if (ACE_static_cast(size_t, this->next_) < this->s_.cur_size_)
+  if (static_cast<size_t> (this->next_) < this->s_.cur_size_)
     {
       item = &this->s_.search_structure_[this->next_].item_;
       return 1;
@@ -1641,8 +1639,7 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
   // create a new node
   ACE_DNode<T> *temp;
   ACE_NEW_MALLOC_RETURN (temp,
-                         ACE_static_cast(ACE_DNode<T>*,
-                                         this->allocator_->malloc (sizeof (ACE_DNode<T>))),
+                         static_cast<ACE_DNode<T>*> (this->allocator_->malloc (sizeof (ACE_DNode<T>))),
                          ACE_DNode<T> (item),
                          -1);
   // obtain approximate location of the node
@@ -1829,8 +1826,7 @@ ACE_DLList<T>::insert_tail (T *new_item)
 {
   ACE_DLList_Node *temp1, *temp2;
   ACE_NEW_MALLOC_RETURN (temp1,
-                         ACE_static_cast(ACE_DLList_Node *,
-                                         this->allocator_->malloc (sizeof (ACE_DLList_Node))),
+                         static_cast<ACE_DLList_Node *> (this->allocator_->malloc (sizeof (ACE_DLList_Node))),
                          ACE_DLList_Node ((void *&)new_item),
                          0);
   temp2 = ACE_DLList_Base::insert_tail (temp1);

@@ -66,7 +66,7 @@ ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
   ACE_UNUSED_ARG (clockid);
   ACE_PSOS_Time_t pt;
   int result = ACE_PSOS_Time_t::get_system_time (pt);
-  *ts = ACE_static_cast (struct timespec, pt);
+  *ts = static_cast<struct timespec> (pt);
   return result;
 #else
   ACE_UNUSED_ARG (clockid);
@@ -232,7 +232,8 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ::QueryPerformanceCounter (&freq);
 
 #  if defined (ACE_LACKS_LONGLONG_T)
-  ACE_UINT64 uint64_freq(freq.u.LowPart, ACE_static_cast (unsigned int, freq.u.HighPart));
+  ACE_UINT64 uint64_freq (freq.u.LowPart,
+                          static_cast<unsigned int> (freq.u.HighPart));
   return uint64_freq;
 #  else
   return freq.QuadPart;
@@ -292,16 +293,16 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 
   // Carefully create the return value to avoid arithmetic overflow
   // if ACE_hrtime_t is ACE_U_LongLong.
-  return ACE_static_cast (ACE_hrtime_t, ts.tv_sec) *
-    ACE_U_ONE_SECOND_IN_NSECS  +  ACE_static_cast (ACE_hrtime_t, ts.tv_nsec);
+  return static_cast<ACE_hrtime_t> (ts.tv_sec) *
+    ACE_U_ONE_SECOND_IN_NSECS  +  static_cast<ACE_hrtime_t> (ts.tv_nsec);
 #else
   ACE_UNUSED_ARG (op);
   const ACE_Time_Value now = ACE_OS::gettimeofday ();
 
   // Carefully create the return value to avoid arithmetic overflow
   // if ACE_hrtime_t is ACE_U_LongLong.
-  return (ACE_static_cast (ACE_hrtime_t, now.sec ()) * (ACE_UINT32) 1000000  +
-          ACE_static_cast (ACE_hrtime_t, now.usec ())) * (ACE_UINT32) 1000;
+  return (static_cast<ACE_hrtime_t> (now.sec ()) * (ACE_UINT32) 1000000  +
+          static_cast<ACE_hrtime_t> (now.usec ())) * (ACE_UINT32) 1000;
 #endif /* ACE_HAS_HI_RES_TIMER */
 }
 
@@ -372,35 +373,33 @@ ACE_OS::nanosleep (const struct timespec *requested,
   return ::nanosleep ((ACE_TIMESPEC_PTR) requested, remaining);
 #elif defined (ACE_PSOS)
 #  if ! defined (ACE_PSOS_DIAB_MIPS)
-  double ticks = KC_TICKS2SEC * requested->tv_sec +
-                 ( ACE_static_cast (double, requested->tv_nsec) *
-                   ACE_static_cast (double, KC_TICKS2SEC) ) /
-                 ACE_static_cast (double, ACE_ONE_SECOND_IN_NSECS);
+  double ticks =
+    KC_TICKS2SEC * requested->tv_sec +
+    (static_cast<double> (requested->tv_nsec) *
+     static_cast<double> (KC_TICKS2SEC) ) /
+    static_cast<double> (ACE_ONE_SECOND_IN_NSECS);
 
-  if (ticks > ACE_static_cast (double, ACE_PSOS_Time_t::max_ticks))
-  {
-    ticks -= ACE_static_cast (double, ACE_PSOS_Time_t::max_ticks);
-    remaining->tv_sec = ACE_static_cast (time_t,
-                                         (ticks /
-                                          ACE_static_cast (double,
-                                                           KC_TICKS2SEC)));
-    ticks -= ACE_static_cast (double, remaining->tv_sec) *
-             ACE_static_cast (double, KC_TICKS2SEC);
+  if (ticks > static_cast<double> (ACE_PSOS_Time_t::max_ticks))
+    {
+      ticks -= static_cast<double> (ACE_PSOS_Time_t::max_ticks);
+      remaining->tv_sec =
+        static_cast<time_t> ((ticks / static_cast<double> (KC_TICKS2SEC)));
+      ticks -= static_cast<double> (remaining->tv_sec) *
+        static_cast<double> (KC_TICKS2SEC);
 
-    remaining->tv_nsec =
-      ACE_static_cast (long,
-                       (ticks * ACE_static_cast (double,
-                                                 ACE_ONE_SECOND_IN_NSECS)) /
-                       ACE_static_cast (double, KC_TICKS2SEC));
+      remaining->tv_nsec =
+        static_cast<long> ((ticks
+                            * static_cast<double> (ACE_ONE_SECOND_IN_NSECS)) /
+                           static_cast<double> (KC_TICKS2SEC));
 
-    ::tm_wkafter (ACE_PSOS_Time_t::max_ticks);
-  }
+      ::tm_wkafter (ACE_PSOS_Time_t::max_ticks);
+    }
   else
-  {
-    remaining->tv_sec = 0;
-    remaining->tv_nsec = 0;
-    ::tm_wkafter (ACE_static_cast (u_long, ticks));
-  }
+    {
+      remaining->tv_sec = 0;
+      remaining->tv_nsec = 0;
+      ::tm_wkafter (static_cast<u_long> (ticks));
+    }
 
   // tm_wkafter always returns 0
 #  endif /* ACE_PSOS_DIAB_MIPS */

@@ -64,8 +64,7 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
     {
       // Get the next <Method_Request>.
       ACE_Method_Request *mr =
-        ACE_reinterpret_cast (ACE_Method_Request *,
-                              mb->base ());
+        reinterpret_cast<ACE_Method_Request *> (mb->base ());
       // Delete the message block.
       mb->release ();
       return mr;
@@ -84,8 +83,7 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
   // correctly.  Since we also pass <mr> note that no unnecessary
   // memory is actually allocated -- just the size field is set.
   ACE_NEW_MALLOC_RETURN (mb,
-                         ACE_static_cast(ACE_Message_Block *,
-                                         this->allocator_->malloc (sizeof (ACE_Message_Block))),
+                         static_cast<ACE_Message_Block *> (this->allocator_->malloc (sizeof (ACE_Message_Block))),
                          ACE_Message_Block (sizeof (*mr),    // size
                                             ACE_Message_Block::MB_DATA, // type
                                             0,       // cont

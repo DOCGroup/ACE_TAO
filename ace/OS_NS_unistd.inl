@@ -112,7 +112,7 @@ ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
 #if defined (VXWORKS)
-  ACE_OSCALL_RETURN (::chdir (ACE_const_cast (char *, path)), int, -1);
+  ACE_OSCALL_RETURN (::chdir (const_cast<char *> (path)), int, -1);
 
 #elif defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (path);
@@ -219,9 +219,9 @@ ACE_OS::close (ACE_HANDLE handle)
   if (result != 0)
     {
       errno = result;
-      return ACE_static_cast (int, -1);
+      return static_cast<int> (-1);
     }
-  return ACE_static_cast (int, 0);
+  return static_cast<int> (0);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -505,9 +505,9 @@ ACE_OS::getcwd (ACE_TCHAR *buf, size_t size)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
 #  if defined (ACE_USES_WCHAR)
-  return ::_wgetcwd (buf, ACE_static_cast (int, size));
+  return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
-  return ::getcwd (buf, ACE_static_cast (int, size));
+  return ::getcwd (buf, static_cast<int> (size));
 #  endif /* ACE_USES_WCHAR */
 #else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
@@ -522,7 +522,7 @@ ACE_OS::getgid (void)
   // getgid() is not supported:  just one user anyways
   return 0;
 # elif defined (ACE_WIN32) || defined (CHORUS)
-  ACE_NOTSUP_RETURN (ACE_static_cast (gid_t, -1));
+  ACE_NOTSUP_RETURN (static_cast<gid_t> (-1));
 # else
   ACE_OSCALL_RETURN (::getgid (), gid_t, (gid_t) -1);
 # endif /* VXWORKS || ACE_PSOS */
@@ -623,7 +623,7 @@ ACE_OS::getuid (void)
   // getuid() is not supported:  just one user anyways
   return 0;
 # elif defined (ACE_WIN32) || defined (CHORUS)
-  ACE_NOTSUP_RETURN (ACE_static_cast (uid_t, -1));
+  ACE_NOTSUP_RETURN (static_cast<uid_t> (-1));
 # else
   ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
 # endif /* VXWORKS || ACE_PSOS */
@@ -766,12 +766,12 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
       break;
     default:
       errno = EINVAL;
-      return ACE_static_cast (off_t, -1); // rather safe than sorry
+      return static_cast<off_t> (-1); // rather safe than sorry
     }
 # endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
   DWORD result = ::SetFilePointer (handle, offset, 0, whence);
   if (result == ACE_SYSCALL_FAILED)
-    ACE_FAIL_RETURN (ACE_static_cast (off_t, -1));
+    ACE_FAIL_RETURN (static_cast<off_t> (-1));
   else
     return result;
 #elif defined (ACE_PSOS)
@@ -779,7 +779,7 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (offset);
   ACE_UNUSED_ARG (whence);
-  ACE_NOTSUP_RETURN (ACE_static_cast (off_t, -1));
+  ACE_NOTSUP_RETURN (static_cast<off_t> (-1));
 # else
   unsigned long oldptr, newptr, result;
   // seek to the requested position
@@ -787,16 +787,16 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
   if (result != 0)
     {
       errno = result;
-      return ACE_static_cast (off_t, -1);
+      return static_cast<off_t> (-1);
     }
   // now do a dummy seek to the current position to obtain the position
   result = ::lseek_f (handle, SEEK_CUR, 0, &newptr);
   if (result != 0)
     {
       errno = result;
-      return ACE_static_cast (off_t, -1);
+      return static_cast<off_t> (-1);
     }
-  return ACE_static_cast (off_t, newptr);
+  return static_cast<off_t> (newptr);
 # endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
   ACE_OSCALL_RETURN (::lseek (handle, offset, whence), off_t, -1);
@@ -837,7 +837,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   ACE_OS_TRACE ("ACE_OS::read");
 #if defined (ACE_WIN32)
   DWORD ok_len;
-  if (::ReadFile (handle, buf, ACE_static_cast (DWORD, len), &ok_len, 0))
+  if (::ReadFile (handle, buf, static_cast<DWORD> (len), &ok_len, 0))
     return (ssize_t) ok_len;
   else
     ACE_FAIL_RETURN (-1);
@@ -851,9 +851,9 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   u_long count;
   u_long result = ::read_f (handle, buf, len, &count);
   if (result != 0)
-    return ACE_static_cast (ssize_t, -1);
+    return static_cast<ssize_t> (-1);
   else
-    return ACE_static_cast (ssize_t, count == len ? count : 0);
+    return static_cast<ssize_t> (count == len ? count : 0);
 # endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
 
@@ -893,7 +893,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
   overlapped = overlapped;
 #if defined (ACE_WIN32)
   DWORD ok_len;
-  DWORD short_len = ACE_static_cast (DWORD, len);
+  DWORD short_len = static_cast<DWORD> (len);
   if (::ReadFile (handle, buf, short_len, &ok_len, overlapped))
     return (ssize_t) ok_len;
   else
@@ -1130,10 +1130,8 @@ ACE_OS::swab (const void *src,
               ssize_t length)
 {
 #if defined (ACE_LACKS_SWAB)
-  const char *from = ACE_static_cast (const char*,
-                                              src);
-  char *to = ACE_static_cast (char *,
-                              dest);
+  const char *from = static_cast<const char*> (src);
+  char *to = static_cast<char *> (dest);
   ssize_t ptr = 0;
   for (ptr = 1; ptr < length; ptr += 2)
     {
@@ -1145,12 +1143,9 @@ ACE_OS::swab (const void *src,
   if (ptr == length) /* I.e., if length is odd, */
     to[ptr-1] = 0;   /* then pad with a NUL. */
 #elif defined (ACE_HAS_NONCONST_SWAB)
-  const char *tmp = ACE_static_cast (const char*,
-                                             src);
-  char *from = ACE_const_cast (char *,
-                                   tmp);
-  char *to = ACE_static_cast (char *,
-                                  dest);
+  const char *tmp = static_cast<const char*> (src);
+  char *from = const_cast<char *> (tmp);
+  char *to = static_cast<char *> (dest);
   ::swab (from, to, length);
 #else
   ::swab (src, dest, length);
@@ -1262,7 +1257,7 @@ ACE_OS::unlink (const ACE_TCHAR *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
 # if defined (VXWORKS)
-    ACE_OSCALL_RETURN (::unlink (ACE_const_cast (char *, path)), int, -1);
+    ACE_OSCALL_RETURN (::unlink (const_cast<char *> (path)), int, -1);
 # elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
     ACE_OSCALL_RETURN (::remove_f ((char *) path), int , -1);
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_C_LIBRARY)
@@ -1292,7 +1287,7 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
 
   // Strictly correctly, we should loop writing all the data if more
   // than a DWORD length can hold.
-  DWORD short_nbyte = ACE_static_cast (DWORD, nbyte);
+  DWORD short_nbyte = static_cast<DWORD> (nbyte);
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, 0))
     return (ssize_t) bytes_written;
   else
@@ -1333,7 +1328,7 @@ ACE_OS::write (ACE_HANDLE handle,
 #if defined (ACE_WIN32)
   DWORD bytes_written; // This is set to 0 byte WriteFile.
 
-  DWORD short_nbyte = ACE_static_cast (DWORD, nbyte);
+  DWORD short_nbyte = static_cast<DWORD> (nbyte);
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, overlapped))
     return (ssize_t) bytes_written;
   else

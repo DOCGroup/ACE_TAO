@@ -920,7 +920,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
       if (mm == (void *) MAP_FAILED)
         result = -1;
       else
-        this->mmap_ = ACE_static_cast (char *, mm);
+        this->mmap_ = static_cast<char *> (mm);
     }
 #else
 
@@ -1130,8 +1130,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 
   // Retrieve the results from the memory map.
   this->start_pfds_ =
-    ACE_reinterpret_cast (struct pollfd *,
-                          this->mmap_ + evp.ep_resoff);
+    reinterpret_cast<struct pollfd *> (this->mmap_ + evp.ep_resoff);
 
 #else
 

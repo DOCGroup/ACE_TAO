@@ -204,9 +204,9 @@ ACE_Task_Base::svc_run (void *args)
   ACE_THR_FUNC_RETURN status;
 #if (defined (__BORLANDC__) && (__BORLANDC__ < 0x570)) || defined (__MINGW32__) || (defined (_MSC_VER) && (_MSC_VER <= 1400))
   // Some compilers complain about reinterpret_cast from int to unsigned long...
-  status = ACE_static_cast (ACE_THR_FUNC_RETURN, svc_status);
+  status = static_cast<ACE_THR_FUNC_RETURN> (svc_status);
 #else
-  status = ACE_reinterpret_cast (ACE_THR_FUNC_RETURN, svc_status);
+  status = reinterpret_cast<ACE_THR_FUNC_RETURN> (svc_status);
 #endif /* (__BORLANDC__ < 0x570) || __MINGW32__ || _MSC_VER <= 1400 */
 
 // If we changed this zero change the other if in OS.cpp Thread_Adapter::invoke

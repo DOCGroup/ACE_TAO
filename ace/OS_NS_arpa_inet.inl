@@ -69,8 +69,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 #if defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::inet_ntop (family, addrptr, strptr, len), const char *, 0);
 #else
-  const u_char *p =
-    ACE_reinterpret_cast (const u_char *, addrptr);
+  const u_char *p = reinterpret_cast<const u_char *> (addrptr);
 
   if (family == AF_INET)
     {
@@ -120,4 +119,3 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
   ACE_NOTSUP_RETURN(-1);
 #endif  /* ACE_HAS_IPV6 */
 }
-

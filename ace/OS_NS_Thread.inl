@@ -83,12 +83,12 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
     if (0 == taskIdCurrent->ACE_VXWORKS_SPARE)
       {
         taskIdCurrent->ACE_VXWORKS_SPARE =
-          ACE_reinterpret_cast (int, new void *[ACE_TSS_THREAD_KEYS_MAX]);
+          reinterpret_cast<int> (new void *[ACE_TSS_THREAD_KEYS_MAX]);
 
         // Zero the entire TSS array.  Do it manually instead of using
         // memset, for optimum speed.  Though, memset may be faster :-)
         void **tss_base_p =
-          ACE_reinterpret_cast (void **, taskIdCurrent->ACE_VXWORKS_SPARE);
+          reinterpret_cast> (void **> (taskIdCurrent->ACE_VXWORKS_SPARE);
         for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
           {
             *tss_base_p = 0;
@@ -387,7 +387,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
                                        ace_result_),
                      int, -1);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cv_create (ACE_const_cast (char *, name),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cv_create (const_cast<char *> (name),
                                                     attributes,
                                                     cv),
                                        ace_result_),
@@ -858,7 +858,7 @@ ACE_OS::event_init (ACE_event_t *event,
   event->waiting_threads_ = 0;
 
   int result = ACE_OS::cond_init (&event->condition_,
-                                  ACE_static_cast (short, type),
+                                  static_cast<short> (type),
                                   name,
                                   arg);
   if (result == 0)
@@ -1709,7 +1709,7 @@ ACE_OS::priority_control (ACE_idtype_t idtype, ACE_id_t id, int cmd, void *arg)
 {
   ACE_OS_TRACE ("ACE_OS::priority_control");
 #if defined (ACE_HAS_PRIOCNTL)
-  ACE_OSCALL_RETURN (priocntl (idtype, id, cmd, ACE_static_cast (caddr_t, arg)),
+  ACE_OSCALL_RETURN (priocntl (idtype, id, cmd, static_cast<caddr_t> (arg)),
                      int, -1);
 #else  /* ! ACE_HAS_PRIOCNTL*/
   ACE_UNUSED_ARG (idtype);

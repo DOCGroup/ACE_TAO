@@ -58,8 +58,8 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 # else /* ACE_WIN32 */
   for (int i = 0; i < len; i++)
     {
-      wchar_t *t = ACE_const_cast (wchar_t *, wstr);
-      str[i] = ACE_static_cast (char, *(t + i));
+      wchar_t *t = const_cast <wchar_t *> (wstr);
+      str[i] = static_cast<char> (*(t + i));
     }
 # endif /* ACE_WIN32 */
   return str;
@@ -106,8 +106,8 @@ ACE_Ascii_To_Wide::convert (const char *str)
 # else /* ACE_WIN32 */
   for (int i = 0; i < len; i++)
     {
-      char *t = ACE_const_cast (char *, str);
-      wstr[i] = ACE_static_cast (wchar_t, *(t + i));
+      char *t = const_cast<char *> (str);
+      wstr[i] = static_cast<wchar_t> (*(t + i));
     }
 # endif /* ACE_WIN32 */
   return wstr;

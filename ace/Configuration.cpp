@@ -269,8 +269,8 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   bool rc = true;
   int sectionIndex = 0;
   ACE_TString sectionName;
-  ACE_Configuration *nonconst_this = ACE_const_cast (ACE_Configuration*, this);
-  ACE_Configuration &nonconst_rhs  = ACE_const_cast (ACE_Configuration&, rhs);
+  ACE_Configuration *nonconst_this = const_cast<ACE_Configuration*> (this);
+  ACE_Configuration &nonconst_rhs  = const_cast<ACE_Configuration&> (rhs);
 
   const ACE_Configuration_Section_Key& rhsRoot = rhs.root_section ();
   ACE_Configuration_Section_Key rhsSection;
@@ -773,7 +773,7 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
     return -1;
 
   int errnum;
-  DWORD len = ACE_static_cast (DWORD, value.length () + 1);
+  DWORD len = static_cast<DWORD> (value.length () + 1);
   len *= sizeof (ACE_TCHAR);
   if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
                                        t_name,
@@ -838,7 +838,7 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
                                         0,
                                         REG_BINARY,
                                         (BYTE *) data,
-                                        ACE_static_cast (DWORD, length)))
+                                        static_cast<DWORD> (length)))
       != ERROR_SUCCESS)
     {
       errno = errnum;
@@ -2086,7 +2086,7 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
     }
 
   // everythings ok, return the data
-  value = ACE_static_cast (ACE_TCHAR*, VIntId.data_.ptr_);
+  value = static_cast<ACE_TCHAR*> (VIntId.data_.ptr_);
   return 0;
 }
 

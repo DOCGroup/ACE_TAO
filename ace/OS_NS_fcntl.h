@@ -64,13 +64,13 @@ namespace ACE_OS {
   /// the end prior to each write, as specified by POSIX.  This
   /// is generally good enough for typical situations, but it is ``not
   /// quite right'' in its semantics.
-  extern ACE_Export 
+  extern ACE_Export
   ACE_HANDLE open (const char *filename,
                    int mode,
                    int perms = ACE_DEFAULT_OPEN_PERMS,
                    LPSECURITY_ATTRIBUTES sa = 0);
 #if defined (ACE_HAS_WCHAR)
-  extern ACE_Export 
+  extern ACE_Export
   ACE_HANDLE open (const wchar_t *filename,
                    int mode,
                    int perms = ACE_DEFAULT_OPEN_PERMS,

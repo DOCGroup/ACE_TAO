@@ -22,24 +22,24 @@ ACE_SPIPE_Addr::dump (void) const
 }
 
 // Set a pointer to the address.
-void 
+void
 ACE_SPIPE_Addr::set_addr (void *addr, int len)
 {
   ACE_TRACE ("ACE_SPIPE_Addr::set_addr");
 
   this->ACE_Addr::base_set (AF_SPIPE, len);
   ACE_OS::memcpy ((void *) &this->SPIPE_addr_,
-		  (void *) addr, 
+		  (void *) addr,
 		  len);
 }
 
-// Do nothing constructor. 
+// Do nothing constructor.
 
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (void)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
-  (void) ACE_OS::memset ((void *) &this->SPIPE_addr_, 
-                         0, 
+  (void) ACE_OS::memset ((void *) &this->SPIPE_addr_,
+                         0,
 			 sizeof this->SPIPE_addr_);
 }
 
@@ -63,7 +63,7 @@ ACE_SPIPE_Addr::set (const ACE_SPIPE_Addr &sa)
   else
     (void) ACE_OS::memcpy ((void *) &this->SPIPE_addr_, (void *)
                            &sa.SPIPE_addr_,
-                           sa.get_size ()); 
+                           sa.get_size ());
   return 0;
 }
 
@@ -77,7 +77,7 @@ ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
 
 int
 ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
-		     gid_t gid, 
+		     gid_t gid,
 		     uid_t uid)
 {
   int len = sizeof (this->SPIPE_addr_.uid_);
@@ -94,7 +94,7 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
     }
   else
     {
-      
+
       if (ACE_OS::strncmp (addr,
                            ACE_LIB_TEXT ("localhost"),
                            ACE_OS::strlen ("localhost")) == 0)
@@ -105,7 +105,7 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
           ACE_OS::strcpy (temp, ACE_LIB_TEXT ("\\\\"));
 
           ACE_TCHAR *t;
-          
+
           // We need to allocate a duplicate so that we can write a
           // NUL character into it.
           ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (addr), -1);
@@ -119,7 +119,7 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
       ACE_OS::strcat (temp, ACE_LIB_TEXT ("\\pipe\\"));
       ACE_OS::strcat (temp, colonp + 1);
     }
-  len += ACE_static_cast (int, ACE_OS::strlen (temp));
+  len += static_cast<int> (ACE_OS::strlen (temp));
   this->ACE_Addr::base_set (AF_SPIPE, len);
 
   ACE_OS::strcpy (this->SPIPE_addr_.rendezvous_, temp);
@@ -135,13 +135,12 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
   return 0;
 }
 
-// Create a ACE_Addr from a ACE_SPIPE pathname. 
+// Create a ACE_Addr from a ACE_SPIPE pathname.
 
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_TCHAR *addr,
-				gid_t gid, 
+				gid_t gid,
 				uid_t uid)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
   this->set (addr, gid, uid);
 }
-

@@ -85,7 +85,7 @@ template <class T> void
 ACE_Future_Set<T>::update (const ACE_Future<T> &future)
 {
   ACE_Message_Block *mb;
-  FUTURE &local_future = ACE_const_cast (ACE_Future<T> &, future);
+  FUTURE &local_future = const_cast<ACE_Future<T> &> (future);
 
   ACE_NEW (mb,
            ACE_Message_Block ((char *) local_future.get_rep (), 0));
@@ -109,9 +109,7 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
                                                       tv) != -1)
     {
       // Extract future rep from the message block.
-      future_rep =
-        ACE_reinterpret_cast (FUTURE_REP *,
-                              mb->base ());
+      future_rep = reinterpret_cast<FUTURE_REP *> (mb->base ());
 
       // Delete the message block.
       mb->release ();

@@ -64,4 +64,3 @@ ACE_OS::shmget (key_t key, int size, int flags)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SYSV_IPC */
 }
-

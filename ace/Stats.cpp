@@ -291,8 +291,8 @@ ACE_Stats::quotient (const ACE_UINT64 dividend,
                      ACE_Stats_Value &quotient)
 {
   // The whole part of the division comes from simple integer division.
-  quotient.whole (ACE_static_cast (ACE_UINT32,
-    divisor == 0  ?  0  :  dividend / divisor));
+  quotient.whole (static_cast<ACE_UINT32> (divisor == 0
+                                           ?  0  :  dividend / divisor));
 
   if (quotient.precision () > 0  ||  divisor == 0)
     {
@@ -305,8 +305,8 @@ ACE_Stats::quotient (const ACE_UINT64 dividend,
       //                10^precision/2 / 10^precision
       //            = ((dividend % divisor) * 10^precision  +  divisor) /
       //                divisor
-      quotient.fractional (ACE_static_cast (ACE_UINT32,
-        dividend % divisor * field / divisor));
+      quotient.fractional (static_cast<ACE_UINT32> (
+                             dividend % divisor * field / divisor));
     }
   else
     {
@@ -592,8 +592,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
 # if defined ACE_LACKS_LONGLONG_T
     elapsed_time / sf;
 # else  /* ! ACE_LACKS_LONGLONG_T */
-    ACE_static_cast (double,
-                     ACE_UINT64_DBLCAST_ADAPTER(elapsed_time / sf));
+    static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / sf));
 # endif /* ! ACE_LACKS_LONGLONG_T */
   seconds /= ACE_HR_SCALE_CONVERSION;
 

@@ -64,10 +64,10 @@ ASYS_INLINE void
 ACE_Log_Record::length (long l)
 {
   ACE_TRACE ("ACE_Log_Record::length");
-  this->length_ = ACE_static_cast (ACE_UINT32, l);
+  this->length_ = static_cast<ACE_UINT32> (l);
 }
 
-ASYS_INLINE ACE_Time_Value 
+ASYS_INLINE ACE_Time_Value
 ACE_Log_Record::time_stamp (void) const
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // FIFO_Recv_Msg.i
@@ -16,24 +17,24 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
                       (strbuf *) &recv_msg,
                       &i) == -1)
     return -1;
-  else 
+  else
     return recv_msg.len;
 #else /* Do the ol' 2-read trick... */
-  if (ACE_OS::read (this->get_handle (), 
-		    (char *) &recv_msg.len, 
+  if (ACE_OS::read (this->get_handle (),
+		    (char *) &recv_msg.len,
 		    sizeof recv_msg.len) != sizeof recv_msg.len)
     return -1;
   else
     {
-      size_t remaining = ACE_static_cast (size_t, recv_msg.len);
-      size_t requested = ACE_static_cast (size_t, recv_msg.maxlen);
-      ssize_t recv_len = ACE_OS::read (this->get_handle (), 
-                                       (char *) recv_msg.buf, 
+      size_t remaining = static_cast<size_t> (recv_msg.len);
+      size_t requested = static_cast<size_t> (recv_msg.maxlen);
+      ssize_t recv_len = ACE_OS::read (this->get_handle (),
+                                       (char *) recv_msg.buf,
                                        ACE_MIN (remaining, requested));
       if (recv_len == -1)
         return -1;
       // Tell caller what's really in the buffer.
-      recv_msg.len = ACE_static_cast (int, recv_len);
+      recv_msg.len = static_cast<int> (recv_len);
 
       // If there are more bytes remaining in the message, read them and
       // throw them away. Leaving them in the FIFO would make it difficult
@@ -63,7 +64,7 @@ ASYS_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (void *buf, size_t max_len)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
-  ACE_Str_Buf recv_msg ((char *) buf, 0, ACE_static_cast (int, max_len));
+  ACE_Str_Buf recv_msg ((char *) buf, 0, static_cast<int> (max_len));
 
   return this->recv (recv_msg);
 }
@@ -75,7 +76,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
 			 int *flags)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
-  if (ACE_OS::getmsg (this->get_handle (), 
+  if (ACE_OS::getmsg (this->get_handle (),
                       (strbuf *) cntl,
                       (strbuf *) data,
                       flags) == -1)
@@ -91,7 +92,7 @@ ACE_FIFO_Recv_Msg::recv (int *band,
 			 int *flags)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
-  if (ACE_OS::getpmsg (this->get_handle (), 
+  if (ACE_OS::getpmsg (this->get_handle (),
                        (strbuf *) cntl,
                        (strbuf *) data,
                        band,

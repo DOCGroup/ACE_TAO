@@ -643,12 +643,14 @@ public:
 
   struct ACE_Export to_string
   {
-    /// The constructor taking a non-const string is
-    /// now deprecated (C++ mapping 00-01-02), but we
-    /// keep it around for backward compatibility.
-    to_string (ACE_CDR::Char *&s,
+    /**
+     * @deprecated The constructor taking a non-const string is now
+     *             deprecated (C++ mapping 00-01-02), but we keep it
+     *             around for backward compatibility.
+     */
+    to_string (char *&s,
                ACE_CDR::ULong b);
-    to_string (const ACE_CDR::Char *&s,
+    to_string (const char *&s,
                ACE_CDR::ULong b);
     const ACE_CDR::Char *&val_;
     ACE_CDR::ULong bound_;

@@ -602,7 +602,7 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
 
 # define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
 void _gobble_##SERVICE_CLASS (void *p) { \
-  ACE_Service_Object *_p = ACE_static_cast (ACE_Service_Object *, p); \
+  ACE_Service_Object *_p = static_cast<ACE_Service_Object *> (p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
 extern "C" CLS##_Export ACE_Service_Object *\

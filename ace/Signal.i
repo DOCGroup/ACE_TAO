@@ -79,7 +79,7 @@ ACE_INLINE int
 ACE_Sig_Set::is_member (int signo) const
 {
   ACE_TRACE ("ACE_Sig_Set::is_member");
-  return ACE_OS::sigismember (ACE_const_cast (sigset_t *, &this->sigset_), signo);
+  return ACE_OS::sigismember (const_cast<sigset_t *> (&this->sigset_), signo);
 }
 
 ACE_INLINE

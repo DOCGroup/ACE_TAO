@@ -335,10 +335,10 @@ typedef ptrdiff_t ptr_arith_t;
   // pointer will be more than 32 bits wide if the platform does not
   // support 64-bit integers.
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  ACE_reinterpret_cast (PTR_TYPE, L.lo ())
+  reinterpret_cast<PTR_TYPE> (L.lo ())
 #else  /* ! ACE_LACKS_LONGLONG_T */
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  ACE_reinterpret_cast (PTR_TYPE, ACE_static_cast (ptrdiff_t, L))
+  reinterpret_cast<PTR_TYPE> (static_cast<ptrdiff_t> (L))
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
 // If the platform lacks a long long, define one.
@@ -530,9 +530,9 @@ typedef ptrdiff_t ptr_arith_t;
 #   define ACE_U64_TO_U32(n) ((n).lo ())
 #   define ACE_CU64_TO_CU32(n) ((n).lo ())
 # else  /* ! ACE_LACKS_LONGLONG_T */
-#   define ACE_U64_TO_U32(n) (ACE_static_cast (ACE_UINT32, (n)))
+#   define ACE_U64_TO_U32(n) (static_cast<ACE_UINT32> (n))
 #   define ACE_CU64_TO_CU32(n) \
-     (ACE_static_cast (ACE_CAST_CONST ACE_UINT32, (n)))
+     (static_cast<ACE_CAST_CONST ACE_UINT32> (n))
 # endif /* ! ACE_LACKS_LONGLONG_T */
 
 // 64-bit literals require special marking on some platforms.
@@ -588,7 +588,7 @@ typedef ptrdiff_t ptr_arith_t;
    // Only use the low 32 bits.
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_U64_TO_U32 (n)
 # elif defined (ACE_WIN32)
-#   define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_static_cast (__int64, n)
+#   define ACE_UINT64_DBLCAST_ADAPTER(n) static_cast<__int64> (n)
 # else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
 # endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */

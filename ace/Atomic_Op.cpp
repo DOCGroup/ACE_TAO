@@ -3,7 +3,9 @@
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(ace, Atomic_Op, "$Id$")
+ACE_RCSID (ace,
+           Atomic_Op,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Atomic_Op.i"
@@ -56,7 +58,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_increment (volatile long *valu
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
   long tmp = 1;
-  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp + 1;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
@@ -70,7 +72,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_decrement (volatile long *valu
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
   long tmp = -1;
-  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp - 1;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
@@ -85,7 +87,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange (
   long rhs)
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
-  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
@@ -100,7 +102,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange_add (volatile long *v
                                                                 long rhs)
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
-  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
 #elif defined (WIN32) && !defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
@@ -114,7 +116,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange_add (volatile long *v
   // Return value is already in EAX register.
 # elif defined (__BORLANDC__)
   _EAX = rhs;
-  _EDX = ACE_reinterpret_cast (unsigned long, value);
+  _EDX = reinterpret_cast<unsigned long> (value);
   __emit__(0x0F, 0xC1, 0x02); // xadd [edx], eax
   // Return value is already in EAX register.
 # else /* _MSC_VER */
@@ -134,7 +136,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_increment (volatile long *value
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
   long tmp = 1;
-  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp + 1;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
@@ -148,7 +150,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_decrement (volatile long *value
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
   long tmp = -1;
-  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp - 1;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
@@ -163,7 +165,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange (
   long rhs)
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
-  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  unsigned long addr = reinterpret_cast<unsigned long> (value);
   // The XCHG instruction automatically follows LOCK semantics
   asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
@@ -179,7 +181,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange_add (volatile long *va
                                                                long rhs)
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
-  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
 #elif defined (WIN32) && !defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
@@ -193,7 +195,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange_add (volatile long *va
   // Return value is already in EAX register.
 # elif defined (__BORLANDC__)
   _EAX = rhs;
-  _EDX = ACE_reinterpret_cast (unsigned long, value);
+  _EDX = reinterpret_cast<unsigned long> (value);
   __emit__(0xF0, 0x0F, 0xC1, 0x02); // lock xadd [edx], eax
   // Return value is already in EAX register.
 # else /* _MSC_VER */

@@ -62,7 +62,7 @@ ACE_OS::sigaction (int signum,
   ACE_NOTSUP_RETURN (-1);
 #elif !defined (ACE_HAS_SIGACTION_CONSTP2)
   ACE_OSCALL_RETURN (::sigaction (signum,
-                                  ACE_const_cast (struct sigaction*, nsa),
+                                  const_cast<struct sigaction*> (nsa),
                                   osa),
                      int, -1);
 #else

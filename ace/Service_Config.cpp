@@ -131,7 +131,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   ACE_Service_Config::signum_ = signum;
 
   // Initialize the Service Repository.
-  ACE_Service_Repository::instance (ACE_static_cast (int, size));
+  ACE_Service_Repository::instance (static_cast<int> (size));
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
@@ -390,9 +390,9 @@ ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
   foo = xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
 
   // Cast the void* to long first.
-  long tmp = ACE_reinterpret_cast (long, foo);
+  long tmp = reinterpret_cast<long> (foo);
   ACE_XML_Svc_Conf::Factory factory =
-    ACE_reinterpret_cast (ACE_XML_Svc_Conf::Factory, tmp);
+    reinterpret_cast<ACE_XML_Svc_Conf::Factory> (tmp);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to resolve factory: %p\n"),

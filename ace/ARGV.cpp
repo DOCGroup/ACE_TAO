@@ -27,7 +27,7 @@ ACE_ARGV::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("argc_ = %d"), this->argc_));
 
-  ACE_ARGV *this_obj = ACE_const_cast (ACE_ARGV *, this);
+  ACE_ARGV *this_obj = const_cast<ACE_ARGV *> (this);
 
   for (int i = 0; i < this->argc_; i++)
     ACE_DEBUG ((LM_DEBUG,

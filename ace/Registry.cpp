@@ -613,7 +613,7 @@ ACE_TString
 ACE_Registry::make_string (const Name &const_name)
 {
   ACE_TString string;
-  Name &name = ACE_const_cast (Name &, const_name);
+  Name &name = const_cast<Name &> (const_name);
 
   // Iterator through the components of name
   for (Name::iterator iterator = name.begin ();
@@ -1100,9 +1100,10 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
     machine_name = 0;
 
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)
-    result = ACE_TEXT_RegConnectRegistry (ACE_const_cast(ACE_TCHAR *, machine_name),
-                                                          predefined,
-                                                          &naming_context.key_);
+    result =
+      ACE_TEXT_RegConnectRegistry (const_cast<ACE_TCHAR *> (machine_name),
+                                   predefined,
+                                   &naming_context.key_);
   if (predefined == HKEY_CURRENT_USER || predefined == HKEY_CLASSES_ROOT)
     // Make sure that for these types, the machine is local
     if (machine_name == 0 ||

@@ -23,10 +23,10 @@ ACE_Message_Queue_Base::state (void)
 // Specialization to use native VxWorks Message Queues.
 
 ACE_INLINE MSG_Q_ID
-ACE_Message_Queue_Vx::msgq ()
+ACE_Message_Queue_Vx::msgq (void)
 {
   // Hijack the tail_ field to store the MSG_Q_ID.
-  return ACE_reinterpret_cast (MSG_Q_ID, tail_);
+  return reinterpret_cast<MSG_Q_ID> (tail_);
 }
 
 ACE_INLINE int

@@ -14,7 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
-  : ACE_POSIX_AIOCB_Proactor (max_aio_operations, 
+  : ACE_POSIX_AIOCB_Proactor (max_aio_operations,
                               ACE_POSIX_Proactor::PROACTOR_SUN),
     condition_ (mutex_)
 {
@@ -96,16 +96,16 @@ ACE_SUN_Proactor::handle_events_i (ACE_Time_Value *delta)
   if (result == 0)
     {
       // timeout, do nothing,
-      // we should process "post_completed" queue 
+      // we should process "post_completed" queue
     }
-  else if (ACE_reinterpret_cast (long, result) == -1)
+  else if (reinterpret_cast<long> (result) == -1)
     {
       // Check errno  for  EINVAL,EAGAIN,EINTR ??
       switch (errno)
        {
        case EINTR :     // aiowait() was interrupted by a signal.
        case EINVAL:     // there are no outstanding asynchronous I/O requests.
-         break;         // we should process "post_completed" queue 
+         break;         // we should process "post_completed" queue
 
        default:         // EFAULT
          ACE_ERROR_RETURN ((LM_ERROR,
@@ -166,7 +166,7 @@ ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
    if (op_return < 0)
      transfer_count = 0; // zero bytes transferred
    else
-     transfer_count = ACE_static_cast (size_t, op_return);
+     transfer_count = static_cast<size_t> (op_return);
 
    return 1; // completed
 }
@@ -183,7 +183,7 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
   transfer_count = 0;
 
   // we call find_completed_aio always with result != 0
-        
+
   for (ai = 0; ai < aiocb_list_max_size_; ai++)
     if (aiocb_list_[ai] != 0 &&                 //check for non zero
         result == &aiocb_list_[ai]->aio_resultp)
@@ -243,7 +243,7 @@ ACE_SUN_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   // Start IO
   switch (result->aio_lio_opcode)
     {
-    case LIO_READ : 
+    case LIO_READ :
       ptype = ACE_LIB_TEXT ("read");
       ret_val = aioread (result->aio_fildes,
                          (char *) result->aio_buf,
@@ -297,7 +297,7 @@ ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result *result)
   if (rc == 0)    //  AIO_CANCELED
     {
       // after aiocancel Sun does not notify us
-      // so we should send notification  
+      // so we should send notification
       // to save POSIX behavoir.
       // Also we should do this for deffered aio's
 

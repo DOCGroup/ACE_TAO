@@ -203,8 +203,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
                   (uint64_freq / (ACE_UINT32) ACE_ONE_SECOND_IN_USECS);
 #             else
                 ACE_High_Res_Timer::global_scale_factor
-                  (ACE_static_cast (unsigned int,
-                                    freq.QuadPart / ACE_HR_SCALE_CONVERSION));
+                  (static_cast<unsigned int> (freq.QuadPart / ACE_HR_SCALE_CONVERSION));
 #             endif // (ACE_LACKS_LONGLONG_T)
 
                 ACE_High_Res_Timer::global_scale_factor_status_ = 1;
@@ -361,10 +360,9 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
-  u_long nseconds = ACE_static_cast (u_long,
-                                     (this->end_ - this->start_) %
-                                       global_scale_factor () * 1000u /
-                                       global_scale_factor ());
+  u_long nseconds = static_cast<u_long> ((this->end_ - this->start_) %
+                                         global_scale_factor () * 1000u /
+                                         global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
   ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor ());
@@ -436,11 +434,9 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
 
   // Separate to seconds and nanoseconds.
   u_long total_secs =
-    ACE_static_cast (u_long,
-                     total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+    static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
   ACE_UINT32 extra_nsecs =
-    ACE_static_cast (ACE_UINT32,
-                     total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+    static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];
   if (count > 1)

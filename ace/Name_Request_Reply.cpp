@@ -70,7 +70,7 @@ ACE_Name_Request::ACE_Name_Request (
   // ... then add in the amount of the variable-sized portion.
   len += name_length + value_length + type_length ;
 
-  this->length (ACE_static_cast (ACE_UINT32, len));
+  this->length (static_cast<ACE_UINT32> (len));
 }
 
 // Initialize length_ in order to avoid problems with byte-ordering.

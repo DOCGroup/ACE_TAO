@@ -32,7 +32,7 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
                       (strbuf *) &send_msg,
                       0) == -1)
     return -1;
-  else 
+  else
     return send_msg.len;
 #else
   iovec iov[2];
@@ -41,7 +41,7 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
   iov[0].iov_len  = sizeof send_msg.len;
 
   iov[1].iov_base = (char *) send_msg.buf;
-  iov[1].iov_len  =  ACE_static_cast (u_long, send_msg.len);
+  iov[1].iov_len  =  static_cast<u_long> (send_msg.len);
 
   ssize_t sent = ACE_OS::writev (this->get_handle (), iov, 2);
   if (sent > 0)

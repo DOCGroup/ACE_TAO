@@ -135,7 +135,7 @@ public:
 #define ACE_YYPARSE_PARAM ace_svc_conf_parameter
 #define ACE_YYLEX_PARAM ACE_YYPARSE_PARAM
 
-#define ACE_SVC_CONF_PARAM (ACE_static_cast (ACE_Svc_Conf_Param *, ACE_YYLEX_PARAM))
+#define ACE_SVC_CONF_PARAM (static_cast<ACE_Svc_Conf_Param *> (ACE_YYLEX_PARAM))
 
 // The following definition for the ACE_YYSTYPE must occur before
 // ACE_YY_DECL is declared since ACE_YY_DECL expands to function

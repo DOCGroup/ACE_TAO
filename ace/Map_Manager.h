@@ -404,7 +404,7 @@ protected:
   ACE_Allocator *allocator_;
 
   /// Synchronization variable for the MT_SAFE <ACE_Map_Manager>.
-  ACE_LOCK lock_;
+  mutable ACE_LOCK lock_;
 
   /// Implement the Map as a resizeable array of <ACE_Map_Entry>.
   ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
