@@ -250,7 +250,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
               this->output_cdr_.reset ();
               // CDR encode the frame header.
               //(<<= isAvailable only in compiled marshalling!)
-              this->frame_header_.message_type = flowProtocol::SimpleFrame;
+              this->frame_header_.message_type = flowProtocol::SimpleFrame_Msg;
               this->frame_header_.message_size = frame->length ()+this->frame_header_len_;
               this->output_cdr_.encode (flowProtocol::_tc_frameHeader,
                                         &this->frame_header_,
@@ -329,7 +329,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
                     }
                 }
               //  This can be either a simpleframe or a sequenced frame,other types of frames.
-              this->frame_header_.message_type = flowProtocol::Frame;
+              this->frame_header_.message_type = flowProtocol::Frame_Msg;
               this->frame_header_.message_size = message_len;
               ACE_DEBUG ((LM_DEBUG,"first fragment of size:%d\n",message_len- this->frame_header_len_));
               this->output_cdr_.reset ();
@@ -601,7 +601,7 @@ int
 TAO_SFP::handle_input (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP::handle_input\n"));
-  flowProtocol::MsgType msg_type = flowProtocol::start;
+  flowProtocol::MsgType msg_type = flowProtocol::Start_Msg;
   ACE_INET_Addr sender;
   char peek_buffer [MAGIC_NUMBER_LEN+2];// 2 is for flags + message_type.
   int peek_len = MAGIC_NUMBER_LEN +2;
@@ -621,12 +621,12 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
   if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_START_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)Start message received\n"));
-      msg_type = flowProtocol::start;
+      msg_type = flowProtocol::Start_Msg;
     }
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_STARTREPLY_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)StartReply message received\n"));
-      msg_type = flowProtocol::startReply;
+      msg_type = flowProtocol::StartReply_Msg;
     }
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_MAGIC_NUMBER) == 0)
     {
@@ -638,12 +638,12 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_FRAGMENT_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) fragment Header received\n"));
-      msg_type = flowProtocol::Fragment;
+      msg_type = flowProtocol::Fragment_Msg;
     }
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_CREDIT_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) credit message received\n"));
-      msg_type = flowProtocol::Credit;
+      msg_type = flowProtocol::Credit_Msg;
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP:Invalid magic number\n"),0);
@@ -661,7 +661,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
       // In this state we check for credit frames.
       switch (msg_type)
         {
-        case flowProtocol::Credit:
+        case flowProtocol::Credit_Msg:
           {
             flowProtocol::credit credit;
             n = this->dgram_.recv ((char *)&credit,
@@ -671,7 +671,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
               ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input - Credit\n"),0);
             break;
           }
-        case flowProtocol::start:
+        case flowProtocol::Start_Msg:
           // consume the retransmitted start message.
           {
             flowProtocol::Start start;
@@ -685,8 +685,8 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
             break;
           }
 
-        case flowProtocol::Frame:
-        case flowProtocol::SimpleFrame:
+        case flowProtocol::Frame_Msg:
+        case flowProtocol::SimpleFrame_Msg:
           {
             ACE_Message_Block * mb =this->read_simple_frame ();
             if (mb != 0)
@@ -704,7 +704,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
               }
             break;
           }
-        case flowProtocol::Fragment:
+        case flowProtocol::Fragment_Msg:
           {
             ACE_DEBUG ((LM_DEBUG,"Fragment received\n"));
             ACE_Message_Block *result = this->read_fragment ();
@@ -713,7 +713,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
               this->callback_->receive_frame (result);
             break;
           }
-        case flowProtocol::EndofStream:
+        case flowProtocol::EndofStream_Msg:
           {
             char *buf;
             ACE_NEW_RETURN (buf,
@@ -735,7 +735,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
       // In this state we check for Data frames.
       switch (msg_type)
         {
-        case flowProtocol::startReply:
+        case flowProtocol::StartReply_Msg:
           {
             flowProtocol::StartReply start_reply;
             n = this->dgram_.recv ((char *)&start_reply,
@@ -768,7 +768,7 @@ TAO_SFP::end_stream (void)
       ACE_DEBUG ((LM_DEBUG,"SFP - ending the stream\n"));
       // send the EndofStream message.
       this->frame_header_.flags = TAO_ENCAP_BYTE_ORDER;
-      this->frame_header_.message_type = flowProtocol::EndofStream;
+      this->frame_header_.message_type = flowProtocol::EndofStream_Msg;
       this->output_cdr_.reset ();
       this->output_cdr_.encode (flowProtocol::_tc_frameHeader,
                                 &this->frame_header_,
@@ -797,9 +797,8 @@ TAO_SFP::end_stream (void)
 int
 TAO_SFP::register_dgram_handler (void)
 {
-  int result;
-  result = this->reactor_->register_handler (this,
-                                             ACE_Event_Handler::READ_MASK);
+  int result = this->reactor_->register_handler (this,
+                                                 ACE_Event_Handler::READ_MASK);
   return result;
 }
 

@@ -10,22 +10,24 @@ module flowProtocol
   typedef sequence <unsigned long> my_seq_ulong;
   enum MsgType
   {
-    //  The MsgTypes Start and struct Start,StartReply and struct
-    // StartReply conflicts. Until the OMG fixes this we have a hack.
+    // The MsgTypes Start and struct Start,StartReply and struct
+    // StartReply conflicts. 
+    // Also there are case-only differences for enumerator Credit and struct credit. 
+    // We suffix _Msg to all enumerators until the AVStreams RTF fixes these.
     // Messages in the forward direction 
     //    Start,
-    start,
-    EndofStream,
-    SimpleFrame,
-    SequencedFrame,
-    Frame,
-    SpecialFrame,
+    Start_Msg,
+    EndofStream_Msg,
+    SimpleFrame_Msg,
+    SequencedFrame_Msg,
+    Frame_Msg,
+    SpecialFrame_Msg,
     // Messages in the reverse direction
     //    StartReply,
-    startReply,
-    Credit,
+    StartReply_Msg,
+    Credit_Msg,
     // Addition of type for a fragment.
-    Fragment
+    Fragment_Msg
   }; 
   
   struct frameHeader
