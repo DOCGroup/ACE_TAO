@@ -1902,7 +1902,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
   return result;
 }
 
-// Wait for task
+// Wait for all threads to exit a task.
 
 int
 ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
@@ -1911,7 +1911,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
   ACE_Thread_Descriptor_Base *copy_table = 0;
 
   // We have to make sure that while we wait for these threads to
-  // exit, we do not have the lock. Therefore we make a copy of all
+  // exit, we do not have the lock.  Therefore we make a copy of all
   // interesting entries and let go of the lock.
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -1930,12 +1930,16 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
          iter.advance ())
-      // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
+      // If threads are created as THR_DETACHED or THR_DAEMON, we
+      // can't wait on them here.
       if (iter.next ()->task_ == task &&
-          (ACE_BIT_DISABLED (iter.next ()->flags_, THR_DETACHED | THR_DAEMON)
-           || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
+          (ACE_BIT_DISABLED (iter.next ()->flags_,
+                             THR_DETACHED | THR_DAEMON)
+           || ACE_BIT_ENABLED (iter.next ()->flags_,
+                               THR_JOINABLE)))
         {
-          ACE_SET_BITS (iter.next ()->thr_state_, ACE_THR_JOINING);
+          ACE_SET_BITS (iter.next ()->thr_state_,
+                        ACE_THR_JOINING);
           copy_table[copy_count++] = *iter.next ();
         }
 
@@ -1946,7 +1950,8 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
       // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
       if (titer.next ()->task_ == task)
         {
-          ACE_Thread_Descriptor_Base *tdb = titer.advance_and_remove (0);
+          ACE_Thread_Descriptor_Base *tdb =
+            titer.advance_and_remove (0);
           copy_table[copy_count++] = *tdb;
           delete tdb;
         }
@@ -1956,7 +1961,9 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
   // Now to do the actual work
   int result = 0;
 
-  for (int i = 0; i < copy_count && result != -1; i++)
+  for (int i = 0;
+       i < copy_count && result != -1;
+       i++)
     {
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;

@@ -275,7 +275,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
   ACE_NEW (this->timer_handler_,
            ACE_Proactor_Timer_Handler (*this));
 
-  // Activate <timer_handler>
+  // Activate <timer_handler>.
   if (this->timer_handler_->activate (THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%N:%l:(%P | %t):%p\n"),

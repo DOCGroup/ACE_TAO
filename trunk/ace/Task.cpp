@@ -26,6 +26,7 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
 }
 
 // Wait for all threads running in a task to exit.
+
 int
 ACE_Task_Base::wait (void)
 {
