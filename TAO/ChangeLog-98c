@@ -1,16 +1,20 @@
 Mon Jul 20 21:10:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Client.java:
-	  A class to access the IDL_Cubit server via the JavaIDL
-	  ORB.
+          A class to access the IDL_Cubit server via the JavaIDL
+          ORB.
 
-	* tests/Cubit/TAO/IDL_Cubit/README: Documented how to 
-	  use the aforementioned Java class. 
+        * tests/Cubit/TAO/IDL_Cubit/README: Documented how to
+          use the aforementioned Java class.
 
 Mon Jul 20 19:06:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Invocation.cpp (invoke): wrapped final return statement
           with ACE_NOTREACHED.
+
+        * orbsvcs/tests/Trading/Makefile: moved -lorbsvcs and -lTAO
+          from LDLIBS to LIBS, so that the libTTest.so build will link
+          against them.
 
 Mon Jul 20 18:17:02 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
