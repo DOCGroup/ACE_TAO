@@ -1104,6 +1104,8 @@ be_visitor_root::visit_component (be_component *node)
     case TAO_CodeGen::TAO_ROOT_CH:
       {
         be_visitor_component_ch visitor (&ctx);
+        // This is the only context state involved in strategies.
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
         status = node->accept (&visitor);
         break;
       }
