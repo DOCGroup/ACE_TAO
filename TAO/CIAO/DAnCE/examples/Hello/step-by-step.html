@@ -123,7 +123,11 @@ Now we can step forward to build the assembly. Here we are going to build the si
 <li> Please make sure that the Deployment.xsd and XMI.xsd files are in the Hello/descriptors directory.
 <br>
 <br>
-<li> Create the <em>.dat</em> file containing the CORBALOC IIOP address of each <code>NodeManager (Node_Daemon)</code> where it is running. Please refer to the existing <code>hello.dat</code> for details, as you can see, we only specify 1 <code>NodeManager</code>, which means these two components will be installed in the same <code>NodeApplication</code> server.</li>
+<li> Create the <em>.dat</em> file containing the CORBALOC IIOP address of each <code>NodeManager (Node_Daemon)</code> 
+     where it is running. Please refer to the existing <code>NodeManagerMap.dat</code> for details, 
+     as you can see, we only specify 2 <code>NodeManagers</code>, which means these two components 
+     will be installed in the different <code>NodeApplication</code> server. Please refer to the
+     <em>DeploymentPlan.cdp</em> file to see how a deployer could specify the mapping between components and nodes.</li>
 
 <br>
 <br>
@@ -139,14 +143,19 @@ Finally you are ready to test the application you have made.
   <LI> Go into the <em> descriptors </em> directory Start NodeManagers (NodeDameon) by running <code> basicNodeDaemon.pl </code>
   
   <LI> Start the execution manager:
-  <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i hello.dat </code>
+  <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
   </LI>
+  
+  <ul type="square"> <li> <em>NOTE</em>: As one can see, we use the "NodeManagerMap.dat" file to instruct the 
+       Execution_Manager how to find the endpoint of each individual NodeManager (i.e., Node Daemon) where
+       component(s) will be deployed, so this is non-standard. We plan to use Naming Service to do this in the future.
+  </ul>
 
   <LI> Start the executor:
-  <code> $CIAO_ROOT/DAnCE/RepositoryManager/executor -p package.tpd -d Hello.cdp -k file://EM.ior </code>
+  <code> $CIAO_ROOT/DAnCE/RepositoryManager/executor -p package.tpd -d DeploymentPlan.cdp -k file://EM.ior </code>
   
   <LI> After this, components should be deployed successfully. You can run the $CIAO_ROOT/DAnCE/examples/Hello/Sender/starter to start the application.
-       Please make sure that the component IOR file for the EC component is present when you run this client.
+       Please make sure that the component IOR file for the EC (<code>EC.ior</code>) component is present when you run this client.
 
   <BR/>
   </LI>
