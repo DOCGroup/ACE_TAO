@@ -1,0 +1,3426 @@
+Sat Feb 26 17:29:50 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Added dependencies for tao_idl
+          to a couple of idl files that were missing it.
+
+Fri Feb 25 19:59:33 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/GIOP.cpp (process_server_request): Removed a memory leak.
+	  Thanks to Klemen Zagar <klemen.zagar@ijs.si> for reporting 
+	  this.
+
+Fri Feb 25 18:39:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.h:
+	* tao/Any.cpp:
+	  Added insertion/extraction operator for long double.
+	  These work right out of the box on platforms like
+	  Solaris and Digitial Unix where the size of the
+	  native long double is 16 bytes. For other platforms,
+	  we define CORBA::LongDouble to be a struct containing
+	  an array 'ld' of 16 chars. In that case, the workaround
+	  would look like:
+
+	  CORBA::LongDouble dd;
+	  sprintf (dd.ld, "%f", 3.14159);
+	  CORBA::Any any;
+	  any <<= dd;
+
+	  CORBA::LongDouble dd_out;
+	  any >>= dd_out;
+	  cout << atof (dd_out.ld) << endl;
+
+Fri Feb 25 18:25:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/reopened_modules.idl:
+	* tests/IDL_Test/including.idl:
+	  Fix to accomodate platforms without namespaces.
+
+Fri Feb 25 15:08:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/releasenotes/index.html:
+          Documented the new version of the COS Event Service
+
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/CosEvent_Service/README:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.dsw:
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.dsp:
+          Provide a program to run the new implementation of the COS Event
+          Service.
+
+        * orbsvcs/CosEvent_Service/svc.conf:
+          Removed, no longer needed.
+
+        * orbsvcs/examples/CosEC/Makefile:
+        * orbsvcs/examples/CosEC/Simple/Makefile:
+        * orbsvcs/examples/CosEC/Simple/README:
+        * orbsvcs/examples/CosEC/Simple/run_test.pl:
+        * orbsvcs/examples/CosEC/Simple/Service.cpp:
+        * orbsvcs/examples/CosEC/Simple/Consumer.h:
+        * orbsvcs/examples/CosEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/Simple/Supplier.h:
+        * orbsvcs/examples/CosEC/Simple/Supplier.cpp:
+          New example, to show how easy it is to use the COS Event
+          Service.
+
+Fri Feb 25 14:03:57 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Fixed warnings in deactivate() call.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+          Removed debugging messages.
+
+Fri Feb 25 10:46:52 2000  Ossama Othman  <ossama@uci.edu>
+
+        * docs/releasenotes/index.html:
+
+          Updated release notes for TAO's pluggable protocol framework.
+
+Fri Feb 25 10:43:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+          Assume that the client invokes obtain_push_consumer() (or any
+          other obtain_xxx_yyy() call), but never invokes the
+          corresponding connect_push_consumer() call.
+          Before this change the only way that object will get destroyed
+          is by an eventual shutdown, as only the POA is holding a
+          reference to it.
+          With the new implementation the EC keeps a reference to it in
+          the ConsumerAdmin collection, once there the ConsumerControl
+          strategy can remove the object if it is deemed to have been
+          there for too long.  Notice that the default control strategies
+          don't do this, but it is relatively easy to add that feature.
+          This change also simplified the shutdown() and disconnect()
+          calls for the proxies, and made the code "more exception safe".
+          This fixes [BUGID:437], and it reduces the probability of
+          hitting [BUGID:438], even though that last one is very unlikely
+          to happen in the first place.
+          Notice how many files were affected, this is a strong argument
+          for the Event Service Framework, that i'm cooking on the back
+          burner.
+
+Fri Feb 25 10:49:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosConcurrencyControl.idl,
+          orbsvcs/orbsvcs/RtecDefaultEventData.idl,
+          orbsvcs/orbsvcs/RtecEventComm.idl: Fixed all three of these
+          files so that they use the more portable #ifndef FOO rather than
+          #if !defined (FOO) syntax.  Thanks to W. Craig Trader
+          <ct7@vitelinc.com> for reporting this.
+
+Fri Feb 25 08:59:59 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tao/IIOP_Acceptor.cpp (create_mprofile, open_default):
+
+          Fixed support for hosts with multiple network interfaces.  A
+          profile will be created for each endpoint created on each
+          network interface.  The loopback interface will be excluded,
+          unless it is the only interface.
+
+          (endpoint_count, open, open_i):
+
+          Additional minor changes to accomodate the new multi-homed host
+          support.
+
+        * tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
+
+          Changes in member variables necessary to support multi-homed
+          hosts (e.g. change from variable to an array, etc).
+
+        * tao/IIOP_Acceptor.i (address):
+
+          Return the first addr in the array of ACE_INET_Addrs.  This is
+          a temporary hack.  Only the Implementation Repository uses this
+          method.  The Implementation Repository will have to start
+          supporting IORs with multiple profiles.  For now, we just return
+          the first addr.
+
+        * tao/Makefile.am:
+
+          Updated dependencies.
+
+Fri Feb 25 10:45:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.h:
+        * TAO_IDL/driver.drv_args.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+          Added command line option -So to suppress the
+          generation of ostream operators for exceptions.
+          Suggested by Greg Holtmeyer <Greg.Holtmeyer@MW.Boeing.com>.
+
+Fri Feb 25 09:44:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * performance-tests/Latency/dii_client.cpp:
+          Guarded all pertinent code with
+          #if !defined (TAO_HAS_MINIMUM_CORBA). If minimum
+          CORBA is defined, the client code should now just
+          get and narrow a reference to the server. skip
+          instantiating the client, and shutdown the server
+          if that option is selected.
+
+Fri Feb 25 09:34:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+          For struct foo, removed typedef of foo_ptr and
+          foo::_ptr_type. These are not part of the spec.
+          Thanks to Chris Cleeland <cleeland@cs.wustl.edu>
+          for pointing this out.
+
+Thu Feb 24 18:33:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/run_test.pl:
+        * tests/Param_Test/tests.h:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/multdim_array.h:
+        * tests/Param_Test/multdim_array.cpp:
+          Activated the multidimensional array test, which
+          had been commented out for some time.
+
+Thu Feb 24 18:21:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+          If a multidimensional array 'foo' is an IN parameter to an
+          operation, some compilers have trouble with the
+          implicit cast to const. We now help them out by casting
+          (multidimensional arrays only) the IN argument to
+          const foo_slice * before making the upcall.
+
+Thu Feb 24 16:25:04 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp:
+          Fixed compile errors on RedHat Linux platform. Thanks to Sandeep
+          Adwankar <adwankar@rsch.comm.mot.com> for pointing this out.
+
+Thu Feb 24 10:49:32 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tao/ORB_Core.cpp (init):
+
+          Fixed the reason why the seg fault when printing a warning about
+          an unknown "-ORB" option was occuring in the first place.
+          "current_arg" was not being set to the current argument.
+
+Thu Feb 24 09:29:19 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tao/ORB_Core.cpp (init):
+
+          Fixed seg fault that was occurring due to attempt to print a
+          NULL string (zero pointer).  Print "<NULL>" if the pointer to
+          the current argument is zero.  The seg fault occurred when
+          providing a command such as the following:
+
+             ./server -ORBDebugLevel 6 -ORBDottedDecimalAddress
+
+          The "-ORBDottedDecimalAddress" option is missing its argument.
+
+        * tao/POA.cpp (imr_notify_startup):
+
+          Corrected spelling of "Notifing."
+
+Thu Feb 24 01:32:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/Object.cpp (_non_existent): The collocated servant also
+          throws exception.  Moved it into the try block.  Thanks to Brian
+          Wright <bwright@paladyne.com> for reporting this.
+
+Wed Feb 23 18:35:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Invoke the consumer control strategy as soon as an
+          exception is raised while pushing to a consumer.
+          This fixes [BUGID:434]
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          The comments explaining what we do when we detect a system
+          exception while pushing an event where very confusing, i think
+          it is better now.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+          Include support for detecting misbehaving pull suppliers and
+          pull consumers.
+          This fixes [BUGID:433]
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+          Invoke the consumer or supplier control strategies as soon as an
+          exception is raised while pushing an event to a push consumer or
+          while pulling an event from a pull supplier.
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+          Provide access to the ConsumerControl and SupplierControl
+          interfaces.
+
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+          There Pull_Push_Test had no header explaining its output.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+          Workaround apparent bugs in the GHS compiler.
+          It needs some extra #includes to instantiate the templates.
+          Thanks to Bill Tovrea <gwtovrea@west.raytheon.com> for reporting
+          this problem and testing potential fixes.
+
+Wed Feb 23 20:36:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * tests/README: Updated this file to include brief descriptions of
+          all tests in the subdirectories.  Thanks to Rick Hess
+          <rick.hess@lmco.com> for reporting this.
+
+Wed Feb 23 14:42:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/IDL_Test/Makefile:
+          Added dependency on the IDL compiler so the reopeneded_modules
+          test is actually recompiled.
+
+        * examples/Persistent_Grid/Grid_i.cpp:
+          Fixed out of order in initialization list.
+
+Wed Feb 23 12:31:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * examples/Persistent_Grid/Grid_i.cpp:
+        * examples/Persistent_Grid/Simple_util.cpp: Fixed a warning on
+          Linux egcs.
+
+Tue Feb 22 18:13:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_scope.cpp:
+          In comparing names for name clashes, we now use the local name
+          for local declarations, and the top component of the scoped
+          name for referenced types, as specified in CORBA 2.3.1. Thanks
+          to Klaus Hofmann <Klaus.Hofmann@astrum.de> for sending in the
+          IDL file that pointed this out.
+
+Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * TAO/tao/Invocation.cpp (start and invoke): Removed extra updates
+          that were being called on the countdown timer.
+
+        * TAO/tao/GIOP.cpp (send_message): Optimized away a call to
+          TAO_OutputCDR::length().
+
+        * TAO/tao/Wait_Strategy.cpp (sending_request): The assignment of
+          <reply_received_>, <expecting_response_>, and <calling_thread_>
+          was protected by the leader/followers lock.  In the case of
+          oneways, these fields are not used, so this seems excessive. In
+          the case of twoways, this stuff is done before the request is
+          actually sent, therefore, there isn't any chance of the leader
+          resetting these fields simultaneously.  Therefore, the lock has
+          been removed.
+
+        * TAO/tao/IIOP_Connector.cpp (connect):
+        * TAO/tao/UIOP_Connector.cpp (connect):
+        * TAO/tao/SHMIOP_Connector.cpp (connect):
+
+          Optimize the creation of the synch options.  Only create it is
+          there is a timeout specified by the user.
+
+Tue Feb 22 14:51:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_generator.cpp:
+          Changes to create_module() to handle a module which is
+          reopened by appearing once in each of a chain of
+          #inclusions. Thanks to Lothar Werzinger
+          <werzinger.lothar@krones.de> for the example IDL file
+          that uncovered this bug.
+
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/including.idl:
+        * tests/IDL_Test/reopened_modules.idl:
+          Examples added to test the use case above.
+
+Tue Feb 22 13:28:19 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp:
+
+          Fixed compile errors on Redhat Linux. Thanks to
+          Alex Luk <fluk7@ie.cuhk.edu.hk> for reporting this.
+
+Tue Feb 22 10:33:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Removed inclusion of server template header file in
+          server header file, if tie classes are not generated.
+          Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
+          for reporting this bug.
+
+Mon Feb 21 20:43:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
+        * tao/Asynch_Invocation.cpp:
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+        * tao.Invocation.h:
+        * tao/Invocation.i:
+        * tao/Invocation.cpp:
+        * tao/Object.cpp:
+        * tao/Stub.cpp:
+        * tao/DomainC.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/MessagingC.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Optimization suggested by Irfan. Instead of marshaling the
+          operation name into the request header by using the
+          overloaded << operator for strings (which contains a
+          call to strlen), we use the version of write_string that
+          takes a length argument. The length then has to be
+          precomputed. The signatures of the TAO_GIOP_*_Invocation
+          constructors has been modified to carry this value,
+          as has the write_request_header* functions of TAO_GIOP.
+          For regular oneway, twoway, and AMI requests, this
+          value is calculated by the IDL compiler and plugged in
+          to the constructor call in the stub. For interpreted stubs
+          and regular DII requests, the Stub object calculates the length.
+          For deferred synchronous DII request, the length is calculated
+          in the invocation constructor.
+
+Mon Feb 21 16:19:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.cpp:
+        * tao/decode.cpp:
+          Do not use ACE_Message_Block::duplicate() or clone() to copy the
+          underlying CDR stream.  The first one is not thread safe and the
+          second one does not preserve alignment.
+          Instead we use the ACE_CDR::consolidate() function that performs
+          a deep copy (thus thread safe) and preserves alignment.
+          This fixes [BUGID:430]
+
+        * examples/Makefile:
+          Add the Persistent_Grid example to the Makefile.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+          The try_pull() method was always setting the <has_event> flag to
+          0, even when there were events available.
+
+        * orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.cpp:
+          Fine-tune the execution time.
+
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+          Enable the Pull-Push test because the bugs in TAO that kept it
+          from working have been fixed.
+
+        * performance-tests/Cubit/TAO/DII_Cubit/run_test.pl:
+          Fixed the invocation to the IDL server, the options where
+          wrong.
+
+        * tests/param_test/ub_any_seq.cpp:
+          Print debugging messages only if TAO_debug_level is defined.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+          Several cosmetic fixes and changes to the comments.
+
+Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * tao/Makefile.bor, TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
+
+        * tests/MProfile/test_i.h: Removed extra semicolon.
+
+Mon Feb 21 16:09:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * docs/DIFFERENCES: Clarified that this file doesn't reflect
+          what's in TAO any more.  Thanks to Alex Brown
+          <abrown@3com-ne.com> for pointing this out.
+
+Mon Feb 21 15:54:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/union.idl:
+          Added an IDL code simplified from an example sent in
+          by Jonathan Reis <reis@stentorsoft.com>
+
+Mon Feb 21 10:59:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/include.utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+          In create_module(), the check for a reopened module
+          now includes a check for whether a previous module
+          found with the scope iterator is from an included file or
+          not. Previously, the node from the included file would be
+          returned, and therefore no code would be generated for it. Also
+          added code to add the included module's members to the reopened
+          module, and removed an unused member from class UTL_Scope.
+          Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
+          for reporting this bug.
+
+          Also, a small change to lookup_by_name_local in utl_scope.cpp
+          fixed a bug reported by Jonathan Reis <reis@stentorsoft.com>.
+          This closes out bugzilla bug #449.
+
+Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO/orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Synced with orbsvcs.dsp.  Thanks to Mogens Hansen
+          <mogens_h@dk-online.dk> for noticing this.
+
+Sat Feb 19 20:24:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp
+          (parse_collection_arg): Initialized <aux> to 0 to avoid MSVC
+          warning.
+
+Sat Feb 19 18:47:22 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/decode.cpp:
+          When decoding Anys from a CDR stream we always use "append", to
+          copy the contents of the original CDR stream into a new buffer.
+          This new buffer is created with the natural alignment on the
+          local machine, but we were storing the original stream byte
+          order in the Any.
+
+Sat Feb 19 15:32:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.cpp:
+          Reverted accidental commit.
+
+Sat Feb 19 17:07:24 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
+
+        * docs/releasenotes/index.html (CosEC_Multiple):
+          updated release notes
+
+Sat Feb 19 14:23:38 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+          The Any structure keeps a byte_order field to determine what is
+          the byte order in its internal CDR stream.
+          This fixes [BUGID:431]
+
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+          Move the CDR extraction and insertion operators for Any into the
+          Any.cpp file.
+          Analogous changes for the TypeCode operators.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          Generate code that uses the new byte_order field in Anys
+
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+          Moved the CDR extraction and insertion operators for TypeCode
+          into the Typecode.cpp file.
+
+        * tao/BoundsC.cpp:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynArray_i.cpp:
+        * tao/DynEnum_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+        * tao/GIOPC.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/IOPC.cpp:
+        * tao/IORC.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/InterceptorC.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/Invocation.cpp:
+        * tao/MessagingC.cpp:
+        * tao/NVList.cpp:
+        * tao/ObjectIDList.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * tao/Services.cpp:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.cpp:
+        * tao/append.cpp:
+        * tao/decode.cpp:
+        * tao/deep_free.cpp:
+        * tao/encode.cpp:
+        * tao/skip.cpp:
+          Use the new byte_order field in Any.
+
+        * tests/IDL_Test/Makefile:
+          Updated dependencies.
+
+        * tests/Param_Test/complex_any.cpp:
+          The test was not checking the return value for some >>=
+          operators.
+
+Sat Feb 19 15:34:49 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 1.0.14 released.
+
+Fri Feb 18 19:21:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+          Removed IDL compiler item about relaxing the rule in IDL of
+          defining forward declared interfaces in the same
+          file (until it gets implemented) and added one about the
+          new command line option -Sc to suppress generation of
+          tie classes.
+
+Fri Feb 18 19:05:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_si.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+          Added command line option -Sc to suppress generation
+          of tie classes and *S_T.* files. A question about this
+          was sent in by Alex Hornby <alex@anvil.co.uk>, which
+          prompted the implementation. This closes out bugzilla
+          bug #443.
+
+Fri Feb 18 13:53:43 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+          Make argv buffers bigger, so they can handle more options.
+
+Fri Feb 18 12:53:13 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/as.cpp:
+
+          Fixed compile errors on Redhat Linux. Thanks to
+          Alex Luk <fluk7@ie.cuhk.edu.hk> for reporting this.
+
+Fri Feb 18 10:44:33 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+          While shuting down the Trader will disconnect from its
+          peers. Using a loop like this:
+               for (CORBA::ULong i = count - 1; i > 0; i--)
+          this is obviously busted, if count is 0 then the loop will run
+          for a *long* time, but worse, it crashes when trying to access
+          the sequence.
+
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/run_test.pl:
+          The test was too brittle.  Now the export test creates a file
+          just before going into the event look, the script can use that
+          file to launch the import test only after that.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Fixed a syntax error.  This program is obviously not compiled
+          often enough.
+
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+          Don't use CORBA::Any::dump to dump the contents of an Any, that
+          will let us reduce the size of the TAO library by a couple of
+          bytes.
+
+Fri Feb 18 08:39:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+          Fixed several exception specs, i guess it was too much
+          cut&paste ;-)
+
+Fri Feb 18 00:48:43 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/SHMIOP_Factory.cpp (requires_explicit_endpoint): Changed to
+          return 1, i.e., do not create a SHMIOP endpoint if not
+          explicitly specified by users.  Thanks to Carlos for pointing
+          this out.
+
+Thu Feb 17 21:48:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * utils/catior/catior.cpp:
+          It was still printing IIOP for the SHMIOP protocol, the order of
+          the arguments for an ACE_DEBUG() call was broken.
+
+Thu Feb 17 19:05:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/nested_scope.idl:
+          New file.
+
+        * tests/IDL_Test/idl_test.dsp:
+        * tests/IDL_Test/Makefile:
+        * tests/IDL_Test/reopened_modules.idl:
+          Removed new example from reopened_modules.idl and added
+          the example plus many similar ones for various data types
+          to new file nested_scope.idl.
+
+Thu Feb 17 18:39:36 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+          More changes necessary to handle the skipped nested scope/repeated
+          name example added to IDL_Tests recently. These changes will deal
+          with all the types at the innermost scope that were causing a
+          problem. Also (see ACE ChangeLog) was able to get rid of the
+          ACE_GLOBAL_COLONS macro that was recently added to deal with
+          SunCC 5.0.
+
+Thu Feb 17 18:12:21 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * docs/interceptors.html: Updated the links for the latest
+          Portable Interceptors Joint Submission.
+
+Thu Feb 17 15:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Added the new CosEvent files to the orbsvcs projects.
+
+Thu Feb 17 14:44:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+          Add support for the pull model.  The architecture is very
+          simple, the SupplierAdmin keeps two collections, of
+          ProxyPushConsumer and ProxyPullSupplier objects.
+          Somehow the Pulling_Strategy obtains events from the
+          PullSuppliers connected to the EventChannel and pushes them into
+          the ConsumerAdmin implementation.
+          The ProxyPushConsumer objects also propagate their events to the
+          ConsumerAdmin object.
+          The ConsumerAdmin implementation propagates the events to its
+          two collections, the ProxyPushSuppliers and the
+          ProxyPullSuppliers.
+          The former use the Dispatching strategy to select a thread that
+          will finally deliver the event to the PushConsumer client
+          object.
+          In contrast the ProxyPullSupplier object queues the event until
+          the application invokes pull() or try_pull.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Add support in the Factory class for the new pull-related
+          components.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+          Implement the CosEventChannelAdmin::ProxyPullConsumer
+          interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+          Implement the CosEventChannelAdmin::ProxyPullSupplier
+          interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Removed all the connected/reconnected/disconnected methods,
+          since they are only relevant for filtering Event Channels.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.cpp:
+          PullSuppliers must be polled to get the events they have (if
+          any).  There are many strategies to do that, for example,
+          periodically poll all the suppliers, have dedicated threads
+          blocked on pull(), one of each supplier, and there may be other
+          variations too.
+          This class defines the interface for the Pulling strategy.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+          A simple implementation of the Pulling strategy.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+          Add support for the ProxyPullSupplier objects.
+          New push() method to propagate an event to all the connected
+          consumers.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+          Add support for the ProxyPullConsumer objects.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+          Removed all the connected/reconnected/disconnected methods,
+          since they are only relevant for filtering Event Channels.
+          Move the TAO_CEC_Push_Event worker into the CEC_ConsumerAdmin
+          files, because that's where it is used now.
+
+        * orbsvcs/tests/CosEvent/CosEvent.dsw:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Basic.dsw:
+        * orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.dsp:
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+          New test for the pull-push model, currently disabled because the
+          CORBA::Any class is not thread safe (see [BUGID:430])
+
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.cpp:
+          Implement new helper classes for testing the Pull model.
+
+        * docs/cec_options.html:
+          Documented the options of the COS Event Channel Factory.
+
+        * utils/catior/catior.cpp:
+          Updated to understand the SHMIOP options.
+
+        * orbsvcs/tests/CosEvent/Basic/Push_Event.cpp:
+          Minor cosmetic fix.
+
+        * orbsvcs/orbsvcs/Makefile:
+          Updated dependencies with TAO_ORBSVCS="Naming Time Property
+          Sched Event CosEvent NativeCosEvent Event2 Notify Trader
+          LifeCycle Log Concurrency"
+
+Thu Feb 17 13:51:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Let's see if this time I can get it right.  The macro name is
+          TAO_ORBSVCS_HAS_XXX not TAO_HAS_ORBSVCS_XXX.
+
+Wed Feb 16 16:55:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Add another -I flag to make the DU C++ compiler happy.
+
+Wed Feb 16 15:01:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Modified generation of scoped names for arguments
+          and return types to be compatible with scoped
+          names where the nested name repeats after skipping
+          one or more scopes. This was done for interfaces
+          yesterday, these changes were to structure, exception,
+          union, and sequence. Also used the new ACE_GLOBAL_COLONS
+          macro where necessary to avoid SunCC 5.0 going berserk
+          whenever it sees a construction like (::foo::...  ).
+
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+          Removed unnecessary generation of a call to the base class
+          default constructor.
+
+Wed Feb 16 08:36:01 2000  Ossama Othman  <ossama@uci.edu>
+
+        * docs/Options.html:
+
+          Fixed typographical error.
+
+        * docs/pluggable_protocols/index.html:
+        * tao/default_resource.cpp (init_protocol_factories):
+
+          Updated documentation/comments about pluggable protocol svc.conf
+          entries.  Thanks to Gilbert Grosdidier <grodid@in2p3.fr> for
+          motivating this update.
+
+Tue Feb 15 22:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/SHMIOP_Transport.cpp (send): Changed to use the new
+          ACE_MEM_IO::send method to send a message block chain.  This
+          reduced the number of signaling and should improve performace.
+
+Tue Feb 15 19:53:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+          Changes needed to handle the new nested module use case
+          recently added to IDL_Test.
+
+Tue Feb 15 16:55:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          I was using the wrong macro, it is TAO_HAS_ORBSVCS_Event2, not
+          ACE_HAS_Event2.
+
+Tue Feb 15 08:23:35 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
+          Fixed problems for platforms without native C++ exceptions.
+
+Tue Feb 15 08:19:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Fixed template instantiation, Event2 uses the same templates, so
+          if it is enabled we should not instantiate the templates.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+          Cosmetic fixes.
+
+Mon Feb 14 18:13:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+          Extension of fix below that doesn't depend on order
+          of events inside AST_Module constructor body. Also
+          removes static variable declared inside AST_Module
+          constructor body.
+
+Mon Feb 14 13:01:53 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_scope.cpp:
+          In the check for redefinition of a scope immediately
+          inside itself, add a check for a null pointer to
+          Identifier. This was causing seg faults on many
+          platforms.
+
+Mon Feb 14 10:16:15 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tao/Acceptor_Registry.h:
+
+          Removed inclusion of extraneous headers.
+
+        * tao/Makefile:
+
+          Updated dependencies.
+
+Mon Feb 14 08:25:32 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Simple/time/Time.idl:
+        * examples/Simple/time/Time_Client_i.cpp:
+        * examples/Simple/time/Time_i.cpp:
+        * examples/Simple/time/Time_i.h:
+          The Time interface had a time method in it (A no-no in IDL).
+          Changed time () to current_time ().
+
+Mon Feb 14 02:47:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tests/Interceptors/server.cpp (main): Changed to activate the
+          servant explicitly so it would use the right POA.  Thanks to
+          Russell L. Carter <rcarter@consys.com> for reporting this.
+
+Sun Feb 13 11:09:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * tao/TAO: Added a fini() method so that the TAO_ORB_Manager
+          can be instructed not to try to destroy the RootPOA a second
+          time.  Thanks to Boris Sukholitko <boris@webglide.com> for
+          reporting this.
+
+Sat Feb 12 21:06:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * orbsvcs/tests/Event/Basic/Complex.cpp:
+        * orbsvcs/tests/Event/Basic/Negation.cpp:
+          Removed last hardcoded expected counts.  Use the count from the
+          suppliers to predict the number of received events.
+
+        * orbsvcs/tests/Event/Basic/Timeout.cpp:
+          Use dump_results() to show the results.  The test can fail under
+          heavy system load because some timers can be missed.
+
+Sat Feb 12 20:57:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * orbsvcs/tests/Event/Basic/Negation.cpp:
+
+Sat Feb 12 15:58:54 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Add the new files to the MSVC projects.
+
+        * orbsvcs/tests/CosEvent/CosEvent.dsw:
+        * orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.dsp:
+        * orbsvcs/tests/Event/Event.dsw:
+          Add workspaces for the new CosEvent tests, and update the Event
+          tests workspace.
+
+Sat Feb 12 13:37:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Implemented a new version of the COS Event Service. This version
+          is based on the experience gained while implemented the second
+          generation of TAO's Real-time Event Service.  Special care has
+          been taken to make it flexible, scalable, support multiple
+          threads and be exception safe.
+          The current version does not support the Pull model, but soon it
+          will.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+          Implement the CosEventChannelAdmin::EventChannel interface, also
+          serve as a big Mediator among all the other internal classes.
+          All the object it requires are created using an Abstract
+          Factory, in turn this factory is dynamically loaded using the
+          Service Configurator.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+          Implement the CosEventChannelAdmin::ConsumerAdmin interface.
+          The internal collections are implemented using
+          TAO_EC_Proxy_Collection which provide several iteration
+          strategies, underlying data structures and MT-safe vs. lock-free
+          implementations.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+          Implement the CosEventChannelAdmin::SupplierAdmin interface.
+          As the ConsumerAdmin classes they use TAO_EC_Proxy_Collection.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+          Implement the CosEventChannelAdmin::ProxyPushConsumer interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Implement the CosEventChannelAdmin::ProxyPushSupplier interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
+          Define the interface for the consumer control strategy, i.e. how
+          does the event channel deal with misbehaving or dead consumers.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.cpp:
+          Ditto for suppliers
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.cpp:
+          The dispatching strategy, it collaborates with the
+          ProxyPushSupplier to efficiently dispatch the events to the
+          consumers.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.cpp:
+          Define the Abstract Factory interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Default implementation of the TAO_CEC_Factory interface. It
+          parses the arguments provided by the service configurator to
+          choose at initialization time the strategies that would be used
+          by the Event Channel.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h:
+          Default values for the various parameters in the Event Channel
+          and its default strategy factory.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.cpp:
+          Implement a multi-threaded dispatching strategy.  Based on a
+          single message queue, each message is a command object that
+          either dispatches the event or shutdowns the dispatching
+          thread.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+          Helper classes to implement the MT dispatching strategy.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+          A simple implementation of the control strategies, they
+          periodically poll all the consumers (or suppliers), if they are
+          not available they are removed from the Event Service.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Fixed bug in single-threaded configurations for the proxy
+          collections.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Added comments on potential exception handling pitfalls.
+
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+          Removed uneeded #include
+
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+          The default configuration should be MT-safe, it is easier to
+          explain how the configuration can be optimized for the ST case
+          than explain why it is not safe by default.
+
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/CosEvent/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Basic.dsw:
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+        * orbsvcs/tests/CosEvent/Basic/Disconnect.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.h:
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.cpp:
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Push_Event.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Push_Event.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.dsp:
+        * orbsvcs/tests/CosEvent/lib/Makefile:
+        * orbsvcs/tests/CosEvent/lib/CECTest.dsw:
+        * orbsvcs/tests/CosEvent/lib/CECTest.dsp:
+        * orbsvcs/tests/CosEvent/lib/cectest_export.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.cpp:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.h:
+          Tests for the new implementation of the CosEventService.
+          The include tests for:
+          - Event Delivery (multiple threads)
+          - Proper disconnection
+          - Proper disconnection with multiple threads
+          - Shutdown procedures for the Event Channel.
+
+        * orbsvcs/tests/Event/Basic/Wildcard.cpp:
+          This test was not destroying the ORB.
+          Sometimes in our heavily loaded "compilation servers" timer was
+          not expiring the expected number of times, possibly because the
+          host was too loaded and the process was not scheduled often
+          enough.
+          I base the test on the number of messages actually sent, not the
+          number of timeouts expected, this seems to work much better.
+
+        * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          The bitmask test requires the Prefix_Filter_Builder.
+
+        * orbsvcs/tests/Event/Basic/Complex.cpp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+          Cosmetic fixes.
+
+        * orbsvcs/tests/Event/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+          If the event channel sends the disconnect callback there is no
+          sense in trying to disconnect from it: the proxy is already
+          destroyed.
+
+        * taoconfig.mk:
+          Removed TSS_ORB_FLAG it has been obsolete for too long to even
+          remember what it was.
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+          I accidentaly removed some template instantations during my code
+          review.
+
+Sat Feb 12 10:29:28 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * docs/releasenotes/orbcore.html:
+        * docs/Options.html: Added information about shared memory
+          transport.
+
+Fri Feb 11 19:50:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_argument.cpp
+        * TAO_IDL/ast/ast_array.cpp
+        * TAO_IDL/ast/ast_attribute.cpp
+        * TAO_IDL/ast/ast_concrete_type.cpp
+        * TAO_IDL/ast/ast_constant.cpp
+        * TAO_IDL/ast/ast_enum.cpp
+        * TAO_IDL/ast/ast_enum_val.cpp
+        * TAO_IDL/ast/ast_exception.cpp
+        * TAO_IDL/ast/ast_expression.cpp
+        * TAO_IDL/ast/ast_field.cpp
+        * TAO_IDL/ast/ast_interface_fwd.cpp
+        * TAO_IDL/ast/ast_module.cpp
+        * TAO_IDL/ast/ast_native.cpp
+        * TAO_IDL/ast/ast_operation.cpp
+        * TAO_IDL/ast/ast_predefined_type.cpp
+        * TAO_IDL/ast/ast_root.cpp
+        * TAO_IDL/ast/ast_sequence.cpp
+        * TAO_IDL/ast/ast_string.cpp
+        * TAO_IDL/ast/ast_structure.cpp
+        * TAO_IDL/ast/ast_type.cpp
+        * TAO_IDL/ast/ast_typedef.cpp
+        * TAO_IDL/ast/ast_union.cpp
+        * TAO_IDL/ast/ast_union_branch.cpp
+        * TAO_IDL/ast/ast_union_label.cpp
+        * TAO_IDL/include/ast_argument.h
+        * TAO_IDL/include/ast_array.h
+        * TAO_IDL/include/ast_attribute.h
+        * TAO_IDL/include/ast_concrete_type.h
+        * TAO_IDL/include/ast_constant.h
+        * TAO_IDL/include/ast_enum.h
+        * TAO_IDL/include/ast_enum_val.h
+        * TAO_IDL/include/ast_exception.h
+        * TAO_IDL/include/ast_expression.h
+        * TAO_IDL/include/ast_field.h
+        * TAO_IDL/include/ast_interface_fwd.h
+        * TAO_IDL/include/ast_module.h
+        * TAO_IDL/include/ast_native.h
+        * TAO_IDL/include/ast_operation.h
+        * TAO_IDL/include/ast_predefined_type.h
+        * TAO_IDL/include/ast_root.h
+        * TAO_IDL/include/ast_sequence.h
+        * TAO_IDL/include/ast_string.h
+        * TAO_IDL/include/ast_structure.h
+        * TAO_IDL/include/ast_type.h
+        * TAO_IDL/include/ast_typedef.h
+        * TAO_IDL/include/ast_union.h
+        * TAO_IDL/include/ast_union_branch.h
+        * TAO_IDL/include/ast_union_label.h
+          Took the destructor bodies out of the header file,
+          in preparation for someday adding some memory
+          manangement to them.
+
+Fri Feb 11 18:20:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+          The prevention of the redefinition of a scope
+          within itself was preventing that redefinition
+          not just in the scope immediately within, but
+          in all contained scopes. Thanks to
+          Klaus Hofmann <Klaus.Hofmann@astrum.de>
+          for sending in the example IDL file that pointed
+          this out.
+
+        * tests/IDL_Test/reopened_modules:
+          Added Klaus Hofmann's example IDL file to the group.
+
+Fri Feb 11 14:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/TAO_Internal.cpp: I forgot to add the initialization for
+          SHMIOP_Protocol_Factory's static service.  And it was causing
+          the tests/ORB_init test to fail. Thanks to Bala for reporting
+          this.
+
+Fri Feb 11 13:48:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+          Changes to prevent modules, interrfaces, structs,
+          unions, valuetypes and exeptions from being
+          redefined immediately inside their own scope. This
+          closes out Bugzilla bug #417. Thanks to
+          Alia Atlas <akatlas@bbn.com> for sending in an
+          example IDL file.
+
+Fri Feb 11 10:22:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+          I overlooked this fix for valuetypes similar to the
+          one for attributes in my entry for yesterday.
+
+Fri Feb 11 09:53:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/reopened_modules.idl:
+          File had incorrect IDL, but version of IDL compiler
+          before recent changes was accepting it.
+
+Thu Feb 10 22:14:06 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Complex.dsp:
+        * orbsvcs/tests/Event/Basic/Disconnect.dsp:
+          Add new files to the project.
+
+Thu Feb 10 22:04:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h;
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+          Changes to enable call to 'delete' on the
+          scoped name member in the destructor of all instances
+          of AST_Decl.Specifically, code generation for arguments
+          and attributes had to be modified to avoid double
+          deletion in those cases. An IDL file with a large number
+          of enums was causing the IDL comiler to run out of heap
+          memory. These changes and the changes to utl_string.cpp
+          in the ChangeLog entry below have fixed that problem.
+          Thanks to Ted Nolan SRI Augusta GA <ted@ags.ga.erg.sri.com>
+          for sending in the IDL file.
+
+        * TAO_IDL/util/utl_string.cpp:
+          Cosmetic changes.
+
+Thu Feb 10 15:14:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+          Added scope argument to call to create_module().
+
+        * TAO_IDL/include/utl_string.h:
+          Uninlined destructor (see below).
+
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+          Change in approach to handling reopened modules
+          in IDL files. The front end used to create a new node
+          each time a module was reopened, resulting in several
+          brittle additions to the lookup functions. Now, when a
+          module is reopened, the original node is returned for
+          additions to its scope, and the lookup functions have
+          been simplified. Thanks to Andreas Terstegge
+          <Andreas.Terstegge@nokia.com> for sending in an example
+          IDl file that pointed out this bug. This closes out
+          Bugzilla bug #400
+
+        * TAO_IDL/util/utl_string.cpp:
+          Added calls to 'delete' in destructor for two char*
+          members which are always initialized by calls to
+          'new'.
+
+Thu Feb 10 14:10:32 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO/TAO.dsp:
+        * TAO/TAO_Static.dsp: Added SHMIOP_* files.
+
+Thu Feb 10 13:25:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO/tao/SHMIOP_Acceptor.h:
+        * TAO/tao/SHMIOP_Acceptor.i:
+        * TAO/tao/SHMIOP_Acceptor.cpp:
+        * TAO/tao/SHMIOP_Connect.h:
+        * TAO/tao/SHMIOP_Connect.i:
+        * TAO/tao/SHMIOP_Connect.cpp:
+        * TAO/tao/SHMIOP_Connector.h:
+        * TAO/tao/SHMIOP_Connector.cpp:
+        * TAO/tao/SHMIOP_Factory.h:
+        * TAO/tao/SHMIOP_Factory.cpp:
+        * TAO/tao/SHMIOP_Profile.h:
+        * TAO/tao/SHMIOP_Profile.i:
+        * TAO/tao/SHMIOP_Profile.cpp:
+        * TAO/tao/SHMIOP_Transport.h:
+        * TAO/tao/SHMIOP_Transport.cpp: Added shmiop:// pluggable protocol.
+
+        * TAO/tao/corbafwd.h: Uncommented TAO_TAG_SHMEM_PROFILE.
+
+        * TAO/tao/default_resource.cpp: Added SHMIOP in
+          <init_protocol_factories> to be loaded by default if SHMIOP is
+          enable on this platform.
+
+        * TAO/tao/orbconf.h: Added macro definition to enable SHMIOP by
+          default.
+
+        * TAO/tao/Makefile: Added SHMIOP_* files and updated file dependencies.
+
+Wed Feb 09 12:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * tests/AMI/ami_test.idl,
+          tests/AMI/ami_test_i.cpp,
+          tests/AMI/simple_client.cpp: Made the exception handling
+          test more descriptive.
+
+Wed Feb  9 21:26:46 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tao/ORB_Core.cpp (init):
+
+          Moved parsing of "-ORBSvcConfDirective" before "-ORBSvcConf"
+          because "-ORBSvcConf" was interpreting "Directive" as its
+          argument.  The CORBA spec states that ORB options should be
+          recognized if there is no space between the option and its
+          argument.  As such this was an "order of parsing" problem, not
+          a problem with the option parser itself.  Thanks to Dale Wood
+          <dale_wood@Mitel.com> for providing a fix.
+
+Wed Feb  9 20:56:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Notify/NotifyPublish_i.h:
+        * orbsvcs/orbsvcs/Notify/ID_Pool_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ID_Pool_T.h:
+        * orbsvcs/orbsvcs/Notify/NotifyPublish_i.h:
+        * orbsvcs/orbsvcs/Notify/NotifySubscribe_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Dispatcher.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+          Made a first code review, much work to do.
+
+Wed Feb  9 22:07:44 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+          fixes for warnings and link errors with g++ on SunOS7
+
+Wed Feb  9 14:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.i:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          New filter builder, it parses the ConsumerQOS structure assuming
+          that the filters are in prefix notation, i.e. each conjunction,
+          disjunction or logical_and filter indicates how many children it
+          has.
+          This notation is more consistent and allow us to easily express
+          complex filters like: (type == 5 && source != 10) or
+          ((type == 5 && source != 10) || !(type == 2 && source == 8))
+
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.cpp:
+          New filter, it only accepts an event if all its children
+          do. Unlikely the conjunction filter that waits for all the
+          children to accept at least one event.
+
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+          Add support for the prefix notation.
+
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+          Fixed some comments.
+
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Complex.cpp:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Event/Basic/svc.complex.conf:
+          Add new test to check that complex filters can be defined using
+          the prefix notation.
+
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+          Use the ConsumerQoS_Factory with support for the prefix
+          notation.
+
+Wed Feb  9 13:48:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+          Fixed connect() call, it was using the wrong variable to check
+          if it was connected already.
+
+Tue Feb 08 15:17:13 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/Nested_Event_Loop: I was using a ulong to hold the value
+          of a pointer.  This is problematic on platforms where the
+          pointer is 64 bits and the ulong takes 32 bits.  Therefore, the
+          new scheme uses an octet sequence to solve this size disparity.
+          Thanks to Nanbor for the suggestion.
+
+Tue Feb  8 01:26:29 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h.cpp}:
+          Added missing implementation for administrative methods.
+
+Mon Feb  7 15:31:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be_include/be_union_branch.h:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          The IDL compiler has been generating a
+          separate member typecode inside the union for each
+          duplicate case label, but the TypeCode class
+          contains no state (and therefore no methods using
+          such state) containing info about multiple case
+          labels - only about members. Typecode generation was changed
+          to generate just one typecode for each member with
+          the value of the first case label encountered for
+          that member. The private union function _discriminant()
+          (called by (de)marshaling code) was modified to
+          return this value no matter what the actual current
+          discriminant value may be. Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for sending
+          in yet another IDL file/test code example that got to
+          the crux of this matter.
+
+        * tests/IDL_Test/union.idl:
+        * tests/IDL_Test/main.cpp:
+          Added an expanded version of Chris Kohlhoff's example
+          to IDL_Test.
+
+Mon Feb 07 12:15:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * tests/AMI/run_test.pl: Set the "-x" switch on the client,
+          this will cause it to shut down properly.
+
+        * tests/AMI/simple_client.cpp: Activated the "-x" switch behavior
+          to shut down the ORB, also added a more descriptive debugging
+          output for exception handling.
+
+Sat Feb 05 04:24:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Leader_Follower: The leader followers class did not support
+          nested calls to the event loop, i.e., calling perform_work() or
+          run() from the servant code.  In order to accommodate this
+          feature the following changes were made:
+
+          - server_threads* was renamed to event_loop_threads* since this
+            name was more appropriate.
+
+          - In set_event_loop_thread(), if we are the client thread
+            running the show, then it is ok and we down have to wait.
+
+          - Changes to <leader_> are made more carefully now.  Both the
+            values of <event_loop_thread_> and <client_leader_thread_> are
+            taken into account since they may signify that we are already
+            a leader.
+
+            Since set_client_thread() and reset_client_thread() both
+            became more careful, set_client_leader_thread() and
+            reset_client_leader_thread() became easier.  Also, code in the
+            wait strategies became a bit easier.
+
+          - <is_event_loop_thread_> was changed from a flag to
+            <event_loop_thread_>, a counter that keeps track of how many
+            nested event loop call we have made.
+
+          Thanks to Dave Meyer <dmeyer@lima.alex.std.saic.com> for
+          suggesting the addition of this missing feature!
+
+        * tests/Nested_Event_Loop: A new test for invoking nested event
+          loop calls from user code, i.e., a call to perform_work() or
+          run() from the implementation of the servant.
+
+Fri Feb 04 22:28:16 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/GIOP_Server_Request.cpp (parse_header_lite): Recent auto
+          compile failures to MT_Cubit were caused by the following
+          change:
+
+          Mon Jan 10 12:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+          Jeff changed TAO_GIOP_ServerRequest::parse_header_std but not
+          TAO_GIOP_ServerRequest::parse_header_lite.  Why this bug which
+          was there since Jan 10 only surfaced after the following change:
+
+          Thu Feb  3 17:47:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+          is left as an exercise to the reader ;-)
+
+Fri Feb  4 00:22:51 2000  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+          added a section for the Notification Service.
+
+Thu Feb  3 19:06:58 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tests/DSI_Gateway/test_dsi.cpp (invoke):
+
+          Added missing ACE_CHECK after call to ORB::shutdown().
+
+Thu Feb  3 20:55:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Added code generation to initialize the union's
+          discriminant in the default constructor. This ensures
+          that, if an uninitialized union is inserted into an
+          Any, whether by itself or contained in some constructed
+          type, the Any destructor's call to deep_free() will
+          execute properly. The discriminator must be set to the
+          first case label value of the first member declared in
+          the union. Thanks to Christopher Kohlhoff <chris@kohlhoff.com>
+          for sending in the example that uncovered this bug.
+
+Thu Feb  3 17:47:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/DomainC.cpp:
+        * tao/GIOP.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/MessagingC.cpp:
+        * tao/Object.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * tao/Stub.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+          Another temporary workaround to enable the coexistence of
+          reliable oneways requests and regular twoway requests until
+          we have GIOP 1.2 fully in place. There were compatibility
+          problems with Java servers. Thanks to Lothar Werzinger
+          <werzinger.lothar@krones.de> for reporting this problem.
+
+Thu Feb 03 16:12:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Leader_Follower.i (~TAO_LF_Server_Thread_Helper): The
+          charanga (Linux box) Exceptions auto build caught the type
+          problem described in bug 416.  In this case, a client thread
+          completed its twoway call and while giving up leadership, it
+          noticed that there were server threads waiting to become the
+          leaders. Hence it sent a broadcast to the server threads and did
+          not wake any of the followers.  In the meantime, however, the
+          server threads had timed out, and therefore did not select a new
+          leader.
+
+          So the fix is for the server thread to always select a new
+          leader if needed, irrespective of whether a server thread was
+          able to become a leader or it had timed out.
+          reset_server_thread() was removed and
+          ~TAO_LF_Server_Thread_Helper was given the responsibility.
+
+        * tao/ORB_Core.cpp (run): No need to call
+          server_thread_helper.reset_server_thread() explicitly anymore.
+          ~TAO_LF_Server_Thread_Helper will take care of it.
+
+Thu Feb  3 13:40:42 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+
+          Fixed all the TAO_ exception macros to ACE_ exception macros.
+
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
+
+          Added libAVSvc to the LDLIBS and -DTAO_ORBSVCS_HAS_Trader to the
+          Makefile so that the TAO_String_Hash_Key class doesn't get defined
+          twice.
+
+        Thanks to Alex Luk <fluk7@ie.cuhk.edu.hk> and Kenneth Osenbroch
+        <kennetho@stud.cs.uit.no> for reporting this.
+
+Thu Feb  3 10:31:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Disable the new event channel with old versions of g++, they are
+          too busted to even try to get them to work.
+
+Wed Feb  2 19:15:09 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Added the two filters Carlos
+          created to the MSVC project file.
+
+Wed Feb  2 17:49:33 2000  Ossama Othman  <ossama@uci.edu>
+
+        * docs/pluggable_protocols/index.html:
+
+          Updated the "Notes from a Real World Pluggable Protocol
+          Implementation" section so that it no longer states that changes
+          to ACE and TAO were necessary.  Changes to ACE and TAO weren't
+          necessary for that implementation.
+
+Wed Feb  2 19:17:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * docs/pluggable_protocols/index.html: Updated the documentation
+          to clarify the conditions under which a pluggable protocol can
+          be developed without affecting ACE+TAO.  Thanks to Gilbert
+          Grosdidier <Gilbert.Grosdidier@in2p3.fr> for motivating this.
+
+Wed Feb  2 17:29:34 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          One more fix to this file. Nothing was breaking, but
+          it was pointed out, again by Christopher Kohlhoff
+          <chris@kohlhoff.com> that, even though the members
+          with multiple case labels were getting generated only
+          once, the encapsulated length was calculated as if
+          they were included more than once.
+
+Wed Feb  2 14:14:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+          Fixed race condition during shutdown.  The EC can die before the
+          supplier has a chance to disconnect.  In that case when trying
+          to disconnect the supplier receives an exception that should be
+          ignored.
+
+Wed Feb  2 13:12:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/releasenotes/ec.html:
+          Updated.
+
+Wed Feb  2 14:03:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+          My fix of Feb. 1 regarding multiple case labels and
+          typecode generation broke two use cases. One, reported
+          by Christopher Kohlhoff <chris@kohlhoff.com> was when
+          a previously defined struct is nested inside a union.
+          The other, when a union is recursive, appeared when
+          the DII versions of the param tests were failing. This
+          fix restores generation of correct typecodes for unions
+          with nested structs, recursive members, and when any of
+          its members (nested, recursive or vanilla) has multiple
+          case labels
+
+Wed Feb  2 08:39:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Some platforms do no recursiong when instantiating templates
+          (that is not ANSI-compliant, btw), I added missing template
+          instantiations those platforms.
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+          Fixed warning about signed/unsigned comparisons.
+
+Tue Feb  1 19:56:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.h:
+          Added code to yacc file to prevent a crash when an
+          IDL file set a union's discriminator type to octet,
+          or typedef of octet. It now just outputs the error
+          message. This closes out bug #121.
+
+Tue Feb  1 17:43:09 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ctr.cpp:
+
+        Fixed compile errors and warning with egcs-1.1.1 on Sun OS 5.7.
+        Thanks to Alex Luk <fluk7@ie.cuhk.edu.hk> and Kenneth Osenbroch
+        <kennetho@stud.cs.uit.no> for reporting this.
+
+Tue Feb  1 16:50:28 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/mpeg_shared/com.cpp:
+        * orbsvcs/tests/AVStreams/mpeg_shared/fileio.cpp:
+        * orbsvcs/tests/AVStreams/mpeg_shared/filters.cpp:
+        * orbsvcs/tests/AVStreams/mpeg_shared/routine.cpp:
+        * orbsvcs/tests/AVStreams/mpeg_shared/sendpt.cpp:
+        * orbsvcs/tests/AVStreams/mpeg_mib/mibDrawArea.cpp:
+
+         Fixed warnings for egcs on SunOS5.7.
+
+Tue Feb  1 13:51:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/ec_options.html:
+          Documented the compile time options for the RTEC.
+
+Tue Feb  1 14:14:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/be_union_branch.h:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          Prevented multiple generations of typecode for a
+          union member with multiple case labels. The CORBA
+          spec requires that the limit for an index supplied
+          to member_label, member_type, etc. not exceed the
+          member count, otherwise a Bounds exception is thrown.
+          The TAO CDR_Interpreter operates on the same assumption,
+          and it was crashing on unions with members having
+          multiple case labels. Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for reporting this bug.
+
+Tue Feb  1 11:25:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+          More fixes in the can_match() routine, this is why we need
+          something better that "0" as a wildcard for source and/or type.
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+          It was using the wrong object reference to disconnect
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+          Fixed several bugs in the connect/disconnect calls and their
+          use.
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
+          Added some debugging messages (that are not compiled by
+          default).
+
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+        * orbsvcs/tests/Event/Basic/svc.conf:
+          Fixed configuration scripts.
+
+Mon Jan 31 19:44:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          More tweaking to get the templates to compile on every
+          platform.
+
+Mon Jan 31 21:32:14 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/tests/Event/lib/ECTest.dsp:
+          Add the new files to the MSVC project file.
+
+Mon Jan 31 19:32:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Bitmask.dsp:
+        * orbsvcs/tests/Event/Basic/Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Negation.dsp:
+        * orbsvcs/tests/Event/Basic/Timeout.dsp:
+        * orbsvcs/tests/Event/Basic/Wildcard.dsp:
+          Updated the project files and workspaces, included the new
+          project for the bitmask test.
+
+Mon Jan 31 19:02:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+          This filter quickly rejects events that do not match a given
+          bitmask.
+          If the event is not rejected based on the mask then the child is
+          consulted to finally accept or reject the event.
+          When composed with the Null_Filter it accepts any events that
+          satisfy:
+          (event.header.type & type_mask) != 0
+          && (event.header.type & source_mask) != 0
+
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.cpp:
+          This filter only accepts events whose type and/or source have a
+          given value when a bitmask is applied to them.
+          In short the filter checks that satisfy:
+          (event.header.type & type_mask) == type_value
+          && (event.header.source & source_mask) == source_value
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+          The basic factory can create the new filters.
+
+        * orbsvcs/orbsvcs/Event_Service_Constants.h:
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.i:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+          Add support for the new filters into the ConsumerQoS factory.
+
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          New test for the bitmask filters.
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Disconnect.h:
+        * orbsvcs/tests/Event/Basic/Disconnect.cpp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.h:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Negation.h:
+        * orbsvcs/tests/Event/Basic/Negation.cpp:
+        * orbsvcs/tests/Event/Basic/Timeout.h:
+        * orbsvcs/tests/Event/Basic/Timeout.cpp:
+        * orbsvcs/tests/Event/Basic/Wildcard.h:
+        * orbsvcs/tests/Event/Basic/Wildcard.cpp:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.h:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.h:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+          Refactor several tests, they all had some supplier or consumer
+          that simply counted events. The shared class is now in the
+          library.
+
+Mon Jan 31 20:21:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * Added the following changes for Borland C++Builder 4:
+
+          TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
+
+          TAO/tests/MProfile/test_i.cpp, test_i.h: Added definition of
+          missing constructor, added required ACE_THROW_SPEC and removed
+          reference to missing inline file.
+
+          TAO/tests/Param_Test/client.bor: Added new file
+          recursive_union.obj.
+
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+          contributing these.
+
+Mon Jan 31 20:29:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+          Added keyword 'fixed' to lexer and parser.
+
+        * TAO_IDL/util/utl_scope.cpp:
+          Modified lookup_by_name_local() to output an error if it sees
+          any case variation of 'fixed'. The change to the lexer and
+          parser will catch the use of 'fixed' as a type. This change will
+          catch the use of 'fixed' as an identifier. Fixed types are not
+          implemented in TAO, so we need to output an error message
+          whenever the word is used in an IDL file.  Thanks to J. Scott
+          Evans <evans@cpi.com> for reporting this bug.
+
+Mon Jan 31 20:15:25 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+          Had to expand several typedefs to workaround problems with SunCC
+          4.2 apparently the compiler cannot deal with nested typedefs
+          inside templates very well.
+
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+          Fixed a comment.
+
+Mon Jan 31 20:13:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+          Added missing ACE_TYPENAME macros, only HP/aCC seems to detect
+          the problem.
+
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
+          Workaround a bug in the HP/aCC compiler, unless the copy
+          constructor is explicitly defined the compiler crashes when
+          trying to generate the code for it.
+
+Mon Jan 31 13:21:48 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          The both_ir test was leaving servers running.  Added shutdown
+          commands for them at the end of the test.
+
+        * tao/POA.cpp:
+          Noticed that servers using the IMR were not shutting down properly
+          on non-Win32 platforms.  This happened because the code was grabbing
+          locks twice, so it deadlocked when the default lock wasn't a thread
+          mutex.  It now calls the equivalent *_i methods.
+
+Mon Jan 31 14:54:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/Leader_Followers: The thread-per-connection TAO server has
+          problems when shutting down since there is no portable way to
+          wakeup a thread blocked in read().  Therefore, changed the
+          server to use a thread-pool instead of a thread-per-connection
+          approach.
+
+Mon Jan 31 11:14:21 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Updated the project files.
+
+Mon Jan 31 08:25:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i:
+          Don't use typedefs inside templates with return values, it
+          confuses g++ 2.7.X
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+          Some typedefs were protected, and thus not accessible for some
+          classes.
+
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Move some template instantiations around.
+
+        * orbsvcs/orbsvcs/Event/EC_Worker.h:
+        * orbsvcs/orbsvcs/Event/EC_Worker.cpp:
+          Try to work around old g++ bug.
+
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+          Remove unnecessary header file and updated dependencies.
+
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.h:
+          Fix typos in the comments.
+
+Sun Jan 30 19:59:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Changed the basic collection classes that keep both the consumer
+          and supplier proxies.  The new scheme uses the strategy pattern:
+          the concrete collection (such as a list or RB-tree) is the
+          strategy to store/retrieve objects, while different classes
+          implement the serialization protocol (such as using
+          copy-on-read, or delayed changes).
+          This new implementation uses templates, because the code is
+          generic for both the consumer and supplier proxies.  It is
+          possible that the same implementation can be used for other
+          Event Services (such as Notification or CosEvents)
+
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp:
+          Implement the different serialization protocols for the proxy
+          collections.
+          In this new implementation there are no iterators exposed to the
+          rest of the EC, instead a for_each() method is implemented, each
+          component that needs to iterate over a consumer or supplier
+          collection implements a different Worker object for the task.
+
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.cpp:
+          Implement the concrete collections, currently we have two of
+          them, one based on RB-trees and another based on an ordered
+          list.
+
+        * orbsvcs/orbsvcs/Event/EC_Worker.h:
+        * orbsvcs/orbsvcs/Event/EC_Worker.i:
+        * orbsvcs/orbsvcs/Event/EC_Worker.cpp:
+          Defines the interfaces for the Worker objects.
+
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+          Modified to create the new collection classes.
+          Removed the methods to create consumer and supplier admin locks,
+          because they have been superseeded by the collection classes.
+
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+          Added support for the new collection scheme, and removed old
+          defaults for the previous style.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Added support for the new proxy collections.
+          The factory can create both list-based or RB-tree-based
+          collections, decorated with any of the three basic algorithms
+          (i.e. simple locking, aka immediate changes, delayed changes or
+           copy-on-read)
+          The file contains most of the template instantiations, must fix
+          that.
+
+        * docs/ec_options.html:
+          The options in the default resource factory have changed, to
+          handle the new collection types.
+
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.i:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.i:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Changed all the iterations in the Event Service implementation
+          to use Workers instead of iterators.
+
+        * orbsvcs/orbsvcs/Event/EC_Command.h:
+        * orbsvcs/orbsvcs/Event/EC_Command.i:
+        * orbsvcs/orbsvcs/Event/EC_Command.cpp:
+          Added new Reconnected command for delayed reconnections.
+          Normalized the name of the Shutdown command.
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+          Create the equivalent proxy collections corresponding to the old
+          strategies.
+
+        * docs/tutorials/Quoter/Event_Service/ec.conf:
+        * orbsvcs/CosEvent_Service/svc.conf:
+        * orbsvcs/Event_Service/svc.conf:
+        * orbsvcs/examples/RtEC/Schedule/svc.conf:
+        * orbsvcs/examples/RtEC/Simple/ec.conf:
+        * orbsvcs/tests/EC_Mcast/svc.conf:
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+        * orbsvcs/tests/EC_Throughput/ec.mt.conf:
+        * orbsvcs/tests/Event/Basic/mt.svc.conf:
+        * orbsvcs/tests/Event/Basic/observer.conf:
+        * orbsvcs/tests/Event/Basic/sched.conf:
+        * orbsvcs/tests/Event/Basic/svc.conf:
+        * orbsvcs/tests/Event/Performance/ec.mt.conf:
+        * orbsvcs/tests/Event/Performance/ec.st.conf:
+        * orbsvcs/tests/Event/Performance/ec.rb_tree.conf:
+        * orbsvcs/tests/Event/Performance/ec.list.conf:
+          All the configuration files were updated to avoid any obsolete
+          flags.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+          Normalized the name of the Shutdown_Command, the one to shutdown
+          a task is now called Shutdown_Task.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.i:
+          Removed, the EC_Proxy_Collection and EC_Concreate_Proxy_Set
+          classes have superseeded this implementation.
+
+        * orbsvcs/tests/Event/lib/Consumer.h:
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Supplier.h:
+        * orbsvcs/tests/Event/lib/Supplier.cpp:
+          Optimized activation and de-activation of consumers and
+          suppliers.
+
+Sun Jan 30 18:52:45 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
+          Added a timeout to the startup code so if the startup
+          server does not respond within the timeout, then kill
+          it and return an exception.  The timeout period can
+          be controlled by the -t option.
+
+          Also replaced the ACE_Process code with the ACE_Process_Manager.
+          This should automatically clean up the child processes
+          when they exit.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Prints out more information when a CannotActivate exception
+          occurs.
+
+Sat Jan 29 12:57:53 2000  bala  <bala@cs.wustl.edu>
+
+        * TAO version 1.0.13 released.
+
+Fri Jan 28 20:11:23 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB_Core.cpp:
+          When the last ORB is detroyed it must reset the first_orb_
+          variable in TAO_ORB_Table to 0.  Thanks to Alex for reporting
+          this bug and providing a fix.
+
+Fri Jan 28 18:35:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/Request.cpp:
+          Removed the check on work_pending() in method
+          get_repsonse(), used in deferred synchronous requests.
+          Recent changes to perform_work() and/or work_pending()
+          have made it possible for work_pending() to return 0
+          even if the DII request has not completed (received its
+          response). This was causing get_response() to return
+          TRUE erroneously, and the resulting null message
+          block pointer would eventually cause a client crash.
+          Now get_response() returns TRUE only if the
+          repsonse has been received.
+
+Fri Jan 28 17:27:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Fix sent in by Alex Arulanthu <Alex.Arulanthu@sylantro.com> that
+          plugs a memory leak in generated code when decoding a sequence
+          of length 0.  Thanks to Jianfei Xu <jxu@yahoo.com> for reporting
+          this.
+
+Fri Jan 28 14:05:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * performance-tests/Latency/st_client.cpp:
+          Added 'x' to the string passed to get_opts(). It was in
+          the switch statement and in the usage message, as it is
+          in the other client types in this test suite.
+
+Fri Jan 28 12:51:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/Leader_Followers: Minor changes to make it work with
+          different compilers.
+
+Thu Jan 27 20:25:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Leader_Follower:
+
+          wait_for_client_leader_to_complete: If a client thread (a thread
+          making a remote request) is currently running the event loop, an
+          event loop thread (a thread running ORB->run or
+          ORB->perform_work) must wait for that client thread to complete.
+
+          Additional state: <client_thread_is_leader_> keep track of
+          whether a client thread the current leader.
+          <server_threads_waiting_> keeps track of whether server threads
+          waiting for the client leader to complete.
+          <server_threads_condition_> is the condition variable used by
+          event loop threads waiting for the client leader to complete.
+
+          TAO_LF_Server_Thread_Helper: Auto-pointer like class similar to
+          TAO_LF_Client_Thread_Helper and TAO_LF_Leader_Thread_Helper that
+          helps manage the leader follower object.  This class helps with
+          grabbing the lock and calling set_server_thread and grabbing the
+          lock, calling reset_server_thread, and electing a new leader.
+
+          set_server_thread: This method now calls
+          wait_for_client_leader_to_complete if needed.  Also it now has a
+          relevant return value for timeouts and errors.
+
+          set_leader_thread and reset_leader_thread: Added the setting and
+          resetting <client_thread_is_leader_>.
+
+          elect_new_leader: Election of new leader must first consider
+          event loop threads before considering waiting clients.  If
+          server threads are waiting, we wake them all up.  Note that it
+          is necessary to give precedence to server threads over client
+          threads since only one client runs at any given time; with a tp
+          reactor, multiple server threads can execute simultaneously.
+
+        * tao/ORB_Core.cpp (run): Use of TAO_LF_Server_Thread_Helper
+          helped with abstracting and simplifying some of the leader
+          follower code.  In additions, timeouts are determined by
+          examining the <timeout> variable.  Therefore, we don't need
+          <break_on_timeouts> anymore.
+
+        * tao/ORB (run and perform_work): The new ORB_Core::run simplified
+          ORB::run and ORB::perform_work.
+
+        * tao/Wait_Strategy.cpp (TAO_Wait_On_Reactor::wait,
+          TAO_Exclusive_Wait_On_Leader_Follower::wait, and
+          TAO_Muxed_Wait_On_Leader_Follower::wait): The while loop in
+          TAO_Wait_On_Reactor::wait and
+          TAO_Exclusive_Wait_On_Leader_Follower::wait was incorrect.
+
+          This:
+
+          *max_wait_time != ACE_Time_Value::zero
+
+          should have been:
+
+          *max_wait_time == ACE_Time_Value::zero
+
+          While fixing this, I simplified the while loop making it easier
+          to read and understand.
+
+          Also fixed TAO_Muxed_Wait_On_Leader_Follower::wait which did not
+          handle timeouts correctly.
+
+        * tests/Leader_Followers: This is a test for server applications
+          that have client threads (threads making remote calls) starting
+          before server threads (threads running the event loop).
+
+          The event loop threads should wait for the client threads that
+          become leaders to give up leadership before continuing.
+
+        * version_tests.dsw:
+        * tests/Makefile (DIRS):
+        * run_all_list.pm:
+
+          Added new test Leader_Followers.
+
+Thu Jan 27 08:36:17 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp: The help messages
+          were still displaying "tao_ir" instead of "tao_imr".  Also,
+          if an Implementation Repository wasn't running, tao_imr
+          wouldn't get a chance to parse the command line arguments -
+          so it wouldn't even display the help messages unless an
+          ImplRepo was running.  Thanks to Dave Zumbro
+          <zumbro_d@ociweb.com> for reporting these.  [Bugs 412, 413]
+
+Wed Jan 26 16:17:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+          A fix for what I broke yesterday. At least we should now
+          again be able to compile files where a forward declared
+          interface is defined later in the file.
+
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+          Cosmetic changes.
+
+        * tests/IDL_Test/interface.idl:
+          Commented out the forward declared interface that's not
+          defined in the same file for now, until it is working on
+          more platforms.
+
+Tue Jan 25 19:42:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/UIOP_Profile.cpp (decode):
+        * tao/IIOP_Profile.cpp : A problem when TAO clients were
+          interacting with GIOP 1.2 servers. The profile received by the
+          TAO client is parsed in decode (). In the code for IIOP_Profile,
+          a check was made for a higher minor version but no action was
+          taken. In the process, the version information that the
+          IIOP_Profile class was holding had the minor version information
+          of the received profile and  not what the TAO client can
+          send. So, changes have been made to check for the minor version
+          number. If the minor version is less than or equal to the minor
+          version that TAO supports, we save that information. If it is
+          greater than the one we support, the {IIOP, UIOP}_Profile
+          classes would highest minor version that we support. This
+          information gets passed on through the invocation classes to the
+          transport and then to the messaging classes. Thanks to Klemen
+          Zagar <klemen.zagar@irj.si> for reporting this problem.
+
+Tue Jan 25 19:27:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+          Added entry for forward declared interface change to
+          IDL compiler.
+
+Tue Jan 25 19:01:33 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          Fixed shutdown problem for the Timer Module.
+
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Fixed memory leak, if the supplier disconnects while some
+          consumers are still attached it has to shutdown() its filter to
+          clear the extra reference counts.
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Negation.cpp:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+          Fixed several memory leaks in the tests, to verify that the
+          service is ok.
+
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          Increased allowed execution time for one of the tests.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+          Cosmetic fixes
+
+Tue Jan 25 18:51:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/interface.idl:
+        * tests/IDL_Test/generic_object.idl:
+          Added tests for new forward declared interface rule
+          mentioned below and for generic objects used as
+          parameters in a request.
+
+Tue Jan 25 18:19:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd.cpp:
+        * TAO_IDL/be_include/be_visitor_interface_fwd.h:
+          Modified files
+
+        * TAO_IDL/be_include/be_visitor_interface_fwd/cdr_op_ch.h:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+          New files.
+
+          Changes to support code generation and C++ compilation
+          for IDL files containing a forward declared interface
+          that is not defined in the same file. The spec had
+          required that the definition be present, but the rule
+          was recently relaxed in CORBA 2.3.1 (99-10-07). If
+          the full definition is not in some generated .cpp file
+          that is included in the build, the C++ compiler will
+          produce a link error. This closes Bugzilla entry #401.
+
+Tue Jan 25 14:23:04 2000  Ossama Othman  <ossama@uci.edu>
+
+        * docs/pluggable_protocols/index.html:
+
+          Updated/corrected some URLs.
+
+Tue Jan 25 14:05:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Leader_Follower.h (TAO_LF_Client_Thread_Helper and
+          TAO_LF_Leader_Thread_Helper): Auto-pointer like classes that
+          help manage the leader follower object.
+          TAO_LF_Client_Thread_Helper helps with set_client_thread and
+          reset_client_thread while TAO_LF_Leader_Thread_Helper helps with
+          set_leader_thread and reset_leader_thread.
+
+        * tao/Wait_Strategy.cpp (TAO_Muxed_Wait_On_Leader_Follower::wait
+          and TAO_Exclusive_Wait_On_Leader_Follower::wait):
+
+          We now use guards to make sure that the leader follower object
+          has consistent information even when errors occur.  Previously,
+          there were many return and exceptional conditions where the
+          leader follower object was left in an inconsistent state.
+
+Tue Jan 25 12:17:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+          Missed some cases in the previous checkin of this file.
+
+Tue Jan 25 10:38:31 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+          Fixed "unreachable statement" warnings on kai.
+
+Tue Jan 25 02:07:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/Simple/time/README: Added description on getting
+          JACE.Misc.GetOpt.
+
+        * examples/Simple/time/Time_Client.java: Modified the Java client
+          so that it, like C++ client, can use command line args to
+          determine ways of acquiring Time objref.  This test now uses
+          JACE.Misc.GetOpt (a complete JACE installation is not required.)
+
+Mon Jan 24 18:47:22 2000  Ossama Othman  <ossama@uci.edu>
+
+        * docs/Options.html:
+
+          Clarified what UID and GID in the documentation for the
+          -ORBSetUID and -ORBSetGID options.
+
+Mon Jan 24 13:17:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+          Russell L. Carter <rcarter@pinyon.org> reported a bug when
+          the return type of an operation is CORBA::Object. It turns
+          out that CORBA::TypeCode, interface, forward declared interface,
+          valuetype, and forward declared valuetype needed the same fix.
+
+Sun Jan 23 18:15:32 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+          Updated the release notes for the Logging Service
+
+Sun Jan 23 14:09:30 2000  Ossama Othman  <ossama@uci.edu>
+
+        * docs/Options.html:
+
+          Added descriptions of the newly added "-ORBSetUID" and
+          "-ORBSetGID" ORB options.
+
+        * tao/ORB_Core.cpp (init):
+
+          Added two new ORB options "-ORBSetUID" and "-ORBSetGID."  These
+          options can be used to the set the effective user and group IDs,
+          respectively.  This is useful when starting the ORB under the
+          super-user but it is desired to run the ORB under different user
+          and/or group IDs.  A typical use would be to start a TAO daemon,
+          under the 'nobody' user via System V style initialization
+          scripts.
+
+          Note that these options are only supported if the platform
+          implements the setuid() and setgid() POSIX system calls.
+
+          In general, it is a good idea to only run the ORB with
+          super-user privileges when necessary, e.g. when performing
+          benchmarking experiments, and when access to the real-time
+          scheduling class is needed.  If the ORB must be started via the
+          super-user account, and the real-time scheduling class won't be
+          used, than the ORB's effective user ID should at least be
+          changed to an unprivileged one, such as 'nobody'.
+
+Sat Jan 22 21:08:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: Renamed
+          EC_SupplierFiltering.* to EC_Supplier_Filter.*.
+
+Sat Jan 22 18:25:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
+          Fixed typo in the inline include file, only a problem in builds
+          that disable inlining.
+
+Sat Jan 22 17:04:14 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+          Added support for atomic reconnections.  Before this change the
+          event channel could loose messages when a consumer reconnected,
+          because the implementation basically disconnected the consumer
+          and then connected it again.  There was an interval where the
+          suppliers could push events, while the consumer was temporarily
+          disconnected.
+          The new implementation pushes a reconnected() message through
+          the event channel, the consumer and supplier admins and finally
+          to each proxy.
+          There were no changes on the critical path, or regular
+          connect/disconnect calls, so this only affect the performance of
+          reconnections.
+          This fixes bug #271
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          Another attempt at fixing this code to compile without CORBA
+          Messaging support. It happens that ACE_HAS_CORBA_MESSAGING is
+          always defined, but sometimes to 0 and other times to 1.
+
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          New test to check that Atomic reconnects actually work.
+
+        * orbsvcs/tests/Event/Basic/mt_disconnect.conf:
+        * orbsvcs/tests/Event/Basic/mt.svc.conf:
+          Renamed because it is also used in the Atomic_Reconnect test.
+
+Sat Jan 22 17:11:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Brian Harris <harris_b@ociweb.com> reported that when using
+          the -GI option with the IDL compiler to generate implementation
+          files for an IDL file 'foo', an included IDL file 'bar' caused
+          the generation of #include "barI.h" in the implementation header
+          file, when it should be #include "barC.h". However, since barC.h
+          is indirectly included by the line #include "fooS.h", it does
+          not need to be there at all. The block that generates this line
+          in be_codegen.cpp is commented out for now, to see if some use
+          case arises where it is needed. This closes out bug 410.
+
+Fri Jan 21 21:19:26 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Updated dependencies again, i forget LifeCycle last time.
+
+Fri Jan 21 16:46:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.i:
+          The QoS factories now take an (optional) initializer function
+          from the user to help with customized Event Channels that
+          transmit a union as part of the EventPayload.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+          Fixed some very obscure concurrency problems while disconnecting
+          suppliers: if a supplier and a consumer where disconnecting at
+          the same time there was a very small window for a crash.  The
+          race condition has been eliminated.
+
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.h:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/mt_disconnect.conf:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          New test that performs concurrent supplier and consumer
+          connect/disconnect calls.
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
+          Renamed the EC_SupplierFiltering class to EC_Supplier_Filter, it
+          is more consitent that way (next step: rename EC_Filter to
+          EC_Consumer_Filter)
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+          Propagate the EC_SupplierFiltering name change.
+
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          The ORB initialized was not the default ORB used by the resource
+          factory for the event service.
+
+Fri Jan 21 08:39:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          More #ifdefs to compile when CORBA messaging is disabled.
+
+Thu Jan 20 09:07:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Minimum CORBA does not provide the _non_existent() method, we
+          disable the test in that case.
+
+Thu Jan 20 07:11:16 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: updated dependencies, in
+          a workspace that had Notify (and all of the other
+          orbsvcs) built.
+
+Wed Jan 19 17:51:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_check.cpp:
+          Added update of AST_Decl's filename pointer before
+          outputting a 'forward declaration not defined' error.
+          In certain cases, #xxxx statements in the IDL file
+          cause the preprocessor to add #<line number> "<filename>"
+          statements where <filename> is a repeat of the main
+          file name. This would invalidate
+          the filename pointer held deep down in a forward
+          declared interface node. If a forward declared interface
+          is found not to have a full definition, the error
+          function that is called tries to use this filename
+          pointer, causing a crash. Thanks to
+          Hessel Idzenga <idzenga@lucent.com> for sending in
+          the example file that uncovered this bug.
+
+Wed Jan 19 15:44:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Uninlined union destructor. In certain cases
+          where the union in nested inside other structs
+          and/or unions, Dec Unix picks up on the fact that
+          the inner union's destructor is called before
+          it is defined inline. Although he didn't report
+          this bug, thanks to Hugh Arnold <harnold@itginc.com>
+          for sending in the example IDL file that rooted it
+          out.
+
+Wed Jan 19 12:07:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+          Fixed demarshaling for unions having members with
+          multiple case labels. Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for reporting
+          the bug.
+
+Tue Jan 18 20:45:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/Timed_Buffered_Oneways/run_test.pl:
+          TAO/tests/Timed_Buffered_Oneways is timing out on our HPUX_aCC
+          auto compile.  Added extra timing information to narrow down
+          this problem.
+
+Tue Jan 18 20:26:11 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Transport_Mux_Strategy.cpp
+          (TAO_Exclusive_TMS::dispatch_reply): The following change to
+          this method was incorrect:
+
+          Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+          This method is not the correct place mark the transport as being
+          available for reuse.  If we do so here, another thread can start
+          using the transport and reset the message state before we have
+          had a chance of reading the reply.  However, we still need to
+          find a place to safely mark the transport as idle otherwise we
+          will not end up reusing network connections.  Note that this was
+          not a problem for Oneway, Twoway, and Locate Request invocations
+          since their destructors were setting the transport to idle
+          anyway.  The problem was for DII and Asynch invocations since
+          their destructors were (correctly) not setting the transport to
+          idle.
+
+          Solution: First we revived
+          <Transport_Mux_Strategy::idle_after_reply> which was there but
+          commented out. <TAO_Exclusive_TMS::idle_after_reply> idles the
+          transport while <TAO_Muxed_TMS::idle_after_reply> is a no-op.
+          Note that this is the opposite of how <idle_after_send> works.
+
+          Second we make <~TAO_Asynch_Reply_Dispatcher> and
+          <~TAO_DII_Deferred_Reply_Dispatcher> call
+          <Transport_Mux_Strategy::idle_after_reply>.  These reply
+          dispatchers are told about their transports when
+          <Invocation::invoke_i> has succeeded.
+
+          Third we change Oneway, Twoway, and Locate Request invocations
+          to call <idle_after_reply> instead of <idle> in their
+          destructors.  This will prevent double idling of the transports
+          when used with the TAO_Muxed_TMS strategy.
+
+        * examples/Buffered_AMI/client.cpp (main): Checking
+          <message_count == -1> was not a effective trick since the
+          <(iterations % message_count) != 0> failed.  Therefore,
+          introduced a new variable <setup_buffering> to simplify this
+          madness.
+
+Tue Jan 18 18:45:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_union.cpp:
+          Increased the signed long default discriminator
+          value by 1. It was being set to ACE_INT32_MIN,
+          which is -2147483648. The literal constant is
+          generated in the _default() method, and when
+          MSVC sees the line
+                this->disc_ = -2147483648;
+          it outputs the warning "unary minus operator applied to
+          unsigned type, result still unsigned". If the line is
+                this->disc_ = -2147483647;
+          we get no warning.
+
+Tue Jan 18 17:26:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/deep_free.cpp:
+          Fixed a memory leak in recursive unions. The fix also
+          removes leaks in unions that contain anonymous
+          sequences. Thanks to
+          Lothar Werzinger <werzinger.lothar@krones.de> for
+          reporting this leak and sending in an example IDL
+          file.
+        * tao/DynStruct_i.cpp:
+          Fixed some mismatched forms of ACE_CHECK that I added
+          earlier today.
+
+Tue Jan 18 13:04:24 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Fixed warnings on platforms without native C++ exception
+          support.
+
+Tue Jan 18 12:08:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/DynStruct_i.cpp:
+          Added patches to from_any() and to_any() sent in by
+          Philippe Merle <Philippe.Merle@lifl.fr>.These
+          patches (de)marshal the repository ID if the Any
+          contains an exception.
+
+Tue Jan 18 11:37:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/MT_Client/client.cpp (parse_args): Only shutdown server
+          when specified by the user.
+
+        * tests/MT_Client/run_test.pl: Added explicit shutdown of the
+          server.
+
+Tue Jan 18 08:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+          Added a protected modified for the supplier (or consumer in the
+          ProxySupplier case), this is useful for users that inherit from
+          the ProxySupplier or ProxyConsumer and change the policies used
+          to communicate with the peer.  Notice that this changes should
+          only be made once the connection is complete, i.e. after
+          connect_push_XXX() has completed.  Thanks to Dave Meyer
+          <dmeyer@std.saic.com> for suggesting this.
+
+Mon Jan 17 22:13:05 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+          Added a new command, ior to the tao_imr program.  This
+          command creates a simplified IOR by attaching a given
+          name with the IMR's endpoint.  This will only work with
+          servers that register the simplified IORs with the
+          IOR lookup table (Interoperable Naming Service stuff).
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Change the nestea_ir test to use this scheme.
+
+        * docs/implrepo/index.html:
+        * docs/implrepo/tao_imr.html
+        * docs/implrepo/usersguide.html
+          Updated the documentation.
+
+Mon Jan 17 22:53:53 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Updated the NT project files.
+
+Tue Jan 18 20:44:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Object.cpp:
+          The _non_existent() method must catch the
+          CORBA::OBJECT_NOT_EXIST exception and return the appropriate
+          value.
+
+Tue Jan 18 20:39:50 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.i:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.i:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.i:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          New components to the event channel that deal with stale
+          consumer and/or supplier proxies.
+          The first implementations simply poll the consumers and
+          suppliers periodically, using the _non_existent() method to
+          check if the object is there, to avoid dead-locks they use the
+          timeout policies in the ORB to bound the time the spend
+          polling.
+
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          The factory must create the new components now.
+          Use CORBA::ORB_init() instead of TAO_ORB_Core_instance() to get
+          to the ORB.  This is standard and it can be easily configured
+          using the ORBid.
+
+        * docs/ec_options.html:
+          Documented the new options in the TAO_EC_Default_Factory.
+
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+          New defaults for the consumer and supplier control policies.
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          The event channel creates the consumer and supplier control
+          policies (using the factory), and then activates them.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Addded methods to invoke _non_existent() while holding the state
+          lock, to avoid race conditions (as in one thread disconnecting
+          a consumer while another thread tries to check if the consumer
+          still exists).
+
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
+          New accessor to use the collection lock.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+          Fixed nasty bug in the definition of the Disconnect command
+          object, the typedef was wrong.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+          Removed old debug message.
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
+          Removed references to TAO_ORB_Core_instance().
+
+Mon Jan 17 19:54:34 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/GIOP.cpp (write_request_header_lite): Made
+          write_request_header_lite similar to write_request_header_std -
+          both for checking the <response_flags> correctly and for dealing
+          with the SYNC_WITH_SERVER option.  Thanks to Bala for pointing
+          this out.
+
+Mon Jan 17 15:49:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          Fix to scoping of field name generation in header
+          file when structs and/or unions are nested. Thanks to
+          Hugh Arnold <harnold@itginc.com> for reporting this
+          bug and sending in the example file.
+
+        * TAO_IDL/be/be_visitor_scope.cpp:
+          Cosmetic changes.
+
+        * tests/IDL_Test/union.idl:
+          Added example IDL file mentioned above to test suite.
+
+        * tests/IDL_Test/idl_test.dsp:
+          Updated project settings to make custom build settings
+          identical for all the IDL files in the test suite.
+
+Tue Jan 18 10:54:49 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/Options.html:
+          Documented the -ORBReactorRegistry option in the resource
+          factory.
+
+Sun Jan 16 15:54:39 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tao/default_resource.cpp:
+
+          Moved template instantiations related to ACE_LOCAL_MEMORY_POOL
+          to ace/ACE.cpp.  The idea is to place this set of template
+          instantiations in a "common" area, since ace/Configuration.cpp
+          also needs these templates instantations.
+
+Fri Jan 14 08:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * tests/AMI/README,
+          docs/releasenotes/index.html,
+          examples/AMI/FL_Callback/README:
+          Realized that IDL_HAS_VALUETYPE is defined by default in the TAO
+          IDL compiler. Updated the documentation about AMI accordingly.
+
+Fri Jan 14 06:01:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * TAO_IDL/be/be_interface.cpp,
+          TAO_IDL/be_include/be_interface.h:
+          Added a method named 'replacement' giving access to an
+          interface node, which can serve as an replacement for the original.
+
+        * TAO_IDL/be/be_interface_strategy.cpp,
+          TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+          TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp,
+          TAO_IDL/be_include/be_interface_strategy.h:
+          Enhanced the AMI preprocessor and the associated interface
+          strategies to handle replacement nodes.
+          This was necessary to pass information around for AMI code generation.
+          The bug triggering this was a multiply defined typedef. Thanks
+          to Bala for figuring this out.
+
+Thu Jan 13 20:11:55 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp (run): Generalized to work with <perform_work>.
+          In <perform_work>, we only run the loop once.
+
+        * tao/ORB.cpp (perform_work): The method now calls
+          orb_core->run(), specifying that it is <perform_work> which
+          prevents looping of the event loop.
+
+        * tao/ORB.h (CORBA_ORB): There are now three versions of
+          perform_work() and are similar to the run() methods.
+
+Tue Jan 11 21:27:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Messaging.pidl (Messaging): Added two TAO specific SYNC
+          options that control how buffering takes place in the ORB.
+
+          (a) SYNC_EAGER_BUFFERING is the same as SYNC_NONE.  These
+          options will first queue the message in the buffering queue and
+          then check the buffering constraints.  If the constraints have
+          been reached, the buffered messages will be delivered to the
+          server.  If the delivery of the messages to the server times
+          out, the queued messages will remain queued until the buffering
+          constraints are reached again.
+
+          (b) SYNC_DELAYED_BUFFERING will first check the buffering queue.
+          If the queue already has buffered messages, then this option
+          will behave the same as the above option, i.e., buffer the
+          message for later delivery.  However, if the queue is empty, it
+          will try to deliver the message immediately. If the message
+          delivery to the server times out, the message will be queued for
+          later delivery when the buffering constraints are reached.
+
+        * tao: Added code to handle the new options and strategies related
+          to the above change.  The following files were effected:
+
+          - Invocation.cpp
+          - GIOP.cpp
+          - MessagingC.cpp
+          - MessagingC.h
+          - ORB_Core.cpp
+          - ORB_Core.h
+          - ORB_Core.i
+          - Stub.cpp
+          - Sync_Strategies.cpp
+          - Sync_Strategies.h
+          - TAOC.cpp
+          - TAOC.h
+
+        * tao/GIOP.cpp (write_request_header_std): Comparison with majic
+          numbers is evil ;-) Changed it to compare against the constants.
+
+        * tao/Pluggable.h (TAO_Transport): Added friendship between the
+          transport class and the sync classes.
+
+        * tests/Timed_Buffered_Oneways/client.cpp
+          (setup_buffering_constraints): Added the ability to either
+          choose eager or delayed buffering.
+
+Tue Jan 11 17:25:16 2000  bala  <bala@cs.wustl.edu>
+
+        * TAO version 1.0.12 released.
+
+Tue Jan 11 16:46:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/PollableS.cpp:
+        * tao/PollableC.cpp:
+        * tao/MessagingS.h: Fixed compile errors in AMI code.
+
+Tue Jan 11 11:20:27 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp (set_rt_mode):
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp (set_rt_mode):
+
+          If errors occur while setting the thread priority, print a
+          message but don't abandon the test.
+
+Tue Jan 11 00:27:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * orbsvcs/Notify_Service/Notify_Service.dsp
+        * orbsvcs/Notify_Service/Notify_Service.dsw
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Added Notify Service.
+
+        * orbsvcs/orbsvcs/Notify/NotifyPublish_i.h:
+        * orbsvcs/orbsvcs/Notify/NotifySubscribe_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Dispatcher.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h: Added
+          TAO_ORBSVCS_Export.  Thanks to Stephane Chatre
+          <schatre@oresis.com> for noticing these.
+
+Mon Jan 10 18:12:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/PollableC.cpp: Fixed two instances of wrong usage of
+          ACE_NEW_RETURN.
+
+Mon Jan 10 16:43:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+          Lookup and code generation of case labels for unions
+          in IDL did not correctly handle cases where the
+          label names are scoped (for example, if the enum
+          discriminator is defined in a different module than
+          the union, the case label names may or may not be
+          scoped). Thanks to Hessel Idzenga <idzenga@lucent.com>
+          for reporting this bug.
+
+Mon Jan 10 12:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/GIOP.cpp:
+        * tao/GIOP_Server_Request.cpp:
+          Since Reliable Oneways depend on a feature of GIOP 1.2,
+          and GIOP 1.2 has not yet been fully implemented in TAO,
+          a temporary workaround was added so that a TAO server
+          will not confuse a twoway request from a GIOP 1.1
+          client with a oneway SYNC_WITH_SERVER request. When
+          GIOP 1.2 is fully implemented in TAO, the TAO server
+          can then check the version in the message header and
+          behave accordingly. [bug 397]
+
+Mon Jan 10 11:51:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+          Turned out to be the same change as below, but these
+          were warnings from SunCC.
+
+Mon Jan 10 11:40:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          Fix to generated code for >>=. We were getting a
+          compile error from HPUX.
+
+Sat Jan  8 12:13:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+          Fixed some uninitialized declarations. Reported by
+          g++ David Levine.
+
+Sat Jan  8 03:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * TAO/docs/releasenotes/index.html
+          TAO/examples/AMI/FL_Callback/README,
+          TAO/examples/Buffered_AMI/README,
+          TAO/tests/AMI/README:
+          Made the documentation of 'defines' necessary to compile
+          AMI consistent across various documentations.
+          Currently, you need to set TAO_HAS_CORBA_MESSAGING and
+          TAO_HAS_AMI_CALLBACK to activate AMI code in the TAO library.
+          (TAO_HAS_VALUETYPE is needed as well, but is defined by default)
+          IDL_HAS_VALUETYPE needs to be defined for the TAO IDL compiler,
+          this is due to the fact that AMI uses valuetypes for exception
+          handling, though this might change in the future, because the
+          spec might change in this area. Use -GC on the IDL compiler
+          to generate AMI stubs.
+          Thanks to "Russell L. Carter" <rcarter@consys.com> for pointing
+          this out.
+
+Fri Jan  7 15:22:38 2000  Ossama Othman  <othman@cs.wustl.edu>
+
+        * tao/ORB.cpp (destroy):
+
+          Corrected behavior where ORB::destroy() would throw a
+          BAD_INV_ORDER exception if the ORB was already shutdown, which
+          does not agree with the CORBA specification.  It is now possible
+          to call ORB::destroy() after ORB::shutdown().  Thanks to Mogens
+          Hansen <mogens_h@dk-online.dk> for reporting this problem.
+
+Fri Jan  7 11:52:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.h:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+          Fixed bug where discriminator in a union with an
+          explicit default case was not getting set after
+          transmission. Thanks to Hugh Arnold <harnold@itginc.com>
+          for reporting this bug.
+
+Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao: Minimum CORBA in TAO meant a minimum POA.  This
+          relationship was changed such that minimum CORBA does not have
+          to mean a minimum POA.  This will allow the user to use a
+          minimum CORBA build of TAO with the full functionality of the
+          POA.  The default, however, remains the same, i.e., minimum
+          CORBA enables a minimum POA.
+
+          Added a new variable TAS_HAS_MINIMUM_POA to orbconf.h.
+          TAS_HAS_MINIMUM_POA support is disabled by default if TAO is not
+          configured for minimum CORBA.  If TAO is configured for minimum
+          CORBA, then TAS_HAS_MINIMUM_POA will be enabled by default.
+          Also, TAO_HAS_MINIMUM_POA_MAPS is now influenced by the value of
+          TAO_HAS_MINIMUM_POA rather than that of TAO_HAS_MINIMUM_CORBA if
+          not explicitly set by the user.
+
+          The following files were involved in this change:
+
+          - POA.cpp
+          - POA.h
+          - POA.i
+          - POA.pidl
+          - POAC.cpp
+          - POAC.h
+          - POAC.i
+          - POAManager.cpp
+          - POAManager.h
+          - POAManager.i
+          - POAS.cpp
+          - POAS.h
+          - POAS.i
+          - Object_Adapter.cpp
+          - Object_Adapter.h
+          - Object_Adapter.i
+
+          Thanks to Erik Johannes <ejohannes@oresis.com> for motivating
+          this change.
+
+        * tests/Timed_Buffered_Oneways: New test for oneways with
+          buffering and timing constraints.  The client sends is setup to
+          send large requests to the server.  The server is setup to take
+          a long time to process these requests.  The combination will
+          cause flow control for the client.  The timing constraints on
+          the client ORB will prevent the client from blocking because of
+          flow control.  The request is queued up for later delivery once
+          the flow control subsides.
+
+        * tao/IIOP_Connect.cpp (handle_timeout):
+        * tao/UIOP_Connect.cpp (handle_timeout):
+
+          Added code to access the thread or ORB roundtrip timeout
+          policies.  This allows us to perform a timed send operation
+          instead of a blocking one. We do not consider the object
+          roundtrip timeout policy since we do not have access to it.
+
+        * tao/ORB_Core.h (stubless_relative_roundtrip_timeout):  Added a
+          new method to access the RoundtripTimeoutPolicy policy set on
+          the thread or on the ORB.  In this method, we do not consider
+          the stub since we do not have access to it.
+
+        * tao/Sync_Strategies.cpp: Moved the TAO-specific SYNCH_FLUSH
+          option from the Messaging::SyncScope policy and changed it to
+          BUFFER_FLUSH as one of the buffering constraint modes in the
+          TAO-specific BufferingConstraint policy.  Since we now have
+          BUFFER_FLUSH, we don't need BUFFER_NONE anymore since they both
+          do the same thing.  Also, we didn't need the
+          TAO_Flush_Sync_Strategy anymore and the Buffered_Oneway example
+          was changed to accommodate this change.
+
+        * tao/Pluggable.cpp
+
+          (send_buffered_messages): The return value of 0 is considered
+          EOF.  Therefore, changed the return values in the case of
+          timeouts and empty queues to be 1.  Also, fixed how timeouts are
+          handled.
+
+          (reset_message): The resetting of the queued messages was not
+          correct.  It was deleting excessively. This was fixed.  Also,
+          the resetting was decoupled from the queue so that it can be
+          used with independent message blocks.
+
+        * tao/Wait_Strategy.cpp:
+
+          TAO_Exclusive_Wait_On_Leader_Follower::handle_input: The check
+          for <expecting_response_> was conflicting with the ability to
+          buffer asynchronous calls.  If we mark the asynchronous call as
+          a twoway call, then buffering cannot take place.  If we mark it
+          as a oneway call, then the check for <expecting_response_>
+          fails.  For now I have selected to disable the check.  The long
+          term fix is to separate out the two concerns (a) can the call be
+          buffered and (b) are we expecting a response.
+
+        * tao/Transport_Mux_Strategy.cpp
+          (TAO_Exclusive_TMS::dispatch_reply): Once we receive our reply,
+          we need to mark the transport as being available for reuse
+          again.
+
+        * tao: Renamed TAO_RelativeRoundtripTimeoutPolicy_i to
+          TAO_RelativeRoundtripTimeoutPolicy.
+
+        * tao/Messaging_Policy_i.cpp (set_time_value): Factored out common
+          code in Invocation.cpp and IIOP_Connect.cpp.
+
+        * tao/MessagingS.cpp: Added an overloaded relative_expiry(), which
+          is a hacky TAO extension to reduce a call to
+          CORBA::Environment::default_environment () since this method
+          will never raise exceptions.
+
+Thu Jan 06 21:26:17 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tests/Param_Test/param_test_i.cpp
+          (test_unbounded_struct_sequence): Changed the explicit cast to
+          [(unsigned int) 0] to unsigned literal [0u] to avoid MSVC fro
+          whining.
+
+Wed Jan  5 15:54:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/Any.cpp:
+          Fix to new Any extractor to pointer to const Any,
+          prompted by a SunCC 4.2 compile error.
+
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          Removed a couple of unnecessary 'ACE_reinterpret_cast's
+          in generated code for the new Any extractor to pointer
+          to const Any. They were causing compile errors with
+          Kai, SunCC and other compilers.
+
+        * performance-tests/Latency/deferred_synch_client.dsp:
+          Added missing paths for library linking.
+
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+          Put in the complete relative path to tao_idl.exe, as
+          it is in all other projects with IDL files.
+
+Tue Jan  4 11:46:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/Any.h:
+        * tao/Any.cpp:
+          Added >>= operators to extract to const CORBA::Any *&,
+          as well as to const char *& and const wchar *&, as outlined in
+          the CORBA 2.3.1 C++ mapping.
+
+        * TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.h:
+          Added code generation for Any extraction operator to
+          pointer to const whenever extraction to a pointer is called
+          for. Left the former generated operators (same but without
+          the 'const') for backward compatibility, but marked them
+          as 'deprecated' in the generated header file. Also modified
+          code for both operators to return a null pointer if the
+          extraction fails. All this is in accordance with CORBA 2.3.1.
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+          Modified Any extraction operator to return a null pointer
+          if the extraction fails, for the reason given above.
+
+Tue Jan 04 07:30:04 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 1.0.11 released.
+
+Tue Jan  4 00:34:57 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp: Fixes for KAI that
+          missed the last round and fixes that were needed after the last
+          round.
+
+Mon Jan  3 20:33:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp: Fixes for KAI that
+          missed the last round and fixes that were needed after the last
+          round.
+
+Mon Jan  3 15:08:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs//LifeCycle_Service/Factory_Trader.cpp:
+        * orbsvcs/tests/Property/client.cpp: KAI needed fixes in these
+          files to compile clean. There was a need to explicitly use an
+          unsigned integer to avoid overloading amibiguity. Essentially
+          the same fix as 'Mon Jan 03 10:55:36 2000  David L. Levine'.
+
+Mon Jan  3 14:45:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/ORB.h:
+        * tao/corbafwd.h: Removed compiler-specific alignment adjusting
+          preprocessor directives for MSVC and BCB completely.  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
+
+Mon Jan 03 10:55:36 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Clerk_i.cpp (get_first_IOR):
+          explicitly use unsigned 0 index for bindings_list
+          array element to avoid overloading ambiguity on Irix
+          and HP/UX.
+
+Mon Jan 03 10:46:31 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n):
+          modified look index so that its comparison is > 0, not
+          >= 0.  Now that it's unsigned, it was causing a compiler
+          warning.
+
+Sun Jan 02 10:48:59 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+          Fixed a MSVC warning, complaining about an array
+          operator.
+
+Sat Jan 01 09:18:59 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: updated dependencies, including
+          Notification Service files.
+
+Sat Jan 01 09:17:40 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ChangeLog: moved to ChangeLog-99c.

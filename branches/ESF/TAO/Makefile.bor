@@ -1,0 +1,33 @@
+#
+# Makefile for building ACE and TAO 
+#
+
+!ifndef BUILDALL
+
+# By default we build a smaller set of libraries and executables.
+DIRS = \
+	..\ace \
+	..\apps\gperf\src \
+	tao \
+	tao_idl \
+	orbsvcs \
+	utils
+
+!else
+
+# When BUILDALL is defined we will make everything that can be built.
+DIRS = \
+	..\ace \
+	..\apps \
+	..\netsvcs \
+	..\tests \
+	tao \
+	TAO_IDL \
+	orbsvcs \
+	examples \
+	tests \
+	utils
+
+!endif
+	
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
