@@ -1,3 +1,8 @@
+Thu Mar 29 10:53:01 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+	* tao/operation_details.i: Reordered definition of reply_service_info ()
+          and request_service_info () to fix compiler warnings in vxWorks.
+
 Thu Mar 29 10:40:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/Servant_Base.i (_create_stub): Fixed a fuzz
