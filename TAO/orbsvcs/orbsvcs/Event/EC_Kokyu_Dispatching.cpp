@@ -146,18 +146,11 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   RtecScheduler::RT_Info *rt_info = 
     this->scheduler_->get(qos_info.rt_info);
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) : after get returned\n"));
-
   Kokyu::QoSDescriptor qosd;
   qosd.preemption_priority_ = rt_info->preemption_priority;
   qosd.deadline_ = rt_info->period;
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
-  
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t) About to drop event into queue. "
-              "rt_info = %d, pre_prio = %d\n",
-              rt_info->handle, qosd.preemption_priority_));
   
   this->dispatcher_->dispatch(cmd,qosd);
 }

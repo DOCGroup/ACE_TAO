@@ -20,7 +20,7 @@
 
 // Uncomment this to turn on some extra trace level debugging info,
 // comment it out to turn off that extra debugging info.
-#define SCHEDULER_LOGGING
+//#define SCHEDULER_LOGGING
 
 #include "ace/config-all.h"
 
