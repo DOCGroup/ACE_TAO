@@ -28,7 +28,7 @@ NS_NamingContext::NS_NamingContext (void)
   
   // if orb core returned a null lock, allocate a thread mutex by default
   //  if (this->lock_ == 0)
-    ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_Thread_Mutex> ());
+    ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ());
 }
 
 NS_NamingContext::~NS_NamingContext (void)

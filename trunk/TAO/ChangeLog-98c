@@ -1,3 +1,10 @@
+Fri Apr 17 15:35:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: 
+	  An explicit ACE_Thread_Mutex was used, this is non-portable to
+	  platforms without threads, the "Right Thing" is to use the macro
+	  ACE_SYNCH_MUTEX.
+
 Fri Apr 17 13:29:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/skip.cpp (skip): 
