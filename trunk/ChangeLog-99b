@@ -1,3 +1,9 @@
+Tue Aug  3 22:23:18 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Added an ifeq flag for
+	  the interface repository. Compiling with interface_repo=1 will
+	  compile  the files  for interface repository.
+
 Tue Aug  3 18:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Shared_Malloc/test_position_independent_malloc.cpp: 
