@@ -12,8 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
-LDFLAGS += -L$(TAO_ROOT)/tao
+LDLIBS += -lTAO 
+LDFLAGS += -L$(ACE_ROOT)/bin
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
@@ -56,10 +56,10 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 client: $(addprefix $(VDIR),$(CLNT_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SVR_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 
@@ -70,3 +70,6 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
