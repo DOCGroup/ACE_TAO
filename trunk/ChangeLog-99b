@@ -1,27 +1,35 @@
+Tue May 18 10:38:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Thread_Manager_Test.cpp: replaced Hash_Map_Manager
+          with a simple array.  This avoids dynamic allocation in
+          the signal handler.  And, it avoids having to specialize
+          ACE_Hash<ACE_hthread_t> on platforms that have a pthread_t
+          struct.
+
 Tue May 18 09:33:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/FILE_IO: Added new sendv()/recvv() and sendv_n()/recvv_n()
- 	  methods to be consistent with SOCK_IO and SOCK_Stream.
+        * ace/FILE_IO: Added new sendv()/recvv() and sendv_n()/recvv_n()
+          methods to be consistent with SOCK_IO and SOCK_Stream.
 
-	* ace/SOCK_IO.cpp (recvv): Make sure to 0-out the iov_base so that
- 	  it's always ok to delete it, even if any of the internal
- 	  operations fail!
+        * ace/SOCK_IO.cpp (recvv): Make sure to 0-out the iov_base so that
+          it's always ok to delete it, even if any of the internal
+          operations fail!
 
 Tue May 18 10:14:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Makefile:
-	* ace/FlReactor.h:
-	* ace/FlReactor.i:
-	* ace/FlReactor.cpp:
-	* include/makeinclude/platform_linux_lxpthread.GNU:
-	* include/makeinclude/wrapper_macros.GNU:
-	* tests/Makefile:
-	* tests/FlReactor_Test.cpp:
-	  Added new reactor implementation based on the event loop of the
-	  Fast-Light toolkit, similar to the XtReactor.
-	  FLTK is a GUI toolkit that works on UNIX/X-Windows and on Win32, 
-	  it is integrated to OpenGL and is pure C++.
-	  Check http://fltk.easysw.org for more details.
+        * ace/Makefile:
+        * ace/FlReactor.h:
+        * ace/FlReactor.i:
+        * ace/FlReactor.cpp:
+        * include/makeinclude/platform_linux_lxpthread.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+        * tests/Makefile:
+        * tests/FlReactor_Test.cpp:
+          Added new reactor implementation based on the event loop of the
+          Fast-Light toolkit, similar to the XtReactor.
+          FLTK is a GUI toolkit that works on UNIX/X-Windows and on Win32,
+          it is integrated to OpenGL and is pure C++.
+          Check http://fltk.easysw.org for more details.
 
 Tue May 18 09:35:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
