@@ -371,6 +371,13 @@ public:
   UTL_ScopedName *string_to_scoped_name (char *s);
   // Parses a string with double colons.
 
+  long seen_include_file_before(UTL_String *);
+  // Seen this include before?
+
+  long last_seen_index (void) const;
+
+  void last_seen_index (long val);
+
 private:
   // Data
   UTL_ScopeStack             *pd_scopes;             // Store scopes stack
@@ -407,11 +414,6 @@ private:
   // For char*'s have been allocated for this.
 
   ParseState                pd_parse_state;         // Parse state we're in.
-
-  // Operations
-  long                      seen_include_file_before(UTL_String *);
-                                                    // Seen this include
-                                                    // before?
 
   UTL_String                *pd_idl_src_file;       // IDL source file.
 
