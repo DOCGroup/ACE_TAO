@@ -231,12 +231,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
  
   *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
   *os << "TAO_" 
-      <<  node->flat_name () << "_Smart_Proxy_Base (" 
-      <<  "::" << node->full_name () 
-      << "_ptr proxy)" << be_nl
-      <<  ": base_proxy_ (proxy)" << be_nl
+      <<  node->flat_name () << "_Smart_Proxy_Base (void)" << be_uidt_nl
       << "{" << be_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   os->indent ();
   *os << scope->full_name ();
@@ -275,29 +272,48 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
                          "codegen for scope failed\n"),
                         -1);
     }
- 
-    os->indent ();
-    *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \\"
-        << be_idt_nl<<"defined (ACE_HAS_GNU_REPO)"<<be_uidt_nl
-        << "template class ACE_Singleton<";
-    *os << scope->full_name ();
-    
-    // Only if there exists any nesting "::" is needed!
-    if (node->is_nested ())
-      *os << "::";
-    *os <<"TAO_" <<node->flat_name ()
-        << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;"<<be_nl
-        << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)"
-        << be_nl
-        << "#pragma instantiate ACE_Singleton<";
-     *os << scope->full_name ();
 
-     // Only if there exists any nesting "::" is needed!
-     if (node->is_nested ())
-       *os << "::";
-     *os << "TAO_"<<node->flat_name ()
-        << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>"<<be_nl
-        << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */"<<be_nl<<be_nl;
+ 
+  os->indent ();
+  
+  *os << node->full_name() << "_ptr" << be_nl;
+  *os << scope->full_name ();
+  
+  // Only if there exists any nesting "::" is needed!
+  if (node->is_nested ())
+    *os << "::";  
+  
+  *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::"
+	  << "get_proxy (void)" << be_idt_nl
+      << be_uidt_nl;
+  
+  *os << "{" << be_idt_nl
+      << "return ACE_dynamic_cast ( "<< node->local_name() 
+      << "_ptr, base_proxy_.in ());"
+      << be_uidt_nl << "}" << be_nl << be_nl;
+  
+  os->indent ();
+  *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \\"
+      << be_idt_nl<<"defined (ACE_HAS_GNU_REPO)"<<be_uidt_nl
+      << "template class ACE_Singleton<";
+  *os << scope->full_name ();
+    
+  // Only if there exists any nesting "::" is needed!
+  if (node->is_nested ())
+    *os << "::";
+  *os <<"TAO_" <<node->flat_name ()
+      << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;"<<be_nl
+      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)"
+      << be_nl
+      << "#pragma instantiate ACE_Singleton<";
+  *os << scope->full_name ();
+
+  // Only if there exists any nesting "::" is needed!
+  if (node->is_nested ())
+    *os << "::";
+  *os << "TAO_"<<node->flat_name ()
+      << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>"<<be_nl
+      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */"<<be_nl<<be_nl;
 
   return 0;
 }

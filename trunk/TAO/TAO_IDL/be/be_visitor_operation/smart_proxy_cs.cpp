@@ -151,7 +151,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
           *os << "return ";
         }
 
-  *os << "this->base_proxy_";
+  *os << "this->get_proxy ()";
  
   if (this->gen_invoke (ctx, node) == -1)
     return -1;
