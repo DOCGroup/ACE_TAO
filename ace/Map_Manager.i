@@ -110,8 +110,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id)
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
   size_t index = 0;
-  return this->find_i (ext_id, 
-                       index);
+  return this->find_and_return_index (ext_id, 
+                                      index);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
