@@ -1,320 +1,325 @@
+Sat Aug 22 21:59:54 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/NestedUpcall/MT_Client_Test/Makefile:
+          updated dependencies so that the module can build.
+
 Sat Aug 22 16:01:07 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Makefile:
-		Changed to reflect the moving of pccTimer.cpp to 
-	  /project/doc/mvme.
+        * tests/Cubit/TAO/MT_Cubit/Makefile:
+                Changed to reflect the moving of pccTimer.cpp to
+          /project/doc/mvme.
 
 Sat Aug 22 14:47:07 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/COOL/MT_Cubit/cubit_impl.{h,cpp}:
-	  Renamed these files to cubit_i.{h,cpp} to be consistent.
+        * tests/Cubit/COOL/MT_Cubit/cubit_impl.{h,cpp}:
+          Renamed these files to cubit_i.{h,cpp} to be consistent.
 
 Sat Aug 22 13:17:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/NestedUpcall/{MT_Client_Test,Triangle_Test},
-	  tests/Quoter: Changed all *_Impl to *_i to be more consistent.
+        * tests/NestedUpcall/{MT_Client_Test,Triangle_Test},
+          tests/Quoter: Changed all *_Impl to *_i to be more consistent.
 
-	* tests/Simple/time: Added more comments and cleaned up the test
- 	  so that it minimizes the use of dynamic memory allocation.  Also,
-	  renamed some files to be more consistent.
+        * tests/Simple/time: Added more comments and cleaned up the test
+          so that it minimizes the use of dynamic memory allocation.  Also,
+          renamed some files to be more consistent.
 
 Sat Aug 22 11:01:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Simple/Makefile: 
-	  Added a Makefile so making everything from the top-level would
-	  work.
+        * tests/Simple/Makefile:
+          Added a Makefile so making everything from the top-level would
+          work.
 
 Sat Aug 22 02:30:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp (read_ior): Use the
- 	  buffer's allocator to free the memory.
+        * tests/Cubit/TAO/IDL_Cubit/client_i.cpp (read_ior): Use the
+          buffer's allocator to free the memory.
 
-	* tests/Simple/time/: Made a big pass through the example to clean
- 	  things up, remove extra code, and rename things. 
+        * tests/Simple/time/: Made a big pass through the example to clean
+          things up, remove extra code, and rename things.
 
 Sat Aug 22 01:41:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* orbsvcs/Naming_Service/Naming_Service.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	  Forgot to fix the output directories.
+        * tao/TAO.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+          Forgot to fix the output directories.
 
-	* TAO_IDL/tao_idl.dsp:
-	* tests/Simple/time/server.dsp:
-	* tests/Simple/time/client.dsp:
-	  More Alpha configurations added.
+        * TAO_IDL/tao_idl.dsp:
+        * tests/Simple/time/server.dsp:
+        * tests/Simple/time/client.dsp:
+          More Alpha configurations added.
 
 Fri Aug 21 23:16:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* orbsvcs/Naming_Service/Naming_Service.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	  Added Alpha configurations.
+        * tao/TAO.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+          Added Alpha configurations.
 
 Fri Aug 21 20:12:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Thruput/TAO/client.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	  Removed uneeded #include's that made some HP-UX platforms very
-	  angry. Thanks to John Mulhern <9107@mn3.lawson.lawson.com> 
-	  for reporting this.
+        * tests/Thruput/TAO/client.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          Removed uneeded #include's that made some HP-UX platforms very
+          angry. Thanks to John Mulhern <9107@mn3.lawson.lawson.com>
+          for reporting this.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	  EGCS (on Solaris) complained about a missing function, but the
-	  function was pure virtual! My attempts to teach it better failed
-	  so I resorted to define the function anyway.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          EGCS (on Solaris) complained about a missing function, but the
+          function was pure virtual! My attempts to teach it better failed
+          so I resorted to define the function anyway.
 
 Fri Aug 21 19:22:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface/collocated_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/arglist.cpp: 
-	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp: 
-	  The IDL compiler generates all the method definitions with a
-	  default value for the CORBA::Environment argument.
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+          The IDL compiler generates all the method definitions with a
+          default value for the CORBA::Environment argument.
 
-	* tao/Makefile: 
-	* tao/ORB_Core.h: 
-	* tao/ORB_Core.i: 
-	* tao/ORB_Core.cpp: 
-	* tao/Environment.h: 
-	* tao/Environment.i: 
-	* tao/Environment.cpp: 
-	* tao/Exception.h: 
-	* tao/Exception.i: 
-	* tao/Exception.cpp: 
-	  The ORB provides a default for the CORBA_Environment, this
-	  default is stored in TSS storage. Creating a new
-	  CORBA_Environment pushes that default and replaces it with the
-	  new variable; the old default is restores when the variable is
-	  destroyed.
-	  The CORBA_Environment class was moved to its own file to avoid
-	  cyclic dependencies with the ORB_Core.
+        * tao/Makefile:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/Environment.h:
+        * tao/Environment.i:
+        * tao/Environment.cpp:
+        * tao/Exception.h:
+        * tao/Exception.i:
+        * tao/Exception.cpp:
+          The ORB provides a default for the CORBA_Environment, this
+          default is stored in TSS storage. Creating a new
+          CORBA_Environment pushes that default and replaces it with the
+          new variable; the old default is restores when the variable is
+          destroyed.
+          The CORBA_Environment class was moved to its own file to avoid
+          cyclic dependencies with the ORB_Core.
 
-	* tao/Any.h: 
-	* tao/CDR.h: 
-	* tao/Connect.h: 
-	* tao/CurrentC.h: 
-	* tao/Forwarding_Servant.h: 
-	* tao/GIOP.h: 
-	* tao/IIOP_Interpreter.h: 
-	* tao/IIOP_ORB.h: 
-	* tao/IIOP_Object.h: 
-	* tao/Invocation.h: 
-	* tao/Marshal.h: 
-	* tao/NVList.h: 
-	* tao/ORB.h: 
-	* tao/Object.h: 
-	* tao/POA.h: 
-	* tao/POAC.h: 
-	* tao/POAS.h: 
-	* tao/POA_CORBA.h: 
-	* tao/PolicyC.h: 
-	* tao/Request.h: 
-	* tao/Sequence.h: 
-	* tao/Sequence_T.h: 
-	* tao/Servant_Base.h: 
-	* tao/Server_Request.h: 
-	* tao/Stub.h: 
-	* tao/TAO.h: 
-	* tao/Typecode.h: 
-	* tao/corba.h: 
-	* tao/poa_T.h: 
-	* tao/varout.h: 
-	  All methods taking a CORBA_Environment as the last argument
-	  provide a default value for it.
+        * tao/Any.h:
+        * tao/CDR.h:
+        * tao/Connect.h:
+        * tao/CurrentC.h:
+        * tao/Forwarding_Servant.h:
+        * tao/GIOP.h:
+        * tao/IIOP_Interpreter.h:
+        * tao/IIOP_ORB.h:
+        * tao/IIOP_Object.h:
+        * tao/Invocation.h:
+        * tao/Marshal.h:
+        * tao/NVList.h:
+        * tao/ORB.h:
+        * tao/Object.h:
+        * tao/POA.h:
+        * tao/POAC.h:
+        * tao/POAS.h:
+        * tao/POA_CORBA.h:
+        * tao/PolicyC.h:
+        * tao/Request.h:
+        * tao/Sequence.h:
+        * tao/Sequence_T.h:
+        * tao/Servant_Base.h:
+        * tao/Server_Request.h:
+        * tao/Stub.h:
+        * tao/TAO.h:
+        * tao/Typecode.h:
+        * tao/corba.h:
+        * tao/poa_T.h:
+        * tao/varout.h:
+          All methods taking a CORBA_Environment as the last argument
+          provide a default value for it.
 
-	* The new files in $TAO_ROOT/tao required the regeneration of the
-	  dependencies for all the Makefiles.
+        * The new files in $TAO_ROOT/tao required the regeneration of the
+          dependencies for all the Makefiles.
 
 Fri Aug 21 19:06:21 1998  Carlos O'Ryan <coryan@CHA-CHA>
 
-	* tests/Param_Test/client.dsp:
-	  Added the new except.cpp and except.h
+        * tests/Param_Test/client.dsp:
+          Added the new except.cpp and except.h
 
-	* TAO_IDL/driver/drv_preproc.cpp:
-	  Check the error result when running the preprocessor.
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Check the error result when running the preprocessor.
 
 Fri Aug 21 15:00:21 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/Any.i:
-	  Oops, forgot to implement the from_wchar and to_wchar
-	  constructors (see my last ChangeLog entry).
+        * tao/Any.i:
+          Oops, forgot to implement the from_wchar and to_wchar
+          constructors (see my last ChangeLog entry).
 
 Fri Aug 21 14:27:27 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}: Added virtual
-	  destructors to all the classes. Thanks to Carlos for reporting
-  	  this. Fixed a few template warnings.
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}: Added virtual
+          destructors to all the classes. Thanks to Carlos for reporting
+          this. Fixed a few template warnings.
 
 Fri Aug 21 13:47:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/Typecode.cpp:
-	  private_equal() was missing tk_ulonglong in the switch
-	  statement.
+        * tao/Typecode.cpp:
+          private_equal() was missing tk_ulonglong in the switch
+          statement.
 
-	* tao/Any.{h,i,cpp):
-	  Added <<= and >>= for long long, unsigned long long
-	  and wchar.
+        * tao/Any.{h,i,cpp):
+          Added <<= and >>= for long long, unsigned long long
+          and wchar.
 
 Fri Aug 21 11:34:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp (init_naming_service):
-	* tests/Cubit/TAO/MT_Cubit/server.cpp (initialize_orb):
-	  Fixed the g++ warning for passing ORB_var to an ORB_ptr
-	  argument.
+        * tests/Cubit/TAO/IDL_Cubit/client_i.cpp (init_naming_service):
+        * tests/Cubit/TAO/MT_Cubit/server.cpp (initialize_orb):
+          Fixed the g++ warning for passing ORB_var to an ORB_ptr
+          argument.
 
 Fri Aug 21 00:04:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Exception.cpp:
-	* tao/corba.h:
-	* tao/orbconf.h:
-	  The ORB is ready to work with exceptions now. I was able to
-	  throw an exception on the server side, catch it, transmit it to
-	  the client, the client is able to build the exception with the
-	  right dynamic type and then raise it again. This, of course,
-	  using SII. We still have to do some more work to support DII.
+        * tao/Exception.cpp:
+        * tao/corba.h:
+        * tao/orbconf.h:
+          The ORB is ready to work with exceptions now. I was able to
+          throw an exception on the server side, catch it, transmit it to
+          the client, the client is able to build the exception with the
+          right dynamic type and then raise it again. This, of course,
+          using SII. We still have to do some more work to support DII.
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
-	  Fixed misuses of TAO_THROW and TAO_TRY macros that did not work
-	  when the code was used with exceptions enabled.
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+          Fixed misuses of TAO_THROW and TAO_TRY macros that did not work
+          when the code was used with exceptions enabled.
 
-	* tests/Param_Test/except.cpp:
-	* tests/Param_Test/param_test_i.cpp:
-	* tests/Param_Test/param_test_i.h:
-	  Removed throw specs from the servant implementation, they just
-	  complicate things. Cleanup the client side.
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test_i.h:
+          Removed throw specs from the servant implementation, they just
+          complicate things. Cleanup the client side.
 
 Thu Aug 20 19:42:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	  Fixed two warnings reported by David. They were only a problem
-	  when using user exceptions in DII, something that still requires
-	  some work.
+        * tao/Invocation.cpp:
+          Fixed two warnings reported by David. They were only a problem
+          when using user exceptions in DII, something that still requires
+          some work.
 
 Thu Aug 20 18:24:04 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Property/client.{h,cpp}
-	* orbsvcs/tests/Property/server.cpp}
-	  Added Naming_Utils code to simplify Naming Service
-	  operations. Note that this code is shakey, and will not always
-	  execute properly. For better results, try executing the client
-	  and server with -ORBnameserviceport set
+        * orbsvcs/tests/Property/client.{h,cpp}
+        * orbsvcs/tests/Property/server.cpp}
+          Added Naming_Utils code to simplify Naming Service
+          operations. Note that this code is shakey, and will not always
+          execute properly. For better results, try executing the client
+          and server with -ORBnameserviceport set
 
 Thu Aug 20 18:18:43 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-	  Modified IDL compiler to reflect the CORBA spec, which
-	  states that objects need only one version of the <<=
-	  operator.
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+          Modified IDL compiler to reflect the CORBA spec, which
+          states that objects need only one version of the <<=
+          operator.
 
-	* tao/CurrentC.{h,cpp}:
-	  Modified this IDL-generated file to reflect the above
-	  change.
+        * tao/CurrentC.{h,cpp}:
+          Modified this IDL-generated file to reflect the above
+          change.
 
 Thu Aug 20 17:36:52 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/CosPropertyService/: Removed. For equivalent
-	  code, see orbsvcs/tests/Property
+        * orbsvcs/tests/CosPropertyService/: Removed. For equivalent
+          code, see orbsvcs/tests/Property
 
 Thu Aug 20 17:21:32 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/Any.{h,i,cpp}:
-	  Misread the CORBA spec - do not need two versions of <<=
-	  for objects and (presumably) other pointer types, so
-	  fixed earlier commit.
+        * tao/Any.{h,i,cpp}:
+          Misread the CORBA spec - do not need two versions of <<=
+          for objects and (presumably) other pointer types, so
+          fixed earlier commit.
 
 Thu Aug 20 16:14:54 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: Added Naming_Utils code
-	  to simplify Naming Service operations
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: Added Naming_Utils code
+          to simplify Naming Service operations
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util32.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered2.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/motionvector.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mono.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mb_ordered.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/jrevdct.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybriderr.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybrid.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/gray.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs4.h
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2fast.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2.h
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/decoders.h
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/2x2.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/24bit.cpp
-	  Added "ace/OS.h" to fix RCSID errors
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util32.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered2.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/motionvector.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mono.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mb_ordered.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/jrevdct.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybriderr.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybrid.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/gray.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs4.h
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2fast.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2.h
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/decoders.h
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/2x2.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/24bit.cpp
+          Added "ace/OS.h" to fix RCSID errors
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.{h,cpp}
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.{h,cpp}
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.{h,cpp}
-  	  Added Naming_Utils code to simplify Naming Service
-	  operations. Also added "ace/OS.h" include to fix RCSID errors
+        * orbsvcs/tests/AVStreams/mpeg/source/server/server.{h,cpp}
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.{h,cpp}
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.{h,cpp}
+          Added Naming_Utils code to simplify Naming Service
+          operations. Also added "ace/OS.h" include to fix RCSID errors
 
 
 Thu Aug 20 14:32:12 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/Any.{h,i,cpp}:
-	  We now have <<= and >>= (copying and non-copying
-	  versions) for typecodes and CORBA objects.
+        * tao/Any.{h,i,cpp}:
+          We now have <<= and >>= (copying and non-copying
+          versions) for typecodes and CORBA objects.
 
 Thu Aug 20 14:14:30 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp :
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp :
-		Fixed compile errors and warning shown by g++.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp :
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp :
+                Fixed compile errors and warning shown by g++.
 
 Thu Aug 20 13:58:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/orbconf.h:
-	* tao/corba.h:
-	  Exception support is controlled my the TAO_USE_EXCEPTIONS
-	  macro.
+        * tao/orbconf.h:
+        * tao/corba.h:
+          Exception support is controlled my the TAO_USE_EXCEPTIONS
+          macro.
 
-	* tao/POAC.h:
-	* tao/POAC.cpp:
-	* tao/Typecode.cpp:
-	  Added the _raise () methods, they use a macro (TAO_RAISE) to
-	  actually throw the exception, the macro expands to nothing if
-	  exceptions are not supported.
+        * tao/POAC.h:
+        * tao/POAC.cpp:
+        * tao/Typecode.cpp:
+          Added the _raise () methods, they use a macro (TAO_RAISE) to
+          actually throw the exception, the macro expands to nothing if
+          exceptions are not supported.
 
-	* tao/Exception.h:
-	* tao/Exception.i:
-	* tao/Exception.cpp:
-	  Fixed problems with operator=
-	  The modifier for the CORBA_Environment::exception() would raise
-	  the exception if native C++ exceptions are supported.
+        * tao/Exception.h:
+        * tao/Exception.i:
+        * tao/Exception.cpp:
+          Fixed problems with operator=
+          The modifier for the CORBA_Environment::exception() would raise
+          the exception if native C++ exceptions are supported.
 
-	* tao/Connect.h:
-	* tao/Connect.cpp:
-	  Use TAO_TRY macros to catch the exceptions in the upcall, this
-	  is in preparation for the support for native C++ exceptions.
+        * tao/Connect.h:
+        * tao/Connect.cpp:
+          Use TAO_TRY macros to catch the exceptions in the upcall, this
+          is in preparation for the support for native C++ exceptions.
 
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	  The compiler generates the _raise() method now.
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+          The compiler generates the _raise() method now.
 
-	* tao/debug.h:
-	* tao/debug.cpp:
-	  Removed some _FAR uses.
+        * tao/debug.h:
+        * tao/debug.cpp:
+          Removed some _FAR uses.
 
 Thu Aug 20 11:57:04 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
