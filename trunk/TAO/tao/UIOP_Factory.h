@@ -6,7 +6,7 @@
 //   TAO
 //
 // = FILENAME
-//   Protocol_Factory.h
+//   UIOP_Factory.h
 //
 // = AUTHOR
 //   Fred Kuhns <fredk@cs.wustl.edu>

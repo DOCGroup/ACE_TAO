@@ -50,11 +50,11 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 class TAO_Export TAO_Transport
 {
   // = TITLE
-  //   Generic definitions for the new Transport class.
+  //   Generic definitions for the Transport class.
   //
   // = DESCRIPTION
   //   The transport object is created in the Service handler
-  //   constructor and deleted in the service handlers destructor!!
+  //   constructor and deleted in the Service Handler's destructor!!
 
 public:
   TAO_Transport (CORBA::ULong tag,
@@ -67,7 +67,7 @@ public:
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
 
-  virtual void close_connection() = 0;
+  virtual void close_connection (void) = 0;
   // Call the corresponding connection handler's <close>
   // method.
 
@@ -154,8 +154,8 @@ public:
   // Strategy if Reactor is used  for that strategy. Default
   // implementation out here returns -1 setting <errno> to ENOTSUP.
 
-  // = Setting the Transport object in Idle state. Theese methods are
-  //   routed the TMS object. The TMS starategies implement the
+  // = Setting the Transport object in Idle state. These methods are
+  //   routed through the TMS object. The TMS strategies implement the
   //   methods accordingly.
 
   virtual int idle_after_send (void);
