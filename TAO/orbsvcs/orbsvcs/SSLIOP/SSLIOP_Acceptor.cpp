@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
 #include "SSLIOP_Acceptor.h"
@@ -12,6 +10,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
 #include "SSLIOP_Acceptor.i"
