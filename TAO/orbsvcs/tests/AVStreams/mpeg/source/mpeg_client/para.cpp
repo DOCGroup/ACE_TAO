@@ -106,7 +106,7 @@ static void InitBuf(void)
 {
   FILE * fp;
   char buf[256];
-  int i;
+  unsigned int i;
 
   config = (int *)&(shared->config);
   fconfig = (float *)&(shared->config);
@@ -158,7 +158,7 @@ static void SaveBuf(void)
     return;
   }
   Fputs(BANNER);
-  for (i = 0; i < ITEMS; i++)
+  for (i = 0; i < (int)ITEMS; i++)
     if (para[i].float_tag)
       fprintf(fp, "%f\n", fconfig[i]);
     else
@@ -185,7 +185,8 @@ static int curListPos(void)
 
 static void modifyCB(Widget w, XtPointer closure, XtPointer call_data)
 {
-  int i, value;
+  int i;
+  ACE_UNUSED_ARG(w); ACE_UNUSED_ARG(closure); ACE_UNUSED_ARG(call_data); 
   XmString item;
   char buf[100], * valptr;
   i = curListPos();
@@ -215,6 +216,7 @@ static void dismissCB(Widget W, XtPointer closure, XtPointer call_data)
 {
   
   XtUnrealizeWidget(parashell);
+  ACE_UNUSED_ARG(W); ACE_UNUSED_ARG(closure); ACE_UNUSED_ARG(call_data); 
   /*
   XtUnmanageChild(parashell);
   */
@@ -222,9 +224,10 @@ static void dismissCB(Widget W, XtPointer closure, XtPointer call_data)
 
 Widget CreateParameterWindow(Widget parent)
 {
+  ACE_UNUSED_ARG(parent);
   Arg   	args[20];
   int		n;
-  Widget 	wform, frame1, frame2, wlabel,
+  Widget 	wform, frame1, frame2, 
                 wmodify, wdismiss;
   XmFontList fontlist;
   XFontStruct * font;
@@ -248,7 +251,7 @@ Widget CreateParameterWindow(Widget parent)
   */
 
   font = XLoadQueryFont (XtDisplay (parashell), "courB14");
-  fontlist = XmStringCreateFontList (font, cset);
+  fontlist = XmFontListCreate (font, cset);
 
   n = 0;
   XtSetArg(args[n], XmNtitle, "Virtual Parameter List"); n++;
@@ -313,9 +316,9 @@ Widget CreateParameterWindow(Widget parent)
     fprintf(stderr, "Total parameter items: %d\n", items);
     */
     for (items = 0; para[items].title[0] != 0; items ++);
-    if (items > ITEMS)
+    if (items > (int)ITEMS)
       items = ITEMS;
-    else if (items < ITEMS)
+    else if (items < (int)ITEMS)
     {
       fprintf(stderr, "Error in para.c: fewer titles than parameters, %d out of %d.\n",
 	      items, ITEMS);
@@ -332,8 +335,9 @@ Widget CreateParameterWindow(Widget parent)
       char buf[100];
       if (para[i].float_tag)
         sprintf(buf, "%s: %f", para[i].title, fconfig[i]);
-      else
+      else{
         sprintf(buf, "%s: %d", para[i].title, config[i]);
+      }
       item[i] = (XmString)XmStringCreateLtoR(buf, XmStringTag);
     }
     XtSetArg(args[n], XmNitems, item); n++;
@@ -346,7 +350,7 @@ Widget CreateParameterWindow(Widget parent)
       XmStringFree(item[i]);
     ACE_OS::free (item);
   }
-  XmFontListFree(fontlist);
+//  XmFontListFree(fontlist);
 
   n=0;
   XtSetArg (args[n], XmNtopOffset, 5); n++;

@@ -18,12 +18,12 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
  */
 
 #include "ace/OS.h"
-#include <stdio.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
+/* include <stdio.h>
+include <errno.h>
+include <stdlib.h>
+include <sys/types.h>
+include <sys/uio.h>
+include <unistd.h> */
 #include <X11/IntrinsicP.h>
 #include <Xm/DialogS.h>
 #include "mpeg_mib/mibload.h"
@@ -40,7 +40,7 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 #include "include/common.h"
 #include "newproto.h"
 #include "global.h"
-#include "ace/OS.h"
+
 
 ACE_RCSID(mpeg_client, ui, "$Id$")
 
@@ -57,20 +57,20 @@ static int cmdSocket = -1;
 
 /* Intrinsics Application Context */
 static  XtAppContext		App;
-static  Window			monitorwindow = (int)NULL;
+static  Window			monitorwindow = (int)0;
 static  mib_Widget		*mainload, *infoload;
-static  Widget			shell = (int)NULL, infoshell = (int)NULL,
-                                parashell = (int)NULL, progshell = (int)NULL,
-                                fileshell = (int)NULL;
-static  Widget			frametext= (int)NULL;
-static  Widget			volumescale = (int)NULL, balancescale = (int)NULL,
-                                speedscale = (int)NULL, positionscale = (int)NULL;
+static  Widget			shell = (int)0, infoshell = (int)0,
+                                parashell = (int)0, progshell = (int)0,
+                                fileshell = (int)0;
+static  Widget			frametext= (int)0;
+static  Widget			volumescale = (int)0, balancescale = (int)0,
+                                speedscale = (int)0, positionscale = (int)0;
 static  int			frameshown = 0;
 
 #define MINX 500
 #define MINY 360
 
-static  Window displaywin       = (int)NULL;
+static  Window displaywin       = (int)0;
 static  int privcolormap	= 0;
 
 static void exit_callback(Widget, XtPointer, XmAnyCallbackStruct *);
@@ -143,14 +143,14 @@ static void UICreate()
   "*XmToggleButtonGadget.indicatorSize: 16",
   "*fontList: -adobe-helvetica-medium-r-normal--14-*-*-*-p-*-iso8859-1",
   "*XmText*fontList: -adobe-courier-medium-r-normal--12-*-*-*-m-70-iso8859-1",
-  NULL
+  0
   };
 
 /*****************************************************************************/
 
   n = 0;
 
-  toplevel = XtAppInitialize(&App, "virtual_vcr", NULL, 0, &argc_share,
+  toplevel = XtAppInitialize(&App, "virtual_vcr", 0, 0, &argc_share,
 				argv_share, fallbacks, args, n);
 
   display = XtDisplay(toplevel);
@@ -202,8 +202,8 @@ static void UICreate()
    balancescale = XmCreateScale(mainwindow, "scale", args, n); 
    XmStringFree (titleString);
    XtManageChild (balancescale);
-   XtAddCallback (balancescale, XmNvalueChangedCallback, (XtCallbackProc)balance_callback, NULL);
-   XtAddCallback (balancescale, XmNdragCallback,         (XtCallbackProc)balance_callback, NULL);
+   XtAddCallback (balancescale, XmNvalueChangedCallback, (XtCallbackProc)balance_callback, 0);
+   XtAddCallback (balancescale, XmNdragCallback,         (XtCallbackProc)balance_callback, 0);
 
 
    titleString = XmStringCreateLtoR ("Volume", cset);
@@ -224,8 +224,8 @@ static void UICreate()
    volumescale = XmCreateScale(mainwindow, "scale", args, n); 
    XmStringFree (titleString);
    XtManageChild (volumescale);
-   XtAddCallback (volumescale, XmNvalueChangedCallback, (XtCallbackProc)volume_callback, NULL);
-   XtAddCallback (volumescale, XmNdragCallback,         (XtCallbackProc)volume_callback, NULL);
+   XtAddCallback (volumescale, XmNvalueChangedCallback, (XtCallbackProc)volume_callback, 0);
+   XtAddCallback (volumescale, XmNdragCallback,         (XtCallbackProc)volume_callback, 0);
 
 
    titleString = XmStringCreateLtoR ("Play Speed", cset);
@@ -246,8 +246,8 @@ static void UICreate()
    speedscale = XmCreateScale(mainwindow, "scale", args, n); 
    XmStringFree (titleString);
    XtManageChild (speedscale);
-   XtAddCallback (speedscale, XmNvalueChangedCallback, (XtCallbackProc)speed_callback, NULL);
-   XtAddCallback (speedscale, XmNdragCallback,         (XtCallbackProc)speed_callback, NULL);
+   XtAddCallback (speedscale, XmNvalueChangedCallback, (XtCallbackProc)speed_callback, 0);
+   XtAddCallback (speedscale, XmNdragCallback,         (XtCallbackProc)speed_callback, 0);
 
 
    titleString = XmStringCreateLtoR ("Position", cset);
@@ -267,8 +267,8 @@ static void UICreate()
    positionscale = XmCreateScale(mainwindow, "scale", args, n); 
    XmStringFree (titleString);
    XtManageChild (positionscale);
-   XtAddCallback (positionscale, XmNvalueChangedCallback, (XtCallbackProc)position_callback, NULL);
-   XtAddCallback (positionscale, XmNdragCallback,         (XtCallbackProc)position_callback, NULL);
+   XtAddCallback (positionscale, XmNvalueChangedCallback, (XtCallbackProc)position_callback, 0);
+   XtAddCallback (positionscale, XmNdragCallback,         (XtCallbackProc)position_callback, 0);
 
   }
 
@@ -277,41 +277,41 @@ static void UICreate()
   XtRealizeWidget(shell);
 
   frametext = mib_find_name(mainload, "TitleText")->me;
-  XtVaSetValues(frametext,
+/*  XtVaSetValues(frametext,
 		XmNfontList, fontlist,
 		XmNcursorPositionVisible, False,
 		XmNeditable, False,
 		NULL);
-
+*/
   temp = mib_find_name(mainload, "Monitor")->me;
   XtAddCallback(temp, XmNexposeCallback,
-			(XtCallbackProc) monitor_expose, (XtPointer) NULL);
+			(XtCallbackProc) monitor_expose, (XtPointer) 0);
   XtVaSetValues(temp,   XmNforeground,
 			BlackPixel(display, DefaultScreen(display)),
 			XmNbackground,
 			BlackPixel(display, DefaultScreen(display)),
-                        NULL);
+                        0);
   monitorwindow = XtWindow(temp);
 
   temp = mib_find_name(mainload, "Info")->me;
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) info_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "Para")->me;
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) para_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "Prog")->me;
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) prog_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "File")->me;
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) file_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "Exit")->me;
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) exit_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
   
   temp = mib_find_name(mainload, "Loop")->me;
   XtVaGetValues(temp, XmNforeground, &fg,
@@ -345,18 +345,18 @@ static void UICreate()
   XmNselectPixmap, (XCreatePixmapFromBitmapData(display, DefaultRootWindow(display),
                                (char *)loop_bits, loop_width, loop_height, fg, bg, depth)),
 */
-		NULL);
+		0);
   XtAddCallback(temp, XmNvalueChangedCallback, (XtCallbackProc) loopchange_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 /*
    XtAddCallback(temp, XmNarmCallback, (XtCallbackProc) looparm_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
   XtAddCallback(temp, XmNdisarmCallback, (XtCallbackProc) loopdisarm_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 */
   temp = mib_find_name(mainload, "Normal")->me;
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) normal_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "Rewind")->me;
   XtVaGetValues(temp, XmNforeground, &fg,
@@ -364,9 +364,9 @@ static void UICreate()
   button_pix = XCreatePixmapFromBitmapData(display, DefaultRootWindow(display),
                 (char *)fb_bits, fb_width, fb_height, fg, bg, depth);
   XtVaSetValues(temp, XmNlabelType, XmPIXMAP,
-                        XmNlabelPixmap, button_pix, NULL);
+                        XmNlabelPixmap, button_pix, 0);
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) fb_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "Stop")->me;
   XtVaGetValues(temp, XmNforeground, &fg,
@@ -374,9 +374,9 @@ static void UICreate()
   button_pix = XCreatePixmapFromBitmapData(display, DefaultRootWindow(display),
                 (char *)stop_bits, stop_width, stop_height, fg, bg, depth);
   XtVaSetValues(temp, XmNlabelType, XmPIXMAP,
-                        XmNlabelPixmap, button_pix, NULL);
+                        XmNlabelPixmap, button_pix, 0);
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) stop_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "FF")->me;
   XtVaGetValues(temp, XmNforeground, &fg,
@@ -384,9 +384,9 @@ static void UICreate()
   button_pix = XCreatePixmapFromBitmapData(display, DefaultRootWindow(display),
                 (char *)ff_bits, ff_width, ff_height, fg, bg, depth);
   XtVaSetValues(temp, XmNlabelType, XmPIXMAP,
-                        XmNlabelPixmap, button_pix, NULL);
+                        XmNlabelPixmap, button_pix, 0);
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) ff_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "Step")->me;
   XtVaGetValues(temp, XmNforeground, &fg,
@@ -394,9 +394,9 @@ static void UICreate()
   button_pix = XCreatePixmapFromBitmapData(display, DefaultRootWindow(display),
                  (char *)step_bits, step_width, step_height, fg, bg, depth);
   XtVaSetValues(temp, XmNlabelType, XmPIXMAP,
-                        XmNlabelPixmap, button_pix, NULL);
+                        XmNlabelPixmap, button_pix, 0);
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) step_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(mainload, "Play")->me;
   XtVaGetValues(temp, XmNforeground, &fg,
@@ -406,7 +406,7 @@ static void UICreate()
   XtVaSetValues(temp, XmNlabelType, XmPIXMAP,
                         XmNlabelPixmap, button_pix, NULL);
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) play_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
 /*****************************************************************************/
 
@@ -430,14 +430,14 @@ static void UICreate()
 
   temp = mib_find_name(infoload, "Dismiss")->me;
   XtAddCallback(temp, XmNactivateCallback, (XtCallbackProc) infoclose_callback,
-			(XtPointer) NULL);
+			(XtPointer) 0);
 
   temp = mib_find_name(infoload, "TextBig")->me;
   XtVaSetValues(temp, XmNcursorPositionVisible, False,
-			   XmNeditable, False, NULL);
+			   XmNeditable, False, 0);
   XmTextSetString(temp, infomessage);
 
-  XmFontListFree (fontlist);
+//  XmFontListFree (fontlist);
 
   parashell = CreateParameterWindow(shell);
 
@@ -500,7 +500,7 @@ void UIMinsize(int x, int y)
 
   if (privcolormap)
   {
-    XtVaSetValues(shell, XmNcolormap, cmap, NULL);
+    XtVaSetValues(shell, XmNcolormap, cmap, 0);
   }
   if (shell)
   {
@@ -510,7 +510,7 @@ void UIMinsize(int x, int y)
 		  XmNminHeight, MINY,
                   XmNmaxWidth, minx,
 		  XmNmaxHeight, miny,
-		  NULL);
+		  0);
 
     XtMapWidget(shell); /* Map the shell now to avoid disappearing buttons! */
     if (displaywin)
@@ -702,7 +702,7 @@ static void speed_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cbs)
     CmdWrite((char *)&value, 4);
     break;
   default:
-    fprintf(stderr, "Hit the default, incorrect reason sent for scale!!\n");
+    ACE_OS::fprintf(stderr, "Hit the default, incorrect reason sent for scale!!\n");
     break;
  }
 }
@@ -722,7 +722,7 @@ static void balance_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cbs)
     CmdWrite((char *)&value, 4);
     break;
   default:
-    fprintf(stderr, "Hit the default, incorrect reason sent for scale!!\n");
+    ACE_OS::fprintf(stderr, "Hit the default, incorrect reason sent for scale!!\n");
     break;
  }
 }
@@ -765,7 +765,7 @@ static void position_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cbs
     }
     break;
   default:
-    fprintf(stderr, "Hit the default, incorrect reason sent for scale!!\n");
+    ACE_OS::fprintf(stderr, "Hit the default, incorrect reason sent for scale!!\n");
     break;
  }
 }
@@ -805,7 +805,7 @@ static void cmdSocket_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cb
       }
       else
       {
-	fprintf(stderr, "UI: VCR program initialization failed.\n");
+	ACE_OS::fprintf(stderr, "UI: VCR program initialization failed.\n");
 	playtag = 0;
       }
     }
@@ -873,9 +873,9 @@ void UIprocess(int cmdSock)
   
   VPinitWindow(shell, monitorwindow, cmdSock);
   XtAppAddInput(App, cmdSock, (XtPointer)XtInputReadMask,
-		(XtInputCallbackProc)cmdSocket_callback, NULL);
+		(XtInputCallbackProc)cmdSocket_callback, 0);
 
-  title = vh = vf = vb = ah = af = ab = NULL;
+  title = vh = vf = vb = ah = af = ab = 0;
 
   for (i = 1; i < argc_share; i++) {
     if (ACE_OS::strcmp (argv_share[i], "-v") == 0) {
@@ -902,7 +902,7 @@ void UIprocess(int cmdSock)
     }
   }
 
-  if (title != NULL) { /* the init program is supplied by -l */
+  if (title != 0) { /* the init program is supplied by -l */
     cerr << "title is not null \n";
     FILE * fp;
     char buf[PATH_SIZE];
@@ -913,24 +913,24 @@ void UIprocess(int cmdSock)
     
     get_full_path(title, buf, 256);
     fp = fopen(buf, "r");
-    if (fp != NULL) {
-      if ((!feof(fp)) && fgets(buf, PATH_SIZE, fp) != NULL) {
+    if (fp != 0) {
+      if ((!feof(fp)) && fgets(buf, PATH_SIZE, fp) != 0) {
 	buf[strlen(buf)-1] = 0;
       }
       else buf[0] = 0;
-      if ((!feof(fp)) && fgets(vh, PATH_SIZE, fp) != NULL) {
+      if ((!feof(fp)) && fgets(vh, PATH_SIZE, fp) != 0) {
 	vh[strlen(vh)-1] = 0;
       }
       else vh[0] = 0;
-      if ((!feof(fp)) && fgets(vf, PATH_SIZE, fp) != NULL) {
+      if ((!feof(fp)) && fgets(vf, PATH_SIZE, fp) != 0) {
 	vf[strlen(vf)-1] = 0;
       }
       else vf[0] = 0;
-      if ((!feof(fp)) && fgets(ah, PATH_SIZE, fp) != NULL) {
+      if ((!feof(fp)) && fgets(ah, PATH_SIZE, fp) != 0) {
 	ah[strlen(ah)-1] = 0;
       }
       else ah[0] = 0;
-      if ((!feof(fp)) && fgets(af, PATH_SIZE, fp) != NULL) {
+      if ((!feof(fp)) && fgets(af, PATH_SIZE, fp) != 0) {
 	af[strlen(af)-1] = 0;
       }
       else af[0] = 0;
@@ -941,29 +941,29 @@ void UIprocess(int cmdSock)
       StartProgram(buf, vh, vf, ah, af);
     }
   }
-  else if (vh != NULL || ah != NULL) {/* init program supplied by -v and -a */
+  else if (vh != 0 || ah != 0) {/* init program supplied by -v and -a */
     char *ptr;
 
     /* form the title */
-    if (vh != NULL) {
+    if (vh != 0) {
       title = (char *)ACE_OS::malloc(strlen(vh) + 1);
-      if (title != NULL) {
+      if (title != 0) {
 	strcpy(title, vh);
       }
     }
     else {
       title = (char *)ACE_OS::malloc(strlen(ah) + 1);
-      if (title != NULL) {
+      if (title != 0) {
 	strcpy(title, ah);
       }
     }
-    if (title == NULL) {
+    if (title == 0) {
       title = "The program from the command line";
     }
 
     /* generate vh and vf */
-    if (vh != NULL) {
-      if ((ptr = strchr(vh, ':')) != NULL) {
+    if (vh != 0) {
+      if ((ptr = strchr(vh, ':')) != 0) {
 	* ptr = 0;
 	vf = ptr + 1;
       }
@@ -975,8 +975,8 @@ void UIprocess(int cmdSock)
     else vh = vf = "";
 
     /* generate ah and af */
-    if (ah != NULL) {
-      if ((ptr = strchr(ah, ':')) != NULL) {
+    if (ah != 0) {
+      if ((ptr = strchr(ah, ':')) != 0) {
 	* ptr = 0;
 	af = ptr + 1;
       }
@@ -987,12 +987,12 @@ void UIprocess(int cmdSock)
     }
     else ah = af = "";
 
-    fprintf(stderr, "Init program: title %s, vh %s, vf %s, ah %s, af %s\n",
+    ACE_OS::fprintf(stderr, "Init program: title %s, vh %s, vf %s, ah %s, af %s\n",
 	    title, vh, vf, ah, af);
     StartProgram(title, vh, vf, ah, af);
     ACE_OS::free (title);
-    if (ab != NULL) ACE_OS::free (ab);
-    if (vb != NULL) ACE_OS::free (vb);
+    if (ab != 0) ACE_OS::free (ab);
+    if (vb != 0) ACE_OS::free (vb);
   }
   
   XtAppMainLoop(App);

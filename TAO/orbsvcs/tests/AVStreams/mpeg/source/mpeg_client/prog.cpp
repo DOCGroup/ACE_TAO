@@ -674,6 +674,7 @@ static void verifyCB(Widget w, XtPointer closure, XmTextVerifyCallbackStruct * c
 
 static void CreateModifyWindow(Widget parent)
 {
+  ACE_UNUSED_ARG (parent);
   Arg   	args[20];
   int		n;
   Widget 	wform, wtext, wdone, wcancel;
@@ -761,7 +762,7 @@ static void CreateModifyWindow(Widget parent)
   
   XtManageChild(wtext);
   
-  XmFontListFree (fontlist);
+ // XmFontListFree (fontlist);
   wprogmodify = wtext;
 }
 
@@ -898,7 +899,7 @@ Widget CreateProgramWindow(Widget parent, int cmdSock, int * playflag, Widget fr
   }
   wlist = XmCreateScrolledList(wform, "ProgramList", args, n);
   XtManageChild(wlist);
-  XmFontListFree(fontlist);
+//  XmFontListFree(fontlist);
   wproglist = wlist;
   for (n = 0; n < items; n++)
     XmStringFree(item[n]);
