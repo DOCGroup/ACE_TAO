@@ -1,13 +1,17 @@
+Tue Feb  2 20:02:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * bin/make_release: Added .gz to the list of binary file extensions.
+
 Tue Feb  2 19:28:46 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* docs/tutorials: ACE-ified the first 11 tutorials.  I hope 
-	  James still recognizes this stuff now ;-)
+        * docs/tutorials: ACE-ified the first 11 tutorials.  I hope
+          James still recognizes this stuff now ;-)
 
 Tue Feb  2 19:12:50 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/001/logger.h (class Logging_Handler): 
-	  Incorporated Pradeep's suggestion to get rid of the memset() and
- 	  use the recv() return value to drop in the null-termination.
+        * docs/tutorials/001/logger.h (class Logging_Handler):
+          Incorporated Pradeep's suggestion to get rid of the memset() and
+          use the recv() return value to drop in the null-termination.
 
 Tue Feb  2 14:19:30 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -29,12 +33,12 @@ Tue Feb  2 12:48:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Feb  2 12:27:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp: Added an ACE_UNUSED_ARG for program_name for
- 	  ACE::daemonize().  Thanks to David Levine for reporting this.
+        * ace/ACE.cpp: Added an ACE_UNUSED_ARG for program_name for
+          ACE::daemonize().  Thanks to David Levine for reporting this.
 
-	* ace/OS.h: Generalized the WIF* macros so that they will be
- 	  defined on any platform that lacks them, not just NT.  Thanks to
- 	  David Levine for reporting this.
+        * ace/OS.h: Generalized the WIF* macros so that they will be
+          defined on any platform that lacks them, not just NT.  Thanks to
+          David Levine for reporting this.
 
 Tue Feb 02 08:58:32 1999  Steve Huston  <shuston@riverace.com>
 
