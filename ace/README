@@ -118,6 +118,7 @@ ACE_HAS_ANSI_CASTS                      Platform supports new C++
                                         style casts (dynamic_cast,
                                         static_cast, reinterpret_cast
                                         and const_cast)
+ACE_HAS_DINKUM_STL                      Using the Dinkum STL library
 ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with
                                         ACE_HAS_TSS_EMULATION _only_.
                                         Defaults to 64.

@@ -82,6 +82,7 @@
 #if defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
 # define ACE_LACKS_PTRDIFF_T
 # define ACE_PTRDIFF_T_TYPE std::ptrdiff_t
+# define ACE_HAS_DINKUM_STL
 #endif
 
 #if defined(__BORLANDC__) && (__BORLANDC__ < 0x600)
