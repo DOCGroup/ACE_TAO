@@ -176,5 +176,9 @@ BuildCmds= \
 
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\svc.conf
+# End Source File
 # End Target
 # End Project
