@@ -32,6 +32,8 @@ class TAO_Connector_Registry;
 class TAO_Reactor_Registry;
 class TAO_Priority_Mapping;
 
+class TAO_Flushing_Strategy;
+
 // ****************************************************************
 
 class TAO_Export TAO_Protocol_Item
@@ -183,6 +185,10 @@ public:
 
   /// Creates the lock for the lock needed in the Cache Map
   virtual ACE_Lock *create_cached_connection_lock (void);
+
+  /// Creates the flushing strategy.  The new instance is owned by the
+  /// caller.
+  virtual TAO_Flushing_Strategy *create_flushing_strategy (void) = 0;
 
 protected:
   /**
