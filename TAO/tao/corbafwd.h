@@ -1147,7 +1147,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_ISO8859_1
 #define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
 
-#define TAO_DEFAULT_PRIORITY -1
+#define TAO_INVALID_PRIORITY -1
 
 // An hash define for the regular two way operation
 #define TAO_TWOWAY_RESPONSE_FLAG 255

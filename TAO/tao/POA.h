@@ -283,6 +283,8 @@ protected:
 
   int validity_check (void);
 
+  int validate_priority_model (void);
+
   PortableServer::ThreadPolicyValue thread_;
 
   PortableServer::LifespanPolicyValue lifespan_;
