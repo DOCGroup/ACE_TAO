@@ -73,6 +73,13 @@ public:
    ~ACE_Thread_Descriptor (void);
    // Do nothing destructor to keep some compilers happy
 
+  // = We need the following to make BORLANDC happy.
+  int operator== (const ACE_Thread_Descriptor &rhs) const;
+  // Equality operator.
+
+  int operator!= (const ACE_Thread_Descriptor &rhs) const;
+  // Inequality operator.
+
 private:
   ACE_thread_t thr_id_;
   // Unique thread ID.
@@ -104,6 +111,7 @@ private:
   ACE_Thread_Descriptor *prev_;
   // We need these pointers to maintain the double-linked list in a
   // thread managers.
+
 };
 
 // Forward declaration.

@@ -1,3 +1,40 @@
+Tue Nov 18 19:28:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (handle_signal): Fixed a large number of
+ 	  bugs with non-portable scope of the loop counter...  Thanks to
+ 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+
+	* ace/Select_Reactor: Added == and != operators for
+ 	  ACE_Event_Tuple to fix things with BORLANDC.  Thanks to Valik
+ 	  Solorzano Barboza <valik@xs4all.nl> for reporting this.
+
+	* ace/Select_Reactor.cpp (unbind): Fixed a stupid bug with the
+ 	  scope of the loop counter...  Thanks to Valik Solorzano Barboza
+ 	  <valik@xs4all.nl> for reporting this.
+
+	* ace/OS.i (tempnam): Fixed a typo -- WIN32 should be ACE_WIN32.
+  	  Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
+ 	  reporting this.
+
+	* ace/OS.h: Reordered the ACE_SEH_* macros so they work correctly
+ 	  with BORLANDC.  Thanks to Valik Solorzano Barboza
+ 	  <valik@xs4all.nl> for reporting this.
+
+	* ace/OS: Added operator== and operator!= for ACE_Cleanup_Info so
+ 	  that it will work correctly with BORLANDC.  Thanks to Valik
+ 	  Solorzano Barboza <valik@xs4all.nl> for reporting this.
+
+	* ace/config-win32-common.h: Added
+ 	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION for BORLANDC.  Thanks to
+ 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+
+	* ace/Filecache.cpp: Fixed a bug with BORLANDC.  Thanks to Valik
+ 	  Solorzano Barboza <valik@xs4all.nl> for reporting this.
+
+	* ace/ACE.cpp (crc32): Added some parens to the COMPUTE macro to
+ 	  make it easier to grok.  Thanks to Valik Solorzano Barboza
+ 	  <valik@xs4all.nl> for reporting this.
+
 Tue Nov 18 16:27:32 1997    <irfan@TWOSTEP>
 
 	* ace/Log_Msg.cpp (log): Changed the %T option of Log_Msg from

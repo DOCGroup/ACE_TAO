@@ -82,12 +82,14 @@
 #   include /**/ <iostream.h>
 
 #   if defined (ACE_WIN32)
-#     include /**/ <ios.h>
-#     include /**/ <streamb.h>
-#     include /**/ <strstrea.h>
-#     include /**/ <istream.h>
-#     include /**/ <ostream.h>
-#     include /**/ <iomanip.h>
+#     if defined(_MSC_VER) // VSB
+#     	include /**/ <ios.h>
+#     	include /**/ <streamb.h>
+#       include /**/ <istream.h>
+#     	include /**/ <ostream.h>
+#     	include /**/ <iomanip.h>
+#     endif /* _MSC_VER */
+#     include /**/ <strstrea.h> // VSB
 #   endif /* ACE_WIN32 */
 
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */

@@ -5,8 +5,14 @@
 #include "ace/Filecache.h"
 #include "ace/Object_Manager.h"
 
+#if defined (__BORLANDC__) //VSB
+// Third parameter will be ignored in ACE_OS::open
+static const int R_MASK = 0;
+static const int W_MASK = 0;
+#else
 static const int R_MASK = S_IRUSR|S_IRGRP|S_IROTH;
 static const int W_MASK = S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH;
+#endif /* __BORLANDC__ */
 
 #if defined (ACE_WIN32)
 // See if you can get rid of some of these.

@@ -46,6 +46,19 @@ ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
 {
 }
 
+int 
+ACE_Thread_Descriptor::operator==(const ACE_Thread_Descriptor &rhs) const
+{
+  return ACE_OS::thr_cmp (this->thr_handle_, rhs_th.thr_handle_) == 0
+    && ACE_OS::thr_equal (this->thr_id_, rhs.thr_id_) == 0;
+}
+
+int 
+ACE_Thread_Descriptor::operator!=(const ACE_Thread_Descriptor &rhs) const
+{
+  return !(*this == rhs);
+}
+
 int
 ACE_Thread_Descriptor::at_exit (void *object,
                                 ACE_CLEANUP_FUNC cleanup_hook,
@@ -1003,11 +1016,9 @@ ACE_Thread_Manager::apply_grp (int grp_id,
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
        iter.advance ())
-    {
-      if (iter.next ()->grp_id_ == grp_id)
-        if ((this->*func) (iter.next (), arg) == -1)
-          result = -1;
-    }
+    if (iter.next ()->grp_id_ == grp_id)
+      if ((this->*func) (iter.next (), arg) == -1)
+        result = -1;
 
   // Must remove threads after we have traversed the thr_list_ to
   // prevent clobber thr_list_'s integrity.

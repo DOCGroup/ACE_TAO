@@ -105,6 +105,12 @@ struct ACE_Event_Tuple
   ACE_Event_Tuple (void);
   ACE_Event_Tuple (ACE_Event_Handler* eh, ACE_HANDLE h);
   
+  int operator== (const ACE_Event_Tuple &rhs) const;
+  // Equality operator.
+
+  int operator!= (const ACE_Event_Tuple &rhs) const;
+  // Inequality operator.
+
   ACE_HANDLE handle_;
   ACE_Event_Handler* event_handler_;
 };
