@@ -1,9 +1,18 @@
+Sat Aug 14 03:29:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/tests/Config_Handlers/handler_test.mpb:
+	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+	* tools/XML_Helpers/XMLHelpers.mpc:
+
+	  Tried fixing some warnings and errors in the builds. I am not
+	  able to reproduce it and so I am taking a blind shot. 
+
 Thu Aug 12 14:14:00 Jules White <jules@dre.vanderbilt.edu>
   
 	* docs/schema/cdp.xsd: 
 	* docs/schema/Modified_Deployment.xsd:
 	
-	Changed the schema so that it was more compliant with the spec.
+          Changed the schema so that it was more compliant with the spec. 
 
 Thu Aug 12 15:25:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
