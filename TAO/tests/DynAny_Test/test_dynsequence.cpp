@@ -123,7 +123,7 @@ Test_DynSequence::run_test (void)
       ftc1->length (3,
                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      AnySeq as_in (3);
+      CORBA::AnySeq as_in (3);
       as_in.length (3);
       CORBA_Any in_any3;
       in_any3 <<= CORBA::Any::from_string (data.m_string2, 0);
@@ -134,7 +134,7 @@ Test_DynSequence::run_test (void)
       ftc1->set_elements (as_in,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
+      CORBA::AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Any out_any2 = (*as_out)[2];
       CORBA::String out_str2;
