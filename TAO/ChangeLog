@@ -1,12 +1,18 @@
+Thu Oct 16 00:39:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+          Fixed the problem for AMI_IDL_Files not built in the idl_stubs
+          rule.
+
 Wed Oct 15 22:09:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/Makefile: 
+	* orbsvcs/tests/Makefile:
 	* orbsvcs/orbsvcs/Makefile: Enable the RTCosScheduling build only
 	  when rtcorba and interceptors are enabled.
 
 Wed Oct 15 20:54:42 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/RTCosScheduling/Makefile: Updated dependencies.	
+	* orbsvcs/tests/RTCosScheduling/Makefile: Updated dependencies.
 
 Wed Oct 15 16:30:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent.mpc:
