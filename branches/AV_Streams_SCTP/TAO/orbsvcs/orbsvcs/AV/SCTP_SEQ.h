@@ -203,8 +203,8 @@ public:
   int connector_open (TAO_AV_SCTP_SEQ_Connector *connector,
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler *&handler,
-                         const ACE_INET_Addr &remote_addr,
-			 const ACE_INET_Addr &local_addr);
+                         const ACE_Multihomed_INET_Addr &remote_addr,
+			 const ACE_Multihomed_INET_Addr &local_addr);
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *& handler);
 protected:
   TAO_AV_SCTP_SEQ_Connector *connector_;
