@@ -395,23 +395,24 @@ CORBA_ORB::resolve_name_service (void)
       
       // Choose any local port, we don't really care.
       if (response.open (ACE_Addr::sap_any) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "open failed.\n"),
-                          CORBA_Object::_nil ());
+        {
+          ACE_ERROR ((LM_ERROR, "open failed.\n"));
+          return CORBA_Object::_nil ();
+        }
+      
 
       if (response.get_local_addr (response_addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "get_local_addr failed.\n"),
-                          CORBA_Object::_nil ());
+        {
+          ACE_ERROR ((LM_ERROR, "get_local_addr failed.\n"));
+          return CORBA_Object::_nil ();
+        }
 
       // Figure out what port to listen on for server replies.
       CORBA::Short reply_port = response_addr.get_port_number ();
 
       // Send multicast of one byte, enough to wake up server.
       ssize_t n_bytes = multicast.send ((char *) &reply_port,
-                                        sizeof reply_port)
-
-      // Send multicast of one byte, enough to wake up server.
+                                        sizeof reply_port);
       if (n_bytes == -1)
 	return CORBA_Object::_nil ();
 
