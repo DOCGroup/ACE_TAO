@@ -42,9 +42,15 @@ class ACE_Export ACE_Process_Mutex
   //     the same host machine, as well as within a process, of
   //     course.
 public:
-  ACE_Process_Mutex (const ACE_TCHAR *name = 0,
+  ACE_Process_Mutex (const char *name = 0,
                      void *arg = 0);
   // Create a Process_Mutex, passing in the optional <name>.
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_Process_Mutex (const wchar_t *name,
+                     void *arg = 0);
+  // Create a Process_Mutex, passing in the optional <name>. (wchar_t version)
+#endif /* ACE_HAS_WCHAR */
 
   ~ACE_Process_Mutex (void);
 

@@ -758,19 +758,16 @@ typedef struct
 #   define ACE_STDOUT 1
 #   define ACE_STDERR 2
 
-#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT ("/")
-#   define ACE_DIRECTORY_SEPARATOR_CHAR  ACE_TEXT ('/')
+#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
+#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+#   define ACE_PLATFORM_A "pSOS"
+#   define ACE_PLATFORM_EXE_SUFFIX_A ""
 
 #   define ACE_DLL_SUFFIX ACE_TEXT (".so")
 #   define ACE_DLL_PREFIX ACE_TEXT ("lib")
 #   define ACE_LD_SEARCH_PATH ACE_TEXT ("LD_LIBRARY_PATH")
 #   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (":")
 #   define ACE_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
-
-#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT ("/")
-#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT ('/')
-#   define ACE_PLATFORM ACE_TEXT ("pSOS")
-#   define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT ("")
 
 #   define ACE_MAX_DEFAULT_PORT 65535
 
@@ -793,13 +790,6 @@ typedef struct
 #     define MAP_FIXED 0
 #   endif /* ACE_LACKS_MMAP */
 
-// The following 2 defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_LOCALNAME)
-#     define ACE_DEFAULT_LOCALNAME ACE_TEXT ("localnames")
-#   endif /* ACE_DEFAULT_LOCALNAME */
-#   if !defined (ACE_DEFAULT_GLOBALNAME)
-#     define ACE_DEFAULT_GLOBALNAME ACE_TEXT ("globalnames")
-#   endif /* ACE_DEFAULT_GLOBALNAME */
 
 typedef int ACE_exitcode;
 
@@ -2942,23 +2932,14 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     include /**/ <sys/timeb.h>
 #   endif /* ACE_HAS_WINCE */
 
-// The following defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_LOCALNAME)
-#     define ACE_DEFAULT_LOCALNAME ACE_TEXT ("localnames")
-#   endif /* ACE_DEFAULT_LOCALNAME */
-
-#   if !defined (ACE_DEFAULT_GLOBALNAME)
-#     define ACE_DEFAULT_GLOBALNAME ACE_TEXT ("globalnames")
-#   endif /* ACE_DEFAULT_GLOBALNAME */
-
 // Need to work around odd glitches with NT.
 #   if !defined (ACE_MAX_DEFAULT_PORT)
 #     define ACE_MAX_DEFAULT_PORT 0
 #   endif /* ACE_MAX_DEFAULT_PORT */
 
 // We're on WinNT or Win95
-#   define ACE_PLATFORM ACE_TEXT ("Win32")
-#   define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT (".exe")
+#   define ACE_PLATFORM_A "Win32"
+#   define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
 
 // Used for dynamic linking
 #   if !defined (ACE_DEFAULT_SVC_CONF)
@@ -3014,8 +2995,8 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   define ACE_DEV_NULL "nul"
 
 // Define the pathname separator characters for Win32 (ugh).
-#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT ("\\")
-#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT ('\\')
+#   define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
+#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
 #   define ACE_LD_SEARCH_PATH ACE_TEXT ("PATH")
 #   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (";")
 #   define ACE_DLL_SUFFIX ACE_TEXT (".dll")
@@ -3262,12 +3243,12 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #   define ACE_INVALID_SEM_KEY -1
 
 // Define the pathname separator characters for UNIX.
-#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT ("/")
-#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT ('/')
+#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
+#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
 
 // We're some kind of UNIX...
-#   define ACE_PLATFORM ACE_TEXT("UNIX")
-#   define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT("")
+#   define ACE_PLATFORM_A "UNIX"
+#   define ACE_PLATFORM_EXE_SUFFIX_A ""
 
 #   if !defined (ACE_LD_SEARCH_PATH)
 #     define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
@@ -3282,15 +3263,6 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #   if !defined (ACE_DLL_PREFIX)
 #     define ACE_DLL_PREFIX "lib"
 #   endif /* ACE_DLL_PREFIX */
-
-// The following 2 defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_LOCALNAME)
-#     define ACE_DEFAULT_LOCALNAME ACE_TEXT ("localnames")
-#   endif /* ACE_DEFAULT_LOCALNAME */
-
-#   if !defined (ACE_DEFAULT_GLOBALNAME)
-#     define ACE_DEFAULT_GLOBALNAME ACE_TEXT ("globalnames")
-#   endif /* ACE_DEFAULT_GLOBALNAME */
 
 // Used for dynamic linking.
 #   if !defined (ACE_DEFAULT_SVC_CONF)
@@ -3732,6 +3704,35 @@ extern "C"
 #   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
 
 # endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+
+// Define the Wide character and normal versions of some of the string macros
+#   if defined (ACE_HAS_WCHAR)
+#     define ACE_DIRECTORY_SEPARATOR_STR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_STR_A)
+#     define ACE_DIRECTORY_SEPARATOR_CHAR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_CHAR_A)
+#     define ACE_PLATFORM_W ACE_TEXT_WIDE(ACE_PLATFORM_A)
+#     define ACE_PLATFORM_EXE_SUFFIX_W ACE_TEXT_WIDE(ACE_PLATFORM_EXE_SUFFIX)
+#   endif /* ACE_HAS_WCHAR */
+
+#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT(ACE_DIRECTORY_SEPARATOR_STR_A)
+#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT(ACE_DIRECTORY_SEPARATOR_CHAR_A)
+#   define ACE_PLATFORM ACE_TEXT(ACE_PLATFORM_A)
+#   define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT(ACE_PLATFORM_EXE_SUFFIX)
+
+// Theses defines are used by the ACE Name Server.
+#   if !defined (ACE_DEFAULT_LOCALNAME_A)
+#     define ACE_DEFAULT_LOCALNAME_A "localnames"
+#   endif /* ACE_DEFAULT_LOCALNAME_A */
+#   if !defined (ACE_DEFAULT_GLOBALNAME_A)
+#     define ACE_DEFAULT_GLOBALNAME_A "globalnames"
+#   endif /* ACE_DEFAULT_GLOBALNAME_A */
+
+#   if defined (ACE_HAS_WCHAR)
+#     define ACE_DEFAULT_LOCALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_LOCALNAME_A)
+#     define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)
+#   endif /* ACE_HAS_WCHAR */
+
+#   define ACE_DEFAULT_LOCALNAME ACE_TEXT(ACE_DEFAULT_LOCALNAME_A)
+#   define ACE_DEFAULT_GLOBALNAME ACE_TEXT(ACE_DEFAULT_GLOBALNAME_A)
 
 // defined Win32 specific macros for UNIX platforms
 # if !defined (O_BINARY)
@@ -4864,7 +4865,11 @@ public:
 # endif /* ACE_WIN32 */
 
   // = A set of wrappers for miscellaneous operations.
-  static int atoi (const ACE_TCHAR *s);
+  static int atoi (const char *s);
+
+# if defined (ACE_HAS_WCHAR)
+  static int atoi (const wchar_t *s);
+# endif /* ACE_HAS_WCHAR */
 
   static double floor (double x);
   // This method computes the largest integral value not greater than x.
@@ -4924,8 +4929,14 @@ public:
   static long sysinfo (int cmd,
                        char *buf,
                        long count);
-  static int hostname (ACE_TCHAR *name,
+
+  static int hostname (char *name,
                        size_t maxnamelen);
+
+#if defined (ACE_HAS_WCHAR)  
+  static int hostname (wchar_t *name,
+                       size_t maxnamelen);
+#endif /* ACE_HAS_WCHAR */
 
   // = A set of wrappers for explicit dynamic linking.
   static int dlclose (ACE_SHLIB_HANDLE handle);
@@ -5261,7 +5272,11 @@ public:
   static int thread_mutex_unlock (ACE_thread_mutex_t *m);
 
   // = A set of wrappers for low-level file operations.
-  static int access (const ACE_TCHAR *path, int amode);
+  static int access (const char *path, int amode);
+#if defined (ACE_HAS_WCHAR)
+  static int access (const wchar_t *path, int amode);
+#endif /* ACE_HAS_WCHAR */
+
   static int close (ACE_HANDLE handle);
   static ACE_HANDLE creat (const ACE_TCHAR *filename,
                            mode_t mode);
@@ -5317,10 +5332,16 @@ public:
 #if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
   ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
 #endif /* ACE_HAS_LLSEEK */
-  static ACE_HANDLE open (const ACE_TCHAR *filename,
+  static ACE_HANDLE open (const char *filename,
                           int mode,
                           int perms = 0,
                           LPSECURITY_ATTRIBUTES sa = 0);
+#if defined (ACE_HAS_WCHAR)
+  static ACE_HANDLE open (const wchar_t *filename,
+                          int mode,
+                          int perms = 0,
+                          LPSECURITY_ATTRIBUTES sa = 0);
+#endif /* ACE_HAS_WCHAR */
   static int putmsg (ACE_HANDLE handle,
                      const struct strbuf *ctl,
                      const struct strbuf *data,
@@ -5420,7 +5441,12 @@ public:
 
   // = A set of wrappers for directory operations.
   static mode_t umask (mode_t cmask);
-  static int chdir (const ACE_TCHAR *path);
+  static int chdir (const char *path);
+
+#if defined (ACE_HAS_WCHAR)
+  static int chdir (const wchar_t *path);
+#endif /* ACE_HAS_WCHAR */
+
   static int mkdir (const ACE_TCHAR *path,
                     mode_t mode = ACE_DEFAULT_DIR_PERMS);
   static int mkfifo (const ACE_TCHAR *file,
@@ -6745,9 +6771,15 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_POP(A)
 # endif /* ACE_HAS_PACE */
 
-# if !defined (ACE_DEFAULT_MUTEX)
-#   define ACE_DEFAULT_MUTEX ACE_TEXT ("ACE_MUTEX")
-# endif /* ACE_DEFAULT_MUTEX */
+# if !defined (ACE_DEFAULT_MUTEX_A)
+#   define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
+# endif /* ACE_DEFAULT_MUTEX_A */
+
+# if defined (ACE_HAS_WCHAR)
+#   define ACE_DEFAULT_MUTEX_W ACE_TEXT_WIDE(ACE_DEFAULT_MUTEX_A)
+# endif /* ACE_HAS_WCHAR */
+
+# define ACE_DEFAULT_MUTEX ACE_TEXT(ACE_DEFAULT_MUTEX_A)
 
 # if !defined (ACE_MAIN)
 #   define ACE_MAIN main

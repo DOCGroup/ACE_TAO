@@ -577,7 +577,7 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
 }
 
 ACE_INLINE int
-ACE_OS::chdir (const ACE_TCHAR *path)
+ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
 #if defined (ACE_HAS_PACE)
@@ -600,14 +600,23 @@ ACE_OS::chdir (const ACE_TCHAR *path)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
-
 #else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 
 #endif /* ACE_HAS_PACE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::chdir (const wchar_t *path)
+{
+#if defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
+#else /* ACE_WIN32 */
+  return ACE_OS::chdir (ACE_Wide_To_Ascii (path).char_rep ());
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
 
 #if !defined (ACE_LACKS_MKTEMP)
 ACE_INLINE ACE_TCHAR *
@@ -6092,17 +6101,26 @@ ACE_OS::socket (int domain,
 }
 
 ACE_INLINE int
-ACE_OS::atoi (const ACE_TCHAR *s)
+ACE_OS::atoi (const char *s)
 {
-  ACE_OS_TRACE ("ACE_OS::atoi");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_atoi (s), int, -1);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wtoi (s), int, -1);
-#else /* ACE_WIN32 */
+#else /* ACE_HAS_PACE */
   ACE_OSCALL_RETURN (::atoi (s), int, -1);
 #endif /* ACE_HAS_PACE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::atoi (const wchar_t *s)
+{
+#if defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_wtoi (s), int, -1);
+#else /* ACE_WIN32 */
+  return ACE_OS::atoi (ACE_Wide_To_Ascii(s).char_rep());
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE double
 ACE_OS::floor (double x)
@@ -8231,7 +8249,7 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS::access (const ACE_TCHAR *path, int amode)
+ACE_OS::access (const char *path, int amode)
 {
   ACE_OS_TRACE ("ACE_OS::access");
 #if defined (ACE_HAS_PACE)
@@ -8248,13 +8266,23 @@ ACE_OS::access (const ACE_TCHAR *path, int amode)
 
   ACE_OS::fclose (handle);
   return (handle == ACE_INVALID_HANDLE ? -1 : 0);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
 #else
   ACE_OSCALL_RETURN (::access (path, amode), int, -1);
 #endif /* ACE_HAS_PACE */
 }
 
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::access (const wchar_t *path, int amode)
+{
+#if defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
+#else /* ACE_WIN32 */
+  return ACE_OS::access (ACE_Wide_To_Ascii (path).char_rep (), amode);
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ACE_HANDLE
 ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
@@ -8300,7 +8328,7 @@ ACE_OS::uname (struct utsname *name)
 #endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
 
 ACE_INLINE int
-ACE_OS::hostname (ACE_TCHAR name[], size_t maxnamelen)
+ACE_OS::hostname (char name[], size_t maxnamelen)
 {
   ACE_OS_TRACE ("ACE_OS::hostname");
 #if defined (ACE_HAS_WINCE)
@@ -8322,7 +8350,7 @@ ACE_OS::hostname (ACE_TCHAR name[], size_t maxnamelen)
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_PHARLAP_RT */
 #elif defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (ACE_TEXT_GetComputerName (name,
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name,
                                                         LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
 #elif defined (VXWORKS)
@@ -8353,6 +8381,30 @@ ACE_OS::hostname (ACE_TCHAR name[], size_t maxnamelen)
     }
 #endif /* ACE_HAS_WINCE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
+{
+#if defined (ACE_WIN32)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (GetComputerNameW (name,
+                                                        LPDWORD (&maxnamelen)),
+                                          ace_result_), int, -1);
+#else /* ACE_WIN32 */
+  // Emulate using the char version
+  char *char_name = 0;
+  int result = 0;
+
+  ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
+
+  result = ACE_OS::hostname(char_name, maxnamelen);
+  ACE_OS::strcpy (name, ACE_Ascii_To_Wide (char_name));
+
+  delete [] char_name;
+  return result;
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::msgctl (int msqid, int cmd, struct msqid_ds *val)
