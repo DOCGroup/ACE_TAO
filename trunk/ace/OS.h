@@ -6536,4 +6536,78 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #   define WCOREDUMP(stat) 0
 # endif /* ACE_WIN32 */
 
+// Stuff used by the ACE CDR classes.
+#if defined ACE_LITTLE_ENDIAN
+#  define STREAM_BYTE_ORDER 1  
+// little endian encapsulation byte order has value = 1
+#else  /* ! ACE_LITTLE_ENDIAN */
+#  define STREAM_BYTE_ORDER 0  
+// big endian encapsulation byte order has value = 0
+#endif /* ! ACE_LITTLE_ENDIAN */
+
+// Default constants for ACE CDR performance optimizations.
+#define DEFAULT_CDR_BUFSIZE 512
+#define DEFAULT_CDR_EXP_GROWTH_MAX 4096
+#define DEFAULT_CDR_LINEAR_GROWTH_CHUNK 4096
+#define DEFAULT_CDR_MEMCPY_TRADEOFF 256
+
+// Typedefs and macros for efficient ACE CDR memory address
+// boundary alignment
+
+// Type for doing arithmetic on pointers ... as elsewhere, we assume
+// that "unsigned" versions of a type are the same size as the
+// "signed" version of the same type.
+
+#if     ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT
+typedef u_int ptr_arith_t;
+
+#elif   ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
+typedef u_long ptr_arith_t;
+
+#elif   ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
+typedef u_long long ptr_arith_t;
+
+#else
+#       error "Can't find a suitable type for doing pointer arithmetic."
+#endif /* error */
+
+// Efficiently align "value" up to "alignment", knowing that all such
+// boundaries are binary powers and that we're using two's complement
+// arithmetic.
+
+// Since the alignment is a power of two its binary representation is:
+//    alignment      = 0...010...0
+//
+// hence
+//
+//    alignment - 1  = 0...001...1 = T1
+//
+// so the complement is:
+//
+//  ~(alignment - 1) = 1...110...0 = T2
+//
+// Notice that there is a multiple of <alignment> in the range
+// [<value>,<value> + T1], also notice that if
+//
+// X = ( <value> + T1 ) & T2
+//
+// then
+//
+// <value> <= X <= <value> + T1
+//
+// because the & operator only changes the last bits, and since X is a
+// multiple of <alignment> (its last bits are zero) we have found the
+// multiple we wanted.
+//
+
+#define align_binary(ptr, alignment) \
+    ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))
+
+// Efficiently round "ptr" up to an "alignment" boundary, knowing that
+// all such boundaries are binary powers and that we're using two's
+// complement arithmetic.
+//
+#define ptr_align_binary(ptr, alignment) \
+        ((char *) align_binary (((ptr_arith_t) (ptr)), (alignment)))
+
 #endif  /* ACE_OS_H */
