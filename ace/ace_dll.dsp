@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="ACE dynamic library" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
@@ -14,30 +14,22 @@ CFG=ACE dynamic library - Win32 Alpha Unicode Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ace_dll.mak"\
- CFG="ACE dynamic library - Win32 Alpha Unicode Debug"
+!MESSAGE NMAKE /f "ace_dll.mak" CFG="ACE dynamic library - Win32 Alpha Unicode Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE dynamic library - Win32 Debug" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Release" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -179,13 +171,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /MTd WIN32" /c
 # ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MDd WIN32" /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -212,13 +204,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD WIN32" /c
 # ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD WIN32" /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -245,13 +237,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /MTd WIN32" /c
 # ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MDd WIN32" /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -278,13 +270,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD WIN32" /c
 # ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD WIN32" /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -339,7 +331,6 @@ DEP_CPP_ACE_C=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -403,6 +394,7 @@ DEP_CPP_ACE_C=\
 	
 NODEP_CPP_ACE_C=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -441,7 +433,6 @@ DEP_CPP_ACTIV=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -523,6 +514,7 @@ DEP_CPP_ACTIV=\
 	
 NODEP_CPP_ACTIV=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -640,7 +632,6 @@ DEP_CPP_ARGV_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -687,6 +678,7 @@ DEP_CPP_ARGV_=\
 	
 NODEP_CPP_ARGV_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -730,7 +722,6 @@ DEP_CPP_ASYNC=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -781,6 +772,7 @@ DEP_CPP_ASYNC=\
 	
 NODEP_CPP_ASYNC=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -822,7 +814,6 @@ DEP_CPP_ASYNCH=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -904,6 +895,7 @@ DEP_CPP_ASYNCH=\
 	
 NODEP_CPP_ASYNCH=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -966,7 +958,6 @@ DEP_CPP_CONNE=\
 	".\Connector.i"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Dynamic.h"\
 	".\Dynamic.i"\
 	".\Event_Handler.h"\
@@ -1066,6 +1057,7 @@ DEP_CPP_CONNE=\
 	
 NODEP_CPP_CONNE=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -1089,37 +1081,30 @@ SOURCE=.\Containers.cpp
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
 
 # PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 # PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
 
 # PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 # PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
 
 # PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
 
 # PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
 # PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
 
 !ENDIF 
 
@@ -1149,7 +1134,6 @@ DEP_CPP_CORBA=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\CORBA_Handler.h"\
 	".\CORBA_Handler.i"\
 	".\Event_Handler.h"\
@@ -1218,6 +1202,7 @@ DEP_CPP_CORBA=\
 	
 NODEP_CPP_CORBA=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -1759,7 +1744,6 @@ DEP_CPP_DYNAMI=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Dynamic_Service.h"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
@@ -1827,6 +1811,7 @@ DEP_CPP_DYNAMI=\
 	
 NODEP_CPP_DYNAMI=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -1864,7 +1849,6 @@ DEP_CPP_EVENT=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -1913,6 +1897,7 @@ DEP_CPP_EVENT=\
 	
 NODEP_CPP_EVENT=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -2550,7 +2535,6 @@ DEP_CPP_FILEC=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Filecache.h"\
@@ -2616,6 +2600,7 @@ DEP_CPP_FILEC=\
 	
 NODEP_CPP_FILEC=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -3141,7 +3126,6 @@ DEP_CPP_LOCAL=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -3230,6 +3214,7 @@ DEP_CPP_LOCAL=\
 	
 NODEP_CPP_LOCAL=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -3267,7 +3252,6 @@ DEP_CPP_LOCAL_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -3338,6 +3322,7 @@ DEP_CPP_LOCAL_=\
 	
 NODEP_CPP_LOCAL_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -3377,7 +3362,6 @@ DEP_CPP_LOG_M=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -3447,6 +3431,7 @@ DEP_CPP_LOG_M=\
 	
 NODEP_CPP_LOG_M=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -3953,7 +3938,6 @@ DEP_CPP_MALLO=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -4000,6 +3984,7 @@ DEP_CPP_MALLO=\
 	
 NODEP_CPP_MALLO=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -4092,7 +4077,6 @@ DEP_CPP_MEMOR=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -4139,6 +4123,7 @@ DEP_CPP_MEMOR=\
 	
 NODEP_CPP_MEMOR=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -4176,7 +4161,6 @@ DEP_CPP_MESSA=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -4225,6 +4209,7 @@ DEP_CPP_MESSA=\
 	
 NODEP_CPP_MESSA=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -4378,7 +4363,6 @@ DEP_CPP_MULTI=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -4475,6 +4459,7 @@ DEP_CPP_MULTI=\
 	
 NODEP_CPP_MULTI=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -4514,7 +4499,6 @@ DEP_CPP_NAME_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -4593,6 +4577,7 @@ DEP_CPP_NAME_=\
 	
 NODEP_CPP_NAME_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -4687,7 +4672,6 @@ DEP_CPP_NAME_S=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -4767,6 +4751,7 @@ DEP_CPP_NAME_S=\
 	
 NODEP_CPP_NAME_S=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -4806,7 +4791,6 @@ DEP_CPP_NAMIN=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -4909,6 +4893,7 @@ NODEP_CPP_NAMIN=\
 	"..\STL\pair.h"\
 	"..\STL\vector.h"\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -4947,7 +4932,6 @@ DEP_CPP_OBJEC=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -5020,6 +5004,7 @@ NODEP_CPP_OBJEC=\
 	".\Array.cpp"\
 	".\Array.i"\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -5114,7 +5099,6 @@ DEP_CPP_OS_CP=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -5165,6 +5149,7 @@ NODEP_CPP_OS_CP=\
 	".\Array.cpp"\
 	".\Array.i"\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -5202,7 +5187,6 @@ DEP_CPP_PARSE=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -5298,6 +5282,7 @@ DEP_CPP_PARSE=\
 	
 NODEP_CPP_PARSE=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -5407,7 +5392,6 @@ DEP_CPP_PRIOR=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -5484,6 +5468,7 @@ DEP_CPP_PRIOR=\
 	
 NODEP_CPP_PRIOR=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -5523,7 +5508,6 @@ DEP_CPP_PROAC=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -5628,6 +5612,7 @@ DEP_CPP_PROAC=\
 	
 NODEP_CPP_PROAC=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -5667,7 +5652,6 @@ DEP_CPP_PROCE=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -5716,6 +5700,7 @@ DEP_CPP_PROCE=\
 	
 NODEP_CPP_PROCE=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -5905,7 +5890,6 @@ DEP_CPP_REACT=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -5997,6 +5981,7 @@ DEP_CPP_REACT=\
 	
 NODEP_CPP_REACT=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -6034,7 +6019,6 @@ DEP_CPP_READ_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -6099,6 +6083,7 @@ DEP_CPP_READ_=\
 	
 NODEP_CPP_READ_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -6201,7 +6186,6 @@ DEP_CPP_REGIST=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -6293,6 +6277,7 @@ NODEP_CPP_REGIST=\
 	"..\STL\pair.h"\
 	"..\STL\vector.h"\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -6332,7 +6317,6 @@ DEP_CPP_REMOT=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -6413,6 +6397,7 @@ DEP_CPP_REMOT=\
 	
 NODEP_CPP_REMOT=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -6452,7 +6437,6 @@ DEP_CPP_REMOTE=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -6541,6 +6525,7 @@ DEP_CPP_REMOTE=\
 	
 NODEP_CPP_REMOTE=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -6635,7 +6620,6 @@ DEP_CPP_SELEC=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -6728,6 +6712,7 @@ DEP_CPP_SELEC=\
 	
 NODEP_CPP_SELEC=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -6794,7 +6779,6 @@ DEP_CPP_SERVI=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -6897,6 +6881,7 @@ DEP_CPP_SERVI=\
 	
 NODEP_CPP_SERVI=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -6936,7 +6921,6 @@ DEP_CPP_SERVIC=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -7036,6 +7020,7 @@ DEP_CPP_SERVIC=\
 	
 NODEP_CPP_SERVIC=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -7221,7 +7206,6 @@ DEP_CPP_SERVICE_T=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -7317,6 +7301,7 @@ DEP_CPP_SERVICE_T=\
 	
 NODEP_CPP_SERVICE_T=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -7548,7 +7533,6 @@ DEP_CPP_SIGNA=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -7595,6 +7579,7 @@ DEP_CPP_SIGNA=\
 	
 NODEP_CPP_SIGNA=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -8549,7 +8534,6 @@ DEP_CPP_SSTRI=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -8612,6 +8596,7 @@ DEP_CPP_SSTRI=\
 	
 NODEP_CPP_SSTRI=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -8672,7 +8657,6 @@ DEP_CPP_STRAT=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -8753,6 +8737,7 @@ DEP_CPP_STRAT=\
 	
 NODEP_CPP_STRAT=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -9069,7 +9054,6 @@ DEP_CPP_SVC_C=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -9138,6 +9122,7 @@ DEP_CPP_SVC_C=\
 	
 NODEP_CPP_SVC_C=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -9177,7 +9162,6 @@ DEP_CPP_SVC_CO=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -9277,6 +9261,7 @@ DEP_CPP_SVC_CO=\
 	
 NODEP_CPP_SVC_CO=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -9314,7 +9299,6 @@ DEP_CPP_SVC_H=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Dynamic.h"\
 	".\Dynamic.i"\
 	".\Event_Handler.h"\
@@ -9410,6 +9394,7 @@ DEP_CPP_SVC_H=\
 	
 NODEP_CPP_SVC_H=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -9568,7 +9553,6 @@ DEP_CPP_SYSTE=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -9616,6 +9600,7 @@ DEP_CPP_SYSTE=\
 	
 NODEP_CPP_SYSTE=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -9653,7 +9638,6 @@ DEP_CPP_TASK_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -9745,6 +9729,7 @@ DEP_CPP_TASK_=\
 	
 NODEP_CPP_TASK_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -9837,7 +9822,6 @@ DEP_CPP_THREAD=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Dynamic.h"\
 	".\Dynamic.i"\
 	".\Event_Handler.h"\
@@ -9888,6 +9872,7 @@ DEP_CPP_THREAD=\
 	
 NODEP_CPP_THREAD=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -10003,7 +9988,6 @@ DEP_CPP_TIMER=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -10062,6 +10046,7 @@ DEP_CPP_TIMER=\
 	
 NODEP_CPP_TIMER=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -10099,7 +10084,6 @@ DEP_CPP_TIMER_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -10152,6 +10136,7 @@ DEP_CPP_TIMER_=\
 	
 NODEP_CPP_TIMER_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -10189,7 +10174,6 @@ DEP_CPP_TIMER_L=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -10242,6 +10226,7 @@ DEP_CPP_TIMER_L=\
 	
 NODEP_CPP_TIMER_L=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -10279,7 +10264,6 @@ DEP_CPP_TIMER_Q=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -10330,6 +10314,7 @@ DEP_CPP_TIMER_Q=\
 	
 NODEP_CPP_TIMER_Q=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -10367,7 +10352,6 @@ DEP_CPP_TIMER_QU=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -10461,6 +10445,7 @@ DEP_CPP_TIMER_QU=\
 	
 NODEP_CPP_TIMER_QU=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -10498,7 +10483,6 @@ DEP_CPP_TIMER_W=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -10553,6 +10537,7 @@ DEP_CPP_TIMER_W=\
 	
 NODEP_CPP_TIMER_W=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -10914,7 +10899,6 @@ DEP_CPP_TOKEN_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -10985,6 +10969,7 @@ DEP_CPP_TOKEN_=\
 	
 NODEP_CPP_TOKEN_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -11022,7 +11007,6 @@ DEP_CPP_TOKEN_I=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -11093,6 +11077,7 @@ DEP_CPP_TOKEN_I=\
 	
 NODEP_CPP_TOKEN_I=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -11130,7 +11115,6 @@ DEP_CPP_TOKEN_M=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -11201,6 +11185,7 @@ DEP_CPP_TOKEN_M=\
 	
 NODEP_CPP_TOKEN_M=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -11238,7 +11223,6 @@ DEP_CPP_TOKEN_R=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -11310,6 +11294,7 @@ DEP_CPP_TOKEN_R=\
 	
 NODEP_CPP_TOKEN_R=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -11666,7 +11651,6 @@ DEP_CPP_UPIPE=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -11776,6 +11760,7 @@ DEP_CPP_UPIPE=\
 	
 NODEP_CPP_UPIPE=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -11815,7 +11800,6 @@ DEP_CPP_UPIPE_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -11924,6 +11908,7 @@ DEP_CPP_UPIPE_=\
 	
 NODEP_CPP_UPIPE_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -11963,7 +11948,6 @@ DEP_CPP_UPIPE_S=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -12068,6 +12052,7 @@ DEP_CPP_UPIPE_S=\
 	
 NODEP_CPP_UPIPE_S=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -12105,7 +12090,6 @@ DEP_CPP_WFMO_=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -12189,6 +12173,7 @@ DEP_CPP_WFMO_=\
 	
 NODEP_CPP_WFMO_=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
@@ -12228,7 +12213,6 @@ DEP_CPP_XTREA=\
 	".\config-win32.h"\
 	".\Containers.cpp"\
 	".\Containers.h"\
-	".\Containers.i"\
 	".\Event_Handler.h"\
 	".\Event_Handler.i"\
 	".\Free_List.cpp"\
@@ -12319,6 +12303,7 @@ DEP_CPP_XTREA=\
 	
 NODEP_CPP_XTREA=\
 	".\config.h"\
+	".\Containers.i"\
 	".\stdcpp.h"\
 	
 
