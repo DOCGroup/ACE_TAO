@@ -65,8 +65,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IFR_BaseC.o .obj/IFR_BaseC.so .shobj/IFR_BaseC.o .shobj/IFR_BaseC.so: IFR_BaseC.cpp IFR_BaseC.h \
-  $(ACE_ROOT)/ace/pre.h ifr_client_export.h \
+.obj/IFR_BaseC.o .obj/IFR_BaseC.o .obj/IFR_BaseC.o .obj/IFR_BaseC.o: IFR_BaseC.cpp IFR_BaseC.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -108,8 +107,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -409,7 +407,7 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IFR_BasicC.o .obj/IFR_BasicC.so .shobj/IFR_BasicC.o .shobj/IFR_BasicC.so: IFR_BasicC.cpp IFR_BasicC.h \
+.obj/IFR_BasicC.o .obj/IFR_BasicC.o .obj/IFR_BasicC.o .obj/IFR_BasicC.o: IFR_BasicC.cpp IFR_BasicC.h \
   $(ACE_ROOT)/ace/pre.h IFR_BaseC.h ifr_client_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -452,8 +450,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -597,8 +594,8 @@ endif
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp IFR_BaseC.i \
-  IFR_BasicC.i $(TAO_ROOT)/tao/Stub.h \
+  $(TAO_ROOT)/tao/VarOut_T.cpp IFR_BaseC.i IFR_BasicC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -753,7 +750,7 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IFR_ExtendedC.o .obj/IFR_ExtendedC.so .shobj/IFR_ExtendedC.o .shobj/IFR_ExtendedC.so: IFR_ExtendedC.cpp IFR_ExtendedC.h \
+.obj/IFR_ExtendedC.o .obj/IFR_ExtendedC.o .obj/IFR_ExtendedC.o .obj/IFR_ExtendedC.o: IFR_ExtendedC.cpp IFR_ExtendedC.h \
   $(ACE_ROOT)/ace/pre.h IFR_BasicC.h IFR_BaseC.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -796,8 +793,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -941,8 +937,8 @@ endif
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp IFR_BaseC.i \
-  IFR_BasicC.i IFR_ExtendedC.i $(TAO_ROOT)/tao/Stub.h \
+  $(TAO_ROOT)/tao/VarOut_T.cpp IFR_BaseC.i IFR_BasicC.i \
+  IFR_ExtendedC.i $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1097,7 +1093,7 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IFR_ComponentsC.o .obj/IFR_ComponentsC.so .shobj/IFR_ComponentsC.o .shobj/IFR_ComponentsC.so: IFR_ComponentsC.cpp IFR_ComponentsC.h \
+.obj/IFR_ComponentsC.o .obj/IFR_ComponentsC.o .obj/IFR_ComponentsC.o .obj/IFR_ComponentsC.o: IFR_ComponentsC.cpp IFR_ComponentsC.h \
   $(ACE_ROOT)/ace/pre.h IFR_ExtendedC.h IFR_BasicC.h \
   IFR_BaseC.h ifr_client_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1141,8 +1137,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1286,8 +1281,8 @@ endif
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp IFR_BaseC.i \
-  IFR_BasicC.i IFR_ExtendedC.i IFR_ComponentsC.i \
+  $(TAO_ROOT)/tao/VarOut_T.cpp IFR_BaseC.i IFR_BasicC.i \
+  IFR_ExtendedC.i IFR_ComponentsC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/PolicyC.h \
@@ -1443,7 +1438,7 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IFR_Client_Adapter_Impl.o .obj/IFR_Client_Adapter_Impl.so .shobj/IFR_Client_Adapter_Impl.o .shobj/IFR_Client_Adapter_Impl.so: IFR_Client_Adapter_Impl.cpp \
+.obj/IFR_Client_Adapter_Impl.o .obj/IFR_Client_Adapter_Impl.o .obj/IFR_Client_Adapter_Impl.o .obj/IFR_Client_Adapter_Impl.o: IFR_Client_Adapter_Impl.cpp \
   IFR_Client_Adapter_Impl.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -1478,8 +1473,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1638,9 +1632,8 @@ endif
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp IFR_BaseC.i \
-  IFR_BasicC.i IFR_ExtendedC.i \
-  $(TAO_ROOT)/tao/ORB_Core.h \
+  $(TAO_ROOT)/tao/VarOut_T.cpp IFR_BaseC.i IFR_BasicC.i \
+  IFR_ExtendedC.i $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \

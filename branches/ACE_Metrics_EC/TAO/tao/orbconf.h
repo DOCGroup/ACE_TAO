@@ -827,5 +827,21 @@ enum TAO_Policy_Scope
 #  define TAO_DEFAULT_INIT_REFERENCE_INITIALIZER "mcast://:::"
 #endif /* TAO_DEFAULT_INIT_REFERENCE_INITIALIZER */
 
+// The default arguments of the client strategy factory for the fake service
+// configurator
+#if !defined (TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS)
+#if !defined(ACE_HAS_TSS_CONNECTORS)
+#define TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS "static Client_Strategy_Factory \"-ORBClientConnectionHandler rw\""
+#else
+#define TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS "static Client_Strategy_Factory \"-ORBClientConnectionHandler rw -ORBConnectorLock null\""
+#endif //ACE_HAS_TSS_CONNECTORS
+#endif /* TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS */
+
+// The default arguments of the server strategy factory for the fake service
+// configurator
+#if !defined (TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS)
+#define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS  "static Server_Strategy_Factory \"-ORBconcurrency reactive -ORBsystemidpolicydemuxstrategy dynamic -ORBtablesize 128\""
+#endif /* TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS */
+
 #include "ace/post.h"
 #endif  /* TAO_ORBCONF_H */

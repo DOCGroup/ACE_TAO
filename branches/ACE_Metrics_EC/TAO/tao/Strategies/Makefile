@@ -95,7 +95,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/DIOP_Factory.o .obj/DIOP_Factory.so .shobj/DIOP_Factory.o .shobj/DIOP_Factory.so: DIOP_Factory.cpp DIOP_Factory.h \
+.obj/DIOP_Factory.o .obj/DIOP_Factory.o .obj/DIOP_Factory.o .obj/DIOP_Factory.o: DIOP_Factory.cpp DIOP_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -130,8 +130,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -340,8 +339,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -386,8 +384,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -486,7 +483,7 @@ endif
   $(TAO_ROOT)/tao/Transport_Connector.h \
   $(TAO_ROOT)/tao/Transport_Connector.inl
 
-.obj/DIOP_Profile.o .obj/DIOP_Profile.so .shobj/DIOP_Profile.o .shobj/DIOP_Profile.so: DIOP_Profile.cpp DIOP_Profile.h \
+.obj/DIOP_Profile.o .obj/DIOP_Profile.o .obj/DIOP_Profile.o .obj/DIOP_Profile.o: DIOP_Profile.cpp DIOP_Profile.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -530,8 +527,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -690,8 +686,7 @@ endif
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(ACE_ROOT)/ace/INET_Addr.h \
-  $(ACE_ROOT)/ace/Addr.h \
-  $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i strategies_export.h \
   DIOP_Endpoint.i DIOP_Profile.i $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -793,7 +788,7 @@ endif
   $(TAO_ROOT)/tao/iiop_endpoints.h \
   $(TAO_ROOT)/tao/iiop_endpoints.i
 
-.obj/DIOP_Transport.o .obj/DIOP_Transport.so .shobj/DIOP_Transport.o .shobj/DIOP_Transport.so: DIOP_Transport.cpp DIOP_Transport.h \
+.obj/DIOP_Transport.o .obj/DIOP_Transport.o .obj/DIOP_Transport.o .obj/DIOP_Transport.o: DIOP_Transport.cpp DIOP_Transport.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -830,8 +825,7 @@ endif
   $(TAO_ROOT)/tao/Cache_Entries.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -842,8 +836,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1005,8 +998,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -1196,6 +1188,11 @@ endif
   $(TAO_ROOT)/tao/operation_details.i \
   $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
+  $(ACE_ROOT)/ace/Timeprobe.i \
+  $(ACE_ROOT)/ace/Timeprobe_T.h \
+  $(ACE_ROOT)/ace/Timeprobe_T.cpp \
+  $(ACE_ROOT)/ace/High_Res_Timer.h \
+  $(ACE_ROOT)/ace/High_Res_Timer.i \
   $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
   $(TAO_ROOT)/tao/Sync_Strategies.h \
   $(TAO_ROOT)/tao/TAOC.h \
@@ -1232,7 +1229,7 @@ endif
   $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
   $(TAO_ROOT)/tao/GIOP_Message_Lite.i
 
-.obj/DIOP_Connector.o .obj/DIOP_Connector.so .shobj/DIOP_Connector.o .shobj/DIOP_Connector.so: DIOP_Connector.cpp DIOP_Connector.h \
+.obj/DIOP_Connector.o .obj/DIOP_Connector.o .obj/DIOP_Connector.o .obj/DIOP_Connector.o: DIOP_Connector.cpp DIOP_Connector.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1270,8 +1267,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Synch.h \
@@ -1413,8 +1409,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1522,8 +1517,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -1634,7 +1628,7 @@ endif
   $(TAO_ROOT)/tao/Profile.i DIOP_Endpoint.h \
   DIOP_Endpoint.i DIOP_Profile.i
 
-.obj/DIOP_Acceptor.o .obj/DIOP_Acceptor.so .shobj/DIOP_Acceptor.o .shobj/DIOP_Acceptor.so: DIOP_Acceptor.cpp DIOP_Acceptor.h \
+.obj/DIOP_Acceptor.o .obj/DIOP_Acceptor.o .obj/DIOP_Acceptor.o .obj/DIOP_Acceptor.o: DIOP_Acceptor.cpp DIOP_Acceptor.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1677,8 +1671,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1878,8 +1871,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -1924,8 +1916,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -2031,7 +2022,7 @@ endif
   $(TAO_ROOT)/tao/Protocols_Hooks.h \
   $(TAO_ROOT)/tao/Codeset_Manager.h
 
-.obj/DIOP_Connection_Handler.o .obj/DIOP_Connection_Handler.so .shobj/DIOP_Connection_Handler.o .shobj/DIOP_Connection_Handler.so: DIOP_Connection_Handler.cpp \
+.obj/DIOP_Connection_Handler.o .obj/DIOP_Connection_Handler.o .obj/DIOP_Connection_Handler.o .obj/DIOP_Connection_Handler.o: DIOP_Connection_Handler.cpp \
   DIOP_Connection_Handler.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2065,8 +2056,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Synch.h \
@@ -2208,8 +2198,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2319,8 +2308,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -2333,6 +2321,11 @@ endif
   $(ACE_ROOT)/ace/SOCK_Dgram.i DIOP_Connection_Handler.i \
   $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
+  $(ACE_ROOT)/ace/Timeprobe.i \
+  $(ACE_ROOT)/ace/Timeprobe_T.h \
+  $(ACE_ROOT)/ace/Timeprobe_T.cpp \
+  $(ACE_ROOT)/ace/High_Res_Timer.h \
+  $(ACE_ROOT)/ace/High_Res_Timer.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -2414,7 +2407,7 @@ endif
   $(TAO_ROOT)/tao/Resume_Handle.inl DIOP_Endpoint.h \
   DIOP_Endpoint.i
 
-.obj/DIOP_Endpoint.o .obj/DIOP_Endpoint.so .shobj/DIOP_Endpoint.o .shobj/DIOP_Endpoint.so: DIOP_Endpoint.cpp DIOP_Endpoint.h \
+.obj/DIOP_Endpoint.o .obj/DIOP_Endpoint.o .obj/DIOP_Endpoint.o .obj/DIOP_Endpoint.o: DIOP_Endpoint.cpp DIOP_Endpoint.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -2437,8 +2430,7 @@ endif
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -2449,8 +2441,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -2473,8 +2464,7 @@ endif
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
-  $(ACE_ROOT)/ace/Addr.h \
-  $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i strategies_export.h \
   DIOP_Endpoint.i DIOP_Connection_Handler.h \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -2603,8 +2593,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2720,7 +2709,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i DIOP_Connection_Handler.i
 
-.obj/UIOP_Factory.o .obj/UIOP_Factory.so .shobj/UIOP_Factory.o .shobj/UIOP_Factory.so: UIOP_Factory.cpp UIOP_Factory.h \
+.obj/UIOP_Factory.o .obj/UIOP_Factory.o .obj/UIOP_Factory.o .obj/UIOP_Factory.o: UIOP_Factory.cpp UIOP_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2755,8 +2744,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -2965,8 +2953,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -2990,8 +2977,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -3127,7 +3113,7 @@ endif
   $(TAO_ROOT)/tao/Connector_Impl.inl \
   $(TAO_ROOT)/tao/Connector_Impl.cpp
 
-.obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.so .shobj/UIOP_Lite_Factory.o .shobj/UIOP_Lite_Factory.so: UIOP_Lite_Factory.cpp UIOP_Lite_Factory.h \
+.obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.o: UIOP_Lite_Factory.cpp UIOP_Lite_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3166,8 +3152,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -3372,8 +3357,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -3397,8 +3381,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -3538,7 +3521,7 @@ endif
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/UIOP_Profile.o .obj/UIOP_Profile.so .shobj/UIOP_Profile.o .shobj/UIOP_Profile.so: UIOP_Profile.cpp UIOP_Profile.h \
+.obj/UIOP_Profile.o .obj/UIOP_Profile.o .obj/UIOP_Profile.o .obj/UIOP_Profile.o: UIOP_Profile.cpp UIOP_Profile.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3582,8 +3565,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3788,8 +3770,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -3821,8 +3802,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -3926,7 +3906,7 @@ endif
   $(TAO_ROOT)/tao/ORB_Core.i uiop_endpoints.h \
   uiop_endpoints.i
 
-.obj/UIOP_Transport.o .obj/UIOP_Transport.so .shobj/UIOP_Transport.o .shobj/UIOP_Transport.so: UIOP_Transport.cpp UIOP_Transport.h \
+.obj/UIOP_Transport.o .obj/UIOP_Transport.o .obj/UIOP_Transport.o .obj/UIOP_Transport.o: UIOP_Transport.cpp UIOP_Transport.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3951,8 +3931,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -3967,12 +3946,10 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/IPC_SAP.i \
-  $(ACE_ROOT)/ace/SOCK.i \
-  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/SOCK.i $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -4246,6 +4223,11 @@ endif
   $(TAO_ROOT)/tao/Endpoint.i UIOP_Endpoint.i \
   UIOP_Profile.i $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
+  $(ACE_ROOT)/ace/Timeprobe.i \
+  $(ACE_ROOT)/ace/Timeprobe_T.h \
+  $(ACE_ROOT)/ace/Timeprobe_T.cpp \
+  $(ACE_ROOT)/ace/High_Res_Timer.h \
+  $(ACE_ROOT)/ace/High_Res_Timer.i \
   $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
   $(TAO_ROOT)/tao/Sync_Strategies.h \
   $(TAO_ROOT)/tao/TAOC.h \
@@ -4348,7 +4330,7 @@ endif
   $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
   $(TAO_ROOT)/tao/GIOP_Message_Lite.i
 
-.obj/UIOP_Connector.o .obj/UIOP_Connector.so .shobj/UIOP_Connector.o .shobj/UIOP_Connector.so: UIOP_Connector.cpp UIOP_Connector.h \
+.obj/UIOP_Connector.o .obj/UIOP_Connector.o .obj/UIOP_Connector.o .obj/UIOP_Connector.o: UIOP_Connector.cpp UIOP_Connector.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4373,8 +4355,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Connector.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -4389,12 +4370,10 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/IPC_SAP.i \
-  $(ACE_ROOT)/ace/SOCK.i \
-  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/SOCK.i $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -4550,8 +4529,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4767,7 +4745,7 @@ endif
   $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(TAO_ROOT)/tao/Connect_Strategy.h
 
-.obj/UIOP_Acceptor.o .obj/UIOP_Acceptor.so .shobj/UIOP_Acceptor.o .shobj/UIOP_Acceptor.so: UIOP_Acceptor.cpp UIOP_Acceptor.h \
+.obj/UIOP_Acceptor.o .obj/UIOP_Acceptor.o .obj/UIOP_Acceptor.o .obj/UIOP_Acceptor.o: UIOP_Acceptor.cpp UIOP_Acceptor.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Transport_Acceptor.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -4810,8 +4788,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5011,8 +4988,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -5036,8 +5012,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -5171,7 +5146,7 @@ endif
   $(TAO_ROOT)/tao/Protocols_Hooks.h \
   $(TAO_ROOT)/tao/Codeset_Manager.h
 
-.obj/UIOP_Connection_Handler.o .obj/UIOP_Connection_Handler.so .shobj/UIOP_Connection_Handler.o .shobj/UIOP_Connection_Handler.so: UIOP_Connection_Handler.cpp \
+.obj/UIOP_Connection_Handler.o .obj/UIOP_Connection_Handler.o .obj/UIOP_Connection_Handler.o .obj/UIOP_Connection_Handler.o: UIOP_Connection_Handler.cpp \
   UIOP_Connection_Handler.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5206,8 +5181,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -5348,8 +5322,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5386,8 +5359,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -5553,6 +5525,11 @@ endif
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
+  $(ACE_ROOT)/ace/Timeprobe.i \
+  $(ACE_ROOT)/ace/Timeprobe_T.h \
+  $(ACE_ROOT)/ace/Timeprobe_T.cpp \
+  $(ACE_ROOT)/ace/High_Res_Timer.h \
+  $(ACE_ROOT)/ace/High_Res_Timer.i \
   $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
   $(TAO_ROOT)/tao/Base_Transport_Property.h \
   $(TAO_ROOT)/tao/Base_Transport_Property.inl \
@@ -5571,7 +5548,7 @@ endif
   $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.i
 
-.obj/UIOP_Endpoint.o .obj/UIOP_Endpoint.so .shobj/UIOP_Endpoint.o .shobj/UIOP_Endpoint.so: UIOP_Endpoint.cpp UIOP_Endpoint.h \
+.obj/UIOP_Endpoint.o .obj/UIOP_Endpoint.o .obj/UIOP_Endpoint.o .obj/UIOP_Endpoint.o: UIOP_Endpoint.cpp UIOP_Endpoint.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -5594,8 +5571,7 @@ endif
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -5606,8 +5582,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -5623,8 +5598,7 @@ endif
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(TAO_ROOT)/tao/Endpoint.i strategies_export.h \
   $(ACE_ROOT)/ace/UNIX_Addr.h \
-  $(ACE_ROOT)/ace/Addr.h \
-  $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -5754,8 +5728,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -5882,7 +5855,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl UIOP_Transport.i \
   UIOP_Connection_Handler.inl
 
-.obj/SHMIOP_Factory.o .obj/SHMIOP_Factory.so .shobj/SHMIOP_Factory.o .shobj/SHMIOP_Factory.so: SHMIOP_Factory.cpp SHMIOP_Factory.h \
+.obj/SHMIOP_Factory.o .obj/SHMIOP_Factory.o .obj/SHMIOP_Factory.o .obj/SHMIOP_Factory.o: SHMIOP_Factory.cpp SHMIOP_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5917,8 +5890,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -6127,8 +6099,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -6158,8 +6129,7 @@ endif
   $(TAO_ROOT)/tao/Connection_Handler.inl \
   SHMIOP_Transport.h $(ACE_ROOT)/ace/MEM_Stream.h \
   $(ACE_ROOT)/ace/MEM_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -6307,7 +6277,7 @@ endif
   $(ACE_ROOT)/ace/Argv_Type_Converter.h \
   $(ACE_ROOT)/ace/Argv_Type_Converter.inl
 
-.obj/SHMIOP_Profile.o .obj/SHMIOP_Profile.so .shobj/SHMIOP_Profile.o .shobj/SHMIOP_Profile.so: SHMIOP_Profile.cpp SHMIOP_Profile.h \
+.obj/SHMIOP_Profile.o .obj/SHMIOP_Profile.o .obj/SHMIOP_Profile.o .obj/SHMIOP_Profile.o: SHMIOP_Profile.cpp SHMIOP_Profile.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -6351,8 +6321,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -6511,8 +6480,7 @@ endif
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(ACE_ROOT)/ace/INET_Addr.h \
-  $(ACE_ROOT)/ace/Addr.h \
-  $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
   $(ACE_ROOT)/ace/MEM_Addr.h \
   $(ACE_ROOT)/ace/MEM_Addr.i SHMIOP_Endpoint.i \
@@ -6616,7 +6584,7 @@ endif
   $(TAO_ROOT)/tao/iiop_endpoints.h \
   $(TAO_ROOT)/tao/iiop_endpoints.i
 
-.obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.so .shobj/SHMIOP_Transport.o .shobj/SHMIOP_Transport.so: SHMIOP_Transport.cpp SHMIOP_Transport.h \
+.obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.o: SHMIOP_Transport.cpp SHMIOP_Transport.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -6654,8 +6622,7 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -6799,8 +6766,7 @@ endif
   $(ACE_ROOT)/ace/Dynamic.i \
   $(ACE_ROOT)/ace/MEM_Stream.h \
   $(ACE_ROOT)/ace/MEM_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -6943,6 +6909,11 @@ endif
   $(ACE_ROOT)/ace/MEM_Addr.i SHMIOP_Endpoint.i \
   SHMIOP_Profile.i $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
+  $(ACE_ROOT)/ace/Timeprobe.i \
+  $(ACE_ROOT)/ace/Timeprobe_T.h \
+  $(ACE_ROOT)/ace/Timeprobe_T.cpp \
+  $(ACE_ROOT)/ace/High_Res_Timer.h \
+  $(ACE_ROOT)/ace/High_Res_Timer.i \
   $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
   $(TAO_ROOT)/tao/Sync_Strategies.h \
   $(TAO_ROOT)/tao/TAOC.h \
@@ -7045,7 +7016,7 @@ endif
   $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
   $(TAO_ROOT)/tao/GIOP_Message_Lite.i
 
-.obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.so .shobj/SHMIOP_Connector.o .shobj/SHMIOP_Connector.so: SHMIOP_Connector.cpp SHMIOP_Connector.h \
+.obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.o: SHMIOP_Connector.cpp SHMIOP_Connector.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -7070,8 +7041,7 @@ endif
   $(ACE_ROOT)/ace/SOCK_Connector.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -7086,12 +7056,10 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/IPC_SAP.i \
-  $(ACE_ROOT)/ace/SOCK.i \
-  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/SOCK.i $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -7264,8 +7232,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -7476,7 +7443,7 @@ endif
   $(TAO_ROOT)/tao/Blocked_Connect_Strategy.h \
   $(TAO_ROOT)/tao/Connect_Strategy.h
 
-.obj/SHMIOP_Acceptor.o .obj/SHMIOP_Acceptor.so .shobj/SHMIOP_Acceptor.o .shobj/SHMIOP_Acceptor.so: SHMIOP_Acceptor.cpp SHMIOP_Acceptor.h \
+.obj/SHMIOP_Acceptor.o .obj/SHMIOP_Acceptor.o .obj/SHMIOP_Acceptor.o .obj/SHMIOP_Acceptor.o: SHMIOP_Acceptor.cpp SHMIOP_Acceptor.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -7519,8 +7486,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -7720,8 +7686,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -7752,8 +7717,7 @@ endif
   SHMIOP_Transport.h strategies_export.h \
   $(ACE_ROOT)/ace/MEM_Stream.h \
   $(ACE_ROOT)/ace/MEM_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -7895,7 +7859,7 @@ endif
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/Codeset_Manager.h
 
-.obj/SHMIOP_Connection_Handler.o .obj/SHMIOP_Connection_Handler.so .shobj/SHMIOP_Connection_Handler.o .shobj/SHMIOP_Connection_Handler.so: SHMIOP_Connection_Handler.cpp \
+.obj/SHMIOP_Connection_Handler.o .obj/SHMIOP_Connection_Handler.o .obj/SHMIOP_Connection_Handler.o .obj/SHMIOP_Connection_Handler.o: SHMIOP_Connection_Handler.cpp \
   SHMIOP_Connection_Handler.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -7929,8 +7893,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Synch.h \
@@ -8072,8 +8035,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -8109,8 +8071,7 @@ endif
   SHMIOP_Transport.h strategies_export.h \
   $(ACE_ROOT)/ace/MEM_Stream.h \
   $(ACE_ROOT)/ace/MEM_IO.h \
-  $(ACE_ROOT)/ace/SOCK.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -8209,6 +8170,11 @@ endif
   SHMIOP_Connection_Handler.inl \
   $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
+  $(ACE_ROOT)/ace/Timeprobe.i \
+  $(ACE_ROOT)/ace/Timeprobe_T.h \
+  $(ACE_ROOT)/ace/Timeprobe_T.cpp \
+  $(ACE_ROOT)/ace/High_Res_Timer.h \
+  $(ACE_ROOT)/ace/High_Res_Timer.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -8291,7 +8257,7 @@ endif
   $(TAO_ROOT)/tao/Resume_Handle.h \
   $(TAO_ROOT)/tao/Resume_Handle.inl
 
-.obj/SHMIOP_Endpoint.o .obj/SHMIOP_Endpoint.so .shobj/SHMIOP_Endpoint.o .shobj/SHMIOP_Endpoint.so: SHMIOP_Endpoint.cpp SHMIOP_Endpoint.h \
+.obj/SHMIOP_Endpoint.o .obj/SHMIOP_Endpoint.o .obj/SHMIOP_Endpoint.o .obj/SHMIOP_Endpoint.o: SHMIOP_Endpoint.cpp SHMIOP_Endpoint.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/Endpoint.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -8314,8 +8280,7 @@ endif
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -8326,8 +8291,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -8350,8 +8314,7 @@ endif
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
-  $(ACE_ROOT)/ace/Addr.h \
-  $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
   $(ACE_ROOT)/ace/MEM_Addr.h \
   $(ACE_ROOT)/ace/MEM_Addr.i SHMIOP_Endpoint.i \
@@ -8481,8 +8444,7 @@ endif
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Acceptor.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -8609,7 +8571,7 @@ endif
   $(TAO_ROOT)/tao/Transport.inl SHMIOP_Transport.i \
   SHMIOP_Connection_Handler.inl
 
-.obj/uiop_endpoints.o .obj/uiop_endpoints.so .shobj/uiop_endpoints.o .shobj/uiop_endpoints.so: uiop_endpoints.cpp uiop_endpoints.h \
+.obj/uiop_endpoints.o .obj/uiop_endpoints.o .obj/uiop_endpoints.o .obj/uiop_endpoints.o: uiop_endpoints.cpp uiop_endpoints.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -8648,8 +8610,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -8786,7 +8747,7 @@ endif
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i uiop_endpoints.i
 
-.obj/advanced_resource.o .obj/advanced_resource.so .shobj/advanced_resource.o .shobj/advanced_resource.so: advanced_resource.cpp advanced_resource.h \
+.obj/advanced_resource.o .obj/advanced_resource.o .obj/advanced_resource.o .obj/advanced_resource.o: advanced_resource.cpp advanced_resource.h \
   $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8816,8 +8777,7 @@ endif
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -9111,8 +9071,7 @@ endif
   $(ACE_ROOT)/ace/Select_Reactor_Base.h \
   $(ACE_ROOT)/ace/Token.h \
   $(ACE_ROOT)/ace/Token.i \
-  $(ACE_ROOT)/ace/Pipe.h \
-  $(ACE_ROOT)/ace/Pipe.i \
+  $(ACE_ROOT)/ace/Pipe.h $(ACE_ROOT)/ace/Pipe.i \
   $(ACE_ROOT)/ace/Select_Reactor_Base.i \
   $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
   $(ACE_ROOT)/ace/Timer_Heap.h \
@@ -9127,7 +9086,7 @@ endif
   $(ACE_ROOT)/ace/TP_Reactor.h \
   $(ACE_ROOT)/ace/TP_Reactor.i
 
-.obj/LFU_Connection_Purging_Strategy.o .obj/LFU_Connection_Purging_Strategy.so .shobj/LFU_Connection_Purging_Strategy.o .shobj/LFU_Connection_Purging_Strategy.so: LFU_Connection_Purging_Strategy.cpp \
+.obj/LFU_Connection_Purging_Strategy.o .obj/LFU_Connection_Purging_Strategy.o .obj/LFU_Connection_Purging_Strategy.o .obj/LFU_Connection_Purging_Strategy.o: LFU_Connection_Purging_Strategy.cpp \
   LFU_Connection_Purging_Strategy.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -9166,8 +9125,7 @@ endif
   $(TAO_ROOT)/tao/Cache_Entries.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -9178,8 +9136,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -9340,7 +9297,7 @@ endif
   $(TAO_ROOT)/tao/Synch_Refcountable.inl \
   $(TAO_ROOT)/tao/Transport.inl
 
-.obj/FIFO_Connection_Purging_Strategy.o .obj/FIFO_Connection_Purging_Strategy.so .shobj/FIFO_Connection_Purging_Strategy.o .shobj/FIFO_Connection_Purging_Strategy.so: FIFO_Connection_Purging_Strategy.cpp \
+.obj/FIFO_Connection_Purging_Strategy.o .obj/FIFO_Connection_Purging_Strategy.o .obj/FIFO_Connection_Purging_Strategy.o .obj/FIFO_Connection_Purging_Strategy.o: FIFO_Connection_Purging_Strategy.cpp \
   FIFO_Connection_Purging_Strategy.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -9379,8 +9336,7 @@ endif
   $(TAO_ROOT)/tao/Cache_Entries.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -9391,8 +9347,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -9553,7 +9508,7 @@ endif
   $(TAO_ROOT)/tao/Synch_Refcountable.inl \
   $(TAO_ROOT)/tao/Transport.inl
 
-.obj/NULL_Connection_Purging_Strategy.o .obj/NULL_Connection_Purging_Strategy.so .shobj/NULL_Connection_Purging_Strategy.o .shobj/NULL_Connection_Purging_Strategy.so: NULL_Connection_Purging_Strategy.cpp \
+.obj/NULL_Connection_Purging_Strategy.o .obj/NULL_Connection_Purging_Strategy.o .obj/NULL_Connection_Purging_Strategy.o .obj/NULL_Connection_Purging_Strategy.o: NULL_Connection_Purging_Strategy.cpp \
   NULL_Connection_Purging_Strategy.h $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -9592,8 +9547,7 @@ endif
   $(TAO_ROOT)/tao/Cache_Entries.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -9604,8 +9558,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -9766,7 +9719,7 @@ endif
   $(TAO_ROOT)/tao/Synch_Refcountable.inl \
   $(TAO_ROOT)/tao/Transport.inl
 
-.obj/LF_Strategy_Null.o .obj/LF_Strategy_Null.so .shobj/LF_Strategy_Null.o .shobj/LF_Strategy_Null.so: LF_Strategy_Null.cpp LF_Strategy_Null.h \
+.obj/LF_Strategy_Null.o .obj/LF_Strategy_Null.o .obj/LF_Strategy_Null.o .obj/LF_Strategy_Null.o: LF_Strategy_Null.cpp LF_Strategy_Null.h \
   $(ACE_ROOT)/ace/pre.h strategies_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \

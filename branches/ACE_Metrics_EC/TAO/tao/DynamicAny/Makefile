@@ -74,7 +74,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/DynamicAny.o .obj/DynamicAny.so .shobj/DynamicAny.o .shobj/DynamicAny.so: DynamicAny.cpp DynamicAny.h \
+.obj/DynamicAny.o .obj/DynamicAny.o .obj/DynamicAny.o .obj/DynamicAny.o: DynamicAny.cpp DynamicAny.h \
   $(ACE_ROOT)/ace/pre.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -115,8 +115,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -325,7 +324,7 @@ endif
   $(TAO_ROOT)/tao/PortableInterceptorC.i DynamicAnyC.i \
   DynAnyFactory.h
 
-.obj/DynAnyFactory.o .obj/DynAnyFactory.so .shobj/DynAnyFactory.o .shobj/DynAnyFactory.so: DynAnyFactory.cpp DynAnyFactory.h \
+.obj/DynAnyFactory.o .obj/DynAnyFactory.o .obj/DynAnyFactory.o .obj/DynAnyFactory.o: DynAnyFactory.cpp DynAnyFactory.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -366,8 +365,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -585,8 +583,8 @@ endif
   $(ACE_ROOT)/ace/Containers_T.cpp DynSequence_i.h \
   DynEnum_i.h DynArray_i.h DynUnion_i.h
 
-.obj/DynCommon.o .obj/DynCommon.so .shobj/DynCommon.o .shobj/DynCommon.so: DynCommon.cpp DynCommon.h \
-  $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
+.obj/DynCommon.o .obj/DynCommon.o .obj/DynCommon.o .obj/DynCommon.o: DynCommon.cpp DynCommon.h $(ACE_ROOT)/ace/pre.h \
+  DynamicAny.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -626,8 +624,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -845,7 +842,7 @@ endif
   $(ACE_ROOT)/ace/Containers_T.cpp DynEnum_i.h \
   DynSequence_i.h DynStruct_i.h DynUnion_i.h
 
-.obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp DynAny_i.h $(ACE_ROOT)/ace/pre.h \
+.obj/DynAny_i.o .obj/DynAny_i.o .obj/DynAny_i.o .obj/DynAny_i.o: DynAny_i.cpp DynAny_i.h $(ACE_ROOT)/ace/pre.h \
   DynamicAny.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -886,8 +883,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1096,7 +1092,7 @@ endif
   $(TAO_ROOT)/tao/PortableInterceptorC.i DynamicAnyC.i \
   DynCommon.h DynAnyFactory.h
 
-.obj/DynStruct_i.o .obj/DynStruct_i.so .shobj/DynStruct_i.o .shobj/DynStruct_i.so: DynStruct_i.cpp DynStruct_i.h \
+.obj/DynStruct_i.o .obj/DynStruct_i.o .obj/DynStruct_i.o .obj/DynStruct_i.o: DynStruct_i.cpp DynStruct_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1137,8 +1133,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1354,7 +1349,7 @@ endif
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h
 
-.obj/DynSequence_i.o .obj/DynSequence_i.so .shobj/DynSequence_i.o .shobj/DynSequence_i.so: DynSequence_i.cpp DynSequence_i.h \
+.obj/DynSequence_i.o .obj/DynSequence_i.o .obj/DynSequence_i.o .obj/DynSequence_i.o: DynSequence_i.cpp DynSequence_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1395,8 +1390,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1612,8 +1606,8 @@ endif
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h
 
-.obj/DynEnum_i.o .obj/DynEnum_i.so .shobj/DynEnum_i.o .shobj/DynEnum_i.so: DynEnum_i.cpp DynEnum_i.h \
-  $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
+.obj/DynEnum_i.o .obj/DynEnum_i.o .obj/DynEnum_i.o .obj/DynEnum_i.o: DynEnum_i.cpp DynEnum_i.h $(ACE_ROOT)/ace/pre.h \
+  DynamicAny.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1653,8 +1647,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1870,7 +1863,7 @@ endif
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h
 
-.obj/DynArray_i.o .obj/DynArray_i.so .shobj/DynArray_i.o .shobj/DynArray_i.so: DynArray_i.cpp DynArray_i.h \
+.obj/DynArray_i.o .obj/DynArray_i.o .obj/DynArray_i.o .obj/DynArray_i.o: DynArray_i.cpp DynArray_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1911,8 +1904,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -2128,7 +2120,7 @@ endif
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h
 
-.obj/DynUnion_i.o .obj/DynUnion_i.so .shobj/DynUnion_i.o .shobj/DynUnion_i.so: DynUnion_i.cpp DynUnion_i.h \
+.obj/DynUnion_i.o .obj/DynUnion_i.o .obj/DynUnion_i.o .obj/DynUnion_i.o: DynUnion_i.cpp DynUnion_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2169,8 +2161,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -2379,7 +2370,7 @@ endif
   $(TAO_ROOT)/tao/PortableInterceptorC.i DynamicAnyC.i \
   DynCommon.h DynAnyFactory.h
 
-.obj/DynamicAnyC.o .obj/DynamicAnyC.so .shobj/DynamicAnyC.o .shobj/DynamicAnyC.so: DynamicAnyC.cpp DynamicAny.h \
+.obj/DynamicAnyC.o .obj/DynamicAnyC.o .obj/DynamicAnyC.o .obj/DynamicAnyC.o: DynamicAnyC.cpp DynamicAny.h \
   $(ACE_ROOT)/ace/pre.h dynamicany_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2420,8 +2411,7 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
