@@ -106,14 +106,13 @@ TAO_SSLIOP_Server_Transport::~TAO_SSLIOP_Server_Transport (void)
 
 // ****************************************************************
 
-TAO_SSLIOP_Client_Transport::
-    TAO_SSLIOP_Client_Transport (TAO_SSLIOP_Client_Connection_Handler *handler,
-                               TAO_ORB_Core *orb_core)
-  :  TAO_SSLIOP_Transport (handler,
-                         orb_core),
-     client_mesg_factory_ (0),
-     orb_core_ (orb_core),
-     params_ ()
+TAO_SSLIOP_Client_Transport::TAO_SSLIOP_Client_Transport (
+      TAO_SSLIOP_Client_Connection_Handler *handler,
+      TAO_ORB_Core *orb_core)
+  : TAO_SSLIOP_Transport (handler, orb_core),
+    client_mesg_factory_ (0),
+    orb_core_ (orb_core),
+    params_ ()
 {
 }
 
@@ -328,9 +327,9 @@ TAO_SSLIOP_Client_Transport::messaging_init (CORBA::Octet major,
               if (TAO_debug_level > 0)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     ASYS_TEXT ("(%N|%l|%p|%t) ")
-                                     ASYS_TEXT ("No matching minor ")
-                                     ASYS_TEXT ("version number \n")),
+                                     ACE_TEXT ("(%N|%l|%p|%t) ")
+                                     ACE_TEXT ("No matching minor ")
+                                     ACE_TEXT ("version number \n")),
                                     0);
                 }
             }
@@ -340,9 +339,9 @@ TAO_SSLIOP_Client_Transport::messaging_init (CORBA::Octet major,
           if (TAO_debug_level > 0)
             {
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     ASYS_TEXT ("(%N|%l|%p|%t) ")
-                                     ASYS_TEXT ("No matching minor ")
-                                     ASYS_TEXT ("version number \n")),
+                                     ACE_TEXT ("(%N|%l|%p|%t) ")
+                                     ACE_TEXT ("No matching minor ")
+                                     ACE_TEXT ("version number \n")),
                                     0);
             }
         }
