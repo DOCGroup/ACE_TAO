@@ -39,10 +39,32 @@ HTTP_Handler::open (ACE_HANDLE handle,
                                      SO_RCVBUF,
                                      (char *) &sockbufsize,
                                      sizeof (sockbufsize));
+
     if (result < 0)
       {
         perror ("SO_RCVBUF");
       }
+
+    int sendsockbufsize = 64*1024;
+
+    result = ACE_OS::setsockopt (handle,
+                                 SOL_SOCKET,
+                                 SO_SNDBUF,
+                                 (char *) &sendsockbufsize,
+                                 sizeof (sendsockbufsize));
+    if (result < 0)
+      {
+        perror ("SO_SNDBUF");
+      }
+
+    struct protoent *p = ACE_OS::getprotobyname ("tcp");
+    if (p && stream_.set_option (p->p_proto,
+				 TCP_NODELAY,
+				 (char *)& one, 
+				 sizeof (one))) {
+      perror("tcp_nodelay");
+
+
   }
 
   this->handle_ = handle;
