@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_typedef.h"
 
@@ -32,7 +32,7 @@
 #include "be_visitor_typedef/any_op_ch.cpp"
 #include "be_visitor_typedef/any_op_cs.cpp"
 #include "be_visitor_typedef/cdr_op_ch.cpp"
+#include "be_visitor_typedef/cdr_op_ci.cpp"
 #include "be_visitor_typedef/cdr_op_cs.cpp"
 
 ACE_RCSID(be, be_visitor_typedef, "$Id$")
-

@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_union.h"
 
@@ -70,8 +70,6 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
                          "codegen for scope failed\n"), -1);
     }
 
-
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }
-

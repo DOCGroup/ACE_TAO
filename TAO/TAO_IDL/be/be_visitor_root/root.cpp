@@ -159,7 +159,9 @@ int be_visitor_root::visit_root (be_root *node)
 
   // *ASG* - this is a tempoaray hack soln so that our CDR operators get
   // generated in the *.i file rather than the *.cpp file
-  if (this->ctx_->state () != TAO_CodeGen::TAO_ROOT_CI && this->ctx_->state () != TAO_CodeGen::TAO_ROOT_IH && this->ctx_->state () != TAO_CodeGen::TAO_ROOT_IS)
+  if (this->ctx_->state () != TAO_CodeGen::TAO_ROOT_CI
+      && this->ctx_->state () != TAO_CodeGen::TAO_ROOT_IH
+      && this->ctx_->state () != TAO_CodeGen::TAO_ROOT_IS)
     {
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
@@ -195,11 +197,13 @@ int be_visitor_root::visit_root (be_root *node)
       ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CH);
       break;
     case TAO_CodeGen::TAO_ROOT_CI:
+      ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
-    case TAO_CodeGen::TAO_ROOT_CS:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_IS:
@@ -343,6 +347,9 @@ be_visitor_root::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CH);
       break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
+      break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CS);
       break;
@@ -418,6 +425,9 @@ be_visitor_root::visit_exception (be_exception *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS);
@@ -509,6 +519,9 @@ be_visitor_root::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH);
       break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI);
+      break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS);
       break;
@@ -566,20 +579,24 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_ROOT_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CI);
       break;
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
     case TAO_CodeGen::TAO_ROOT_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-        case TAO_CodeGen::TAO_ROOT_IS:
-        case TAO_CodeGen::TAO_ROOT_IH:
-                return 0; // nothing to be done
+    case TAO_CodeGen::TAO_ROOT_IS:
+    case TAO_CodeGen::TAO_ROOT_IH:
+      return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -641,6 +658,9 @@ be_visitor_root::visit_valuetype (be_valuetype *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS);
@@ -707,13 +727,17 @@ be_visitor_root::visit_valuetype_fwd (be_valuetype_fwd *node)
     case TAO_CodeGen::TAO_ROOT_CI:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CI);
       break;
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CI);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
     case TAO_CodeGen::TAO_ROOT_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
@@ -804,6 +828,9 @@ be_visitor_root::visit_module (be_module *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_MODULE_CDR_OP_CH);
       break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_MODULE_CDR_OP_CI);
+      break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_MODULE_CDR_OP_CS);
       break;
@@ -872,6 +899,9 @@ be_visitor_root::visit_structure (be_structure *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
@@ -948,6 +978,9 @@ be_visitor_root::visit_union (be_union *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
       break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
+      break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       break;
@@ -1022,6 +1055,9 @@ be_visitor_root::visit_typedef (be_typedef *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS);

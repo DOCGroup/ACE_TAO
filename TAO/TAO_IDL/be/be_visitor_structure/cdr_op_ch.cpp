@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_structure.h"
 
@@ -53,7 +53,7 @@ be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
   os->indent ();
   *os << "CORBA::Boolean " << idl_global->export_macro ()
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
-      << " &); // " << be_nl;
+      << " &);" << be_nl;
   *os << "CORBA::Boolean " << idl_global->export_macro ()
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);\n";
@@ -74,4 +74,3 @@ be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }
-

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -97,6 +97,7 @@ be_visitor_interface::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CI:
     case TAO_CodeGen::TAO_INTERFACE_SI:
@@ -158,6 +159,7 @@ be_visitor_interface::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
@@ -232,6 +234,9 @@ be_visitor_interface::visit_enum (be_enum *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CS);
@@ -312,6 +317,9 @@ be_visitor_interface::visit_exception (be_exception *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS);
@@ -407,6 +415,7 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CI:
     case TAO_CodeGen::TAO_INTERFACE_SI:
@@ -477,6 +486,9 @@ be_visitor_interface::visit_structure (be_structure *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
@@ -557,6 +569,9 @@ be_visitor_interface::visit_union (be_union *node)
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
       break;
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
+      break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       break;
@@ -635,6 +650,9 @@ be_visitor_interface::visit_typedef (be_typedef *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS);
