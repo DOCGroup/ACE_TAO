@@ -1,3 +1,13 @@
+Tue Oct 15 12:55:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP (CPPFLAGS, LDFLAGS, LIBS):
+
+	  Append PLATFORM_SSL_{CPPFLAGS,LDFLAGS,LIBS} to each of these
+	  variables, respectively.  Addresses build issues on platforms
+	  where OpenSSL is not installed in a location known to the
+	  compiler and linker.  Thanks to Werner Buchert <medat.de> for
+	  pointing out the problem.
+
 Tue Oct 15 14:31:49 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
