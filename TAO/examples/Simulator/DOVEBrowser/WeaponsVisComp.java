@@ -28,7 +28,9 @@ public class WeaponsVisComp extends Panel implements VisComp
 
   private int count_ = 0;
   private Hashtable weapons_table_ = new Hashtable ();
-  private GridLayout gl_= new GridLayout (1,1);   
+  private GridBagLayout gbl_= new GridBagLayout ();
+  private GridBagConstraints gbc_ = new GridBagConstraints ();
+
   Label default_label_ = new Label ("No weapons available", Label.CENTER);
 
   public WeaponsVisComp (String title)
@@ -36,9 +38,16 @@ public class WeaponsVisComp extends Panel implements VisComp
       default_label_.setFont (FONT_BIG);
       default_label_.setForeground (BLUE);
 
-      setLayout (gl_);
-
+      setLayout (gbl_);
+      gbc_.gridx = 0;
+      gbc_.gridy = 0;
+      gbc_.gridheight = 1;
+      gbc_.gridwidth  = 1;
+      gbc_.anchor = GridBagConstraints.NORTH;
+      gbc_.fill = GridBagConstraints.NONE;
       setBackground (Color.black);
+
+      gbl_.setConstraints (default_label_, gbc_);
       add (default_label_);
     }
 
@@ -68,14 +77,15 @@ public class WeaponsVisComp extends Panel implements VisComp
       System.out.println ("Visualization Component received wrong data type!");
     }
     if (weapons_ != null)
-    {      
+    { 
       for (int i = 0; i < weapons_.number_of_weapons && i < 5; i++)
 	{
-	  String weapon;
-	  int status;
+	  String weapon = "";
+	  int status = 0;
 	  switch (i)
 	    {
 	    default:
+	      break;
 	    case 0: weapon = weapons_.weapon1_identifier;						      
 	      status = weapons_.weapon1_status;
 	      break;
@@ -94,31 +104,37 @@ public class WeaponsVisComp extends Panel implements VisComp
 	    }
 
 
-	  Label status_label = (Label)weapons_table_.get (weapon);
+	  Label status_label_ = (Label)weapons_table_.get (weapon);
 
-	  if (status_label != null)
-	    status_label.setText ((status == 1) ? ONLINE : OFFLINE);
+	  if (status_label_ != null)
+	    status_label_.setText ((status == 1) ? ONLINE : OFFLINE);
 	  else
 	    {	 
 	      if (count_ == 0)
 		this.removeAll ();
-	      count_++;
-	      Label weapon_label = new Label (count_ + ". " + weapon, Label.LEFT);
-	      status_label = new Label ((status == 1) ? ONLINE : OFFLINE, Label.LEFT);
 
-	      status_label.setFont (FONT_SMALL);
-	      weapon_label.setFont (FONT_SMALL);
-	      weapon_label.setForeground (BLUE);
+	      count_++;
+	      Label weapon_label_ = new Label (count_ + ". " + weapon, Label.LEFT);
+	      status_label_ = new Label ((status == 1) ? ONLINE : OFFLINE, Label.RIGHT);
+
+	      status_label_.setFont (FONT_SMALL);
+	      weapon_label_.setFont (FONT_SMALL);
+	      weapon_label_.setForeground (BLUE);
 	      
-	      gl_.setRows (count_);
-	      gl_.setColumns (2);
-  
-	      this.add (weapon_label);
-	      this.add (status_label);	
-	      weapons_table_.put (weapon, status_label);
+	      gbc_.gridx = 0;
+	      gbc_.anchor = GridBagConstraints.WEST;
+	      gbl_.setConstraints (weapon_label_, gbc_);
+	      add (weapon_label_);
+	      gbc_.gridx = 1;
+	      gbc_.anchor = GridBagConstraints.EAST;
+	      gbl_.setConstraints (status_label_, gbc_);
+	      add (status_label_);
+	      
+	      gbc_.gridy++;
+	      weapons_table_.put (weapon, status_label_);
 	    }
 
-	  status_label.setForeground ((status == 1) ?
+	  status_label_.setForeground ((status == 1) ?
 				      Color.lightGray :
 				      Color.darkGray);
 	}

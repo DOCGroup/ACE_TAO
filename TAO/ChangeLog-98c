@@ -1,3 +1,9 @@
+Mon Mar 23 13:20:12 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/DOVEBrowser/WeaponsVisComp.java:
+	  Found some uninitialized variables and fixed the problem.
+	  This component should now be more stable.
+	
 Mon Mar 23 10:42:12 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.{cpp,h,i}
