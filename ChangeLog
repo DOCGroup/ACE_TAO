@@ -1,32 +1,47 @@
+Mon Mar  8 20:21:15 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h
+          Added correct handling of ACE_NEEDS_IPC_1C_H for different
+          LynxOS versions.
+
+          ACE_HAS_TERM_IOCTLS is now enabled for all LynxOS versions.
+
+          Moved missing prototype declaration of pthread_sigmask to os_signal.h.
+
+          Removed unneeded ALIGNBYTES and ALIGN macros.
+
+        * ace/os_include/os_signal.h
+          Added missing prototype declaration of pthread_sigmask.
+
 Mon Mar  8 18:34:09 2004  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* ace/Process_Semaphore.cpp:
-	* ace/Process_Mutex.inl:
-	Added SEM_UNDO when using SysV Semaphore Complex methods.
-	That fixes bug 1153 thanks to Frank Kuhlmann <kuhlmann@materna.de>
+        * ace/Process_Semaphore.cpp:
+        * ace/Process_Mutex.inl:
+        Added SEM_UNDO when using SysV Semaphore Complex methods.
+        That fixes bug 1153 thanks to Frank Kuhlmann <kuhlmann@materna.de>
 
 Mon Mar  8 16:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ASNMP/tests/tests.mpc:
-	* ASNMP/asnmp/asnmp.mpc:
-	* ASNMP/examples/get/get.mpc:
-	* ASNMP/examples/next/next.mpc:
-	* ASNMP/examples/set/set.mpc:
-	* ASNMP/examples/trap/trap.mpc:
-	* ASNMP/examples/walk/walk.mpc:
-	  Added missing file extensions. This prevented resulted in project
+        * ASNMP/tests/tests.mpc:
+        * ASNMP/asnmp/asnmp.mpc:
+        * ASNMP/examples/get/get.mpc:
+        * ASNMP/examples/next/next.mpc:
+        * ASNMP/examples/set/set.mpc:
+        * ASNMP/examples/trap/trap.mpc:
+        * ASNMP/examples/walk/walk.mpc:
+          Added missing file extensions. This prevented resulted in project
           files that did nothing.
 
 Mon Mar  8 16:14:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Thread_Manager.cpp:
-	  Rewrote the retrieval of the thread priority so that we don't
-	  have to do a static_cast. The BCB compiler doesn't allow this
-	  cast.
+        * ace/Thread_Manager.cpp:
+          Rewrote the retrieval of the thread priority so that we don't
+          have to do a static_cast. The BCB compiler doesn't allow this
+          cast.
 
 Mon Mar  8 13:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/TkReactor_Test.cpp:
+        * tests/TkReactor_Test.cpp:
           Fixed compile errors. Thanks to Robert Schiele
           <robert.schiele@t-online.de> for reporting this.
 
