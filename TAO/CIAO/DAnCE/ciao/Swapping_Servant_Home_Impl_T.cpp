@@ -60,7 +60,7 @@ namespace CIAO
            this->dynamic_servant_map_.begin ();
          iter != end; ++iter)
       {
-        // (*iter).int_id_->destroy (oid);
+        (*iter).int_id_->destroy (oid);
       }
   }
 
@@ -286,12 +286,13 @@ namespace CIAO
 
     COMP_SVNT *servant = 0;
 
-    if (this->component_map_.unbind (oid.in (), servant) == 0)
+    if (this->component_map_.find (oid.in (), servant) == 0)
     {
       PortableServer::ServantBase_var safe (servant);
 
       servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+      this->component_map_.unbind (oid.in ());
     }
   }
 }
