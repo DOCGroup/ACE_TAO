@@ -1,3 +1,18 @@
+Sun Feb  8 19:48:33 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/Scheduling_Service/SchedEntry.{cpp,h,i} : Moved the
+          Classes for the various scheduling entries out of the 
+	  ACE_Scheduler class and into a separate set of files
+          (first cut - still a work in progress)
+
+	* orbsvcs/Scheduling_Service/DynSched.{cpp,h,i} : Completed 
+          merges of dispatches, and a thorough review of priority
+          assignment (second cut - still a work in progress)
+
+	* orbsvcs/Scheduling_Service/Strategy_Scheduler.{cpp,h} : 
+	  Completed merges of dispatches, and a thorough review of the 
+          modified strategies (second cut - still a work in progress)
+				
 Fri Feb  6 15:31:17 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_array.cpp: 
