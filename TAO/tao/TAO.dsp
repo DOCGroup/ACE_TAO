@@ -401,6 +401,10 @@ SOURCE=.\Dynamic_ParameterC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynamicA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynamicC.cpp
 # ADD CPP /GR
 # End Source File
@@ -673,6 +677,10 @@ SOURCE=.\MCAST_Parser.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_PolicyValueA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_PolicyValueC.cpp
 # ADD CPP /GR
 # End Source File
@@ -725,6 +733,10 @@ SOURCE=.\ObjectIdListC.cpp
 # Begin Source File
 
 SOURCE=.\ObjectKey_Table.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\OctetSeqA.cpp
 # End Source File
 # Begin Source File
 
@@ -791,6 +803,10 @@ SOURCE=.\Pluggable_Messaging.cpp
 # Begin Source File
 
 SOURCE=.\Pluggable_Messaging_Utils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_ForwardA.cpp
 # End Source File
 # Begin Source File
 
@@ -926,6 +942,10 @@ SOURCE=.\Services_Activate.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServicesA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServicesC.cpp
 # ADD CPP /GR
 # End Source File
@@ -940,6 +960,10 @@ SOURCE=.\Special_Basic_Arguments.cpp
 # Begin Source File
 
 SOURCE=.\Special_Basic_SArguments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeqA.cpp
 # End Source File
 # Begin Source File
 
@@ -1419,6 +1443,10 @@ SOURCE=.\Dynamic_ParameterC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynamicA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynamicC.h
 # End Source File
 # Begin Source File
@@ -1703,6 +1731,10 @@ SOURCE=.\MCAST_Parser.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_PolicyValueA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_PolicyValueC.h
 # End Source File
 # Begin Source File
@@ -1779,6 +1811,10 @@ SOURCE=.\OBV_Constants.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OctetSeqA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
@@ -1848,6 +1884,10 @@ SOURCE=.\Pluggable_Messaging.h
 # Begin Source File
 
 SOURCE=.\Pluggable_Messaging_Utils.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_ForwardA.h
 # End Source File
 # Begin Source File
 
@@ -1995,6 +2035,10 @@ SOURCE=.\Services_Activate.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServicesA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServicesC.h
 # End Source File
 # Begin Source File
@@ -2012,6 +2056,10 @@ SOURCE=.\Special_Basic_SArgument_T.h
 # Begin Source File
 
 SOURCE=.\Special_Basic_SArguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeqA.h
 # End Source File
 # Begin Source File
 
