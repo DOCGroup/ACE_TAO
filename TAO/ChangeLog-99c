@@ -1,7 +1,8 @@
-Fri Jun 18 14:52:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Jun 18 15:12:15 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/GIOP.cpp (process_server_request): Removed extra
-	  ACE_UNUSED_ARG (response_required).
+	  ACE_UNUSED_ARG (response_required) and initialized <request_id>
+	  to zero in process_server_request().
 
 	* examples/POA/Forwarding/MyFooServant.cpp (handle_input): Removed
 	  extra semi-colon.
