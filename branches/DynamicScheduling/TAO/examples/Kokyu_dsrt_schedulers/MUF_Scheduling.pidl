@@ -1,12 +1,14 @@
 //$Id$
-#include <RTScheduler.pidl>
-#include <RTCORBA.pidl>
+#include <tao/RTScheduling/RTScheduler.pidl>
+#include <tao/RTCORBA/RTCORBA.pidl>
 
-module MIF_Scheduling
+module MUF_Scheduling
 {
   struct SchedulingParameter
   {
-    long importance;
+    TimeBase::TimeT deadline;
+    TimeBase::TimeT estimated_initial_execution_time;
+    long criticality;
   };
 
   local interface SchedulingParameterPolicy
@@ -14,11 +16,11 @@ module MIF_Scheduling
   {
     attribute SchedulingParameter value;
   };
-  
+
   local interface Scheduler : RTScheduling::Scheduler
   {
     SchedulingParameterPolicy
-      create_scheduling_parameter 
+      create_scheduling_parameter
         (in SchedulingParameter value);
   };
 };
