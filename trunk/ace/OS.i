@@ -2734,11 +2734,22 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_init (rw, type, arg), ace_result_), int, -1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
+  ACE_UNUSED_ARG (name);
   int result = -1;
+  
+  // Since we cannot use the user specified name for all three
+  // objects, we will create three complete new names
+  TCHAR name1[100];
+  TCHAR name2[100];
+  TCHAR name3[100];
 
-  if (ACE_OS::mutex_init (&rw->lock_, type, name, arg) == 0
-      && ACE_OS::cond_init (&rw->waiting_readers_, type, name, arg) == 0
-      && ACE_OS::cond_init (&rw->waiting_writers_, type, name, arg) == 0)
+  ACE::unique_name (&rw->lock_, name1, sizeof name1);
+  ACE::unique_name (&rw->waiting_readers_, name2, sizeof name2);
+  ACE::unique_name (&rw->waiting_writers_, name3, sizeof name3);
+
+  if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
+      && ACE_OS::cond_init (&rw->waiting_readers_, type, name2, arg) == 0
+      && ACE_OS::cond_init (&rw->waiting_writers_, type, name3, arg) == 0)
     {
       // Success!  
       rw->ref_count_ = 0;
