@@ -215,7 +215,7 @@ up ACE</A> before building TAO.
 <H4>Visual C++ 5.0/6.0</H4>
 
 <P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
-<CODE>ACE_wrappers\TAO</CODE> because the Visual C++ 5 Project files
+<CODE>ACE_wrappers\TAO</CODE> because the Visual C++ 5/6 Project files
 are set up to work in this configuration. If you move it, then make
 sure you change the project files to look for the include and library
 files in the correct place.</P>
@@ -296,19 +296,22 @@ Point of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>.
 <P>Each IDL file generates .h, .i and .cpp files. Here is an example of
 adding an IDL file named foobar.idl into a VC project.
 <OL>
-  <LI>Create/open the workspace. Create server project and client project if
-      you haven't had them ready. Add the IDL file &lt;foobar.idl&gt and other
-      non-IDL generated files into both client and server projects.</LI>
+  <LI>Create/open the workspace. In addition to creating server
+       project and client project, create a separate "<b>Utility
+       Project</b>" call foobar_idl for compiling the shared IDL file.
+       Add the IDL file &lt;foobar.idl&gt to foobar_idl project and
+       other non-IDL generated files into both client and server
+       projects.</LI>  
 
   <LI>Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and
       foobarS.cpp into server project and foobarC.h, foobarC.i,
       foobarC.cpp into client projects.</LI>
 
-  <LI>Now open the project setting window (Project -&gt; Setting... or just
-      press Alt-F7.) Select the IDL files in both client and server projects.
-      Choose to set the setting for "All Configuration." Make sure the
-      "Always use custom build step" is checked and "Exclude from build" is
-      unchecked.</LI>
+  <LI>Now open the project setting window of foobar_idl (Project -&gt;
+       Setting... or just press Alt-F7.) Select the IDL file in the
+       projects.  Choose to set the setting for "All Configuration."
+       Make sure the "Always use custom build step" is checked and
+       "Exclude from build" is unchecked.</LI> 
 
   <LI>Click on the "Custom Build" tab. Add this entry as the build command
       for IDL files:<BR><BR>
@@ -339,6 +342,10 @@ adding an IDL file named foobar.idl into a VC project.
 
   <LI>Add foobarC.cpp and foobarS.cpp to the server project and
       foobarC.cpp into the client project.</LI>
+
+  <li>Make both client and server projects dependent projects of
+       foobar_idl project to make sure the IDL file get compiled
+       before client and server projects.</li>
 </OL>
 
 <p>Notice that these procedures only setup the IDL compiler to perform
