@@ -129,12 +129,12 @@ Task_State::Task_State (int argc, char **argv)
     // file.
     {
       ACE_NEW (barrier_,
-	       ACE_Barrier (thread_count_ + 2));
+               ACE_Barrier (thread_count_ + 2));
     }
   else
     {
       ACE_NEW (barrier_,
-	       ACE_Barrier (thread_count_ + 1));
+               ACE_Barrier (thread_count_ + 1));
     }
 
   ACE_NEW (latency_,
@@ -156,7 +156,7 @@ Client::put_latency (double *jitter,
                      u_int thread_id)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
-	   
+
   ts_->latency_[thread_id] = latency;
   ts_->global_jitter_array_[thread_id] = jitter;
 
@@ -598,8 +598,11 @@ Client::run_tests (Cubit_ptr cb,
   for (i = 0; i < loop_count; i++)
     {
       ACE_High_Res_Timer timer_;
-      ACE_Time_Value tv (0, (long int) (sleep_time - delta) < 0? 0 : (sleep_time - delta));
-		ACE_OS::sleep (tv);
+      ACE_Time_Value tv (0,
+                         (u_long) ((sleep_time - delta) < 0
+                                     ? 0
+                                     : (sleep_time - delta)));
+                ACE_OS::sleep (tv);
 
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
@@ -623,9 +626,9 @@ Client::run_tests (Cubit_ptr cb,
                 /* start recording quantify data from here */
                 quantify_start_recording_data ();
 #endif /* USE_QUANTIFY */
-		//ACE_ERROR (( LM_ERROR, "in {%t} i=%d\n", i));
+                //ACE_ERROR (( LM_ERROR, "in {%t} i=%d\n", i));
                 ret_octet = cb->cube_octet (arg_octet, env);
-		//ACE_ERROR (( LM_ERROR, "out {%t} i=%d\n", i));
+                //ACE_ERROR (( LM_ERROR, "out {%t} i=%d\n", i));
 
 #if defined (USE_QUANTIFY)
                 quantify_stop_recording_data();
