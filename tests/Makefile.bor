@@ -45,6 +45,7 @@ TESTS = \
 	Message_Block_Test \
 	Message_Queue_Notifications_Test \
 	Message_Queue_Test \
+	Message_Queue_Test_Ex \
 	MM_Shared_Memory_Test \
 	MT_Reactor_Timer_Test \
 	MT_SOCK_Test \
