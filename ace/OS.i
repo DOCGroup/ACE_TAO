@@ -101,12 +101,9 @@ using std::bsearch;
 using std::qsort;
 # if defined (ACE_WIN32)
 using std::_tzset;
-using std::_timezone;
 # else
 using std::tzset;
-using std::timezone;
 # endif
-using std::difftime;
 using std::ctime;
 using std::localtime;
 using std::gmtime;
