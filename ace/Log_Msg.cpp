@@ -249,7 +249,7 @@ ACE_Log_Msg::instance (void)
 #undef ACE_NEW_RETURN_I
 
 // Sets the flag in the default priority mask used to initialize
-// ACE_Log_Msg instances, as well as the current instance.
+// ACE_Log_Msg instances, as well as the current per-thread instance.
 
 void
 ACE_Log_Msg::enable_debug_messages (ACE_Log_Priority priority)
@@ -260,7 +260,7 @@ ACE_Log_Msg::enable_debug_messages (ACE_Log_Priority priority)
 }
 
 // Clears the flag in the default priority mask used to initialize
-// ACE_Log_Msg instances, as well as the current instance.
+// ACE_Log_Msg instances, as well as the current per-thread instance.
 
 void
 ACE_Log_Msg::disable_debug_messages (ACE_Log_Priority priority)
@@ -285,7 +285,7 @@ pid_t ACE_Log_Msg::pid_ = -1;
 // Current offset of msg_[].
 int ACE_Log_Msg::msg_off_ = 0;
 
-// Default priority mask
+// Default per-thread priority mask
 // By default, all priorities are enabled.
 u_long ACE_Log_Msg::default_priority_mask_ = LM_SHUTDOWN
                                            | LM_TRACE
@@ -298,6 +298,10 @@ u_long ACE_Log_Msg::default_priority_mask_ = LM_SHUTDOWN
                                            | LM_CRITICAL
                                            | LM_ALERT
                                            | LM_EMERGENCY;
+
+// Default per-process priority mask
+// By default, no priorities are enabled.
+u_long ACE_Log_Msg::process_priority_mask_ = 0;
 
 void
 ACE_Log_Msg::close (void)
@@ -376,23 +380,35 @@ ACE_Log_Msg::acquire (void)
 }
 
 u_long
-ACE_Log_Msg::priority_mask (u_long n_mask)
+ACE_Log_Msg::priority_mask (u_long n_mask, MASK_TYPE mask_type)
 {
-  u_long o_mask = this->priority_mask_;
-  this->priority_mask_ = n_mask;
+  u_long o_mask;
+
+  if (mask_type == THREAD) {
+    o_mask = this->priority_mask_;
+    this->priority_mask_ = n_mask;
+  }
+  else {
+    o_mask = ACE_Log_Msg::process_priority_mask_;
+        ACE_Log_Msg::process_priority_mask_ = n_mask;
+  }
+
   return o_mask;
 }
 
 u_long
-ACE_Log_Msg::priority_mask (void)
+ACE_Log_Msg::priority_mask (MASK_TYPE mask_type)
 {
-  return this->priority_mask_;
+  return mask_type == THREAD  ?  this->priority_mask_
+                              :  ACE_Log_Msg::process_priority_mask_;
 }
 
 int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority)
 {
-  return ACE_BIT_ENABLED (this->priority_mask_, log_priority);
+  return ACE_BIT_ENABLED (this->priority_mask_ |
+                            ACE_Log_Msg::process_priority_mask_,
+                          log_priority);
 }
 
 int
@@ -1180,7 +1196,7 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntrace_depth_ = %d\n"), this->trace_depth_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\trace_active_ = %d\n"), this->trace_active_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tracing_enabled_ = %d\n"), this->tracing_enabled_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\npriority_mask_ = %d\n"), this->priority_mask_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\npriority_mask_ = %x\n"), this->priority_mask_));
   if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\thr_state_ = %d\n"),
                 this->thr_desc_->state ()));
