@@ -20,10 +20,14 @@ SHLIB         = lib<%sharedname%>.$(SOEXT)
 SOEXT         = <%soext%>
 <%endfor%>
 <%foreach(configurations)%>
+<%if(pic)%>
 CPPFLAGS     += <%pic%>
+<%endif%>
 <%endfor%>
 <%foreach(platforms)%>
+<%if(shflags)%>
 SHFLAGS       = <%shflags%>
+<%endif%>
 <%endfor%>
 <%endif%>
 <%foreach(configurations)%>
@@ -106,15 +110,18 @@ $(BIN): $(OBJS)
 
 <%endif%>
 <%if(sharedname)%>
-<%if(sharedname)%>
 INSTARGET = $(SHLIB)
+
+all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
 <%else%>
 <%if(staticname)%>
 INSTARGET = $(LIB)
-<%endif%>
-<%endif%>
-all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
 
+all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
+<%endif%>
+<%endif%>
+
+<%if(sharedname)%>
 $(SHLIB): $(OBJS)
 	$(LINK.cc) $(SHFLAGS) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
 
@@ -146,6 +153,11 @@ install:
 <%endif%>
 clean:
 	-$(RM) $(OBJS)
+<%foreach(configurations)%>
+<%if(clean)%>
+	-$(RM) -r <%clean%>
+<%endif%>
+<%endfor%>
 
 realclean: clean
 	-$(RM) <%if(exename)%>$(BIN)<%else%>$(SHLIB) $(LIB)<%endif%><%if(install)%> <%install%>/$(INSTARGET)<%endif%>
