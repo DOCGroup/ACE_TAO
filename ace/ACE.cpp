@@ -1546,7 +1546,7 @@ ACE::set_handle_limit (int new_limit)
     }
   if (new_limit > cur_limit)
     {
-#if !defined (ACE_LACKS_RLIMIT)
+#if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
       struct rlimit rl;
       ACE_OS::memset ((void *) &rl, 0, sizeof rl);
       rl.rlim_cur = new_limit;
@@ -1558,7 +1558,7 @@ ACE::set_handle_limit (int new_limit)
     }
   else
     {
-#if !defined (ACE_LACKS_RLIMIT)
+#if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
       struct rlimit rl;
       ACE_OS::memset ((void *) &rl, 0, sizeof rl);
       rl.rlim_cur = new_limit;
