@@ -1,3 +1,8 @@
+Sat Mar 29 20:26:54 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: moved #defin of RTLD_LAZY after #include of dlfcn.h.
+	  Thanks to Chris Lahey <CLahey@cccis.com> for this fix.
+
 Sat Mar 29 17:08:33 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.cpp: Added many new ACE_UNUSED_ARGS macros to eliminate
