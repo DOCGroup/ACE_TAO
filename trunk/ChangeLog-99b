@@ -11,6 +11,10 @@ Sun Feb 28 20:08:54 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	Fixed to pass <ACE_POSIX_Asynch_Result *> wherever <aiocb *> is being
 	passed, since it is ok to pass the derived class pointer in place of
 	base class pointer.
+	Defined the fields <bytes_transferred_> and <error_> in
+	<ACE_POSIX_Asynch_Result> so that they can be used instead of
+	<AIO_SYSERROR> and <AIO_SYSRETURN>. Because <aiocb:;aio_return> and
+	<aiocb::aio_error> fields  are not supported on HP yet. 
 
 Sun Feb 28 14:22:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
