@@ -44,8 +44,8 @@ Consumer_Router::open (void *)
 int
 Consumer_Router::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) closing Consumer_Router %s\n",
-	      this->is_reader () ? "reader" : "writer"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) closing Consumer_Router %s\n"),
+	      this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer")));
 
   if (this->is_writer ())
     // Inform the thread to shut down.
@@ -65,25 +65,26 @@ Consumer_Router::svc (void)
   assert (this->is_writer ());
 
   ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) starting svc in Consumer_Router\n"));
+	      ACE_TEXT ("(%t) starting svc in Consumer_Router\n")));
 
   for (ACE_Message_Block *mb = 0;
        this->getq (mb) >= 0;
        )
     {
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) warning: Consumer_Router is "
-                  "forwarding a message to Supplier_Router\n"));
+		  ACE_TEXT ("(%t) warning: Consumer_Router is ")
+                  ACE_TEXT ("forwarding a message to Supplier_Router\n")));
 
       // Pass this message down to the next Module's writer Task.
       if (this->put_next (mb) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "(%t) send_peers failed in Consumer_Router\n"),
-			  -1);
+	ACE_ERROR_RETURN
+          ((LM_ERROR, 
+            ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
+           -1);
     }
 
   ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) stopping svc in Consumer_Router\n"));
+	      ACE_TEXT ("(%t) stopping svc in Consumer_Router\n")));
   return 0;
   // Note the implicit ACE_OS::thr_exit() via destructor.
 }
@@ -109,9 +110,10 @@ Consumer_Router::put (ACE_Message_Block *mb,
   else if (this->is_reader ())
     {
       if (this->context ()->send_peers (mb) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "(%t) send_peers failed in Consumer_Router\n"),
-			  -1);
+	ACE_ERROR_RETURN
+          ((LM_ERROR,
+            ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
+           -1);
       else 
 	return 0;
     }
@@ -125,24 +127,29 @@ Consumer_Router::put (ACE_Message_Block *mb,
 }
 
 // Return information about the <Consumer_Router>.
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+#  define FMTSTR  ACE_TEXT ("%s\t %d/%s %s (%s)\n")
+#else
+#  define FMTSTR  ACE_TEXT ("%ls\t %d/%ls %ls (%ls)\n")
+#endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
 int
-Consumer_Router::info (char **strp, size_t length) const
+Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr  addr;
-  const char *mod_name = this->name ();
+  const ACE_TCHAR *mod_name = this->name ();
   
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
     return -1;
   
   ACE_OS::sprintf (buf,
-                   "%s\t %d/%s %s (%s)\n",
+                   FMTSTR,
 		   mod_name,
                    addr.get_port_number (),
-                   "tcp",
-		   "# consumer router",
-                   this->is_reader () ? "reader" : "writer");
+                   ACE_TEXT ("tcp"),
+		   ACE_TEXT ("# consumer router"),
+                   this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer"));
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
     return -1;
   else

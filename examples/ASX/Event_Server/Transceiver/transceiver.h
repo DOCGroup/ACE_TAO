@@ -17,7 +17,7 @@ class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH
   //     it's a ``transceiver.''
 public:
   // = Initialization method.
-  Event_Transceiver (int argc, char *argv[]);
+  Event_Transceiver (int argc, ACE_TCHAR *argv[]);
   // Performs the actual initialization.
 
   Event_Transceiver (void);
@@ -44,16 +44,16 @@ private:
   int transmitter (void);
   // Writes data from ACE_STDIN to socket.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments.
 
   u_short port_number_;
   // Port number of event server.
 
-  const char *host_name_;
+  const ACE_TCHAR *host_name_;
   // Name of event server.
 
-  const char *role_;
+  const ACE_TCHAR *role_;
   // Are we playing the Consumer or Supplier role?
 };
 
