@@ -26,7 +26,7 @@ namespace TAO
   enum Invocation_Status
     {
       /// Initial state of the FSM in the invocation class.
-      TAO_INVOKE_START,
+      TAO_INVOKE_START = 0,
       /// The request must be restarted, a temporary failure has
       /// occured.
       TAO_INVOKE_RESTART,

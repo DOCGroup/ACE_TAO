@@ -38,7 +38,7 @@ namespace TAO
 {
   class Profile_Transport_Resolver;
 
-  class TAO_Export Synch_Twoway_Invocation : protected Remote_Invocation
+  class TAO_Export Synch_Twoway_Invocation : public Remote_Invocation
   {
   public:
     Synch_Twoway_Invocation (CORBA::Object_ptr otarget,
@@ -87,7 +87,7 @@ namespace TAO
 
   };
 
-  class TAO_Export Synch_Oneway_Invocation : protected Synch_Twoway_Invocation
+  class TAO_Export Synch_Oneway_Invocation : public Synch_Twoway_Invocation
   {
   public:
     Synch_Oneway_Invocation (CORBA::Object_ptr otarget,

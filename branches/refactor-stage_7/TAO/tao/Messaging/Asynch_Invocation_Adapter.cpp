@@ -77,73 +77,67 @@ namespace TAO
   }
 
 
-  void
-  Asynch_Invocation_Adapter::invoke_remote (TAO_Stub *stub,
-                                            TAO_Operation_Details &op
-                                            ACE_ENV_ARG_DECL)
+  Invocation_Status
+  Asynch_Invocation_Adapter::invoke_twoway (
+      TAO_Operation_Details &op,
+      CORBA::Object *&effective_target,
+      Profile_Transport_Resolver &r,
+      ACE_Time_Value *&max_wait_time
+      ACE_ENV_ARG_DECL)
   {
-    ACE_Time_Value tmp_wait_time;
-
-    bool is_timeout  =
-      this->get_timeout (tmp_wait_time);
-
-    ACE_Time_Value *max_wait_time = 0;
-
-    if (is_timeout)
-      max_wait_time = &tmp_wait_time;
-
-    TAO::Invocation_Status s = TAO_INVOKE_START;
+    // Simple sanity check
+    if (this->mode_ != TAO_ASYNCHRONOUS_CALLBACK_INVOCATION ||
+        this->type_ != TAO_TWOWAY_INVOCATION)
+      {
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+            CORBA::SystemException::_tao_minor_code (
+                TAO_DEFAULT_MINOR_CODE,
+                EINVAL),
+            CORBA::COMPLETED_NO),
+                          TAO_INVOKE_FAILURE);
+      }
 
     auto_ptr<TAO_Asynch_Reply_Dispatcher> safe_rd (this->rd_);
 
-    while (s == TAO_INVOKE_START ||
-           s == TAO_INVOKE_RESTART)
+    if (this->rd_)
       {
-        // Resolver for resolving transports for htis profile.
-        Profile_Transport_Resolver resolver (this->target_,
-                                             stub);
+        // Cache the  transport in the reply dispatcher
+        this->rd_->transport (r.transport ());
 
-        (void) resolver.resolve (max_wait_time
-                                 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        // AMI Timeout Handling Begin
+        ACE_Time_Value tmp;
 
-        op.request_id (resolver.transport ()->tms ()->request_id ());
-
-        if (this->rd_)
+        if (this->get_timeout (tmp))
           {
-            // Cache the  transport in the reply dispatcher
-            this->rd_->transport (resolver.transport ());
-
-            // AMI Timeout Handling Begin
-            if (is_timeout)
-              {
-                this->rd_->schedule_timer (op.request_id (),
-                                           *max_wait_time);
-              }
-          }
-
-        op.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
-
-        TAO::Asynch_Remote_Invocation asynch (this->target_,
-                                              resolver,
-                                              op,
-                                              this->rd_);
-        s =
-          asynch.remote_invocation (max_wait_time
-                                    ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-
-        if (s != TAO_INVOKE_FAILURE)
-          safe_rd.release ();
-
-        if (TAO_debug_level > 3 &&
-            s == TAO_INVOKE_RESTART)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO_Messaging (%P|%t) - Asynch_Invocation_Adapter::invoke_remote -"
-                        " retstarting invocation again \n"));
+            this->rd_->schedule_timer (op.request_id (),
+                                       *max_wait_time);
           }
       }
+
+    TAO::Asynch_Remote_Invocation asynch (effective_target,
+                                          r,
+                                          op,
+                                          this->rd_);
+    Invocation_Status s =
+      asynch.remote_invocation (max_wait_time
+                                ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (s != TAO_INVOKE_FAILURE)
+      (void) safe_rd.release ();
+
+    if (s == TAO_INVOKE_RESTART &&
+        asynch.is_forwarded ())
+      {
+        effective_target = asynch.steal_forwarded_reference ();
+
+        this->object_forwarded (effective_target,
+                                r.stub ()
+                                ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      }
+
+    return s;
   }
 
 } // End namespace TAO

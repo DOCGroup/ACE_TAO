@@ -43,7 +43,7 @@ namespace TAO
    * @brief Base class for Twoway_Invocation and Oneway_Invocation.
    *
    */
-  class TAO_Export Remote_Invocation : protected Invocation_Base
+  class TAO_Export Remote_Invocation : public Invocation_Base
   {
   public:
     Remote_Invocation (CORBA::Object_ptr otarget,

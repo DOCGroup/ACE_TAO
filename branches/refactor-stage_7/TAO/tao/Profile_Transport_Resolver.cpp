@@ -41,12 +41,12 @@ namespace TAO
 
     if (this->transport_)
       {
-        this->transport_->remove_reference ();
-
         if (this->is_released_ == false)
           {
             this->transport_->make_idle ();
           }
+
+        this->transport_->remove_reference ();
       }
 
     if (this->inconsistent_policies_)
@@ -115,7 +115,7 @@ namespace TAO
 
     if (!this->transport_->is_tcs_set ())
       {
-        TAO_Codeset_Manager *tcm = 
+        TAO_Codeset_Manager *tcm =
           this->stub_->orb_core ()->codeset_manager ();
         tcm->set_tcs (*this->profile_, *this->transport_);
       }

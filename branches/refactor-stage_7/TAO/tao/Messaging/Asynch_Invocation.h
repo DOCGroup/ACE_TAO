@@ -38,7 +38,7 @@ namespace TAO
   class Profile_Transport_Resolver;
 
   class TAO_Messaging_Export Asynch_Remote_Invocation
-    : protected Synch_Twoway_Invocation
+    : public Synch_Twoway_Invocation
   {
   public:
     Asynch_Remote_Invocation (CORBA::Object_ptr otarget,
