@@ -1,3 +1,7 @@
+Mon Aug 28 10:54:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile*: Updated dependencies
+
 Mon Aug 28 02:22:11 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/Portable_Interceptors/Benchmark/Benchmark.dsw
