@@ -1,25 +1,39 @@
+Tue Sep 12 10:32:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+          Fixed warnings about unused variables.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+          Use ACE_THROW_RETURN instead of just ACE_THROW.
+
+        * */Makefile:
+          Updated dependencies again, last time I generated them with
+          static_libs_only enabled.
+
 Tue Sep 12 11:29:34 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAOACE.dsw:
+        * TAOACE.dsw:
 
-	  Added IORTable project dependency to ImplRepo_Service
-	  and IFR_Service projects.
+          Added IORTable project dependency to ImplRepo_Service
+          and IFR_Service projects.
 
 Tue Sep 12 10:53:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
-	* orbsvcs/orbsvcs/Makefile.CosNaming:
-	* orbsvcs/orbsvcs/Makefile.CosNotification: Updated dependencies.
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Makefile.CosNotification: Updated dependencies.
 
 Tue Sep 12 01:58:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/mfc/client.cpp: Included "tao/PortableServer/POA.h".
+        * examples/mfc/client.cpp: Included "tao/PortableServer/POA.h".
 
-	* examples/mfc/client.dsp:
-	* examples/mfc/server.dsp: Added TAO_PortableServermfc* linked
-	  libraries and changed TAO_CosNaming* link libraries to
-	  TAO_CosNamingmfc* libraries.  Thanks for Bennett R. Stabile
-	  <bstabile@home.com> for reporting the bug.
+        * examples/mfc/client.dsp:
+        * examples/mfc/server.dsp: Added TAO_PortableServermfc* linked
+          libraries and changed TAO_CosNaming* link libraries to
+          TAO_CosNamingmfc* libraries.  Thanks for Bennett R. Stabile
+          <bstabile@home.com> for reporting the bug.
 
 Tue Sep 12 01:36:57 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 

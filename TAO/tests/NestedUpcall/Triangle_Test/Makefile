@@ -76,7 +76,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Triangle_TestC.o .obj/Triangle_TestC.o .obj/Triangle_TestC.o .obj/Triangle_TestC.o: Triangle_TestC.cpp Triangle_TestC.h \
+.obj/Triangle_TestC.o .obj/Triangle_TestC.so .shobj/Triangle_TestC.o .shobj/Triangle_TestC.so: Triangle_TestC.cpp Triangle_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -350,7 +350,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  Triangle_TestC.i
 
-.obj/Triangle_TestS.o .obj/Triangle_TestS.o .obj/Triangle_TestS.o .obj/Triangle_TestS.o: Triangle_TestS.cpp Triangle_TestS.h Triangle_TestC.h \
+.obj/Triangle_TestS.o .obj/Triangle_TestS.so .shobj/Triangle_TestS.o .shobj/Triangle_TestS.so: Triangle_TestS.cpp Triangle_TestS.h Triangle_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -655,7 +655,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/server_A.o .obj/server_A.o .obj/server_A.o .obj/server_A.o: server_A.cpp server_A.h \
+.obj/server_A.o .obj/server_A.so .shobj/server_A.o .shobj/server_A.so: server_A.cpp server_A.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -943,7 +943,7 @@ realclean: clean
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
 
-.obj/server_B.o .obj/server_B.o .obj/server_B.o .obj/server_B.o: server_B.cpp server_B.h \
+.obj/server_B.o .obj/server_B.so .shobj/server_B.o .shobj/server_B.so: server_B.cpp server_B.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1231,7 +1231,7 @@ realclean: clean
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
 
-.obj/Object_A_i.o .obj/Object_A_i.o .obj/Object_A_i.o .obj/Object_A_i.o: Object_A_i.cpp \
+.obj/Object_A_i.o .obj/Object_A_i.so .shobj/Object_A_i.o .shobj/Object_A_i.so: Object_A_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1515,7 +1515,7 @@ realclean: clean
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
 
-.obj/Object_B_i.o .obj/Object_B_i.o .obj/Object_B_i.o .obj/Object_B_i.o: Object_B_i.cpp \
+.obj/Object_B_i.o .obj/Object_B_i.so .shobj/Object_B_i.o .shobj/Object_B_i.so: Object_B_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1799,7 +1799,7 @@ realclean: clean
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
 
-.obj/Initiator_i.o .obj/Initiator_i.o .obj/Initiator_i.o .obj/Initiator_i.o: Initiator_i.cpp \
+.obj/Initiator_i.o .obj/Initiator_i.so .shobj/Initiator_i.o .shobj/Initiator_i.so: Initiator_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2083,7 +2083,7 @@ realclean: clean
  Triangle_TestS_T.h Triangle_TestS_T.i Triangle_TestS_T.cpp \
  Triangle_TestS.i
 
-.obj/initiator.o .obj/initiator.o .obj/initiator.o .obj/initiator.o: initiator.cpp \
+.obj/initiator.o .obj/initiator.so .shobj/initiator.o .shobj/initiator.so: initiator.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

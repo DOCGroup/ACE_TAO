@@ -70,7 +70,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/blocking_client.o .obj/blocking_client.o .obj/blocking_client.o .obj/blocking_client.o: blocking_client.cpp \
+.obj/blocking_client.o .obj/blocking_client.so .shobj/blocking_client.o .shobj/blocking_client.so: blocking_client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -371,7 +371,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
-.obj/blocking_server.o .obj/blocking_server.o .obj/blocking_server.o .obj/blocking_server.o: blocking_server.cpp \
+.obj/blocking_server.o .obj/blocking_server.so .shobj/blocking_server.o .shobj/blocking_server.so: blocking_server.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -682,7 +682,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/ami_client.o .obj/ami_client.o .obj/ami_client.o .obj/ami_client.o: ami_client.cpp \
+.obj/ami_client.o .obj/ami_client.so .shobj/ami_client.o .shobj/ami_client.so: ami_client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -993,7 +993,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/ami_server.o .obj/ami_server.o .obj/ami_server.o .obj/ami_server.o: ami_server.cpp \
+.obj/ami_server.o .obj/ami_server.so .shobj/ami_server.o .shobj/ami_server.so: ami_server.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1304,7 +1304,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/ami_client.o .obj/ami_client.o .obj/ami_client.o .obj/ami_client.o: ami_client.cpp \
+.obj/ami_client.o .obj/ami_client.so .shobj/ami_client.o .shobj/ami_client.so: ami_client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1615,7 +1615,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/ami_server.o .obj/ami_server.o .obj/ami_server.o .obj/ami_server.o: ami_server.cpp \
+.obj/ami_server.o .obj/ami_server.so .shobj/ami_server.o .shobj/ami_server.so: ami_server.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1926,7 +1926,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/Controller.o .obj/Controller.o .obj/Controller.o .obj/Controller.o: Controller.cpp Controller.h TestS.h \
+.obj/Controller.o .obj/Controller.so .shobj/Controller.o .shobj/Controller.so: Controller.cpp Controller.h TestS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2224,7 +2224,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
-.obj/Manager.o .obj/Manager.o .obj/Manager.o .obj/Manager.o: Manager.cpp Manager.h TestS.h \
+.obj/Manager.o .obj/Manager.so .shobj/Manager.o .shobj/Manager.so: Manager.cpp Manager.h TestS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2532,7 +2532,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/AMI_Manager.o .obj/AMI_Manager.o .obj/AMI_Manager.o .obj/AMI_Manager.o: AMI_Manager.cpp AMI_Manager.h TestS.h \
+.obj/AMI_Manager.o .obj/AMI_Manager.so .shobj/AMI_Manager.o .shobj/AMI_Manager.so: AMI_Manager.cpp AMI_Manager.h TestS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2840,7 +2840,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/Manager_Handler.o .obj/Manager_Handler.o .obj/Manager_Handler.o .obj/Manager_Handler.o: Manager_Handler.cpp Manager_Handler.h TestS.h \
+.obj/Manager_Handler.o .obj/Manager_Handler.so .shobj/Manager_Handler.o .shobj/Manager_Handler.so: Manager_Handler.cpp Manager_Handler.h TestS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -3148,7 +3148,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/TestC.o .obj/TestC.o .obj/TestC.o .obj/TestC.o: TestC.cpp TestC.h \
+.obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3426,7 +3426,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  TestC.i
 
-.obj/TestS.o .obj/TestS.o .obj/TestS.o .obj/TestS.o: TestS.cpp TestS.h \
+.obj/TestS.o .obj/TestS.so .shobj/TestS.o .shobj/TestS.so: TestS.cpp TestS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \

@@ -69,7 +69,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/MT_Client_TestC.o .obj/MT_Client_TestC.o .obj/MT_Client_TestC.o .obj/MT_Client_TestC.o: MT_Client_TestC.cpp MT_Client_TestC.h \
+.obj/MT_Client_TestC.o .obj/MT_Client_TestC.so .shobj/MT_Client_TestC.o .shobj/MT_Client_TestC.so: MT_Client_TestC.cpp MT_Client_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -343,7 +343,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  MT_Client_TestC.i
 
-.obj/MT_Client_TestS.o .obj/MT_Client_TestS.o .obj/MT_Client_TestS.o .obj/MT_Client_TestS.o: MT_Client_TestS.cpp MT_Client_TestS.h \
+.obj/MT_Client_TestS.o .obj/MT_Client_TestS.so .shobj/MT_Client_TestS.o .shobj/MT_Client_TestS.so: MT_Client_TestS.cpp MT_Client_TestS.h \
  MT_Client_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -649,7 +649,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp server.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -937,7 +937,7 @@ realclean: clean
  MT_Client_TestS_T.h MT_Client_TestS_T.i MT_Client_TestS_T.cpp \
  MT_Client_TestS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1238,7 +1238,7 @@ realclean: clean
  MT_Client_TestS.i \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h
 
-.obj/local_server.o .obj/local_server.o .obj/local_server.o .obj/local_server.o: local_server.cpp \
+.obj/local_server.o .obj/local_server.so .shobj/local_server.o .shobj/local_server.so: local_server.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1538,7 +1538,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/MT_Object_i.o .obj/MT_Object_i.o .obj/MT_Object_i.o .obj/MT_Object_i.o: MT_Object_i.cpp \
+.obj/MT_Object_i.o .obj/MT_Object_i.so .shobj/MT_Object_i.o .shobj/MT_Object_i.so: MT_Object_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

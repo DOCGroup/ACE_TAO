@@ -47,7 +47,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Trading_Server.o .obj/Trading_Server.o .obj/Trading_Server.o .obj/Trading_Server.o: Trading_Server.cpp Trading_Service.h \
+.obj/Trading_Server.o .obj/Trading_Server.so .shobj/Trading_Server.o .shobj/Trading_Server.so: Trading_Server.cpp Trading_Service.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -375,7 +375,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.i
 
-.obj/Trading_Service.o .obj/Trading_Service.o .obj/Trading_Service.o .obj/Trading_Service.o: Trading_Service.cpp \
+.obj/Trading_Service.o .obj/Trading_Service.so .shobj/Trading_Service.o .shobj/Trading_Service.so: Trading_Service.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

@@ -77,7 +77,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/SecurityS.o .obj/SecurityS.o .obj/SecurityS.o .obj/SecurityS.o: SecurityS.cpp SecurityS.h \
+.obj/SecurityS.o .obj/SecurityS.so .shobj/SecurityS.o .shobj/SecurityS.so: SecurityS.cpp SecurityS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -387,7 +387,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/SecurityC.o .obj/SecurityC.o .obj/SecurityC.o .obj/SecurityC.o: SecurityC.cpp SecurityC.h \
+.obj/SecurityC.o .obj/SecurityC.so .shobj/SecurityC.o .shobj/SecurityC.so: SecurityC.cpp SecurityC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \

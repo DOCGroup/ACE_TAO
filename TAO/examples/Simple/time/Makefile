@@ -91,7 +91,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/TimeC.o .obj/TimeC.o .obj/TimeC.o .obj/TimeC.o: TimeC.cpp TimeC.h \
+.obj/TimeC.o .obj/TimeC.so .shobj/TimeC.o .shobj/TimeC.so: TimeC.cpp TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -365,7 +365,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  TimeC.i
 
-.obj/TimeS.o .obj/TimeS.o .obj/TimeS.o .obj/TimeS.o: TimeS.cpp TimeS.h TimeC.h \
+.obj/TimeS.o .obj/TimeS.so .shobj/TimeS.o .shobj/TimeS.so: TimeS.cpp TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -669,7 +669,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Time_Client_i.h ../Simple_util.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Time_Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -986,7 +986,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
  TimeC.h TimeC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp ../Simple_util.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1304,7 +1304,7 @@ realclean: clean
  Time_i.h TimeS.h TimeC.h TimeC.i TimeS_T.h TimeS_T.i TimeS_T.cpp \
  TimeS.i
 
-.obj/Time_i.o .obj/Time_i.o .obj/Time_i.o .obj/Time_i.o: Time_i.cpp Time_i.h TimeS.h TimeC.h \
+.obj/Time_i.o .obj/Time_i.so .shobj/Time_i.o .shobj/Time_i.so: Time_i.cpp Time_i.h TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1587,7 +1587,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  TimeS_T.h TimeS_T.i TimeS_T.cpp TimeS.i
 
-.obj/Time_Client_i.o .obj/Time_Client_i.o .obj/Time_Client_i.o .obj/Time_Client_i.o: Time_Client_i.cpp Time_Client_i.h ../Simple_util.h \
+.obj/Time_Client_i.o .obj/Time_Client_i.so .shobj/Time_Client_i.o .shobj/Time_Client_i.so: Time_Client_i.cpp Time_Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1904,7 +1904,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
  TimeC.h TimeC.i
 
-.obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o: ../Simple_util.cpp ../Simple_util.h \
+.obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

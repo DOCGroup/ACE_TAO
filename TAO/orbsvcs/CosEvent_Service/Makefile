@@ -50,7 +50,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosEvent_Service.o .obj/CosEvent_Service.o .obj/CosEvent_Service.o .obj/CosEvent_Service.o: CosEvent_Service.cpp \
+.obj/CosEvent_Service.o .obj/CosEvent_Service.so .shobj/CosEvent_Service.o .shobj/CosEvent_Service.so: CosEvent_Service.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

@@ -80,7 +80,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Callback_Handler.o .obj/Callback_Handler.o .obj/Callback_Handler.o .obj/Callback_Handler.o: Callback_Handler.cpp \
+.obj/Callback_Handler.o .obj/Callback_Handler.so .shobj/Callback_Handler.o .shobj/Callback_Handler.so: Callback_Handler.cpp \
  $(ACE_ROOT)/ace/FILE_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FILE_IO.h \
@@ -392,7 +392,7 @@ realclean: clean
  Push_Web_ServerS_T.h Push_Web_ServerS_T.i Push_Web_ServerS_T.cpp \
  Push_Web_ServerS.i
 
-.obj/Push_Iterator_Factory_i.o .obj/Push_Iterator_Factory_i.o .obj/Push_Iterator_Factory_i.o .obj/Push_Iterator_Factory_i.o: Push_Iterator_Factory_i.cpp \
+.obj/Push_Iterator_Factory_i.o .obj/Push_Iterator_Factory_i.so .shobj/Push_Iterator_Factory_i.o .shobj/Push_Iterator_Factory_i.so: Push_Iterator_Factory_i.cpp \
  Push_Iterator_Factory_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FILE_Addr.h \
@@ -703,7 +703,7 @@ realclean: clean
  Push_Web_ServerS_T.h Push_Web_ServerS_T.i Push_Web_ServerS_T.cpp \
  Push_Web_ServerS.i Callback_Handler.h
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1015,7 +1015,7 @@ realclean: clean
  $(ACE_ROOT)/ace/FILE.i \
  $(ACE_ROOT)/ace/FILE_IO.i
 
-.obj/Callback_i.o .obj/Callback_i.o .obj/Callback_i.o .obj/Callback_i.o: Callback_i.cpp \
+.obj/Callback_i.o .obj/Callback_i.so .shobj/Callback_i.o .shobj/Callback_i.so: Callback_i.cpp \
  $(ACE_ROOT)/ace/FILE_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FILE_IO.h \
@@ -1331,7 +1331,7 @@ realclean: clean
  Push_Web_ServerS_T.h Push_Web_ServerS_T.i Push_Web_ServerS_T.cpp \
  Push_Web_ServerS.i
 
-.obj/Push_Iterator_Handler.o .obj/Push_Iterator_Handler.o .obj/Push_Iterator_Handler.o .obj/Push_Iterator_Handler.o: Push_Iterator_Handler.cpp \
+.obj/Push_Iterator_Handler.o .obj/Push_Iterator_Handler.so .shobj/Push_Iterator_Handler.o .shobj/Push_Iterator_Handler.so: Push_Iterator_Handler.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -1645,7 +1645,7 @@ realclean: clean
  $(ACE_ROOT)/ace/FILE.i \
  $(ACE_ROOT)/ace/FILE_IO.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Process_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \

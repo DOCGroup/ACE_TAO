@@ -105,7 +105,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/GridC.o .obj/GridC.o .obj/GridC.o .obj/GridC.o: GridC.cpp GridC.h \
+.obj/GridC.o .obj/GridC.so .shobj/GridC.o .shobj/GridC.so: GridC.cpp GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -379,7 +379,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  GridC.i
 
-.obj/GridS.o .obj/GridS.o .obj/GridS.o .obj/GridS.o: GridS.cpp GridS.h GridC.h \
+.obj/GridS.o .obj/GridS.so .shobj/GridS.o .shobj/GridS.so: GridS.cpp GridS.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -683,7 +683,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Grid_Client_i.h Simple_util.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Grid_Client_i.h Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -968,7 +968,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  GridC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp Simple_util.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1258,7 +1258,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  GridS_T.h GridS_T.i GridS_T.cpp GridS.i
 
-.obj/Grid_i.o .obj/Grid_i.o .obj/Grid_i.o .obj/Grid_i.o: Grid_i.cpp Grid_i.h GridS.h GridC.h \
+.obj/Grid_i.o .obj/Grid_i.so .shobj/Grid_i.o .shobj/Grid_i.so: Grid_i.cpp Grid_i.h GridS.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1541,7 +1541,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  GridS_T.h GridS_T.i GridS_T.cpp GridS.i
 
-.obj/Grid_Client_i.o .obj/Grid_Client_i.o .obj/Grid_Client_i.o .obj/Grid_Client_i.o: Grid_Client_i.cpp Grid_Client_i.h Simple_util.h \
+.obj/Grid_Client_i.o .obj/Grid_Client_i.so .shobj/Grid_Client_i.o .shobj/Grid_Client_i.so: Grid_Client_i.cpp Grid_Client_i.h Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1826,7 +1826,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  GridC.i
 
-.obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o: Simple_util.cpp Simple_util.h \
+.obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: Simple_util.cpp Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1986,7 +1986,7 @@ realclean: clean
  Simple_util.cpp \
  $(TAO_ROOT)/tao/debug.h
 
-.obj/Persistent_Client_i.o .obj/Persistent_Client_i.o .obj/Persistent_Client_i.o .obj/Persistent_Client_i.o: Persistent_Client_i.cpp Persistent_Client.h \
+.obj/Persistent_Client_i.o .obj/Persistent_Client_i.so .shobj/Persistent_Client_i.o .shobj/Persistent_Client_i.so: Persistent_Client_i.cpp Persistent_Client.h \
  Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2272,7 +2272,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  GridC.i
 
-.obj/persistent_client.o .obj/persistent_client.o .obj/persistent_client.o .obj/persistent_client.o: persistent_client.cpp Persistent_Client.h \
+.obj/persistent_client.o .obj/persistent_client.so .shobj/persistent_client.o .shobj/persistent_client.so: persistent_client.cpp Persistent_Client.h \
  Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \

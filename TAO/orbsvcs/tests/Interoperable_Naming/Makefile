@@ -67,7 +67,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Web_ServerC.o .obj/Web_ServerC.o .obj/Web_ServerC.o .obj/Web_ServerC.o: Web_ServerC.cpp Web_ServerC.h \
+.obj/Web_ServerC.o .obj/Web_ServerC.so .shobj/Web_ServerC.o .shobj/Web_ServerC.so: Web_ServerC.cpp Web_ServerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -341,7 +341,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  Web_ServerC.i
 
-.obj/Web_ServerS.o .obj/Web_ServerS.o .obj/Web_ServerS.o .obj/Web_ServerS.o: Web_ServerS.cpp Web_ServerS.h Web_ServerC.h \
+.obj/Web_ServerS.o .obj/Web_ServerS.so .shobj/Web_ServerS.o .shobj/Web_ServerS.so: Web_ServerS.cpp Web_ServerS.h Web_ServerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -645,7 +645,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp ncontextext_client_i.h Web_ServerC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp ncontextext_client_i.h Web_ServerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -922,7 +922,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
-.obj/ncontextext_client_i.o .obj/ncontextext_client_i.o .obj/ncontextext_client_i.o .obj/ncontextext_client_i.o: ncontextext_client_i.cpp \
+.obj/ncontextext_client_i.o .obj/ncontextext_client_i.so .shobj/ncontextext_client_i.o .shobj/ncontextext_client_i.so: ncontextext_client_i.cpp \
  ncontextext_client_i.h Web_ServerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
