@@ -35,10 +35,10 @@ TAO_SFP::TAO_SFP (CORBA::ORB_ptr orb,
                   SFP_Callback *callback)
   :orb_ (orb),
    reactor_ (reactor),
-   timeout1_ (timeout1),
-   timeout2_ (timeout2),
    start_tries_ (10),
    startReply_tries_ (10),
+   timeout1_ (timeout1),
+   timeout2_ (timeout2),
    callback_ (callback),
    sequence_num_ (0),
    credit_num_ (10),
@@ -491,7 +491,8 @@ TAO_SFP::send_cdr_buffer (TAO_OutputCDR &cdr,ACE_Message_Block *mb)
   // from the heap.
   iovec iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
-  for (const ACE_Message_Block* b = cdr.begin ();
+  const ACE_Message_Block* b = 0;
+  for (b = cdr.begin ();
        b != cdr.end () && iovcnt < TAO_WRITEV_MAX;
        b = b->cont ())
     {
@@ -587,6 +588,9 @@ TAO_SFP::handle_timeout (const ACE_Time_Value &tv,
         {
           this->end_stream ();
         }
+      break;
+    default:
+      ACE_DEBUG ((LM_DEBUG,"Handle_timeout: No Action in this state %d",this->state_));
     }
   return 0;
 }
@@ -722,6 +726,8 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
             this->callback_->end_stream ();
             return -1;
           }
+        default:
+          break;
         }
       break;
     case REPLY_RECEIVED:
@@ -739,7 +745,14 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
             else
               ACE_DEBUG ((LM_DEBUG,"start reply consumed\n"));
           }
+          break;
+        default:
+          ACE_DEBUG ((LM_DEBUG,"Invalid message in state REPLY_RECEIVED\n"));
+          break;
         }
+      break;
+    default:
+      break;
     }
   return 0;
 }
@@ -1110,3 +1123,21 @@ TAO_SFP::dump_buf(char *buffer,int size)
     ACE_DEBUG ((LM_DEBUG,"%d ",buf[i]));
   ACE_DEBUG ((LM_DEBUG,"n========================================n"));
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_DNode<TAO_SFP_Fragment_Node>;
+template class ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node>;
+template class ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node>;
+template class ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<unsigned int, TAO_SFP_Fragment_Table_Entry *>;
+template class ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_DNode<TAO_SFP_Fragment_Node>
+#pragma instantiate ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node>
+#pragma instantiate ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node>
+#pragma instantiate ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<unsigned int, TAO_SFP_Fragment_Table_Entry *>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
