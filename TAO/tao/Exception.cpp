@@ -3,6 +3,9 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
+#include "ace/Malloc.h"
+#include "ace/SString.h"
+
 #include "Exception.h"
 #include "Environment.h"
 #include "Any_SystemException.h"
@@ -11,9 +14,6 @@
 #include "ORB_Constants.h"
 #include "TC_Constants_Forward.h"
 #include "debug.h"
-
-#include "ace/Malloc.h"
-#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed for ostream& operator<< (ostream &os, const CORBA::Exception &e)
@@ -150,7 +150,7 @@ CORBA::Exception::_type (void) const
                   ACE_LIB_TEXT (" deprecated and will be removed")
                   ACE_LIB_TEXT (" in future versions.\n")));
     }
-            
+
   return CORBA::TypeCode::_nil ();
 }
 
