@@ -1,3 +1,9 @@
+Thu Apr 29 13:57:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Context.cpp:
+	  Fixed an include problem that was causing string_dup
+	  and string_free not to be found when linking to TAO.
+
 Thu Apr 29 12:15:22 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
