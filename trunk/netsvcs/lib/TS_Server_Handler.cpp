@@ -1,5 +1,5 @@
 // TS_Server_Handler.cpp
-// @(#)TS_Server_Handler.cpp	1.1	10/18/96
+// $Id$
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/SString.h"

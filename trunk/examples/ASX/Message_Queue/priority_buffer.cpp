@@ -1,5 +1,5 @@
 // This short program prints the contents of stdin to stdout sorted by
-// @(#)priority_buffer.cpp	1.1	10/18/96
+// $Id$
 
 // the length of each line via the use of an ASX Message_Queue.  It
 // illustrates how priorities can be used for ACE Message_Queues.

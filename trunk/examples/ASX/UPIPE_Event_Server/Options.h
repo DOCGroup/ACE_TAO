@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Options.h	1.1	10/18/96
+// $Id$
 
 // Option manager for Event Server.
 

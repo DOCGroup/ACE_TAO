@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_L_Dgram.h	1.1	10/18/96
+// $Id$
 
 // Handles UNIX datagram messages from local host.
 

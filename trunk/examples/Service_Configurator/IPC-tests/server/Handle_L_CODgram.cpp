@@ -1,5 +1,5 @@
 #include "Handle_L_CODgram.h"
-// @(#)Handle_L_CODgram.cpp	1.1	10/18/96
+// $Id$
 
 
 #if defined (SunOS4)

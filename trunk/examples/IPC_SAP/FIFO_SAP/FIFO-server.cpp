@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)FIFO-server.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/FIFO_Recv.h"
 

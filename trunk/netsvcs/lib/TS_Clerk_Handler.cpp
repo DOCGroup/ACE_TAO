@@ -1,5 +1,5 @@
 // TS_Clerk_Handler.cpp
-// @(#)TS_Clerk_Handler.cpp	1.1	10/18/96
+// $Id$
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Service_Config.h"

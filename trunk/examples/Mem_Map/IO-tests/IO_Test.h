@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)IO_Test.h	1.1	10/18/96
+// $Id$
 
 /* Class hierarchy for the File I/O tests. */
 

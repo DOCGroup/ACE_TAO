@@ -1,5 +1,5 @@
 #define ACE_BUILD_SVC_DLL
-// @(#)CCM_App.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Stream.h"
 #include "ace/Task.h"

@@ -1,5 +1,5 @@
 // Torture test ACE thread-specific storage...
-// @(#)test_tss.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Task.h"

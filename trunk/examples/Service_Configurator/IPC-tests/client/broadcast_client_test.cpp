@@ -1,5 +1,5 @@
 /* Tests out the broadcast service of the
-// @(#)broadcast_client_test.cpp	1.1	10/18/96
+// $Id$
 
    Internet domain IPC-SAP dgram abstraction. */
 

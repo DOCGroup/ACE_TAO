@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)test.h	1.1	10/18/96
+// $Id$
 
 #include "ace/OS.h"
 #include "ace/SV_Message.h"

@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)Channel.cpp	1.1	10/18/96
+// $Id$
 
 #include "Routing_Entry.h"
 #include "Channel_Connector.h"

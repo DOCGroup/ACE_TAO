@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Options.h	1.1	10/18/96
+// $Id$
 
 #if !defined (_OPTIONS)
 #define _OPTIONS

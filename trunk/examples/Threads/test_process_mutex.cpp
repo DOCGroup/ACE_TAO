@@ -1,5 +1,5 @@
 // This program tests ACE_Process_Mutexes.  To run it, open 3 
-// @(#)test_process_mutex.cpp	1.1	10/18/96
+// $Id$
 
 // or 4 windows and run this program in each window...
 

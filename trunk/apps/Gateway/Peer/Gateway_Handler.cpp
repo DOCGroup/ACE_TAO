@@ -1,5 +1,5 @@
 #include "ace/Get_Opt.h"
-// @(#)Gateway_Handler.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Log_Msg.h"
 #include "Gateway_Handler.h"

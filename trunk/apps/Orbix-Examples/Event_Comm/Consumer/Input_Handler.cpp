@@ -1,5 +1,5 @@
 #include "Input_Handler.h"
-// @(#)Input_Handler.cpp	1.1	10/18/96
+// $Id$
 
 #include "Notification_Receiver_Handler.h"
 

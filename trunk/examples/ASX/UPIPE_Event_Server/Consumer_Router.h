@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Consumer_Router.h	1.1	10/18/96
+// $Id$
 
 // The interface between one or more consumers and an Event Server
 // ACE_Stream.

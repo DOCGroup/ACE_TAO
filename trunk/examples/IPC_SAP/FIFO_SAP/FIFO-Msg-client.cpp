@@ -1,5 +1,5 @@
 #include "ace/FIFO_Send_Msg.h"
-// @(#)FIFO-Msg-client.cpp	1.1	10/18/96
+// $Id$
 
 
 #if defined (ACE_HAS_STREAM_PIPES)

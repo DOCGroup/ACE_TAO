@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_Timeout.h	1.1	10/18/96
+// $Id$
 
 /* Handles timeouts. */
 

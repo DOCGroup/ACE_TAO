@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Gateway_Handler.h	1.1	10/18/96
+// $Id$
 
 
 /* These Gateway handler classes process Peer messages sent from the

@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Log_Wrapper.h	1.1	10/18/96
+// $Id$
 
 
 // log_wrapper.h

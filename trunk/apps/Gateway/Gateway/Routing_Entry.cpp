@@ -1,5 +1,5 @@
 // Defines an entry in the Routing Table.
-// @(#)Routing_Entry.cpp	1.1	10/18/96
+// $Id$
 
 #include "Routing_Entry.h"
 

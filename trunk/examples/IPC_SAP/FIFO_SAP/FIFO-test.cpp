@@ -1,5 +1,5 @@
 /* Purpose:  This program uses ACE_FIFO wrappers to perform interprocess
-// @(#)FIFO-test.cpp	1.1	10/18/96
+// $Id$
 
    communication between a parent process and a child process.        
    The parents reads from an input file and writes it into the fifo.  

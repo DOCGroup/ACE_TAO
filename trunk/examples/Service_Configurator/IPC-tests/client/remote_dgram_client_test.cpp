@@ -1,5 +1,5 @@
 /* Tests out the Internet domain IPC-SAP dgram abstraction. */
-// @(#)remote_dgram_client_test.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Mem_Map.h"

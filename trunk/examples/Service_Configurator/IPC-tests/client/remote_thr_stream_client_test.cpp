@@ -1,5 +1,5 @@
 /* Test program for the INET ACE_TLI-SAPs... */
-// @(#)remote_thr_stream_client_test.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Mem_Map.h"

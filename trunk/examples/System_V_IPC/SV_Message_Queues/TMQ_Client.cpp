@@ -1,5 +1,5 @@
 #include "ace/Typed_SV_Message_Queue.h"
-// @(#)TMQ_Client.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Log_Msg.h"
 #include "test.h"

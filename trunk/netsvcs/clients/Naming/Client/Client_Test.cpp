@@ -1,5 +1,5 @@
 #define ACE_BUILD_SVC_DLL
-// @(#)Client_Test.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Service_Config.h"
 #include "ace/Naming_Context.h"

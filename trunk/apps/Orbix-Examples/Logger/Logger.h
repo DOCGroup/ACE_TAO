@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Logger.h	1.1	10/18/96
+// $Id$
 
 
 #if !defined (_LOGGER_H)

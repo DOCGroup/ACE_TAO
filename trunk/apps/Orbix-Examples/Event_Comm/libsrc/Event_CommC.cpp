@@ -1,5 +1,5 @@
 
-// @(#)Event_CommC.cpp	1.1	10/18/96
+// $Id$
 
 #include "Event_Comm.hh"
 

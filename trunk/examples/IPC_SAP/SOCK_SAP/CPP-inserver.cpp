@@ -1,5 +1,5 @@
 // This example tests the non-blocking features of the
-// @(#)CPP-inserver.cpp	1.1	10/18/96
+// $Id$
 
 // ACE_SOCK_Acceptor and ACE_SOCK_Stream classes.
 

@@ -1,5 +1,5 @@
 /* The main test driver for the dynamically configured server. */
-// @(#)server_test.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Service_Config.h"

@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Routing_Table.cpp	1.1	10/18/96
+// $Id$
 
 
 #if !defined (_ROUTING_TABLE_C)

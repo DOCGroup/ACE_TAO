@@ -1,5 +1,5 @@
 #include "Handle_L_SPIPE.h"
-// @(#)Handle_L_SPIPE.cpp	1.1	10/18/96
+// $Id$
 
 
 #if !defined (__ACE_INLINE__)

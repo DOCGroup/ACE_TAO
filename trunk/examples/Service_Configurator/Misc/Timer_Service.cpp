@@ -1,5 +1,5 @@
 #include "Timer_Service.h"
-// @(#)Timer_Service.cpp	1.1	10/18/96
+// $Id$
 
 
 int

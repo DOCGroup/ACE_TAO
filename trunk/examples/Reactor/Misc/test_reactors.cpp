@@ -1,5 +1,5 @@
 // Perform a torture test of multiple ACE_Reactors and ACE_Tasks in
-// @(#)test_reactors.cpp	1.1	10/18/96
+// $Id$
 
 // the same process...  Thanks to Detlef Becker for contributing this.
 

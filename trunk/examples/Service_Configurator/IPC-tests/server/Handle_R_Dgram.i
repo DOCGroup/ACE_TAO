@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_R_Dgram.i	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Get_Opt.h"

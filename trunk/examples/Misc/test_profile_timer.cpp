@@ -1,5 +1,5 @@
 #include "ace/Profile_Timer.h"
-// @(#)test_profile_timer.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Log_Msg.h"
 

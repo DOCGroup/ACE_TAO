@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Options.i	1.1	10/18/96
+// $Id$
 
 /* Option manager for ustreams */
 

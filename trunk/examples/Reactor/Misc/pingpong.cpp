@@ -1,5 +1,5 @@
 /* Simple program that illustrates all the features of the ACE_Reactor:
-// @(#)pingpong.cpp	1.1	10/18/96
+// $Id$
 
 
    1. I/O event demultiplexing

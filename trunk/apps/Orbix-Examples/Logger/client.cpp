@@ -1,5 +1,5 @@
 // A client for the distributed logger example.  This program reads
-// @(#)client.cpp	1.1	10/18/96
+// $Id$
 
 // from either stdin or from a redirected file and sends all the
 // contents to the logging server.  It also computes how long it takes

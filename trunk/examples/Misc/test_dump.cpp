@@ -1,5 +1,5 @@
 // The following code illustrates how the ACE_Dumpable mechanisms are
-// @(#)test_dump.cpp	1.1	10/18/96
+// $Id$
 
 // integrated into ACE components like the SOCK_Acceptor and
 // SOCK_Stream.

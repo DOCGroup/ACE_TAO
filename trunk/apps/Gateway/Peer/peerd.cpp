@@ -1,5 +1,5 @@
 /* Driver for the peer daemon (peerd).  Note that this
-// @(#)peerd.cpp	1.1	10/18/96
+// $Id$
 
    is completely generic code due to the Service Configurator
    framework! */

@@ -1,5 +1,5 @@
 #if !defined (ACE_HANDLE_THR_STREAM_C)
-// @(#)Handle_Thr_Stream.cpp	1.1	10/18/96
+// $Id$
 
 #define ACE_HANDLE_THR_STREAM_C
 

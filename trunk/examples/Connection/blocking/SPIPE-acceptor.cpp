@@ -1,5 +1,5 @@
 #if !defined (SPIPE_ACCEPTOR_C)
-// @(#)SPIPE-acceptor.cpp	1.1	10/18/96
+// $Id$
 
 #define SPIPE_ACCEPTOR_C
 

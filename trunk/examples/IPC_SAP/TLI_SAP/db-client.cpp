@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)db-client.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/TLI_Connector.h"
 

@@ -1,5 +1,5 @@
 /* Test program for different methods of copying files. */
-// @(#)test_io.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/OS.h"

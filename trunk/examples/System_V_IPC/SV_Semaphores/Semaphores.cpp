@@ -1,5 +1,5 @@
 // Illustrates the use of the Semaphore_Complex class.  Note that it
-// @(#)Semaphores.cpp	1.1	10/18/96
+// $Id$
 
 // doesn't matter whether the parent or the child creates the
 // semaphore since Semaphore_Complex will correctly serialize the

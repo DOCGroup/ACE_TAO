@@ -1,5 +1,5 @@
 #include "ace/OS.h"
-// @(#)Config_Files.cpp	1.1	10/18/96
+// $Id$
 
 #include "Config_Files.h"
 

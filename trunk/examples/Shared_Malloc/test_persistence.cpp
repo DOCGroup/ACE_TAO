@@ -1,5 +1,5 @@
 // Test the persistence capabilities of the ACE shared memory manager.
-// @(#)test_persistence.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Log_Msg.h"

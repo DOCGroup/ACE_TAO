@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Options.h	1.1	10/18/96
+// $Id$
 
 /* This may look like C code, but it is really -*- C++ -*- */
 

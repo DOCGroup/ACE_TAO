@@ -1,5 +1,5 @@
 #if !defined (CPP_CONNECTOR_C)
-// @(#)CPP-connector.cpp	1.1	10/18/96
+// $Id$
 
 #define CPP_CONNECTOR_C
 

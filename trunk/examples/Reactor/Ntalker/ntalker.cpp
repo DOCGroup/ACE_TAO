@@ -1,5 +1,5 @@
 // Server.C
-// @(#)ntalker.cpp	1.1	10/18/96
+// $Id$
 
 // 
 // listens to multicast address.  after first message received, will

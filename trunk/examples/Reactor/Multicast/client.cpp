@@ -1,5 +1,5 @@
 // client.C (written by Tim Harrison)
-// @(#)client.cpp	1.1	10/18/96
+// $Id$
 
 // This program reads in messages from stdin and sends them
 // to a Log_Wrapper.

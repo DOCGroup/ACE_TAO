@@ -1,5 +1,5 @@
 // Client_Logging_Handler.cpp
-// @(#)Client_Logging_Handler.cpp	1.1	10/18/96
+// $Id$
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Service_Config.h"

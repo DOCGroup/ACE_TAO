@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_Broadcast.i	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Get_Opt.h"

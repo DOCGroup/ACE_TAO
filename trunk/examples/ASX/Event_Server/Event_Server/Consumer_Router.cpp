@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)Consumer_Router.cpp	1.1	10/18/96
+// $Id$
 
 #include "Consumer_Router.h"
 #include "Options.h"

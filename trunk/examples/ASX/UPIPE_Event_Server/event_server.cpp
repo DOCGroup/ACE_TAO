@@ -1,5 +1,5 @@
 // Test the event server.
-// @(#)event_server.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Log_Msg.h"
 #include "ace/Stream.h"

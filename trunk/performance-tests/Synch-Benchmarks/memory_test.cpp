@@ -1,5 +1,5 @@
 #include "ace/Synch.h"
-// @(#)memory_test.cpp	1.1	10/18/96
+// $Id$
 
 #include "Options.h"
 #include "Benchmark.h"

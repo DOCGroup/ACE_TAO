@@ -1,5 +1,5 @@
 /* Handles parsing the Options provided to the user.
-// @(#)Options.cpp	1.1	10/18/96
+// $Id$
 
    Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)

@@ -1,5 +1,5 @@
 // Test program for the event transceiver.  This program can play the
-// @(#)transceiver.cpp	1.1	10/18/96
+// $Id$
 
 // role of either Consumer or Supplier.  You can terminate this
 // program by typing ^C....

@@ -1,5 +1,5 @@
 #include "Event_Analyzer.h"
-// @(#)Event_Analyzer.cpp	1.1	10/18/96
+// $Id$
 
 
 #if defined (ACE_HAS_THREADS)

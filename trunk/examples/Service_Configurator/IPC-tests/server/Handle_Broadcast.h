@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_Broadcast.h	1.1	10/18/96
+// $Id$
 
 /* Handles INET broadcast datagram messages from remote hosts on the local subnet. */
 

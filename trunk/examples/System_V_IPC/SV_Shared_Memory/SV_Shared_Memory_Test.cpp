@@ -1,5 +1,5 @@
 #include "ace/SV_Shared_Memory.h"
-// @(#)SV_Shared_Memory_Test.cpp	1.1	10/18/96
+// $Id$
 
 #include "SV_Shared_Memory_Test.h"
 

@@ -1,5 +1,5 @@
 /* Test program for the INET IPC-SAPs... */
-// @(#)remote_service_directory_test.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Log_Msg.h"

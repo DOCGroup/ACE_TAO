@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)auto_builtin_ptr.h	1.1	10/18/96
+// $Id$
 
 template <class X>
 class auto_builtin_ptr

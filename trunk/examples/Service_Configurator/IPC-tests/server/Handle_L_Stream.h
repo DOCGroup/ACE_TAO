@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_L_Stream.h	1.1	10/18/96
+// $Id$
 
 
 /* Handle connections from local UNIX domain sockets. */

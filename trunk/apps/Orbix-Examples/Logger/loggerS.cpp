@@ -1,5 +1,5 @@
 
-// @(#)loggerS.cpp	1.1	10/18/96
+// $Id$
 
 #include "logger.hh"
 

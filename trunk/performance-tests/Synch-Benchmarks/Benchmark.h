@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Benchmark.h	1.1	10/18/96
+// $Id$
 
 /* Defines the class used to dynamically link in the benchmark tests */
 

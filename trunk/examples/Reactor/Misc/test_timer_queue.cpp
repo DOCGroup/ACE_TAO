@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)test_timer_queue.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Timer_Queue.h"
 

@@ -1,5 +1,5 @@
 #include "ace/Service_Config.h"
-// @(#)server.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/CORBA_Handler.h"
 #include "Test_i.h"

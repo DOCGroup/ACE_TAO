@@ -1,5 +1,5 @@
 // Test the Log_Msg abstraction.
-// @(#)test_log_msg.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Log_Msg.h"

@@ -1,5 +1,5 @@
 // Test out the cooperative thread cancellation mechanisms provided by
-// @(#)test_cancel.cpp	1.1	10/18/96
+// $Id$
 
 // the ACE_Thread_Manager.
 

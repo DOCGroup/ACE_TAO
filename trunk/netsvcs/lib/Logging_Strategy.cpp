@@ -1,5 +1,5 @@
 // Logging_Strategy.cpp
-// @(#)Logging_Strategy.cpp	1.1	10/18/96
+// $Id$
 
 #define ACE_BUILD_SVC_DLL
 #include "iostream.h"

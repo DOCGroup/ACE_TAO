@@ -1,5 +1,5 @@
 #include <fstream.h>
-// @(#)Dump_Restore.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"

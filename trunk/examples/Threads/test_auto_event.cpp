@@ -1,5 +1,5 @@
 // This test shows the use of an ACE_Auto_Event as a signaling
-// @(#)test_auto_event.cpp	1.1	10/18/96
+// $Id$
 
 // mechanism. Two threads are created (one a reader, the other a
 // writer). The reader waits till the writer has completed

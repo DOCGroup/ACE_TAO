@@ -1,5 +1,5 @@
 // Example for using ACE_UPIPE_SAP and ACE_Thread for intra-process
-// @(#)ex3.cpp	1.1	10/18/96
+// $Id$
 
 // communication.  This example uses char buffers as input/output
 // interface to the ACE_UPIPE_Stream

@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)test_handle_set.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Handle_Set.h"
 

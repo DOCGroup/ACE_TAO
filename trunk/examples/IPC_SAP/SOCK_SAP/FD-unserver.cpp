@@ -1,5 +1,5 @@
 #include "ace/LSOCK_Acceptor.h"                             
-// @(#)FD-unserver.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/LSOCK_Stream.h"
 #include "ace/UNIX_Addr.h"                                       

@@ -1,5 +1,5 @@
 #include "Channel_Connector.h"
-// @(#)Channel_Connector.cpp	1.1	10/18/96
+// $Id$
 
 
 Channel_Connector::Channel_Connector (void)

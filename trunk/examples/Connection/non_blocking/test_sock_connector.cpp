@@ -1,5 +1,5 @@
 // ACE_SOCK Client.
-// @(#)test_sock_connector.cpp	1.1	10/18/96
+// $Id$
 
                                                         
 #include "ace/SOCK_Connector.h"

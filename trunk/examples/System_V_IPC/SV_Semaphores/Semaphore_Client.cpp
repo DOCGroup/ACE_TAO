@@ -1,5 +1,5 @@
 #include "Semaphore_Test.h"
-// @(#)Semaphore_Client.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/SV_Shared_Memory.h"
 #include "ace/SV_Semaphore_Simple.h"

@@ -1,5 +1,5 @@
 #if !defined (SPIPE_CONNECTOR_C)
-// @(#)SPIPE-connector.cpp	1.1	10/18/96
+// $Id$
 
 #define SPIPE_CONNECTOR_C
 

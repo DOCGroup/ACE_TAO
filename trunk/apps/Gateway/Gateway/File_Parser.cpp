@@ -1,5 +1,5 @@
 #if !defined (FILE_PARSER_C)
-// @(#)File_Parser.cpp	1.1	10/18/96
+// $Id$
 
 #define FILE_PARSER_C
 

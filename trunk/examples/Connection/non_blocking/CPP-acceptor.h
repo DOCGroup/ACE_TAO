@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)CPP-acceptor.h	1.1	10/18/96
+// $Id$
 
 #if !defined (CPP_ACCEPTOR_H)
 #define CPP_ACCEPTOR_H

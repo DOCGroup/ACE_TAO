@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)Logging_Handler.cpp	1.1	10/18/96
+// $Id$
 
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"

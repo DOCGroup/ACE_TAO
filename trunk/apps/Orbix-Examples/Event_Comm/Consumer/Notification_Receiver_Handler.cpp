@@ -1,5 +1,5 @@
 #include "Notification_Receiver_Handler.h"
-// @(#)Notification_Receiver_Handler.cpp	1.1	10/18/96
+// $Id$
 
 
 #if defined (ACE_HAS_ORBIX)

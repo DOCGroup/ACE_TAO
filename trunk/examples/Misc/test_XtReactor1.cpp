@@ -1,5 +1,5 @@
 // The following is another test that exercises the Eric C. Newton's
-// @(#)test_XtReactor1.cpp	1.1	10/18/96
+// $Id$
 
 // <ecn@clark.net> XtReactor implementation.
 

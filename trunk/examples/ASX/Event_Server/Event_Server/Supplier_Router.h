@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Supplier_Router.h	1.1	10/18/96
+// $Id$
 
 /* The interface between a supplier and an Event Service ACE_Stream */
 

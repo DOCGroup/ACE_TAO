@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_L_FIFO.h	1.1	10/18/96
+// $Id$
 
 /* Handle connections from local UNIX ACE_FIFO */
 /* Read from a well known ACE_FIFO and write to stdout. */

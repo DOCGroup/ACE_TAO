@@ -1,5 +1,5 @@
 #include "Handle_Timeout.h"
-// @(#)Handle_Timeout.cpp	1.1	10/18/96
+// $Id$
 
 
 #if defined (SunOS4)

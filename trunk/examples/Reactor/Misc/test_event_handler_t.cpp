@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)test_event_handler_t.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Event_Handler_T.h"
 

@@ -1,5 +1,5 @@
 // This test program illustrates how the ACE barrier synchronization
-// @(#)test_barrier1.cpp	1.1	10/18/96
+// $Id$
 
 // mechanisms work.
 

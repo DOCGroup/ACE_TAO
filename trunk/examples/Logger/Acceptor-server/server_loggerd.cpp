@@ -1,5 +1,5 @@
 // This server daemon collects, formats, and displays logging
-// @(#)server_loggerd.cpp	1.1	10/18/96
+// $Id$
 
 // information forwarded from client daemons running on other hosts in
 // the network.  In addition, this example illustrates how to use the

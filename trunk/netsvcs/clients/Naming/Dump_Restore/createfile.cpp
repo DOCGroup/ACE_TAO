@@ -1,5 +1,5 @@
 #include <stdio.h>
-// @(#)createfile.cpp	1.1	10/18/96
+// $Id$
 
 #include <string.h>
 #include <math.h>

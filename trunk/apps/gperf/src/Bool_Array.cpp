@@ -1,5 +1,5 @@
 /* Fast lookup table abstraction implemented as an Iteration Number Array
-// @(#)Bool_Array.cpp	1.1	10/18/96
+// $Id$
 
    Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)

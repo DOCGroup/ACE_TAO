@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)Notifier_i.cpp	1.1	10/18/96
+// $Id$
 
 #include "Notification_Receiver_i.h"
 #include "Notifier_i.h"
