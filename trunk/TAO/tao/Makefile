@@ -61,7 +61,11 @@ PUB_HDRS = \
   IORC \
   IORManipulation \
   BoundC \
-  GIOPC
+  GIOPC \
+  TAO_Export \
+  TAO_Singleton_Manager \
+  TAO_Singleton \
+  DLL_ORB
 
 POA_FILES = \
   Object_Adapter \
@@ -206,9 +210,14 @@ ORB_CORE_FILES = \
   BoundsC \
   TAOC \
   TAOS \
-  Object_Loader
+  Object_Loader \
+  TAO_Singleton_Manager \
+  DLL_ORB
 
 DYNAMIC_ANY_FILES =
+
+TEMPLATE_FILES = \
+  TAO_Singleton
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO

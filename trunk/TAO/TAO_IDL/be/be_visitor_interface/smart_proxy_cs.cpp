@@ -308,7 +308,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       os->indent ();
       *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \\"
           << be_idt_nl<<"defined (ACE_HAS_GNU_REPO)"<<be_uidt_nl
-          << "template class ACE_Singleton<";
+          << "template class TAO_Singleton<";
       *os << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -318,7 +318,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;"<<be_nl
           << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)"
           << be_nl
-          << "#pragma instantiate ACE_Singleton<";
+          << "#pragma instantiate TAO_Singleton<";
       *os << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!

@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Singleton.h"
+#include "tao/TAO_Singleton.h"
 #include "ace/Synch.h"
 #include "tao/corbafwd.h"
 
@@ -70,7 +70,7 @@ private:
 
 // currently the ValueFactory_Map is a singleton and not per ORB
 // as in the OMG specs
-typedef ACE_Singleton<TAO_ValueFactory_Map, ACE_SYNCH_MUTEX>
+typedef TAO_Singleton<TAO_ValueFactory_Map, ACE_SYNCH_MUTEX>
         TAO_VALUEFACTORY_MAP;
 
 

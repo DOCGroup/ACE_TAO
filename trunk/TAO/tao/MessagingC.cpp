@@ -1795,9 +1795,9 @@ Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
     defined (ACE_HAS_GNU_REPO)
-  template class ACE_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+  template class TAO_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #pragma instantiate ACE_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+  #pragma instantiate TAO_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
   #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_SMART_PROXIES */

@@ -25,7 +25,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Singleton.h"
 #include "ace/Service_Config.h"
 
 class TAO_Object_Adapter;

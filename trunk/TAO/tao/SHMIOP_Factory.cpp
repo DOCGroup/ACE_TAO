@@ -6,7 +6,6 @@
 
 #include "tao/SHMIOP_Acceptor.h"
 #include "tao/SHMIOP_Connector.h"
-#include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, SHMIOP_Factory, "$Id$")
 

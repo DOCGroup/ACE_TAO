@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "ace/config-all.h"
 
 #if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
@@ -9,7 +8,6 @@
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Connector.h"
 #include "ace/SSL/SSL_Context.h"
-#include "ace/Dynamic_Service.h"
 
 ACE_RCSID(TAO_SSLIOP, SSLIOP_Factory, "$Id$")
 
