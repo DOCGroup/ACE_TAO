@@ -1,3 +1,17 @@
+Mon Aug 09 09:47:06 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Log_Msg.{h,cpp}: replaced the ACE_Log_Msg_key_created_
+          and ACE_Log_Msg_key_ file static variables with static
+          class members ACE_Log_Msg::key_created_ and
+          ACE_Log_Msg::log_msg_tss_key_, respectively.  Only declare
+          ACE_Log_Msg::log_msg_tss_key_ if the platform supports TSS
+          (native or emulated).  Replaced the ACE_Log_Msg_message_queue
+          file static variable with ACE_Log_Msg_Manager::message_queue_.
+          Cleaned up Log_Msg.cpp. [Bug 86]
+
+          Thanks to Umar Syyid <usyyid@hns.com> for suggesting that
+          we remove the file static variables.
+
 Mon Aug 09 09:33:43 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: #define ECOMM (to ECONNABORTED) if it's not
@@ -941,7 +955,7 @@ Tue Jul 27 16:18:21 1999  David L. Levine  <levine@cs.wustl.edu>
           on VxWorks.  In particular, they don't provide copies
           of global (static) variables in the library.  So, "programs"
           that share a library will also share the static variables in
-          the library.
+          the library. [Bug 86]
 
 Tue Jul 27 14:26:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
