@@ -22,12 +22,12 @@
 #include "ace/Synch.h"
 #include "tests/test_config.h"
 
+#if defined (ACE_HAS_THREADS)
+
 int
 main (void)
 {
   ACE_START_TEST ("Atomic_Op_Test");
-
-#if defined (ACE_HAS_THREADS)
 
   ACE_Atomic_Op <ACE_Thread_Mutex, long> foo (5L);
   ACE_ASSERT (foo == 5L);
@@ -47,10 +47,6 @@ main (void)
   foo = 5L;
   ACE_ASSERT (foo == 5L);
 
-#else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */
-
   ACE_END_TEST;
   return 0;
 }
@@ -60,3 +56,18 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, long>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+int
+main (void)
+{
+  ACE_START_TEST ("Atomic_Op_Test");
+
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+
+  ACE_END_TEST;
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */
+
+
