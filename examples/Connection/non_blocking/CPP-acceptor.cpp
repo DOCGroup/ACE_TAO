@@ -14,7 +14,7 @@ ACE_RCSID(non_blocking, CPP_acceptor, "$Id$")
 #define PR_AC_1 ACE_PEER_ACCEPTOR_1
 #define PR_AC_2 ACE_PEER_ACCEPTOR_2
 #define PR_AD ACE_PEER_STREAM_ADDR
-#define SH SVC_HANDLER
+#define SVH SVC_HANDLER
 
 template <PR_ST_1>
 Svc_Handler<PR_ST_2>::Svc_Handler (ACE_Reactor *r)
@@ -104,8 +104,8 @@ Svc_Handler<PR_ST_2>::handle_timeout (const ACE_Time_Value &,
   return 0;
 }
 
-template <class SH, PR_AC_1> int
-IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
+template <class SVH, PR_AC_1> int
+IPC_Server<SVH, PR_AC_2>::init (int argc, char *argv[])
 {
   const char *local_addr = argc > 1
     ? argv[1]
@@ -157,25 +157,25 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
     return 0;
 }
 
-template <class SH, PR_AC_1>
-IPC_Server<SH, PR_AC_2>::IPC_Server (void)
+template <class SVH, PR_AC_1>
+IPC_Server<SVH, PR_AC_2>::IPC_Server (void)
   : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
 }
 
-template <class SH, PR_AC_1> int
-IPC_Server<SH, PR_AC_2>::fini (void)
+template <class SVH, PR_AC_1> int
+IPC_Server<SVH, PR_AC_2>::fini (void)
 {
   return 0;
 }
 
-template <class SH, PR_AC_1>
-IPC_Server<SH, PR_AC_2>::~IPC_Server (void)
+template <class SVH, PR_AC_1>
+IPC_Server<SVH, PR_AC_2>::~IPC_Server (void)
 {
 }
 
-template <class SH, PR_AC_1> int
-IPC_Server<SH, PR_AC_2>::handle_close (ACE_HANDLE handle,
+template <class SVH, PR_AC_1> int
+IPC_Server<SVH, PR_AC_2>::handle_close (ACE_HANDLE handle,
                                        ACE_Reactor_Mask mask)
 {
   ACE_UNUSED_ARG (handle);
@@ -188,8 +188,8 @@ IPC_Server<SH, PR_AC_2>::handle_close (ACE_HANDLE handle,
 
 // Run the interative service.
 
-template <class SH, PR_AC_1> int
-IPC_Server<SH, PR_AC_2>::svc (void)
+template <class SVH, PR_AC_1> int
+IPC_Server<SVH, PR_AC_2>::svc (void)
 {
   char buf[BUFSIZ];
 
@@ -209,9 +209,9 @@ IPC_Server<SH, PR_AC_2>::svc (void)
 
   while (ACE_Reactor::event_loop_done () == 0)
     {
-      SH sh (this->reactor ());
+      SVH sh (this->reactor ());
 
-      // Create a new <SH> endpoint, which performs all processing in
+      // Create a new <SVH> endpoint, which performs all processing in
       // its <open> method (note no automatic restart if errno ==
       // EINTR).
 
@@ -232,7 +232,7 @@ IPC_Server<SH, PR_AC_2>::svc (void)
                         this->acceptor ().get_handle ()));
         }
 
-      // <SH>'s destructor closes the stream implicitly but the
+      // <SVH>'s destructor closes the stream implicitly but the
       // listening endpoint stays open.
     }
 
@@ -245,5 +245,5 @@ IPC_Server<SH, PR_AC_2>::svc (void)
 #undef PR_AC_1
 #undef PR_AC_2
 #undef PR_AD
-#undef SH
+#undef SVH
 #endif /* CPP_ACCEPTOR_C */

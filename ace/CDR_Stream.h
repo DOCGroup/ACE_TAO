@@ -728,7 +728,7 @@ public:
   void reset (const ACE_Message_Block *data,
               int byte_order);
 
-  /// Steal the contents from the currect CDR.
+  /// Steal the contents from the current CDR.
   ACE_Message_Block *steal_contents (void);
 
   /// Steal the contents of <cdr> and make a shallow copy into this

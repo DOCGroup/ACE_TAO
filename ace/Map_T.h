@@ -64,7 +64,7 @@ public:
   int operator () (T &t);
 
   /// Returns the current value.
-  T& current_value (void);
+  T& current_value (void) const;
 
 protected:
 
@@ -555,7 +555,7 @@ public:
   /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Map_Impl (ACE_Allocator *alloc = 0);
 
-  /// Initialize with <size> entries.  The <size> parameter is ignore
+  /// Initialize with <size> entries.  The <size> parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Map_Impl (size_t size,
                 ACE_Allocator *alloc = 0);
@@ -837,7 +837,7 @@ public:
   /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
 
-  /// Initialize with <size> entries.  The <size> parameter is ignore
+  /// Initialize with <size> entries.  The <size> parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Active_Map_Manager_Adapter (size_t size,
                                   ACE_Allocator *alloc = 0);
@@ -1131,7 +1131,7 @@ public:
   /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = 0);
 
-  /// Initialize with <size> entries.  The <size> parameter is ignore
+  /// Initialize with <size> entries.  The <size> parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Hash_Map_Manager_Ex_Adapter (size_t size,
                                    ACE_Allocator *alloc = 0);
@@ -1417,7 +1417,7 @@ public:
   /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
 
-  /// Initialize with <size> entries.  The <size> parameter is ignore
+  /// Initialize with <size> entries.  The <size> parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Map_Manager_Adapter (size_t size,
                            ACE_Allocator *alloc = 0);

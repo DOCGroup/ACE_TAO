@@ -12,7 +12,7 @@ ACE_RCSID(non_blocking, CPP_connector, "$Id$")
 #define PR_CO_1 ACE_PEER_CONNECTOR_1
 #define PR_CO_2 ACE_PEER_CONNECTOR_2
 #define PR_AD ACE_PEER_CONNECTOR_ADDR
-#define SH SVC_HANDLER
+#define SVH SVC_HANDLER
 
 template <PR_ST_1>
 Peer_Handler<PR_ST_2>::Peer_Handler (ACE_Reactor *r)
@@ -201,8 +201,8 @@ Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE h,
   return 0;
 }
 
-template <class SH, PR_CO_1> int
-IPC_Client<SH, PR_CO_2>::svc (void)
+template <class SVH, PR_CO_1> int
+IPC_Client<SVH, PR_CO_2>::svc (void)
 {
   if (this->reactor ())
     ACE_Reactor::run_event_loop ();
@@ -210,20 +210,20 @@ IPC_Client<SH, PR_CO_2>::svc (void)
   return 0;
 }
 
-template <class SH, PR_CO_1> int
-IPC_Client<SH, PR_CO_2>::fini (void)
+template <class SVH, PR_CO_1> int
+IPC_Client<SVH, PR_CO_2>::fini (void)
 {
   return 0;
 }
 
-template <class SH, PR_CO_1>
-IPC_Client<SH, PR_CO_2>::IPC_Client (void)
+template <class SVH, PR_CO_1>
+IPC_Client<SVH, PR_CO_2>::IPC_Client (void)
   : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
 }
 
-template <class SH, PR_CO_1> int
-IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
+template <class SVH, PR_CO_1> int
+IPC_Client<SVH, PR_CO_2>::init (int argc, char *argv[])
 {
   // Call down to the CONNECTOR's open() method to do the
   // initialization.
@@ -248,9 +248,9 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
   this->options_.set (ACE_Synch_Options::USE_REACTOR,
                       timeout);
 
-  SH *sh;
+  SVH *sh;
   ACE_NEW_RETURN (sh,
-                  SH (this->reactor ()),
+                  SVH (this->reactor ()),
                   -1);
 
   // Connect to the peer.
@@ -266,13 +266,13 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
     return 0;
 }
 
-template <class SH, PR_CO_1> 
-IPC_Client<SH, PR_CO_2>::~IPC_Client (void)
+template <class SVH, PR_CO_1> 
+IPC_Client<SVH, PR_CO_2>::~IPC_Client (void)
 {
 }
 
-template <class SH, PR_CO_1> int
-IPC_Client<SH, PR_CO_2>::handle_close (ACE_HANDLE h, 
+template <class SVH, PR_CO_1> int
+IPC_Client<SVH, PR_CO_2>::handle_close (ACE_HANDLE h, 
 				       ACE_Reactor_Mask)
 {
   if (h == ACE_INVALID_HANDLE)
@@ -297,5 +297,5 @@ IPC_Client<SH, PR_CO_2>::handle_close (ACE_HANDLE h,
 #undef PR_CO_1
 #undef PR_CO_2
 #undef PR_AD
-#undef SH
+#undef SVH
 #endif /* CPP_CONNECTOR_C */

@@ -17,25 +17,25 @@ ACE_RCSID(server, Handle_Thr_Stream, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 // Shorthand names.
-#define SH SVC_HANDLER
+#define SVH SVC_HANDLER
 #define PR_AC_1 ACE_PEER_ACCEPTOR_1
 #define PR_AC_2 ACE_PEER_ACCEPTOR_2
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
 
-template <class SH, PR_AC_1>
-Handle_Thr_Acceptor<SH, PR_AC_2>::~Handle_Thr_Acceptor (void)
+template <class SVH, PR_AC_1>
+Handle_Thr_Acceptor<SVH, PR_AC_2>::~Handle_Thr_Acceptor (void)
 {
 }
 
-template <class SH, PR_AC_1>
-Handle_Thr_Acceptor<SH, PR_AC_2>::Handle_Thr_Acceptor (void)
+template <class SVH, PR_AC_1>
+Handle_Thr_Acceptor<SVH, PR_AC_2>::Handle_Thr_Acceptor (void)
   : thr_flags_ (THR_DETACHED | THR_NEW_LWP)
 {
 }
 
-template <class SH, PR_AC_1> int
-Handle_Thr_Acceptor<SH, PR_AC_2>::info (char **strp,
+template <class SVH, PR_AC_1> int
+Handle_Thr_Acceptor<SVH, PR_AC_2>::info (char **strp,
 					size_t length) const
 {
   char buf[BUFSIZ];
@@ -54,8 +54,8 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::info (char **strp,
   return ACE_OS::strlen (buf);
 }
 
-template <class SH, PR_AC_1> int
-Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
+template <class SVH, PR_AC_1> int
+Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, char *argv[])
 {
   ACE_INET_Addr local_addr (ACE_DEFAULT_THR_PORT);
   int n_threads = ACE_DEFAULT_THREADS;
@@ -93,8 +93,8 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
     return 0;
 }
 
-template <class SH, PR_AC_1> int
-Handle_Thr_Acceptor<SH, PR_AC_2>::fini (void)
+template <class SVH, PR_AC_1> int
+Handle_Thr_Acceptor<SVH, PR_AC_2>::fini (void)
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
@@ -161,7 +161,7 @@ CLI_Stream<PR_ST_2>::svc (void)
   return 0;
 }
 
-#undef SH
+#undef SVH
 #undef PR_AC_1
 #undef PR_AC_2
 #undef PR_ST_1
