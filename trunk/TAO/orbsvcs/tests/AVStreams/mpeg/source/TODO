@@ -11,6 +11,8 @@ Things to do
   Destructor of reactor crashes the server
 
 - Parent-Child relationship
+   -- parent goes back and listens for new connections
+   -- child handles this connection
 
 - rttag is enabled with -r
   does it work ?
