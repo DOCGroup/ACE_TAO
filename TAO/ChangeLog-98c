@@ -5,8 +5,11 @@ Wed Aug 19 10:48:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Fixed syntax errors, wrong paths and increased sleep time, seems
           to work now.
 
-        * tests/Cubit/TAO/DII_Cubit/run_test.pl:
-          The script was giving the wrong options to the server.
+	* tests/Cubit/TAO/DII_Cubit/run_test.pl: 
+	  The script was giving the wrong options to the server.
+
+	* tests/NestedUpcall/Reactor/run_test.pl: 
+	  Increased sleep time, simplify command line args.
 
 Wed Aug 19 09:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
