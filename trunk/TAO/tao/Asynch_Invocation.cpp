@@ -2,7 +2,7 @@
 
 #include "tao/Asynch_Invocation.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) 
+#if defined (TAO_HAS_CORBA_MESSAGING)
 #if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 
 #include "tao/Timeprobe.h"
@@ -62,7 +62,7 @@ TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                    this->profile_,
                                    this->opname_,
                                    this->request_id_,
-                                   this->request_service_info_,
+                                   this->service_info_,
                                    1,
                                    this->out_stream_,
                                    ACE_TRY_ENV);

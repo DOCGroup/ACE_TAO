@@ -16,11 +16,6 @@ TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
   // New Reply Dispatcher.
   ACE_NEW (rd_,
            TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
-                                        reply_handler_ptr));
-}
-
-ACE_INLINE const IOP::ServiceContextList &
-TAO_GIOP_Twoway_Asynch_Invocation::reply_service_info (void) const
-{
-  return this->rd_->reply_service_info ();
+                                        reply_handler_ptr,
+                                        this->service_info_));
 }
