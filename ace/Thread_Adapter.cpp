@@ -79,9 +79,9 @@ ACE_Thread_Adapter::invoke (void)
   // Without TSS, create an <ACE_Thread_Exit> instance.  When this
   // function returns, its destructor will be called because the
   // object goes out of scope.  The drawback with this appraoch is
-  // that the destructor _won't_ get called if <thr_exit> is
-  // called.  So, threads shouldn't exit that way.  Instead, they
-  // should return from <svc>.
+  // that the destructor _won't_ get called if <thr_exit> is called.
+  // So, threads shouldn't exit that way.  Instead, they should return
+  // from <svc>.
   ACE_Thread_Exit exit_hook;
   exit_hook.thr_mgr (this->thr_mgr ());
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
