@@ -20,11 +20,6 @@
 //     iterative server).  This server queries and increments a
 //     "counting value" in a file.
 //
-//     To execute this test program you can simply start the server
-//     process and connect to it via telnet.  If you type "inc" and
-//     "read" in the telnet window you'll exercise the functionality
-//     of the server.
-//
 // = AUTHOR
 //    Doug Schmidt and Kevin Boyle <kboyle@sanwafp.com>
 // 
@@ -138,6 +133,12 @@ ACE_File_Lock &
 Options::file_lock (void)
 {
   return this->file_lock_;
+}
+
+ACE_Concurrency_Strategy <Counting_Service> *
+Options::concurrency_strategy (void)
+{
+  return this->concurrency_strategy_;
 }
 
 const char *
@@ -367,15 +368,22 @@ Counting_Service::handle_input (ACE_HANDLE)
 	      "(%P|%t) reading from peer on %d\n",
 	      this->peer ().get_handle ()));
 
-  ssize_t bytes = this->peer ().recv (buf, sizeof buf);
+  size_t len;
+  // Read the PDU length first.
+  ssize_t bytes = this->peer ().recv ((void *) &len, sizeof len);
+
+  if (bytes <= 0)
+    return -1;
+
+  bytes = this->peer ().recv (buf, len);
 
   if (bytes <= 0 || buf[0] == EOF)
     return -1;
   else
     {
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%P|%t) input on %d is %*s\n",
-		  this->peer ().get_handle (), bytes, buf));
+		  "(%P|%t) %d bytes of input on %d is %*s\n",
+		  len, this->peer ().get_handle (), bytes, buf));
 
       // Read and return the current value in the file.
       if (ACE_OS::strncmp (buf, "read", 4) == 0)
@@ -444,17 +452,41 @@ client (void *arg)
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connector;
 
-  char *command = "inc";
-  size_t command_len = ACE_OS::strlen (command);
+  char buf[BUFSIZ];
+  char *command;
+  size_t command_len;
   size_t i;
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client iteration %d\n", i));
+
       if (connector.connect (stream, server_addr) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
-      else if (stream.send_n (command, command_len) != command_len)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), 0);
-      else if (connector.close () == -1)
+
+      command = "inc";
+      command_len = ACE_OS::strlen (command);
+
+      if (stream.send (4,
+		       &command_len, sizeof command_len,
+		       command, command_len) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
+
+      command = "read";
+      command_len = ACE_OS::strlen (command);
+
+      if (stream.send (4,
+		       &command_len, sizeof command_len,
+		       command, command_len) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
+      else if (stream.recv (buf, sizeof buf) <= 0)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 0);
+
+      //      ACE_DEBUG ((LM_DEBUG, 
+      //		  "(%P|%t) client iteration %d, buf = %s\n", 
+      //		  i, buf));
+
+      if (stream.close () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 0);
     }
 
@@ -463,21 +495,24 @@ client (void *arg)
 
   if (connector.connect (stream, server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
-  else if (stream.send_n (command, command_len) != command_len)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), 0);
-
-  char buf[BUFSIZ];
-  ssize_t n = stream.recv (buf, sizeof buf);
-
-  if (n <= 0)
+  else if (stream.send (4,
+			&command_len, sizeof command_len,
+			command, command_len) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
+  else if (stream.recv (buf, sizeof buf) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 0);
   else
     {
-      size_t count = ACE_OS::atoi (buf);
+      size_t count = ACE_OS::atoi (ACE_OS::strrchr (buf, ' '));
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) count = %d\n", count));
 
       // Make sure that the count is correct.
       ACE_ASSERT (count == ACE_MAX_ITERATIONS);
     }
+
+  if (stream.close () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 0);
 
   return 0;
 }
@@ -493,8 +528,11 @@ server (void *)
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
-  // Run the main event loop.
-  ACE_Service_Config::run_reactor_event_loop ();
+  ACE_Time_Value timeout (3);
+
+  // Run the main event loop, but only wait for up to 3 seconds (this
+  // is used to shutdown the server.
+  ACE_Service_Config::run_reactor_event_loop (timeout);
 
   // Remove the filename.
   ACE_OS::unlink (OPTIONS::instance ()->filename ());
@@ -530,7 +568,9 @@ main (int argc, char *argv[])
 		  server_addr.get_port_number ()));
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
-      switch (ACE_OS::fork ("child"))
+      pid_t pid = ACE_OS::fork ("child");
+
+      switch (pid)
 	{
 	case -1:
 	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
@@ -542,6 +582,8 @@ main (int argc, char *argv[])
 	  /* NOTREACHED */
 	default:
 	  client (&server_addr);
+	  // Shutdown the server process.
+	  ACE_OS::kill (pid, SIGINT);
 	  ACE_OS::wait ();
 	  break;
 	  /* NOTREACHED */
