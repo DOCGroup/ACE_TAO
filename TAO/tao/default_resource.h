@@ -120,6 +120,9 @@ protected:
   double purge_percentage_;
   // Specifies the percentage of entries which should get purged on
   // demand.
+
+  int reactor_mask_signals_;
+  // If <0> then we create reactors with signal handling disabled.
 };
 
 #if defined (__ACE_INLINE__)
