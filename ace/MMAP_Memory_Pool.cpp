@@ -4,6 +4,8 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/OS_NS_sys_mman.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_stat.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"
