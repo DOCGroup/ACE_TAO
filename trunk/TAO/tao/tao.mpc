@@ -1,3 +1,4 @@
+//$Id$
 project(TAO) : acelib, taoversion, core, tao_output, extra_core {
   includes    += $(TAO_ROOT) $(TAO_ROOT)/tao
   sharedname   = TAO

@@ -27,7 +27,6 @@
 
 #include "strategies_export.h"
 #include "ace/LSOCK_Acceptor.h"
-#include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 #include "tao/Transport.h"
 

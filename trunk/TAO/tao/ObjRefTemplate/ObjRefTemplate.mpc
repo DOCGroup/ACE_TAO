@@ -1,3 +1,4 @@
+//$Id$
 project : valuetype, taolib, core {
   sharedname   = TAO_ObjRefTemplate
   dynamicflags = TAO_ORT_BUILD_DLL

@@ -1,4 +1,5 @@
 #include "ValueFactory.h"
+#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ValueFactory.inl"

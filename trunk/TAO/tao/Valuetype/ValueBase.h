@@ -28,8 +28,10 @@
 #include "tao/Arg_Traits_T.h"
 
 #include "ace/Basic_Types.h"
-#include "ace/Synch_T.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -166,7 +168,7 @@ namespace CORBA
 
   private: // data
     CORBA::ULong _tao_reference_count_;
-    TAO_SYNCH_MUTEX _tao_reference_count_lock_;
+    ACE_SYNCH_MUTEX _tao_reference_count_lock_;
   }; // DefaultValueRefCountBase
 
   //  which lock has the lowest memory overhead ?

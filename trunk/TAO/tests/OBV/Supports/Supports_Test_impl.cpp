@@ -1,8 +1,9 @@
 // $Id$
+// FUZZ: disable check_for_streams_include
 
 #include "Supports_Test_impl.h"
 
-#include "ace/Stream.h"
+#include "ace/streams.h"
 
 /* vt_graph_impl */
 
@@ -49,11 +50,14 @@ void
 vt_graph_impl::print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  cout << "Printing graph data..." << endl;
-  cout << "Number of nodes: " << nodes_ ().length () << endl;
+  ACE_DEBUG ((LM_DEBUG,
+	      "Printing graph data... \n"));
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "Number of nodes: [%d] \n", nodes_ ().length ()));
+
   for (size_t i = 0; i < nodes_ ().length (); i++)
     nodes_ ()[i]->print ();
-  cout << endl;
 }
 
 
