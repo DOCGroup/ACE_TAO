@@ -11,7 +11,10 @@ inline int
 ACE_SOCK_Stream::close_reader (void)
 {
   ACE_TRACE ("ACE_SOCK_Stream::close_reader");
-  return ACE_OS::shutdown (this->get_handle (), 0);
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    return ACE_OS::shutdown (this->get_handle (), 0);
+  else
+    return 0;
 }
 
 // Shut down just the writing end of a ACE_SOCK. 
@@ -20,7 +23,10 @@ inline int
 ACE_SOCK_Stream::close_writer (void)
 {
   ACE_TRACE ("ACE_SOCK_Stream::close_writer");
-  return ACE_OS::shutdown (this->get_handle (), 1);
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    return ACE_OS::shutdown (this->get_handle (), 1);
+  else
+    return 0;
 }
 
 inline ssize_t 
