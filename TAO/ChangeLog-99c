@@ -1,3 +1,33 @@
+Mon Jul 26 15:30:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tao/Any.cpp:
+	* append.cpp:
+	* CDR_Interpreter.cpp:
+	* decode.cpp:
+	* DynAny_i.cpp:
+	* GIOP.cpp:
+	* GIOP_Server_Request.cpp:
+	* IIOP_Connect.cpp:
+	* Object.cpp:
+	* ORB.cpp:
+	* ORB_Core.cpp:
+	* Pluggable.cpp:
+	* POA.i:
+	* Stub.i:
+	* Principal.cpp:
+	* skip.cpp:
+	* ValueBase.i:
+	* Typecode.i:
+	  Minor mods to get rid of MSVC level 4 warnings, mostly casting 
+	  return values from integer to CORBA::Boolean and the like
+
+	* Typecode.h:
+	  Changed the private member kind_ from CORBA::TCKind type to
+	  CORBA::Long. With indirection in typecodes came the added value
+	  ~0u to switch statements. MSVC at level 4 warns that this value is
+	  not in the enum. This mod (suggested by Carlos) seems to work
+	  well, with some minor changes in the files above to compensate.
+
 Mon Jul 26 15:15:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/IDL_Test/Makefile:
