@@ -162,13 +162,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "return" << be_idt_nl
       << "ACE_reinterpret_cast" << be_idt_nl
       <<"(" << be_idt_nl
-      << node->full_name () << "_ptr," << be_idt_nl
+      << node->local_name () << "_ptr," << be_idt_nl
       << "obj->_tao_QueryInterface" << be_idt_nl
       << "(" << be_idt_nl
       << "ACE_reinterpret_cast" << be_idt_nl
       << "(" << be_idt_nl
       << "ptr_arith_t," << be_nl
-      << "&" << node->full_name () << "::_narrow" << be_uidt_nl
+      << "&" << node->local_name () << "::_narrow" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl
       << ");\n" << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt;
