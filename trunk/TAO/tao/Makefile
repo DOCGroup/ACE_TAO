@@ -278,10 +278,10 @@ ifeq ($(minimum_corba),0)
 ORB_CORE_FILES += \
   Services \
   NVList \
+  IFR_Client_Adapter \
   Dynamic_Adapter
 
 INTERFACE_REPO_FILES += \
-  IFR_Client_Adapter \
   IFR_TypeCodes
 
 endif # minimum_corba
