@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,9 +14,15 @@
 
 #ifndef ACE_BASED_POINTER_REPOSITORY_H
 #define ACE_BASED_POINTER_REPOSITORY_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"                  // Need ACE_Export
+#include "ace/ACE_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 // Forward decl., using the "Cheshire Cat" technique.
 class ACE_Based_Pointer_Repository_Rep;
@@ -55,9 +61,11 @@ public:
   int unbind (void *addr);
 
 private:
+
   /// Use the "Cheshire-Cat" technique to hide the implementation in
   /// order to avoid circular #include dependencies.
   ACE_Based_Pointer_Repository_Rep *rep_;
+
 };
 
 #include "ace/Singleton.h"
@@ -67,4 +75,5 @@ typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
         ACE_BASED_POINTER_REPOSITORY;
 
 #include "ace/post.h"
+
 #endif /* ACE_BASED_POINTER_REPOSITORY_H */

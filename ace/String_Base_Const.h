@@ -10,11 +10,17 @@
  */
 //=============================================================================
 
-#if !defined ACE_STRING_BASE_CONST_H
+#ifndef ACE_STRING_BASE_CONST_H
 #define ACE_STRING_BASE_CONST_H
 
 #include "ace/pre.h"
-#include "ace/config-all.h"
+
+#include "ace/ACE_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 /**
  * @class ACE_String_Base_Const

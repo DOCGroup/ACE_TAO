@@ -1,3 +1,160 @@
+Wed Apr 10 10:40:36 2002  Ossama Othman  <ossama@uci.edu>
+
+	Inter-header dependency reductions:
+
+	* ace/Auto_IncDec_T.h:
+	* ace/Auto_Ptr.h:
+	* ace/Based_Pointer_T.h:
+	* ace/Bound_Ptr.h:
+	* ace/Cached_Connect_Strategy_T.h:
+	* ace/Cache_Map_Manager_T.h:
+	* ace/Caching_Strategies_T.h:
+	* ace/Caching_Utility_T.h: 
+	* ace/Capabilities.h:
+	* ace/Cleanup_Strategies_T.h:
+	* ace/Containers_T.h:
+	* ace/CORBA_macros.h:
+	* ace/Dynamic_Service.h:
+	* ace/Env_Value_T.h:
+	* ace/Managed_Object.h:
+	* ace/Map.h:
+	* ace/Map_Manager.h:
+
+	  No need to include "ace/OS.h".  "ace/config-all.h" is enough.
+
+	* ace/Asynch_Acceptor.h:
+
+	  No need to include "ace/OS.h".  "ace/Default_Constants.h" is
+	  enough.
+
+	* ace/Addr.h:
+	* ace/Arg_Shifter.h:
+	* ace/Argv_Type_Converter.h:
+	* ace/Based_Pointer_Repository.h:
+	* ace/Containers.h:
+	* ace/Containers.cpp:
+	* ace/Init_ACE.h:
+	* ace/Trace.h:
+
+	  No need to include "ace/OS.h".  "ace/ACE_export.h" is enough.
+
+	* ace/RB_Tree.h:
+
+  	  No need to include "ace/OS.h".  "ace/Global_Macros.h" is
+	  enough.
+
+	* ace/Global_Macros.h:
+
+	  Moved ACE_GUARD macros to this file, meaning that it is no
+	  longer necessary to include "ace/OS.h" just to get those
+	  macros.  This should save on pre-processing times for some
+	  sources.
+
+	  Include "ace/OS_Export.h" to pull in the ACE_OS_Export macro
+	  definitions.
+
+	* ace/Arg_Shifter.cpp:
+	* ace/Argv_Type_Converter.cpp:
+
+	  Include "ace/OS_String.h" to pull in static string manipulation
+	  methods.
+
+	  Changed all ACE_OS string method calls to ACE_OS_String.
+
+	* ace/Trace.cpp:
+
+	  Minor include file cosmetic tweaks.
+
+	* ace/Time_Value.h:
+	* ace/Time_Value.inl:
+	* ace/Time_Value.cpp:
+
+	  Moved ACE_Time_Value class and related macros/constants to these
+	  files.  Files that only need the ACE_Time_Value class
+	  declaration need only include this header instead of "ace/OS.h",
+	  thus reducing pre-processing times.
+
+	* ace/OS.h:
+
+	  Moved ACE_Time_Value class and ACE_GUARD macros out of this
+	  header.
+
+	* ace/OS.i:
+	* ace/OS.cpp:
+
+	  Moved ACE_Time_Value methods out of the files into the new
+	  Time_Value.* files.
+
+	* ace/Init_ACE.cpp:
+
+	  Use "unsigned int" instead of the "u_int" typedef to avoid
+	  including "ace/OS.h".
+
+	* ace/Hashable.h:
+	* ace/Hashable.cpp:
+	* ace/Method_Request.h:
+	* ace/Method_Request.cpp:
+
+	  No need to include "ace/OS.h".  "ace/ACE_export.h" is enough.
+
+	  Use "unsigned long" instead of the "u_long" typedef to avoid
+	  including "ace/OS.h".
+
+	* ace/Proactor.h:
+
+	  No need to include "ace/OS.h" to pull in ACE_Time_Value class
+	  declaration.  A forward declaration is enough.
+
+	* ace/Argv_Type_Converter.inl:
+	* ace/CE_Screen_Output.h:
+
+	  Cosmetic changes to improve conformance to our coding
+	  style/guidelines.
+
+	* ace/config-all.h:
+
+	  No need to include "ace/ACE_export.h" and "ace/svc_export.h".
+	  They should only be included by headers that need them.
+
+	  Do not include "ace/OS_Errno.h".  Fixes a circular dependency.
+
+	* ace/Copy_Disabled.h:
+	* ace/Dirent.h:
+	* ace/Log_Msg_Backend.h:
+	* ace/Refcountable.h:
+	* ace/Recyclable.h:
+	* ace/String_Base_Const.h:
+	* ace/Thread_Adapter.h:
+
+	  Include "ace/ACE_export.h" to pull in definition of ACE_Export
+	  macro.
+
+	* ace/OS_Export.h:
+
+	  Include "ace/config.h" instead of "ace/config-all.h" to fix a
+	  circular include.
+
+	* ace/OS_Errno.h:
+
+	  No need to include "ace/config.h".  It is already included
+	  indirectly by "ace/OS_Export.h".
+
+	* ace/OS_Dirent.h:
+
+	  Include "ace/OS_Errno.h" to pull in errno definitions.
+
+	* ace/Handle_Ops.h:
+
+	  Include "ace/ACE_export.h" to pull in ACE_Export macro
+	  definition.
+
+	  Added missing "#pragma once".
+
+	* ace/Makefile:
+	* ace/Makefile.bor:
+
+	  Added new Time_Value.* sources to these Makefiles.
+
 Wed Apr 10 13:32:15 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Token.h:

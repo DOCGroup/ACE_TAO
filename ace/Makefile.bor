@@ -206,6 +206,7 @@ OBJFILES = \
 	$(OBJDIR)\Thread.obj \
 	$(OBJDIR)\Thread_Manager.obj \
 	$(OBJDIR)\Time_Request_Reply.obj \
+	$(OBJDIR)\Time_Value.obj \
 	$(OBJDIR)\Timeprobe.obj \
 	$(OBJDIR)\Timer_Hash.obj \
 	$(OBJDIR)\Timer_Heap.obj \

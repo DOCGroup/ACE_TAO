@@ -11,6 +11,7 @@ SHLIB    = $(LIBACE).$(SOEXT)
 
 OS_FILES = \
   Basic_Types \
+  Time_Value \
   OS \
   OS_Dirent \
   OS_Memory \

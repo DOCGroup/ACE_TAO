@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,10 @@
 
 #ifndef ACE_PAIR_H
 #define ACE_PAIR_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,4 +26,5 @@
 #include "ace/Pair_T.h"
 
 #include "ace/post.h"
+
 #endif /* ACE_PAIR_H */

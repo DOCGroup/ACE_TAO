@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,13 +14,16 @@
 
 #ifndef ACE_METHOD_REQUEST_H
 #define ACE_METHOD_REQUEST_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "Global_Macros.h"
 
 /**
  * @class ACE_Method_Request
@@ -44,10 +47,10 @@ public:
 
   // = Accessors.
   /// Get priority.
-  u_long priority (void) const;
+  unsigned long priority (void) const;
 
   /// Set priority.
-  void priority (u_long);
+  void priority (unsigned long);
 
   // = Invocation method (must be overridden by subclasses).
   /// Invoked when the <Method_Request> is scheduled to run.
@@ -55,12 +58,13 @@ public:
 
 protected:
   /// The priority of the request.
-  u_long priority_;
+  unsigned long priority_;
 
 private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Method_Request &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Method_Request (const ACE_Method_Request &))
 };
+
 
 #include "ace/post.h"
 #endif /* ACE_METHOD_REQUEST_H */

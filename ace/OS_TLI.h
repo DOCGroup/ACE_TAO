@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_Errno.h"
+
 # if !defined (ACE_HAS_TLI)
 // Dummies to help compilation.
 struct t_call { };

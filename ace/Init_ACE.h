@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -7,7 +8,6 @@
  *
  * This class consolidates the operations on the Handles.
  *
- *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================
@@ -15,9 +15,10 @@
 
 #ifndef ACE_INIT_ACE_H
 #define ACE_INIT_ACE_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,7 +55,7 @@ private:
    * <fini> must decrement it.  <fini> then does nothing until it
    * reaches 0.
    */
-  static u_int init_fini_count_;
+  static unsigned int init_fini_count_;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
@@ -62,4 +63,5 @@ private:
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
+
 #endif  /* ACE_INIT_ACE_H */

@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+
 ACE_INLINE
 ACE_Hashable::ACE_Hashable (void)
   : hash_value_ (0)
@@ -11,7 +14,7 @@ ACE_Hashable::~ACE_Hashable (void)
 {
 }
 
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hashable::hash (void) const
 {
   // In doing the check below, we take chance of paying a performance

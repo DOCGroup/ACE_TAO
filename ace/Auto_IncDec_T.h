@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,10 @@
 
 #ifndef ACE_AUTO_INCDEC_T_H
 #define ACE_AUTO_INCDEC_T_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +37,7 @@ template <class ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>
 class ACE_Auto_IncDec
 {
 public:
-  // = Initialization and termination methods.
+
   /// Implicitly increment the counter.
   ACE_Auto_IncDec (ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter);
 
@@ -56,7 +57,7 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const
                                           ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
     ACE_UNIMPLEMENTED_FUNC (ACE_Auto_IncDec (const
-                                            ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
+                                             ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
 };
 
 #if defined (__ACE_INLINE__)
@@ -81,4 +82,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_AUTO_INCDEC_T_H */

@@ -34,6 +34,8 @@
 #include "ace/OS_TLI.h"
 #include "ace/OS_Errno.h"
 
+#include "ace/Time_Value.h"
+
 class ACE_Timeout_Manager;
 
 #if !defined (_SC_AIO_MAX)
@@ -660,229 +662,12 @@ using std::timezone;
 using std::difftime;
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
-# if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
-// Definition per POSIX.
-typedef struct timespec
-{
-  time_t tv_sec; // Seconds
-  long tv_nsec; // Nanoseconds
-} timespec_t;
-# elif defined (ACE_HAS_BROKEN_POSIX_TIME)
-// OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
-#   include /**/ <sys/timers.h>
-# endif /* !ACE_HAS_POSIX_TIME */
-
-# if defined(ACE_LACKS_TIMESPEC_T)
-typedef struct timespec timespec_t;
-# endif /* ACE_LACKS_TIMESPEC_T */
-
 # if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
 typedef int clockid_t;
 #   if !defined (CLOCK_REALTIME)
 #     define CLOCK_REALTIME 0
 #   endif /* CLOCK_REALTIME */
 # endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
-
-// -------------------------------------------------------------------
-// These forward declarations are only used to circumvent a bug in
-// MSVC 6.0 compiler.  They shouldn't cause any problem for other
-// compilers and they can be removed once MS release a SP that contains
-// the fix.
-class ACE_Time_Value;
-ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
-                                         const ACE_Time_Value &tv2);
-
-ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
-                                         const ACE_Time_Value &tv2);
-
-// This forward declaration is needed by the set() and FILETIME() functions
-#if defined (ACE_LACKS_LONGLONG_T)
-  class ACE_Export ACE_U_LongLong;
-#endif //ghs
-// -------------------------------------------------------------------
-
-/**
- * @class ACE_Time_Value
- *
- * @brief Operations on "timeval" structures, which express time in <secs> and <usecs>.
- *
- * This class centralizes all the time related processing in
- * ACE.  These timers are typically used in conjunction with OS
- * mechanisms like <select>, <poll>, or <cond_timedwait>.
- * <ACE_Time_Value> makes the use of these mechanisms portable
- * across OS platforms,
- */
-class ACE_OS_Export ACE_Time_Value
-{
-public:
-  // = Useful constants.
-
-  /// Constant "0".
-  static const ACE_Time_Value zero;
-
-  /**
-   * Constant for maximum time representable.  Note that this time is
-   * not intended for use with <select> or other calls that may have
-   * *their own* implementation-specific maximum time representations.
-   * Its primary use is in time computations such as those used by the
-   * dynamic subpriority strategies in the <ACE_Dynamic_Message_Queue>
-   * class.
-   */
-  static const ACE_Time_Value max_time;
-
-  // = Initialization methods.
-
-  /// Default Constructor.
-  ACE_Time_Value (void);
-
-  /// Constructor.
-  ACE_Time_Value (long sec, long usec = 0);
-
-  // = Methods for converting to/from various time formats.
-  /// Construct the <ACE_Time_Value> from a <timeval>.
-  ACE_Time_Value (const struct timeval &t);
-
-  ///  Initializes the <ACE_Time_Value> object from a <timespec_t>.
-  ACE_Time_Value (const timespec_t &t);
-
-  /// Copy constructor.
-  ACE_Time_Value (const ACE_Time_Value &tv);
-
-# if defined (ACE_WIN32)
-  ///  Initializes the ACE_Time_Value object from a Win32 FILETIME
-  ACE_Time_Value (const FILETIME &ft);
-# endif /* ACE_WIN32 */
-
-  /// Construct a <Time_Value> from two <long>s.
-  void set (long sec, long usec);
-
-  /// Construct a <Time_Value> from a <double>, which is assumed to be
-  /// in second format, with any remainder treated as microseconds.
-  void set (double d);
-
-  /// Construct a <Time_Value> from a <timeval>.
-  void set (const timeval &t);
-
-  /// Initializes the <Time_Value> object from a <timespec_t>.
-  void set (const timespec_t &t);
-
-# if defined (ACE_WIN32)
-  ///  Initializes the <Time_Value> object from a <timespec_t>.
-  void set (const FILETIME &ft);
-# endif /* ACE_WIN32 */
-
-  /// Converts from <Time_Value> format into milli-seconds format.
-  long msec (void) const;
-
-  /// Converts from milli-seconds format into <Time_Value> format.
-  void msec (long);
-
-  /// Returns the value of the object as a <timespec_t>.
-  operator timespec_t () const;
-
-  /// Returns the value of the object as a <timeval>.
-  operator timeval () const;
-
-  /// Returns a pointer to the object as a <timeval>.
-  operator const timeval *() const;
-
-# if defined (ACE_WIN32)
-  /// Returns the value of the object as a Win32 FILETIME.
-  operator FILETIME () const;
-# endif /* ACE_WIN32 */
-
-  // = The following are accessor/mutator methods.
-
-  /// Get seconds.
-  long sec (void) const;
-
-  /// Set seconds.
-  void sec (long sec);
-
-  /// Get microseconds.
-  long usec (void) const;
-
-  /// Set microseconds.
-  void usec (long usec);
-
-  // = The following arithmetic methods operate on <Time_Value>s.
-
-  /// Add <tv> to this.
-  ACE_Time_Value &operator += (const ACE_Time_Value &tv);
-
-  /// Subtract <tv> to this.
-  ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
-
-  /// Multiply the time value by the <d> factor, which must be >= 0.
-  ACE_Time_Value &operator *= (double d);
-
-  /// Increment microseconds (the only reason this is here is
-  /// to allow the use of ACE_Atomic_Op with ACE_Time_Value).
-  ACE_Time_Value operator++ (int);  // Postfix advance
-  ACE_Time_Value &operator++ (void);  // Prefix advance
-
-  /// Decrement microseconds (the only reason this is here is
-  /// to allow the use of ACE_Atomic_Op with ACE_Time_Value).
-  ACE_Time_Value operator-- (int);  // Postfix dec
-  ACE_Time_Value &operator-- (void);  // Prefix dec
-
-  /// Adds two ACE_Time_Value objects together, returns the sum.
-  friend ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
-                                               const ACE_Time_Value &tv2);
-
-  /// Subtracts two ACE_Time_Value objects, returns the difference.
-  friend ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
-                                               const ACE_Time_Value &tv2);
-
-  /// True if tv1 < tv2.
-  friend ACE_OS_Export int operator < (const ACE_Time_Value &tv1,
-                                    const ACE_Time_Value &tv2);
-
-  /// True if tv1 > tv2.
-  friend ACE_OS_Export int operator > (const ACE_Time_Value &tv1,
-                                    const ACE_Time_Value &tv2);
-
-  /// True if tv1 <= tv2.
-  friend ACE_OS_Export int operator <= (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
-
-  /// True if tv1 >= tv2.
-  friend ACE_OS_Export int operator >= (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
-
-  /// True if tv1 == tv2.
-  friend ACE_OS_Export int operator == (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
-
-  /// True if tv1 != tv2.
-  friend ACE_OS_Export int operator != (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
-
-  /// Dump is a no-op.
-  /**
-   * The dump() method is a no-op.  It's here for backwards compatibility
-   * only, but does not dump anything. Invoking logging methods here
-   * violates layering restrictions in ACE because this class is part
-   * of the OS layer and @c ACE_Log_Msg is at a higher level.
-   */
-  void dump (void) const;
-
-# if defined (ACE_WIN32)
-  /// Const time difference between FILETIME and POSIX time.
-#  if defined (ACE_LACKS_LONGLONG_T)
-  static const ACE_U_LongLong FILETIME_to_timval_skew;
-#  else
-  static const DWORDLONG FILETIME_to_timval_skew;
-#  endif // ACE_LACKS_LONGLONG_T
-# endif /* ACE_WIN32 */
-
-private:
-  /// Put the timevalue into a canonical form.
-  void normalize (void);
-
-  /// Store the values as a <timeval>.
-  timeval tv_;
-};
 
 /**
  * @class ACE_Countdown_Time
@@ -1441,31 +1226,6 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 # if !defined (ACE_DEFAULT_THREAD_PRIORITY)
 #   define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
 # endif /* ACE_DEFAULT_THREAD_PRIORITY */
-
-// Convenient macro for testing for deadlock, as well as for detecting
-// when mutexes fail.
-#define ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
-   ACE_Guard< MUTEX > OBJ (LOCK); \
-   if (OBJ.locked () != 0) { ACTION; } \
-   else { REACTION; }
-#define ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, REACTION) \
-  ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ;, REACTION)
-#define ACE_GUARD(MUTEX, OBJ, LOCK) \
-  ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, return)
-#define ACE_GUARD_RETURN(MUTEX, OBJ, LOCK, RETURN) \
-  ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, return RETURN)
-# define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
-# define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
-# define ACE_READ_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
-# define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
 
 # if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 # include /**/ "pace/semaphore.h"
@@ -2724,12 +2484,6 @@ typedef unsigned int size_t;
       typedef loff_t ACE_LOFF_T;
 #   endif
 # endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
-
-// Define some helpful constants.
-// Not type-safe, and signed.  For backward compatibility.
-#define ACE_ONE_SECOND_IN_MSECS 1000L
-#define ACE_ONE_SECOND_IN_USECS 1000000L
-#define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
 // Type-safe, and unsigned.
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,9 +12,16 @@
 
 #ifndef ACE_TRACE_H
 #define ACE_TRACE_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Global_Macros.h"
 
 /**
  * @class ACE_Trace
@@ -83,4 +90,5 @@ private:
 };
 
 #include "ace/post.h"
+
 #endif /* ACE_TRACE_H */

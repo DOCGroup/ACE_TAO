@@ -1,3 +1,6 @@
+// -*- C++ -*-
+
+//=============================================================================
 /**
  *  @file    CE_Screen_Output.h
  *
@@ -7,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef ACE_CE_Screen_Output_h
-#define ACE_CE_Screen_Output_h
+#ifndef ACE_CE_SCREEN_OUTPUT_H
+#define ACE_CE_SCREEN_OUTPUT_H
 
 #include "ace/config-all.h"
 
@@ -41,78 +44,60 @@ const ACE_TCHAR tab[]  = ACE_LIB_TEXT("\t");
 class ACE_Export ACE_CE_Screen_Output : public ACE_Log_Msg_Callback
 {
 public:
-    /**
-     * Ctor with HWND specified.
-     */
-    ACE_CE_Screen_Output(HWND hEdit);
 
-    /**
-     * Default Ctor
-     */
-    ACE_CE_Screen_Output();
+  ACE_CE_Screen_Output (HWND hEdit);
 
-    /**
-     * Default Dtor
-     */
-    virtual ~ACE_CE_Screen_Output();
+  ACE_CE_Screen_Output (void);
 
-    /**
-     * Implementation of pure virtual function from ACE_Log_Msg_Callback.
-     */
-    virtual void log (ACE_Log_Record &log_record);
+  virtual ~ACE_CE_Screen_Output();
 
-    /**
-     * Interface to specify active window handle.
-     */
-    void SetOutputWindow(HWND hWnd);
+  /// Implementation of pure virtual function from ACE_Log_Msg_Callback.
+  virtual void log (ACE_Log_Record &log_record);
 
-    /**
-     * Clears text screen.
-     */
-    void clear();
+  /// Interface to specify active window handle.
+  void SetOutputWindow (HWND hWnd);
 
-    /**
-     * << operator that performs actual print out.
-     *
-     * Note: This is the only one operator that performs
-     *       output.  All other perators convert the type and
-     *       use this operator underneath.
-     */
-    ACE_CE_Screen_Output& operator << (ACE_TCHAR*);
-    ACE_CE_Screen_Output& operator << (const ACE_TCHAR*);
+  void clear (void);
 
-    ACE_CE_Screen_Output& operator << (ACE_ANTI_TCHAR* output);
-    ACE_CE_Screen_Output& operator << (const ACE_ANTI_TCHAR* output);
+  /// Stream insertion operator that performs actual print out.
+  /**
+   * @note This is the only one operator that performs output.  All
+   *       other perators convert the type and use this operator
+   *       underneath.
+   */
+  ACE_CE_Screen_Output& operator << (ACE_TCHAR*);
+  ACE_CE_Screen_Output& operator << (const ACE_TCHAR*);
 
-    ACE_CE_Screen_Output& operator << (char output);
-    ACE_CE_Screen_Output& operator << (unsigned char output);
+  ACE_CE_Screen_Output& operator << (ACE_ANTI_TCHAR* output);
+  ACE_CE_Screen_Output& operator << (const ACE_ANTI_TCHAR* output);
 
-    ACE_CE_Screen_Output& operator << (unsigned short output);
+  ACE_CE_Screen_Output& operator << (char output);
+  ACE_CE_Screen_Output& operator << (unsigned char output);
 
-    ACE_CE_Screen_Output& operator << (int output);
-    ACE_CE_Screen_Output& operator << (unsigned int output);
+  ACE_CE_Screen_Output& operator << (unsigned short output);
 
-    ACE_CE_Screen_Output& operator << (float output);
+  ACE_CE_Screen_Output& operator << (int output);
+  ACE_CE_Screen_Output& operator << (unsigned int output);
 
-    ACE_CE_Screen_Output& operator << (long output);
-    ACE_CE_Screen_Output& operator << (unsigned long output);
+  ACE_CE_Screen_Output& operator << (float output);
 
-    ACE_CE_Screen_Output& operator << (FILE* pFile);
+  ACE_CE_Screen_Output& operator << (long output);
+  ACE_CE_Screen_Output& operator << (unsigned long output);
+
+  ACE_CE_Screen_Output& operator << (FILE* pFile);
 
 private:
-    /**
-     * Copy Ctor
-     */
-    ACE_CE_Screen_Output(ACE_CE_Screen_Output&);
 
-    HWND handler_;
+  ACE_CE_Screen_Output(ACE_CE_Screen_Output&);
 
-    /**
-     * File pointer that used to save output to file.
-     * This class does not own the file handler pointer.
-     */
-    FILE* pFile_;
+private:
+
+  HWND handler_;
+
+  /// FILE pointer that used to save output to file.  This class does
+  /// not own the file handler pointer.
+  FILE* pFile_;
 };
 
 #endif  // ACE_HAS_WINCE
-#endif  // ACE_CE_Screen_Output_h
+#endif  // ACE_CE_SCREEN_OUTPUT_H

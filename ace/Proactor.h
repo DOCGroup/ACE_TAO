@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -396,98 +396,113 @@ public:
   // Note that the user does not have to use or know about these
   // methods unless they want to "fake" results.
 
-  /// Create the correct implementation class for ACE_Asynch_Read_Stream::Result class.
-  virtual ACE_Asynch_Read_Stream_Result_Impl *create_asynch_read_stream_result (ACE_Handler &handler,
-                                                                                ACE_HANDLE handle,
-                                                                                ACE_Message_Block &message_block,
-                                                                                u_long bytes_to_read,
-                                                                                const void* act,
-                                                                                ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                int priority = 0,
-                                                                                int signal_number = ACE_SIGRTMIN);
+  /// Create the correct implementation class for
+  /// ACE_Asynch_Read_Stream::Result class.
+  virtual ACE_Asynch_Read_Stream_Result_Impl *
+    create_asynch_read_stream_result (ACE_Handler &handler,
+                                      ACE_HANDLE handle,
+                                      ACE_Message_Block &message_block,
+                                      u_long bytes_to_read,
+                                      const void* act,
+                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                      int priority = 0,
+                                      int signal_number = ACE_SIGRTMIN);
 
-  /// Create the correct implementation class for ACE_Asynch_Write_Stream::Result.
-  virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
-                                                                                  ACE_HANDLE handle,
-                                                                                  ACE_Message_Block &message_block,
-                                                                                  u_long bytes_to_write,
-                                                                                  const void* act,
-                                                                                  ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                  int priority = 0,
-                                                                                  int signal_number = ACE_SIGRTMIN);
+  /// Create the correct implementation class for
+  /// ACE_Asynch_Write_Stream::Result.
+  virtual ACE_Asynch_Write_Stream_Result_Impl *
+    create_asynch_write_stream_result (ACE_Handler &handler,
+                                       ACE_HANDLE handle,
+                                       ACE_Message_Block &message_block,
+                                       u_long bytes_to_write,
+                                       const void* act,
+                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                       int priority = 0,
+                                       int signal_number = ACE_SIGRTMIN);
 
-  /// Create the correct implementation class for ACE_Asynch_Read_File::Result.
-  virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler &handler,
-                                                                            ACE_HANDLE handle,
-                                                                            ACE_Message_Block &message_block,
-                                                                            u_long bytes_to_read,
-                                                                            const void* act,
-                                                                            u_long offset,
-                                                                            u_long offset_high,
-                                                                            ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                            int priority = 0,
-                                                                            int signal_number = ACE_SIGRTMIN);
+  /// Create the correct implementation class for
+  /// ACE_Asynch_Read_File::Result.
+  virtual ACE_Asynch_Read_File_Result_Impl *
+    create_asynch_read_file_result (ACE_Handler &handler,
+                                    ACE_HANDLE handle,
+                                    ACE_Message_Block &message_block,
+                                    u_long bytes_to_read,
+                                    const void* act,
+                                    u_long offset,
+                                    u_long offset_high,
+                                    ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                    int priority = 0,
+                                    int signal_number = ACE_SIGRTMIN);
 
-  /// Create the correct implementation class for ACE_Asynch_Write_File::Result.
-  virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler &handler,
-                                                                              ACE_HANDLE handle,
-                                                                              ACE_Message_Block &message_block,
-                                                                              u_long bytes_to_write,
-                                                                              const void* act,
-                                                                              u_long offset,
-                                                                              u_long offset_high,
-                                                                              ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                              int priority = 0,
-                                                                              int signal_number = ACE_SIGRTMIN);
+  /// Create the correct implementation class for
+  /// ACE_Asynch_Write_File::Result.
+  virtual ACE_Asynch_Write_File_Result_Impl *
+    create_asynch_write_file_result (ACE_Handler &handler,
+                                     ACE_HANDLE handle,
+                                     ACE_Message_Block &message_block,
+                                     u_long bytes_to_write,
+                                     const void* act,
+                                     u_long offset,
+                                     u_long offset_high,
+                                     ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                     int priority = 0,
+                                     int signal_number = ACE_SIGRTMIN);
 
-  /// Create the correct implementation class for ACE_Asynch_Read_Dgram::Result.
-  virtual ACE_Asynch_Read_Dgram_Result_Impl *create_asynch_read_dgram_result (ACE_Handler &handler,
-                                                                              ACE_HANDLE handle,
-                                                                              ACE_Message_Block *message_block,
-                                                                              size_t bytes_to_read,
-                                                                              int flags,
-                                                                              int protocol_family,
-                                                                              const void* act,
-                                                                              ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                              int priority = 0,
-                                                                              int signal_number = ACE_SIGRTMIN);
+  /// Create the correct implementation class for
+  /// ACE_Asynch_Read_Dgram::Result.
+  virtual ACE_Asynch_Read_Dgram_Result_Impl *
+    create_asynch_read_dgram_result (ACE_Handler &handler,
+                                     ACE_HANDLE handle,
+                                     ACE_Message_Block *message_block,
+                                     size_t bytes_to_read,
+                                     int flags,
+                                     int protocol_family,
+                                     const void* act,
+                                     ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                     int priority = 0,
+                                     int signal_number = ACE_SIGRTMIN);
   
-  /// Create the correct implementation class for ACE_Asynch_Write_Dgram::Result.
-  virtual ACE_Asynch_Write_Dgram_Result_Impl *create_asynch_write_dgram_result (ACE_Handler &handler,
-                                                                                ACE_HANDLE handle,
-                                                                                ACE_Message_Block *message_block,
-                                                                                size_t bytes_to_write,
-                                                                                int flags,
-                                                                                const void* act,
-                                                                                ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                int priority = 0,
-                                                                                int signal_number = ACE_SIGRTMIN);
+  /// Create the correct implementation class for
+  /// ACE_Asynch_Write_Dgram::Result.
+  virtual ACE_Asynch_Write_Dgram_Result_Impl *
+    create_asynch_write_dgram_result (ACE_Handler &handler,
+                                      ACE_HANDLE handle,
+                                      ACE_Message_Block *message_block,
+                                      size_t bytes_to_write,
+                                      int flags,
+                                      const void* act,
+                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                      int priority = 0,
+                                      int signal_number = ACE_SIGRTMIN);
 
   /// Create the correct implementation class for ACE_Asynch_Accept::Result.
-  virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
-                                                                      ACE_HANDLE listen_handle,
-                                                                      ACE_HANDLE accept_handle,
-                                                                      ACE_Message_Block &message_block,
-                                                                      u_long bytes_to_read,
-                                                                      const void* act,
-                                                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                      int priority = 0,
-                                                                      int signal_number = ACE_SIGRTMIN);
+  virtual ACE_Asynch_Accept_Result_Impl *
+    create_asynch_accept_result (ACE_Handler &handler,
+                                 ACE_HANDLE listen_handle,
+                                 ACE_HANDLE accept_handle,
+                                 ACE_Message_Block &message_block,
+                                 u_long bytes_to_read,
+                                 const void* act,
+                                 ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                 int priority = 0,
+                                 int signal_number = ACE_SIGRTMIN);
 
-  /// Create the correct implementation class for ACE_Asynch_Transmit_File::Result.
-  virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler &handler,
-                                                                                    ACE_HANDLE socket,
-                                                                                    ACE_HANDLE file,
-                                                                                    ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                                                    u_long bytes_to_write,
-                                                                                    u_long offset,
-                                                                                    u_long offset_high,
-                                                                                    u_long bytes_per_send,
-                                                                                    u_long flags,
-                                                                                    const void *act,
-                                                                                    ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                    int priority = 0,
-                                                                                    int signal_number = ACE_SIGRTMIN);
+  /// Create the correct implementation class for
+  /// ACE_Asynch_Transmit_File::Result.
+  virtual ACE_Asynch_Transmit_File_Result_Impl *
+    create_asynch_transmit_file_result (ACE_Handler &handler,
+                                        ACE_HANDLE socket,
+                                        ACE_HANDLE file,
+                                        ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
+                                        u_long bytes_to_write,
+                                        u_long offset,
+                                        u_long offset_high,
+                                        u_long bytes_per_send,
+                                        u_long flags,
+                                        const void *act,
+                                        ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                        int priority = 0,
+                                        int signal_number = ACE_SIGRTMIN);
 
   /**
    * Create a timer result object which can be used with the Timer
@@ -496,7 +511,8 @@ public:
    * Timer object with a meaningful signal number, choosing the
    * largest signal number from the signal mask of the Proactor.
    */
-  virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
+  virtual ACE_Asynch_Result_Impl *create_asynch_timer (
+                                                       ACE_Handler &handler,
                                                        const void *act,
                                                        const ACE_Time_Value &tv,
                                                        ACE_HANDLE event = ACE_INVALID_HANDLE,
@@ -570,7 +586,7 @@ private:
 
 #else /* NOT WIN32 or POSIX with AIO features. */
 
-#  include "ace/OS.h"     // Need ACE_Time_Value
+class ACE_Time_Value;
 
 class ACE_Export ACE_Proactor
 {

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,9 +12,10 @@
 
 #ifndef ACE_CONTAINERS_T_H
 #define ACE_CONTAINERS_T_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -1821,4 +1822,5 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_CONTAINERS_T_H */
