@@ -75,7 +75,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
-                                    CORBA::Environment &env)
+                                    CORBA::Environment &ACE_TRY_ENV)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
@@ -84,7 +84,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
     hint_ (0),
     orb_core_ (orb_core)
 {
-  parse_string (string, env);
+  parse_string (string, ACE_TRY_ENV);
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
@@ -204,11 +204,9 @@ TAO_UIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
 CORBA::ULong
 TAO_UIOP_Profile::hash (CORBA::ULong max,
-                        CORBA::Environment &env)
+                        CORBA::Environment &)
 {
   CORBA::ULong hashval;
-
-  env.clear ();
 
   // Just grab a bunch of convenient bytes and hash them; could do
   // more (rendezvous_point, full key, exponential hashing)

@@ -16,7 +16,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Transport_Timeprobe_Description[] =
+static const char *TAO_UIOP_Transport_Timeprobe_Description[] =
   {
     "UIOP_Transport::send - start",
     "UIOP_Transport::send - end",
@@ -42,7 +42,7 @@ enum
 
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_UIOP_Transport_Timeprobe_Description,
                                   TAO_UIOP_TRANSPORT_SEND_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
@@ -131,7 +131,7 @@ TAO_UIOP_Client_Transport::
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const TAO_UIOP_Profile* profile =
-    ACE_dynamic_cast(const TAO_UIOP_Profile*,pfile);
+    ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
 
   // Obtain object key.
   const TAO_ObjectKey& key = profile->object_key ();
@@ -179,7 +179,7 @@ TAO_UIOP_Client_Transport::
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const TAO_UIOP_Profile* profile =
-    ACE_dynamic_cast(const TAO_UIOP_Profile*,pfile);
+    ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
 
   // Obtain object key.
   const TAO_ObjectKey& key = profile->object_key ();
@@ -481,7 +481,7 @@ TAO_UIOP_Transport::recv (char *buf,
                           int flags,
                           ACE_Time_Value *)
 {
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
   return this->handler_->peer ().recv_n (buf,
                                          len,
@@ -493,7 +493,7 @@ TAO_UIOP_Transport::recv (iovec *iov,
                           int iovcnt,
                           ACE_Time_Value *)
 {
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
   return handler_->peer ().recvv_n (iov, iovcnt);
 }
