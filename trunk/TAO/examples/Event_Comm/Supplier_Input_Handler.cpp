@@ -113,7 +113,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
         }
       ACE_CATCHANY
         {
-          ACE_TRY_ENV.print_exception ("Unexpected Error\n");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected Error\n");
         }
       ACE_ENDTRY;
     }
