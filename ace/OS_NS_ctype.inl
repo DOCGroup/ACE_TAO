@@ -2,6 +2,9 @@
 // $Id$
 
 #include "ace/os_include/os_ctype.h"
+#if defined ACE_HAS_WCHAR
+# include "ace/os_include/os_wctype.h"
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::ace_isalnum (ACE_TCHAR c)
