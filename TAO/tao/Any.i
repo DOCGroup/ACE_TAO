@@ -210,6 +210,12 @@ operator <<= (CORBA_Any_var &lhs, CORBA::Any::from_string rhs)
   lhs.inout () <<= rhs;
 }
 
+ACE_INLINE void
+operator <<= (CORBA_Any_var &lhs, CORBA::Any::from_wstring rhs)
+{
+  lhs.inout () <<= rhs;
+}
+
 // *************************************************************
 // CORBA_Any_var extraction operators
 // *************************************************************
@@ -312,6 +318,12 @@ operator >>= (CORBA_Any_var &lhs, CORBA::Any::to_wchar rhs)
 
 ACE_INLINE CORBA::Boolean
 operator >>= (CORBA_Any_var &lhs, CORBA::Any::to_string rhs)
+{
+  return lhs.inout () >>= rhs;
+}
+
+ACE_INLINE CORBA::Boolean
+operator >>= (CORBA_Any_var &lhs, CORBA::Any::to_wstring rhs)
 {
   return lhs.inout () >>= rhs;
 }

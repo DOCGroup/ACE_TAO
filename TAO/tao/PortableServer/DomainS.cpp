@@ -1026,50 +1026,64 @@ void POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::make_domain_manager 
 }
 
 #if (TAO_HAS_INTERCEPTORS == 1) && (TAO_HAS_INTERFACE_REPOSITORY == 1)
-POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (const char *_tao_operation,
-IOP::ServiceContextList &_tao_service_context_list,IR_InterfaceDef* object_type,CORBA::Boolean constr_policy,
-CORBA::Environment &)
-  : TAO_ServerRequest_Info (_tao_operation, _tao_service_context_list),object_type_ (object_type),constr_policy_ (constr_policy)
+
+POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
+    const char *_tao_operation,
+    IOP::ServiceContextList &_tao_service_context_list,
+    IR_InterfaceDef_ptr object_type,
+    CORBA::Boolean &constr_policy,
+    CORBA::Environment &
+  )
+  : TAO_ServerRequest_Info (
+        _tao_operation, 
+        _tao_service_context_list
+      ),
+    object_type_ (object_type),
+    constr_policy_ (constr_policy)
 {}
 
 Dynamic::ParameterList *
 POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::arguments (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-   // Generate the arg list on demand
+  // Generate the arg list on demand
   CORBA::ULong length = 0;
-        length = this->parameter_list_.length ();
-      this->parameter_list_.length (length + 1);
-      this->parameter_list_[length].argument <<=  this->object_type_;
+  length = this->parameter_list_.length ();
+  this->parameter_list_.length (length + 1);
+  this->parameter_list_[length].argument <<=  this->object_type_;
 
-    this->parameter_list_[length].mode = Dynamic::PARAM_IN;
-                length = this->parameter_list_.length ();
-        this->parameter_list_.length (length + 1);
-        this->parameter_list_[length].argument <<= CORBA::Any::from_boolean (this->constr_policy_ );
-      this->parameter_list_[length].mode = Dynamic::PARAM_IN;
+  this->parameter_list_[length].mode = Dynamic::PARAM_IN;
+  length = this->parameter_list_.length ();
+  this->parameter_list_.length (length + 1);
+  this->parameter_list_[length].argument <<= CORBA::Any::from_boolean (this->constr_policy_);
+  this->parameter_list_[length].mode = Dynamic::PARAM_IN;
 
-      return &this->parameter_list_;
+  return &this->parameter_list_;
 }
 
-    Dynamic::ExceptionList *
-    POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::exceptions (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException))
-    {
- // Generate the exception list on demand
-    return 0;
+Dynamic::ExceptionList *
+POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::exceptions (
+    CORBA::Environment &
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand
+  return 0;
 }
 
 
-      CORBA::Any *
-  POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::result (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
- // Generate the result on demand
-   CORBA::TypeCode tc (CORBA::tk_void);
+CORBA::Any *
+POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::result (
+    CORBA::Environment &
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand
+  CORBA::TypeCode tc (CORBA::tk_void);
   this->result_val_.type (&tc);
 
   return &this->result_val_;
-  }
+}
 
 #endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERFACE_REPOSITORY */
 

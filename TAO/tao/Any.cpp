@@ -71,58 +71,6 @@ CORBA_Any::CORBA_Any (void)
 {
 }
 
-// The more common "Any" constructor has its own copy of a typecode,
-// and either holds or "consumes" an arbitrary data value satisfying
-// the normal binary interface rules.
-
-#if 0
-CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr,
-                      void *,
-                      CORBA::Environment &ACE_TRY_ENV)
-  : type_ (CORBA::TypeCode::_duplicate (CORBA::_tc_null)),
-    byte_order_ (TAO_ENCAP_BYTE_ORDER),
-    cdr_ (0),
-    any_owns_data_ (0),
-    value_ (0),
-    destructor_ (0)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-
-CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr,
-                      void *,
-                      CORBA::Boolean,
-                      CORBA::Environment &ACE_TRY_ENV)
-  : type_ (CORBA::TypeCode::_duplicate (CORBA::_tc_null)),
-    byte_order_ (TAO_ENCAP_BYTE_ORDER),
-    cdr_ (0),
-    any_owns_data_ (0),
-    value_ (0),
-    destructor_ (0)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-
-// All-at-once replacement of the contents of an "Any."
-
-void
-CORBA_Any::replace (CORBA::TypeCode_ptr,
-                    const void *,
-                    CORBA::Boolean,
-                    CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-
-void
-CORBA_Any::replace (CORBA::TypeCode_ptr,
-                    const void *,
-                    CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-#endif /* 0 */
-
 CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
                       CORBA::Environment &)
   : type_ (CORBA::TypeCode::_duplicate (tc)),
@@ -132,7 +80,6 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
     value_ (0),
     destructor_ (0)
 {
-  // ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 // Constructor using a message block.
@@ -178,9 +125,11 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 CORBA_Any &
 CORBA_Any::operator= (const CORBA_Any &src)
 {
-  // check if it is a self assignment
+  // Check if it is a self assignment
   if (this == &src)
-    return *this;
+    {
+      return *this;
+    }
 
   // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
@@ -204,17 +153,21 @@ CORBA_Any::operator= (const CORBA_Any &src)
     }
 
   this->byte_order_ = src.byte_order_;
-  ACE_NEW_RETURN (this->cdr_, ACE_Message_Block, *this);
-  ACE_CDR::consolidate (this->cdr_, src.cdr_);
+
+  ACE_NEW_RETURN (this->cdr_, 
+                  ACE_Message_Block, 
+                  *this);
+
+  ACE_CDR::consolidate (this->cdr_, 
+                        src.cdr_);
 
   return *this;
 }
 
 // Destructor for an "Any" deep-frees memory if needed.
-
 CORBA_Any::~CORBA_Any (void)
 {
-  // decrement the refcount on the Message_Block we hold, it does not
+  // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
   // message block (i.e. it is always cloned or duplicated.
 
@@ -243,8 +196,12 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   this->byte_order_ = byte_order;
-  ACE_NEW (this->cdr_, ACE_Message_Block);
-  ACE_CDR::consolidate (this->cdr_, mb);
+
+  ACE_NEW (this->cdr_, 
+           ACE_Message_Block);
+
+  ACE_CDR::consolidate (this->cdr_, 
+                        mb);
   // We can save the decode operation if there's no need to extract
   // the object.
 }
@@ -296,7 +253,6 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
 }
 
 // Free internal data.
-
 void
 CORBA_Any::free_value (void)
 {
@@ -364,7 +320,10 @@ CORBA_Any::_tao_decode (TAO_InputCDR &cdr,
   ptr_arith_t offset = ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;
   mb.rd_ptr (offset);
   mb.wr_ptr (offset + size);
-  ACE_OS::memcpy (mb.rd_ptr (), begin, size);
+
+  ACE_OS::memcpy (mb.rd_ptr (), 
+                  begin, 
+                  size);
 
   // Stick it into the Any. It gets duplicated there.
   this->_tao_replace (this->type_.in (),
@@ -372,7 +331,7 @@ CORBA_Any::_tao_decode (TAO_InputCDR &cdr,
                       &mb);
 }
 
-// insertion operators
+// Insertion operators.
 
 void
 CORBA_Any::operator<<= (CORBA::Short s)
@@ -464,9 +423,9 @@ CORBA_Any::operator<<= (CORBA::LongDouble d)
                       stream.begin ());
 }
 
-// insertion of Any - copying
+// Insertion of Any - copying.
 void
-CORBA_Any::operator<<= (const CORBA_Any& a)
+CORBA_Any::operator<<= (const CORBA_Any &a)
 {
   TAO_OutputCDR stream;
   stream << a;
@@ -475,16 +434,16 @@ CORBA_Any::operator<<= (const CORBA_Any& a)
                       stream.begin ());
 }
 
-// insertion of Any - non-copying
+// Insertion of Any - non-copying.
 void
 CORBA::Any::_tao_any_destructor (void *x)
 {
-  CORBA::Any *tmp = ACE_static_cast (CORBA::Any*,x);
+  CORBA::Any *tmp = ACE_static_cast (CORBA::Any *, x);
   delete tmp;
 }
 
 void
-CORBA::Any::operator<<= (CORBA::Any* a)
+CORBA::Any::operator<<= (CORBA::Any *a)
 {
   TAO_OutputCDR stream;
   stream << *a;
@@ -548,7 +507,7 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
                       stream.begin ());
 }
 
-// Insertion of CORBA::Exception - copying
+// Insertion of CORBA::Exception - copying.
 void
 CORBA_Any::operator<<= (const CORBA_Exception &exception)
 {
@@ -574,7 +533,7 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
   ACE_CHECK;
 }
 
-// Insertion of CORBA::Exception - non-copying
+// Insertion of CORBA::Exception - non-copying.
 void
 CORBA_Any::operator<<= (CORBA_Exception *exception)
 {
@@ -614,12 +573,13 @@ CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
 }
 
 // Insertion of CORBA object - non-copying.
-
 void
 CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
 {
   if (objptr == 0)
-    return; // @@ Should we raise an exception?
+    {
+      return; // @@ Should we raise an exception?
+    }
 
   TAO_OutputCDR stream;
   stream << *objptr;
@@ -629,7 +589,6 @@ CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
 }
 
 // Insertion of from_string.
-
 void
 CORBA_Any::operator<<= (from_string s)
 {
@@ -639,7 +598,7 @@ CORBA_Any::operator<<= (from_string s)
   // If the inserted string is bounded, we create a typecode.
   static CORBA::Long _oc_string [] =
   {
-    // CDR typecode octets
+    // CDR typecode octets.
     TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
     0                       // ... unbounded string to start with
   };
@@ -650,6 +609,7 @@ CORBA_Any::operator<<= (from_string s)
     {
       // Bounded string.
       _oc_string [1] = s.bound_;
+
       // @@ It seems like this could be leaked!
       ACE_NEW (tc,
                CORBA::TypeCode (CORBA::tk_string,
@@ -660,10 +620,12 @@ CORBA_Any::operator<<= (from_string s)
     }
   else
     {
-      tc = CORBA::_tc_string; // unbounded.
+      // Unbounded.
+      tc = CORBA::_tc_string;
     }
 
   char *tmp;
+
   // Non-copying.
   if (s.nocopy_)
     {
@@ -691,7 +653,7 @@ CORBA_Any::operator<<= (from_wstring ws)
   // If the inserted string is bounded, we create a typecode.
   static CORBA::Long _oc_wstring [] =
   {
-    // CDR typecode octets
+    // CDR typecode octets.
     TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
     0                       // ... unbounded string to start with
   };
@@ -702,6 +664,7 @@ CORBA_Any::operator<<= (from_wstring ws)
     {
       // Bounded string.
       _oc_wstring [1] = ws.bound_;
+
       // @@ TODO It seems like this is leaked!
       ACE_NEW (tc,
                CORBA::TypeCode (CORBA::tk_wstring,
@@ -712,7 +675,8 @@ CORBA_Any::operator<<= (from_wstring ws)
     }
   else
     {
-      tc = CORBA::_tc_wstring; // unbounded.
+      // Unbounded.
+      tc = CORBA::_tc_wstring;
     }
 
   CORBA::WChar *tmp;
@@ -736,7 +700,7 @@ CORBA_Any::operator<<= (from_wstring ws)
 
 // Extraction: these are safe and hence we have to check that the
 // typecode of the Any is equal to the one we are trying to extract
-// into
+// into.
 
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::Short &s) const
@@ -780,10 +744,13 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
       return stream.read_ushort (s);
     }
   ACE_CATCHANY
@@ -809,10 +776,13 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
       return stream.read_long (l);
     }
   ACE_CATCHANY
@@ -838,10 +808,13 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
       return stream.read_ulong (l);
     }
   ACE_CATCHANY
@@ -867,10 +840,13 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
       return stream.read_longlong (l);
     }
   ACE_CATCHANY
@@ -937,10 +913,13 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
       return stream.read_float (f);
     }
   ACE_CATCHANY
@@ -966,10 +945,13 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
       return stream.read_double (d);
     }
   ACE_CATCHANY
@@ -995,10 +977,13 @@ CORBA_Any::operator>>= (CORBA::LongDouble &ld) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
       return stream.read_longdouble (ld);
     }
   ACE_CATCHANY
@@ -1024,15 +1009,16 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
-
-      if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
       if (stream >> a)
-        return 1;
+        {
+          return 1;
+        }
     }
   ACE_CATCHANY
     {
@@ -1058,7 +1044,9 @@ CORBA_Any::operator>>= (const CORBA::Any *&a) const
       ACE_TRY_CHECK;
 
       if (!equivalent)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->any_owns_data_ && this->value_)
         {
@@ -1072,8 +1060,11 @@ CORBA_Any::operator>>= (const CORBA::Any *&a) const
           CORBA::Any_var tmp = x;
           TAO_InputCDR stream (this->cdr_,
                                this->byte_order_);
+
           if (!(stream >> tmp.inout ()))
-            return 0;
+            {
+              return 0;
+            }
 
           ACE_const_cast(CORBA::Any*,
                          this)->_tao_replace (CORBA::_tc_any,
@@ -1114,7 +1105,9 @@ CORBA_Any::operator>>= (const char *&s) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->any_owns_data_ && this->value_)
         {
@@ -1126,8 +1119,11 @@ CORBA_Any::operator>>= (const char *&s) const
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
       CORBA::String_var tmp;
+
       if (!stream.read_string (tmp.out ()))
-        return 0;
+        {
+          return 0;
+        }
 
       ACE_const_cast(CORBA::Any*,
                      this)->_tao_replace (CORBA::_tc_string,
@@ -1176,7 +1172,9 @@ CORBA_Any::operator>>= (const CORBA::WChar *&s) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->any_owns_data_ && this->value_)
         {
@@ -1187,8 +1185,11 @@ CORBA_Any::operator>>= (const CORBA::WChar *&s) const
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
       CORBA::WString_var tmp;
+
       if (!stream.read_wstring (tmp.out ()))
-        return 0;
+        {
+          return 0;
+        }
 
       ACE_const_cast(CORBA::Any*,
                      this)->_tao_replace (CORBA::_tc_wstring,
@@ -1229,7 +1230,9 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->any_owns_data_ && this->value_)
         {
@@ -1242,7 +1245,9 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
       CORBA::TypeCode_var tmp;
 
       if (!(stream >> tmp.inout ()))
-        return 0;
+        {
+          return 0;
+        }
 
       ACE_const_cast(CORBA::Any*,
                      this)->_tao_replace (CORBA::_tc_TypeCode,
@@ -1278,10 +1283,13 @@ CORBA_Any::operator>>= (to_boolean b) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
+
       return stream.read_boolean (b.ref_);
     }
   ACE_CATCHANY
@@ -1307,10 +1315,13 @@ CORBA_Any::operator>>= (to_octet o) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
+
       return stream.read_octet (o.ref_);
     }
   ACE_CATCHANY
@@ -1336,10 +1347,13 @@ CORBA_Any::operator>>= (to_char c) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
+
       return stream.read_char (c.ref_);
     }
   ACE_CATCHANY
@@ -1365,10 +1379,13 @@ CORBA_Any::operator>>= (to_wchar wc) const
       ACE_TRY_CHECK;
 
       if (!result)
-        return 0;
+        {
+          return 0;
+        }
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
+
       return stream.read_wchar (wc.ref_);
     }
   ACE_CATCHANY
@@ -1405,12 +1422,17 @@ CORBA_Any::operator>>= (to_string s) const
         }
 
       if (kind != CORBA::tk_string)
-        return 0;
+        {
+          return 0;
+        }
 
       CORBA::ULong bound = tcvar->length (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (s.bound_ != bound)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->any_owns_data_ && this->value_)
         {
@@ -1421,8 +1443,11 @@ CORBA_Any::operator>>= (to_string s) const
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
       CORBA::String_var tmp;
+
       if (!stream.read_string (tmp.out ()))
-        return 0;
+        {
+          return 0;
+        }
 
       ACE_const_cast(CORBA::Any*,
                      this)->_tao_replace (CORBA::_tc_string,
@@ -1467,12 +1492,17 @@ CORBA_Any::operator>>= (to_wstring ws) const
         }
 
       if (kind != CORBA::tk_wstring)
-        return 0;
+        {
+          return 0;
+        }
 
       CORBA::ULong bound = tcvar->length (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (ws.bound_ != bound)
-        return 0;
+        {
+          return 0;
+        }
 
       if (this->any_owns_data_ && this->value_)
         {
@@ -1483,8 +1513,11 @@ CORBA_Any::operator>>= (to_wstring ws) const
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
       CORBA::WString_var tmp;
+
       if (!stream.read_wstring (tmp.out ()))
-        return 0;
+        {
+          return 0;
+        }
 
       ACE_const_cast(CORBA::Any*,
                      this)->_tao_replace (CORBA::_tc_string,
@@ -1518,6 +1551,7 @@ CORBA_Any::operator>>= (to_object obj) const
 
       CORBA::TypeCode_var tcvar =
         CORBA::TypeCode::_duplicate (this->type_.in ());
+
       while (kind == CORBA::tk_alias)
         {
           tcvar = tcvar->content_type (ACE_TRY_ENV);
@@ -1528,7 +1562,9 @@ CORBA_Any::operator>>= (to_object obj) const
         }
 
       if (kind != CORBA::tk_objref)
-        return 0;
+        {
+          return 0;
+        }
 
       // It is hard to apply this optimization, because value_ points
       // to a derived class from CORBA::Object, and with multiple
@@ -1558,7 +1594,9 @@ CORBA_Any::operator>>= (to_object obj) const
                            TAO_ORB_Core_instance ());
 
       if (stream >> obj.ref_)
-        return 1;
+        {
+          return 1;
+        }
     }
   ACE_CATCHANY
     {
@@ -1601,7 +1639,9 @@ operator<< (TAO_OutputCDR& cdr,
   CORBA::TypeCode_var tc = x.type ();
 
   if (!(cdr << tc.in ()))
-    return 0;
+    {
+      return 0;
+    }
 
   ACE_TRY_NEW_ENV
     {
@@ -1626,8 +1666,11 @@ operator>> (TAO_InputCDR &cdr,
             CORBA::Any &x)
 {
   CORBA::TypeCode_var tc;
+
   if (!(cdr >> tc.out ()))
-    return 0;
+    {
+      return 0;
+    }
 
   ACE_TRY_NEW_ENV
     {
@@ -1682,10 +1725,13 @@ CORBA_Any_var::operator= (CORBA::Any *p)
   if (this->ptr_ != p)
     {
       if (this->ptr_ != 0)
-        delete (this->ptr_);
+        {
+          delete (this->ptr_);
+        }
 
       this->ptr_ = p;
     }
+
   return *this;
 }
 
@@ -1699,7 +1745,9 @@ CORBA_Any_var::operator= (const CORBA::Any_var& r)
                   *this);
 
   if (this->ptr_ != 0)
-    delete this->ptr_;
+    {
+      delete this->ptr_;
+    }
 
   this->ptr_ = tmp;
 

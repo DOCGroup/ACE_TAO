@@ -322,46 +322,56 @@ protected:
 private:
   CORBA_ConstructionPolicy (const CORBA_ConstructionPolicy &);
   void operator= (const CORBA_ConstructionPolicy &);
+
 #if (TAO_HAS_INTERCEPTORS == 1) && (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
-    // Generation of interceptors related RequestInfo classes per operation.
+  // Generation of interceptors related RequestInfo classes per operation.
   // This needed to be able to store the arguments, exceptiosn, constexts
   // and build the lists dynamically on demand so that unnecessary time overhead
   // of building these lists when they arent used is avoided.
-      class TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager : public TAO_ClientRequest_Info
+  class TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager 
+    : public TAO_ClientRequest_Info
   {
   public:
     friend class CORBA_ConstructionPolicy;
     TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
-      const char *_tao_operation,
-      IOP::ServiceContextList &_tao_service_context_list,
-      CORBA::Object *_tao_target        ,    IR_InterfaceDef* object_type        ,    CORBA::Boolean constr_policy    ,
+        const char *_tao_operation,
+        IOP::ServiceContextList &_tao_service_context_list,
+        CORBA::Object *_tao_target,
+        IR_InterfaceDef *object_type,
+        CORBA::Boolean &constr_policy,
         CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ()
-    );
+          TAO_default_environment ()
+      );
 
-     virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV =
-         TAO_default_environment ())
-     ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Dynamic::ExceptionList * exceptions (
-    CORBA::Environment &ACE_TRY_ENV =
-       TAO_default_environment ())
-   ACE_THROW_SPEC ((CORBA::SystemException));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-virtual CORBA::Any * result (
-  CORBA::Environment &ACE_TRY_ENV =
-     TAO_default_environment ())
- ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-
-private:
-TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (const TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &);
-void operator= (const TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &);
-IR_InterfaceDef* & object_type_;
-CORBA::Boolean & constr_policy_;
-};
+  private:
+    TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
+        const TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &
+      );
+    void operator= (
+        const TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &
+      );
+    IR_InterfaceDef *object_type_;
+    CORBA::Boolean &constr_policy_;
+  };
 
 #endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERFACE_REPOSITORY */
 

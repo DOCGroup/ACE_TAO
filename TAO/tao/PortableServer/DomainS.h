@@ -382,10 +382,10 @@ public:
   public:
     friend class POA_CORBA_ConstructionPolicy;
     TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
-      const char *  _tao_operation,
+      const char *_tao_operation,
       IOP::ServiceContextList &_tao_service_context_list,
-      IR_InterfaceDef* object_type,
-      CORBA::Boolean constr_policy,
+      IR_InterfaceDef_ptr object_type,
+      CORBA::Boolean &constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
@@ -415,8 +415,8 @@ public:
     void operator= (
         const TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &
       );
-    IR_InterfaceDef* & object_type_;
-    CORBA::Boolean & constr_policy_;
+    IR_InterfaceDef_ptr object_type_;
+    CORBA::Boolean &constr_policy_;
 };
 
 #endif /* TAO_HAS_INTERCEPTORS */
