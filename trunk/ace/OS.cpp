@@ -3138,7 +3138,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
           return result;
         }
 #endif /* ACE_WIN32 */
-    }
+}
 
 #if defined (ACE_NEEDS_WRITEV)
 
@@ -3148,7 +3148,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
 extern "C" int
 writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
-// ACE_TRACE ("::writev");
+  // ACE_TRACE ("::writev");
 
   size_t length = 0;
   int i;

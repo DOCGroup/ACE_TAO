@@ -113,6 +113,46 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 #include /**/ <malloc.h>
 #endif /* ACE_LACKS_MALLOC_H */
 
+ACE_INLINE ssize_t
+ACE_IO_Vector::length (void) const
+{
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))  
+  return this->len;
+#else
+  return this->iov_len;
+#endif /* ACE_HAS_WINSOCK2 */
+}
+ 
+ACE_INLINE void
+ACE_IO_Vector::length (ssize_t new_length)
+{
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))  
+  this->len = new_length;
+#else
+  this->iov_len = new_length;
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void *
+ACE_IO_Vector::buffer (void) const
+{
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))  
+  return this->buf;
+#else
+  return this->iov_base;
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_IO_Vector::buffer (void *new_buffer)
+{
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))  
+  this->buf = (char *) new_buffer;
+#else
+  this->iov_base = new_buffer;
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
 // Returns the value of the object as a timeval.
 
 ACE_INLINE
@@ -5826,6 +5866,15 @@ ACE_OS::filesize (ACE_HANDLE handle)
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE ssize_t
+ACE_OS::readv (ACE_HANDLE handle,
+               struct iovec *iov,
+               int iovlen)
+{
+  // ACE_TRACE ("ACE_OS::readv");
+  ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
+}
+
 ACE_INLINE int
 ACE_OS::writev (ACE_HANDLE handle,
                 const struct iovec *iov,
@@ -5835,14 +5884,53 @@ ACE_OS::writev (ACE_HANDLE handle,
   ACE_OSCALL_RETURN (::writev (handle, (ACE_WRITEV_TYPE *) iov, iovcnt), int, -1);
 }
 
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+
 ACE_INLINE ssize_t
-ACE_OS::readv (ACE_HANDLE handle,
-               struct iovec *iov,
-               int iovlen)
+ACE_OS::readv (ACE_HANDLE handle, 
+               WSABUF *buffers, 
+               int n)
 {
-  // ACE_TRACE ("ACE_OS::readv");
-  ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
+  ssize_t bytes_received = 0;
+  int result = ::WSARecv ((SOCKET) handle, 
+                          buffers,
+                          n,
+                          (DWORD *) &bytes_received,
+                          0,
+                          0,
+                          0);
+  if (result != 0)
+    {
+      errno = ::GetLastError ();
+      return -1;
+    }
+  else
+    return bytes_received;
 }
+
+ACE_INLINE ssize_t
+ACE_OS::writev (ACE_HANDLE handle, 
+                const WSABUF *buffers, 
+                int n)
+{
+  ssize_t bytes_sent = 0;
+  int result = ::WSASend ((SOCKET) handle, 
+                          (WSABUF *) buffers,
+                          n,
+                          (DWORD *) &bytes_sent,
+                          0,
+                          0,
+                          0);
+  if (result != 0)
+    {
+      errno = ::GetLastError ();
+      return -1;
+    }
+  else
+    return bytes_sent;
+}
+
+#endif /* ACE_HAS_WINSOCK2 */
 
 ACE_INLINE int
 ACE_OS::poll (struct pollfd *pollfds, u_long len, ACE_Time_Value *timeout)
