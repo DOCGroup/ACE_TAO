@@ -1,3 +1,10 @@
+Tue Jun 10 11:35:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/create_ace_build:
+
+          Fixed a bug in the message printed about the config.h and
+          platform_macros.GNU.
+
 Tue Jun 10 11:09:12 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/Process.pm:
