@@ -17,6 +17,7 @@ LSRC = 	\
 	RT_Task.cpp \
 	ReactorTask.cpp \
 	Task_Manager.cpp \
+	Latency_Scheduler_Runtime.cpp \
 
 ES_OBJS=$(LSRC:.cpp=.o)
 
