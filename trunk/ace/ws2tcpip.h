@@ -1,4 +1,6 @@
 /*
+**      $Id$
+**
 **      WS2TCPIP.H - WinSock2 Extension for TCP/IP protocols
 **
 **      This file contains TCP/IP specific information for use
@@ -24,7 +26,7 @@ typedef struct _INTERFACE_INFO
         struct sockaddr iiAddress;              /* Interface address */
         struct sockaddr iiBroadcastAddress;     /* Broadcast address */
         struct sockaddr iiNetmask;              /* Network mask */
-} INTERFACE_INFO;
+} INTERFACE_INFO, FAR * LPINTERFACE_INFO;
 
 /* Possible flags for the  iiFlags - bitmask  */
 
@@ -44,7 +46,7 @@ struct ip_mreq {
 
 /* TCP/IP specific Ioctl codes */
 
-#define SIO_GET_INTERFACE_LIST  <TBD>
+#define SIO_GET_INTERFACE_LIST  _IOR('t', 127, u_long) // <TBD>
 
 /* Option to use with [gs]etsockopt at the IPPROTO_IP level */
 
