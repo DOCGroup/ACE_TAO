@@ -24,6 +24,14 @@
 #define ACE_LACKS_MSGBUF_T
 #define ACE_LACKS_SYSV_SHMEM
 
+// Only MSVC 5.0 definitions
+#if (_MSC_VER >= 1100)
+#define ACE_HAS_SIG_ATOMIC_T
+#define ACE_HAS_TYPENAME_KEYWORD
+#endif
+  
+
+
 // Win32 has UNICODE support
 #define ACE_HAS_UNICODE
 
