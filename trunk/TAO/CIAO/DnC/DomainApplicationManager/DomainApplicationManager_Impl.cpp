@@ -445,7 +445,7 @@ finishLaunch (::CORBA::Boolean start
 	        ACE_THROW (Deployment::StartError ());
 
           // Dump the connections for debug purpose.
-          dump_connections (retn_connections);
+          dump_connections (my_connections);
 
           // Invoke finishLaunch() operation on NodeApplication.
           my_na->finishLaunch (my_connections,
