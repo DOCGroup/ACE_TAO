@@ -17,7 +17,10 @@
 #include "Lifespan_Strategy.h"
 #include "Id_Uniqueness_Strategy.h"
 #include "Activation_Strategy.h"
-#include "Servant_Retention_Strategy.h"
+#include "ServantRetentionStrategy.h"
+#include "ServantRetentionStrategyFactory.h"
+
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Active_Policy_Strategies.inl"
@@ -156,19 +159,18 @@ namespace TAO
 
       activation_strategy_->strategy_init (poa);
 
-      switch (policies.servant_retention())
-      {
-        case ::PortableServer::RETAIN :
+      ServantRetentionStrategyFactory *strategy_factory =
+        ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyFactory");
+
+      if (strategy_factory == 0)
         {
-          ACE_NEW (servant_retention_strategy_, Retain_Servant_Retention_Strategy);
-          break;
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic ServantRetentionStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_ServantRetentionStrategyFactoryImpl()"));
+          strategy_factory =
+            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyFactory");
         }
-        case ::PortableServer::NON_RETAIN :
-        {
-          ACE_NEW (servant_retention_strategy_, Non_Retain_Servant_Retention_Strategy);
-          break;
-        }
-      }
+
+      servant_retention_strategy_ = strategy_factory->create (policies.servant_retention());
 
       servant_retention_strategy_->strategy_init (poa);
     }

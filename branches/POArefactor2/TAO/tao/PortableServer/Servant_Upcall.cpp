@@ -6,7 +6,7 @@
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
 #include "tao/PortableServer/Thread_Strategy.h"
-#include "tao/PortableServer/Servant_Retention_Strategy.h"
+#include "tao/PortableServer/ServantRetentionStrategy.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"

@@ -46,7 +46,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/Request_Processing_Strategy.h"
 #include "tao/PortableServer/Lifespan_Strategy.h"
 #include "tao/PortableServer/Id_Uniqueness_Strategy.h"
-#include "tao/PortableServer/Servant_Retention_Strategy.h"
+#include "tao/PortableServer/ServantRetentionStrategy.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"

@@ -20,7 +20,7 @@ ACE_RCSID (PortableServer,
 #include "tao/debug.h"
 #include "tao/PortableServer/ImplRepo_i.h"
 #include "tao/PortableServer/POA.h"
-#include "tao/PortableServer/Servant_Retention_Strategy.h"
+#include "tao/PortableServer/ServantRetentionStrategy.h"
 
 namespace TAO
 {

@@ -33,22 +33,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Servant_Retention_Strategy::Servant_Retention_Strategy (void) :
-      poa_ (0)
-    {
-    }
-
-    Servant_Retention_Strategy::~Servant_Retention_Strategy (void)
-    {
-    }
-
-    void
-    Servant_Retention_Strategy::strategy_init (
-      TAO_POA *poa)
-    {
-      poa_ = poa;
-    }
-
     Retain_Servant_Retention_Strategy::Retain_Servant_Retention_Strategy (void) :
       active_object_map_ (0),
       waiting_servant_deactivation_ (0),
