@@ -1,3 +1,12 @@
+Tue Jun 11 10:23:03 2002  Stephen Torri	<storri@cs.wustl.edu>
+
+	* ace/String_Base.h: Updated comments/documentation on the String_Base
+	  class.
+
+	* ace/String_Base.{i,cpp}: Added brackets to if/else statements for
+	  better structure/readability. Changed "(cond) ? true : false" to
+	  better "if/else" structure.
+
 Tue Jun 11 19:05:39 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.h: Added a default constructor for 
