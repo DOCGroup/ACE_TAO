@@ -1,3 +1,8 @@
+Tue Apr 17 21:59:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional/client.dsp:
+	* tests/BiDirectional/server.dsp: Fixed the release builds.
+
 Tue Apr 17 21:21:06 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Collocation/Coll_Tester.cpp:
