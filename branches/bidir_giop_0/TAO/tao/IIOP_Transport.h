@@ -81,24 +81,6 @@ public:
 
   virtual int register_handler (void);
 
-  virtual ssize_t send (TAO_Stub *stub,
-                        int two_way,
-                        const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0);
-
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0,
-                        size_t *bytes_transferred = 0);
-
-  virtual ssize_t send (const u_char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0);
-
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0);
-
-
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
@@ -127,6 +109,7 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
   // Initialising the messaging object
+
 private:
 
   /// The connection service handler used for accessing lower layer

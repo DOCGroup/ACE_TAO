@@ -2,7 +2,6 @@
 // $Id$
 
 #include "tao/IIOP_Transport.h"
-#include "tao/IIOP_Connect.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
