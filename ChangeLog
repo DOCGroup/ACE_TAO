@@ -1,3 +1,7 @@
+Tue Jul  6 15:02:30 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/run_test.lst: Added Dev_Poll_Reactor_Test.
+
 Tue Jul  6 11:59:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Service_Config.cpp: Reverted the following change.

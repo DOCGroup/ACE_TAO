@@ -40,6 +40,7 @@ Conn_Test: !chorus
 DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
 Date_Time_Test
+Dev_Poll_Reactor_Test
 Dirent_Test
 Dynamic_Priority_Test
 Enum_Interfaces_Test
