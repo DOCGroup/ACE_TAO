@@ -37,9 +37,13 @@ module SSLIOP {
   /// Authority certificates proceeding sequentially upward.
   typedef sequence<ASN_1_Cert> SSL_Cert;
 
+  /// The SSLIOP::Current interface provides methods to gain access to
+  /// the SSL session state for the current execution context.
   local interface Current : CORBA::Current {
 
-    exception   NoContext { };
+    /// Exception that indicates a SSLIOP::Current operation was
+    /// invoked outside of an SSL session.
+    exception NoContext {};
 
     /// Return the certificate chain associated with the current
     /// execution context.  If no SSL session is being used for the
