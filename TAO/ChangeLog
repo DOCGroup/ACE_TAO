@@ -1,3 +1,11 @@
+Thu Sep 11 08:32:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
+	* examples/RTScheduling/MIF_Scheduler/Makefile:
+
+	  Removed duplicate library instances in link command.  Addresses
+	  link errors showing up statically linked builds.
+
 Wed Sep 10 17:49:10 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         Added files:
