@@ -91,7 +91,7 @@ struct TAO_RTSched_Export TAO_RT_Info_Tuple
   void operator = (const RtecScheduler::RT_Info &);
   // Assignment operator with an RT_Info on the RHS.
 
-  int operator < (const TAO_RT_Info_Tuple &t);
+  bool operator < (const TAO_RT_Info_Tuple &t);
   // Less-than comparison operator: orders tuples by ascending rate (descending period).
 
   u_long rate_index;
@@ -433,7 +433,7 @@ public:
 
 
 class TAO_RTSched_Export TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE 
+  // = TITLE
   //   A base class for scheduling strategies
   //
   // = DESCRIPTION This class provides a DFS finish time comparison
@@ -467,7 +467,7 @@ public:
 
 class TAO_RTSched_Export TAO_MUF_FAIR_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE 
+  // = TITLE
   //   A scheduling strategy that implements the Maximum Urgency First
   //   scheduling algorithm with Fair Admission of Indexed Rates
   //   (FAIR).

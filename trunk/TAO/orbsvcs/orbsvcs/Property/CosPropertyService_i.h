@@ -60,7 +60,7 @@ public:
   virtual ~CosProperty_Hash_Key (void);
   // Destructor.
 
-  virtual int operator == (const CosProperty_Hash_Key &hash_key) const;
+  virtual bool operator == (const CosProperty_Hash_Key &hash_key) const;
   // The operator for hash binding and "find"ing.
 
   virtual u_long hash (void) const;

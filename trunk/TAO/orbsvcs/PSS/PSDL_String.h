@@ -56,10 +56,10 @@ public:
   void operator= (const ACE_CString & rhs);
 
   /// Equality comparison operator.
-  int operator== (const TAO_PSDL_String &rhs) const;
+  bool operator== (const TAO_PSDL_String &rhs) const;
 
   /// Inequality comparison operator.
-  int operator!= (const TAO_PSDL_String &rhs) const;
+  bool operator!= (const TAO_PSDL_String &rhs) const;
 
   /// Returns a hash value for this string.
   u_long hash (void) const;

@@ -48,10 +48,10 @@ public:
   TAO_Notify_Property_Boolean& operator= (const CORBA::Boolean& rhs);
 
   /// Equality comparison operator.
-  int operator== (const CORBA::Boolean &rhs) const;
+  bool operator== (const CORBA::Boolean &rhs) const;
 
   /// Inequality comparison operator.
-  int operator!= (const CORBA::Boolean &rhs) const;
+  bool operator!= (const CORBA::Boolean &rhs) const;
 
   int set (const TAO_Notify_PropertySeq& property_seq);
 

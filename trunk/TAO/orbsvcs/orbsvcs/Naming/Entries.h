@@ -103,10 +103,10 @@ public:
   void operator= (const TAO_ExtId & rhs);
 
   /// Equality comparison operator (must match both id_ and kind_).
-  int operator== (const TAO_ExtId &rhs) const;
+  bool operator== (const TAO_ExtId &rhs) const;
 
   /// Inequality comparison operator.
-  int operator!= (const TAO_ExtId &rhs) const;
+  bool operator!= (const TAO_ExtId &rhs) const;
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.

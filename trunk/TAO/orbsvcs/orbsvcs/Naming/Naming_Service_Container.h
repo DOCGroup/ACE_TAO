@@ -112,8 +112,8 @@ public:
   T& operator* (void);
 
   /// Check if two iterators point to the same position
-  int operator== (const ACE_Unbounded_List_Iterator<T> &) const;
-  int operator!= (const ACE_Unbounded_List_Iterator<T> &) const;
+  bool operator== (const ACE_Unbounded_List_Iterator<T> &) const;
+  bool operator!= (const ACE_Unbounded_List_Iterator<T> &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -94,18 +94,16 @@ TAO_PSDL_String::operator= (const ACE_CString & rhs)
     this->length_ = 0;
 }
 
-int
+bool
 TAO_PSDL_String::operator== (const TAO_PSDL_String &rhs) const
 {
   return (ACE_OS::strcmp (buffer_, rhs.buffer_) == 0);
-
 }
 
-int
+bool
 TAO_PSDL_String::operator!= (const TAO_PSDL_String &rhs) const
 {
   return (ACE_OS::strcmp (buffer_, rhs.buffer_) != 0);
-
 }
 
 u_long

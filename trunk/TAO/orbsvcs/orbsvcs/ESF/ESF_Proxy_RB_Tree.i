@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 
@@ -8,14 +10,14 @@ TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::
 {
 }
 
-template<class PROXY> ACE_INLINE int
+template<class PROXY> ACE_INLINE bool
 TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::
     operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const
 {
   return this->impl_ == rhs.impl_;
 }
 
-template<class PROXY> ACE_INLINE int
+template<class PROXY> ACE_INLINE bool
 TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::
     operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const
 {

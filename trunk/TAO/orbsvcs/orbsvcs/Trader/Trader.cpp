@@ -522,41 +522,43 @@ TAO_Link_Attributes_i::max_link_follow_policy (CosTrading::FollowOption new_valu
   this->max_link_follow_policy_ = new_value;
 }
 
-int
+bool
 operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
            const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)
 {
   if (l.high < r.high)
-    return 1;
+    return true;
   else if (l.high == r.high)
     return (l.low < r.low);
   else
-    return 0;
+    return false;
 }
 
-int
+bool
 operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
            const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)
 {
   return (r < l);
 }
 
-int
+bool
 operator== (const CosTrading::Admin::OctetSeq& left,
             const CosTrading::Admin::OctetSeq& right)
 {
-  int return_value = 0;
-  CORBA::ULong left_length = left.length (),
-    right_length = right.length ();
+  bool return_value = false;
+
+  const CORBA::ULong left_length = left.length ();
+  const CORBA::ULong right_length = right.length ();
 
   if (left_length == right_length)
     {
-      return_value = 1;
-      for (CORBA::ULong i = 0; i < left_length; i++)
+      return_value = true;
+
+      for (CORBA::ULong i = 0; i < left_length; ++i)
         {
           if (left[i] != right[i])
             {
-              return_value = 0;
+              return_value = false;
               break;
             }
         }

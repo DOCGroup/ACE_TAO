@@ -15,8 +15,8 @@
 #include "ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ETCL, 
-           ETCL_Constraint, 
+ACE_RCSID (ETCL,
+           ETCL_Constraint,
            "$Id$")
 
 TAO_ETCL_Constraint::TAO_ETCL_Constraint (void)
@@ -57,7 +57,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
     }
   ACE_ENDTRY;
 
-  this->type_ = 
+  this->type_ =
     TAO_ETCL_Literal_Constraint::comparable_type (type.in ());
 
   switch (this->type_)
@@ -365,10 +365,10 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   return return_value;
 }
 
-CORBA::Boolean
+bool
 TAO_ETCL_Literal_Constraint::operator== (const TAO_ETCL_Literal_Constraint & rhs)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)
@@ -397,10 +397,10 @@ TAO_ETCL_Literal_Constraint::operator== (const TAO_ETCL_Literal_Constraint & rhs
 }
 
 
-CORBA::Boolean
+bool
 TAO_ETCL_Literal_Constraint::operator!= (const TAO_ETCL_Literal_Constraint & rhs)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)
@@ -428,10 +428,10 @@ TAO_ETCL_Literal_Constraint::operator!= (const TAO_ETCL_Literal_Constraint & rhs
   return return_value;
 }
 
-CORBA::Boolean
+bool
 TAO_ETCL_Literal_Constraint::operator< (const TAO_ETCL_Literal_Constraint & rhs)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)
@@ -459,10 +459,10 @@ TAO_ETCL_Literal_Constraint::operator< (const TAO_ETCL_Literal_Constraint & rhs)
   return return_value;
 }
 
-CORBA::Boolean
+bool
 TAO_ETCL_Literal_Constraint::operator<= (const TAO_ETCL_Literal_Constraint & rhs)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)
@@ -487,10 +487,10 @@ TAO_ETCL_Literal_Constraint::operator<= (const TAO_ETCL_Literal_Constraint & rhs
   return return_value;
 }
 
-CORBA::Boolean
+bool
 TAO_ETCL_Literal_Constraint::operator> (const TAO_ETCL_Literal_Constraint & rhs)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)
@@ -515,10 +515,10 @@ TAO_ETCL_Literal_Constraint::operator> (const TAO_ETCL_Literal_Constraint & rhs)
   return return_value;
 }
 
-CORBA::Boolean
+bool
 TAO_ETCL_Literal_Constraint::operator>= (const TAO_ETCL_Literal_Constraint & rhs)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Literal_Type widest_type = this->widest_type (rhs);
 
   switch (widest_type)

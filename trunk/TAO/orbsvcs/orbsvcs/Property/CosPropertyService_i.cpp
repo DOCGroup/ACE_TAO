@@ -40,7 +40,7 @@ CosProperty_Hash_Key::CosProperty_Hash_Key (const CosProperty_Hash_Key &src)
 {
 }
 
-int
+bool
 CosProperty_Hash_Key::operator == (const CosProperty_Hash_Key &hash_key) const
 {
   return (ACE_OS::strcmp (this->pname_,

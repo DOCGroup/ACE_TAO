@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 ACE_INLINE TAO_Notify_Property_Boolean&
@@ -24,13 +25,13 @@ TAO_Notify_Property_Boolean::operator= (const CORBA::Boolean& value)
   return *this;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Notify_Property_Boolean::operator== (const CORBA::Boolean &rhs) const
 {
   return (this->value_ == rhs);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Notify_Property_Boolean::operator!= (const CORBA::Boolean &rhs) const
 {
   return (this->value_ != rhs);
