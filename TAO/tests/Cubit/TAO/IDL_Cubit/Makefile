@@ -14,14 +14,14 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lorbsvcs -lTAO 
+LDLIBS = -lorbsvcs -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
-PROG_SRCS = $(IDL_SRC) server.cpp client.cpp tmplinst.cpp 
+PROG_SRCS = $(IDL_SRC) server.cpp client.cpp tmplinst.cpp
 
 LSRC = $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = cubitC.o cubitS.o  server.o cubit_i.o tmplinst.o 
+CUBIT_SVR_OBJS = cubitC.o cubitS.o  server.o cubit_i.o tmplinst.o
 CUBIT_CLT_OBJS = cubitC.o cubitS.o client.o tmplinst.o
 TEST_OBJS      = IDL_Cubit_Test.o
 
@@ -57,6 +57,7 @@ server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 
 client:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
 IDL_Cubit_Test: $(addprefix $(VDIR),$(TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 

@@ -206,7 +206,7 @@ Cubit_Client::cube_union_dii (void)
     }
 
   // ... initialise the argument list and result ...
-  Cubit::oneof  *u, r;
+  Cubit::oneof  *u, *r;
 
   u = new Cubit::oneof;
   u->_d (Cubit::e_3rd);
@@ -230,12 +230,11 @@ Cubit_Client::cube_union_dii (void)
       return;
     }
 
-  // @@ Naga, please check with Andy and see if we can update all uses
-  // of the Any methods with the new <<= and >>= operators.  Please
-  // make sure you document what is going on here if you do this.
+  // set the result's typecode to indicate what we expect. Let the ORB allocate
+  // the memory
   req->result ()->value ()->replace (Cubit::_tc_oneof,
                                      0,
-                                     CORBA::B_TRUE,
+                                     0,
                                      this->env_);
 
   if (this->env_.exception () != 0)
@@ -258,9 +257,17 @@ Cubit_Client::cube_union_dii (void)
       return;
     }
 
-  r = *(Cubit::oneof *) req->result ()->value ()->value ();
+  // retrieve the value in "r". Note that we don't own the memory that the ORb
+  // has allocated
+  if (!((*req->result ()->value ()) >>= r))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error retrieving union oneof via the >>= operator\n"));
+      CORBA::release (req);
+      return;
+    }
 
-  if (r.cm ().o != 27 || r.cm ().l != 125 || r.cm ().s != -343)
+  if (r->cm ().o != 27 || r->cm ().l != 125 || r->cm ().s != -343)
     {
       this->error_count_++;
       ACE_ERROR ((LM_ERROR, "cube_union_dii -- bad results\n"));
@@ -483,7 +490,7 @@ Cubit_Client::cube_struct_dii (void)
 
   // ... initialise the argument list and result ...
   Cubit::Many arg;
-  Cubit::Many result;
+  Cubit::Many *result;
 
   arg.o = 3;
   arg.l = 5;
@@ -502,9 +509,10 @@ Cubit_Client::cube_struct_dii (void)
       return;
     }
 
+  // set the typecode for the result and expect the ORB to allocate the memory
   req->result ()->value ()->replace (Cubit::_tc_Many,
                                      0,
-                                     CORBA::B_TRUE,
+                                     0,
                                      this->env_);
 
   if (this->env_.exception () != 0)
@@ -525,9 +533,15 @@ Cubit_Client::cube_struct_dii (void)
       return;
     }
 
-  result = *(Cubit::Many *) req->result ()->value ()->value ();
+  if (!((*req->result ()->value ()) >>= result))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error retrieving struct Many via the >>= operator\n"));
+      CORBA::release (req);
+      return;
+    }
 
-  if (result.o != 27 || result.l != 125 || result.s != -343)
+  if (result->o != 27 || result->l != 125 || result->s != -343)
     ACE_ERROR ((LM_ERROR, "DII cube_struct -- bad results\n"));
   else
     dmsg ("DII cube_struct ... success!!");

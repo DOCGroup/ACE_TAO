@@ -330,6 +330,12 @@ public:
   CDR &stream (void);
   // Return the underlying stream.
 
+  TAO_InputCDR &inp_stream (void);
+  // return the underlying input stream
+
+  TAO_OutputCDR &out_stream (void);
+  // return the underlying output stream
+
 private:
   IIOP_Object *data_;
   // The object on which this invocation is going.
