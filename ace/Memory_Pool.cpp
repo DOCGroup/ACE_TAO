@@ -433,18 +433,22 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   // If guess_on_fault_ is true, then we want to try to remap without
   // knowing the faulting address.  guess_on_fault_ can only be true
   // on platforms that do not provide the faulting address through
-  // signals or exceptions.
-  // We check to see if the mapping is up to date. If it is, then this
-  // fault isn't due to this mapping and we pass it on.
+  // signals or exceptions.  We check to see if the mapping is up to
+  // date. If it is, then this fault isn't due to this mapping and we
+  // pass it on.
   if (guess_on_fault_)
     {
-      // check if the current mapping is up to date.
+      // Check if the current mapping is up to date.
       off_t current_map_size = ACE_OS::filesize (this->mmap_.handle ());
 
-      if (ACE_static_cast(size_t, current_map_size) == this->mmap_.size())
+      if (ACE_static_cast (size_t, current_map_size) == this->mmap_.size ())
 	{
-	  // It is up to date so this is a bad address.
-	  return -1;
+	  // The mapping is up to date so this really is a bad
+	  // address.  Thus, remove current signal handler so process
+	  // will fail with default action and core file will be
+	  // written.
+          this->signal_handler_.remove_handler (SIGSEGV);
+          return 0;
 	}
 
       // Extend the mapping to cover the size of the backing store.
