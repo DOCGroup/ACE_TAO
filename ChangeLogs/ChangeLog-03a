@@ -1,3 +1,12 @@
+Tue Jul 25 13:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added
+	ACE_Bounded_Cached_Connect_Strategy which provides a bound on the
+	cache which is checked before creating new handlers. Thanks to
+	Edan Ayal  <edana@bandwiz.com> for contributing this class and
+	Susan Liebeskind  <shl@janis.gtri.gatech.edu> for brainstorming
+	about it.
+		
 Tue Jul 25 05:46:29 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Optimized the check to make sure that
