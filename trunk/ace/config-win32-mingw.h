@@ -40,6 +40,7 @@
 #endif
 
 #define ACE_LACKS_STRRECVFD
+#define ACE_LACKS_NATIVE_STRPTIME
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME
 
