@@ -35,6 +35,7 @@ $SV2 = Process::Create ($EXEPREFIX."server_B".$EXE_EXT,
 if (ACE::waitforfile_timed ($ior2file, 5) == -1) {
     print STDERR "ERROR: cannot find file <$ior1file>\n";
     $SV2->Kill (); $SV2->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
 
