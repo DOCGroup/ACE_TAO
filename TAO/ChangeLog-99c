@@ -9,6 +9,21 @@ Sun Jun 20 16:33:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/GIOP.cpp: 
 	  Fixed error messages.
 
+	* tests/Multiple_Inheritance/run_test.pl:
+	  The test was reporting spurious faults: the server is shutdown
+	  using a signal to its exit status is never 0.
+
+	* tests/NestedUpcall/Reactor/run_test.pl:
+	  The test was too aggresive, it was using too many file
+	  descriptors.
+
+	* tests/InterOp-Naming/INS_test_client.cpp:
+	* tests/InterOp-Naming/Server_i.cpp:
+	* tests/InterOp-Naming/Server_i.h:
+	* tests/InterOp-Naming/run_test.pl:
+	  The test is more "standard" now, and the script works in many
+	  cases, but it needs more work.
+
 Sun Jun 20 14:39:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_Utils.h: Reformatted the documentation
