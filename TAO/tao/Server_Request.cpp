@@ -504,26 +504,29 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
         }
 
       // ... Followed by "inout" and "out" parameters, left to right
-      for (u_int i = 0;
-           i < this->params_->count ();
-           i++)
+      if (this->params_)
         {
-          CORBA::NamedValue_ptr nv = this->params_->item (i, env);
-          CORBA::Any_ptr any;
-
-          if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
-            continue;
-
-          any = nv->value ();
-          tc = any->type ();
-          value = any->value ();
-          if (any->any_owns_data ())
+          for (u_int i = 0;
+               i < this->params_->count ();
+               i++)
             {
-              TAO_InputCDR cdr ((ACE_Message_Block *)value);
-              (void) this->outgoing_->append (tc, &cdr, env);
+              CORBA::NamedValue_ptr nv = this->params_->item (i, env);
+              CORBA::Any_ptr any;
+              
+              if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
+                continue;
+              
+              any = nv->value ();
+              tc = any->type ();
+              value = any->value ();
+              if (any->any_owns_data ())
+                {
+                  TAO_InputCDR cdr ((ACE_Message_Block *)value);
+                  (void) this->outgoing_->append (tc, &cdr, env);
+                }
+              else
+                (void) this->outgoing_->encode (tc, value, 0, env);
             }
-          else
-            (void) this->outgoing_->encode (tc, value, 0, env);
         }
     }
 }
