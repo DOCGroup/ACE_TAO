@@ -1,3 +1,9 @@
+Sat Nov 18 20:36:54 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Strategies/UIOP_Connector.h:
+
+	  Fixed typo.
+
 Sat Nov 18 19:23:44 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Base_Connection_Property.cpp (is_equivalent)
