@@ -29,22 +29,22 @@
 #if defined (ACE_HAS_AIO_CALLS)
 
 #include "ace/OS.h"
+
 #include "ace/Asynch_IO_Impl.h"
-#include "ace/Reactor.h"
-#include "ace/Select_Reactor.h"
 #include "ace/Unbounded_Queue.h"
-#include "ace/Task.h"
+#include "ace/Map_Manager.h"
 
 // Forward declarations
 class ACE_POSIX_SIG_Proactor;
 class ACE_POSIX_AIOCB_Proactor;
 class ACE_Proactor_Impl;
+class ACE_Handle_Set;
 
 /**
  * @class ACE_POSIX_Asynch_Result
  *
- * This class provides concrete implementation for <ACE_Asynch_Result>
- * for POSIX4 platforms. This class extends <aiocb> and makes it more
+ * This class provides concrete implementation for ACE_Asynch_Result
+ * for POSIX4 platforms. This class extends @c aiocb and makes it more
  * useful.
  */
 class ACE_Export ACE_POSIX_Asynch_Result : public virtual ACE_Asynch_Result_Impl,
@@ -495,7 +495,7 @@ protected:
  * @class ACE_POSIX_Asynch_Write_Stream
  *
  * @brief This class implements <ACE_Asynch_Write_Stream> for
- *  all POSIX implementations of   Proactor.
+ *  all POSIX implementations of ACE_Proactor.
  */
 class ACE_Export ACE_POSIX_Asynch_Write_Stream : public virtual ACE_Asynch_Write_Stream_Impl,
                                                  public ACE_POSIX_Asynch_Operation
@@ -623,6 +623,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Read_File factory.
   ACE_POSIX_Asynch_Read_File_Result (ACE_Handler &handler,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
@@ -633,8 +635,6 @@ protected:
                                      ACE_HANDLE event,
                                      int priority,
                                      int signal_number);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Read_File factory.
 
   /// ACE_Proactor will call this method when the read completes.
   virtual void complete (u_long bytes_transferred,
@@ -924,7 +924,6 @@ class ACE_Export ACE_POSIX_Asynch_Accept_Result : public virtual ACE_Asynch_Acce
 {
   /// Factory classes will have special permissions.
   friend class ACE_POSIX_Asynch_Accept;
-  friend class ACE_POSIX_Asynch_Accept_Handler;
 
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
@@ -1082,38 +1081,36 @@ public:
               int priority,
               int signal_number = 0);
 
-
   /**
-  *  Cancel all pending pseudo-asynchronus requests
-  *  Behavior as usual AIO request
-  */
+   *  Cancel all pending pseudo-asynchronus requests
+   *  Behavior as usual AIO request
+   */
   int cancel (void);
 
   /**
-  *  Close performs cancellation of all pending requests
-  *  and closure the listen handle
-  */
-  int close (void);
+   *  Close performs cancellation of all pending requests
+   *  and closure the listen handle
+   */
+  int close ();
 
-  /// virtual from ACE_Event_Hanlder
+  /// virtual from ACE_Event_Handler
   ACE_HANDLE get_handle (void) const;
 
-  /// virtual from ACE_Event_Hanlder
+  /// virtual from ACE_Event_Handler
   void set_handle (ACE_HANDLE handle);
 
-  /// virtual from ACE_Event_Hanlder
-  /// Called when accept event comes up on <listen_hanlde>
+  /// virtual from ACE_Event_Handler
+  /// Called when accept event comes up on <listen_handle>
   int handle_input (ACE_HANDLE handle);
 
-  /// virtual from ACE_Event_Hanlder
-  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) ;
+  /// virtual from ACE_Event_Handler
+  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask);
 
   // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
   //   methods are defined here to avoid dominace warnings. They route
   //   the call to the ACE_POSIX_Asynch_Operation base class.
   /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-
 
 private:
   int cancel_uncompleted (int flg_notify);
@@ -1126,68 +1123,252 @@ private:
   //         on canceled AIO requests
 
   int flg_open_ ;
-  /// 1 - Accept is registered in ACE_POSIX_Asynch_Accept_Task
-  /// 0 - Aceept is deregisted in ACE_POSIX_Asynch_Accept_Task
+  /// 1 - Accept is registered in ACE_Asynch_Pseudo_Task
+  /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
 
-
-  /// to prevent ACE_POSIX_Asynch_Accept_Task from deletion
-  /// while we make a call to the ACE_POSIX_Asynch_Accept_Task
+  /// to prevent ACE_Asynch_Pseudo_Task from deletion
+  /// while we make a call to the ACE_Asynch_Pseudo_Task
   /// This is extra cost !!!
   /// we could avoid them if all applications will follow the rule:
   /// Proactor should be deleted only after deletion all
-  ///  AsynchOperation objects connected with it
+  /// AsynchOperation objects connected with it
   int  task_lock_count_;
 
-  /// Queue of Result pointers that correspond to all the <accept>'s
-  /// pending.
+  /// Queue of Result pointers that correspond to all the pending
+  /// accept operations.
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result*> result_queue_;
 
-  /// The lock to protect the  result queue which is shared. The queue
+  /// The lock to protect the result queue which is shared. The queue
+  /// is updated by main thread in the register function call and
+  /// through the auxillary thread in the deregister fun. So let us
+  /// mutex it.
+  ACE_SYNCH_MUTEX lock_;
+};
+
+/**
+ * @class ACE_POSIX_Asynch_Connect_Result
+ *
+ * @brief This is that class which will be passed back to the
+ *     completion handler when the asynchronous connect completes.
+ *
+ *     This class has all the information necessary for a
+ *     completion handler to uniquely identify the completion of the
+ *     asynchronous connect.
+ */
+class ACE_Export ACE_POSIX_Asynch_Connect_Result : public virtual ACE_Asynch_Connect_Result_Impl,
+                                                  public ACE_POSIX_Asynch_Result
+{
+  /// Factory classes will have special permissions.
+  friend class ACE_POSIX_Asynch_Connect;
+
+  /// The Proactor constructs the Result class for faking results.
+  friend class ACE_POSIX_Proactor;
+
+public:
+
+  /// I/O handle for the  connection.
+  ACE_HANDLE connect_handle (void) const;
+
+  // = Base class operations. These operations are here to kill
+  //   dominance warnings. These methods call the base class methods.
+
+  /// Number of bytes transferred by the operation.
+  u_long bytes_transferred (void) const;
+
+  /// ACT associated with the operation.
+  const void *act (void) const;
+
+  /// Did the operation succeed?
+  int success (void) const;
+
+  /**
+   * This is the ACT associated with the handle on which the
+   * Asynch_Operation takes place.
+   *
+   * @note This is not implemented for POSIX4 platforms.
+   */
+  const void *completion_key (void) const;
+
+  /// Error value if the operation fail.
+  u_long error (void) const;
+
+  /// This returns ACE_INVALID_HANDLE on POSIX4 platforms.
+  ACE_HANDLE event (void) const;
+
+  /**
+   * This really make sense only when doing file I/O.
+   *
+   * @note On POSIX4-Unix, @c offset_high should be supported using
+   *       @c aiocb64.
+   */
+  u_long offset (void) const;
+  u_long offset_high (void) const;
+
+  /// The priority of the asynchronous operation.
+  int priority (void) const;
+
+  /**
+   * POSIX4 realtime signal number to be used for the
+   * operation.  The signal number ranges from @c SIGRTMIN to @c SIGRTMAX.
+   * By default, SIGRTMIN is used to issue AIO calls.
+   *
+   * @note This is a no-op on non-POSIX4 systems and returns 0.
+   */
+  int signal_number (void) const;
+
+  /// Post this object to the Proactor.
+  int post_completion (ACE_Proactor_Impl *proactor);
+
+protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Connect factory.
+  ACE_POSIX_Asynch_Connect_Result (ACE_Handler &handler,
+                                   ACE_HANDLE  connect_handle,
+                                   const void* act,
+                                   ACE_HANDLE  event,
+                                   int priority,
+                                   int signal_number);
+
+  /// ACE_Proactor will call this method when the accept completes.
+  virtual void complete (u_long bytes_transferred,
+                         int success,
+                         const void *completion_key,
+                         u_long error);
+
+  /// Destructor.
+  virtual ~ACE_POSIX_Asynch_Connect_Result (void);
+
+  // aiocb::aio_filedes
+  // I/O handle for the new connection.
+  void connect_handle (ACE_HANDLE handle);
+};
+
+
+/**
+ * @class ACE_POSIX_Asynch_Connect
+ *
+ */
+class ACE_Export ACE_POSIX_Asynch_Connect :
+  public virtual ACE_Asynch_Connect_Impl,
+  public ACE_POSIX_Asynch_Operation,
+  public ACE_Event_Handler
+{
+public:
+
+  /// Constructor.
+  ACE_POSIX_Asynch_Connect (ACE_POSIX_AIOCB_Proactor * posix_aiocb_proactor);
+
+  /// Destructor.
+  virtual ~ACE_POSIX_Asynch_Connect (void);
+
+ /**
+   * This belongs to ACE_POSIX_Asynch_Operation. We forward
+   * this call to that method. We have put this here to avoid the
+   * compiler warnings.
+   */
+  int open (ACE_Handler &handler,
+            ACE_HANDLE handle,
+            const void *completion_key,
+            ACE_Proactor *proactor = 0);
+
+  /**
+   * This starts off an asynchronous connect.
+   *
+   * @arg connect_handle   will be used for the connect call.  If
+   *                       ACE_INVALID_HANDLE is specified, a new
+   *                       handle will be created.
+   */
+  int connect (ACE_HANDLE connect_handle,
+               const ACE_Addr &remote_sap,
+               const ACE_Addr &local_sap,
+               int reuse_addr,
+               const void *act,
+               int priority,
+               int signal_number = 0);
+
+  /**
+   *  Cancel all pending pseudo-asynchronus requests
+   *  Behavior as usual AIO request
+   */
+  int cancel (void);
+  
+  /**
+   *  Close performs cancellation of all pending requests.
+   */
+  int close (void);
+
+  /// virtual from ACE_Event_Handler
+  ACE_HANDLE get_handle (void) const;
+
+  /// virtual from ACE_Event_Handler
+  void set_handle (ACE_HANDLE handle);
+
+  /// virtual from ACE_Event_Handler
+  /// Called when accept event comes up on <listen_hanlde>
+  int handle_input (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle);
+  int handle_exception (ACE_HANDLE handle);
+
+  /// virtual from ACE_Event_Handler
+  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) ;
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
+
+  /// Return the underlying proactor.
+  ACE_Proactor* proactor (void) const;
+
+private:
+  int connect_i (ACE_POSIX_Asynch_Connect_Result *result,
+                 const ACE_Addr & remote_sap,
+                 const ACE_Addr & local_sap,
+                 int reuse_addr);
+
+  int post_result (ACE_POSIX_Asynch_Connect_Result *result, int flg_post);
+
+  /// Cancel uncompleted connect operations.
+  /**
+   *  @arg flg_notify  Indicates whether or not we should send notification
+   *                   about canceled accepts.  If this is 0, don't send
+   *                   notifications about canceled connects.  If 1, notify
+   *                   user about canceled connects according POSIX
+   *                   standards we should receive notifications on canceled
+   *                   AIO requests.
+   */
+  int cancel_uncompleted (int flg_notify, ACE_Handle_Set & set);
+ 
+  int flg_open_ ;
+  /// 1 - Connect is registered in ACE_Asynch_Pseudo_Task
+  /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
+
+
+  /// to prevent ACE_Asynch_Pseudo_Task from deletion
+  /// while we make a call to the ACE_Asynch_Pseudo_Task 
+  /// This is extra cost !!!
+  /// we could avoid them if all applications will follow the rule:
+  /// Proactor should be deleted only after deletion all
+  ///  AsynchOperation objects connected with it 
+  int  task_lock_count_;
+
+  typedef ACE_Map_Manager<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX> 
+          MAP_MANAGER;
+  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX> 
+          MAP_ITERATOR;
+  typedef ACE_Map_Entry<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *>
+          MAP_ENTRY;
+
+  MAP_MANAGER result_map_;
+  // Map of Result pointers that correspond to all the <accept>'s
+  // pending.
+
+  /// The lock to protect the result queue which is shared. The queue
   /// is updated by main thread in the register function call and
   /// through the auxillary thread  in the deregister fun. So let us
   /// mutex it.
   ACE_SYNCH_MUTEX lock_;
 };
 
-/**
- * @class ACE_POSIX_Asynch_Accept_Task
- *
- */
-class ACE_Export ACE_POSIX_Asynch_Accept_Task : public ACE_Task<ACE_MT_SYNCH>
-{
-   friend class ACE_POSIX_Asynch_Accept;
-public:
-
-  ACE_POSIX_Asynch_Accept_Task (void);
-  virtual ~ACE_POSIX_Asynch_Accept_Task (void);
-
-  int start (void);
-  int stop (void);
-
-  virtual int svc (void);
-
-  int register_acceptor (ACE_POSIX_Asynch_Accept *posix_accept,
-                         ACE_Reactor_Mask mask);
-  int remove_acceptor (ACE_POSIX_Asynch_Accept *posix_accept);
-  int resume_acceptor (ACE_POSIX_Asynch_Accept *posix_accept);
-  int suspend_acceptor (ACE_POSIX_Asynch_Accept *posix_accept);
-
-protected:
-  int lock_finish (void);
-  int unlock_finish (void);
-
-  int flg_active_ ;
-
-  ACE_Select_Reactor select_reactor_;
-  // should be initialized before reactor_
-
-  ACE_Reactor reactor_;
-
-  ACE_Lock &token_;
-
-  int finish_count_;
-  ACE_Manual_Event finish_event_;
-};
 
 /**
  * @class ACE_POSIX_Asynch_Transmit_File_Result
@@ -1207,7 +1388,7 @@ class ACE_Export ACE_POSIX_Asynch_Transmit_File_Result : public virtual ACE_Asyn
 
   /// Handlers do all the job.
   friend class ACE_POSIX_Asynch_Transmit_Handler;
-
+ 
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
 
@@ -1471,7 +1652,7 @@ protected:
  * @class ACE_POSIX__Asynch_Write_Dgram_Result
  *
  * @brief This is class provides concrete implementation for
- *    ACE_Asynch_Write_Dgram::Result class.
+ *        ACE_Asynch_Write_Dgram::Result class.
  */
 class ACE_Export ACE_POSIX_Asynch_Write_Dgram_Result : public virtual ACE_Asynch_Write_Dgram_Result_Impl,
                                                        public ACE_POSIX_Asynch_Result
@@ -1541,14 +1722,14 @@ protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
   ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Handler &handler,
-                                        ACE_HANDLE handle,
-                                        ACE_Message_Block *message_block,
-                                        size_t bytes_to_write,
-                                        int flags,
-                                        const void* act,
-                                        ACE_HANDLE event,
-                                        int priority,
-                                        int signal_number);
+                                       ACE_HANDLE handle,
+                                       ACE_Message_Block *message_block,
+                                       size_t bytes_to_write,
+                                       int flags,
+                                       const void* act,
+                                       ACE_HANDLE event,
+                                       int priority,
+                                       int signal_number);
 
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
@@ -1597,7 +1778,7 @@ public:
   /// Destructor
   virtual ~ACE_POSIX_Asynch_Write_Dgram (void);
 
-  /** This starts off an asynchronous send.  Upto
+  /** This starts off an asynchronous send.  Up to
    * <message_block->total_length()> will be sent.  <message_block>'s
    * <rd_ptr> will be updated to reflect the sent bytes if the send operation
    * is successful completed.
@@ -1659,7 +1840,7 @@ protected:
  * @class ACE_POSIX_Asynch_Read_Dgram_Result
  *
  * @brief This is class provides concrete implementation for
- * ACE_Asynch_Read_Dgram::Result class.
+ *        ACE_Asynch_Read_Dgram::Result class.
  */
 class ACE_Export ACE_POSIX_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_Read_Dgram_Result_Impl,
                                                       public virtual ACE_POSIX_Asynch_Result

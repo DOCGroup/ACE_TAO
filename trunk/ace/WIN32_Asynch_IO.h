@@ -9,15 +9,16 @@
  *
  *  These classes only works on Win32 platforms.
  *
- *  The implementation of <ACE_Asynch_Transmit_File> and
- *  <ACE_Asynch_Accept> are only supported if ACE_HAS_WINSOCK2 is
- *  defined or you are on WinNT 4.0 or higher.
+ *  The implementation of ACE_Asynch_Transmit_File,
+ *  ACE_Asynch_Accept, and ACE_Asynch_Connect are only supported if
+ *  ACE_HAS_WINSOCK2 is defined or you are on WinNT 4.0 or higher.
  *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Roger Tragin <r.tragin@computer.org>
+ *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================
 
@@ -36,6 +37,9 @@
 #include "ace/OS.h"
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Addr.h"
+#include "ace/Event_Handler.h"
+
+#include "ace/Map_Manager.h"
 
 // Forward declaration
 class ACE_WIN32_Proactor;
@@ -1041,6 +1045,222 @@ public:
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
+};
+
+/**
+ * @class ACE_WIN32_Asynch_Connect_Result
+ *
+ * @brief This is that class which will be passed back to the
+ *        completion handler when the asynchronous connect completes.
+ *
+ *     This class has all the information necessary for the
+ *     completion handler to uniquiely identify the completion of the
+ *     asynchronous connect.
+ */
+class ACE_Export ACE_WIN32_Asynch_Connect_Result : public virtual ACE_Asynch_Connect_Result_Impl,
+                                                   public ACE_WIN32_Asynch_Result
+{
+  /// Factory classes will have special permissions.
+  friend class ACE_WIN32_Asynch_Connect;
+
+  /// The Proactor constructs the Result class for faking results.
+  friend class ACE_WIN32_Proactor;
+
+public:
+
+  /// I/O handle for the  connection.
+  ACE_HANDLE connect_handle (void) const;
+
+  // = Base class operations. These operations are here to kill some
+  //   warnings. These methods call the base class methods.
+
+  /// Number of bytes transferred by the operation.
+  u_long bytes_transferred (void) const;
+
+  /// ACT associated with the operation.
+  const void *act (void) const;
+
+  /// Did the operation succeed?
+  int success (void) const;
+
+  /**
+   * Returns the ACT associated with the handle when it was
+   * registered with the I/O completion port.  This ACT is not the
+   * same as the ACT associated with the asynchronous operation.
+   */
+  const void *completion_key (void) const;
+
+  /// Error value if the operation fail.
+  u_long error (void) const;
+
+  /// Event associated with the OVERLAPPED structure.
+  ACE_HANDLE event (void) const;
+
+  /// This really make sense only when doing file I/O.
+  u_long offset (void) const;
+
+  /// Offset_high associated with the OVERLAPPED structure.
+  u_long offset_high (void) const;
+
+  /// The priority of the asynchronous operation. Currently, this is
+  /// not supported on Win32.
+  int priority (void) const;
+
+  /// No-op. Returns 0.
+  int signal_number (void) const;
+
+  /// Post this object to the Proactor's completion port.
+  int post_completion (ACE_Proactor_Impl *proactor);
+
+protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Connect factory.
+  ACE_WIN32_Asynch_Connect_Result (ACE_Handler &handler,
+                                   ACE_HANDLE  connect_handle,
+                                   const void* act,
+                                   ACE_HANDLE  event,
+                                   int priority,
+                                   int signal_number);
+
+  /// ACE_Proactor will call this method when the accept completes.
+  virtual void complete (u_long bytes_transferred,
+                         int success,
+                         const void *completion_key,
+                         u_long error);
+
+  /// Destructor.
+  virtual ~ACE_WIN32_Asynch_Connect_Result (void);
+
+  /// Set the I/O handle for the new connection.
+  void  connect_handle (ACE_HANDLE handle);
+
+  ACE_HANDLE  connect_handle_;
+};
+
+
+/**
+ * @class ACE_WIN32_Asynch_Connect
+ */
+class ACE_Export ACE_WIN32_Asynch_Connect :
+  public virtual ACE_Asynch_Connect_Impl,
+  public ACE_WIN32_Asynch_Operation,
+  public ACE_Event_Handler
+{
+public:
+
+  /// Constructor.
+  ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
+
+  /// Destructor.
+  virtual ~ACE_WIN32_Asynch_Connect (void);
+
+ /**
+   * This open belongs to ACE_WIN32_Asynch_Operation. We forward
+   * this call to that method. We have put this here to avoid the
+   * compiler warnings.
+   */
+  int open (ACE_Handler &handler,
+            ACE_HANDLE handle,
+            const void *completion_key,
+            ACE_Proactor *proactor = 0);
+
+  /**
+   * Start an asynchronous connect.
+   *
+   * @arg connect_handle   handle to use for the connect. If the value
+   *                       ACE_INVALID_HANDLE, a new handle will be created.
+   *
+   * @retval 0  Success
+   * @retval -1 Error
+   */
+  int connect (ACE_HANDLE connect_handle,
+               const ACE_Addr &remote_sap,
+               const ACE_Addr &local_sap,
+               int  reuse_addr,
+               const void *act,
+               int priority,
+               int signal_number = 0);
+
+  /**
+   *  Cancel all pending pseudo-asynchronus requests
+   *  Behavior as usual AIO request
+   */
+  int cancel (void);
+
+  /**
+   *  Close performs cancellation of all pending requests
+   *  and close the connect handle
+   */
+  int close (void);
+
+  /// virtual from ACE_Event_Handler
+  ACE_HANDLE get_handle (void) const;
+
+  /// virtual from ACE_Event_Handler
+  void set_handle (ACE_HANDLE handle);
+
+  /// virtual from ACE_Event_Handler
+  int handle_input  ( ACE_HANDLE handle);
+  int handle_output ( ACE_HANDLE handle);
+  int handle_exception ( ACE_HANDLE handle);
+
+  /// virtual from ACE_Event_Handler
+  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) ;
+
+  // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_WIN32_Asynch_Operation base class.
+  /// Return the underlying proactor.
+  ACE_Proactor* proactor (void) const;
+
+private:
+  int connect_i (ACE_WIN32_Asynch_Connect_Result *result,
+                 const ACE_Addr &remote_sap,
+                 const ACE_Addr &local_sap,
+                 int reuse_addr);
+
+  int post_result (ACE_WIN32_Asynch_Connect_Result *result, int flg_post);
+
+  /// Cancel uncompleted connect operations.
+  /**
+   * @arg flg_notify  Indicates whether or not to send notification about
+   *                  canceled connect operations.  If 0, don't send
+   *                  notifications. If 1, notify user about canceled
+   *                  connects.
+   *                  According WIN32 standards we should receive
+   *                  notifications on canceled AIO requests.
+   */
+  int cancel_uncompleted (int flg_notify, ACE_Handle_Set & set);
+
+  int flg_open_ ;
+  /// 1 - Connect is registered in ACE_Asynch_Pseudo_Task
+  /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
+
+
+  /// to prevent ACE_Asynch_Pseudo_Task from deletion
+  /// while we make a call to the ACE_Asynch_Pseudo_Task 
+  /// This is extra cost !!!
+  /// we could avoid them if all applications will follow the rule:
+  /// Proactor should be deleted only after deletion all
+  ///  AsynchOperation objects connected with it 
+  int  task_lock_count_;
+
+  typedef ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX> 
+          MAP_MANAGER;
+  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX> 
+          MAP_ITERATOR;
+  typedef ACE_Map_Entry<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *>
+          MAP_ENTRY;
+
+  MAP_MANAGER result_map_;
+  // Map of Result pointers that correspond to all the <accept>'s
+  // pending.
+
+  ACE_SYNCH_MUTEX lock_;
+  // The lock to protect the  result queue which is shared. The queue
+  // is updated by main thread in the register function call and
+  // through the auxillary thread  in the deregister fun. So let us
+  // mutex it.
 };
 
 /**

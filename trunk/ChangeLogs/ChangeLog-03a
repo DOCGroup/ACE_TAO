@@ -1,3 +1,44 @@
+Tue Apr 16 18:42:39 2002  Steve Huston  <shuston@riverace.com>
+
+        New feature, ACE_Asynch_Connect, contributed by Alex Libman
+        <alibman@ihug.com.au>. Allows asynchronous connect using the
+        ACE Proactor framework. The new classes follow the same arrangement
+        as the existing ACE_Asynch_Accept framework.
+
+        * ace/Asynch_Connector.{h cpp}: New files
+
+        * ace/Asynch_IO.{h cpp}: Added new ACE_Asynch_Connect class and
+          its result.  Added new method, ACE_Handler::handle_connect(), to
+          handle completion of asynch connect operations.
+
+        * ace/Asynch_IO_Impl.{h i cpp}: Added new classes
+          ACE_Asynch_Connect_Impl and ACE_Asynch_Connect_Result_Impl.
+
+        * ace/Asynch_Pseudo_Task.{h cpp}: Generalized task that handles
+          asynch emulation where needed, for example, asynch accept/connect.
+          Replaces the ACE_Asynch_Accept_Task and used for both accept/connect.
+
+        * ace/POSIX_Asynch_IO.{h cpp}: Removed ACE_POSIX_Asynch_Accept_Task
+          (subsumed by ACE_Asynch_Pseudo_Task, above) and add the
+          ACE_POSIX_Asynch_Connect and its Result class.
+
+        * ace/POSIX_Proactor.{h cpp}: Added asynch connect plumbing.
+
+        * ace/Proactor.{h cpp}: Added asynch connect support methods.
+
+        * ace/Proactor_Impl.h: Added create_asynch_connect[_result] methods.
+
+        * ace/SUN_Proactor.cpp: Change from asynch_accept_task to
+          asynch_pseudo_task.
+
+        * ace/WIN32_Asynch_IO.{h cpp}: Add new ACE_WIN32_Asynch_Connect and
+          _Result.
+
+        * ace/WIN32_Proactor.{h cpp}: Added new create_asynch_connect() and
+          create_asynch_connect_result() methods.
+
+        * ace/Makefile: Added Asynch_Connector, Asynch_Pseudo_Task
+
 Tue Apr 16 11:49:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Service_Templates.cpp:
@@ -77,10 +118,10 @@ Mon Apr 15 16:20:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
           - Make it possible to get/set the timer queue based on pointers, the
             get method with a & is still available, but is marked as deprecated
           - Make the thr_id method const
-          - When the timer queue is created by the ACE_Thread_Timer_Queue_Adapter
-            then it is also deleted, if it is passed or set afterwards it isn't
-            deleted by ACE_Thread_Timer_Queue_Adapter (just like in the
-            ACE_Reactor).
+          - When the timer queue is created by the
+            ACE_Thread_Timer_Queue_Adapter then it is also deleted, if it is
+            passed or set afterwards it isn't deleted by
+            ACE_Thread_Timer_Queue_Adapter (just like in the ACE_Reactor).
 
 Mon Apr 15 10:22:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -192,7 +233,7 @@ Fri Apr 12 19:15:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Acceptor.cpp (parse_address): Set the entire address
           (address and port) instead of just the IP address part.
-          Thanks to Alex Libman <AlexL@rumblegroup.com> for this fix.
+          Thanks to Alex Libman <alibman@ihug.com.au> for this fix.
 
 Fri Apr 12 18:00:41 UTC 2002  Don Hinton  <dhinton@ieee.org>
 

@@ -55,7 +55,15 @@ ACE_Asynch_Accept_Result_Impl::~ACE_Asynch_Accept_Result_Impl (void)
 {
 }
 
+ACE_Asynch_Connect_Result_Impl::~ACE_Asynch_Connect_Result_Impl (void)
+{
+}
+
 ACE_Asynch_Accept_Impl::~ACE_Asynch_Accept_Impl (void)
+{
+}
+
+ACE_Asynch_Connect_Impl::~ACE_Asynch_Connect_Impl (void)
 {
 }
 

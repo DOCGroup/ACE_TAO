@@ -52,11 +52,21 @@ ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("CreateIoCompletionPort")));
+
+  this->get_asynch_pseudo_task ().start ();
 }
 
 ACE_WIN32_Proactor::~ACE_WIN32_Proactor (void)
 {
+  this->get_asynch_pseudo_task ().stop ();
+
   this->close ();
+}
+
+ACE_Asynch_Pseudo_Task &
+ACE_WIN32_Proactor::get_asynch_pseudo_task ()
+{
+  return this->pseudo_task_;
 }
 
 int
@@ -66,7 +76,7 @@ ACE_WIN32_Proactor::close (void)
   if (this->completion_port_ != 0)
     {
       // To avoid memory leaks we should delete all results from queue.
-    
+
       for (;;)
         {
           ACE_OVERLAPPED *overlapped = 0;
@@ -74,7 +84,7 @@ ACE_WIN32_Proactor::close (void)
           u_long completion_key = 0;
 
           // Get the next asynchronous operation that completes
-          BOOL res = ::GetQueuedCompletionStatus 
+          BOOL res = ::GetQueuedCompletionStatus
             (this->completion_port_,
              &bytes_transferred,
              &completion_key,
@@ -84,7 +94,7 @@ ACE_WIN32_Proactor::close (void)
           if (overlapped == 0)
             break;
 
-          ACE_WIN32_Asynch_Result *asynch_result = 
+          ACE_WIN32_Asynch_Result *asynch_result =
             (ACE_WIN32_Asynch_Result *) overlapped;
 
           delete asynch_result;
@@ -192,6 +202,16 @@ ACE_WIN32_Proactor::create_asynch_accept (void)
   ACE_Asynch_Accept_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Accept (this),
+                  0);
+  return implementation;
+}
+
+ACE_Asynch_Connect_Impl *
+ACE_WIN32_Proactor::create_asynch_connect (void)
+{
+  ACE_Asynch_Connect_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_WIN32_Asynch_Connect (this),
                   0);
   return implementation;
 }
@@ -386,6 +406,26 @@ ACE_WIN32_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                                   event,
                                                   priority,
                                                   signal_number),
+                  0);
+  return implementation;
+}
+
+ACE_Asynch_Connect_Result_Impl *
+ACE_WIN32_Proactor::create_asynch_connect_result (ACE_Handler & handler,
+                                                  ACE_HANDLE connect_handle,
+                                                  const void *act,
+                                                  ACE_HANDLE event,
+                                                  int priority ,
+                                                  int signal_number)
+{
+  ACE_Asynch_Connect_Result_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_WIN32_Asynch_Connect_Result (handler,
+                                                   connect_handle,
+                                                   act,
+                                                   event,
+                                                   priority,
+                                                   signal_number),
                   0);
   return implementation;
 }

@@ -10,6 +10,7 @@
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Roger Tragin <r.tragin@computer.org>
+ *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================
 
@@ -31,6 +32,7 @@
 #include "ace/Event_Handler.h"
 
 #include "ace/Proactor_Impl.h"
+#include "ace/Asynch_Pseudo_Task.h"
 
 // Forward declarations.
 class ACE_WIN32_Asynch_Result;
@@ -47,6 +49,8 @@ class ACE_WIN32_Proactor_Timer_Handler;
  */
 class ACE_Export ACE_WIN32_Proactor : public ACE_Proactor_Impl
 {
+  friend class ACE_WIN32_Asynch_Connect;
+
 public:
   /// A do nothing constructor.
   ACE_WIN32_Proactor (size_t number_of_threads = 0,
@@ -110,6 +114,7 @@ public:
   virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
   virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
   virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
+  virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void);
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
   // Methods used to create Asynch_IO_Result objects. We create the right
@@ -188,6 +193,14 @@ public:
                                                                       int priority,
                                                                       int signal_number = 0);
 
+  virtual ACE_Asynch_Connect_Result_Impl *create_asynch_connect_result (ACE_Handler & handler,
+                                                                        ACE_HANDLE connect_handle,
+                                                                        const void *act,
+                                                                        ACE_HANDLE event,
+                                                                        int priority,
+                                                                        int signal_number = 0);
+
+
   virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler &handler,
                                                                                     ACE_HANDLE socket,
                                                                                     ACE_HANDLE file,
@@ -212,6 +225,9 @@ public:
                                                        int signal_number = 0);
 
 protected:
+  /// Task to process pseudo-asynchronous operations
+  ACE_Asynch_Pseudo_Task & get_asynch_pseudo_task (void);
+
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
@@ -261,6 +277,10 @@ protected:
   /// Handler to handle the wakeups. This works in conjunction with the
   /// <ACE_Proactor::run_event_loop>.
   ACE_Handler wakeup_handler_;
+
+  /// Pseudo-task for asynch connect ( NT/2000)
+  /// In future should removed in XP with ConnectEx support
+  ACE_Asynch_Pseudo_Task pseudo_task_;
 };
 
 /**

@@ -19,6 +19,7 @@
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Roger Tragin <r.tragin@computer.org>
+ *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================
 
@@ -41,6 +42,7 @@ class ACE_Proactor;
 class ACE_Handler;
 class ACE_Message_Block;
 class ACE_INET_Addr;
+class ACE_Addr;
 
 // Forward declarations
 class ACE_Asynch_Result_Impl;
@@ -822,6 +824,102 @@ public:
     ACE_Asynch_Accept_Result_Impl *implementation_;
   };
 };
+// Forward declarations
+class ACE_Asynch_Connect_Result_Impl;
+class ACE_Asynch_Connect_Impl;
+
+/**
+ * @class ACE_Asynch_Connect
+ *
+ * @brief This class is a factory for starting off asynchronous connects
+ * This class forwards all methods to its implementation class.
+ *
+ * Once @c open is called, multiple asynchronous connect operationss can
+ * started using this class.  A ACE_Asynch_Connect::Result will
+ * be passed back to the associated ACE_Handler when the asynchronous connect
+ * completes through the ACE_Handler::handle_connect() callback.
+ */
+class ACE_Export ACE_Asynch_Connect : public ACE_Asynch_Operation
+{
+
+public:
+  /// A do nothing constructor.
+  ACE_Asynch_Connect (void);
+
+  /// Destructor.
+  virtual ~ACE_Asynch_Connect (void);
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.
+   *
+   * @note @arg handle is ignored and should be @c ACE_INVALID_HANDLE.
+   */
+  int open (ACE_Handler &handler,
+            ACE_HANDLE handle = ACE_INVALID_HANDLE,
+            const void *completion_key = 0,
+            ACE_Proactor *proactor = 0);
+
+  /**
+   * This starts off an asynchronous Connect. 
+   */
+  int connect (ACE_HANDLE connect_handle,
+               const ACE_Addr & remote_sap,
+               const ACE_Addr & local_sap,
+               int  reuse_addr,
+               const void *act=0,
+               int priority = 0,
+               int signal_number = ACE_SIGRTMIN);
+
+  /// Return the underlying implementation class.
+  ACE_Asynch_Connect_Impl *implementation (void) const;
+
+protected:
+  /// Set the implementation class.
+  void implementation (ACE_Asynch_Connect_Impl *implementation);
+
+  /// Delegation/implementation class that all methods will be
+  /// forwarded to.
+  ACE_Asynch_Connect_Impl *implementation_;
+
+public:
+/**
+ * @class Result
+ *
+ * @brief This is that class which will be passed back to the
+ * handler when the asynchronous connect completes.
+ *
+ * This class has all the information necessary for the
+ * handler to uniquely identify the completion of the
+ * asynchronous connect.
+ */
+  class ACE_Export Result : public ACE_Asynch_Result
+  {
+
+    /// The concrete implementation result classes only construct this
+    /// class.
+    friend class ACE_POSIX_Asynch_Connect_Result;
+    friend class ACE_WIN32_Asynch_Connect_Result;
+
+  public:
+
+    /// I/O handle for the  connection.
+    ACE_HANDLE connect_handle (void) const;
+
+    /// Get the implementation.
+    ACE_Asynch_Connect_Result_Impl *implementation (void) const;
+
+  protected:
+    /// Contructor. Implementation will not be deleted.
+    Result (ACE_Asynch_Connect_Result_Impl *implementation);
+
+    /// Destructor.
+    virtual ~Result (void);
+
+    /// Impelmentation class.
+    ACE_Asynch_Connect_Result_Impl *implementation_;
+  };
+};
 
 // Forward declarations
 class ACE_Asynch_Transmit_File_Result_Impl;
@@ -1344,6 +1442,9 @@ public:
 
   /// This method will be called when an asynchronous accept completes.
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
+
+  /// This method will be called when an asynchronous connect completes.
+  virtual void handle_connect (const ACE_Asynch_Connect::Result &result);
 
   /// This method will be called when an asynchronous transmit file
   /// completes.
