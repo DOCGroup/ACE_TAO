@@ -16,6 +16,15 @@ Mon Oct 13 15:41:32 1997  Steve Huston  <shuston@riverace.com>
 	* ace/Select_Reactor.i, Priority_Reactor.i: Moved code for the
 	  ACE_Event_Tuple struct from Priority_Reactor.i to Select_Reactor.i.
 
+	* ace/Priority_Reactor.cpp: added #include Malloc_T.h to build on AIX.
+
+	* ace/Synch_T.h, Timer_Queue_Adapters.h - added a template argument
+	  to the non-ACE_HAS_TEMPLATE_TYPEDEFS, multi-threaded version of
+	  the ACE_SYNCH_CONDITION macro - of the 3 possibilities for its
+	  definition, this is the only case which requires a template
+	  argument.  Timer_Queue_Adapters.h is the only user of the definition,
+	  and it was changed to not supply the template argument.
+
 Mon Oct 13 14:10:30 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Priority_Reactor_Test.cpp: 
