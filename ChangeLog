@@ -1,3 +1,8 @@
+Tue Nov 18 21:25:23 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * html/index.html:
+          Configured the index.html to display CIAO doxygen information.
+
 Tue Nov 18 15:58:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac (AC_PROC_CC, AC_PROG_CPP, AC_PROG_CC_C_O):
