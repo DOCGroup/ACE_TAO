@@ -48,7 +48,7 @@ PIC             = -PIC
 #
 # so here we remove the archive prior to making the new one
 #
-AR              = rm -f $@ ; CC
+AR              = CC
 ARFLAGS         = -xar -o
 RANLIB          = echo
 SOFLAGS         = -G $(CPPFLAGS)
