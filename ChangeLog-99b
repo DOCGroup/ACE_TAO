@@ -1,3 +1,10 @@
+Sun Mar 14 17:20:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg: Generalized the enable_debug_messages() and
+ 	  disable_debug_messages() methods so they can be used to enable
+ 	  or disable arbitrary priorities.  Thanks to Susan Liebeskind
+ 	  <shl@janis.gtri.gatech.edu> for suggesting this.
+
 Sun Mar 14 14:46:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* ace/OS.i (tzset,timezone):  pSOS doesn't support these two
