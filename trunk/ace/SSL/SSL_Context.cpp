@@ -85,7 +85,7 @@ ACE_SSL_Context::ssl_library_init (void)
       // OpenSSL < 0.9.5 doesn't have EGD support.
 
       const char *egd_socket_file =
-        ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
+        ACE_OS::getenv (ACE_SSL_EGD_FILE_ENV);
 
       if (egd_file != 0)
         (void) this->egd_file (egd_socket_file);
