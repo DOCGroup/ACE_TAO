@@ -7,7 +7,7 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "IORC.h"
+#include "IORManip_Loader.h"
 #include "tao/Typecode.h"
 #include "tao/Any.h"
 #include "tao/ORB.h"
