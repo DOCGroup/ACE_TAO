@@ -1,3 +1,10 @@
+Mon Dec  1 13:03:50 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          Fixed a bug in the subtraction operator on strings.  Values in
+          doubled quoted strings weren't being subtracted properly.
+
 Mon Dec 01 16:01:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/Creator.pm (add_file_written):
@@ -14,18 +21,18 @@ Mon Dec 01 16:01:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Nov 30 10:40:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
-	  When duplicates our not allowed and duplicates are found, then output
-	  an error instead of a warning
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+          When duplicates our not allowed and duplicates are found, then output
+          an error instead of a warning
 
 Sun Nov 30 10:22:29 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* tests/tests.dsw:
-	* tests/Task_Ex_Test.icc:
-	* tests/Task_Ex_Test.dsp:
-	* tests/Makefile.am:
-	Added Task_Ex_Test to Makefile.am and tests.dsw
-	Added Task_Ex_Test.icc, Task_Ex_Test.dsp
+        * tests/tests.dsw:
+        * tests/Task_Ex_Test.icc:
+        * tests/Task_Ex_Test.dsp:
+        * tests/Makefile.am:
+        Added Task_Ex_Test to Makefile.am and tests.dsw
+        Added Task_Ex_Test.icc, Task_Ex_Test.dsp
 
 Sat Nov 29 15:25:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -51,110 +58,110 @@ Sat Nov 29 15:25:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Nov 28 17:08:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/README: Added this file with some basic information on
-	  Kokyu and pointing to the Kokyu html documents under Kokyu/docs.
+        * Kokyu/README: Added this file with some basic information on
+          Kokyu and pointing to the Kokyu html documents under Kokyu/docs.
 
 Fri Nov 28 17:17:29 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Caching_Strategies_T.i: Added #include "ace/OS_Memory.h" so
-	  ACE_NEW can be found properly when inlined methods are used without
-	  the .cpp file, such as when instantiating templates in AIX Visual
-	  Age C++.
+        * ace/Caching_Strategies_T.i: Added #include "ace/OS_Memory.h" so
+          ACE_NEW can be found properly when inlined methods are used without
+          the .cpp file, such as when instantiating templates in AIX Visual
+          Age C++.
 
-	* ace/Cache_Map_Manager_T.cpp: Added #include "ace/Log_Msg.h" to
-	  find ACE_ERROR, et al.
+        * ace/Cache_Map_Manager_T.cpp: Added #include "ace/Log_Msg.h" to
+          find ACE_ERROR, et al.
 
-	* ace/Env_Value_T.h: Added #include "ace/Global_Macros.h" to
-	  get ACE_UNIMPLEMENTED_FUNC and "ace/OS_NS_stdlib.h" to get
-	  strtol, strtoul.
+        * ace/Env_Value_T.h: Added #include "ace/Global_Macros.h" to
+          get ACE_UNIMPLEMENTED_FUNC and "ace/OS_NS_stdlib.h" to get
+          strtol, strtoul.
 
-	* ace/Reverse_Lock_T.inl: Added #include "ace/OS_NS_errno.h" so
-	  errno can be found properly when inlined methods are used without
-	  the .cpp file, such as when instantiating templates in AIX Visual
-	  Age C++.
+        * ace/Reverse_Lock_T.inl: Added #include "ace/OS_NS_errno.h" so
+          errno can be found properly when inlined methods are used without
+          the .cpp file, such as when instantiating templates in AIX Visual
+          Age C++.
 
-	* tests/Bound_Ptr_Test.{h, cpp}: Added #include "ace/Null_Mutex.h"
-	  to find ACE_Null_Mutex. Moved the Printer and Scheduler class
-	  definitions from Bound_Ptr_Test.cpp to a new file, Bound_Ptr_Test.h
-	  so AIX Visual Age C++ can find it when instantiating templates.
+        * tests/Bound_Ptr_Test.{h, cpp}: Added #include "ace/Null_Mutex.h"
+          to find ACE_Null_Mutex. Moved the Printer and Scheduler class
+          definitions from Bound_Ptr_Test.cpp to a new file, Bound_Ptr_Test.h
+          so AIX Visual Age C++ can find it when instantiating templates.
 
-	* tests/Buffer_Stream_Test.cpp:
-	* tests/Cached_Accept_Conn_Test.cpp:
-	* tests/Cached_Allocator_Test.cpp:
-	* tests/Cached_Conn_Test.cpp:
-	* tests/CDR_Test.cpp:
-	* tests/Config_Test.cpp:
-	* tests/Env_Value_Test.cpp:
-	* tests/Logging_Strategy_Test.cpp:
-	* tests/MT_Reactor_Upcall_Test.cpp: Added #include
-	  "ace/OS_NS_string.h" to get string functions.
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Allocator_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Config_Test.cpp:
+        * tests/Env_Value_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/MT_Reactor_Upcall_Test.cpp: Added #include
+          "ace/OS_NS_string.h" to get string functions.
 
-	* tests/Cache_Map_Manager_Test.cpp: Added #include "ace/OS_NS_stdlib.h"
-	  to get atoi() and srand(), and "ace/OS_Memory.h" for ACE_NEW.
+        * tests/Cache_Map_Manager_Test.cpp: Added #include "ace/OS_NS_stdlib.h"
+          to get atoi() and srand(), and "ace/OS_Memory.h" for ACE_NEW.
 
-	* tests/Capabilities_Test.cpp: Added #include "ace/OS_NS_fcntl.h" to
-	  get open() and "ace/OS_NS_unistd.h" to get write().
+        * tests/Capabilities_Test.cpp: Added #include "ace/OS_NS_fcntl.h" to
+          get open() and "ace/OS_NS_unistd.h" to get write().
 
-	* tests/Conn_Test.cpp: Added #include "ace/OS_NS_sys_select.h" to get
-	  select() and the proper mutex header, Thread_Mutex.h, Null_Mutex.h,
-	  or Process_Mutex.h.
+        * tests/Conn_Test.cpp: Added #include "ace/OS_NS_sys_select.h" to get
+          select() and the proper mutex header, Thread_Mutex.h, Null_Mutex.h,
+          or Process_Mutex.h.
 
-	* tests/Conn_Test.h: Added #include "ace/Null_Condition.h" so the
-	  template parent has it available when instantiating templates.
+        * tests/Conn_Test.h: Added #include "ace/Null_Condition.h" so the
+          template parent has it available when instantiating templates.
 
-	* tests/Env_Value_Test.cpp:
-	* tests/Get_Opt_Test.cpp:
-	* tests/Handle_Set_Test.cpp:
-	* tests/Hash_Map_Bucket_Iterator_Test.cpp: Added #include
-	  "ace/OS_NS_stdlib.h" to get itoa().
+        * tests/Env_Value_Test.cpp:
+        * tests/Get_Opt_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp: Added #include
+          "ace/OS_NS_stdlib.h" to get itoa().
 
-	* tests/Future_Set_Test.cpp:
-	* tests/Logging_Strategy_Test.cpp: Added #include "ace/OS_NS_stdio.h"
-	  and "ace/OS_NS_unistd.h" to get missing symbols on AIX.
+        * tests/Future_Set_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp: Added #include "ace/OS_NS_stdio.h"
+          and "ace/OS_NS_unistd.h" to get missing symbols on AIX.
 
-	* tests/Future_Test.cpp: Added #include "ace/OS_NS_sys_time.h" to get
-	  gettimeofday() and "ace/OS_NS_string.h" to get strlen().
+        * tests/Future_Test.cpp: Added #include "ace/OS_NS_sys_time.h" to get
+          gettimeofday() and "ace/OS_NS_string.h" to get strlen().
 
-	* tests/MEM_Stream_Test.cpp: Added #include "ace/OS_NS_stdio.h" to get
-	  sprintf().
+        * tests/MEM_Stream_Test.cpp: Added #include "ace/OS_NS_stdio.h" to get
+          sprintf().
 
 Fri Nov 28 11:21:05 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	The following are fixes for problems exposed by running
-	`autoreconf' with the "--warnings=all" command line option.
+        The following are fixes for problems exposed by running
+        `autoreconf' with the "--warnings=all" command line option.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Precompute the absolute path of the ACE "tests" build
-	  directory.
+          Precompute the absolute path of the ACE "tests" build
+          directory.
 
-	* Makefile.am (CONFIGURE_DEPENDENCIES):
+        * Makefile.am (CONFIGURE_DEPENDENCIES):
 
-	  Updated configure script dependency list to reflect latest set
-	  of M4 filenames.
+          Updated configure script dependency list to reflect latest set
+          of M4 filenames.
 
-	* ace/Makefile.am:
-	* ace/QoS/Makefile.am:
-	* ace/RMCast/Makefile.am:
-	* ace/SSL/Makefile.am:
-	* apps/gperf/src/Makefile.am:
-	* tests/SSL/Makefile.am:
+        * ace/Makefile.am:
+        * ace/QoS/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * apps/gperf/src/Makefile.am:
+        * tests/SSL/Makefile.am:
 
-	  "INCLUDES" -> "AM_CPPFLAGS".  The former is obsolete.
+          "INCLUDES" -> "AM_CPPFLAGS".  The former is obsolete.
 
-	* tests/Makefile.am (libdir):
+        * tests/Makefile.am (libdir):
 
-	  Do not set this variable to the absolute path of the current
-	  working directory via the "$(shell pwd)" GNU Make extension.
-	  Instead pre-compute it inside the `configure' script, and then
-	  substitute the actual value inside the generated Makefile.
-	  "$(shell pwd)" is not portable to non-GNU Make implementations.
+          Do not set this variable to the absolute path of the current
+          working directory via the "$(shell pwd)" GNU Make extension.
+          Instead pre-compute it inside the `configure' script, and then
+          substitute the actual value inside the generated Makefile.
+          "$(shell pwd)" is not portable to non-GNU Make implementations.
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Ran `autoupdate' on this file to update obsolete Autoconf
-	  macros.  In particular, "AC_HELP_STRING" is now
-	  "AS_HELP_STRING".
+          Ran `autoupdate' on this file to update obsolete Autoconf
+          macros.  In particular, "AC_HELP_STRING" is now
+          "AS_HELP_STRING".
 
 Fri Nov 28 15:37:36 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -191,9 +198,9 @@ Fri Nov 28 14:59:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Nov 28 08:56:50 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Configuration_Import_Export.cpp (import_config): Rearranged
-	  the code a bit to avoid declaring the "end" variable multiple
- 	  times in the loop.  Thanks to Moran Levi for suggesting this.
+        * ace/Configuration_Import_Export.cpp (import_config): Rearranged
+          the code a bit to avoid declaring the "end" variable multiple
+          times in the loop.  Thanks to Moran Levi for suggesting this.
 
 Fri Nov 28 14:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -213,21 +220,21 @@ Fri Nov 28 13:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Nov 27 10:40:32 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Configuration_Import_Export.cpp (import_config): The
-	  problem: when importing a configuration from file - the import
- 	  process assumes maximum line length of 4096 bytes (which means
- 	  actually about 1360 bytes because each byte is represented as
- 	  three bytes in the output file).  The solution is to use a
- 	  dynamic buffer to load a line from the file. If the load did not
- 	  reach the end of the line - resize the buffer and continue until
- 	  the end of the line is reached.  Thanks to Moran Levi
- 	  <moran@monosphere.com> for the fixes.
+        * ace/Configuration_Import_Export.cpp (import_config): The
+          problem: when importing a configuration from file - the import
+          process assumes maximum line length of 4096 bytes (which means
+          actually about 1360 bytes because each byte is represented as
+          three bytes in the output file).  The solution is to use a
+          dynamic buffer to load a line from the file. If the load did not
+          reach the end of the line - resize the buffer and continue until
+          the end of the line is reached.  Thanks to Moran Levi
+          <moran@monosphere.com> for the fixes.
 
 Thu Nov 27 16:51:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/ARGV_Test.cpp:
+        * tests/ARGV_Test.cpp:
 
-	  Fixed compile errors on Win32.
+          Fixed compile errors on Win32.
 
 Thu Nov 27 10:51:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -240,72 +247,72 @@ Thu Nov 27 10:51:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Nov 26 18:36:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/ARGV_Test.cpp:
+        * tests/ARGV_Test.cpp:
 
-	  Fixed compile errors, mostly related to missing includes.
+          Fixed compile errors, mostly related to missing includes.
 
 Wed Nov 26 17:09:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Log_Msg.cpp (log): Fixed a compile error with VC6.
+        * ace/Log_Msg.cpp (log): Fixed a compile error with VC6.
 
 Wed Nov 26 12:10:22 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS_NS_signal.h: Put the typedef for ACE_SIGNAL_C_FUNC inside
-	  of an extern "C" block to quiet warnings on Solaris.  Thanks to
-	  Kevin Heifner <heifner_k@ociweb.com> for this suggestion!
+        * ace/OS_NS_signal.h: Put the typedef for ACE_SIGNAL_C_FUNC inside
+          of an extern "C" block to quiet warnings on Solaris.  Thanks to
+          Kevin Heifner <heifner_k@ociweb.com> for this suggestion!
 
-	* ace/POSIX_Proactor.cpp: Made the sig_handler() function static
-	  so that it won't "leak" out of ACE!
+        * ace/POSIX_Proactor.cpp: Made the sig_handler() function static
+          so that it won't "leak" out of ACE!
 
-	* tests/Log_Msg_Test.cpp (test_format_specs):
-	* ace/Log_Msg.cpp (log): ACE_Log_Msg::log has a number of problems
-	  when ACE is built with ACE_USES_WCHAR
-	  1) %m needs to convert strerror to wide string
-	  2) %I should not use memset to set spaces in wide string
-	  3) recent modifications to remove dependencies on ACE_TRACE
-	     prevent %I from indenting
-	  Thanks to Duane Binder for these fixes.
+        * tests/Log_Msg_Test.cpp (test_format_specs):
+        * ace/Log_Msg.cpp (log): ACE_Log_Msg::log has a number of problems
+          when ACE is built with ACE_USES_WCHAR
+          1) %m needs to convert strerror to wide string
+          2) %I should not use memset to set spaces in wide string
+          3) recent modifications to remove dependencies on ACE_TRACE
+             prevent %I from indenting
+          Thanks to Duane Binder for these fixes.
 
 Wed Nov 26 12:15:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Blocked a number of tests from running in if messaging is disabled.
+          Blocked a number of tests from running in if messaging is disabled.
 
 Wed Nov 26 17:41:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* include/makeinclude/ace_flags.bor:
-	  Changed TAO FT flags and libs
+        * include/makeinclude/ace_flags.bor:
+          Changed TAO FT flags and libs
 
 Wed Nov 26 10:11:20 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/ARGV_Test.cpp: Added new functions to test the fixes by
-	  Duane Binder below.
+        * tests/ARGV_Test.cpp: Added new functions to test the fixes by
+          Duane Binder below.
 
-	* ace/Argv_Type_Converter.cpp (cleanup): Ensure we don't try to
-	  delete memory that wasn't allocated dynamically.  Thanks to
- 	  Duane Binder <duane.binder@veritas.com> for reporting this and
- 	  providing a fix.  This fixes bugid 1658.
+        * ace/Argv_Type_Converter.cpp (cleanup): Ensure we don't try to
+          delete memory that wasn't allocated dynamically.  Thanks to
+          Duane Binder <duane.binder@veritas.com> for reporting this and
+          providing a fix.  This fixes bugid 1658.
 
-	* ace/Log_Msg_NT_Event_Log.cpp (open):
-	  ACE_Log_Msg_NT_Event_Log::open() has a problem with passing the
- 	  program name to ACE_TEXT_RegSetValueEx.  It is passing
- 	  msg_file_length.  msg_file_length is defined as
- 	  ACE_OS::strlen(msg_file).  Unfortunately, this is 1/2 the
- 	  required buffer length since this argument is defined in bytes,
- 	  not in characters. End result - the event log message file entry
- 	  is truncated resulting in the log message file not found.
-  	  Thanks to Duane Binder <duane.binder@veritas.com> for reporting
- 	  this and providing a fix.  This fixes bugid 1659.
+        * ace/Log_Msg_NT_Event_Log.cpp (open):
+          ACE_Log_Msg_NT_Event_Log::open() has a problem with passing the
+          program name to ACE_TEXT_RegSetValueEx.  It is passing
+          msg_file_length.  msg_file_length is defined as
+          ACE_OS::strlen(msg_file).  Unfortunately, this is 1/2 the
+          required buffer length since this argument is defined in bytes,
+          not in characters. End result - the event log message file entry
+          is truncated resulting in the log message file not found.
+          Thanks to Duane Binder <duane.binder@veritas.com> for reporting
+          this and providing a fix.  This fixes bugid 1659.
 
-	* ace/POSIX_Proactor.cpp: Changed sig_handler() to be extern "C".
-	  Thanks to Chris Cleeland for suggesting this fix.
+        * ace/POSIX_Proactor.cpp: Changed sig_handler() to be extern "C".
+          Thanks to Chris Cleeland for suggesting this fix.
 
-	* ace/Process.{h,cpp}: Fixed the ACE_Process_Options::command_line_argv()
-	  method so that it doesn't modify the command_line_buf_ parameter
- 	  directly since this messes things up when process_name() is
- 	  used.  Thanks to Dror Tirosh <ace@dror.mailshell.com> for reporting
- 	  this.
+        * ace/Process.{h,cpp}: Fixed the ACE_Process_Options::command_line_argv()
+          method so that it doesn't modify the command_line_buf_ parameter
+          directly since this messes things up when process_name() is
+          used.  Thanks to Dror Tirosh <ace@dror.mailshell.com> for reporting
+          this.
 
 Wed Nov 26 16:09:55 UTC 2003  Don Hinton  <dhinton@dresytems.com>
 
@@ -319,87 +326,87 @@ Wed Nov 26 15:58:07 UTC 2003  Don Hinton  <dhinton@dresytems.com>
 
 Wed Nov 26 14:52:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
-	  Corrected wrong include
+        * examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+          Corrected wrong include
 
 Tue Nov 25 16:24:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Added the Servant_To_Reference_Test for the daily builds.
+          Added the Servant_To_Reference_Test for the daily builds.
 
 Tue Nov 25 23:41:21 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* apps/JAWS3/jaws3/Concurrency.cpp:
+        * apps/JAWS3/jaws3/Concurrency.cpp:
 
-	  Remove the unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
+          Remove the unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
 
-	* apps/JAWS3/jaws3/Config_File.cpp:
+        * apps/JAWS3/jaws3/Config_File.cpp:
 
-	  Added #include "ace/Unbounded_Queue.h"
+          Added #include "ace/Unbounded_Queue.h"
 
-	* apps/JAWS3/jaws3/Datagram.cpp:
+        * apps/JAWS3/jaws3/Datagram.cpp:
 
-	  Remove unnecessary default values in cpp impl file.
+          Remove unnecessary default values in cpp impl file.
 
-	* apps/JAWS3/jaws3/Event_Dispatcher.cpp:
-	  Use ACE_THR_FUNC_RETURN instead of void*
+        * apps/JAWS3/jaws3/Event_Dispatcher.cpp:
+          Use ACE_THR_FUNC_RETURN instead of void*
 
-	* apps/JAWS3/jaws3/IO.h:
+        * apps/JAWS3/jaws3/IO.h:
 
-	  Added #include "ace/Singleton.h" and 	#include
-	  "ace/Synch_Traits.h"
+          Added #include "ace/Singleton.h" and  #include
+          "ace/Synch_Traits.h"
 
-	* apps/JAWS3/jaws3/Reactive_IO.cpp:
+        * apps/JAWS3/jaws3/Reactive_IO.cpp:
 
-	  Added #include "ace/ACE.h"
+          Added #include "ace/ACE.h"
 
-	* apps/JAWS3/jaws3/Signal_Task.cpp:
+        * apps/JAWS3/jaws3/Signal_Task.cpp:
 
-	  Added #define JAWS_BUILD_DLL. Use ACE_THR_FUNC_RETURN instead of
-	  void*. Add if !defined (ACE_WIN32) for WIN32 because of SIGHUP
+          Added #define JAWS_BUILD_DLL. Use ACE_THR_FUNC_RETURN instead of
+          void*. Add if !defined (ACE_WIN32) for WIN32 because of SIGHUP
 
-	* apps/JAWS3/jaws3/Signal_Task.h:
+        * apps/JAWS3/jaws3/Signal_Task.h:
 
-	  Added #include "jaws3/Export.h" and add JAWS_Export to
-	  JAWS_Signal_Task
+          Added #include "jaws3/Export.h" and add JAWS_Export to
+          JAWS_Signal_Task
 
-	* apps/JAWS3/jaws3/THYBRID_Concurrency.h:
-	* apps/JAWS3/jaws3/TPR_Concurrency.h:
+        * apps/JAWS3/jaws3/THYBRID_Concurrency.h:
+        * apps/JAWS3/jaws3/TPR_Concurrency.h:
 
-	  Added #include "ace/Atomic_Op.h"
+          Added #include "ace/Atomic_Op.h"
 
 Tue Nov 25 23:35:27 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* apps/JAWS3/jaws3.mwc:
-	* apps/JAWS3/jaws3/jaws3.mpc:
+        * apps/JAWS3/jaws3.mwc:
+        * apps/JAWS3/jaws3/jaws3.mpc:
 
-	  Added To the repository
+          Added To the repository
 
 Tue Nov 25 15:01:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/global.features:
 
-	  Added sctp and xt_reactor to the list of features.
+          Added sctp and xt_reactor to the list of features.
 
 Tue Nov 25 12:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/DLL.h: Made the constructors explicit.
+        * ace/DLL.h: Made the constructors explicit.
 
-	* ace/Service_Config.cpp:
+        * ace/Service_Config.cpp:
 
-	  Fix for one of the problems that showed up in TAO. For some
-	  reason  we were passing in a "0" to the constructor
-	  ACE_Service_Type that was expecting a const ACE_DLL &. None of
-	  the compilers complained about this, since they created
-	  temporary. This created all sorts of problems once this "Sun Nov
-	  23 11:00:02 2003  Douglas C. Schmidt
-	  <schmidt@ace.cs.wustl.edu>" went through since it added a new
-	  constructor.
+          Fix for one of the problems that showed up in TAO. For some
+          reason  we were passing in a "0" to the constructor
+          ACE_Service_Type that was expecting a const ACE_DLL &. None of
+          the compilers complained about this, since they created
+          temporary. This created all sorts of problems once this "Sun Nov
+          23 11:00:02 2003  Douglas C. Schmidt
+          <schmidt@ace.cs.wustl.edu>" went through since it added a new
+          constructor.
 
-	  We have now fixed it by creating a temporary and forcing the
-	  compiler to use the right constructor of ACE_Service_Type. This
-	  shouldn't be harmful, since we were expecting just this.
+          We have now fixed it by creating a temporary and forcing the
+          compiler to use the right constructor of ACE_Service_Type. This
+          shouldn't be harmful, since we were expecting just this.
 
 Tue Nov 25 11:14:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -419,40 +426,40 @@ Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov 25 10:08:12 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* apps/JAWS3/jaws3/io.h:
-	* apps/JAWS3/jaws3/io.cpp:
-	* apps/JAWS3/jaws3/file.h:
-	* apps/JAWS3/jaws3/file.cpp:
-	  Removed.
+        * apps/JAWS3/jaws3/io.h:
+        * apps/JAWS3/jaws3/io.cpp:
+        * apps/JAWS3/jaws3/file.h:
+        * apps/JAWS3/jaws3/file.cpp:
+          Removed.
 
 
 Tue Nov 25 09:23:35 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* apps/JAWS3/small/SS_Templates.cpp:
-	* apps/JAWS3/jaws3/io.h:
-	* apps/JAWS3/jaws3/io.cpp:
-	* apps/JAWS3/jaws3/file.h:
-	* apps/JAWS3/jaws3/file.cpp:
-	* apps/JAWS3/jaws3/Timer_Helpers.h:
-	* apps/JAWS3/jaws3/Timer_Helpers.cpp:
-	* apps/JAWS3/jaws3/Templates.cpp:
-	* apps/JAWS3/jaws3/Reactive_IO_Helpers.h:
-	* apps/JAWS3/jaws3/Options.h:
-	* apps/JAWS3/jaws3/Options.cpp:
-	* apps/JAWS3/jaws3/Asynch_IO_Helpers.h:
-	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h:
-	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp:
-	* apps/JAWS3/http/HTTP_States.h:
-	* apps/JAWS3/contrib/john_at_lyris_dot_com/readme:
-	* apps/JAWS3/contrib/jmills_at_tga_dot_com/readme:
-	* apps/JAWS3/bench/rqfiles.cpp:
-	* apps/JAWS3/bench/mkfiles.cpp:
-	* apps/JAWS3/docs/web/images/jaws3_components.gif:
-	* apps/JAWS3/docs/web/images/jaws3_components.fig:
-	* apps/JAWS3/docs/web/images/jaws3_banner.png:
-	* apps/JAWS3/docs/web/images/jaws3_banner.gif:
+        * apps/JAWS3/small/SS_Templates.cpp:
+        * apps/JAWS3/jaws3/io.h:
+        * apps/JAWS3/jaws3/io.cpp:
+        * apps/JAWS3/jaws3/file.h:
+        * apps/JAWS3/jaws3/file.cpp:
+        * apps/JAWS3/jaws3/Timer_Helpers.h:
+        * apps/JAWS3/jaws3/Timer_Helpers.cpp:
+        * apps/JAWS3/jaws3/Templates.cpp:
+        * apps/JAWS3/jaws3/Reactive_IO_Helpers.h:
+        * apps/JAWS3/jaws3/Options.h:
+        * apps/JAWS3/jaws3/Options.cpp:
+        * apps/JAWS3/jaws3/Asynch_IO_Helpers.h:
+        * apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h:
+        * apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp:
+        * apps/JAWS3/http/HTTP_States.h:
+        * apps/JAWS3/contrib/john_at_lyris_dot_com/readme:
+        * apps/JAWS3/contrib/jmills_at_tga_dot_com/readme:
+        * apps/JAWS3/bench/rqfiles.cpp:
+        * apps/JAWS3/bench/mkfiles.cpp:
+        * apps/JAWS3/docs/web/images/jaws3_components.gif:
+        * apps/JAWS3/docs/web/images/jaws3_components.fig:
+        * apps/JAWS3/docs/web/images/jaws3_banner.png:
+        * apps/JAWS3/docs/web/images/jaws3_banner.gif:
 
-	  Added to the repository
+          Added to the repository
 
 Tue Nov 25 05:25:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -499,7 +506,7 @@ Mon Nov 24 05:26:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Only cleanup shared libraries when shared_libs is defined and
           static libraries when static_libs is defined.  Also, test for
           whether or not the CLEANUP targets in this case are empty, not
-	  b
+          b
           just for existience, since they always exist by this time.
 
 Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
