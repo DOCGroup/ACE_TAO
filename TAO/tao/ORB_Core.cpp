@@ -128,6 +128,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Name Service IOR string.
   ACE_CString ns_ior;
 
+  // New <ObjectID>:<IOR> mapping that is used by the
+  // resolve_initial_references ()
+  ACE_CString init_ref;
+
   // Name Service port #.
   u_short ns_port = 0;
 
@@ -391,6 +395,19 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           iiop_lite = 1;
         }
+
+      // A new <ObjectID>:<IOR> mapping has been specified. This will be
+      // used by the resolve_initial_references ().
+
+      else if (ACE_OS::strcmp (current_arg, "-ORBInitRef") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              init_ref = arg_shifter.get_current ();
+              arg_shifter.consume_arg ();
+            }
+        }
       else
         arg_shifter.ignore_arg ();
    }
@@ -469,7 +486,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // pointer in the ORB core.  The actual registry is either in TSS or global
   // memory.
   this->connector_registry (trf->get_connector_registry ());
-  // @@ Make sure the IIOP_Connector is registered with the connector registry. 
+  // @@ Make sure the IIOP_Connector is registered with the connector registry.
   this->connector_registry ()->add_connector (trf->get_connector ());
 
   // @@ Init acceptor ... This needs altering for Pluggable Protocols! fredk
@@ -518,6 +535,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->orb_params ()->addr (rendezvous);
   this->orb_params ()->host (host);
+
+  // Set the init_ref.
+  this->orb_params ()->init_ref (init_ref);
+
   this->orb_params ()->name_service_ior (ns_ior);
   this->orb_params ()->name_service_port (ns_port);
   this->orb_params ()->trading_service_ior (ts_ior);
@@ -538,7 +559,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (this->connector_registry ()->open (trf, this->reactor ()) != 0)
     return -1;
 
-  // Have registry parse the preconnects 
+  // Have registry parse the preconnects
   if (preconnections)
     this->connector_registry ()->preconnect (preconnections);
 
