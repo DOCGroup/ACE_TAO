@@ -1,3 +1,12 @@
+Wed Jul 21 15:54:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/DLL.cpp: ACE_HAS_MOSTLY_UNICODE_APIS fixes.
+
+	* ace/OS.i (ctime):
+	* ace/OS.cpp (ctime): One copy should only be available when
+	  ACE_HAS_MOSTLY_UNICODE_APIS is defined.  Thanks to Steve for
+	  reporting this.
+
 Wed Jul 21 15:21:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Env_Value_Test.cpp (main): use the single-process
