@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao/Special_Basic_SArguments.h"
+#include "Special_Basic_SArguments.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (PortableServer,
            Special_Basic_SArguments,
            "$Id$")
 

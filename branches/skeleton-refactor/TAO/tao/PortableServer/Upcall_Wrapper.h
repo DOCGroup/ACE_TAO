@@ -26,10 +26,14 @@
 #include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/ServerRequestInfo.h"
+#include "tao/PortableServer/ServerInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+
 class TAO_ServantBase;
+class TAO_ServerRequest;
+
 
 namespace PortableServer
 {
@@ -39,6 +43,8 @@ namespace PortableServer
 
 namespace TAO
 {
+  class Argument;
+
   /**
    * @class Upcall_Wrapper
    *
@@ -52,10 +58,11 @@ namespace TAO
     /// Constructor.
     Upcall_Wrapper (TAO::Argument * args[],
                     size_t nargs,
-                    TAO::Argument * retval,
                     TAO_ServerRequest & server_request,
-                    PortableServer::Servant servant,
-                    void * servant_upcall);
+                    void * servant_upcall,
+                    PortableServer::ServantBase * servant,
+                    CORBA::TypeCode_ptr * exceptions,
+                    size_t nexceptions);
 
     /// Perform pre-upcall operations.
     /**
@@ -76,41 +83,29 @@ namespace TAO
   private:
 
     /// Operation argument list.
+    /**
+     * @note The TAO::Argument corresponding to the return value is
+     *       always the first element in the array, regardless of
+     *       whether or not the return type is void.
+     */
     TAO::Argument ** const args_;
 
     /// Number of arguments in the operation argument list.
     size_t const nargs_;
 
-    /// The return value.
-    /**
-     * @note Zero if return type is @c void.
-     */
-    TAO::Argument * const retval_;
-
     /// Object containing server side messaging operations (e.g. CDR
     /// reply construction, etc).
     TAO_ServerRequest & server_request_;
 
-    /// The servant being invoked in the upcall.
-    PortableServer::ServantBase * const servant_;
-
 #if TAO_HAS_INTERCEPTORS == 1
 
-    /// Object containing POA related items specific to the current
+    /// PortableServer::ServerRequestInfo instance specific to the
     /// upcall.
-    /**
-     * The actual type of this member is
-     * @c TAO_Object_Adapter::Servant_Upcall @c *.  It is statically
-     * cast to that type when it is needed.  Since we're using a
-     * static_cast\<\> there is no performance penalty.
-     *
-     * We do this to avoid including "Object_Adapter.h".
-     */
-    void * const servant_upcall_;
+    TAO::ServerRequestInfo request_info_;
 
     /// Interceptor adapter object that encapsulates the server side
     /// interception points.
-    TAO::ServerInterceptorAdapter interceptor_adapter_;
+    TAO::ServerRequestInterceptor_Adapter interceptor_adapter_;
 
 #endif  /* TAO_HAS_INTECEPTORS == 1 */
 

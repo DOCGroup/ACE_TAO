@@ -733,11 +733,15 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
   int result = 0;
 
 #if TAO_HAS_INTERCEPTORS == 1
-  TAO_ServerRequestInterceptor_Adapter sri_adapter (
-    this->orb_core_.server_request_interceptors (),
-    request.interceptor_count ());
+  TAO::ServerRequestInterceptor_Adapter sri_adapter (request);
 
-  TAO_ServerRequestInfo ri (request, 0);
+  TAO::ServerRequestInfo ri (0,
+                             0,
+                             request,
+                             0,
+                             0,
+                             0,
+                             0);
 
   ACE_TRY
     {

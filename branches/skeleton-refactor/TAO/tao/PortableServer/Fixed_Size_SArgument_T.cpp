@@ -3,14 +3,14 @@
 #ifndef TAO_FIXED_SIZE_SARGUMENT_T_CPP
 #define TAO_FIXED_SIZE_SARGUMENT_T_CPP
 
-#include "tao/Fixed_Size_SArgument_T.h"
+#include "tao/PortableServer/Fixed_Size_SArgument_T.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/Dynamic_ParameterC.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Fixed_Size_SArgument_T.inl"
+#include "tao/PortableServer/Fixed_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 

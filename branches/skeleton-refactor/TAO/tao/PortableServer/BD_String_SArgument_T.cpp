@@ -3,14 +3,14 @@
 #ifndef TAO_BD_STRING_SARGUMENT_T_C
 #define TAO_BD_STRING_SARGUMENT_T_C
 
-#include "tao/BD_String_SArgument_T.h"
+#include "tao/PortableServer/BD_String_SArgument_T.h"
 #include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/BD_String_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
+ACE_RCSID (PortableServer,
            BD_String_SArgument_T,
            "$Id$")
 

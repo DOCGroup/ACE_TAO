@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/UB_String_SArgument_T.h"
+#include "tao/PortableServer/UB_String_SArgument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -3,14 +3,14 @@
 #ifndef TAO_VAR_ARRAY_SARGUMENT_T_C
 #define TAO_VAR_ARRAY_SARGUMENT_T_C
 
-#include "tao/Var_Array_SArgument_T.h"
+#include "tao/PortableServer/Var_Array_SArgument_T.h"
 #include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Var_Array_SArgument_T.inl"
+#include "tao/PortableServer/Var_Array_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
+ACE_RCSID (PortableServer,
            Var_Array_SArgument_T,
            "$Id$")
 
