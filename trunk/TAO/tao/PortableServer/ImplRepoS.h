@@ -328,11 +328,29 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
-      , ImplementationRepository::Administration::CannotActivate
+      , ImplementationRepository::NotFound
+      , ImplementationRepository::CannotActivate
     )) = 0;
   
     static void activate_server_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall
+      ACE_ENV_ARG_DECL
+    );
+
+  virtual char * activate_server_with_startup (
+      const char * server,
+      CORBA::Long check_startup
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+      , ImplementationRepository::NotFound
+      , ImplementationRepository::CannotActivate
+    )) = 0;
+  
+    static void activate_server_with_startup_skel (
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
@@ -346,7 +364,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::AlreadyRegistered
+      , ImplementationRepository::AlreadyRegistered
     )) = 0;
   
     static void register_server_skel (
@@ -378,7 +396,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     )) = 0;
   
     static void remove_server_skel (
@@ -394,7 +412,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     )) = 0;
   
     static void shutdown_server_skel (
@@ -412,7 +430,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     )) = 0;
   
     static void server_is_running_skel (
@@ -428,7 +446,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     )) = 0;
   
     static void server_is_shutting_down_skel (
@@ -445,7 +463,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     )) = 0;
   
     static void find_skel (
@@ -541,8 +559,20 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
-      , ImplementationRepository::Administration::CannotActivate
+      , ImplementationRepository::NotFound
+      , ImplementationRepository::CannotActivate
+    ));
+  
+  virtual char * activate_server_with_startup (
+      CORBA_Object *_collocated_tao_target_,
+      const char * server,
+      CORBA::Long check_startup
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+      , ImplementationRepository::NotFound
+      , ImplementationRepository::CannotActivate
     ));
   
   virtual void register_server (
@@ -553,7 +583,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::AlreadyRegistered
+      , ImplementationRepository::AlreadyRegistered
     ));
   
   virtual void reregister_server (
@@ -573,7 +603,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual void shutdown_server (
@@ -583,7 +613,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual char * server_is_running (
@@ -595,7 +625,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual void server_is_shutting_down (
@@ -605,7 +635,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual void find (
@@ -616,7 +646,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual void list (
@@ -658,8 +688,20 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
-      , ImplementationRepository::Administration::CannotActivate
+      , ImplementationRepository::NotFound
+      , ImplementationRepository::CannotActivate
+    ));
+  
+  virtual char * activate_server_with_startup (
+      CORBA_Object *_collocated_tao_target_,
+      const char * server,
+      CORBA::Long check_startup
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+      , ImplementationRepository::NotFound
+      , ImplementationRepository::CannotActivate
     ));
   
   virtual void register_server (
@@ -670,7 +712,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::AlreadyRegistered
+      , ImplementationRepository::AlreadyRegistered
     ));
   
   virtual void reregister_server (
@@ -690,7 +732,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual void shutdown_server (
@@ -700,7 +742,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual char * server_is_running (
@@ -712,7 +754,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual void server_is_shutting_down (
@@ -722,7 +764,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual void find (
@@ -733,7 +775,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , ImplementationRepository::Administration::NotFound
+      , ImplementationRepository::NotFound
     ));
   
   virtual void list (

@@ -379,6 +379,136 @@ TAO_NAMESPACE  ImplementationRepository
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerObject;
   
+  
+#if !defined (_IMPLEMENTATIONREPOSITORY_ALREADYREGISTERED_CH_)
+#define _IMPLEMENTATIONREPOSITORY_ALREADYREGISTERED_CH_
+  
+  class TAO_PortableServer_Export AlreadyRegistered : public CORBA::UserException
+  {
+  public:
+    
+    AlreadyRegistered (void);
+    AlreadyRegistered (const AlreadyRegistered &);
+    ~AlreadyRegistered (void);
+
+    AlreadyRegistered &operator= (const AlreadyRegistered &);
+
+    static void _tao_any_destructor (void*);
+
+    static AlreadyRegistered *_downcast (CORBA::Exception *);
+    static CORBA::Exception *_alloc (void);
+
+    virtual CORBA::Exception *_tao_duplicate (void) const;
+
+    virtual void _raise (void);
+
+    virtual void _tao_encode (
+        TAO_OutputCDR &
+        ACE_ENV_ARG_DECL_NOT_USED
+      ) const;
+    
+    virtual void _tao_decode (
+        TAO_InputCDR &
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
+    
+    
+    virtual CORBA::TypeCode_ptr _type (void) const;
+  };
+
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AlreadyRegistered;
+  
+  
+#endif /* end #if !defined */
+  
+  
+#if !defined (_IMPLEMENTATIONREPOSITORY_CANNOTACTIVATE_CH_)
+#define _IMPLEMENTATIONREPOSITORY_CANNOTACTIVATE_CH_
+  
+  class TAO_PortableServer_Export CannotActivate : public CORBA::UserException
+  {
+  public:
+    TAO_String_Manager reason;
+    
+    CannotActivate (void);
+    CannotActivate (const CannotActivate &);
+    ~CannotActivate (void);
+
+    CannotActivate &operator= (const CannotActivate &);
+
+    static void _tao_any_destructor (void*);
+
+    static CannotActivate *_downcast (CORBA::Exception *);
+    static CORBA::Exception *_alloc (void);
+
+    virtual CORBA::Exception *_tao_duplicate (void) const;
+
+    virtual void _raise (void);
+
+    virtual void _tao_encode (
+        TAO_OutputCDR &
+        ACE_ENV_ARG_DECL_NOT_USED
+      ) const;
+    
+    virtual void _tao_decode (
+        TAO_InputCDR &
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
+    
+        CannotActivate (
+        const char * _tao_reason
+      );
+    
+    virtual CORBA::TypeCode_ptr _type (void) const;
+  };
+
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CannotActivate;
+  
+  
+#endif /* end #if !defined */
+  
+  
+#if !defined (_IMPLEMENTATIONREPOSITORY_NOTFOUND_CH_)
+#define _IMPLEMENTATIONREPOSITORY_NOTFOUND_CH_
+  
+  class TAO_PortableServer_Export NotFound : public CORBA::UserException
+  {
+  public:
+    
+    NotFound (void);
+    NotFound (const NotFound &);
+    ~NotFound (void);
+
+    NotFound &operator= (const NotFound &);
+
+    static void _tao_any_destructor (void*);
+
+    static NotFound *_downcast (CORBA::Exception *);
+    static CORBA::Exception *_alloc (void);
+
+    virtual CORBA::Exception *_tao_duplicate (void) const;
+
+    virtual void _raise (void);
+
+    virtual void _tao_encode (
+        TAO_OutputCDR &
+        ACE_ENV_ARG_DECL_NOT_USED
+      ) const;
+    
+    virtual void _tao_decode (
+        TAO_InputCDR &
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
+    
+    
+    virtual CORBA::TypeCode_ptr _type (void) const;
+  };
+
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotFound;
+  
+  
+#endif /* end #if !defined */
+  
   struct EnvironmentVariable;
   class EnvironmentVariable_var;
   
@@ -641,6 +771,7 @@ TAO_NAMESPACE  ImplementationRepository
     ACE_NESTED_CLASS (ImplementationRepository, EnvironmentList) environment;
     TAO_String_Manager working_directory;
     ACE_NESTED_CLASS (ImplementationRepository, ActivationMode) activation;
+    TAO_String_Manager location;
     
   };
   
@@ -1131,144 +1262,25 @@ TAO_NAMESPACE  ImplementationRepository
     
     static void _tao_any_destructor (void*);
     
-    
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_ALREADYREGISTERED_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_ALREADYREGISTERED_CH_
-    
-    class TAO_PortableServer_Export AlreadyRegistered : public CORBA::UserException
-    {
-    public:
-      
-      AlreadyRegistered (void);
-      AlreadyRegistered (const AlreadyRegistered &);
-      ~AlreadyRegistered (void);
-
-      AlreadyRegistered &operator= (const AlreadyRegistered &);
-
-      static void _tao_any_destructor (void*);
-
-      static AlreadyRegistered *_downcast (CORBA::Exception *);
-      static CORBA::Exception *_alloc (void);
-
-      virtual CORBA::Exception *_tao_duplicate (void) const;
-
-      virtual void _raise (void);
-
-      virtual void _tao_encode (
-          TAO_OutputCDR &
-          ACE_ENV_ARG_DECL_NOT_USED
-        ) const;
-      
-      virtual void _tao_decode (
-          TAO_InputCDR &
-          ACE_ENV_ARG_DECL_NOT_USED
-        );
-      
-      
-      virtual CORBA::TypeCode_ptr _type (void) const;
-    };
-
-static ::CORBA::TypeCode_ptr _tc_AlreadyRegistered;
-    
-    
-#endif /* end #if !defined */
-    
-    
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CANNOTACTIVATE_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CANNOTACTIVATE_CH_
-    
-    class TAO_PortableServer_Export CannotActivate : public CORBA::UserException
-    {
-    public:
-      TAO_String_Manager reason;
-      
-      CannotActivate (void);
-      CannotActivate (const CannotActivate &);
-      ~CannotActivate (void);
-
-      CannotActivate &operator= (const CannotActivate &);
-
-      static void _tao_any_destructor (void*);
-
-      static CannotActivate *_downcast (CORBA::Exception *);
-      static CORBA::Exception *_alloc (void);
-
-      virtual CORBA::Exception *_tao_duplicate (void) const;
-
-      virtual void _raise (void);
-
-      virtual void _tao_encode (
-          TAO_OutputCDR &
-          ACE_ENV_ARG_DECL_NOT_USED
-        ) const;
-      
-      virtual void _tao_decode (
-          TAO_InputCDR &
-          ACE_ENV_ARG_DECL_NOT_USED
-        );
-      
-            CannotActivate (
-          const char * _tao_reason
-        );
-      
-      virtual CORBA::TypeCode_ptr _type (void) const;
-    };
-
-static ::CORBA::TypeCode_ptr _tc_CannotActivate;
-    
-    
-#endif /* end #if !defined */
-    
-    
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_NOTFOUND_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_NOTFOUND_CH_
-    
-    class TAO_PortableServer_Export NotFound : public CORBA::UserException
-    {
-    public:
-      
-      NotFound (void);
-      NotFound (const NotFound &);
-      ~NotFound (void);
-
-      NotFound &operator= (const NotFound &);
-
-      static void _tao_any_destructor (void*);
-
-      static NotFound *_downcast (CORBA::Exception *);
-      static CORBA::Exception *_alloc (void);
-
-      virtual CORBA::Exception *_tao_duplicate (void) const;
-
-      virtual void _raise (void);
-
-      virtual void _tao_encode (
-          TAO_OutputCDR &
-          ACE_ENV_ARG_DECL_NOT_USED
-        ) const;
-      
-      virtual void _tao_decode (
-          TAO_InputCDR &
-          ACE_ENV_ARG_DECL_NOT_USED
-        );
-      
-      
-      virtual CORBA::TypeCode_ptr _type (void) const;
-    };
-
-static ::CORBA::TypeCode_ptr _tc_NotFound;
-    
-    
-#endif /* end #if !defined */
-    
     virtual void activate_server (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
-        , ImplementationRepository::Administration::CannotActivate
+        , ImplementationRepository::NotFound
+        , ImplementationRepository::CannotActivate
+      ));
+    
+    virtual char * activate_server_with_startup (
+        const char * server,
+        CORBA::Long check_startup
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , ImplementationRepository::NotFound
+        , ImplementationRepository::CannotActivate
       ));
     
     virtual void register_server (
@@ -1278,7 +1290,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::AlreadyRegistered
+        , ImplementationRepository::AlreadyRegistered
       ));
     
     virtual void reregister_server (
@@ -1296,7 +1308,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual void shutdown_server (
@@ -1305,7 +1317,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual char * server_is_running (
@@ -1316,7 +1328,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual void server_is_shutting_down (
@@ -1325,7 +1337,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual void find (
@@ -1335,7 +1347,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual void list (
@@ -1405,8 +1417,20 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
-        , ImplementationRepository::Administration::CannotActivate
+        , ImplementationRepository::NotFound
+        , ImplementationRepository::CannotActivate
+      )) = 0;
+    
+    virtual char * activate_server_with_startup (
+        CORBA_Object *_collocated_tao_target_,
+        const char * server,
+        CORBA::Long check_startup
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , ImplementationRepository::NotFound
+        , ImplementationRepository::CannotActivate
       )) = 0;
     
     virtual void register_server (
@@ -1417,7 +1441,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::AlreadyRegistered
+        , ImplementationRepository::AlreadyRegistered
       )) = 0;
     
     virtual void reregister_server (
@@ -1437,7 +1461,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       )) = 0;
     
     virtual void shutdown_server (
@@ -1447,7 +1471,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       )) = 0;
     
     virtual char * server_is_running (
@@ -1459,7 +1483,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       )) = 0;
     
     virtual void server_is_shutting_down (
@@ -1469,7 +1493,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       )) = 0;
     
     virtual void find (
@@ -1480,7 +1504,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       )) = 0;
     
     virtual void list (
@@ -1523,8 +1547,20 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
-        , ImplementationRepository::Administration::CannotActivate
+        , ImplementationRepository::NotFound
+        , ImplementationRepository::CannotActivate
+      ));
+    
+    virtual char * activate_server_with_startup (
+        CORBA_Object *_collocated_tao_target_,
+        const char * server,
+        CORBA::Long check_startup
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , ImplementationRepository::NotFound
+        , ImplementationRepository::CannotActivate
       ));
     
     virtual void register_server (
@@ -1535,7 +1571,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::AlreadyRegistered
+        , ImplementationRepository::AlreadyRegistered
       ));
     
     virtual void reregister_server (
@@ -1555,7 +1591,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual void shutdown_server (
@@ -1565,7 +1601,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual char * server_is_running (
@@ -1577,7 +1613,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual void server_is_shutting_down (
@@ -1587,7 +1623,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual void find (
@@ -1598,7 +1634,7 @@ static ::CORBA::TypeCode_ptr _tc_NotFound;
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
-        , ImplementationRepository::Administration::NotFound
+        , ImplementationRepository::NotFound
       ));
     
     virtual void list (
@@ -2035,6 +2071,18 @@ ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Broker *
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerObject_ptr &);
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::AlreadyRegistered &); // copying version
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::AlreadyRegistered*); // noncopying version
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::AlreadyRegistered *&); // deprecated
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::AlreadyRegistered *&);
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::CannotActivate &); // copying version
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::CannotActivate*); // noncopying version
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::CannotActivate *&); // deprecated
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::CannotActivate *&);
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::NotFound &); // copying version
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::NotFound*); // noncopying version
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::NotFound *&); // deprecated
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::NotFound *&);
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::EnvironmentVariable &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::EnvironmentVariable*); // noncopying version
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::EnvironmentVariable *&); // deprecated
@@ -2061,18 +2109,6 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration_ptr &);
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::AlreadyRegistered &); // copying version
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::AlreadyRegistered*); // noncopying version
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::AlreadyRegistered *&); // deprecated
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::Administration::AlreadyRegistered *&);
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::CannotActivate &); // copying version
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::CannotActivate*); // noncopying version
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::CannotActivate *&); // deprecated
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::Administration::CannotActivate *&);
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::NotFound &); // copying version
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::NotFound*); // noncopying version
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::NotFound *&); // deprecated
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::Administration::NotFound *&);
 // Any operators for interface ImplementationRepository::ServerInformationIterator
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformationIterator_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformationIterator_ptr *); // non-copying
@@ -2082,6 +2118,15 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerObject_ptr );
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerObject_ptr &);
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::AlreadyRegistered &);
+TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::AlreadyRegistered &);
+
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::CannotActivate &);
+TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::CannotActivate &);
+
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::NotFound &);
+TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::NotFound &);
+
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::EnvironmentVariable &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::EnvironmentVariable &);
 
@@ -2122,15 +2167,6 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::Administration_ptr );
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration_ptr &);
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::Administration::AlreadyRegistered &);
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration::AlreadyRegistered &);
-
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::Administration::CannotActivate &);
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration::CannotActivate &);
-
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::Administration::NotFound &);
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration::NotFound &);
-
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerInformationIterator_ptr );
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerInformationIterator_ptr &);
 
