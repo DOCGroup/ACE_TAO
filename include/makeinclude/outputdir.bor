@@ -18,12 +18,16 @@
 # MAKE_OBJDIR - command to be used for creating OBJDIR
 #
 
-!ifndef STATIC_DIR
 !ifdef STATIC
+!ifndef STATIC_DIR
 STATIC_DIR=Static
+!endif
+OBJSTATIC_DIR=Static
 !else
+!ifndef STATIC_DIR
 STATIC_DIR=Dynamic
 !endif
+OBJSTATIC_DIR=Dynamic
 !endif
 
 !ifdef DEBUG
@@ -39,15 +43,27 @@ OBJDEBUG_DIR=Release
 !endif
 
 !ifdef PASCAL
+!ifndef PASCAL_DIR
 PASCAL_DIR=Pascal
+!endif
+OBJPASCAL_DIR=Pascal
 !else
+!ifndef PASCAL_DIR
 PASCAL_DIR=.
+!endif
+OBJPASCAL_DIR=.
 !endif
 
 !ifdef UNICODE
+!ifndef UNICODE_DIR
 UNICODE_DIR=Unicode
+!endif
+OBJUNICODE_DIR=Unicode
 !else
+!ifndef UNICODE_DIR
 UNICODE_DIR=.
+!endif
+OBJUNICODE_DIR=.
 !endif
 
 # By default binaries are built underneath the current build directory
@@ -78,7 +94,7 @@ MAKE_BINDIR=if not exist "$(BINDIR)" mkdir "$(BINDIR)"
 !endif
 
 !ifndef OBJDIR
-OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(STATIC_DIR)\$(OBJDEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
+OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(OBJSTATIC_DIR)\$(OBJDEBUG_DIR)\$(OBJPASCAL_DIR)\$(OBJUNICODE_DIR)
 !endif
 
 !ifdef MKDIR
