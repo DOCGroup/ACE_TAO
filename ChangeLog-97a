@@ -15,6 +15,9 @@ Thu Mar 06 13:24:04 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/ace.mak: removed Thread_Priority and renamed Scheduling_Params
 	  to Sched_Param.
 
+	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp (handle_client):
+	  added "l" qualifier for sprintf of ACE_OS::getpid ().
+
 	* tests/Priority_Task_Test.cpp,
 	  examples/Threads/{context_switch_time.cpp,Makefile}:
 	  adapted to new thread priority/ACE_Sched_Params.
