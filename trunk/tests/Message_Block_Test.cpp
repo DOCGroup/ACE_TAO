@@ -100,8 +100,11 @@ Worker_Task::svc (void)
 
       int length = mb->length ();
 
-      // If there's a next() Task then duplicate the message and send
-      // it on down the pipeline.
+      // If there's a next() Task then "logically" copy the message by
+      // calling <duplicate> and send it on down the pipeline.  Note
+      // that this doesn't actually make a copy of the message
+      // contents (i.e., the Data_Block portion), it just makes a copy
+      // of the header and reference counts the data.
       if (this->next () != 0)
 	ACE_ASSERT (this->put_next (mb->duplicate ()) != -1);
 
@@ -175,7 +178,7 @@ Worker_Task::svc (void)
   return 0;
 }
 
-Worker_Task::Worker_Task ()
+Worker_Task::Worker_Task (void)
 {
   // Make us an Active Object.
   if (this->activate (THR_NEW_LWP) == -1)
@@ -183,7 +186,8 @@ Worker_Task::Worker_Task ()
 }  
 
 static int
-produce (Worker_Task &worker_task, ACE_Allocator *alloc_strategy)
+produce (Worker_Task &worker_task,
+	 ACE_Allocator *alloc_strategy)
 {
   ACE_Message_Block *mb;
 
@@ -277,7 +281,10 @@ main (int, char *[])
 
   for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) Start Message_Block_Test using %s allocation strategy\n", alloc_struct[i].name_));
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%t) Start Message_Block_Test using %s allocation strategy\n",
+		  alloc_struct[i].name_));
+
       // Create the worker tasks.
       Worker_Task worker_task[ACE_MAX_THREADS] ;
     
@@ -291,13 +298,15 @@ main (int, char *[])
 
       // Wait for all the threads to reach their exit point.
     
-      ACE_DEBUG ((LM_DEBUG, "(%t) waiting for worker tasks to finish...\n"));
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%t) waiting for worker tasks to finish...\n"));
     
       ACE_Thread_Manager::instance ()->wait ();
       ptime.stop ();
       ptime.elapsed_time (alloc_struct[i].et_);
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) destroying worker tasks\n"));
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%t) destroying worker tasks\n"));
     }
 
   for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
