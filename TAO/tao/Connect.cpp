@@ -798,6 +798,15 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   return result;
 }
 
+// ****************************************************************
+
+// @@ Alex: remember that we should have only one
+//    Client_Connection_Handler class, the RW, ST and MT strategies
+//    were moved to the Wait_Strategy....
+//    It is possible that some of the code implemented here must be
+//    moved to those classes, and quite possibly, you need to tweak
+//    the TAO_Transport interface to implement everything.
+
 // @@ For pluggable protocols, added a reference to the corresponding
 //    transport obj.
 TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)

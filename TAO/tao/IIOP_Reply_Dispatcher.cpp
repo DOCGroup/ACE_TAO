@@ -63,9 +63,9 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (void)
 // Destructor.
 TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher (void)
 {
-}  
+}
 
-// Dispatch the reply using the Stub object. 
+// Dispatch the reply using the Stub object.
 int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (void)
 {

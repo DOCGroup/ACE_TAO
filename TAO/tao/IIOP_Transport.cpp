@@ -158,7 +158,7 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 //   return 1;
 // }
 
-// Return 0, when the reply is not read fully, 1 if it is read fully. 
+// Return 0, when the reply is not read fully, 1 if it is read fully.
 int
 TAO_IIOP_Client_Transport::handle_client_input (int block)
 {
@@ -189,7 +189,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   //  if (!this->message_size_)
   // {
   // Reading the header.
-  
+
   // @@ Where do I keep this CDR? (alex)
   // }
 
@@ -209,14 +209,14 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
       // handle the input.
       return 0;
       // NOT REACHED.
-      
+
     case TAO_GIOP::EndOfFile:
     case TAO_GIOP::CommunicationError:
     case TAO_GIOP::MessageError:
       // Handle errors like these.
       // @@ this->reply_handler_->error ();
       return 1;
-      
+
     case TAO_GIOP::Request:
       // In GIOP 1.0 and GIOP 1.1 this is an error, but it is
       // *possible* to receive requests in GIOP 1.2.  Don't handle this
@@ -224,48 +224,48 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
       // ERROR too.
       // @@ this->reply_handler_->error ();
       return 1;
-      
+
     case TAO_GIOP::CancelRequest:
     case TAO_GIOP::LocateRequest:
     case TAO_GIOP::CloseConnection:
       // @@ Errors for the time being.
       // @@ this->reply_handler_->error ();
       return 1;
-      
+
     case TAO_GIOP::LocateReply:
     case TAO_GIOP::Reply:
       // Handle after the switch.
       break;
     }
-  
+
   // For GIOP 1.0 and 1.1 the reply_ctx comes first:
   // @@ Put this reply ctx into the reply dispatcher. so that
   // invocation can read it.
-  // We should pass that reply_ctx to the invocation, interceptors 
+  // We should pass that reply_ctx to the invocation, interceptors
   // will want to read it!
- 
+
   TAO_GIOP_ServiceContextList reply_ctx;
   *cdr >> reply_ctx;
-  
+
   // Read the request id and the reply status type.
   // status can be NO_EXCEPTION, SYSTEM_EXCEPTION, USER_EXCEPTION,
   // LOCATION_FORWARD or (on GIOP 1.2) LOCATION_FORWARD_PERM
-  
+
   CORBA::ULong request_id;
   CORBA::ULong reply_status;
-  
+
   if (!cdr->read_ulong (request_id))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
                        "Failed to read request_id.\n"),
                       -1);
-      
+
   if (!cdr->read_ulong (reply_status))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
                        "Failed to read request_status type.\n"),
                       -1);
-      
+
   // Find the TAO_Reply_Handler for that request ID!
   TAO_IIOP_Reply_Dispatcher* reply_dispatcher =
     this->rms_->find_dispatcher (request_id);
@@ -274,18 +274,25 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
                        "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
                        "Failed to find Reply Handler.\n"),
                       -1);
-  
+
   // Init the Reply dispatcher with all the reply info.
   reply_dispatcher->reply_status (reply_status);
   // @@ reply_dispatcher->version (this->version ());
   // @@ reply->dispatcher->reply_context (reply_ctx);
   reply_dispatcher->cdr (cdr);
 
+  // @@ Alex: I think that a better interface is:
+  //  reply_dispatcher->dispatch_reply (reply_status, version,
+  //                                    reply_ctx, cdr);
+  // That way we don't need to keep state in the dispatch_reply
+  // object, careful about the lifetime of the reply_ctx and CDR
+  // objects because they allocate memory....
+  
   // Handle the reply.
   if (reply_dispatcher->dispatch_reply () == -1)
     return -1;
-  
-  // This is a NOOP for the Exclusive request case, but it actually 
+
+  // This is a NOOP for the Exclusive request case, but it actually
   // destroys the stream in the muxed case.
   this->rms_->destroy_cdr_stream ();
 

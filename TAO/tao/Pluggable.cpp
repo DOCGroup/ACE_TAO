@@ -9,6 +9,14 @@
 #include "tao/IIOP_RMS.h"
 #include "tao/IIOP_Reply_Dispatcher.h"
 
+// @@ Alex: the strategies should be allocated from the ORB_Core,
+//    which in turn may use the Resource_Factory. Just allocate them
+//    from the heap because they should be allocated just once.
+
+// @@ Alex: i think you are right, but the strategies should be
+//    provided by the ORB, potentially allocated using the resource
+//    factory.
+
 // Constructor.
 TAO_Transport::TAO_Transport (TAO_IIOP_Request_Multiplexing_Strategy *rms,
                               TAO_IIOP_Wait_Strategy *ws)
@@ -20,16 +28,21 @@ TAO_Transport::TAO_Transport (TAO_IIOP_Request_Multiplexing_Strategy *rms,
   // @@ I am hard coding RMS strategy here. (alex)
   ACE_NEW (rms_,
            TAO_IIOP_Exclusive_RMS);
-  
+
   // @@ Hardcoding the WS here. (alex)
   ACE_NEW (ws_,
            TAO_Wait_On_Read (this));
 }
-   
+
 TAO_Transport::~TAO_Transport (void)
 {
 }
 
+// @@ Alex: this stream stuff belongs to the RMS, right?
+//    Maybe the right interface is:
+//    TAO_Transport::bind_reply_dispatcher (request_id,
+//                                          reply_dispatcher,
+//                                          input_cdr);
 
 // Set the CDR stream for reading the input message.
 void
@@ -37,6 +50,12 @@ TAO_Transport::input_cdr_stream (TAO_InputCDR *cdr)
 {
   this->rms_->set_cdr_stream (cdr);
 }
+
+// @@ Do you need an accessor? Or is the CDR stream simply passed by
+//    the RMS to the right target.  We should go to the RMS and obtain 
+//    the CDR stream from it, that way we can implement an optimized
+//    version of the RMS that uses a single CDR stream allocated from
+//    the stack.
 
 // Get the CDR stream for reading the input message.
 TAO_InputCDR *
@@ -51,7 +70,7 @@ void
 TAO_Transport::message_size (CORBA::ULong message_size)
 {
   this->message_size_ = message_size;
-  
+
   // Reset the offset.
   this->message_offset_ = 0;
 }
@@ -79,7 +98,7 @@ TAO_Transport::incr_message_offset (CORBA::Long bytes_transferred)
                        "TAO: %N:%l: (%P | %t): TAO_Transport::incr_message_offset: "
                        "Failed to update the offset of incoming message\n"),
                       -1);
- 
+
   this->message_offset_ +=  bytes_transferred;
 
   return 0;
@@ -92,7 +111,7 @@ void
 TAO_Transport::orb_core (TAO_ORB_Core *orb_core)
 {
   this->orb_core_ = orb_core;
-}  
+}
 
 // Get it.
 TAO_ORB_Core *
@@ -134,8 +153,9 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
 // Read and handle the reply. Returns 0 when there is Short Read on
 // the connection. Returns 1 when the full reply is read and
 // handled. Returns -1 on errors.
-// If <block> is 1, then reply is read in a blocking manner. 
+// If <block> is 1, then reply is read in a blocking manner.
 
+// @@ Alex: Shouldn't this be an pure virtual method?
 int
 TAO_Transport::handle_client_input (int /* block */)
 {
