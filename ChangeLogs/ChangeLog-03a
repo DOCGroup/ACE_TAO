@@ -1,3 +1,8 @@
+Thu Oct 18 22:46:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp: Fixed warnings in Sun CC and TRU 64 builds. 
+
 Thu Oct 18 20:42:55 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Proactor_Test.cpp:
