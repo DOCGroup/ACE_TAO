@@ -19,6 +19,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
+
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
@@ -52,7 +56,10 @@ POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T *tp, Port
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::~ServerObject_tie (void)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
 }
 
 template <class T> ACE_INLINE T *
@@ -64,7 +71,11 @@ POA_ImplementationRepository::ServerObject_tie<T>::_tied_object (void)
 template <class T> ACE_INLINE void
 POA_ImplementationRepository::ServerObject_tie<T>::_tied_object (T &obj)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -72,7 +83,11 @@ POA_ImplementationRepository::ServerObject_tie<T>::_tied_object (T &obj)
 template <class T> ACE_INLINE void
 POA_ImplementationRepository::ServerObject_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -93,14 +108,18 @@ template <class T> ACE_INLINE PortableServer::POA_ptr
 POA_ImplementationRepository::ServerObject_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-
+    {
+      return PortableServer::POA::_duplicate (this->poa_.in ());
+    }
+  
   return this->ServerObject::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerObject_tie<T>::ping  (
-    
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -108,13 +127,15 @@ void POA_ImplementationRepository::ServerObject_tie<T>::ping  (
   ))
 {
   this->ptr_->ping (
-ACE_ENV_SINGLE_ARG_PARAMETER
+    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerObject_tie<T>::shutdown  (
-    
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -122,11 +143,14 @@ void POA_ImplementationRepository::ServerObject_tie<T>::shutdown  (
   ))
 {
   this->ptr_->shutdown (
-ACE_ENV_SINGLE_ARG_PARAMETER
+    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
@@ -161,7 +185,10 @@ POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T *tp, 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::~Administration_tie (void)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
 }
 
 template <class T> ACE_INLINE T *
@@ -173,7 +200,11 @@ POA_ImplementationRepository::Administration_tie<T>::_tied_object (void)
 template <class T> ACE_INLINE void
 POA_ImplementationRepository::Administration_tie<T>::_tied_object (T &obj)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -181,7 +212,11 @@ POA_ImplementationRepository::Administration_tie<T>::_tied_object (T &obj)
 template <class T> ACE_INLINE void
 POA_ImplementationRepository::Administration_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -202,10 +237,15 @@ template <class T> ACE_INLINE PortableServer::POA_ptr
 POA_ImplementationRepository::Administration_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-
+    {
+      return PortableServer::POA::_duplicate (this->poa_.in ());
+    }
+  
   return this->Administration::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::activate_server  (
@@ -219,9 +259,13 @@ void POA_ImplementationRepository::Administration_tie<T>::activate_server  (
   ))
 {
   this->ptr_->activate_server (
-server ACE_ENV_ARG_PARAMETER
+    server
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 char * POA_ImplementationRepository::Administration_tie<T>::activate_server_with_startup  (
@@ -236,10 +280,14 @@ char * POA_ImplementationRepository::Administration_tie<T>::activate_server_with
   ))
 {
   return this->ptr_->activate_server_with_startup (
-server,
-    check_startup ACE_ENV_ARG_PARAMETER
+    server,
+    check_startup
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::register_server  (
@@ -253,10 +301,14 @@ void POA_ImplementationRepository::Administration_tie<T>::register_server  (
   ))
 {
   this->ptr_->register_server (
-server,
-    options ACE_ENV_ARG_PARAMETER
+    server,
+    options
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::reregister_server  (
@@ -269,10 +321,14 @@ void POA_ImplementationRepository::Administration_tie<T>::reregister_server  (
   ))
 {
   this->ptr_->reregister_server (
-server,
-    options ACE_ENV_ARG_PARAMETER
+    server,
+    options
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::remove_server  (
@@ -285,9 +341,13 @@ void POA_ImplementationRepository::Administration_tie<T>::remove_server  (
   ))
 {
   this->ptr_->remove_server (
-server ACE_ENV_ARG_PARAMETER
+    server
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::shutdown_server  (
@@ -300,9 +360,13 @@ void POA_ImplementationRepository::Administration_tie<T>::shutdown_server  (
   ))
 {
   this->ptr_->shutdown_server (
-server ACE_ENV_ARG_PARAMETER
+    server
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 char * POA_ImplementationRepository::Administration_tie<T>::server_is_running  (
@@ -317,11 +381,15 @@ char * POA_ImplementationRepository::Administration_tie<T>::server_is_running  (
   ))
 {
   return this->ptr_->server_is_running (
-server,
+    server,
     addr,
-    server_object ACE_ENV_ARG_PARAMETER
+    server_object
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::server_is_shutting_down  (
@@ -334,9 +402,13 @@ void POA_ImplementationRepository::Administration_tie<T>::server_is_shutting_dow
   ))
 {
   this->ptr_->server_is_shutting_down (
-server ACE_ENV_ARG_PARAMETER
+    server
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::find  (
@@ -350,10 +422,14 @@ void POA_ImplementationRepository::Administration_tie<T>::find  (
   ))
 {
   this->ptr_->find (
-server,
-    info ACE_ENV_ARG_PARAMETER
+    server,
+    info
+    ACE_ENV_ARG_PARAMETER
   );
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::list  (
@@ -367,13 +443,17 @@ void POA_ImplementationRepository::Administration_tie<T>::list  (
   ))
 {
   this->ptr_->list (
-how_many,
+    how_many,
     server_list,
-    server_iterator ACE_ENV_ARG_PARAMETER
+    server_iterator
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
@@ -408,7 +488,10 @@ POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformatio
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::~ServerInformationIterator_tie (void)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
 }
 
 template <class T> ACE_INLINE T *
@@ -420,7 +503,11 @@ POA_ImplementationRepository::ServerInformationIterator_tie<T>::_tied_object (vo
 template <class T> ACE_INLINE void
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::_tied_object (T &obj)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -428,7 +515,11 @@ POA_ImplementationRepository::ServerInformationIterator_tie<T>::_tied_object (T 
 template <class T> ACE_INLINE void
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -449,10 +540,15 @@ template <class T> ACE_INLINE PortableServer::POA_ptr
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-
+    {
+      return PortableServer::POA::_duplicate (this->poa_.in ());
+    }
+  
   return this->ServerInformationIterator::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator_tie<T>::next_n  (
@@ -465,14 +561,17 @@ CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator_tie<T>::n
   ))
 {
   return this->ptr_->next_n (
-how_many,
-    server_list ACE_ENV_ARG_PARAMETER
+    how_many,
+    server_list
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerInformationIterator_tie<T>::destroy  (
-    
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -480,7 +579,7 @@ void POA_ImplementationRepository::ServerInformationIterator_tie<T>::destroy  (
   ))
 {
   this->ptr_->destroy (
-ACE_ENV_SINGLE_ARG_PARAMETER
+    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 

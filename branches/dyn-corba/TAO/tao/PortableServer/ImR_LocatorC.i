@@ -19,8 +19,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR___CI_
@@ -36,11 +37,17 @@ ImplementationRepository::Locator::Locator (
   this->ImplementationRepository_Locator_setup_collocation (_tao_collocated);
 }
 
+ACE_INLINE
+CORBA::Boolean
+ImplementationRepository::Locator::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ci.cpp:72
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,

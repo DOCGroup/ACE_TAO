@@ -44,7 +44,7 @@ TAO_Object_Adapter::transient_poa_name_size ()
 }
 
 ACE_INLINE int
-TAO_Object_Adapter::locate_servant (const TAO_ObjectKey &key
+TAO_Object_Adapter::locate_servant (const TAO::ObjectKey &key
                                     ACE_ENV_ARG_DECL)
 {
   // Lock access for the duration of this transaction.
@@ -55,7 +55,7 @@ TAO_Object_Adapter::locate_servant (const TAO_ObjectKey &key
 }
 
 ACE_INLINE TAO_SERVANT_LOCATION
-TAO_Object_Adapter::find_servant (const TAO_ObjectKey &key,
+TAO_Object_Adapter::find_servant (const TAO::ObjectKey &key,
                                   PortableServer::Servant &servant
                                   ACE_ENV_ARG_DECL)
 {
@@ -279,12 +279,12 @@ TAO_POA_Current_Impl::object_id (void) const
 }
 
 ACE_INLINE void
-TAO_POA_Current_Impl::object_key (const TAO_ObjectKey &key)
+TAO_POA_Current_Impl::object_key (const TAO::ObjectKey &key)
 {
   this->object_key_ = &key;
 }
 
-ACE_INLINE const TAO_ObjectKey &
+ACE_INLINE const TAO::ObjectKey &
 TAO_POA_Current_Impl::object_key (void) const
 {
   return *this->object_key_;

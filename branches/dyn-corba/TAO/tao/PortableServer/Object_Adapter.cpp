@@ -807,7 +807,7 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
        ++j)
     {
       const TAO_Profile *profile = mp.get_profile (j);
-      TAO_ObjectKey_var objkey = profile->_key ();
+      TAO::ObjectKey_var objkey = profile->_key ();
 
       if (ACE_OS::memcmp (objkey->get_buffer (),
                           &TAO_POA::objectkey_prefix[0],

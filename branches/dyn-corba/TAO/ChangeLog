@@ -1,3 +1,47 @@
+Sat Jan 11 14:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/Default_ORT.pidl:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/Default_ORTC.i:
+        * tao/PortableServer/ImR_Locator.pidl:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImR_LocatorC.i:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImR_LocatorS.h:
+        * tao/PortableServer/ImR_LocatorS.i:
+        * tao/PortableServer/ImR_LocatorS_T.cpp:
+        * tao/PortableServer/ImR_LocatorS_T.h:
+        * tao/PortableServer/ImR_LocatorS_T.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer/ImplRepoS_T.cpp:
+        * tao/PortableServer/ImplRepoS_T.h:
+        * tao/PortableServer/ImplRepoS_T.i:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.i:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS.i:
+        * tao/PortableServer/PolicyS_T.cpp:
+        * tao/PortableServer/PolicyS_T.h:
+        * tao/PortableServer/PolicyS_T.i:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerC.i:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+
+	  Regeneration of .pidl files and other changes in the
+	  PortableServer library.
+
 Sat Jan 11 000:18:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:

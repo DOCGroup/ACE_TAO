@@ -19,8 +19,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::activate_server_skel (
     TAO_ServerRequest &req,
@@ -37,8 +38,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::activate_server_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::activate_server_with_startup_skel (
     TAO_ServerRequest &req,
@@ -55,8 +57,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::activate_server_with_star
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::register_server_skel (
     TAO_ServerRequest &req,
@@ -73,8 +76,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::register_server_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::reregister_server_skel (
     TAO_ServerRequest &req,
@@ -91,8 +95,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::reregister_server_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::remove_server_skel (
     TAO_ServerRequest &req,
@@ -109,8 +114,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::remove_server_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::shutdown_server_skel (
     TAO_ServerRequest &req,
@@ -127,8 +133,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::shutdown_server_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::server_is_running_skel (
     TAO_ServerRequest &req,
@@ -145,8 +152,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::server_is_running_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::server_is_shutting_down_skel (
     TAO_ServerRequest &req,
@@ -163,8 +171,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::server_is_shutting_down_s
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::find_skel (
     TAO_ServerRequest &req,
@@ -181,8 +190,9 @@ ACE_INLINE void POA_ImplementationRepository::Locator::find_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2197
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_ImplementationRepository::Locator::list_skel (
     TAO_ServerRequest &req,
@@ -199,3 +209,4 @@ ACE_INLINE void POA_ImplementationRepository::Locator::list_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
