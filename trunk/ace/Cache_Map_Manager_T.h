@@ -133,10 +133,18 @@ public:
 
   int find (const KEY &key,
             VALUE &value);
-  // Loopkup entry<key,value> in the cache.
+  // Lookup entry<key,value> in the cache. If it is not found, returns -1.
+  // If the <key> is located in the MAP object, the CACHING_STRATEGY is
+  // notified of it via notify_find (int result, ATTRIBUTES &attribute).
+  // If notify_find also returns 0 (success), then this function returns
+  // 0 (success) and sets the cached value in <value>.
 
   int find (const KEY &key);
-  // Is <key> in the cache?
+  // Lookup entry<key,value> in the cache. If it is not found, returns -1.
+  // If the <key> is located in the MAP object, the CACHING_STRATEGY is
+  // notified of it via notify_find (int result, ATTRIBUTES &attribute).
+  // If notify_find also returns 0 (success), then this function returns
+  // 0 (success).
 
   int rebind (const KEY &key,
               const VALUE &value);
