@@ -21,7 +21,8 @@ Tue Oct 20 18:04:30 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         * orbsvcs/Trading_Service/Trading_Service.{h,cpp}:
         * docs/releasenotes/trader.html:
         Added a command line argument -TSdumpior to dump the trader's ior
-        to a file.
+        to a file. Thanks to Sunil Kumar <skumar@sutmyn.com> for
+	noticing this was missing.  
 
 Tue Oct 20 11:07:18 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
