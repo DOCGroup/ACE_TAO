@@ -32,6 +32,58 @@ pace_pthread_atfork (void (*prepare) (void),
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
+pace_pthread_create (pace_pthread_t * thread,
+                     const pace_pthread_attr_t * attr,
+                     void * (*start_routine) (void*),
+                     void * arg)
+{
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+pace_pthread_t
+pace_pthread_self ()
+{
+  return pthread_self ();
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_pthread_getschedparam (pace_pthread_t thread,
+                            int * policy,
+                            pace_sched_param * param)
+{
+  return pthread_getschedparam (thread, policy, param);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_pthread_setschedparam (pace_pthread_t thread,
+                            int policy,
+                            const pace_sched_param * param)
+{
+  return pthread_setschedparam (thread, policy, param);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_pthread_attr_init (pace_pthread_attr_t * attr)
+{
+  return pthread_attr_init (attr);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
 pace_pthread_attr_destroy (pace_pthread_attr_t * attr)
 {
   return pthread_attr_destroy (attr);
@@ -44,90 +96,7 @@ int
 pace_pthread_attr_getdetachstate (const pace_pthread_attr_t * attr,
                                   int * detachstate)
 {
-  PACE_UNUSED_ARG (attr);
-  PACE_UNUSED_ARG (detachstate);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_getinheritsched (const pace_pthread_attr_t * attr,
-                                   int * inheritsched)
-{
-  PACE_UNUSED_ARG (attr);
-  PACE_UNUSED_ARG (inheritsched);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_getschedparam (const pace_pthread_attr_t * attr,
-                                 pace_sched_param * param)
-{
-  PACE_UNUSED_ARG (attr);
-  PACE_UNUSED_ARG (param);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_getschedpolicy (const pace_pthread_attr_t * attr,
-                                  int * policy)
-{
-  PACE_UNUSED_ARG (attr);
-  PACE_UNUSED_ARG (policy);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_getscope (const pace_pthread_attr_t * attr,
-                            int * contentionscope)
-{
-  PACE_UNUSED_ARG (attr);
-  PACE_UNUSED_ARG (contentionscope);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_getstackaddr (const pace_pthread_attr_t * attr,
-                                void ** stackaddr)
-{
-  PACE_UNUSED_ARG (attr);
-  PACE_UNUSED_ARG (stackaddr);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_getstacksize (const pace_pthread_attr_t * attr,
-                                size_t * stacksize)
-{
-  PACE_UNUSED_ARG (attr);
-  PACE_UNUSED_ARG (stacksize);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_init (pace_pthread_attr_t * attr)
-{
-  return pthread_attr_init (attr);
+  return pthread_attr_getdetachstate (attr, detachstate);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -144,10 +113,30 @@ pace_pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
+pace_pthread_attr_getinheritsched (const pace_pthread_attr_t * attr,
+                                   int * inheritsched)
+{
+  return pthread_attr_getinheritsched (attr, inheritsched);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
 pace_pthread_attr_setinheritsched (pace_pthread_attr_t * attr,
                                    int inheritsched)
 {
   return pthread_attr_setinheritsched (attr, inheritsched);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_pthread_attr_getschedparam (const pace_pthread_attr_t * attr,
+                                 pace_sched_param * param)
+{
+  return pthread_attr_getschedparam (attr, param);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -164,10 +153,30 @@ pace_pthread_attr_setschedparam (pace_pthread_attr_t * attr,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
+pace_pthread_attr_getschedpolicy (const pace_pthread_attr_t * attr,
+                                  int * policy)
+{
+  return pthread_attr_getschedpolicy (attr, policy);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
 pace_pthread_attr_setschedpolicy (pace_pthread_attr_t * attr,
                                   int policy)
 {
   return pthread_attr_setschedpolicy (attr, policy);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_pthread_attr_getscope (const pace_pthread_attr_t * attr,
+                            int * contentionscope)
+{
+  return pthread_attr_getscope (attr, contentionscope);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -184,10 +193,30 @@ pace_pthread_attr_setscope (pace_pthread_attr_t * attr,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
+pace_pthread_attr_getstackaddr (const pace_pthread_attr_t * attr,
+                                void ** stackaddr)
+{
+  return pthread_attr_getstackaddr (attr, stackaddr);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
 pace_pthread_attr_setstackaddr (pace_pthread_attr_t * attr,
                                 void * stackaddr)
 {
   return pthread_attr_setstackaddr (attr, stackaddr);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_pthread_attr_getstacksize (const pace_pthread_attr_t * attr,
+                                size_t * stacksize)
+{
+  return pthread_attr_getstacksize (attr, stacksize);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -326,18 +355,6 @@ pace_pthread_condattr_setpshared (pace_pthread_condattr_t * attr,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_pthread_create (pace_pthread_t * thread,
-                     const pace_pthread_attr_t * attr,
-                     void * (*start_routine) (void*),
-                     void * arg)
-{
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
 pace_pthread_detach (pace_pthread_t thread)
 {
   PACE_UNUSED_ARG (thread);
@@ -364,17 +381,6 @@ pace_pthread_exit (void * value_ptr)
   PACE_UNUSED_ARG (value_ptr);
   PACE_ERRNO_NO_SUPPORT ();
   return;
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_getschedparam (pace_pthread_t thread,
-                            int * policy,
-                            pace_sched_param * param)
-{
-  return pthread_getschedparam (thread, policy, param);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -617,15 +623,6 @@ pace_pthread_once (pace_pthread_once_t * once_control,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
-pace_pthread_t
-pace_pthread_self ()
-{
-  return pthread_self ();
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
 int
 pace_pthread_setcancelstate (int state, int * oldstate)
 {
@@ -646,17 +643,6 @@ pace_pthread_setcanceltype (int type, int * oldtype)
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_setschedparam (pace_pthread_t thread,
-                            int policy,
-                            const pace_sched_param * param)
-{
-  return pthread_setschedparam (thread, policy, param);
-}
-#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE

@@ -21,7 +21,6 @@
  * ---------------------------------------------------------------------- */
 
 #include "pace/errno.h"
-int errno;
 
 # define PACE_ERRNO_NO_SUPPORT_RETURN(FAILVALUE) \
 return ( (errno = ENOTSUP), FAILVALUE)
