@@ -1,6 +1,15 @@
+/* -*- C++ -*- */
 // $Id$
 
 // ATM_Params.i
+
+ACE_INLINE void
+ACE_ATM_Params::dump (void) const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_TRACE ("ACE_ATM_Params::dump");
+#endif /* ACE_HAS_DUMP */
+}
 
 ACE_INLINE
 ACE_ATM_Params::ACE_ATM_Params (int rw_flag,

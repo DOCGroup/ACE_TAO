@@ -22,7 +22,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Local_Memory_Pool)
 void
 ACE_Local_Memory_Pool::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Local_Memory_Pool::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const ACE_TCHAR *,
@@ -88,7 +90,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_MMAP_Memory_Pool)
 void
 ACE_MMAP_Memory_Pool::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MMAP_Memory_Pool::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int
@@ -593,7 +597,9 @@ ACE_Sbrk_Memory_Pool::acquire (size_t nbytes,
 void
 ACE_Sbrk_Memory_Pool::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const ACE_TCHAR *,
@@ -628,7 +634,9 @@ ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (const char *base
 void
 ACE_Shared_Memory_Pool::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Shared_Memory_Pool::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int

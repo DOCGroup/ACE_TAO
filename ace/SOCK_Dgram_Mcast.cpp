@@ -54,6 +54,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_SOCK_Dgram_Mcast)
 void
 ACE_SOCK_Dgram_Mcast::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -111,6 +112,7 @@ ACE_SOCK_Dgram_Mcast::dump (void) const
     }
 # endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // Constructor.

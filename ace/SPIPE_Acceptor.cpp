@@ -35,7 +35,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_SPIPE_Acceptor)
 void
 ACE_SPIPE_Acceptor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SPIPE_Acceptor::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // General purpose routine for performing server ACE_SPIPE creation.

@@ -811,6 +811,7 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::
 dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const
 {
+#if defined (ACE_HAS_DUMP)
   if (node)
     {
       dump_node_i (*node);
@@ -827,6 +828,7 @@ dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const
     {
       ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nNULL POINTER (BLACK)\n")));
     }
+#endif /* ACE_HAS_DUMP */
 }
 
 
@@ -838,10 +840,12 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::
 dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const
 {
+#if defined (ACE_HAS_DUMP)
   const char * color_str = (node.color () == ACE_RB_Tree_Node_Base::RED)
                            ? "RED" : "BLACK";
 
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT (" color=[%s]\n"), color_str));
+#endif /* ACE_HAS_DUMP */
 }
 
 /// Tests the red-black invariant(s) throughout the whole tree.

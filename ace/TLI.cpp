@@ -19,7 +19,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_TLI)
 void
 ACE_TLI::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_TLI::ACE_TLI (void)

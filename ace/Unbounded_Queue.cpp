@@ -84,6 +84,7 @@ ACE_Unbounded_Queue<T>::end (void)
 template <class T> void
 ACE_Unbounded_Queue<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -102,6 +103,7 @@ ACE_Unbounded_Queue<T>::dump (void) const
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("count = %d\n"), count++));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T> void
@@ -322,7 +324,9 @@ ACE_Unbounded_Queue<T>::set (const T &item,
 template <class T> void
 ACE_Unbounded_Queue_Const_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   // ACE_TRACE ("ACE_Unbounded_Queue_Const_Iterator<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T>
@@ -375,7 +379,9 @@ ACE_Unbounded_Queue_Const_Iterator<T>::next (T *&item)
 template <class T> void
 ACE_Unbounded_Queue_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   // ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T>

@@ -2130,6 +2130,7 @@ ACE_Log_Msg::conditional_set (const char *filename,
 void
 ACE_Log_Msg::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Log_Msg::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -2170,6 +2171,7 @@ ACE_Log_Msg::dump (void) const
   // Synchronize output operations.
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void

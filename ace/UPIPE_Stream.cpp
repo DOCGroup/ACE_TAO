@@ -43,7 +43,9 @@ ACE_UPIPE_Stream::control (int cmd,
 void
 ACE_UPIPE_Stream::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_UPIPE_Stream::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int 

@@ -15,6 +15,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_IPC_SAP)
 void
 ACE_MEM_SAP::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_SAP::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -23,6 +24,7 @@ ACE_MEM_SAP::dump (void) const
   else
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_MEM_SAP uninitialized.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_MEM_SAP::ACE_MEM_SAP (void)

@@ -44,6 +44,7 @@ ACE_Future_Observer<T>::~ACE_Future_Observer (void)
 template <class T> void
 ACE_Future_Rep<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
               "ref_count_ = %d\n",
@@ -59,6 +60,7 @@ ACE_Future_Rep<T>::dump (void) const
   ACE_DEBUG ((LM_INFO,"value_ready_mutex_: \n"));
   this->value_ready_mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T> ACE_Future_Rep<T> *
@@ -402,6 +404,7 @@ ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
 template <class T> void
 ACE_Future<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG,
               ACE_BEGIN_DUMP, this));
 
@@ -410,6 +413,7 @@ ACE_Future<T>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T> ACE_Future_Rep<T> *

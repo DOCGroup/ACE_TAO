@@ -16,7 +16,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Synch_Options)
 void
 ACE_Synch_Options::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Synch_Options::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Static initialization.

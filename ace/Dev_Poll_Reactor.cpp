@@ -581,6 +581,7 @@ ACE_Dev_Poll_Reactor_Notify::purge_pending_notifications (
 void
 ACE_Dev_Poll_Reactor_Notify::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -589,6 +590,7 @@ ACE_Dev_Poll_Reactor_Notify::dump (void) const
               this->dp_reactor_));
   this->notification_pipe_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // -----------------------------------------------------------------
@@ -2373,6 +2375,7 @@ ACE_Dev_Poll_Reactor::ready_ops (ACE_HANDLE /* handle */,
 void
 ACE_Dev_Poll_Reactor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dev_Poll_Reactor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -2386,6 +2389,7 @@ ACE_Dev_Poll_Reactor::dump (void) const
               ACE_LIB_TEXT ("deactivated_ = %d"),
               this->deactivated_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 short

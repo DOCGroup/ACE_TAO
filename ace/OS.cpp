@@ -905,6 +905,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 void
 ACE_OS::ace_flock_t::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_OS_TRACE ("ACE_OS::ace_flock_t::dump");
 
 #if 0
@@ -923,6 +924,7 @@ ACE_OS::ace_flock_t::dump (void) const
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
+#endif /* ACE_HAS_DUMP */
 }
 
 void
@@ -1713,6 +1715,7 @@ ACE_TSS_Info::operator != (const ACE_TSS_Info &info) const
 void
 ACE_TSS_Info::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   //  ACE_OS_TRACE ("ACE_TSS_Info::dump");
 
 #if 0
@@ -1722,6 +1725,7 @@ ACE_TSS_Info::dump (void)
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
+#endif /* ACE_HAS_DUMP */
 }
 
 // Moved class ACE_TSS_Keys declaration to OS.h so it can be visible
@@ -2162,6 +2166,7 @@ ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 void
 ACE_TSS_Cleanup::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   // Iterate through all the thread-specific items and dump them all.
 
   ACE_TSS_TABLE_ITERATOR key_info = table_;
@@ -2169,6 +2174,7 @@ ACE_TSS_Cleanup::dump (void)
        i < ACE_DEFAULT_THREAD_KEYS;
        ++key_info, ++i)
     key_info->dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_TSS_Keys *

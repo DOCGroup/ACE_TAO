@@ -47,7 +47,9 @@ ACE_Array_Base<T>::operator[] (size_t index) const
 template <class T> ACE_INLINE void
 ACE_Array_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   // ACE_TRACE ("ACE_Array_Iterator<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T> ACE_INLINE

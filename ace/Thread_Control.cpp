@@ -21,7 +21,9 @@ ACE_RCSID(ace, Thread_Control, "$Id$")
 void
 ACE_Thread_Control::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_OS_TRACE ("ACE_Thread_Control::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int

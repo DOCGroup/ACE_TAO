@@ -17,6 +17,10 @@ http://www.cs.wustl.edu/~othman/aceconf/.
 Macro                                   Description
 -----                                   -----------
 
+ACE_HAS_DUMP                            Used to enable the dump() method bodies.
+                                        If not defined, the bodies are ifdef out
+                                        in order to reduce footprint.  By default,
+                                        it is not defined.
 ACE_CAST_CONST                          Used to work around broken
                                         SunCC ANSI casts that require
                                         an extra const.

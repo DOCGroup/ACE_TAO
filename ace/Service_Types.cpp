@@ -19,7 +19,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type_Impl)
 void
 ACE_Service_Type_Impl::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Type_Impl::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
@@ -102,7 +104,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Module_Type)
 void
 ACE_Module_Type::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Module_Type::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Module_Type::ACE_Module_Type (void *m,
@@ -222,7 +226,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Type)
 void
 ACE_Stream_Type::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Stream_Type::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int
