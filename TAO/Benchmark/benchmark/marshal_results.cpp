@@ -19,6 +19,8 @@
 #include "benchmark/marshal_results.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(benchmark, marshal_results, "$Id$")
+
 int 
 CORBA_Marshal_Results::log_results (void)
 {

@@ -20,6 +20,8 @@
 #include "benchmark/marshal_options.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(benchmark, marshal_options, "$Id$")
+
 static char *usage_string = 
 "Marshal_Test available options: \n\
 -d                      : set debug ON \n\

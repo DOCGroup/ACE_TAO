@@ -3,6 +3,8 @@
 #include "benchmark/driver.h"
 #include "orbix_marshal_client.h"
 
+ACE_RCSID(Orbix, client, "$Id$")
+
 int main (int argc, char *argv [])
 {
   // instantiate a DRIVER with the Orbix_Client_Proxy as the template
