@@ -1,7 +1,5 @@
 #include "ThreadPolicy.h"
 #include "PortableServer.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Service_Config.h"
 
 ACE_RCSID (PortableServer,
            ThreadPolicy,

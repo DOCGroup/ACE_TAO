@@ -1,11 +1,5 @@
 #include "ImplicitActivationPolicy.h"
-#include "ImplicitActivationPolicyValue.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Service_Config.h"
-
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
            ImplicitActivationPolicy,
@@ -17,8 +11,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ImplicitActivationPolicy::ImplicitActivationPolicy () :
-      value_ (0)
+    ImplicitActivationPolicy::ImplicitActivationPolicy ()
     {
     }
 
@@ -38,42 +31,7 @@ namespace TAO
     ImplicitActivationPolicy::init (
       ::PortableServer::ImplicitActivationPolicyValue value)
     {
-      switch (value)
-        {
-        case ::PortableServer::IMPLICIT_ACTIVATION :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<ImplicitActivationPolicyValue>::instance ("ImplicitActivationPolicyValueImplicit");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ImplicitActivationPolicyValueImplicit Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyValueImplicit()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<ImplicitActivationPolicyValue>::instance ("ImplicitActivationPolicyValueImplicit");
-              }
-            break;
-          }
-        case ::PortableServer::NO_IMPLICIT_ACTIVATION :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<ImplicitActivationPolicyValue>::instance ("ImplicitActivationPolicyValueExplicit");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ImplicitActivationPolicyValueExplicit Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyValueExplicit()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<ImplicitActivationPolicyValue>::instance ("ImplicitActivationPolicyValueExplicit");
-              }
-
-            break;
-          }
-        }
+      value_ = value;
     }
 
     CORBA::Policy_ptr
@@ -86,7 +44,7 @@ namespace TAO
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-      (void) copy->init (this->value_->policy_type ());
+      (void) copy->init (this->value_);
 
       return copy;
     }
@@ -101,7 +59,7 @@ namespace TAO
     ImplicitActivationPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      return value_->policy_type ();
+      return value_;
     }
 
     CORBA::PolicyType

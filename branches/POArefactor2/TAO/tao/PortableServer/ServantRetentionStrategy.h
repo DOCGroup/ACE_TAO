@@ -15,19 +15,17 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
 #include "Servant_Location.h"
 #include "Servant_Upcall.h"
 #include "ServantRetentionPolicyC.h"
-
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "PortableServer.h"
 
 class TAO_Root_POA;
 class TAO_Active_Object_Map;

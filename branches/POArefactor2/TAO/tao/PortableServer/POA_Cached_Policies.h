@@ -16,17 +16,19 @@
 #define TAO_POA_CACHED_POLICIES_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/ThreadPolicyC.h"
-#include "tao/PortableServer/LifespanPolicyC.h"
-#include "tao/PortableServer/IdUniquenessPolicyC.h"
-#include "tao/PortableServer/IdAssignmentPolicyC.h"
-#include "tao/PortableServer/ImplicitActivationPolicyC.h"
-#include "tao/PortableServer/ServantRetentionPolicyC.h"
-#include "tao/PortableServer/RequestProcessingPolicyC.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ThreadPolicyC.h"
+#include "LifespanPolicyC.h"
+#include "IdUniquenessPolicyC.h"
+#include "IdAssignmentPolicyC.h"
+#include "ImplicitActivationPolicyC.h"
+#include "ServantRetentionPolicyC.h"
+#include "RequestProcessingPolicyC.h"
 
 // Forward references.
 class TAO_POA_Policy_Set;

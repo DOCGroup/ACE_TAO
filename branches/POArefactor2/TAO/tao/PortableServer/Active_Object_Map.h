@@ -26,7 +26,7 @@
 
 #include "ace/Map_T.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/PortableServer/Servant_Base.h"
+#include "Servant_Base.h"
 
 // Forward declarations.
 class TAO_Id_Uniqueness_Strategy;

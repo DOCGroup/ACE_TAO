@@ -14,14 +14,15 @@
 #define TAO_POLICY_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
-#include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
-#include "tao/Environment.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Service_Object.h"
+#include "ace/CORBA_macros.h"
+#include "tao/Environment.h"
 
 class TAO_Root_POA;
 

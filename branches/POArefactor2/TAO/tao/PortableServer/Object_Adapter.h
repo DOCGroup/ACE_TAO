@@ -21,11 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Key_Adapters.h"
-#include "tao/PortableServer/poa_macros.h"
-#include "tao/PortableServer/Servant_Location.h"
-#include "tao/PortableServer/Default_Policy_Validator.h"
-#include "tao/PortableServer/POA_Policy_Set.h"
+#include "Key_Adapters.h"
+#include "poa_macros.h"
+#include "Servant_Location.h"
+#include "Default_Policy_Validator.h"
+#include "POA_Policy_Set.h"
 
 #include "tao/Adapter.h"
 #include "tao/Server_Strategy_Factory.h"

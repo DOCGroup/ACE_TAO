@@ -22,31 +22,18 @@
 #include "ThreadStrategySingle.h"
 #include "ThreadStrategySingleFactoryImpl.h"
 
-#include "LifespanPolicyValueTransient.h"
-#include "LifespanPolicyValuePersistent.h"
-
 #include "IdAssignmentStrategySystem.h"
 #include "IdAssignmentStrategyUser.h"
 
 #include "IdUniquenessStrategyMultiple.h"
 #include "IdUniquenessStrategyUnique.h"
 
-#include "ImplicitActivationPolicyValueExplicit.h"
-#include "ImplicitActivationPolicyValueImplicit.h"
-
 #include "ImplicitActivationStrategyExplicit.h"
 #include "ImplicitActivationStrategyImplicit.h"
-
-#include "RequestProcessingPolicyValueAOMOnly.h"
-#include "RequestProcessingPolicyValueDefaultServant.h"
-#include "RequestProcessingPolicyValueServantManager.h"
 
 #include "RequestProcessingStrategyAOMOnly.h"
 #include "RequestProcessingStrategyDefaultServant.h"
 #include "RequestProcessingStrategyServantManager.h"
-
-#include "ServantRetentionPolicyValueRetain.h"
-#include "ServantRetentionPolicyValueNonRetain.h"
 
 #include "ServantRetentionStrategyNonRetainFactoryImpl.h"
 #include "ServantRetentionStrategyRetainFactoryImpl.h"
@@ -94,20 +81,6 @@ TAO_POA_Initializer::init (void)
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueDefaultServant
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueServantManager
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueAOMOnly
-    );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
 //  ACE_Service_Config::process_directive (
 //      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyDefaultServant
 //    );
@@ -123,25 +96,7 @@ TAO_POA_Initializer::init (void)
 //      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyAOMOnly
 //    );
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyValueNonRetain
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyValueRetain
-    );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
   // Policy Values
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_LifespanPolicyValueTransient
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_LifespanPolicyValuePersistent
-    );
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategySystem
@@ -158,16 +113,6 @@ TAO_POA_Initializer::init (void)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyUnique
     );
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueExplicit
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueImplicit
-    );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (

@@ -15,12 +15,13 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "LifespanPolicyC.h"
-#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "LifespanPolicyC.h"
+#include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -68,7 +69,7 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::PolicyError));
 
     private:
-      LifespanPolicyValue *value_;
+      ::PortableServer::LifespanPolicyValue value_;
     };
   }
 }

@@ -15,12 +15,13 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "ServantRetentionPolicyC.h"
-#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ServantRetentionPolicyC.h"
+#include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -70,7 +71,7 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::PolicyError));
 
     private:
-      ServantRetentionPolicyValue *value_;
+      ::PortableServer::ServantRetentionPolicyValue value_;
     };
   }
 }

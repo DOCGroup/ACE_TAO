@@ -14,14 +14,14 @@
 #define TAO_PORTABLESERVER_IMPLICITACTIVATIONSTRATEGYFACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-#include "tao/PortableServer/ImplicitActivationStrategyFactory.h"
+#include "ImplicitActivationStrategyFactory.h"
 
 namespace TAO
 {

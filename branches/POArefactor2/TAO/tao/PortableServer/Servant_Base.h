@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "PS_ForwardC.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "PS_ForwardC.h"
 #include "tao/Abstract_Servant_Base.h"
-
 #include "ace/Atomic_Op.h"
 
 class TAO_Operation_Table;

@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/AdapterActivatorC.h"
+#include "AdapterActivatorC.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

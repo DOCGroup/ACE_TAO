@@ -16,13 +16,14 @@
 #define TAO_POAMANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "POAManagerC.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "poa_macros.h"
+#include "POAManagerC.h"
 
 // Local Object
 #include "tao/LocalObject.h"

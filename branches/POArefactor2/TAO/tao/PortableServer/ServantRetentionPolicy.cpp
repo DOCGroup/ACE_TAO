@@ -1,11 +1,5 @@
 #include "ServantRetentionPolicy.h"
-#include "ServantRetentionPolicyValue.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Service_Config.h"
-
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
            ServantRetentionPolicy,
@@ -17,8 +11,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionPolicy::ServantRetentionPolicy () :
-      value_ (0)
+    ServantRetentionPolicy::ServantRetentionPolicy ()
     {
     }
 
@@ -38,42 +31,7 @@ namespace TAO
     ServantRetentionPolicy::init (
       ::PortableServer::ServantRetentionPolicyValue value)
     {
-      switch (value)
-        {
-        case ::PortableServer::RETAIN :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<ServantRetentionPolicyValue>::instance ("ServantRetentionPolicyValueRetain");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ServantRetentionPolicyValueRetain Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyValueRetain()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<ServantRetentionPolicyValue>::instance ("ServantRetentionPolicyValueRetain");
-              }
-            break;
-          }
-        case ::PortableServer::NON_RETAIN :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<ServantRetentionPolicyValue>::instance ("ServantRetentionPolicyValueNonRetain");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ServantRetentionPolicyValueNonRetain Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyValueNonRetain()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<ServantRetentionPolicyValue>::instance ("ServantRetentionPolicyValueNonRetain");
-              }
-
-            break;
-          }
-        }
+      value_ = value;
     }
 
     CORBA::Policy_ptr
@@ -86,7 +44,7 @@ namespace TAO
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-      (void) copy->init (this->value_->policy_type ());
+      (void) copy->init (this->value_);
 
       return copy;
     }
@@ -101,7 +59,7 @@ namespace TAO
     ServantRetentionPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      return value_->policy_type ();
+      return value_;
     }
 
     CORBA::PolicyType

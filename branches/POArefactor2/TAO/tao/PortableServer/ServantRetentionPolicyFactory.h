@@ -14,7 +14,7 @@
 #define TAO_PORTABLESERVER_SERVANTRETENTIONPOLICYFACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

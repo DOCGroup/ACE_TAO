@@ -14,13 +14,14 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "ace/Guard_T.h"
-#include "ace/CORBA_macros.h"
-#include "tao/Environment.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Guard_T.h"
+#include "ace/CORBA_macros.h"
+#include "tao/Environment.h"
 
 class TAO_Root_POA;
 

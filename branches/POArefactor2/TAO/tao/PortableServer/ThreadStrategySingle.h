@@ -15,6 +15,11 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ThreadStrategy.h"
 #include "ace/Service_Config.h"
 
@@ -25,10 +30,6 @@
 #include "ace/Null_Mutex.h"
 
 #include "tao/orbconf.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

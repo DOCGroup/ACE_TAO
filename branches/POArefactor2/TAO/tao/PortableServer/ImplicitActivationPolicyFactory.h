@@ -14,14 +14,14 @@
 #define TAO_LOADABLE_IMPLICIT_ACTIVATION_POLICY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PolicyFactory.h"
-#include "tao/PortableServer/ImplicitActivationPolicyC.h"
+#include "PolicyFactory.h"
+#include "ImplicitActivationPolicyC.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

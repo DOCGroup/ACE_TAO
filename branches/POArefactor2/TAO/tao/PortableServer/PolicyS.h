@@ -40,8 +40,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Collocation_Proxy_Broker.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Servant_Base.h"
+#include "PortableServer.h"
+#include "Servant_Base.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

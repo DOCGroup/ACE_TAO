@@ -1,10 +1,5 @@
 #include "RequestProcessingPolicy.h"
-#include "RequestProcessingPolicyValue.h"
-#include "ace/Dynamic_Service.h"
-
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingPolicy,
@@ -16,8 +11,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingPolicy::RequestProcessingPolicy () :
-      value_ (0)
+    RequestProcessingPolicy::RequestProcessingPolicy ()
     {
     }
 
@@ -37,57 +31,7 @@ namespace TAO
     RequestProcessingPolicy::init (
       ::PortableServer::RequestProcessingPolicyValue value)
     {
-      switch (value)
-        {
-        case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<RequestProcessingPolicyValue>::instance ("RequestProcessingPolicyValueAOMOnly");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic RequestProcessingPolicyValueAOMOnly Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyValueAOMOnly()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<RequestProcessingPolicyValue>::instance ("RequestProcessingPolicyValueAOMOnly");
-              }
-            break;
-          }
-        case ::PortableServer::USE_DEFAULT_SERVANT :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<RequestProcessingPolicyValue>::instance ("RequestProcessingPolicyValueDefaultServant");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic RequestProcessingPolicyValueDefaultServant Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyValueDefaultServant()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<RequestProcessingPolicyValue>::instance ("RequestProcessingPolicyValueDefaultServant");
-              }
-            break;
-          }
-        case ::PortableServer::USE_SERVANT_MANAGER :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<RequestProcessingPolicyValue>::instance ("RequestProcessingPolicyValueServantManager");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic RequestProcessingPolicyValueServantManager Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyValueServantManager()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<RequestProcessingPolicyValue>::instance ("RequestProcessingPolicyValueServantManager");
-              }
-            break;
-          }
-        }
+      value_ = value;
     }
 
     CORBA::Policy_ptr
@@ -100,7 +44,7 @@ namespace TAO
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-      (void) copy->init (this->value_->policy_type ());
+      (void) copy->init (this->value_);
 
       return copy;
     }
@@ -115,7 +59,7 @@ namespace TAO
     RequestProcessingPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      return value_->policy_type ();
+      return value_;
     }
 
     CORBA::PolicyType

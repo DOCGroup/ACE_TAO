@@ -15,12 +15,13 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "IdAssignmentPolicyC.h"
-#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "IdAssignmentPolicyC.h"
+#include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

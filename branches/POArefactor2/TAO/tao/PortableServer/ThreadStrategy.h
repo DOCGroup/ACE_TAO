@@ -15,15 +15,16 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "Policy_Strategy.h"
 #include "ThreadPolicyC.h"
 #include "ace/Service_Config.h"
 
 #include "tao/orbconf.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 namespace TAO
 {

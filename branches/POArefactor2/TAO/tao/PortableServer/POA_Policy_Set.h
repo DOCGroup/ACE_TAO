@@ -18,11 +18,12 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "tao/Policy_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Policy_Set.h"
 
 class TAO_Policy_Validator;
 

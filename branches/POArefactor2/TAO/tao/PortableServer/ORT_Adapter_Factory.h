@@ -15,13 +15,14 @@
 #define TAO_ORT_ADAPTER_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portableserver_export.h"
+#include "ace/Service_Object.h"
 
 namespace TAO
 {

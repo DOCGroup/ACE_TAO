@@ -15,15 +15,15 @@
 #define TAO_IMR_CLIENT_ADAPTER_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
-
-#include "portableserver_export.h"
+#include "ace/CORBA_macros.h"
 #include "tao/orbconf.h"
 #include "tao/Environment.h"
 

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Base.h"
+#include "Servant_Base.h"
 
 /**
  * @struct TAO_Active_Object_Map_Entry

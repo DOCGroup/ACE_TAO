@@ -15,11 +15,12 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "ImplicitActivationStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ImplicitActivationStrategy.h"
 
 namespace TAO
 {

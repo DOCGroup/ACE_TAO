@@ -1,6 +1,4 @@
 #include "IdAssignmentPolicy.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Service_Config.h"
 #include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
