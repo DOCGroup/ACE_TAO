@@ -1,3 +1,9 @@
+Mon May 31 11:00:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Core/NodeApplication_Impl.cpp:
+	  Fixed one bug of the refence count of Component instance
+	  objectRef.
+
 Mon May 31 00:40:25 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Core/NodeApplication_Impl.cpp:
