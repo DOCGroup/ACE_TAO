@@ -171,6 +171,8 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                          "TradingService") != 0
       && ACE_OS::strcmp (service_name,
                          "ImplRepoService") != 0
+      && ACE_OS::strcmp (service_name,
+                         "InterfaceRepository") != 0
                          )
     {
       // The client has requested an IOR other than for the
