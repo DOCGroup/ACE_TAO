@@ -146,19 +146,21 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   os->indent ();
   // Get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl = ("
-      << intf->full_skel_name () << " *)_tao_object_reference;\n\n";
+      << intf->full_skel_name () << " *)_tao_object_reference;" 
+      << be_nl << be_nl;
 
   // Declare a return type variable.
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-  // Do we have any arguments in the operation that needs marshalling
+  // Do we have any arguments in the operation that needs marshalling.
   UTL_ScopeActiveIterator si (node,
                               UTL_Scope::IK_decls);
   AST_Decl *d = 0;
   AST_Argument *arg = 0;
   int flag = 0;
+
   while (!si.is_done ())
   {
     d = si.item ();
@@ -167,19 +169,19 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     if (arg->direction () == AST_Argument::dir_INOUT ||
         arg->direction () == AST_Argument::dir_OUT)
       {
-        // There are return type that needs to get marshalled
+        // There are return type that needs to get marshalled.
         flag = 1;
         break;
       }
+
     si.next ();
   }
 
-  // Check if the flag is zero and for the return type
-  if (flag == 0 &&
-      node->void_return_type () == 1)
+  // Check if the flag is zero and for the return type.
+  if (flag == 0 && node->void_return_type () == 1)
     {
       // There are no return type and argument values that needs to be
-      // marshalled
+      // marshalled.
       *os << "_tao_server_request.argument_flag (0);" << be_nl;
     }
 
