@@ -1,0 +1,334 @@
+// $Id$
+
+// ============================================================================
+//
+// = FILENAME
+//    DsLogAdmin.idl
+//
+// = DESCRIPTION
+//    This module defines the Log, Iterator, LogMgr and LogFactory
+//    interfaces for the OMG's Telecom Event Log Service
+//
+// = AUTHOR
+//    Matthew Braun (mjb2@cs.wustl.edu)
+//
+// ============================================================================
+
+#ifndef DS_LOG_ADMIN_IDL
+#define DS_LOG_ADMIN_IDL
+
+#include "TimeBase.idl"
+// CORBA Time Service
+
+#pragma prefix "omg.org"
+
+module DsLogAdmin
+{
+  exception InvalidParam {string details;};
+  exception InvalidThreshold {};
+  exception InvalidTime {};
+  exception InvalidTimeInterval {};
+  exception InvalidMask {};
+  exception LogIdAlreadyExists {};
+  exception InvalidGrammar{};
+  exception InvalidConstraint{};
+  exception LogFull {short n_records_written;};
+  exception LogLocked {};
+  exception InvalidRecordId {};
+  exception InvalidAttribute {string attr_name; any value;};
+
+  exception NoResources {};
+  // @@ This is buggy. In the body of the spec BasicLogFactory::create
+  // ()'s signature does not match the signature in the IDL. It is
+  // also declared raising NoResources. I'm putting this here for
+  // now...
+
+  typedef unsigned long LogId;
+  // LogIds are unique within the scope of the log factory.
+
+  typedef unsigned long long RecordId;
+  // RecordIds are unique within the scope of one log.
+
+  typedef sequence<RecordId> RecordIdList;
+  const string default_grammar = "EXTENDED_TCL";
+  // Default grammar used for log record queries.
+  typedef string Constraint;
+  // A query string
+  typedef TimeBase::TimeT TimeT;
+
+  struct NVPair
+  {
+    string name;
+    any value;
+  };
+  typedef sequence<NVPair> NVList;
+
+  struct TimeInterval
+  {
+    TimeT start;
+    TimeT stop;
+  };
+
+  struct LogRecord
+  {
+    RecordId id;
+    // Unique number assigned by the log
+    TimeT time;
+    // Time when the event is logged
+    NVList attr_list;
+    // List of user defined name/value pairs. Not part of the event
+    // received by the log. Optional.
+    any info;
+    // Event content
+  };
+
+  typedef sequence<LogRecord> RecordList;
+  typedef sequence<any> Anys;
+
+
+  interface Iterator
+    {
+      // = TITLE
+      //   Iterator with bulk operation support; returned as a
+      //   result of querying the Log
+      //
+      // = DESCRIPTION
+      //   Allows clients to iterate over a list of LogRecords
+      //   returned from a query () or retrieve () operation
+
+      RecordList get(in unsigned long position,
+                     in unsigned long how_many) raises(InvalidParam);
+      // Returns a maximum of <how_many> records, starting from
+      // position <position>
+
+      void destroy();
+      // Destroy the iterator
+    };
+
+  struct AvailabilityStatus
+  {
+    boolean off_duty;
+    boolean log_full;
+  };
+
+  enum LogFullAction { wrap, halt };
+
+  struct Time24
+  {
+    unsigned short hour;// 0-23
+    unsigned short minute;// 0-59
+  };
+
+  struct Time24Interval
+  {
+    Time24 start;
+    Time24 stop;
+  };
+
+  typedef sequence<Time24Interval> IntervalsOfDay;
+  const unsigned short Sunday = 1;
+  const unsigned short Monday = 2;
+  const unsigned short Tuesday = 4;
+  const unsigned short Wednesday = 8;
+  const unsigned short Thursday = 16;
+  const unsigned short Friday = 32;
+  const unsigned short Saturday = 64;
+  typedef unsigned short DaysOfWeek;// Bit mask of week days
+
+  struct WeekMaskItem
+  {
+    DaysOfWeek days;
+    IntervalsOfDay intervals;
+  };
+
+  typedef sequence<WeekMaskItem> WeekMask;
+  typedef unsigned short Threshold; // 0-100 %
+  typedef sequence<Threshold> CapacityAlarmThresholdList;
+  interface LogMgr;
+
+  enum OperationalState { disabled, enabled };
+  // Logging enabled/disabled. If the log is enabled, it can be
+  // queried. If it is disabled, is may not be.
+
+  enum AdministrativeState { locked, unlocked };
+  // Logging on/off. If the log is locked, new records cannot be
+  // added, but records can be queried.
+
+  enum ForwardingState { on, off };
+  // Forwarding on/off. If forwarding is on, the log should forward
+  // records to other event consumers.
+
+  typedef unsigned short QoSType;
+  typedef sequence<QoSType> QoSList;
+
+  exception UnsupportedQoS { QoSList denied; };
+  const QoSType QoSNone = 0;
+  const QoSType QoSFlush = 1;
+  const QoSType QoSReliability = 2;
+
+
+  interface Log
+    {
+      LogMgr my_factory();
+      // Return the factory of the log
+
+      LogId id();
+      // Return the id of the log
+
+      QoSList get_qos();
+      void set_qos(in QoSList qos) raises(UnsupportedQoS);
+      // Get or set the list of the QoS properties supported by the log
+
+      unsigned long get_max_record_life();
+      void set_max_record_life(in unsigned long life);
+      // Get and set the record life in seconds (0 == infinite)
+
+      unsigned long long get_max_size();
+      void set_max_size(in unsigned long long size) raises (InvalidParam);
+      // Get and set the maximum size in octets (0 == no limit)
+
+      unsigned long long get_current_size();
+      // Return the current size in octets
+
+      unsigned long long get_n_records();
+      // Return the number of records in the log
+
+      LogFullAction get_log_full_action();
+      void set_log_full_action(in LogFullAction action);
+      // Get and set the action to be taken when the log reaches its
+      // maximum size
+
+      AdministrativeState get_administrative_state();
+      void set_administrative_state(in AdministrativeState state);
+      // Get and set the administrative state (locked/unlocked)
+
+      ForwardingState get_forwarding_state();
+      void set_forwarding_state(in ForwardingState state);
+      // Get and set the forwarding state (on or off)
+
+      OperationalState get_operational_state();
+      // Returns the operational state (disabled or enabled)
+
+      TimeInterval get_interval();
+      void set_interval(in TimeInterval interval)
+        raises (InvalidTime, InvalidTimeInterval);
+      // Get and set the log duration
+
+      AvailabilityStatus get_availability_status();
+      // Return the availability status (off_duty or log_full)
+
+      CapacityAlarmThresholdList get_capacity_alarm_thresholds();
+      void set_capacity_alarm_thresholds(in CapacityAlarmThresholdList
+                                         threshs)
+        raises (InvalidThreshold);
+      // Get and set the capacity alarm threshold
+
+
+      WeekMask get_week_mask();
+      void set_week_mask(in WeekMask masks)
+        raises (InvalidTime, InvalidTimeInterval, InvalidMask);
+      // Get and set the weekly scheduling parameters
+
+      RecordList query(in string grammar,
+                       in Constraint c,
+                       out Iterator i)
+        raises(InvalidGrammar, InvalidConstraint);
+      // Returns all records in the log that match the given
+      // constraint <c>. Note that match () only returns the number
+      // of matches, whereas query () returns the actual matches.
+
+      RecordList retrieve(in TimeT from_time,
+                          in long how_many,
+                          out Iterator i);
+      // Retrieve <how_many> records from time <from_time> using
+      // iterator <i>. Negative <how_many> indicates backwards
+      // retrieval
+
+      unsigned long match(in string grammar,
+                          in Constraint c)
+        raises(InvalidGrammar, InvalidConstraint);
+      // Returns the number of records matching constraint <c>
+
+
+      unsigned long delete_records(in string grammar,
+                                   in Constraint c)
+        raises(InvalidGrammar, InvalidConstraint);
+      unsigned long delete_records_by_id(in RecordIdList ids);
+      // Delete records matching constraint <c> or with ids in
+      // <ids>. Both operations return the number of records deleted
+
+      void write_records(in Anys records) raises(LogFull, LogLocked);
+      // Write records to the log storage
+
+      void write_recordlist(in RecordList list) raises(LogFull, LogLocked);
+      // Write a list of record ids to storage
+
+      void set_record_attribute(in RecordId id,
+                                in NVList attr_list)
+        raises(InvalidRecordId, InvalidAttribute);
+      // Set single record attributes
+
+
+      unsigned long set_records_attribute(in string grammar,
+                                          in Constraint c,
+                                          in NVList attr_list)
+        raises(InvalidGrammar, InvalidConstraint, InvalidAttribute);
+      // Set the attributes of all records that matches the
+      // constraints with same attr_list. Returns number of records
+      // whose attributes have been set
+
+      NVList get_record_attribute(in RecordId id)
+        raises(InvalidRecordId);
+      // Get the attributes of the record with id <id>
+
+      Log copy(out LogId id);
+      Log copy_with_id (in LogId id) raises (LogIdAlreadyExists);
+      // Copy the log on which the operation was invoked. copy ()
+      // Returns the unique id of the newly created
+      // log. copy_with_id () attempts to create the new log with
+      // the specified id, but may fail if the id is in use
+
+      void flush() raises (UnsupportedQoS);
+      // Causes all pending events to be written to storage before
+      // flush () returns
+    };
+
+
+  interface BasicLog : Log
+    {
+      void destroy();
+      // Destroy the log object and all contained records
+    };
+
+  typedef sequence<Log> LogList;
+  typedef sequence<LogId> LogIdList;
+
+  interface LogMgr
+    {
+      LogList list_logs();
+      // Lists all logs created by the log factory
+
+      Log find_log(in LogId id);
+      // Returns a reference to the log with the supplied id
+
+      LogIdList list_logs_by_id();
+      // Lists all log ids
+    };
+
+    interface BasicLogFactory : LogMgr
+    {
+      BasicLog create (in LogFullAction full_action,
+                       in unsigned long long max_size,
+                       out LogId id)
+        raises (NoResources);
+      // Allows clients to create new BasicLog objects.
+
+      BasicLog create_with_id (in LogId id,
+                               in LogFullAction full_action,
+                               in unsigned long long max_size)
+        raises (NoResources, LogIdAlreadyExists);
+      // Same as create (), but allows clients to specify the id
+    };
+};
+
+#endif /* DS_LOG_ADMIN_IDL */

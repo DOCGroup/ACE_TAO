@@ -1,0 +1,38 @@
+#
+# Makefile for building	the IFR	Service	executable
+#
+
+!ifndef MINIMUM_CORBA
+NAME = IFR_Service
+!else
+!undef NAME
+!endif
+
+OBJFILES = \
+	$(OBJDIR)\IFR_Server.obj \
+        $(OBJDIR)\IFR_Service.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS)	\
+	$(TAO_IORTABLE_CFLAGS) \
+	$(TAO_IFR_CLIENT_CFLAGS) \
+        $(TAO_TYPECODEFACTORY_CFLAGS) \
+        $(TAO_IFRSERVICE_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_IORTABLE_LIB) \
+	$(TAO_IFR_CLIENT_LIB) \
+        $(TAO_TYPECODEFACTORY_LIB) \
+        $(TAO_IFRSERVICE_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
+
