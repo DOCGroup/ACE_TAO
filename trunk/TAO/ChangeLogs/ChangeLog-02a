@@ -1,3 +1,12 @@
+Tue Dec 12 15:58:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* docs/INS.html:
+	  Updated the document to the correct style of corbaloc URL.
+	  corbaloc:iiop:$TARGETHOSTNAME:$PORT/object_name.
+	  
+	  Thanks to Russell L. Carter <rcarter@pinyon.org> for
+	  motivating the change.
+
 Tue Dec 12  3:23:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
         * TAO_IDL/include/ast_type.h:
