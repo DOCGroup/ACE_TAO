@@ -1,12 +1,8 @@
 Wed Apr 22 22:13:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/ace_bcc.ide: Added a new IDE for the Borland C++ compiler.
-  	  Thanks to Valik Solorzano Barboza <valik@geodan.nl> for
- 	  this.
-
-	* ace/tests_bcc.ide: Added a new IDE for the Borland C++ compiler.
-  	  Thanks to Valik Solorzano Barboza <valik@geodan.nl> for
- 	  suggesting this.
+        * ace/ace_bcc.ide: Added a new IDE for the Borland C++ compiler.
+          Thanks to Valik Solorzano Barboza <valik@geodan.nl> for
+          this.
 
         * ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Fixed a
           missing semi-colon.  Thanks to Jorn Jensen <jornj@funcom.com>
