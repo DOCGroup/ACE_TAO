@@ -1,3 +1,18 @@
+Mon Nov  3 03:04:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+          Added #includes needed due to recent subsetting.
+
 Sun Nov  2 23:28:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * docs/tutorials/Quoter/Event_Service/server.cpp:

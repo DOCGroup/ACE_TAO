@@ -10,11 +10,11 @@
 
 ACE_RCSID(ace, Token, "$Id$")
 
-#if defined (ACE_HAS_THREADS)
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Token.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined (ACE_HAS_THREADS)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Token)
 

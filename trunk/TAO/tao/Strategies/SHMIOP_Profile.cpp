@@ -20,6 +20,8 @@ ACE_RCSID (Strategies,
 # include "SHMIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/os_include/os_netdb.h"
+
 static const char prefix_[] = "shmiop";
 
 const char TAO_SHMIOP_Profile::object_key_delimiter_ = '/';
