@@ -519,7 +519,7 @@ template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_Value *tv)
 {
-  int result;
+  int result = -1;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
