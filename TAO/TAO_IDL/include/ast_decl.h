@@ -150,7 +150,23 @@ public:
   void set_file_name(UTL_String *s);
   UTL_ScopedName *name();
   void set_name(UTL_ScopedName *n);
-  Identifier *local_name();
+  
+  Identifier *local_name ();
+
+  //
+  // If there is _cxx_ in the beginning, we will remove that and keep
+  // a copy of the original name. TAO IDL's front end adds _cxx_
+  // prefix to the all the reserved keywords. But when we invoke the
+  // operation remotely, we should be sending only the name with out
+  // "_cxx_" prefix.
+  //
+  
+  Identifier *original_local_name (void);
+  // Get.
+
+  void original_local_name (Identifier *);
+  // Set.
+
   void add_pragmas(UTL_StrList *p);
   UTL_StrList *pragmas();
   idl_bool added();
@@ -178,6 +194,7 @@ private:
   UTL_String                    *pd_file_name;  // What file defined in
   UTL_ScopedName                *pd_name;       // As given
   Identifier                    *pd_local_name; // Name in scope
+  Identifier                    *pd_original_local_name; // _cxx_ removed if any. 
   UTL_StrList                   *pd_pragmas;    // Pragmas
   idl_bool                      pd_added;       // already added
 
