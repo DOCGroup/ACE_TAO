@@ -16,6 +16,14 @@ Mon Nov 24 13:39:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           newlines. In the connect() operation generated for a 
           component, added ACE_UNUSED_ARG() for an argument which is
           unused if the component has no receptacles declared.
+          
+        * CCF/CCF/IDL2/SyntaxTree/TranslationCtor.cpp:
+        
+          New file with a dummy class and constructor, added as a workaround
+          for errors related to the protected default constructor of the
+          real TranslationRegion class, simlar to what has already been 
+          added for the Elements, Interface and Valuetype classes in
+          IDL2::SyntaxTree.
 
 Thu Nov 20 20:05:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

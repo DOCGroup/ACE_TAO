@@ -56,7 +56,7 @@ namespace StringLiterals
 
     // Commonly used Components module members.
     "::Components::Cookie",                               // COMP_CK
-    "::Components::NameList &names",                      // COMP_NAMES
+    "::Components::NameList & /* names */",               // COMP_NAMES
     "::Components::EventConsumerBase",                    // COMP_ECB
 
     // This could change - don't want it scattered all over.

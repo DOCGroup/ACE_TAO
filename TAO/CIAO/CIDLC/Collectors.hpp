@@ -154,7 +154,7 @@ public:
         h->table ().exist (expl) ||
         h->table ().exist (impl)) return;
 
-    if(declarations_.add (h))
+    if (declarations_.add (h))
     {
       // Note that I don't go after components that inherited home manages
       // because it will be handled by component inheritance tree.
