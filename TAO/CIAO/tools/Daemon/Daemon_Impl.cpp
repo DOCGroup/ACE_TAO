@@ -29,7 +29,7 @@ CIAO::Daemon_Impl::_default_POA (void)
 }
 
 char *
-CIAO::Daemon_Impl::name (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Daemon_Impl::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
@@ -55,7 +55,8 @@ void
 CIAO::Daemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 int

@@ -16,7 +16,7 @@
 void
 add_rtcad_configs (const char *rtcadfile,
                    Components::ConfigValues &configs
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                   ACE_ENV_ARG_DECL_NOT_USED)
 {
   CIAO::RTConfiguration::RTORB_Resource_Info resources;
   CIAO::RTConfiguration::Policy_Sets psets;
@@ -100,7 +100,7 @@ CIAO::ComponentServer_Task::svc ()
       if (this->options_.rtcad_filename_.length () != 0)
         add_rtcad_configs (this->options_.rtcad_filename_.c_str (),
                            configs
-                           ACE_ENV_SINGLE_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       comserv_servant->init (configs

@@ -50,7 +50,9 @@ CIAO::Daemon_i::controller::write_IOR(const char* ior,
 }
 
 int
-CIAO::Daemon_i::controller::parse_args (int argc, char *argv[] ACE_ENV_ARG_DECL)
+CIAO::Daemon_i::controller::parse_args (int argc, 
+                                        char *argv[] 
+                                        ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Make sure one command was given
   if (argc < 2)
