@@ -215,11 +215,10 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Minimum
 
-# Commented out for the timebeing
-#[HPUX_ACC]
-#TYPE = TIMEONLY
-#LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/herb_HPUX_ACC/
-#WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
+[HPUX_ACC]
+TYPE = TIMEONLY
+LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/herb_HPUX_ACC/
+WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
 
 # Commented out for the timebeing
 #[AIX_VAC]

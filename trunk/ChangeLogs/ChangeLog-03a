@@ -1,3 +1,9 @@
+Mon Nov  5 14:21:30 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/nightlybuilds/builds.lst:
+
+          Added the HP-UX nightly build back to the list.
+
 Mon Nov  5 13:31:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ACE.cpp:
