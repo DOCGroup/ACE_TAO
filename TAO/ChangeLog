@@ -1,3 +1,10 @@
+Thu Aug  5 23:42:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/ec_typed_events.mpb:
+	  Changed to inherit from dynamicinterface and ifr_client instead
+	  of providing libs and after statements so that dependency chain
+	  is complete.
+
 Thu Aug  5 20:20:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
