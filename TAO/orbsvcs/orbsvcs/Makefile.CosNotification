@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:Notify:Trader
 
-ACE_SHLIBS_ =  -lTAO -lACE
+ACE_SHLIBS = -lTAO_Svc_Utils -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

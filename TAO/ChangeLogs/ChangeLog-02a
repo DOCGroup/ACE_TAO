@@ -1,3 +1,9 @@
+Mon May 22 14:28:03 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile.CosNotification (ACE_SHLIBS):
+          changed back to ACE_SHLIBS, and inserted -lTAO_Svc_Utils
+          to avoid warnings about unresolved symbols from Compaq cxx.
+
 Mon May 22 09:22:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Event_Service/Makefile:
