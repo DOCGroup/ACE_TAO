@@ -1,3 +1,8 @@
+Wed Sep 13 18:15:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
+	  Fixed warning about strange */, it was a misplaced comment.
+
 Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
         * tao/Endpoint.cpp
