@@ -23,9 +23,7 @@ template <ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Message_Queue<ACE_SYNCH_USE>::is_empty_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::is_empty_i");
-  // This has to be an && in the following condition because there could be
-  // zero-length messages in message queue.
-  return this->cur_bytes_ <= 0 && this->cur_count_ <= 0;
+  return this->tail_ == 0;
 }
 
 // Check if queue is full (does not hold locks).
