@@ -26,14 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGC_H_
 #define _TAO_IDL_ORIG_MESSAGINGC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #ifndef TAO_MESSAGING_SAFE_INCLUDE
 #error "You should not include MessagingC.h directly, use Messaging.h"
@@ -44,13 +45,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "messaging_export.h"
-#include "tao/Environment.h"
-#include "tao/Object.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "tao/Valuetype/ValueFactory.h"
-#include "tao/Objref_VarOut_T.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
 #include "tao/Valuetype/Value_VarOut_T.h"
+#include "tao/Objref_VarOut_T.h"
 
 #include "tao/PollableC.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
@@ -71,9 +74,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -82,7 +83,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -99,7 +100,7 @@ namespace Messaging
 {
   
   // TAO_IDL - Generated from
-  // be\be_valuetype.cpp:527
+  // be\be_valuetype.cpp:525
   
   
 
@@ -167,7 +168,7 @@ namespace Messaging
     virtual CORBA::OctetSeq &marshaled_exception (void) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/valuetype_ch.cpp:250
+    // be\be_visitor_valuetype/valuetype_ch.cpp:238
   
   protected:
     ExceptionHolder (void);
@@ -204,7 +205,10 @@ namespace Messaging
     
     static ExceptionHolder_init* _downcast (CORBA::ValueFactoryBase *);
     
-    virtual CORBA::ValueBase *create_for_unmarshal (void);
+    virtual CORBA::ValueBase *
+    create_for_unmarshal (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
     
     // TAO-specific extensions
   public:
@@ -222,7 +226,7 @@ namespace Messaging
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExceptionHolder;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_REPLYHANDLER__VAR_OUT_CH_)
 #define _MESSAGING_REPLYHANDLER__VAR_OUT_CH_
@@ -273,7 +277,7 @@ namespace Messaging
     
     static ReplyHandler_ptr _nil (void)
     {
-      return (ReplyHandler_ptr)0;
+      return static_cast<ReplyHandler_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -417,8 +421,8 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Messaging_Export Value_Traits<Messaging::ExceptionHolder>
   {
-    static void tao_add_ref (Messaging::ExceptionHolder *);
-    static void tao_remove_ref (Messaging::ExceptionHolder *);
+    static void add_ref (Messaging::ExceptionHolder *);
+    static void remove_ref (Messaging::ExceptionHolder *);
     static void release (Messaging::ExceptionHolder *);
   };
 
@@ -428,17 +432,17 @@ namespace TAO
 #define _MESSAGING_REPLYHANDLER__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::ReplyHandler>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::ReplyHandler>
   {
-    static Messaging::ReplyHandler_ptr duplicate (
-        Messaging::ReplyHandler_ptr
+    static ::Messaging::ReplyHandler_ptr duplicate (
+        ::Messaging::ReplyHandler_ptr
       );
     static void release (
-        Messaging::ReplyHandler_ptr
+        ::Messaging::ReplyHandler_ptr
       );
-    static Messaging::ReplyHandler_ptr nil (void);
+    static ::Messaging::ReplyHandler_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::ReplyHandler_ptr p,
+        ::Messaging::ReplyHandler_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -461,7 +465,7 @@ TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyHandler_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_valuetype.cpp:434
+// be\be_valuetype.cpp:432
 
 namespace CORBA
 {
@@ -482,13 +486,13 @@ TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "MessagingC.i"
+#include "MessagingC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -499,4 +503,5 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Reply
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 
