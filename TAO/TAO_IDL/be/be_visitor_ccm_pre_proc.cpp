@@ -91,7 +91,12 @@ be_visitor_ccm_pre_proc::visit_root (be_root *node)
 int
 be_visitor_ccm_pre_proc::visit_module (be_module *node)
 {
-  if (!node->imported () && this->visit_scope (node) == -1)
+  if (node->imported ())
+    {
+      return 0;
+    }
+
+  if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_ccm_pre_proc::"
@@ -105,6 +110,11 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ccm_pre_proc::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   if (this->lookup_cookie (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -174,6 +184,11 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
 int
 be_visitor_ccm_pre_proc::visit_home (be_home *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   AST_Interface *xplicit = this->create_explicit (node);
 
   if (xplicit == 0)
@@ -239,6 +254,11 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
 int
 be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   if (this->create_event_consumer (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -1,3 +1,11 @@
+Fri Nov 15 15:22:54 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+
+          Added check to skip implied IDL generation for imported nodes.
+          Thanks once again to Nanbor <nanbor@cse.wustl.edu> for his
+          testing of the new CCM-related IDL features.
+
 Fri Nov 15 14:51:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Asynch_Queued_Message.cpp:
