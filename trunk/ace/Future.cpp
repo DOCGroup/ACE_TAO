@@ -418,24 +418,5 @@ ACE_Future<T>::get_rep ()
   return this->future_rep_;
 }
 
-template <class T> void *
-ACE_Future<T>::operator new (size_t)
-{
-  ACE_throw_bad_alloc;
-#if defined (__HP_aCC)
-  return 0;
-#endif /* 0 */
-}
-
-template <class T> void
-ACE_Future<T>::operator delete (void *)
-{
-}
-
-template <class T> void
-ACE_Future<T>::operator & ()
-{
-}
-
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_FUTURE_CPP */
