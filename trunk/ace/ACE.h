@@ -298,11 +298,11 @@ public:
   // = Timed Scatter-read and gather-write functions.
 
   static ssize_t writev (ACE_HANDLE handle, 
-                         const struct iovec* iov,
+                         const ACE_IO_Vector_Base *iov,
                          int iovcnt,
                          const ACE_Time_Value *timeout);
   static ssize_t writev (ACE_HANDLE handle, 
-                         const struct ACE_IO_Vector *iov,
+                         const ACE_IO_Vector *iov,
                          int iovcnt,
                          const ACE_Time_Value *timeout);
   // Send <iovcnt> <iovec> structs to <handle> (uses the
@@ -313,11 +313,11 @@ public:
   // bytes written is returned.
 
   static ssize_t readv (ACE_HANDLE handle,
-                        struct iovec *iov,
+                        ACE_IO_Vector_Base *iov,
                         int iovcnt,
                         const ACE_Time_Value *timeout);
   static ssize_t readv (ACE_HANDLE handle,
-                        struct ACE_IO_Vector *iov,
+                        ACE_IO_Vector *iov,
                         int iovcnt,
                         const ACE_Time_Value *timeout);
   // Read <iovcnt> <iovec> structs from <handle> (uses the
