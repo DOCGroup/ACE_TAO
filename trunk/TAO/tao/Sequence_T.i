@@ -491,14 +491,24 @@ template <class T, class T_var> ACE_INLINE T &
 TAO_Unbounded_Array_Sequence<T, T_var>::operator[] (CORBA::ULong i)
 {
   ACE_ASSERT (i < this->maximum_);
+
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+  return ((T*) this->buffer_)[i];
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
   return (ACE_reinterpret_cast (T*, this->buffer_))[i];
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 }
 
 template <class T, class T_var> ACE_INLINE const T &
 TAO_Unbounded_Array_Sequence<T, T_var>::operator[] (CORBA::ULong i) const
 {
   ACE_ASSERT (i < this->maximum_);
+
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+  return ((const T* ACE_CAST_CONST) this->buffer_)[i];
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
   return (ACE_reinterpret_cast (const T* ACE_CAST_CONST, this->buffer_))[i];
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 }
 
 template <class T, class T_var> ACE_INLINE T *
@@ -609,14 +619,24 @@ template <class T, class T_var, size_t MAX> ACE_INLINE T &
 TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator[] (CORBA::ULong i)
 {
   ACE_ASSERT (i < this->maximum_);
+
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+  return ((T*) this->buffer_)[i];
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
   return (ACE_reinterpret_cast (T*, this->buffer_))[i];
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 }
 
 template <class T, class T_var, size_t MAX> ACE_INLINE const T &
 TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator[] (CORBA::ULong i) const
 {
   ACE_ASSERT (i < this->maximum_);
+
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+  return ((const T* ACE_CAST_CONST) this->buffer_)[i];
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
   return (ACE_reinterpret_cast (const T* ACE_CAST_CONST, this->buffer_))[i];
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 }
 
 template <class T, class T_var, size_t MAX> ACE_INLINE T *

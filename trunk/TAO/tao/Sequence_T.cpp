@@ -1051,8 +1051,12 @@ operator= (const TAO_Unbounded_Array_Sequence<T, T_var> &rhs)
       if (this->maximum_ < rhs.maximum_)
         {
           // free the old buffer
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+          T *tmp = (T *) this->buffer_;
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
           T *tmp = ACE_reinterpret_cast (T *,
                                          this->buffer_);
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
 
           TAO_Unbounded_Array_Sequence<T, T_var>::freebuf (tmp);
 
@@ -1070,10 +1074,15 @@ operator= (const TAO_Unbounded_Array_Sequence<T, T_var> &rhs)
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+      T_var::copy (((T *) this->buffer_)[i],
+                   ((const T *) rhs.buffer_)[i]);
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
       T_var::copy (ACE_reinterpret_cast (T *, 
                                          this->buffer_)[i], 
                    ACE_reinterpret_cast (const T *, 
                                          rhs.buffer_)[i]);
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
     }
 
   return *this;
@@ -1175,10 +1184,15 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator=
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
+      T_var::copy (((T *) this->buffer_)[i],
+                   ((const T *) rhs.buffer_)[i]);
+#else /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
       T_var::copy (ACE_reinterpret_cast (T *, 
                                          this->buffer_)[i], 
                    ACE_reinterpret_cast (const T *, 
                                          rhs.buffer_)[i]);
+#endif /* (__SUNPRO_CC) && (__SUNPRO_CC < 0x500) */
     }
 
   return *this;
