@@ -96,6 +96,11 @@ public:
   // doesn't support read locks then this just calls <acquire>.
   // Returns -1 on failure.  If we "failed" because someone else
   // already had the lock, <errno> is set to <EBUSY>.
+
+  virtual int tryacquire_write_upgrade (void) = 0;
+  // Conditionally try to upgrade a lock held for read to a write lock.
+  // If the locking mechanism doesn't support read locks then this just
+  // calls <acquire>. Returns 0 on success, -1 on failure.
 };
 
 class ACE_Export ACE_Adaptive_Lock : public ACE_Lock
@@ -125,6 +130,7 @@ public:
   virtual int acquire_write (void);
   virtual int tryacquire_read (void);
   virtual int tryacquire_write (void);
+  virtual int tryacquire_write_upgrade (void);
   void dump (void) const;
 
 protected:
@@ -188,6 +194,13 @@ public:
 
   int tryacquire_write (short whence = 0, off_t start = 0, off_t len = 1);
   // Conditionally acquire a write lock (i.e., won't block).  Returns
+  // -1 on failure.  If we "failed" because someone else already had
+  // the lock, <errno> is set to <EBUSY>.
+
+  int tryacquire_write_upgrade (short whence = 0,
+                                off_t start = 0,
+                                off_t len = 1);
+  // Conditionally upgrade to a write lock (i.e., won't block).  Returns
   // -1 on failure.  If we "failed" because someone else already had
   // the lock, <errno> is set to <EBUSY>.
 
@@ -311,6 +324,12 @@ public:
   // Returns -1 on failure.  If we "failed" because someone else
   // already had the lock, <errno> is set to <EBUSY>.
 
+  int tryacquire_write_upgrade (void);
+  // This is only here to make the <ACE_Semaphore>
+  // interface consistent with the other synchronization APIs.
+  // Assumes the caller has already acquired the semaphore using one of
+  // the above calls, and returns 0 (success) always.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -396,6 +415,12 @@ public:
   // Returns -1 on failure.  If we "failed" because someone else
   // already had the lock, <errno> is set to <EBUSY>.
 
+  int tryacquire_write_upgrade (void);
+  // This is only here to make the <ACE_Process_Semaphore>
+  // interface consistent with the other synchronization APIs.
+  // Assumes the caller has already acquired the semaphore using one of
+  // the above calls, and returns 0 (success) always.
+
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   const ACE_sema_t &lock (void) const;
   // Return the underlying lock.
@@ -437,6 +462,7 @@ public:
   int release (size_t);
   int acquire_write (void);
   int tryacquire_write (void);
+  int tryacquire_write_upgrade (void);
   int acquire_read (void);
   int tryacquire_read (void);
 
@@ -483,6 +509,14 @@ public:
 
   int tryacquire_write (void);
   // Conditionally acquire a write lock (i.e., won't block).
+
+  int tryacquire_write_upgrade (void);
+  // Conditionally upgrade a read lock to a write lock.  This only
+  // works if there are no other readers present, in which case the
+  // method returns 0.  Otherwise, the method returns -1 and sets
+  // <errno> to <EBUSY>.  Note that the caller of this method *must*
+  // already possess this lock as a read lock (but this condition is
+  // not checked by the current implementation).
 
   int acquire (void);
   // Note, for interface uniformity with other synchronization
@@ -578,6 +612,11 @@ public:
   // failure.  If we "failed" because someone else already had the
   // lock, <errno> is set to <EBUSY>.
 
+  int tryacquire_write_upgrade (void);
+  // This is only here for consistency with the other synchronization
+  // APIs and usability with Lock adapters. Assumes the caller already has
+  // acquired the mutex and returns 0 in all cases.
+
   const ACE_mutex_t &lock (void) const;
   // Return the underlying mutex.
 
@@ -660,6 +699,11 @@ public:
   // failure.  If we "failed" because someone else already had the
   // lock, <errno> is set to <EBUSY>.
 
+  int tryacquire_write_upgrade (void);
+  // This is only here for consistency with the other synchronization
+  // APIs and usability with Lock adapters. Assumes the caller already has
+  // acquired the mutex and returns 0 in all cases.
+
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   const ACE_mutex_t &lock (void) const;
   // Return the underlying mutex.
@@ -738,6 +782,10 @@ public:
   // failure.  If we "failed" because someone else already had the
   // lock, <errno> is set to <EBUSY>.
 
+  int tryacquire_write_upgrade (void);
+  // Attempt to upgrade a read lock to a write lock. Returns 0 on
+  // success, -1 on failure.
+
   const ACE_File_Lock &lock (void) const;
   // Return the underlying lock.
 
@@ -796,6 +844,7 @@ public:
   int release (void);
   int acquire_write (void);
   int tryacquire_write (void);
+  int tryacquire_write_upgrade (void);
   int acquire_read (void);
   int tryacquire_read (void);
 
@@ -1129,6 +1178,12 @@ public:
   // Returns -1 on failure.  If we "failed" because someone else
   // already had the lock, <errno> is set to <EBUSY>.
 
+  int tryacquire_write_upgrade (void);
+  // This is only here to make the <ACE_Thread_Mutex>
+  // interface consistent with the other synchronization APIs.
+  // Assumes the caller has already acquired the mutex using one of
+  // the above calls, and returns 0 (success) always.
+
   const ACE_thread_mutex_t &lock (void) const;
   // Return the underlying mutex.
 
@@ -1380,6 +1435,12 @@ public:
   // synchronization APIs.  Returns -1 on failure.  If we "failed"
   // because someone else already had the lock, <errno> is set to
   // <EBUSY>.
+
+  int tryacquire_write_upgrade (void);
+  // This is only here to make the <ACE_Recursive_Thread_Mutex>
+  // interface consistent with the other synchronization APIs.
+  // Assumes the caller has already acquired the mutex using one of
+  // the above calls, and returns 0 (success) always.
 
   int release (void);
   // Releases a recursive mutex (will not release mutex until all the

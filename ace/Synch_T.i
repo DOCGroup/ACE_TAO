@@ -233,6 +233,16 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_write (void)
   return this->lock_->tryacquire_write ();
 }
 
+// Conditionally try to upgrade a lock held for read to a write lock.
+// If the locking mechanism doesn't support read locks then this just
+// calls <acquire>. Returns 0 on success, -1 on failure.
+
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_write_upgrade (void)
+{
+  return this->lock_->tryacquire_write_upgrade ();
+}
+
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock)
   : lock_ (lock)
@@ -293,6 +303,13 @@ template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_write (void)
 {
   return this->lock_.tryacquire_write ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_write_upgrade (void)
+{
+  return this->lock_.tryacquire_write_upgrade ();
 }
 
 #if defined (ACE_HAS_THREADS)

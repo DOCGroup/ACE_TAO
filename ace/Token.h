@@ -149,6 +149,9 @@ public:
   int tryacquire_write (void);
   // Just calls <tryacquire>.
 
+  int tryacquire_write_upgrade (void);
+  // Assumes the caller has acquired the token and returns 0.
+
   // = Accessor methods.
 
   int waiters (void);
