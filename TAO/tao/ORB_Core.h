@@ -84,6 +84,7 @@ class TAO_Policy_Current;
 class TAO_Codeset_Manager;
 class TAO_IORInterceptor_List;
 class TAO_IORInterceptor_Adapter;
+class TAO_Valuetype_Adapter;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -929,6 +930,9 @@ public:
   TAO_IORInterceptor_List *ior_interceptor_list (void);
   //@}
 
+  /// Return the valuetype adapter
+  TAO_Valuetype_Adapter *& valuetype_adapter (void);
+
   /// Return the underlying transport cache
   TAO_Transport_Cache_Manager *transport_cache (void);
 
@@ -1277,8 +1281,11 @@ protected:
   TAO_ServerRequestInterceptor_List server_request_interceptors_;
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  /// IORInterceptor adapter factory.
+  /// IORInterceptor adapter.
   TAO_IORInterceptor_Adapter *ior_interceptor_adapter_;
+
+  /// Pointer to the valuetype adapter.
+  TAO_Valuetype_Adapter *valuetype_adapter_;
 
   /// The IOR parser registry.
   TAO_Parser_Registry parser_registry_;

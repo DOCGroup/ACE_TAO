@@ -1,3 +1,13 @@
+Mon Aug 18 14:24:45 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+
+          Moved TAO_Valuetype_Adapter from ORB to ORB_Core. Added new method
+          ORB_Core::valuetype_adapter () to access the valuetype adapter.
+
 Mon Aug 18 09:12:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
