@@ -1039,6 +1039,13 @@ public:
     typedef POAManager_var _var_type;
   #endif /* __GNUC__ */
 
+    enum State {
+      HOLDING,
+      ACTIVE,
+      DISCARDING,
+      INACTIVE
+    };
+
     // the static operations
     static POAManager_ptr _duplicate (POAManager_ptr obj);
     static POAManager_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -1087,6 +1094,7 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+    virtual State get_state (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     POAManager (

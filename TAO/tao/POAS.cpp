@@ -1630,6 +1630,12 @@ void POA_PortableServer::_tao_collocated_POAManager::deactivate (
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+PortableServer::POAManager::State
+POA_PortableServer::_tao_collocated_POAManager:: get_state(CORBA::Environment &_tao_orb_environment)
+{
+  return this->servant_->get_state (_tao_orb_environment);
+}
+
 PortableServer::POAManager*
 POA_PortableServer::POAManager::_this (CORBA_Environment &TAO_IN_ENV)
 {
