@@ -480,7 +480,7 @@ main (int argc, ASYS_TCHAR *argv[])
       status = 1;
     }
     else {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Dequeue timeout test ok\n")));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Timed dequeue test: OK\n")));
       status = 0;     // All is well
     }
   }
