@@ -1,3 +1,11 @@
+Fri Jun 18 14:52:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/GIOP.cpp (process_server_request): Removed extra
+	  ACE_UNUSED_ARG (response_required).
+
+	* examples/POA/Forwarding/MyFooServant.cpp (handle_input): Removed
+	  extra semi-colon.
+
 Fri Jun 18 14:26:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp (init):

@@ -1,3 +1,15 @@
+Fri Jun 18 14:52:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Message_Block_Test.cpp: Removed template instantiations
+	  for ACE_Message_Queue_Iterator and
+	  ACE_Message_Queue_Reverse_Iterator.  They are already available
+	  in the ace library.
+
+	* ace/Service_Types.cpp: Added explicit instantiations for
+	  ACE_Message_Queue_Reverse_Iterator.  ACE_Message_Queue and
+	  ACE_Message_Queue_Iterator were already there.  This addition
+	  will complete the set.
+
 Fri Jun 18 12:12:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SOCK_Dgram: Added the first set of hooks to support
