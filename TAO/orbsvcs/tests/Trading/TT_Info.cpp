@@ -119,10 +119,11 @@ const char* TT_Info::MODEL_NUMBERS[] =
   "9q834jidlj234ujof"
 };
 
-const int TT_Info::NUM_QUERIES = 1;
+const int TT_Info::NUM_QUERIES = 2;
 const char* TT_Info::QUERIES[][3] =
 {
-  {INTERFACE_NAMES[REMOTE_IO], "", ""}
+  {INTERFACE_NAMES[REMOTE_IO], "", ""},
+  {INTERFACE_NAMES[REMOTE_IO], "Location ~ 'Cupples'", ""}
 };
 
 void
