@@ -34,7 +34,8 @@ class TAO_ORBSVCS_Export TAO_Concurrency_Server
   //    concurrency server.
   //
   // = DESCRIPTION
-  //   @@ Torben, please fill in here...
+  //    This class takes an orb and Poa reference and activates the
+  //    concurrency service lock set factory object under them.
 public:
   // = Initialization and termination methods.
   TAO_Concurrency_Server (void);
@@ -57,7 +58,7 @@ public:
 
 private:
   CC_LockSetFactory lock_set_factory_;
-  // @@ Torben, please comment this.
+  // This is the lock set factory activated under the POA.
 };
 
 #endif /* _CONCURRENCY_SERVER_H */

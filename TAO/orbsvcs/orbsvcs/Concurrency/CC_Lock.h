@@ -24,6 +24,11 @@
 #include "ace/Synch.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 
+#define NUMBER_OF_LOCK_MODES 5
+// This contant defines the number of lock modes. There is really no
+// way to set this constant dynamically because the nuber of lock
+// modes are not stated as part of the IDL.
+
 class TAO_ORBSVCS_Export CC_Lock 
 {
   // = TITLE
@@ -78,12 +83,8 @@ private:
   int lock_held_;
   // If greater than zero the lock is held (that number of times).
 
-  static CORBA::Boolean compatible_[5][5];
-  // Defines the compatibility of the locks. 5 = number of lock modes.
-  // @@ Torben, can you please make sure that you use an enum value
-  // rather than a magic number for this?  Ideally, this enum value
-  // would be defined in the same place as the "number of lock modes."
-  // 
+  static CORBA::Boolean compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
+  // Defines the compatibility of the locks.
 };
 
 #endif /* !defined (_CC_LOCK_H) */
