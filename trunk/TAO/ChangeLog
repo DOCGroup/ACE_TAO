@@ -1,7 +1,7 @@
 Mon Nov  3 04:43:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * Makefile:
-          Pass the $(MAKE) variable to the reverseclean script and us it
+          Pass the $(MAKE) variable to the reverseclean script
           instead of "make".  This fixes problems in autobuilds that
           assign something other than "make" to the make_program
           variable.
