@@ -48,16 +48,18 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 server: $(addprefix $(VDIR),$(SERVER_OBJS)) $(SHLIB)
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-$(CLIENT_MODULE_LIB): Test_Client_Module.h Test_Client_Module.cpp
+$(CLIENT_MODULE_LIB):
 	$(MAKE) -f Makefile.Test_Client_Module
 
-$(SERVER_MODULE_LIB): $(CLIENT_MODULE_LIB) Test_Server_Module.h Test_Server_Module.cpp
+$(SERVER_MODULE_LIB): $(CLIENT_MODULE_LIB)
 	$(MAKE) -f Makefile.Test_Server_Module
 
 idl_stubs realclean depend:
 	@for m in Makefile.Test_Client_Module Makefile.Test_Server_Module; do \
           $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
 	done
+
+.PHONY: $(CLIENT_MODULE_LIB) $(SERVER_MODULE_LIB)
 
 #----------------------------------------------------------------------------
 #       Dependencies

@@ -2,10 +2,12 @@ Tue Aug 13 10:25:36 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/DLL_ORB/Makefile (CLIENT_MODULE_LIB, SERVER_MODULE_LIB):
 
-	  Added dependencies on the corresponding sources to these
-	  targets.  Without them, changes to the source files would not
-	  cause a top-level "make" to rebuild the libraries built by these
-	  targets.
+	  Added these targets to the ".PHONY" target.  This forces the
+	  top-level Makefile to invoke these targets regardless of whether
+	  or not the actual libraries they build have been built or not.
+	  This fixes a problem where the libraries were not rebuilt after
+	  invoking the top-level Makefile despite the fact that the
+	  library sources were modified.
 
 Tue Aug 13 09:16:44 2002  Ossama Othman  <ossama@uci.edu>
 
