@@ -1,3 +1,9 @@
+Tue Jul 06 10:17:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: use mhmail instead of mailx on Suns.
+          mailx loses the subject, when run from my cron job.  Thanks
+          to Naga for reporting this.
+
 Mon Jul  5 20:45:21 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.(h i): Added code for support of pthread suspend/resume and
@@ -15,52 +21,52 @@ Mon Jul  5 20:45:21 1999  Steve Huston  <shuston@riverace.com>
 
 Mon Jul  5 16:39:50 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Updated the discussion to point out
-	  our support for KAI C++ 3.3, Borland C++ Builder 4.0, and the
- 	  IBM VisualAge C++ compiler.
+        * ACE-INSTALL.html: Updated the discussion to point out
+          our support for KAI C++ 3.3, Borland C++ Builder 4.0, and the
+          IBM VisualAge C++ compiler.
 
-	* ace/Future.h: Moved the static methods until the bottom
-	  of the ACE_Future_Rep class to workaround a bug with Borland's
- 	  C++ Builder.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for testing this fix.
+        * ace/Future.h: Moved the static methods until the bottom
+          of the ACE_Future_Rep class to workaround a bug with Borland's
+          C++ Builder.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for testing this fix.
 
-	* ace/Timer_Heap_T.cpp (grow_heap): Removed an extra memory
-	  allocation that snuck in whilst integrating the IBM VisualAge
- 	  C++ compiler patches.  Thanks to David Levine for reporting
- 	  this.
+        * ace/Timer_Heap_T.cpp (grow_heap): Removed an extra memory
+          allocation that snuck in whilst integrating the IBM VisualAge
+          C++ compiler patches.  Thanks to David Levine for reporting
+          this.
 
-	* Added new Borland Makefiles.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for these.
+        * Added new Borland Makefiles.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for these.
 
-	* include/makeinclude: Added several new platform configuration
-	  files for Borland C++ Builder.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for these.
+        * include/makeinclude: Added several new platform configuration
+          files for Borland C++ Builder.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for these.
 
 Mon Jul  5 13:08:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cache_Map_Manager_Test.cpp: Added ACE_UNUSED_ARG macros
- 	  for <result> to ward off warnings.
+        * tests/Cache_Map_Manager_Test.cpp: Added ACE_UNUSED_ARG macros
+          for <result> to ward off warnings.
 
 Mon Jul 05 13:00:19 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Malloc.i (free): Fixed unused arg warning for <ptr>.
+        * ace/Malloc.i (free): Fixed unused arg warning for <ptr>.
 
-	* examples/Threads/future1.cpp:
-	* examples/Threads/future2.cpp:
+        * examples/Threads/future1.cpp:
+        * examples/Threads/future2.cpp:
 
-	  Fixed template instantiations.
+          Fixed template instantiations.
 
 Mon Jul  5 12:25:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i (strspn):
-	  This function cannot return -1 to indicate errors, the function
-	  returns an unsigned integral type.
+        * ace/OS.i (strspn):
+          This function cannot return -1 to indicate errors, the function
+          returns an unsigned integral type.
 
 Mon Jul 05 12:14:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i: Wchat_t version of strenvdup should only be available
-	  on Win32.  Thanks to Bala, Carlos, and David for noticing this.
-	  (strspn): Ditto to this function.
+        * ace/OS.i: Wchat_t version of strenvdup should only be available
+          on Win32.  Thanks to Bala, Carlos, and David for noticing this.
+          (strspn): Ditto to this function.
 
 Mon Jul 05 09:58:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -172,13 +178,13 @@ Mon Jul 05 04:11:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tests/UPIPE_SAP_Test.cpp:
         * tests/Upgradable_RW_Test.cpp:
         * tests/test_config.h: Changes to make it possible to write pure
-	  UNICODE programs on NT.  Now it is possible to compile ACE on NT
-	  with ACE_HAS_MOSTLY_UNICODE_APIS defined.  Most tests passed
-	  without trouble.  However, Future_Set_Test is not yet included
-	  in the version_tests and Dynamic_Priority_Test also
-	  failed. Thanks to Valery Arkhangorodsky
-	  <valerya@servicesoft.com> for providing a preliminary patch for
-	  ACE to motivate the change.
+          UNICODE programs on NT.  Now it is possible to compile ACE on NT
+          with ACE_HAS_MOSTLY_UNICODE_APIS defined.  Most tests passed
+          without trouble.  However, Future_Set_Test is not yet included
+          in the version_tests and Dynamic_Priority_Test also
+          failed. Thanks to Valery Arkhangorodsky
+          <valerya@servicesoft.com> for providing a preliminary patch for
+          ACE to motivate the change.
 
 Sun Jul 04 18:57:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -412,15 +418,15 @@ Fri Jul  2 13:54:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Jul 02 13:44:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Test.cpp (worker): Added const fix to
-	  <msg> and <rendezvous>.
+        * tests/Thread_Pool_Reactor_Test.cpp (worker): Added const fix to
+          <msg> and <rendezvous>.
 
-	* tests/Priority_Task_Test.cpp: Added const fix to <usage>.
+        * tests/Priority_Task_Test.cpp: Added const fix to <usage>.
 
-	* tests/Notify_Performance_Test.cpp (print_results): Added const
-	  fix to <reactor_type>.
+        * tests/Notify_Performance_Test.cpp (print_results): Added const
+          fix to <reactor_type>.
 
-	* tests/Message_Block_Test.cpp: Added const fix to <name_>.
+        * tests/Message_Block_Test.cpp: Added const fix to <name_>.
 
 Fri Jul  2 11:49:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 

@@ -11,13 +11,14 @@ $usage="$0 [-l log directory] [-m mail recipient(s)]\n";
 ####
 #### Configuration parameters.
 ####
+$subject = 'ACE+TAO build results';
 $find = 'find';
-$mail = 'mail';
+$mail = "mail -s '$subject'";
 
 $ostype = $ENV{'OSTYPE'}  ||  `/bin/uname -s`;
 if ( "$ostype" =~ /(solaris)|(SunOS)/i ) {
   $find = '/pkg/gnu/bin/find';
-  $mail = 'mailx';
+  $mail = "/pkg/mh/bin/mhmail -subject '$subject'";
 }
 
 
