@@ -217,6 +217,10 @@ ORB_CORE_FILES = \
   OctetSeqA \
   StringSeqC \
   StringSeqA \
+  ULongSeqC \
+  ULongSeqA \
+  UShortSeqC \
+  UShortSeqA \
   Codeset_Manager \
   Codeset_Translator_Factory \
   ORB_Core \
