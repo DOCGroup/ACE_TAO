@@ -22,7 +22,7 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Proactor.h"
-#include "ace/WIn32_Proactor.h"
+#include "ace/WIN32_Proactor.h"
 #include "ace/Atomic_Op.h"
 
 ACE_RCSID(Proactor, test_multiple_loops, "$Id$")
@@ -131,5 +131,10 @@ main (int, char *[])
 
   return 0;
 }
-
+#else
+int
+main (int, char *[])
+{
+  return 0;
+}
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */

@@ -13,6 +13,10 @@
 // Note that this application will not work with remote registries
 // if used with the CURRENT_USER predefined registry.
 
+#include "ace/OS.h"
+
+#if defined (ACE_WIN32)
+
 #include "ace/Registry.h"
 #include "ace/streams.h"
 
@@ -146,4 +150,10 @@ setup_names ()
 
   component.id_ = ACE_TEXT ("Instance Counter"), ::counter_name.insert (component);
 }
-
+#else /* !ACE_WIN32 */
+int
+ACE_TMAIN (int , ACE_TCHAR *[])
+{
+  return 0;
+}
+#endif /* ACE_WIN32 */

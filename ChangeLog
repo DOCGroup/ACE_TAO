@@ -1,3 +1,45 @@
+Thu Jul 31 00:49:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        These are changes needed in order to use MPC.
+
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.{h,cpp}:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFCDlg.{h,cpp}:
+        * examples/Log_Msg/Log_Msg_MFC/MFC_Log.cpp:
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * examples/Reactor/WFMO_Reactor/Directory_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Exceptions.cpp:
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * examples/Registry/test_registry_iterator.cpp:
+        * examples/Registry/test_registry_update.cpp:
+        * examples/Service_Configurator/Misc/Timer_Service.cpp:
+          Modified include order and added ifdef's around WIN32 specific
+          code so these projects will compile on non-Windows platforms,
+          since MPC doesn't currently allow you to easily exclude projects
+          based on platform.
+
+
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+          Removed an unused parameter and added parentheses to fix compile
+          warnings and errors.
+
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+          Fixed a capilalization typo in an include, and added an else
+          branch to define a main() function.
+
+        * examples/RMCast/Send_File/RMCast_Send_File.mpc:
+        * tests/RMCast/acetest.mpb:
+          Added a "requires += rmcast" so that these projects would only
+          be compiled if libRMCast had been compiled, i.e., rmcast=1.
+
 Wed Jul 30 19:21:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Global_Macros.h:

@@ -1,8 +1,11 @@
 // Log_Msg_MFC.cpp : Defines the class behaviors for the application.
 // $Id$
 
-#include "stdafx.h"
 #include "Log_Msg_MFC.h"
+
+#if defined (ACE_WIN32)
+
+#include "stdafx.h"
 #include "Log_Msg_MFCDlg.h"
 
 #ifdef _DEBUG
@@ -88,3 +91,5 @@ BOOL CLog_Msg_MFCApp::InitInstance()
 	//  application, rather than start the application's message pump.
 	return FALSE;
 }
+
+#endif /* ACE_WIN32 */
