@@ -1,3 +1,12 @@
+Wed Jan 31 15:12:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR_Stream.h:
+
+          Made method do_byte_swap() public. If ACE_ENABLE_SWAP_ON_WRITE
+          is defined, TAO_GIOP_Message_Base::format_message() and
+          TAO_GIOP_Message_Lite::format_message() both call this method.
+          Thanks to Paul Rubel <prubel@bbn.com> for reporting this bug.
+
 Wed Jan 31 12:19:51 2001  Steve Huston  <shuston@riverace.com>
 
         * docs/tutorials/Chap_2/ex03.html, ex04.html: Fixed these example
