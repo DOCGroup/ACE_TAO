@@ -251,5 +251,5 @@ print HIST "OK\n";
 close(HIST)
     || mydie "cannot close history file";
 
-unline $disable_file
+unlink $disable_file
     || mydie "cannot unlink disable file";
