@@ -1,0 +1,11 @@
+--- CC_command.tab.cpp.orig	Thu Jul 30 13:30:26 1998
++++ CC_command.tab.cpp	Thu Jul 30 13:30:37 1998
+@@ -367,7 +367,7 @@
+     *ace_cc_yyssp = ace_cc_yystate = 0;
+ 
+ ace_cc_yyloop:
+-    if (ace_cc_yyn = ace_cc_yydefred[ace_cc_yystate]) goto ace_cc_yyreduce;
++    if ((ace_cc_yyn = ace_cc_yydefred[ace_cc_yystate])) goto ace_cc_yyreduce;
+     if (ace_cc_yychar < 0)
+     {
+         if ((ace_cc_yychar = ace_cc_yylex()) < 0) ace_cc_yychar = 0;
