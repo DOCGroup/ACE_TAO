@@ -211,12 +211,8 @@ TAO_DIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
   // Extract the data for the node..
   this->messaging_object ()->get_message_data (&qd);
 
-  // Resume before starting to process the request..
-  rh.resume_handle ();
-
   // Process the message
-  return this->process_parsed_messages (&qd);
-
+  return this->process_parsed_messages (&qd, rh);
 }
 
 
