@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -115,7 +115,7 @@ public:
 #include "ace/Timeprobe.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Singleton.h"
 #include "ace/Timeprobe_T.h"
 

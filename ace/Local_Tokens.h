@@ -53,7 +53,9 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-#include "ace/Synch_T.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Condition_Thread_Mutex.h"
+#include "ace/TSS_T.h"
 #include "ace/Containers.h"
 #include "ace/Synch_Options.h"
 #include "ace/Map_Manager.h"
