@@ -219,3 +219,8 @@ WEB  = http://amras.ece.uci.edu/cgi-bin/show_log_dir.cgi?amras_QNX
 TYPE = TIMEONLY
 LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/herb_HPUX_ACC/
 WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
+
+[AIX_VAC]
+TYPE = TIMEONLY
+LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/tripoli_AIX_VAC/
+WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?tripoli_AIX_VAC
