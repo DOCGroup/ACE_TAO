@@ -171,7 +171,7 @@ test_reactor_upcall (ACE_Reactor &reactor)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "t:m:s:l:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:m:s:l:"));
 
   int c;
 

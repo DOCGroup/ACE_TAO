@@ -42,19 +42,19 @@ template <class T>
 class ACE_Cached_Mem_Pool_Node
 {
 public:
-  /// return the address of free memory.
+  /// Return the address of free memory.
   T *addr (void);
 
-  /// get the next ACE_Cached_Mem_Pool_Node in a list.
+  /// Get the next ACE_Cached_Mem_Pool_Node in a list.
   ACE_Cached_Mem_Pool_Node<T> *get_next (void);
 
-  /// set the next ACE_Cached_Mem_Pool_Node.
+  /// Set the next ACE_Cached_Mem_Pool_Node.
   void set_next (ACE_Cached_Mem_Pool_Node<T> *ptr);
 
 private:
   /**
    * Since memory is not used when placed in a free list,
-   * we can use it to maintain the structure of  free list.
+   * we can use it to maintain the structure of free list.
    * I was using union to hide the fact of overlapping memory
    * usage.  However, that cause problem on MSVC.  So, I now turn
    * back to hack this with casting.
@@ -65,7 +65,7 @@ private:
 /**
  * @class ACE_Cached_Allocator
  *
- * @brief Create a cached memory poll with <n_chunks> chunks each with
+ * @brief Create a cached memory pool with <n_chunks> chunks each with
  * sizeof (TYPE) size.
  *
  * This class enables caching of dynamically allocated,
@@ -79,11 +79,11 @@ template <class T, class ACE_LOCK>
 class ACE_Cached_Allocator : public ACE_New_Allocator
 {
 public:
-  /// Create a cached memory poll with <n_chunks> chunks
+  /// Create a cached memory pool with <n_chunks> chunks
   /// each with sizeof (TYPE) size.
   ACE_Cached_Allocator (size_t n_chunks);
 
-  /// clear things up.
+  /// Clear things up.
   ~ACE_Cached_Allocator (void);
 
   /**
@@ -124,7 +124,7 @@ private:
 /**
  * @class ACE_Dynamic_Cached_Allocator
  *
- * @brief Create a cached memory poll with <n_chunks> chunks each with
+ * @brief Create a cached memory pool with <n_chunks> chunks each with
  * requested size <chunk_size>.
  *
  * This class enables caching of dynamically allocated,
@@ -138,11 +138,11 @@ template <class ACE_LOCK>
 class ACE_Dynamic_Cached_Allocator : public ACE_New_Allocator
 {
 public:
-  /// Create a cached memory poll with <n_chunks> chunks
+  /// Create a cached memory pool with <n_chunks> chunks
   /// each with <chunk_size> size.
   ACE_Dynamic_Cached_Allocator (size_t n_chunks, size_t chunk_size);
 
-  /// clear things up.
+  /// Clear things up.
   ~ACE_Dynamic_Cached_Allocator (void);
 
   /**
@@ -178,7 +178,7 @@ private:
 
   /// Maintain a cached memory free list. We use <char> as template
   /// parameter, although sizeof(char) is usually less than
-  /// sizeof(void*). Really important is that <chunk_size> 
+  /// sizeof(void*). Really important is that <chunk_size>
   /// must be >= sizeof(void*).
   ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<char>, ACE_LOCK> free_list_;
 
@@ -190,7 +190,7 @@ private:
  * @class ACE_Allocator_Adapter
  *
  * @brief This class is an Adapter that allows the <ACE_Allocator> to
- * use the <Malloc> class below.
+ * use the <ACE_Malloc> class below.
  */
 template <class MALLOC>
 class ACE_Allocator_Adapter : public ACE_Allocator
@@ -210,6 +210,7 @@ public:
   // = Initialization.
   ACE_Allocator_Adapter (const char *pool_name = 0);
 
+  /// Constructor (this has to be inline to avoid bugs with some C++ compilers.
   ACE_Allocator_Adapter (const char *pool_name,
                          const char *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
@@ -219,11 +220,11 @@ public:
     {
       ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
     }
-  // Constructor (this has to be inline to avoid bugs with some C++ compilers.
 
 #if defined (ACE_HAS_WCHAR)
   ACE_Allocator_Adapter (const wchar_t *pool_name);
 
+  /// Constructor (this has to be inline to avoid bugs with some C++ compilers.
   ACE_Allocator_Adapter (const wchar_t *pool_name,
                          const wchar_t *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
@@ -233,7 +234,6 @@ public:
     {
       ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
     }
-  // Constructor (this has to be inline to avoid bugs with some C++ compilers.
 #endif /* ACE_HAS_WCHAR */
 
   /// Destructor.
@@ -285,7 +285,7 @@ public:
   virtual int trybind (const char *name, void *&pointer);
 
   /// Locate <name> and pass out parameter via pointer.  If found,
-  /// return 0, Returns -1 if <name> isn't found.
+  /// return 0, returns -1 if <name> isn't found.
   virtual int find (const char *name, void *&pointer);
 
   /// Returns 0 if the name is in the mapping and -1 if not.
@@ -536,8 +536,8 @@ public:
    * have reached a water mark. This implies a fixed amount of allocated
    * memory.
    *
-   * @param size - the chunk size of that you would like a count of
-   * @return function returns the number of chunks of the given size
+   * @param size - The chunk size of that you would like a count of
+   * @return Function returns the number of chunks of the given size
    *          that would fit in the currently allocated memory.
    */
   ssize_t avail_chunks (size_t size) const;
@@ -609,11 +609,12 @@ public:
   typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization method.
-  /// if <name> = 0 it will iterate through everything else only
+  /// If <name> = 0 it will iterate through everything else only
   /// through those entries whose <name> match.
   ACE_Malloc_LIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
                               const char *name = 0);
 
+  /// Destructor.
   ~ACE_Malloc_LIFO_Iterator_T (void);
 
   // = Iteration methods.
@@ -672,11 +673,12 @@ public:
   typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization method.
-  /// if <name> = 0 it will iterate through everything else only
+  /// If <name> = 0 it will iterate through everything else only
   /// through those entries whose <name> match.
   ACE_Malloc_FIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
                               const char *name = 0);
 
+  /// Destructor.
   ~ACE_Malloc_FIFO_Iterator_T (void);
 
   // = Iteration methods.
@@ -762,7 +764,7 @@ class ACE_Malloc_LIFO_Iterator : public ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_
 {
 public:
   // = Initialization method.
-  /// if <name> = 0 it will iterate through everything else only
+  /// If <name> = 0 it will iterate through everything else only
   /// through those entries whose <name> match.
   ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
                             const char *name = 0);
@@ -773,7 +775,7 @@ class ACE_Malloc_FIFO_Iterator : public ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_
 {
 public:
   // = Initialization method.
-  /// if <name> = 0 it will iterate through everything else only
+  /// If <name> = 0 it will iterate through everything else only
   /// through those entries whose <name> match.
   ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
                             const char *name = 0);
