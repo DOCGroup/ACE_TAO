@@ -8,6 +8,8 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 
+ACE_RCSID(Trading, colocated_test, "$Id$")
+
 void
 parse_args (int argc, char *argv[],
             CORBA::Boolean& verbose)

@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -20,6 +20,8 @@
 
 #include "ace/Read_Buffer.h"
 #include "CC_client.h"
+
+ACE_RCSID(Concurrency, CC_client, "$Id$")
 
 // Constructor.
 CC_Client::CC_Client (void)

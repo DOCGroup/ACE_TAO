@@ -1,4 +1,5 @@
 /* $Id$  */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -26,6 +27,8 @@
 
 #include "Video_Server.h"
 #include "orbsvcs/CosNamingC.h"
+
+ACE_RCSID(mpeg_server, Video_Server, "$Id$")
 
 // Video_Sig_Handler methods
 // handles the timeout SIGALRM signal

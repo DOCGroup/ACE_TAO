@@ -16,6 +16,8 @@
 
 #include "CosNaming_i.h"
 
+ACE_RCSID(Naming, CosNaming_i, "$Id$")
+
 NS_NamingContext::NS_NamingContext (size_t default_hash_table_size)
   : lock_ (0)
 {

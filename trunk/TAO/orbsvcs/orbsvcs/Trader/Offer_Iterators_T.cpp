@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 // ============================================================================
 // $Id$
 //
@@ -19,6 +17,8 @@
 #define  TAO_OFFER_ITERATORS_T_C
 
 #include "Offer_Iterators_T.h"
+
+ACE_RCSID(Trader, Offer_Iterators_T, "$Id$")
 
 template <class MAP_LOCK_TYPE>
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::

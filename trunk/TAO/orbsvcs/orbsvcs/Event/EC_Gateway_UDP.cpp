@@ -1,10 +1,10 @@
-//
 // $Id$
-//
 
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
+
+ACE_RCSID(Event, EC_Gateway_UDP, "$Id$")
 
 // ****************************************************************
 

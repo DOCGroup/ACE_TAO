@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 // ============================================================================
 //
@@ -23,6 +22,8 @@
 #include "ace/Process.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include <stdio.h>
+
+ACE_RCSID(Concurrency, CC_command, "$Id$")
 
 CC_Command::~CC_Command(void)
 {

@@ -15,6 +15,8 @@
 
 #include "Entries.h"
 
+ACE_RCSID(Naming, Entries, "$Id$")
+
 NS_IntId::NS_IntId (void)
   : type_ (CosNaming::nobject)
 {

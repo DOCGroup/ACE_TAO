@@ -16,6 +16,8 @@
 
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 
+ACE_RCSID(AV, Endpoint_Strategy, "$Id$")
+
 // ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Strategy
 // ----------------------------------------------------------------------

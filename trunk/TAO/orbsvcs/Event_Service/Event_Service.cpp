@@ -10,6 +10,8 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
 
+ACE_RCSID(Event_Service, Event_Service, "$Id$")
+
 const char* service_name = "EventService";
 // The name we use to register with the Naming Service.
 

@@ -3,6 +3,8 @@
 #include "Video_Control_State.h"
 #include "Video_Server.h"
 
+ACE_RCSID(mpeg_server, Video_Control_State, "$Id$")
+
 Video_Control_State::Video_Control_State ()
   : vci_ (VIDEO_CONTROL_I::instance ())
 {

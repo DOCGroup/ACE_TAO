@@ -2,6 +2,8 @@
 
 #include "Logging_Service_i.h"
 
+ACE_RCSID(Logging_Service, Logging_Service, "$Id$")
+
 int
 main (int argc, char *argv[])
 {

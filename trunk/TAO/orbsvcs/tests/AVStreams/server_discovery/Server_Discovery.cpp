@@ -12,6 +12,8 @@
 #include "Server_0005fDiscovery_0005fUtil.h"
 #include "Trader_Client.h"
 
+ACE_RCSID(server_discovery, Server_Discovery, "$Id$")
+
 // Since we're doing C-like function calls here, let's throw in some
 // global variables for good measure.
 

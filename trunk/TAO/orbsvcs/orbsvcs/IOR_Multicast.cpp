@@ -2,6 +2,8 @@
 
 #include "IOR_Multicast.h"
 
+ACE_RCSID(orbsvcs, IOR_Multicast, "$Id$")
+
 ACE_HANDLE
 TAO_IOR_Multicast::get_handle (void) const
 {

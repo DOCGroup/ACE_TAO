@@ -18,6 +18,7 @@
 #include "orbsvcs/LifeCycleServiceC.h"
 #include "Life_Cycle_Service_Impl.h"
 
+ACE_RCSID(LifeCycle_Service, Life_Cycle_Service_Impl, "$Id$")
 
 // Constructor
 Life_Cycle_Service_Impl::Life_Cycle_Service_Impl (void)

@@ -1,11 +1,12 @@
-//
 // $Id$
-//
+
 #include "orbsvcs/Event_Utilities.h"
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/Event_Utilities.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID(orbsvcs, Event_Utilities, "$Id$")
 
 ACE_ConsumerQOS_Factory::ACE_ConsumerQOS_Factory (void)
   : designator_set_ (0)

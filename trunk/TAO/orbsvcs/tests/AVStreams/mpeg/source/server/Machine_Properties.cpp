@@ -2,6 +2,8 @@
 
 #include "Machine_Properties.h"
 
+ACE_RCSID(server, Machine_Properties, "$Id$")
+
 const int TAO_Machine_Properties::NUM_PROPERTIES = 10;
 
 const int DEFAULT_TIMEOUT_SEC = 1;

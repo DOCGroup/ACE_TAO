@@ -16,6 +16,8 @@
 #include "GPlot_File.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Event, GPlot_File, "$Id$")
+
 int
 ACE_GPlot_File::open (const char *filename)
 {

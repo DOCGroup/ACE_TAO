@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -19,6 +20,7 @@
  * ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
+
 /* This file contains C code to implement an ordered dither in the 
    luminance channel and F-S error diffusion on chrominance.
 */
@@ -28,6 +30,8 @@
 #include "video.h"
 #include "proto.h"
 #include "dither.h"
+
+ACE_RCSID(mpeg_client, hybriderr, "$Id$")
 
 #define DITH_SIZE 16
 

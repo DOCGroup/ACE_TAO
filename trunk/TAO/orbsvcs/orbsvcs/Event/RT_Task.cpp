@@ -13,6 +13,8 @@
 
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(Event, RT_Task, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_RT_Task_Timeprobe_Description[] =

@@ -18,6 +18,8 @@
 #include "AnyAnalyser.h"
 #include "tao/Align.h"
 
+ACE_RCSID(DOVEMIB, AnyAnalyser, "$Id$")
+
 AnyAnalyser::AnyAnalyser (const char *file_name) 
   : printVisitor_ptr_(new PrintVisitor (file_name)) {
 }

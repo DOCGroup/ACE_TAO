@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -19,11 +20,14 @@
  * ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
+
 #include <stdlib.h>
 #include <string.h>
 #include "video.h"
 #include "dither.h"
 #include "proto.h"
+
+ACE_RCSID(mpeg_client, 24bit, "$Id$")
 
 /*
  * We'll define the "ConvertColor" macro here to do fixed point arithmetic

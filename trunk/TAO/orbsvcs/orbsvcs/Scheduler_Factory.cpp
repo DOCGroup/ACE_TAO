@@ -10,6 +10,8 @@
 #include "orbsvcs/Scheduler_Factory.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(orbsvcs, Scheduler_Factory, "$Id$")
+
 // initialize static class members
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
 ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =

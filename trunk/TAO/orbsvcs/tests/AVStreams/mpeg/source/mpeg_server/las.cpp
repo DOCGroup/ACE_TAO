@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -39,6 +40,8 @@
 
 #include "include/common.h"
 #include "server_proto.h"
+
+ACE_RCSID(mpeg_server, las, "$Id$")
 
 #ifdef LIVE_AUDIO
 
@@ -182,6 +185,8 @@ int ReadLiveAudioSamples(char * buf, int samples)
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Intrinsic.h>
+
+ACE_RCSID(mpeg_server, las, "$Id$")
 
 static int sunfd1;
 static int bps;

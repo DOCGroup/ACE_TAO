@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -23,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+
 #include <stdio.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -41,6 +43,8 @@
 #include "include/common.h"
 #include "newproto.h"
 #include "global.h"
+
+ACE_RCSID(mpeg_client, prog, "$Id$")
 
 #define NUM_LIST_ITEMS 20
 #define STRING_SIZE 100

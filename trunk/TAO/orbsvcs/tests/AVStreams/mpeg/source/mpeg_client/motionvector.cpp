@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -19,9 +20,12 @@
  * ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
+
 #include "video.h"
 #include "proto.h"
 #include "util.h"
+
+ACE_RCSID(mpeg_client, motionvector, "$Id$")
 
 
 /*

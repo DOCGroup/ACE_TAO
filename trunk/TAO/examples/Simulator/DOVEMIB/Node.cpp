@@ -16,7 +16,7 @@
 
 #include "Node.h"
 
-
+ACE_RCSID(DOVEMIB, Node, "$Id$")
 
 StructNode::StructNode (const char *Name_ptr,
 			unsigned int recursion_level) {

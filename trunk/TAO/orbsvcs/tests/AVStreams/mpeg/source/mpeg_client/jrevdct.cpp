@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * jrevdct.c
  *
@@ -30,6 +31,8 @@
 #include <string.h>
 #include "video.h"
 #include "proto.h"
+
+ACE_RCSID(mpeg_client, jrevdct, "$Id$")
 
 #define GLOBAL			/* a function referenced thru EXTERNs */
   

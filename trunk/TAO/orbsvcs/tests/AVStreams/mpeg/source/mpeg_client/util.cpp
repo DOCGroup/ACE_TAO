@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -24,6 +25,8 @@
 #include "video.h"
 #include "proto.h"
 #include "util.h"
+
+ACE_RCSID(mpeg_client, util, "$Id$")
 
 #define TRUE 1
 #define FALSE 0

@@ -2,6 +2,8 @@
 
 #include "client_i.h"
 
+ACE_RCSID(Logger, client, "$Id$")
+
 // This function runs the Logging service test.
 
 int

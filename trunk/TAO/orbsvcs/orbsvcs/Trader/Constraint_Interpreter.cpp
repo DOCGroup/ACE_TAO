@@ -1,5 +1,3 @@
-// Constraint_Interpreter.cpp
-
 // ========================================================================
 // $Id$
 //
@@ -16,6 +14,8 @@
 
 #include "ace/OS.h"
 #include "Constraint_Interpreter.h"
+
+ACE_RCSID(Trader, Constraint_Interpreter, "$Id$")
 
   // *************************************************************
   // TAO_Interpreter

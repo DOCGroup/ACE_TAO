@@ -1,10 +1,13 @@
 /* $Id$ */
+
 #include <stdio.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include "video.h"
 #include "proto.h"
 #include "ui.h"                         /* include user interface */
+
+ACE_RCSID(mpeg_client, util32, "$Id$")
 
 /*
  * Return a pointer to a full color bit visual on the dpy

@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -35,6 +36,8 @@
 */
 #include "filters.h"
 #include "ace/OS.h"
+
+ACE_RCSID(mpeg_shared, filters, "$Id$")
 
 #define BUFSIZE 256
 #define maxval(a,b) ((a) > (b) ? (a) : (b))

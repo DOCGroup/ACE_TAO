@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -20,6 +20,7 @@
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"
 
+ACE_RCSID(Concurrency, CC_test_utils, "$Id$")
 
 char *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {

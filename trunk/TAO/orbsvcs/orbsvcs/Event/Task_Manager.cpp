@@ -7,6 +7,8 @@
 #include "Task_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Event, Task_Manager, "$Id$")
+
 ACE_Task_Manager::ACE_Task_Manager (void)
   : shutdown_ (0)
 {

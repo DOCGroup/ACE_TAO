@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -42,6 +43,8 @@
 #include "include/common.h" 
 #include "mpeg_shared/routine.h"
 #include "server_proto.h"
+
+ACE_RCSID(mpeg_server, lvs, "$Id$")
 
 #ifdef LIVE_VIDEO
 #include "lvs_shared.h"

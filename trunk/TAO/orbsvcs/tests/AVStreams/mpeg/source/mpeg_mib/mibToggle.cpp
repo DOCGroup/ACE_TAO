@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1994 The Geometry Center; University of Minnesota
    1300 South Second Street;  Minneapolis, MN  55454, USA;
 
@@ -7,11 +8,12 @@ under the the terms of the GNU GENERAL PUBLIC LICENSE which should be
 included along with thisw file.  This software may be obtained via anonymous
 ftp from geom.umn.edu; email: software@geom.umn.edu. */
 
-
 /* Author: Daeron Meyer */
 
 #include "mibload.h"
 #include "mibwidgets.h"
+
+ACE_RCSID(mpeg_mib, mibToggle, "$Id$")
 
 extern Display	*dpy;
 extern GC	 mib_gc;

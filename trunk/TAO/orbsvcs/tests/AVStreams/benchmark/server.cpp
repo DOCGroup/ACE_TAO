@@ -1,7 +1,8 @@
 // $Id$
 
-
 #include "server.h"
+
+ACE_RCSID(benchmark, server, "$Id$")
 
 // AV_Server_Sig_Handler routines
 

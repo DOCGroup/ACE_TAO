@@ -28,6 +28,8 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "DOVEMIB.h"
 
+ACE_RCSID(DOVEMIB, DOVEMIB, "$Id$")
+
 static const char usage [] = 
 "[-? |\n"
 "            [-O[RBport] ORB port number]"

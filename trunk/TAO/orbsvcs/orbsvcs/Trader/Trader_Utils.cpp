@@ -1,7 +1,8 @@
-// File: Trader_Utils.cpp
 // $Id$
 
 #include "Trader_Utils.h"
+
+ACE_RCSID(Trader, Trader_Utils, "$Id$")
 
   // *************************************************************
   // TAO_Policy_Manager

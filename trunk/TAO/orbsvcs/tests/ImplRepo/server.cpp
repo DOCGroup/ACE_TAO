@@ -2,6 +2,8 @@
 
 #include "server_impl.h"
 
+ACE_RCSID(ImplRepo, server, "$Id$")
+
 int
 main (int argc, char *argv[])
 {

@@ -11,6 +11,8 @@
 
 #include "Trader_Client.h"
 
+ACE_RCSID(server_discovery, Trader_Client, "$Id$")
+
 Trader_Client* Trader_Client::instance_ = 0;
 
 Trader_Client*

@@ -7,6 +7,8 @@
 #include "orbsvcs/LoggerC.h"
 #include "client_i.h"
 
+ACE_RCSID(Logger, client_i, "$Id$")
+
 // Constructor
 Logger_Client::Logger_Client (void)
 {

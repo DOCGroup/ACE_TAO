@@ -1,7 +1,8 @@
-
 // $Id$
 
 #include "client.h"
+
+ACE_RCSID(benchmark, client, "$Id$")
 
 Client_StreamEndPoint::Client_StreamEndPoint (void)
 {

@@ -21,6 +21,8 @@
 #include "NS_client.h"
 #include "stdio.h"
 
+ACE_RCSID(Concurrency, NS_client, "$Id$")
+
 // constructor
 
 CosNaming_Client::CosNaming_Client (void)

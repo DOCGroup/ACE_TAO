@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -19,6 +20,7 @@
  * ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
+
 /*
  * decoders.c
  *
@@ -33,6 +35,8 @@
 #include "util.h" 
 #include "video.h"
 #include "proto.h"
+
+ACE_RCSID(mpeg_client, decoders, "$Id$")
 
 /* Decoding table for macroblock_address_increment */
 mb_addr_inc_entry     mb_addr_inc[2048];

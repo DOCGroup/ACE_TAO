@@ -7,6 +7,8 @@
 #include "Memory_Pools.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Event, Memory_Pools, "$Id$")
+
 //ACE_TSS<ACE_ES_Dispatch_Request_Allocator> ACE_ES_Memory_Pools::Dispatch_Request_;
 //ACE_TSS<ACE_ES_Event_Container_Allocator> ACE_ES_Memory_Pools::Event_Container_;
 //ACE_TSS<ACE_ES_Event_Allocator> ACE_ES_Memory_Pools::Event_;

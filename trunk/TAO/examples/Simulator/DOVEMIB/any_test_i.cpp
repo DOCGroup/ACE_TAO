@@ -17,6 +17,7 @@
 #include "NavWeapC.h"
 #include "AnyAnalyser.h"
 
+ACE_RCSID(DOVEMIB, any_test_i, "$Id$")
 
 // Constructor
 Any_Test_i::Any_Test_i (const char *obj_name)

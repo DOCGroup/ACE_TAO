@@ -1,8 +1,11 @@
 // $Id$
+
 #ifndef TAO_OFFER_DATABASE_C
 #define TAO_OFFER_DATABASE_C
 
 #include "Offer_Database.h"
+
+ACE_RCSID(Trader, Offer_Database, "$Id$")
 
 template <class LOCK_TYPE>
 TAO_Offer_Database<LOCK_TYPE>::TAO_Offer_Database (void)

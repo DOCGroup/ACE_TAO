@@ -3,6 +3,7 @@
 #include "ace/ACE.h"
 #include "BCU.h"
 
+ACE_RCSID(Event, BCU, "$Id$")
 
 u_long
 ACE_BCU (u_long n)

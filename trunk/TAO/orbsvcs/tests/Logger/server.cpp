@@ -2,6 +2,8 @@
 
 #include "server_i.h"
 
+ACE_RCSID(Logger, server, "$Id$")
+
 int
 main (int argc, char *argv[])
 {

@@ -5,6 +5,8 @@
 #include "orbsvcs/Log/Logger_i.h"
 #include "ace/Log_Record.h"
 
+ACE_RCSID(Log, Logger_i, "$Id$")
+
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
                                CORBA::Environment &_env)

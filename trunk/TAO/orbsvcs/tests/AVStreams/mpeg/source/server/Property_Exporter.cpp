@@ -2,6 +2,7 @@
 
 #include "Property_Exporter.h"
 
+ACE_RCSID(server, Property_Exporter, "$Id$")
 
 // *************************************************************
 // DP_Adapter

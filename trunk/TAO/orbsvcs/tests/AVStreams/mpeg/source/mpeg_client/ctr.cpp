@@ -1,4 +1,5 @@
 // $Id$
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -23,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+
 #include <stdio.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -51,6 +53,8 @@
 #include "mpeg_shared/fileio.h"
 #include "mpeg_shared/com.h"
 #include "Command_Handler.h"
+
+ACE_RCSID(mpeg_client, ctr, "$Id$")
 
 #define SPEEDHIST_SIZE 20
 

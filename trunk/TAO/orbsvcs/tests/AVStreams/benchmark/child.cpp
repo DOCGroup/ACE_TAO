@@ -1,7 +1,9 @@
 // $Id$
 
-
 #include "child.h"
+
+ACE_RCSID(benchmark, child, "$Id$")
+
 // Bench_Server_StreamEndPoint methods.
 
 Bench_Server_StreamEndPoint::Bench_Server_StreamEndPoint (void)

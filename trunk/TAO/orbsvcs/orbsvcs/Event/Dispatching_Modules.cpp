@@ -13,6 +13,8 @@
 
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(Event, Dispatching_Modules, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Dispatching_Modules_Timeprobe_Description[] =

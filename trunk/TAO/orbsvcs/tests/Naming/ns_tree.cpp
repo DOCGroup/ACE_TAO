@@ -20,6 +20,8 @@
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "test_objectS.h"
 
+ACE_RCSID(Naming, ns_tree, "$Id$")
+
 class My_Test_Object : public POA_Test_Object
 {
 public:

@@ -3,7 +3,8 @@
 #include "mpeg_server/Audio_Server.h"
 #include "as.h"
 
- 
+ACE_RCSID(server, as, "$Id$")
+
 int
 Audio_Child_Process::init (int argc,
                            char **argv)
