@@ -1,0 +1,13 @@
+# $Id$
+
+  - Counter.idl
+
+    IDL interface definition.
+
+  - Counter_i.h,cpp
+    
+    IDL interface implementation.
+
+  - client.cpp
+
+  - server.cpp
