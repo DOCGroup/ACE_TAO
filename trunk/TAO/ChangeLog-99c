@@ -1,3 +1,21 @@
+Tue May 11 18:06:40 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/corbafwd.h
+	* tao/corba.h
+	* tao/TypeCode_Constants.cpp
+	* tao/Services.i (New file)
+	* tao/Services.cpp (New file)
+	* tao/Services.h (New file): Addition of new data types that we
+	had not and which is being carefully looked for by the test suite
+	from Open Group. The data types added include ServiceType,
+	ServiceDetailType, ServiceOption, ServiceDetail,
+	ServiceInformation. The defintions come from vide. CORBA 2.2 spec,
+	chapter4, pg-4.2. The above data types have been tested on SunCC &
+	Linux_EGCS with some test cases in TAO liek Param_Test. They
+	compiled clena and ran without any errors. 
+	
+
 Tue May 11 17:47:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/append.cpp:
