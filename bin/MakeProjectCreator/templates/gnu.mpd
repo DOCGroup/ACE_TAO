@@ -376,7 +376,7 @@ endif
 # target before building any of the source files.
 FORCED_IDL_STUBS = <%source_files%>
 
-ADDITIONAL_IDL_TARGETS += <%foreach(idl_files)%><%if(flag_overrides(idl_file, gendir))%><%flag_overrides(idl_file, gendir)%>/<%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%else%><%noextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%endif%><%endfor%>
+ADDITIONAL_IDL_TARGETS +=<%foreach(idl_files)%> <%if(flag_overrides(idl_file, gendir))%><%flag_overrides(idl_file, gendir)%>/<%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%else%><%noextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%endif%><%endfor%>
 
 ## We really only want the generated source files, but there's no
 ## way to get just the cpp files from the custom_type output files in MPC
