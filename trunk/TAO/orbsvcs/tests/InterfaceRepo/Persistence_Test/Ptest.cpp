@@ -75,7 +75,8 @@ Ptest::init (int argc,
 int
 Ptest::run (void)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       if (this->query_ == 1)
         {
