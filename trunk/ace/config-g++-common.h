@@ -27,6 +27,10 @@
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 # endif /* __GNUC__ != 2.91 */
 
+# if __GNUC__ == 2 && __GNUC_MINOR__ < 8
+#   define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
+# endif /* __GNUC__ == 2 && __GNUC_MINOR__ < 8 */
+
   // Some versions of egcs, e.g., egcs-2.90.27 980315 (egcs-1.0.2 release),
   // have bugs with static data members in template classes.
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
