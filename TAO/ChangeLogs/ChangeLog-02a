@@ -1,3 +1,9 @@
+Fri Sep 22 12:20:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/tests/ImplRepo/run_test.pl:
+
+	  Added missing quotes around a couple of ACE_ROOTs.
+
 Thu Sep 21 19:27:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_produce.cpp:
