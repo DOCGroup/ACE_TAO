@@ -390,7 +390,7 @@
 #        define ACE_bad_alloc std::bad_alloc
 #        define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #      endif /* __SUNPRO_CC < 0x500 */
-#  elif defined (__BORLANDC__)
+#  elif defined (__BORLANDC__) || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) 
 #    include /**/ <new>
 #    define ACE_bad_alloc std::bad_alloc
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
