@@ -25,6 +25,9 @@
  */
 /* data structure used by StatFile() */
 
+#if !defined (_MPEG_FILE_IO_H)
+#define _MPEG_FILE_IO_H
+
 struct StatBuf
 {
   unsigned short mode;
@@ -93,3 +96,5 @@ int wait_read_bytes(int s, char *buf, int size);
    encountered */
 
 int wait_write_bytes(int s, char *buf, int size);
+
+#endif /* _MPEG_FILE_IO_H */

@@ -243,6 +243,9 @@ Video_Timer_Global::TimerProcessing (void)
 void
 Video_Timer_Global::timerHandler (int sig)
 {
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "Video_Timer_Global::timerHandler\n"));
+
   int val2, val3;
   int usec = VIDEO_SINGLETON::instance ()->currentUPF + VIDEO_SINGLETON::instance ()->addedUPF;
   
