@@ -201,7 +201,7 @@ private:
 };
 
 template <size_t POOL_SIZE>
-class ACE_Static_Allocator : public ACE_Allocator
+class ACE_Static_Allocator : public ACE_Static_Allocator_Base
 {
   // = TITLE
   //     Defines a class that provided a highly optimized memory
@@ -209,38 +209,16 @@ class ACE_Static_Allocator : public ACE_Allocator
   //
   // = DESCRIPTION
   //     This class allocates a fixed-size <POOL_SIZE> of memory and
-  //     every time <malloc>/<calloc> is called, it simply moves an
-  //     internal index forward and returns a pointer to the requested
-  //     chunk.  All memory is allocated statically and <free> is a
-  //     no-op.  This behavior is focused on use-cases where all the
-  //     memory allocation needs are known in advance.
+  //     uses the <ACE_Static_Allocator_Base> class implementations of
+  //     <malloc> and <calloc> to optimize memory allocation from this
+  //     pool.
 public:
   ACE_Static_Allocator (void);
-  virtual void *malloc (size_t nbytes); 
-  virtual void *calloc (size_t nbytes, char initial_value = '\0');
-  virtual void free (void *ptr);
-  virtual int remove (void);
-  virtual int bind (const char *name, void *pointer, int duplicates = 0);
-  virtual int trybind (const char *name, void *&pointer);
-  virtual int find (const char *name, void *&pointer);
-  virtual int find (const char *name);
-  virtual int unbind (const char *name);
-  virtual int unbind (const char *name, void *&pointer);
-  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
-  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR); 
-  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
-#if defined (ACE_HAS_MALLOC_STATS)
-  virtual void print_stats (void) const;
-#endif /* ACE_HAS_MALLOC_STATS */ 
-  virtual void dump (void) const;
+  // This function <{must}> be inlined!!!
 
 private:
   char pool_[POOL_SIZE];
-  // Byte in the pool.
-
-  size_t offset_;
-  // Pointer into the <pool_> buffer.
+  // Pool contents.
 };
 
 // Forward declaration.

@@ -57,14 +57,18 @@ ACE_SOCK::open (int type,
   ACE_TRACE ("ACE_SOCK::open");
   int one = 1;
 
-  this->set_handle (ACE_OS::socket (protocol_family, type, protocol));
+  this->set_handle (ACE_OS::socket (protocol_family,
+                                    type,
+                                    protocol));
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
     return -1;
   else if (protocol_family != PF_UNIX &&
            reuse_addr 
-           && this->set_option (SOL_SOCKET, SO_REUSEADDR,
-                                &one, sizeof one) == -1)
+           && this->set_option (SOL_SOCKET,
+                                SO_REUSEADDR,
+                                &one,
+                                sizeof one) == -1)
     {
       this->close ();
       return -1;
