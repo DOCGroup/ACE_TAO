@@ -41,7 +41,7 @@ public:
   // destructor
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-  // visit valuetype_fwd
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
 };
 
 #endif /* _BE_VALUETYPE_FWD_ANY_OP_CH_H_ */

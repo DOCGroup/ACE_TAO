@@ -151,7 +151,8 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 }
 
 int
-be_visitor_valuetype_init_cs::visit_factory (be_factory *)
+be_visitor_valuetype_init_cs::visit_eventtype (be_eventtype *node)
 {
-  return 0;
+  return this->visit_valuetype (node);
 }
+

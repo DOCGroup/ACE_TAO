@@ -42,8 +42,7 @@ public:
   // destructor
 
   virtual int visit_valuetype (be_valuetype *node);
-  // visit valuetype
-
+  virtual int visit_eventtype (be_eventtype *node);
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_MARSHAL_CH_H_ */

@@ -688,6 +688,24 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
 
   os->gen_endif ();
 
+  /* Set this before visiting the scope so things like
+  
+      interface foo
+      {
+        struct bar
+        {
+          ....
+          foo foo_member;
+        };
+        
+        void op (in bar inarg);
+      };
+      
+     will not cause infinite recursion in this visitor.
+  */
+  
+  this->generated (node, I_TRUE);
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -696,7 +714,6 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -780,6 +797,24 @@ be_visitor_arg_traits::visit_union (be_union *node)
 
   os->gen_endif ();
 
+  /* Set this before visiting the scope so things like
+  
+      interface foo
+      {
+        struct bar
+        {
+          ....
+          foo foo_member;
+        };
+        
+        void op (in bar inarg);
+      };
+      
+     will not cause infinite recursion in this visitor.
+  */
+  
+  this->generated (node, I_TRUE);
+
   int status = this->visit_scope (node);
 
   if (status != 0)
@@ -790,7 +825,6 @@ be_visitor_arg_traits::visit_union (be_union *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
   return 0;
 }
 

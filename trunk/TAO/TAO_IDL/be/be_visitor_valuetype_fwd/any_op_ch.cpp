@@ -77,3 +77,10 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
   node->cli_hdr_any_op_gen (1);
   return 0;
 }
+
+int
+be_visitor_valuetype_fwd_any_op_ch::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  return this->visit_valuetype_fwd (node);
+}
+

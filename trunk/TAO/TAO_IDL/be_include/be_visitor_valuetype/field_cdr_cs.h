@@ -58,10 +58,8 @@ public:
   // visit interface forward type
 
   virtual int visit_valuetype (be_valuetype *node);
-  // visit valuetype type
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-  // visit valuetype forward type
 
   virtual int visit_component (be_component *node);
   // visit component type

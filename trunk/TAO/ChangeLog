@@ -1,3 +1,130 @@
+Mon Feb 14 23:05:55 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_recursive.cpp:
+        * TAO_IDL/be/be_eventtype.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_si.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/any_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_cdr_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/marshal_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/marshal_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_init.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_obv_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_obv_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_obv_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_sh.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_si.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_ss.h:
+        * TAO_IDL/be_include/be_visitor_valuetype_fwd/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h:
+
+	  - Removed all eventtype visitors, they all just delegate to
+	    the corresponding valuetype visitor. Added visit_eventtype()
+	    methods to valuetype visitors where necessary so the delegation
+	    can be done within the valuetype visitor itself and still
+	    keep the polymorphism in be_eventtype::visit_eventtype(),
+	    since the arg traits and ccm-preproc visitors still need
+	    it.
+
+	  - Changed error checking to allow a struct/union/sequence/array
+	    defined inside an interface to contain that interface
+	    as a member or element type, that is, this is no longer
+	    regarded by the IDL compiler as illegal recursion.
+
+	  - Fixed bug that aborted the IDL compiler when an eventtype
+	    contained a constant declaration. Thanks to Steven Baker
+	    <Steven_D_Baker@raytheon.com> for reporting the bug.
+
+        * TAO_IDL/be/be_visitor_eventtype.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_ci.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_cs.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_obv_ci.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_obv_cs.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_sh.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_si.cpp:
+        * TAO_IDL/be/be_visitor_eventtype/eventtype_ss.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/eventtype_fwd_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_eventtype.h:
+        * TAO_IDL/be_include/be_visitor_eventtype_fwd.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/any_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_ch.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_ci.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_cs.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_obv_ch.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_obv_ci.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_obv_cs.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_sh.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_si.h:
+        * TAO_IDL/be_include/be_visitor_eventtype/eventtype_ss.h:
+        * TAO_IDL/be_include/be_visitor_eventtype_fwd/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_eventtype_fwd/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_eventtype_fwd/eventtype_fwd_ch.h:
+
+	  Files removed as part of the fix in the first listed item
+	  above.
+
 Mon Feb 14 09:25:27 2005  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:

@@ -269,6 +269,12 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 }
 
 int
+be_visitor_valuetype_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
 be_visitor_valuetype_cs::visit_operation (be_operation *node)
 {
   if (node->cli_stub_gen () || node->imported ())
