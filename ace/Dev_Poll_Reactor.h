@@ -974,7 +974,7 @@ protected:
    * @note It is only possible to achieve millisecond timeout
    *       resolutions with the ACE_Dev_Poll_Reactor.
    */
-  int work_pending_i (ACE_Time_Value &max_wait_time);
+  int work_pending_i (ACE_Time_Value *max_wait_time);
 
   /// Poll for events and return the number of event handlers that
   /// were dispatched.
