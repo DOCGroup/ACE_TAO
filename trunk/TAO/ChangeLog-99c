@@ -10,9 +10,9 @@ Wed Feb 10 10:28:16 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 Tue Feb  9 22:26:52 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Added the class IOR_LookupTable which is an abstraction over the Hash_Map_Manager
-	to store the object_name -> IOR mappings that will be used by the
-	resolve_initial_references ().
+	Added the class IOR_LookupTable which is an abstraction over the
+	Hash_Map_Manager to store the object_name -> IOR mappings that
+	will be used by the resolve_initial_references ().
 
 	Updated the Makefile to include this class.
 
