@@ -3,6 +3,9 @@ Sat Apr 05 20:32:54 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Log_Msg.cpp (instance): Added another ACE_NO_HEAP_CHECK.
 	  Matthias provided the fix.
 
+	* ace/config-win32.h: Disable ACE_HAS_STRICT by default, because
+	  it will break existing application code.
+
 Sat Apr  5 19:11:46 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
 
 	* ace/Signal.i (ACE_Sig_Guard): Changed the constructor of
