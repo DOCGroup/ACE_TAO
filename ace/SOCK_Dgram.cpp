@@ -100,9 +100,12 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
   int error = 0;
 
+  printf("in ACE_SOCK_Dgram::shared_open\n");
+
   if (local == ACE_Addr::sap_any
       && protocol_family == PF_INET)
     {
+      printf("trying ACE::bind_port\n");
       if (ACE::bind_port (this->get_handle ()) == -1)
         error = 1;
     }
@@ -151,6 +154,12 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::open");
+
+#if defined (ACE_HAS_IPV6)
+  if(local.get_type() == AF_INET6)
+    protocol_family = PF_INET6;
+#endif
+
   if (ACE_SOCK::open (SOCK_DGRAM,
                       protocol_family,
                       protocol,
