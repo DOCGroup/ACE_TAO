@@ -1,3 +1,19 @@
+Fri Mar 12 14:11:28 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+        * ORB.h, ORB.cpp and orbconf.h:  Fixed multicast problem.
+          Removed dynamic memory allocation in multicast_query ()
+          and now pass a pointer to a buffer allocated on the stack
+          in multicast_to_service ().  Also added a macro
+          TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS = 2.  This control
+          the number of attempts multicast)query () will make to get
+          a response.  
+
+          Also moved a call to multicast.close () to after to attempt
+          loop.  It seems when multicast.close () is called the reply
+          packet from the server is lost on solaris hosts.  By moving
+          this to after the recv the packets are now read on the first
+          recv.
+
 Fri Mar 12 12:23:07 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Retrieved 
