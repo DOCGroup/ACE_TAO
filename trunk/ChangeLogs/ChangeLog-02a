@@ -1,3 +1,10 @@
+Wed May 24 08:10:21 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/WFMO_Reactor.h: Wrapped the !WinSock2 defs in defined(ACE_WIN32)
+          to prevent compile errors on non-win32 platforms. It may be better to
+          wrap the whole file in #if defined (ACE_WIN32), but this will solve
+          the immediate problem.
+
 Tue May 23 20:13:52 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.h: Moved the definition of WSANETWORKEVENTS to
