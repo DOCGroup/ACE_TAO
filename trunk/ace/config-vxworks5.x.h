@@ -36,9 +36,9 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
-# if defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x542
+# if defined (ACE_VXWORKS) && ACE_VXWORKS == 0x542
 #   define ACE_LACKS_CLEARERR
-# endif /* ACE_VXWORKS >= 0x542 */
+# endif /* ACE_VXWORKS == 0x542 */
 
 #elif defined (ghs)
   // Processor type, if necessary.  Green Hills defines "ppc".
