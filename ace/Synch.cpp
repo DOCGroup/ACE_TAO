@@ -935,7 +935,7 @@ ACE_Static_Object_Lock::instance (void)
     {
       ACE_NEW_RETURN (ACE_Static_Object_Lock::mutex_,
 		      ACE_Recursive_Thread_Mutex, 0);
-#if ! defined (ACE_HAS_BROKEN_ATEXIT)
+#if 0
       // On DEC CXX, HP/UX, and AIX.  It should be done through the
       // Object_Manager, but then all "statics" will have to play that
       // game as well.
@@ -944,7 +944,7 @@ ACE_Static_Object_Lock::instance (void)
 #else
       ::atexit (ACE_Static_Object_Lock::atexit);
 #endif /* ACE_HAS_SIG_C_FUNC */
-#endif /* ACE_HAS_BROKEN_ATEXIT */
+#endif /* 0 */
     }
   return ACE_Static_Object_Lock::mutex_;
 }
