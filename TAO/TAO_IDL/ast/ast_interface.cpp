@@ -133,7 +133,6 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (I_TRUE);      // always the case
-  this->compute_repoID ();
 }
 
 AST_Interface::~AST_Interface (void)
