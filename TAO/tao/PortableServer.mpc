@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core, iorinterceptor {
+project : taolib, core, valuetype {
   sharedname   = TAO_PortableServer
   dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
 

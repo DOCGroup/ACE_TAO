@@ -75,7 +75,6 @@ private:
 
   /// Dynamic array of registered IOR interceptors.
   TYPE interceptors_;
-
 };
 
 

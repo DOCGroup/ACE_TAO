@@ -14,7 +14,7 @@ ACE_RCSID (PortableServer,
 
 #include "tao/StringSeqC.h"
 
-#include "tao/PortableServer/IORInfo.h"
+#include "tao/IORInterceptor/IORInfoC.h" // needed for the HOLDING and other state constants, would like to zap this
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h"
@@ -28,8 +28,8 @@ ACE_RCSID (PortableServer,
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/TSS_Resources.h"
+#include "tao/IORInterceptor_Adapter.h"
 #include "tao/debug.h"
-#include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "Default_Acceptor_Filter.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_sys_time.h"
@@ -1023,17 +1023,16 @@ TAO_POA::adapter_state_changed (
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /// First get a list of all the interceptors.
-  TAO_IORInterceptor_List * interceptor_list =
-    this->orb_core_.ior_interceptor_list ();
+  TAO_IORInterceptor_Adapter *ior_adapter =
+    this->orb_core_.ior_interceptor_adapter ();
 
-  if (interceptor_list == 0)
-    return;
-
-  interceptor_list->adapter_state_changed (array_obj_ref_template,
-                                           state
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  if (ior_adapter)
+    {
+      ior_adapter->adapter_state_changed (array_obj_ref_template,
+                                          state
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -3733,127 +3732,26 @@ TAO_POA::key_to_stub_i (const TAO::ObjectKey &key,
 void
 TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
 {
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  /// First get a list of all the interceptors.
-  TAO_IORInterceptor_List * interceptor_list =
-    this->orb_core_.ior_interceptor_list ();
+  TAO_IORInterceptor_Adapter *ior_adapter =
+    this->orb_core_.ior_interceptor_adapter ();
 
-  if (interceptor_list == 0)
-    return;
-
-  TAO_IORInterceptor_List::TYPE & interceptors =
-    interceptor_list->interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
-
-  if (interceptor_count == 0)
-    return;
-
-  TAO_IORInfo *tao_info = 0;
-  ACE_NEW_THROW_EX (tao_info,
-                    TAO_IORInfo (this),
-                    CORBA::NO_MEMORY (
-                       CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          ENOMEM),
-                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  PortableInterceptor::IORInfo_var info = tao_info;
-
-  // Release the POA during IORInterceptor calls to avoid potential
-  // deadlocks.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-  ACE_UNUSED_ARG (non_servant_upcall);
-
-  for (size_t i = 0; i < interceptor_count; ++i)
+  if (ior_adapter)
     {
-      ACE_TRY
-        {
-          interceptors[i]->establish_components (info.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // According to the Portable Interceptors specification,
-          // IORInterceptor::establish_components() must not throw an
-          // exception.  If it does, then the ORB is supposed to
-          // ignore it and continue processing the remaining
-          // IORInterceptors.
-          if (TAO_debug_level > 1)
-            {
-              CORBA::String_var name = interceptors[i]->name (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              // @@ What do we do if we get an exception here?
-
-              if (name.in () != 0)
-                {
-                  ACE_DEBUG ((LM_WARNING,
-                              "(%P|%t) Exception thrown while processing "
-                              "IORInterceptor \"%s\">\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
-                }
-
-              ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,
-                                       "Ignoring exception in "
-                                       "IORInterceptor::establish_components");
-            }
-        }
-      ACE_ENDTRY;
+      ior_adapter->establish_components (this ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
-
-  tao_info->components_established ();
-
-  this->components_established (info.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // The IORInfo instance is no longer valid.  Invalidate it to
-  // prevent the user from peforming "illegal" operations.
-  tao_info->invalidate ();
 }
 
 void
 TAO_POA::components_established (PortableInterceptor::IORInfo_ptr info
                                  ACE_ENV_ARG_DECL)
 {
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  TAO_IORInterceptor_List * interceptor_list =
-    this->orb_core_.ior_interceptor_list ();
+  TAO_IORInterceptor_Adapter *ior_adapter =
+    this->orb_core_.ior_interceptor_adapter ();
 
-    if (interceptor_list == 0)
-    return;
-
-  TAO_IORInterceptor_List::TYPE & interceptors =
-    interceptor_list->interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
-
-  // All the establish_components() interception points have been
-  // invoked. Now call the components_established() interception point
-  // on all the IORInterceptors.
-  for (size_t j = 0; j < interceptor_count; ++j)
+  if (ior_adapter)
     {
-      ACE_TRY
-        {
-          interceptors[j]->components_established (
-            info
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 6,
-                                         CORBA::COMPLETED_NO));
-        }
-      ACE_ENDTRY;
+      ior_adapter->components_established (info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

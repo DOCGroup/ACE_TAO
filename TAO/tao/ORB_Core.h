@@ -85,7 +85,6 @@ class TAO_Policy_Manager;
 class TAO_Policy_Current;
 
 class TAO_Codeset_Manager;
-class TAO_IORInterceptor_List;
 class TAO_IORInterceptor_Adapter;
 class TAO_Valuetype_Adapter;
 
@@ -931,12 +930,14 @@ public:
   void add_interceptor (
     PortableInterceptor::IORInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
-
-  TAO_IORInterceptor_List *ior_interceptor_list (void);
   //@}
 
   /// Return the valuetype adapter
   TAO_Valuetype_Adapter *& valuetype_adapter (void);
+
+  /// Get the IOR Interceptor adapter. If not created, this method will try
+  /// to create one.
+  TAO_IORInterceptor_Adapter *ior_interceptor_adapter (void);
 
   /// Set and Get methods to indicate whether a BiDir IIOP policy has
   /// been set in the POA.
@@ -1072,8 +1073,6 @@ private:
   /// applied on objects in the <other_orb>
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
                                          const TAO_MProfile &mp);
-
-  TAO_IORInterceptor_Adapter *ior_interceptor_adapter (void);
 
 protected:
 
