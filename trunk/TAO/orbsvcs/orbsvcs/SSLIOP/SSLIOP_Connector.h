@@ -47,7 +47,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_SSL_Connector
 {
 public:
   /// Constructor.
-  TAO_SSLIOP_Connector (int no_protection);
+  TAO_SSLIOP_Connector (Security::QOP qop);
 
   /**
    * @name The TAO_Connector methods
@@ -82,7 +82,7 @@ protected:
 
   /// SSLIOP-specific connection establishment.
   int ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
-                      int no_protection,
+                      Security::QOP qop,
                       const Security::EstablishTrust &trust,
                       TAO_GIOP_Invocation *invocation,
                       TAO_Transport_Descriptor_Interface *desc
@@ -109,7 +109,7 @@ private:
 
   /// If zero, connect to IIOP over SSL port by default.
   /// Otherwise, connect to the insecure IIOP port.
-  int no_protection_;
+  Security::QOP qop_;
 
   /// Our connect strategy
   TAO_SSLIOP_CONNECT_STRATEGY connect_strategy_;

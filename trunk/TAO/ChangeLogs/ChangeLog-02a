@@ -1,3 +1,46 @@
+Thu Jan 17 17:39:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+
+	  Use the Security::QOP type instead of an integer to store the
+	  desired quality-of-protection.  The former is more descriptive.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h (TAO_SSLIOP_Endpoint):
+
+  	  Cache the quality-of-protection and establishment-of-trust
+	  settings associated with the endpoint object.  They are need
+	  when determining if a given cached connection is suitable for an
+	  invocation with a given set of security policies
+	  (e.g. QOPPolicy).
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (qop, trust):
+
+	  Accessors methods for their cached counterparts.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp (is_equivalent, hash):
+
+	  Take into account the quality-of-protection and
+	  establishment-of-trust settings when determining endpoint
+	  equivalence and computing hashes.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+
+	  Added support for the Security::SecQOPIntegrity
+	  quality-of-protection.  Integrity without confidentiality is
+	  achieved by using the "eNULL" SSL cipher.  Despite the fact that
+	  encryption is disabled, a secure hash is still used to ensure
+	  integrity.
+
+	  Cleaned up the code in this method.
+
 Thu Jan 17 17:34:10 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ObjectReferenceTemplate.pidl: 
@@ -6,8 +49,8 @@ Thu Jan 17 17:34:10 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  PortableInterceptor.pidl to the new
 	  ObjectReferenceTemplate.pidl. This is needed to get the builds
 	  straight for the minimum corba. By moving the ORT related part
-	  to a separate pidl, we are making it(ORT) usable irrespective of
-	  the usage of interceptors. 
+	  to a separate pidl, we are making it (ORT) usable irrespective
+	  of the usage of interceptors. 
 
 	* tao/PortableInterceptorC.i: 
 	* tao/PortableInterceptorC.h:

@@ -1,18 +1,18 @@
 // -*- C++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//     TAO_SSLIOP
-//
-// = FILENAME
-//     SSLIOP_Factory.h
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@ece.uci.edu>
-//     Ossama Othman <ossama@ece.uci.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file     SSLIOP_Factory.h
+ *
+ *  $Id$
+ *
+ *  SSLIOP implementation of PP Framework Protocol_Factory interface.
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SSLIOP_FACTORY_H
 #define TAO_SSLIOP_FACTORY_H
@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/SecurityC.h"
+
 #include "tao/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
@@ -32,7 +34,16 @@
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_SSLIOP_Export TAO_SSLIOP_Protocol_Factory : public TAO_Protocol_Factory
+/**
+ * @class TAO_SSLIOP_Protocol_Factory
+ *
+ * @brief SSLIOP-specific protocol factory implementation.
+ *
+ * This class implements the SSLIOP-specific protocol factory
+ * implementation for use in TAO's pluggable protocols framework.
+ */
+class TAO_SSLIOP_Export TAO_SSLIOP_Protocol_Factory
+  : public TAO_Protocol_Factory
 {
 public:
   TAO_SSLIOP_Protocol_Factory (void);
@@ -61,16 +72,16 @@ public:
   virtual int requires_explicit_endpoint (void) const;
 
 private:
+
+  /// Changing the version number can be used to provide backwards
+  /// compatibility with old clients.
   int major_;
   int minor_;
-  // Changing the version number can be used to provide backwards
-  // compatibility with old clients.
 
-  int no_protection_;
-  // In the case of the server side, allow connections to the insecure
-  // IIOP port.
-  // In the case of the client side, connect to the insecure IIOP port
-  // instead of the secure IIOP over SSL port.
+  /// Default quality-of-protection settings for the SSLIOP pluggable
+  /// protocol.
+  Security::QOP qop_;
+
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)

@@ -52,7 +52,7 @@ public:
 
   /// Constructor.
   TAO_SSLIOP_Server_Invocation_Interceptor (SSLIOP::Current_ptr current,
-                                            int no_protection);
+                                            Security::QOP qop);
 
   /**
    * @name PortableInterceptor::ServerRequestInterceptor Methods
@@ -125,10 +125,8 @@ private:
   /// Reference to the current SSLIOP execution context.
   SSLIOP::Current_var ssliop_current_;
 
-  /// If set to 1, then the secure invocation server request
-  /// interceptor will allow requests coming in on the insecure port
-  /// to be handled.
-  int no_protection_;
+  /// The default quality-of-protection settings in use.
+  Security::QOP qop_;
 
 };
 

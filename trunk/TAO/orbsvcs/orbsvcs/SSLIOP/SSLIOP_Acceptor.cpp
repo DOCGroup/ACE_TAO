@@ -46,7 +46,7 @@ template class TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_A
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (int support_no_protection)
+TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (Security::QOP qop)
   : TAO_IIOP_SSL_Acceptor (),
     ssl_acceptor_ (),
     creation_strategy_ (0),
@@ -76,7 +76,7 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (int support_no_protection)
 
   // @@ This should go away once we support setting security
   //    association options through policies.
-  if (support_no_protection)
+  if (qop == Security::SecQOPNoProtection)
     ACE_SET_BITS (this->ssl_component_.target_supports,
                   Security::NoProtection);
 }

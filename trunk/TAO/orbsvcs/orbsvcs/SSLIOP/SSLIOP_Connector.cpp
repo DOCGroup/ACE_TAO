@@ -61,9 +61,9 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Connection_Handler*>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
-TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (int no_protection)
+TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (Security::QOP qop)
   : TAO_IIOP_SSL_Connector (),
-    no_protection_ (no_protection),
+    qop_ (qop),
     connect_strategy_ (),
     base_connector_ (),
     handler_state_ ()
@@ -205,23 +205,18 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   // Temporary variable used to avoid overwriting the default value
   // set when the ORB was initialized.
-  int no_protection = this->no_protection_;
+  Security::QOP qop = this->qop_;
 
   if (!CORBA::is_nil (qop_policy.in ()))
     {
-      Security::QOP qop = qop_policy->qop (TAO_ENV_SINGLE_ARG_PARAMETER);
+      qop = qop_policy->qop (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-
-      if (qop == Security::SecQOPNoProtection)
-        no_protection = 1;
-      else if (qop == Security::SecQOPIntegrityAndConfidentiality)
-        no_protection = 0;
     }
 
   // If the SSL port is zero, then no SSLIOP tagged component was
   // available in the IOR, meaning that there is no way to make a
   // secure invocation.  Throw an exception.
-  if (no_protection == 0
+  if (qop != Security::SecQOPNoProtection
       && ssl_endpoint->ssl_component ().port == 0)
     {
       if (TAO_debug_level > 0)
@@ -237,7 +232,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                         -1);
     }
 
-  if ((!establish_trust && no_protection)
+  if ((!establish_trust && qop == Security::SecQOPNoProtection)
       || ssl_endpoint->ssl_component ().port == 0)
     {
       return this->iiop_connect (ssl_endpoint,
@@ -246,7 +241,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
     }
 
   return this->ssliop_connect (ssl_endpoint,
-                               no_protection,
+                               qop,
                                trust,
                                invocation,
                                desc
@@ -337,7 +332,7 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
 int
 TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
-                                      int no_protection,
+                                      Security::QOP qop,
                                       const Security::EstablishTrust &trust,
                                       TAO_GIOP_Invocation *invocation,
                                       TAO_Transport_Descriptor_Interface *desc
@@ -365,6 +360,18 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                           EPERM),
                         CORBA::COMPLETED_NO),
                       -1);
+
+  // If the invocation wants integrity without confidentiality but the
+  // server does not support "no protection," then it won't be
+  // possible provide integrity.  In order to support integrity
+  // without confidentiality, encryption must be disabled but secure
+  // hashes must remain enabled.  This is achieved using the "eNULL"
+  // cipher.  However, the "eNULL" cipher is only enabled on the
+  // server side if "no protection" is enabled.
+  if (ACE_BIT_DISABLED (ssl_component.target_supports,
+                        Security::NoProtection)
+      && qop == Security::SecQOPIntegrity)
+    ACE_THROW_RETURN (CORBA::INV_POLICY (), -1);
 
   const ACE_INET_Addr &remote_address =
     ssl_endpoint->object_addr ();
@@ -411,53 +418,65 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       // Purge connections (if necessary)
       this->orb_core ()->lane_resources ().transport_cache ().purge ();
 
-      // Setup the establishment of trust connection properties, if
-      // any.
-      //
       // The svc_handler is created beforehand so that we can get
       // access to the underlying ACE_SSL_SOCK_Stream (the peer) and
       // its SSL pointer member prior to descending into the
       // ACE_Strategy_Connector (the "base_connector_").  This is
       // thread-safe and reentrant, hence no synchronization is
       // necessary.
-      if ((trust.trust_in_client || trust.trust_in_target)
-          && this->base_connector_.creation_strategy ()->make_svc_handler (
-               svc_handler) == 0)
+      if (this->base_connector_.creation_strategy ()->make_svc_handler (
+               svc_handler) != 0)
         {
-          int verify_mode = 0;
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Unable to create SSLIOP ")
+                        ACE_TEXT ("service handler.\n")));
 
-          // On the server side, "trust_in_client" requires that a
-          // peer (client) certificate exist.  Fail if one doesn't
-          // exist.
-          //
-          // In SSLIOP's case, trust_in_client also implies
-          // trust_in_target.
-          if (trust.trust_in_client)
-            verify_mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
+          return -1;
+        }
+        
 
-          // Require verification of the target's certificate.
-          else if (trust.trust_in_target)
-            verify_mode = SSL_VERIFY_PEER;
+      // Setup the establishment of trust connection properties, if
+      // any.
+      int verify_mode = 0;
 
-          // Trust in neither the client nor the target is required.
-          else
-            verify_mode = SSL_VERIFY_NONE;
+      // On the server side, "trust_in_client" requires that a peer
+      // (client) certificate exist.  Fail if one doesn't exist.
+      //
+      // In SSLIOP's case, trust_in_client also implies
+      // trust_in_target.
+      if (trust.trust_in_client)
+        verify_mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
 
-          ::SSL_set_verify (svc_handler->peer().ssl(),
-                            verify_mode,
-                            0);
+      // Require verification of the target's certificate.
+      else if (trust.trust_in_target)
+        verify_mode = SSL_VERIFY_PEER;
 
-          if (no_protection
-              && ::SSL_set_cipher_list (svc_handler->peer().ssl(),
-                                        "eNULL") == 0)
-            {
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) Unable to set eNULL ")
-                            ACE_TEXT ("SSL cipher.\n")));
+      // Trust in neither the client nor the target is required.
+      else
+        verify_mode = SSL_VERIFY_NONE;
 
-              ACE_THROW_RETURN (CORBA::INV_POLICY (), -1);
-            }
+      ::SSL_set_verify (svc_handler->peer ().ssl (),
+                        verify_mode,
+                        0);
+
+      // The "eNULL" cipher disables encryption but still uses a
+      // secure hash (e.g. SHA1 or MD5) to ensure integrity.  (Try the
+      // command "openssl ciphers -v eNULL".)
+      //
+      // Note that it is not possible to completely disable protection
+      // here.
+      if (qop == Security::SecQOPNoProtection
+          || qop == Security::SecQOPIntegrity
+          && ::SSL_set_cipher_list (svc_handler->peer ().ssl (),
+                                    "eNULL") == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Unable to set eNULL ")
+                        ACE_TEXT ("SSL cipher.\n")));
+
+          ACE_THROW_RETURN (CORBA::INV_POLICY (), -1);
         }
 
       // @@ This needs to change in the next round when we implement
@@ -508,6 +527,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
         }
 
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
+
       // Add the handler to Cache
       int retval =
         this->orb_core ()->lane_resources ().transport_cache ().cache_transport (

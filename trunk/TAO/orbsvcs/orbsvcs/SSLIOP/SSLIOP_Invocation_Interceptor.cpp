@@ -12,9 +12,9 @@ ACE_RCSID (TAO_SSLIOP, SSLIOP_Invocation_Interceptor, "$Id$")
 
 TAO_SSLIOP_Server_Invocation_Interceptor::
 TAO_SSLIOP_Server_Invocation_Interceptor (SSLIOP::Current_ptr current,
-                                          int no_protection)
+                                          Security::QOP qop)
   : ssliop_current_ (SSLIOP::Current::_duplicate (current)),
-    no_protection_ (no_protection)
+    qop_ (qop)
 {
 }
 
@@ -59,7 +59,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
     this->ssliop_current_->no_context (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (no_ssl && this->no_protection_ == 0)
+  if (no_ssl && this->qop_ != Security::SecQOPNoProtection)
     ACE_THROW (CORBA::NO_PERMISSION ());
 
 #if 0
@@ -117,10 +117,11 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
       //          SecTargetSecureInvocationPolicy so that we can
       //          accept or reject requests on a per-object basis
       //          instead on a per-endpoint basis.
-      if (this->no_protection_ == 0)
+      if (this->qop_ != Security::SecQOPNoProtection)
         ACE_THROW (CORBA::NO_PERMISSION ());
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 #endif /* 0 */
 }
 
