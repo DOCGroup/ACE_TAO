@@ -1,112 +1,118 @@
+Sat Apr 18 12:19:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (init_naming_service):
+          dereference orb and child_poa with in () in calls to
+          my_name_server_.init ().
+
 Sat Apr 18 10:14:13 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/Any.cpp: There was a mistake in some of the the >>=
-	operators in which for the "any owns data" case, we were
-	retrieving the data from the value_ field instead of the cdr_
-	field.
+        * tao/Any.cpp: There was a mistake in some of the the >>=
+        operators in which for the "any owns data" case, we were
+        retrieving the data from the value_ field instead of the cdr_
+        field.
 
-	* tao/GIOP.cpp: An unwanted explicit template instantiation for
-	Unbounded sequences of TypeCode is now removed.
+        * tao/GIOP.cpp: An unwanted explicit template instantiation for
+        Unbounded sequences of TypeCode is now removed.
 
-	* tao/decode.cpp: A very very subtle error. For the case of
-	Any::decode, our strategy was to let the Any maintain a pointer to
-	the CDR stream and eventually let the >>= operators do the
-	retrieve part. We were correctly maintaining pointers to the
-	duplicated ACE_Message_Block. Unfortunately, this
-	ACE_Message_Block was maintaining a data member which is the CDR
-	stream which was allocated on the function call stack of
-	"do_static_call". As a result, all kinds of weird results started
-	showing up. We now make an explicit copy. Although this scheme
-	will slow down the performance for Anys, at this time, this is the
-	only feasible solution to get things working.
+        * tao/decode.cpp: A very very subtle error. For the case of
+        Any::decode, our strategy was to let the Any maintain a pointer to
+        the CDR stream and eventually let the >>= operators do the
+        retrieve part. We were correctly maintaining pointers to the
+        duplicated ACE_Message_Block. Unfortunately, this
+        ACE_Message_Block was maintaining a data member which is the CDR
+        stream which was allocated on the function call stack of
+        "do_static_call". As a result, all kinds of weird results started
+        showing up. We now make an explicit copy. Although this scheme
+        will slow down the performance for Anys, at this time, this is the
+        only feasible solution to get things working.
 
-	* tests/CDR: Added test for Any in basic_types.cpp
+        * tests/CDR: Added test for Any in basic_types.cpp
 
-	* tests/Param_Test: Added some debug statements.
+        * tests/Param_Test: Added some debug statements.
 
 Fri Apr 17 19:15:24 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* tao/Any.h :
-	* tao/Any.cpp : Added static dump () method for debugging any
-	values. It prints out type and value (if the type is primitive).
+        * tao/Any.h :
+        * tao/Any.cpp : Added static dump () method for debugging any
+        values. It prints out type and value (if the type is primitive).
 
 Fri Apr 17 15:35:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
-	  An explicit ACE_Thread_Mutex was used, this is non-portable to
-	  platforms without threads, the "Right Thing" is to use the macro
-	  ACE_SYNCH_MUTEX.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
+          An explicit ACE_Thread_Mutex was used, this is non-portable to
+          platforms without threads, the "Right Thing" is to use the macro
+          ACE_SYNCH_MUTEX.
 
 Fri Apr 17 13:29:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/skip.cpp (skip):
-	* tao/deep_copy.cpp (deep_copy):
-	* TAO_IDL/be/be_decl.cpp (tc_name2long): Removed unreferenced
- 	  variables.
+        * tao/skip.cpp (skip):
+        * tao/deep_copy.cpp (deep_copy):
+        * TAO_IDL/be/be_decl.cpp (tc_name2long): Removed unreferenced
+          variables.
 
 Fri Apr 17 12:12:04 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation.cpp: There was an error in the
-	way the return Any type was passed to the demarshal and marshal
-	routines of the generated skeleton code.
+        * TAO_IDL/be/be_visitor_operation.cpp: There was an error in the
+        way the return Any type was passed to the demarshal and marshal
+        routines of the generated skeleton code.
 
-	* tao/Any.cpp: Error in the assignment operator for Any fixed. For
-	the Any owns case, we were copying the data from the value_ field
-	instead of the cdr_ field.
+        * tao/Any.cpp: Error in the assignment operator for Any fixed. For
+        the Any owns case, we were copying the data from the value_ field
+        instead of the cdr_ field.
 
-	* tao/decode.cpp: In Any::decode, we were setting the value_ field
-	of the Any to the ACE_Message_Block rather than setting the cdr_
-	field.
+        * tao/decode.cpp: In Any::decode, we were setting the value_ field
+        of the Any to the ACE_Message_Block rather than setting the cdr_
+        field.
 
-	* tao/encode.cpp: In Any::encode, we were reading from the value_
-	field of the Any rather than the cdr_ field.
+        * tao/encode.cpp: In Any::encode, we were reading from the value_
+        field of the Any rather than the cdr_ field.
 
-	* tests/Param_Test: Added code for the Any test. This is still
-	under test.
+        * tests/Param_Test: Added code for the Any test. This is still
+        under test.
 
 Fri Apr 17 02:38:13 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/{be_visitor_exception, be_visitor_sequence,
-	be_visitor_structure, be_visitor_union}.cpp: We had a mismatch in
-	the signatures of operator <<= in the declaration and
-	implementation. In addition, we force the generated code for >>=
-	operator to own the allocated memory.
+        * TAO_IDL/be/{be_visitor_exception, be_visitor_sequence,
+        be_visitor_structure, be_visitor_union}.cpp: We had a mismatch in
+        the signatures of operator <<= in the declaration and
+        implementation. In addition, we force the generated code for >>=
+        operator to own the allocated memory.
 
-	* TAO_IDL/be/be_visitor_interface.cpp: In the code that generates
-	>>= operator, we also generate code such that the allocated memory
-	is owned by the Any
+        * TAO_IDL/be/be_visitor_interface.cpp: In the code that generates
+        >>= operator, we also generate code such that the allocated memory
+        is owned by the Any
 
-	* tao/Any.{h, cpp}: We now have two data members in class Any. We
-	keep the older semantics of the value_ field. In addition, we
-	maintain a ACE_Message_Block *cdr_ member. Originally we shared
-	the value_ variable to mean either a CDR stream or a pointer to
-	some data type. This was based on whether the Any owns the data or
-	not. However, this strategy does not work because in the >>=
-	operators for constructed types, we must hold on to the newly
-	allocated storage since we own it and we must free it.
+        * tao/Any.{h, cpp}: We now have two data members in class Any. We
+        keep the older semantics of the value_ field. In addition, we
+        maintain a ACE_Message_Block *cdr_ member. Originally we shared
+        the value_ variable to mean either a CDR stream or a pointer to
+        some data type. This was based on whether the Any owns the data or
+        not. However, this strategy does not work because in the >>=
+        operators for constructed types, we must hold on to the newly
+        allocated storage since we own it and we must free it.
 
-	* tao/TypeCode.cpp: In the constructor, we were initializing the
-	internal buffer to point to 4 bytes past the actual buffer that
-	was passed as a parameter. Things were fine as long as we were not
-	transmitting typecodes. However, once we started doing that, we
-	realized that somehow the buffers kept on reducing by 4 as we kept
-	transmitting typecodes over the wire. Thus, a typecode receive don
-	the other end had a smaller buffer (and hence different contents)
-	than the original. We fix this by making our internal buffer point
-	ot the start of the buffer that was passed as a parameter. The
-	side-effect of this is that whenever we have to initialize a
-	TAO_InputCDR with this internal buffer, we must do so by
-	explicitly skipping the first 4 bytes (which contains the byte
-	order flag) and indicating that the length is 4 less than the
-	actual.
+        * tao/TypeCode.cpp: In the constructor, we were initializing the
+        internal buffer to point to 4 bytes past the actual buffer that
+        was passed as a parameter. Things were fine as long as we were not
+        transmitting typecodes. However, once we started doing that, we
+        realized that somehow the buffers kept on reducing by 4 as we kept
+        transmitting typecodes over the wire. Thus, a typecode receive don
+        the other end had a smaller buffer (and hence different contents)
+        than the original. We fix this by making our internal buffer point
+        ot the start of the buffer that was passed as a parameter. The
+        side-effect of this is that whenever we have to initialize a
+        TAO_InputCDR with this internal buffer, we must do so by
+        explicitly skipping the first 4 bytes (which contains the byte
+        order flag) and indicating that the length is 4 less than the
+        actual.
 
-	* tao/decode.cpp: In TypeCode::decode, there was a very subtle
-	error. Whenever we were decoding a typecode and determining that
-	it was one  of the ORB maintained constants, we were simply
-	pointing to it and passing it back. However, this is not correct
-	because the application can call "release" which was resulting in
-	"Freeing Non-Heap Memory" which is terrible. We now "_duplicate"
-	such typecodes and then pass them to the applications.
+        * tao/decode.cpp: In TypeCode::decode, there was a very subtle
+        error. Whenever we were decoding a typecode and determining that
+        it was one  of the ORB maintained constants, we were simply
+        pointing to it and passing it back. However, this is not correct
+        because the application can call "release" which was resulting in
+        "Freeing Non-Heap Memory" which is terrible. We now "_duplicate"
+        such typecodes and then pass them to the applications.
 
 Thu Apr 16 20:34:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
