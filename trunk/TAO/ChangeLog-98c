@@ -1,7 +1,7 @@
 Tue Jun 30 22:08:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp (lookup_strategy): added full
-          qualification of return type TAO_CodeGen::LOOKUP_STRATEGY.
+          qualification of TAO_CodeGen::LOOKUP_STRATEGY return type.
 
 Tue Jun 30 18:27:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
