@@ -1,3 +1,19 @@
+Tue Jun 26 14:47:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp (set_to_default_value):
+
+          Modified the case for CORBA::tk_objref to set the member
+          Any's value to 0, in addition to initializing the type
+          code. Failure to do this was causing interoperability
+          problems with CorbaScript. Thanks to Philippe Merle
+          <Philippe.Merle@lifl.fr> for reporting this bug.
+
+        * tao/DynamicAny/DynCommon.cpp (set_flag):
+
+          Added CORBA::tk_value_box to the list of TCKinds that
+          throw CORBA::NO_IMPLEMENT, along with tk_value and
+          tk_fixed.
+
 Tue Jun 26 09:55:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Oneways_Invoking_Twoways/Sender_i.cpp: Fixed a warning in
