@@ -1,3 +1,19 @@
+Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch_T.{h,i}: Added a disown() method that relinquishes
+ 	  ownership of the lock so that it is not released implicitly in
+ 	  the destructor.  Thanks to Chris Kohlhoff <chris@kohlhoff.com>
+ 	  for contributing this.
+
+	* ace/Event_Handler.h: Updated the comment on handle_close() so that
+	  it more accurately reflects what is going on.  Thanks to Defang
+ 	  Zhou <dzhou@inktomi.com> for suggesting this.
+
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.{h,cpp}: Added
+	  handle_close() operations to solve problems with certain
+ 	  concurrency models.  Thanks to Defang Zhou <dzhou@inktomi.com>
+ 	  for reporting this.
+
 Mon Mar  5 11:29:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/ACE-categories.html:
@@ -15,12 +31,16 @@ Mon Mar  5 08:20:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Mar  5 07:52:52 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * tests/RMCast/RMCast_Fragment_Test.cpp,
-        * tests/RMCast/RMCast_Reassembly_Test.cpp,
-        * tests/Dynamic_Priority_Test.cpp,
-        * tests/Thread_Pool_Test.cpp: Make sure to write into the
-          wr_ptr() rather than the rd_ptr().  Thanks to Gonzalo Diethelm
-          <Gonzalo.Diethelm@sonda.com> for reporting this.
+	* ace/Log_Record.cpp (priority): Clarified the behavior of the
+	  priority() set/get methods.  Thanks to Christian Schuhegger
+ 	  <Christian.Schuhegger@cern.ch> for reporting this.
+
+	* tests/RMCast/RMCast_Fragment_Test.cpp,
+	* tests/RMCast/RMCast_Reassembly_Test.cpp,
+	* tests/Dynamic_Priority_Test.cpp,
+	* tests/Thread_Pool_Test.cpp: Make sure to write into the
+	  wr_ptr() rather than the rd_ptr().  Thanks to Gonzalo Diethelm
+ 	  <Gonzalo.Diethelm@sonda.com> for reporting this.
 
 Mon Mar  5 08:00:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 

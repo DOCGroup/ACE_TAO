@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SYNCH_T_H
 #define ACE_SYNCH_T_H
 #include "ace/pre.h"
@@ -427,8 +426,17 @@ public:
   ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
-  /// lock.
+  /// lock.  If <block> is non-0 then <acquire> the <ACE_LOCK>, else
+  /// <tryacquire> it.  
   ACE_Guard (ACE_LOCK &l, int block);
+
+  /// Implicitly and automatically acquire (or try to acquire) the
+  /// lock.  If <become_owner> is 0 then initialize the guard without
+  /// automatically acquiring the lock; this parameter simply indicates
+  /// whether the guard should release the lock implicitly on destruction.
+  /// If <block> is non-0 then <acquire> the <ACE_LOCK>, else
+  /// <tryacquire> it.  
+  ACE_Guard (ACE_LOCK &l, int block, int become_owner);
 
   /// Implicitly release the lock.
   ~ACE_Guard (void);
@@ -443,6 +451,10 @@ public:
 
   /// Explicitly release the lock, but only if it is held!
   int release (void);
+
+  /// Relinquish ownership of the lock so that it is not released
+  /// implicitly in the destructor.
+  void disown (void);
 
   // = Utility methods.
   /// 1 if locked, 0 if couldn't acquire the lock
