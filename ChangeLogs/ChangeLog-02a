@@ -1,3 +1,7 @@
+Thu Feb 15 11:33:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Logging_Strategy.cpp: Fixed some Unicode problems on Win32.
+
 Thu Feb 15 08:49:44 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/nightlybuilds/builds.lst:

@@ -142,7 +142,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'n':
           // The max number for the log_file being created
-          this->max_file_number_ = atoi (get_opt.optarg) - 1;
+          this->max_file_number_ = ACE_OS::atoi (get_opt.optarg) - 1;
           this->fixed_number_ = 1;
           break;
         case 'o':
@@ -367,11 +367,11 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
               for (int i = max_num ; i > 1 ;i--)
                 {
                   ACE_OS::sprintf (backup,
-                                   "%s.%d",
+                                   ACE_LIB_TEXT ("%s.%d"),
                                    this->filename_,
                                    i);
                   ACE_OS::sprintf (to_backup,
-                                   "%s.%d",
+                                   ACE_LIB_TEXT ("%s.%d"),
                                    this->filename_,
                                    i - 1);
 
@@ -384,7 +384,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                   ACE_OS::rename (to_backup, backup);
                 }
               ACE_OS::sprintf (backup,
-                               "%s.1",
+                               ACE_LIB_TEXT ("%s.1"),
                                this->filename_);
             }
           else
@@ -393,7 +393,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                 count_ = 1;
 
               ACE_OS::sprintf (backup,
-                               "%s.%d",
+                               ACE_LIB_TEXT ("%s.%d"),
                                this->filename_,
                                count_);
             }
