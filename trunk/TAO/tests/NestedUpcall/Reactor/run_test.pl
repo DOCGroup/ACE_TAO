@@ -14,8 +14,10 @@ $mtfile="mttest.ior";
 
 print STDERR "\n\n==== Single-threaded test\n";
 
+unlink $file;
+
 $SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-                       "-o $file");
+                       " -q -o $file");
 if (ACE::waitforfile_timed ($file, 3) == -1) {
   print STDERR "ERROR: cannot find file <$file>\n";
   $SV->Kill (); $SV->TimedWait (1);
@@ -23,7 +25,7 @@ if (ACE::waitforfile_timed ($file, 3) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-		       " -x -k file://$file");
+		       "-q -x -k file://$file");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -49,7 +51,7 @@ print STDERR "Grace period, waiting for the system to stabilize....";
 sleep 5;
 
 $SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-                       " -o $mtfile");
+                       "-q -o $mtfile");
 if (ACE::waitforfile_timed ($mtfile, 3) == -1) {
   print STDERR "ERROR: cannot find file <$file>\n";
   $SV->Kill (); $SV->TimedWait (1);
@@ -57,7 +59,8 @@ if (ACE::waitforfile_timed ($mtfile, 3) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."mt_client".$EXE_EXT,
-		       " -x -k file://$mtfile -ORBsvcconf svc.mt.conf");
+		       "-ORBsvcconf svc.mt.conf"
+		       ." -q -x -k file://$mtfile -n 100 ");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

@@ -1,3 +1,32 @@
+Sat Jun 19 22:22:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	* tao/Wait_Strategy.cpp:
+	  The thread pool changes had some problems with nested upcalls
+	  and the client-side leader follower: they did not keep track of
+	  the number of followers properly. This has been fixed.
+
+	* tests/MT_Server/client.cpp:
+	* tests/MT_Server/run_test.pl:
+	  Only shutdown the server if the -x option is used.
+	  The script uses this feature to pass cleanly all the time.
+
+	* tests/NestedUpcall/Reactor/client.cpp:
+	* tests/NestedUpcall/Reactor/client.h:
+	* tests/NestedUpcall/Reactor/eh_i.cpp:
+	* tests/NestedUpcall/Reactor/eh_i.h:
+	* tests/NestedUpcall/Reactor/mt_client.cpp:
+	* tests/NestedUpcall/Reactor/mt_client.h:
+	* tests/NestedUpcall/Reactor/reactor_i.cpp:
+	* tests/NestedUpcall/Reactor/reactor_i.h:
+	* tests/NestedUpcall/Reactor/run_test.pl:
+	* tests/NestedUpcall/Reactor/server.cpp:
+	* tests/NestedUpcall/Reactor/server.h:
+	  The -q option can be used to turn the test silent. This is used
+	  to run a high number of iterations in the mt client test.
+
 Sat Jun 19 17:38:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:

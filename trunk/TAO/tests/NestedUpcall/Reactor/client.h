@@ -68,17 +68,17 @@ private:
   int shutdown_;
   // Flag to tell server to shutdown.
 
+  u_int call_count_;
+  // # of calls made to functions.
+
+  int quiet_;
+  // The test is quiet...
+
   CORBA::ORB_var orb_;
   // Remember our orb.
 
   Reactor_var reactor_;
   // reactor pointer for NestedUpCalls.
-
-  CORBA::Environment env_;
-  // Environment variable.
-
-  u_int call_count_;
-  // # of calls made to functions.
 
   FILE *nested_up_calls_reactor_ior_file_;
   // File from which to obtain the IOR.
