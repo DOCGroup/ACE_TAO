@@ -393,6 +393,11 @@ int
 ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
+
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG, "Service_Config::process_directive - %s\n",
+                directive));
+
   ACE_UNUSED_ARG (directive);
 
   ace_yyrestart (0);
@@ -546,7 +551,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   u_long old_process_mask = log_msg->priority_mask
     (ACE_Log_Msg::PROCESS);
   u_long old_thread_mask = log_msg->priority_mask
-    (ACE_Log_Msg::THREAD);    
+    (ACE_Log_Msg::THREAD);
 
   if (ACE_Service_Config::is_initialized_ != 0)
     // Guard against reentrant processing!
@@ -648,7 +653,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       {
         // Reset debugging back to the way it was when we came into
         // into <open_i>.
-        log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS); 
+        log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS);
         log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);
       }
   }
