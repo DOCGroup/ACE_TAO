@@ -68,6 +68,16 @@ private:
   void tokenize (ACE_TCHAR *flag_string);
   // Tokenize to set all the flags
 
+  void priorities (ACE_TCHAR *priority_string,
+                   ACE_Log_Msg::MASK_TYPE mask);
+  // Tokenize to set priorities (either process or thread one).
+
+  u_long thread_priority_mask_;
+  // Current thread's priority mask set by <priorities>
+
+  u_long process_priority_mask_;
+  // Process-wide priority mask set by <priorities>
+
   u_long flags_;
   // Flags we keep track of.
 
