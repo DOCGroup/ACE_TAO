@@ -1452,12 +1452,12 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
 
 #endif /* end #if !defined */
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const ImplementationRepository::ServerObject_ptr
   );
 
-TAO_Export CORBA::Boolean operator>> (
+TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::ServerObject_ptr &
   );
@@ -1490,11 +1490,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationReposito
 #if !defined _TAO_CDR_OP_ImplementationRepository_EnvironmentList_I_
 #define _TAO_CDR_OP_ImplementationRepository_EnvironmentList_I_
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_PortableServer_Export operator<< (
     TAO_OutputCDR &,
     const ImplementationRepository::EnvironmentList &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_PortableServer_Export operator>> (
     TAO_InputCDR &,
     ImplementationRepository::EnvironmentList &
   );
@@ -1580,33 +1580,33 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationReposito
 #if !defined _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_
 #define _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_
 
-CORBA::Boolean TAO_Export operator<< (
+CORBA::Boolean TAO_PortableServer_Export operator<< (
     TAO_OutputCDR &,
     const ImplementationRepository::ServerInformationList &
   );
-CORBA::Boolean TAO_Export operator>> (
+CORBA::Boolean TAO_PortableServer_Export operator>> (
     TAO_InputCDR &,
     ImplementationRepository::ServerInformationList &
   );
 
 #endif /* _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_ */
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const ImplementationRepository::ServerInformationIterator_ptr
   );
 
-TAO_Export CORBA::Boolean operator>> (
+TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::ServerInformationIterator_ptr &
   );
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const ImplementationRepository::Administration_ptr
   );
 
-TAO_Export CORBA::Boolean operator>> (
+TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::Administration_ptr &
   );
