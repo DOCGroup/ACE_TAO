@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib hello_stub.lib TAO_IFR_Client.lib CIAO_Container.lib TAO_Security.lib /nologo /dll /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 ace.lib tao.lib hello_stub.lib TAO_IFR_Client.lib CIAO_Container.lib TAO_PortableServer.lib TAO_Security.lib /nologo /dll /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "hello_executors - Win32 Debug"
 
@@ -68,8 +68,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HELLO_EXECUTORS_EXPORTS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\.." /I "..\..\..\.." /I "..\..\.." /I "..\..\..\..\orbsvcs\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HELLO_EXECUTOR_BUILD_DLL" /YX /FD  /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HELLO_EXECUTORS_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\.." /I "..\..\..\.." /I "..\..\.." /I "..\..\..\..\orbsvcs\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HELLO_EXECUTOR_BUILD_DLL" /YX /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib hello_stub.lib TAO_IFR_Clientd.lib CIAO_Containerd.lib TAO_Securityd.lib /nologo /dll /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 aced.lib taod.lib hello_stubd.lib TAO_IFR_Clientd.lib CIAO_Containerd.lib TAO_PortableServerd.lib TAO_Securityd.lib /nologo /dll /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
@@ -96,7 +96,15 @@ SOURCE=.\hello_executors.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\hello_servants.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\helloEC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\helloS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -112,7 +120,15 @@ SOURCE=.\hello_executors.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\hello_servants.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\helloEC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\helloS.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -179,6 +195,10 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\helloEC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\helloS.i
 # End Source File
 # End Group
 # End Target

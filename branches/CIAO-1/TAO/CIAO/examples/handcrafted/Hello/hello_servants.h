@@ -21,13 +21,21 @@
 //
 // ===========================================================
 
-#include "helloCS.h"
+#include "helloS.h"
 #include "helloEC.h"
 
 class CIAO_HelloWorld_Context :
-  public virtual CCM_HelloWorld_Context,
-  public virtual ::Components::SessionContext
+  public virtual CCM_HelloWorld_Context
+// @@ The following line is causing compiler to barf.
+//  , public virtual ::Components::SessionContext
 {
+public:
+  // Ctor.
+  CIAO_HelloWorld_Context ();
+
+  // Dtor.
+  virtual ~CIAO_HelloWorld_Context ();
+
   // Operations for HellowWorld attributes, event source, and
   // receptable defined in CCM_HelloWorld_Context.
 
@@ -205,11 +213,13 @@ protected:
 };
 
 
-class CIAO_HelloHome_Servant
+class CIAO_HelloHome_Servant :
+  public virtual POA_HelloHome,
+  public virtual PortableServer::RefCountServantBase
 {
 public:
   // Ctor.
-  CIAO_HelloHome_Servant (CCM_HelloWorld_ptr exe);
+  CIAO_HelloHome_Servant (CCM_HelloHome_ptr exe);
 
   // Dtor.
   ~CIAO_HelloHome_Servant (void);
@@ -239,5 +249,5 @@ public:
 
 protected:
   // My Executor.
-  CCM_HelloWorld_var executor_;
+  CCM_HelloHome_var executor_;
 };
