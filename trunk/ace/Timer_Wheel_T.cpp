@@ -69,12 +69,12 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::ACE_Timer_Wheel_T (size_t wheelsize,
   size_t i;
 
   // Create the timing wheel
-  ACE_NEW (this->wheel_, NODE *[wheelsize]);
+  ACE_NEW (this->wheel_, (ACE_Timer_Node_T<TYPE, FUNCTOR> *[wheelsize]));
 
   for (i = 0; i < wheelsize; i++)
   {
     // Create the dummy nodes
-    NODE *tempnode = this->alloc_node ();
+    ACE_Timer_Node_T<TYPE, FUNCTOR> *tempnode = this->alloc_node ();
     tempnode->next_ = tempnode->prev_ = tempnode;
     this->wheel_[i] = tempnode;
   }
@@ -82,8 +82,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::ACE_Timer_Wheel_T (size_t wheelsize,
   // Do the preallocation
   for (i = 0; i < prealloc; i++)
   {
-    NODE *temp;
-    ACE_NEW (temp, NODE);
+    ACE_Timer_Node_T<TYPE, FUNCTOR> *temp;
+    ACE_NEW (temp, (ACE_Timer_Node_T<TYPE, FUNCTOR>));
     temp->next_ = this->freelist_;
     this->freelist_ = temp;
   }
@@ -100,7 +100,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::~ACE_Timer_Wheel_T (void)
     // delete nodes until only the dummy node is left
     while (this->wheel_[i]->next_ != this->wheel_[i])
     {
-      NODE *next = this->wheel_[i]->next_;
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *next = this->wheel_[i]->next_;
       this->wheel_[i]->next_ = next->next_;
       next->next_->prev_ = this->wheel_[i];
       this->free_node (next);
@@ -113,7 +113,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::~ACE_Timer_Wheel_T (void)
   // Get rid of the freelist now
   while (this->freelist_ != NULL)
   {
-    NODE *temp = this->freelist_;
+    ACE_Timer_Node_T<TYPE, FUNCTOR> *temp = this->freelist_;
     this->freelist_ = temp->next_;
     delete temp;
   }
@@ -167,14 +167,14 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
   ACE_TRACE ("ACE_Timer_Wheel_T::schedule");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  NODE *tempnode = this->alloc_node ();
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *tempnode = this->alloc_node ();
 
   if (tempnode)
   {
     // Note that the timer_id is actually the pointer to the node
     
     // Use operator placement new.
-    new (tempnode) NODE (type,
+    new (tempnode) ACE_Timer_Node_T<TYPE, FUNCTOR> (type,
                          act,
                          delay,
                          interval,
@@ -202,7 +202,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
 
   for (size_t i = 0; i < this->wheel_size_; i++)
   {
-    NODE *curr = this->wheel_[i]->next_;
+    ACE_Timer_Node_T<TYPE, FUNCTOR> *curr = this->wheel_[i]->next_;
   
     while (curr != this->wheel_[i])
     {
@@ -216,7 +216,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
           // two args)
           this->upcall_functor_.operator () (*this, curr->type_);
 
-        NODE *tempnode = curr;
+        ACE_Timer_Node_T<TYPE, FUNCTOR> *tempnode = curr;
         curr->prev_->next_ = curr->next_;
         curr->next_->prev_ = curr->prev_;
         curr = curr->next_;
@@ -242,11 +242,11 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::cancel (int timer_id,
   ACE_TRACE ("ACE_Timer_Wheel_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  NODE *node = (NODE *) timer_id;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *node = (ACE_Timer_Node_T<TYPE, FUNCTOR> *) timer_id;
   
   ACE_ASSERT (timer_id == node->timer_id_);
 
-  // Check to see if the node looks like a true NODE
+  // Check to see if the node looks like a true ACE_Timer_Node_T<TYPE, FUNCTOR>
   if (timer_id == node->timer_id_)
   {
     node->next_->prev_ = node->prev_;
@@ -284,7 +284,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::dump (void) const
   for (size_t i = 0; i < this->wheel_size_; i++)
   {
     ACE_DEBUG ((LM_DEBUG, "%d\n", i));
-    NODE *temp = this->wheel_[i]->next_;
+    ACE_Timer_Node_T<TYPE, FUNCTOR> *temp = this->wheel_[i]->next_;
     while (temp != this->wheel_[i])
     {
       temp->dump ();
@@ -298,12 +298,12 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::dump (void) const
 template <class TYPE, class FUNCTOR> ACE_Timer_Node_T<TYPE, FUNCTOR> *
 ACE_Timer_Wheel_T<TYPE, FUNCTOR>::alloc_node (void)
 {
-  NODE *temp;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *temp;
 
   if (this->freelist_ == NULL)
   {
     ACE_NEW_RETURN (temp,
-                    NODE,
+                    (ACE_Timer_Node_T<TYPE, FUNCTOR>),
                     0);
   }
   else
@@ -352,7 +352,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::remove (void)
   }
 
   // Remove and return
-  NODE *temp = this->wheel_[earliest_pos]->next_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *temp = this->wheel_[earliest_pos]->next_;
   temp->prev_->next_ = temp->next_;
   temp->next_->prev_ = temp->prev_;
 
@@ -370,7 +370,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *e
 
   // Insert time into dummy node
   this->wheel_[pos]->timer_value_ = expired->timer_value_;
-  NODE *cursor = this->wheel_[pos]->next_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *cursor = this->wheel_[pos]->next_;
 
   // Find position to insert
   while (cursor->timer_value_ < expired->timer_value_)

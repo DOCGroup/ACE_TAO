@@ -344,9 +344,11 @@ public:
   // The converse of the QuotedString put operator.
 #endif /* __GNUG__ */
 
+#if !defined (ACE_LACKS_IOSTREAM_SETGET)
   // = Using the macros to provide get/set operators.
   ACE_OPERATORG_SET (ACE_IOStream<STREAM>);
   ACE_OPERATORP_SET (ACE_IOStream<STREAM>);
+#endif /* ACE_LACKS_IOSTREAM_SETSET */
 
   // = These are handy to have around for overriding.
 

@@ -37,7 +37,7 @@ public:
   ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_T<TYPE, FUNCTOR> &);
   // Constructor.
 
-  virtual int next (NODE *&timer_node, 
+  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR> *&timer_node, 
 		    const ACE_Time_Value &cur_time);
   // Pass back the next <timer_node> that hasn't been seen yet, if its
   // <time_value_> <= <cur_time>.  In addition, moves the timer queue
@@ -128,27 +128,27 @@ public:
   // Dump the state of an object.
 
 protected:
-  virtual void reschedule (NODE *);
+  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
   // Reschedule an "interval" <ACE_Timer_Node>.
 
-  virtual ITERATOR &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
-  virtual NODE *alloc_node (void);
+  virtual ACE_Timer_Node_T<TYPE, FUNCTOR> *alloc_node (void);
   // Factory method that allocates a new node (uses operator new if
   // we're *not* preallocating, otherwise uses an internal freelist).
 
-  virtual void free_node (NODE *);
+  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
   // Factory method that frees a previously allocated node (uses
   // operatord delete if we're *not* preallocating, otherwise uses an
   // internal freelist).
 
 private:
-  NODE *remove (size_t index);
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *remove (size_t index);
   // Remove and return the <index>th <ACE_Timer_Node> and restore the
   // heap property.
 
-  void insert (NODE *new_node);
+  void insert (ACE_Timer_Node_T<TYPE, FUNCTOR> *new_node);
   // Insert <new_node> into the heap and restore the heap property.
 
   void grow_heap (void);
@@ -156,17 +156,17 @@ private:
   // If preallocation is used, will also double the size of the 
   // preallocated array of ACE_Timer_Nodes.
 
-  void reheap_up (NODE *new_node, 
+  void reheap_up (ACE_Timer_Node_T<TYPE, FUNCTOR> *new_node, 
 		  size_t index,
 		  size_t parent);
   // Restore the heap property, starting at <index>.
 
-  void reheap_down (NODE *moved_node, 
+  void reheap_down (ACE_Timer_Node_T<TYPE, FUNCTOR> *moved_node, 
 		    size_t index, 
 		    size_t child);
   // Restore the heap property, starting at <index>.
 
-  void copy (int index, NODE *moved_node);
+  void copy (int index, ACE_Timer_Node_T<TYPE, FUNCTOR> *moved_node);
   // Copy <moved_node> into the <index> slot of <heap_> and move
   // <index> into the corresponding slot in the <timer_id_> array.
 
@@ -191,7 +191,7 @@ private:
   HEAP_ITERATOR iterator_;
   // Iterator used to expire timers.
 
-  NODE **heap_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> **heap_;
   // Current contents of the Heap, which is organized as a "heap" of
   // <ACE_Timer_Node> *'s.  In this context, a heap is a "partially
   // ordered, almost complete" binary tree, which is stored in an
@@ -211,17 +211,17 @@ private:
   // "Pointer" to the first element in the freelist contained within
   // the <timer_ids_> array, which is organized as a stack.
 
-  NODE *preallocated_nodes_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *preallocated_nodes_;
   // If this is non-0, then we preallocate <max_size_> number of
   // <ACE_Timer_Node> objects in order to reduce dynamic allocation
   // costs.  In auto-growing implementation, this points to the 
   // last array of nodes allocated.
 
-  NODE *preallocated_nodes_freelist_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *preallocated_nodes_freelist_;
   // This points to the head of the <preallocated_nodes_> freelist,
   // which is organized as a stack.
 
-  ACE_Unbounded_Set<NODE *> preallocated_node_set_;
+  ACE_Unbounded_Set<ACE_Timer_Node_T<TYPE, FUNCTOR> *> preallocated_node_set_;
   // Set of pointers to the arrays of preallocated timer nodes.
   // Used to delete the allocated memory when required.
 

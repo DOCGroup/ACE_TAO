@@ -173,7 +173,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR>::expire (const ACE_Time_Value &cur_time)
   // Keep looping while there are timers remaining and the earliest
   // timer is <= the <cur_time> passed in to the method.
 
-  for (NODE *expired;
+  for (ACE_Timer_Node_T<TYPE, FUNCTOR> *expired;
        iter.next (expired, cur_time) != 0;
        )
     {
