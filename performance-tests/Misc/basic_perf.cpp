@@ -127,7 +127,7 @@ Basic_Test::iteration_time (void)
 {
   return per_iteration (elapsed_time_ > empty_iteration_time_  ?
                           elapsed_time_ - empty_iteration_time_  :
-                          0);
+                          ACE_static_cast (ACE_hrtime_t, 0));
 }
 
 void
