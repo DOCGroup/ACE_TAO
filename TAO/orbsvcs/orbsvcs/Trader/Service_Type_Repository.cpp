@@ -35,6 +35,18 @@ TAO_Service_Type_Repository (ACE_Lock* lock)
 TAO_Service_Type_Repository::
 ~TAO_Service_Type_Repository (void)
 {
+  {
+    ACE_WRITE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+    
+    for (Service_Type_Map::iterator service_map_iterator (this->type_map_);
+         ! service_map_iterator.done ();
+         service_map_iterator++)
+      {
+        Type_Info* type_info = (*service_map_iterator).int_id_;
+        delete type_info;
+      }
+  }
+  
   delete this->lock_;
 }
 
@@ -67,7 +79,7 @@ add_type (const char * name,
 		   CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName))
 {
   Prop_Map prop_map;
-  Super_Type_Map super_map;
+  Service_Type_Map super_map;
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
   
   TAO_WRITE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, inc_num);
@@ -133,17 +145,13 @@ add_type (const char * name,
 
 
 void 
-TAO_Service_Type_Repository::
-remove_type (const char * name,
-	     CORBA::Environment& _env)
+TAO_Service_Type_Repository::remove_type (const char * name,
+                                          CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException, 
-		  CosTrading::IllegalServiceType, 
-		  CosTrading::UnknownServiceType, 
-		  CosTradingRepos::ServiceTypeRepository::HasSubTypes))
+                   CosTrading::IllegalServiceType, 
+                   CosTrading::UnknownServiceType, 
+                   CosTradingRepos::ServiceTypeRepository::HasSubTypes))
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_Service_Type_Repository::remove_type (%s)\n",
-	      name));
-	      
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
     TAO_THROW (CosTrading::IllegalServiceType (name));
 
@@ -155,19 +163,13 @@ remove_type (const char * name,
     TAO_THROW (CosTrading::UnknownServiceType (name));
 
   // Check if it has any subtypes.
-  Type_Info& type_info = type_entry->int_id_;
-  if (type_info.has_subtypes_)
-    {
-      TAO_THROW (CosTradingRepos::ServiceTypeRepository::HasSubTypes
-		 (name, ""));
-    }
-
-  // remove this type from an entry of each of its supertypes.
-  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super =
-    type_info.type_struct_.super_types;
+  Type_Info* type_info = type_entry->int_id_;
+  if (type_info->has_subtypes_)
+    TAO_THROW (CosTradingRepos::ServiceTypeRepository::HasSubTypes (name, ""));
 
   // remove the type from the map.
   this->type_map_.unbind (type_entry);
+  delete type_info;
 }
            
 CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq* 
@@ -199,10 +201,10 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes&
        ! itr.done ();
        itr++)
     {
-      Type_Info& type_info = (*itr).int_id_;
+      Type_Info* type_info = (*itr).int_id_;
       const char* type_name = (const char*) (*itr).ext_id_;
 
-      if (num < type_info.type_struct_.incarnation)
+      if (num < type_info->type_struct_.incarnation)
 	types[i++] = CORBA::string_dup (type_name);
     }
   
@@ -242,7 +244,7 @@ describe_type (const char * name,
   CosTradingRepos::ServiceTypeRepository::TypeStruct* descr =
     new CosTradingRepos::ServiceTypeRepository::TypeStruct;
   CosTradingRepos::ServiceTypeRepository::TypeStruct & s =
-    type_entry->int_id_.type_struct_;
+    type_entry->int_id_->type_struct_;
   
   (*descr) = s;
   
@@ -279,7 +281,7 @@ fully_describe_type (const char * name,
   CosTradingRepos::ServiceTypeRepository::TypeStruct* descr =
     new CosTradingRepos::ServiceTypeRepository::TypeStruct;
   CosTradingRepos::ServiceTypeRepository::TypeStruct & s =
-    type_entry->int_id_.type_struct_;
+    type_entry->int_id_->type_struct_;
   
   // Aggregate the Properties of this type and all its supertypes.
   // Computer the transitive closure of all supertypes.
@@ -316,7 +318,7 @@ mask_type (const char * name,
     TAO_THROW (CosTrading::UnknownServiceType (name));
 
   // make sure the type is unmasked.
-  CORBA::Boolean& mask = type_entry->int_id_.type_struct_.masked;
+  CORBA::Boolean& mask = type_entry->int_id_->type_struct_.masked;
   
   if (mask == CORBA::B_TRUE)
     TAO_THROW (CosTradingRepos::ServiceTypeRepository::AlreadyMasked (name));
@@ -346,7 +348,7 @@ unmask_type (const char * name,
     TAO_THROW (CosTrading::UnknownServiceType (name));
   
   // make sure the type is masked.
-  CORBA::Boolean& mask = type_entry->int_id_.type_struct_.masked;  
+  CORBA::Boolean& mask = type_entry->int_id_->type_struct_.masked;  
   if (mask == CORBA::B_FALSE)
     TAO_THROW (CosTradingRepos::ServiceTypeRepository::AlreadyMasked (name));
   else
@@ -360,11 +362,12 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
 		       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types)
 {   
   // Insert our own properties first.
+  CORBA::ULong i = 0;
   CORBA::ULong prop_index_begin = props.length ();
   CORBA::ULong num_properties = type_struct.props.length ();
 
   props.length (prop_index_begin + num_properties);
-  for (CORBA::ULong i = 0; i < num_properties; i++)
+  for (i = 0; i < num_properties; i++)
     props[prop_index_begin++] = type_struct.props[i];
 
   // Insert the names of our own supertypes next
@@ -383,7 +386,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
       this->type_map_.find (next_type_name, next_type_entry);
       
       CosTradingRepos::ServiceTypeRepository::TypeStruct&
-	next_type_struct = next_type_entry->int_id_.type_struct_;
+	next_type_struct = next_type_entry->int_id_->type_struct_;
       
       this->fully_describe_type_i (next_type_struct, props, super_types);
     }
@@ -417,7 +420,7 @@ validate_properties (Prop_Map& prop_map,
 
 void
 TAO_Service_Type_Repository::
-validate_supertypes (Super_Type_Map& super_map,
+validate_supertypes (Service_Type_Map& super_map,
 		     const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 		     CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::IllegalServiceType,
@@ -437,7 +440,7 @@ validate_supertypes (Super_Type_Map& super_map,
 	  if (this->type_map_.find (s_type, type_entry) == -1)
 	    TAO_THROW (CosTrading::UnknownServiceType (type));
 	  else
-	    if (super_map.bind (s_type, &(type_entry->int_id_)) == 1)
+	    if (super_map.bind (s_type, type_entry->int_id_) == 1)
 	      TAO_THROW (CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName (type));
 	}
     }
@@ -460,7 +463,7 @@ validate_inheritance (Prop_Map& prop_map,
       CosTradingRepos::ServiceTypeRepository::PropStructSeq super_props;
 
       this->type_map_.find (super_type, super_type_entry);      
-      this->fully_describe_type_i (super_type_entry->int_id_.type_struct_,
+      this->fully_describe_type_i (super_type_entry->int_id_->type_struct_,
 				   super_props,
 				   place_holder);
 
@@ -498,14 +501,15 @@ update_type_map (const char* name,
 		 const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 		 const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 		 Prop_Map& prop_map,
-		 Super_Type_Map& super_map)
+		 Service_Type_Map& super_map)
 {
-  Type_Info type;
+  Type_Info* type = 0;
+  ACE_NEW (type, Type_Info);
   // update entries for all supertypes to include this type as a subtype. 
   // we can use the super_types_map we have constructed.
 
   TAO_String_Hash_Key type_name (name);
-  for (Super_Type_Map::iterator super_map_iterator (super_map);
+  for (Service_Type_Map::iterator super_map_iterator (super_map);
        ! super_map_iterator.done ();
        super_map_iterator++)
     {
@@ -515,12 +519,20 @@ update_type_map (const char* name,
 
   // all parameters are valid, create an entry for this service type
   // in the this->type_map_. 
-  type.type_struct_.if_name = if_name;
-  type.type_struct_.props = props;
-  type.type_struct_.super_types = super_types;
-  type.type_struct_.masked = CORBA::B_FALSE;
-  type.type_struct_.incarnation = this->incarnation_;
-  type.has_subtypes_ = CORBA::B_FALSE;
+  type->type_struct_.if_name = if_name;
+  type->type_struct_.props = props;
+  type->type_struct_.super_types = super_types;
+  type->type_struct_.masked = CORBA::B_FALSE;
+  type->type_struct_.incarnation = this->incarnation_;
+  type->has_subtypes_ = CORBA::B_FALSE;
   
   this->type_map_.bind (type_name, type);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

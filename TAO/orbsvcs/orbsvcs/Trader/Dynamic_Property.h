@@ -70,6 +70,9 @@ public:
 			    const CORBA::Any& extra_info);
 private:
 
+  TAO_DP_Dispatcher (const TAO_DP_Dispatcher&);
+  TAO_DP_Dispatcher& operator= (const TAO_DP_Dispatcher&);
+  
   struct Handler_Info
   {
     TAO_DP_Evaluation_Handler* handle_;

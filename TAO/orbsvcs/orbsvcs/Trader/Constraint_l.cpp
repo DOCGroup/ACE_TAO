@@ -445,9 +445,11 @@ extern int yywrap YY_PROTO(( void ));
 #endif
 #endif
 
+#if 0
 #ifndef YY_NO_UNPUT
 static void yyunput YY_PROTO(( int c, char *buf_ptr ));
 #endif
+#endif /* 0 */
 
 #ifndef yytext_ptr
 static void yy_flex_strncpy YY_PROTO(( char *, yyconst char *, int ));
@@ -672,117 +674,117 @@ case 1:
 YY_RULE_SETUP
 #line 44 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_MIN; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 2:
 YY_RULE_SETUP
 #line 45 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_MAX; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 3:
 YY_RULE_SETUP
 #line 46 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_FIRST; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 4:
 YY_RULE_SETUP
 #line 47 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_RANDOM; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 5:
 YY_RULE_SETUP
 #line 48 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_WITH; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 6:
 YY_RULE_SETUP
 #line 49 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_EXIST; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 7:
 YY_RULE_SETUP
 #line 50 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_NOT; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 8:
 YY_RULE_SETUP
 #line 51 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_AND; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 9:
 YY_RULE_SETUP
 #line 52 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_OR; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 10:
 YY_RULE_SETUP
 #line 53 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_IN; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 11:
 YY_RULE_SETUP
 #line 54 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_TWIDDLE; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 12:
 YY_RULE_SETUP
 #line 55 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_PLUS; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 13:
 YY_RULE_SETUP
 #line 56 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_MINUS; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 14:
 YY_RULE_SETUP
 #line 57 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_MULT; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 15:
 YY_RULE_SETUP
 #line 58 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_DIV; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 16:
 YY_RULE_SETUP
 #line 59 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_LT; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 17:
 YY_RULE_SETUP
 #line 60 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_LE; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 18:
 YY_RULE_SETUP
 #line 61 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_GT; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 19:
 YY_RULE_SETUP
 #line 62 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_GE; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 20:
 YY_RULE_SETUP
 #line 63 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_EQ; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 21:
 YY_RULE_SETUP
 #line 64 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_NE; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 22:
 YY_RULE_SETUP
 #line 65 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_LPAREN; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 23:
 YY_RULE_SETUP
 #line 66 "Trader/constraint.l"
 { TAO_YY_LEX_DEBUG; return TAO_RPAREN; }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 24:
 YY_RULE_SETUP
 #line 67 "Trader/constraint.l"
@@ -791,7 +793,7 @@ YY_RULE_SETUP
 		    new TAO_Literal_Constraint(CORBA::B_TRUE);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 25:
 YY_RULE_SETUP
 #line 72 "Trader/constraint.l"
@@ -800,7 +802,7 @@ YY_RULE_SETUP
 		    new TAO_Literal_Constraint(CORBA::B_FALSE);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 26:
 YY_RULE_SETUP
 #line 77 "Trader/constraint.l"
@@ -809,7 +811,7 @@ YY_RULE_SETUP
 		    new TAO_Literal_Constraint((CORBA::Long)atoi(yytext));
 		  TAO_YY_LEX_DEBUG; return TAO_NUMBER; 
 		}
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 27:
 YY_RULE_SETUP
 #line 82 "Trader/constraint.l"
@@ -818,7 +820,7 @@ YY_RULE_SETUP
 		    new TAO_Literal_Constraint((CORBA::Double)atof(yytext));
 		  TAO_YY_LEX_DEBUG; return TAO_NUMBER; 
 		}
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 28:
 YY_RULE_SETUP
 #line 87 "Trader/constraint.l"
@@ -826,7 +828,7 @@ YY_RULE_SETUP
 		  yylval.constraint_ = extract_string(yytext);
 		  TAO_YY_LEX_DEBUG; return TAO_STRING; 
 		}
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 29:
 YY_RULE_SETUP
 #line 91 "Trader/constraint.l"
@@ -835,14 +837,14 @@ YY_RULE_SETUP
 		    new TAO_Property_Constraint(yytext);
 		  TAO_YY_LEX_DEBUG; return TAO_IDENT; 
 		}
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 30:
 YY_RULE_SETUP
 #line 96 "Trader/constraint.l"
 { 
                   TAO_YY_LEX_DEBUG; return TAO_UNKNOWN;
                 }
-	YY_BREAK
+	ACE_NOTREACHED (YY_BREAK)
 case 31:
 YY_RULE_SETUP
 #line 99 "Trader/constraint.l"
@@ -1184,7 +1186,7 @@ yy_state_type yy_current_state;
 	return yy_is_jam ? 0 : yy_current_state;
 	}
 
-
+#if 0
 #ifndef YY_NO_UNPUT
 #ifdef YY_USE_PROTOS
 static void yyunput( int c, register char *yy_bp )
@@ -1228,7 +1230,7 @@ register char *yy_bp;
 	yy_c_buf_p = yy_cp;
 	}
 #endif	/* ifndef YY_NO_UNPUT */
-
+#endif /* 0 */
 
 #ifdef __cplusplus
 static int yyinput()

@@ -28,7 +28,7 @@
   // TAO_Lookup
   // *************************************************************
 
-template<class TRADER>
+template<class TRADER, class TRADER_LOCK_TYPE>
 class TAO_Lookup :
   public TAO_Trader_Components<POA_CosTrading::Lookup>,
   public TAO_Support_Attributes<POA_CosTrading::Lookup>,
@@ -170,7 +170,7 @@ private:
 		       CosTradingRepos::ServiceTypeRepository_ptr rep,
 		       TAO_Policies& policies,
 		       Offer_Queue& ordered_offers,
-           CosTrading::PolicyNameSeq_out returned_limits_applied,
+                       CosTrading::PolicyNameSeq_out returned_limits_applied,
 		       CORBA::Environment& env)
     TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
 		    CosTrading::Lookup::IllegalPreference,
@@ -220,11 +220,11 @@ private:
   // TAO_Property_Filter to ensure the returned offers contain the
   // properties specified in the desired_props in parameter.
 
-  void forward_query (const CosTrading::TraderName& starting_trader,
-		      const char *type,
+  void forward_query (const CosTrading::TraderName& next_hop,
+                      const char *type,
 		      const char *constr,
 		      const char *pref,
-		      TAO_Policies& policies,
+                      const CosTrading::PolicySeq& policy_seq,
 		      const CosTrading::Lookup::SpecifiedProps& desired_props,
 		      CORBA::ULong how_many,
 		      CosTrading::OfferSeq_out offers,
@@ -245,11 +245,6 @@ private:
   // If a starting_trader policy was specfied, foward the query to the 
   // next link in the sequence.
 		      
-  CORBA::Boolean duplicate_stem_id (TAO_Policies& policies,
-				    CORBA::Environment& _env);
-  // Determine if the stem id provided to the query is one we've
-  // already seen.
-
   CORBA::Boolean retrieve_links (TAO_Policies& policies,
 				 CORBA::ULong offer_returned,
 				 CosTrading::LinkNameSeq_out links,
@@ -262,10 +257,11 @@ private:
   // registered links should be followed in this query.
   
   void federated_query (const CosTrading::LinkNameSeq& links,
+                        const TAO_Policies& policies,
+                        const CosTrading::Admin::OctetSeq& request_id,
 			const char *type,
 			const char *constr,
 			const char *pref,
-			TAO_Policies& policies,
 			const CosTrading::Lookup::SpecifiedProps& desired_props,
 			CORBA::ULong how_many,
 			CosTrading::OfferSeq_out offers,
@@ -288,22 +284,23 @@ private:
   // suitable for returning to the user.  
 
     // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER,TRADER_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER, TRADER_LOCK_TYPE> &))
   
   TRADER &trader_;
   // A reference to the trader for obtaining offer maps.
-
+  
   typedef ACE_Unbounded_Set    
     <
-    CosTrading::Admin::OctetSeq_var
+    CosTrading::Admin::OctetSeq
     >
     Request_Ids;
   
   Request_Ids request_ids_;
   // A list of recent request_id_stems 
 
-  //  TAO_Register_Offer_Iterator<TRADER> msvc_dummy_;
+  TRADER_LOCK_TYPE lock_;
+  // Lock to secure the set of request ids.
 };
 
 
@@ -573,8 +570,8 @@ public:
   typedef TRADER::Offer_Database Offer_Database;
   
   void validate_properties (const char* type,
-			    CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
-			    CosTrading::PropertySeq& properties,
+			    const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
+			    const CosTrading::PropertySeq& properties,
 			    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalPropertyName, 
 		     CosTrading::PropertyTypeMismatch, 
@@ -601,7 +598,7 @@ public:
   // TAO_Admin
   // *************************************************************
 
-template <class TRADER>
+template <class TRADER, class TRADER_LOCK_TYPE>
 class TAO_Admin : 
   public TAO_Trader_Components <POA_CosTrading::Admin>,
   public TAO_Support_Attributes <POA_CosTrading::Admin>,
@@ -756,16 +753,18 @@ public:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Admin<TRADER> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Admin (const TAO_Admin<TRADER> &))
-  
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Admin<TRADER,TRADER_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Admin (const TAO_Admin<TRADER,TRADER_LOCK_TYPE> &))
+    
   TRADER &trader_;
-
+  
   CosTrading::Admin::OctetSeq stem_id_;
   // Unique prefix to create a sequence number space.
   
   CORBA::ULong sequence_number_;
   // Current sequence number.
+
+  TRADER_LOCK_TYPE lock_;
 };
 
   // *************************************************************
@@ -929,7 +928,6 @@ private:
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Link<TRADER, MAP_TRADER> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Link (const TAO_Link<TRADER, MAP_TRADER> &))
-
   
   typedef ACE_Hash_Map_Manager
   <

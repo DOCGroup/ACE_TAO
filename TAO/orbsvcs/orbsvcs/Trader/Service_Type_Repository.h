@@ -216,14 +216,6 @@ private:
   typedef ACE_Hash_Map_Manager
     <
     TAO_String_Hash_Key,
-    Type_Info,
-    ACE_Null_Mutex
-    >
-    Service_Type_Map;
-  
-  typedef ACE_Hash_Map_Manager
-    <
-    TAO_String_Hash_Key,
     CosTradingRepos::ServiceTypeRepository::PropStruct*,
     ACE_Null_Mutex
     >
@@ -234,7 +226,7 @@ private:
     TAO_String_Hash_Key,
     Type_Info*,
     ACE_Null_Mutex
-    > Super_Type_Map;
+    > Service_Type_Map;
 
   void fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
 			      CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
@@ -251,7 +243,7 @@ private:
   // Confirm that the properties in props have valid names, and aren't
   // duplicated. Cram those properties into the prop_map.
   
-  void validate_supertypes (Super_Type_Map& super_map,
+  void validate_supertypes (Service_Type_Map& super_map,
 			    const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 			    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalServiceType,
@@ -267,7 +259,7 @@ private:
   // or retstrictions redefined.
 
   //  void validate_interface (const char* if_name,
-  //			   Super_Type_Map& super_map,
+  //			   Service_Type_Map& super_map,
   //			   CORBA::Environment& _env)
   //    TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch));
   // Ensure that the interface type derives from its superclasses'.
@@ -277,10 +269,13 @@ private:
 			const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 			const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 			Prop_Map& prop_map,
-			Super_Type_Map& super_map);
+			Service_Type_Map& super_map);
   // Update the type map with the information contained in the
   // TypeStruct, prop_map, and super_map.
 
+  TAO_Service_Type_Repository (const TAO_Service_Type_Repository&);
+  TAO_Service_Type_Repository& operator= (const TAO_Service_Type_Repository&);
+  
   ACE_Lock* lock_;
   // Lock with which to serialize access to the service type map.
   

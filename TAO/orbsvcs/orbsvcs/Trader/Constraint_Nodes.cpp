@@ -441,8 +441,8 @@ TAO_Literal_Constraint::operator CORBA::Long (void) const
     return_value = this->op_.integer_;
   else if (this->type_ == TAO_UNSIGNED)
     return_value =
-      (this->op_.uinteger_ > MAX_SIGNED_INTEGER) ?
-      MAX_SIGNED_INTEGER : this->op_.uinteger_;
+      (this->op_.uinteger_ > (CORBA::ULong) MAX_SIGNED_INTEGER) ?
+      MAX_SIGNED_INTEGER : (CORBA::Long) this->op_.uinteger_;
   else if (this->type_ == TAO_DOUBLE)
     return_value  =
       (this->op_.double_ > 0) ?
@@ -736,19 +736,16 @@ operator+ (const TAO_Literal_Constraint& left,
 	CORBA::Double result = (CORBA::Double)left + (CORBA::Double)right;
 	return TAO_Literal_Constraint((CORBA::Double)result);
       }
-      break;
     case TAO_SIGNED:
       {
 	CORBA::Long result = (CORBA::Long)left + (CORBA::Long)right;
 	return TAO_Literal_Constraint((CORBA::Long)result);
       }
-      break;
     case TAO_UNSIGNED:
       {
 	CORBA::ULong result = (CORBA::ULong)left + (CORBA::ULong)right;
 	return TAO_Literal_Constraint((CORBA::ULong)result);
       }
-      break;
     default:
       return TAO_Literal_Constraint((CORBA::Long)0);
     }
@@ -768,19 +765,16 @@ operator- (const TAO_Literal_Constraint& left,
 	CORBA::Double result = (CORBA::Double)left - (CORBA::Double)right;
 	return TAO_Literal_Constraint((CORBA::Double)result);
       }
-      break;
     case TAO_SIGNED:
       {
 	CORBA::Long result = (CORBA::Long)left - (CORBA::Long)right;
 	return TAO_Literal_Constraint((CORBA::Long)result);
       }
-      break;
     case TAO_UNSIGNED:
       {
 	CORBA::ULong result = (CORBA::ULong)left - (CORBA::ULong)right;
 	return TAO_Literal_Constraint((CORBA::ULong)result);
       }
-      break;
     default: 
       return TAO_Literal_Constraint((CORBA::Long)0);
     }
@@ -800,19 +794,16 @@ operator* (const TAO_Literal_Constraint& left,
 	CORBA::Double result = (CORBA::Double)left * (CORBA::Double)right;
 	return TAO_Literal_Constraint((CORBA::Double)result);
       }
-      break;
     case TAO_SIGNED:
       {
 	CORBA::Long result = (CORBA::Long)left * (CORBA::Long)right;
 	return TAO_Literal_Constraint((CORBA::Long)result);
       }
-      break;
     case TAO_UNSIGNED:
       {
 	CORBA::ULong result = (CORBA::ULong)left * (CORBA::ULong)right;
 	return TAO_Literal_Constraint((CORBA::ULong)result);
       }
-      break;
     default:
       return TAO_Literal_Constraint((CORBA::Long)0);
     }  
@@ -832,19 +823,16 @@ operator/ (const TAO_Literal_Constraint& left,
 	CORBA::Double result = (CORBA::Double)left / (CORBA::Double)right;
 	return TAO_Literal_Constraint((CORBA::Double)result);
       }
-      break;
     case TAO_SIGNED:
       {
 	CORBA::Long result = (CORBA::Long)left / (CORBA::Long)right;
 	return TAO_Literal_Constraint((CORBA::Long)result);
       }
-      break;
     case TAO_UNSIGNED:
       {
 	CORBA::ULong result = (CORBA::ULong)left / (CORBA::ULong)right;
 	return TAO_Literal_Constraint((CORBA::ULong)result);
       }
-      break;
     default:
       return TAO_Literal_Constraint((CORBA::Long)0);
     }  
@@ -860,19 +848,16 @@ operator- (const TAO_Literal_Constraint& operand)
 	CORBA::Double result = - (CORBA::Double)operand;
 	return TAO_Literal_Constraint((CORBA::Double)result);
       }
-      break;
     case TAO_SIGNED:
       {
 	CORBA::Long result = - (CORBA::Long)operand;
 	return TAO_Literal_Constraint((CORBA::Long)result);
       }
-      break;
     case TAO_UNSIGNED:
       {
 	CORBA::Long result = - (CORBA::Long)((CORBA::ULong)operand);
 	return TAO_Literal_Constraint((CORBA::ULong)result);
       }
-      break;
     default:
       return TAO_Literal_Constraint((CORBA::Long)0);
     }  

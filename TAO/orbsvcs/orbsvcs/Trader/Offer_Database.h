@@ -48,7 +48,7 @@ class TAO_Offer_Database
 //   contruct an iterator (which acquires a read lock on the map under
 //   an existing read lock). Just don't do it, ok?
 {
-  friend TAO_Service_Offer_Iterator<LOCK_TYPE>;
+  friend class TAO_Service_Offer_Iterator<LOCK_TYPE>;
 public:
 
   // Traits
@@ -60,7 +60,7 @@ public:
   ~TAO_Offer_Database (void);
   
   CosTrading::OfferId insert_offer (const char* type,
-				    const CosTrading::Offer& offer);
+                                    CosTrading::Offer* offer);
   // Add an offer of type <type> and generate a CosTrading::OfferId
   // for it. Returns 0 on failure.
   
@@ -89,17 +89,12 @@ public:
   // Return an iterator that will traverse and return all the offer
   // ids in the service type map.
 
- private:
-
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Offer_Database<LOCK_TYPE> &))
-    ACE_UNIMPLEMENTED_FUNC (TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &))
-    
+  // private:
 
   class Hashable_ULong
   {
   public:
-
+    
     Hashable_ULong (void)
       : number_ (0) {}
     
@@ -112,40 +107,45 @@ public:
       { this->number_ = number.number_; }
     
     operator CORBA::ULong (void) const { return number_; }
-
+    
     friend int operator== (const Hashable_ULong& left,
-		    const Hashable_ULong& right)
+                           const Hashable_ULong& right)
       { return left.number_ == right.number_; }
     
   private:
-
+    
     CORBA::ULong number_;   
   };
-  
+    
   typedef ACE_Hash_Map_Manager
     <
-    //    CORBA::ULong,
     Hashable_ULong,
-    CosTrading::Offer,
+    CosTrading::Offer*,
     ACE_Null_Mutex
     >
-    Offer_Map;
+    Offer_Map; 
 
+ private:
+  
   struct Offer_Map_Entry 
   {
     Offer_Map* offer_map_;
     CORBA::ULong counter_;
     LOCK_TYPE lock_;
   };
-  
+
   typedef ACE_Hash_Map_Manager 
     <
     TAO_String_Hash_Key,
-    Offer_Map_Entry,
+    Offer_Map_Entry*,
     ACE_Null_Mutex
     >
     Offer_Database;
-
+  // The internal id is a pointer here, not only to avoid copying,
+  // since we would only copy on insertion, and we only insert once
+  // --- with an empty Offer_Map_Entry --- but also since most locks
+  // have unimplemented copy constructors.
+  
   CosTrading::Offer* lookup_offer (const char* type,
 				   CORBA::ULong id);
   // Lookup an offer whose type is <type> and id, <id>. Return 0 on
@@ -169,6 +169,11 @@ public:
   // Take in a previously generated offer id and return the type
   // and id that were used to generate the offer id.  
 
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Offer_Database<LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &))
+    
+    
   LOCK_TYPE db_lock_;
   
   Offer_Database offer_db_;
