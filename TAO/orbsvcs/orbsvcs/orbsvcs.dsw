@@ -159,6 +159,27 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Fault Tolerance"=.\Fault_Tolerance.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "LoadBalancing"=.\LoadBalancing.dsp - Package Owner=<4>
 
 Package=<5>
@@ -269,4 +290,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-
