@@ -10,7 +10,7 @@
 
 BIN   	= peerd
 LIB   	= libPeer.a
-SHLIB	= libPeer.so
+SHLIB	= libPeer.$(SOEXT)
 
 FILES	= Peer 
 

@@ -10,7 +10,7 @@
 
 BIN   	= gatewayd
 LIB   	= libGateway.a
-SHLIB	= libGateway.so
+SHLIB	= libGateway.$(SOEXT)
 
 FILES	= Concrete_Proxy_Handlers \
 	  Config_Files \
