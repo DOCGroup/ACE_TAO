@@ -1,3 +1,11 @@
+Sat Apr 27 12:41:50 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Loader.cpp~:
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp~:
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h~:
+	  Removed the files from the CVS as these are temporary files
+	  and should be not be in CVS.
+
 Sat Apr 27 18:59:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService.bor:
