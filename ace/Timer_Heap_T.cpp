@@ -76,7 +76,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
   : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
     max_size_ (size),
     cur_size_ (0),
-    timer_ids_freelist_ (1),
+    timer_ids_next_ (0),
+    timer_ids_min_free_ (size),
     preallocated_nodes_ (0),
     preallocated_nodes_freelist_ (0)
 {
@@ -94,7 +95,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
   // distinguish freelist elements from "pointers" into the <heap_>
   // array.
   for (size_t i = 0; i < size; i++)
-    this->timer_ids_[i] = -((long) (i + 1));
+    this->timer_ids_[i] = -1;
 
   if (preallocate)
     {
@@ -127,7 +128,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
   : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
     max_size_ (ACE_DEFAULT_TIMERS),
     cur_size_ (0),
-    timer_ids_freelist_ (1),
+    timer_ids_next_ (0),
+    timer_ids_min_free_ (ACE_DEFAULT_TIMERS),
     preallocated_nodes_ (0),
     preallocated_nodes_freelist_ (0)
 {
@@ -149,10 +151,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
   // Initialize the "freelist," which uses negative values to
   // distinguish freelist elements from "pointers" into the <heap_>
   // array.
-  for (size_t i = 0;
-       i < this->max_size_;
-       i++)
-    this->timer_ids_[i] = -((long) (i + 1));
+  for (size_t i = 0; i < this->max_size_; i++)
+    this->timer_ids_[i] = -1;
 
   ACE_NEW (iterator_,
            HEAP_ITERATOR (*this));
@@ -195,15 +195,30 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::pop_freelist (void)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::pop_freelist");
 
+  // Scan for a free timer ID. Note that since this function is called
+  // _after_ the check for a full timer heap, we are guaranteed to find
+  // a free ID. The next_ index was left at the previous allocated ID
+  // and we pick up where we left off last time.
+  ++this->timer_ids_next_;
+  if (this->timer_ids_next_ == this->max_size_)
+    {
+      ACE_ASSERT (this->timer_ids_min_free_ < this->max_size_);
+      this->timer_ids_next_ = this->timer_ids_min_free_;
+      // We restarted the free search at min. Since min won't be
+      // free anymore, find the next lowest free entry, recognizing
+      // that there may not be any more; in that case, min_free_
+      // gets left saying "none free" and will be reset next time
+      // an entry is freed.
+      while (++this->timer_ids_min_free_ < this->max_size_)
+        if (this->timer_ids_[this->timer_ids_min_free_] < 0)
+          break;
+    }
+  while (this->timer_ids_[this->timer_ids_next_] >= 0)
+    ++this->timer_ids_next_;
+
   // We need to truncate this to <int> for backwards compatibility.
   int new_id = ACE_static_cast (int,
-                                this->timer_ids_freelist_);
-
-  // The freelist values in the <timer_ids_> are negative, so we need
-  // to negate them to get the next freelist "pointer."
-  this->timer_ids_freelist_ =
-    -this->timer_ids_[this->timer_ids_freelist_];
-
+                                this->timer_ids_next_);
   return new_id;
 }
 
@@ -212,10 +227,16 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::push_freelist (int old_id)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::push_freelist");
 
-  // The freelist values in the <timer_ids_> are negative, so we need
-  // to negate them to get the next freelist "pointer."
-  this->timer_ids_[old_id] = -this->timer_ids_freelist_;
-  this->timer_ids_freelist_ = old_id;
+  // Since this ID has alreayd been checked by one of the public
+  // functions, it's safe to cast it here.
+  size_t oldid = size_t (old_id);
+
+  // The freelist values in the <timer_ids_> are negative, so set the
+  // freed entry back to 'free'. If this is the new lowest value free
+  // timer ID, remember it.
+  this->timer_ids_[oldid] = -1;
+  if (oldid < this->timer_ids_min_free_)
+    this->timer_ids_min_free_ = oldid;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
@@ -260,6 +281,11 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmax_size_ = %d"), this->max_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ncur_size_ = %d"), this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nids_next_ = %d"),
+              this->timer_ids_next_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmin_free_ = %d"),
+              this->timer_ids_min_free_));
+
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nheap_ = \n")));
 
   for (size_t i = 0; i < this->cur_size_; i++)
@@ -272,7 +298,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntimer_ids_ = \n")));
 
-  for (size_t j = 0; j < this->cur_size_; j++)
+  for (size_t j = 0; j < this->max_size_; j++)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("%d\t%d\n"),
                 j,
@@ -300,9 +326,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove (size_t slot)
 {
   ACE_Timer_Node_T<TYPE> *removed_node =
     this->heap_[slot];
-
-  // Return this timer id to the freelist.
-  this->push_freelist (removed_node->get_timer_id ());
 
   // Decrement the size of the heap by one since we're removing the
   // "slot"th node.
@@ -401,7 +424,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_up (ACE_Timer_Node_T<TYPE> *mo
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::insert (ACE_Timer_Node_T<TYPE> *new_node)
 {
-  if (this->cur_size_ + 2 >= max_size_)
+  if (this->cur_size_ + 2 >= this->max_size_)
     this->grow_heap ();
 
   this->reheap_up (new_node,
@@ -414,7 +437,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 {
   // All the containers will double in size from max_size_
-  size_t new_size = max_size_ * 2;
+  size_t new_size = this->max_size_ * 2;
 
    // First grow the heap itself.
 
@@ -429,7 +452,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) && defined (_WINDOWS) */
   ACE_OS::memcpy (new_heap,
                   this->heap_,
-                  max_size_ * sizeof *new_heap);
+                  this->max_size_ * sizeof *new_heap);
   delete [] this->heap_;
   this->heap_ = new_heap;
 
@@ -442,7 +465,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
   ACE_OS::memcpy (new_timer_ids,
                   this->timer_ids_,
-                  max_size_ * sizeof (long));
+                  this->max_size_ * sizeof (long));
 
   delete [] timer_ids_;
   this->timer_ids_ = new_timer_ids;
@@ -503,18 +526,11 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *e
 {
   ACE_TRACE ("ACE_Timer_Heap_T::reschedule");
 
-  // If we are rescheduling then we have freed our timer id so we need
-  // to reacquire it.  NOTE: we rely on the fact that we will get the
-  // same timer id we just freed.
-# if !defined (ACE_NDEBUG)
-  int timerId =
-# endif /* ACE_NDEBUG */
-    this->timer_id ();
-
-  // Just to be safe...
-  ACE_ASSERT (timerId == expired->get_timer_id ());   
-
-  // Restore the heap property.
+  // If we are rescheduling, then the most recent call was to
+  // remove_first (). That called remove () to remove the node from the
+  // heap, but did not free the timer ID. The ACE_Timer_Node still has
+  // its assigned ID - just needs to be inserted at the new proper
+  // place, and the heap restored properly.
   this->insert (expired);
 }
 
@@ -546,6 +562,10 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::alloc_node (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::free_node (ACE_Timer_Node_T<TYPE> *node)
 {
+
+  // Return this timer id to the freelist.
+  this->push_freelist (node->get_timer_id ());
+
   // Only free up a node if we are *not* using the preallocated heap.
   if (this->preallocated_nodes_ == 0)
     delete node;
