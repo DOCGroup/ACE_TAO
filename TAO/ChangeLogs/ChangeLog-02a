@@ -1,3 +1,7 @@
+Thu Sep  6 07:17:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/MCAST_Parser.cpp: Fixed compile errors in Minimum builds. 
+
 Wed Sep  5 22:28:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/MCAST_Parser.cpp: Fixed a compile error with g++.

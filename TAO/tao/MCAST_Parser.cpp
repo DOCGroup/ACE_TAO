@@ -6,6 +6,7 @@
 #include "tao/ORB.h"
 #include "tao/Exception.h"
 #include "tao/Environment.h"
+#include "tao/debug.h"
 #include "ace/Read_Buffer.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Acceptor.h"
@@ -61,7 +62,7 @@ TAO_MCAST_Parser::parse_string (const char *ior,
                                  orb,
                                  timeout,
                                  ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object;
 }
