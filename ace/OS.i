@@ -485,6 +485,7 @@ extern "C" char *mktemp (char *);
 #define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
 #endif /* VXWORKS */
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
@@ -496,6 +497,7 @@ ACE_OS::chdir (const char *path)
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 #endif /* VXWORKS */
 }
+#endif /* ACE_HAS_UNICODE_ONLY */
 
 ACE_INLINE int
 ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
@@ -567,6 +569,7 @@ ACE_OS::isatty (ACE_HANDLE fd)
   ACE_OSCALL_RETURN (::isatty (fd), int, -1);
 }
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 ACE_INLINE int
 ACE_OS::mkfifo (const char *file, mode_t mode)
 {
@@ -579,6 +582,15 @@ ACE_OS::mkfifo (const char *file, mode_t mode)
   ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
 #endif /* VXWORKS */
 }
+
+#if !defined (ACE_LACKS_MKTEMP)
+ACE_INLINE char *
+ACE_OS::mktemp (char *s)
+{
+  return ::mktemp (s);
+}
+#endif /* !ACE_LACKS_MKTEMP */
+#endif /* !ACE_HAS_UNICODE_ONLY */
 
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
@@ -668,16 +680,14 @@ ACE_OS::umask (mode_t cmask)
   } \
   return RESULT; } while (0)
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
-#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::chdir");
   ACE_OSCALL_RETURN (::_chdir (path), int, -1);
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_WINCE */
 }
+#endif /* ACE_HAS_UNICODE_ONLY */
 
 ACE_INLINE int
 ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
@@ -728,6 +738,7 @@ ACE_OS::isatty (ACE_HANDLE handle)
 #endif /* ACE_HAS_WINCE */
 }
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 ACE_INLINE int
 ACE_OS::mkfifo (const char *file, mode_t mode)
 {
@@ -737,6 +748,7 @@ ACE_OS::mkfifo (const char *file, mode_t mode)
   // ACE_TRACE ("ACE_OS::mkfifo");
   ACE_NOTSUP_RETURN (-1);
 }
+#endif /* ACE_HAS_UNICODE_ONLY */
 
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
@@ -914,6 +926,7 @@ ACE_OS::rand (void)
   ACE_OSCALL_RETURN (::rand (), int, -1);
 }
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 ACE_INLINE int
 ACE_OS::unlink (const char *path)
 {
@@ -921,11 +934,8 @@ ACE_OS::unlink (const char *path)
 #if defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::unlink ((char *) path), ace_result_),
                      int, -1);
-#elif !defined (ACE_HAS_WINCE)
-  ACE_OSCALL_RETURN (::unlink (path), int, -1);
 #else
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_OSCALL_RETURN (::unlink (path), int, -1);
 #endif /* VXWORKS */
 }
 
@@ -933,7 +943,7 @@ ACE_INLINE char *
 ACE_OS::tempnam (const char *dir, const char *pfx)
 {
   // ACE_TRACE ("ACE_OS::tempnam");
-#if defined (VXWORKS) || defined (ACE_LACKS_TEMPNAM) || defined (ACE_HAS_WINCE)
+#if defined (VXWORKS) || defined (ACE_LACKS_TEMPNAM)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
@@ -949,6 +959,7 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
 #endif /* WIN32 */
 #endif /* VXWORKS */
 }
+#endif /* !ACE_HAS_UNICODE_ONLY */
 
 
 ACE_INLINE LPTSTR
@@ -7933,22 +7944,18 @@ ACE_OS::sigaction (int signum,
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 ACE_INLINE char *
 ACE_OS::getcwd (char *buf, size_t size)
 {
   // ACE_TRACE ("ACE_OS::getcwd");
-#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
   return ::_getcwd (buf, size);
 #else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
 #endif /* ACE_WIN32 */
-#else /* ! ACE_HAS_WINCE */
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_NOTSUP_RETURN (0);
-#endif /* ! ACE_HAS_WINCE */
 }
+#endif /* !ACE_HAS_UNICODE_ONLY */
 
 ACE_INLINE int
 ACE_OS::sleep (u_int seconds)
@@ -8046,11 +8053,10 @@ ACE_OS::nanosleep (const struct timespec *requested,
 #endif /* ACE_HAS_CLOCK_GETTIME */
 }
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 ACE_INLINE int
 ACE_OS::mkdir (const char *path, mode_t mode)
 {
-#if !defined (ACE_HAS_WINCE)
-  // ACE_TRACE ("ACE_OS::mkdir");
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 
@@ -8061,13 +8067,8 @@ ACE_OS::mkdir (const char *path, mode_t mode)
 #else
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif /* VXWORKS */
-#else
-  // @@ WinCE doesn't have the concept of environment variables.
-  ACE_UNUSED_ARG (path);
-  ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ! ACE_HAS_WINCE */
 }
+#endif /* ACE_HAS_UNICODE_ONLY */
 
 ACE_INLINE char *
 ACE_OS::getenv (const char *symbol)
@@ -8568,7 +8569,7 @@ ACE_OS::perror (const wchar_t *s)
 #else
   // @@ Let's leave this to some later point.
   ACE_UNUSED_ARG (s);
-  ACE_NOTSUP_RETURN ();
+  //@@??@@  ACE_NOTSUP_RETURN ();
 #endif /* ! ACE_HAS_WINCE */
 }
 
@@ -8585,18 +8586,14 @@ ACE_OS::system (const wchar_t *command)
 #endif /* ACE_HAS_WINCE */
 }
 
+#if !defined (ACE_LACKS_MKTEMP)
 ACE_INLINE wchar_t *
 ACE_OS::mktemp (wchar_t *s)
 {
   // ACE_TRACE ("ACE_OS::mktemp");
-#if !defined (ACE_HAS_WINCE)
   return ::_wmktemp (s);
-#else
-  // @@ Should be able to emulate this using Win32 APIS.
-  ACE_UNUSED_ARG (s);
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
 }
+#endif /* !ACE_LACKS_MKTEMP */
 
 ACE_INLINE int
 ACE_OS::mkdir (const wchar_t *path, mode_t mode)
@@ -8616,15 +8613,27 @@ ACE_OS::mkdir (const wchar_t *path, mode_t mode)
 ACE_INLINE int
 ACE_OS::chdir (const wchar_t *path)
 {
-#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::chdir");
-  ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
-#else
+#if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
 #endif /* ACE_HAS_WINCE */
 }
 
+ACE_INLINE wchar_t *
+ACE_OS::getcwd (wchar_t *buf, size_t size)
+{
+  // ACE_TRACE ("ACE_OS::getcwd");
+#if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (size);
+  ACE_NOTSUP_RETURN (0);
+#else
+  return ::_wgetcwd (buf, size);
+#endif /* ACE_HAS_WINCE */
+}
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
 
@@ -8853,7 +8862,3 @@ ACE_Thread_Adapter::entry_point (void)
   return this->entry_point_;
 }
 
-#if defined (ACE_HAS_WINCE)
-// Let's not deal with too many errors at a time.
-#error "WINCE HERE"
-#endif
