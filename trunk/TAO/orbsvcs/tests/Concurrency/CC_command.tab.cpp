@@ -53,7 +53,7 @@ typedef union
 #include <memory.h>
 #endif
 
-/* #include <values.h> /*
+/* #include <values.h> */
 
 #ifdef __cplusplus
 
