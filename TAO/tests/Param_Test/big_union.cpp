@@ -183,7 +183,7 @@ Test_Big_Union::reset_parameters (void)
         fixed_struct.c = gen->gen_long () % 255;
         fixed_struct.s = gen->gen_long () % 32768;
         fixed_struct.o = gen->gen_long () % 255;
-        fixed_struct.f = gen->gen_short () / 255.0;
+        fixed_struct.f = gen->gen_short () / 255.0f;
         fixed_struct.b = gen->gen_long () % 2;
         fixed_struct.d = gen->gen_short () / 255.0;
         this->in_.the_fixed_struct (fixed_struct);
