@@ -196,6 +196,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       return CosLifeCycle::LifeCycleObject::_nil();
     }
   TAO_ENDTRY;
+  return CosLifeCycle::LifeCycleObject::_nil();
 }
 
 
