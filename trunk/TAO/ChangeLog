@@ -1,3 +1,11 @@
+Thu Jan  1 17:25:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FTORB_Utils.bor:
+	  No need to link with portablegroup
+
+	* orbsvcs/orbsvcs/Makefile.bor:
+	  Moved portablegroup before the ft projects.
+
 Thu Jan  1 16:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
