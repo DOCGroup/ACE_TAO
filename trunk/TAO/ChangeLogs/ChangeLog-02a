@@ -1,3 +1,12 @@
+Wed Feb 16 08:36:01 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/pluggable_protocols/index.html:
+	* tao/default_resource.cpp (init_protocol_factories):
+
+	  Updated documentation/comments about pluggable protocol svc.conf
+	  entries.  Thanks to Gilbert Grosdidier <grodid@in2p3.fr> for
+	  motivating this update.
+
 Tue Feb 15 22:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/SHMIOP_Transport.cpp (send): Changed to use the new
