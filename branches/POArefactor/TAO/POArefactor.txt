@@ -1,3 +1,8 @@
+Thu Sep  9 13:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_ThreadPolicy.h:
+          Temporary checkin, have to work on this
+
 Thu Sep  9 13:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Policy.{h,cpp}:
