@@ -45,6 +45,7 @@ static ACE_Message_Block mb1 (BUFSIZ + 1);
 static ACE_Message_Block mb2 (BUFSIZ + 1);
 static aiocb aiocb1;
 static aiocb aiocb2;
+static aiocb aiocb3;
 static sigset_t completion_signal;
 
 // Function prototypes.
@@ -80,14 +81,14 @@ setup_signal_delivery (void)
   //   issue <aio_>'s.
   
   if (sigemptyset (&completion_signal) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Couldnt init the RT completion signal set\n"),
+    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                       "Couldnt init the RT completion signal set"),
                       -1);
 
   if (sigaddset (&completion_signal,
                  SIGRTMIN) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Couldnt init the RT completion signal set\n"),
+    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                       "Couldnt init the RT completion signal set"),
                       -1);
 
   // Set up signal handler for this signal.
@@ -112,8 +113,8 @@ setup_signal_handler (int signal_number)
                                     &reaction,
                                     0);
   if (sigaction_return == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Proactor couldnt do sigaction for the RT SIGNAL"),
+    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                       "Proactor couldnt do sigaction for the RT SIGNAL"),
                       -1);
   return 0;
 }
@@ -132,11 +133,11 @@ issue_aio_calls (void)
   aiocb1.aio_sigevent.sigev_signo = SIGRTMIN;
   aiocb1.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb1;
 
-  // Fire off the aio write.
+  // Fire off the aio read.
   if (aio_read (&aiocb1) == -1)
     // Queueing failed.
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Erro:%p:Asynch_Read_Stream: aio_read queueing failed\n"),
+    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                       "Asynch_Read_Stream: aio_read queueing failed"),
                       -1);
 
   // Setup AIOCB.
@@ -149,11 +150,29 @@ issue_aio_calls (void)
   aiocb2.aio_sigevent.sigev_signo = SIGRTMIN;
   aiocb2.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb2;
 
-  // Fire off the aio write.
+  // Fire off the aio read.
   if (aio_read (&aiocb2) == -1)
     // Queueing failed.
+    ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                       "Asynch_Read_Stream: aio_read queueing failed"),
+                      -1);
+
+  // Setup sigval.
+  aiocb3.aio_fildes = ACE_INVALID_HANDLE;
+  aiocb3.aio_offset = 0;
+  aiocb3.aio_buf = 0;
+  aiocb3.aio_nbytes = 0;
+  aiocb3.aio_reqprio = 0;
+  aiocb3.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
+  aiocb3.aio_sigevent.sigev_signo = SIGRTMIN;
+  aiocb3.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb3;
+  sigval value;
+  value.sival_ptr = ACE_reinterpret_cast (void *, &aiocb3);
+  // Queue this one for completion right now.
+  if (sigqueue (ACE_OS::getpid (), SIGRTMIN, value) == -1)
+    // Queueing failed.
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Erro:%p:Asynch_Read_Stream: aio_read queueing failed\n"),
+                       "Error: %p\n", "sigqueue"),
                       -1);
 
   return 0;
@@ -163,7 +182,7 @@ static int
 query_aio_completions (void)
 {
   for (size_t number_of_compleions = 0;
-       number_of_compleions < 2;
+       number_of_compleions < 3;
        number_of_compleions ++)
     {
       // Wait for <milli_seconds> amount of time.  @@ Assigning
@@ -185,8 +204,8 @@ query_aio_completions (void)
       // errno appropriately. This is what the WinNT proactor
       // does.
       if (sig_return == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error:%p:Error waiting for RT completion signals\n"),
+        ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
+                           "Error waiting for RT completion signals"),
                           -1);
 
       // RT completion signals returned.
@@ -223,51 +242,58 @@ query_aio_completions (void)
 
       // Retrive the aiocb.
       aiocb* aiocb_ptr = (aiocb *) sig_info.si_value.sival_ptr;
-
-      // Analyze error and return values. Return values are
-      // actually <errno>'s associated with the <aio_> call
-      // corresponding to aiocb_ptr.
-      int error_code = aio_error (aiocb_ptr);
-      if (error_code == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p:Invalid control block was sent to <aio_error> for compleion querying\n"),
-                          -1);
-
-      if (error_code != 0)
-        // Error occurred in the <aio_>call. Return the errno
-        // corresponding to that <aio_> call.
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p:An AIO call has failed\n"),
-                          error_code);
-
-      // No error occured in the AIO operation.
-      int nbytes = aio_return (aiocb_ptr);
-      if (nbytes == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p:Invalid control block was send to <aio_return>\n"),
-                          -1);
-      if (number_of_compleions == 0)
+      if (aiocb_ptr == &aiocb3)
         {
-          // Print the buffer.
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n Number of bytes transferred : %d\n",
-                      nbytes));
-          // Note... the dumps of the buffers are disabled because they
-          // may easily overrun the ACE_Log_Msg output buffer. If you need
-          // to turn the on for some reason, be careful of this.
-#if 0
-          ACE_DEBUG ((LM_DEBUG, "The buffer : %s \n", mb1.rd_ptr ()));
-#endif /* 0 */
+          ACE_ASSERT (sig_info.si_code == SI_QUEUE);
+          ACE_DEBUG ((LM_DEBUG, "sigqueue caught... good\n"));
         }
       else
         {
-          // Print the buffer.
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n Number of bytes transferred : %d\n",
-                      nbytes));
+          // Analyze error and return values. Return values are
+          // actually <errno>'s associated with the <aio_> call
+          // corresponding to aiocb_ptr.
+          int error_code = aio_error (aiocb_ptr);
+          if (error_code == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                               "Invalid control block was sent to <aio_error> for completion querying"),
+                              -1);
+
+          if (error_code != 0)
+            // Error occurred in the <aio_>call. Return the errno
+            // corresponding to that <aio_> call.
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                               "An AIO call has failed"),
+                              error_code);
+
+          // No error occured in the AIO operation.
+          int nbytes = aio_return (aiocb_ptr);
+          if (nbytes == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                               "Invalid control block was send to <aio_return>"),
+                              -1);
+          if (number_of_compleions == 0)
+            {
+              // Print the buffer.
+              ACE_DEBUG ((LM_DEBUG,
+                          "\n Number of bytes transferred : %d\n",
+                          nbytes));
+              // Note... the dumps of the buffers are disabled because they
+              // may easily overrun the ACE_Log_Msg output buffer. If you need
+              // to turn the on for some reason, be careful of this.
 #if 0
-          ACE_DEBUG ((LM_DEBUG, "The buffer : %s \n", mb2.rd_ptr ()));
+              ACE_DEBUG ((LM_DEBUG, "The buffer : %s \n", mb1.rd_ptr ()));
 #endif /* 0 */
+            }
+          else
+            {
+              // Print the buffer.
+              ACE_DEBUG ((LM_DEBUG,
+                          "\n Number of bytes transferred : %d\n",
+                          nbytes));
+#if 0
+              ACE_DEBUG ((LM_DEBUG, "The buffer : %s \n", mb2.rd_ptr ()));
+#endif /* 0 */
+            }
         }
     }
 
