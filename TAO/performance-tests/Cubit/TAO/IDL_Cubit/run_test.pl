@@ -113,11 +113,11 @@ if ($server == -1) {
 unlink $iorfile;
 
 if ($server != 0) {
-  print STDERR "ERROR: server error status\n";
+  print STDERR "ERROR: server error status $server\n";
 }
 
 if ($client != 0) {
-  print STDERR "ERROR: client error status\n";
+  print STDERR "ERROR: client error status $client\n";
 }
 
 if ($server != 0 || $client != 0) {
@@ -173,11 +173,11 @@ if ($OSNAME ne "MSWin32")
   unlink $iorfile;
 
   if ($server != 0) {
-    print STDERR "ERROR: server error status\n";
+    print STDERR "ERROR: server error status $server\n";
   }
 
   if ($client != 0) {
-    print STDERR "ERROR: client error status\n";
+    print STDERR "ERROR: client error status $client\n";
   }
 
   if ($server != 0 || $client != 0) {

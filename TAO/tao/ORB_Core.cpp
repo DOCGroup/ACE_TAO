@@ -80,7 +80,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
-                                                
+
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
   ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
@@ -881,18 +881,18 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else
         {
-          int milliseconds = 
+          int milliseconds =
             ACE_OS::atoi (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT);
 
           this->thread_per_connection_timeout_.set (0,
                                                     1000 * milliseconds);
         }
-      if (this->thread_per_connection_use_timeout_ == 0)
-        {
-          // Do not wait for the server threads because they may block
-          // forever.
-          this->tm_.wait_on_exit (0);
-        }
+    }
+  if (this->thread_per_connection_use_timeout_ == 0)
+    {
+      // Do not wait for the server threads because they may block
+      // forever.
+      this->tm_.wait_on_exit (0);
     }
 
   // Inititalize the "ORB" pseudo-object now.
