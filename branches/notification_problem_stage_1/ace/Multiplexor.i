@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 // $Id$
-
 // Multiplexor.i
 #if 0
 

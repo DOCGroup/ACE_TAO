@@ -762,6 +762,14 @@ SOURCE=.\Select_Reactor_Base.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Select_Reactor_Handler_Repository.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Select_Reactor_Notify.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Config.cpp
 # End Source File
 # Begin Source File
@@ -1914,6 +1922,14 @@ SOURCE=.\Select_Reactor_Base.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Select_Reactor_Handler_Repository.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Select_Reactor_Notify.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Select_Reactor_T.h
 # End Source File
 # Begin Source File
@@ -2887,6 +2903,10 @@ SOURCE=.\Select_Reactor.i
 # Begin Source File
 
 SOURCE=.\Select_Reactor_Base.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Select_Reactor_Handler_Repository.inl
 # End Source File
 # Begin Source File
 
