@@ -1,5 +1,4 @@
 #include "JAWS/server/IO.h"
-#include "JAWS/server/HTTP_Handler.h"
 #include "JAWS/server/HTTP_Helpers.h"
 #include "JAWS/server/VFS.h"
 #include "ace/Message_Block.h"
@@ -28,7 +27,7 @@ JAWS_IO::handle (ACE_HANDLE handle)
 }
 
 void
-JAWS_IO::handler (HTTP_Handler *handler)
+JAWS_IO::handler (JAWS_IO_Handler *handler)
 {
   this->handler_ = handler;
 }
@@ -54,7 +53,7 @@ JAWS_Synch_IO::read (ACE_Message_Block& mb, int size)
   else 
     {
       mb.wr_ptr (result);
-      this->handler_->client_data (mb);
+      this->handler_->read_complete (mb);
     } 
 }
 
@@ -214,7 +213,7 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
     {
       // This callback is for this->read()
       if (result.success () && result.bytes_transferred () != 0)
-	this->handler_->client_data (result.message_block ());
+	this->handler_->read_complete (result.message_block ());
       else
 	this->handler_->read_error ();    
     }

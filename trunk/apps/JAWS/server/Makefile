@@ -15,6 +15,8 @@ FILES  	= \
 	HTTP_Handler \
 	HTTP_Helpers \
 	HTTP_Request \
+	HTTP_Response \
+	Parse_Headers \
 	VFS \
 	IO 
 

@@ -13,7 +13,7 @@ class JXH_List
   //
   // = DESCRIPTION
   //    Yet another implementation of a list.
-  //    Comletely unordered.  Elements inserted at tail, but may
+  //    Completely unordered.  Elements inserted at tail, but may
   //    be moved about by other operations.  Must use linear
   //    search to find.
   //

@@ -1,15 +1,19 @@
+/* -*- c++ -*- */
+// Hey, Emacs!  This is a C++ file!
+
 #if !defined (HTTP_HANDLER_H)
 #define HTTP_HANDLER_H
 
 // Forward declarations
-class JAWS_IO;
 class Message_Block;
 class HTTP_Handler_Factory;
 
 #include "ace/Asynch_IO.h"
 #include "JAWS/server/HTTP_Request.h"
+#include "JAWS/server/HTTP_Response.h"
+#include "JAWS/server/IO.h"
 
-class HTTP_Handler
+class HTTP_Handler : protected JAWS_IO_Handler
   //
   // = TITLE
   //     
@@ -22,7 +26,6 @@ class HTTP_Handler
   //	 asynchronously. It uses an abstract IO class to move between
   //	 different HTTP protocol states. It is up to the IO class to
   //	 decide on synchronous or asynchronous I/O.
-
 {
   // Friend I/O classes. Can call protected methods.
   friend class JAWS_Synch_IO;
@@ -50,56 +53,14 @@ protected:
   virtual ~HTTP_Handler (void);
   // Destructor
 
+  virtual void timeout (void);
+  // This method is called by the framework when there is a timeout.
+
   virtual void done (void);
   // This is the termination state of the handler. After successful or
   // unsuccessful completions, the handler will end up in this state
   // (method).
   
-  virtual void client_data (ACE_Message_Block &data);
-  // This method is called by the IO class when new client data shows
-  // up.
-
-  virtual void read_error (void);
-  // This method is called by the IO class when there was an error in
-  // reading new data from the client.
-
-  virtual void transmit_file_complete (void);
-  // This method is called by the IO class when the requested file has
-  // been successfully transmitted to the client.
-
-  virtual void transmit_file_error (int result);
-  // This method is called by the IO class when there was an error in
-  // transmitting the requested file to the client.
-
-  virtual void receive_file_complete (void);
-  // This method is called by the IO class when the requested file has
-  // been successfully received from the client.
-
-  virtual void receive_file_error (int result);
-  // This method is called by the IO class when there was an error in
-  // receiving the requested file from the client.
-
-  virtual void write_error (void);
-  // This method is called by the IO class when there was an error in
-  // writing data to the client.
-
-  virtual void timeout (void);
-  // This method is called by the framework when there is a timeout.
-
-  virtual int enough_data (void);
-  // Has the header of the client request been read yet?
-  
-  virtual void confirmation_message_complete (void);
-  // This method is called by the IO class when the confirmation
-  // message has been delivered to the client.
-
-  virtual void error_message_complete (void);
-  // This method is called by the IO class when the error message has
-  // been delivered to the client.
-
-  virtual void parse_request (void);
-  // Parse the client request
-
   virtual void invalid_request (int result);
   // Invalid request.
 
@@ -115,10 +76,23 @@ protected:
   HTTP_Handler_Factory &factory_;
   // Reference to the creating factory.
 
+protected:
+  // Methods inherited from JAWS_IO_Handler
+
+  void read_complete (ACE_Message_Block &data);
+  void read_error (void);
+  void transmit_file_complete (void);
+  void transmit_file_error (int result);
+  void receive_file_complete (void);
+  void receive_file_error (int result);
+  void write_error (void);
+  void confirmation_message_complete (void);
+  void error_message_complete (void);
+
 public:
   enum 
   {
-    MAX_REQUEST_SIZE = 1024,
+    MAX_REQUEST_SIZE = 8192,
     METHODSIZ = 10, 
     VERSIONSIZ = 10
   };
@@ -131,6 +105,7 @@ private:
   // I/O handle to the client
 
   HTTP_Request request_;
+  HTTP_Response response_;
 
   JAWS_IO &io_;
   // IO class used by the handler

@@ -8,6 +8,7 @@
 
 /* static */
 // const char *HTTP_Handler::HTTP_HEADER = "HTTP/1.0 200 Document follows\r\n" "Server: JAWS\r\n\r\n";
+
 const char *HTTP_Handler::HTTP_HEADER = "";
 const char *HTTP_Handler::HTTP_TRAILER = "";
 const int HTTP_Handler::HTTP_HEADER_LENGTH  = ACE_OS::strlen (HTTP_Handler::HTTP_HEADER);
@@ -18,6 +19,7 @@ HTTP_Handler::HTTP_Handler (JAWS_IO &io,
   : factory_ (factory),
     request_data_ (0),
     handle_ (ACE_INVALID_HANDLE),
+    response_ (io, request_),
     io_ (io)
 {
   this->io_.handler (this);
@@ -33,77 +35,46 @@ void
 HTTP_Handler::open (ACE_HANDLE handle, 
 		    ACE_Message_Block &initial_data)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) New connection \n"));
-  
+  ACE_DEBUG ((LM_DEBUG, "(%t) New connection \n"));
+
+  {
+    int sockbufsize = 64*1024;
+    int result = ACE_OS::setsockopt (handle,
+                                     SOL_SOCKET,
+                                     SO_RCVBUF,
+                                     (char *) &sockbufsize,
+                                     sizeof (sockbufsize));
+    if (result < 0) {
+      perror ("SO_RCVBUF");
+    }
+  }
+
   this->handle_ = handle;
   this->io_.handle (this->handle_);
   
   this->request_data_ = initial_data.duplicate ();
-  this->client_data (initial_data);
+  this->read_complete (initial_data);
 }
 
 void 
-HTTP_Handler::client_data (ACE_Message_Block &message_block)
+HTTP_Handler::read_complete (ACE_Message_Block &message_block)
 {
-  message_block.rd_ptr ()[message_block.length ()] = '\0';
-
-  if (this->enough_data ())
-    {
-      this->parse_request ();
-      return;
-    }
-  
-  int next_read_size = HTTP_Handler::MAX_REQUEST_SIZE - this->request_data_->length ();
-  if (next_read_size == 0)
-    {
-      this->request_too_long ();
-      return;
-    }
-  
-  this->io_.read (*this->request_data_, next_read_size);
-}
-
-int 
-HTTP_Handler::enough_data (void)
-{
-  char *data = this->request_data_->rd_ptr ();
-  if (ACE_OS::strstr (data, "\r\n\r\n") != NULL ||
-      ACE_OS::strstr (data, "\n\n") != NULL)
-    return 1;
-  else
-    return 0;
-}
-
-void
-HTTP_Handler::parse_request (void)
-{
-  request_.init (request_data_->rd_ptr (), request_data_->length ());
-
-  switch (request_.status ()) {
-  case HTTP_Request::OK:
-    switch (request_.type ()) {
-    case HTTP_Request::GET :
-      this->io_.transmit_file (request_.filename (), 
-                               HTTP_HEADER, 
-                               HTTP_HEADER_LENGTH,
-                               HTTP_TRAILER, 
-                               HTTP_TRAILER_LENGTH);
-      break;
-
-    case HTTP_Request::PUT :
-      this->io_.receive_file (request_.filename (),
-                              request_.data (),
-                              request_.data_length (),
-                              request_.content_length ());
-      break;
-
-    default :
-      this->invalid_request (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED);
-    }
+  switch (this->request_.parse_request (message_block)) {
+  case 0:
+    do {
+      int next_read_size
+        = HTTP_Handler::MAX_REQUEST_SIZE - message_block.length ();
+      if (next_read_size == 0) {
+        this->request_too_long ();
+        return;
+      }
+      this->io_.read (message_block, next_read_size);
+    } while (0);
     break;
 
   default:
-    this->invalid_request (HTTP_Status_Code::STATUS_BAD_REQUEST);
+    // this->request_.respond ();
+    this->response_.process_request ();
   }
 }
 
