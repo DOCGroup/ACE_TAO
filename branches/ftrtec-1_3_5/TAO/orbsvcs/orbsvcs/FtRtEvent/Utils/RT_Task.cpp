@@ -6,7 +6,7 @@
 void RT_Task::set_current()
 {
   if (ACE_OS::thr_setprio(ACE_SCHED_FIFO) == -1){
-    ACE_DEBUG((LM_DEBUG, "Cannot set the thread to RT class"));
+    ACE_DEBUG((LM_DEBUG, "Cannot set the thread to RT class\n"));
   }
 }
 
@@ -25,6 +25,8 @@ int RT_Task::activate(ACE_Task_Base* task)
                       0,
                       priority) == -1)
     {
+      ACE_DEBUG((LM_DEBUG, "Cannot activate the thread in RT class\n"));
+
       // On Linux, for example, only the superuser can set the policy
       // to other than ACE_SCHED_OTHER.  But with ACE_SCHED_OTHER,
       // there is only one thread priority value, for example, 0.  So,
