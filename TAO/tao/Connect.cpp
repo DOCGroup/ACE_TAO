@@ -63,9 +63,10 @@ TAO_Server_Connection_Handler::open (void*)
       addr.addr_to_string (client, sizeof (client));
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) connection from client %s\n",
-              client));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) connection from client %s\n",
+                client));
   return 0;
 }
 
@@ -73,10 +74,11 @@ int
 TAO_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
-  ACE_DEBUG  ((LM_DEBUG,
-               "(%P|%t) TAO_Server_Connection_Handler::handle_close (%d, %d)\n",
-               handle,
-               rm));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG  ((LM_DEBUG,
+                 "(%P|%t) TAO_Server_Connection_Handler::handle_close (%d, %d)\n",
+                 handle,
+                 rm));
 
   return TAO_SVC_HANDLER::handle_close (handle, rm);
 }
@@ -89,8 +91,9 @@ TAO_Server_Connection_Handler::svc (void)
   // thread with this method as the "worker function".
   int result = 0;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) TAO_Server_Connection_Handler::svc begin\n"));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) TAO_Server_Connection_Handler::svc begin\n"));
 
   // Here we simply synthesize the "typical" event loop one might find
   // in a reactive handler, except that this can simply block waiting
@@ -99,8 +102,9 @@ TAO_Server_Connection_Handler::svc (void)
   while ((result = handle_input ()) >= 0)
     continue;
 
-  ACE_DEBUG  ((LM_DEBUG,
-               "(%P|%t) TAO_Server_Connection_Handler::svc end\n"));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG  ((LM_DEBUG,
+                 "(%P|%t) TAO_Server_Connection_Handler::svc end\n"));
 
   return result;
 }
@@ -531,10 +535,11 @@ int
 TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
-  ACE_DEBUG  ((LM_DEBUG,
-               "(%P|%t) TAO_Client_Connection_Handler::handle_close (%d, %d)\n",
-               handle,
-               rm));
+  if (ACE_Service_Config::debug ())
+    ACE_DEBUG  ((LM_DEBUG,
+                 "(%P|%t) TAO_Client_Connection_Handler::handle_close (%d, %d)\n",
+                 handle,
+                 rm));
 
   return BASECLASS::handle_close (handle, rm);
 }
