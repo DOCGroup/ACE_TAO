@@ -153,13 +153,13 @@ public:
     add_consumer(consumer_impl1_3,
                  "consumer1_3",
                  tv,
-                 cons1_3_types[0],
+                 cons1_3_types,
                  RtecScheduler::VERY_HIGH_CRITICALITY,
                  RtecScheduler::VERY_HIGH_IMPORTANCE
                  ACE_ENV_ARG_PARAMETER
                  );
     ACE_CHECK;
-
+    /*
     //DEBUG: print out schedule
     RtecScheduler::Scheduler_ptr scheduler = this->scheduler(ACE_ENV_SINGLE_ARG_PARAMETER);
     //RtecEventChannelAdmin::EventChannel_ptr event_channel = this->event_channel(ACE_ENV_SINGLE_ARG_DECL);
@@ -197,7 +197,7 @@ public:
                                           configs.in (),
                                           anomalies.in (),
                                           sched_out.str().c_str());
-    ////END DEBUG
+    *///END DEBUG
     ACE_DEBUG((LM_DEBUG,"Consumer_EC set_up_supp_and_cons() DONE\n"));
   } //set_up_supp_and_cons()
 

@@ -196,12 +196,12 @@ Consumer::setWorkTime(ACE_Time_Value& worktime)
 }
 
 void
-Consumer::rt_info(RT_Info_Vector& consumer_rt_info)
+Consumer::rt_info(InfoHandle consumer_rt_info)
 {
   rt_info_ = consumer_rt_info;
 }
 
-Consumer::RT_Info_Vector&
+Consumer::InfoHandle
 Consumer::rt_info(void)
 {
   return rt_info_;

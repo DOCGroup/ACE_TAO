@@ -112,7 +112,7 @@ RtEventChannelAdmin::handle_t
 Kokyu_EC::register_consumer (
         const char * entry_point,
         const RtEventChannelAdmin::SchedInfo & info,
-        RtecEventComm::EventType type,
+        EventType_Vector& cons_types, //RtecEventComm::EventType type,
         RtecEventComm::PushConsumer_ptr consumer,
         RtecEventChannelAdmin::ProxyPushSupplier_out proxy_supplier
         ACE_ENV_ARG_DECL
@@ -142,18 +142,43 @@ Kokyu_EC::register_consumer (
   ACE_CHECK;
 
   ACE_ConsumerQOS_Factory consumer_qos1;
-
-  if (type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
+  //Starting the disjunction group somehow causes the timeout (I think) event to have RT_Info handle 0!
+  //consumer_qos1.start_disjunction_group(cons_types.size());
+  /*
+  //And without the disjunction group, this doesn't seem to actually do anything with types after the first!
+  //So, I guess we need a separate proxy consumer per event type.
+  for(EventType_Vector::Iterator iter(cons_types);
+      !iter.done(); iter.advance())
     {
-      ACE_DEBUG((LM_DEBUG,"Kokyu_EC::register_consumer() inserting type %d into RT_Info %d\n",type,consumer1_rt_info));
-      consumer_qos1.insert_type (type,  consumer1_rt_info);
+      EventType_Vector::TYPE *type; //would rather const to ensure we don't change it, but not supported!
+      iter.next(type);
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC register_consumer() registering event type %d\n",*type));
+      if (*type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
+        {
+          consumer_qos1.insert_type (*type,  consumer1_rt_info);
+        }
+      else
+        {
+          consumer_qos1.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
+                                     info.period, //in 100s of nanosec
+                                     consumer1_rt_info);
+        }
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC register_consumer() registered event type\n"));
     }
-  else
-    {
-      consumer_qos1.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
-                                 info.period, //in 100s of nanosec
-                                 consumer1_rt_info);
-    }
+  */
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC register_consumer() registering event type %d\n",cons_types[0]));
+      if (cons_types[0] != ACE_ES_EVENT_INTERVAL_TIMEOUT)
+        {
+          ACE_DEBUG((LM_DEBUG,"\t(Generic type)\n"));
+          consumer_qos1.insert_type (cons_types[0],  consumer1_rt_info);
+        }
+      else
+        {
+          ACE_DEBUG((LM_DEBUG,"\t(Periodic timeout)\n"));
+          consumer_qos1.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
+                                     info.period, //in 100s of nanosec
+                                     consumer1_rt_info);
+        }
 
   proxy_supplier =
     consumer_admin_->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -163,8 +188,10 @@ Kokyu_EC::register_consumer (
     consumer_qos1.get_ConsumerQOS ()
     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  ACE_DEBUG((LM_DEBUG,"Kokyu_EC register_consumer() returning %d\n",consumer1_rt_info));
   return consumer1_rt_info;
-}
+} //register_consumer()
 
 RtEventChannelAdmin::handle_t
 Kokyu_EC::register_supplier (
@@ -225,11 +252,11 @@ Kokyu_EC::add_dependency (
         , RtecScheduler::UNKNOWN_TASK
       ))
 {
-      scheduler_impl_->add_dependency (handle,
-                                 dependency,
-                                 number_of_calls,
-                                 dependency_type
-                                 ACE_ENV_ARG_PARAMETER);
+  scheduler_impl_->add_dependency (handle,
+                                   dependency,
+                                   number_of_calls,
+                                   dependency_type
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -340,10 +367,12 @@ Kokyu_EC::add_timeout_consumer(
   info.threads = 0;
   info.info_type = RtecScheduler::OPERATION;
 
+  EventType_Vector cons_types(1);
+  cons_types.push_back(ACE_ES_EVENT_INTERVAL_TIMEOUT);
   RtecScheduler::handle_t supplier_timeout_consumer_rt_info =
     this->register_consumer(timeout_entry_point,
                             info,
-                            ACE_ES_EVENT_INTERVAL_TIMEOUT,
+                            cons_types,
                             safe_timeout_consumer.in(),
                             timeout_supplier_proxy.out()
                             ACE_ENV_ARG_PARAMETER);
@@ -404,7 +433,7 @@ Kokyu_EC::add_consumer_with_supplier(
                                      Consumer * consumer_impl,
                                      const char * cons_entry_point,
                                      ACE_Time_Value cons_period,
-                                     RtecEventComm::EventType cons_type,
+                                     EventType_Vector& cons_types, //RtecEventComm::EventType cons_type,
                                      RtecScheduler::Criticality_t cons_crit,
                                      RtecScheduler::Importance_t cons_imp,
                                      Supplier * supplier_impl,
@@ -419,16 +448,20 @@ Kokyu_EC::add_consumer_with_supplier(
                    , RtecScheduler::SYNCHRONIZATION_FAILURE
                    ))
 {
-  add_consumer(consumer_impl,cons_entry_point,cons_period,cons_type,cons_crit,cons_imp ACE_ENV_ARG_PARAMETER);
+  add_consumer(consumer_impl,cons_entry_point,cons_period,cons_types,cons_crit,cons_imp ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   add_supplier(supplier_impl,supp_entry_point,supp_types ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  Consumer::RT_Info_Vector cons_infos = consumer_impl->rt_info();
-  this->add_dependency (cons_infos[0],//consumer_impl->rt_info(),
-                        supplier_impl->rt_info(),
+  //This is kind of redundant since we have the DUMMY supplier, but we should at least
+  //make a nod to a dependency map which somewhat reflects reality. To go all the way
+  //would mean adding dependencies for each of the consumer's RT_Infos.
+
+  //ACE_DEBUG((LM_DEBUG,"Kokyu_EC (%P|%t) add_consumer_with_supplier() adding dependency %d\n",*cons_info));
+  this->add_dependency (supplier_impl->rt_info(),
+                        consumer_impl->rt_info(),
                         1,
-                        RtecBase::TWO_WAY_CALL
+                        RtecBase::ONE_WAY_CALL
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 } //add_consumer_with_supplier()
@@ -439,7 +472,7 @@ Kokyu_EC::add_consumer(
                        Consumer * consumer_impl,
                        const char * entry_point,
                        ACE_Time_Value period,
-                       RtecEventComm::EventType cons_type,
+                       EventType_Vector& cons_types, //RtecEventComm::EventType cons_type,
                        RtecScheduler::Criticality_t crit,
                        RtecScheduler::Importance_t imp
                        ACE_ENV_ARG_DECL
@@ -466,18 +499,29 @@ Kokyu_EC::add_consumer(
     consumer_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  RtecScheduler::handle_t consumer_rt_info =
-    this->register_consumer(entry_point,
-                            info,
-                            cons_type,
-                            consumer.in(),
-                            proxy_supplier.out()
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  RtecScheduler::handle_t consumer_rt_info;
+  EventType_Vector tmp_types(1);
+  for(EventType_Vector::Iterator iter(cons_types);
+      !iter.done(); iter.advance())
+    {
+      EventType_Vector::TYPE *type; //would rather const to ensure we don't change it, but not supported!
+      iter.next(type);
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_consumer() registering event type %d\n",*type));
 
-  Consumer::RT_Info_Vector cons_infos;
-  cons_infos.push_back(consumer_rt_info);
-  consumer_impl->rt_info(cons_infos);
+      std::stringstream entry_pt;
+      entry_pt << entry_point << "_" << *type; //need a different entry point per type
+
+      tmp_types[0] = *type;
+      consumer_rt_info = this->register_consumer(entry_pt.str().c_str(), //entry_point,
+                                                 info,
+                                                 tmp_types, //cons_types,
+                                                 consumer.in(),
+                                                 proxy_supplier.out()
+                                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+  consumer_impl->rt_info(consumer_rt_info);
 
   this->consumers_.push_back(consumer_impl);
 } //add_consumer()
