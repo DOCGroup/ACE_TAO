@@ -101,7 +101,7 @@ public:
 
   ULONG AddRef (void);
   ULONG Release (void);
-  TAO_HRESULT QueryInterface (REFIID riid,
+  TAO_HRESULT QueryInterface (TAO_REFIID riid,
                               void **ppv);
 
   CORBA_Object (STUB_Object *p = 0,

@@ -200,7 +200,7 @@ public:
   // = Memory management.
   ULONG AddRef (void);
   ULONG Release (void);
-  TAO_HRESULT QueryInterface (REFIID type_id,
+  TAO_HRESULT QueryInterface (TAO_REFIID type_id,
                               void **ppv);
 
   virtual TAO_ObjectKey *key (CORBA::Environment &env);

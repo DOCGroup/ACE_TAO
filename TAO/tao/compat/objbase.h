@@ -57,12 +57,12 @@ typedef u_long TAO_HRESULT;
 //      CLSID -- implementation ID
 //
 typedef char TAO_IID [16];          // XXX actually a struct
-typedef const TAO_IID &REFIID;
+typedef const TAO_IID &TAO_REFIID;
 #if !defined(INITGUID)
-#  define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
+#  define TAO_DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
                       extern "C" const TAO_IID name
 #else
-#  define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
+#  define TAO_DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
                       extern "C" const TAO_IID name = { 0 }
 #endif
 
@@ -71,12 +71,12 @@ typedef const TAO_IID &REFIID;
 // All objects in the "Component Object Model" (COM) inherit from
 // this pure virtual base class.
 //
-DEFINE_GUID (IID_TAO_IUnknown, b,c,d,e,f,g,h,i,j,k,l);
+TAO_DEFINE_GUID (IID_TAO_IUnknown, b,c,d,e,f,g,h,i,j,k,l);
 
 class TAO_IUnknown
 {
 public:
-  virtual TAO_HRESULT  QueryInterface (REFIID riid,
+  virtual TAO_HRESULT  QueryInterface (TAO_REFIID riid,
                                    void **ppv) = 0;
   virtual ULONG  AddRef (void) = 0;
   virtual ULONG  Release (void) = 0;
