@@ -3,6 +3,9 @@ Sat May 22 07:30:44 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-chorus.h,ace/config-lynxos.h: added
           ACE_HAS_NONCONST_SELECT_TIMEVAL.
 
+        * ace/Filecache.cpp: commented out "template<>" for
+          now.  Not all compilers can cope with it.
+
 Fri May 21 21:12:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Map_Manager.i (operator==): Since <map_man_> is a pointer
