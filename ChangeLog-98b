@@ -1,13 +1,25 @@
+Fri Jun  5 11:53:18 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Log_Msg.{h,cpp}: Added enable_debug_messages() to do
+	  the opposite of disable_debug_messages().
+	  
+	* ace/Parse_Node.cpp: Got rid of all the checks of the 
+	  Service Configurator's debug flag.  Instead, the checking
+	  will occur in the Service Configurator.
+
+	* ace/Service_Config.cpp: Added to Stephen Coy's changes so
+	  that debug messages are turned back on after the Service
+	  Configurator is done.  That way, other code can still use
+	  debug messages.
+
 Thu Jun  4 12:25:48 1998  Rajiv C. Gandhi  <gandhi@tango.cs.wustl.edu>
 
 	* apps/gperf/src/Options.h: removing the option to stack
 	  allocate some large arrays as CC does not seem to like it.
 
-
 	* apps/gperf/src/Key_List.cpp (output_lookup_array): removing
 	  the option to stack allocate some large arrays as CC does 
           not seem to like it. 
-
 
 	* apps/gperf/src/Gen_Perf.cpp: removing the option to stack
 	  allocate some large arrays as CC does not seem to like it.
