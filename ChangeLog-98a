@@ -1,3 +1,9 @@
+Wed Dec 17 19:42:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.i: Fixed some very subtle bugs with cond_signal() and
+ 	  cond_broadcast().  Thanks to Patrick J. McNerthney
+ 	  <pat@thememedia.com> for reporting these and sending the fixes.
+
 Wed Dec 17 19:27:06 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ACE-INSTALL.html (HREF): Added an advise not to use VC5.0 SP3.

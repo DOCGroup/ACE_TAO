@@ -2424,8 +2424,14 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
   // If there aren't any waiters, then this is a no-op.  Note that
   // this function *must* be called with the <external_mutex> held
   // since other wise there is a race condition that can lead to the
-  // lost wakeup bug...
-  if (cv->waiters_ > 0)
+  // lost wakeup bug...  This is needed to ensure that the <waiters_>
+  // value is not in an inconsistent internal state while being
+  // updated by another thread.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  int have_waiters = cv->waiters_ > 0;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
+  if (have_waiters != 0)
     return ACE_OS::sema_post (&cv->sema_);
   else
     return 0; // No-op
@@ -2442,32 +2448,40 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 #if defined (ACE_HAS_THREADS)
   // The <external_mutex> must be locked before this call is made.
 
-  if (cv->waiters_ == 0)
-    return 0; // No-op
-  else // We are broadcasting, even if there is just one waiter...
+  // This is needed to ensure that <waiters_> and <was_broadcast_> are
+  // consistent relative to each other.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  int have_waiters = 0;
+
+  if (cv->waiters_ > 0)
     {
-      int result = 0;
+      // We are broadcasting, even if there is just one waiter...
       // Record the fact that we are broadcasting.  This helps the
-      // cond_wait() method know how to optimize itself.
+      // cond_wait() method know how to optimize itself.  Be sure to
+      // set this with the <waiters_lock_> held.
       cv->was_broadcast_ = 1;
-
+      have_waiters = 1;
+    }
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+  int result = 0;
+  if (have_waiters)
+    {
       // Wake up all the waiters.
-
       if (ACE_OS::sema_post (&cv->sema_, cv->waiters_) == -1)
         result = -1;
-
-      // Wait for all the awakened threads to acquire their part of the
-      // counting semaphore.
+      // Wait for all the awakened threads to acquire their part of
+      // the counting semaphore.
 #if defined (VXWORKS)
       else if (ACE_OS::sema_wait (&cv->waiters_done_) == -1)
 #else
       else if (ACE_OS::event_wait (&cv->waiters_done_) == -1)
 #endif /* VXWORKS */
         result = -1;
-
+      // This is okay, even without the <waiters_lock_> held because
+      // no other waiter threads can wake up to access it.
       cv->was_broadcast_ = 0;
-      return result;
     }
+  return result;
 #else
   ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
