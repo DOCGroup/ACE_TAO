@@ -1,3 +1,9 @@
+Wed Jun 18 07:16:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Added ACE_LACKS_DIRENT_H, ACE_LACKS_SYS_IOCTL_H, ACE_LACKS_STROPTS_H
+          and ACE_HAS_DIRENT
+
 Wed Jun 18 06:21:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
