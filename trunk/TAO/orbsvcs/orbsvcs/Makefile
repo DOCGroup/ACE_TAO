@@ -50,9 +50,9 @@ ifndef TAO_ORBSVCS
                 Time \
                 Log \
                 Concurrency \
-                LifeCycle \
                 Property \
                 Trader \
+                LifeCycle \
                 Sched \
                 Event \
                 CosEvent \
@@ -75,7 +75,7 @@ endif # AV
 ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
   ifeq (,$(findstring Event,$(TAO_ORBSVCS)))
     IDL_SRCS += RtecEventComm RtecEventChannelAdmin RtecUDPAdmin
-  endif # Event
+  endif # ! Event
   TAO_ORBSVCS_SRCS += \
         Event/EC_Event_Channel \
         Event/EC_ConsumerAdmin \
@@ -158,6 +158,16 @@ ifneq (,$(findstring Sched,$(TAO_ORBSVCS)))
         Sched/Strategy_Scheduler
 endif # Sched
 
+ifneq (,$(findstring LifeCycle,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosLifeCycle LifeCycleService
+  TAO_ORBSVCS_SRCS +=
+
+  ifeq (,$(findstring Trader,$(TAO_ORBSVCS)))
+    #### LifeCycle needs Trader.
+    TAO_ORBSVCS += Trader
+  endif # ! Trader
+endif # LifeCycle
+
 ifneq (,$(findstring Trader,$(TAO_ORBSVCS)))
   IDL_SRCS += CosTrading
   TAO_ORBSVCS_SRCS += \
@@ -178,9 +188,8 @@ ifneq (,$(findstring Trader,$(TAO_ORBSVCS)))
   ifeq (,$(findstring Naming,$(TAO_ORBSVCS)))
     #### The Trader needs IOR_Multicast, so add it in if the
     #### Naming Service isn't included.
-    TAO_ORBSVCS_SRCS += \
-        IOR_Multicast
-  endif # Naming
+    TAO_ORBSVCS_SRCS += IOR_Multicast
+  endif # ! Naming
 endif # Trader
 
 ifneq (,$(findstring Property,$(TAO_ORBSVCS)))
@@ -189,11 +198,6 @@ ifneq (,$(findstring Property,$(TAO_ORBSVCS)))
         Property/CosPropertyService_i\
         Property/CosPropertyService_i_T
 endif # Property
-
-ifneq (,$(findstring LifeCycle,$(TAO_ORBSVCS)))
-  IDL_SRCS += CosLifeCycle LifeCycleService
-  TAO_ORBSVCS_SRCS +=
-endif # LifeCycle
 
 ifneq (,$(findstring Concurrency,$(TAO_ORBSVCS)))
   IDL_SRCS += CosConcurrencyControl
