@@ -2,7 +2,7 @@
 /**
  *  @file  DT_Handler.h
  *
- *  $Id$ 
+ *  $Id$
  *
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
@@ -43,14 +43,14 @@ namespace CIAO
      * This class defines handler methods to parse the aforementioned type
      * in the descriptor files. The corresponding CORBA IDL mapped type in this
      * a CORBA::Typecode is created and returned. Dynamic creation of typecodes
-     * also requires operations defined on the ORB interface, hence the 
+     * also requires operations defined on the ORB interface, hence the
      * process_DataType requires an ORB_ptr as a formal parameter.
      */
 
     class Config_Handler_Export DT_Handler
     {
     public:
-      static void process_DataType (DOMNodeIterator * iter, 
+      static void process_DataType (DOMNodeIterator * iter,
                                     ::CORBA::TypeCode_ptr type,
                                     ::CORBA::ORB_ptr orb);
       // process <type> definitions in the descriptor files
@@ -59,13 +59,6 @@ namespace CIAO
                                     ::CORBA::TypeCode_ptr type);
       // process <Deployment:TCKind> definitions in the descriptor
       // files
-
-      static void process_enum_tc (DOMNodeIterator * iter,
-                                   ::CORBA::TypeCode_ptr type,
-                                   CORBA::ORB_ptr orb);
-      // process <Deployment:EnumType> definitions in the 
-      // descriptor files
-
     };
   }
 }

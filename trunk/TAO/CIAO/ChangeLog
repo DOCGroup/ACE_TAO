@@ -1,3 +1,24 @@
+Tue May 11 16:12:07 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DT_Handler.h:
+        * DnC/Config_Handlers/DT_Handler.cpp:
+
+          Added CORBA::TypeCode::duplicate for basic type codes as the
+          individual handlers and IDL structures will be releasing the
+          typecodes generated.
+
+        * DnC/Config_Handlers/Any_Handler.h:
+        * DnC/Config_Handlers/Any_Handlers.cpp:
+
+          Insted of requiring that each top level handler pass an ORB
+          reference to the Any handler, now the Any handler calls ORB init
+          There is not additional overhead other than the call as the same
+          ORB reference is returned each time from the ORB table
+
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+
+          Added targets Any_Handler.cpp and DT_Handler.cpp
+
 Tue May 11 12:51:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Domain_Handler.h:
