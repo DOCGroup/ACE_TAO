@@ -5750,7 +5750,8 @@ tags:
  be_include/be_visitor_interface/cdr_op_ci.h \
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
- be_include/be_visitor_interface/tie_si.h be_include/be.h \
+ be_include/be_visitor_interface/tie_si.h \
+ be_include/be_visitor_interface/ami_interface_ch.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
  be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
@@ -8784,6 +8785,7 @@ tags:
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
+ be_include/be_visitor_interface/ami_interface_ch.h \
  be_include/be_visitor_interface_fwd.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
@@ -10249,6 +10251,7 @@ tags:
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
+ be_include/be_visitor_interface/ami_interface_ch.h \
  be/be_visitor_interface/interface.cpp \
  be/be_visitor_interface/interface_ch.cpp \
  be/be_visitor_interface/interface_ci.cpp \
@@ -10267,7 +10270,8 @@ tags:
  be/be_visitor_interface/any_op_cs.cpp \
  be/be_visitor_interface/cdr_op_ch.cpp \
  be/be_visitor_interface/cdr_op_ci.cpp \
- be/be_visitor_interface/cdr_op_cs.cpp
+ be/be_visitor_interface/cdr_op_cs.cpp \
+ be/be_visitor_interface/ami_interface_ch.cpp
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
