@@ -16,6 +16,7 @@ FILES	= Benchmark_Performance \
 	  Performance_Test_Options \
 	  Performance_Test \
 	  mutex_test \
+	  guard_test \
 	  recursive_lock_test \
 	  sema_test \
 	  sysvsema_test \
