@@ -10,6 +10,10 @@
 
 #include "tao/corba.h"
 
+#if !defined (__ACE_INLINE__)
+#  include "Exception.i"
+#endif /* __ACE_INLINE__ */
+
 // Static initializers.
 CORBA::TypeCode_ptr TAO_Exceptions::sys_exceptions[TAO_Exceptions::NUM_SYS_EXCEPTIONS];
 
