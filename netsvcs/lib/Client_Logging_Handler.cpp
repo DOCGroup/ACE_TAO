@@ -64,9 +64,9 @@ ACE_Client_Logging_Handler::open (void *)
 ACE_Client_Logging_Handler::get_handle (void) const
 {
   ACE_TRACE ("ACE_Client_Logging_Handler::get_handle");
-  ACE_ERROR_RETURN ((LM_ERROR,
-		     "get_handle() shouldn't be called\n"),
-		     ACE_INVALID_HANDLE);
+  ACE_ERROR ((LM_ERROR,
+	      "get_handle() shouldn't be called\n"));
+  return ACE_INVALID_HANDLE;
 }
 
 // Receive a logging record from an application.
