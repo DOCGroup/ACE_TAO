@@ -16,9 +16,8 @@
 #if !defined (_RTIFUNCS_H)
 #define _RTIFUNCS_H
 
-#include "ace/OS.h"
 #include "cubitC.h"
 
-ostream &operator<< (ostream &o, Cubit::RtiPacket const &arg);
+void print_RtiPacket (Cubit::RtiPacket const &arg);
 
 #endif /* _RTIFUNCS_H */
