@@ -1,3 +1,9 @@
+Fri Jan 22 11:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * TAO/orbsvcs/tests/Simulator/DOVEBrowser/make.bat: added a
+	  "make setup" capability to set up the DOVE browser directory
+	  prior to the first build on NT.
+	
 Fri Jan 22 08:43:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (parse_args):
