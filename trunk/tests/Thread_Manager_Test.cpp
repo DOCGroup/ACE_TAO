@@ -137,6 +137,8 @@ main (int, char *[])
 
   ACE_ASSERT (grp_id != -1);
 
+  // Pthreads doesn't do suspend/resume
+#if !defined (ACE_HAS_PTHREADS)
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, "(%t) suspending group\n"));
@@ -150,6 +152,7 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG, "(%t) resuming group\n"));
 
   ACE_ASSERT (thr_mgr->resume_grp (grp_id) != -1);
+#endif /* ACE_HAS_PTHREADS */
 
   // Wait for 1 more second and then send a SIGINT to every thread in
   // the group.
