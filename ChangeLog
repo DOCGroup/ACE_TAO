@@ -1,3 +1,8 @@
+Mon Jul 24 10:30:35 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* OS_Dirent.inl: Added the deletion of the DIR.directory_name_
+	  and the DIR struct itself for the Win32 emulation.
+
 Sat Jul 22 22:10:35 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* config-win32-common.h
