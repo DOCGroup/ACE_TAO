@@ -19,7 +19,9 @@ BIN2 =   Service
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
   ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
-    BIN = $(BIN2)
+    ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
+      BIN = $(BIN2)
+    endif # RTOLDEvent
   endif # Sched
 endif # Event
 
