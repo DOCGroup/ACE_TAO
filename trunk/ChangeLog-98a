@@ -1,3 +1,10 @@
+Wed Dec 03 07:39:15 1997  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_hpux.GNU:
+ 	* include/makeinclude/platform_hpux_gcc.GNU: Moved some compile options
+	  from the DCFLAGS to the CCFLAGS to compile correctly with or without
+	  debugging.
+
 Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Future.cpp: restored ACE_Atomic_Op instantiation because
