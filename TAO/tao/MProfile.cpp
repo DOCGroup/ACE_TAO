@@ -1,6 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include <tao/corba.h>
+
 
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  fwded_mprofile_(0),
@@ -28,8 +30,8 @@ TAO_MProfile::set (CORBA::ULong sz)
   // first release all of our profiles.
   if (this->pfiles_)
     {
-      // @@ Fred, please don't put spaces in front of the ';' here.
-      for (PHandle h = 0 ; h < this->size_ ; h++ )
+      
+      for (PHandle h = 0; h < this->size_; h++ )
         {
           if (this->pfiles_[h]) 
             {
@@ -48,9 +50,9 @@ TAO_MProfile::set (CORBA::ULong sz)
   
           if (this->size_ == sz)
             {
-              // @@ Fred, please always use ACE_NEW_RETURN() or ACE_NEW()
-              // when you allocate memory.
-              this->pfiles_ = new TAO_Profile_ptr [this->size_];
+              ACE_NEW_RETURN (this->pfiles_,
+                              TAO_Profile_ptr [this->size_],
+                              -1);
               ACE_OS::memset (this->pfiles_,
                               0,
                               sizeof (TAO_Profile_ptr) *this->size_);
@@ -63,8 +65,9 @@ TAO_MProfile::set (CORBA::ULong sz)
     {
       if (this->size_ == sz)
         {
-          // @@ Fred, same here.
-          pfiles_ = new TAO_Profile_ptr [this->size_];
+          ACE_NEW_RETURN (this->pfiles_,
+                          TAO_Profile_ptr [this->size_],
+                          -1);
           ACE_OS::memset (this->pfiles_,
                           0,
                           sizeof (TAO_Profile_ptr) *this->size_);
@@ -120,11 +123,11 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
 TAO_MProfile::~TAO_MProfile (void)
  {
   if (this->pfiles_)
-    // @@ Fred, please make sure you use consistent style in your for
-    // loop (i.e., remove certain spaces...).
-    for ( PHandle h = 0 ; h < size_ ; h++ )
-      if (this->pfiles_[h])
-        this->pfiles_[h]->_decr_refcnt ();
+    for (PHandle h = 0; h < size_; h++)
+      {
+        if (this->pfiles_[h])
+          this->pfiles_[h]->_decr_refcnt ();
+      }
 
   delete [] pfiles_;
   pfiles_ = 0;
@@ -136,10 +139,17 @@ TAO_MProfile::~TAO_MProfile (void)
 TAO_Profile *
 TAO_MProfile::get_cnext (void)
 {
-  // @@ Fred, this express is too complicated.  Please rewrite it use
-  // if/else.
-  return last_ == 0 ? 0 : ((current_ < last_) ? pfiles_ [current_++] : 
-                           pfiles_ [(current_ = 1, 0)]);
+  if (last_ == 0)
+      return 0;
+
+  if (current_ == last_)
+      current_ = 0;
+
+  return pfiles_ [current_++];
+
+  // was 
+  // return last_ == 0 ? 0 : ((current_ < last_) ? pfiles_ [current_++] : 
+  //                          pfiles_ [(current_ = 1, 0)]);
 }
 
 // This will return the next element until either null is found or the
@@ -148,37 +158,66 @@ TAO_MProfile::get_cnext (void)
 TAO_Profile *
 TAO_MProfile::get_next (void)
 {
-  // @@ Fred, same comment here.
-  return last_ == 0 ? 0 : ((current_ == last_) ? 0 : pfiles_ [current_++]);
+  // Nolist or EndOfList
+  if (last_ == 0 || current_ == last_)
+    return 0;
+
+  return pfiles_ [current_++];
+
+  // was 
+  // return last_ == 0 ? 0 : ((current_ == last_) ? 0 : pfiles_ [current_++]);
 }
 
 TAO_Profile *
 TAO_MProfile::get_cprev (void)
 {
-  // @@ Fred, same comment here...
-  return last_ == 0 ? 0 : 
-              (last_ == 1 ? pfiles_ [current_=0] :
-                    (current_ > 1 ? pfiles_ [(--current_ - 1)] :
-                     // @@ Fred, please don't use assignment within
-                     // expressions.
-                     pfiles_ [(current_ = last_, last_ - 1)]));
+  if (last_ == 0)
+    return 0;
+
+  if (last_ == 1)
+    current_=1;
+  else if (current_ > 1)
+    current_--;
+  else // current_ == 0 or 1, 0 => list never read before and == 1
+    current_ = last_;
+      
+  return pfiles_ [current_ - 1];
+
+  // was
+  // return last_ == 0 ? 0 : 
+  //             (last_ == 1 ? pfiles_ [current_=0] :
+  //                   (current_ > 1 ? pfiles_ [(--current_ - 1)] :
+  //                    pfiles_ [(current_ = last_, last_ - 1)]));
 }
 
 TAO_Profile *
 TAO_MProfile::get_prev (void)
 {
-  // @@ Same comment here.
-  return last_ == 0 ? 0 :
-         (current_ > 1 ? pfiles_ [--current_ - 1] : 
-          (TAO_Profile *)(current_ = 0, 0));
+  if (last_ == 0 || current_ <= 1)
+    // No List of BeginningOfList
+    return 0;
+
+  if (current_ > 1)
+    {
+      current_--;
+    }
+
+  return pfiles_ [current_ - 1];
+
+  // was 
+  // return last_ == 0 ? 0 :
+  //        (current_ > 1 ? pfiles_ [--current_ - 1] : 
+  //         (TAO_Profile *)(current_ = 0, 0));
 }
 
 // does not affect the current_ setting!
 TAO_Profile *
 TAO_MProfile::get_profile (PHandle handle)
 {
-  // @@ Same comment here.
-  return handle >= 0 && handle < last_ ?  pfiles_ [handle] : 0;
+  if (handle < last_)
+    return pfiles_ [handle];
+
+  return 0;
 }
   
 TAO_Profile *
@@ -186,17 +225,27 @@ TAO_MProfile::get_current_profile (void)
 {
   if (last_ == 0) 
     return 0;
-  else
-    // @@ Fred, same comment here.
-    return current_ == 0 ? pfiles_ [current_] : pfiles_ [current_-1];
+ 
+  if (current_ == 0)
+    // means list has not been read before.
+    current_ = 1;
+
+  return pfiles_ [current_-1];
+
+  // was 
+  //  return current_ == 0 ? pfiles_ [current_] : pfiles_ [current_-1];
 }
 
 PHandle 
 TAO_MProfile::get_current_handle (void)
 {
-  // @@ Fred, same comment here.
-  return current_ > 0 ? (current_ - 1) : 0;
-  // the last profile returned!
+  if (current_ > 0)
+    return current_ - 1;
+
+  return 0;
+
+  // was
+  // return current_ > 0 ? (current_ - 1) : 0;
 }
 
 void 
