@@ -218,6 +218,8 @@ produce (Worker_Task &worker_task)
     ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
 
   ACE_DEBUG ((LM_DEBUG, "\n(%t) end producer\n"));
+
+  return 0;
 }
 
 
