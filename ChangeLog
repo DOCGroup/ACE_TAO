@@ -1,3 +1,10 @@
+Fri May 09 12:57:09 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * bin/MakeProjectCreator/config/ciao_client.mpb:
+        * bin/MakeProjectCreator/config/ciao_component.mpb: Added more
+	  directories into libpaths to reflect recent TAO subsetting
+	  efforts.
+
 Fri May  9 12:49:42 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:

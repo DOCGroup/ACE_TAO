@@ -1,7 +1,7 @@
 project : ciao_client {
   depends += CIAO_Container
-  libs       += TAO_PortableServer TAO_IORInterceptor TAO_ObjRefTemplate TAO_Valuetype TAO_Security CIAO_Container
-  libpaths += $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/orbsvcs/orbsvcs
+  libs       += TAO_PortableServer TAO_IORInterceptor TAO_ObjRefTemplate TAO_Security CIAO_Container
+  libpaths += $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/IORInterceptor $(TAO_ROOT)/tao/ObjRefTemplate $(TAO_ROOT)/orbsvcs/orbsvcs
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/CIAO/ciao
 }
