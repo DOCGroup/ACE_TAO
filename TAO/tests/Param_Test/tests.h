@@ -44,5 +44,6 @@
 #include "var_struct.h"
 #include "except.h"
 #include "big_union.h"
+#include "multdim_array.h"
 
 #endif /* if !defined */
