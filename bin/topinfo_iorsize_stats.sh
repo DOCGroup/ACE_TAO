@@ -59,7 +59,7 @@ cd $DEST/source
 
 FILES="server client"
 for i in $FILES ; do
-/usr/bin/tac ${i}_size.txt > $DEST/data/${i}_size.txt
-/usr/bin/tail -5 ${i}_size.txt > $DEST/data/LAST_${i}_size.txt
-$ROOT/bin/generate_topinfo_charts.sh ${i}_size.txt $DEST/images/${i}_size.png st_${i}_size.txt
+/usr/bin/tac ${i}_ior_size.txt > $DEST/data/${i}_ior_size.txt
+/usr/bin/tail -5 ${i}_ior_size.txt > $DEST/data/LAST_${i}_ior_size.txt
+$ROOT/bin/generate_topinfo_charts.sh ${i}_ior_size.txt $DEST/images/${i}_ior_size.png ${i}_ior_size.txt
 done
