@@ -1,4 +1,4 @@
-#!/bin/ksh 
+#!/bin/ksh  
 # $Id$
 
 # =TITLE
@@ -17,7 +17,7 @@
 #              create an Quoter.               
 
 # save the old working dir
-old_dir=$cwd
+old_dir=`pwd`
 # get the user name
 login=`whoami`
 # get the user id 
@@ -100,7 +100,11 @@ if [ $1 ]; then
 
     sleep 1
 
+    cd ../../orbsvcs/LifeCycle_Service
+
     ./Life_Cycle_Service -ORBnameserviceior $IOR -ORBport $lifecycleserviceport >>  /tmp/logfile_$login 2>&1 &
+	
+    cd $old_dir
 
     echo // Started Life Cycle Service on port $lifecycleserviceport
     sleep 1

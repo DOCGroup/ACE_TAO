@@ -25,7 +25,7 @@ Quoter_Server::Quoter_Server (void)
 int
 Quoter_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:o:s");
+  ACE_Get_Opt get_opts (argc_, argv_, "dln:o:s");
   int c;
 
   while ((c = get_opts ()) != -1)
