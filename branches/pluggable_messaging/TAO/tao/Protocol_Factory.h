@@ -21,7 +21,6 @@
 #include "ace/Strategies_T.h"
 #include "ace/SString.h"
 #include "tao/Pluggable.h"
-#include "tao/GIOP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -53,11 +53,13 @@ class TAO_Export TAO_Pluggable_Client_Message_Factory
   //   
 
 public:
-  TAO_Pluggable_Client_Message_Factory (void);
-  // Ctor
-
   virtual ~TAO_Pluggable_Client_Message_Factory (void);
   // Dtor
+  
+  virtual int handle_input (TAO_Transport *transport,
+                            TAO_ORB_Core *orb_core,
+                            TAO_Message_State_Factory &mesg_state,
+                            ACE_Time_Value *max_time_value) = 0;
 
   virtual CORBA::Boolean write_request_header (const IOP::ServiceContextList& svc_ctx,
                                                CORBA::ULong request_id,
@@ -85,6 +87,14 @@ public:
   virtual CORBA::Boolean start_message (TAO_Pluggable_Message_Type t,
                                         TAO_OutputCDR &msg) = 0;
   // Start writing the header for a message in to the stream <msg>
+
+  virtual int parse_reply (TAO_Transport *transport,
+                           TAO_Message_State_Factory &state,
+                           IOP::ServiceContextList& reply_ctx,
+                           CORBA::ULong &request_id,
+                           CORBA::ULong &reply_status) = 0;
+  // Parse the reply.. 
+
 };
 
 class TAO_Export TAO_Pluggable_Server_Message_Factory
@@ -98,23 +108,26 @@ class TAO_Export TAO_Pluggable_Server_Message_Factory
 
 public:
   
-  TAO_Pluggable_Server_Message_Factory (void);
-  // Ctor
-
   virtual ~TAO_Pluggable_Server_Message_Factory (void);
   // Dtor
 
-  //  virtual int send_message (TAO_Transport *transport,
-  //                      TAO_OutputCDR &stream,
-  ///                       ACE_Time_Value *max_wait_time = 0,
-  //TAO_Stub *stub = 0) = 0;
+  /*virtual int send_message (TAO_Transport *transport,
+                            TAO_OutputCDR &stream,
+                            ACE_Time_Value *max_wait_time = 0,
+                            TAO_Stub *stub = 0) = 0;*/
   // Send message, returns TRUE if success, else FALSE.
 
   virtual int handle_input (TAO_Transport *transport,
                             TAO_ORB_Core *orb_core,
                             TAO_Message_State_Factory &state,
                             ACE_Time_Value *max_wait_time = 0) = 0;
+
   
+  virtual int process_connector_messages (TAO_Transport *transport,
+                                         TAO_ORB_Core *orb_core,
+                                         TAO_InputCDR &input,
+                                         CORBA::Octet message_type) = 0;
+  // Process messages from the connectors
 };
 
 
@@ -133,9 +146,6 @@ class TAO_Export TAO_Message_State_Factory
   //   states so that the Transport layer does not really know with
   //   whom it is interacting with.
 public:
-  TAO_Message_State_Factory (void);
-  // Ctor
-
   virtual ~TAO_Message_State_Factory (void);
   // Dtor
   
@@ -154,7 +164,6 @@ public:
 private:
   
 };
-
 
 
 #if defined (__ACE_INLINE__)

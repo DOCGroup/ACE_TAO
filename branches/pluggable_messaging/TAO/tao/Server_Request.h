@@ -22,18 +22,18 @@
 #define TAO_SERVER_REQUEST_H
 
 #include "tao/corbafwd.h"
+#include "tao/IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
-#include "tao/GIOP.h"
 #include "tao/Object.h"
 
 class TAO_POA;
 class TAO_ORB_Core;
-
+class TAO_Transport;
 class TAO_Param_Data_Skel
 {
   // = TITLE

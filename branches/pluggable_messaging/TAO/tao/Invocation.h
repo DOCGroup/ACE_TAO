@@ -36,7 +36,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB_Core.h"
-#include "tao/GIOP.h"
 #include "tao/Any.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/TAOC.h"

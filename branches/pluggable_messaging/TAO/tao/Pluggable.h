@@ -107,27 +107,22 @@ public:
   // not clear this this is the best place to specify this.  The actual
   // timeout values will be kept in the Policies.
 
-  virtual void messaging_init 
-  (TAO_Pluggable_Message_Factory *factory) = 0;
-  // This is the method that would set the messaging object on the
-  // transport object. The transport object would be generally
-  // ignorant of the undrelying messaging object. This method sets a
-  // pointer to the right messaging object. 
 
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              const TAO_Profile *profile,
+                              TAO_Stub *stub,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
+                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a request.
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             const TAO_Profile *profile,
+                             TAO_Stub *stub,
+                             const short address_disposition,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+                             TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 

@@ -40,6 +40,80 @@ typedef enum GIOP_Messages
 }TAO_GIOP_Message_Type;
 
 
+typedef enum GIOP_LocateStatusType
+{
+  TAO_GIOP_UNKNOWN_OBJECT,
+  TAO_GIOP_OBJECT_HERE,
+  TAO_GIOP_OBJECT_FORWARD,
+  TAO_GIOP_OBJECT_FORWARD_PERM,      //GIOP1.2
+  TAO_GIOP_LOC_SYSTEM_EXCEPTION,     // GIOP1.2
+  TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE //GIOP 1.2
+}TAO_GIOP_Locate_Status_Type;
+
+
+
+class TAO_GIOP_Locate_Status_Msg
+{
+  // =TITLE
+  //  Hold the relevant information for every type of Locate mesg.
+  //
+  // =DESCRIPTION
+  //  This class is there to hold the relevant info for different
+  //  types of locate status messages. As on date we dont know much
+  //  about other mesg types other than OBJECT_FORWARD. This clss can
+  //  be clearly defined as time progresses. 
+  // 
+public:
+  CORBA::Object_var forward_location_var;
+  // The value will need to be used when the Message type is
+  // TAO_GIOP_OBJECT_FORWARD 
+  
+  TAO_GIOP_Locate_Status_Type status;
+  // Stype of Locate status message
+  //@@ Other mesg types.
+};
+
+
+typedef enum GIOP_ReplyStatusType
+{
+  TAO_GIOP_NO_EXCEPTION,
+  // Request completed successfully
+
+  TAO_GIOP_USER_EXCEPTION,
+  // Request terminated with user exception
+
+  TAO_GIOP_SYSTEM_EXCEPTION,
+  // Request terminated with system exception
+
+  TAO_GIOP_LOCATION_FORWARD,
+  // Reply is a location forward type
+  
+  TAO_GIOP_LOCATION_FORWARD_PERM,
+  // GIOP 1.2, Reply is a location forward perm type..
+
+  NEEDS_ADDRESSING_MODE
+  // GIOP1.2, 
+  
+} TAO_GIOP_Reply_Status_Type;
+
+
+class TAO_GIOP_ReplyHeader
+{
+  // = TITLE
+  //   This class embodies the header of a GIOP reply.
+  // @@Not used. Could be used in future
+public:
+  IOP::ServiceContextList service_info;
+  // Information
+
+  CORBA::ULong request_id;
+  // Unique identifier of the request for which this is a reply.
+
+  TAO_GIOP_Reply_Status_Type reply_status;
+  // Status of the reply (see above enum).
+  
+};
+
 
 class TAO_Export TAO_GIOP_Version
 {
@@ -153,6 +227,7 @@ public:
   // fragment and the upper level needs to know if it is a request,
   // locate request or what).
   
+  
 private:
   int append_fragment (ACE_Message_Block* current);
   // Append <current> to the list of fragments
@@ -179,18 +254,41 @@ public:
   // Print out a debug messages..  
 
   static CORBA::Boolean start_message (const TAO_GIOP_Version &version,
-                                       TAO_Pluggable_Message_Type t,
+                                       TAO_GIOP_Message_Type t,
                                        TAO_OutputCDR &msg);
   
   // Build the header for a message of type <t> into stream <msg>.
                                        
 
+  static int send_message (TAO_Transport *transport,
+                           TAO_OutputCDR &output,
+                           const size_t header_len,
+                           const size_t message_offset,
+                           ACE_Time_Value *max_wait_time = 0,
+                           TAO_Stub *stub = 0);
+  // Send the message on the wire using the right transport. 
+
+  static int read_bytes_input (TAO_Transport *transport,
+                               TAO_InputCDR &input,
+                               CORBA::ULong read_size,
+                               ACE_Time_Value *max_wait_time);
+  
+  static int parse_giop_header (TAO_GIOP_Message_State *state,
+                                TAO_InputCDR &input);
+  
+  static ssize_t read_buffer (TAO_Transport *transport,
+                              char *buf,
+                              size_t len,
+                              ACE_Time_Value *max_wait_time);
 };
 
 // Some constant definitions that would not change for sometime. I
 // think. So we can have them here till they change
 const size_t TAO_GIOP_HEADER_LEN = 12;
 const size_t TAO_GIOP_LITE_HEADER_LEN = 5;
+
+// This is the length of the MAGIC WORD + VERSION
+const size_t TAO_GIOP_MAGIC_VERSION_LEN = 6;
 
 const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
 const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
