@@ -36,7 +36,7 @@ LOBJ    = $(addsuffix .o,$(FILES))
 SHOBJ   = $(addsuffix .so,$(FILES))
 
 
-LDLIBS	= -lutil
+LDLIBS	= -lACE
 LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
