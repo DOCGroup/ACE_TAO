@@ -15,9 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "PolicyFactory.h"
-#include "PortableServerC.h"
-#include "PolicyStrategy.h"
+#include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -40,19 +38,26 @@ namespace TAO
        public virtual Policy_Strategy
     {
     public:
-      virtual ~Thread_Strategy (void);
+      virtual ~Activation_Strategy (void) {};
 
-      void init (TAO_POA *poa, CORBA::PolicyList *policy_list)
+      void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list)
       {
         // dependent on type create the correct strategy.
       }
+
+      virtual bool allow_implicit_activation (void) const = 0;
     };
 
     class TAO_PortableServer_Export Implicit_Activation_Strategy :
        public virtual Activation_Strategy
     {
     public:
-      virtual ~Implicit_Activation_Strategy (void);
+      virtual ~Implicit_Activation_Strategy (void) {};
+
+      virtual bool allow_implicit_activation (void) const
+      {
+        return true;
+      }
 
     private:
     };
@@ -61,7 +66,12 @@ namespace TAO
        public virtual Activation_Strategy
     {
     public:
-      virtual ~Explicit_Activation_Strategy (void);
+      virtual ~Explicit_Activation_Strategy (void) {};
+
+      virtual bool allow_implicit_activation (void) const
+      {
+        return false;
+      }
     };
   }
 }

@@ -15,6 +15,7 @@
 #include "Id_Assignment_Strategy.h"
 #include "Lifespan_Strategy.h"
 #include "Id_Uniqueness_Strategy.h"
+#include "Activation_Strategy.h"
 
 ACE_RCSID(PortableServer,
           Active_Policy_Strategies,
@@ -29,7 +30,8 @@ namespace TAO
       request_processing_strategy_ (0),
       id_assignment_strategy_ (0),
       lifespan_strategy_ (0),
-      id_uniqueness_strategy_ (0)
+      id_uniqueness_strategy_ (0),
+      activation_strategy_ (0)
     {
     }
 
@@ -119,6 +121,20 @@ namespace TAO
           break;
         }
       }
+
+      switch (policies.implicit_activation())
+      {
+        case ::PortableServer::IMPLICIT_ACTIVATION :
+        {
+          ACE_NEW (activation_strategy_, Implicit_Activation_Strategy);
+          break;
+        }
+        case ::PortableServer::NO_IMPLICIT_ACTIVATION :
+        {
+          ACE_NEW (activation_strategy_, Explicit_Activation_Strategy);
+          break;
+        }
+      }
     }
 
     Thread_Strategy*
@@ -151,6 +167,10 @@ namespace TAO
       return lifespan_strategy_;
     }
 
-
+    Activation_Strategy*
+    Active_Policy_Strategies::activation_strategy (void) const
+    {
+      return activation_strategy_;
+    }
   }
 }

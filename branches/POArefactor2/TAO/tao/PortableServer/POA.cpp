@@ -2100,7 +2100,7 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
   if (this->cached_policies_.implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
     {
       // If we reach here, then we either have the MULTIPLE_ID policy
-      // or we xhave the UNIQUE_ID policy and we are not in the active
+      // or we have the UNIQUE_ID policy and we are not in the active
       // object map.
       PortableServer::ObjectId_var system_id;
       if (this->active_object_map ().
