@@ -1,3 +1,22 @@
+Fri Sep 24 12:28:04 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+	  Changed the template parameter on the string_sequence_element
+	  from charT to the string_traits.  With this change the
+	  "string_sequence_element" no longer depends on the "string"
+	  aspect, with suitable traits it works for object references too!
+	  Also, because all the types depend on the template parameter I
+	  have some hope of working around the MSVC6 bugs.
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+	  Changed the unit tests so they would compile with boost-1.30.2
+
 Fri Sep 24 11:25:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:

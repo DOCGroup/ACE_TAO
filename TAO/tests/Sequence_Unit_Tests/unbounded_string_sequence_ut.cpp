@@ -263,33 +263,35 @@ struct Tester
 
   void add_all(test_suite * ts)
   {
+    boost::shared_ptr<Tester> shared_this(self_);
+
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_default_constructor,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_ulong_constructor,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor_from_default,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor_from_ulong,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_less_than_maximum,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_more_than_maximum,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_index_accessor,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_index_checking,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor_values,
-                shared_from_this()));
+                shared_this));
   }
 
   static boost::shared_ptr<Tester> allocate()
@@ -302,11 +304,6 @@ struct Tester
 
 private:
   Tester() {}
-
-  boost::shared_ptr<Tester> shared_from_this()
-  {
-    return boost::shared_ptr<Tester>(self_);
-  }
 
   boost::weak_ptr<Tester> self_;
 };

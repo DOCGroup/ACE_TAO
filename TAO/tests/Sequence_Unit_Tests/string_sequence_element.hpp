@@ -11,26 +11,20 @@
  * @author Carlos O'Ryan
  */
 
-#include "string_traits.hpp"
-
 namespace TAO
 {
 namespace details
 {
 
-template<typename charT>
+template<typename string_traits>
 class string_sequence_element
 {
 public:
-  typedef charT character_type;
-  typedef charT * value_type;
-  typedef charT const * const_value_type;
-  typedef details::string_traits<charT,true> string_traits;
-
-  typedef details::string_traits_base<charT> base_traits;
-
-  typedef typename base_traits::string_var string_var;
-  typedef typename base_traits::string_mgr string_mgr;
+  typedef typename string_traits::char_type character_type;
+  typedef character_type * value_type;
+  typedef character_type const * const_value_type;
+  typedef typename string_traits::string_var string_var;
+  typedef typename string_traits::string_mgr string_mgr;
 
   string_sequence_element(
       value_type & e, CORBA::Boolean release)
@@ -50,7 +44,7 @@ public:
   {
   }
 
-  string_sequence_element & operator=(charT const * rhs)
+  string_sequence_element & operator=(character_type const * rhs)
   {
     if (release())
     {
@@ -63,7 +57,7 @@ public:
     return *this;
   }
 
-  string_sequence_element & operator=(charT * rhs)
+  string_sequence_element & operator=(character_type * rhs)
   {
     if (release())
     {

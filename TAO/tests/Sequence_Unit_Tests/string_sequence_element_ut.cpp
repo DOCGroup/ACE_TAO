@@ -66,7 +66,7 @@ template<class charT>
 struct Tester
 {
   typedef string_traits<charT,true> tested_element_traits;
-  typedef string_sequence_element<charT> tested_element;
+  typedef string_sequence_element<tested_element_traits> tested_element;
   typedef charT * string_type;
   typedef typename tested_element_traits::string_var string_var;
   typedef typename tested_element_traits::string_mgr string_mgr;
@@ -333,30 +333,32 @@ struct Tester
 
   void add_all(test_suite * ts)
   {
+    boost::shared_ptr<Tester> shared_this(self_);
+
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_const_string,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_element,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_self_assignment,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_non_const_string,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_copy,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_var,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_mgr,
-                shared_from_this()));
+                shared_this));
   }
 
   static boost::shared_ptr<Tester> allocate()
@@ -369,11 +371,6 @@ struct Tester
 
 private:
   Tester() {}
-
-  boost::shared_ptr<Tester> shared_from_this()
-  {
-    return boost::shared_ptr<Tester>(self_);
-  }
 
   boost::weak_ptr<Tester> self_;
 };
