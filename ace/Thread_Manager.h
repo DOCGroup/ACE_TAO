@@ -54,10 +54,10 @@
 
 
 // This is the synchronization mechanism used to prevent a thread
-// descriptor gets removed from the Thread_Manager before it gets
+// descriptor from getting removed from the Thread_Manager before it gets
 // stash into it.  If you want to disable this feature (and risk of
-// corrupting the freelist,) you define the lock as ACE_Null_Mutex.
-// Usually, if you can be sure that your threads will run for an
+// corrupting the freelist,) you have to define the lock as ACE_Null_Mutex.
+// Usually, if you are sure that your threads will run for an
 // extended period of time, you can safely disable the lock.
 
 #if !defined (ACE_DEFAULT_THREAD_MANAGER_LOCK)
@@ -222,13 +222,13 @@ class ACE_Export ACE_Thread_Manager
   //    The default behavior of thread manager is to wait on
   //    all threads under it's management when it gets destructed.
   //    Therefore, remember to remove a thread from thread manager if
-  //    you don't want it to wait for the thread. There are also
-  //    function to disable this default wait-on-exit behavior.
+  //    you don't want it to wait for the thread.  There are also
+  //    functions to disable this default wait-on-exit behavior.
   //    However, if your program depends on turning this off to run
   //    correctly, you are probably doing something wrong.  Rule of
   //    thumb, use ACE_Thread to manage your daemon threads.
   //
-  //    Notice that if there're threads live beyond the scope of main (),
+  //    Notice that if there're threads that live beyond the scope of main (),
   //    you are sure to have resource leaks in your program.  Remember
   //    to wait on threads before exiting main() if that could happen
   //    in your programs.
