@@ -13,7 +13,7 @@
  *
  * ============================================================================= */
 
-#include "pace/wait.h"
+#include "pace/sys/wait.h"
 
 #if !defined (PACE_HAS_INLINE)
 # include "pace/posix/wait.inl"

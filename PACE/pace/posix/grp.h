@@ -22,42 +22,47 @@
 extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
-  /** 
+#ifndef PACE_GROUP
+#define PACE_GROUP
+typedef struct group pace_group;
+#endif /* PACE_GROUP */
+
+  /**
      PACE's implementation of the POSIX function getgrgid.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 9.2.1.
    */
-  PACE_INLINE struct group * pace_getgrgid (pace_gid_t gid);
+  PACE_INLINE pace_group * pace_getgrgid (pace_gid_t gid);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function getgrgid_r.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 9.2.1.
    */
   PACE_INLINE int pace_getgrgid_r (pace_gid_t gid,
-                                   struct group * grp,
+                                   pace_group * grp,
                                    char * buffer,
                                    size_t bufsize,
-                                   struct group ** result);
+                                   pace_group ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function getgrnam.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 9.2.1.
    */
-  PACE_INLINE struct group * pace_getgrnam (const char * name);
+  PACE_INLINE pace_group * pace_getgrnam (const char * name);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function getgrnam_r.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 9.2.1.
    */
   PACE_INLINE int pace_getgrnam_r (const char * name,
-                                   struct group * grp,
+                                   pace_group * grp,
                                    char * buffer,
                                    size_t bufsize,
-                                   struct group ** result);
+                                   pace_group ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
 # if defined (PACE_HAS_CPLUSPLUS)
