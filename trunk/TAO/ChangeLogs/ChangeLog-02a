@@ -1,3 +1,8 @@
+Tue Oct 10 07:20:27 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile : Fixed a pre GNU 2.8 problem for FT
+	  service.
+
 Mon Oct 09 15:56:58 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/IORManipulation/TAO_IORManip.dsp:
