@@ -367,10 +367,6 @@ SOURCE=.\IORManipulation.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Key_Adapters.cpp
 # End Source File
 # Begin Source File
@@ -1012,10 +1008,6 @@ SOURCE=.\IORC.h
 # Begin Source File
 
 SOURCE=.\IORManipulation.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORS.h
 # End Source File
 # Begin Source File
 

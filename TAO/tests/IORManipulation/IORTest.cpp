@@ -25,7 +25,6 @@
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "tao/IORManipulation.h"
-#include "tao/IORS.h"
 
 ACE_RCSID(IORManipluation, IORTest, "$Id$")
 
@@ -34,7 +33,7 @@ main (int argc, char *argv[])
 {
   // The variable is declared volatile because, some compilers
   // optimizes this the wrong way. A case is point is the CC compiler
-  // on IRIX. 
+  // on IRIX.
   volatile int Status = 0;
 
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
@@ -278,14 +277,13 @@ main (int argc, char *argv[])
 
           // @@ Don't use ACE_PRINT_EXCEPTION here since it will print
           //    "EXCEPTION" somewhere in the output which will make
-          //    our auto-compile/test scripts think that an unexpected 
+          //    our auto-compile/test scripts think that an unexpected
           //    exception occurred.  Instead, simply print the
           //    exception ID.
           //       -Ossama
           ACE_DEBUG ((LM_DEBUG,
-                      "Caught <%s> exception.\n"
-                      "This exception was expected.\n\n",
-                      userex._id ()));
+                      "Caught <TAO_IOP::TAO_IOR_Manipulation::NotFound> exception.\n"
+                      "This exception was expected.\n\n"));
         }
       else
         {
