@@ -243,10 +243,6 @@ SOURCE=.\RTCORBAC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\rtcorbafwd.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Thread_Pool.h
 # End Source File
 # End Group

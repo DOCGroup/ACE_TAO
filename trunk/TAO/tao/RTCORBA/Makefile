@@ -113,7 +113,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  Direct_Priority_Mapping.h rtcorba_export.h Priority_Mapping.h \
- rtcorbafwd.h $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -215,7 +215,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  Linear_Priority_Mapping.h rtcorba_export.h Priority_Mapping.h \
- rtcorbafwd.h $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -565,7 +565,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Acceptor_Registry.h \
  $(TAO_ROOT)/tao/Acceptor_Registry.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i Priority_Mapping_Manager.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
@@ -596,7 +596,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i Priority_Mapping.h \
- rtcorbafwd.h $(TAO_ROOT)/tao/corbafwd.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -696,7 +696,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i rtcorba_export.h \
- Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1026,7 +1026,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -1204,7 +1204,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -1484,7 +1484,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -2418,7 +2418,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
  RT_Policy_i.h RTCORBA.h RTCORBAC.h Priority_Mapping_Manager.h \
- Priority_Mapping.h rtcorbafwd.h Priority_Mapping.i \
+ Priority_Mapping.h Priority_Mapping.i \
  Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.i \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i RT_Stub.h \
@@ -2576,7 +2576,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -2810,7 +2810,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -3059,7 +3059,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  RT_PolicyFactory.h RTCORBA.h RTCORBAC.h Priority_Mapping_Manager.h \
- Priority_Mapping.h rtcorbafwd.h Priority_Mapping.i \
+ Priority_Mapping.h Priority_Mapping.i \
  Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.h RT_Policy_i.i \
  RT_Protocols_Hooks.h \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
@@ -3332,7 +3332,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -3607,7 +3607,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  RT_Policy_i.h RTCORBA.h RTCORBAC.h Priority_Mapping_Manager.h \
- Priority_Mapping.h rtcorbafwd.h Priority_Mapping.i \
+ Priority_Mapping.h Priority_Mapping.i \
  Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.i
 
 .obj/RT_Policy_i.o .obj/RT_Policy_i.so .shobj/RT_Policy_i.o .shobj/RT_Policy_i.so: RT_Policy_i.cpp RT_Policy_i.h \
@@ -3756,7 +3756,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -3958,7 +3958,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  Priority_Mapping_Manager.h rtcorba_export.h Priority_Mapping.h \
- rtcorbafwd.h Priority_Mapping.i \
+ Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
@@ -4387,7 +4387,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i rtcorba_export.h \
  RT_Policy_i.h RTCORBA.h RTCORBAC.h Priority_Mapping_Manager.h \
- Priority_Mapping.h rtcorbafwd.h Priority_Mapping.i \
+ Priority_Mapping.h Priority_Mapping.i \
  Priority_Mapping_Manager.i RTCORBAC.i RT_Policy_i.i
 
 .obj/RT_Stub_Factory.o .obj/RT_Stub_Factory.so .shobj/RT_Stub_Factory.o .shobj/RT_Stub_Factory.so: RT_Stub_Factory.cpp RT_Stub_Factory.h \
@@ -4866,7 +4866,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- Priority_Mapping_Manager.h Priority_Mapping.h rtcorbafwd.h \
+ Priority_Mapping_Manager.h Priority_Mapping.h \
  Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \

@@ -25,19 +25,21 @@
 #include "ace/pre.h"
 #include "tao/orbconf.h"
 
-#include "rtcorba_export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "rtcorba_export.h"
 #include "tao/IOPC.h"
-#include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
-
+#include "tao/PolicyC.h"
 #include "tao/Encodable.h"
 
-#include "Priority_Mapping_Manager.h"
+// Forward references.
+class TAO_Priority_Mapping_Manager;
+class TAO_Priority_Mapping_Manager_var;
+class TAO_Priority_Mapping_Manager_out;
+class TAO_Priority_Mapping;
 
 #ifndef TAO_RTCORBA_SAFE_INCLUDE
 #error "You should not include RTCORBAC.h directly, use RTCORBA.h"
@@ -108,20 +110,23 @@ TAO_NAMESPACE  RTCORBA
     ACE_NESTED_CLASS (RTCORBA, Priority) lane_priority;
     CORBA::ULong static_threads;
     CORBA::ULong dynamic_threads;
+
   };
 
   class TAO_RTCORBA_Export ThreadpoolLane_var
   {
   public:
-    ThreadpoolLane_var (void); // default constructor
+    ThreadpoolLane_var (void);
     ThreadpoolLane_var (ThreadpoolLane *);
-    ThreadpoolLane_var (const ThreadpoolLane_var &); // copy constructor
-    ThreadpoolLane_var (const ThreadpoolLane &); // fixed-size types only
-    ~ThreadpoolLane_var (void); // destructor
+    ThreadpoolLane_var (const ThreadpoolLane_var &);
+    // Fixed-size types only.
+    ThreadpoolLane_var (const ThreadpoolLane &);
+    ~ThreadpoolLane_var (void);
 
     ThreadpoolLane_var &operator= (ThreadpoolLane *);
     ThreadpoolLane_var &operator= (const ThreadpoolLane_var &);
-    ThreadpoolLane_var &operator= (const ThreadpoolLane &); // fixed-size types only
+    // Fixed-size types only.
+    ThreadpoolLane_var &operator= (const ThreadpoolLane &);
     ThreadpoolLane *operator-> (void);
     const ThreadpoolLane *operator-> (void) const;
 
@@ -150,36 +155,46 @@ TAO_NAMESPACE  RTCORBA
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CH_
 
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes : public TAO_Unbounded_Base_Sequence
+  class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes
+    : public TAO_Unbounded_Base_Sequence
     {
     public:
       // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void); // Default constructor.
+    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void);
       _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum,
+    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         ThreadpoolLane *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs);
-      _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &operator= (const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs);
-      virtual ~_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void); // Dtor.
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (
+        const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs
+      );
+    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &operator= (
+        const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void);
+    
       // = Accessors.
       ThreadpoolLane &operator[] (CORBA::ULong i);
       const ThreadpoolLane &operator[] (CORBA::ULong i) const;
+    
       // = Static operations.
       static ThreadpoolLane *allocbuf (CORBA::ULong size);
       static void freebuf (ThreadpoolLane *buffer);
+    
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
       ThreadpoolLane *get_buffer (CORBA::Boolean orphan = 0);
       const ThreadpoolLane *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         ThreadpoolLane *data,
-        CORBA::Boolean release);
+        CORBA::Boolean release
+      );
     };
 
 #endif /* end #if !defined */
@@ -221,6 +236,7 @@ TAO_NAMESPACE  RTCORBA
     typedef ThreadpoolLanes_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+    
   };
 
 #endif /* end #if !defined */
@@ -236,15 +252,17 @@ TAO_NAMESPACE  RTCORBA
   class TAO_RTCORBA_Export ThreadpoolLanes_var
   {
   public:
-    ThreadpoolLanes_var (void); // default constructor
+    ThreadpoolLanes_var (void);
     ThreadpoolLanes_var (ThreadpoolLanes *);
-    ThreadpoolLanes_var (const ThreadpoolLanes_var &); // copy constructor
-    ThreadpoolLanes_var (const ThreadpoolLanes &); // fixed-size base types only
-    ~ThreadpoolLanes_var (void); // destructor
+    ThreadpoolLanes_var (const ThreadpoolLanes_var &);
+    // Fixed-size base types only.
+    ThreadpoolLanes_var (const ThreadpoolLanes &);
+    ~ThreadpoolLanes_var (void);
 
     ThreadpoolLanes_var &operator= (ThreadpoolLanes *);
     ThreadpoolLanes_var &operator= (const ThreadpoolLanes_var &);
-    ThreadpoolLanes_var &operator= (const ThreadpoolLanes &); // fixed-size base types only
+    // Fixed-size base types only.
+    ThreadpoolLanes_var &operator= (const ThreadpoolLanes &);
     ThreadpoolLanes *operator-> (void);
     const ThreadpoolLanes *operator-> (void) const;
 
@@ -288,7 +306,7 @@ TAO_NAMESPACE  RTCORBA
 
   private:
     ThreadpoolLanes *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const ThreadpoolLanes_var &);
   };
 
@@ -304,6 +322,7 @@ TAO_NAMESPACE  RTCORBA
         CLIENT_PROPAGATED,
         SERVER_DECLARED
   };
+  
   typedef PriorityModel &PriorityModel_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PriorityModel;
 
@@ -346,7 +365,10 @@ TAO_NAMESPACE  RTCORBA
     static PriorityModelPolicy_ptr duplicate (PriorityModelPolicy_ptr);
     static void release (PriorityModelPolicy_ptr);
     static PriorityModelPolicy_ptr nil (void);
-    static PriorityModelPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static PriorityModelPolicy_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -387,7 +409,8 @@ TAO_NAMESPACE  RTCORBA
 #if !defined (_RTCORBA_PRIORITYMODELPOLICY_CH_)
 #define _RTCORBA_PRIORITYMODELPOLICY_CH_
 
-class TAO_RTCORBA_Export PriorityModelPolicy: public virtual CORBA::Policy
+  class TAO_RTCORBA_Export PriorityModelPolicy
+    : public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -397,16 +420,19 @@ class TAO_RTCORBA_Export PriorityModelPolicy: public virtual CORBA::Policy
 
     // the static operations
     static PriorityModelPolicy_ptr _duplicate (PriorityModelPolicy_ptr obj);
+    
     static PriorityModelPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static PriorityModelPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static PriorityModelPolicy_ptr _nil (void)
       {
         return (PriorityModelPolicy_ptr)0;
@@ -436,6 +462,7 @@ class TAO_RTCORBA_Export PriorityModelPolicy: public virtual CORBA::Policy
     PriorityModelPolicy ();
 
     virtual ~PriorityModelPolicy (void);
+  
   private:
     PriorityModelPolicy (const PriorityModelPolicy &);
     void operator= (const PriorityModelPolicy &);
@@ -485,7 +512,10 @@ class TAO_RTCORBA_Export PriorityModelPolicy: public virtual CORBA::Policy
     static ThreadpoolPolicy_ptr duplicate (ThreadpoolPolicy_ptr);
     static void release (ThreadpoolPolicy_ptr);
     static ThreadpoolPolicy_ptr nil (void);
-    static ThreadpoolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static ThreadpoolPolicy_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -526,7 +556,8 @@ class TAO_RTCORBA_Export PriorityModelPolicy: public virtual CORBA::Policy
 #if !defined (_RTCORBA_THREADPOOLPOLICY_CH_)
 #define _RTCORBA_THREADPOOLPOLICY_CH_
 
-class TAO_RTCORBA_Export ThreadpoolPolicy: public virtual CORBA::Policy
+  class TAO_RTCORBA_Export ThreadpoolPolicy
+    : public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -536,16 +567,19 @@ class TAO_RTCORBA_Export ThreadpoolPolicy: public virtual CORBA::Policy
 
     // the static operations
     static ThreadpoolPolicy_ptr _duplicate (ThreadpoolPolicy_ptr obj);
+    
     static ThreadpoolPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static ThreadpoolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static ThreadpoolPolicy_ptr _nil (void)
       {
         return (ThreadpoolPolicy_ptr)0;
@@ -567,6 +601,7 @@ class TAO_RTCORBA_Export ThreadpoolPolicy: public virtual CORBA::Policy
     ThreadpoolPolicy ();
 
     virtual ~ThreadpoolPolicy (void);
+  
   private:
     ThreadpoolPolicy (const ThreadpoolPolicy &);
     void operator= (const ThreadpoolPolicy &);
@@ -614,7 +649,10 @@ class TAO_RTCORBA_Export ThreadpoolPolicy: public virtual CORBA::Policy
     static ProtocolProperties_ptr duplicate (ProtocolProperties_ptr);
     static void release (ProtocolProperties_ptr);
     static ProtocolProperties_ptr nil (void);
-    static ProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static ProtocolProperties_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -655,8 +693,9 @@ class TAO_RTCORBA_Export ThreadpoolPolicy: public virtual CORBA::Policy
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES_CH_
 
-class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
-                                      public TAO_Encodable
+class TAO_RTCORBA_Export ProtocolProperties 
+  : public virtual CORBA_Object,
+    public TAO_Encodable
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -666,16 +705,19 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
 
     // the static operations
     static ProtocolProperties_ptr _duplicate (ProtocolProperties_ptr obj);
+    
     static ProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static ProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static ProtocolProperties_ptr _nil (void)
       {
         return (ProtocolProperties_ptr)0;
@@ -694,6 +736,7 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
     ProtocolProperties ();
 
     virtual ~ProtocolProperties (void);
+  
   private:
     ProtocolProperties (const ProtocolProperties &);
     void operator= (const ProtocolProperties &);
@@ -715,15 +758,16 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
         IOP::ProfileId protocol_type;
     ACE_NESTED_CLASS (RTCORBA, ProtocolProperties_var) orb_protocol_properties;
     ACE_NESTED_CLASS (RTCORBA, ProtocolProperties_var) transport_protocol_properties;
+    
   };
 
   class TAO_RTCORBA_Export Protocol_var
   {
   public:
-    Protocol_var (void); // default constructor
+    Protocol_var (void);
     Protocol_var (Protocol *);
-    Protocol_var (const Protocol_var &); // copy constructor
-    ~Protocol_var (void); // destructor
+    Protocol_var (const Protocol_var &);
+    ~Protocol_var (void);
 
     Protocol_var &operator= (Protocol *);
     Protocol_var &operator= (const Protocol_var &);
@@ -733,7 +777,8 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
     operator const Protocol &() const;
     operator Protocol &();
     operator Protocol &() const;
-    operator Protocol *&(); // variable-size types only
+    // Variable-size types only.
+    operator Protocol *&();
 
     // in, inout, out, _retn
     const Protocol &in (void) const;
@@ -760,7 +805,7 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
 
   private:
     Protocol *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const Protocol_var &);
   };
 
@@ -770,36 +815,46 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_
 
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_ProtocolList : public TAO_Unbounded_Base_Sequence
+  class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_ProtocolList
+    : public TAO_Unbounded_Base_Sequence
     {
     public:
       // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void); // Default constructor.
+    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void);
       _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum,
+    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         Protocol *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs);
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &operator= (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs);
-      virtual ~_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void); // Dtor.
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (
+        const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs
+      );
+    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &operator= (
+        const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void);
+    
       // = Accessors.
       Protocol &operator[] (CORBA::ULong i);
       const Protocol &operator[] (CORBA::ULong i) const;
+    
       // = Static operations.
       static Protocol *allocbuf (CORBA::ULong size);
       static void freebuf (Protocol *buffer);
+    
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
       Protocol *get_buffer (CORBA::Boolean orphan = 0);
       const Protocol *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         Protocol *data,
-        CORBA::Boolean release);
+        CORBA::Boolean release
+      );
     };
 
 #endif /* end #if !defined */
@@ -841,6 +896,7 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
     typedef ProtocolList_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+    
   };
 
 #endif /* end #if !defined */
@@ -856,10 +912,10 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
   class TAO_RTCORBA_Export ProtocolList_var
   {
   public:
-    ProtocolList_var (void); // default constructor
+    ProtocolList_var (void);
     ProtocolList_var (ProtocolList *);
-    ProtocolList_var (const ProtocolList_var &); // copy constructor
-    ~ProtocolList_var (void); // destructor
+    ProtocolList_var (const ProtocolList_var &);
+    ~ProtocolList_var (void);
 
     ProtocolList_var &operator= (ProtocolList *);
     ProtocolList_var &operator= (const ProtocolList_var &);
@@ -907,7 +963,7 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
 
   private:
     ProtocolList *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const ProtocolList_var &);
   };
 
@@ -955,7 +1011,10 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
     static ServerProtocolPolicy_ptr duplicate (ServerProtocolPolicy_ptr);
     static void release (ServerProtocolPolicy_ptr);
     static ServerProtocolPolicy_ptr nil (void);
-    static ServerProtocolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static ServerProtocolPolicy_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -996,7 +1055,8 @@ class TAO_RTCORBA_Export ProtocolProperties : public virtual CORBA_Object,
 #if !defined (_RTCORBA_SERVERPROTOCOLPOLICY_CH_)
 #define _RTCORBA_SERVERPROTOCOLPOLICY_CH_
 
-class TAO_RTCORBA_Export ServerProtocolPolicy: public virtual CORBA::Policy
+  class TAO_RTCORBA_Export ServerProtocolPolicy
+    : public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1006,16 +1066,19 @@ class TAO_RTCORBA_Export ServerProtocolPolicy: public virtual CORBA::Policy
 
     // the static operations
     static ServerProtocolPolicy_ptr _duplicate (ServerProtocolPolicy_ptr obj);
+    
     static ServerProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static ServerProtocolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static ServerProtocolPolicy_ptr _nil (void)
       {
         return (ServerProtocolPolicy_ptr)0;
@@ -1037,6 +1100,7 @@ class TAO_RTCORBA_Export ServerProtocolPolicy: public virtual CORBA::Policy
     ServerProtocolPolicy ();
 
     virtual ~ServerProtocolPolicy (void);
+  
   private:
     ServerProtocolPolicy (const ServerProtocolPolicy &);
     void operator= (const ServerProtocolPolicy &);
@@ -1086,7 +1150,10 @@ class TAO_RTCORBA_Export ServerProtocolPolicy: public virtual CORBA::Policy
     static ClientProtocolPolicy_ptr duplicate (ClientProtocolPolicy_ptr);
     static void release (ClientProtocolPolicy_ptr);
     static ClientProtocolPolicy_ptr nil (void);
-    static ClientProtocolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static ClientProtocolPolicy_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -1127,7 +1194,8 @@ class TAO_RTCORBA_Export ServerProtocolPolicy: public virtual CORBA::Policy
 #if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY_CH_)
 #define _RTCORBA_CLIENTPROTOCOLPOLICY_CH_
 
-class TAO_RTCORBA_Export ClientProtocolPolicy: public virtual CORBA::Policy
+  class TAO_RTCORBA_Export ClientProtocolPolicy
+    : public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1137,16 +1205,19 @@ class TAO_RTCORBA_Export ClientProtocolPolicy: public virtual CORBA::Policy
 
     // the static operations
     static ClientProtocolPolicy_ptr _duplicate (ClientProtocolPolicy_ptr obj);
+    
     static ClientProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static ClientProtocolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static ClientProtocolPolicy_ptr _nil (void)
       {
         return (ClientProtocolPolicy_ptr)0;
@@ -1168,6 +1239,7 @@ class TAO_RTCORBA_Export ClientProtocolPolicy: public virtual CORBA::Policy
     ClientProtocolPolicy ();
 
     virtual ~ClientProtocolPolicy (void);
+  
   private:
     ClientProtocolPolicy (const ClientProtocolPolicy &);
     void operator= (const ClientProtocolPolicy &);
@@ -1217,7 +1289,10 @@ class TAO_RTCORBA_Export ClientProtocolPolicy: public virtual CORBA::Policy
     static PrivateConnectionPolicy_ptr duplicate (PrivateConnectionPolicy_ptr);
     static void release (PrivateConnectionPolicy_ptr);
     static PrivateConnectionPolicy_ptr nil (void);
-    static PrivateConnectionPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static PrivateConnectionPolicy_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -1258,7 +1333,8 @@ class TAO_RTCORBA_Export ClientProtocolPolicy: public virtual CORBA::Policy
 #if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY_CH_)
 #define _RTCORBA_PRIVATECONNECTIONPOLICY_CH_
 
-class TAO_RTCORBA_Export PrivateConnectionPolicy: public virtual CORBA::Policy
+  class TAO_RTCORBA_Export PrivateConnectionPolicy
+    : public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1268,16 +1344,19 @@ class TAO_RTCORBA_Export PrivateConnectionPolicy: public virtual CORBA::Policy
 
     // the static operations
     static PrivateConnectionPolicy_ptr _duplicate (PrivateConnectionPolicy_ptr obj);
+    
     static PrivateConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static PrivateConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static PrivateConnectionPolicy_ptr _nil (void)
       {
         return (PrivateConnectionPolicy_ptr)0;
@@ -1291,6 +1370,7 @@ class TAO_RTCORBA_Export PrivateConnectionPolicy: public virtual CORBA::Policy
     PrivateConnectionPolicy ();
 
     virtual ~PrivateConnectionPolicy (void);
+  
   private:
     PrivateConnectionPolicy (const PrivateConnectionPolicy &);
     void operator= (const PrivateConnectionPolicy &);
@@ -1338,7 +1418,10 @@ class TAO_RTCORBA_Export PrivateConnectionPolicy: public virtual CORBA::Policy
     static TCPProtocolProperties_ptr duplicate (TCPProtocolProperties_ptr);
     static void release (TCPProtocolProperties_ptr);
     static TCPProtocolProperties_ptr nil (void);
-    static TCPProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static TCPProtocolProperties_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -1379,7 +1462,8 @@ class TAO_RTCORBA_Export PrivateConnectionPolicy: public virtual CORBA::Policy
 #if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_TCPPROTOCOLPROPERTIES_CH_
 
-class TAO_RTCORBA_Export TCPProtocolProperties: public virtual ProtocolProperties
+  class TAO_RTCORBA_Export TCPProtocolProperties
+    : public virtual ProtocolProperties
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1389,16 +1473,19 @@ class TAO_RTCORBA_Export TCPProtocolProperties: public virtual ProtocolPropertie
 
     // the static operations
     static TCPProtocolProperties_ptr _duplicate (TCPProtocolProperties_ptr obj);
+    
     static TCPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static TCPProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static TCPProtocolProperties_ptr _nil (void)
       {
         return (TCPProtocolProperties_ptr)0;
@@ -1497,6 +1584,7 @@ class TAO_RTCORBA_Export TCPProtocolProperties: public virtual ProtocolPropertie
     TCPProtocolProperties ();
 
     virtual ~TCPProtocolProperties (void);
+  
   private:
     TCPProtocolProperties (const TCPProtocolProperties &);
     void operator= (const TCPProtocolProperties &);
@@ -1544,7 +1632,10 @@ class TAO_RTCORBA_Export TCPProtocolProperties: public virtual ProtocolPropertie
     static GIOPProtocolProperties_ptr duplicate (GIOPProtocolProperties_ptr);
     static void release (GIOPProtocolProperties_ptr);
     static GIOPProtocolProperties_ptr nil (void);
-    static GIOPProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static GIOPProtocolProperties_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -1585,7 +1676,8 @@ class TAO_RTCORBA_Export TCPProtocolProperties: public virtual ProtocolPropertie
 #if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_GIOPPROTOCOLPROPERTIES_CH_
 
-class TAO_RTCORBA_Export GIOPProtocolProperties: public virtual ProtocolProperties
+  class TAO_RTCORBA_Export GIOPProtocolProperties
+    : public virtual ProtocolProperties
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1595,16 +1687,19 @@ class TAO_RTCORBA_Export GIOPProtocolProperties: public virtual ProtocolProperti
 
     // the static operations
     static GIOPProtocolProperties_ptr _duplicate (GIOPProtocolProperties_ptr obj);
+    
     static GIOPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static GIOPProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static GIOPProtocolProperties_ptr _nil (void)
       {
         return (GIOPProtocolProperties_ptr)0;
@@ -1618,6 +1713,7 @@ class TAO_RTCORBA_Export GIOPProtocolProperties: public virtual ProtocolProperti
     GIOPProtocolProperties ();
 
     virtual ~GIOPProtocolProperties (void);
+  
   private:
     GIOPProtocolProperties (const GIOPProtocolProperties &);
     void operator= (const GIOPProtocolProperties &);
@@ -1665,7 +1761,10 @@ class TAO_RTCORBA_Export GIOPProtocolProperties: public virtual ProtocolProperti
     static UnixDomainProtocolProperties_ptr duplicate (UnixDomainProtocolProperties_ptr);
     static void release (UnixDomainProtocolProperties_ptr);
     static UnixDomainProtocolProperties_ptr nil (void);
-    static UnixDomainProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static UnixDomainProtocolProperties_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -1706,7 +1805,8 @@ class TAO_RTCORBA_Export GIOPProtocolProperties: public virtual ProtocolProperti
 #if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES_CH_
 
-class TAO_RTCORBA_Export UnixDomainProtocolProperties: public virtual ProtocolProperties
+  class TAO_RTCORBA_Export UnixDomainProtocolProperties
+    : public virtual ProtocolProperties
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1716,16 +1816,19 @@ class TAO_RTCORBA_Export UnixDomainProtocolProperties: public virtual ProtocolPr
 
     // the static operations
     static UnixDomainProtocolProperties_ptr _duplicate (UnixDomainProtocolProperties_ptr obj);
+    
     static UnixDomainProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static UnixDomainProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static UnixDomainProtocolProperties_ptr _nil (void)
       {
         return (UnixDomainProtocolProperties_ptr)0;
@@ -1773,6 +1876,7 @@ class TAO_RTCORBA_Export UnixDomainProtocolProperties: public virtual ProtocolPr
     UnixDomainProtocolProperties ();
 
     virtual ~UnixDomainProtocolProperties (void);
+  
   private:
     UnixDomainProtocolProperties (const UnixDomainProtocolProperties &);
     void operator= (const UnixDomainProtocolProperties &);
@@ -1820,7 +1924,10 @@ class TAO_RTCORBA_Export UnixDomainProtocolProperties: public virtual ProtocolPr
     static SharedMemoryProtocolProperties_ptr duplicate (SharedMemoryProtocolProperties_ptr);
     static void release (SharedMemoryProtocolProperties_ptr);
     static SharedMemoryProtocolProperties_ptr nil (void);
-    static SharedMemoryProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static SharedMemoryProtocolProperties_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -1861,7 +1968,8 @@ class TAO_RTCORBA_Export UnixDomainProtocolProperties: public virtual ProtocolPr
 #if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES_CH_
 
-class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual ProtocolProperties
+  class TAO_RTCORBA_Export SharedMemoryProtocolProperties
+    : public virtual ProtocolProperties
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1871,16 +1979,19 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
 
     // the static operations
     static SharedMemoryProtocolProperties_ptr _duplicate (SharedMemoryProtocolProperties_ptr obj);
+    
     static SharedMemoryProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static SharedMemoryProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static SharedMemoryProtocolProperties_ptr _nil (void)
       {
         return (SharedMemoryProtocolProperties_ptr)0;
@@ -1945,6 +2056,7 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
     SharedMemoryProtocolProperties ();
 
     virtual ~SharedMemoryProtocolProperties (void);
+  
   private:
     SharedMemoryProtocolProperties (const SharedMemoryProtocolProperties &);
     void operator= (const SharedMemoryProtocolProperties &);
@@ -1967,20 +2079,23 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
 
     ACE_NESTED_CLASS (RTCORBA, Priority) low;
     ACE_NESTED_CLASS (RTCORBA, Priority) high;
+    
   };
 
   class TAO_RTCORBA_Export PriorityBand_var
   {
   public:
-    PriorityBand_var (void); // default constructor
+    PriorityBand_var (void);
     PriorityBand_var (PriorityBand *);
-    PriorityBand_var (const PriorityBand_var &); // copy constructor
-    PriorityBand_var (const PriorityBand &); // fixed-size types only
-    ~PriorityBand_var (void); // destructor
+    PriorityBand_var (const PriorityBand_var &);
+    // Fixed-size types only.
+    PriorityBand_var (const PriorityBand &);
+    ~PriorityBand_var (void);
 
     PriorityBand_var &operator= (PriorityBand *);
     PriorityBand_var &operator= (const PriorityBand_var &);
-    PriorityBand_var &operator= (const PriorityBand &); // fixed-size types only
+    // Fixed-size types only.
+    PriorityBand_var &operator= (const PriorityBand &);
     PriorityBand *operator-> (void);
     const PriorityBand *operator-> (void) const;
 
@@ -2009,36 +2124,46 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CH_
 
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_PriorityBands : public TAO_Unbounded_Base_Sequence
+  class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_RTCORBA_PriorityBands
+    : public TAO_Unbounded_Base_Sequence
     {
     public:
       // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void); // Default constructor.
+    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void);
       _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum,
+    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         PriorityBand *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs);
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &operator= (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs);
-      virtual ~_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void); // Dtor.
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands (
+        const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs
+      );
+    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &operator= (
+        const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void);
+    
       // = Accessors.
       PriorityBand &operator[] (CORBA::ULong i);
       const PriorityBand &operator[] (CORBA::ULong i) const;
+    
       // = Static operations.
       static PriorityBand *allocbuf (CORBA::ULong size);
       static void freebuf (PriorityBand *buffer);
+    
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
       PriorityBand *get_buffer (CORBA::Boolean orphan = 0);
       const PriorityBand *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         PriorityBand *data,
-        CORBA::Boolean release);
+        CORBA::Boolean release
+      );
     };
 
 #endif /* end #if !defined */
@@ -2080,6 +2205,7 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
     typedef PriorityBands_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+    
   };
 
 #endif /* end #if !defined */
@@ -2095,15 +2221,17 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
   class TAO_RTCORBA_Export PriorityBands_var
   {
   public:
-    PriorityBands_var (void); // default constructor
+    PriorityBands_var (void);
     PriorityBands_var (PriorityBands *);
-    PriorityBands_var (const PriorityBands_var &); // copy constructor
-    PriorityBands_var (const PriorityBands &); // fixed-size base types only
-    ~PriorityBands_var (void); // destructor
+    PriorityBands_var (const PriorityBands_var &);
+    // Fixed-size base types only.
+    PriorityBands_var (const PriorityBands &);
+    ~PriorityBands_var (void);
 
     PriorityBands_var &operator= (PriorityBands *);
     PriorityBands_var &operator= (const PriorityBands_var &);
-    PriorityBands_var &operator= (const PriorityBands &); // fixed-size base types only
+    // Fixed-size base types only.
+    PriorityBands_var &operator= (const PriorityBands &);
     PriorityBands *operator-> (void);
     const PriorityBands *operator-> (void) const;
 
@@ -2147,7 +2275,7 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
 
   private:
     PriorityBands *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const PriorityBands_var &);
   };
 
@@ -2197,7 +2325,10 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
     static PriorityBandedConnectionPolicy_ptr duplicate (PriorityBandedConnectionPolicy_ptr);
     static void release (PriorityBandedConnectionPolicy_ptr);
     static PriorityBandedConnectionPolicy_ptr nil (void);
-    static PriorityBandedConnectionPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static PriorityBandedConnectionPolicy_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -2238,7 +2369,8 @@ class TAO_RTCORBA_Export SharedMemoryProtocolProperties: public virtual Protocol
 #if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_)
 #define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY_CH_
 
-class TAO_RTCORBA_Export PriorityBandedConnectionPolicy: public virtual CORBA::Policy
+  class TAO_RTCORBA_Export PriorityBandedConnectionPolicy
+    : public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2248,16 +2380,19 @@ class TAO_RTCORBA_Export PriorityBandedConnectionPolicy: public virtual CORBA::P
 
     // the static operations
     static PriorityBandedConnectionPolicy_ptr _duplicate (PriorityBandedConnectionPolicy_ptr obj);
+    
     static PriorityBandedConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static PriorityBandedConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static PriorityBandedConnectionPolicy_ptr _nil (void)
       {
         return (PriorityBandedConnectionPolicy_ptr)0;
@@ -2279,6 +2414,7 @@ class TAO_RTCORBA_Export PriorityBandedConnectionPolicy: public virtual CORBA::P
     PriorityBandedConnectionPolicy ();
 
     virtual ~PriorityBandedConnectionPolicy (void);
+  
   private:
     PriorityBandedConnectionPolicy (const PriorityBandedConnectionPolicy &);
     void operator= (const PriorityBandedConnectionPolicy &);
@@ -2326,7 +2462,10 @@ class TAO_RTCORBA_Export PriorityBandedConnectionPolicy: public virtual CORBA::P
     static Current_ptr duplicate (Current_ptr);
     static void release (Current_ptr);
     static Current_ptr nil (void);
-    static Current_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static Current_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -2367,7 +2506,8 @@ class TAO_RTCORBA_Export PriorityBandedConnectionPolicy: public virtual CORBA::P
 #if !defined (_RTCORBA_CURRENT_CH_)
 #define _RTCORBA_CURRENT_CH_
 
-class TAO_RTCORBA_Export Current: public virtual CORBA::Current
+  class TAO_RTCORBA_Export Current
+    : public virtual CORBA::Current
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2377,16 +2517,19 @@ class TAO_RTCORBA_Export Current: public virtual CORBA::Current
 
     // the static operations
     static Current_ptr _duplicate (Current_ptr obj);
+    
     static Current_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static Current_ptr _nil (void)
       {
         return (Current_ptr)0;
@@ -2417,6 +2560,7 @@ class TAO_RTCORBA_Export Current: public virtual CORBA::Current
     Current ();
 
     virtual ~Current (void);
+  
   private:
     Current (const Current &);
     void operator= (const Current &);
@@ -2464,7 +2608,10 @@ class TAO_RTCORBA_Export Current: public virtual CORBA::Current
     static Mutex_ptr duplicate (Mutex_ptr);
     static void release (Mutex_ptr);
     static Mutex_ptr nil (void);
-    static Mutex_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static Mutex_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -2505,7 +2652,8 @@ class TAO_RTCORBA_Export Current: public virtual CORBA::Current
 #if !defined (_RTCORBA_MUTEX_CH_)
 #define _RTCORBA_MUTEX_CH_
 
-class TAO_RTCORBA_Export Mutex : public virtual CORBA_Object
+  class TAO_RTCORBA_Export Mutex
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2515,16 +2663,19 @@ class TAO_RTCORBA_Export Mutex : public virtual CORBA_Object
 
     // the static operations
     static Mutex_ptr _duplicate (Mutex_ptr obj);
+    
     static Mutex_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static Mutex_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static Mutex_ptr _nil (void)
       {
         return (Mutex_ptr)0;
@@ -2563,6 +2714,7 @@ class TAO_RTCORBA_Export Mutex : public virtual CORBA_Object
     Mutex ();
 
     virtual ~Mutex (void);
+  
   private:
     Mutex (const Mutex &);
     void operator= (const Mutex &);
@@ -2610,7 +2762,10 @@ class TAO_RTCORBA_Export Mutex : public virtual CORBA_Object
     static RTORB_ptr duplicate (RTORB_ptr);
     static void release (RTORB_ptr);
     static RTORB_ptr nil (void);
-    static RTORB_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static RTORB_ptr narrow (
+        CORBA::Object *,
+        CORBA::Environment &
+      );
     static CORBA::Object * upcast (void *);
   
   private:
@@ -2651,7 +2806,8 @@ class TAO_RTCORBA_Export Mutex : public virtual CORBA_Object
 #if !defined (_RTCORBA_RTORB_CH_)
 #define _RTCORBA_RTORB_CH_
 
-class TAO_RTCORBA_Export RTORB : public virtual CORBA_Object
+  class TAO_RTCORBA_Export RTORB
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2661,16 +2817,19 @@ class TAO_RTCORBA_Export RTORB : public virtual CORBA_Object
 
     // the static operations
     static RTORB_ptr _duplicate (RTORB_ptr obj);
+    
     static RTORB_ptr _narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static RTORB_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+    
     static RTORB_ptr _nil (void)
       {
         return (RTORB_ptr)0;
@@ -2909,6 +3068,7 @@ class TAO_RTCORBA_Export RTORB : public virtual CORBA_Object
     RTORB ();
 
     virtual ~RTORB (void);
+  
   private:
     RTORB (const RTORB &);
     void operator= (const RTORB &);
