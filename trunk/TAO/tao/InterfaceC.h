@@ -4160,6 +4160,7 @@ virtual IR_InterfaceDef_ptr create_interface (
     const char * version,
     const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
+    CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
@@ -4416,6 +4417,7 @@ protected:
       const char * version,
       const IR_InterfaceDefSeq & base_interfaces,
       CORBA::Boolean is_abstract,
+      CORBA::Boolean is_local,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
