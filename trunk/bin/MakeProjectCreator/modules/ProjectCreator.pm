@@ -176,6 +176,7 @@ sub new {
   $self->{'convert_slashes'}       = $self->convert_slashes();
   $self->{'sort_files'}            = $self->sort_files();
   $self->{'source_callback'}       = undef;
+  $self->{'dollar_special'}        = $self->dollar_special();
   $self->reset_generating_types();
 
   return $self;
@@ -209,6 +210,9 @@ sub process_assignment {
   if ($name eq 'after' && $value =~ /\*/) {
     my($def) = $self->get_default_project_name();
     $value = $self->fill_type_name($value, $def);
+  }
+  if (defined $value && !$self->{'dollar_special'} && $value =~ /\$\$/) {
+    $value =~ s/\$\$/\$/g;
   }
   $self->SUPER::process_assignment($name, $value, $assign);
 }
@@ -700,10 +704,16 @@ sub process_feature {
   }
 
   if ($self->check_features($requires, $avoids)) {
+    ## The required features are enabled, so we say that
+    ## a project has been defined and we allow the parser to
+    ## find the data held within the feature.
     $self->{'feature_defined'} = 0;
     $self->{$self->{'type_check'}} = 1;
   }
   else {
+    ## Otherwise, we read in all the lines until we find the
+    ## closing brace for the feature and it appears to the parser
+    ## that nothing was defined.
     my($curly) = 1;
     while($_ = $fh->getline()) {
       my($line) = $self->strip_line($_);
@@ -1997,7 +2007,7 @@ sub write_output_file {
           my($pjname) = $self->get_assignment('project_name');
           my(@list)   = $self->get_component_list('source_files');
           if (UNIVERSAL::isa($cb, 'ARRAY')) {
-            my(@copy) = @$cb;                
+            my(@copy) = @$cb;
             my($s) = shift(@copy);
             &$s(@copy, $name, $pjname, @list);
           }
@@ -2355,6 +2365,11 @@ sub get_default_element_name {
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub dollar_special {
+  #my($self) = shift;
+  return 0;
+}
 
 sub translate_value {
   my($self) = shift;
