@@ -22,11 +22,9 @@ CFG=TAO LIB - Win32 Debug
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 CPP=cl.exe
-RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO LIB - Win32 Release"
 
@@ -40,11 +38,12 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -64,10 +63,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
+# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -583,6 +583,10 @@ SOURCE=.\Single_Reactor.cpp
 # Begin Source File
 
 SOURCE=.\skip.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Smart_Proxies.cpp
 # End Source File
 # Begin Source File
 
@@ -1170,6 +1174,10 @@ SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Smart_Proxies.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\stub.h
 # End Source File
 # Begin Source File
@@ -1559,6 +1567,10 @@ SOURCE=.\SHMIOP_Profile.i
 # Begin Source File
 
 SOURCE=.\Single_Reactor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Smart_Proxies.i
 # End Source File
 # Begin Source File
 
