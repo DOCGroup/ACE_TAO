@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
+$status = 0;
 
 $SV  = new PerlACE::Process ("server", "-o $iorfile");
 $CL = new PerlACE::Process ("client", " -k file://$iorfile");
@@ -22,7 +23,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     exit 1;
 } 
 
-$CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

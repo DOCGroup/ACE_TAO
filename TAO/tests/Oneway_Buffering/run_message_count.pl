@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $admin_iorfile = PerlACE::LocalFile ("admin.ior");
 $server_iorfile = PerlACE::LocalFile ("server.ior");
+$status = 0;
 
 unlink $admin_iorfile;
 unlink $server_iorfile;
