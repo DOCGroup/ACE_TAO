@@ -1,3 +1,12 @@
+Tue Dec 30 13:30:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
+          Removed not needed forward declaration
+
+        * orbsvcs/tests/RTCosScheduling/Object1_i.h:
+          Added missing type of inheritence from base class. Fixes Tru64
+          warning.
+
 Tue Dec 30 13:22:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.cpp:
