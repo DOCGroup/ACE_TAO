@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // ace_x11.mpb,v
 
-feature(ace_with_x11) {
+project {
   requires += ace_with_x11
 
   // Depends on configration from include/makeinclude/platform_*.GNU

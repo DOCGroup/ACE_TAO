@@ -8,19 +8,6 @@ ACE_RCSID (Xt_Stopwatch,
            server,
            "$Id$")
 
-
-#if !defined (ACE_HAS_XT)
-
-int
-main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "Xt not supported on this platform\n"));
-  return 0;
-}
-
-#else
-
 #include "tao/xt_resource.h"
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
@@ -157,4 +144,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#endif /* ACE_HAS_Xt */

@@ -1,0 +1,6 @@
+// -*- MPC -*-
+
+project : taolib, ace_xtreactor {
+  after    += TAO_XtReactor
+  libs     += TAO_XtReactor
+}

@@ -689,7 +689,6 @@ ACE_HAS_WINSOCK2                        The Win32 platform supports
                                         WinSock 2.0
 ACE_HAS_XLI                             Platform has the XLI version
                                         of TLI
-ACE_HAS_XT                              Platform has Xt and Motif
 ACE_HAS_XTI                             Platform has XTI
                                         (X/Open-standardized superset
                                         of TLI).  Implies ACE_HAS_TLI

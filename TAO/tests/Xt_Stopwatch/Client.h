@@ -18,7 +18,6 @@
 
 #include "testC.h"
 
-#if defined (ACE_HAS_XT)
 
 #include "tao/xt_resource.h"
 class Control;
@@ -59,5 +58,4 @@ private:
   // The server.
 };
 
-#endif /*ACE_HAS_XT*/
 #endif /* CLIENT_H */

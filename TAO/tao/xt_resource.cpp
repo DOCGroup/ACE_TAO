@@ -2,8 +2,6 @@
 
 #include "tao/xt_resource.h"
 
-#if defined(ACE_HAS_XT)
-
 #if !defined (__ACE_INLINE__)
 # include "tao/xt_resource.i"
 #endif /* ! __ACE_INLINE__ */
@@ -39,4 +37,3 @@ ACE_STATIC_SVC_DEFINE (TAO_XT_Resource_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_XT_Resource_Factory)
 
-#endif /* ACE_HAS_XT */

@@ -39,6 +39,7 @@ report process</a>.<p>
   </li><li><a href="#svcsinstall">Building and Installing ACE Network Services</a>
   </li><li><a href="#sslinstall">Building and Installing The ACE_SSL Library</a>
   </li><li><a href="#qtreactor_install">Building, Installing and Using The ACE_QtReactor Library</a>
+  </li><li><a href="#xtreactor_install">Building, Installing and Using The ACE_XtReactor Library</a>
   </li><li><a href="#minimum_build">What Do I Need to Build for TAO?</a>
   </li><li><a href="#resource_requirements">System Resource Requirements</a>
   </li><li><a href="#MPC">General MPC Information</a>
@@ -2426,22 +2427,65 @@ below.</p>
   <li> Add <code>qt=1</code> to your <code>$MPC_ROOT/config/default.features</code> and
   generate build files using MPC. Alternatively, re-run MPC with <code>-features qt=1</code>
   switch to obtain build files with Qt support.</li>
-  <li>Build ACE using MPC generated files. After compilation <code>ACE_QtReactor</code> library should be
+  <li>Build ACE using MPC generated files. Add qt=1 command line option to makefile if necessary.
+  After compilation <code>ACE_QtReactor</code> library should be
   placed in libout directory.</li>
 </ol>
 
-To use <code>ACE_QtReactor</code> library in user applciation one has to ensure the library was built as
+To use <code>ACE_QtReactor</code> library in user application one has to ensure the library was built as
 described above. Then there are at least two options:
 <ol>
   <li>For MPC based application one has to derive a project from <code>ace_qtreactor</code>
       and generate build files using <code>-features qt=1</code> switch or by setting
       <code>qt=1</code> in <code>default.features</code> file. The <code>ace_qtreactor</code> base project
       ensures all path variables are set correctly and add links necessary libraries to the
-      project.</li>
+      project, as well as makes the project dependant on necessary features.</li>
   <li>For application with custom build system one has to define path to Qt includes and
       libraries and also link the application with <code>qt-mt</code> and
       <code>ACE_QtReactor</code> library.</li>
 </ol>
+
+<h3><a name="xtreactor_install">Building, Installing and Using The ACE_XtReactor Library</a></h3>
+<p>The first step for all platforms is to build and install the
+X Toolkit library, which usually comes with X11 distribution.  The
+<code>ACE_XtReactor</code> library must then be built according to the instructions
+below.</p>
+
+<ol>
+  <li>Make sure that the <code>X11</code> and <code>XT</code> make variables are set correctly in
+  <code>include/makeinclude/platform_macros</code>. Usually this variables are set as needed in
+  ACE distribution.</li>
+  <li> Add <code>ace_with_xt=1</code> and <code>ace_with_xt=1</code> to your
+  <code>$MPC_ROOT/config/default.features</code> and generate build files using MPC.
+  Alternatively, re-run MPC with <code>-features ace_with_x11=1,ace_with_xt=1</code>
+  switch to obtain build files with Xt support.</li>
+  <li>Build ACE using MPC generated files. Add <code>ace_with_x11=1</code> and
+  <code>ace_with_xt=1</code> command line option to makefile if necessary.
+  After compilation <code>ACE_XtReactor</code> library should be
+  placed in libout directory.</li>
+</ol>
+
+To use <code>ACE_XtReactor</code> library in user application one has to ensure the library was built as
+described above. Then there are at least two options:
+<ol>
+  <li>For MPC based application one has to derive a project from <code>ace_xtreactor</code>
+      and generate build files using <code>-features ace_with_x11=1,ace_with_xt=1</code> switch
+      or by setting <code>ace_with_xt=1</code> and <code>ace_with_xt</code>
+      in <code>default.features</code> file. The <code>ace_xtreactor</code> base project
+      ensures all path variables are set correctly and add links necessary libraries to the
+      project, as well as makes the project dependant on necessary features.</li>
+  <li>For application with custom build system one has to define path to Xt includes and
+      libraries and also link the application with <code>X11</code>, <code>Xt</code> and
+      <code>ACE_XtReactor</code> library.</li>
+</ol>
+
+There are some examples of using <code>ACE_XtReactor</code> in <code>ACE</code> distribution.
+They depend additionally on either <code>Motif/Lestif</code> or <code>Athena</code>
+widgets. To build these examples one has to install <code>Motif/Lestif</code> or
+<code>Athena</code> libraries and generate <code>makefiles</code> from MPC additionally using either
+<code>ace_with_motif=1</code> or <code>ace_with_athena=1</code> switches. The examples are derived from
+either <code>ace_motif</code> or <code>ace_athena</code> MPC base project, which provides necessry
+build settings.
 
 <hr><p>
 </p><h3><a name="minimum_build">What Do I Need to Build for TAO?</a></h3>
@@ -2916,7 +2960,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Sat Dec  4 15:51:56 CET 2004
+Last modified: Fri Dec 10 00:31:08 CET 2004
 <!-- hhmts end -->
 
 

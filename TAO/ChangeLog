@@ -1,4 +1,38 @@
-Tue Dec  7 21:05:12 2004  Marek Brudka  <mbrudka@aster.pl>
+Fri Dec 10 00:45:22 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/QtTests/.cvsignore (Module):
+	* utils/catior/.cvsignore (Module):
+	Created few ignores to make cvs silent.
+
+	* tests/Xt_Stopwatch/svc.conf.xml (Module):
+	* tests/Xt_Stopwatch/svc.conf (Module):
+	Changed shared library wher XtResourceFactory is to be looked for.
+
+	* tests/Xt_Stopwatch/timer.h (Module):
+	* tests/Xt_Stopwatch/timer.cpp (Module):
+	* tests/Xt_Stopwatch/test_i.h (Module):
+	* tests/Xt_Stopwatch/test_i.cpp (Module):
+	* tests/Xt_Stopwatch/server.cpp (Module):
+	* tests/Xt_Stopwatch/client.cpp (Module):
+	* tests/Xt_Stopwatch/Xt_Stopwatch.mpc (Module):
+	* tests/Xt_Stopwatch/Stopwatch_display.h (Module):
+	* tests/Xt_Stopwatch/Stopwatch_display.cpp (Module):
+	* tests/Xt_Stopwatch/Control.h (Module):
+	* tests/Xt_Stopwatch/Control.cpp (Module):
+	* tests/Xt_Stopwatch/Client.h (Module):
+	Removed ACE_HAS_XT macros.
+
+	* tao/TAO_XtReactor_export.h (Module):
+	Created export macros for TAO_XtRector library.
+
+	* tao/xt_resource.h (Module):
+	* tao/xt_resource.cpp (Module):
+	Removed ACE_HAS_XT macros. Applied export macros for XtResourceFactory.
+
+	* tao/tao_xtreactor.mpc (Module):
+	Derived tao_xtreactor from all needed base projects.
+
+Fri Dec 10 00:40:11 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/QtTests/README (Module):
 	Described a problem with ORB shutdown.

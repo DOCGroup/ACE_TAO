@@ -19,6 +19,7 @@
 //      4. Events from ACE timer (registed with ACE_XtReactor::schedule_timer)
 //      5. Events from the TCP/IP channel using ACE_Acceptor
 //      No command line arguments are needed to run the test.
+//      Programs needs Athena Widgets to be compiled and run.
 //
 // = AUTHOR
 //    Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
@@ -28,10 +29,8 @@
 #include "test_config.h"
 
 ACE_RCSID (tests,
-           XtReactor_Test,
+           XtAthenaReactor_Test,
            "$Id$")
-
-#if defined (ACE_HAS_XT)
 
 #include "ace/XtReactor.h"
 #include "ace/Event_Handler.h"
@@ -46,35 +45,6 @@ ACE_RCSID (tests,
 #include /**/ <X11/Intrinsic.h>
 #include /**/ <X11/Xatom.h>
 #include /**/ <X11/Shell.h>
-
-#if !defined (ACE_LACKS_MOTIF)
-
-#include /**/ <Xm/Xm.h>
-#include /**/ <Xm/Label.h>
-#include /**/ <Xm/PushB.h>
-#include /**/ <Xm/RowColumn.h>
-
-static void set_label(Widget w, const char *p)
-{
-  XtVaSetValues (w,
-                 XmNlabelString,
-                 XmStringCreateLocalized( (char*) p),
-                 0);
-}
-#define LABEL_WIDGET xmLabelWidgetClass
-#define BUTTON_WIDGET xmPushButtonWidgetClass
-#define PRESS_ME_CALLBACK XmNactivateCallback
-static Widget create_box(Widget parent, const char *name)
-{
-  Arg al[10];
-  int ac = 0;
-  XtSetArg (al[ac], XmNnumColumns, 3); ac++;
-  XtSetArg (al[ac], XmNpacking, XmPACK_COLUMN); ac++;
-  XtSetArg (al[ac], XmNentryAlignment, XmALIGNMENT_CENTER); ac++;
-  return XmCreateRowColumn (parent, (char *) name, al, ac);
-}
-
-#else  // Athena Widgets
 
 #include /**/ <X11/Xaw/Command.h>
 #include /**/ <X11/Xaw/Label.h>
@@ -92,7 +62,6 @@ static Widget create_box(Widget parent, const char * name)
 {
     return XtCreateWidget( (char*) name, boxWidgetClass, parent, 0, 0);
 }
-#endif /* ACE_HAS_MOTIF */
 
 // Port we listen on.
 static const u_short SERV_TCP_PORT = 6670;
@@ -253,14 +222,12 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* ACE_HAS_XT */
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("XtReactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("XtAthenaReactor_Test"));
 
-#if defined (ACE_HAS_XT)
   XtAppContext app_context;
   Widget topLevel, goodbye, PressMe, lbl, digits_rc;
   Widget children[5];
@@ -355,12 +322,8 @@ run_main (int argc, ACE_TCHAR *argv[])
                                           THR_NEW_LWP | THR_DETACHED);
 
   XtAppMainLoop (XtWidgetToApplicationContext (topLevel));
-#else
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_INFO,
-              "Xt not supported on this platform\n"));
-#endif /* ACE_HAS_XT */
+
   ACE_END_TEST;
   return 0;
 }
+
