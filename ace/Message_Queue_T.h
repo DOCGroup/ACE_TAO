@@ -19,6 +19,10 @@
 
 #include "ace/Synch.h"
 
+#if defined (VXWORKS)
+  class ACE_Message_Queue_Vx;
+#endif /* defined (VXWORKS) */
+
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue : public ACE_Message_Queue_Base
 {
@@ -375,7 +379,7 @@ class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE>
   //     of the queue whose priority becomes later than can be represented
   //     advance to the beyond_late portion of the queue.  These behaviors
   //     support a limited schedule overrun, with pending messages prioritized
-  //     ahead of late messages, and late messages ahead of beyond late  
+  //     ahead of late messages, and late messages ahead of beyond late
   //     messages.  These behaviors can be modified in derived classes by
   //     providing alternative definitions for the appropriate virtual methods.
   //
@@ -383,9 +387,9 @@ class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE>
   //
   //          H                                           T
   //          |                                           |
-  // 
+  //
   //          B - B - B - B - L - L - L - P - P - P - P - P
-  //    
+  //
   //          |           |   |       |   |               |
   //         BH          BT   LH     LT   PH             PT
   //
@@ -409,7 +413,7 @@ class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE>
   //             through base class pointers: achieving this may result in
   //             highly unpredictable results, as expectations about
   //             where a message starts or remains between method
-  //             invocations may not hold for a dynamically managed 
+  //             invocations may not hold for a dynamically managed
   //             message queue.
   //
 public:
@@ -422,7 +426,7 @@ public:
   virtual ~ACE_Dynamic_Message_Queue (void);
   // Close down the message queue and release all resources.
 
-  virtual int remove_messages (ACE_Message_Block *&list_head, 
+  virtual int remove_messages (ACE_Message_Block *&list_head,
                                ACE_Message_Block *&list_tail,
                                u_int status_flags);
   // Detach all messages with status given in the passed flags from
@@ -454,10 +458,10 @@ protected:
   // Message Queue constructor to update the priorities of all
   // enqueued messages.
 
-  virtual int sublist_enqueue_i (ACE_Message_Block *new_item, 
+  virtual int sublist_enqueue_i (ACE_Message_Block *new_item,
                                  const ACE_Time_Value &current_time,
-                                 ACE_Message_Block *&sublist_head, 
-                                 ACE_Message_Block *&sublist_tail, 
+                                 ACE_Message_Block *&sublist_head,
+                                 ACE_Message_Block *&sublist_tail,
                                  ACE_Dynamic_Message_Strategy::Priority_Status status);
   // enqueue a message in priority order within a given priority status sublist
 
@@ -467,7 +471,7 @@ protected:
   // portion of the queue, or if that is empty from the late portion,
   // or if that is empty from the beyond late portion, or if that is
   // empty just sets the passed pointer to zero and returns -1.
- 
+
   virtual int refresh_queue (const ACE_Time_Value & current_time);
   // Refresh the queue using the strategy
   // specific priority status function.
@@ -507,7 +511,7 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Message_Queue (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> &))
 
-  // provide definitions for these (just call base class method), 
+  // provide definitions for these (just call base class method),
   // but make them private so they're not accessible outside the class
 
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
@@ -570,7 +574,7 @@ public:
 #if defined (VXWORKS)
 
   static ACE_Message_Queue_Vx *
-    create_Vx_message_queue (size_t max_messages, size_t max_message_length, 
+    create_Vx_message_queue (size_t max_messages, size_t max_message_length,
                              ACE_Notification_Strategy *ns = 0);
   // factory method for a wrapped VxWorks message queue
 
