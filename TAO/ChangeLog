@@ -1,3 +1,12 @@
+Sun Apr 27 09:37:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IOP_IORC.h:
+	* tao/IOP_IORC.cpp:
+	* tao/IOP_IORC.i: Regenerated the code. Somehow the regenarted
+	  code never got merged back from the branch.
+
+	* tao/diffs/IOP_IOR.diff: Updated diff file.
+	
 Sat Apr 26 16:08:15 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/PortableServer/Servant_Base.{h,cpp} Added an accessor method
