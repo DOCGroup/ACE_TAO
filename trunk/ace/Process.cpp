@@ -778,6 +778,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
         }
     }
 
+  command_line_argv_calculated_ = 0;
   return 0; // Success.
 }
 
@@ -796,6 +797,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
   // Useless macro.
   va_end (argp);
 
+  command_line_argv_calculated_ = 0;
   return 0;
 }
 
@@ -829,6 +831,7 @@ ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
 
   delete [] anti_clb;
 
+  command_line_argv_calculated_ = 0;
   return 0;
 }
 #endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
