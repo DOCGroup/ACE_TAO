@@ -1,3 +1,20 @@
+Sat May 01 01:48:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.cpp (DllMain): Only use DllMain to control
+	  Object_Manager's lifecycle when
+	  ACE_USES_DLL_TO_MANAGE_THE_LIFECYCLE_OF_OBJECT_MANAGER is
+	  defined and we are building ACE as a DLL.
+
+	* ace/config-win32.h: Defining
+	  ACE_USES_DLL_TO_MANAGE_THE_LIFECYCLE_OF_OBJECT_MANAGER =1, when
+	  compiling DLL version of ACE will cause then ACE::init/fini be
+	  called automatically for you in DllMain when ACE gets linked
+	  in/unlinked.
+
+	  Defining ACE_USES_DLL_TO_MANAGE_THE_LIFECYCLE_OF_OBJECT_MANAGER
+	  =1 automatically define ACE_HAS_NONSTATIC_OBJECT_MANAGER to 1
+	  and define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
+
 Fri Apr 30 22:53:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: put Object_Manager back on the stack of main,
