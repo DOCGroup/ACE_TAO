@@ -78,7 +78,7 @@ protected:
     return 0;
   }
 
-  ACE_FILE_Addr get_outgoing_message (Message *message)
+  ACE_FILE_Addr get_outgoing_message (Message *)
   {
     // Exclude 23
     return ACE_FILE_Addr ("/tmp/outgoing_message");
@@ -153,7 +153,7 @@ protected:
     return 0;
   }
 
-  ACE_FILE_Addr get_message_destination (Message *message)
+  ACE_FILE_Addr get_message_destination (Message *)
   {
     // Exclude 26
     return ACE_FILE_Addr ("/tmp/encoded_message");

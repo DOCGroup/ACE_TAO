@@ -17,7 +17,7 @@ public:
     return new MessageType (MessageType::RAWTEXT, src);
   }
 
-  static ACE_FILE_IO *audio_to_text (ACE_FILE_Addr &src, ACE_FILE_Addr &dest)
+  static ACE_FILE_IO *audio_to_text (ACE_FILE_Addr &, ACE_FILE_Addr &dest)
   {
     ACE_FILE_Connector connector;
     ACE_FILE_IO *file = 0;
@@ -32,7 +32,7 @@ public:
     return file;
   }
 
-  static ACE_FILE_IO *video_to_text (ACE_FILE_Addr &src, ACE_FILE_Addr &dest)
+  static ACE_FILE_IO *video_to_text (ACE_FILE_Addr &, ACE_FILE_Addr &dest)
   {
     ACE_FILE_Connector connector;
     ACE_FILE_IO *file = 0;
@@ -76,13 +76,13 @@ public:
     return 0;
   }
 
-  static int convert_to_mp3 (ACE_FILE_Addr &src, ACE_FILE_Addr &dest)
+  static int convert_to_mp3 (ACE_FILE_Addr &, ACE_FILE_Addr &)
   {
     // Convert arbitrary audio data to some standard mp3 format
     return 0;
   }
 
-  static int convert_to_mpeg (ACE_FILE_Addr &src, ACE_FILE_Addr &dest)
+  static int convert_to_mpeg (ACE_FILE_Addr &, ACE_FILE_Addr &)
   {
     // Convert arbitrary vidio data to some standard mpeg format
     return 0;
