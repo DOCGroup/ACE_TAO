@@ -1,4 +1,16 @@
 // $Id$
+//=============================================================================
+/**
+ *  @file    PG_Property_Set_Helper.h
+ *
+ *  $Id$
+ *
+ *  This file declares classes to help manage the Property_Sets 
+ *  defined in the Portable Object Group.
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
 #ifndef PROPERTY_SET_HELPER_H_
 #define PROPERTY_SET_HELPER_H_
 #include "FT_DetectorFactory_i.h"
@@ -26,14 +38,11 @@ namespace Portable_Group
 {
   namespace Property_Set
   {
-
-    // todo use ACE Containers
-    typedef ACE_Map_Manager<std::string, CORBA::Any, ACE_SYNCH_NULL_MUTEX> ValueMap;
-    typedef ACE_Pair< std::string, CORBA::Any> NamedValue;
-    typedef ACE_Vector< NamedValue, 10 > NamedValueVec;
-
     class Encoder
     {
+      typedef ACE_Pair< ACE_CString, CORBA::Any> NamedValue;
+      typedef ACE_Vector< NamedValue, 10 > NamedValueVec;
+
     public:
       Encoder ();
       ~Encoder ();
@@ -51,19 +60,23 @@ namespace Portable_Group
 
     class Decoder
     {
+      typedef ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_SYNCH_NULL_MUTEX> ValueMap;
     public:
-
-      Decoder (FT::Properties_var & property_set);
+      Decoder (const FT::Properties & property_set);
       ~Decoder ();
 
       // general purpose method
-      int find (const std::string & key, CORBA::Any & pValue)const;
+      int find (const ACE_CString & key, CORBA::Any & pValue)const;
 
-      // convenience methods
-      int find (const std::string & key, long & value)const;
-      int find (const std::string & key, double & value)const;
-      int find (const std::string & key, std::string & value)const;
-
+      // if templated methods were available:
+      // template <typename TYPE >
+      // int find (const ACE_CString & key, TYPE & value)const
+      // {
+      //   CORBA::Any any;
+      //   find (key, any);
+      //   return (any >>= value);
+      // }
+      // instead, see global function below
 
     private:
       Decoder();
@@ -74,6 +87,22 @@ namespace Portable_Group
       ValueMap values_;
       FT::Properties_var property_set_;
     };
+
+    /**
+     * Find a value in a Property_Set::Decoder.
+     * This is a work-around for the lack of
+     * templated methods.
+     */
+    template <typename TYPE>
+    int find (Decoder & decoder, const ACE_CString & key, TYPE & value)
+    {
+      CORBA::Any any;
+      decoder.find (key, any);
+      // if find fails, any will be empty and the attempt to extract 
+      // the value will fail, so there's no need to check status
+      // on the find.
+      return (any >>= value);
+    }
 
     /**
      * unit test: encode and decode properties.

@@ -1,3 +1,22 @@
+Wed Jul 23 17:23:33 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * TAO/orbsvcs/Fault_Detector/Detector_i.h:
+        * TAO/orbsvcs/Fault_Detector/Detector_i.cpp:
+        * TAO/orbsvcs/Fault_Detector/FT_DetectorFactory_i.h:
+        * TAO/orbsvcs/Fault_Detector/FT_DetectorFactory_i.cpp:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * TAO/orbsvcs/Fault_Detector/PG_Property_Set_Helper.h:
+        * TAO/orbsvcs/Fault_Detector/PG_Property_Set_Helper.cpp:
+          FaultDetector is code-complete.  No tests available, yet.
+
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector.h:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector.cpp:
+
+          Removed these files.
+
+        These changes were made in the oci_haft branch.
+
 Tue Jul 22 14:47:14 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * TAO/orbsvcs/Fault_Detector/Detector_i.h:

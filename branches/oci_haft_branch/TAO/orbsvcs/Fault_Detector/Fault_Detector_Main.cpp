@@ -1,7 +1,20 @@
 // $Id$
-//FaultDetectorMain.cpp
+//=============================================================================
+/**
+ *  @file    FaultDetectorMain.cpp
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant CORBA.
+ *  This file provides the main routine for a process that
+ *  implements the FaultDetectorFactory interface and manages
+ *  a set of FaultDetectors.
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
 
-#include "Fault_Detector.h"
+#include "ace/pre.h"
 #include "FT_DetectorFactory_i.h"
 
 #include "tao/PortableServer/ORB_Manager.h"
@@ -32,41 +45,45 @@ int main (int argc, ACE_TCHAR * argv[] )
 // property set helper test
         if ( Portable_Group::Property_Set::test_encode_decode () )
         {
-          std::cout << "Passed property set self-test. " << std::endl;
+          ACE_ERROR ((LM_ERROR,
+            "%T %n: Passed property set self-test.\n "
+            ));
         }
 
         result = factory.self_register(orbManager);
         if (result == 0)
         {
-          std::cout << "FT Replica: Ready. ";
-          factory.identity(std::cout);
-          std::cout << std::endl;
+          ACE_ERROR ((LM_ERROR,
+            "%T %n: Ready %s\n", factory.identity() 
+            ));
 
           // Run the main event loop for the ORB.
           result = orbManager.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           if (result == -1)
           {
             ACE_ERROR_RETURN (
-              (LM_ERROR, "FT_Replica_i::run"),
+              (LM_ERROR, "%T %n: FT_Replica_i::run error"),
               -1);
           }
           ACE_TRY_CHECK;
-          std::cout << "FT Replica: Terminated normally.";
-          factory.identity(std::cout);
-          std::cout << std::endl;
+          ACE_ERROR ((LM_ERROR,
+            "%T %n: Terminated normally. %s\n", factory.identity()
+            ));
         }
         else
         {
-          ACE_ERROR_RETURN (
-            (LM_ERROR, "%p\n", "Write IOR failed\n"),
-            -1);
+          ACE_ERROR ((LM_ERROR, 
+            "%T %n: Write IOR failed: %p\n"
+            ));
+          result = -1;
         }
       }
       else
       {
-        ACE_ERROR_RETURN (
-          (LM_ERROR, "%p\n", "orb manager init failed\n"),
-          -1);
+        ACE_ERROR ((LM_ERROR, 
+          "%T %n: orb manager init failed\n"
+        ));
+        result = -1;
       }
     }
     ACE_CATCHANY
