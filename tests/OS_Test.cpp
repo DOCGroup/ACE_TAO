@@ -473,6 +473,60 @@ string_emulation_test (void)
   return 0;
 }
 
+
+static int
+ctime_r_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ctime_r\n")));
+
+  int result = 0;
+
+  // test 'normal' buffer
+  ACE_TCHAR buf[27];
+  buf[26] = 'Z';
+
+  ACE_Time_Value cur_time =
+    ACE_OS::gettimeofday ();
+
+  time_t secs = cur_time.sec ();
+  ACE_OS::ctime_r (&secs, buf, 26);
+
+  if (buf[0] == '\0')
+    {
+      result = -1;
+
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Truncated input buffer\n")));
+    }
+  else if (buf[26] != 'Z')
+    {
+      result = -1;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Wrote past end of input buffer\n")));
+    }
+
+  // test small buffer
+  if (result == 0)
+    {
+      buf[10] = 'Z';
+      ACE_OS::ctime_r (&secs,
+                       buf,
+                       10);
+
+      if ((buf[9] != '\0') ||
+          (buf[10] != 'Z'))
+      {
+        result = -1;
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%p|%t) Buffer length limit error\n")));
+      }
+    }
+
+
+  return result;
+}
+
+
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -485,6 +539,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     status = result;
 
   if ((result = string_emulation_test ()) != 0)
+    status = result;
+
+  if ((result = ctime_r_test ()) != 0)
     status = result;
 
   ACE_END_TEST;
