@@ -73,9 +73,9 @@ namespace TAO
                        TAO_OutputCDR &cdr
                        ACE_ENV_ARG_DECL);
 
-    void send_message (short message_semantics,
-                       TAO_OutputCDR &cdr
-                       ACE_ENV_ARG_DECL);
+    Invocation_Status send_message (TAO_OutputCDR &cdr,
+                                    short message_semantics
+                                    ACE_ENV_ARG_DECL);
   protected:
     Profile_Transport_Resolver &resolver_;
     TAO_Operation_Details &detail_;

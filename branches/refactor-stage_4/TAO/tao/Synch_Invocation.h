@@ -42,9 +42,9 @@ namespace TAO
     Synch_Twoway_Invocation (Profile_Transport_Resolver &resolver,
                              TAO_Operation_Details &detail);
 
-    Invocation_Status communicate (Argument **args,
-                                   int args_number
-                                   ACE_ENV_ARG_DECL);
+    Invocation_Status remote_twoway (Argument **args,
+                                     int args_number
+                                     ACE_ENV_ARG_DECL);
 
   protected:
 
@@ -55,6 +55,7 @@ namespace TAO
     Invocation_Status handle_user_exception (TAO_InputCDR &cdr
                                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd,
@@ -71,10 +72,9 @@ namespace TAO
     Synch_Oneway_Invocation (Profile_Transport_Resolver &resolver,
                              TAO_Operation_Details &detail);
 
-    Invocation_Status communicate (Argument **args,
-                                   int args_number
-                                   ACE_ENV_ARG_DECL);
-
+    Invocation_Status remote_oneway (Argument **args,
+                                     int args_number
+                                     ACE_ENV_ARG_DECL);
   };
 }
 

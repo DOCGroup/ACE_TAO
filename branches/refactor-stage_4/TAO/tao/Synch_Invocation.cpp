@@ -25,9 +25,9 @@ namespace TAO
   }
 
   Invocation_Status
-  Synch_Twoway_Invocation::communicate (Argument **args,
-                                        int args_number
-                                        ACE_ENV_ARG_DECL)
+  Synch_Twoway_Invocation::remote_twoway (Argument **args,
+                                          int args_number
+                                          ACE_ENV_ARG_DECL)
   {
     TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
                                    this->detail_.reply_service_info ());
@@ -68,10 +68,14 @@ namespace TAO
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
 
-    this->send_message (TAO_Transport::TAO_TWOWAY_REQUEST,
-                        cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    Invocation_Status s =
+      this->send_message (cdr,
+                          TAO_Transport::TAO_TWOWAY_REQUEST
+                          ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (s);
+
+    if (s != TAO_INVOKE_SUCCESS)
+      return s;
 
     // @@ In all MT environments, there's a cancellation point lurking
     // here; need to investigate.  Client threads would frequently be
@@ -98,6 +102,8 @@ namespace TAO
                                      args_number
                                      ACE_ENV_ARG_PARAMETER);
   }
+
+
 
 
   Invocation_Status
@@ -226,7 +232,7 @@ namespace TAO
 #endif
 
     }
-    cout << "Got here " << endl;
+
     return TAO_INVOKE_SUCCESS;
   }
 
@@ -326,62 +332,53 @@ namespace TAO
   {
   }
 
+
+
   Invocation_Status
-  Synch_Oneway_Invocation::communicate (Argument **args,
-                                        int args_number
-                                        ACE_ENV_ARG_DECL)
+  Synch_Oneway_Invocation::remote_oneway (Argument **args,
+                                          int args_number
+                                          ACE_ENV_ARG_DECL)
   {
     const CORBA::Octet response_flags =
-      this->detail_.response_flags ();
+       this->detail_.response_flags ();
 
-    if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
-        || response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT)
-        || response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING)
-        || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
-      {
-        TAO_Target_Specification tspec;
-        this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER) ||
+        response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
 
-        TAO_OutputCDR &cdr =
-          this->resolver_.transport ()->messaging_object ()->out_stream ();
-
-        this->write_header (tspec,
-                            cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-        this->marshal_data (args,
-                            args_number,
-                            cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-
-        if (response_flags != CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT))
-          {
-            this->send_message (TAO_Transport::TAO_ONEWAY_REQUEST,
-                                cdr
-                                ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-          }
-        else
-          {
-            this->send_message (TAO_Transport::TAO_TWOWAY_REQUEST,
-                                cdr
-                                ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-          }
-      }
-    else
-      {
-        return Synch_Twoway_Invocation::communicate (args,
+      return Synch_Twoway_Invocation::remote_twoway (args,
                                                      args_number
                                                      ACE_ENV_ARG_PARAMETER);
+
+
+    TAO_Target_Specification tspec;
+    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    TAO_OutputCDR &cdr =
+      this->resolver_.transport ()->messaging_object ()->out_stream ();
+
+    this->write_header (tspec,
+                        cdr
+                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    this->marshal_data (args,
+                        args_number,
+                        cdr
+                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+
+    if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT))
+      {
+        return this->send_message (cdr,
+                                   TAO_Transport::TAO_TWOWAY_REQUEST
+                                   ACE_ENV_ARG_PARAMETER);
       }
 
-    return TAO_INVOKE_SUCCESS;
+    return this->send_message (cdr,
+                               TAO_Transport::TAO_ONEWAY_REQUEST
+                               ACE_ENV_ARG_PARAMETER);
   }
-
 
 }
