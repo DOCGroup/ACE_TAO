@@ -63,8 +63,7 @@ public:
   // Perform the work of the SVC_HANDLER. Called by the acceptor
   // when a new connection shows up
   
-  // %% rename this to int handle_connection (void); ??
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  virtual int handle_connection (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Handle one client connection.
 
   virtual int svc (void);

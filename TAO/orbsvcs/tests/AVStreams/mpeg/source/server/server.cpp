@@ -33,9 +33,6 @@ int
 Mpeg_Svc_Handler::open (void *)
 {
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) Mpeg_Svc_Handler::open"
-              "called\n"));
   // Lets use threads at a later point. The current scheme works fine
   // with fork..  
   // this will activate a thread 
@@ -58,14 +55,14 @@ Mpeg_Svc_Handler::open (void *)
       this->svc ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Parent returning from Mpeg_Svc_handler::open\n"));
+                  "(%P|%t) Child returning from Mpeg_Svc_handler::open\n"));
       return 0;
       
     default:
       // i am the parent. i should go back and listen for more
       // connections
 
-      // (1) this will commit suicide, because this svc_handler is not required
+      // (1) "this" will commit suicide, because this svc_handler is not required
       // in the parent. otherwise, a new mpeg_svc_handler will be created
       // for each connection, and will never go away, i.e. a memory leak
       // will result. 
@@ -76,7 +73,7 @@ Mpeg_Svc_Handler::open (void *)
       // has a connected socket.
       this->destroy ();
       ACE_DEBUG ((LM_DEBUG,
-                  "Child Returning from Mpeg_Svc_Handler::open\n"));
+                  "(%P|%t) Parent Returning from Mpeg_Svc_Handler::open\n"));
       return 0;
     }
   return 0;
@@ -88,8 +85,7 @@ int
 Mpeg_Svc_Handler::svc (void)
 {
   int result;
-  // %% this needs to be renamed, the name is misleading!
-  result = this->handle_input ();
+  result = this->handle_connection ();
 
   if (result != 0)
 
@@ -101,7 +97,7 @@ Mpeg_Svc_Handler::svc (void)
 
 // handles the connection
 int
-Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
+Mpeg_Svc_Handler::handle_connection (ACE_HANDLE)
 {
   int junk;
   int result;
@@ -196,7 +192,7 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
 
         if (result != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) handle_input: "),
+                             "(%P|%t) handle_connection: "),
                              result);
         return result;
                  
@@ -211,7 +207,7 @@ Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
       ACE_Reactor::instance ()->end_event_loop ();
       if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t)handle_input : "),
+                           "(%P|%t)handle_connection : "),
                           result);
       return result;
      
