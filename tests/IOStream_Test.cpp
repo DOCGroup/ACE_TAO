@@ -399,7 +399,7 @@ server (void *arg = 0)
   client_handler >> i >> f1 >> l >> f2 >> d;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) Server Received: int %d float %g long %d float %g double %g\n"),
+              ACE_TEXT (" (%P|%t) Server Received: int %d float %f long %d float %f double %f\n"),
               i,
               f1,
               (int) l,

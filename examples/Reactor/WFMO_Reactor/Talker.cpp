@@ -178,6 +178,9 @@ public:
   // called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
   // passed to <open>.
 
+  void handle (ACE_HANDLE);
+  // Set the ACE_HANDLE value for this Handler.
+
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   // We've been removed from the Reactor.
 
@@ -378,6 +381,12 @@ ACE_HANDLE
 Peer_Handler::handle (void) const
 {
   return this->stream_.get_handle ();
+}
+
+void
+Peer_Handler::handle (ACE_HANDLE handle)
+{
+  return this->stream_.set_handle (handle);
 }
 
 // We've been removed from the Reactor.

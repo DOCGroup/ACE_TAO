@@ -318,6 +318,7 @@ public:
   int open (const ACE_TCHAR *host,
             u_short port);
   ACE_HANDLE handle (void) const;
+  void handle (ACE_HANDLE);
 
 protected:
   // These methods are called by the freamwork
@@ -391,6 +392,12 @@ ACE_HANDLE
 Sender::handle (void) const
 {
   return this->stream_.get_handle ();
+}
+
+void
+Sender::handle (ACE_HANDLE handle)
+{
+  return this->stream_.set_handle (handle);
 }
 
 int
