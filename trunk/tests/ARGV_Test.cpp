@@ -39,7 +39,7 @@ main (int, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("argc = %d\n"),
-              a.argc ())));
+              a.argc ()));
 
   // Print the contents of the combined <ACE_ARGV>.
   for (size_t i = 0; i < a.argc (); i++)
