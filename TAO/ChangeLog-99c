@@ -1,3 +1,10 @@
+Fri Jul 23 17:23:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Transport_Mux_Strategy.cpp:
+	  Fixed return value when the request id does not match. This is
+	  not always an error, for example if an old reply for a timedout
+	  request arrives while we are waiting for another requests.
+
 Fri Jul 23 16:50:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (_get_collocated_servant): Further simplify the
