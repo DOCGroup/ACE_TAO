@@ -1,3 +1,9 @@
+Sun Jun 28 15:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tao/GIOP.cpp: In method location_forwarding, removed
+	  the explicit release of the IIOP_Object. It is implicitly
+	  released by the release of the CORBA::OBject pointer.
+
 Sat Jun 27 18:13:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO/tests/POA/Explicit_Activation/server.cpp (main): Changed
