@@ -1,3 +1,9 @@
+Thu Apr 17 16:48:23 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* acconfig.h:
+
+	  Removed this old autoheader template.  It is no longer used.
+
 Thu Apr 17 19:33:29 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Get_Opt.cpp: Added #include "ace/ACE.h" to pick up ACE::gcd().
