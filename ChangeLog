@@ -1,3 +1,12 @@
+Mon Jun 28 08:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Removed ACE_RUN_VALGRIND_OPT for valgrind. The easiest way
+          to do this is to set the environment variable VALGRIND_OPTS and
+          then valgrind will use these settings. This way the user can
+          control all the options of valgrind, which options there are,
+          see the valgrind documentation
+
 Mon Jun 28 06:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}:
