@@ -1,6 +1,6 @@
 // -*- C++ -*-
 //=============================================================================
-/** 
+/**
  *  @file   OS_String.inl
  *
  *  $Id$
@@ -53,7 +53,7 @@ ACE_OS_String::memchr (const void *s, int c, size_t len)
 ACE_INLINE void *
 ACE_OS_String::memchr (void *s, int c, size_t len)
 {
-  return ACE_const_cast (void *, 
+  return ACE_const_cast (void *,
     ACE_OS_String::memchr (ACE_static_cast (const void *, s), c, len));
 }
 
@@ -161,7 +161,7 @@ ACE_OS_String::strchr (char *s, int c)
 ACE_INLINE wchar_t *
 ACE_OS_String::strchr (wchar_t *s, wint_t c)
 {
-  return ACE_const_cast (wchar_t *, 
+  return ACE_const_cast (wchar_t *,
     ACE_OS_String::strchr (ACE_static_cast (const wchar_t *, s), c));
 }
 #endif /* ACE_HAS_WCHAR */
@@ -272,17 +272,15 @@ ACE_OS_String::strncat (char *s, const char *t, size_t len)
 #endif /* ACE_HAS_PACE */
 }
 
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE wchar_t *
-ACE_OS_String::strncat (wchar_t *s, const wchar_t *t, size_t len)
+ACE_INLINE ACE_WCHAR_T *
+ACE_OS_String::strncat (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 {
-#  if defined (ACE_LACKS_WCSNCAT)
+#  if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCAT)
   return ACE_OS_String::wcsncat_emulation (s, t, len);
-#  else /* ACE_LACKS_WCSNCAT */
+#  else /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCAT */
   return ::wcsncat (s, t, len);
-#  endif /* ACE_LACKS_WCSNCAT */
+#  endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCAT */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS_String::strncmp (const char *s, const char *t, size_t len)
@@ -364,7 +362,7 @@ ACE_OS_String::strpbrk (char *s1, const char *s2)
 ACE_INLINE wchar_t *
 ACE_OS_String::strpbrk (wchar_t *s, const wchar_t *t)
 {
-  return ACE_const_cast (wchar_t *, 
+  return ACE_const_cast (wchar_t *,
     ACE_OS_String::strpbrk (ACE_static_cast (const wchar_t *, s), t));
 }
 #endif /* ACE_HAS_WCHAR */
@@ -409,7 +407,7 @@ ACE_OS_String::strrchr (char *s, int c)
 ACE_INLINE wchar_t *
 ACE_OS_String::strrchr (wchar_t *s, wint_t c)
 {
-  return ACE_const_cast (wchar_t *, 
+  return ACE_const_cast (wchar_t *,
     ACE_OS_String::strrchr (ACE_static_cast (const wchar_t *, s), c));
 }
 #endif /* ACE_HAS_WCHAR */
@@ -603,7 +601,7 @@ ACE_OS_String::strnchr (char *s, int c, size_t len)
 {
 #if defined ACE_PSOS_DIAB_PPC  /* Compiler problem Diab 4.2b */
   const char *const_char_s = s;
-  return ACE_const_cast (char *, 
+  return ACE_const_cast (char *,
                          ACE_OS_String::strnchr (const_char_s, c, len));
 #else
   return ACE_const_cast (char *,
@@ -731,4 +729,3 @@ ACE_OS_String::strtoul (const wchar_t *s, wchar_t **ptr, int base)
   return ::wcstoul (s, ptr, base);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
-

@@ -1,3 +1,10 @@
+Tue Dec  4 22:26:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS_String.h:
+	* ace/OS_String.i:
+	* ace/OS_String.cpp (strncpy, wcsncat_emulation): One more
+	  string function that needs to be available.  (See next entry.)
+
 Tue Dec 04 22:12:04 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS_String.h:

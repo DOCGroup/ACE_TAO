@@ -129,10 +129,8 @@ public:
   /// Appends part of a string to another string (char version).
   static char *strncat (char *s, const char *t, size_t len);
 
-#if defined (ACE_HAS_WCHAR)
   /// Appends part of a string to another string (wchar_t version).
-  static wchar_t *strncat (wchar_t *s, const wchar_t *t, size_t len);
-#endif /* ACE_HAS_WCHAR */
+  static ACE_WCHAR_T *strncat (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len);
 
   /// Compares two arrays (char version).
   static int strncmp (const char *s, const char *t, size_t len);
@@ -520,12 +518,12 @@ private:
   static size_t wcslen_emulation (const ACE_WCHAR_T *string);
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSLEN */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCAT)
+#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCAT)
   /// Emulated wcscat - Appends a string.
-  static wchar_t *wcsncat_emulation (wchar_t *destination,
-                                     const wchar_t *source,
-                                     size_t count);
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCAT */
+  static ACE_WCHAR_T *wcsncat_emulation (ACE_WCHAR_T *destination,
+                                         const ACE_WCHAR_T *source,
+                                         size_t count);
+#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCAT */
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCMP)
   /// Emulated wcsncmp - Compares two arrays.
