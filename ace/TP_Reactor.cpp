@@ -14,8 +14,9 @@ ACE_RCSID(ace, TP_Reactor, "$Id$")
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
-                                ACE_Timer_Queue *tq)
-  : ACE_Select_Reactor (sh, tq)
+                                ACE_Timer_Queue *tq,
+                                int mask_signals)
+  : ACE_Select_Reactor (sh, tq, 0, 0, mask_signals)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);
@@ -24,8 +25,9 @@ ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
 ACE_TP_Reactor::ACE_TP_Reactor (size_t size,
                                 int rs,
                                 ACE_Sig_Handler *sh,
-                                ACE_Timer_Queue *tq)
-  : ACE_Select_Reactor (size, rs, sh, tq)
+                                ACE_Timer_Queue *tq,
+                                int mask_signals)
+  : ACE_Select_Reactor (size, rs, sh, tq, 0, 0, mask_signals)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);
