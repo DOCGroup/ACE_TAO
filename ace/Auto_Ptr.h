@@ -21,9 +21,6 @@
 
 #include "ace/ACE.h"
 
-#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-	    (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
-
 template <class X>
 class ACE_Auto_Basic_Ptr 
   // = TITLE
@@ -55,6 +52,15 @@ protected:
   X *p_;
 };
 
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
+            (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+#include <memory>
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+using std::auto_ptr;
+#endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#else /* ACE_HAS_STANDARD_CPP_LIBRARY */
+
 template <class X>
 class auto_ptr : public ACE_Auto_Basic_Ptr <X>
   // = TITLE
@@ -67,12 +73,6 @@ public:
   X *operator-> () const;  
 };
 
-#else /* ACE_HAS_STANDARD_CPP_LIBRARY */
-#include <memory>
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-using std::auto_ptr;
-#endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
 template<class X>
