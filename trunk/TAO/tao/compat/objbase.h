@@ -10,7 +10,7 @@
 //    objbase.h
 //
 // = DESCRIPTION
-// 
+//
 //   This has "enough COM" to compile (on UNIX) a recent version of the
 //   IIOP engine code, which more or less uses COM as a source standard.
 //
@@ -60,8 +60,10 @@ typedef char TAO_IID [16];          // XXX actually a struct
 typedef const TAO_IID &TAO_REFIID;
 
 // #if !defined(INITGUID)
-// #  define TAO_DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
-//                       extern "C" const TAO_IID name
+#if 0 /* not used */
+#  define TAO_DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
+                      extern "C" const TAO_IID name
+#endif /* not used */
 // #else
 #  define TAO_DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
                       extern "C" const TAO_IID name = { 0 }
