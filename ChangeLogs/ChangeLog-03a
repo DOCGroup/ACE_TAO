@@ -1,3 +1,8 @@
+Sat Oct 19 09:19:10 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Timer_Queue_Test.cpp: Fixed warnings with G++.
+	  Thanks to Bala for reporting this.
+
 Fri Oct 18 22:07:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Only define ACE_HAS_ALLOCA for IBM
