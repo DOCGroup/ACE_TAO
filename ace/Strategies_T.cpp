@@ -469,8 +469,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
   this->recycling_strategy_ = 0;
 
   // Close down all cached service handlers.
-  CONNECTION_MAP::ENTRY *entry;
-  for (CONNECTION_MAP::ITERATOR iterator (connection_map_);
+  CONNECTION_MAP_ENTRY *entry;
+  for (CONNECTION_MAP_ITERATOR iterator (connection_map_);
        iterator.next (entry);
        iterator.advance ())
     {
@@ -558,7 +558,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
  int reuse_addr,
  int flags,
  int perms,
- CONNECTION_MAP::ENTRY *&entry,
+ CONNECTION_MAP_ENTRY *&entry,
  int &found)
 {
   ACE_UNUSED_ARG (remote_addr);
@@ -571,7 +571,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
   found = 0;
 
   // Get the recycling act for the svc_handler
-  CONNECTION_MAP::ENTRY *possible_entry = (CONNECTION_MAP::ENTRY *) sh->recycling_act ();
+  CONNECTION_MAP_ENTRY *possible_entry = (CONNECTION_MAP_ENTRY *) sh->recycling_act ();
 
   // Check to see if the hint svc_handler has been closed down
   if (possible_entry->ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED)
@@ -633,7 +633,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
  int reuse_addr,
  int flags,
  int perms,
- CONNECTION_MAP::ENTRY *&entry,
+ CONNECTION_MAP_ENTRY *&entry,
  int &found)
 {
   // Explicit type conversion
@@ -886,7 +886,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
  int perms,
  int& found)
 {
-  CONNECTION_MAP::ENTRY *entry = 0;
+  CONNECTION_MAP_ENTRY *entry = 0;
 
   // Check if the user passed a hint svc_handler
   if (sh != 0)
@@ -945,8 +945,8 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cache_i (const void *recycling_act)
 {
   // The wonders and perils of ACT
-  CONNECTION_MAP::ENTRY *entry =
-    ACE_static_cast (CONNECTION_MAP::ENTRY *, recycling_act);
+  CONNECTION_MAP_ENTRY *entry =
+    ACE_static_cast (CONNECTION_MAP_ENTRY *, recycling_act);
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
   // Therefore recyclable is IDLE.
@@ -973,8 +973,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::recycle_s
                                                                                         ACE_Recyclable_State new_state)
 {
   // The wonders and perils of ACT
-  CONNECTION_MAP::ENTRY *entry =
-    ACE_static_cast (CONNECTION_MAP::ENTRY *, recycling_act);
+  CONNECTION_MAP_ENTRY *entry =
+    ACE_static_cast (CONNECTION_MAP_ENTRY *, recycling_act);
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
   // Therefore recyclable is IDLE.
@@ -999,8 +999,8 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Recyclable_St
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::recycle_state_i (const void *recycling_act) const
 {
   // The wonders and perils of ACT
-  CONNECTION_MAP::ENTRY *entry =
-    ACE_static_cast (CONNECTION_MAP::ENTRY *, recycling_act);
+  CONNECTION_MAP_ENTRY *entry =
+    ACE_static_cast (CONNECTION_MAP_ENTRY *, recycling_act);
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
   // Therefore recyclable is IDLE.
@@ -1021,8 +1021,8 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::purge_i (const void *recycling_act)
 {
   // The wonders and perils of ACT
-  CONNECTION_MAP::ENTRY *entry =
-    ACE_static_cast (CONNECTION_MAP::ENTRY *, recycling_act);
+  CONNECTION_MAP_ENTRY *entry =
+    ACE_static_cast (CONNECTION_MAP_ENTRY *, recycling_act);
 
   return this->connection_map_.unbind (entry);
 }
@@ -1041,8 +1041,8 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::mark_as_closed_i (const void *recycling_act)
 {
   // The wonders and perils of ACT
-  CONNECTION_MAP::ENTRY *entry =
-    ACE_static_cast (CONNECTION_MAP::ENTRY *, recycling_act);
+  CONNECTION_MAP_ENTRY *entry =
+    ACE_static_cast (CONNECTION_MAP_ENTRY *, recycling_act);
 
   // Mark the <svc_handler> in the cache as CLOSED.
   entry->ext_id_.recycle_state (ACE_RECYCLABLE_CLOSED);
@@ -1072,8 +1072,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
     *act_holder = 0;
 
   // The wonders and perils of ACT
-  CONNECTION_MAP::ENTRY *entry =
-    ACE_static_cast, CONNECTION_MAP::ENTRY *, recycling_act);
+  CONNECTION_MAP_ENTRY *entry =
+    ACE_static_cast (CONNECTION_MAP_ENTRY *, recycling_act);
 
   // Decrement the refcount on the <svc_handler>.
   int refcount = entry->ext_id_.decrement ();
@@ -1112,7 +1112,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::concurren
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (
   REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
-  CONNECTION_MAP::ENTRY *&entry)
+  CONNECTION_MAP_ENTRY *&entry)
 {
   typedef ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
                                        SVC_HANDLER *,
