@@ -122,17 +122,51 @@ more output (try 10).
 </TD></TR>
 <TR>
 
+<TD><CODE>-ORBendpoint</CODE> <EM>endpoint</EM></TD> <TD><a
+name="-ORBendpoint"></a>Tells the ORB to listen for requests on the
+interface specified by <I><EM>endpoint</EM></I>.  Endpoints are
+specified using a URL style format.  An endpoint has the form:
+<blockquote><CODE>
+protocol://V.v@addr1,...,W.w@addrN
+</CODE></blockquote>
+where <CODE>V.v</CODE> and <CODE>W.w</CODE> are optional protcol versions for
+each address.  An example of an IIOP endpoint is:
+<blockquote><CODE>
+iiop://<I><EM>hostname</EM></I>:<I><EM>port</EM></I>
+</CODE></blockquote>
+Sets of endpoints may be specified using multiple <CODE>-ORBendpoint</CODE>
+options or by delimiting endpoints with a semi-colon (;).  For example,
+<blockquote><CODE>
+-ORBendpoint iiop://localhost:9999 -ORBendpoint uiop:///tmp/mylocalsock
+</CODE></blockquote>
+is equivalent to:
+<blockquote><CODE>
+-ORBendpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock'
+</CODE></blockquote>
+Notice the single quotes (') in the latter option specification.  Single
+quotes are needed to prevent the shell from interpreting text after the
+semi-colon as another command to run.
+</TD></TR>
+
+<TR>
+
 <TD><CODE>-ORBhost</CODE> <EM>hostname</EM></TD> <TD><a
 name="-ORBhost"></a>Tells the ORB to listen for requests on the
 interface associated with the host named
-<I><EM>hostname</EM></I>.</TD></TR>
+<I><EM>hostname</EM></I>.  This option is valid only for IIOP endpoints.<BR>  
+<STRONG>NOTE:</STRONG> This option has been superceded by the
+<CODE>-ORBendpoint</CODE> option. It will not be supported in the
+future.</TD></TR>
 
 <TR>
 
 <TD><CODE>-ORBport</CODE> <EM>portspec</EM></TD> <TD>Tells the ORB to
 listen for requests on the port specified by
 <I><EM>portspec</EM></I>. If not specified, the OS gets to choose a
-random empty port.</TD>
+random empty port.  This option is valid only for IIOP endpoints.<BR>  
+<STRONG>NOTE:</STRONG> This option has been superceded by the
+<CODE>-ORBendpoint</CODE> option. It will not be supported in the
+future.</TD>
 
 </TR>
 
@@ -166,12 +200,18 @@ If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
 <TD><CODE>-ORBcollocation</CODE> <EM>yes/no</EM></TD>
 <TD>Specifies the use of collocation object optimization.  Default is yes.</TD></TR>
 <TR>
-<TD><CODE>-ORBpreconnect</CODE> <EM>host</EM><STRONG>:</STRONG><EM>port</em>[<STRONG>,</STRONG><EM>host</EM><STRONG>:</STRONG><EM>port</em>...]</TD>
-<TD><A name="-ORBpreconnect"></a>Pre-establishes a blocking connection to each listed
-<em>host</em>:<em>port</em> combination.  If a connection cannot
-be established, a warning is announced and it continues with the
-next listed.  Listing the same combination multiple times will
-properly establish multiple connections to that endpoint.</TD></TR>
+<TD><CODE>-ORBpreconnect</CODE> <EM>endpoint</EM></TD>
+<TD><A name="-ORBpreconnect"></a>Pre-establishes a blocking connection to
+each listed <EM>endpoint</EM>. If a connection cannot be established the
+failed preconnection will be ignored and the next preconnection in the list
+will be processed.  Successful and unsuccessful preconnections will be
+displayed if a debugging level greater than or equal to one is specified by
+using the <CODE>-ORBdebuglevel</CODE> option.  Listing the same combination
+multiple times will properly establish multiple connections to that endpoint.
+The <CODE>-ORBpreconnect</CODE> option uses the same endpoint format as the
+<CODE>-ORBendpoint</CODE> option.  Specifying IIOP endpoints using a comma
+delimited list of <EM>host<STRONG>:</STRONG>port</EM> pairs is deprecated
+and will not be supported in the future.</TD></TR>
 <TR>
 <TD><CODE>-ORBcdrtradeoff</CODE> <EM>maxsize</EM></TD>
 <TD><A name="-ORBCDRtradeoff"></a>Control the strategy to tradeoff
