@@ -7,6 +7,11 @@ Wed Sep 16 11:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Makefile,run_tests.{bat,psosim,sh,vxworks}:
           added High_Res_Timer_Test.
 
+        * ace/OS.* (readPPCTimer): unlined readPPCTimer for
+          PowerPC.  If it was called more than once in a
+          compilation unit, when inlined, the assembler complained
+          about multiple definitions of the aclock symbol.
+
 Wed Sep 16 11:28:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: In
