@@ -183,18 +183,27 @@ TAO_GIOP_Reply_Status_Type
 TAO_GIOP_Utils::
   convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type)  
 {
+
   switch (corba_type)
     {
     case CORBA::NO_EXCEPTION:
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%N|%l) \n"));
       return TAO_GIOP_NO_EXCEPTION;
 
     case CORBA::SYSTEM_EXCEPTION:
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%N|%l) \n"));
       return TAO_GIOP_SYSTEM_EXCEPTION;
 
     case CORBA::USER_EXCEPTION:
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%N|%l) \n"));
       return TAO_GIOP_USER_EXCEPTION;
 
     default:
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%N|%l) \n"));
       // Don't know what to do here??
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }

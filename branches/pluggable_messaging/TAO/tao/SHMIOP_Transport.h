@@ -158,6 +158,9 @@ private:
   // The message_factor instance specific for this particular
   // transport protocol.
 
+  TAO_ORB_Core *orb_core_;
+  // Our ORB core
+
   CORBA::Boolean lite_flag_;
   // Are we using lite?
   

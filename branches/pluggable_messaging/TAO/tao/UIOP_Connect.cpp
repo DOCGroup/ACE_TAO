@@ -100,7 +100,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
   if (lite_flag_)
     {
       ACE_NEW (this->acceptor_factory_,
-               TAO_GIOP_Message_Lite);
+               TAO_GIOP_Message_Lite (orb_core));
     }
   else
     {
