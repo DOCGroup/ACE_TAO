@@ -1,3 +1,14 @@
+Tue Mar 04 19:58:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/FileCharStream.cpp (determine_encoding): Commented
+	  out the annoying debug information.  Users should get the
+	  encoding information from this->getEncoding(), instead of
+	  relying on the debug info.
+
+	* ACEXML/common/LocatorImpl.cpp (reset): Remember to reset string
+	  pointers to 0 after deleteing them.  Otherwise, a parser may
+	  crash if it is used to parse a second file.
+
 Tue Mar  4 17:39:31 2003  Steve Huston  <shuston@riverace.com>
 
         * docs/CE-status.txt: Updated to reflect the ACE 5.3 status of CE.
