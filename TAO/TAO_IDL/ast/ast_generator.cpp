@@ -722,11 +722,13 @@ AST_Generator::create_expr (unsigned long v)
 }
 
 AST_Expression *
-AST_Generator::create_expr (ACE_UINT64 v)
+AST_Generator::create_expr (ACE_UINT64 v,
+                            AST_Expression::ExprType t)
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (v),
+                  AST_Expression (v, 
+                                  t),
                   0);
 
   return retval;

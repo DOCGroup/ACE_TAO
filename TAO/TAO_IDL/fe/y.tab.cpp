@@ -3045,7 +3045,9 @@ case 152:
 {
 /*      | IDL_UINTEGER_LITERAL
 */
-          tao_yyval.exval = idl_global->gen ()->create_expr (tao_yyvsp[0].uival);
+          tao_yyval.exval = 
+            idl_global->gen ()->create_expr (tao_yyvsp[0].uival,
+                                             AST_Expression::EV_ulonglong);
         }
 break;
 case 153:

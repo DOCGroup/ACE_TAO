@@ -235,7 +235,8 @@ AST_Expression::AST_Expression (unsigned long ulv)
 }
 
 // An AST_Expression denoting an unsigned long integer.
-AST_Expression::AST_Expression (ACE_UINT64 ulv)
+AST_Expression::AST_Expression (ACE_UINT64 ulv,
+                                ExprType t)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -248,7 +249,7 @@ AST_Expression::AST_Expression (ACE_UINT64 ulv)
   ACE_NEW (this->pd_ev,
            AST_ExprValue);
 
-  this->pd_ev->et = EV_ulonglong;
+  this->pd_ev->et = t;
   this->pd_ev->u.ullval = ulv;
 }
 

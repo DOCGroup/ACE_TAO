@@ -1,3 +1,21 @@
+Wed Aug 13 16:33:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_generator.h:
+
+          Added AST_Expression::ExprType enum parameter to the AST_Expression
+          constructor taking an ACE_UINT64, to disambiguate it from the
+          constructor taking an unsigned long, on platforms where these
+          two types are the same.
+
 Wed Aug 13 15:22:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp (create_event_i):
