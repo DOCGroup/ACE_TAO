@@ -326,6 +326,9 @@ typedef unsigned __int64 ACE_UINT64;
         #include /**/ <afxwin.h>   /* He is doing MFC */
                 // Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
                 // #define      _INC_WINDOWS  // Prevent winsock.h from including windows.h
+#else if defined (ACE_HAS_WINCE)
+        #include <windows.h>
+        #include <wce.h>
 #endif
 
 #if !defined (_INC_WINDOWS)     /* Already include windows.h ? */

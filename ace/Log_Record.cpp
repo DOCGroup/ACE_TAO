@@ -184,10 +184,8 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
       if (log_window == 0)
         log_window = ACE_CE_Bridge::get_default_winbridge ();
 
-      CString *verbose_cstring = new CString (verbose_msg);
-
       // <verbose_cstring> will be deleted by <write_msg> function
-      log_window->write_msg (verbose_cstring);
+      log_window->write_msg (verbose_msg);
     }
 
   return result;
