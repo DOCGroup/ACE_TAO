@@ -34,7 +34,8 @@ public:
 	       int prot = PROT_RDWR, 
 	       int share = MAP_PRIVATE, 
 	       void *addr = 0, 
-	       off_t pos = 0);
+	       off_t pos = 0,
+               LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
 
@@ -45,7 +46,8 @@ public:
 	       int prot = PROT_RDWR, 
 	       int share = MAP_PRIVATE, 
 	       void *addr = 0, 
-	       off_t pos = 0);
+	       off_t pos = 0,
+               LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file specified by <file_name>.
 
   int map (ACE_HANDLE handle, 
@@ -53,7 +55,8 @@ public:
 	   int prot = PROT_RDWR, 
 	   int share = MAP_PRIVATE, 
 	   void *addr = 0,
-	   off_t pos = 0);
+	   off_t pos = 0,
+           LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
 
@@ -61,7 +64,8 @@ public:
 	   int prot = PROT_RDWR, 
 	   int share = MAP_PRIVATE, 
 	   void *addr = 0, 
-	   off_t pos = 0);
+	   off_t pos = 0,
+           LPSECURITY_ATTRIBUTES sa = 0);
   // Remap the file associated with <handle_>.
 
   int map (LPCTSTR filename,
@@ -71,7 +75,8 @@ public:
 	   int prot = PROT_RDWR, 
 	   int share = MAP_PRIVATE, 
 	   void *addr = 0, 
-	   off_t pos = 0);
+	   off_t pos = 0,
+           LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file specified by <filename>.
 
   ~ACE_Mem_Map (void);
@@ -79,7 +84,8 @@ public:
 
   int open (LPCTSTR filename,
 	    int flags = O_RDWR | O_CREAT, 
-	    int mode = ACE_DEFAULT_FILE_PERMS);
+	    int mode = ACE_DEFAULT_FILE_PERMS,
+            LPSECURITY_ATTRIBUTES sa = 0);
   // Open the file without mapping it.
 
   int close (void);
@@ -163,7 +169,8 @@ private:
 	      int prot = PROT_RDWR, 
 	      int share = MAP_SHARED, 
 	      void *addr = 0, 
-	      off_t pos = 0);
+	      off_t pos = 0,
+              LPSECURITY_ATTRIBUTES sa = 0);
   // This method does the dirty work of actually calling ::mmap to map
   // the file into memory.
 

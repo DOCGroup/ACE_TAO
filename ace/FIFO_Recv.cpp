@@ -38,16 +38,17 @@ int
 ACE_FIFO_Recv::open (const char *fifo_name,
 		     int flags,
 		     int perms,
-		     int persistent)
+		     int persistent,
+                     LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Recv::open");
 
-  if (ACE_FIFO::open (fifo_name, ACE_NONBLOCK | flags, perms) == -1)
+  if (ACE_FIFO::open (fifo_name, ACE_NONBLOCK | flags, perms, sa) == -1)
     return -1;
   else if (this->disable (ACE_NONBLOCK) == -1)
     return -1;
   else if (persistent 
-	   && (this->aux_handle_ = ACE_OS::open (fifo_name, O_WRONLY)) == ACE_INVALID_HANDLE)
+	   && (this->aux_handle_ = ACE_OS::open (fifo_name, O_WRONLY, 0, sa)) == ACE_INVALID_HANDLE)
     return -1;
   else
     return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
@@ -62,7 +63,8 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (void)
 ACE_FIFO_Recv::ACE_FIFO_Recv (const char *fifo_name,
 			      int flags,
 			      int perms,
-			      int persistent)
+			      int persistent,
+                              LPSECURITY_ATTRIBUTES sa)
   : aux_handle_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_FIFO_Recv::ACE_FIFO_Recv");
@@ -70,7 +72,8 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (const char *fifo_name,
   if (this->ACE_FIFO_Recv::open (fifo_name,
 				 flags,
 				 perms,
-				 persistent) == -1)
+				 persistent,
+                                 sa) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_FIFO_Recv"));
 }
 
