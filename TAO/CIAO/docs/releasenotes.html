@@ -20,22 +20,21 @@
 
   <tr>
     <td>CCM Core</td>
-    <td>We are currently working on a prototype that can install a
-        component remotely using the CCM
-        <code>ComponentInstallation</code> interface.  Since TAO_IDL
-        still doesn't generate component specific code yet, and we
+    <td>We are currently working on a prototype that enables remote
+        component installation using the CCM
+        <code>ComponentInstallation</code> interface.  Since we
         still don't have a CIDL implementation, we will also write up
         an example to show how the code should be generated in both
-        TAO_IDL and CIAO_CIDL compiler.</td>
+        CIAO_CIDL compiler and provide example component
+        implementations.</td>
   </tr>
 
   <tr>
     <td>TAO_IDL</td>
-    <td>
-        TAO_IDL front-end has been extended to handle the keyword
-        extension added by component model specification.  The next
-        stage will be to start implementing the code for backend code
-        generation.  Check out <a
+    <td>TAO_IDL has been extended to handle and generate all the
+        component related keyword but <code>import</code>.  Although
+        the generated code has not been tested extensively.
+        TAO_IDL Check out <a
         href="http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/releasenotes/index.html#idl"> TAO IDL compiler</a> for more details.
     </td>
   </tr>
@@ -43,10 +42,10 @@
   <tr>
     <td>CIAO_CIDL</td>
     <td>
-        CIAO_CIDL is still an unknown at this point.  We do not have
-        immediate plan to integrate Persistence State Service with
-        CIDL.  For starter, we will probably only support a simple
-        construct like the following:
+        We still have no solid schedule for implementing CIAO_CIDL at
+        this point and we do not have immediate plan to integrate
+        Persistence State Service with CIDL.  For starter, we will
+        probably only support a simple construct like the following:
 <pre>
         import ::some_idl_module;
 
@@ -195,7 +194,7 @@ certain release together.  All interfaces and types are under
 <hr>
 <address></address>
 <!-- hhmts start -->
-Last modified: Mon Aug 12 11:12:10 Central Daylight Time 2002
+Last modified: Thu Sep 19 16:52:41 Central Daylight Time 2002
 <!-- hhmts end -->
 <address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address>
 </body> </html>
