@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.76 $)dnl
+AC_REVISION($Revision 0.77 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -43,6 +43,10 @@ AC_PREREQ(2.13)dnl
 
 dnl Add maintainer mode option to the option list.
 AM_MAINTAINER_MODE
+
+dnl The maintainer of this configure script.
+ACE_CONFIGURE_MAINTAINER='Ossama Othman <ossama@ece.uci.edu>'
+
 
 dnl Until autoconf support in ACE is complete, prevent this script
 dnl from running unless the user explictly forces the configure script
@@ -113,6 +117,9 @@ AC_PROG_CC_C_O
 dnl Check the C++ compiler and preprocessor.
 AC_PROG_CXX
 AC_PROG_CXXCPP
+
+dnl Set the test language as C++
+AC_LANG_CPLUSPLUS
 
 dnl If we are cross compiling disable certain things in the Makefiles.
 AM_CONDITIONAL(ACE_CROSS_COMPILED, test X$cross_compiling = Xyes)dnl
@@ -185,10 +192,6 @@ AC_CHECK_PROG(GPERF, gperf, gperf)dnl
 dnl Check for profiling progam
 AC_CHECK_PROGS(PROF, gprof prof,)dnl
 
-
-dnl Set the test language as C++
-AC_LANG_CPLUSPLUS
-
 dnl The user's/default C++ flags are stored in "CXXFLAGS."  We use
 dnl the variable "ACE_CXXFLAGS" to set the C++ flags we want.  At the end
 dnl of the configuration process we combine ACE_CXXFLAGS and CXXFLAGS
@@ -207,564 +210,13 @@ dnl Determine which subsets to build
 dnl This is done using the autoconf "--enable-foobar" mechanism.
 ACE_CHECK_SUBSETS
 
-AC_ARG_ENABLE(debug,
-              [  --enable-debug          enable debugging                [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  ACE_CXXFLAGS="$ACE_CXXFLAGS $DCXXFLAGS"
-                  ;;
-                no)
-                  AC_DEFINE(ACE_NDEBUG)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-debug)
-                  ;;
-               esac
-              ],)
+dnl Add --{enable,disable,with,without}-feature options.
+ACE_CONFIGURATION_OPTIONS
+ACE_COMPILATION_OPTIONS
 
-AC_ARG_ENABLE(exceptions,
-              [  --enable-exceptions     enable C++ exception handling   [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  ace_user_enable_exceptions=yes
-                  ;;
-                no)
-                  ace_user_enable_exceptions=no
-                  if test -n "$GXX"; then
-dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
-changequote(, )dnl
-                    if g++ --version | egrep -v '^2\.[0-7]' > /dev/null; then
-changequote([, ])dnl
-                      ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-exceptions"
-                    fi
-                  fi
-                  if test -n "$GCC"; then
-dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
-changequote(, )dnl
-                    if gcc --version | egrep -v '^2\.[0-7]' > /dev/null; then
-changequote([, ])dnl
-                      ACE_CFLAGS="$ACE_CFLAGS -fno-exceptions" 
-                    fi
-                  fi
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-exceptions)
-                  ;;
-               esac
-              ],
-              [
-               ace_user_enable_exceptions=no
-              ])
+dnl Configure the TAO directory if it exists.
+dnl TAO_CONFIGURATION_OPTIONS
 
-
-AC_ARG_ENABLE(fast,
-              [  --enable-fast           enable -fast flag, e.g. Sun C++ [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  ACE_CXXFLAGS="$ACE_CXXFLAGS -fast"
-                  ACE_CFLAGS="$ACE_CFLAGS -fast"
-                  ;;
-                no)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-fast)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(inline,
-              [  --enable-inline         enable code inlining            [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_DEFINE(__ACE_INLINE__)
-                  ;;
-                no)
-                  AC_DEFINE(ACE_NO_INLINE)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-inline)
-                  ;;
-               esac
-              ],
-              [
-               AC_DEFINE(__ACE_INLINE__)
-              ])
-
-AC_ARG_ENABLE(log-msg-prop,
-              [  --enable-log-msg-prop   enable threads inheriting
-                          ACE_Log_Msg properties from parent
-                          thread                          [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  dnl nothing to do
-                  ;;
-                no)
-                  AC_DEFINE(ACE_THREADS_DONT_INHERIT_LOG_MSG)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-log-msg-prop)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(logging,
-              [  --enable-logging        enable ACE logging macros       [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  dnl nothing to do
-                  ;;
-                no)
-                  AC_DEFINE(ACE_NLOGGING)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-logging)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(malloc-stats,
-              [  --enable-malloc-stats   enable malloc statistics
-                          collection                      [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_DEFINE(ACE_HAS_MALLOC_STATS)
-                  ;;
-                no)
-                  dnl nothing to do
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-malloc-stats)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(optimize,
-              [  --enable-optimize       enable additional optimizations [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  ace_user_enable_optimize=yes
-                  ;;
-                no)
-                  AC_MSG_WARN(Optimization configure support not fully implemented yet.)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-optimize)
-                  ;;
-               esac
-              ],
-              [
-               ace_user_enable_optimize=yes
-              ])
-
-AC_ARG_ENABLE(pi-malloc,
-              [  --enable-pi-malloc      enable position indep. malloc   [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_DEFINE(ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-                  ;;
-                no)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-pi-malloc)
-                  ;;
-               esac
-              ],
-              [
-               AC_DEFINE(ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-              ])
-
-AC_ARG_ENABLE(probe,
-              [  --enable-probe          enable ACE_Timeprobes           [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_DEFINE(ACE_COMPILE_TIMEPROBES)
-                  ;;
-                no)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-probe)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(profile,
-              [  --enable-profile        enable profiling                [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  if test -z "$PROF"; then
-                    AC_MSG_WARN(No profiling program found.  Assuming 'prof' exists)
-                    ACE_CXXFLAGS="$ACE_CXXFLAGS -p"
-                    ACE_CFLAGS="$ACE_CFLAGS -p"
-                  else
-                    case "$PROF" in
-                    gprof)
-                      echo "Building with 'gprof' support"
-                      ACE_CXXFLAGS="$ACE_CXXFLAGS -pg"
-                      ACE_CFLAGS="$ACE_CFLAGS -pg"
-                      ;;
-                    prof)
-                      echo "Building with 'prof' support"
-                      ACE_CXXFLAGS="$ACE_CXXFLAGS -p"
-                      ACE_CFLAGS="$ACE_CFLAGS -p"
-                      ;;
-                    *)
-                      dnl We shouldn't get here.
-                      AC_MSG_WARN(Assuming 'prof' exists)
-                      ACE_CXXFLAGS="$ACE_CXXFLAGS -p"
-                      ACE_CFLAGS="$ACE_CFLAGS -p"
-                      ;;
-                    esac
-                  fi
-                  ;;
-                no)
-                  dnl Do nothing
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-profile)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(purify,
-              [  --enable-purify         Purify all executables          [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_CHECK_PROG(PURIFY, purify, purify,)
-                  if test -n "$PURIFY"; then
-                    PURE_CACHE_BASE_DIR=/tmp/purifycache
-                    PURE_CACHE_DIR="${PURE_CACHE_BASE_DIR}-${LOGNAME}"
-                    PURE_CACHE_DIR="${PURE_CACHE_DIR}-"`basename $CXX`
-                    PURELINK="$PURIFY -best-effort -chain-length=20 -cache-dir=$PURE_CACHE_DIR -fds-inuse-at-exit=no -inuse-at-exit -max_threads=100"
-                    dnl Pick up Quantify directory from the users PATH.
-		    ACE_PURIFY_DIR=`type purify | sed -e 's/.* is //' -e 's%/purify'`
-                    ACE_CPPFLAGS="-DACE_HAS_PURIFY -I$ACE_PURIFY_DIR"
-                  else
-                    AC_MSG_WARN(Purify program was not found.)
-                    AC_MSG_WARN(Disabling purify support.)
-                  fi
-                  ;;
-                no)
-                  PURELINK=""
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-purify)
-                  ;;
-               esac
-              ], PURELINK="")
-
-AC_ARG_ENABLE(quantify,
-              [  --enable-quantify       Quantify all executables        [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_CHECK_PROG(QUANTIFY, quantify, quantify,)
-                  if test -n "$QUANTIFY"; then
-                    PURE_CACHE_BASE_DIR=/tmp/purifycache
-                    PURE_CACHE_DIR="${PURE_CACHE_BASE_DIR}-${LOGNAME}"
-                    PURE_CACHE_DIR="${PURE_CACHE_DIR}-"`basename $CXX`
-
-                    PRELINK="$QUANTIFY -best-effort -max_threads=100 -cache-dir=$PURE_CACHE_DIR"
-                    dnl Pick up Quantify directory from the users PATH.
-		    ACE_QUANTIFY_DIR=`type quantify | sed -e 's/.* is //' -e 's%/quantify$$%%'`
-                    ACE_CPPFLAGS="-DACE_HAS_QUANTIFY -I$ACE_QUANTIFY_DIR"
-                  else
-                    AC_MSG_WARN(Quantify program was not found.)
-                    AC_MSG_WARN(Disabling quantify support.)
-                  fi
-                  ;;
-                no)
-                  PRELINK=""
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-quantify)
-                  ;;
-               esac
-              ], PRELINK="")
-
-AC_ARG_ENABLE(reentrant,
-              [  --enable-reentrant      enable reentrant functions      [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  ace_user_enable_reentrant_funcs=yes
-                  ;;
-                no)
-                  ace_user_enable_reentrant_funcs=no
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-reentrant)
-                  ;;
-               esac
-              ],
-              [
-               ace_user_enable_reentrant_funcs=yes
-              ])
-
-
-AC_ARG_ENABLE(repo,
-              [  --enable-repo           use GNU template repository
-                          GNU C++ with repo patches and
-                          EGCS only                       [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  if test -n "$GXX"; then
-                    ace_user_enable_repo=yes
-                    ACE_CXXFLAGS="$ACE_CXXFLAGS -frepo"
-                    AC_DEFINE(ACE_HAS_GNU_REPO)
-                  else
-                    ace_user_enable_repo=no
-                    AC_MSG_WARN(Not using GNU C++! GNU template respository disabled)
-                  fi
-                  ;;
-                no)
-                  ace_user_enable_repo=no
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-repo)
-                  ;;
-               esac
-              ],
-              [
-               ace_user_enable_repo=no
-              ])
-
-AC_ARG_ENABLE(rtti,
-              [  --enable-rtti           enable run-time type
-                          identification
-                          *Currently only for Sun C++     [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  if test -z "$GXX"; then
-                    case "$target" in
-                      *solaris*)
-                           ace_user_enable_rtti=yes
-                           ;;
-                      *)
-                           ;;
-                    esac
-                  else
-                    AC_MSG_WARN(Not using Sun C++. RTTI will not be enabled.)
-                  fi
-                  ;;
-                no)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-rtti)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(static-obj-mgr,
-              [  --enable-static-obj-mgr enable static Object_Manager    [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  dnl nothing to do
-                  ;;
-                no)
-                  AC_DEFINE(ACE_HAS_NONSTATIC_OBJECT_MANAGER)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-static-obj-mgr)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(threads,
-              [  --enable-threads        enable thread support           [default=yes]],
-              [
-               case "${enableval}" in
-                yes)
-                  ace_user_enable_threads=yes
-                  ;;
-                no)
-                  ace_user_enable_threads=no
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-threads)
-                  ;;
-               esac
-              ],
-              [
-                ace_user_enable_threads=yes
-              ])
-
-
-AC_ARG_ENABLE(verb-not-sup,
-              [  --enable-verb-not-sup   enable verbose ENOTSUP reports  [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_DEFINE(ACE_HAS_VERBOSE_NOTSUP)
-                  ;;
-                no)
-                  dnl Do nothing
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-verb-not-sup)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(trace,
-              [  --enable-trace          enable ACE tracing              [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  ;;
-                no)
-                  AC_DEFINE(ACE_NTRACE)
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-trace)
-                  ;;
-               esac
-              ],
-              [
-               AC_DEFINE(ACE_NTRACE)
-              ])
-
-AC_ARG_ENABLE(xt-reactor,
-              [  --enable-xt-reactor     build support for the XtReactor [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_PATH_XTRA
-dnl Here, if X isn't found or the user sets "--without-x" on the command
-dnl line, then "no_x" is set to "yes."
-                  if test "$no_x" != yes; then
-                    ACE_XLIBS="-lX11 -lXt"
-                    ace_user_enable_xt_reactor=yes
-                  else
-                    ACE_XLIBS=""
-                    ace_user_enable_xt_reactor=no
-                    AC_MSG_WARN(X was not found or it was disabled.)
-                    AC_MSG_WARN(ACE_XtReactor will not be enabled.)
-                  fi
-                  ;;
-                no)
-                  ACE_XLIBS=""
-                  ace_user_enable_xt_reactor=no
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-xt-reactor)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_ENABLE(fl-reactor,
-              [  --enable-fl-reactor     build support for the FlReactor [default=no]],
-              [
-               case "${enableval}" in
-                yes)
-                  AC_MSG_ERROR(--enable-fl-reactor currently unimplemented)
-                  ace_user_enable_fl_reactor=yes
-                  ;;
-                no)
-                  AC_MSG_ERROR(--enable-fl-reactor currently unimplemented)
-                  ace_user_enable_fl_reactor=no
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${enableval} for --enable-fl-reactor)
-                  ;;
-               esac
-              ],)
-
-AC_ARG_WITH(gperf,
-              [  --with-gperf            compile the gperf program       [default=yes]],
-              [
-               case "${withval}" in
-                yes)
-                  ace_user_with_gperf=yes
-                  AC_DEFINE(ACE_HAS_GPERF)
-                  if test -n "$GPERF"; then
-                    AC_MSG_WARN(gperf program already exists)
-                    AC_MSG_WARN(existing gperf may be overwritten during installation)
-                  fi
-                  ;;
-                no)
-                  ace_user_with_gperf=no
-                  ;;
-                *)
-                  AC_MSG_ERROR(bad value ${withval} for --with-gperf)
-                  ;;
-               esac
-              ],
-              [
-               ace_user_with_gperf=yes
-               AC_DEFINE(ACE_HAS_GPERF)
-               if test -n "$GPERF"; then
-                 AC_MSG_WARN(gperf program already exists)
-                 AC_MSG_WARN(existing gperf may be overwritten during installation)
-               fi
-              ])
-AM_CONDITIONAL(COMPILE_GPERF, test X$ace_user_with_gperf = Xyes)
-
-AC_ARG_WITH(orbix,
-              [  --with-orbix[=DIR]      compile ACE with Orbix          [default=no]],
-              [
-               case "${withval}" in
-                yes)
-                  AC_MSG_WARN(Orbix configure support not implemented yet.)
-                  ;;
-                no)
-                  ;;
-                *)
-                  AC_MSG_WARN(Orbix configure support not implemented yet.)
-                  ;;
-               esac
-              ],)
-
-#AC_ARG_WITH(tao,
-#              [  --with-tao              build TAO (the ACE ORB)         [default=yes]],
-#              [
-#               case "${withval}" in
-#                yes)
-#                  ace_user_with_tao=yes
-#                  ;;
-#                no)
-#                  ;;
-#                *)
-#                  AC_MSG_ERROR(bad value ${withval} for --with-tao)
-#                  ;;
-#               esac
-#              ],
-#              [
-#               ace_user_with_tao=yes
-#              ])
-
-AC_ARG_WITH(tli-device,
-              [  --with-tli-device[=DEV] device for TCP on TLI           [default=/dev/tcp]],
-              [
-               case "${withval}" in
-                yes)
-                  AC_MSG_ERROR(Specify the TLI/TCP device if you use this option.)
-                  ;;
-                no)
-                  ;;
-                *)
-                  if test -e "${withval}"; then
-                    AC_DEFINE_UNQUOTED(ACE_TLI_TCP_DEVICE, "${withval}")
-                  else
-                    AC_MSG_ERROR(TLI/TCP device ${withval} does not exist.)
-                  fi
-                  ;;
-               esac
-              ],)
 
 # Autoconf's AC_OBJEXT and AC_EXEEXT macros only works for C compilers!
 # Libtool's setup macro calls AC_OBJEXT and AC_EXEEXT without setting
@@ -928,8 +380,6 @@ dnl Temporary hack until I get integrate libtool's new tag support
 dnl into automake.
 dnl This hack forces libtool to always use the C++ tag.
 LIBTOOL="$LIBTOOL --tag=CXX"
-
-dnl CC="$save_CC"
 
 dnl Check for sched_yield() in posix4 library.
 dnl Some platforms, such as Solaris, may define sched_yield() there.
@@ -2967,67 +2417,13 @@ ACE_CACHE_CHECK(if const char * can be rvalue in conditional operator,
                   ])
   ], , AC_DEFINE(ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS))
 
-dnl Check if platform supports explicit template instantiation
-ACE_CACHE_CHECK(for explicit template instantiation,
-  ace_cv_feature_explicit_template_instantiation,[
-    AC_TRY_LINK([
-                 template <class T>
-                 class Foo
-                 {
-                 public:
-                   Foo(T bar) : bar_(bar) {};
-                 private:
-                   T bar_;
-                 };
-
-                 template class Foo<int>;
-                ],
-                [
-                 Foo<int> foo(11);
-                ],
-                [
-                 ace_cv_feature_explicit_template_instantiation=yes
-                ],
-                [
-                 ace_cv_feature_explicit_template_instantiation=no
-                ])
-  ],
-  [
-   AC_DEFINE(ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  ],
-  [
-   ACE_CACHE_CHECK(for pragma template instantiation,
-     ace_cv_feature_pragma_template_instantiation,[
-       AC_TRY_COMPILE([
-                       template <class T>
-                       class Foo
-                       {
-                       public:
-                         Foo(T bar) : bar_(bar) {};
-                       private:
-                         T bar_;
-                       };
-#pragma instantiate Foo<int>;
-                      ],
-                      [
-                       Foo<int> foo(11);
-                      ],
-                      [
-                       ace_cv_feature_pragma_template_instantiation=yes
-                      ],
-                      [
-                       ace_cv_feature_pragma_template_instantiation=no
-                      ])
-     ], AC_DEFINE(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA),)
-  ])
-
 dnl Check if templates require source on platform
 dnl FIXME:  This test may be broken.
 ACE_CACHE_CHECK(if templates require source,
   ace_cv_feature_templates_require_source,
   [
    dnl Create the common header file
-   cat > conftest.h <<EOF
+   cat > ace_test.h <<EOF
 #ifndef FOO_H
 #define FOO_H
 template <class T>
@@ -3038,81 +2434,487 @@ class Foo
  private:
    T value_;
 };
+
+template <class T>
+class Bar
+{
+ public:
+   Bar (Foo<T> *);
+ private:
+   Foo<T> *foo_ptr;
+};
 #endif /* FOO_H */
 EOF
 
-   dnl Create template source test file 1
-   cat > conftest.$ac_ext <<EOF
-#include "conftest.h"
+   dnl Create template source test file
+   cat > ace_test.$ac_ext <<EOF
+#include "ace_test.h"
 #ifndef FOO_CXX
 #define FOO_CXX
 template <class T>
 Foo<T>::Foo (T val)
+  : value_ (val)
 {
- value_ = val;
+ // Nothing else to do.
+}
+
+template <class T>
+Bar<T>::Bar (Foo<T> *val)
+  : foo_ptr (val)
+{
+ // Nothing else to do.
 }
 #endif /* FOO_CXX */
 EOF
 
-   dnl Create the Main test file
-   cat > conftestMain.$ac_ext <<EOF
-#include "conftest.h"
-int main (int, char **)
-{
- Foo<int> foo (15);
+   dnl Add the ACE-specific compiler flags to the compiler flags for
+   dnl the duration of this test.
+   ace_cxx_template_save_CXXFLAGS="$CXXFLAGS"
+   ace_cxx_template_save_CPPFLAGS="$CPPFLAGS"
+   ace_cxx_template_save_LDFLAGS="$LDFLAGS"
+   CXXFLAGS="$ACE_CXXFLAGS $CXXFLAGS"
+   CPPFLAGS="$ACE_CPPFLAGS $CPPFLAGS"
+   LDFLAGS="$ACE_LDFLAGS $LDFLAGS"
 
- return 0;
-}
-EOF
+   dnl Remove any template repositories.
+   rm -rf Templates.DB SunWS_cache ptrepository *.rpo
 
-   ace_save_ac_link="$ac_link"
+   dnl First try without explicit template instantiation.
+   AC_TRY_LINK([
+#include "ace_test.h"
+     ],
+     [
+Foo<int> foo (15);
+Bar<char> bar (0);
+     ],
+     [
+      dnl Template source is not required.
+      ace_cv_feature_templates_require_source=no
 
-   dnl Command to link two C++ files
-   ac_link='${CXX-g++} -o conftest${ac_exeext} conftestMain.$ac_ext 1>&AC_FD_CC'
+      dnl Template source does not require pragma.
+      AC_CACHE_VAL([ace_cv_feature_templates_require_pragma],
+                   [ace_cv_feature_templates_require_pragma=no])
 
-   dnl Now try to link them
-   if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext}; then
-     rm -rf conftest*
-     dnl Restore the original link variable NOW, not later.
-     ac_link="$ace_save_ac_link"
+      dnl Explicit template instantiation is not required.
+      AC_CACHE_VAL([ace_cv_feature_explicit_template_instantiation],
+                   [ace_cv_feature_explicit_template_instantiation=no])
 
-     dnl Template source is not required.
-     ace_cv_feature_templates_require_source=no
-   else
-     dnl Now try including the template source.
-     cat >> conftestMain.$ac_ext <<EOF
+      dnl Pragma template instantiation is not required.
+      AC_CACHE_VAL([ace_cv_feature_pragma_template_instantiation],
+                   [ace_cv_feature_pragma_template_instantiation=no])
+     ],
+     [
+      dnl Remove any template repositories.
+      rm -rf Templates.DB SunWS_cache ptrepository *.rpo
 
-#include "conftest.$ac_ext"
-EOF
+      dnl Now try including the template source.
+      AC_TRY_LINK([
+#include "ace_test.h"
+#include "ace_test.$ac_ext"
+        ],
+        [
+Foo<int> foo (15);
 
-     if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext}; then
-       rm -rf conftest*
-       dnl Restore the original link variable NOW not later
-       ac_link="$ace_save_ac_link"
+Bar<char> bar (0);
+        ],
+        [
+         dnl Template source is required!
+         ace_cv_feature_templates_require_source=yes
 
-       dnl Template source is required!
-       ace_cv_feature_templates_require_source=yes
-     else
-       dnl if we get here, then we have no idea what is needed!
-       echo "configure: failed program was:" >&AC_FD_CC
-       echo "conftest.h:" >&AC_FD_CC
-       cat conftest.h >&AC_FD_CC
-       echo "conftest.$ac_ext:" >&AC_FD_CC
-       cat conftest.$ac_ext >&AC_FD_CC
-       echo "conftestMain.$ac_ext:" >&AC_FD_CC
-       cat conftestMain.$ac_ext >&AC_FD_CC
-       rm -rf conftest*
-       dnl Restore the original link variable NOW not later
-       ac_link="$ace_save_ac_link"
+         dnl Template source does not require pragma.
+         AC_CACHE_VAL([ace_cv_feature_templates_require_pragma],
+                      [ace_cv_feature_templates_require_pragma=no])
 
-       ace_cv_feature_templates_require_source=no
-     fi
-   fi
-   rm -f conftest*
+         dnl Explicit template instantiation is not required.
+         AC_CACHE_VAL([ace_cv_feature_explicit_template_instantiation],
+                      [ace_cv_feature_explicit_template_instantiation=no])
+
+         dnl Pragma template instantiation is not required.
+         AC_CACHE_VAL([ace_cv_feature_pragma_template_instantiation],
+                      [ace_cv_feature_pragma_template_instantiation=no])
+        ],
+        [
+dnl BEGIN OUTER REQUIRE SOURCE #########################################
+         dnl Remove any generated template repositories.
+         rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+         dnl Now try with explicit template instantiation.
+         AC_TRY_LINK([
+#include "ace_test.h"
+
+template class Foo<int>;
+template class Bar<char>;
+           ],
+           [
+Foo<int> foo (15);
+Bar<char> bar (0);
+           ],
+           [
+            dnl Template source is not required.
+            ace_cv_feature_templates_require_source=no
+
+            dnl Template source does not require pragma.
+            AC_CACHE_VAL([ace_cv_feature_templates_require_pragma],
+                         [ace_cv_feature_templates_require_pragma=no])
+
+            dnl Explicit template instantiation is required.
+            AC_CACHE_VAL([ace_cv_feature_explicit_template_instantiation],
+                         [ace_cv_feature_explicit_template_instantiation=yes])
+
+            dnl Pragma template instantiation is not required.
+            AC_CACHE_VAL([ace_cv_feature_pragma_template_instantiation],
+                         [ace_cv_feature_pragma_template_instantiation=no])
+           ],
+           [
+            dnl Remove any generated template repositories.
+            rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+            dnl Don't set
+            dnl ace_cv_feature_pragma_template_instantiation
+            dnl to "no" here.  It should only be set to "no" if
+            dnl explicit template instantiation works.
+
+            dnl Now try including the template source.
+            AC_TRY_LINK([
+#include "ace_test.h"
+#include "ace_test.$ac_ext"
+
+template class Foo<int>;
+template class Bar<char>;
+              ],
+              [
+Foo<int> foo (15);
+Bar<char> bar (0);
+              ],
+              [
+               dnl Template source is required!
+               ace_cv_feature_templates_require_source=yes
+
+               dnl Template source does not require pragma.
+               AC_CACHE_VAL([ace_cv_feature_templates_require_pragma],
+                   [ace_cv_feature_templates_require_pragma=no])
+
+               dnl Explicit template instantiation is required.
+               AC_CACHE_VAL(
+                 [ace_cv_feature_explicit_template_instantiation],
+                 [ace_cv_feature_explicit_template_instantiation=yes])
+
+               dnl Pragma template instantiation is not required.
+               AC_CACHE_VAL(
+                 [ace_cv_feature_pragma_template_instantiation],
+                 [ace_cv_feature_pragma_template_instantiation=no])
+              ],
+              [
+dnl BEGIN INNER REQUIRE SOURCE #########################################
+               dnl Remove any generated template repositories.
+               rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+               dnl Don't set
+               dnl ace_cv_feature_explicit_template_instantiation
+               dnl to "no" here.  It should only be set to "no" if
+               dnl pragma template instantiation works.
+
+               dnl Now try with pragma template instantiation.
+               AC_TRY_LINK([
+#include "ace_test.h"
+
+#pragma instantiate Foo<int>
+#pragma instantiate Bar<char>
+                 ],
+                 [
+Foo<int> foo (15);
+Bar<char> bar (0);
+                 ],
+                 [
+                  dnl Template source is not required.
+                  ace_cv_feature_templates_require_source=no
+
+                  dnl Template source does not require pragma.
+                  AC_CACHE_VAL(
+                    [ace_cv_feature_templates_require_pragma],
+                    [ace_cv_feature_templates_require_pragma=no])
+
+                  dnl Explicit template instantiation is not required.
+                  AC_CACHE_VAL(
+                    [ace_cv_feature_explicit_template_instantiation],
+                    [ace_cv_feature_explicit_template_instantiation=no])
+
+                  dnl Pragma template instantiation is required.
+                  AC_CACHE_VAL(
+                    [ace_cv_feature_pragma_template_instantiation],
+                    [ace_cv_feature_pragma_template_instantiation=yes])
+                 ],
+                 [
+                  dnl Remove any generated template repositories.
+                  rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+                  dnl Don't set
+                  dnl ace_cv_feature_explicit_template_instantiation
+                  dnl to "no" here.  It should only be set to "no" if
+                  dnl pragma template instantiation works.
+
+                  dnl Now try including the template source.
+                  AC_TRY_LINK([
+#include "ace_test.h"
+#include "ace_test.$ac_ext"
+
+#pragma instantiate Foo<int>
+#pragma instantiate Bar<char>
+                    ],
+                    [
+Foo<int> foo (15);
+Bar<char> bar (0);
+                    ],
+                    [
+                     dnl Template source is required!
+                     ace_cv_feature_templates_require_source=yes
+
+                     dnl Template source does not require pragma.
+                     AC_CACHE_VAL(
+                       [ace_cv_feature_templates_require_pragma],
+                       [ace_cv_feature_templates_require_pragma=no])
+
+                     dnl Explicit template instantiation is not required.
+                     AC_CACHE_VAL(
+                       [ace_cv_feature_explicit_template_instantiation],
+                       [ace_cv_feature_explicit_template_instantiation=no])
+
+                     dnl Pragma template instantiation is required.
+                     AC_CACHE_VAL(
+                       [ace_cv_feature_pragma_template_instantiation],
+                       [ace_cv_feature_pragma_template_instantiation=yes])
+                    ],
+                    [
+                     dnl If we get here, then we have no idea what is needed!
+                     ace_cv_feature_templates_require_source=no
+                    ])
+                 ])
+dnl END INNER REQUIRE SOURCE #########################################
+              ])
+          ])
+dnl END OUTER REQUIRE SOURCE #########################################
+        ])
+     ])
+
+   dnl Remove any generated template repositories.
+   rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+   dnl Remove the test additional test files.
+   rm -f ace_test*
+
+   dnl Restore the compiler flags
+   CXXFLAGS="$ace_cxx_template_save_CXXFLAGS"
+   CPPFLAGS="$ace_cxx_template_save_CPPFLAGS"
+   LDFLAGS="$ace_cxx_template_save_LDFLAGS"
   ],
   [
    AC_DEFINE(ACE_TEMPLATES_REQUIRE_SOURCE)
-  ],)
+  ],
+  [
+   dnl Check if templates require pragma.
+   ACE_CACHE_CHECK([if templates require pragma],
+     [ace_cv_feature_templates_require_pragma],
+     [
+      dnl Create the common header file
+      cat > ace_test.h <<EOF
+#ifndef FOO_H
+#define FOO_H
+template <class T>
+class Foo
+{
+ public:
+   Foo (T val);
+ private:
+   T value_;
+};
+
+template <class T>
+class Bar
+{
+ public:
+   Bar (Foo<T> *);
+ private:
+   Foo<T> *foo_ptr;
+};
+#endif /* FOO_H */
+EOF
+
+      dnl Create template source test file
+      cat > ace_test.$ac_ext <<EOF
+#include "ace_test.h"
+#ifndef FOO_CXX
+#define FOO_CXX
+template <class T>
+Foo<T>::Foo (T val)
+  : value_ (val)
+{
+ // Nothing else to do.
+}
+
+template <class T>
+Bar<T>::Bar (Foo<T> *val)
+  : foo_ptr (val)
+{
+ // Nothing else to do.
+}
+#endif /* FOO_CXX */
+EOF
+
+      dnl Add the ACE-specific compiler flags to the compiler flags for
+      dnl the duration of this test.
+      ace_cxx_template_save_CXXFLAGS="$CXXFLAGS"
+      ace_cxx_template_save_CPPFLAGS="$CPPFLAGS"
+      ace_cxx_template_save_LDFLAGS="$LDFLAGS"
+      CXXFLAGS="$ACE_CXXFLAGS $CXXFLAGS"
+      CPPFLAGS="$ACE_CPPFLAGS $CPPFLAGS"
+      LDFLAGS="$ACE_LDFLAGS $LDFLAGS"
+
+      dnl Remove any template repositories.
+      rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+      dnl We already know that the simplest case doesn't work so go
+      dnl straight to the "require pragma" test.
+
+      dnl Now try including the template pragma.
+      AC_TRY_LINK([
+#include "ace_test.h"
+
+#pragma implementation ("ace_test.$ac_ext")
+        ],
+        [
+Foo<int> foo (15);
+Bar<char> bar (0);
+        ],
+        [
+         dnl Template source is required!
+         ace_cv_feature_templates_require_pragma=yes
+        ],
+        [
+dnl BEGIN OUTER REQUIRE PRAGMA #########################################
+         dnl Remove any generated template repositories.
+         rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+         dnl Now try with explicit template instantiation.
+         AC_TRY_LINK([
+#include "ace_test.h"
+
+#pragma implementation ("ace_test.$ac_ext")
+
+template class Foo<int>;
+template class Bar<char>;
+           ],
+           [
+Foo<int> foo (15);
+Bar<char> bar (0);
+           ],
+           [
+            dnl Template pragma is required!
+            ace_cv_feature_templates_require_pragma=yes
+
+            dnl Explicit template instantiation is required.
+            AC_CACHE_VAL(
+              [ace_cv_feature_explicit_template_instantiation],
+              [ace_cv_feature_explicit_template_instantiation=yes])
+
+            dnl Pragma template instantiation is not required.
+            AC_CACHE_VAL(
+              [ace_cv_feature_pragma_template_instantiation],
+              [ace_cv_feature_pragma_template_instantiation=no])
+           ],
+           [
+dnl BEGIN INNER REQUIRE PRAGMA #########################################
+            dnl Remove any generated template repositories.
+            rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+            dnl Now try with pragma template instantiation.
+            AC_TRY_LINK([
+#include "ace_test.h"
+
+#pragma implementation ("ace_test.$ac_ext")
+
+#pragma instantiate Foo<int>
+#pragma instantiate Bar<char>
+              ],
+              [
+Foo<int> foo (15);
+Bar<char> bar (0);
+              ],
+              [
+               dnl Template pragma is required!
+               ace_cv_feature_templates_require_pragma=yes
+
+               dnl Explicit template instantiation is not required.
+               AC_CACHE_VAL(
+                 [ace_cv_feature_explicit_template_instantiation],
+                 [ace_cv_feature_explicit_template_instantiation=no])
+
+               dnl Pragma template instantiation is required.
+               AC_CACHE_VAL(
+                 [ace_cv_feature_pragma_template_instantiation],
+                 [ace_cv_feature_pragma_template_instantiation=yes])
+              ],
+              [
+               dnl If we get here, then we have no idea what is needed!
+               ace_cv_feature_templates_require_pragma=no
+              ])
+dnl END INNER REQUIRE PRAGMA #########################################
+           ])
+dnl END OUTER REQUIRE PRAGMA #########################################
+        ])
+
+      dnl Remove any generated template repositories.
+      rm -rf Templates.DB SunWS_cache ptrepository *.rpo
+
+      dnl Remove the additional test files.
+      rm -f ace_test*
+
+      dnl Restore the compiler flags
+      CXXFLAGS="$ace_cxx_template_save_CXXFLAGS"
+      CPPFLAGS="$ace_cxx_template_save_CPPFLAGS"
+      LDFLAGS="$ace_cxx_template_save_LDFLAGS"
+     ],
+     [
+      AC_DEFINE(ACE_TEMPLATES_REQUIRE_PRAGMA)
+     ],
+     [
+      dnl Do nothing.
+     ])
+  ])
+
+ACE_CACHE_CHECK([if explicit template instantiation is needed],
+  [ace_cv_feature_explicit_template_instantiation],
+  [
+   AC_MSG_ERROR([
+Bug in configure script, check for need of explicit template
+instantiation should have occurred during check for need of template
+source.  Please e-mail the maintainer of this configure script:
+  $ACE_CONFIGURE_MAINTAINER
+this message.
+    ])
+  ],
+  [
+   AC_DEFINE(ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  ],
+  [
+   ACE_CACHE_CHECK([if pragma template instantiation is needed],
+     [ace_cv_feature_pragma_template_instantiation],
+     [
+      AC_MSG_ERROR([
+Bug in configure script, check for need of pragma template
+instantiation should have occurred during check for need of template
+source.  Please e-mail the maintainer of this configure script:
+  $ACE_CONFIGURE_MAINTAINER
+this message.
+        ])
+     ],
+     [
+      AC_DEFINE(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+     ],
+     [
+      dnl Do nothing
+     ])
+  ])
+  
 
 dnl Check if platform supports template specialization
 ACE_CACHE_CHECK(for template specialization,
@@ -4376,7 +4178,7 @@ dnl name.
     ,
     AC_DEFINE(ACE_LACKS_SETDETACH))
 
-  dnl ACE currently doesn't provide enoug fine grained control over
+  dnl ACE currently doesn't provide enough fine grained control over
   dnl these functions so both must be present in order to prevent
   dnl ACE_LACKS_SETSCHED from being defined.
   AC_CHECK_FUNC(sched_setscheduler, dnl
@@ -7368,19 +7170,6 @@ if test "$ace_u_long_long_typedef_set" = yes; then
   AC_DEFINE_UNQUOTED(ACE_UINT64_TYPEDEF, $ACE_UINT64)
 fi
 
-dnl Additional flags to set by the configure script
-
-if test -n "$GXX"; then
-  ACE_CXXFLAGS="$ACE_CXXFLAGS -W -Wall -Wpointer-arith"
-  if test "$ace_user_enable_repo" = no; then
-    ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
-  fi
-fi
-
-if test -n "$GCC"; then
-  ACE_CFLAGS="$ACE_CFLAGS -W -Wall -Wpointer-arith"
-fi
-
 dnl Combine package set flags with user's flags.
 dnl User's flags go after package flags to allow user to override
 dnl package defaults.
@@ -7444,7 +7233,7 @@ ACE_CACHE_CHECK(if generated ACE configuration is usable,
 The generated configuration appears to be unusable.  Please verify
 that your system path and environment variables are correct.  If they
 appear to be correct then please send the maintainer of this configure
-script Ossama Othman <ossama@ece.uci.edu> the \`config.log' file and
+script $ACE_CONFIGURE_MAINTAINER the \`config.log' file and
 the following information:
 
   ACE \`configure' Script Information
@@ -7732,3 +7521,9 @@ dnl  TAO/tao-config
   echo ""
  ])
 
+
+
+dnl Configure the TAO directory if it exists.
+dnl if test -d $srcdir/TAO; then
+dnl   AC_CONFIG_SUBDIRS (TAO)
+dnl fi

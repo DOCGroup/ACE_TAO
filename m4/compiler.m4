@@ -34,6 +34,8 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
  AC_REQUIRE([AC_PROG_CXXCPP])
  AC_REQUIRE([AC_LANG_CPLUSPLUS])
 
+ AC_REQUIRE([ACE_COMPILATION_OPTIONS])
+
  if test -n "$GXX"; then
 dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
 changequote(, )dnl
@@ -294,4 +296,16 @@ changequote([, ])dnl
      OCXXFLAGS="-O"
      ;;
  esac
+
+ dnl Additional flags
+ if test -n "$GXX"; then
+   ACE_CXXFLAGS="$ACE_CXXFLAGS -W -Wall -Wpointer-arith"
+   if test "$ace_user_enable_repo" = no; then
+     ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
+   fi
+ fi
+
+ if test -n "$GCC"; then
+   ACE_CFLAGS="$ACE_CFLAGS -W -Wall -Wpointer-arith"
+ fi
 ])
