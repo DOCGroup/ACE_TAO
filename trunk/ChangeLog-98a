@@ -7,6 +7,9 @@ Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_osf1_4.0.GNU: added suppression of
           warning 610, nonoverriding_function_decl.
 
+        * ace/config-chorus.h,config-freebsd*.h: migrated to
+          config-g++-common.h.
+
 Mon Feb 02 14:40:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/OrdMultiSet_Test.cpp: added explicit template instantiation
