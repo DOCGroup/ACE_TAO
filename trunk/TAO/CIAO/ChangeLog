@@ -1,3 +1,9 @@
+Tue Oct 12 09:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc:
+          Removed / at the end of the includes part, this should fix the
+          compile error in the Borland builds
+
 Mon Oct 11 23:41:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
