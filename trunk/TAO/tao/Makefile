@@ -119,6 +119,16 @@ LDFLAGS += $(RLDFLAGS)
 .PRECIOUS: Object_KeyC.h Object_KeyC.i Object_KeyC.cpp
 .PRECIOUS: POAS.h POAS.i POAS.cpp POAC.h POAC.i POAC.cpp
 
+# ghs for VxWorks on i86 sometimes core dumps with -g
+ifeq ($(findstring cxvx86,$(CXX)),cxvx86)
+$(VDIR)POA.$(OBJEXT):
+	$(COMPILE-NO_DASH_G.cc) -o $@ $<
+endif # cxvx86
+
+#----------------------------------------------------------------------------
+#	Dependencies
+#----------------------------------------------------------------------------
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
