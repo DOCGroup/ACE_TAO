@@ -6,8 +6,6 @@ project : taolib_with_idl, core {
   idlflags += -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -o PortableServer
 
   Source_Files {
-    PortableServer/ImplRepoC.cpp
-    PortableServer/ImplRepoS.cpp
     PortableServer
   }
 
@@ -28,7 +26,6 @@ project : taolib_with_idl, core {
   }
 
   IDL_Files {
-    gendir = PortableServer
     PortableServer/ImplRepo.idl
   }
 }
