@@ -42,9 +42,6 @@ main (int argc, ACE_TCHAR *argv[])
 
       ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
 
-      ACE_Reactor *reactor =
-        orb->orb_core ()->reactor ();
-
       for (;;)
         {
           ACE_Time_Value tv (5, 0);
