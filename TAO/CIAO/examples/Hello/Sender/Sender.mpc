@@ -57,3 +57,14 @@ project(Hello_Base_Sender_exec) : ciao_component {
     Sender_exec.cpp
   }
 }
+
+project (Hello_Starter) : ciao_client{
+  exename = starter
+  after += Sender_stub
+  libs += Sender_stub
+  libpaths += ..
+
+  Source_Files {
+    starter.cpp
+  }
+}

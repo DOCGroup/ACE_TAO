@@ -20,53 +20,53 @@ endif
 
 %.tgt0:
 ifeq ($(KEEP_GOING),1)
-	-@$(MAKE) -f Makefile.Hello_Starter -C starter $(*);
-else
-	@$(MAKE) -f Makefile.Hello_Starter -C starter $(*);
-endif
-%.tgt1:
-ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_stub -C Hello_Base $(*);
 else
 	@$(MAKE) -f Makefile.Hello_Base_stub -C Hello_Base $(*);
 endif
-%.tgt2: %.tgt1
+%.tgt1: %.tgt0
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_Receiver_stub -C Receiver $(*);
 else
 	@$(MAKE) -f Makefile.Hello_Base_Receiver_stub -C Receiver $(*);
 endif
-%.tgt3: %.tgt1
+%.tgt2: %.tgt0
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_svnt -C Hello_Base $(*);
 else
 	@$(MAKE) -f Makefile.Hello_Base_svnt -C Hello_Base $(*);
 endif
-%.tgt4: %.tgt2 %.tgt3
+%.tgt3: %.tgt1 %.tgt2
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_Receiver_svnt -C Receiver $(*);
 else
 	@$(MAKE) -f Makefile.Hello_Base_Receiver_svnt -C Receiver $(*);
 endif
-%.tgt5: %.tgt4
+%.tgt4: %.tgt3
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_Receiver_exec -C Receiver $(*);
 else
 	@$(MAKE) -f Makefile.Hello_Base_Receiver_exec -C Receiver $(*);
 endif
-%.tgt6: %.tgt1
+%.tgt5: %.tgt0
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_Sender_stub -C Sender $(*);
 else
 	@$(MAKE) -f Makefile.Hello_Base_Sender_stub -C Sender $(*);
 endif
-%.tgt7: %.tgt3 %.tgt6
+%.tgt6: %.tgt2 %.tgt5
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_Sender_svnt -C Sender $(*);
 else
 	@$(MAKE) -f Makefile.Hello_Base_Sender_svnt -C Sender $(*);
 endif
-%.tgt8: %.tgt7
+%.tgt7: %.tgt5 %.tgt6
+ifeq ($(KEEP_GOING),1)
+	-@$(MAKE) -f Makefile.Hello_Starter -C Sender $(*);
+else
+	@$(MAKE) -f Makefile.Hello_Starter -C Sender $(*);
+endif
+%.tgt8: %.tgt6 %.tgt7
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Hello_Base_Sender_exec -C Sender $(*);
 else

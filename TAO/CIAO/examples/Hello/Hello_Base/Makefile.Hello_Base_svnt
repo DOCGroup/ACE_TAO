@@ -27,7 +27,7 @@ ifndef CIAO_ROOT
   CIAO_ROOT = $(TAO_ROOT)/CIAO
 endif
 
-TAO_IDL = $(ACE_ROOT)/bin/tao_idl
+TAO_IDL = ../../../../../bin/tao_idl
 IDL_FILES = Hello_Base
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
@@ -55,7 +55,7 @@ $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
-OUTPUT_DIRECTORY = $(ACE_ROOT)/lib
+OUTPUT_DIRECTORY = ../../../../../lib
 all: $(OUTPUT_DIRECTORY)
 
 $(OUTPUT_DIRECTORY):
@@ -96,7 +96,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 
-INSTALL_CHECK = $(ACE_ROOT)/lib
+INSTALL_CHECK = ../../../../../lib
 ifeq ($(INSTALL_CHECK),.)
   ifeq ($(PWD),)
     PWD=$(shell pwd)
@@ -110,7 +110,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ciao -I$(TAO_ROOT)/orbsvcs/orbsvcs -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
+CPPFLAGS     += -I../../.. -I../../../ciao -I../../../../orbsvcs/orbsvcs -I../../../../orbsvcs -I../../../.. -I../../../../tao -I../../../../..
 ifeq ($(shared_libs),1)
   ifneq ($(SHLIB),)
     CPPFLAGS += -DHELLO_BASE_SVNT_BUILD_DLL
@@ -123,9 +123,9 @@ ifeq ($(static_libs),1)
 endif
 
 
-LDFLAGS      += -L$(ACE_ROOT)/lib
+LDFLAGS      += -L../../../../../lib
 
-TAO_IDLFLAGS += -Wb,export_macro=HELLO_BASE_SVNT_Export -Wb,export_include=Hello_Base_svnt_export.h -I$(CIAO_ROOT) -I$(TAO_ROOT)/CIAO/ciao -I$(TAO_ROOT)/orbsvcs/orbsvcs -Gv -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+TAO_IDLFLAGS += -Wb,export_macro=HELLO_BASE_SVNT_Export -Wb,export_include=Hello_Base_svnt_export.h -I../../.. -I../../../../CIAO/ciao -I../../../../orbsvcs/orbsvcs -Gv -I../../../.. -I../../../../orbsvcs -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------

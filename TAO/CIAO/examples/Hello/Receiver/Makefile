@@ -62,4 +62,4 @@ rcs_info: rcs_info.tgt0 rcs_info.tgt1 rcs_info.tgt2
 
 idl_stubs: idl_stubs.tgt0 idl_stubs.tgt1 idl_stubs.tgt2
 
-reverseclean: realclean.tgt2 realclean.tgt1 realclean.tgt0
+reverseclean: realclean.tgt2 realclean.tgt1 realclean.tgt0e
