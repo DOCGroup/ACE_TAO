@@ -252,7 +252,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                     --binary_length;
                     ++ptr;
                   }
-                delete (char *)binary_data;
+                delete (char *) [] binary_data;
                 break;
               }
             default:
@@ -526,7 +526,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                     ++ptr;
                   }
                 line += ACE_LIB_TEXT ("\"");
-                delete (char *)binary_data;
+                delete (char *) [] binary_data;
                 break;
               }
             default:
