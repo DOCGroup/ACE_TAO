@@ -1,6 +1,6 @@
-// IPC_SAP/poll server, which illustrates how to integrate the ACE
 // $Id$
 
+// IPC_SAP/poll server, which illustrates how to integrate the ACE
 // socket wrappers with the SVR4 poll() system call to create a
 // single-threaded concurrent server.
 
@@ -25,7 +25,7 @@ main (void)
 
   for (int i = 0; i < MAX_FDS; i++)
     {
-      poll_array[i].fd = ACE::INVALID_HANDLE;
+      poll_array[i].fd = ACE_INVALID_HANDLE;
       poll_array[i].events = POLLIN;
     }
 
