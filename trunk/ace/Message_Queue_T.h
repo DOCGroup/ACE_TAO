@@ -93,11 +93,22 @@ public:
                     size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                     ACE_Notification_Strategy * = 0);
 
-  /// Close down the message queue and release all resources.
+  /// Release all resources from the message queue and mark it as deactivated.
+  /// Returns the number of messages released from the queue.
   virtual int close (void);
 
-  /// Close down the message queue and release all resources.
+  /// Release all resources from the message queue and mark it as deactivated.
   virtual ~ACE_Message_Queue (void);
+
+  /// Release all resources from the message queue but do not mark it as deactivated. 
+  /// This method holds the queue lock during this operation.  Returns the number of 
+  /// messages flushed.
+  virtual int flush (void);
+
+  /// Release all resources from the message queue but do not mark it as deactivated. 
+  /// This method does not hold the queue lock during this operation, i.e., it assume
+  /// the lock is held externally.    Returns the number of messages flushed.
+  virtual int flush_i (void);
 
   // = Enqueue and dequeue methods.
 
@@ -898,6 +909,16 @@ public:
 
   /// Close down the message queue and release all resources.
   virtual ~ACE_Message_Queue_Ex (void);
+
+  /// Release all resources from the message queue but do not mark it as deactivated. 
+  /// This method holds the queue lock during this operation.  Returns the number of 
+  /// messages flushed.
+  virtual int flush (void);
+
+  /// Release all resources from the message queue but do not mark it as deactivated. 
+  /// This method does not hold the queue lock during this operation, i.e., it assume
+  /// the lock is held externally.    Returns the number of messages flushed.
+  virtual int flush_i (void);
 
   // = Enqueue and dequeue methods.
 
