@@ -1,3 +1,22 @@
+Tue Mar  6 19:44:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP_Message_Handler.cpp:
+          When printing an invalid GIOP magic number use hex values, not
+          the character representation, because the latter can print out
+          garbage.
+
+        * tao/ORB_Core.cpp:
+          Print the return value of each handle_events() call, on an
+          attempt to figure out why it is spinning.
+
+        * tao/Transport.cpp:
+          Print handle, return value and errno after each call to
+          send_current_message()
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Don't enter the event loop if the reply has been received
+          already.
+
 Tue Mar  6 11:02:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * Merged in changes from the fix_bug132 branch.  I need several
