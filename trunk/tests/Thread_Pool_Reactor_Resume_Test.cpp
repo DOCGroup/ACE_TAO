@@ -120,7 +120,8 @@ parse_arg (int argc, ACE_TCHAR *argv[])
 Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr),
     nr_msgs_rcvd_(0),
-    ref_count_ (1)
+    ref_count_ (1),
+    refcount_lock_ (0)
 {
   // Make sure we use TP_Reactor with this class (that's the whole
   // point, right?)
