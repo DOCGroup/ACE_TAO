@@ -47,7 +47,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_LACKS_SYS_MMAN_H)
+#if defined (ACE_LACKS_SYS_MMAN_H) && !defined (ACE_WIN32)
 #  define PROT_READ 0
 #  define PROT_WRITE 0
 #  define PROT_EXEC 0
@@ -74,7 +74,7 @@ PAGE_EXECUTE_WRITECOPY
 PAGE_GUARD
 PAGE_NOACCESS
 PAGE_NOCACHE  */
-#endif /* !ACE_LACKS_SYS_MMAN_H */
+#endif /* !ACE_LACKS_SYS_MMAN_H && !ACE_WIN32*/
 
 #if !defined (PROT_RDWR)
 #  define PROT_RDWR (PROT_READ|PROT_WRITE)

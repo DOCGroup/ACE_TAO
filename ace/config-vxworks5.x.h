@@ -193,6 +193,9 @@
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_MSG_H
 
+// Not sure if these should always be defined.
+#define ACE_LACKS_SYS_UN_H
+#define ACE_LACKS_PTHREAD_H
 
 // Some string things
 #define ACE_LACKS_WCSCAT
