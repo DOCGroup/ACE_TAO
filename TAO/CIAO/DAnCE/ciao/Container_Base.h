@@ -218,6 +218,10 @@ namespace CIAO
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
     // Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref,
                     Container::OA_Type t

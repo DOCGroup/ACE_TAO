@@ -59,6 +59,10 @@ namespace CIAO
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     virtual void update_servant_map (PortableServer::ObjectId &oid,
                                      Dynamic_Component_Servant_Base* servant
                                      ACE_ENV_ARG_DECL);
