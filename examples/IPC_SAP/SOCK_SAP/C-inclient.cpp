@@ -50,7 +50,8 @@ main (int argc, char *argv[])
   ACE_OS::memcpy (&saddr.sin_addr, hp->h_addr, hp->h_length);
 
   // Establish connection with remote server.
-  if (ACE_OS::connect (s_handle, (struct sockaddr *) &saddr,
+  if (ACE_OS::connect (s_handle,
+		       ACE_reinterpret_cast(sockaddr *, &saddr),
                        sizeof saddr) == -1)
     ACE_OS::perror ("connect"), ACE_OS::exit (1);
 
