@@ -379,6 +379,13 @@ public:
   TAO_ORB_Core *orb_core (void) const;
   // Get the ORB core.
 
+  const ACE_CString &_tao_ft_client_id (void);
+  void _tao_ft_client_id (const char *id);
+  // TAO specific extension to get and set the client ID. The client
+  // id can be set by the application which would be used by the FT
+  // service. As there are no specific interfaces defined in the spec,
+  // we have this prorpietary extensions
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_ORB_ptr _ptr_type;
   typedef CORBA_ORB_var _var_type;

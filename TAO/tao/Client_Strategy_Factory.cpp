@@ -35,3 +35,9 @@ TAO_Client_Strategy_Factory::create_cached_connector_lock (void)
 {
   return 0;
 }
+
+ACE_Lock *
+TAO_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
+{
+  return 0;
+}
