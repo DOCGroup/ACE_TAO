@@ -13,22 +13,20 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
 }
 
 int 
-TAO_Dynamic_Hash_OpTable::register_op (const CORBA_String &opname,
-				       skeleton
-				       skel_ptr)
+TAO_Dynamic_Hash_OpTable::bind (const CORBA_String &opname,
+                                TAO_Skeleton skel_ptr)
 {
   ACE_CString key (opname);
   return this->hash_.bind (key, skel_ptr);
 }
 
-skeleton 
-TAO_Dynamic_Hash_OpTable::lookup (const CORBA_String &opname)
+int
+TAO_Dynamic_Hash_OpTable::find (const CORBA_String &opname,
+                                TAO_Skeleton& skel_ptr)
 {
   ACE_CString key (opname);
-  skeleton skel_ptr = 0;
 
- (void) this->hash_.find (key, skel_ptr);
-  return skel_ptr;
+  return this->hash_.find (key, skel_ptr);
 }
 
 // Linear search strategy
@@ -47,8 +45,8 @@ TAO_Linear_OpTable::~TAO_Linear_OpTable (void)
 // ****** we should really make sure that the same key doesn't exist
 // ******
 int 
-TAO_Linear_OpTable::register_op (const CORBA_String &opname,
-				 skeleton skel_ptr)
+TAO_Linear_OpTable::bind (const CORBA_String &opname,
+                          TAO_Skeleton skel_ptr)
 {
   CORBA_ULong i = this->next_;
 
@@ -62,19 +60,22 @@ TAO_Linear_OpTable::register_op (const CORBA_String &opname,
   return -1; // error
 }
 
-skeleton 
-TAO_Linear_OpTable::lookup (const CORBA_String &opname)
+int
+TAO_Linear_OpTable::find (const CORBA_String &opname,
+                          TAO_Skeleton& skel_ptr)
 {
   ACE_ASSERT (this->next_ <= this->tablesize_);
 
   for (CORBA_ULong i;
        i < this->next_;
        i++)
-    if (!ACE_OS::strncmp (opname,
-			  this->tbl_[i].opname, ACE_OS::strlen (opname)))
-      return this->tbl_[i].skel_ptr;
-
-  return 0;  // not found
+    if (!ACE_OS::strncmp (opname, this->tbl_[i].opname, ACE_OS::strlen (opname)))
+      {
+        skel_ptr = this->tbl_[i].skel_ptr;
+        return 1;
+      }
+  
+  return -1;  // not found
 }
 
 TAO_Linear_OpTable::Entry::Entry (void)
@@ -104,8 +105,8 @@ TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
 
 // ****** we should really make sure that the same key doesn't exist ******
 int 
-TAO_Active_Demux_OpTable::register_op (const CORBA_String &opname,
-				       skeleton skel_ptr)
+TAO_Active_Demux_OpTable::bind (const CORBA_String &opname,
+				       TAO_Skeleton skel_ptr)
 {
   CORBA_ULong i = ACE_OS::atoi (opname);
 
@@ -117,13 +118,15 @@ TAO_Active_Demux_OpTable::register_op (const CORBA_String &opname,
   return -1; // error
 }
 
-skeleton 
-TAO_Active_Demux_OpTable::lookup (const CORBA_String &opname)
+int
+TAO_Active_Demux_OpTable::find (const CORBA_String &opname,
+                                TAO_Skeleton& skel_ptr)
 {
   CORBA_ULong i = ACE_OS::atoi (opname);
 
   ACE_ASSERT (i <= this->tablesize_);
-  return this->tbl_[i].skel_ptr;
+  skel_ptr = this->tbl_[i].skel_ptr;
+  return 1;
 }
 
 TAO_Active_Demux_OpTable::Entry::Entry (void)
