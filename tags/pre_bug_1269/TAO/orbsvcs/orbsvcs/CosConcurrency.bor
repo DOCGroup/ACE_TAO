@@ -1,0 +1,56 @@
+#
+# Makefile for building the TAO CosConcurrency library
+#
+
+NAME = TAO_CosConcurrency
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\.. -Ge 1 -Wb,export_macro=TAO_Concurrency_Export \
+	-Wb,export_include=Concurrency/concurrency_export.h -Wb,pre_include=ace/pre.h \
+	-Wb,post_include=ace/post.h
+
+IDLFILES = \
+	$(IDLDIR)\CosConcurrencyControl.idl
+
+OBJFILES = \
+	$(OBJDIR)\CC_Lock.obj \
+	$(OBJDIR)\CC_LockSet.obj \
+	$(OBJDIR)\CC_LockSetFactory.obj \
+	$(OBJDIR)\Concurrency_Utils.obj \
+	$(OBJDIR)\CosConcurrencyControlC.obj \
+	$(OBJDIR)\CosConcurrencyControlS.obj
+
+RESOURCE = $(OBJDIR)\CosConcurrency.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLSERVER_CFLAGS) \
+	$(TAO_CONCURRENCY_CFLAGS) \
+	-DTAO_CONCURRENCY_BUILD_DLL
+
+CPPDIR = .;Concurrency
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\Concurrency
+INCLUDES = Concurrency\*.h
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\CosConcurrencyControlC.cpp $(IDLDIR)\CosConcurrencyControlS.cpp: $(IDLDIR)\CosConcurrencyControl.idl
+	$(TAO_IDL) $**
