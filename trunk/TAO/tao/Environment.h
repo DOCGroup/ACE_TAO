@@ -102,9 +102,7 @@ public:
   // = Obtain a default environment to use with TAO.
   static CORBA_Environment &default_environment (void);
 
-#if !defined (TAO_USES_FLICK)
 private:
-#endif /* TAO_USES_FLICK */
 
   friend class TAO_ORB_Core;
   CORBA_Environment (TAO_ORB_Core *orb_core);
@@ -117,10 +115,6 @@ private:
   CORBA_Environment* previous_;
   // The previous environment on the "default environment stack".
 
-#if defined (TAO_USES_FLICK)
-  int _major;
-  char *_id;
-#endif /* TAO_USES_FLICK */
 };
 
 #if defined (__ACE_INLINE__)

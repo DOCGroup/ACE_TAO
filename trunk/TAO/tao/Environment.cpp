@@ -37,12 +37,7 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
 
 CORBA_Environment::CORBA_Environment (void)
   : exception_ (0),
-#if !defined (TAO_USES_FLICK)
     previous_ (0)
-#else
-    previous_ (0),
-    _major(CORBA::NO_EXCEPTION)
-#endif /* TAO_USES_FLICK */
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
 }
@@ -96,9 +91,6 @@ CORBA_Environment::exception (CORBA_Exception *ex)
   if (this->exception_ != 0)
     {
       this->exception_->_incr_refcnt ();
-#if defined (TAO_USES_FLICK)
-      this->_major = this->exception_type();
-#endif /* TAO_USES_FLICK */
 #if defined (TAO_HAS_EXCEPTIONS)
       this->exception_->_raise ();
 #endif /* TAO_HAS_EXCEPTIONS */

@@ -210,22 +210,6 @@ public:
   // Decrement the object's reference count.  When this count goes to
   // 0 this object will be deleted.
 
-#if defined (TAO_USES_FLICK)
-  char *&_host_ (void);
-  // Return a reference to the underlying <host_> to allow Flick to
-  // manipulate it directly.
-
-  CORBA::UShort &_port_ (void);
-  // Return a reference to the underlying <port_> to allow Flick to
-  // manipulate it directly.
-
-  TAO_ObjectKey &_object_key_ (void);
-  // Return a non-const reference of object key.
-
-  int reset_object_addr (void);
-  // Reset <object_addr_> after setting <host_> and <port_>.
-#endif /* TAO_USES_FLICK */
-
 private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
