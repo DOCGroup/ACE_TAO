@@ -173,6 +173,8 @@ main (int argc, char *argv[])
                   "all resources released\n"));
     }
 
+  delete allocator;
+
   return 0;
 }
 
