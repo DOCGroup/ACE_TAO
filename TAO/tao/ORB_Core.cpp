@@ -968,7 +968,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   if (ns_port != 0)
     {
-      char ns_port_char[33];
+      char ns_port_char[256];
 
       ACE_OS_String::itoa (ns_port,
                            ns_port_char,
@@ -979,17 +979,16 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
       ns_port_ptr = (const char *) ns_port_char;
 
-      const char prefix [] = "mcast://:";
+      const char prefix[] = "mcast://:";
 
       CORBA::String_var def_init_ref =
         CORBA::string_alloc (sizeof (prefix) +
-                             ACE_OS::strlen
-                             (ns_port_ptr.in ()) +
-                             3);
+                             ACE_OS::strlen (ns_port_ptr.in ()) +
+                             2);
 
-      def_init_ref = ACE_OS::strcpy (def_init_ref, prefix);
-      def_init_ref = ACE_OS::strcat (def_init_ref, ns_port_ptr.in ());
-      def_init_ref = ACE_OS::strcat (def_init_ref, "::");
+      ACE_OS::strcpy (def_init_ref, prefix);
+      ACE_OS::strcat (def_init_ref, ns_port_ptr.in ());
+      ACE_OS::strcat (def_init_ref, "::");
 
       this->orb_params ()->default_init_ref (def_init_ref.in ());
     }
