@@ -1,9 +1,9 @@
-package BorlandWorkspaceCreator;
+package MakeWorkspaceCreator;
 
 # ************************************************************
-# Description   : A Borland Workspace (Makefile.bor) creator
+# Description   : A Generic Workspace (Makefile) creator
 # Author        : Chad Elliott
-# Create Date   : 7/02/2002
+# Create Date   : 2/18/2003
 # ************************************************************
 
 # ************************************************************
@@ -13,7 +13,7 @@ package BorlandWorkspaceCreator;
 use strict;
 use File::Basename;
 
-use BorlandProjectCreator;
+use MakeProjectCreator;
 use WorkspaceCreator;
 
 use vars qw(@ISA);
@@ -25,7 +25,7 @@ use vars qw(@ISA);
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_modified_workspace_name('Makefile', '.bor');
+  return $self->get_modified_workspace_name('Makefile', '');
 }
 
 
@@ -41,7 +41,7 @@ sub pre_workspace {
   my($crlf) = $self->crlf();
 
   print $fh "#----------------------------------------------------------------------------$crlf" .
-            "#       Borland Workspace$crlf" .
+            "#       Make Workspace$crlf" .
             "#----------------------------------------------------------------------------$crlf" .
             $crlf;
 }
@@ -55,38 +55,32 @@ sub write_comps {
   my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
 
-  print $fh "!include <\$(ACE_ROOT)\\include\\makeinclude\\make_flags.bor>$crlf";
-
-  foreach my $target ('all', 'clean', 'realclean', 'install') {
-    print $fh $crlf .
-              "$target\:$crlf";
-    foreach my $project (@list) {
-      my($dir)    = dirname($project);
-      my($chdir)  = 0;
-      my($back)   = 1;
-
-      ## If the directory isn't "." then we need
-      ## to figure out how to get back to our starting point
-      if ($dir ne '.') {
-        $chdir = 1;
-        my($length) = length($dir);
-        for(my $i = 0; $i < $length; $i++) {
-          if (substr($dir, $i, 1) eq '/') {
-            $back++;
-          }
-        }
+  ## Only use the list if there is more than one project
+  if ($#list > 0) {
+    print $fh "MFILES = \\$crlf";
+    for(my $i = 0; $i <= $#list; $i++) {
+      print $fh "         $list[$i]";
+      if ($i != $#list) {
+        print $fh " \\";
       }
-
-      print $fh ($chdir ? "\t\@cd $dir$crlf" : '') .
-                "\t\$(MAKE) -\$(MAKEFLAGS) \$(MAKE_FLAGS) -f " . basename($project) . " $target$crlf" .
-                ($chdir ? "\t\@cd " . ('../' x $back) . $crlf : '');
+      print $fh $crlf;
     }
   }
 
-  # Generate a convenient rule for regenerating the workspace.
+  ## Print out the projet Makefile
   print $fh $crlf .
-            "regenerate:$crlf" .
-            "\t$^X $0 @ARGV$crlf";
+            "all clean realclean:$crlf";
+
+  ## If there is more than one project, use a for loop
+  if ($#list > 0) {
+    print $fh "\t\@for file in \$(MFILES); do \\$crlf" .
+              "\t\$(MAKE) -f \$\$file \$(\@); \\$crlf" .
+              "\tdone$crlf";
+  }
+  else {
+    ## Otherwise, just list the call to make without a for loop
+    print $fh "\t\@\$(MAKE) -f " . $list[0] . " \$(\@);$crlf";
+  }
 }
 
 

@@ -1,443 +1,494 @@
+Tue Feb 25 07:56:59 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+
+          Updated the documentation to reflect the removal of the 3
+          character restriction on type names.
+
+        * bin/MakeProjectCreator/config/avstreamsexe.mpb:
+
+          Inherit from namingexe instead of reproducing the same
+          information.
+
+        * bin/MakeProjectCreator/config/rteventexe.mpb:
+
+          Inherit from server instead of reproducing the same information.
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Removed the restriction of a 3 character type.
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GHSProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+
+          Refactor code into the base class.
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GHSWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Made modifications to these modules to allow an mwc file to have
+          multiple workspaces defined within it.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Cosmetic change.
+
+        * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/MakeProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Added a new project type for generic Makefiles.  These are not
+          suitable for use within ACE or TAO, but may be useful to someone.
+
 Mon Feb 24 15:37:06 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/TTY_IO.h (ACE_TTY_IO): Added the dtrdisable member to
-	  Serial_Params.  This finishes a fix suggested by Ray Limpus
- 	  <ray.limpus@boeing.com>.  Thanks to Jeff Parsons for noticing
- 	  this.
+        * ace/TTY_IO.h (ACE_TTY_IO): Added the dtrdisable member to
+          Serial_Params.  This finishes a fix suggested by Ray Limpus
+          <ray.limpus@boeing.com>.  Thanks to Jeff Parsons for noticing
+          this.
 
 Mon Feb 24 08:53:52 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Basic_Types.i (operator++, operator--):
+        * ace/Basic_Types.i (operator++, operator--):
 
-	  Fixed incorrect dereferencing of non-pointer return variable.
+          Fixed incorrect dereferencing of non-pointer return variable.
 
 Sun Feb 23 12:16:34 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/WIN32_Asynch_IO.cpp (cancel): Added support for cancel() on
-	  MinGW.  Thanks to Vince for this fix.
+        * ace/WIN32_Asynch_IO.cpp (cancel): Added support for cancel() on
+          MinGW.  Thanks to Vince for this fix.
 
-	* examples/Mem_Map/Makefile: Moved the definition of DIRS to
-	  later in the Makefile so we can exclude it from the MinGW
-	  build.  Thanks to Vince for reporting this, as well.
+        * examples/Mem_Map/Makefile: Moved the definition of DIRS to
+          later in the Makefile so we can exclude it from the MinGW
+          build.  Thanks to Vince for reporting this, as well.
 
-	* ace/WIN32_Proactor.cpp (close): Make sure to check whether
-	  GetQueuedQueuedCompletion() returns false.  Thanks to Vince
- 	  Mounts <vince@mounts.cc> for reporting this.
+        * ace/WIN32_Proactor.cpp (close): Make sure to check whether
+          GetQueuedQueuedCompletion() returns false.  Thanks to Vince
+          Mounts <vince@mounts.cc> for reporting this.
 
 Sat Feb 22 08:16:36 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Basic_Types.h (operator++, operator--):
+        * ace/Basic_Types.h (operator++, operator--):
 
-	  Fixed return type mismatch between declaration and definition in
-	  Basic_Types.i.
+          Fixed return type mismatch between declaration and definition in
+          Basic_Types.i.
 
 Fri Feb 21 12:52:00 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Global_Macros.h:
-	* ace/OS.h:
+        * ace/Global_Macros.h:
+        * ace/OS.h:
 
-	  Moved ACE_CORBA_{1,2,3} and ACE_NESTED_CLASS macro out of OS.h
-	  and into Global_Macros.h.  Helps avoid inclusion of OS.h in some
-	  cases.
+          Moved ACE_CORBA_{1,2,3} and ACE_NESTED_CLASS macro out of OS.h
+          and into Global_Macros.h.  Helps avoid inclusion of OS.h in some
+          cases.
 
 Fri Feb 21 10:05:23 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Local_Name_Space_T.cpp:
+        * ace/Local_Name_Space_T.cpp:
 
-	  Include "ace/Auto_Ptr.h" once again to pull in the
-	  ACE_Auto_Basic_Array_Ptr class declaration.  Fixes compile-time
-	  problems on AIX about unknown template types.
+          Include "ace/Auto_Ptr.h" once again to pull in the
+          ACE_Auto_Basic_Array_Ptr class declaration.  Fixes compile-time
+          problems on AIX about unknown template types.
 
 Fri Feb 21 13:32:43 2003  Edward Scott  <eas@prismtechnologies.com>
 
         * docs/bugzilla-build-setup.html:
 
-	  Removed obsolete documentation file. Thanks to Johnny Willemsen
-	  <jwillemsen@remedy.nl> for reporting the problem.
+          Removed obsolete documentation file. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for reporting the problem.
 
 Fri Feb 21 06:18:19 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Framework_Component_DLL.cpp:
+        * tests/Framework_Component_DLL.cpp:
 
-	  Include "ace/Service_Object.h" to pull in ACE_Service_Object
-	  class declaration.  Necessitated by inter-header dependency
-	  reductions.
+          Include "ace/Service_Object.h" to pull in ACE_Service_Object
+          class declaration.  Necessitated by inter-header dependency
+          reductions.
 
 Thu Feb 20 18:54:03 2003  Ossama Othman  <ossama@uci.edu>
 
-	* apps/Gateway/Gateway/gatewayd.cpp:
+        * apps/Gateway/Gateway/gatewayd.cpp:
 
-	  Include "ace/Service_Object.h" to pull in ACE_Service_Object_Ptr
-	  class declaration.  Necessitated by inter-header dependency
-	  reductions.
+          Include "ace/Service_Object.h" to pull in ACE_Service_Object_Ptr
+          class declaration.  Necessitated by inter-header dependency
+          reductions.
 
 Thu Feb 20 18:49:37 2003  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Service_Configurator/Misc/Timer_Service.h:
+        * examples/Service_Configurator/Misc/Timer_Service.h:
 
-	  Include "ace/Service_Object.h" to pull in ACE_Service_Object
-	  class declaration.  Necessitated by inter-header dependency
-	  reductions.
+          Include "ace/Service_Object.h" to pull in ACE_Service_Object
+          class declaration.  Necessitated by inter-header dependency
+          reductions.
 
 Thu Feb 20 18:45:29 2003  Ossama Othman  <ossama@uci.edu>
 
-	* examples/C++NPv2/Service_Reporter.cpp:
+        * examples/C++NPv2/Service_Reporter.cpp:
 
-	  Include "ace/Service_Types.h" to pull in ACE_Service_Type_Impl
-	  class declaration.  Necessitated by inter-header dependency
-	  reductions.
+          Include "ace/Service_Types.h" to pull in ACE_Service_Type_Impl
+          class declaration.  Necessitated by inter-header dependency
+          reductions.
 
 Thu Feb 20 18:31:10 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Strategies_T.cpp:
+        * ace/Strategies_T.cpp:
 
-	  Fixed "lose of const in cast" errors.
+          Fixed "lose of const in cast" errors.
 
 Thu Feb 20 18:20:19 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Acceptor.h (ACE_SSL_SOCK_Acceptor):
+        * ace/SSL/SSL_SOCK_Acceptor.h (ACE_SSL_SOCK_Acceptor):
 
-	  Reverted the change that made this class inherit privately from
-	  ACE_SSL_SOCK instead of publically.  While this isn't strictly
-	  the correct thing to do, IMO, it does correct some compile-time
-	  problems.
+          Reverted the change that made this class inherit privately from
+          ACE_SSL_SOCK instead of publically.  While this isn't strictly
+          the correct thing to do, IMO, it does correct some compile-time
+          problems.
 
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
-	  Fixed compile-time error related to violation of a const
-	  qualifier on a pointer to the timeout value.
+          Fixed compile-time error related to violation of a const
+          qualifier on a pointer to the timeout value.
 
 Thu Feb 20 19:18:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ChangeLogs/ChangeLog-02b:
-	* ChangeLogs/ChangeLog-03a: New files having all the old ChangeLog
-	  entries till 5.3.1.
-	* ChangeLog: Shortened the changelog for ease of use.
+        * ChangeLogs/ChangeLog-02b:
+        * ChangeLogs/ChangeLog-03a: New files having all the old ChangeLog
+          entries till 5.3.1.
+        * ChangeLog: Shortened the changelog for ease of use.
 
 Thu Feb 20 10:35:15 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Strategies_T.h:
-	* ace/Strategies_T.cpp:
+        * ace/Strategies_T.h:
+        * ace/Strategies_T.cpp:
 
-	  Reverted part of changes that introduced extensive use of
-	  traits since they were forcing the introduction of the
-	  ACE_TYPENAME macro in more places than is desirable at this
-	  point in time.  They may be reintroduced in the future.
+          Reverted part of changes that introduced extensive use of
+          traits since they were forcing the introduction of the
+          ACE_TYPENAME macro in more places than is desirable at this
+          point in time.  They may be reintroduced in the future.
 
 Thu Feb 20 09:24:00 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Service_Config.h:
+        * ace/Service_Config.h:
 
-	  Forward declare ACE_Service_Object.  Necessitated by inter-header
-	  dependency reductions.
+          Forward declare ACE_Service_Object.  Necessitated by inter-header
+          dependency reductions.
 
 Thu Feb 20 09:23:51 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Acceptor.h:
-	* ace/Connector.h:
+        * ace/Acceptor.h:
+        * ace/Connector.h:
 
-	  No need to include "ace/Service_Config.h" and
-	  "ace/Svc_Handler.h".
+          No need to include "ace/Service_Config.h" and
+          "ace/Svc_Handler.h".
 
-	  Include "ace/Synch_Options.h".  Necessitated by inter-header
-	  dependency reductions.
+          Include "ace/Synch_Options.h".  Necessitated by inter-header
+          dependency reductions.
 
-	* ace/Acceptor.cpp:
-	* ace/Connector.cpp:
+        * ace/Acceptor.cpp:
+        * ace/Connector.cpp:
 
-	  Include "ace/Svc_Handler.h".  Necessitated by inter-header
-	  dependency reductions.
+          Include "ace/Svc_Handler.h".  Necessitated by inter-header
+          dependency reductions.
 
-	* ace/Atomic_Op.h:
+        * ace/Atomic_Op.h:
 
-	  Fixed doxygen documentation.
+          Fixed doxygen documentation.
 
-	* ace/Atomic_Op.i (operator++, operator--):
+        * ace/Atomic_Op.i (operator++, operator--):
 
-	  Implement these post{in,de}crement operators in terms of their
-	  corresponding pre{in,de}crement operators to ensure consistent
-	  semantics.
+          Implement these post{in,de}crement operators in terms of their
+          corresponding pre{in,de}crement operators to ensure consistent
+          semantics.
 
-	* ace/Atomic_Op_T.h (mutex_, own_mutex_):
+        * ace/Atomic_Op_T.h (mutex_, own_mutex_):
 
-	  Improved const-correctness by making these mutex members
-	  mutable.  This allows us to avoid casting away the constness.
+          Improved const-correctness by making these mutex members
+          mutable.  This allows us to avoid casting away the constness.
 
-	* ace/Atomic_Op_T.i (operator==, operator>=, operator>):
-	  (operator<=, operator<, value, operator=):
+        * ace/Atomic_Op_T.i (operator==, operator>=, operator>):
+          (operator<=, operator<, value, operator=):
 
-	  Do not cast away the constness of the mutex.  That hack is no
-	  longer necessary since the mutex is now mutable.
+          Do not cast away the constness of the mutex.  That hack is no
+          longer necessary since the mutex is now mutable.
 
-	* ace/Basic_Types.h:
+        * ace/Basic_Types.h:
 
-	  Improved doxygen documentation.
+          Improved doxygen documentation.
 
-	  Moved endianness determination macros prior to ACE_U_LongLong
-	  class.
+          Moved endianness determination macros prior to ACE_U_LongLong
+          class.
 
-	  (operator=):
+          (operator=):
 
-	  Added ACE_ULongLong assignment operator declarations that accept
-	  32 bit signed and unsigned integers.
+          Added ACE_ULongLong assignment operator declarations that accept
+          32 bit signed and unsigned integers.
 
-	  (operator++, operator--):
+          (operator++, operator--):
 
-	  Added missing ACE_ULongLong post{in,de}crement operator
-	  declarations.
+          Added missing ACE_ULongLong post{in,de}crement operator
+          declarations.
 
-	  (data_):
+          (data_):
 
-	  Make declaration order of lower and upper 32 bit members (lo_
-	  and hi_) of this structure dependant on the endianness of the
-	  platform.  This mimics what is done for the ACE_LongLong type
-	  in the ACE_CDR classes.
+          Make declaration order of lower and upper 32 bit members (lo_
+          and hi_) of this structure dependant on the endianness of the
+          platform.  This mimics what is done for the ACE_LongLong type
+          in the ACE_CDR classes.
 
-	* ace/Basic_Types.i (operator=):
+        * ace/Basic_Types.i (operator=):
 
-	  Added ACE_ULongLong assignment operator implementation that
-	  accept 32 bit signed and unsigned integers.
+          Added ACE_ULongLong assignment operator implementation that
+          accept 32 bit signed and unsigned integers.
 
-	  (operator++, operator--):
+          (operator++, operator--):
 
-	  Added missing ACE_ULongLong post{in,de}crement operator
-	  implementations.
+          Added missing ACE_ULongLong post{in,de}crement operator
+          implementations.
 
-	* ace/CDR_Base.cpp (mb_align):
+        * ace/CDR_Base.cpp (mb_align):
 
-	  Uninlined this method in order to reduce inter-header
-	  dependencies.
+          Uninlined this method in order to reduce inter-header
+          dependencies.
 
-	  (operator<, operator<=, operator>, operator>=, operator==):
-	  (operator!=):
+          (operator<, operator<=, operator>, operator>=, operator==):
+          (operator!=):
 
-	  Added these missing operator for the ACE_LongLong type.
+          Added these missing operator for the ACE_LongLong type.
 
-	  (Float, operator=, operator!=):
+          (Float, operator=, operator!=):
 
-	  Fixed potential unused argument warnings for the Cray/UNICOS
-	  case.
+          Fixed potential unused argument warnings for the Cray/UNICOS
+          case.
 
-	* ace/CDR_Base.h:
+        * ace/CDR_Base.h:
 
-	  Include "ace/OS.h" instead of "ace/Message_Block.h", and forward
-	  declare ACE_Message_Block in order to reduce inter-header
-	  dependencies.
+          Include "ace/OS.h" instead of "ace/Message_Block.h", and forward
+          declare ACE_Message_Block in order to reduce inter-header
+          dependencies.
 
-	  Changed all uses of typedefs like "u_char" and "u_long" to their
-	  non-typedef counterparts, e.g. "unsigned char" and "unsigned
-	  long".  Makes it possible to avoid including headers that
-	  contain those typedefs.
+          Changed all uses of typedefs like "u_char" and "u_long" to their
+          non-typedef counterparts, e.g. "unsigned char" and "unsigned
+          long".  Makes it possible to avoid including headers that
+          contain those typedefs.
 
-	  (operator=):
+          (operator=):
 
-	  Added ACE_LongLong constructors assignment operators that accept
-	  32-bit integers.
+          Added ACE_LongLong constructors assignment operators that accept
+          32-bit integers.
 
-	  (operator==, operator!=, operator<=, operator<, operator>=):
-	  (operator>):
+          (operator==, operator!=, operator<=, operator<, operator>=):
+          (operator>):
 
-	  Added these missing ACE_LongLong relation operators.
+          Added these missing ACE_LongLong relation operators.
 
-	* ace/CDR_Base.inl (operator=):
+        * ace/CDR_Base.inl (operator=):
 
-	  Added ACE_LongLong constructors assignment operators that accept
-	  32-bit integers.
+          Added ACE_LongLong constructors assignment operators that accept
+          32-bit integers.
 
-	  (operator==, operator!=, operator<=, operator<, operator>=):
-	  (operator>):
+          (operator==, operator!=, operator<=, operator<, operator>=):
+          (operator>):
 
-	  Added these missing ACE_LongLong relation operators.
+          Added these missing ACE_LongLong relation operators.
 
-	* ace/CDR_Stream.h:
+        * ace/CDR_Stream.h:
 
-	  Moved definition of the ACE_CDR_BYTE_ORDER macros from OS.h to
-	  this header.  Helps with header dependency reduction.
+          Moved definition of the ACE_CDR_BYTE_ORDER macros from OS.h to
+          this header.  Helps with header dependency reduction.
 
-	* ace/Capabilities.h:
+        * ace/Capabilities.h:
 
-	  Use ACE_Hash_Map_Manager_Ex instead of ACE_Hash_Map_Manager.
-	  Doing so saves us three template instantiations.
+          Use ACE_Hash_Map_Manager_Ex instead of ACE_Hash_Map_Manager.
+          Doing so saves us three template instantiations.
 
-	* ace/Capabilities.i:
+        * ace/Capabilities.i:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
-	* ace/Capabilities.cpp:
+        * ace/Capabilities.cpp:
 
-	  No need to include "ace/Map_Manager.h".
+          No need to include "ace/Map_Manager.h".
 
-	  Added missing ACE_RCSID macro.
+          Added missing ACE_RCSID macro.
 
-	  Improved conformance to ACE coding conventions.
+          Improved conformance to ACE coding conventions.
 
-	  Removed explicit template instantiations for the
-	  ACE_Hash_Map_Manager template.  That template is no longer
-	  used.
+          Removed explicit template instantiations for the
+          ACE_Hash_Map_Manager template.  That template is no longer
+          used.
 
-	  (reset_caps):
+          (reset_caps):
 
-	  Use ACE_Hash_Map_Manager_Ex template traits instead of the
-	  actual template type.  Makes for cleaner code.
+          Use ACE_Hash_Map_Manager_Ex template traits instead of the
+          actual template type.  Makes for cleaner code.
 
-	* ace/Configuration.cpp:
-	* ace/Configuration.h:
-	* ace/Strategies_T.cpp:
-	* ace/Token_Collection.cpp:
-	* ace/Token_Collection.h:
-	* ace/Token_Invariants.cpp:
-	* ace/Token_Invariants.h:
-	* ace/Token_Manager.cpp:
-	* ace/Token_Manager.h:
-	* ace/WIN32_Asynch_IO.cpp:
-	* ace/WIN32_Asynch_IO.h:
+        * ace/Configuration.cpp:
+        * ace/Configuration.h:
+        * ace/Strategies_T.cpp:
+        * ace/Token_Collection.cpp:
+        * ace/Token_Collection.h:
+        * ace/Token_Invariants.cpp:
+        * ace/Token_Invariants.h:
+        * ace/Token_Manager.cpp:
+        * ace/Token_Manager.h:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/WIN32_Asynch_IO.h:
 
-	  Take advantage of template traits to improve clarity of code.
+          Take advantage of template traits to improve clarity of code.
 
-	* ace/Copy_Disabled.h:
+        * ace/Copy_Disabled.h:
 
-	  Corrected comment.
+          Corrected comment.
 
-	* ace/Default_Constants.h:
+        * ace/Default_Constants.h:
 
-	  Moved ACE_DEFAULT_CDR_BUFSIZE, ACE_DEFAULT_CDR_EXP_GROWTH_MAX,
-	  ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK,
-	  ACE_DEFAULT_CDR_MEMCPY_TRADEOFF macros from OS.h to this
-	  header.  Helps with inter-header dependency reduction.
+          Moved ACE_DEFAULT_CDR_BUFSIZE, ACE_DEFAULT_CDR_EXP_GROWTH_MAX,
+          ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK,
+          ACE_DEFAULT_CDR_MEMCPY_TRADEOFF macros from OS.h to this
+          header.  Helps with inter-header dependency reduction.
 
-	* ace/Dynamic_Service_Base.cpp:
-	* ace/Parse_Node.cpp:
-	* ace/Service_Manager.cpp:
-	* ace/Service_Repository.cpp:
-	* ace/Svc_Conf.y:
-	* ace/Svc_Conf_y.cpp:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
 
-	  Include "ace/Service_Types.h".  Necessitated by inter-header
-	  dependency reduction.
+          Include "ace/Service_Types.h".  Necessitated by inter-header
+          dependency reduction.
 
-	* ace/Filecache.h:
-	* ace/Filecache.cpp:
-	* ace/Hash_Map_With_Allocator_T.h:
-	* ace/Hash_Map_With_Allocator_T.cpp:
-	* ace/Local_Name_Space_T.h:
-	* ace/Local_Name_Space.cpp:
+        * ace/Filecache.h:
+        * ace/Filecache.cpp:
+        * ace/Hash_Map_With_Allocator_T.h:
+        * ace/Hash_Map_With_Allocator_T.cpp:
+        * ace/Local_Name_Space_T.h:
+        * ace/Local_Name_Space.cpp:
 
-	  Use ACE_Hash_Map_Manager_Ex instead of ACE_Hash_Map_Manager.
-	  Doing so saves us three template instantiations.
+          Use ACE_Hash_Map_Manager_Ex instead of ACE_Hash_Map_Manager.
+          Doing so saves us three template instantiations.
 
-	* ace/Future_Set.h:
-	* ace/Map_T.h:
+        * ace/Future_Set.h:
+        * ace/Map_T.h:
 
-	  Include "ace/Hash_Map_Manager_T.h" instead of
-	  "ace/Hash_Map_Manager.h".  The former is all that is needed, and
-	  the latter already includes the former.
+          Include "ace/Hash_Map_Manager_T.h" instead of
+          "ace/Hash_Map_Manager.h".  The former is all that is needed, and
+          the latter already includes the former.
 
-	* ace/Hash_Map_Manager_T.i (operator++, operator--):
-	* ace/Map_Manager.i:
-	* ace/RB_Tree.i:
+        * ace/Hash_Map_Manager_T.i (operator++, operator--):
+        * ace/Map_Manager.i:
+        * ace/RB_Tree.i:
 
-	  Implement the post-{in,de}crement operators in terms of their
-	  pre-{in,de}crement operator counterparts to ensure consistency.
+          Implement the post-{in,de}crement operators in terms of their
+          pre-{in,de}crement operator counterparts to ensure consistency.
 
-	* ace/Local_Name_Space_T.cpp:
+        * ace/Local_Name_Space_T.cpp:
 
-	  No need to include "ace/Auto_Ptr.h"
+          No need to include "ace/Auto_Ptr.h"
 
-	  Use template traits to improve code clarity.
+          Use template traits to improve code clarity.
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Moved ACE_CDR_BYTE_ORDER macro definition to CDR_Stream.h.
-	  Helps with inter-header dependencies.
+          Moved ACE_CDR_BYTE_ORDER macro definition to CDR_Stream.h.
+          Helps with inter-header dependencies.
 
-	  Moved ACE_DEFAULT_CDR_BUFSIZE, ACE_DEFAULT_CDR_EXP_GROWTH_MAX,
-	  ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK,
-	  ACE_DEFAULT_CDR_MEMCPY_TRADEOFF to Default_Constants.h.  Helps
-	  with inter-header dependency reduction.
+          Moved ACE_DEFAULT_CDR_BUFSIZE, ACE_DEFAULT_CDR_EXP_GROWTH_MAX,
+          ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK,
+          ACE_DEFAULT_CDR_MEMCPY_TRADEOFF to Default_Constants.h.  Helps
+          with inter-header dependency reduction.
 
-	* ace/POSIX_Asynch_IO.cpp:
+        * ace/POSIX_Asynch_IO.cpp:
 
-	  Added missing ACE_RCSID macro.
+          Added missing ACE_RCSID macro.
 
-	  (bytes_transferred):
-	  Use map template traits to improve code clarity.
+          (bytes_transferred):
+          Use map template traits to improve code clarity.
 
-	* ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_Asynch_IO.h:
 
-	  Redefined old map typedefs in terms of the map traits.
+          Redefined old map typedefs in terms of the map traits.
 
-	* ace/Parse_Node.h:
-	* ace/Service_Repository.h:
+        * ace/Parse_Node.h:
+        * ace/Service_Repository.h:
 
-	  No need to include "ace/Service_Types.h".  A forward declaration
-	  for ACE_Service_Types is enough.
+          No need to include "ace/Service_Types.h".  A forward declaration
+          for ACE_Service_Types is enough.
 
-	* ace/Service_Config.h:
+        * ace/Service_Config.h:
 
-	  No need to include "ace/Service_Types.h" and "ace/Signal.h".
-	  Forward declaring ACE_Service_Types and ACE_Sig_Adapter is
-	  enough.
+          No need to include "ace/Service_Types.h" and "ace/Signal.h".
+          Forward declaring ACE_Service_Types and ACE_Sig_Adapter is
+          enough.
 
-	* ace/Strategies_T.h:
+        * ace/Strategies_T.h:
 
-	  No need to include "ace/Service_Config.h" and
-	  "ace/Synch_Options.h".
+          No need to include "ace/Service_Config.h" and
+          "ace/Synch_Options.h".
 
-	* ace/Synch_Options.h:
+        * ace/Synch_Options.h:
 
-	  Changed all uses of typedefs like "u_char" and "u_long" to their
-	  non-typedef counterparts, e.g. "unsigned char" and "unsigned
-	  long".  Makes it possible to avoid including OS.h.  A big win in
-	  compile time reduction.
+          Changed all uses of typedefs like "u_char" and "u_long" to their
+          non-typedef counterparts, e.g. "unsigned char" and "unsigned
+          long".  Makes it possible to avoid including OS.h.  A big win in
+          compile time reduction.
 
-	  Include "ace/Time_Value.h".  Necessitated by inter-header
-	  dependency reduction.
+          Include "ace/Time_Value.h".  Necessitated by inter-header
+          dependency reduction.
 
-	* ace/Synch_Options.cpp:
+        * ace/Synch_Options.cpp:
 
-	  Changed all uses of typedefs like "u_char" and "u_long" to their
-	  non-typedef counterparts, e.g. "unsigned char" and "unsigned
-	  long".  Makes it possible to avoid including OS.h.  A big win in
-	  compile time reduction.
+          Changed all uses of typedefs like "u_char" and "u_long" to their
+          non-typedef counterparts, e.g. "unsigned char" and "unsigned
+          long".  Makes it possible to avoid including OS.h.  A big win in
+          compile time reduction.
 
-	  Include "ace/Trace.h".  Necessitated by inter-header
-	  dependency reduction.
+          Include "ace/Trace.h".  Necessitated by inter-header
+          dependency reduction.
 
-	* ace/Template_Instantiations.cpp:
+        * ace/Template_Instantiations.cpp:
 
-	  Removed all ACE_Hash_Map_Manager related template
-	  instantiations.  The ones for ACE_Hash_Map_Manager_Ex are all
-	  that are needed.
+          Removed all ACE_Hash_Map_Manager related template
+          instantiations.  The ones for ACE_Hash_Map_Manager_Ex are all
+          that are needed.
 
-	* ace/SSL/SSL_SOCK_Acceptor.h (ACE_SSL_SOCK_Acceptor):
+        * ace/SSL/SSL_SOCK_Acceptor.h (ACE_SSL_SOCK_Acceptor):
 
-	  Inherit privately from ACE_SSL_SOCK, instead of publically.
-	  ACE_SSL_SOCK_Acceptor is IMPLEMENTED-IN-TERMS-OF ACE_SSL_SOCK.
-	  It does not satisfy the IS-A relationship.
+          Inherit privately from ACE_SSL_SOCK, instead of publically.
+          ACE_SSL_SOCK_Acceptor is IMPLEMENTED-IN-TERMS-OF ACE_SSL_SOCK.
+          It does not satisfy the IS-A relationship.
 
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
-	  Use ACE_Countdown_Time to take into account the time between
-	  each call to select() instead of using the same timeout value in
-	  each loop iteration.  [Bug 1110]
+          Use ACE_Countdown_Time to take into account the time between
+          each call to select() instead of using the same timeout value in
+          each loop iteration.  [Bug 1110]
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (get_remote_addr):
+        * ace/SSL/SSL_SOCK_Stream.cpp (get_remote_addr):
 
-	  Retrieve the remote addr from the parent ACE_SSL_SOCK class, not
-	  ACE_SOCK.  Addresses potential inconsistencies in the future.
+          Retrieve the remote addr from the parent ACE_SSL_SOCK class, not
+          ACE_SOCK.  Addresses potential inconsistencies in the future.
 
-	* ace/SSL/SSL_SOCK_Stream.h (ACE_SSL_SOCK_Stream):
+        * ace/SSL/SSL_SOCK_Stream.h (ACE_SSL_SOCK_Stream):
 
-	  Removed friend declarations for the
-	  ACE_SSL_SOCK_{Acceptor,Connector} classes.  They are
-	  unnecessary.
+          Removed friend declarations for the
+          ACE_SSL_SOCK_{Acceptor,Connector} classes.  They are
+          unnecessary.
 
 Tue Feb 11 17:14:56 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/TTY_IO.cpp: Fixed several problems with DTR enabling.  Thanks to
-	  Ray Limpus <ray.limpus@boeing.com> for reporting this.
+        * ace/TTY_IO.cpp: Fixed several problems with DTR enabling.  Thanks to
+          Ray Limpus <ray.limpus@boeing.com> for reporting this.
 
 Thu Feb  6 16:36:18 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Bound_Ptr.{h,i}: Made the get() method const.  Thanks to
-	  Chris Kohlhoff for reporting this.
+        * ace/Bound_Ptr.{h,i}: Made the get() method const.  Thanks to
+          Chris Kohlhoff for reporting this.
