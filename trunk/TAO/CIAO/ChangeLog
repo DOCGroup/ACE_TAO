@@ -1,3 +1,21 @@
+Wed Apr 06 10:30:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/examples/BasicSP/descriptors/NodeManagerMap.dat
+
+	  Modified virtual node names to make them more meaningful.
+
+	* DAnCE/examples/BasicSP/descriptors/DeploymentPlan.cdp
+
+	  Added this file, which is a copy of the old HUDisplay.cdp
+	  file.
+
+	* DAnCE/examples/BasicSP/descriptors/BasicSP.cdp
+	* DAnCE/examples/BasicSP/descriptors/HUDisplay.cdp
+
+	  Removed these two files since they are redundant. The
+	  former one now is "flattern_deploymentplan.cdp",
+	  the latter one is "DeploymentPlan.cdp".
+
 Tue Apr 05 19:29:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
