@@ -64,9 +64,9 @@ public:
   CORBA::Long max_suppliers (void);
   CORBA::Boolean reject_new_events (void);
 
-  TAO_Notify_Property_Long* const queue_length (void);
-  TAO_Notify_Property_Long* const consumers (void);
-  TAO_Notify_Property_Long* const suppliers (void);
+  TAO_Notify_Property_Long* queue_length (void);
+  TAO_Notify_Property_Long* consumers (void);
+  TAO_Notify_Property_Long* suppliers (void);
 
 protected:
   // @@ Pradeep can you explain why there is any maximum for these

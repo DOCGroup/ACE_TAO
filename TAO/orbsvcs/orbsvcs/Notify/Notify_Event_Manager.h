@@ -101,7 +101,7 @@ class TAO_Notify_Export TAO_Notify_Event_Manager
   TAO_Notify_Event_Processor* event_processor (void);
   // Get the Event Processor.
 
-  TAO_Notify_AdminProperties* const admin_properties (void);
+  TAO_Notify_AdminProperties* admin_properties (void);
   // Get the Admin Properties.
 
   // = Event forwarding methods.
