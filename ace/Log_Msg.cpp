@@ -1229,6 +1229,16 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
   ACE_OS::free (ACE_MALLOC_T (save_p));
 
+#if !defined (ACE_NDEBUG)
+  // Check that memory was not corrupted.
+  if (ACE_OS::strlen (this->msg_) >= ACE_Log_Record::MAXLOGMSGLEN)
+    {
+      abort_prog = true;
+      ACE_OS::fprintf (stderr,
+                       "The following logged message is too long!\n");
+    }
+#endif /* ACE_NDEBUG */
+
   // Copy the message from thread-specific storage into the transfer
   // buffer (this can be optimized away by changing other code...).
   log_record.msg_data (this->msg ());
