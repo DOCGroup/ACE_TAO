@@ -7726,9 +7726,10 @@ ACE_INLINE long
 ACE_OS::timezone (void)
 {
 # if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) 
+  && !defined (CHORUS)
 #   if defined (ACE_WIN32)
   return ::_timezone;  // For Win32.
-#   elif defined(__Lynx__) || defined (__FreeBSD__) || defined (CHORUS)
+#   elif defined(__Lynx__) || defined (__FreeBSD__)
   long result = 0;
   struct timeval time;
   struct timezone zone;
