@@ -1,3 +1,11 @@
+Mon Dec  7 22:00:50 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+          
+          Changed a few lines so the idl compiler will accept a value
+          of 65535 for a const unsigned short (it previously rejected
+          anything > 65534).
+
 Mon Dec  7 15:28:16 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
 	* performance-tests/Thruput/TAO/utils.cpp (psecs): fixed another
