@@ -168,37 +168,8 @@ TAO_POA::set_obj_ref_factory (
   PortableInterceptor::ObjectReferenceFactory *current_factory
   ACE_ENV_ARG_DECL)
 {
-  // @@ Priyanka, I have no idea what you're doing here.
-
-  TAO_ObjectReferenceFactory *tao_obj_ref_factory;
-
-  // @@ Priyanka, this is a memory leak.  You allocate a new instance
-  //    and then do nothing with it!
-  ACE_NEW_THROW_EX (tao_obj_ref_factory,
-                    TAO_ObjectReferenceFactory (this),
-                    CORBA::NO_MEMORY ());
-
-  // @@ Priyanka, again... why you reinterpret_cast<>ing here?
-  //    You're just assigning a derived class pointer to a base class
-  //    pointer.  Just assign it!  Polymorphism!
-  PortableInterceptor::ObjectReferenceFactory *obj_ref_factory =
-    ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceFactory *,
-                          tao_obj_ref_factory);
-
-  // @@ Priyanka, memory leak!
-  obj_ref_factory = current_factory;
-
-  // @@ Priyanka, access violation and a memory leak!  You never
-  //    increased the reference count.  The caller owns the storage!
-  //    If you want to "own" it, then you need to increase the
-  //    reference count!
-  this->obj_ref_factory_ = obj_ref_factory;
-
-  // @@ Priyanka, can't you just zap all of the above (broken) code,
-  //    and replace it simply with:
-  //
-  //         CORBA::add_ref (current_factory);
-  //         this->obj_ref_factory_ = current_factory;
+  CORBA::add_ref (current_factory);
+  this->obj_ref_factory_ = current_factory;
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &name,
@@ -215,11 +186,12 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     policy_list_ (0),
     mprofile_ (0),
     tagged_component_ (),
-    profile_id_ (0),
-    add_component_support_ (0),
+    tagged_component_id_ (),
+    profile_id_array_ (0),
     policies_ (policies),
     parent_ (parent),
     active_object_map_ (0),
+    adapter_state_ (PortableInterceptor::HOLDING),
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -257,20 +229,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     caller_key_to_object_ (0),
     servant_for_key_to_object_ (0)
 {
-  // @@ Priyanka, you never initialize the "adapter_state_" attribute
-  //    in the above member initializer list!!  This means the
-  //    adapter_state_ variable has garbage in it to begin with!!!  I
-  //    suggest initializing it to PortableInterceptor::HOLDING since
-  //    TAO's POA always starts out in that state.
-  //
-  //    Another problem is that you never change the state until the
-  //    POA is destroyed.  At some point, the POA becomes ACTIVE.
-  //    This is hard to find out since the POA simply checks the
-  //    POAManager state to figure out if it is active.  Also, be
-  //    careful not to call this->adapter_state_changed(...,
-  //    ...ACTIVE) if the adapter_manager_state_changed(...,
-  //    ...ACTIVE) has already been called.
-
   // Parse the policies that are used in the critical path in
   // a cache.
   this->cached_policies_.update (this->policies_
@@ -370,42 +328,20 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  // @@ Priyanka, it might be better to move all of this code to the
-  //    new_POA() method since you can potentially throw an exception
-  //    here.  This isn't bad for the native exception case, but it is
-  //    really bad to throw an exception in a constructor in the
-  //    emulated exception case since it is not possible to reproduce
-  //    native exception semantics in such situations.
-
-  // @@ Priyanka, why do you need to store these in a
-  //    CORBA::String_var?  Just pass them directly to the constructor
-  //    below since the ORB_Core retains ownership of the returned
-  //    strings.
-  CORBA::String_var server_id = this->orb_core_.server_id();
-  CORBA::String_var orb_id = this->orb_core_.orbid ();
-
   // Create an ObjectReferenceTemplate for this POA.
   TAO_ObjectReferenceTemplate *ort_template;
 
-  // @@ Priyanka, move the this->adapter_name() call on to a separate
-  //    line so that you can do an ACE_CHECK immediately after it.
-  //    Don't forget to store the returned value in a
-  //    PortableInterceptor::AdapterName_var.  This will also fix a
-  //    memory leak you introduced below when an exception occurs.
   ACE_NEW_THROW_EX (ort_template,
                     TAO_ObjectReferenceTemplate (
-                      server_id.in (),
-                      orb_id.in (),
-                      this->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER),
+                      this->orb_core_.server_id (),
+                      this->orb_core_.orbid (),
                       this),
                     CORBA::NO_MEMORY ());
-  // @@ Priyanka, where's the ACE_CHECK?
+  ACE_CHECK;
 
   this->ort_template_ = ort_template;
-
-  this->set_obj_ref_factory (this->ort_template_
-                             ACE_ENV_ARG_PARAMETER);
-  // @@ Priyanka, where's the ACE_CHECK?
+  CORBA::add_ref (this->ort_template_);
+  this->obj_ref_factory_ = this->ort_template_;
 
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
@@ -759,17 +695,6 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   this->cleanup_in_progress_ = 1;
 
-  // @@ Priyanka, it looks like you should be doing the following
-  //    here:
-  //
-  //      this->adapter_state_ = PortableInterceptor::INACTIVE;
-  //      this->adapter_state_changed (s,
-  //                                   this->adapter_state_
-  //                                   ACE_ENV_ARG_PARAMETER);
-  //      ACE_CHECK;
-  //
-  //    See Section 21.5.2.2 "Adapter States" for details.
-
   // This operation destroys the POA and all descendant POAs. The POA
   // so destroyed (that is, the POA with its name) may be re-created
   // later in the same process. (This differs from the
@@ -786,23 +711,11 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
-  // @@ Priyanka, why are you allocating this sequence on the heap.
-  //    Not only is it unnecessary to do so, but it is expensive.
-  //    Just instantiate it on the stack.
-  PortableInterceptor::ObjectReferenceTemplateSeq
-    *seq_obj_ref_template = 0;
-
-  ACE_NEW_THROW_EX (seq_obj_ref_template,
-                    PortableInterceptor::ObjectReferenceTemplateSeq,
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  PortableInterceptor::ObjectReferenceTemplateSeq_var
-    seq_obj_ref_template_var = seq_obj_ref_template;
+  PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
 
   CORBA::ULong i = 0;
 
-  // Remove all children POAs
+  //  Remove all children POAs
   for (CHILDREN::iterator iterator = this->children_.begin ();
        iterator != this->children_.end ();
        ++iterator)
@@ -813,16 +726,22 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       PortableInterceptor::ObjectReferenceTemplate *child_at =
         child_poa->get_adapter_template ();
 
+      CORBA::add_ref (child_at);
+
       /// Add it to the sequence of object reference templates that
       /// will be destroyed.
-      seq_obj_ref_template_var->length (i+1);
+      seq_obj_ref_template.length (i+1);
 
-      seq_obj_ref_template_var[i] = child_at;
+      seq_obj_ref_template[i] = child_at;
+
+      child_poa->adapter_state_ = PortableInterceptor::INACTIVE;
+
+      child_poa->adapter_state_changed (seq_obj_ref_template,
+                                        child_poa->adapter_state_
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
       ++i;
-
-      // @@ Priyanka, this is redundant.  The below call already does
-      //    that.
-      child_poa->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
       child_poa->destroy_i (etherealize_objects,
                             wait_for_completion
@@ -889,18 +808,10 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
-      // @@ Priyanka, once you fix the sequence instantiation so that
-      // it is stack instantiated, you can remove the broken cast you
-      // use below and simply pass the sequence as an "in" parameter,
-      // i.e. just pass it in without a cast.  Note that you'll need
-      // to fix the adapter_state_changed() signature to accept a
-      // "const PortableInterceptor::ObjectReferenceTemplateSeq &".
-      // Hence, no need to introduce pointers or casts.
-      this->adapter_state_changed (
-        (const PortableInterceptor::ObjectReferenceTemplateSeq *)seq_obj_ref_template,
-        this->adapter_state_);
-      // @@ Priyanka, once you add the missing ACE_ENV_ARG_PARAMETER
-      // to the above call, don't forget the ACE_CHECK here.
+      this->adapter_state_changed (seq_obj_ref_template,
+                                   this->adapter_state_
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else
     {
@@ -951,12 +862,7 @@ TAO_POA::the_children_i (ACE_ENV_SINGLE_ARG_DECL)
   return children._retn ();
 }
 
-// @@ Priyanka, shouldn't this method return a
-//    PortableInterceptor::AdapterName, not a CORBA::StringSeq?  One
-//    may be a typedef of the other but they have different
-//    TypeCodes!
-//
-CORBA::StringSeq *
+PortableInterceptor::AdapterName *
 TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -964,10 +870,34 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
   /// RootPOA to the one whose name is requested. But, the sequence
   /// shouldnt include the name of the RootPOA.
 
+  CORBA::String_var current_poa_name =
+    this->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  PortableServer::POA_ptr current_poa = this;
+
+  PortableServer::POA_var current_poa_name_parent = 0;
+
+  CORBA::ULong name_seq_length = 0;
+
+  // Find the length of the final sequence.
+  while (current_poa_name_parent.in () != PortableServer::POA::_nil ())
+    {
+      ++name_seq_length;
+
+      // Make the parent name as the current_poa_name
+      // Go up the ladder by one parent ;-)
+      current_poa_name_parent =
+        current_poa->the_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      current_poa = current_poa_name_parent.in ();
+    }
+
   /// Empty adapter name sequence.
-  CORBA::StringSeq *name_seq = 0;
+  PortableInterceptor::AdapterName *name_seq = 0;
   ACE_NEW_THROW_EX (name_seq,
-                    CORBA::StringSeq,
+                    PortableInterceptor::AdapterName,
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -975,37 +905,16 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
-  CORBA::StringSeq_var safe_args (name_seq);
-
-  CORBA::String_var current_poa_name =
-    this->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  CORBA::ULong name_seq_length = 0;
-
-  PortableServer::POA_var current_poa =
-    PortableServer::POA::_duplicate (this);
+  PortableInterceptor::AdapterName_var safe_args (name_seq);
+  name_seq->length (name_seq_length);
 
   // Should do it kind of a while loop .. get the poa_current and
   // attach the name to the sequence and go further till the final
   // name is the name of RootPOA and stop there.
-  // @@ TAO_OBJID_ROOTPOA
-  //
-  // @@ Priyanka, judging from Section 21.5.2.1 "Adapter Names" in the
-  //    spec, you're putting the adapter names in the reverse order.
-  //    In particular, it states
-  //        "the adapter name shall be the sequence of names starting
-  //         with the root POA that is required to reach the POA using
-  //         the find_POA call"
-  //    Assuming that my interpretation is correct.  The below code is
-  //    incorrect.
-  while (ACE_OS::strcmp (current_poa_name.in (),
-                         TAO_DEFAULT_ROOTPOA_NAME) != 0)
+  current_poa = this;
+
+  while (current_poa_name_parent.in () != PortableServer::POA::_nil ())
     {
-      ++name_seq_length;
-
-      name_seq->length (name_seq_length);
-
       (*name_seq) [name_seq_length-1] = current_poa_name.in ();
 
       /// Make the parent name as the current_poa_name
@@ -1018,8 +927,9 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
         current_poa_name_parent->the_name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      current_poa =
-        PortableServer::POA::_duplicate (current_poa_name_parent.in ());
+      current_poa = current_poa_name_parent.in ();
+
+      --name_seq_length;
     }
 
   return safe_args._retn ();
@@ -1090,19 +1000,11 @@ TAO_POA::tao_add_ior_component_to_profile (
                                  CORBA::COMPLETED_NO));
 }
 
-// @@ Priyanka, change the first paramater to a:
-//       const PortableInterceptor::ObjectReferenceTemplateSeq &
-//    Just use the standard C++ mapping parameter passing rules.
-//    While it isn't strictly necessary to do so for this TAO-specific
-//    method, it is less confusing to use consistent parameter passing
-//    style.
-//
-//    Also, the IOR interceptors can throw an exception.  You forgot
-//    to add a CORBA::Environment parameter, i.e. "ACE_ENV_ARG_DECL"
 void
-TAO_POA::
-adapter_state_changed (const PortableInterceptor::ObjectReferenceTemplateSeq *seq_obj_ref_template,
-                       PortableInterceptor::AdapterState state)
+TAO_POA::adapter_state_changed (const PortableInterceptor::ObjectReferenceTemplateSeq &seq_obj_ref_template,
+                                PortableInterceptor::AdapterState state
+                                ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// First get a list of all the interceptors.
   TAO_IORInterceptor_List::TYPE &interceptors =
@@ -1115,19 +1017,10 @@ adapter_state_changed (const PortableInterceptor::ObjectReferenceTemplateSeq *se
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      // @@ Priyanka, your missing the "ACE_ENV_ARG_PARAMETER" in the
-      //    following method call.  This is really bad for the
-      //    emulated exceptions case.  Not only is the exception not
-      //    propagated up to the caller, but you're also introducing a
-      //    TSS access each time this method is called due to the
-      //    missing the ACE_ENV_ARG_PARAMETER.  The TSS access occurs
-      //    since the default CORBA::Environment argument call you
-      //    introduced by not passing in the ACE_ENV_ARG_PARAMETER
-      //    places the emulated exception results in TSS.
-      interceptors[i]->adapter_state_changed ((*seq_obj_ref_template),
-                                              state);
-      // @@ Priyanka, once you add the "ACE_ENV_ARG_PARAMETER" don't
-      //    forget the ACE_CHECK here.
+      interceptors[i]->adapter_state_changed (seq_obj_ref_template,
+                                              state
+                                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -3680,10 +3573,6 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  /// Set the endpoints
-  (void) this->orb_core_.open (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   TAO_Default_Acceptor_Filter filter;
   TAO_Stub *data =
     this->create_stub_object (key,
@@ -3717,10 +3606,8 @@ TAO_POA::tao_establish_components (ACE_ENV_SINGLE_ARG_DECL)
 
 }
 
-// @@ Priyanka, this first parameter should be a
-//    PortableInterceptor::IORInfo_ptr.  Please learn the C++ mapping!
 void
-TAO_POA::establish_components (PortableInterceptor::IORInfo *info
+TAO_POA::establish_components (PortableInterceptor::IORInfo_ptr info
                                ACE_ENV_ARG_DECL)
 {
   // Iterate over the registered IOR interceptors so that they may be
@@ -3778,10 +3665,8 @@ TAO_POA::establish_components (PortableInterceptor::IORInfo *info
   return;
 }
 
-// @@ Priyanka, this first parameter should be a
-//    PortableInterceptor::IORInfo_ptr.  Please learn the C++ mapping!
 void
-TAO_POA::components_established_i (PortableInterceptor::IORInfo *info
+TAO_POA::components_established_i (PortableInterceptor::IORInfo_ptr info
                                    ACE_ENV_ARG_DECL)
 {
   // Iterate over the registered IOR interceptors so that they may be
@@ -3831,21 +3716,13 @@ void
 TAO_POA::save_ior_component (const IOP::TaggedComponent &component
                              ACE_ENV_ARG_DECL_NOT_USED)
 {
-  // @@ Priyanka, let's think about why this is broken.
-  //    - This method gets invoked by IORInfo::add_ior_component().
-  //    - That means that each IORInterceptor can potentially invoke
-  //      this method, and thus cause this state to be changed.
-  //    - That is REALLY busted.  The previously cached tagged
-  //      component will be forgotten, and thus will never be added to
-  //      the IOR's tagged components!!  A profile can have MULTIPLE
-  //      tagged components!
-  //    - BROKEN!
-  //
-  //    Do you really need this method?  What about
-  //    tao_add_ior_component()?
+  CORBA::ULong present_length = this->tagged_component_.length ();
 
-  this->tagged_component_ = component;
-  this->add_component_support_ = 1;
+  CORBA::ULong new_length = present_length + 1;
+
+  this->tagged_component_.length (new_length);
+
+  this->tagged_component_ [present_length] = component;
 }
 
 void
@@ -3854,26 +3731,23 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
                                    IOP::ProfileId profile_id
                                    ACE_ENV_ARG_DECL_NOT_USED)
 {
-  // @@ Priyanka, let's think about why this is broken.
-  //    - This method gets invoked by IORInfo::add_ior_component().
-  //    - That means that each IORInterceptor can potentially invoke
-  //      this method, and thus cause this state to be changed.
-  //    - That is REALLY busted.  The previously cached tagged
-  //      component will be forgotten, and thus will never be added to
-  //      the IOR's tagged components!!  A profile can have MULTIPLE
-  //      tagged components!
-  //    - BROKEN!
-  //
-  //    The method name is also misleading.  You're really only
-  //    supposed to be using the ProfileId parameter to decide which
-  //    profiles will have a tagged component added.
-  //
-  //    Do you really need this method?  What about
-  //    tao_add_ior_component_to_profile()?
+  // The length of this->tagged_component_id_ is the same as the
+  // length of the profile_id_array_ since we are trying to make a
+  // one-to-one link between these two arrays. So, whenever
+  // this->tagged_component_id_ is increased, we need to increase the
+  // size of this->profile_id_array_ also.
 
-  this->tagged_component_ = component;
-  this->profile_id_ = profile_id;
-  this->add_component_support_ = 1;
+  CORBA::ULong present_length = this->tagged_component_id_.length ();
+
+  CORBA::ULong new_length = present_length + 1;
+
+  this->tagged_component_id_.length (new_length);
+
+  this->tagged_component_id_ [present_length]= component;
+
+  this->profile_id_array_.size (new_length);
+
+  this->profile_id_array_ [present_length] = profile_id;
 }
 
 TAO_Stub *
@@ -3963,23 +3837,24 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
   this->set_policy_list (policy_list);
   this->set_mprofile (&mprofile);
 
-  /// Add the saved tagged components (from IORInfo::add_ior_component
-  /// methods to the IOR... if needed.
-  if (this->add_component_support_ == 1)
+  // Add the saved tagged components (from IORInfo::add_ior_component
+  // methods to the IOR... if needed.
+  CORBA::ULong len = this->tagged_component_.length ();
+  for (CORBA::ULong i = 0; i != len; ++i)
     {
-      if (this->profile_id_ == 0)
-        {
-          this->tao_add_ior_component (this->tagged_component_
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-        }
-      else
-        {
-          this->tao_add_ior_component_to_profile (this->tagged_component_,
-                                                  this->profile_id_
-                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-        }
+      this->tao_add_ior_component (this->tagged_component_[i]
+                                   ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+      }
+
+  len = this->tagged_component_id_.length ();
+
+  for (CORBA::ULong i = 0; i != len; ++i)
+    {
+      this->tao_add_ior_component_to_profile (this->tagged_component_id_[i],
+                                              this->profile_id_array_[i]
+                                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
     }
 
   return

@@ -58,10 +58,6 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Priyanka, why aren't you using the following:
-  //       this->tao_add_ior_component()
-  //    ?!!!?
-
   // Add the given tagged component to all profiles.
   this->poa_->save_ior_component (component
                                   ACE_ENV_ARG_PARAMETER);
@@ -75,12 +71,6 @@ TAO_IORInfo::add_ior_component_to_profile (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Add the given tagged component to all profiles matching the given
-  // ProfileId.
-
-  // @@ Priyanka, why aren't you using the following:
-  //       this->tao_add_ior_component_to_profile()
-  //    ?!!!?
   this->poa_->save_ior_component_and_profile_id (component,
                                                  profile_id
                                                  ACE_ENV_ARG_PARAMETER);
@@ -113,6 +103,8 @@ TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
   */
   PortableInterceptor::ObjectReferenceTemplate *adapter_template =
     this->poa_->get_adapter_template ();
+
+  CORBA::add_ref (adapter_template);
 
   if (adapter_template == 0)
     {

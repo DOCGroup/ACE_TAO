@@ -10,11 +10,9 @@ ACE_RCSID (PortableServer,
 TAO_ObjectReferenceTemplate::
 TAO_ObjectReferenceTemplate (const char *server_id,
                              const char *orb_id,
-                             PortableInterceptor::AdapterName *adapter_name,
                              TAO_POA *poa)
   : server_id_ (server_id),
     orb_id_ (orb_id),
-    adapter_name_ (adapter_name),
     poa_ (poa)
 {
   /// Constructor
@@ -29,36 +27,55 @@ char *
 TAO_ObjectReferenceTemplate::server_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Priyanka, you're not conforming to the C++ mapping.  Do a
-  //    "return CORBA::string_dup()".  The caller owns the
-  //    storage/memory!
-  return ACE_const_cast (char *, this->server_id_);
+  return CORBA::string_dup (this->server_id_);
 }
 
 char *
 TAO_ObjectReferenceTemplate::orb_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Priyanka, you're not conforming to the C++ mapping.  Do a
-  //    "return CORBA::string_dup()".  The caller owns the
-  //    storage/memory!
-  return ACE_const_cast (char *, this->orb_id_);
+  return CORBA::string_dup (this->orb_id_);
 }
 
 PortableInterceptor::AdapterName *
 TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Priyanka, you're not conforming to the C++ mapping.  You must
-  //    instantiate a new PortableInterceptor::AdapterName instance,
-  //    and initialize it with this->adapter_name_ (e.g. via the
-  //    constructor).  Specifically, you must return a copy (in this
-  //    case).  The caller owns the storage/memory!
-  return this->adapter_name_;
+  PortableInterceptor::AdapterName *adapter_name = 0;
+
+  if (this->adapter_name_ != 0)
+    {
+      ACE_NEW_THROW_EX (adapter_name,
+                        PortableInterceptor::AdapterName (* (this->adapter_name_)),
+                        CORBA::NO_MEMORY (
+                           CORBA_SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              ENOMEM),
+                           CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (0);
+
+      return adapter_name;
+    }
+  else
+    {
+      this->adapter_name_ =
+        this->poa_->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      ACE_NEW_THROW_EX (adapter_name,
+                        PortableInterceptor::AdapterName (* (this->adapter_name_)),
+                        CORBA::NO_MEMORY (
+                           CORBA_SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              ENOMEM),
+                           CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (0);
+
+      return adapter_name;
+    }
 }
 
-// @@ Priyanka, technically this should be CORBA::Object_ptr!
-CORBA::Object *
+CORBA::Object_ptr
 TAO_ObjectReferenceTemplate::make_object (
     const char * intf,
     const PortableInterceptor::ObjectId & id
@@ -67,26 +84,18 @@ TAO_ObjectReferenceTemplate::make_object (
       CORBA::SystemException
     ))
 {
-  CORBA::OctetSeq object_id = id;
+  PortableServer::ObjectId oid;
 
-  // @@ Priyanka, reinterpret_cast<>s are generally really bad.  Do
-  // you really have to use it?
-  PortableServer::ObjectId *user_id =
-    ACE_reinterpret_cast (PortableServer::ObjectId *,
-                          &object_id);
+  oid.replace (id.maximum (),
+               id.length (),
+               ACE_const_cast (CORBA::Octet *,id.get_buffer ()),
+               0);
 
   // Create a reference
   CORBA::Object_var object =
     this->poa_->invoke_key_to_object (intf,
-                                      *user_id
+                                      oid
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  // @@ Priyanka, what purpose does this object_to_string() call
-  //    serve?  Can't you remove it?
-  CORBA::String_var ior =
-    this->poa_->orb_core ().orb ()->object_to_string (object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object._retn ();
@@ -95,9 +104,5 @@ TAO_ObjectReferenceTemplate::make_object (
 void
 TAO_ObjectReferenceTemplate::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  // @@ Priyanka, this is a reference counted object.  You cannot
-  //    directly call delete() on the instance.  Use the reference
-  //    counting mechanism.  For valuetypes, this is
-  //    CORBA::remove_ref().
-  delete this;
+  CORBA::remove_ref (this);
 }

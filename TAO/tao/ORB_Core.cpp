@@ -1302,6 +1302,7 @@ TAO_ORB_Core::get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL)
   // Initialize the protocols hooks instance.
   this->protocols_hooks_->init_hooks (this
                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   return this->protocols_hooks_;
 }
@@ -1653,14 +1654,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
 
-  // This method should only be called by servers, so now we set up
-  // for listening!
-  int ret = this->open (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (ret == -1)
-    return -1;
-
   // Fetch the Reactor
   ACE_Reactor *r = this->reactor ();
 
@@ -1859,33 +1852,6 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
       ior_interceptors[k]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
-}
-
-// Set up listening endpoints.
-int
-TAO_ORB_Core::open (ACE_ENV_SINGLE_ARG_DECL)
-{
-  // Double check pattern
-  if (this->open_called_ == 1)
-    return 1;
-
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
-
-  if (this->open_called_ == 1)
-    return 1;
-
-  /// Open the Acceptor Registry.
-  int ret=
-    this->lane_resources ().open_acceptor_registry (0
-                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (ret == -1)
-    return -1;
-
-  this->open_called_ = 1;
-
-  return 0;
 }
 
 TAO_Thread_Lane_Resources &

@@ -1,3 +1,76 @@
+Fri Feb  8 16:40:38 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp :
+	* tao/ORB_Core.h :
+	  Removed the unnecessary and wrongly places open call.
+	  Removed the no-longer needed open () method.
+
+	* tao/PortableServer/POAManager.h :
+	* tao/PortableServer/POAManager.cpp:
+	  Modified the way in which the POAManager Id is set.
+	  Added a new public method to return the manager id.
+
+	* tao/PortableServer/ObjectReferenceTemplate.h:
+	  Removed unnecessary includes.
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp :
+	* tao/PortableServer/ObjectReferenceFactory.cpp:
+	  Assigned and returned variables in memory-correct
+	  syntax following the C++ mapping rules.
+
+	* tao/PortableServer/IORInfo.cpp :
+	  Removed the fixed review comments. Incremented the reference
+	  count of the adapter_template where needed.
+
+	* tao/PortableServer/Object_Adapter.cpp (open):
+	  Re-added the open_default_resources method call in the open
+	  method which is the right place to do.
+
+	* tao/PortableServer/POA.cpp :
+	* tao/PortableServer/POA.h :
+	  Removed unnecessary reinterpret casts. Modified the
+	  instantiation of ObjectReferenceTemplate in accordance with its
+	  modified constructor. And, similar other minor but important
+	  changes such as setting the default value of the private
+	  variable adapter_state_. Invoked the adapter_state_changed
+	  methods when they should have been called.
+
+	  Modified the signature of the adapter_name_i method to return a
+	  PortableInterceptor::AdapterName * instead of returning
+	  CORBA::StringSeq *. Fixed its implementation to reduce locks and
+	  return the correct format.
+
+	  Modified the signature of adapter_state_changed method to take
+	  the reference to the object reference template sequence rather
+	  than a pointer to it.
+
+	  Removed the call to TAO_ORB_Core::open from the key_to_stub_i
+	  method since its not needed here.
+
+	  Modified the implementation of the save_ior_component* methods
+	  to save all the IOP::TaggedComponents passed it. With the way it
+	  was done before, if the method was called more than once, the
+	  previous values are over written. Modified accordingly the
+	  implementation of create_stub_object.
+
+	* tao/PortableServer/POA.i :
+	  Modified the implementation of TAO_POA::get_manager_id method to
+	  invoke the get_manager_id method in TAO_POA_Manager.
+
+	* tao/ObjectReferenceTemplateC.h (PortableInterceptor):
+	* tao/ObjectReferenceTemplateC.cpp (_tao_unmarshal_v):
+	  Re-added the _tao_marshal_v and _tao_unmarshal_v internal
+	  methods.
+
+	* orbsvcs/examples/ORT/Gateway_i.cpp (invoke):
+	  Added the missing ACE_ENV macros.
+
+	* tests/ORT/server.cpp :
+	  Added a missing ACE_ENV macro.
+
+	* tests/ORT/README:
+	  Updated on commands to run the test.
+
 Fri Feb  8 14:12:54 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* docs/tutorials/Quoter/index.html: Updated the tutorial to make
@@ -9,7 +82,7 @@ Fri Feb  8 14:12:54 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Fri Feb  8 12:33:29 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/DLL_ORB.cpp:
-	* tao/Policy_Set.cpp: 
+	* tao/Policy_Set.cpp:
 	  The Tru64/CXX builds require #including "tao/Environment.h",
 	  this is one of the few builds that does not define
 	  ACE_TEMPLATES_REQUIRE_SOURCE.
@@ -26,7 +99,7 @@ Fri Feb  8 12:25:55 2002  Carlos O'Ryan  <coryan@uci.edu>
 	  operators directly instead of using the IFR_Client_Adapter, that
 	  makes the patches shorter and, therefore, makes for easier long
 	  term maintainance.
-	
+
 	* Domain/DomainS.h:
 	* diffs/Domain.diff:
 	  Fixed the export macros.
@@ -48,31 +121,31 @@ Fri Feb  8 13:55:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Xt_Stopwatch/server.cpp (main): Added a patch for single
 	  threaded builds. Thanks to Marco Kranawetter
-	  <Marco.Kranawetter@icn.siemens.de> for the patch. 
+	  <Marco.Kranawetter@icn.siemens.de> for the patch.
 
-	* tests/Xt_Stopwatch/Makefile: Fixed dependency. 
+	* tests/Xt_Stopwatch/Makefile: Fixed dependency.
 
 Thu Feb 08 12:08:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/RTCORBA/Activity/activity_export.h: Added a new export
 	  definition file. This is needed for Win32 based systems.
-	
-	* examples/RTCORBA/Activity/Thread_Task.h: 
+
+	* examples/RTCORBA/Activity/Thread_Task.h:
 	* examples/RTCORBA/Activity/Activity.h:
 	* examples/RTCORBA/Activity/Job_i.h:
 	* examples/RTCORBA/Activity/POA_Holder.h:
 	* examples/RTCORBA/Activity/Periodic_Task.h:
 	* examples/RTCORBA/Activity/Task_Stats.h:
 	* examples/RTCORBA/Activity/Thread_Task.h: Added the export flag
-	  to all the header files. 
-	
+	  to all the header files.
+
 	* examples/RTCORBA/Activity/Builder.cpp:
 	* examples/RTCORBA/Activity/Builder.h: Changed the svc_conf macros
 	  to use the export flags.
-	
+
 	* examples/RTCORBA/Activity/activity.dsp: Added the export
 	  definition file. Fixed the release build configurtaion. It was
-	  broken. 
+	  broken.
 
 	  The above fixes should fix the annoying warnings in Win32 builds.
 
@@ -262,7 +335,7 @@ Thu Feb  7 17:06:24 2002  Carlos O'Ryan  <coryan@uci.edu>
 	* tao/Policy_Manager.h:
 	* tao/Policy_Manager.i:
 	  Use CORBA::InvalidPolicies instead of CORBA_InvalidPolicies.
-	  
+
 	* tao/Pollable.pidl:
 	* tao/PollableC.h:
 	* tao/PollableC.i:
@@ -287,7 +360,7 @@ Thu Feb  7 17:06:24 2002  Carlos O'Ryan  <coryan@uci.edu>
 	  CORBA::TypeCode pseudo-object is automagically inserted by the
 	  IDL compiler, and any attempt to define it in a .pidl file would
 	  fail.
-	
+
 	* tao/Typecode_Constants.cpp:
 	  Remove a number of TypeCodes that are defined in the generated
 	  code.
@@ -300,7 +373,7 @@ Thu Feb  7 17:06:24 2002  Carlos O'Ryan  <coryan@uci.edu>
 	  the comments made reference was removed looong time ago.
 	  Removed a number of forward references that are better declared
 	  in the generated (from PIDL) files.
-	  
+
 	* tao/DynamicInterface/Unknown_User_Exception.h:
 	* tao/DynamicInterface/Unknown_User_Exception.cpp:
 	  Update hand-crafted code to include the new _tao_duplicate()
