@@ -984,6 +984,11 @@ for the pointer to the STL fixes.
   <LI>Each project will contain 8 different configurations.  These
       are a mixture of Debug/Release, Unicode/non-Unicode, and
       Static/Dynamic library versions for both i386 and Alpha machines.
+      Make sure you are building the one you'll use.  All these
+      different configurations are provided for your convenience.  You
+      can either adopt the scheme to build your applications with
+      different configurations, or use <code>ace/config.h</code> to
+      tweak with the default settings on NT.
       <STRONG>Note:</STRONG> If you
       use the dynamic libraries, make sure you include ACE_ROOT\bin
       in your PATH whenever you run programs that use ACE.<BR><BR>
