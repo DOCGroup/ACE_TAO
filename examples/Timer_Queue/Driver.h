@@ -42,8 +42,10 @@ typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
 template <class RECEIVER, class ACTION>
 class Command 
   // = TITLE
-  // @@ Please add a more descriptive title here...
-  //    Command
+  //    Defines an abstract class that allows us to invoke commands
+  //    without knowing anything about the implementation.  This class
+  //    is used in the <Timer_Queue_Test_Driver> to invoke operations
+  //    of the driver.
   //
   // = DESCRIPTION
   //    This class declares an interface to execute operations,
@@ -53,10 +55,11 @@ class Command
 {
 public:
   Command (RECEIVER &recvr, ACTION action);
-  // @@ Please add a comment.
+  // Sets the <receiver_> of the Command to recvr, and the 
+  // <action_> of the Command to <action>.
 
   virtual int execute (void *arg);
-  // @@ Please add a comment.
+  // Invokes the method <action_> from the object <receiver_>.
 
 private:
   RECEIVER &receiver_;
@@ -69,12 +72,11 @@ private:
 template <class TQ, class RECEIVER, class ACTION>
 class Timer_Queue_Test_Driver
   // = TITLE 
-  // @@ Please add a more descriptive title here...
-  //    Timer_Queue_Test_Driver
+  //    Defines a class that provides a simmple implementation for 
+  //      a test driver for timer queues.  
   //
   // = DESCRIPTION
-  //    This class implements a test driver for timer queues.  This is
-  //    the place where the common code to test the different
+  //    This is the place where the common code to test the different
   //    implementations of the timer queue resides.  This class has
   //    the logic for the parse_commands() method, the run_test(),
   //    read_input() and the get_next_request().  Subclasses can
@@ -82,20 +84,31 @@ class Timer_Queue_Test_Driver
   //    to that implementation.
 {
 public:
-  // @@ Please comment all of these methods.
   virtual int parse_commands (const char *buf);
+  // Breaks up the input string buffer into pieces and executes
+  // the appropriate method to handle that operation.
 
   virtual int run_test (void);
+  // This is the main entry point to the test driver.  The user
+  // of the class should normally invoke this method.
+  // Returns 0 when successful, or 0 otherwise.
   
   virtual int get_next_request (void);
+  // This internal method gets the next request from the user.
+  // Returns -1 when user wants to exit.  Returns 0 otherwise.
 
   virtual ssize_t read_input (char *buf, size_t bufsiz);
+  // Reads input from the user into the buffer <buf> with a maximum
+  // of <bufsiz> bytes.  Returns the amount of bytes actually read
+  // Otherwise, a -1 is returned and errno is set to indicate the error.
 
   // = Template Methods.
     
   virtual int display_menu (void)=0;
+  // Prints the user interface for the driver to STDOUT.
   
   virtual int init (void)=0;
+  // Initializes values and operations for the driver.
   
 protected:
   TQ timer_queue_;

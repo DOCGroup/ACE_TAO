@@ -99,13 +99,11 @@ class Async_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Async_Time
 public:
   Async_Timer_Queue_Test_Driver (void);
 
+  virtual int display_menu (void);
   // Print menu of options.
 
-  virtual int display_menu (void);
-
-  // Initializes the driver's internal variables inherited from the parent
-
   virtual int init (void);
+  // Initializes the driver's internal variables inherited from the parent
 };
 
 #endif /* _ASYNC_TIMER_QUEUE_TEST_H_ */

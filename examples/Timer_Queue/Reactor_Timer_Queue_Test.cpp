@@ -27,11 +27,6 @@
 static const int NO_OF_IO_HANDLERS = 5;
 #define  REACTOR  ACE_Reactor::instance ()
 
-// constructor
-
-Reactor_Timer_Handler::Reactor_Timer_Handler (void)
-{}
-
 void 
 Reactor_Timer_Handler::set_timer_id (long tid)
 {
@@ -42,6 +37,9 @@ int
 Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 			       const void *)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (tv);
+
   ACE_Time_Value txv = ACE_OS::gettimeofday ();
   ACE_DEBUG ((LM_DEBUG, "\nTimer #%d fired at %d.%06d (%T)!\n",
 	      this->tid_, txv.sec (), txv.usec ()));
@@ -103,6 +101,9 @@ Input_Handler::cancel_timer (void *argument)
 int
 Input_Handler::shutdown_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
   this->done_ = 1;
   ACE_DEBUG ((LM_DEBUG, "Shutting down event loop\n"));
   return -1;
@@ -111,6 +112,9 @@ Input_Handler::shutdown_timer (void *argument)
 int
 Input_Handler::list_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
   ACE_Timer_Queue_Iterator &iter = this->tq_->iter ();
   ACE_DEBUG ((LM_DEBUG, "\n\nTimers in queue:\n"));
           
@@ -122,7 +126,6 @@ Input_Handler::list_timer (void *argument)
 		  tn->get_timer_value ().sec (),
 		  tn->get_timer_value ().usec ()));
     }
-
   return 0;
 }
 
@@ -133,7 +136,7 @@ Input_Handler::handle_input (ACE_HANDLE)
 }
 
 Reactor_Timer_Queue_Test_Driver::Reactor_Timer_Queue_Test_Driver (void)
-  : thandler (&timer_queue_, *this)
+  : thandler_ (&timer_queue_, *this)
 {
 }
 
@@ -160,27 +163,30 @@ Reactor_Timer_Queue_Test_Driver::init (void)
 
   // initialize <Command>s with their corresponding <Input_Handler>  methods.
   ACE_NEW_RETURN (schedule_cmd_, 
-		  COMMAND (thandler, &Input_Handler::schedule_timer),
+		  COMMAND (thandler_, &Input_Handler::schedule_timer),
 		  -1);
   
   ACE_NEW_RETURN (cancel_cmd_,
-		  COMMAND (thandler, &Input_Handler::cancel_timer),
+		  COMMAND (thandler_, &Input_Handler::cancel_timer),
 		  -1);
 
   ACE_NEW_RETURN (list_cmd_,
-		  COMMAND (thandler, &Input_Handler::list_timer),
+		  COMMAND (thandler_, &Input_Handler::list_timer),
 		  -1);
 
   ACE_NEW_RETURN (shutdown_cmd_,
-		  COMMAND (thandler, &Input_Handler::shutdown_timer),
+		  COMMAND (thandler_, &Input_Handler::shutdown_timer),
 		  -1);
 
   REACTOR->set_timer_queue (&timer_queue_);
 
-  ACE::register_stdin_handler (&thandler, REACTOR,
+  ACE::register_stdin_handler (&thandler_, REACTOR,
                                ACE_Thread_Manager::instance ());
 
+  // print the menu of options.
   this->display_menu ();
+
+  return 0;
 }
 
 // run test was overrun due to the reactive way of handling input.
@@ -193,7 +199,7 @@ Reactor_Timer_Queue_Test_Driver::run_test (void)
   this->init ();
 
   // Run until we say stop.
-  while (thandler.done () == 0)
+  while (thandler_.done () == 0)
     REACTOR->handle_events ();
 
   ACE_DEBUG ((LM_DEBUG, "TIMER TEST ENDED\n"));

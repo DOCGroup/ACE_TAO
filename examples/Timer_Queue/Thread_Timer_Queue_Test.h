@@ -94,7 +94,8 @@ private:
 
 class Thread_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task, Input_Task::ACTION>
   // = TITLE
-  //    Thread_Timer_Queue_Test_Driver
+  //    Implements an example application that exercises <Thread_Timer_Queue> 
+  //    timer queue.
   //
   // = DESCRIPTION
   //    This class implements a simple test driver for the
@@ -110,18 +111,17 @@ public:
   virtual int run_test (void);
 
 private:
-  Input_Task input_task;
-  // @@ Please fix this by putting a trailing '_'...
+  Input_Task input_task_;
+  // Subclassed from ACE_Task.
 };
 
 class Handler : public ACE_Event_Handler 
   // = TITLE
-  //    This class implements a simple Event_Handler,
+  //     Event handler for the timer queue timeout events.
   //
   // = DESCRIPTION
-  //     The <handle_timeout> hook method justs printouts the current
-  //     time, delete this and prints the delay on the twhen it is
-  //     expired.
+  //     The <handle_timeout> hook method prints out the current
+  //     time, prints the time when this timer expired and deletes "this".
 {
 public:
   Handler (const ACE_Time_Value &expiration_time);
