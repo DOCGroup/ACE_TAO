@@ -148,7 +148,10 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   ACE_TRACE ("ACE_Shared_Memory_Pool::handle_signal");
   // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("signal %S occurred\n"), signum));
 
-#if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)
+  // While FreeBSD 5.X has a siginfo_t struct with a si_addr field, 
+  // it does not define SEGV_MAPERR.
+#if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR) && \
+        (defined (SEGV_MAPERR) || defined (SEGV_MEMERR))
   off_t offset;
   // Make sure that the pointer causing the problem is within the
   // range of the backing store.
