@@ -1,9 +1,14 @@
+Tue Jan  5 18:27:26 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Server_i.cpp (init): Added the IR related
+	code.
+
 Tue Jan  5 17:44:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/DynAnyC.h
 	* tao/DynAnyC.i
-	* tao/DynSequence_i.h: 
-	* tao/DynStruct_i.h: 
+	* tao/DynSequence_i.h:
+	* tao/DynStruct_i.h:
 	  Removed some other uses of ACE_Array in favor of ACE_Array_Base,
 	  in these cases there was no need for the operator== and/or
 	  operator!=

@@ -7,7 +7,9 @@ ACE_RCSID(Time_Service, Server_i, "$Id$")
 
 // Constructor.
 Server_i::Server_i (void)
-  : ior_output_file_ (0)
+  : ior_output_file_ (0),
+    use_ir_ (0),
+    register_with_ir_ (0)
 {
   // no-op.
 }
@@ -24,7 +26,7 @@ Server_i::~Server_i (void)
 int
 Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ir");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -42,6 +44,12 @@ Server_i::parse_args (void)
                              "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
+      case 'i': // Use the Implementation Repository.
+	this->use_ir_ = 1;
+	break;
+      case 'r': // Register with the Implementation repository.
+	this->register_with_ir_ = 1;
+	break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -49,6 +57,8 @@ Server_i::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-o] <ior_output_file>"
+                           " [-i] <Use the Implementation Repository>"
+			   " [-r] <Register with the Implementation Repository>"
                            "\n",
                            argv_ [0]),
                           1);
@@ -98,6 +108,64 @@ Server_i::init_naming_service (CORBA::Environment& env)
   return 0;
 }
 
+// Initialize the Implementation Repository.
+
+int
+Server_i::init_IR (void)
+{
+  TAO_TRY
+    {
+
+      if (this->use_ir_ == 1)
+	{
+	  ACE_NEW_RETURN (this->ir_helper_,
+			  IR_Helper ("child_poa",
+				     this->orb_manager_.child_poa (),
+				     this->orb_manager_.orb (),
+				     TAO_debug_level),
+			  -1);
+
+	  if (this->register_with_ir_ == 1)
+	    this->ir_helper_->register_server ("server -i -ORBobjrefstyle url");
+
+	  this->ir_helper_->change_object (this->time_service_server_,
+					   TAO_TRY_ENV);
+	}
+
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+
+      // Convert the IR server reference to a string.
+      CORBA::String_var objref_server =
+	this->orb_manager_.orb ()->object_to_string (this->time_service_server_.in (),
+						     TAO_TRY_ENV);
+
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+
+      // Print the IR server IOR on the console.
+      ACE_DEBUG ((LM_DEBUG,
+		  "[SERVER] Process/Thread : (%P/%t) The Time Service IREPO SERVER IOR is: <%s>\n",
+		  objref_server.in ()));
+
+      // Print the IOR to a file.
+      if (this->ior_output_file_)
+	{
+	  ACE_OS::fprintf (this->ior_output_file_,
+			   "%s\n",
+			   objref_server.in ());
+	  ACE_OS::fclose (this->ior_output_file_);
+	}
+
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception:");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  return 0;
+}
+
 // Create a new time server object.
 
 int
@@ -106,35 +174,74 @@ Server_i::create_server (void)
   TAO_TRY
     {
       // Create a new server object.
-	   ACE_NEW_RETURN (this->time_service_server_impl_,
-		      TAO_Time_Service_Server,
+      ACE_NEW_RETURN (this->time_service_server_impl_,
+		      TAO_Time_Service_Server(this->use_ir_),
 		      0);
 
       // Generate IOR of the <TimeService Server> and register with
       // POA.
-      this->time_service_server_ =
-        time_service_server_impl_->_this ();
+	   //this->time_service_server_ =
+	   //time_service_server_impl_->_this ();
 
-      // Convert the server reference to a string.
-      CORBA::String_var objref_server =
-	this->orb_->object_to_string (this->time_service_server_.in (),
-				      TAO_TRY_ENV);
+      // Register a servant with the child poa.
+
+      CORBA::String_var server_str =
+	this->orb_manager_.activate_under_child_poa ("TimeServer",
+						     this->time_service_server_impl_,
+						     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      PortableServer::ObjectId_var id =
+	PortableServer::string_to_ObjectId ("TimeServer");
+
+      CORBA::Object_var server_ref =
+	this->orb_manager_.child_poa ()->id_to_reference (id.in (),
+							  TAO_TRY_ENV);
+
+      this->time_service_server_ = CosTime::TimeService::_narrow (server_ref,
+								  TAO_TRY_ENV);
 
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
+      // All this !! just to register a servant with the child poa.
+      // Instead of using _this ().
+
+      // Convert the server reference to a string.
+      CORBA::String_var objref_server =
+      	this->orb_->object_to_string (this->time_service_server_.in (),
+				      TAO_TRY_ENV);
+
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
-		  "[SERVER] Process/Thread Id : (%P/%t) The Time Service SERVER IOR is: <%s>\n",
-		  objref_server.in ()));
+       		  "[SERVER] Process/Thread Id : (%P/%t) The Time Service "
+ 		  "SERVER IOR without Implementation Repository is: <%s>\n",
+ 		  objref_server.in ()));
+
+      // The IOR after registering with the child poa is much bigger than
+      // if the object was registered with the root poa. why ??
+
+      //ACE_DEBUG ((LM_DEBUG,
+      //	  "[SERVER] Process/Thread Id : (%P/%t) The Time Service "
+      // "SERVER IOR without Implementation Repository is: <%s>\n",
+      //  server_str.in ()));
 
       // Print the Time Service server IOR to a file.
-      if (this->ior_output_file_)
-	{
-	  ACE_OS::fprintf (this->ior_output_file_,
-			   "%s\n",
-			   objref_server.in ());
-	  ACE_OS::fclose (this->ior_output_file_);
-	}
+      // Convert the server reference to a string.
+      // CORBA::String_var objref_server =
+      // 	this->orb_->object_to_string (this->time_service_server_.in (),
+      // 				      TAO_TRY_ENV);
+
+      //       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+
+      //       // Print the server IOR on the console.
+      //       ACE_DEBUG ((LM_DEBUG,
+      // 		  "[SERVER] Process/Thread Id : (%P/%t) The Time Service SERVER IOR is: <%s>\n",
+      // 		  objref_server.in ()));
+
+
+      // Print the Time Service server IOR to a file.
+      // Moved this to the init_IR where the changed IR is written to the output file.
+
     }
   TAO_CATCHANY
     {
@@ -269,13 +376,17 @@ Server_i::init (int argc,
       this->orb_ = this->orb_manager_.orb ();
 
       // Register the above implementation with the Naming Service.
-      this->init_naming_service (TAO_TRY_ENV);
+      // ??this->init_naming_service (TAO_TRY_ENV);
 
       // Create the server object.
       this->create_server ();
 
+      // Initialize the IR.
+      this->init_IR ();
+
       // Register the server object with the Naming Service.
-      this->register_server ();
+      // ??this->register_server ();
+
 
     }
   TAO_CATCHANY
@@ -291,20 +402,32 @@ Server_i::init (int argc,
 int
 Server_i::run (CORBA::Environment &env)
 {
-TAO_TRY
+  TAO_TRY
     {
+      if (this->use_ir_ == 1)
+	{
+	  this->ir_helper_->notify_startup (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
+
       // Run the main event loop for the ORB.
       if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
 			  -1);
+
+      if (this->use_ir_ == 1)
+	{
+	  this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
     }
- TAO_CATCHANY
-   {
+  TAO_CATCHANY
+    {
      TAO_TRY_ENV.print_exception ("Exception:");
      return -1;
-  }
- TAO_ENDTRY;
+    }
+  TAO_ENDTRY;
 
- return 0;
+  return 0;
 }
