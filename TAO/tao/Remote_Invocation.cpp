@@ -14,10 +14,12 @@ ACE_RCSID (tao,
 
 namespace TAO
 {
-  Remote_Invocation::Remote_Invocation (CORBA::Object_ptr otarget,
-                                        Profile_Transport_Resolver &resolver,
-                                        TAO_Operation_Details &detail,
-                                        bool response_expected)
+  Remote_Invocation::Remote_Invocation (
+      CORBA::Object_ptr otarget,
+      Profile_Transport_Resolver &resolver,
+      TAO_Operation_Details &detail,
+      bool response_expected)
+
     : Invocation_Base (otarget,
                        resolver.object (),
                        resolver.stub (),
@@ -31,7 +33,6 @@ namespace TAO
   Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec
                                        ACE_ENV_ARG_DECL)
   {
-
     /**
      * Mega hack for RTCORBA start. I don't think that
      * PortableInterceptor  would work here esp. for RTCORBA. PI needs

@@ -50,14 +50,14 @@ namespace TAO
    *
    * This class is the base of the invocation object hiererachy. This
    * hierarchy is classified  based on the type of invocation and the
-   * mode of the invocation. One of the objects from the hiererachy is
+   * mode of invocation. One of the objects from the hiererachy is
    * created on the stack for every invocation.
    *
-   * This class encapsulates the essential details that are required
-   * for PortableInterceptors to function correctly. Further this
-   * class also provides some helper and accessor methods that are
-   * used by clients.
-   * @@ More..
+   * In addition this class encapsulates the essential details that
+   * are required for PortableInterceptors to function
+   * correctly. Further this class also provides some helper and
+   * accessor methods that are used by clients.
+   *
    */
   class TAO_Export Invocation_Base
   {
@@ -65,7 +65,7 @@ namespace TAO
     virtual ~Invocation_Base (void);
 
     //@{
-    /// Accessor and mutator methods ..
+    /// Accessor and mutator methods
     TAO_ORB_Core *orb_core (void) const;
 
     TAO_Stub *stub (void) const;
@@ -73,13 +73,18 @@ namespace TAO
     /// Accessor and mutator methods for forwarded object
     /// locations.
     /**
-     * These methods have to be public so that the PortableInterceptor
-     * can use this.
+     * These access methods have to be public so that the
+     * PortableInterceptor can use them
      */
     CORBA::Object_ptr forwarded_reference (void);
     void forwarded_reference (CORBA::Object_ptr o);
 
-    /// Accessors for the service context list
+    /// Accessors for the service context list.
+    /**
+     * The service context lists are actually cached
+     * elsewhere. Providing this accessor helps the PI to access this
+     * list in both remote and collocated mode.
+     */
     TAO_Service_Context &request_service_context (void);
     TAO_Service_Context &reply_service_context (void);
 
@@ -104,10 +109,9 @@ namespace TAO
 
     /// Does this invocation return a response?
     CORBA::Boolean  response_expected (void) const;
-
     //@}
+
   protected:
-    /// Don't allow creation of an object of type Invocation_Base.
     /**
      * @param otarget, The original target on which this invocation
      * was started.
@@ -133,7 +137,7 @@ namespace TAO
     /// Forwarded object reference.
     CORBA::Object_var forwarded_to_;
 
-    /// Is the response expected?
+    /// Is response expected?
     bool response_expected_;
 
   private:
