@@ -77,13 +77,6 @@ public:
   // Both the arguments should be non-null!!!. Applies prefix and
   // suffix to the local name and makes a flat name.
 
-
-  void compute_repoID (const char *prefix,
-                       const char *suffix,
-                       char *& name);
-  // Apply the prefix and suffix to the local name and compute the
-  // repoID.  Both the parameters should be non-null.
-
   // End of Methods use by the interface type strategy.
 
   virtual idl_bool is_nested (void);
