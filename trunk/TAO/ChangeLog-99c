@@ -1,3 +1,8 @@
+Tue Dec 21 10:58:54 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
+	  Fixed warnings.
+
 Tue Dec 21 09:32:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Log/LogMgr_i.cpp: removed
