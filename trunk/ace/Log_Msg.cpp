@@ -1623,14 +1623,18 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
     ACE_Log_Record::VERBOSE_LEN - 58];
   // 58 for the HEXDUMP header;
 
-  ACE_TCHAR msg_buf[80];
+  ACE_TCHAR *msg_buf;
+  size_t text_sz = text ? ACE_OS::strlen(text) : 0;
+  ACE_NEW_RETURN (msg_buf,
+                  ACE_TCHAR[text_sz + 58],
+                 -1);
 
   buf[0] = 0; // in case size = 0
 
   int len = ACE::format_hexdump (buffer,
                                  size,
                                  buf,
-                                 sizeof (buf) / sizeof (ACE_TCHAR));
+                                 sizeof (buf) / sizeof (ACE_TCHAR) - text_sz);
 
   int sz = 0;
 
@@ -1653,6 +1657,8 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
              ACE_LIB_TEXT ("%s\n%s"),
              msg_buf,
              buf);
+
+  delete msg_buf;
   return 0;
 }
 
