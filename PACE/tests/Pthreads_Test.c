@@ -71,14 +71,14 @@ join_point (int func1_times, int func2_times)
 int
 main (int argc, char **argv)
 {
-  PACE_UNUSED_ARG (argc);
-  PACE_UNUSED_ARG (argv);
-
   /* Test creating a thread. */
   pace_pthread_t thread1;
   pace_pthread_t thread2;
   int func1_ret = 0;
   int func2_ret = 0;
+
+  PACE_UNUSED_ARG (argc);
+  PACE_UNUSED_ARG (argv);
 
   pace_pthread_create(&thread1,
                       NULL,
