@@ -393,6 +393,9 @@ typedef unsigned __int64 ACE_UINT64;
 #define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH
 #endif /* ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION */
 
+// At least for Win32 - MSVC compiler (ver. 5)
+#define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
+
 /*
  * Borland Compilers.
  */
