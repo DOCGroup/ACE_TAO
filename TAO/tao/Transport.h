@@ -747,6 +747,11 @@ private:
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
+  /// Process the message that is in the head of the incoming queue.
+  /// If there are more messages in the queue, this method sends a
+  /// notify () to the reactor to send a next thread along.
+  int process_queue_head (TAO_Resume_Handle &rh);
+
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))

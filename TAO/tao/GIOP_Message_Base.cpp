@@ -342,8 +342,6 @@ TAO_GIOP_Message_Base::missing_data (ACE_Message_Block &incoming)
 
   if (len > msg_size)
     {
-      // Move the rd_ptr so that we can extract the next message.
-      // incoming.rd_ptr (msg_size);
       return -1;
      }
   else if (len == msg_size)
