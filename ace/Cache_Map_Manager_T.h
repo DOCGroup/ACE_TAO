@@ -34,7 +34,7 @@ class ACE_Cache_Map_Iterator;
 template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Reverse_Iterator;
 
-template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES>
+template <class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Manager
 {
   // = TITLE
@@ -56,19 +56,19 @@ public:
   // = Traits.
   typedef KEY key_type;
   typedef VALUE mapped_type;
-  typedef ACE_TYPENAME MAP::ITERATOR IMPLEMENTATION;
-  typedef ACE_TYPENAME MAP::REVERSE_ITERATOR REVERSE_IMPLEMENTATION;
+  typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
+  typedef REVERSE_ITERATOR_IMPL REVERSE_ITERATOR_IMPLEMENTATION;
   typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
   // The actual value mapped to the key in the map. The <attributes>
   // are used by the strategy and is transparent to the user of this
   // class.
 
-  friend class ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
-  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> ITERATOR;
-  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> REVERSE_ITERATOR;
+  typedef ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> ITERATOR;
+  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> REVERSE_ITERATOR;
 
    // = STL-style iterator typedefs.
   typedef ITERATOR iterator;
