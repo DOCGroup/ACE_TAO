@@ -1,3 +1,22 @@
+Thu Nov  4 16:45:55 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe/y.tab.cpp.diff:
+	  When parsing an IDL struct with an empty body,
+	  the IDL compiler would not only output an errror
+	  message, it would also crash. Fixing this required
+	  some added error checking in the yacc grammar file,
+	  while avoiding any change to the behavior for 
+	  exceptions, which use much of the same code in the
+	  grammar, but may legally have an empty body. Also,
+	  a bare semicolon in a struct or exeption body would
+	  also cause a crash - now there is error checking for
+	  this condition as well. Thanks to
+	  Erik Johannes <ejohannes@oresis.com> for reporting
+	  this bug.
+
 Thu Nov 04 15:22:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 1.0.8 released.
