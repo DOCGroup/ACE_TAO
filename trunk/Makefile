@@ -92,17 +92,17 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 examples \
                 include \
                 netsvcs \
-	        os-patches \
+                os-patches \
                 performance-tests \
                 tests \
-		WindozeCE
+                WindozeCE
 
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
                 ACE_wrappers/ACE-INSTALL \
                 ACE_wrappers/man
 
 ALL_RELEASE_FILES = $(RELEASE_FILES) \
-		    ACE_wrappers/TAO
+                    ACE_wrappers/TAO
 
 RELEASE_LIB_FILES = \
                 ACE_wrappers/STL \
@@ -113,7 +113,7 @@ RELEASE_LIB_FILES = \
                 ACE_wrappers/tests
 
 
-.PHONY: release releasetao releaseall ACE-INSTALL
+.PHONY: release releasetao releaseall
 
 REL = beta
 CHECK =
@@ -121,15 +121,15 @@ CHECK =
 #### The release target creates the ACE (only) kit.
 release: ACE-INSTALL
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
-	   -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
-	   -l "$(RELEASE_LIB_FILES)"
+           -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
+           -l "$(RELEASE_LIB_FILES)"
 
 #### The following target is for use by the TAO Makefile.  It should not
 #### be called directly from the command line.  The releasetao target
 #### creates the combined ACE-TAO kit.
 releasetao:
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace+tao -t $(REL) \
-	   -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)"
+           -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)"
 
 #### The releaseall target:
 ####   1) Creates the ACE kit.
