@@ -89,9 +89,9 @@ int
 Common_Task::close (u_long exit_status)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) thread is exiting with status %d in module %s\n",
-	     exit_status,
-	      this->name ()));
+              "(%t) thread is exiting with status %d in module %s\n",
+             exit_status,
+              this->name ()));
 
   // Can do anything here that is required when a thread exits, e.g.,
   // storing thread-specific information in some other storage
@@ -125,7 +125,7 @@ Supplier::svc (void)
       mb->wr_ptr (2);
 
       if (this->put_next (mb) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
+        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
     }
 
   ACE_NEW_RETURN(mb, ACE_Message_Block, -1);
@@ -161,25 +161,32 @@ Consumer::svc (void)
 
   for (;;)
     {
+#if defined (__Lynx__)
+      // ACE_OS::pthread_cond_timedwait () doesn't work on LynxOS.  Until
+      // we figure that out, this thr_yield () pertrubs the test enough
+      // so that it is never called.
+      ACE_OS::thr_yield ();
+#endif /* __Lynx__ */
+
       this->timeout_.sec (ACE_OS::time (0) + 4); // Wait for upto 4 seconds
 
       result = this->getq (mb, &this->timeout_);
 
       if (result == -1)
-	break;
+        break;
 
       int length = mb->length ();
 
       if (length > 0)
-	{
-	  output = mb->rd_ptr ();
-	  ACE_ASSERT (*c == output[0]);
-	  c++;
-	}
+        {
+          output = mb->rd_ptr ();
+          ACE_ASSERT (*c == output[0]);
+          c++;
+        }
       mb->release ();
 
       if (length == 0)
-	break;
+        break;
     }
 
   ACE_ASSERT (result == 0 || errno == EWOULDBLOCK);
