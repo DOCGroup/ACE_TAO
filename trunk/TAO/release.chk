@@ -24,24 +24,24 @@ Legend:
 [1111  ]   libTAO and TAO_IDL compile.
 [1111  ]   IDL_Cubit compiles
         [11 1  ] Runs
-[11x1  ]   Param_Test compiles and runs for
-        [x1 1  ] DII short
-        [x1 1  ] DII ubstring
-        [x0 1  ] DII fixed_struct
-        [x1 0  ] DII strseq
-        [x1 0  ] DII var_struct
-        [x1 0  ] DII nested_struct
-        [x0 0  ] DII struct_seq
-        [x0 0  ] DII objref
-	     
-        [11 1  ] SII short
-        [11 1  ] SII ubstring
-        [10 1  ] SII fixed_struct
-        [11 1  ] SII strseq
-        [11 1  ] SII var_struct
-        [11 1  ] SII nested_struct
-        [00 0  ] SII struct_seq
-        [00 0  ] SII objref
+[1111  ]   Param_Test compiles and runs for
+        [x111  ] DII short
+        [x111  ] DII ubstring
+        [x011  ] DII fixed_struct
+        [x100  ] DII strseq
+        [x100  ] DII var_struct
+        [x100  ] DII nested_struct
+        [x000  ] DII struct_seq
+        [x000  ] DII objref
+
+        [1111  ] SII short
+        [1111  ] SII ubstring
+        [1011  ] SII fixed_struct
+        [1111  ] SII strseq
+        [1111  ] SII var_struct
+        [1111  ] SII nested_struct
+        [0000  ] SII struct_seq
+        [0000  ] SII objref
 [1110  ] MT_Cubit compiles
         [100x  ] runs for Octet
         [100x  ] runs for Short
@@ -49,8 +49,8 @@ Legend:
         [100x  ] runs for Struct
 [1101  ] orbsvcs compiles
         [10 x  ] Event_Latency runs
-	[0x x  ] Simple_Naming runs
-	[xx x  ] Logger runs
+        [0x x  ] Simple_Naming runs
+        [xx x  ] Logger runs
 
 NOTES
 * Solaris/CC
@@ -62,6 +62,9 @@ NOTES
 
 * Solaris/g++
 ** Warnings during tao_idl compilation.
+** SII,DII struct_seq causes a bus error on the server.
+** SII objref causes marshal exceptions, but no fatalities.
+** DII objref client gets illegal instruction.
 ** orbsvcs fails with missing stuff in ACE_Map_Manager.
 ** MT_Cubit gets relocation error on startup:
    ld.so.1: ./svr: fatal: relocation error: symbol not found:
@@ -71,7 +74,7 @@ NOTES
 * IRIX
 ** Event Latency won't work because unproper detection of failures for
    priority change.
-   MT_Cubit does not compile due to extra library (-lposix4) only 
+   MT_Cubit does not compile due to extra library (-lposix4) only
    present in Solaris; IMHO that should go into the platform file for
    Solaris/CC
 
