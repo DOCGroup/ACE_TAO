@@ -150,7 +150,7 @@ NestedUpCalls_Client::init (int argc, char **argv)
                            this->nested_up_calls_reactor_key_),
                           -1);
 
-      
+
       ACE_DEBUG ((LM_DEBUG, "Reactor received OK\n"));
 
       CORBA::Object_var poa_object =

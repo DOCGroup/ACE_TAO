@@ -62,7 +62,7 @@ private:
   char **argv_;
   // arguments from command line.
 
-  char *nested_up_calls_reactor_key_;
+  const char *nested_up_calls_reactor_key_;
   // Key of reactor obj ref.
 
   int shutdown_;

@@ -15,15 +15,19 @@ svr_worker (void *arg)
 {
   Cubit_Server cubit_server;
   ACE_Barrier *barrier = (ACE_Barrier *) arg;
-  char *fake[] = {"server", "-o", THE_IOR_FILE};//, "-ORBcollocationstrategy", "direct" };
+
+  int argc = 3;
+  CORBA::String_var argv0 = CORBA::string_dup ("server");
+  CORBA::String_var argv1 = CORBA::string_dup ("-o");
+  CORBA::String_var argv2 = CORBA::string_dup (THE_IOR_FILE);
+  //CORBA::String_var argv3 = CORBA::string_dup ("-ORBCollocationStrategy");
+  //CORBA::String_var argv4 = CORBA::string_dup ("direct");
+  char* argv[] = { argv0.inout (), argv1.inout (), argv2.inout () };
 
   ACE_TRY_NEW_ENV
     {
-      if (cubit_server.init (3,
-                             ACE_const_cast (char **,
-                                             fake),
-                             ACE_TRY_ENV)
-          == -1)
+      if (cubit_server.init (argc, argv,
+                             ACE_TRY_ENV) == -1)
         return (void *) 1;
       else
         {
