@@ -8,7 +8,8 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Application_Controlled
+DIRS  = Application_Controlled \
+        Infrastructure_Controlled
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
