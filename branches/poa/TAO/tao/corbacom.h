@@ -414,6 +414,7 @@ public:
 
   static WString wstring_alloc (ULong len);
   static WString wstring_copy (const WChar *const);
+  static WString wstring_dup (const WChar *const);
   static void wstring_free (WChar *const);
 
   // various CORBA defined classes
