@@ -132,7 +132,7 @@ static void VbTest()
   ACE_ASSERT(c1 == c2);
 
   Vb v6;
-  Counter64 c3(12345678901234), c4;
+  Counter64 c3(12345678901234ULL), c4;
   v6.set_oid(o1);
   v6.set_value(c3);
   ACE_ASSERT(v6.valid() == 1);

@@ -1,28 +1,45 @@
-# Sample SNMPv1 Agent
-# Makefile for Solaris 2.x
-# $Id$
+#----------------------------------------------------------------------------
+#
+#     $Id$
+#
+#----------------------------------------------------------------------------
 
-OBJS = main.o snmp_agent.o agent_impl.o
-INCL = -I$(ACE_ROOT) -I$(ACE_ROOT)/ASNMP
-CC=CC
-SOL_FLAGS=-mt -R $(ACE_ROOT)/ASNMP/asnmp:$(ACE_ROOT)/ace
-DEBUG = -g $(SOL_FLAGS)
-CFLAGS =$(INCL) $(DEBUG)
-RUNPATH =
-LIBS = -L $(ACE_ROOT)/ASNMP/asnmp -lasnmp -L $(ACE_ROOT)/ace -lACE -ldl
+#----------------------------------------------------------------------------
+#	Local macros
+#----------------------------------------------------------------------------
 
-agent: $(OBJS)
-	$(CC) -o agent $(DEBUG) $(OBJS) $(LIBS) $(RUNPATH)
+BIN   	= agent
 
+SRC	= agent_impl.cpp  main.cpp  snmp_agent.cpp
 
-main.o: main.cpp
-	$(CC) -c $(CFLAGS) main.cpp
+LIBS  += -L$(ACE_ROOT)/ASNMP/asnmp -lasnmp
 
-snmp_agent.o: snmp_agent.cpp snmp_agent.h
-	$(CC) -c $(CFLAGS) snmp_agent.cpp
+#----------------------------------------------------------------------------
+#	Include macros and targets
+#----------------------------------------------------------------------------
 
-agent_impl.o: agent_impl.cpp agent_impl.h
-	$(CC) -c $(CFLAGS) agent_impl.cpp
+include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-clean:
-	-$(RM) *.o agent *~
+#----------------------------------------------------------------------------
+#	Local targets
+#----------------------------------------------------------------------------
+CPPFLAGS +=  -I$(ACE_ROOT)/ASNMP 
+
+BIN = agent
+ 
+all: $(BIN)
+ 
+agent: $(addprefix $(VDIR),agent_impl.o main.o snmp_agent.o)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+ 
+#----------------------------------------------------------------------------
+#	Dependencies
+#----------------------------------------------------------------------------
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
