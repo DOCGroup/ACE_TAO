@@ -1,7 +1,7 @@
 #ifndef Echo__h_
 #define Echo__h_
 /**
- * @file
+ * @file Echo.h
  *
  * $Id$
  *
