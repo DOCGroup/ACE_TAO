@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -83,11 +83,15 @@ static long	idl_atoi(char *, long);
 static void	idl_parse_line_and_file(char *);
 static void	idl_store_pragma(char *);
 
+
+
 // HPUX has yytext typed to unsigned char *. We make sure here that
 // we'll always use char *
 static char	*__yytext = (char *) yytext;
 
 %}
+
+%array
 
 %%
 
@@ -132,7 +136,7 @@ oneway		return ONEWAY;
 \<\<		return LEFT_SHIFT;
 \>\>		return RIGHT_SHIFT;
 \:\:		{
-		  yylval.strval = "::";    
+		  yylval.strval = "::";
 		  return SCOPE_DELIMITOR;
 		}
 
@@ -213,7 +217,7 @@ oneway		return ONEWAY;
 			break;
 		      else
 			yyunput(c, NULL);
-	              if (c == '\n') 
+	              if (c == '\n')
 		        idl_global->set_lineno(idl_global->lineno() + 1);
 		    }
 	          }
@@ -266,7 +270,7 @@ idl_parse_line_and_file(char *buf)
   for (; *r != '\0' && *r != ' ' && *r != '\t'; r++);
   *r++ = 0;
   idl_global->set_lineno(idl_atoi(h, 10));
-  
+
   /* Find file name, if present */
   for (; *r != '"'; r++) {
     if (*r == '\n' || *r == '\0')
@@ -293,7 +297,7 @@ idl_parse_line_and_file(char *buf)
     idl_global->store_include_file_name(nm);
   }
 }
-    
+
 /*
  * Store a #pragma line into the list of pragmas
  */
@@ -316,7 +320,7 @@ idl_store_pragma(char *buf)
   if (strcmp(pragma, "import") == 0) {
     idl_global->set_import(I_TRUE);
     return;
-  } 
+  }
   if (strcmp(pragma, "include") == 0) {
     idl_global->set_import(I_FALSE);
     return;
@@ -420,7 +424,7 @@ idl_atof(char *s)
 	if (neg) d *= -1.0;
 
 	return d;
-}	
+}
 
 /*
  * Convert (some) escaped characters into their ascii values
