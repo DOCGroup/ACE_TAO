@@ -1,5 +1,87 @@
 Mon Dec  3 16:27:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
+	* orbsvcs/performance-tests/Makefile:
+	  Add new EC_Federated_Scalability and EC_Scalability tests.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/README:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/run_test.pl:
+	  New test to measure the scalability of TAO's Real-time Event
+	  Service when configured using the federated (IIOP) architecture.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Control.idl:
+	  Define the IDL interfaces used to control the participants in
+	  the test.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/ECFS_Configuration.h:
+	  Define the configuration parameters for the test
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Servant_var.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Servant_var.inl:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Servant_var.cpp:
+	  Helper class to manipulate reference counted servants in a
+	  type-safe way.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Consumer.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Consumer.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Coordinator.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Coordinator.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Loopback.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Loopback.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Loopback_Consumer.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Loopback_Consumer.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Loopback_Supplier.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Loopback_Supplier.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Peer.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Peer.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Supplier.h:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Supplier.cpp:
+	  Implement the test interfaces.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/client.cpp:
+	  The "clients" in this test are the processes that implement an
+	  event channel and join using a federation.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/server.cpp:
+	  The server is the process that controls all the participants.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/client.conf:
+	  Configuration for the client.
+
+	* orbsvcs/performance-tests/EC_Scalability/Makefile:
+	* orbsvcs/performance-tests/EC_Scalability/README:
+	* orbsvcs/performance-tests/EC_Scalability/run_test.pl:
+	  New test, based on EC_Latency, to measure the scalability of
+	  TAO's Real-time Event Service when configured using the
+	  non-federated architecture.
+
+	* orbsvcs/performance-tests/EC_Scalability/Client_Task.h:
+	* orbsvcs/performance-tests/EC_Scalability/Client_Task.cpp:
+	* orbsvcs/performance-tests/EC_Scalability/Consumer.h:
+	* orbsvcs/performance-tests/EC_Scalability/Consumer.cpp:
+	* orbsvcs/performance-tests/EC_Scalability/Supplier.h:
+	* orbsvcs/performance-tests/EC_Scalability/Supplier.cpp:
+	  Implement the IDL interfaces used in this test.
+
+	* orbsvcs/performance-tests/EC_Scalability/client.cpp:
+	  The client connects as both a supplier and consumer to the event
+	  service and measures roundtrip delay.
+
+	* orbsvcs/performance-tests/EC_Scalability/server.cpp:
+	  The server implements an event channel.
+
+	* orbsvcs/performance-tests/EC_Latency/client.cpp:
+	  Fixed initialized of supplier_owner() variable.
+
+	* orbsvcs/performance-tests/EC_Federated_Latency/Control.idl:
+	* orbsvcs/performance-tests/EC_Federated_Latency/Coordinator.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Latency/Peer.h:
+	* orbsvcs/performance-tests/EC_Federated_Latency/Peer.cpp:
+	  Pass the global scale factor (gsf) from the node that measures
+	  the time using ACE::gethrtime() to the node that reports the
+	  time.  We used to just use the reporting's node gsf, but that is
+	  incorrect if the machines are heterogenous.
+
 	* performance-tests/Makefile.bor:
 	  Fixed comments.
 
