@@ -1,3 +1,9 @@
+Sat Mar  5 08:48:02 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* netsvcs/lib/TS_Clerk_Handler.cpp (parse_args): Fixed a typo
+	  where ACE_TESXT should be ACE_TEXT.  Thanks to 
+	  Sean Parker <supinlick@yahoo.com> for reporting this.
+
 Fri Mar  4 10:32:17 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Naming_Context.cpp: Changed ACE_OS::strcat() to 

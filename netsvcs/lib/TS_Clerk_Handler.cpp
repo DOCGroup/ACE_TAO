@@ -562,7 +562,7 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
 int
 ACE_TS_Clerk_Processor::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRACE (ACE_TESXT ("ACE_TS_Clerk_Processor::parse_args"));
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::parse_args"));
   ACE_INET_Addr server_addr;
   ACE_TS_Clerk_Handler *handler;
 
