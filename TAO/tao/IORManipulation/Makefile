@@ -181,8 +181,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- IORC.h \
- $(TAO_ROOT)/tao/Object.h \
+ IORC.h $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -342,8 +341,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- IORC.h \
- $(TAO_ROOT)/tao/Object.h \
+ IORC.h $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -367,6 +365,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/IORManipulation.o .obj/IORManipulation.so .shobj/IORManipulation.o .shobj/IORManipulation.so: IORManipulation.cpp IORManipulation.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -462,7 +461,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -528,8 +526,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.h \

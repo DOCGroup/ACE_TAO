@@ -32,7 +32,7 @@ TAO_IIOP_Profile::object_key_delimiter (void) const
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
-                                    const TAO_GIOP_Version &version,
+                                    const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_IIOP_PROFILE, orb_core, version),
     endpoint_ (addr,
@@ -47,7 +47,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
                                     const TAO_ObjectKey &object_key,
                                     const ACE_INET_Addr &addr,
-                                    const TAO_GIOP_Version &version,
+                                    const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_IIOP_PROFILE, orb_core, version),
     endpoint_ (host, port, addr),
@@ -60,7 +60,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_IIOP_PROFILE,
                  orb_core,
-                 TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1),
     object_key_ (),

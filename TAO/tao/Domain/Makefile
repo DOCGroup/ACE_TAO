@@ -50,8 +50,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/DomainS.o .obj/DomainS.so .shobj/DomainS.o .shobj/DomainS.so: DomainS.cpp DomainS.h \
- $(ACE_ROOT)/ace/pre.h \
- domain_export.h \
+ $(ACE_ROOT)/ace/pre.h domain_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -367,8 +366,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \

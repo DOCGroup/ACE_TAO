@@ -164,7 +164,7 @@ private:
                   CORBA::Octet minor);
 
   /// Close a connection, first sending GIOP::CloseConnection.
-  void send_close_connection (const TAO_GIOP_Version &version,
+  void send_close_connection (const TAO_GIOP_Message_Version &version,
                               TAO_Transport *transport,
                               void *ctx);
 

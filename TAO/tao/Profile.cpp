@@ -316,7 +316,7 @@ TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
                                           TAO_ORB_Core *orb_core)
   : TAO_Profile (tag,
                  orb_core,
-                 TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     tagged_profile_ ()
 {
 }

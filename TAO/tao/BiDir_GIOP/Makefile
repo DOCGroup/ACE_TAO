@@ -998,8 +998,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB.h \

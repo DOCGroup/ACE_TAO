@@ -35,7 +35,7 @@
 #include "ace/LSOCK_Acceptor.h"
 #include "UIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
-#include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Message_Version.h"
 
 
 // TAO UIOP_Acceptor concrete call defination
@@ -117,7 +117,7 @@ private:
   TAO_UIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
 
-  TAO_GIOP_Version version_;
+  TAO_GIOP_Message_Version version_;
   // The GIOP version for this endpoint
 
   TAO_ORB_Core *orb_core_;
