@@ -1,3 +1,10 @@
+Mon Dec 03 21:36:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/String_Base.h:
+	* ace/String_Base.i: Incoporated relavent additions to SString.*
+	  into String_Base as they won't be picked up when the branch
+	  merged.
+
 Thu Nov 15 11:11:14 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/*: Merged in XML parser workspace.
