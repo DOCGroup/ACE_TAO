@@ -26,7 +26,6 @@ CFG=synch_driver - Win32 Release
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
@@ -108,9 +107,5 @@ SOURCE=.\Options.h
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # End Group
-# Begin Source File
-
-SOURCE=.\Options.i
-# End Source File
 # End Target
 # End Project

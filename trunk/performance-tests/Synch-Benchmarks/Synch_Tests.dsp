@@ -93,67 +93,83 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
+SOURCE=.\Perf_Test\Adaptive_Lock_Performance_Test_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Perf_Test\adaptive_mutex_test.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Perf_Test\adaptive_recursive_lock_test.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Perf_Test\adaptive_sema_test.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Benchmark_Base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Benchmark_Performance.cpp
+SOURCE=.\Perf_Test\Benchmark_Performance.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\condb_test.cpp
+SOURCE=.\Perf_Test\condb_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\conds_test.cpp
+SOURCE=.\Perf_Test\conds_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\context_test.cpp
+SOURCE=.\Perf_Test\context_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\memory_test.cpp
+SOURCE=.\Perf_Test\memory_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\mutex_test.cpp
+SOURCE=.\Perf_Test\mutex_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Performance_Test.cpp
+SOURCE=.\Perf_Test\Performance_Test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\performance_test_options.cpp
+SOURCE=.\Perf_Test\Performance_Test_Options.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\pipe_proc_test.cpp
+SOURCE=.\Perf_Test\pipe_proc_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\pipe_thr_test.cpp
+SOURCE=.\Perf_Test\pipe_thr_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\recursive_lock_test.cpp
+SOURCE=.\Perf_Test\recursive_lock_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\rwrd_test.cpp
+SOURCE=.\Perf_Test\rwrd_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\rwwr_test.cpp
+SOURCE=.\Perf_Test\rwwr_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\sema_test.cpp
+SOURCE=.\Perf_Test\sema_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\sysvsema_test.cpp
+SOURCE=.\Perf_Test\sysvsema_test.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"

@@ -3,7 +3,19 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Synch_Tests"=".\Synch_Tests.dsp" - Package Owner=<4>
+Project: "Perf_Test"=".\Perf_Test\Perf_Test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Synch_Lib"=".\Synch_Lib\Synch_Lib.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -23,9 +35,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name Synch_Tests
-    End Project Dependency
 }}}
 
 ###############################################################################
