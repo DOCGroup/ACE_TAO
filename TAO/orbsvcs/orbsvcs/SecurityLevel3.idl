@@ -423,7 +423,7 @@ module SecurityLevel3 {
      * It has one extra field over the base Principal, which is
      * "alternate_names".
      */
-    valuetype SimplePrincipal : truncatable Principal {
+  valuetype SimplePrincipal : /* truncatable */ Principal {
         /**
          * This field indicates whether the principal was derived or is
          * going to be derived from an authentication mechanism.
@@ -504,7 +504,7 @@ module SecurityLevel3 {
      * truncated by access control systems that do not want to
      * examine the principal in detail.
      */
-    valuetype ProxyPrincipal :  truncatable Principal {
+    valuetype ProxyPrincipal :  /* truncatable */ Principal {
 
         /**
          * In a Proxy Principal of (A for B) the <code>speaking</code> field
@@ -536,7 +536,7 @@ module SecurityLevel3 {
      * truncated by access control systems that do not want to
      * examine the principal in detail.
      */
-    valuetype QuotingPrincipal :  truncatable Principal {
+    valuetype QuotingPrincipal :  /* truncatable */ Principal {
 
         /**
          * In a Quoting Principal of (A|B) the <code>speaking</code> field
