@@ -763,7 +763,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
       && newpos + size <= this->start_.space ())
     {
       // Notice that ACE_Message_Block::duplicate may leave the
-      // wr_ptr() with a higher value that what we actually want.
+      // wr_ptr() with a higher value than what we actually want.
       this->start_.rd_ptr (newpos);
       this->start_.wr_ptr (newpos + size);
 

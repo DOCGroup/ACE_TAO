@@ -1,3 +1,13 @@
+Fri Nov  7 11:21:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/CDR_Stream.cpp:
+
+	  Fixed a typo in the comments.
+	
+	* ace/Message_Block.cpp: 
+
+	  Removed unnecessary lines.
+
 Fri Nov  7 17:11:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Dev_Poll_Reactor.cpp:
