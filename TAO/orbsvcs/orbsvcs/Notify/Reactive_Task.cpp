@@ -6,7 +6,7 @@
 #include "Reactive_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Reactive_Task, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Reactive_Task, "$Id$")
 
 #include "Timer_Reactor.h"
 

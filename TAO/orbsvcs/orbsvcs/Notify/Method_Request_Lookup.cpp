@@ -6,7 +6,7 @@
 #include "Method_Request_Lookup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Lookup, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Method_Request_Lookup, "$Id$")
 
 #include "tao/debug.h"
 #include "Consumer_Map.h"

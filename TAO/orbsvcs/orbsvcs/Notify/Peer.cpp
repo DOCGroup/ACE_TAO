@@ -6,7 +6,7 @@
 #include "Peer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Peer, "$id$")
+ACE_RCSID(Notify, TAO_NS_Peer, "$Id$")
 
 #include "tao/debug.h"
 #include "Proxy.h"

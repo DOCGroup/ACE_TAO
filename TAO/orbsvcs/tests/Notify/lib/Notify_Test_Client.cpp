@@ -177,14 +177,14 @@ Notify_Test_Client::create_event_channel (const char* cname,
     {
       CORBA::Object_var obj = naming_context_->resolve (name);
       ec = CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
-
-      if (CORBA::is_nil (ec.in ()))
-        {
-          return 0;
-        }
     }
   else
     {
+      if (CORBA::is_nil (this->notify_factory_.in ()))
+        {
+          return CosNotifyChannelAdmin::EventChannel::_nil ();
+        }
+
       CosNotifyChannelAdmin::ChannelID id;
       CosNotification::QoSProperties initial_qos;
       CosNotification::AdminProperties initial_admin;
@@ -193,7 +193,7 @@ Notify_Test_Client::create_event_channel (const char* cname,
                                             initial_admin,
                                             id
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
 
       naming_context_->rebind(name, ec.in());
@@ -208,5 +208,3 @@ Notify_Test_Client::done (void)
 {
   return this->done_;
 }
-
-

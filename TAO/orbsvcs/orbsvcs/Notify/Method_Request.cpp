@@ -6,7 +6,7 @@
 #include "Method_Request.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Method_Request, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Method_Request, "$Id$")
 
 TAO_NS_Method_Request_Event::TAO_NS_Method_Request_Event (const TAO_NS_Event_var& event)
   :event_ (event)

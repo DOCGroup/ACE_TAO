@@ -6,7 +6,7 @@
 #include "Property_Boolean.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Property_Boolean, "$id$")
+ACE_RCSID(Notify, TAO_NS_Property_Boolean, "$Id$")
 
 #include "PropertySeq.h"
 

@@ -13,6 +13,7 @@ ACE_RCSID(RT_Notify, TAO_NS_Proxy, "$Id$")
 #include "Method_Request_Updates.h"
 #include "Worker_Task.h"
 #include "Properties.h"
+#include "POA_Helper.h"
 
 TAO_NS_Proxy::TAO_NS_Proxy (void)
   :updates_off_ (0)
@@ -23,15 +24,19 @@ TAO_NS_Proxy::~TAO_NS_Proxy ()
 {
 }
 
-void
-TAO_NS_Proxy::init (TAO_NS_Admin *admin ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::Object_ptr
+TAO_NS_Proxy::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Object::init (admin);
-
-  // For Proxy's the object should be activated in the proxy poa.
-  // so we override the default initialization in TAO_NS_Object
-
+  // Set the POA that we use to return our <ref>
   this->poa_ = this->proxy_poa_;
+
+  return this->proxy_poa_->activate (servant, this->id_ ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_Proxy::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->proxy_poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
 void

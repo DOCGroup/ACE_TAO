@@ -6,7 +6,7 @@
 #include "Buffering_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Buffering_Strategy, "$id$")
+ACE_RCSID(Notify, TAO_NS_Buffering_Strategy, "$Id$")
 
 #include "ace/Message_Queue.h"
 #include "orbsvcs/CosNotificationC.h"

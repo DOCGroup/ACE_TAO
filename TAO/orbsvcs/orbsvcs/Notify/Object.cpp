@@ -13,7 +13,7 @@
 #include "Object.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Object, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Object, "$Id$")
 
 TAO_NS_Object::TAO_NS_Object (void)
   : event_manager_ (0)

@@ -7,7 +7,7 @@
 #include "Event_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Event_Manager, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Event_Manager, "$Id$")
 
 #include "ProxyConsumer.h"
 #include "ProxySupplier.h"

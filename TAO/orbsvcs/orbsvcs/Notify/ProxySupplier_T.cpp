@@ -9,7 +9,7 @@
 #include "ProxySupplier_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_ProxySupplier_T, "$id$")
+ACE_RCSID(Notify, TAO_NS_ProxySupplier_T, "$Id$")
 
 #include "Consumer.h"
 #include "Structured/StructuredEvent.h"

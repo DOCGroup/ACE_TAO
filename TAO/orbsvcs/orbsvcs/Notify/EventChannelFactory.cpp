@@ -6,7 +6,7 @@
 #include "EventChannelFactory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_EventChannelFactory, "$Id$")
+ACE_RCSID(Notify, TAO_NS_EventChannelFactory, "$Id$")
 
 #include "ace/Dynamic_Service.h"
 #include "Properties.h"

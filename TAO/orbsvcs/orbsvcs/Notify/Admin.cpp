@@ -1,12 +1,11 @@
 // $Id$
-
 #include "Admin.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Admin.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Admin, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Admin, "$Id$")
 
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 

@@ -6,7 +6,7 @@
 #include "Worker_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Worker_Task, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Worker_Task, "$Id$")
 
 TAO_NS_Worker_Task::TAO_NS_Worker_Task (void)
 {

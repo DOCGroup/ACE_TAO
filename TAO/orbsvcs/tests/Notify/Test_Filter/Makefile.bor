@@ -1,0 +1,41 @@
+# $Id$
+# Makefile for building the Test_Filter library with Borland C++ Builder
+
+NAME = Test_Filter
+
+OBJFILES = \
+	$(OBJDIR)\RT_Test_Filter.obj \
+	$(OBJDIR)\RT_Test_FilterFactory.obj
+
+EXTERNAL_LIBS =
+
+LFLAGS = \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	ACE$(LIB_DECORATOR).lib \
+	$(EXTERNAL_LIBS)
+
+!ifdef STATIC
+LIB_FLAGS =
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS =
+!endif
+
+CFLAGS = \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+INCLUDES = \
+	RT_Test_Filter.h \
+	RT_Test_FilterFactory.h \
+	rt_test_filter_export.h
+
+BASE_BINDIR = $(ACE_ROOT)\bin
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>

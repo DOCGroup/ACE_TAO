@@ -24,7 +24,7 @@ endif # Naming
 endif # Notify
 
 PSRC=$(addsuffix .cpp,$(BIN))
-LDLIBS += -lNotifyTests -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_Messaging -lTAO_PortableServer -lTAO -lTAO_Strategies
+LDLIBS += -lTAO_NotifyTests -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_Messaging -lTAO_PortableServer -lTAO -lTAO_Strategies
 CPPFLAGS += -I../../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
