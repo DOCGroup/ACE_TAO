@@ -1295,10 +1295,9 @@ TAO_DynUnion_i::get_any (CORBA::Environment &env)
 // Some specialized instantiations of the template functor defined in
 // DynUnion_i_T.cpp.
 
-ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-DU_Extractor<CORBA::Boolean>::check_match (CORBA_Any& inside_any,
-                                           CORBA_Any& outside_any)
+TAO_DynUnion_i::Boolean_extractor::check_match (const CORBA_Any &inside_any,
+                                                const CORBA_Any &outside_any)
 {
   CORBA::Any::to_boolean member_struct (this->member_index_);
   CORBA::Any::to_boolean arg_struct (this->arg_index_);
@@ -1309,10 +1308,9 @@ DU_Extractor<CORBA::Boolean>::check_match (CORBA_Any& inside_any,
   return member_struct.ref_ == arg_struct.ref_;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-DU_Extractor<CORBA::Char>::check_match (CORBA_Any& inside_any,
-                                        CORBA_Any& outside_any)
+TAO_DynUnion_i::Char_extractor::check_match (const CORBA_Any &inside_any,
+                                             const CORBA_Any &outside_any)
 {
   CORBA::Any::to_char member_struct (this->member_index_);
   CORBA::Any::to_char arg_struct (this->arg_index_);
@@ -1324,8 +1322,8 @@ DU_Extractor<CORBA::Char>::check_match (CORBA_Any& inside_any,
 }
 
 CORBA::Boolean
-TAO_DynUnion_i::WChar_extractor::check_match (CORBA_Any& inside_any,
-                                              CORBA_Any& outside_any)
+TAO_DynUnion_i::WChar_extractor::check_match (const CORBA_Any &inside_any,
+                                              const CORBA_Any &outside_any)
 {
   CORBA::Any::to_wchar member_struct (this->member_index_);
   CORBA::Any::to_wchar arg_struct (this->arg_index_);
@@ -1337,8 +1335,8 @@ TAO_DynUnion_i::WChar_extractor::check_match (CORBA_Any& inside_any,
 }
 
 CORBA::Boolean
-TAO_DynUnion_i::Enum_extractor::check_match (CORBA_Any& inside_any,
-                                             CORBA_Any& outside_any)
+TAO_DynUnion_i::Enum_extractor::check_match (const CORBA_Any &inside_any,
+                                             const CORBA_Any &outside_any)
 {
   // Get the CDR stream of one argument...
   ACE_Message_Block *mb = inside_any._tao_get_cdr ();
@@ -1392,13 +1390,13 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
       return retval;
     case CORBA::tk_boolean:
       ACE_NEW_THROW_EX (retval,
-                        DU_Extractor<CORBA::Boolean>,
+                        Boolean_extractor,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
       return retval;
     case CORBA::tk_char:
       ACE_NEW_THROW_EX (retval,
-                        DU_Extractor<CORBA::Char>,
+                        Char_extractor,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
       return retval;
@@ -1525,8 +1523,6 @@ template class DU_Extractor<CORBA::Short>;
 template class DU_Extractor<CORBA::Long>;
 template class DU_Extractor<CORBA::UShort>;
 template class DU_Extractor<CORBA::ULong>;
-template class DU_Extractor<CORBA::Boolean>;
-template class DU_Extractor<CORBA::Char>;
 
 // For platforms without native 64-bit ints . . .
 #if !defined (ACE_LACKS_LONGLONG_T)
@@ -1539,8 +1535,6 @@ template class DU_Extractor<CORBA::ULongLong>;
 #pragma instantiate DU_Extractor<CORBA::Long>
 #pragma instantiate DU_Extractor<CORBA::UShort>
 #pragma instantiate DU_Extractor<CORBA::ULong>
-#pragma instantiate DU_Extractor<CORBA::Boolean>
-#pragma instantiate DU_Extractor<CORBA::Char>
 
 // For platforms without native 64-bit ints . . .
 #if !defined (ACE_LACKS_LONGLONG_T)
