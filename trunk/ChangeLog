@@ -1,3 +1,9 @@
+Fri Sep 19 07:01:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/ace_dll.dsp:
+
+          Added missing files to the project.
+
 Thu Sep 18 13:49:56 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
 
         * performance-tests/SCTP/README: 
