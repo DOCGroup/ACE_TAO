@@ -1,9 +1,10 @@
 Fri Nov 29 12:58:00 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
-
+    
+        * tests/OBV/TC_Alignment/TC_Alignment.dsw:
         * tests/OBV/TC_Alignment/client.dsp:
         * tests/OBV/TC_Alignment/server.dsp:
 
-          Renamed these project files, since the default filename (the same as the
+          Renamed the project files, since the default filename (the same as the
           project name) contained whitespace.
 
 Fri Nov 29 12:31:20 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
