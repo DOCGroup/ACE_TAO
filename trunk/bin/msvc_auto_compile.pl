@@ -340,6 +340,17 @@ if ($#directories < 0) {
 }
 
 print "msvc_auto_compile: Begin\n";
+
+print "================ ace/config.h ================\n";
+open (CONFIG, $ACE_ROOT."\\ace\\config.h")
+  || print "cannot open ace/config.h";
+while (<CONFIG>) {
+  chop;
+  print $_, "\n";
+}
+close (CONFIG);
+print "================ ace/config.h ================\n";
+
 print STDERR "Beginning Core Build\n" if ($print_status == 1);
 Build_Core if (!$use_custom_dir || $build_core_only);
 print STDERR "Beginning Full Build\n" if ($print_status == 1);
