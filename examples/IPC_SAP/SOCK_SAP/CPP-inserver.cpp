@@ -298,6 +298,7 @@ run_event_loop (u_short port)
                        "%p\n",
                        "open"),
                       1);
+  // Check to see what addresses we actually got bound to!
   else if (twoway_acceptor.get_local_addr (twoway_server_addr) == -1
            || oneway_acceptor.get_local_addr (oneway_server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

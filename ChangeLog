@@ -1,3 +1,9 @@
+Wed Apr 24 11:07:15 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/RMCast/Makefile (FILES): Removed a stray "\".  Thanks to
+	  <amir@fats.co.il> for reporting this.  Also reordered the files
+	  so they would be in alphabetical order.
+
 Wed Apr 24 11:17:31 2002  Steve Huston  <shuston@riverace.com>
 
         * PROBLEM-REPORT-FORM: Always ask for config.h and
