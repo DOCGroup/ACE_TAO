@@ -92,14 +92,14 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId &oid,
                                  PortableServer::POA_ptr poa,
                                  const char *operation,
                                  PortableServer::ServantLocator::Cookie cookie,
-                                 PortableServer::Servant servant,
+                                 PortableServer::Servant p_servant,
                                  CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (oid);
   ACE_UNUSED_ARG (poa);
   ACE_UNUSED_ARG (operation);
   ACE_UNUSED_ARG (cookie);
-  ACE_UNUSED_ARG (servant);
+  ACE_UNUSED_ARG (p_servant);
   ACE_UNUSED_ARG (env);
 }
 
