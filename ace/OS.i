@@ -7866,21 +7866,21 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return tb.tb_high * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
-// #elif defined (linux)
+
 // NOTE: the following don't seem to work on Linux.  Use ::gettimeofday
 //       instead.
-// # if defined (ACE_HAS_PENTIUM)
-//   ACE_hrtime_t now;
+// #elif defined (__GNUG__) && defined (ACE_HAS_PENTIUM)
+//    ACE_hrtime_t now;
 //
-//   // See comments about the RDTSC Pentium instruction for the ACE_WIN32
-//   // version of ACE_OS::gethrtime (), below.
-//   //
-//   // Read the high-res tick counter directly into memory variable "now".
-//   // The A constraint signifies a 64-bit int.
-//   asm volatile ("rdtsc" : "=A" (now) : : "memory");
+//    // See comments about the RDTSC Pentium instruction for the ACE_WIN32
+//    // version of ACE_OS::gethrtime (), below.
+//    //
+//    // Read the high-res tick counter directly into memory variable "now".
+//    // The A constraint signifies a 64-bit int.
+//    asm volatile ("rdtsc" : "=A" (now) : : "memory");
 //
-//   return now;
-// # elif defined (__alpha)
+//    return now;
+// #elif deifned (__GNUG__) && defined (__alpha)
 //   ACE_hrtime_t now;
 //
 //   // The following statement is based on code published by:
@@ -7890,10 +7890,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 //   asm volatile ("rpcc %0" : "=r" (now) : : "memory");
 //
 //   return now;
-// # else
-//   const ACE_Time_Value now = ACE_OS::gettimeofday ();
-//   return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
-// # endif /* ACE_HAS_PENTIUM || __alpha */
 #elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM) && !defined (ACE_HAS_WINCE)
   // Issue the RDTSC assembler instruction to get the number of clock
   // ticks since system boot.  RDTSC is only available on Pentiums and
@@ -7968,15 +7964,17 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 
   // Carefully create the return value to avoid arithmetic overflow
   // if ACE_hrtime_t is ACE_U_LongLong.
-  ACE_hrtime_t now = ts.tv_sec;
-  now *= (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS;
-  now += ts.tv_nsec;
-
-  return now;
+  return ACE_static_cast (ACE_hrtime_t, ts.tv_sec) *
+           (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS  +
+         ts.tv_nsec;
 #else
   ACE_UNUSED_ARG (op);
   const ACE_Time_Value now = ACE_OS::gettimeofday ();
-  return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
+
+  // Carefully create the return value to avoid arithmetic overflow
+  // if ACE_hrtime_t is ACE_U_LongLong.
+  return (ACE_static_cast (ACE_hrtime_t, now.sec ()) * (ACE_UINT32) 1000000  +
+          ACE_static_cast (ACE_hrtime_t, now.usec ())) * (ACE_UINT32) 1000;
 #endif /* ACE_HAS_HI_RES_TIMER */
 }
 
@@ -9015,7 +9013,7 @@ ACE_OS::thr_self (void)
 ACE_INLINE int
 ACE_OS::thr_setprio (const ACE_Thread_ID &thr_id, int prio)
 {
-  // ACE_TRACE ("ACE_OS::thr_getprio");
+  // ACE_TRACE ("ACE_OS::thr_setprio");
   return ACE_OS::thr_setprio (thr_id.handle (), prio);
 }
 
