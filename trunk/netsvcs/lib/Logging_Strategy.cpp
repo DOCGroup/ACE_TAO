@@ -37,25 +37,20 @@ private:
 void
 ACE_Logging_Strategy::tokenize (char *flag_string)
 {
-  char *flag;
-  if ((flag = ACE_OS::strtok (flag_string, "|")) != NULL)
+  for (char *flag = ACE_OS::strtok (flag_string, "|");
+       flag != 0;
+       flag = ACE_OS::strtok (0, "|"))
     {
-      while (flag)
-	{
-	  if (ACE_OS::strcmp (flag, "STDERR") == 0)
-	    ACE_SET_BITS (this->flags_, ACE_Log_Msg::STDERR);
-	  else if (ACE_OS::strcmp (flag, "LOGGER") == 0)
-	    ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
-	  else if (ACE_OS::strcmp (flag, "OSTREAM") == 0)
-	    ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
-	  else if (ACE_OS::strcmp (flag, "VERBOSE") == 0)
-	    ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE);
-	  else if (ACE_OS::strcmp (flag, "SILENT") == 0)
-	    ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
-
-	  // Get the next flag
-	  flag = ACE_OS::strtok(0, "|");
-	}
+      if (ACE_OS::strcmp (flag, "STDERR") == 0)
+	ACE_SET_BITS (this->flags_, ACE_Log_Msg::STDERR);
+      else if (ACE_OS::strcmp (flag, "LOGGER") == 0)
+	ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
+      else if (ACE_OS::strcmp (flag, "OSTREAM") == 0)
+	ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
+      else if (ACE_OS::strcmp (flag, "VERBOSE") == 0)
+	ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE);
+      else if (ACE_OS::strcmp (flag, "SILENT") == 0)
+	ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
     }
 }
 

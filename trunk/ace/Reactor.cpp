@@ -625,6 +625,7 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
           switch (buffer.mask_)
             {
             case ACE_Event_Handler::READ_MASK:
+            case ACE_Event_Handler::ACCEPT_MASK:
               result = buffer.eh_->handle_input (ACE_INVALID_HANDLE);
               break;
             case ACE_Event_Handler::WRITE_MASK:
@@ -1093,7 +1094,7 @@ ACE_Reactor::bit_ops (ACE_HANDLE handle,
   ACE_Sig_Guard sb; // Block out all signals until method returns. 
 
   ACE_FDS_PTMF ptmf  = &ACE_Handle_Set::set_bit;
-  u_long       omask = ACE_Event_Handler::NULL_MASK;
+  u_long omask = ACE_Event_Handler::NULL_MASK;
 
   switch (ops)
     {
@@ -1116,11 +1117,12 @@ ACE_Reactor::bit_ops (ACE_HANDLE handle,
       // The following code is rather subtle...  Note that if we are
       // doing a ACE_Reactor::SET_MASK then if the bit is not enabled
       // in the mask we need to clear the bit from the ACE_Handle_Set.
-      // On the other hand, f we are doing a ACE_Reactor::CLR_MASK or
+      // On the other hand, if we are doing a ACE_Reactor::CLR_MASK or
       // a ACE_Reactor::ADD_MASK we just carry out the operations
       // specified by the mask.
 
-      if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
+      if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK)
+	   || ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
         {
           (rd.*ptmf) (handle);
           ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
@@ -1189,7 +1191,8 @@ ACE_Reactor::handler_i (ACE_HANDLE handle,
     return -1;
   else
     {
-      if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK)
+      if ((ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK)
+	   || ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
           && this->rd_handle_mask_.is_set (handle) == 0)
         return -1;
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK)

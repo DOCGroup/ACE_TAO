@@ -19,9 +19,9 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
   return thr_mgr->spawn (&ACE::read_adapter, eh, flags);
 #else  
   // Keep compilers happy.
-  flags = flags;
-  thr_mgr = thr_mgr;
-  reactor = reactor;
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (thr_mgr);
+  ACE_UNUSED_ARG (reactor);
   return reactor->register_handler (ACE_STDIN, eh, ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
 }

@@ -68,7 +68,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
     return -1;
 
   return this->reactor ()->register_handler 
-    (this, ACE_Event_Handler::READ_MASK);
+    (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 // Simple constructor.
@@ -169,7 +169,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
       // accept_strategy_...
 
       this->reactor_->remove_handler 
-	(handle, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+	(handle, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       // Shut down the listen socket to recycle the handles.
       if (this->peer_acceptor_.close () == -1)
@@ -438,7 +438,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   this->scheduling_strategy_ = sch_s;
 
   return this->reactor ()->register_handler 
-    (this, ACE_Event_Handler::READ_MASK);
+    (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 // Simple constructor.
@@ -520,7 +520,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDL
       // accept_strategy_...
 
       this->reactor ()->remove_handler 
-	(handle, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+	(handle, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       // Set the Reactor to 0 so that we don't try to close down
       // again.
@@ -711,7 +711,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
 
       if (this->reactor ())
 	this->reactor ()->remove_handler 
-	  (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+	  (this, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       if (this->peer_acceptor_.close () == -1)
 	ACE_ERROR ((LM_ERROR, "close\n"));
@@ -731,7 +731,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_timeout
   // Since we aren't necessarily registered with the Reactor, don't
   // bother to check the return value here...
   if (this->reactor ())
-	this->reactor ()->remove_handler (this, ACE_Event_Handler::READ_MASK);
+	this->reactor ()->remove_handler (this, ACE_Event_Handler::ACCEPT_MASK);
   return 0;
 }
 
@@ -763,8 +763,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::register_handler
 					     *tv) == 0)
 	return -1;
       else
-	return this->reactor ()->register_handler (this,
-						   ACE_Event_Handler::READ_MASK); 
+	return this->reactor ()->register_handler 
+	  (this, ACE_Event_Handler::ACCEPT_MASK);
     }
 }
 
@@ -869,7 +869,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE
   if (this->shared_accept (this->svc_handler_, 0, 0, this->restart_) == -1)
     result = -1;
   if (this->reactor () && this->reactor ()->remove_handler 
-      (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
+      (this, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     result = -1;
   return result;
 }

@@ -8,7 +8,7 @@
 typedef FP::Return_Type FP_RETURN_TYPE;
 
 FP_RETURN_TYPE
-Consumer_Config_File_Parser::read_entry (Consumer_Config_File_Entry &entry, 
+Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry, 
 					 int &line_number) 
 {
   FP_RETURN_TYPE read_result;
@@ -18,7 +18,7 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_File_Entry &entry,
 
   // Ignore comments, check for EOF and EOLINE if this succeeds, we
   // have our connection id.
-  while ((read_result = this->getint (entry.conn_id_)) != FP::SUCCESS) 
+  while ((read_result = this->getint (entry.proxy_id_)) != FP::SUCCESS) 
     {
       if (read_result == FP::EOFILE) 
 	return FP::EOFILE;
@@ -27,7 +27,7 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_File_Entry &entry,
 	line_number++;
     }
 
-  // Get the logical id.
+  // Get the supplier id.
   if ((read_result = this->getint (entry.supplier_id_)) != FP::SUCCESS)
     return read_result;
 
@@ -49,7 +49,7 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_File_Entry &entry,
 }
 
 FP_RETURN_TYPE
-Connection_Config_File_Parser::read_entry (Connection_Config_File_Entry &entry, 
+Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry, 
 					   int &line_number) 
 {
   char buf[BUFSIZ];
@@ -59,7 +59,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_File_Entry &entry,
 
   // Ignore comments, check for EOF and EOLINE
   // if this succeeds, we have our connection id
-  while ((read_result = this->getint (entry.conn_id_)) != FP::SUCCESS) 
+  while ((read_result = this->getint (entry.proxy_id_)) != FP::SUCCESS) 
     {
       if (read_result == FP::EOFILE) 
 	return FP::EOFILE;
@@ -87,7 +87,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_File_Entry &entry,
     entry.proxy_role_ = buf[0];
 
   // Get the max retry delay.
-  if ((read_result = this->getint (entry.max_retry_delay_)) != FP::SUCCESS)
+  if ((read_result = this->getint (entry.max_retry_timeout_)) != FP::SUCCESS)
     return read_result;
 
   // Get the local port number.
@@ -95,6 +95,14 @@ Connection_Config_File_Parser::read_entry (Connection_Config_File_Entry &entry,
     return read_result;
   else
     entry.local_port_ = (u_short) port;
+
+  ACE_INT32 priority;
+
+  // Get the priority
+  if ((read_result = this->getint (priority)) != FP::SUCCESS)
+    return read_result;
+  else
+    entry.priority_ = priority;
 
   return FP::SUCCESS;
 }
@@ -108,8 +116,8 @@ int main (int argc, char *argv[])
     exit (1);
   }
   FP_RETURN_TYPE result;
-  Connection_Config_File_Entry entry;
-  Connection_Config_File_Parser CCfile;
+  Proxy_Config_Info entry;
+  Proxy_Config_File_Parser CCfile;
   
   CCfile.open (argv[1]);
 
@@ -125,12 +133,12 @@ int main (int argc, char *argv[])
 	cerr << "Error at line " << line_number << endl;
       else 
 	printf ("%d\t%s\t%d\t%c\t%d\t%c\t%d\n",
-	       entry.conn_id_, entry.host_, entry.remote_port_, entry.proxy_role_,
-	       entry.max_retry_delay_, entry.transform_, entry.local_port_);
+	       entry.proxy_id_, entry.host_, entry.remote_port_, entry.proxy_role_,
+	       entry.max_retry_timeout_, entry.transform_, entry.local_port_);
     }
   CCfile.close();
 
-  Consumer_Config_File_Entry entry;
+  Consumer_Config_Info entry;
   Consumer_Config_File_Parser file;
 
   file.open (argv[2]);
@@ -147,7 +155,7 @@ int main (int argc, char *argv[])
       else 
 	{
 	  printf ("%d\t%d\t%d\t%d\t",
-		  entry.conn_id_, entry.supplier_id_, entry.type_);
+		  entry.proxy_id_, entry.supplier_id_, entry.type_);
 	  while (--entry.total_consumers_ >= 0)
 	    printf ("%d,", entry.consumers_[entry.total_consumers_]);
 	  printf ("\n");
@@ -160,6 +168,6 @@ int main (int argc, char *argv[])
 #endif /* DEBUGGING */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class File_Parser<Connection_Config_File_Entry>;
-template class File_Parser<Consumer_Config_File_Entry>;
+template class File_Parser<Proxy_Config_Info>;
+template class File_Parser<Consumer_Config_Info>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

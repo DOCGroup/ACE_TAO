@@ -1,8 +1,7 @@
-#include "Event_Analyzer.h"
 // $Id$
 
-
-#if defined (ACE_HAS_THREADS)
+#include "Options.h"
+#include "Event_Analyzer.h"
 
 int
 Event_Analyzer::open (void *)
@@ -35,6 +34,10 @@ Event_Analyzer::control (ACE_Message_Block *mb)
 int 
 Event_Analyzer::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
+  if (Options::instance ()->debug ())
+    ACE_DEBUG ((LM_DEBUG, "(%t) passing through Event_Analyser::put() (%s)\n",
+		this->is_reader () ? "reader" : "writer"));
+
   if (mb->msg_type () == ACE_Message_Block::MB_IOCTL)
     this->control (mb);
 
@@ -64,5 +67,3 @@ Event_Analyzer::info (char **strp, size_t length) const
     ACE_OS::strncpy (*strp, mod_name, length);
   return ACE_OS::strlen (mod_name);
 }
-
-#endif /* ACE_HAS_THREADS */

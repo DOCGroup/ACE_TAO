@@ -8,7 +8,11 @@
 ACE_Event_Channel_Options::ACE_Event_Channel_Options (void)
   : performance_window_ (0),
     blocking_semantics_ (ACE_NONBLOCK),
-    socket_queue_size_ (0)
+    socket_queue_size_ (0),
+    threading_strategy_ (REACTIVE),
+    acceptor_port_ (ACE_DEFAULT_GATEWAY_SERVER_PORT),
+    connector_role_ (0),
+    acceptor_role_ (0)
 {
 }
 
@@ -26,20 +30,21 @@ ACE_Event_Channel::options (void)
   return this->options_;
 }
 
-ACE_Event_Channel::handle_timeout (const ACE_Time_Value &, 
-				   const void *)
+int
+ACE_Event_Channel::compute_performance_statistics (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) doing the performance timeout here...\n"));
-  CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
+  PROXY_MAP_ITERATOR cmi (this->proxy_map_);
 
   // If we've got a ACE_Thread Manager then use it to suspend all the
   // threads.  This will enable us to get an accurate count.
 
-#if defined (USE_OUTPUT_MT) || defined (USE_INPUT_MT)
-  if (ACE_Service_Config::thr_mgr ()->suspend_all () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads..."));
-#endif /* USE_INPUT_MT || USE_OUTPUT_MT */
+  if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
+    {
+      if (ACE_Service_Config::thr_mgr ()->suspend_all () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
+      ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads..."));
+    }
 
   size_t total_bytes_in = 0;
   size_t total_bytes_out = 0;
@@ -47,7 +52,7 @@ ACE_Event_Channel::handle_timeout (const ACE_Time_Value &,
   // Iterate through the connection map summing up the number of bytes
   // sent/received.
 
-  for (CONNECTION_MAP_ENTRY *me = 0;
+  for (PROXY_MAP_ENTRY *me = 0;
        cmi.next (me) != 0; 
        cmi.advance ())
     {
@@ -60,7 +65,8 @@ ACE_Event_Channel::handle_timeout (const ACE_Time_Value &,
     }
 
 #if defined (ACE_NLOGGING)
-  ACE_OS::fprintf (stderr, "After %d seconds, \ntotal_bytes_in = %d\ntotal_bytes_out = %d\n",
+  ACE_OS::fprintf (stderr, 
+		   "After %d seconds, \ntotal_bytes_in = %d\ntotal_bytes_out = %d\n",
 		   performance_window_,
 		   total_bytes_in, 
 		   total_bytes_out);
@@ -81,29 +87,36 @@ ACE_Event_Channel::handle_timeout (const ACE_Time_Value &,
 	      (float) (total_bytes_out * 8 / (float) (1024 * 1024 * this->options ().performance_window_))));
 #endif /* ACE_NLOGGING */
 
-#if defined (USE_INPUT_MT) || defined (USE_OUTPUT_MT)
-  ACE_DEBUG ((LM_DEBUG, "(%t) resuming all threads..."));
-
   // Resume all the threads again.
 
-  if (ACE_Service_Config::thr_mgr ()->resume_all () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "resume_all"), -1);
-#endif /* USE_INPUT_MT || USE_OUTPUT_MT */
-
-  return 0;
+  if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
+    {
+      if (ACE_Service_Config::thr_mgr ()->resume_all () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "resume_all"), -1);
+      ACE_DEBUG ((LM_DEBUG, "(%t) resuming all threads..."));
+    }
 }
 
-ACE_Event_Channel::put (ACE_Message_Block *forward_addr, 
+ACE_Event_Channel::handle_timeout (const ACE_Time_Value &, 
+				   const void *)
+{
+  return this->collection_performance_statistics ();
+}
+
+// This method forwards the <event> to Consumer that have registered
+// to receive it.
+
+ACE_Event_Channel::put (ACE_Message_Block *event, 
 			ACE_Time_Value *)
 {
   // We got a valid event, so determine its virtual forwarding
   // address, which is stored in the first of the two event blocks,
   // which are chained together by this->recv().
 	
-  Event_Key *forwarding_addr = (Event_Key *) forward_addr->rd_ptr ();
+  Event_Key *forwarding_addr = (Event_Key *) event->rd_ptr ();
 	
   // Skip over the address portion and get the data.
-  ACE_Message_Block *data = forward_addr->cont ();
+  ACE_Message_Block *data = event->cont ();
 	
   // <dispatch_set> points to the set of Consumers associated with
   // this forwarding address.
@@ -112,8 +125,8 @@ ACE_Event_Channel::put (ACE_Message_Block *forward_addr,
   if (this->efd_.find (*forwarding_addr, dispatch_set) == -1)
     // Failure.
     ACE_ERROR ((LM_DEBUG, 
-		"(%t) find failed on conn id = %d, logical id = %d, type = %d\n",
-		forwarding_addr->conn_id_, 
+		"(%t) find failed on conn id = %d, supplier id = %d, type = %d\n",
+		forwarding_addr->proxy_id_, 
 		forwarding_addr->supplier_id_, 
 		forwarding_addr->type_));
   else
@@ -143,7 +156,7 @@ ACE_Event_Channel::put (ACE_Message_Block *forward_addr,
 		  // counting.
 		  ACE_Message_Block *dup_msg = data->duplicate ();
 		    
-		  ACE_DEBUG ((LM_DEBUG, "(%t) sending to peer %d\n", 
+		  ACE_DEBUG ((LM_DEBUG, "(%t) forwarding to Consumer %d\n", 
 			      (*proxy_handler)->id ()));
 		    
 		  if ((*proxy_handler)->put (dup_msg) == -1)
@@ -165,7 +178,7 @@ ACE_Event_Channel::put (ACE_Message_Block *forward_addr,
     }
 
   // Release the memory in the message block.
-  forward_addr->release ();
+  event->release ();
   return 0;
 }
 
@@ -180,6 +193,11 @@ ACE_Event_Channel::initiate_proxy_connection (Proxy_Handler *proxy_handler,
 {
   return this->connector_.initiate_connection (proxy_handler, 
 					       synch_options);
+}
+
+int
+ACE_Event_Channel::initiate_proxy_accept (void)
+{
 }
 
 int
@@ -220,30 +238,34 @@ ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
 int
 ACE_Event_Channel::reinitiate_proxy_connection (Proxy_Handler *proxy_handler)
 {
-  // Skip over deactivated descriptors.
+  // Skip over proxies with deactivated handles.
   if (proxy_handler->get_handle () != ACE_INVALID_HANDLE)
     {
       // Make sure to close down peer to reclaim descriptor.
       proxy_handler->peer ().close ();
 
-      ACE_DEBUG ((LM_DEBUG, 
-		 "(%t) scheduling reinitiation of Proxy_Handler %d\n",
-		 proxy_handler->id ()));
+      if (proxy_handler->state () != Proxy_Handler::DISCONNECTING)
+	{
+	  ACE_DEBUG ((LM_DEBUG, 
+		      "(%t) scheduling reinitiation of Proxy_Handler %d\n",
+		      proxy_handler->id ()));
 
-      // Reschedule ourselves to try and connect again.
-      if (ACE_Service_Config::reactor ()->schedule_timer 
-	  (proxy_handler, 0, proxy_handler->timeout ()) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
-			  "schedule_timer"), -1);
+	  // Reschedule ourselves to try and connect again.
+	  if (ACE_Service_Config::reactor ()->schedule_timer 
+	      (proxy_handler, 0, proxy_handler->timeout ()) == -1)
+	    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
+			       "schedule_timer"), -1);
+	}
     }
   return 0;
 }
 
-// Initiate connections with the Consumer and Supplier Peers.
+// Initiate active connections with the Consumer and Supplier Peers.
 
-ACE_Event_Channel::initiate_connections (void)
+void
+ACE_Event_Channel::initiate_connector (void)
 {
-  CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
+  PROXY_MAP_ITERATOR cmi (this->proxy_map_);
 				
   ACE_Synch_Options synch_options;
   
@@ -255,7 +277,7 @@ ACE_Event_Channel::initiate_connections (void)
   // Iterate through the Consumer Map connecting all the
   // Proxy_Handlers.
 
-  for (CONNECTION_MAP_ENTRY *me = 0;
+  for (PROXY_MAP_ENTRY *me = 0;
        cmi.next (me) != 0;
        cmi.advance ())
     {
@@ -265,8 +287,18 @@ ACE_Event_Channel::initiate_connections (void)
 	  (proxy_handler, synch_options) == -1)
 	continue; // Failures are handled elsewhere...
     }
+}
 
-  return 0;
+// Initiate passive acceptor to wait for Consumer and Supplier Peers
+// to accept.
+
+void
+ACE_Event_Channel::initiate_acceptor (void)
+{
+  if (ACE_Service_Config::reactor ()->register_handler 
+      (&this->acceptor_, ACE_Event_Handler::ACCEPT_MASK) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", 
+		"cannot register acceptor"));
 }
 
 // This method gracefully shuts down all the Handlers in the
@@ -274,17 +306,18 @@ ACE_Event_Channel::initiate_connections (void)
 
 ACE_Event_Channel::close (u_long)
 {
-#if defined (USE_INPUT_MT) || defined (USE_OUTPUT_MT)
-  ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads\n"));
-  if (ACE_Service_Config::thr_mgr ()->suspend_all () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
-#endif /* USE_INPUT_MT || USE_OUTPUT_MT */
+  if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
+    {
+      if (ACE_Service_Config::thr_mgr ()->suspend_all () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
+      ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads\n"));
+    }
 
-  CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
+  PROXY_MAP_ITERATOR cmi (this->proxy_map_);
 
   // Iterate over all the handlers and shut them down.
 
-  for (CONNECTION_MAP_ENTRY *me;
+  for (PROXY_MAP_ENTRY *me;
        cmi.next (me) != 0; 
        cmi.advance ())
     {
@@ -293,10 +326,9 @@ ACE_Event_Channel::close (u_long)
       ACE_DEBUG ((LM_DEBUG, "(%t) closing down connection %d\n",
 		 proxy_handler->id ()));
 
-      if (proxy_handler->state () != Proxy_Handler::IDLE)
-	// Mark Proxy_Handler as DISCONNECTING so we don't try to
-	// reconnect...
-	proxy_handler->state (Proxy_Handler::DISCONNECTING);
+      // Mark Proxy_Handler as DISCONNECTING so we don't try to
+      // reconnect...
+      proxy_handler->state (Proxy_Handler::DISCONNECTING);
 
       // Deallocate Proxy_Handler resources.
       proxy_handler->destroy (); // Will trigger a delete.
@@ -306,16 +338,16 @@ ACE_Event_Channel::close (u_long)
 }
 
 int
-ACE_Event_Channel::find_proxy (ACE_INT32 conn_id, 
+ACE_Event_Channel::find_proxy (ACE_INT32 proxy_id, 
 			       Proxy_Handler *&proxy_handler)
 {
-  return this->connection_map_.find (conn_id, proxy_handler);
+  return this->proxy_map_.find (proxy_id, proxy_handler);
 }
 
 int
 ACE_Event_Channel::bind_proxy (Proxy_Handler *proxy_handler)
 {
-  switch (this->connection_map_.bind (proxy_handler->id (), proxy_handler))
+  switch (this->proxy_map_.bind (proxy_handler->id (), proxy_handler))
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, 
@@ -342,11 +374,11 @@ ACE_Event_Channel::subscribe (const Event_Key &event_addr,
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%t) bind failed for connection %d\n", 
-			 event_addr.conn_id_), -1);
+			 event_addr.proxy_id_), -1);
       /* NOTREACHED */
     case 1: // Oops, found a duplicate!
       ACE_ERROR_RETURN ((LM_DEBUG, "(%t) duplicate consumer map entry %d, "
-			 "already bound\n", event_addr.conn_id_), -1);
+			 "already bound\n", event_addr.proxy_id_), -1);
       /* NOTREACHED */
     case 0:
       // Success.
@@ -359,19 +391,12 @@ ACE_Event_Channel::open (void *)
   // Ignore SIPPIPE so each Consumer_Proxy can handle it.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
 
-#if 0
-  // If this->performance_window_ > 0 start a timer.
+  if (this->connector_role_)
+    // Actively initiate Peer connections.
+    this->initiate_connector ();
 
-  if (this->options ().performance_window_ > 0)
-    {
-      if (ACE_Service_Config::reactor ()->schedule_timer 
-	  (this, 0, this->options ().performance_window_) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "schedule_timer"));
-      else
-	ACE_DEBUG ((LM_DEBUG, "starting timer for %d seconds...\n", 
-		   this->options ().performance_window_)));
-    }
-#endif
-
+  if (this->acceptor_role_)
+    // Passively initiate Peer acceptor.
+    this->initiate_acceptor ();
   return 0;
 }

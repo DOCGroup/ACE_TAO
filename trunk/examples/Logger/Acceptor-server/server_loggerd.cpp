@@ -242,7 +242,7 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   else if (REACTOR::instance ()->register_handler 
-	   (&peer_acceptor, ACE_Event_Handler::READ_MASK) == -1)
+	   (&peer_acceptor, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "registering service with ACE_Reactor\n"), -1);
 

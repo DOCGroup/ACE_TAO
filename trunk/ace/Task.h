@@ -103,25 +103,25 @@ public:
   virtual int resume (void);
   // Resume a suspended task.
 
-  int grp_id (void);
+  int grp_id (void) const;
   // Get the current group id.
 
   void grp_id (int);
   // Set the current group id.
 
-  ACE_Thread_Manager *thr_mgr (void);
+  ACE_Thread_Manager *thr_mgr (void) const;
   // Gets the thread manager associated with this Task.
 
   void thr_mgr (ACE_Thread_Manager *);
   // Set the thread manager associated with this Task.
 
-  int is_reader (void);	
+  int is_reader (void) const;
   // True if queue is a reader, else false.
 
-  int is_writer (void);	
+  int is_writer (void) const;	
   // True if queue is a writer, else false.
 
-  size_t thr_count (void);
+  size_t thr_count (void) const;
   // Returns the number of threads currently running within a task.
   // If we're a passive object this value is 0, else it's > 0.
 

@@ -24,8 +24,8 @@ Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   } ENDTRY;
 
   // Don't execute a callback here otherwise we'll recurse indefinitely!
-  if (ACE_Service_Config::reactor ()->remove_handler (this, ACE_Event_Handler::READ_MASK 
-					       | ACE_Event_Handler::DONT_CALL) == -1)
+  if (ACE_Service_Config::reactor ()->remove_handler 
+      (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "remove_handler"));
 
   // *Must* be allocated dyanmically!
