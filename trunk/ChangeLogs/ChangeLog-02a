@@ -1,6 +1,6 @@
 Tue Jan 11 21:59:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
-        * bin/make_releaes (create_kit): disable creation of
+        * bin/make_release (create_kit): disable creation of
           md5 files, because it didn't work:  just empty files
           were created.  I think that it was looking in the wrong
           directory.
