@@ -1,3 +1,9 @@
+Wed Apr 17 13:09:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Messaging/Messaging_ORBInitializer.cpp
+	  (register_policy_factories):
+	* tao/Messaging/Messaging_PolicyFactory.cpp (create_policy):
+
 Wed Apr 17 11:34:55 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/IFR_Service/ifr_service_export.h:

@@ -35,17 +35,36 @@ TAO_Messaging_PolicyFactory::create_policy (
                                                     ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-  if (type == Messaging::REBIND_POLICY_TYPE
-      || type == Messaging::REQUEST_PRIORITY_POLICY_TYPE
-      || type == Messaging::REPLY_PRIORITY_POLICY_TYPE
-      || type == Messaging::REQUEST_START_TIME_POLICY_TYPE
-      || type == Messaging::REQUEST_END_TIME_POLICY_TYPE
-      || type == Messaging::REPLY_START_TIME_POLICY_TYPE
-      || type == Messaging::REPLY_END_TIME_POLICY_TYPE
-      || type == Messaging::RELATIVE_REQ_TIMEOUT_POLICY_TYPE
-      || type == Messaging::ROUTING_POLICY_TYPE
-      || type == Messaging::MAX_HOPS_POLICY_TYPE
-      || type == Messaging::QUEUE_ORDER_POLICY_TYPE)
+  if (
+#if (TAO_HAS_REBIND_POLICY == 1)
+      type == Messaging::REBIND_POLICY_TYPE ||
+#endif  /* TAO_HAS_REBIND_POLICY == 1 */
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
+      type == Messaging::REQUEST_PRIORITY_POLICY_TYPE ||
+      type == Messaging::REPLY_PRIORITY_POLICY_TYPE ||
+#endif  /* TAO_HAS_PRIORITY_POLICIES == 1 */
+#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
+      type == Messaging::REQUEST_START_TIME_POLICY_TYPE ||
+#endif  /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
+#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
+      type == Messaging::REQUEST_END_TIME_POLICY_TYPE ||
+#endif  /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
+#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
+      type == Messaging::REPLY_START_TIME_POLICY_TYPE ||
+#endif  /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
+#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
+      type == Messaging::REPLY_END_TIME_POLICY_TYPE ||
+#endif  /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
+#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
+      type == Messaging::RELATIVE_REQ_TIMEOUT_POLICY_TYPE ||
+#endif  /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
+#if (TAO_HAS_ROUTING_POLICY == 1)
+      type == Messaging::ROUTING_POLICY_TYPE ||
+#endif  /* TAO_HAS_ROUTING_POLICY == 1 */
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
+      type == Messaging::MAX_HOPS_POLICY_TYPE ||
+#endif  /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+      type == Messaging::QUEUE_ORDER_POLICY_TYPE)
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
                       CORBA::Policy::_nil ());
 
