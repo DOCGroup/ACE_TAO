@@ -1,3 +1,9 @@
+Tue Apr  9 11:20:19 2002  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/Server_Logging_Handler_T.cpp (handle_logging_record):
+          Moved variable 'count' inside the #if 0 block so it's not flagged
+          as unused.
+
 Tue Apr  9 15:02:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Containers_T.h:
