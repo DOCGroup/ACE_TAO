@@ -24,11 +24,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "Bool_Array.h"
-#include "ace/OS_String.h"
 
 ACE_RCSID(src, Bool_Array, "$Id$")
 
 #if defined (ACE_HAS_GPERF)
+
+#include "ace/OS_String.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_Errno.h"
 
 // Prints out debugging diagnostics.
 

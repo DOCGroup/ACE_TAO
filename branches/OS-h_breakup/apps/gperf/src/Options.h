@@ -24,14 +24,15 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-#include "ace/Log_Msg.h"
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_GPERF)
+
+#include "ace/ace_sys_types.h"
 
 // Enumerate the potential debugging Options.
 

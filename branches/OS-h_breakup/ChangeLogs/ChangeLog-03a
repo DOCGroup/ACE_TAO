@@ -1,3 +1,36 @@
+Thu May  2 12:00:15 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/OS.h:  Uncommented ACE_DEFAULT_MUTEX defs since they are used
+	  in the tests.  Perhaps they should be moved...
+
+	* apps/gperf/src/Options.h: Removed Log_Msg.h and OS.h, added 
+	  config-all.h and ace_sys_types.h.
+
+	* apps/gperf/src/Gen_Perf.cpp: Added Log_Msg.h.
+
+	* apps/gperf/src/Key_List.cpp: Added OS_String.h and OS.h.  Changed ACE_OS to
+	  ACE_OS_String for string functions, e.g., strcmp.
+
+	* ace/gperf/src/List_Node.cpp: Added Log_Msg.h and ace_ctype.h.
+
+	* apps/gperf/src/Iterator.cpp: Added include of ace_ctype.h.
+
+	* apps/gperf/src/Hash_Table.cpp: Added Log_Msg.h and
+	  OS_String.h.  Changed ACE_OS to ACE_OS_String for string related
+	  functions.
+
+	* apps/gperf/src/Bool_Array.cpp: Added Log_Msg.h and OS_Errno.h.
+
+	* apps/drwho/Rwho_DB_Manager.h:  Added ace_sys_param.h.
+
+	* apps/drwho/Multicast_Manager.cpp: Added ace_ctype.h and OS_String.h, changed
+	  ACE_OS to ACE_OS_String where needed.
+
+	* apps/drwho/File_Manager.cpp: 
+	* apps/drwho/PM_Server.cpp:  
+	* apps/drwho/HT_Server.cpp:  Added OS_String.h, and used it for string 
+	  functions.
+	
 Thu May  2 10:15:22 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/OS.h:
@@ -5,7 +38,7 @@ Thu May  2 10:15:22 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  Removed commented out/unneeded includes.  Removed ACE_HAS_BROKEN_IF_HEADER
 	  ifafilt struct declaration that didn't seem to be used.
 
-	  OS.h is now under 2000 lines!  It may get below 1500 before its all over!
+	  OS.h is now under 2000 lines!  It may get below 1500 before it's all over!
 
 Thu May  2 09:11:17 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
