@@ -1,3 +1,12 @@
+Tue Feb 27 04:32:00 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Multicast/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl: 
+
+	  Added scripts to run the AVStreams tests.	
+
 Mon Feb 26 20:01:06 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
