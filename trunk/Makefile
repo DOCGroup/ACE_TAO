@@ -187,6 +187,7 @@ RELEASE_LIB_FILES = \
 # of the release file lists since they may already be in a directory
 # found in those lists.
 RELEASE_TAG_FILES = \
+	man/Makefile.am \
 	man/man3/Makefile.am \
 	man/html/Makefile.am
 
