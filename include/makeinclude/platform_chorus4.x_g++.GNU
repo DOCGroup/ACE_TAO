@@ -9,49 +9,157 @@
 # You will probably need to set the following environment variables
 # or macros:
 #
-# CPU               powerpc or sparc or ...
-# CLX_CDSPATH       <chorus install path>/4.0/chorus-$CPU/tools
-# CLX_CDSVERSION    5.00
-# MERGEDIR          <chorus install path>/4.0/chorus-$CPU/kernel
+# CPU               powerpc (default), sparc or ...
+# CHTOOLS_DIR       <chorus install path>/4.0/chorus-$CPU/tools
+# NUCLEUS_DIR       <chorus install path>/4.0/chorus-$CPU/kernel
+#
+#
+# Example:
+#  The Paths file that is set up when a kernel is configured and built
+#  contains definitions for the CHTOOLS_DIR and NUCLEUS_DIR.
+#
+# -- platform_macros.GNU --
+#  include $(MERGEDIR)/Paths
+#  include $(ACE_ROOT)/include/makeinclude/platform_chorus4.x_g++.GNU
 #
 
-include $(ACE_ROOT)/include/makeinclude/platform_chorus.GNU
+CHORUS = 1
+CROSS-COMPILE = 1
 
-OS_DIR     = $(CLASSIXDIR)/../os
-OS_INCLDIR = $(OS_DIR)/include
+debug       = 1
+exceptions  =
+optimize    = 1
+shared_libs =
+static_libs = 1
 
 #
-# Put the new include paths in the front to avoid including
-# the wrong version of some of the system header files.
+# Directory where the Chorus Development System is installed
 #
-INCLDIRS := -I$(INC_DIR)           \
-            -I$(OS_INCLDIR)        \
-            -I$(OS_INCLDIR)/chorus \
-            -I$(OS_INCLDIR)/CC     \
-            $(INCLDIRS)
+ifndef CHTOOLS_DIR
+  CONFIGURATION_ERROR_CHTOOLS: CHTOOLS_DIR_must_be_set!
+endif
+ifndef NUCLEUS_DIR
+  CONFIGURATION_ERROR_NUCLEUS: NUCLEUS_DIR_must_be_set!
+endif
+ifndef CPU
+  CPU=powerpc
+endif
+ifndef CLX_CDSVERSION
+  CLX_CDSVERSION = 5.00
+endif
+ifndef CLX_CDSHOST
+  CLX_CDSHOST = solaris
+endif
+ifndef OS_DIR
+  OS_DIR   = $(NUCLEUS_DIR)/../os
+endif
 
+XROOT   = $(CHTOOLS_DIR)/$(CPU)/$(CLX_CDSHOST)/$(CLX_CDSVERSION)
+XDIR    = $(XROOT)/$(CPU)-elf
+TOOLDIR = $(XDIR)/bin
+
+
+#
+# Include Dirs
+#
+NUCLEUS_INCLDIR = $(NUCLEUS_DIR)/include
+OS_INCLDIR      = $(OS_DIR)/include
+
+INCLDIRS += -I$(OS_INCLDIR)                 \
+            -I$(NUCLEUS_INCLDIR)            \
+            -I$(OS_INCLDIR)/chorus          \
+            -I$(NUCLEUS_INCLDIR)/chorus     \
+            -I$(OS_INCLDIR)/CC              \
+            -I$(NUCLEUS_INCLDIR)/posix      \
+            -I$(NUCLEUS_INCLDIR)/stdc       \
+            -I$(NUCLEUS_INCLDIR)/chorus/iom \
+            -I$(NUCLEUS_INCLDIR)/CC
+
+
+
+
+#
+# Tools
+#
+CC       = $(TOOLDIR)/gcc -B$(XROOT)/lib/gcc-lib/
+CXX      = $(CC)
+DLD             =
+LD              = $(XDIR)/bin/ld
+MATHLIB         = -L$(NUCLEUS_DIR)/lib/libm -lm
+AR              = $(TOOLDIR)/ar
+RANLIB          = $(TOOLDIR)/ranlib
+
+
+#
+# Flag Settings
+#
+CFLAGS  += -w
+CCFLAGS += $(CFLAGS) -fno-implicit-templates    \
+           -fno-strict-prototypes               \
+           -Usun                                \
+           -fno-builtin                         \
+           -fconserve-space                     \
+           -fcheck-new                          \
+           -nostdinc                            \
+           -pipe                                \
+           -fno-rtti                            \
+           -fwritable-strings                   \
+           -fsigned-char                        \
+           "-msoft-float"                       \
+           -DSOFT_FLOAT                         \
+           -D_POSIX_THREADS                     \
+           -D_POSIX_THREAD_SAFE_FUNCTIONS	\
+           "-DNO_FPU_SUPPORT"
+
+ifeq ($(CPU),powerpc)
+CCFLAGS += -mstrict-align                       \
+           -mno-sdata
+endif
+
+CCFLAGS  += -D__CHORUS__=400                    \
+            -DCHORUS_VERSION_MAJOR=4            \
+            -DCHORUS_VERSION_MINOR=0            \
+            -DCHORUS_PATCH_LEVEL=0              \
+            -DCHORUS_4                          \
+            -D_POSIX_THREAD_PROCESS_SHARED
+
+ifeq ($(exceptions),1)
+else  # ! exceptions
+  CCFLAGS += -fno-exceptions
+endif # ! exceptions     
+
+OCFLAGS         += -O
+PIC             = -fPIC
+ARFLAGS         = srv
 #
 # Adding debug symbols makes the binaries too
 # large to load into memory.
 #DCFLAGS  += -g
-#
-CCFLAGS  += -DCHORUS_4 -D_POSIX_THREAD_PROCESS_SHARED
+
+
+
+LINK.cc.override = $(CXX) -u _main -u _premain
+LINK.cc = override
+
+CHORUSLINK = true
+PRELIB     = @true
 
 #
 # Special link process to get the right libraries and 
 # build up the static constructors and destructors.
 #
-POSTLINK= -r $(OS_DIR)/lib/CC/libC.a $(OS_DIR)/lib/libbsd/libbsd.a    \
-             $(OS_DIR)/lib/classix/libcx.a                            \
-             $(CLASSIXDIR)/lib/classix/libsys.u.a;                    \
-        mv $@ $@.xp.o;                                                \
-        $(CLX_CDSPATH)/host/bin/mkctors $@.xp.o > $@.ct.s;            \
-        $(CXX) -c $@.ct.s;                                            \
-        $(RM) $@.ct.s;                                                \
-        $(LD) $(LDOPTIONS) -e _start -r -dn -o $@                     \
-              $(MERGEDIR)/lib/crt/crth.u.o $(MERGEDIR)/lib/crt/crt0.o \
-              $(MERGEDIR)/lib/crt/crti.o $@.xp.o $@.ct.o              \
-              $(MERGEDIR)/lib/crt/crtn.o;                             \
-        $(RM) $@.xp.o;                                                \
+POSTLINK= -r $(OS_DIR)/lib/CC/libC.a $(OS_DIR)/lib/libbsd/libbsd.a          \
+             $(OS_DIR)/lib/classix/libcx.a                                  \
+             $(NUCLEUS_DIR)/lib/classix/libsys.u.a                          \
+             -nostdlib -lgcc-chorus;                                        \
+        mv $@ $@.xp.o;                                                      \
+        $(CHTOOLS_DIR)/host/bin/mkctors $@.xp.o > $@.ct.s;                  \
+        $(CXX) -c $@.ct.s;                                                  \
+        $(RM) $@.ct.s;                                                      \
+        $(LD) $(LDOPTIONS) -e _start -r -dn -o $@                           \
+              $(NUCLEUS_DIR)/lib/crt/crth.u.o $(NUCLEUS_DIR)/lib/crt/crt0.o \
+              $(NUCLEUS_DIR)/lib/crt/crti.o $@.xp.o $@.ct.o                 \
+              $(NUCLEUS_DIR)/lib/crt/crtn.o;                                \
+        $(RM) $@.xp.o;                                                      \
         $(RM) $@.ct.o
 
