@@ -226,7 +226,6 @@ TAO_ExceptionDef_i::members (const IR::StructMemberSeq & members,
   // Exceptions can be empty.
   if (count > 0)
     {
-      int index = 0;
       ACE_TString section_name;
       ACE_Configuration_Section_Key refs_key;
 
