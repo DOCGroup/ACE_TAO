@@ -10,7 +10,7 @@
 
 #ifndef ACE_LIB_FIND_H
 #define ACE_LIB_FIND_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 #include "ace/ACE_export.h"
@@ -103,5 +103,5 @@ class ACE_Export ACE_Lib_Find
 #include "ace/Lib_Find.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* ACE_LIB_FIND_H */

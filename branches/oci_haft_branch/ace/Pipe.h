@@ -14,7 +14,7 @@
 #ifndef ACE_PIPE_H
 #define ACE_PIPE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -85,6 +85,6 @@ private:
 #include "ace/Pipe.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_PIPE_H */

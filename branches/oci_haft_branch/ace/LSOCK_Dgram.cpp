@@ -16,12 +16,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Dgram)
 void
 ACE_LSOCK_Dgram::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LSOCK_Dgram::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_SOCK_Dgram::dump ();
   ACE_LSOCK::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // The "do nothing" constructor. 

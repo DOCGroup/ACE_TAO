@@ -2,6 +2,8 @@
 // $Id$
 
 #include "ace/Shared_Object.h"
+#include "ace/Global_Macros.h"
+
 /* Provide the abstract base class used to access dynamic linking
    facilities */
 
@@ -9,11 +11,13 @@
 #include "ace/Shared_Object.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Shared_Object, "$Id$")
+ACE_RCSID (ace,
+           Shared_Object,
+           "$Id$")
 
 // Initializes object when dynamic linking occurs.
 
-int 
+int
 ACE_Shared_Object::init (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("ACE_Shared_Object::init");
@@ -22,7 +26,7 @@ ACE_Shared_Object::init (int, ACE_TCHAR *[])
 
 // Terminates object when dynamic unlinking occurs.
 
-int 
+int
 ACE_Shared_Object::fini (void)
 {
   ACE_TRACE ("ACE_Shared_Object::fini");
@@ -31,7 +35,7 @@ ACE_Shared_Object::fini (void)
 
 // Returns information on active object.
 
-int 
+int
 ACE_Shared_Object::info (ACE_TCHAR **, size_t) const
 {
   ACE_TRACE ("ACE_Shared_Object::info");

@@ -7,7 +7,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Platform supports STREAM pipes (note that this is disabled by
 // default, see the manual page on pipe(2) to find out how to enable
@@ -68,5 +68,5 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

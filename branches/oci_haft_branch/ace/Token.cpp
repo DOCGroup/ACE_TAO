@@ -13,7 +13,6 @@ ACE_RCSID(ace, Token, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Synch_T.h"
 #include "ace/Token.i"
 #endif /* __ACE_INLINE__ */
 
@@ -23,6 +22,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Token)
 void
 ACE_Token::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -35,6 +35,7 @@ ACE_Token::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nin_use_ = %d"), this->in_use_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnesting level = %d"), this->nesting_level_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,

@@ -16,7 +16,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Profile_Timer)
 void
 ACE_Profile_Timer::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Profile_Timer::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Initialize interval timer.
@@ -260,8 +262,10 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
 void
 ACE_Profile_Timer::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Profile_Timer::dump");
   timer_.dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 // Initialize interval timer.
@@ -364,8 +368,10 @@ ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
 void
 ACE_Profile_Timer::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Profile_Timer::dump");
   timer_.dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Profile_Timer::ACE_Profile_Timer (void)

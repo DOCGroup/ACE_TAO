@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define _POSIX_C_SOURCE 199506
 #define _QNX_SOURCE
@@ -198,5 +198,5 @@
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_LACKS_ACE_IOSTREAM
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

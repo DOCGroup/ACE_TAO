@@ -14,7 +14,7 @@
 #ifndef ACE_TYPED_SV_MESSAGE_H
 #define ACE_TYPED_SV_MESSAGE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -98,6 +98,6 @@ private:
 #pragma implementation ("Typed_SV_Message.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_TYPED_SV_MESSAGE_H */

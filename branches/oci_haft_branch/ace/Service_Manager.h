@@ -12,7 +12,7 @@
 
 #ifndef ACE_SERVICE_MANAGER_H
 #define ACE_SERVICE_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SOCK_Stream.h"
 
@@ -116,5 +116,5 @@ protected:
 #include "ace/Service_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* _SERVICE_MANAGER_H */

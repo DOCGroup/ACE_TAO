@@ -9,6 +9,7 @@ ACE_RCSID(ace, Name_Proxy, "$Id$")
 void
 ACE_Name_Proxy::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Proxy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -16,6 +17,7 @@ ACE_Name_Proxy::dump (void) const
   this->peer_.dump ();
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("reactor_ = %x"), this->reactor_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // Default constructor.

@@ -520,10 +520,17 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 ACE_INLINE int
 ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 {
-  ACE_UNUSED_ARG (seed);
-
   ACE_OS_TRACE ("ACE_OS::rand_r");
-  ACE_NOTSUP_RETURN (-1);
+
+  long new_seed = (long)(seed);
+  if (new_seed == 0)
+    new_seed = 0x12345987;
+  long temp = new_seed / 127773;
+  new_seed = 16807 * (new_seed - temp * 127773) - 2836 * temp;
+  if (new_seed < 0)
+    new_seed += 2147483647;
+  (seed) = (unsigned int)new_seed;
+  return (int)(new_seed & RAND_MAX);
 }
 
 ACE_INLINE pid_t
@@ -7677,6 +7684,15 @@ ACE_OS::access (const char *path, int amode)
 
   ACE_OS::fclose (handle);
   return (handle == ACE_INVALID_HANDLE ? -1 : 0);
+#  elif defined (VXWORKS)
+  FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path), ACE_LIB_TEXT ("r"));
+  ACE_UNUSED_ARG (amode);
+  if (handle != 0)
+    {
+      ACE_OS::fclose (handle);
+      return 0;
+    }
+  return (-1);
 #  else
     ACE_UNUSED_ARG (path);
     ACE_UNUSED_ARG (amode);
@@ -8008,7 +8024,7 @@ ACE_OS::dlerror (void)
 #else /* _M_UNIX */
   ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
 #endif /* _M_UNIX */
-# elif defined (__hpux)
+# elif defined (__hpux) || defined (VXWORKS)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
@@ -8076,7 +8092,33 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 #   else
   ACE_OSCALL_RETURN (::cxxshl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
 #   endif  /* aC++ vs. Hp C++ */
+# elif defined (VXWORKS)
+  MODULE* handle;
+  // Open readonly
+  ACE_HANDLE filehandle = ACE_OS::open (filename,
+                                        O_RDONLY,
+                                        ACE_DEFAULT_FILE_PERMS);
 
+  if (filehandle != ACE_INVALID_HANDLE)
+    {
+      ACE_OS::last_error(0);
+      ACE_OSCALL ( ::loadModule (filehandle, mode ), MODULE *, 0, handle);
+      int loaderror = ACE_OS::last_error();
+      ACE_OS::close (filehandle);
+
+      if ( (loaderror != 0) && (handle != 0) )
+        {
+          // ouch something went wrong most likely unresolved externals
+          ::unldByModuleId ( handle, 0 );
+          handle = 0;
+        }
+    }
+  else
+    {
+      // couldn't open file
+      handle = 0;
+    }
+  return handle;
 # else
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
@@ -8140,6 +8182,18 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   shl_t _handle = handle;
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
   return status == 0 ? value : 0;
+
+# elif defined (VXWORKS)
+
+  // For now we use the VxWorks global symbol table
+  // which resolves the most recently loaded symbols .. which resolve mostly what we want..
+  ACE_UNUSED_ARG (handle);
+  SYM_TYPE symtype;
+  void *value = 0;
+  STATUS status;
+  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, (char **)&value, &symtype), int, -1, status);
+
+  return status == OK ? value : 0;
 
 # else
 
@@ -8466,21 +8520,21 @@ ACE_OS::munmap (void *addr, size_t len)
 }
 
 ACE_INLINE int
-ACE_OS::madvise (caddr_t addr, size_t len, int advice)
+ACE_OS::madvise (caddr_t addr, size_t len, int map_advice)
 {
   ACE_OS_TRACE ("ACE_OS::madvise");
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
-  ACE_UNUSED_ARG (advice);
+  ACE_UNUSED_ARG (map_advice);
 
   ACE_NOTSUP_RETURN (-1);
 #elif !defined (ACE_LACKS_MADVISE)
-  ACE_OSCALL_RETURN (::madvise (addr, len, advice), int, -1);
+  ACE_OSCALL_RETURN (::madvise (addr, len, map_advice), int, -1);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
-  ACE_UNUSED_ARG (advice);
+  ACE_UNUSED_ARG (map_advice);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }

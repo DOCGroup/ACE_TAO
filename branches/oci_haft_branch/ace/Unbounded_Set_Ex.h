@@ -24,7 +24,7 @@
 
 #ifndef ACE_UNBOUNDED_SET_EX_H
 #define ACE_UNBOUNDED_SET_EX_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Node.h"
 
@@ -355,5 +355,5 @@ private:
 #pragma implementation ("Unbounded_Set_Ex.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_UNBOUNDED_SET_EX_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_GET_OPT_H
 #define ACE_GET_OPT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SStringfwd.h"
 #include "ace/Containers.h"
@@ -462,5 +462,5 @@ private:
 #include "ace/Get_Opt.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_GET_OPT_H */

@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "ace/Guard_T.h"
+
 //
 // ACE_Atomic_Op_Ex inline functions
 //
@@ -245,7 +247,9 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::value (void) const
 template <class ACE_LOCK, class TYPE> ACE_INLINE void
 ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   this->impl_.dump ();
+#endif /* ACE_HAS_DUMP */
   return;
 }
 

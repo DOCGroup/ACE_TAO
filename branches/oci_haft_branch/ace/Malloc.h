@@ -13,7 +13,7 @@
 #ifndef ACE_MALLOC_H
 #define ACE_MALLOC_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -389,6 +389,6 @@ public:
 #include "ace/Malloc_T.h"
 #include "ace/Memory_Pool.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_MALLOC_H */

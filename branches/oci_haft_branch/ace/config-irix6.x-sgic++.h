@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_IRIX6X_H
 #define ACE_CONFIG_IRIX6X_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Include basic (non-threaded) configuration
 #include "ace/config-irix6.x-sgic++-nothreads.h"
@@ -55,5 +55,5 @@
 
 #endif /* (ACE_MT_SAFE == 0) */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_IRIX6X_H */

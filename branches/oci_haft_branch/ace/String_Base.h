@@ -14,7 +14,7 @@
 #ifndef ACE_STRING_BASE_H
 #define ACE_STRING_BASE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/String_Base_Const.h"
 
@@ -440,6 +440,6 @@ template < class CHAR > ACE_INLINE
 #pragma implementation ("String_Base.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_STRING_BASE_H */

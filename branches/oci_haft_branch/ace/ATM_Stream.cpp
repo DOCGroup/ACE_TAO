@@ -12,12 +12,6 @@ ACE_RCSID (ace, ATM_Stream, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ATM_Stream)
 
-void
-ACE_ATM_Stream::dump (void) const
-{
-  ACE_TRACE ("ACE_ATM_Stream::dump");
-}
-
 char*
 ACE_ATM_Stream::get_peer_name (void) const
 {

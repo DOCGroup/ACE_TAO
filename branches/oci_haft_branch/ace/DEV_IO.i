@@ -19,10 +19,16 @@ ACE_DEV_IO::send_n (const void *buf, size_t n) const
 // this many bytes are received.
 
 ASYS_INLINE ssize_t
-ACE_DEV_IO::recv_n (void *buf, size_t n) const
+ACE_DEV_IO::recv_n (void *buf, size_t n,
+                    const ACE_Time_Value *timeout,
+                    size_t *bt) const
 {
   ACE_TRACE ("ACE_DEV_IO::recv_n");
-  return ACE::read_n (this->get_handle (), buf, n);
+  return ACE::recv_n (this->get_handle (),
+                      buf,
+                      n,
+                      timeout,
+                      bt);
 }
 
 ASYS_INLINE ssize_t

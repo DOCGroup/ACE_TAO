@@ -13,7 +13,7 @@
 
 #ifndef ACE_TLI_STREAM_H
 #define ACE_TLI_STREAM_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/TLI.h"
 
@@ -129,5 +129,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TLI_STREAM_H */

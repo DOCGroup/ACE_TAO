@@ -11,7 +11,7 @@
 //=============================================================================
 #ifndef ACE_RECYCLABLE_H
 #define ACE_RECYCLABLE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -74,5 +74,5 @@ protected:
 #include "ace/Recyclable.inl"
 #endif /* __ACE_INLINE __ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_RECYCLABLE_STATE_H*/

@@ -282,6 +282,8 @@ ACE_Registry_Name_Space::list_type_entries (ACE_BINDING_SET &set,
 void
 ACE_Registry_Name_Space::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 

@@ -29,10 +29,12 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::mutex (void)
 template <class ACE_LOCK, class TYPE> void
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class ACE_LOCK, class TYPE>

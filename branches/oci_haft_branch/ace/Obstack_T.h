@@ -11,7 +11,7 @@
 
 #ifndef ACE_OBSTACK_T_H
 #define ACE_OBSTACK_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Obchunk.h"
 
@@ -121,5 +121,5 @@ protected:
 #pragma implementation ("Obstack_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OBSTACK_T_H */

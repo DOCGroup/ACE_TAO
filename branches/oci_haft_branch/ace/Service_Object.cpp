@@ -8,8 +8,11 @@
 
 #include "ace/Service_Types.h"
 #include "ace/DLL.h"
+#include "ace/ACE.h"
 
-ACE_RCSID(ace, Service_Object, "$Id$")
+ACE_RCSID (ace,
+	   Service_Object,
+	   "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
@@ -17,7 +20,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 void
 ACE_Service_Type::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Type::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,

@@ -12,7 +12,7 @@
 
 #ifndef ACE_SERVICE_TEMPLATES_H
 #define ACE_SERVICE_TEMPLATES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Svc_Conf.h"
 
@@ -25,5 +25,5 @@
 #include "ace/Stream_Modules.h"
 #include "ace/Stream.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SERVICE_TEMPLATES_H */

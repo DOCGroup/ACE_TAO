@@ -23,7 +23,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Module)
 template <ACE_SYNCH_DECL> void
 ACE_Module<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_SYNCH_DECL> void

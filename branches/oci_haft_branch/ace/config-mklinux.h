@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-linux-common.h"
 
@@ -16,5 +16,5 @@
 #undef ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SIZET_SOCKET_LEN
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

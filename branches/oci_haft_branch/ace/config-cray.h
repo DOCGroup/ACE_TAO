@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_CRAY_H
 #define ACE_CONFIG_CRAY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 /*
     The following predefined macros are used within ACE ifdefs.
@@ -238,5 +238,5 @@
 
 /* #define ACE_HAS_SYS_ERRLIST */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_CRAY_H */

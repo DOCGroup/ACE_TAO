@@ -29,7 +29,9 @@ ACE_Stream_Head<ACE_SYNCH_USE>::~ACE_Stream_Head (void)
 template <ACE_SYNCH_DECL> void
 ACE_Stream_Head<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // ACE_Module that act as the head and tail of a Stream.
@@ -167,7 +169,9 @@ ACE_Stream_Tail<ACE_SYNCH_USE>::~ACE_Stream_Tail (void)
 template <ACE_SYNCH_DECL> void
 ACE_Stream_Tail<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_SYNCH_DECL> int
@@ -308,7 +312,9 @@ ACE_Thru_Task<ACE_SYNCH_USE>::~ACE_Thru_Task (void)
 template <ACE_SYNCH_DECL> void
 ACE_Thru_Task<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_SYNCH_DECL> int

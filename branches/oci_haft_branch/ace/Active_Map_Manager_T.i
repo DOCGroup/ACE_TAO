@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 template <class T> ACE_INLINE int
@@ -275,7 +276,9 @@ ACE_Active_Map_Manager<T>::npos (void)
 template <class T> ACE_INLINE void
 ACE_Active_Map_Manager<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_AMM_BASE::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T> ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>

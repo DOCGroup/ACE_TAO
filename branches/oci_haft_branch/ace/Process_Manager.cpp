@@ -2,7 +2,6 @@
 
 // Process_Manager.cpp
 #include "ace/ACE.h"
-#include "ace/Synch_T.h"
 #include "ace/Process.h"
 #include "ace/Signal.h"
 #include "ace/Process_Manager.h"
@@ -57,6 +56,7 @@ ACE_Process_Descriptor::~ACE_Process_Descriptor (void)
 void
 ACE_Process_Descriptor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Descriptor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -65,11 +65,13 @@ ACE_Process_Descriptor::dump (void) const
                           this->process_->getpid( )));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_Process_Manager::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Manager::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -81,6 +83,7 @@ ACE_Process_Manager::dump (void) const
     this->process_table_[i].dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Process_Descriptor::ACE_Process_Descriptor (void)

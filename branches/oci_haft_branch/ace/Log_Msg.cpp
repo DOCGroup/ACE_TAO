@@ -27,6 +27,7 @@
 #include "ace/Log_Msg_NT_Event_Log.h"
 #include "ace/Log_Msg_UNIX_Syslog.h"
 #include "ace/Log_Record.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
@@ -36,7 +37,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
   int ACE_Log_Msg::key_created_ = 0;
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
     defined (ACE_HAS_TSS_EMULATION)
-  ACE_thread_key_t ACE_Log_Msg::log_msg_tss_key_;
+
+ACE_thread_key_t *log_msg_tss_key (void)
+{
+  static ACE_thread_key_t key;
+
+  return &key;
+}
+
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
 
@@ -66,16 +74,10 @@ int ACE_Log_Msg::instance_count_ = 0;
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
     template class ACE_Cleanup_Adapter<ACE_Log_Msg>;
-#else
-template class ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex>;
-template class ACE_Guard<ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> >;
 # endif /* ! ACE_MT_SAFE */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Log_Msg>
-#else
-#pragma instantiate ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex>
-#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> >
 # endif /* ! ACE_MT_SAFE */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -243,7 +245,7 @@ ACE_Log_Msg::exists (void)
 
   // Get the tss_log_msg from thread-specific storage.
   return key_created_
-    && ACE_Thread::getspecific (log_msg_tss_key_,
+    && ACE_Thread::getspecific (*(log_msg_tss_key ()),
                                 ACE_reinterpret_cast (void **,
                                                       &tss_log_msg)) != -1
     && tss_log_msg;
@@ -285,7 +287,7 @@ ACE_Log_Msg::instance (void)
 
           {
             ACE_NO_HEAP_CHECK;
-            if (ACE_Thread::keycreate (&log_msg_tss_key_,
+            if (ACE_Thread::keycreate (log_msg_tss_key (),
                                        &ACE_TSS_cleanup) != 0)
               {
                 if (1 == ACE_OS_Object_Manager::starting_up())
@@ -314,7 +316,7 @@ ACE_Log_Msg::instance (void)
   ACE_Log_Msg *tss_log_msg = 0;
 
   // Get the tss_log_msg from thread-specific storage.
-  if (ACE_Thread::getspecific (log_msg_tss_key_,
+  if (ACE_Thread::getspecific (*(log_msg_tss_key ()),
                                ACE_reinterpret_cast (void **,
                                                      &tss_log_msg)) == -1)
     return 0; // This should not happen!
@@ -338,7 +340,7 @@ ACE_Log_Msg::instance (void)
         // storage.  It gets deleted via the ACE_TSS_cleanup function
         // when the thread terminates.
 
-        if (ACE_Thread::setspecific (log_msg_tss_key_,
+        if (ACE_Thread::setspecific (*(log_msg_tss_key()),
                                      ACE_reinterpret_cast (void *,
                                                            tss_log_msg)) != 0)
           return 0; // Major problems, this should *never* happen!
@@ -1376,8 +1378,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'I': // Indent with nesting_depth*width spaces
                   // Caller can do %*I to override nesting indent, and
                   // if %*I was done, wp has the extracted width.
+#if defined (ACE_HAS_TRACE)
                   if (0 == wp)
                     wp = ACE_Trace::get_nesting_indent ();
+#endif /* ACE_HAS_TRACE */
                   wp *= this->trace_depth_;
                   if (ACE_static_cast (size_t, wp) > bspace)
                     wp = ACE_static_cast (int, bspace);
@@ -2130,6 +2134,7 @@ ACE_Log_Msg::conditional_set (const char *filename,
 void
 ACE_Log_Msg::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Log_Msg::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -2170,6 +2175,7 @@ ACE_Log_Msg::dump (void) const
   // Synchronize output operations.
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void

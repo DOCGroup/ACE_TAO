@@ -13,7 +13,7 @@
 
 #ifndef ACE_REGISTRY_NAME_SPACE_H
 #define ACE_REGISTRY_NAME_SPACE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -130,5 +130,5 @@ private:
 };
 
 #endif /* ACE_WIN32 && UNICODE */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_REGISTRY_NAME_SPACE_H */

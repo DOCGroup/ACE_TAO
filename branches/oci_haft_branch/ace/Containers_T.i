@@ -243,7 +243,9 @@ ACE_Ordered_MultiSet_Iterator<T>::done (void) const
 template <class T> ACE_INLINE void
 ACE_Ordered_MultiSet_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 
@@ -332,7 +334,9 @@ ACE_DLList<T>::get (T *&item, size_t index)
 template <class T> ACE_INLINE void
 ACE_DLList<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_DLList_Base::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T> ACE_INLINE int
@@ -411,7 +415,9 @@ ACE_DLList_Iterator<T>::advance (void)
 template <class T> ACE_INLINE void
 ACE_DLList_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 
@@ -465,5 +471,7 @@ ACE_DLList_Reverse_Iterator<T>::next (void) const
 template <class T> ACE_INLINE void
 ACE_DLList_Reverse_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::dump ();
+#endif /* ACE_HAS_DUMP */
 }

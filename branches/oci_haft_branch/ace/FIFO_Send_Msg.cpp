@@ -14,8 +14,10 @@ ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Send_Msg)
 void
 ACE_FIFO_Send_Msg::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Send_Msg::dump");
   ACE_FIFO_Send::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 ssize_t

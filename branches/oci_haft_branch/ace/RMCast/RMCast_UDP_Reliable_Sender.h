@@ -3,7 +3,7 @@
 
 #ifndef ACE_RMCAST_UDP_RELIABLE_SENDER_H
 #define ACE_RMCAST_UDP_RELIABLE_SENDER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Singleton_Factory.h"
 #include "RMCast_IO_UDP.h"
@@ -74,5 +74,5 @@ private:
 #include "RMCast_UDP_Reliable_Sender.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_UDP_RELIABLE_SENDER_H */

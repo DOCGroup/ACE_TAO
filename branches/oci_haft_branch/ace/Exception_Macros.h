@@ -22,7 +22,7 @@
 #ifndef ACE_EXCEPTION_MACROS_H
 #define ACE_EXCEPTION_MACROS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -50,6 +50,6 @@
 #  undef ACE_USES_NATIVE_EXCEPTIONS
 #endif /* ACE_HAS_EXCEPTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_EXCEPTION_MACROS_H */

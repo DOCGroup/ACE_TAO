@@ -5,7 +5,7 @@
 
 #ifndef ACE_CONFIG_WIN32_BORLAND_H
 #define ACE_CONFIG_WIN32_BORLAND_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -68,5 +68,5 @@
 
 #define ACE_LACKS_STRRECVFD
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */

@@ -2,7 +2,7 @@
 
 #ifndef ACE_CXX_COMMON_H
 #define ACE_CXX_COMMON_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_CONFIG_INCLUDE_CXX_COMMON)
 # error ace/config-cxx-common.h: ACE configuration error!  Do not #include this file directly!
@@ -85,5 +85,5 @@
 # error ace/config-cxx-common.h can only be used with Compaq CXX!
 #endif /* ! __DECCXX */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CXX_COMMON_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_QTREACTOR_H
 #define ACE_QTREACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 
 #include "ace/Select_Reactor.h"
@@ -158,5 +158,5 @@ class ACE_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
 
 #endif /*ACE_HAS_QT */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_QTREACTOR_H */

@@ -15,7 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_PEER_SAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_PEER_SAP_H
 
 /* ------------------------------------------------------------------------- */
@@ -104,5 +104,5 @@ class ACE_CLASSIX_Peer_SAP
 
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_PEER_SAP_H */

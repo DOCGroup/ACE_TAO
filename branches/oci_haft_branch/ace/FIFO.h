@@ -13,7 +13,7 @@
 
 #ifndef ACE_FIFO_H
 #define ACE_FIFO_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -77,5 +77,5 @@ private:
 #include "ace/FIFO.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FIFO_H */

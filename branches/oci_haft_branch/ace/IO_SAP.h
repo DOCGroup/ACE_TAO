@@ -13,7 +13,7 @@
 
 #ifndef ACE_IO_SAP_H
 #define ACE_IO_SAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Flag_Manip.h"
 
@@ -86,5 +86,5 @@ private:
 #include "ace/IO_SAP.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_IO_SAP_H */

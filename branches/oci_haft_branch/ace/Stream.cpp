@@ -26,6 +26,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Stream)
 template <ACE_SYNCH_DECL> void
 ACE_Stream<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("-------- module links --------\n")));
 
@@ -66,6 +67,7 @@ ACE_Stream<ACE_SYNCH_USE>::dump (void) const
               && tp == this->linked_us_->stream_head_->writer ()))
         break;
     }
+#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_SYNCH_DECL> int

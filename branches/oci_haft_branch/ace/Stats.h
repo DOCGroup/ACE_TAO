@@ -14,7 +14,7 @@
 #ifndef ACE_STATS_H
 #define ACE_STATS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -268,6 +268,6 @@ private:
 # include "ace/Stats.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ! ACE_STATS_H */

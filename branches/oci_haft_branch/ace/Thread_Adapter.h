@@ -11,7 +11,7 @@
 
 #ifndef ACE_THREAD_ADAPTER_H
 #define ACE_THREAD_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -90,5 +90,5 @@ private:
 #   include "ace/Thread_Adapter.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_THREAD_ADAPTER_H */

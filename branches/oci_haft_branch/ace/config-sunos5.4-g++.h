@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
@@ -180,5 +180,5 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -15,7 +15,7 @@
 #ifndef ACE_OS_H
 #define ACE_OS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -459,18 +459,6 @@ private:
 #   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool, ACE_Pagefile_Memory_Pool_Options
 # endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-# if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
-#   define ACE_TSS_TYPE(T) ACE_TSS< T >
-#   if defined (ACE_HAS_BROKEN_CONVERSIONS)
-#     define ACE_TSS_GET(I, T) (*(I))
-#   else
-#     define ACE_TSS_GET(I, T) ((I)->operator T * ())
-#   endif /* ACE_HAS_BROKEN_CONVERSIONS */
-# else
-#   define ACE_TSS_TYPE(T) T
-#   define ACE_TSS_GET(I, T) (I)
-# endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
-
 # if defined (ACE_HAS_PROC_FS)
 #   include /**/ <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */
@@ -635,7 +623,7 @@ typedef u_int ACE_thread_key_t;
 #     include /**/ <taskLib.h>
 #     include /**/ <taskHookLib.h>
 
-// make sure these are included for VXWORKS.  
+// make sure these are included for VXWORKS.
 // @todo move these to a common place, perhaps the top of the file.
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_netdb.h"
@@ -1161,15 +1149,7 @@ protected:
 #   include "ace/os_include/os_sched.h"
 # endif /* ACE_NEEDS_SCHED_H */
 
-// If the user wants minimum IOStream inclusion, we will just include
-// the forward declarations
-# if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-// Forward declaration for streams
 #   include "ace/iosfwd.h"
-# else /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-// Else they will get all the stream header files
-#   include "ace/streams.h"
-# endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 # if !defined (ACE_HAS_WINCE)
 #   if ! defined (ACE_PSOS_DIAB_MIPS)
@@ -1713,54 +1693,6 @@ typedef struct utsname ACE_utsname;
 #   define F_OK    0       /* Test for existence of File. */
 # endif /* F_OK */
 
-# if !defined (ESUCCESS)
-#   define ESUCCESS 0
-# endif /* !ESUCCESS */
-
-# if !defined (EIDRM)
-#   define EIDRM 0
-# endif /* !EIDRM */
-
-# if !defined (ENFILE)
-#   define ENFILE EMFILE /* No more socket descriptors are available. */
-# endif /* !ENFILE */
-
-# if !defined (ECOMM)
-    // Not the same, but ECONNABORTED is provided on NT.
-#   define ECOMM ECONNABORTED
-# endif /* ECOMM */
-
-# if !defined (WNOHANG)
-#   define WNOHANG 0100
-# endif /* !WNOHANG */
-
-# if !defined (EDEADLK)
-#   define EDEADLK 1000 /* Some large number.... */
-# endif /* !EDEADLK */
-
-#if !defined (ENXIO)     /* Needed in SOCK_Dgram_Mcast */
-#   define ENXIO  6
-#endif /* ENXIO */
-
-# if !defined (PIPE_BUF)
-#   define PIPE_BUF 5120
-# endif /* PIPE_BUF */
-
-# define LOCALNAME 0
-# define REMOTENAME 1
-
-# if !defined (ETIMEDOUT) && defined (ETIME)
-#   define ETIMEDOUT ETIME
-# endif /* ETIMEDOUT */
-
-# if !defined (ETIME) && defined (ETIMEDOUT)
-#   define ETIME ETIMEDOUT
-# endif /* ETIMED */
-
-# if !defined (EBUSY)
-#   define EBUSY ETIME
-# endif /* EBUSY */
-
 # if !defined (_SC_TIMER_MAX)
 #   define _SC_TIMER_MAX 44
 # endif /* _SC_TIMER_MAX */
@@ -1843,6 +1775,9 @@ public:
   // = Set/Get the Thread handle.
   ACE_hthread_t handle (void);
   void handle (ACE_hthread_t);
+
+  void to_string (char*);
+
 
   // != Comparison operator.
   int operator== (const ACE_Thread_ID &) const;
@@ -1940,16 +1875,6 @@ public:
 #     define ACE_MSB_MASK (~((fd_mask) 1 << (NFDBITS - 1)))
 #   endif /* ! ACE_WIN32 */
 # endif /* ACE_HAS_BROKEN_BITSHIFT */
-
-// Signature for registering a cleanup function that is used by the
-// <ACE_Object_Manager> and the <ACE_Thread_Manager>.
-# if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" {
-# endif /* ACE_HAS_SIG_C_FUNC */
-typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
-# if defined (ACE_HAS_SIG_C_FUNC)
-}
-# endif /* ACE_HAS_SIG_C_FUNC */
 
 # if defined (ACE_WIN32)
 // Default WIN32 structured exception handler.
@@ -2345,6 +2270,15 @@ public:
 
   // = A set of wrappers for miscellaneous operations.
   static int atoi (const char *s);
+
+  struct macaddr_node_t {
+    unsigned char node[6];
+  };
+
+  /**
+   * Get the first adapter found on the machine.
+   */
+   static int getmacaddress (struct macaddr_node_t *node);
 
 # if defined (ACE_HAS_WCHAR)
   static int atoi (const wchar_t *s);
@@ -2777,7 +2711,7 @@ public:
   //@{ @name A set of wrappers for memory mapped files.
   static int madvise (caddr_t addr,
                       size_t len,
-                      int advice);
+                      int map_advice);
   static void *mmap (void *addr,
                      size_t len,
                      int prot,
@@ -3018,8 +2952,8 @@ public:
    * <ACE_OS::read> call, which uses the <read> system call on UNIX
    * and the <ReadFile> call on Win32). If errors occur, -1 is
    * returned.  If EOF occurs, 0 is returned.  Whatever data has been
-   * transmitted will be returned to the caller through
-   * <bytes_transferred>.
+   * read will be returned to the caller through<bytes_transferred>.
+   *
    */
   static ssize_t read_n (ACE_HANDLE handle,
                          void *buf,
@@ -4533,10 +4467,6 @@ ace_main_i
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-# if !defined (ACE_HAS_MINIMAL_ACE_OS)
-#   include "ace/Trace.h"
-# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
-
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE
@@ -4706,5 +4636,5 @@ extern ACE_OS_Export int sys_nerr;
 # include "ace/Thread_Control.h"
 #endif  /* ACE_LEGACY_MODE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* ACE_OS_H */

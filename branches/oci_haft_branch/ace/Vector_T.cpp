@@ -45,12 +45,14 @@ void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
 template <class T, size_t DEFAULT_SIZE>
 void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 #if 0
   // Can't do this unless the vector is an object with a dump
   // function.
   for (size_t i = 0; i < this->size (); ++i)
     (*this)[i].dump ();
 #endif /* 0 */
+#endif /* ACE_HAS_DUMP */
 }
 
 #if 0

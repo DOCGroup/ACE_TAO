@@ -14,7 +14,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Stream)
 void
 ACE_SOCK_Stream::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Stream::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int

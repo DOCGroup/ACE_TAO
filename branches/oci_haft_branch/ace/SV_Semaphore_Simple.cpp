@@ -17,7 +17,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_SV_Semaphore_Simple)
 void
 ACE_SV_Semaphore_Simple::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SV_Semaphore_Simple::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int

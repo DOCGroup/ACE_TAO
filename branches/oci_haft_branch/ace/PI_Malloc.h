@@ -14,7 +14,7 @@
 #ifndef ACE_PI_MALLOC_H
 #define ACE_PI_MALLOC_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -196,6 +196,6 @@ private:
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_PI_MALLOC_H */

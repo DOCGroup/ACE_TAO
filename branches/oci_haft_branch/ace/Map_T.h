@@ -12,7 +12,7 @@
 
 #ifndef ACE_MAP_T_H
 #define ACE_MAP_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Pair_T.h"
 #include "ace/Map_Manager.h"
@@ -1597,5 +1597,5 @@ private:
 #pragma implementation ("Map_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_MAP_T_H */

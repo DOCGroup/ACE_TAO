@@ -15,7 +15,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Stream)
 void
 ACE_MEM_Stream::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Stream::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int

@@ -13,7 +13,7 @@
 #ifndef ACE_ARGV_TYPE_CONVERTER_H
 #define ACE_ARGV_TYPE_CONVERTER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 #include "ace/OS_Memory.h"
@@ -111,6 +111,6 @@ private:
 #include "ace/Argv_Type_Converter.inl"
 #endif  /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* ACE_ARGV_TYPE_CONVERTER_H */

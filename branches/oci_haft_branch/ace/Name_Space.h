@@ -13,7 +13,7 @@
 
 #ifndef ACE_NAME_SPACE_H
 #define ACE_NAME_SPACE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -157,5 +157,5 @@ public:
   virtual void dump (void) const = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_NAME_SPACE_H */

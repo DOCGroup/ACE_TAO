@@ -26,7 +26,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Stream_Node)
 void
 ACE_Stream_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Stream_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 void
@@ -50,7 +52,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Parse_Node)
 void
 ACE_Parse_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Parse_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 const ACE_TCHAR *
@@ -143,7 +147,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Suspend_Node)
 void
 ACE_Suspend_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Suspend_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Suspend_Node::ACE_Suspend_Node (const ACE_TCHAR *name)
@@ -157,7 +163,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Resume_Node)
 void
 ACE_Resume_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Resume_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Resume_Node::ACE_Resume_Node (const ACE_TCHAR *name)
@@ -200,7 +208,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Remove_Node)
 void
 ACE_Remove_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remove_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Remove_Node::ACE_Remove_Node (const ACE_TCHAR *name)
@@ -259,7 +269,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Dynamic_Node)
 void
 ACE_Dynamic_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dynamic_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Dynamic_Node::~ACE_Dynamic_Node (void)
@@ -272,7 +284,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Static_Node)
 void
 ACE_Static_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Static_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Static_Node::ACE_Static_Node (const ACE_TCHAR *nm,
@@ -330,7 +344,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Location_Node)
 void
 ACE_Location_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Location_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Location_Node::ACE_Location_Node (void)
@@ -405,7 +421,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Object_Node)
 void
 ACE_Object_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Object_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Object_Node::ACE_Object_Node (const ACE_TCHAR *path,
@@ -456,7 +474,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Function_Node)
 void
 ACE_Function_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Function_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Function_Node::ACE_Function_Node (const ACE_TCHAR *path,
@@ -532,7 +552,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Dummy_Node)
 void
 ACE_Dummy_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dummy_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Dummy_Node::ACE_Dummy_Node (const ACE_Static_Node *static_node,
@@ -572,7 +594,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Static_Function_Node)
 void
 ACE_Static_Function_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Static_Function_Node::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Static_Function_Node::ACE_Static_Function_Node (const ACE_TCHAR *func_name)

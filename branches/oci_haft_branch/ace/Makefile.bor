@@ -243,6 +243,7 @@ OBJFILES = \
 	$(OBJDIR)\UPIPE_Acceptor.obj \
 	$(OBJDIR)\UPIPE_Connector.obj \
 	$(OBJDIR)\UPIPE_Stream.obj \
+   $(OBJDIR)\UUID.obj \
 	$(OBJDIR)\WFMO_Reactor.obj \
 	$(OBJDIR)\WIN32_Asynch_IO.obj \
 	$(OBJDIR)\WIN32_Proactor.obj \

@@ -28,6 +28,8 @@ ACE_UNIX_Addr::set_addr (void *addr, int len)
 void
 ACE_UNIX_Addr::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 // Do nothing constructor. 

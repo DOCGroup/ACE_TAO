@@ -13,7 +13,7 @@
 
 #ifndef ACE_REMOTE_MUTEX_H
 #define ACE_REMOTE_MUTEX_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/INET_Addr.h"
 
@@ -312,5 +312,5 @@ private:
 #include "ace/Remote_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_REMOTE_TOKEN_H */

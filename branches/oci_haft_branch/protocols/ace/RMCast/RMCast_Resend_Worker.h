@@ -3,7 +3,7 @@
 
 #ifndef ACE_RMCAST_RESEND_WORKER_H
 #define ACE_RMCAST_RESEND_WORKER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast.h"
 #include "RMCast_Copy_On_Write.h"
@@ -45,5 +45,5 @@ private:
 #include "RMCast_Resend_Worker.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_RESEND_WORKER_H */

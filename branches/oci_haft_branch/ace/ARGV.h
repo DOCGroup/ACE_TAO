@@ -13,7 +13,7 @@
 
 #ifndef ACE_ARGUMENT_VECTOR_H
 #define ACE_ARGUMENT_VECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -174,5 +174,5 @@ private:
 #include "ace/ARGV.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_ARGUMENT_VECTOR_H */

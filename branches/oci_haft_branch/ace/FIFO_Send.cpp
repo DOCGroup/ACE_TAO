@@ -15,8 +15,10 @@ ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Send)
 void
 ACE_FIFO_Send::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Send::dump");
   ACE_FIFO::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_FIFO_Send::ACE_FIFO_Send (void)

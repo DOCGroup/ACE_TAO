@@ -12,7 +12,7 @@
 
 #ifndef ACE_EVENT_HANDLER_H
 #define ACE_EVENT_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -20,11 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// need to fix THR_DETACHED, then we can get rid of OS.h
-#include "ace/OS.h"
 #include "ace/os_include/os_signal.h"
-#include "ace/os_include/os_pthread.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Synch_Traits.h"
 
 // Forward declaration.
 class ACE_Message_Block;
@@ -382,5 +380,5 @@ public:
 #include "ace/Event_Handler.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_EVENT_HANDLER_H */

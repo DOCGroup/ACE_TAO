@@ -2,6 +2,7 @@
 // $Id$
 
 #define ACE_COMPUTE_BASED_POINTER(P) (((char *) (P) - (P)->base_offset_) + (P)->target_)
+#include "ace/Global_Macros.h"
 
 template <class CONCRETE> ACE_INLINE CONCRETE *
 ACE_Based_Pointer<CONCRETE>::operator->(void)

@@ -56,7 +56,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Request_Queue)
 void
 ACE_TLI_Request_Queue::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Request_Queue::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int
@@ -99,7 +101,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Acceptor)
 void
 ACE_TLI_Acceptor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Acceptor::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_TLI_Acceptor::ACE_TLI_Acceptor (void)

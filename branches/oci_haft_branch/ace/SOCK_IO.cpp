@@ -15,7 +15,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_IO)
 void
 ACE_SOCK_IO::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_IO::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Allows a client to read from a socket without having to provide

@@ -14,7 +14,7 @@
 
 #ifndef ACE_DIRENT_SELECTOR_H
 #define ACE_DIRENT_SELECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -64,5 +64,5 @@ protected:
 #include "ace/Dirent_Selector.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DIRENT_SELECTOR_H */

@@ -14,7 +14,7 @@
 
 #ifndef ACE_LOCAL_NAME_SPACE_T_H
 #define ACE_LOCAL_NAME_SPACE_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Name_Space.h"
 
@@ -25,6 +25,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/SString.h"
 #include "ace/Local_Name_Space.h"
+#include "ace/Null_Mutex.h"
 
 /// A short-hand name for our set of name/value/type tuples passed back
 /// to callers.
@@ -263,5 +264,5 @@ private:
 #pragma implementation ("Local_Name_Space_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */

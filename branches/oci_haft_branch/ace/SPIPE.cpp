@@ -21,7 +21,9 @@ ACE_SPIPE::ACE_SPIPE (void)
 void
 ACE_SPIPE::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SPIPE::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Close down a ACE_SPIPE. 

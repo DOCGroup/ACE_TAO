@@ -355,7 +355,9 @@ ACE_NS_WString::ACE_NS_WString (const ACE_USHORT16 *s,
 void
 ACE_SString::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SString::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Copy constructor.

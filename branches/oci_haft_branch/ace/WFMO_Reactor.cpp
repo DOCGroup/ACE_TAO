@@ -991,6 +991,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
 void
 ACE_WFMO_Reactor_Handler_Repository::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   size_t i = 0;
 
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::dump");
@@ -1049,6 +1050,7 @@ ACE_WFMO_Reactor_Handler_Repository::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 /************************************************************/
@@ -2286,6 +2288,7 @@ ACE_WFMO_Reactor::update_state (void)
 void
 ACE_WFMO_Reactor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -2303,6 +2306,7 @@ ACE_WFMO_Reactor::dump (void) const
   this->timer_queue_->dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 int
@@ -2649,6 +2653,7 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 void
 ACE_WFMO_Reactor_Notify::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->timer_queue_->dump ();
@@ -2656,6 +2661,7 @@ ACE_WFMO_Reactor_Notify::dump (void) const
               ACE_LIB_TEXT ("Max. iteration: %d\n"),
               this->max_notify_iterations_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void

@@ -13,7 +13,7 @@
 #ifndef ACE_ADDR_H
 #define ACE_ADDR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -95,6 +95,6 @@ protected:
 #include "ace/Addr.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_ADDR_H */

@@ -14,19 +14,7 @@ ACE_RCSID(ace, Auto_Ptr, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Ptr)
 
-template<class X> void
-ACE_Auto_Basic_Ptr<X>::dump (void) const
-{
-  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::dump");
-}
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Array_Ptr)
-
-template<class X> void
-ACE_Auto_Basic_Array_Ptr<X>::dump (void) const
-{
-  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::dump");
-}
 
 #if defined (__MINGW32__)
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \

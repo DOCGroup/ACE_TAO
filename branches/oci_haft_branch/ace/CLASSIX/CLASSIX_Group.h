@@ -15,7 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_GROUP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_GROUP_H
 
 /* ------------------------------------------------------------------------- */
@@ -114,5 +114,5 @@ class ACE_CLASSIX_Group : public ACE_CLASSIX_Addr
 #include "ace/CLASSIX/CLASSIX_Group.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_GROUP_H */

@@ -1,9 +1,10 @@
 /* -*- C++ -*- */
 // $Id$
 
+
 #ifndef ACE_CONFIG_WIN32_COMMON_H
 #define ACE_CONFIG_WIN32_COMMON_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -215,6 +216,7 @@
 #define ACE_LACKS_INET_ATON
 #define ACE_LACKS_PARAM_H
 #define ACE_LACKS_PTHREAD_H
+#define ACE_LACKS_ARPA_INET_H
 
 #define ACE_HAS_SNPRINTF
 #define ACE_HAS_VFWPRINTF
@@ -575,5 +577,15 @@ typedef unsigned long long ACE_UINT64;
 #  define ACE_HAS_LOG_MSG_NT_EVENT_LOG
 #endif /* !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
 
-#include "ace/post.h"
+// Needed for obtaining the MAC address
+// I dont believe this will work under CE, notice the
+// check for ACE_HAS_WINCE.
+# if !defined (ACE_HAS_WINCE)
+# include <nb30.h>
+#  if defined (_MSC_VER)
+#   pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
+#  endif
+# endif /* !ACE_HAS_WINCE */
+
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

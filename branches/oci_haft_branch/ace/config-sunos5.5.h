@@ -9,7 +9,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define ACE_LACKS_STDINT_H
 
@@ -377,5 +377,5 @@
 #undef ACE_HAS_PROC_FS
 #undef ACE_HAS_PRUSAGE_T
 #endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64) */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

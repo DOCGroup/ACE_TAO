@@ -16,7 +16,7 @@
 #ifndef ACE_HANDLE_OPS_H
 #define ACE_HANDLE_OPS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -49,6 +49,6 @@ public:
 #include "ace/Handle_Ops.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_HANDLE_OPS_H */

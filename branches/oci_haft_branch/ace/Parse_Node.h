@@ -14,7 +14,7 @@
 #ifndef ACE_PARSE_NODE_H
 #define ACE_PARSE_NODE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -376,6 +376,6 @@ extern ACE_Service_Config *ace_this_svc;
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* ACE_PARSE_NODE_H */

@@ -14,11 +14,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 void
 ACE_File_Lock::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_File_Lock::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h,

@@ -30,7 +30,7 @@
 // ============================================================================
 
 #include "ace/ACE.h"
-#include "ace/OS.h"
+#include "ace/OS_String.h"
 
 //////////////////////////////////////////////////////////////
 // GOF Command Pattern Classes and Template Specializations //
@@ -137,14 +137,14 @@ ACE_Hash<void *>::operator () (const void *t) const
 ACE_INLINE int
 ACE_Equal_To<const ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !ACE_OS_String::strcmp (lhs, rhs);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
 ACE_Equal_To<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !ACE_OS_String::strcmp (lhs, rhs);
 }
 
 ACE_INLINE int
@@ -186,14 +186,14 @@ ACE_Equal_To<ACE_UINT64>::operator () (const ACE_UINT64 lhs, const ACE_UINT64 rh
 ACE_INLINE int
 ACE_Less_Than<const ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (ACE_OS_String::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
 ACE_Less_Than<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (ACE_OS_String::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 
@@ -217,28 +217,28 @@ ACE_Hash<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *t) const
 ACE_INLINE int
 ACE_Equal_To<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !ACE_OS_String::strcmp (lhs, rhs);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
 ACE_Equal_To<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !ACE_OS_String::strcmp (lhs, rhs);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
 ACE_Less_Than<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (ACE_OS_String::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
 ACE_Less_Than<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (ACE_OS_String::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 #endif  // ACE_USES_WCHAR

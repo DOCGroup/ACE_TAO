@@ -22,11 +22,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Acceptor)
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->peer_acceptor_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
@@ -450,6 +452,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::resume (void)
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -468,6 +471,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
               this->service_description_ == 0 ? ACE_LIB_TEXT ("<unknown>") : this->service_description_));
   this->service_addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ACE_PEER_ACCEPTOR &
@@ -833,6 +837,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Oneshot_Acceptor)
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void
 ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -843,6 +848,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
               delete_concurrency_strategy_));
   this->concurrency_strategy_->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int

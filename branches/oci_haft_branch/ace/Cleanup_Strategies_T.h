@@ -13,7 +13,7 @@
 
 #ifndef CLEANUP_STRATEGIES_H
 #define CLEANUP_STRATEGIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -144,5 +144,5 @@ public:
 #pragma implementation ("Cleanup_Strategies_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CLEANUP_STRATEGIES_H */

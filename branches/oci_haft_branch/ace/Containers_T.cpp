@@ -5,6 +5,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
+#include "ace/OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +24,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Stack)
 template <class T> void
 ACE_Bounded_Stack<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Bounded_Stack<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template<class T>
@@ -85,7 +88,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Stack)
 template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Stack<T, ACE_SIZE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template<class T, size_t ACE_SIZE>
@@ -133,7 +138,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Stack)
 template <class T> void
 ACE_Unbounded_Stack<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template<class T>
@@ -494,7 +501,9 @@ ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
 template <class T> void
 ACE_Double_Linked_List_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   this->dump_i ();
+#endif /* ACE_HAS_DUMP */
 }
 
 // Prefix advance.
@@ -596,7 +605,9 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (int dont_remove)
 template <class T> void
 ACE_Double_Linked_List_Reverse_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   this->dump_i ();
+#endif /* ACE_HAS_DUMP */
 }
 
 // Prefix advance.
@@ -783,7 +794,9 @@ ACE_Double_Linked_List<T>::size (void) const
 template <class T> void
 ACE_Double_Linked_List<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   // Dump the state of an object.
+#endif /* ACE_HAS_DUMP */
 }
 
 #if 0
@@ -913,7 +926,9 @@ ACE_Bounded_Set<T>::size (void) const
 template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Set<T, ACE_SIZE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T, size_t ACE_SIZE>
@@ -1045,7 +1060,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set_Iterator)
   template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Set_Iterator<T, ACE_SIZE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T, size_t ACE_SIZE>
@@ -1107,7 +1124,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set_Const_Iterator)
   template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T, size_t ACE_SIZE>
@@ -1169,7 +1188,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Set)
   template <class T> void
 ACE_Bounded_Set<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Bounded_Set<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T>
@@ -1334,7 +1355,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Set_Iterator)
   template <class T> void
 ACE_Bounded_Set_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T>
@@ -1411,7 +1434,9 @@ ACE_DNode<T>::~ACE_DNode (void)
 template <class T> void
 ACE_Unbounded_Stack_Iterator<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   // ACE_TRACE ("ACE_Unbounded_Stack_Iterator<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T>
@@ -1595,6 +1620,7 @@ ACE_Ordered_MultiSet<T>::reset (void)
 template <class T> void
 ACE_Ordered_MultiSet<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   //  ACE_TRACE ("ACE_Ordered_MultiSet<T>::dump");
   //
   //  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -1611,6 +1637,7 @@ ACE_Ordered_MultiSet<T>::dump (void) const
   //    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("count = %d\n"), count++));
   //
   //  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T> int

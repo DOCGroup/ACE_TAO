@@ -15,7 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_GROUP_STAMP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_GROUP_STAMP_H
 
 /* ------------------------------------------------------------------------- */
@@ -86,5 +86,5 @@ class ACE_CLASSIX_Group_Stamp : public ACE_CLASSIX_Group
 #include "ace/CLASSIX/CLASSIX_Group_Stamp.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_GROUP_STAMP_H */

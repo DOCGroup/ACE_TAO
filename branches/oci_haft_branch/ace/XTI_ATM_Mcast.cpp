@@ -16,7 +16,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_XTI_ATM_Mcast)
 void
 ACE_XTI_ATM_Mcast::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_XTI_ATM_Mcast::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast (void)

@@ -14,7 +14,7 @@
 #ifndef ACE_READ_BUFFER_H
 #define ACE_READ_BUFFER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -118,6 +118,6 @@ private:
 # include "ace/Read_Buffer.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_READ_BUFFER_H */

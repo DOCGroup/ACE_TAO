@@ -81,6 +81,7 @@ ACE_TSS_Connection::operator ACE_SOCK_Stream *(void)
 void
 ACE_TSS_Connection::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_Connection::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_TSS_Connection::dump:\n")));
@@ -89,6 +90,7 @@ ACE_TSS_Connection::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_TSS<ACE_SOCK_Stream>::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Remote_Token_Proxy::ACE_Remote_Token_Proxy (void)
@@ -384,6 +386,7 @@ ACE_Remote_Token_Proxy::owner_id (void)
 void
 ACE_Remote_Token_Proxy::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_Token_Proxy::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Tokens::dump:\n")
@@ -392,39 +395,46 @@ ACE_Remote_Token_Proxy::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_Remote_Mutex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_Mutex::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Remote_Mutex::dump:\n")));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_Remote_RLock::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_RLock::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Remote_RLock::dump:\n")));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_Remote_WLock::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_WLock::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Remote_WLock::dump:\n")));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -12,7 +12,7 @@
 
 #ifndef ACE_OBCHUNK_H
 #define ACE_OBCHUNK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Malloc.h"
 
@@ -68,5 +68,5 @@ public:
 #include "ace/Obchunk.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OBCHUNK_H */

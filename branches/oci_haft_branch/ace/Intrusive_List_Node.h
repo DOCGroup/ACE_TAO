@@ -12,7 +12,7 @@
 
 #ifndef ACE_INTRUSIVE_LIST_NODE_H
 #define ACE_INTRUSIVE_LIST_NODE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -77,5 +77,5 @@ private:
 #pragma implementation ("Intrusive_List_Node.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_INTRUSIVE_LIST_NODE_H */

@@ -10,6 +10,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/DLL_Manager.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 
@@ -257,7 +258,9 @@ ACE_Framework_Repository::compact (void)
 void
 ACE_Framework_Repository::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Framework_Repository::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Framework_Repository::ACE_Framework_Repository (int size)

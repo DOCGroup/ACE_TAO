@@ -14,7 +14,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Stream)
 void
 ACE_SPIPE_Stream::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SPIPE_Stream::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Simple-minded do nothing constructor.

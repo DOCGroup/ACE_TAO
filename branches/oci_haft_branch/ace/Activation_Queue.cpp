@@ -11,10 +11,10 @@ ACE_RCSID (ace,
            Activation_Queue,
            "$Id$")
 
-
 void
 ACE_Activation_Queue::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("delete_queue_ = %d\n"),
@@ -25,6 +25,7 @@ ACE_Activation_Queue::dump (void) const
   else
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(NULL)\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Activation_Queue::ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue,

@@ -13,7 +13,7 @@
 
 #ifndef ACE_QOS_SESSION_FACTORY_H
 #define ACE_QOS_SESSION_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/QoS/QoS_Session.h"
 
@@ -88,5 +88,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_QOS_SESSION_FACTORY_H */
