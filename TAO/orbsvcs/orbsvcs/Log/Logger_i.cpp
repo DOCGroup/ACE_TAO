@@ -24,7 +24,8 @@ Logger_Factory_i::Logger_Factory_i (void)
 }
 
 Logger_i::Logger_i (const char *name)
-  : name_ (ACE_OS::strdup (name))
+  : name_ (ACE_OS::strdup (name)),
+    verbosity_level_ (Logger::VERBOSE)
 {
   // Do nothing
 }
@@ -100,10 +101,21 @@ Logger_i::log (const Logger::Log_Record &log_rec,
                       MAXHOSTNAMELEN);
   
   rec.print (namebuf,
-	     this->verbosity_level_,
+	     this->verbosity_conversion (this->verbosity_level_),
 	     stderr);
   // Print out the logging message to stderr with the given level of
   // verbosity
 }
 
-// @@ Matt, please add the method for verbosity().
+Logger::Verbosity_Level 
+Logger_i::verbosity (void) const
+{
+  return verbosity_level_;
+}
+
+void
+Logger_i::verbosity (Logger::Verbosity_Level level, CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  verbosity_level_ = level;
+}
