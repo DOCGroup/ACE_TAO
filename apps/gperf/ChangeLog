@@ -1,5 +1,9 @@
 Fri Aug 21 11:57:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* src: Removed the globally overloaded new operator.  This was a
+ 	  portability pain and didn't really improve performance very
+ 	  much.
+
 	* src/Options.cpp (operator): Fixed '%e' to be '%r' to come up to
  	  speed with ACE changes.
 
