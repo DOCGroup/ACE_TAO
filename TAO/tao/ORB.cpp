@@ -64,12 +64,6 @@ ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
 
-// @@ Priyanka: don't forget to remove this stuff once you add the
-// file: parser to the Parser Registry.
-static const char file_prefix[] = "file://";
-
-// = Static initialization.
-
 // Count of the number of ORBs.
 int CORBA_ORB::orb_init_count_ = 0;
 
@@ -1526,6 +1520,7 @@ CORBA_ORB::string_to_object (const char *str,
 
   TAO_IOR_Parser *ior_parser =
     this->orb_core_->parser_registry ()->match_parser (str);
+
   if (ior_parser != 0)
     {
       return ior_parser->parse_string (str,
@@ -1533,16 +1528,10 @@ CORBA_ORB::string_to_object (const char *str,
                                        ACE_TRY_ENV);
     }
 
-  // @@ Priyanka: once you have the file: parser into the Parser
-  // Registry we should remove the code below.
+
   if (ACE_OS::strncmp (str,
-                       file_prefix,
-                       sizeof file_prefix - 1) == 0)
-    return this->file_string_to_object (str + sizeof file_prefix - 1,
-                                        ACE_TRY_ENV);
-  else if (ACE_OS::strncmp (str,
-                            ior_prefix,
-                            sizeof ior_prefix - 1) == 0)
+                       ior_prefix,
+                       sizeof ior_prefix - 1) == 0)
     return this->ior_string_to_object (str + sizeof ior_prefix - 1,
                                        ACE_TRY_ENV);
   else
@@ -1676,42 +1665,6 @@ CORBA_ORB::ior_string_to_object (const char *str,
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   stream >> objref;
   return objref;
-}
-
-// @@ Priyanka: once you have the file: parser into the Parser
-// Registry we should remove the code below.
-CORBA::Object_ptr
-CORBA_ORB::file_string_to_object (const char* filename,
-                                  CORBA::Environment& ACE_TRY_ENV)
-{
-  FILE* file = ACE_OS::fopen (filename, "r");
-
-  if (file == 0)
-    return CORBA::Object::_nil ();
-
-  ACE_Read_Buffer reader (file, 1);
-
-  char* string = reader.read ();
-
-  if (string == 0)
-    return CORBA::Object::_nil ();
-
-  CORBA::Object_ptr object = CORBA::Object::_nil ();
-  ACE_TRY
-    {
-      object = this->string_to_object (string, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      reader.alloc ()->free (string);
-    }
-  ACE_CATCHANY
-    {
-      reader.alloc ()->free (string);
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-
-  return object;
 }
 
 // ****************************************************************
