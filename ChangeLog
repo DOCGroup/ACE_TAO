@@ -1,101 +1,123 @@
+Sun Jan 23 12:39:20 2005  Marek Brudka  <mbrudka@aster.pl>
+
+        * bin/MakeProjectCreator/config/tao_xtresource.mpb:
+        * bin/MakeProjectCreator/config/tao_tkresource.mpb:
+        * bin/MakeProjectCreator/config/tao_qtresource.mpb:
+        * bin/MakeProjectCreator/config/tao_flresource.mpb:
+        * bin/MakeProjectCreator/config/ace_xtreactor.mpb:
+        * bin/MakeProjectCreator/config/ace_xt.mpb:
+        * bin/MakeProjectCreator/config/ace_x11.mpb:
+        * bin/MakeProjectCreator/config/ace_tkreactor.mpb:
+        * bin/MakeProjectCreator/config/ace_tk.mpb:
+        * bin/MakeProjectCreator/config/ace_motif.mpb:
+        * bin/MakeProjectCreator/config/ace_gl.mpb:
+        * bin/MakeProjectCreator/config/ace_flreactor.mpb:
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+        * bin/MakeProjectCreator/config/ace_athena.mpb:
+        * ace/ace_xtreactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_qtreactor.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace.mpc:
+        Added missing Id strings.
+
 Sun Jan 23 02:22:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ACE_FlReactor.pc.in:
-	* ace/ACE_QtReactor.pc.in:
-	* ace/ACE_TkReactor.pc.in:
-	* ace/ACE_XtReactor.pc.in:
+        * ace/ACE_FlReactor.pc.in:
+        * ace/ACE_QtReactor.pc.in:
+        * ace/ACE_TkReactor.pc.in:
+        * ace/ACE_XtReactor.pc.in:
 
           New files, pkg-config *.pc templates.
 
-	* ace/ace_flreactor.mpc:
-	* ace/ace_qtreactor.mpc:
-	* ace/ace_tkreactor.mpc:
-	* ace/ace_xtreactor.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace_qtreactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_xtreactor.mpc:
 
-	  Removed Demux subsection from Source_Files.
+          Removed Demux subsection from Source_Files.
 
-	  Added empty Inline_Files, Template_Files, and Resource_Files
-	  sections.
+          Added empty Inline_Files, Template_Files, and Resource_Files
+          sections.
 
-	  Added Pkgconfig_Files sections.
+          Added Pkgconfig_Files sections.
 
 Sun Jan 23 00:25:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Initial --enable-tk-reactor and --enable-qt-reactor support.
-	  Set BUILD_{FL,TK,QT,XT} automake conditionals.
+          Initial --enable-tk-reactor and --enable-qt-reactor support.
+          Set BUILD_{FL,TK,QT,XT} automake conditionals.
 
 Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
 
-	* */.cvsignore:
-	  To make cvs silent.
+        * */.cvsignore:
+          To make cvs silent.
 
-	* tests/tests.mpc:
-	* tests/XtReactor_Test.cpp:
-	* tests/XtMotifReactor_Test.cpp:
-	* tests/XtAthenaReactor_Test.cpp:
-	* tests/TkReactor_Test.cpp:
-	* tests/QtReactor_Test.h:
-	* tests/QtReactor_Test.cpp:
-	* tests/FlReactor_Test.cpp:
-	* include/makeinclude/wrapper_macros.GNU:
-	* include/makeinclude/platform_sunos5_g++.GNU:
-	* include/makeinclude/platform_lynxos.GNU:
-	* include/makeinclude/platform_linux_pgi.GNU:
-	* include/makeinclude/platform_linux_icc.GNU:
-	* include/makeinclude/platform_linux_borland.GNU:
-	* include/makeinclude/platform_linux.GNU:
-	* examples/Misc/test_XtReactor2.cpp:
-	* examples/Misc/test_XtReactor1.cpp:
-	* examples/Misc/Misc.mpc:
-	* bin/MakeProjectCreator/config/tao_xtresource.mpb:
-	* bin/MakeProjectCreator/config/tao_tkresource.mpb:
-	* bin/MakeProjectCreator/config/tao_qtresource.mpb:
-	* bin/MakeProjectCreator/config/tao_flresource.mpb:
-	* bin/MakeProjectCreator/config/strategies.mpb:
-	* bin/MakeProjectCreator/config/global.features:
-	* bin/MakeProjectCreator/config/acedefaults.mpb:
-	* bin/MakeProjectCreator/config/ace_xtreactor.mpb:
-	* bin/MakeProjectCreator/config/ace_xt.mpb:
-	* bin/MakeProjectCreator/config/ace_x11.mpb:
-	* bin/MakeProjectCreator/config/ace_tkreactor.mpb:
-	* bin/MakeProjectCreator/config/ace_tk.mpb:
-	* bin/MakeProjectCreator/config/ace_qtreactor.mpb:
-	* bin/MakeProjectCreator/config/ace_qt.mpb:
-	* bin/MakeProjectCreator/config/ace_motif.mpb:
-	* bin/MakeProjectCreator/config/ace_gtk.mpb:
-	* bin/MakeProjectCreator/config/ace_gl.mpb:
-	* bin/MakeProjectCreator/config/ace_flreactor.mpb:
-	* bin/MakeProjectCreator/config/ace_fl.mpb:
-	* bin/MakeProjectCreator/config/ace_athena.mpb:
-	* ace/config-win32-msvc.h:
-	* ace/config-doxygen.h:
-	* ace/ace_xtreactor.mpc:
-	* ace/ace_tkreactor.mpc:
-	* ace/ace_qtreactor.mpc:
-	* ace/ace_flreactor.mpc:
-	* ace/ace.mwc:
-	* ace/ace.mpc:
-	* ace/XtReactor.h:
-	* ace/XtReactor.cpp:
-	* ace/TkReactor.h:
-	* ace/TkReactor.cpp:
-	* ace/README:
-	* ace/QtReactor.h:
-	* ace/QtReactor.cpp:
-	* ace/FlReactor.h:
-	* ace/FlReactor.cpp:
-	* ace/ACE_XtReactor_export.h:
-	* ace/ACE_TkReactor_export.h:
-	* ace/ACE_QtReactor_export.h:
-	* ace/ACE_FlReactor_export.h:
-	* ACE-INSTALL.html:
-	  Changes related with separation of GUI reactors.
-	  The additional information is avalaible in ChangeLog at
-          REACTOR_SEPARATION branch (below).
+        * tests/tests.mpc:
+        * tests/XtReactor_Test.cpp:
+        * tests/XtMotifReactor_Test.cpp:
+        * tests/XtAthenaReactor_Test.cpp:
+        * tests/TkReactor_Test.cpp:
+        * tests/QtReactor_Test.h:
+        * tests/QtReactor_Test.cpp:
+        * tests/FlReactor_Test.cpp:
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_linux_pgi.GNU:
+        * include/makeinclude/platform_linux_icc.GNU:
+        * include/makeinclude/platform_linux_borland.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * examples/Misc/test_XtReactor2.cpp:
+        * examples/Misc/test_XtReactor1.cpp:
+        * examples/Misc/Misc.mpc:
+        * bin/MakeProjectCreator/config/tao_xtresource.mpb:
+        * bin/MakeProjectCreator/config/tao_tkresource.mpb:
+        * bin/MakeProjectCreator/config/tao_qtresource.mpb:
+        * bin/MakeProjectCreator/config/tao_flresource.mpb:
+        * bin/MakeProjectCreator/config/strategies.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/ace_xtreactor.mpb:
+        * bin/MakeProjectCreator/config/ace_xt.mpb:
+        * bin/MakeProjectCreator/config/ace_x11.mpb:
+        * bin/MakeProjectCreator/config/ace_tkreactor.mpb:
+        * bin/MakeProjectCreator/config/ace_tk.mpb:
+        * bin/MakeProjectCreator/config/ace_qtreactor.mpb:
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+        * bin/MakeProjectCreator/config/ace_motif.mpb:
+        * bin/MakeProjectCreator/config/ace_gtk.mpb:
+        * bin/MakeProjectCreator/config/ace_gl.mpb:
+        * bin/MakeProjectCreator/config/ace_flreactor.mpb:
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+        * bin/MakeProjectCreator/config/ace_athena.mpb:
+        * ace/config-win32-msvc.h:
+        * ace/config-doxygen.h:
+        * ace/ace_xtreactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_qtreactor.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace.mwc:
+        * ace/ace.mpc:
+        * ace/XtReactor.h:
+        * ace/XtReactor.cpp:
+        * ace/TkReactor.h:
+        * ace/TkReactor.cpp:
+        * ace/README:
+        * ace/QtReactor.h:
+        * ace/QtReactor.cpp:
+        * ace/FlReactor.h:
+        * ace/FlReactor.cpp:
+        * ace/ACE_XtReactor_export.h:
+        * ace/ACE_TkReactor_export.h:
+        * ace/ACE_QtReactor_export.h:
+        * ace/ACE_FlReactor_export.h:
+        * ACE-INSTALL.html:
+          Changes related with separation of GUI reactors.
+          The additional information is avalaible below.
 
-Wed Jan 19 22:55:50 2005  Marek Brudka  <mbrudka@aster.pl>
+        Wed Jan 19 22:55:50 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/tao_xtresource.mpb:
         * bin/MakeProjectCreator/config/tao_xtreactor.mpb:
@@ -107,81 +129,81 @@ Wed Jan 19 22:55:50 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/tao_flreactor.mpb:
         Adapted to new naming.
 
-Sun Jan  9 01:13:42 2005  Marek Brudka  <mbrudka@aster.pl>
+        Sun Jan  9 01:13:42 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * ace/TkReactor.h (Module):
         * ace/TkReactor.cpp (Module):
         * ace/FlReactor.h (Module):
         * ace/FlReactor.cpp (Module):
-Removed factory methods for loading reactor from shared library.
+        Removed factory methods for loading reactor from shared library.
 
         * bin/MakeProjectCreator/config/global.features (Module):
-	Disabled by defult tao_flreactor and tao_tkreactor features.
+        Disabled by defult tao_flreactor and tao_tkreactor features.
 
-Mon Jan  3 22:48:32 2005  Marek Brudka  <mbrudka@aster.pl>
+        Mon Jan  3 22:48:32 2005  Marek Brudka  <mbrudka@aster.pl>
 
-       * ace/ace_xtreactor.mpc (Module):
-       * ace/ace_tkreactor.mpc (Module):
-       * ace/ace_qtreactor.mpc (Module):
-       * ace/ace_flreactor.mpc (Module):
-       Removed ace_*reactor required features.
+        * ace/ace_xtreactor.mpc (Module):
+        * ace/ace_tkreactor.mpc (Module):
+        * ace/ace_qtreactor.mpc (Module):
+        * ace/ace_flreactor.mpc (Module):
+        Removed ace_*reactor required features.
 
-Tue Dec 14 00:09:48 2004  Marek Brudka  <mbrudka@aster.pl>
+        Tue Dec 14 00:09:48 2004  Marek Brudka  <mbrudka@aster.pl>
 
-       * bin/MakeProjectCreator/config/ace_x11.mpb (Module):
-       * bin/MakeProjectCreator/config/ace_gl.mpb (Module):
-       * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
-       * ACE-INSTALL.html (Module):
-       Modified base projects to enable FlReactor compilation for Windows.
+        * bin/MakeProjectCreator/config/ace_x11.mpb (Module):
+        * bin/MakeProjectCreator/config/ace_gl.mpb (Module):
+        * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
+        * ACE-INSTALL.html (Module):
+        Modified base projects to enable FlReactor compilation for Windows.
 
-Mon Dec 13 01:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec 13 01:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
 
-       * bin/MakeProjectCreator/config/ace_xt.mpb (Module):
-       * bin/MakeProjectCreator/config/ace_gl.mpb (Module):
-       * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
-       Removed nice feature inheritance and reentered a workaround related with
-       "verbatim" section bug in MPC.
+        * bin/MakeProjectCreator/config/ace_xt.mpb (Module):
+        * bin/MakeProjectCreator/config/ace_gl.mpb (Module):
+        * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
+        Removed nice feature inheritance and reentered a workaround related with
+        "verbatim" section bug in MPC.
 
-Mon Dec 13 00:36:44 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec 13 00:36:44 2004  Marek Brudka  <mbrudka@aster.pl>
 
-       * bin/MakeProjectCreator/config/strategies.mpb (Module):
-       Removed explicite dependencies of TAO_Strategies on TAO_TkReactor.
+        * bin/MakeProjectCreator/config/strategies.mpb (Module):
+        Removed explicite dependencies of TAO_Strategies on TAO_TkReactor.
 
-       * bin/MakeProjectCreator/config/tao_tkreactor.mpb (Module):
-       Creating base project for using TAO_TkReactor library.
+        * bin/MakeProjectCreator/config/tao_tkreactor.mpb (Module):
+        Creating base project for using TAO_TkReactor library.
 
-       * bin/MakeProjectCreator/config/strategies.mpb (Module):
-       Removed dependency on tao_tkreactor.
+        * bin/MakeProjectCreator/config/strategies.mpb (Module):
+        Removed dependency on tao_tkreactor.
 
-       * tests/TkReactor_Test.cpp (Module):
-       * bin/MakeProjectCreator/config/ace_tk.mpb (Module):
-       * ace/config-doxygen.h (Module):
-       Removed ACE_HAS_TK macros.
-       * ace/TkReactor.h (Module):
-       * ace/TkReactor.cpp (Module):
-       Removed ACE_HAS_TK macros. Created factory method TkReactor in dll.
+        * tests/TkReactor_Test.cpp (Module):
+        * bin/MakeProjectCreator/config/ace_tk.mpb (Module):
+        * ace/config-doxygen.h (Module):
+        Removed ACE_HAS_TK macros.
+        * ace/TkReactor.h (Module):
+        * ace/TkReactor.cpp (Module):
+        Removed ACE_HAS_TK macros. Created factory method TkReactor in dll.
 
-Sun Dec 12 22:53:48 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec 12 22:53:48 2004  Marek Brudka  <mbrudka@aster.pl>
 
-       * tests/FlReactor_Test.cpp (Module):
-       Removed ACE_HAS_FL macros.
+        * tests/FlReactor_Test.cpp (Module):
+        Removed ACE_HAS_FL macros.
 
-       * bin/MakeProjectCreator/config/strategies.mpb (Module):
-       Removed explicite dependence of TAO_Strategies on TAO_FlReactor.
+        * bin/MakeProjectCreator/config/strategies.mpb (Module):
+        Removed explicite dependence of TAO_Strategies on TAO_FlReactor.
 
-       * bin/MakeProjectCreator/config/tao_flreactor.mpb (Module):
-       Creating base project for using TAO_FlReactor library.
+        * bin/MakeProjectCreator/config/tao_flreactor.mpb (Module):
+        Creating base project for using TAO_FlReactor library.
 
-       * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
-       Removed ACE_HAS_FL macros.
+        * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
+        Removed ACE_HAS_FL macros.
 
-       * ace/config-doxygen.h (Module):
-       Removed ACE_HAS_FL macros.
-       * ace/FlReactor.h (Module):
-       * ace/FlReactor.cpp (Module):
-       Removed ACE_HAS_FL macros. Created factory method for instantinating FlReactor from dll.
+        * ace/config-doxygen.h (Module):
+        Removed ACE_HAS_FL macros.
+        * ace/FlReactor.h (Module):
+        * ace/FlReactor.cpp (Module):
+        Removed ACE_HAS_FL macros. Created factory method for instantinating FlReactor from dll.
 
-Sun Dec 12 02:14:51 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec 12 02:14:51 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * .cvsignore:
         Made cvs more silent on executables.
@@ -250,19 +272,19 @@ Sun Dec 12 02:14:51 2004  Marek Brudka  <mbrudka@aster.pl>
         * ACE-INSTALL.html (Module):
         Rewrote documentation related with GUI reactors.
 
-Fri Dec 10 23:53:41 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec 10 23:53:41 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/global.features (Module):
         Removed xt_reactor feature.
         * ACE-INSTALL.html (Module):
         Modified documentation related to QtReactor and XtReactor.
 
-Fri Dec 10 22:57:22 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec 10 22:57:22 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/QtReactor_Test.cpp (Message):
         Removed unnecesary log about lack of Qt support.
 
-Fri Dec 10 22:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec 10 22:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/global.features (Message):
         Disabled by default ace_With_xt and ace_with_x11.
@@ -270,12 +292,12 @@ Fri Dec 10 22:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
         * include/makeinclude/wrapper_macros.GNU (Module):
         Replace qt_rector variables by qt, as MPC currently uses qt feature.
 
-Fri Dec 10 01:04:52 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec 10 01:04:52 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * examples/Misc/.cvsignore (Module):
         Created few ignores to make cvs silent.
 
-Fri Dec 10 00:45:56 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec 10 00:45:56 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/.cvsignore (Module):
         Created few ignores to make cvs silent.
@@ -338,7 +360,7 @@ Fri Dec 10 00:45:56 2004  Marek Brudka  <mbrudka@aster.pl>
         * ACE-INSTALL.html (Module):
         Modified section on QtReactor and added section on XtReactor.
 
-Tue Dec  7 20:48:36 2004  Marek Brudka  <mbrudka@aster.pl>
+        Tue Dec  7 20:48:36 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * ace/ace_qtreactor.mpc (Module):
         * ace/QtReactor_export.h (Module):
@@ -348,14 +370,14 @@ Tue Dec  7 20:48:36 2004  Marek Brudka  <mbrudka@aster.pl>
         though not very probably name conflict and remain consistent
         with TAO_QtReact_export.
 
-Tue Dec  7 00:23:54 2004  Marek Brudka  <mbrudka@aster.pl>
+        Tue Dec  7 00:23:54 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * ace/ace_qtreactor.mpc (Module):
         * ace/QtReactor_export.h (Module):
         * ace/QtReactor.h (Module):
         Created and applied export macros for ACE_QtReactor library.
 
-Sun Dec  5 23:18:29 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec  5 23:18:29 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * include/makeinclude/wrapper_macros.GNU (Module):
         * include/makeinclude/platform_linux_pgi.GNU (Module):
@@ -382,35 +404,35 @@ Sun Dec  5 23:18:29 2004  Marek Brudka  <mbrudka@aster.pl>
         * ace/QtReactor.cpp (Module):
         Removed code compiled conditionally on ACE_HAS_QT predicate. Compilation is now managed by MPC.
 
-Sat Dec  4 17:03:38 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sat Dec  4 17:03:38 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/RMCast/.cvsignore (Module):
         * ace/.cvsignore (Module):
         * tests/.cvsignore (Module):
         Added linux executables to prevent cvs warnings
 
-Sat Dec  4 16:02:30 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sat Dec  4 16:02:30 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * ace/qt_reactor.mpb (Module):
         This base project is no necessary now.
 
-Sat Dec  4 15:51:01 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sat Dec  4 15:51:01 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/ace_qtreactor.mpb (Module):
         * ace/ace_qtreactor.mpc (Module):
         Removed depracated qt_moc project.
 
-Sat Dec  4 15:49:03 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sat Dec  4 15:49:03 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * ACE-INSTALL.html (Module):
         Added paragraph on building ACE_QtLibrary.
 
-Sat Dec  4 14:28:54 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sat Dec  4 14:28:54 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/global.features (Module):
         Added comment about -features option.
 
-Fri Dec  3 23:10:39 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec  3 23:10:39 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/tao_qtreactor.mpb (Added):
         * bin/MakeProjectCreator/config/ace_xt.mpb (Added):
@@ -443,17 +465,17 @@ Fri Dec  3 23:10:39 2004  Marek Brudka  <mbrudka@aster.pl>
 
 Sat Jan 22 21:18:58 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
-	* ace/Logging_Strategy.cpp (handle_timeout): Fixed when defined
-	  ACE_LACKS_IOSTREAM_TOTALLY. Use ftell instead of fseek in order
-	  to get the current file length. Thanks to Kim ByeongSu <kcando
-	  at kcando dot org> for pointing it out.
+        * ace/Logging_Strategy.cpp (handle_timeout): Fixed when defined
+          ACE_LACKS_IOSTREAM_TOTALLY. Use ftell instead of fseek in order
+          to get the current file length. Thanks to Kim ByeongSu <kcando
+          at kcando dot org> for pointing it out.
 
 Sat Jan 22 21:13:11 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
-	* tests/Test_Output.cpp(close): Fixed when
-	  ACE_LACKS_IOSTREAM_TOTALLY - fflush and fclose should be called
-	  only when output_file_ is valid, and it points to the same
-	  current ACE_LOG_MSG->msg_ostream ().
+        * tests/Test_Output.cpp(close): Fixed when
+          ACE_LACKS_IOSTREAM_TOTALLY - fflush and fclose should be called
+          only when output_file_ is valid, and it points to the same
+          current ACE_LOG_MSG->msg_ostream ().
 
 Fri Jan 21 19:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -478,217 +500,217 @@ Fri Jan 21 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan 20 22:48:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/ACE-guidelines.html:
+        * docs/ACE-guidelines.html:
 
-	  Removed obsolete ACE cast macro usage recommendations.  They are
-	  deprecated.  Thanks to Olli Savia <ops at iki dot fi> for
-	  pointing out this document needed updating.
+          Removed obsolete ACE cast macro usage recommendations.  They are
+          deprecated.  Thanks to Olli Savia <ops at iki dot fi> for
+          pointing out this document needed updating.
 
-	  Updated and removed out-of-date guidelines.
+          Updated and removed out-of-date guidelines.
 
 Thu Jan 20 19:07:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/ACE-casts-convert:
+        * bin/ACE-casts-convert:
 
-	  Enhanced to support conversion of ACE_*_cast_[1-5]_{ptr,ref}
-	  macro calls to their standard C++ counterparts.
+          Enhanced to support conversion of ACE_*_cast_[1-5]_{ptr,ref}
+          macro calls to their standard C++ counterparts.
 
-	* ace/Map_T.inl:
+        * ace/Map_T.inl:
 
-	  Converting remaining deprecated ACE cast macro calls using the
-	  enhanced ACE-casts-convert script described above.
+          Converting remaining deprecated ACE cast macro calls using the
+          enhanced ACE-casts-convert script described above.
 
 Thu Jan 20 18:18:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ACEXML/apps/svcconf/Svcconf_Handler.cpp:
-	* ACEXML/common/AttributesImpl.cpp:
-	* ACEXML/common/FileCharStream.cpp:
-	* ACEXML/common/HttpCharStream.cpp:
-	* ACEXML/common/Mem_Map_Stream.cpp:
-	* ACEXML/common/NamespaceSupport.cpp:
-	* ACEXML/common/SAXExceptions.cpp:
-	* ACEXML/common/StrCharStream.cpp:
-	* ACEXML/common/Transcode.cpp:
-	* ACEXML/parser/debug_validator/Debug_Attributes_Builder.cpp:
-	* ACEXML/parser/parser/Entity_Manager.i:
-	* ACEXML/parser/parser/Parser.cpp:
-	* ACEXML/tests/ContentHandler_Test.cpp:
-	* ACEXML/tests/Transcoder_Test.cpp:
-	* Kokyu/Dispatch_Deferrer.cpp:
-	* Kokyu/Dispatcher_Task.cpp:
-	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
-	* ace/RMCast/RMCast_Fragment.cpp:
-	* ace/RMCast/RMCast_IO_UDP.cpp:
-	* ace/RMCast/RMCast_Partial_Message.cpp:
-	* ace/RMCast/RMCast_Reassembly.cpp:
-	* apps/JAWS/server/IO.cpp:
-	* apps/JAWS/server/JAWS_Pipeline_Handler.cpp:
-	* apps/JAWS2/HTTP_10_Parse.cpp:
-	* apps/JAWS2/HTTP_10_Write.cpp:
-	* apps/JAWS2/JAWS/Assoc_Array.cpp:
-	* apps/JAWS2/JAWS/Concurrency.cpp:
-	* apps/JAWS2/JAWS/IO.cpp:
-	* apps/JAWS2/JAWS/Pipeline_Tasks.cpp:
-	* apps/JAWS3/http/HTTP_States.h:
-	* apps/JAWS3/jaws3/Asynch_IO.cpp:
-	* apps/drwho/CM_Client.cpp:
-	* apps/drwho/CM_Server.cpp:
-	* apps/drwho/server.cpp:
-	* apps/gperf/src/Hash_Table.cpp:
-	* apps/gperf/src/Key_List.cpp:
-	* apps/gperf/src/List_Node.cpp:
-	* apps/mkcsregdb/mkcsregdb.cpp:
-	* examples/APG/Config/HA_Status.cpp:
-	* examples/APG/Logging/Callback-2.h:
-	* examples/APG/Misc_IPC/UDP_Broadcast.cpp:
-	* examples/APG/Misc_IPC/UDP_Unicast.cpp:
-	* examples/APG/Naming/Name_Binding.h:
-	* examples/APG/Proactor/HA_Proactive_Status.cpp:
-	* examples/APG/Reactor/Client.cpp:
-	* examples/APG/Reactor/HAStatus-AC.cpp:
-	* examples/APG/Reactor/HAStatus.cpp:
-	* examples/APG/Reactor/Timer_State_Data.cpp:
-	* examples/APG/Shared_Memory/Hash_Map.cpp:
-	* examples/APG/Shared_Memory/Malloc.cpp:
-	* examples/APG/Shared_Memory/PI_Malloc.cpp:
-	* examples/APG/Sockets/Iovec.cpp:
-	* examples/APG/Svc_Config/HA_Status_Dynamic.cpp:
-	* examples/APG/Svc_Config/HA_Status_Static.cpp:
-	* examples/APG/ThreadPools/TP_Reactor.cpp:
-	* examples/APG/Timers/Alarm.cpp:
-	* examples/APG/Timers/CB.cpp:
-	* examples/APG/Timers/PCB.cpp:
-	* examples/APG/Timers/Task.cpp:
-	* examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
-	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
-	* examples/C++NPv1/Logging_Client.cpp:
-	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
-	* examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
-	* examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
-	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
-	* examples/C++NPv2/Client_Logging_Daemon.cpp:
-	* examples/C++NPv2/Logging_Event_Handler.h:
-	* examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
-	* examples/C++NPv2/Server_Shutdown.cpp:
-	* examples/C++NPv2/Service_Reporter.cpp:
-	* examples/C++NPv2/TPC_Logging_Server.cpp:
-	* examples/C++NPv2/TP_Logging_Server.cpp:
-	* examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
-	* examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
-	* examples/C++NPv2/display_logfile.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
-	* examples/IPC_SAP/FILE_SAP/client.cpp:
-	* examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
-	* examples/Reactor/Misc/notification.cpp:
-	* examples/Reactor/Multicast/Log_Wrapper.cpp:
-	* examples/Reactor/Proactor/test_aiosig_ace.cpp:
-	* examples/Reactor/WFMO_Reactor/APC.cpp:
-	* examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
-	* examples/Reactor/WFMO_Reactor/Multithreading.cpp:
-	* examples/Reactor/WFMO_Reactor/Removals.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i:
-	* examples/Shared_Malloc/test_malloc.cpp:
-	* examples/Shared_Malloc/test_persistence.cpp:
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
-	* examples/TMCast/Member/member.cpp:
-	* examples/Threads/thread_manager.cpp:
-	* examples/Threads/thread_specific.cpp:
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
-	* examples/Web_Crawler/Command_Processor.cpp:
-	* examples/Web_Crawler/Iterators.cpp:
-	* examples/Web_Crawler/Mem_Map_Stream.cpp:
-	* examples/Web_Crawler/URL_Addr.cpp:
-	* examples/Web_Crawler/URL_Visitor.cpp:
-	* netsvcs/lib/Name_Handler.cpp:
-	* protocols/ace/HTBP/HTBP_Channel.cpp:
-	* protocols/ace/HTBP/HTBP_Session.cpp:
-	* performance-tests/Misc/basic_perf.cpp:
-	* performance-tests/Misc/childbirth_time.cpp:
-	* performance-tests/Misc/context_switch_time.cpp:
-	* performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
-	* performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
-	* performance-tests/SCTP/SOCK_STREAM_clt.cpp:
-	* performance-tests/SCTP/SOCK_STREAM_srv.cpp:
-	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
-	* performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
-	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
-	* tests/ACE_Init_Test.cpp:
-	* tests/ACE_Test.cpp:
-	* tests/CDR_Array_Test.cpp:
-	* tests/Cache_Map_Manager_Test.cpp:
-	* tests/Cache_Map_Manager_Test.h:
-	* tests/Conn_Test.cpp:
-	* tests/DLL_Test.cpp:
-	* tests/DLList_Test.cpp:
-	* tests/Dynamic_Priority_Test.cpp:
-	* tests/FlReactor_Test.cpp:
-	* tests/Handle_Set_Test.cpp:
-	* tests/IOStream_Test.cpp:
-	* tests/MT_Reactor_Upcall_Test.cpp:
-	* tests/MT_SOCK_Test.cpp:
-	* tests/Malloc_Test.cpp:
-	* tests/Map_Manager_Test.cpp:
-	* tests/Max_Default_Port_Test.cpp:
-	* tests/Max_Default_Port_Test_IPV6.cpp:
-	* tests/Message_Queue_Test.cpp:
-	* tests/Message_Queue_Test_Ex.cpp:
-	* tests/Multicast_Test.cpp:
-	* tests/Multicast_Test_IPV6.cpp:
-	* tests/OS_Test.cpp:
-	* tests/Object_Manager_Test.cpp:
-	* tests/Priority_Buffer_Test.cpp:
-	* tests/Priority_Reactor_Test.cpp:
-	* tests/Proactor_Scatter_Gather_Test.cpp:
-	* tests/Proactor_Test.cpp:
-	* tests/Proactor_Test_IPV6.cpp:
-	* tests/Proactor_Timer_Test.cpp:
-	* tests/Process_Strategy_Test.cpp:
-	* tests/Reactor_Performance_Test.cpp:
-	* tests/Reactor_Timer_Test.cpp:
-	* tests/Reactors_Test.cpp:
-	* tests/Recursive_Condition_Bug_Test.cpp:
-	* tests/Recursive_Condition_Test.cpp:
-	* tests/Recursive_Mutex_Test.cpp:
-	* tests/SOCK_SEQPACK_SCTP_Test.cpp:
-	* tests/SOCK_Send_Recv_Test.cpp:
-	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
-	* tests/SString_Test.cpp:
-	* tests/SV_Shared_Memory_Test.cpp:
-	* tests/Semaphore_Test.cpp:
-	* tests/Service_Config_DLL.cpp:
-	* tests/Service_Config_Test.cpp:
-	* tests/TSS_Test.cpp:
-	* tests/Task_Ex_Test.cpp:
-	* tests/Thread_Pool_Reactor_Resume_Test.cpp:
-	* tests/Thread_Pool_Reactor_Test.cpp:
-	* tests/Thread_Pool_Test.cpp:
-	* tests/Time_Value_Test.cpp:
-	* tests/HTBP/Reactor_Tests/test_config.h:
-	* tests/HTBP/Send_Recv_Tests/SendRecv_Test.cpp:
-	* tests/RMCast/RMCast_Fragment_Test.cpp:
-	* tests/RMCast/RMCast_Membership_Test.cpp:
-	* tests/RMCast/RMCast_Reassembly_Test.cpp:
-	* tests/RMCast/RMCast_Reordering_Test.cpp:
-	* tests/RMCast/RMCast_Retransmission_Test.cpp:
-	* tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
-	* websvcs/lib/URL_Addr.cpp:
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/common/AttributesImpl.cpp:
+        * ACEXML/common/FileCharStream.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * ACEXML/common/NamespaceSupport.cpp:
+        * ACEXML/common/SAXExceptions.cpp:
+        * ACEXML/common/StrCharStream.cpp:
+        * ACEXML/common/Transcode.cpp:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * ACEXML/parser/parser/Entity_Manager.i:
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/tests/ContentHandler_Test.cpp:
+        * ACEXML/tests/Transcoder_Test.cpp:
+        * Kokyu/Dispatch_Deferrer.cpp:
+        * Kokyu/Dispatcher_Task.cpp:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/RMCast/RMCast_Fragment.cpp:
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_Partial_Message.cpp:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+        * apps/JAWS/server/IO.cpp:
+        * apps/JAWS/server/JAWS_Pipeline_Handler.cpp:
+        * apps/JAWS2/HTTP_10_Parse.cpp:
+        * apps/JAWS2/HTTP_10_Write.cpp:
+        * apps/JAWS2/JAWS/Assoc_Array.cpp:
+        * apps/JAWS2/JAWS/Concurrency.cpp:
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS2/JAWS/Pipeline_Tasks.cpp:
+        * apps/JAWS3/http/HTTP_States.h:
+        * apps/JAWS3/jaws3/Asynch_IO.cpp:
+        * apps/drwho/CM_Client.cpp:
+        * apps/drwho/CM_Server.cpp:
+        * apps/drwho/server.cpp:
+        * apps/gperf/src/Hash_Table.cpp:
+        * apps/gperf/src/Key_List.cpp:
+        * apps/gperf/src/List_Node.cpp:
+        * apps/mkcsregdb/mkcsregdb.cpp:
+        * examples/APG/Config/HA_Status.cpp:
+        * examples/APG/Logging/Callback-2.h:
+        * examples/APG/Misc_IPC/UDP_Broadcast.cpp:
+        * examples/APG/Misc_IPC/UDP_Unicast.cpp:
+        * examples/APG/Naming/Name_Binding.h:
+        * examples/APG/Proactor/HA_Proactive_Status.cpp:
+        * examples/APG/Reactor/Client.cpp:
+        * examples/APG/Reactor/HAStatus-AC.cpp:
+        * examples/APG/Reactor/HAStatus.cpp:
+        * examples/APG/Reactor/Timer_State_Data.cpp:
+        * examples/APG/Shared_Memory/Hash_Map.cpp:
+        * examples/APG/Shared_Memory/Malloc.cpp:
+        * examples/APG/Shared_Memory/PI_Malloc.cpp:
+        * examples/APG/Sockets/Iovec.cpp:
+        * examples/APG/Svc_Config/HA_Status_Dynamic.cpp:
+        * examples/APG/Svc_Config/HA_Status_Static.cpp:
+        * examples/APG/ThreadPools/TP_Reactor.cpp:
+        * examples/APG/Timers/Alarm.cpp:
+        * examples/APG/Timers/CB.cpp:
+        * examples/APG/Timers/PCB.cpp:
+        * examples/APG/Timers/Task.cpp:
+        * examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Logging_Event_Handler.h:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Server_Shutdown.cpp:
+        * examples/C++NPv2/Service_Reporter.cpp:
+        * examples/C++NPv2/TPC_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/display_logfile.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp:
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Removals.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/Shared_Malloc/test_persistence.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+        * examples/TMCast/Member/member.cpp:
+        * examples/Threads/thread_manager.cpp:
+        * examples/Threads/thread_specific.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+        * examples/Web_Crawler/Command_Processor.cpp:
+        * examples/Web_Crawler/Iterators.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.cpp:
+        * examples/Web_Crawler/URL_Addr.cpp:
+        * examples/Web_Crawler/URL_Visitor.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+        * protocols/ace/HTBP/HTBP_Channel.cpp:
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+        * performance-tests/Misc/basic_perf.cpp:
+        * performance-tests/Misc/childbirth_time.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
+        * tests/ACE_Init_Test.cpp:
+        * tests/ACE_Test.cpp:
+        * tests/CDR_Array_Test.cpp:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Cache_Map_Manager_Test.h:
+        * tests/Conn_Test.cpp:
+        * tests/DLL_Test.cpp:
+        * tests/DLList_Test.cpp:
+        * tests/Dynamic_Priority_Test.cpp:
+        * tests/FlReactor_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/IOStream_Test.cpp:
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Max_Default_Port_Test.cpp:
+        * tests/Max_Default_Port_Test_IPV6.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/Message_Queue_Test_Ex.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/OS_Test.cpp:
+        * tests/Object_Manager_Test.cpp:
+        * tests/Priority_Buffer_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Proactor_Timer_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Recursive_Condition_Bug_Test.cpp:
+        * tests/Recursive_Condition_Test.cpp:
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/SString_Test.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/Service_Config_DLL.cpp:
+        * tests/Service_Config_Test.cpp:
+        * tests/TSS_Test.cpp:
+        * tests/Task_Ex_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+        * tests/HTBP/Reactor_Tests/test_config.h:
+        * tests/HTBP/Send_Recv_Tests/SendRecv_Test.cpp:
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Reordering_Test.cpp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * websvcs/lib/URL_Addr.cpp:
 
-	  Converted remainder of
-	  ACE_{static,dynamic,reinterpret,const}_cast macros calls to
-	  their standard C++ counterparts using new bin/ACE-casts-convert
-	  script.
+          Converted remainder of
+          ACE_{static,dynamic,reinterpret,const}_cast macros calls to
+          their standard C++ counterparts using new bin/ACE-casts-convert
+          script.
 
 Thu Jan 20 18:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

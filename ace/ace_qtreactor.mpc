@@ -1,5 +1,5 @@
 //  -*- MPC -*- now wouldn't this be cool...
-// ace_qtreactor.mpc,v
+// $Id$
 
 project(ACE_QtReactor) : acedefaults, aceversion, core, acelib, ace_qt {
 

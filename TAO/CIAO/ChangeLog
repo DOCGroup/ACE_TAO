@@ -1,26 +1,26 @@
 Sun Jan 23 01:49:51 2005  Marek Brudka  <mbrudka@aster.pl>
 
-	* examples/OEP/Display/NavDisplayGUI_exec/README (Module):
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
-	Changes related with separation of GUI reactors.
-	The additional information is avalaible in ChangeLog at REACTOR_SEPARATION branch (below).
+        * examples/OEP/Display/NavDisplayGUI_exec/README (Module):
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
+        Changes related with separation of GUI reactors.
+        The additional information is avalaible in ChangeLog at REACTOR_SEPARATION branch (below).
 
-Mon Dec  6 00:39:19 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec  6 00:39:19 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * examples/OEP/Display/NavDisplayGUI_exec/README (Module):
-	Remove reference to ACE_HAS_QT.
+        Remove reference to ACE_HAS_QT.
 
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
-	Removed deprecated qt_moc base project.
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
+        Removed deprecated qt_moc base project.
 
 Fri Jan 21 17:27:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
 
           Fixed dependency relationship by making
           NodeAppTest_RoundTrip_stub depending on CIAO_DnC_Container.
 
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp
 
           Fixed warning on Debian_Full_Reactor build. The warning is
           caused because of assigning "const char*" to a "char *" type.
@@ -30,31 +30,31 @@ Fri Jan 21 17:27:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 Thu Jan 20 18:29:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/Any_Handler.cpp:
-	* DAnCE/Config_Handlers/Utils.cpp:
-	* performance-tests/Protocols/Sender/Sender_exec.cpp:
-	* tools/Daemon/Daemon_Impl.cpp:
+        * DAnCE/Config_Handlers/Any_Handler.cpp:
+        * DAnCE/Config_Handlers/Utils.cpp:
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * tools/Daemon/Daemon_Impl.cpp:
 
-	  Converted all ACE_{static,dynamic,reinterpret,const}_cast macros
-	  calls to their standard C++ counterparts using new
-	  bin/ACE-casts-convert script.  The ACE cast macros were
-	  deprecated back in ACE 5.4.2.
+          Converted all ACE_{static,dynamic,reinterpret,const}_cast macros
+          calls to their standard C++ counterparts using new
+          bin/ACE-casts-convert script.  The ACE cast macros were
+          deprecated back in ACE 5.4.2.
 
 Thu Jan 20 09:54:04 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OEP/Display/descriptors/NOTE.txt:
-	* examples/OEP/Display/descriptors/NOTE-win.txt: 
+        * examples/OEP/Display/descriptors/NOTE.txt:
+        * examples/OEP/Display/descriptors/NOTE-win.txt: 
 
           Fixed the discrepancy on using Assembly_Deployer. Thanks to 
           Martina Yen <martina_h_yen@raytheon.com> for reporting this.
 
 Wed Jan 19 09:39:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/examples/BasicSP/BasicSP.mpc
-	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED.mpc
-	* DAnCE/examples/BasicSP/BMDevice/BMDevice.mpc
-	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc
-	* DAnCE/examples/BasicSP/EC/EC.mpc
+        * DAnCE/examples/BasicSP/BasicSP.mpc
+        * DAnCE/examples/BasicSP/BMClosedED/BMClosedED.mpc
+        * DAnCE/examples/BasicSP/BMDevice/BMDevice.mpc
+        * DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc
+        * DAnCE/examples/BasicSP/EC/EC.mpc
 
           Changed the shared component library name from
           <what_ever_component>_DnC_<stub> to <What_ever_component>_<stub>,
@@ -63,7 +63,7 @@ Wed Jan 19 09:39:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
           The same change applied to _svnt and _exec libraries.
 
-	* DAnCE/examples/BasicSP/descriptors/basicNodeDaemon.pl
+        * DAnCE/examples/BasicSP/descriptors/basicNodeDaemon.pl
 
           Fixed this script since Some earlier cosmetic change make
           this perl script broken.
@@ -74,25 +74,25 @@ Wed Jan 19 09:39:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 Sat Jan 15 15:16:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/examples/BasicSP/README.html
+        * DAnCE/examples/BasicSP/README.html
 
           Updated this README file for instructions on running the BasicSP
- 	  example by using DAnCE. Thanks Sam Abbe <sam_abbe@raytheon.com>
- 	  for pointing errors on this document page.  This fixes bugid
- 	  2031.
+          example by using DAnCE. Thanks Sam Abbe <sam_abbe@raytheon.com>
+          for pointing errors on this document page.  This fixes bugid
+          2031.
 
 Mon Jan 10 09:45:14 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* DAnCE/RTNodeApplication/RTServer_Impl.h:
-	* DAnCE/RTNodeApplication/RTServer_Impl.cpp: Removed init method
-	  altogether.  VC6 can't handle the syntax and we'll deal with
-	  later.
+        * DAnCE/RTNodeApplication/RTServer_Impl.h:
+        * DAnCE/RTNodeApplication/RTServer_Impl.cpp: Removed init method
+          altogether.  VC6 can't handle the syntax and we'll deal with
+          later.
 
 Fri Jan  7 10:02:02 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* DAnCE/RTNodeApplication/RTServer_Impl.cpp (init): Changed to
-	  call the virtual function defined by the parent explicitly with
-	  this pointer to work around a VC6 bug.
+        * DAnCE/RTNodeApplication/RTServer_Impl.cpp (init): Changed to
+          call the virtual function defined by the parent explicitly with
+          this pointer to work around a VC6 bug.
 
 Wed Jan  5 15:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -114,17 +114,17 @@ Wed Jan  5 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jan  3 10:01:09 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* DAnCE/RTNodeApplication/README:
-	* DAnCE/RTNodeApplication/NodeApplication_Task.cpp:
-	* DAnCE/RTNodeApplication/NodeApplication_Task.h:
-	* DAnCE/RTNodeApplication/NodeApplication_Task.inl:
-	* DAnCE/RTNodeApplication/RTNodeApplication.cpp:
-	* DAnCE/RTNodeApplication/RTNodeApplication.mpc:
-	* DAnCE/RTNodeApplication/RTServer_Impl.cpp:
-	* DAnCE/RTNodeApplication/RTServer_Impl.h:
-	* DAnCE/RTNodeApplication/RTServer_Impl.inl:
-	* DAnCE/RTNodeApplication/senv.sh: Added a minimal
-	  real-time-enabled NodeApplication server.
+        * DAnCE/RTNodeApplication/README:
+        * DAnCE/RTNodeApplication/NodeApplication_Task.cpp:
+        * DAnCE/RTNodeApplication/NodeApplication_Task.h:
+        * DAnCE/RTNodeApplication/NodeApplication_Task.inl:
+        * DAnCE/RTNodeApplication/RTNodeApplication.cpp:
+        * DAnCE/RTNodeApplication/RTNodeApplication.mpc:
+        * DAnCE/RTNodeApplication/RTServer_Impl.cpp:
+        * DAnCE/RTNodeApplication/RTServer_Impl.h:
+        * DAnCE/RTNodeApplication/RTServer_Impl.inl:
+        * DAnCE/RTNodeApplication/senv.sh: Added a minimal
+          real-time-enabled NodeApplication server.
 
 Mon Jan  3 12:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
