@@ -61,6 +61,11 @@ public:
   /// processing.
   int is_message_ready (void);
 
+  /// Reset the contents of the <current_buffer_> if no more requests
+  /// need to be processed. We reset the contents of the
+  /// <message_state_> to parse and process the next request.
+  void reset (int reset_flag);
+
   /// Return the underlying message state
   TAO_GIOP_Message_State &message_state (void);
 
