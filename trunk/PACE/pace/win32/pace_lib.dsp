@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D "WIN32" /D "PACE_HAS_ALL_POSIX_FUNCS" /V"ERBOSE:LIB" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D "WIN32" /D "PACE_HAS_ALL_POSIX_FUNCS" /D "PACE_AS_STATIC_LIBS" /V"ERBOSE:LIB" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe

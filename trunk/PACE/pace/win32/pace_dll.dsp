@@ -1,4 +1,4 @@
-# Microsoft Developer Studio Project File - Name="PACE DLL -" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="PACE DLL" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PACE_DLL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D "_WINDOWS" /D "PACE_DLL_EXPORTS" /D "WIN32" /D "PACE_HAS_ALL_POSIX_FUNCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D "_WINDOWS" /D "PACE_BUILD_DLL" /D "WIN32" /D "PACE_HAS_ALL_POSIX_FUNCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -71,7 +71,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PACE_DLL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../" /D "_WINDOWS" /D "PACE_DLL_EXPORTS" /D "_DEBUG" /D "WIN32" /D "PACE_HAS_ALL_POSIX_FUNCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../" /D "_DEBUG" /D "_WINDOWS" /D "PACE_BUILD_DLL" /D "WIN32" /D "PACE_HAS_ALL_POSIX_FUNCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
