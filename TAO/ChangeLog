@@ -9,11 +9,11 @@ Tue Jun  1 23:20:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Sat May 29 12:21:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include):
-        
+
           Added code to remove whitespace before checking for '#'.
           The CORBA spec allows whitespace to appear before any
-          preprocessing directive. Thanks to 
-          Merlin Ran <merlinr@21cn.com> for sending in the 
+          preprocessing directive. Thanks to
+          Merlin Ran <merlinr@21cn.com> for sending in the
           example IDL files that uncovered this bug.
 
 Fri May 28 18:46:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -31,7 +31,7 @@ Fri May 28 18:46:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added code to the eventtype_fwd visitor to generate a
           forward declaration of the associated consumer interface.
-          
+
         * TAO_IDL/be/be_decl.cpp:
         * TAO_IDL/be_include/be_decl.h:
 
@@ -56,7 +56,7 @@ Fri May 28 18:46:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
 
-          Fixed several mistakes in generated code when ValueBase 
+          Fixed several mistakes in generated code when ValueBase
           appears in a union, struct, exception, sequence, or array.
 
         * TAO_IDL/fe/idl.yy:
@@ -68,7 +68,7 @@ Fri May 28 18:46:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu May 27 18:28:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Basic_Impl.cpp:
-        
+
           Modified constructor to put CORBA::tk_null in the kind_
           member if the TypeCode_ptr argument is null (which would be
           the case if an application tries to insert a basic type
