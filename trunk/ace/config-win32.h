@@ -203,6 +203,11 @@
 
 #define ACE_HAS_GPERF
 
+// VC5 doesn't support operator placement delete
+#if defined (_MSC_VER) && (_MSC_VER < 1200)  
+# define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+#endif /* _MSC_VER && _MSC_VER < 1200 */
+
 // ----------------------- platform specific defines --------------------
 
 #include <ace/config-win32-common.h>
