@@ -180,7 +180,7 @@ Client::run (void)
 {
   int ndist = 0;
   int i;
-  int j; 
+  int j;
   int n;
   int maxindx = 0;
   int minindx = 0;
@@ -195,9 +195,9 @@ Client::run (void)
   ACE_hrtime_t sample_mean;
 #else  /* ! ACE_LACKS_FLOATING_POINT */
   int d;
-  double std_dev;
-  double std_err;
-  double sample_mean;
+  double std_dev = 0.0;
+  double std_err = 0.0;
+  double sample_mean = 0.0;
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 
   ACE_hrtime_t last_over = 0;
@@ -226,7 +226,7 @@ Client::run (void)
   Samples = (ACE_hrtime_t *) ACE_OS::calloc (nsamples,
                                              sizeof (ACE_hrtime_t));
 
-  for (i = -1, *seq = 0, j = 0; 
+  for (i = -1, *seq = 0, j = 0;
        i < (ACE_INT32) nsamples;
        (*seq)++, i++, j++)
     {
@@ -240,7 +240,7 @@ Client::run (void)
       end = ACE_OS::gethrtime ();
 
       if (n <= 0)
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "\nTrouble receiving from socket!\n\n"),
                           -1);
 
@@ -249,22 +249,23 @@ Client::run (void)
       if (i < 0 )
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Ignoring first sample of %lld usecs\n",
-                      sample / 1000));
+                      "Ignoring first sample of %u usecs\n",
+                      (ACE_UINT32) (sample / (ACE_UINT32) 1000)));
           continue;
         }
       else if (max_allow > 0  &&  sample > max_allow)
         {
           ACE_DEBUG ((LM_DEBUG, "Sample # %i = "
-                      "%lld msec is over the limit (%lld)!\n",
+                      "%u msec is over the limit (%u)!\n",
                       i,
-                      sample / 1000000,
-                      max_allow / 1000000));
+                      (ACE_UINT32) (sample / (ACE_UINT32) 1000000),
+                      (ACE_UINT32) (max_allow / (ACE_UINT32) 1000000)));
 
           if (last_over > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "\tTime since last over = %lld msec!\n",
-                        (end - last_over) / 1000000));
+                        "\tTime since last over = %u msec!\n",
+                        (ACE_UINT32) ((end - last_over) /
+                                      (ACE_UINT32) 1000000)));
           last_over = end;
           i--;
           continue;
@@ -295,9 +296,9 @@ Client::run (void)
           if (j == 500)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%i) Partial (running) mean %lld usecs\n",
-                          i + 1, 
-                          psum / (1000 * 500)));
+                          "(%i) Partial (running) mean %u usecs\n",
+                          i + 1,
+                          (ACE_UINT32) (psum / (ACE_UINT32) (1000 * 500))));
               j = 0;
               psum = 0;
             }
@@ -350,8 +351,6 @@ Client::run (void)
     }
 
 #if ! defined (ACE_LACKS_FLOATING_POINT)
-  std_dev = std_err = 0;
-
   for (i = 0; i < (ACE_INT32) nsamples; i++)
     {
       std_dev += ((double)Samples[i] - sample_mean) *
@@ -362,15 +361,15 @@ Client::run (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "\nError indexing into dist array %d (%d)\n\n",
-                      d, 
+                      d,
                       ndist));
           ACE_OS::exit (1);
         }
       Dist[d] += 1;
       if (logfile)
         ACE_OS::fprintf (sampfp,
-                         "%lld\n", 
-                         Samples[i]);
+                         "%u\n",
+                         (ACE_UINT32) Samples[i]);
     }
 #endif /* ACE_LACKS_FLOATING_POINT */
 
@@ -382,25 +381,25 @@ Client::run (void)
       for (i = 0; i < ndist; i++)
         {
           ACE_OS::fprintf (distfp,
-                           "%lld %d\n",
-                           tmp / 1000,
+                           "%u %d\n",
+                           (ACE_UINT32) (tmp / (ACE_UINT32) 1000),
                            Dist[i]);
           tmp += window;
         }
     }
 
 #if defined (ACE_LACKS_FLOATING_POINT)
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "\nResults for %i samples (usec):\n"
               "\tSample Mean = %u,\n"
               "\tSample Max = %u, Max index = %u,\n"
               "\tSample Min = %u, Min index = %u,\n",
               nsamples,
-              sample_mean / (ACE_UINT32) 1000,
-              max / (ACE_UINT32) 1000,
+              (ACE_UINT32) (sample_mean / (ACE_UINT32) 1000),
+              (ACE_UINT32) (max / (ACE_UINT32) 1000),
               maxindx,
-              min / (ACE_UINT32) 1000,
-              minindx);
+              (ACE_UINT32) (min / (ACE_UINT32) 1000),
+              minindx));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
   std_dev = (double) sqrt (std_dev / (double) (nsamples - 1.0));
   std_err = (double) std_dev / sqrt ((double) nsamples);
@@ -408,25 +407,25 @@ Client::run (void)
   ACE_DEBUG ((LM_DEBUG,
               "\nResults for %i samples (usec):\n"
               "\tSample Mean = %f,\n"
-              "\tSample Max = %lld, Max index = %d,\n"
-              "\tSample Min = %lld, Min index = %d,\n"
+              "\tSample Max = %u, Max index = %d,\n"
+              "\tSample Min = %u, Min index = %d,\n"
               "\tStandard Deviation = %f,\n"
               "\tStandard Error = %f\n",
               nsamples,
-              sample_mean / 1000,
-              max / 1000,
+              sample_mean / 1000.0,
+              (u_int) (max / (ACE_UINT32) 1000),
               maxindx,
-              min / 1000,
+              (u_int) (min / (ACE_UINT32) 1000),
               minindx,
-              std_dev / 1000, 
-              std_err / 1000));
+              std_dev / 1000.0,
+              std_err / 1000.0));
 
   if (logfile)
     {
       ACE_OS::fprintf (sumfp,
                        "Command executed: \n");
       for (; *cmd; cmd++)
-        ACE_OS::fprintf (sumfp, 
+        ACE_OS::fprintf (sumfp,
                          "%s ",
                          *cmd);
       ACE_OS::fprintf (sumfp,
@@ -435,18 +434,18 @@ Client::run (void)
       ACE_OS::fprintf (sumfp,
                        "\nResults for %i samples (usec):"
                        "\tSample Mean = %f,\n"
-                       "\tSample Max = %lld, Max index = %d,\n"
-                       "\tSample Min = %lld, Min index = %d,\n"
+                       "\tSample Max = %u, Max index = %d,\n"
+                       "\tSample Min = %u, Min index = %d,\n"
                        "\tStandard Deviation = %f,\n"
                        "\tStandard Error = %f\n",
                        nsamples,
-                       sample_mean / 1000,
-                       max / 1000,
+                       sample_mean / 1000.0,
+                       (ACE_UINT32) (max / (ACE_UINT32) 1000),
                        maxindx,
-                       min / 1000,
+                       (ACE_UINT32) (min / (ACE_UINT32) 1000),
                        minindx,
-                       std_dev / 1000,
-                       std_err / 1000);
+                       std_dev / 1000.0,
+                       std_err / 1000.0);
     }
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 
@@ -576,7 +575,7 @@ main (int argc, char *argv[])
         case 'w':
           window = ACE_OS::atoi (getopt.optarg);
           if (window < 0)
-            ACE_ERROR_RETURN ((LM_ERROR, 
+            ACE_ERROR_RETURN ((LM_ERROR,
                                "Invalid window!\n\n"),
                               1);
           break;
@@ -594,7 +593,7 @@ main (int argc, char *argv[])
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nBuffer size must be greater than 0!\n\n"),
                               1);
-                          
+
         case 'n':
           nsamples = ACE_OS::atoi (getopt.optarg);
           if (nsamples <= 0)
@@ -667,7 +666,8 @@ main (int argc, char *argv[])
       if (isdigit(argv[getopt.optind][0]))
         {
           if (remote_addr.set (dstport,
-                               (ACE_UINT32) ACE_OS::inet_addr (argv[getopt.optind])) == -1)
+                               (ACE_UINT32) ACE_OS::inet_addr
+                                 (argv[getopt.optind])) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid IP address: %s\n",
                                argv[getopt.optind]),
