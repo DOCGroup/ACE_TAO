@@ -55,14 +55,6 @@ namespace CORBA
   typedef ULong Flags;
 
   class Environment;
-
-  TAO_Export Boolean is_nil (Request_ptr);
-  TAO_Export Boolean is_nil (ServerRequest_ptr);
-  TAO_Export Boolean is_nil (Context_ptr);
-
-  TAO_Export void release (Request_ptr);
-  TAO_Export void release (ServerRequest_ptr);
-  TAO_Export void release (Context_ptr);
 };
 
 class TAO_GIOP_Twoway_Invocation;
