@@ -178,7 +178,7 @@ TAO_ServerRequestInfo::get_slot (PortableInterceptor::SlotId id
 {
   // Retrieve the total number of assigned slots from the PICurrent.
   // No TSS access is incurred.
-  TAO_PICurrent *pi_current =
+  TAO::PICurrent * pi_current =
     this->server_request_.orb_core ()->pi_current ();
 
   if (pi_current == 0)
@@ -188,7 +188,7 @@ TAO_ServerRequestInfo::get_slot (PortableInterceptor::SlotId id
   ACE_CHECK_RETURN (0);
 
   // Retrieve the request scope PICurrent object.
-  TAO_PICurrent_Impl &rsc = this->server_request_.rs_pi_current ();
+  TAO::PICurrent_Impl &rsc = this->server_request_.rs_pi_current ();
 
   return rsc.get_slot (id ACE_ENV_ARG_PARAMETER);
 
@@ -368,7 +368,7 @@ TAO_ServerRequestInfo::object_id (ACE_ENV_SINGLE_ARG_DECL)
       //    case, this is still faster than the
       //    PortableServer::Current::object_id() method since no TSS
       //    access is involved.
-      CORBA::ULong len = id.length ();
+      const CORBA::ULong len = id.length ();
       obj_id->length (len);
       CORBA::Octet *buffer = obj_id->get_buffer ();
       ACE_OS::memcpy (buffer, id.get_buffer (), len);
@@ -428,7 +428,7 @@ TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type
           //    object reference!!!
           CORBA::Policy_var policy = policies.get_policy_by_index (i);
 
-          CORBA::PolicyType ptype =
+          const CORBA::PolicyType ptype =
             policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -459,7 +459,7 @@ TAO_ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
 {
   // Retrieve the total number of assigned slots from the PICurrent
   // object.  No TSS access is incurred.
-  TAO_PICurrent *pi_current =
+  TAO::PICurrent * pi_current =
     this->server_request_.orb_core ()->pi_current ();
 
   if (pi_current == 0)
@@ -469,14 +469,7 @@ TAO_ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
   ACE_CHECK;
 
   // Retrieve the "request scope current" (RSC).
-  TAO_PICurrent_Impl &rsc = this->server_request_.rs_pi_current ();
-
-  // If the RSC was logically copied to the TSC, then deep copy the
-  // contents of the RSC to the TSC before modifying the RSC.  The TSC
-  // should not be altered by modifications to the RSC.
-  TAO_PICurrent_Impl *tsc = rsc.pi_peer ();
-  if (tsc != 0)
-    tsc->copy (rsc, 1);  // Deep copy
+  TAO::PICurrent_Impl & rsc = this->server_request_.rs_pi_current ();
 
   rsc.set_slot (id, data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
