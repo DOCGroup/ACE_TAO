@@ -1,3 +1,30 @@
+Fri Apr 11 13:01:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+        * tao/Interceptor_List.cpp:
+        * tao/Makefile.bor:
+        * tao/Makefile.dirs:
+        * tao/Makefile.tao:
+        * tao/IORInterceptor/TAO_IORInterceptor.dsp:
+        * tao/PortableServer/IORInfo.h:
+        * tao/PortableServer/Makefile:
+        * tao/PortableServer/Makefile.bor:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+
+	  Changes to integrate the new IORInterceptor
+	  library into existing TAO builds.
+
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/IORInterceptor/Makefile:
+        * tao/IORInterceptor/Makefile.bor:
+        * tao/IORInterceptor/TAO_IORInterceptor.rc:
+
+	  New files to complete the build framework of
+	  TAO_IORInterceptors.
+
 Fri Apr 11 02:58:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * IFR_Client_Adapter.cpp:

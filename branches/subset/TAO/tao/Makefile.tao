@@ -191,6 +191,7 @@ ORB_CORE_FILES = \
   ClientRequestInfo_i \
   RequestInfo_Util \
   ClientInterceptorAdapter \
+  PI_ForwardC \
   ObjectReferenceTemplateC \
   PortableInterceptorC \
   PICurrent \
@@ -263,6 +264,7 @@ ORB_CORE_FILES = \
   Bind_Dispatcher_Guard \
   Fault_Tolerance_Service \
   Interceptor_List \
+  IORInterceptor_Adapter \
   IFR_Client_Adapter \
   ORBInitInfo \
   ORBInitializer_Registry \
