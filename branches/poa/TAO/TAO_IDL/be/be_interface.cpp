@@ -294,11 +294,11 @@ be_interface::gen_client_header (void)
           *ch << nl;
         }
       else
-	{
-	  // we do not inherit from anybody, hence we do so from the base
-	  // CORBA::Object class
-	  *ch << ": public virtual ACE_CORBA_1 (Object)" << nl;
-	}
+        {
+          // we do not inherit from anybody, hence we do so from the base
+          // CORBA::Object class
+          *ch << ": public virtual CORBA::Object" << nl;
+        }
 
       // generate the body
 
@@ -569,7 +569,7 @@ be_interface::gen_client_stubs (void)
   *cs << "\treturn 1; // success using local knowledge\n";
   cs->decr_indent ();
   *cs << "else" << nl;
-  *cs << "\treturn ACE_CORBA_3 (Object, _is_a) (value, env); // remote call\n";
+  *cs << "\treturn this->CORBA_Object::_is_a (value, env); // remote call\n";
   cs->decr_indent ();
   *cs << "}\n\n";
 
@@ -869,6 +869,48 @@ int be_interface::gen_server_skeletons (void)
   this->accept (&visitor);
   *ss << "\n";
 
+  // generate the constructors and destructor
+  *ci << "ACE_INLINE" << nl;
+  *ci << this->name () << "::" << this->local_name () <<
+    " (void) // default constructor" << nl;
+  *ci << "{}" << nl << nl;
+
+  *ci << "ACE_INLINE" << nl;
+  *ci << this->name () << "::" << this->local_name () <<
+    " (STUB_Object *objref) // constructor" << nl;
+  *ci << "\t: CORBA_Object (objref)" << nl;
+  *ci << "{}" << nl << nl;
+
+  *ci << "ACE_INLINE" << nl;
+  *ci << this->name () << "::~" << this->local_name () <<
+    " (void) // destructor" << nl;
+  *ci << "{}\n\n";
+
+  // generate the ifdefined macro for  the _var type
+  ci->gen_ifdef_macro (this->flatname (), "_var");
+
+  if (this->gen_var_impl () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_interface: _var impl code gen failed\n"));
+      return -1;
+    }
+  ci->gen_endif ();
+
+  // generate the ifdefined macro for  the _out type
+  ci->gen_ifdef_macro (this->flatname (), "_out");
+
+  if (this->gen_out_impl () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_interface: _out impl code gen failed\n"));
+      return -1;
+    }
+  ci->gen_endif ();
+
+  if (be_scope::gen_client_inline () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_interface: code gen failed for scope\n"));
+      return -1;
+    }
   return 0;
 }
 

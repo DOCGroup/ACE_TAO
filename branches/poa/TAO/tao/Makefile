@@ -24,6 +24,7 @@ ORBCORE_SRCS = \
 	poa \
 	principa \
 	request \
+	sequence \
 	svrrqst \
 	typecode \
 	arg_shifter \

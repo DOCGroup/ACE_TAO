@@ -78,7 +78,7 @@ public:
   // return the be_decl node corresponding to this scope node
 
   // Visiting
-  virtual int accept (be_visitor* visitor);
+  virtual int accept (be_visitor *visitor);
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_scope, UTL_Scope);

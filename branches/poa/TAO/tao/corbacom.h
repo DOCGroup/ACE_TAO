@@ -151,6 +151,9 @@ typedef u_int CORBA_Flags;
   typedef int			CORBA_Boolean;
 #  endif /* "bool" not builtin */
 
+// forward declare sequences.
+template <class T> class TAO_Unbounded_Sequence;
+
 template <class T>
 struct CORBA_SEQUENCE
   // = TITLE
@@ -462,7 +465,7 @@ public:
 
   typedef CORBA_UserException  UserException;
 
-  typedef CORBA_SEQUENCE <TypeCode_ptr> ExceptionList;
+  typedef CORBA_SEQUENCE<TypeCode_ptr> ExceptionList;
   typedef ExceptionList *ExceptionList_ptr;
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;

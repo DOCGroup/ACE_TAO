@@ -1125,7 +1125,7 @@ be_array::gen_forany_defn (void)
   // generate the private section
   *ch << "private:\n";
   ch->incr_indent ();
-  *ch << "friend ACE_CORBA_1 (Any);" << nl;
+  *ch << "friend CORBA::Any;" << nl;
   *ch << this->local_name () << "_slice *ptr_;" << nl;
   *ch << "CORBA::Boolean nocopy_;\n";
 

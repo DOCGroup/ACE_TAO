@@ -78,4 +78,3 @@ be_expression::accept (be_visitor *visitor)
 {
   return visitor->visit_expression (this);
 }
-

@@ -17,42 +17,53 @@ Util_Thread::svc (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Utilization Thread created, "
               "waiting for threads to finish binding\n"));
-  ts_->barrier_->wait ();
+
+  // Sumedh, please add comments here.
+  this->ts_->barrier_->wait ();
+
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Threads have bound, "
               "utilization test started\n"));
-  run_computations ();
 
+  this->run_computations ();
   return 0;
 }
 
 double
-Util_Thread::get_number_of_computations ()
+Util_Thread::get_number_of_computations (void)
 {
-  return number_of_computations_;
+  return this->number_of_computations_;
 }
 
-// perform repeated prime factor computations on an arbitrary number
+// Perform repeated prime factor computations on an arbitrary number
 // and you thought your life was boring. :-)
-int
-Util_Thread::run_computations ()
-{
 
-  while (done_ == 0)
+int
+Util_Thread::run_computations (void)
+{
+  // Sumedh, isn't there a "ACE::is_prime()" method that we can reuse
+  // here?  If this doesn't work right, can you please add a new
+  // method in class ACE so that we can leverage existing effort and
+  // prepare for the future?
+
+  while (this->done_ == 0)
     {
-      unsigned long original = CUBIT_ARBIT_NUMBER;
-      unsigned long n = original;
-      unsigned long test_done = 1;
-      unsigned long sqrt_n = (unsigned long) ceil (sqrt (n));
-      unsigned long i;
+      u_long original = CUBIT_ARBIT_NUMBER;
+      u_long n = original;
+      u_long test_done = 1;
+      u_long sqrt_n = (u_long) ceil (sqrt (n));
+      u_long i;
 
       for (i = 2; i <= sqrt_n; i++)
-        while ( (n % i) == 0) {
-          n /= i;
-          test_done *= i;
-        }
-      assert (test_done * n == original);
-      number_of_computations_ ++;
+        while ((n % i) == 0) 
+          {
+            n /= i;
+            test_done *= i;
+          }
+
+      ACE_ASSERT (test_done * n == original);
+
+      this->number_of_computations_ ++;
     }
   return 0;
 }
