@@ -98,7 +98,7 @@ FOO_IORInterceptor::establish_components (
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)
     {
-      if (ex.minor () != CORBA::OMGVMCID | 3)
+      if (ex.minor () != (CORBA::OMGVMCID | 3))
         ACE_RE_THROW;
     }
   ACE_ENDTRY;
