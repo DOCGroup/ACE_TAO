@@ -6,6 +6,8 @@ Tue Nov 19 21:14:15 1996  David L. Levine  <levine@cs.wustl.edu>
 	* OS.i, config-{osf1-4.0,sunos5.[45]}-g++.h:
  	  moved Gnu #include <cstring> out of config files and into OS.i
 
+	* Svc_Conf_l.cpp: added #include of ace/OS.h for HPUX and VxWorks
+
 Tue Nov 19 00:06:57 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Mutex_Test.cpp: Rewrote the Mutex_Test so that it behaves
