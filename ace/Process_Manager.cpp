@@ -190,6 +190,10 @@ ACE_Process_Manager::open (size_t size,
       this->dummy_handle_ = ACE_OS::open (ACE_DEV_NULL,
                                           O_WRONLY);
       ACE_ASSERT (this->dummy_handle_ != ACE_INVALID_HANDLE);
+#if defined (F_SETFD)
+      // Don't want children to inherit the dummy I/O handle!
+      ACE_OS::fcntl (this->dummy_handle_, F_SETFD, 1);
+#endif /* F_SETFD */
 
       // Register signal handler object.  Note that NULL_MASK is used
       // to keep the ACE_Reactor from calling us back on the
