@@ -79,7 +79,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers/TAO)
               if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit 1; fi; \
               cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | egrep -v '/tests/log/' | perl -pi -e 's%/TAO%%g; s/$$/\\\n  /g'`; cd TAO; \
               if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
-	      perl $TAO_ROOT/release.pl) &&
+	      perl $(TAO_ROOT)/release.pl) &&
 else
   TIMESTAMP =
 endif
