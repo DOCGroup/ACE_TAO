@@ -458,7 +458,9 @@ Latency_Supplier::start_generating_events (void)
 {
   const ACE_hrtime_t now = ACE_OS::gethrtime ();
   test_start_time_.set (ACE_static_cast (long, now / 1000000000),
-                        ACE_static_cast (long, (ACE_CU64_TO_CU32 (now) % 1000000000) / 1000));
+                        ACE_static_cast (long,
+                                         ACE_CU64_TO_CU32 (now) % 1000000000 /
+                                           1000));
 
   TAO_TRY
     {
@@ -546,15 +548,8 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 
           if (timestamp_)
             {
-              // @@ David, event.time_ is now a long.  I'm not sure if
-              // this calculation is correct now. For the moment beign
-              // I use a global variable instead.
-              // const ACE_hrtime_t now = ACE_OS::gethrtime ();
-              // event.time_.set (now / ACE_ONE_SECOND_IN_NSECS,
-              // (now % ACE_ONE_SECOND_IN_NSECS) / 1000);
-
-              ACE_hrtime_t t = ACE_OS::gethrtime ();
-              ORBSVCS_Time::hrtime_to_TimeT (event.creation_time_, t);
+              ACE_hrtime_t now = ACE_OS::gethrtime ();
+              ORBSVCS_Time::hrtime_to_TimeT (event.creation_time_, now);
             }
 
           // @@ ACE_TIMEPROBE_RESET;
