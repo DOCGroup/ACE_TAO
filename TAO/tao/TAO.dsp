@@ -955,25 +955,6 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Assorted_Headers.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Accept_State.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -1050,7 +1031,45 @@ SOURCE=.\GIOP_Message_Connectors.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Headers.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Lite.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_State.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -2760,7 +2779,7 @@ SOURCE=.\TAOS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\target_identifier.cpp
+SOURCE=.\target_specification.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -3265,6 +3284,14 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Headers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_State.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Server_Request.h
 # End Source File
 # Begin Source File
@@ -3617,6 +3644,10 @@ SOURCE=.\TAOS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\target_specification.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
@@ -3766,6 +3797,14 @@ SOURCE=.\Exception.i
 # Begin Source File
 
 SOURCE=.\giop.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Headers.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_State.i
 # End Source File
 # Begin Source File
 
@@ -3990,6 +4029,10 @@ SOURCE=.\TAOC.i
 # Begin Source File
 
 SOURCE=.\TAOS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\target_specification.i
 # End Source File
 # Begin Source File
 
