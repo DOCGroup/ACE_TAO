@@ -656,7 +656,20 @@ public:
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                AVStreams::flowSpec &the_spec,
                                CORBA::Environment &ACE_TRY_ENV);
+
 protected:
+  char* add_fep_i (AVStreams::FlowEndPoint_ptr fep,
+                   CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::notSupported,
+                     AVStreams::streamOpFailed));
+  char* add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep,
+                                CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::notSupported,
+                     AVStreams::streamOpFailed));
+  // Helper methods to implement add_fep()
+  
   int translate_qos (const AVStreams::streamQoS& application_qos,
                      AVStreams::streamQoS& network_qos);
   // translate from application level to network level qos.
@@ -970,6 +983,14 @@ public:
 
   virtual ~TAO_MMDevice (void);
   // Destructor
+
+protected:
+  char* add_fdev_i (AVStreams::FDev_ptr fdev,
+                    CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                   AVStreams::notSupported,
+                   AVStreams::streamOpFailed));
+  // Helper method to implement add_fdev()
 
 protected:
 
