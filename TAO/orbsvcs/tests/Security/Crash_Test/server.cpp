@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "test_i.h"
 
 ACE_RCSID(Send_File, server, "$Id$")

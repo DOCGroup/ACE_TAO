@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "SLevel1_Test_i.h"
 
