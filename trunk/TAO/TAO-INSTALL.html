@@ -1,7 +1,9 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <!-- $Id$ -->
 
 <HTML>
 <HEAD>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
   <TITLE>Building and Installing TAO</TITLE>
   <link rev=made href="mailto:schmidt@cs.wustl.edu">
 </HEAD>
@@ -20,7 +22,7 @@
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
     <td>Solaris 2.5, 2.6, 7, and 8, Windows NT/2000/XP (6.x, and 7.1 and
-        Borland C++ Builder 4, 5, and 6), Linux/Intel, Linux/Alpha, VxWorks, LynxOS,
+        Borland C++ Builder 4, 5, and 6), Linux/Intel, Linux/Alpha, VxWorks,
         Digital UNIX 4.0 and 5.0, IRIX 6.x, and QNX Neutrino 2.0
     </td>
   </tr>
@@ -31,7 +33,7 @@
   </tr>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
-    <td> FreeBSD, NetBSD, SunOS 4.x, Chorus
+    <td> FreeBSD, NetBSD, SunOS 4.x, Chorus, LynxOS
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -154,7 +156,6 @@ $ echo 'TAO_IDL := /your/path/tao_idl' \
      >> platform_macros.GNU
 $ echo 'TAO_IDLFLAGS := -g /your/path/gperf' \
 </PRE>
-    </P>
     <P>You could even use:
 <PRE>
 $ echo 'TAO_IDL := tao_idl' \
@@ -162,7 +163,6 @@ $ echo 'TAO_IDL := tao_idl' \
 $ echo 'TAO_IDLFLAGS := -g gperf' \
 </PRE>
     if the tools are in your path.
-    </P>
 
     <P>Obviously you must first build the tools for the host platform,
       typically you would do this as follows:
@@ -232,7 +232,6 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
   <li><code>/bin/rm -r TAO_IDL</code>
   <li><code>ln -s ../../SunOS5_g++/TAO/TAO_IDL</code>
 </ol>
-  </P>
 
       <P>To build on the host:
 <ol>
@@ -245,7 +244,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
   <li><code>export ACE_ROOT=`pwd`</code>
   <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
     make.log</code>
-</ol></p>
+</ol>
 
     <P>For NT hosts, please see the detailed instructions for building
       and installing ACE and TAO in
@@ -429,7 +428,6 @@ to work but will cause problems when building the TAO services, so don't do that
 The correct way is:
 <BLOCKQUOTE><code>set TAO_ROOT=%ACE_ROOT%/TAO</code></BLOCKQUOTE>
 
-</P>
 
 <HR>
 <H3><A NAME="#VC">How to add IDL files into your Visual C++ projects</A></H3>

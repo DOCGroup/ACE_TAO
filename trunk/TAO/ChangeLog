@@ -1,3 +1,9 @@
+Sun Mar  7 17:47:16 2004  Olli Savia  <ops@iki.fi>
+
+	* TAO-INSTALL.html
+	  Moved LynxOS to "partially supported" category.
+	  Fixed some HTML errors.
+
 Sat Mar  6 09:09:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Thread_Per_Connection_Handler.cpp:
