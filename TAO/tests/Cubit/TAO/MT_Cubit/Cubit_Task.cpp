@@ -131,9 +131,6 @@ Cubit_Task::initialize_orb (void)
 
       if (GLOBALS::instance ()->use_name_service == 0)
         return 0;
-      // @@ Naga, if this code is no longer needed can we please
-      // remove it?
-
       // Initialize the naming services.  Init should be able to be
       // passed the command line arguments, but it isn't possible
       // here, so use dummy values.
@@ -210,7 +207,6 @@ Cubit_Task::create_servants (void)
                       -1);
 
       char *buffer;
-      // @@ Naga, can you please document why the value "3" is here?
       // Length of the string is the length of the key + 2 char 
       // id of the servant + null space.
       int len = ACE_OS::strlen (this->key_) + 3;

@@ -19,6 +19,7 @@
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch_T.h"
+#include "ace/Sched_Params.h"
 
 #if !defined (ACE_HAS_THREADS)
 class NOOP_ACE_Barrier
@@ -30,6 +31,27 @@ public:
 #define ACE_Barrier NOOP_ACE_Barrier
 #endif /* ACE_HAS_THREADS */
 
+#if defined (VXWORKS) && defined (VME_DRIVER)
+#define VX_VME_INIT \
+STATUS status = vmeDrv ();\
+if (status != OK)\
+     ACE_DEBUG ((LM_DEBUG,\
+                "ERROR on call to vmeDrv()\n"));\
+  status = vmeDevCreate ("/vme");\
+  if (status != OK)\
+    ACE_DEBUG ((LM_DEBUG,\
+                "ERROR on call to vmeDevCreate()\n"));
+#else
+#define VX_VME_INIT
+#endif /* VXWORKS && VME_DRIVER */
+
+#if defined (ACE_LACKS_FLOATING_POINT)
+#define TIME_IN_MICROSEC(X) X
+#else /* !ACE_LACKS_FLOATING_POINT */
+#define TIME_IN_MICROSEC(X) \
+(X * ACE_ONE_SECOND_IN_USECS)
+#endif /* !ACE_LACKS_FLOATING_POINT */
+
 class Globals
 {
   // = TITLE
@@ -38,9 +60,8 @@ class Globals
   //     This is used both by the server and client side.
 public:
   Globals (void);
+  // default constructor.
 
-  // @@ Naga, can you please make sure these fields/methods are
-  // commented briefly?
   int parse_args (int argc,char **argv);
   // parse the arguments.
 
@@ -84,6 +105,37 @@ public:
   // Barrier for the multiple servants to synchronize after
   // binding to the orb.
 };
+
+class MT_Priority
+{
+public:
+  MT_Priority (void);
+  // constructor.
+
+  virtual ACE_Sched_Priority get_high_priority (void);
+  // sets the priority of the high priority thread.
+
+  virtual ACE_Sched_Priority get_low_priority (u_int num_low_priority,
+                                               ACE_Sched_Priority prev_priority,
+                                               u_int use_multiple_priority);
+  // sets the priority to be used for the low priority thread.
+  u_int number_of_priorities (void);
+  // accessor for num_priorities_.
+
+  u_int grain (void);
+  // accessor for grain_.
+
+protected:
+  u_int num_priorities_;
+  // number of priorities used.
+
+  u_int grain_;
+  // Granularity of the assignment of the priorities.  Some OSs
+  // have fewer levels of priorities than we have threads in our
+  // test, so with this mechanism we assign priorities to groups
+  // of threads when there are more threads than priorities.
+};
+
 
 #endif /* GLOBALS_H */
 
