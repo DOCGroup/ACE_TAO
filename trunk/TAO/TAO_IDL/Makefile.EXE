@@ -228,10 +228,8 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/Containers_T.cpp \
  include/utl_stack.h include/fe_extern.h include/ast_root.h \
  include/ast_module.h include/ast_extern.h include/utl_string.h \
- include/drv_extern.h \
- $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- ../tao/Version.h
+ include/drv_extern.h $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/Process.i ../tao/Version.h
 
 .obj/drv_args.o .obj/drv_args.so .shobj/drv_args.o .shobj/drv_args.so: driver/drv_args.cpp include/idl_defines.h \
  include/global_extern.h include/TAO_IDL_FE_Export.h \
@@ -241,8 +239,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_global.h \
- $(ACE_ROOT)/ace/SString.h \
+ include/idl_global.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -398,8 +395,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_global.h \
- $(ACE_ROOT)/ace/SString.h \
+ include/idl_global.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -542,8 +538,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/ast_predefined_type.h include/ast_concrete_type.h \
  include/ast_type.h include/ast_decl.h include/idl_narrow.h \
  include/utl_stack.h include/fe_extern.h include/drv_extern.h \
- include/utl_string.h \
- $(ACE_ROOT)/ace/Version.h \
+ include/utl_string.h $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/Process_Manager.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
