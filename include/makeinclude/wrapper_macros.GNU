@@ -381,7 +381,7 @@ ifdef quantify
   #### to help avoid occasional link failure.
   PRELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
              -max_threads=100
-  CCFLAGS += -DACE_HAS_QUANTIFY -DACE_QUANTIFY -Dquantify
+  CCFLAGS += -DACE_HAS_QUANTIFY
   CPPFLAGS += -I$(ACE_QUANTIFY_DIR)
 endif # quantify
 
