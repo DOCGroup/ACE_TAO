@@ -345,6 +345,8 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
     ;;
 esac
 
+ACE_FUNC_IOCTL_ARGTYPES
+
 ACE_CHECK_FORMAT_SPECIFIERS
 ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING
 
@@ -420,6 +422,32 @@ socket will fail with an error.])
 fi
 ])
 
+
+# ACE_FUNC_IOCTL_ARGTYPES
+#
+# Determine the correct type to be passed to ioctl's second argument and
+# define the types in ACE_IOCTL_TYPE_ARG2.
+#
+# FIXME: Should we support ioctl's third argument as well...?
+# 
+# FIXME: Is it possible to write a portable feature test, or is checking
+#        the the target OS the best we can do?
+# 
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_FUNC_IOCTL_ARGTYPES],
+[AC_CACHE_CHECK([types of arguments for ioctl()],
+  [ace_cv_func_ioctl_arg2],
+  [case "$target_os" in
+   darwin* | freebsd* | netbsd* | openbsd*)
+    ace_cv_func_ioctl_arg2="unsigned long" ;;
+   *)
+    ace_cv_func_ioctl_arg2="int" ;;
+   esac])
+
+AC_DEFINE_UNQUOTED(ACE_IOCTL_TYPE_ARG2, $ace_cv_func_ioctl_arg2,
+	           [Define to the type of arg 2 for `ioctl'.])
+])
+ 
 
 # ACE_VAR_TIMEZONE
 #

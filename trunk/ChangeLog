@@ -1,3 +1,22 @@
+Mon Sep 13 18:15:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACE_wrappers/m4/platform.m4:
+
+	  Added new ACE_FUNC_IOCTL_ARGTYPES macro, used to set
+	  ACE_IOCTL_TYPE_ARG2.
+
+	* ACE_wrappers/ace/config-netbsd.h:
+
+	  Added ACE_IOCTL_TYPE_ARG2 definition.
+
+	* ACE_wrappers/ace/OS_NS_stropts.h:
+	* ACE_wrappers/ace/OS_NS_stropts.inl:
+
+	  Added feature test macro ACE_IOCTL_TYPE_ARG2 (which defaults to
+	  int) so that ACE_OS::ioctl uses the same type as ::ioctl.  This
+	  help avoid sign extension problems on 64 bit platforms that use
+	  unsigned long.
+
 Mon Sep 13 15:52:04 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.h:
@@ -10,8 +29,6 @@ Mon Sep 13 15:52:04 2004  Dale Wilson  <wilson_d@ociweb.com>
             the last thread stops using it, or
             the ACE_TSS<X> (if any) is deleted
           which ever comes *last*.
-
-
 
 Mon Sep 13 14:56:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
