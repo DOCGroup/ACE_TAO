@@ -1,3 +1,8 @@
+Wed Oct 29 06:17:36 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* tao/default_server.cpp (parse_args): Must increase the loop
+	  counter.
+
 Wed Oct 29 02:11:43 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.18, released Wed Oct 29 02:11:43 1997.
@@ -10,7 +15,7 @@ Wed Oct 29 00:56:26 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* tao/orbobj.*: Wiped argvec_shift and all its bugs off the face
  	of the earth.  Manojkumar Acharya <cvsf325.gpt.co.uk> should prove
  	to be very happy about this turn of events. :-)
-	
+
 	* tao/orbobj.cpp: Weeded out old, dead code here and there and
  	migrated much of what had been in ORB_init() into
  	TAO_ORB_Core::init().
