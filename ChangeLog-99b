@@ -1,3 +1,12 @@
+Wed Jun 16 16:10:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/Process.pm:
+	* bin/Process_Unix.pm:
+	* bin/Process_Win32.pm:
+	  By default we don't create a new console on Win32, moved the
+	  definition of EXE_EXT to the Process.pm file to be consistent
+	  with the DIR_SEPARATOR stuff. Ditto for $newwindow
+
 Wed Jun 16 15:55:28 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* examples/Misc/test_trace.cpp: Cleaned up this example of

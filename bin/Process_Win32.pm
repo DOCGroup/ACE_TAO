@@ -3,10 +3,6 @@ package Process;
 
 use Win32::Process;
 
-$EXE_EXT = ".exe";
-
-$newwindow = "yes";
-
 sub Create
 {
   my $name = shift;
