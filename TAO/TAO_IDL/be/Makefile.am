@@ -30,8 +30,8 @@ libbe_la_SOURCES = \
   be_decl.cpp \
   be_enum.cpp \
   be_enum_val.cpp \
-  be_event.cpp \
-  be_Event_fwd.cpp \
+  be_eventtype.cpp \
+  be_eventtype_fwd.cpp \
   be_exception.cpp \
   be_expression.cpp \
   be_field.cpp \

@@ -16,8 +16,8 @@ OBJFILES = \
 	$(OBJDIR)\ast_decl.obj \
 	$(OBJDIR)\ast_enum.obj \
 	$(OBJDIR)\ast_enum_val.obj \
-	$(OBJDIR)\ast_event.obj \
-	$(OBJDIR)\ast_event_fwd.obj \
+	$(OBJDIR)\ast_eventtype.obj \
+	$(OBJDIR)\ast_eventtype_fwd.obj \
 	$(OBJDIR)\ast_exception.obj \
 	$(OBJDIR)\ast_expression.obj \
         $(OBJDIR)\ast_factory.obj \

@@ -29,8 +29,8 @@ libast_la_SOURCES = \
   ast_decl.cpp \
   ast_enum.cpp \
   ast_enum_val.cpp \
-  ast_event.cpp \
-  ast_event_fwd.cpp \
+  ast_eventtype.cpp \
+  ast_eventtype_fwd.cpp \
   ast_exception.cpp \
   ast_expression.cpp \
   ast_field.cpp \
