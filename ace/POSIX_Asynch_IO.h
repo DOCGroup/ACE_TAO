@@ -114,7 +114,7 @@ public:
 
 protected:
   /// Constructor. <Event> is not used on POSIX.
-  ACE_POSIX_Asynch_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                            const void* act,
                            ACE_HANDLE event,
                            u_long offset,
@@ -123,7 +123,7 @@ protected:
                            int signal_number);
 
   /// Handler that will be called back.
-  ACE_Handler::Proxy_Ptr &handler_proxy_;
+  ACE_Handler::Proxy_Ptr handler_proxy_;
 
   /**
    * ACT for this operation.

@@ -206,7 +206,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
   // need to extra 16 bytes, but it doesn't hurt.
   size_t space_needed = sizeof (sockaddr_in) + 16;
 #if defined (ACE_HAS_IPV6)
-  if (this->addr_family_ = PF_INET6)
+  if (PF_INET6 == this->addr_family_)
     space_needed = sizeof (sockaddr_in6) + 16;
 #endif /* ACE_HAS_IPV6 */
   space_needed = (2 * space_needed) + bytes_to_read;
