@@ -300,10 +300,7 @@ protected:
 
 #if !defined(ACE_WIN32)
   virtual int handle_input (ACE_HANDLE proc);
-  // Collect one (or more, on unix) Process exit status
-
-  virtual ACE_HANDLE get_handle (void) const;
-  // (unix only) : return dummy handle
+  // Collect one (or more, on unix) process exit status.
 #endif // !defined(ACE_WIN32)
 
   virtual int handle_signal (int signum,
@@ -316,10 +313,6 @@ protected:
   //
   // On Win32, this routine is called synchronously, and is passed the
   // HANDLE of the Process that exited, so we can do all our work here
-
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
-  // we're being removed from Reactor...on unix, close bogus handle.
 
 private:
   int resize (size_t);
@@ -362,11 +355,6 @@ private:
 
   size_t current_count_;
   // Current number of processes we are managing.
-
-#if !defined(ACE_WIN32)
-  ACE_HANDLE dummy_handle_;
-  // Allows SIGCHLD to be handled synchronously.
-#endif
 
   ACE_Event_Handler *default_exit_handler_;
   // This event handler is used to notify when a process we control

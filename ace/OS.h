@@ -1210,6 +1210,7 @@ ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
 
 ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                       const ACE_Time_Value &tv2);
+
 // -------------------------------------------------------------------
 
 class ACE_Export ACE_Time_Value
@@ -1312,14 +1313,16 @@ public:
   void usec (long usec);
   // Set microseconds.
 
-  // = The following are arithmetic methods for operating on
-  // Time_Values.
+  // = The following arithmetic methods operate on <Time_Value>s.
 
   void operator += (const ACE_Time_Value &tv);
   // Add <tv> to this.
 
   void operator -= (const ACE_Time_Value &tv);
   // Subtract <tv> to this.
+
+  ACE_Time_Value &operator *= (double d);
+  // Multiply the time value by the <d> factor, which must be >= 0.
 
   friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);

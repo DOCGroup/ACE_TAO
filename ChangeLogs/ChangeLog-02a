@@ -1,5 +1,26 @@
 Sun Jul 16 08:49:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS: Added multiplication operators to ACE_Time_Value.  Thanks
+	  to Tomer Amiaz <Tomer@bandwiz.com> for contributing these.
+
+	* ace/Process_Manager: To fix deadlocks with the Process_Manager
+	  on UNIX applied the following fixes:
+  
+          Use the notify() capability of the reactor from the signal
+ 	  handler. This allows the signal handler to notify the reactor
+ 	  (over a pipe) that the signal should be processed. This is done
+ 	  completely without MT locks.  If
+ 	  ACE_HAS_REACTOR_NOTIFICATION_QUEUE is defined,
+ 	  ACE_Select_Reactor_Notify::notify_queue_lock_ is now made a
+ 	  recursive mutex.
+
+	  Thanks to Roger Larsson <larssoro@hotmail.com> for contribution
+ 	  these fixes.
+	
+	* ace/TTY_IO: Added additional support for the ACE serial line I/O 
+	  wrapper facades.  Thanks to Martin Stack <mstack@cambertx.com>
+ 	  for contribution this.
+
 	* ace/Service_Repository.h,
   	* ace/Service_Object.h,
   	* ace/Service_Config.h: Added the following aliases:
