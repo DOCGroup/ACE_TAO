@@ -1,9 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Signal.i
-#include "ace/Object_Manager.h"
-
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
   // : sigset_ ()
@@ -239,14 +236,12 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
     {
 #if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
       ACE_OS::sigprocmask (SIG_BLOCK,
-                           (sigset_t *) ACE_Object_Manager::default_mask (),
-                           (sigset_t *)
-                           this->omask_);
+                           ACE_OS_Object_Manager::default_mask (),
+                           (sigset_t *) this->omask_);
 #else
       ACE_OS::thr_sigsetmask (SIG_BLOCK,
-                              (sigset_t *) ACE_Object_Manager::default_mask (),
-                              (sigset_t *)
-                              this->omask_);
+                              ACE_OS_Object_Manager::default_mask (),
+                              (sigset_t *) this->omask_);
 #endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     }
   else

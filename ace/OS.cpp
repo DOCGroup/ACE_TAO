@@ -6426,6 +6426,7 @@ void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
+  // default_mask_ isn't initialized, because it's defined by init ().
   : exit_info_ ()
 {
   // If instance_ was not 0, then another ACE_OS_Object_Manager has
@@ -6448,6 +6449,12 @@ ACE_OS_Object_Manager::~ACE_OS_Object_Manager ()
 {
   dynamically_allocated_ = 0;   // Don't delete this again in fini()
   fini ();
+}
+
+sigset_t *
+ACE_OS_Object_Manager::default_mask (void)
+{
+  return ACE_OS_Object_Manager::instance ()->default_mask_;
 }
 
 ACE_OS_Object_Manager *
@@ -6543,6 +6550,9 @@ ACE_OS_Object_Manager::init (void)
           // Register the exit hook, for use by ACE_OS::exit ().
           ACE_OS::set_exit_hook (&ACE_OS_Object_Manager_Internal_Exit_Hook);
         }
+
+      ACE_NEW_RETURN (default_mask_, sigset_t, -1);
+      ACE_OS::sigfillset (default_mask_);
 
       // Finally, indicate that the ACE_OS_Object_Manager instance has
       // been initialized.
@@ -6662,6 +6672,9 @@ ACE_OS_Object_Manager::fini (void)
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
     }
+
+  delete default_mask_;
+  default_mask_ = 0;
 
   // Indicate that this ACE_OS_Object_Manager instance has been shut down.
   object_manager_state_ = OBJ_MAN_SHUT_DOWN;
