@@ -285,7 +285,7 @@ typedef unsigned __int64 ACE_UINT64;
         #endif /* _AFXDLL */
         #if !defined (_AFXDLL) && !defined (ACE_USES_STATIC_MFC)
                 #define _AFXDLL
-        #endif /* _AFXDLL */ 
+        #endif /* _AFXDLL */
 #endif
 
 // <windows.h> and MFC's <afxwin.h> are mutually
