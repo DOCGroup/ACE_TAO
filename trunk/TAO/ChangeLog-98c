@@ -1,3 +1,8 @@
+Thu Feb 12 11:06:48 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poaC.i (PortableServer): Moved POA::_nil() definition above
+ 	many uses.
+
 Thu Feb 12 10:21:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/TAO/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc): added .in ()
