@@ -153,7 +153,7 @@ FTClientMain::parse_args (int argc, char *argv[])
 
   // note: dfnkx are simple_util options
   // include them here so we can detect bad args
-  ACE_Get_Opt get_opts (argc, argv, "c:df:g:nk:x");
+  ACE_Get_Opt get_opts (argc, argv, "c:f:");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -182,20 +182,7 @@ FTClientMain::parse_args (int argc, char *argv[])
         break;
       }
 
-      case 'd':
-      case 'k':
-      case 'n':
-      case 'x':
-        // ignore args used by other command line parsers
-        // poor design, but its ubiquitous
-        break;
-
       default:
-        std::cerr << "FT Client: Unknown argument -" << (char) c << std::endl;
-        usage(std::cerr);
-        result = 1;
-        break;
-
       case '?':
         usage(std::cerr);
         result = 1;
@@ -208,9 +195,7 @@ void FTClientMain::usage(ostream & out)const
 {
   out << "usage"
       << " -c <command file>"
-      << " -f <ior file list>"
-      << " -d (debug)"
-      << " -k (ior)"
+      << " [-f <ior file>]..."
       << std::endl;
 }
 

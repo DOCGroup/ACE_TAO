@@ -25,7 +25,7 @@ module FT_TEST
    * It declares a simple counter that can be set, incremented, and read
    * via method calls.  The counter is also exposed as a property.
    */
-  interface TestReplica : ::FT::Updateable, ::FT::PullMonitorable
+  interface TestReplica : ::FT::Updateable, ::FT::PullMonitorable, ::PortableGroup::TAO_UpdateObjectGroup
   {
     /**
      *  set the counter to an specific value.

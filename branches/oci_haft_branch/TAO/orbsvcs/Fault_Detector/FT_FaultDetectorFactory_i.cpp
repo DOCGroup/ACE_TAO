@@ -41,10 +41,6 @@
     return /* value goes here */
 
 
-// todo: find me a home
-static const char * role_name = "FaultDetector";
-
-
 //////////////////////////////////////////////////////
 // FT_FaultDetectorFactory_i  Construction/destruction
 
@@ -277,14 +273,14 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
           info.the_criteria.length(1);
           info.the_criteria[0].nam.length(1);
           info.the_criteria[0].nam[0].id = CORBA::string_dup(PortableGroup::role_criterion);
-          info.the_criteria[0].val <<= CORBA::string_dup(role_name);
+          info.the_criteria[0].val <<= CORBA::string_dup(FT::FAULT_DETECTOR_ROLE_NAME);
 
           ACE_DEBUG ((LM_DEBUG,
             "FaultDetector registering with ReplicationManager.\n"
             ));
           this->factory_registry_->register_factory(
-            role_name,
-            role_name,
+            FT::FAULT_DETECTOR_ROLE_NAME,
+            FT::FAULT_DETECTOR_ROLE_NAME,
             info
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -367,6 +363,16 @@ int TAO::FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
     this->naming_context_->unbind (this_name_
                             ACE_ENV_ARG_PARAMETER);
     this->ns_name_ = 0;
+  }
+
+  if (this->registered_)
+  {
+    this->factory_registry_->unregister_factory(
+      FT::FAULT_DETECTOR_ROLE_NAME,
+      this->location_
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    this->registered_ = 0;
   }
   return 0;
 }

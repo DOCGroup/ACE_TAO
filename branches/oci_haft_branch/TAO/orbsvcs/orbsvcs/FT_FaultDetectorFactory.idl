@@ -59,6 +59,12 @@ module FT
 
   // end of names from FT CORBA specification
   ///////////////////////////////////////////
+
+  /////////////////////////////
+  // RoleName FaultDetectorFactory uses to register
+  // with Factory Registery
+  const string FAULT_DETECTOR_ROLE_NAME = "FT_FaultDetector";
+
   /**
    * A FaultDetectorFactory creates and manages a set of FaultDetectors.
    *

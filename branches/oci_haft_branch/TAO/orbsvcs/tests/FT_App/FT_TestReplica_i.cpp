@@ -288,6 +288,13 @@ void FT_TestReplica_i::set_state (const FT::State & s)
 #endif // FT_TEST_LACKS_STATE
 }
 
+void FT_TestReplica_i::tao_update_object_group ( PortableGroup::ObjectGroup_ptr iogr
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT());
+}
+
 //////////////////////////////
 // implement FT_TEST::Replica
 

@@ -15,16 +15,26 @@
 #include "FT_ReplicationManager.h"
 #include "FT_Property_Validator.h"
 
-#include "ace/Get_Opt.h"
-#include "tao/Messaging/Messaging.h"
-#include "tao/IORTable/IORTable.h"
-#include "tao/debug.h"
-#include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
-#include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
-#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
-#include "orbsvcs/PortableGroup/PG_conf.h"
-#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include "orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h"
+#include <ace/Get_Opt.h>
+#include <tao/Messaging/Messaging.h>
+#include <tao/IORTable/IORTable.h>
+#include <tao/debug.h>
+#include <orbsvcs/PortableGroup/PG_Object_Group.h>
+#include <orbsvcs/PortableGroup/PG_Properties_Decoder.h>
+#include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+#include <orbsvcs/PortableGroup/PG_Property_Utils.h>
+#include <orbsvcs/PortableGroup/PG_conf.h>
+#include <orbsvcs/PortableGroup/PG_Utils.h>
+
+
+///////////////////////////////////////////////////////////////
+// parallel Object Group Map that is FT/IOGR aware
+// @@ todo reconcile this with the LB centric implementation
+#include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
+
+
+#include <orbsvcs/FaultTolerance/FT_IOGR_Property.h>
+#include <orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h>
 
 ACE_RCSID (FT_ReplicationManager,
            FT_ReplicationManager,
@@ -48,16 +58,12 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   , factory_registry_("ReplicationManager::FactoryRegistry")
   , quit_(0)
 {
-  //@@Note: this->init() is not called here (in the constructor)
-  // since it may throw an exception.  Throwing an exception in
-  // a constructor in an emulated exception environment is
-  // problematic since native exception semantics cannot be
-  // reproduced in such a case.  As such, init() must be called
-  // by whatever code instantiates this ReplicationManager.
+  // @@ init must be called before using this object.
 }
 
 TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
 {
+  // @@ cleanup happens in fini
 }
 
 
@@ -650,6 +656,7 @@ TAO::FT_ReplicationManager::create_member (
                                                ACE_ENV_ARG_PARAMETER);
 }
 
+
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -661,6 +668,18 @@ TAO::FT_ReplicationManager::add_member (
                    PortableGroup::MemberAlreadyPresent,
                    PortableGroup::ObjectNotAdded))
 {
+
+  FT::TagFTGroupTaggedComponent ft_tag_component;
+  TAO_FT_IOGR_Property prop (ft_tag_component);
+  CORBA::Boolean first_member = ! iorm_->is_primary_set(&prop, object_group);
+
+  PortableGroup::TagGroupTaggedComponent tag_component;
+
+  if (! TAO::PG_Utils::get_tagged_component (object_group, tag_component))
+  {
+    ACE_THROW (PortableGroup::ObjectGroupNotFound());
+  }
+
   /////////////////////////////////////////////
   // create a list containing the existing ObjectGroup
   // and the newly added member
@@ -677,26 +696,48 @@ TAO::FT_ReplicationManager::add_member (
 
   // Now merge the list into one new IOGR
   PortableGroup::ObjectGroup_var merged =
-  iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+    iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  FT::TagFTGroupTaggedComponent ft_tag_component;
-  TAO_FT_IOGR_Property prop (ft_tag_component);
-  if (! iorm_->is_primary_set (&prop, merged.in ()
-         ACE_ENV_ARG_PARAMETER) )
+  if (first_member)
   {
-#if 10 // DEBUG_DISABLE
+    // remove the original profile.  It's a dummy entry supplied by create_object.
+    PortableGroup::ObjectGroup_var cleaned =
+      iorm_->remove_profiles (merged, object_group);
     ACE_CHECK;
-    if (! iorm_->set_primary (&prop, member, merged.in () ACE_ENV_ARG_PARAMETER))
+    if (! iorm_->set_primary (&prop, member, cleaned.in () ACE_ENV_ARG_PARAMETER))
     {
       ACE_ERROR ((LM_ERROR,
         "Can't set primary in IOGR after adding first replica.\n"
         ));
     }
-#endif //DEBUG_DISABLE
+    ACE_CHECK;
+    merged = cleaned;
   }
   ACE_CHECK;
 
+  tag_component.object_group_ref_version += 1;
+  ACE_DEBUG ((LM_DEBUG,
+    "add_member: Setting IOGR version to %u\n", ACE_static_cast(unsigned, tag_component.object_group_ref_version)
+    ));
+
+  // Set the property
+  TAO::PG_Utils::set_tagged_component (merged,
+                                       tag_component);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  ///////////////////////
+  // Now we do it again using
+  // our own object group collection
+  TAO::PG_Object_Group * group;
+  if (this->object_group_map_.find_group (merged, group))
+  {
+    group->add_member (the_location, member ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    // Set the new group reference
+    // and distribute it to all members
+    group->set_reference (merged, 1);
+  }
   return merged._retn();
 
 }
@@ -809,14 +850,37 @@ TAO::FT_ReplicationManager::create_object (
                    PortableGroup::InvalidProperty,
                    PortableGroup::CannotMeetCriteria))
 {
-  //@@ Can we really use the TAO_PG_GenericFactory
-  // implementation to create an object group?
+  /// Start with the LB-oriented create_object
   CORBA::Object_var obj = this->generic_factory_.create_object (
     type_id,
     the_criteria,
     factory_creation_id
     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  ////////////////////////////////
+  // then create the corresponding
+  // entry in our object group map
+  
+  PortableGroup::ObjectGroupId oid;
+  if (! ((*factory_creation_id) >>= oid ))
+  {
+    ACE_ERROR ((LM_ERROR,
+      "ReplicationManager::create_object: unexpected type of factory creation id.\n"
+      ));
+    ACE_THROW (PortableGroup::ObjectNotCreated());
+    ACE_CHECK_RETURN (CORBA::Object::_nil());
+  }
+
+  TAO::PG_Object_Group * objectGroup;
+  ACE_NEW_THROW_EX (
+    objectGroup,
+    TAO::PG_Object_Group (oid, type_id, the_criteria),
+    CORBA::NO_MEMORY());
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  
+  this->object_group_map_.insert_group(oid, objectGroup);
+
   return obj._retn();
 }
 
