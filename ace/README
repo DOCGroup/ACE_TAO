@@ -220,7 +220,7 @@ ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const
                                         the setrlimit() prototype.
 ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
                                         prototype for t_error(), i.e.,
-                                        t_error(char *) rather than 
+                                        t_error(char *) rather than
                                         t_error(const char *).
 ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct
                                         timespec members as ts_sec and
@@ -728,6 +728,8 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
                                         gethostbyaddr_r,
                                         gethostbyname_r,
                                         getservbyname_r).
+ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
+                                        use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
 ACE_LACKS_PARAM_H                       Platform lacks <sys/param.h>
