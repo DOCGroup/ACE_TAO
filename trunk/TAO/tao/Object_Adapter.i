@@ -132,3 +132,105 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
   return this->hint_strategy_->unbind_persistent_poa (folded_name,
                                                       system_name);
 }
+
+ACE_INLINE TAO_POA &
+TAO_Object_Adapter::Servant_Upcall::poa (void) const
+{
+  return *this->poa_;
+}
+
+ACE_INLINE PortableServer::Servant
+TAO_Object_Adapter::Servant_Upcall::servant (void) const
+{
+  return this->servant_;
+}
+
+ACE_INLINE TAO_Object_Adapter &
+TAO_Object_Adapter::Servant_Upcall::object_adapter (void) const
+{
+  return this->object_adapter_;
+}
+
+ACE_INLINE const PortableServer::ObjectId &
+TAO_Object_Adapter::Servant_Upcall::id (void) const
+{
+  return this->id_;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+ACE_INLINE void
+TAO_POA_Current_Impl::POA_impl (TAO_POA *impl)
+{
+  this->poa_impl_ = impl;
+}
+
+ACE_INLINE TAO_POA *
+TAO_POA_Current_Impl::POA_impl (void) const
+{
+  return this->poa_impl_;
+}
+
+ACE_INLINE void
+TAO_POA_Current_Impl::object_id (const PortableServer::ObjectId &id)
+{
+  this->object_id_ = id;
+}
+
+ACE_INLINE const PortableServer::ObjectId &
+TAO_POA_Current_Impl::object_id (void) const
+{
+  return this->object_id_;
+}
+
+ACE_INLINE void
+TAO_POA_Current_Impl::object_key (const TAO_ObjectKey &key)
+{
+  this->object_key_ = &key;
+}
+
+ACE_INLINE const TAO_ObjectKey &
+TAO_POA_Current_Impl::object_key (void) const
+{
+  return *this->object_key_;
+}
+
+ACE_INLINE void
+TAO_POA_Current_Impl::servant (PortableServer::Servant servant)
+{
+  this->servant_ = servant;
+}
+
+ACE_INLINE PortableServer::Servant
+TAO_POA_Current_Impl::servant (void) const
+{
+  return this->servant_;
+}
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+ACE_INLINE PortableServer::ServantLocator::Cookie
+TAO_POA_Current_Impl::locator_cookie (void) const
+{
+  return this->cookie_;
+}
+
+ACE_INLINE void
+TAO_POA_Current_Impl::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
+{
+  this->cookie_ = cookie;
+}
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+ACE_INLINE void
+TAO_POA_Current_Impl::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)
+{
+  this->active_object_map_entry_ = entry;
+}
+
+ACE_INLINE TAO_Active_Object_Map::Map_Entry *
+TAO_POA_Current_Impl::active_object_map_entry (void) const
+{
+  return this->active_object_map_entry_;
+}

@@ -21,6 +21,18 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/poa_macros.h"
 
+// Stubs
+#include "tao/POAC.h"
+
+// Servant
+#include "tao/Servant_Base.h"
+
+// Skeletons
+#include "tao/POAS.h"
+
+// Active Object Table
+#include "tao/Active_Object_Map.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -31,6 +43,159 @@
 class TAO_POA;
 class TAO_POA_Manager;
 class TAO_Temporary_Creation_Time;
+class TAO_POA_Current_Impl;
+
+class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
+{
+public:
+
+  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
+  // Returns the POA on which the current request is being invoked.
+  // Can raise the <CORBA::NoContext> exception if this function is
+  // not invoked in the context of an upcall.
+
+  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
+  // Returns the object id of the current request being invoked.  Can
+  // raise the <CORBA::NoContext> exception if this function is not
+  // invoked in the context of an upcall.
+
+  TAO_POA_Current_Impl *implementation (void);
+  // Returns the class that implements this interface.
+
+  TAO_POA_Current_Impl *implementation (TAO_POA_Current_Impl *new_current);
+  // Sets the thread-specific pointer to the new POA Current state,
+  // returning a pointer to the existing POA Current state.
+};
+
+class TAO_Export TAO_POA_Current_Impl
+{
+  // = TITLE
+  //
+  //     Implementation of the PortableServer::Current object.
+  //
+  // = DESCRIPTION
+  //
+  //     Objects of this class hold state information regarding the
+  //     current POA invocation.  Savvy readers will notice that this
+  //     contains substantially more methods than the POA spec shows;
+  //     they exist because the ORB either (a) needs them or (b) finds
+  //     them useful for implementing a more efficient ORB.
+  //
+  //     The intent is that instances of this class are held in
+  //     Thread-Specific Storage so that upcalls can get context
+  //     information regarding their invocation.  The POA itself must
+  //     insure that all <set_*> operations are performed in the
+  //     execution thread so that the proper <TAO_POA_Current> pointer
+  //     is obtained from TSS.
+
+public:
+
+  friend class TAO_POA;
+
+  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
+  // Return pointer to the invoking POA.  Raises the
+  // <CORBA::NoContext> exception.
+
+  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
+  // Return pointer to the object id through which this was invoked.
+  // This may be necessary in cases where a <Servant> is serving under
+  // the guise of multiple object ids.  This has _out semantics Raises
+  // the <CORBA::NoContext> exception.
+
+  void POA_impl (TAO_POA *impl);
+  // Set the POA implementation.
+
+  TAO_POA *POA_impl (void) const;
+  // Get the POA imeplemantation
+
+  TAO_ORB_Core &orb_core (void) const;
+  // ORB Core for this current.
+
+  void object_id (const PortableServer::ObjectId &id);
+  // Set the object ID.
+
+  const PortableServer::ObjectId &object_id (void) const;
+  // Get the object ID.
+
+  void object_key (const TAO_ObjectKey &key);
+  // Set the object key.
+
+  const TAO_ObjectKey &object_key (void) const;
+  // Get the object key.
+
+  void servant (PortableServer::Servant servant);
+  // Set the servant for the current upcall.
+
+  PortableServer::Servant servant (void) const;
+  // Get the servant for the current upcall.
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  PortableServer::ServantLocator::Cookie locator_cookie (void) const;
+  // Get the Servant Locator's cookie
+
+  void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
+  // Set the Servant Locator's cookie
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
+  // Set the <active_object_map_entry>.
+
+  TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
+  // Get the <active_object_map_entry>.
+
+  TAO_POA_Current_Impl (void);
+  // Convenience constructor combining construction & initialization.
+
+  ~TAO_POA_Current_Impl (void);
+  // Destructor
+
+  void setup (TAO_POA *impl,
+              const TAO_ObjectKey &key,
+              PortableServer::Servant servant,
+              const char *operation);
+  // Setup the current.
+
+protected:
+  TAO_POA *poa_impl_;
+  // The POA implementation invoking an upcall
+
+  PortableServer::ObjectId object_id_;
+  // The object ID of the current context.  This is the user id and
+  // not the id the goes into the IOR.  Note also that unlike the
+  // <object_key>, this field is stored by value.
+
+  const TAO_ObjectKey *object_key_;
+  // The object key of the current context.
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  PortableServer::ServantLocator::Cookie cookie_;
+  // Servant Locator's cookie
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  PortableServer::Servant servant_;
+  // The servant for the current upcall.
+
+  const char *operation_;
+  // Operation name for this current.
+
+  TAO_POA_Current_Impl *previous_current_impl_;
+  // Current previous from <this>.
+
+  TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
+  // Pointer to the entry in the TAO_Active_Object_Map corresponding
+  // to the servant for this request.
+
+  int setup_done_;
+  // Is setup complete?
+
+  // = Hidden because we don't allow these
+  TAO_POA_Current_Impl (const TAO_POA_Current_Impl &);
+  void operator= (const TAO_POA_Current_Impl &);
+};
 
 class TAO_Object_Adapter
 {
@@ -391,62 +556,60 @@ public:
 
   friend class Non_Servant_Upcall;
 
-  class Outstanding_Requests
+  class Servant_Upcall
   {
     // = TITLE
-    //     This class helps us by increasing
-    //     <POA::outstanding_requests_> for the duration of the
-    //     servant upcall. Outstanding_Requests has a magic
-    //     constructor and destructor.  We increment
-    //     <POA::outstanding_requests_> in the constructor.  We
-    //     decrement <POA::outstanding_requests_> in the destructor.
-    //     Note that the lock is released after
-    //     <POA::outstanding_requests_> is increased and
-    //     <POA::outstanding_requests_> is decreased after the lock
-    //     has been reacquired.
+    //     This class finds out the POA and the servant to perform an
+    //     upcall.  It can only be instantiated without the object
+    //     adapter's lock held.
   public:
 
-    Outstanding_Requests (TAO_POA &poa,
-                          TAO_Object_Adapter &object_adapter);
+    Servant_Upcall (TAO_Object_Adapter &object_adapter);
     // Constructor.
 
-    ~Outstanding_Requests (void);
+    ~Servant_Upcall (void);
     // Destructor.
 
-  protected:
+    void prepare_for_upcall (const TAO_ObjectKey &key,
+                             const char *operation,
+                             CORBA::Environment &ACE_TRY_ENV);
+    // Locate POA and servant.
 
-    TAO_POA &poa_;
+    TAO_POA &poa (void) const;
+    // POA accessor.
+
+    TAO_Object_Adapter &object_adapter (void) const;
+    // Object Adapter accessor.
+
+    const PortableServer::ObjectId &id (void) const;
+    // ID accessor.
+
+    PortableServer::Servant servant (void) const;
+    // Servant accessor.
+
+  protected:
     TAO_Object_Adapter &object_adapter_;
-  };
 
-  friend class Outstanding_Requests;
+    TAO_POA *poa_;
 
-  class Single_Threaded_POA_Lock
-  {
-    // = TITLE
-    //     This class helps us by locking servants in a single
-    //     threaded POA for the duration of the upcall.
-    //     Single_Threaded_POA_Lock has a magic constructor and
-    //     destructor.  We acquire the servant lock in the
-    //     constructor.  We release the servant lock in the
-    //     destructor.
-  public:
-
-    Single_Threaded_POA_Lock (TAO_POA &poa,
-                              PortableServer::Servant servant);
-    // Constructor.
-
-    ~Single_Threaded_POA_Lock (void);
-    // Destructor.
-
-  protected:
-
-    TAO_POA &poa_;
     PortableServer::Servant servant_;
+
+    enum State
+    {
+      INITIAL_STAGE,
+      OBJECT_ADAPTER_LOCK_ACQUIRED,
+      OBJECT_ADAPTER_LOCK_RELEASED,
+      SERVANT_LOCK_ACQUIRED
+    };
+
+    State state_;
+
+    PortableServer::ObjectId id_;
+
+    TAO_POA_Current_Impl current_context_;
   };
 
-  friend class Single_Threaded_POA_Lock;
-
+  friend class Servant_Upcall;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
