@@ -1,3 +1,24 @@
+Fri Jun 25 06:12:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.cpp (TAO): 
+
+	  Removed wrong comments in the file. 
+
+	* tao/IIOP_Connector.cpp (make_connection):
+	* tao/Strategies/SCIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+
+	  Fixed an error in the above method. While trying to wait for
+	  connection completion, we never passed in the max_wait_time,
+	  assuming that the reactor would take care of it. The reactor did
+	  take care of unblocking after the specified time, but it never
+	  knows whether it was timeout on the handler or a timeout to
+	  drive the reactor. This never set the errno which we in TAO
+	  check to see whether it was timeout. This lead to a problem
+	  where timeouts where being seen as transient exceptions. Thanks
+	  to Milan Cvetkvic <milan dot cvetkovic at mpathix dot com> for
+	  reporting this problem.
+
 Fri Jun 25 08:40:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
