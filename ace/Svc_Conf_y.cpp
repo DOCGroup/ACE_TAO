@@ -501,7 +501,7 @@ ace_yyparse()
     extern char *ace_foo();
 #endif
 
-    if (ace_yys = ACE_OS::getenv("YYDEBUG"))
+    if ((ace_yys = ACE_OS::getenv("YYDEBUG")))
     {
         ace_yyn = *ace_yys;
         if (ace_yyn >= '0' && ace_yyn <= '9')
@@ -518,7 +518,7 @@ ace_yyparse()
     *ace_yyssp = ace_yystate = 0;
 
 ace_yyloop:
-    if (ace_yyn = ace_yydefred[ace_yystate]) goto ace_yyreduce;
+    if ((ace_yyn = ace_yydefred[ace_yystate])) goto ace_yyreduce;
     if (ace_yychar < 0)
     {
         if ((ace_yychar = ace_yylex()) < 0) ace_yychar = 0;
