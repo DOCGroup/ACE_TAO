@@ -62,7 +62,8 @@ project(Hello_Base_Sender_DnC_Upgradeable_exec) : ciao_component_dnc {
 }
 
 project(Hello_Base_Sender_DnC_Upgradeable_exec_1) : ciao_component_dnc {
-  after   += Hello_Base_Sender_DnC_Upgradeable_svnt
+  after   += Hello_Base_Sender_DnC_Upgradeable_svnt \
+             Hello_Base_Sender_DnC_Upgradeable_exec
   sharedname = Sender_DnC_Upgradeable_exec_1
   libs      += Sender_DnC_Upgradeable_stub Sender_DnC_Upgradeable_svnt \
                Sender_DnC_Upgradeable_exec Hello_Base_DnC_Upgradeable_stub \
@@ -81,7 +82,8 @@ project(Hello_Base_Sender_DnC_Upgradeable_exec_1) : ciao_component_dnc {
 }
 
 project(Hello_Base_Sender_DnC_Upgradeable_exec_2) : ciao_component_dnc {
-  after   += Hello_Base_Sender_DnC_Upgradeable_svnt
+  after   += Hello_Base_Sender_DnC_Upgradeable_svnt \
+             Hello_Base_Sender_DnC_Upgradeable_exec
   sharedname = Sender_DnC_Upgradeable_exec_2
   libs      += Sender_DnC_Upgradeable_stub Sender_DnC_Upgradeable_svnt \
                Sender_DnC_Upgradeable_exec Hello_Base_DnC_Upgradeable_stub \
