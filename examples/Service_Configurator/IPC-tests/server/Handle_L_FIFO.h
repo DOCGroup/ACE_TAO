@@ -8,7 +8,7 @@
 #define _HANDLE_L_FIFO_H
 
 #include "ace/Service_Config.h"
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 #include "ace/FIFO_Recv_Msg.h"
 
 class Handle_L_FIFO : public ACE_Service_Object, public ACE_FIFO_Recv_Msg

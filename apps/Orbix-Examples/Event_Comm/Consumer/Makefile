@@ -79,7 +79,7 @@ Notification_Receiver_Handler.o: Notification_Receiver_Handler.cpp \
   ${ACE_ROOT}ace/Thread_Specific.i \
   ${ACE_ROOT}ace/Service_Object.h \
   ${ACE_ROOT}ace/Shared_Object.h \
-  ${ACE_ROOT}ace/Service_Record.h \
+  ${ACE_ROOT}ace/Service_Types.h \
   ${ACE_ROOT}ace/Thread_Manager.h \
   ../include/Event_Comm_i.h ../include/Notification_Receiver_i.h \
   ../include/Notifier_i.h \
@@ -114,7 +114,7 @@ Input_Handler.o: Input_Handler.cpp Input_Handler.h \
   ${ACE_ROOT}ace/Thread_Specific.i \
   ${ACE_ROOT}ace/Service_Object.h \
   ${ACE_ROOT}ace/Shared_Object.h \
-  ${ACE_ROOT}ace/Service_Record.h \
+  ${ACE_ROOT}ace/Service_Types.h \
   ${ACE_ROOT}ace/Thread_Manager.h \
   Notification_Receiver_Handler.h \
   ${ACE_ROOT}ace/CORBA_Handler.h \
@@ -153,7 +153,7 @@ consumer.o: consumer.cpp \
   ${ACE_ROOT}ace/Reactor.i \
   ${ACE_ROOT}ace/Service_Object.h \
   ${ACE_ROOT}ace/Shared_Object.h \
-  ${ACE_ROOT}ace/Service_Record.h \
+  ${ACE_ROOT}ace/Service_Types.h \
   ${ACE_ROOT}ace/Thread_Manager.h \
   ../include/Event_Comm_i.h ../include/Notification_Receiver_i.h \
   ../include/Notifier_i.h \

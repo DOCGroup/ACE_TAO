@@ -7,7 +7,7 @@
 #define _HANDLE_THR_STREAM_H
 
 #include "ace/Acceptor.h"
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 
 #if defined (ACE_HAS_THREADS)
 
