@@ -77,9 +77,8 @@ ifneq ($(DLD),)
   GNU_LD := $(shell sh -c '$(LD_FOR_VERSION_TEST) -v 2>&1 | grep -c "GNU ld"')
 endif # DLD
 
-STATIC_LINK_FLAG ?=
 ifeq ($(GNU_LD),1)
-  STATIC_LINK_FLAG = -static
+  STATIC_LINK_FLAG ?= -static
 endif # GNU_LD
 
 # Add all symbols to the dynamic symbol table.  Needed to enable dynamic_cast
