@@ -1,6 +1,10 @@
+#----------------------------------------------------------------------------
+#       $Id$
+#----------------------------------------------------------------------------
+
 include ./orbix_defaults.mk
 
-all:	client server
+all: client server
 	@echo
 
 	@echo "\"client\" and \"server\" have been compiled."
@@ -9,12 +13,9 @@ all:	client server
 	@echo
 
 C++FLAGS += -DWANT_ORBIX_FDS -DLM_RESULTS
-IDLFLAGS	+= -c C.cpp -s S.cpp -B
-SERVER_OBJS	= ttcpS.o ttcp_i.o
-CLIENT_OBJS	= ttcpC.o ttcp_i.o
-
-#QUANTIFY	=
-QUANTIFY	= quantify -cache-dir=$(IR)/quantify
+IDLFLAGS        += -c C.cpp -s S.cpp -B
+SERVER_OBJS     = ttcpS.o ttcp_i.o
+CLIENT_OBJS     = ttcpC.o ttcp_i.o
 
 client: $(CLIENT_OBJS)
 	$(QUANTIFY) $(C++) $(C++FLAGS) -o client $(CLIENT_OBJS) -lITclt $(LDFLAGS)
