@@ -1,3 +1,28 @@
+Thu Apr 25 16:36:41 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (destroy_interceptors):
+
+	  Destroy the interceptors in reverse order in case the array list
+	  is only partially destroyed and another invocation occurs
+	  afterwards.
+
+	  Since Interceptor::destroy() can throw an exception, decrease
+	  the size of the interceptor array incrementally since some
+	  interceptors may not have been destroyed yet.  Note that this
+	  size reduction is fast since no memory is actually deallocated.
+	  This also forces the size of the ORB's interceptor array(s) to
+	  be set to zero, thus preventing any interceptors from being
+	  invoked after the ORB has shutdown (e.g. orb->run() and then
+	  naming_context->unbind()).  Consequently, this change fixes
+	  memory access violations in some applications that implement
+	  such scenarios.
+
+	  (shutdown):
+
+	  For the sake of consistency, the set the cached pointer to the
+	  TAO_PI_Current object to zero.  Obviously, it should no longer
+	  be used after this point.
+
 Thu Apr 25 16:42:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
