@@ -438,6 +438,10 @@ SOURCE=.\Log_Msg_IPC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log_Msg_NT_Event_Log.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log_Record.cpp
 # End Source File
 # Begin Source File
@@ -1391,6 +1395,10 @@ SOURCE=.\Log_Msg_Callback.h
 # Begin Source File
 
 SOURCE=.\Log_Msg_IPC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_NT_Event_Log.h
 # End Source File
 # Begin Source File
 
