@@ -331,6 +331,12 @@ TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
     transport_ (this, orb_core),
     orb_core_ (orb_core)
 {
+  // OK, Here is a small twist. By now the all the objecs cached in
+  // this class would have been constructed. But we would like to make
+  // the one of the objects, precisely the transport object a pointer
+  // to the Messaging object. So, we set this up properly by calling
+  // the messaging_init method on the transport. 
+  this->transport_.messaging_init (& this->message_factory_);
 }
 
 TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)

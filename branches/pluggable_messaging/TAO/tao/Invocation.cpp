@@ -331,18 +331,16 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // unverified user ID, and then verifying the message (i.e. a dummy
   // service context entry is set up to hold a digital signature for
   // this message, then patched shortly before it's sent).
-  static CORBA::Principal_ptr principal = 0;
-
-  if (TAO_GIOP::write_request_header (this->service_info_,
-                                      this->request_id_,
-                                      response_flags,
-                                      this->profile_->object_key (),
-                                      this->opname_,
-                                      principal,
-                                      this->out_stream_,
-                                      this->orb_core_) == 0)
+  if (this->transport_->send_request_header (this->service_info_,
+                                             this->request_id_,
+                                             response_flags,
+                                             this->stub_,
+                                             TAO_GIOP_Invocation::Key_Addr,
+                                             this->opname_,   
+                                             this->out_stream_) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
+
 
 // Send request.
 int

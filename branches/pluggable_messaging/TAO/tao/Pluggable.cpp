@@ -51,6 +51,86 @@ TAO_Transport::~TAO_Transport (void)
   delete this->buffering_queue_;
 }
 
+ssize_t
+TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
+{
+  // Make sure we have a buffering queue and there are messages in it.
+  if (this->buffering_queue_ == 0 ||
+      this->buffering_queue_->is_empty ())
+    return 0;
+
+  // Get the first message from the queue.
+  ACE_Message_Block *queued_message = 0;
+  ssize_t result = this->buffering_queue_->peek_dequeue_head (queued_message);
+
+  // @@ What to do here on failures?
+  ACE_ASSERT (result != -1);
+
+  // Actual network send.
+  result = this->send (queued_message,
+                       max_wait_time);
+
+  // Socket closed.
+  if (result == 0)
+    {
+      this->dequeue_all ();
+      return -1;
+    }
+
+  // Cannot send.
+  if (result == -1)
+    {
+      // Timeout.
+      if (errno == ETIME)
+        {
+          // Since we queue up the message, this is not an error.  We
+          // can try next time around.
+          return 0;
+        }
+      // Non-timeout error.
+      else
+        {
+          this->dequeue_all ();
+          return -1;
+        }
+    }
+
+  // If successful in sending some or all of the data, reset the queue
+  // appropriately.
+  this->reset_queued_message (queued_message,
+                              result);
+  
+  // Indicate success.
+  return result;
+}
+
+void
+TAO_Transport::dequeue_head (void)
+{
+  // Remove from the head of the queue.
+  ACE_Message_Block *message_block = 0;
+  int result = this->buffering_queue_->dequeue_head (message_block);
+
+  // @@ What to do here on failures?
+  ACE_ASSERT (result != -1);
+  ACE_UNUSED_ARG (result);
+
+  // Release the memory.
+  message_block->release ();
+}
+
+void
+TAO_Transport::dequeue_all (void)
+{
+  // Flush all queued messages.
+  if (this->buffering_queue_)
+    {
+      while (!this->buffering_queue_->is_empty ())
+        this->dequeue_head ();
+    }
+}
+
+
 void
 TAO_Transport::flush_buffered_messages (void)
 {

@@ -31,6 +31,7 @@
 #include "tao/Typecode.h"
 #include "tao/IOPC.h"
 
+
 // Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
@@ -44,6 +45,8 @@ class TAO_Resource_Factory;
 class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
+
+class TAO_Pluggable_Message_Factory;
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
@@ -105,6 +108,13 @@ public:
   // not clear this this is the best place to specify this.  The actual
   // timeout values will be kept in the Policies.
 
+  virtual void messaging_init 
+  (TAO_Pluggable_Message_Factory *factory) = 0;
+  // This is the method that would set the messaging object on the
+  // transport object. The transport object would be generally
+  // ignorant of the undrelying messaging object. This method sets a
+  // pointer to the right messaging object. 
+
   virtual void start_request (TAO_ORB_Core *orb_core,
                               const TAO_Profile *profile,
                               TAO_OutputCDR &output,
@@ -133,6 +143,17 @@ public:
   // Using this method, instead of send(), allows the transport (and
   // wait strategy) to take appropiate action.
 
+  virtual CORBA::Boolean 
+  send_request_header (const IOP::ServiceContextList &svc_ctx,  
+                       CORBA::ULong request_id,
+                       CORBA::Octet response_flags,
+                       TAO_Stub *stub,
+                       const short address_disposition,
+                       const char* opname,
+                       TAO_OutputCDR &msg) = 0;
+  // This is a request for the transport object to write a request
+  // header before it sends out a request
+                                
   TAO_ORB_Core *orb_core (void) const;
   // Access the ORB that owns this connection.
 
@@ -181,7 +202,17 @@ public:
   void flush_buffered_messages (void);
   // Flush any messages that have been buffered.
 
+  ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
+  // Send any messages that have been buffered.
 protected:
+
+  void dequeue_head (void);
+
+  void dequeue_all (void);
+
+  void reset_queued_message (ACE_Message_Block *message_block,
+                             size_t bytes_delivered);
+  
   CORBA::ULong tag_;
   // IOP protocol tag.
 

@@ -27,7 +27,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
+  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
@@ -41,7 +41,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
                                     const ACE_UNIX_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
+  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
@@ -63,7 +63,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
+  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
@@ -75,7 +75,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
+  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
@@ -171,7 +171,7 @@ CORBA::Boolean
 TAO_UIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
 
-  if (other_profile->tag () != TAO_IOP_TAG_UNIX_IOP)
+  if (other_profile->tag () != TAO_TAG_UIOP_PROFILE)
     return 0;
 
   const TAO_UIOP_Profile *op =
@@ -352,7 +352,7 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   // @@ it seems like this is not a good separation of concerns, why
   // do we write the TAG here? That's generic code and should be
   // handled by the object reference writer (IMHO).
-  stream.write_ulong (TAO_IOP_TAG_UNIX_IOP);
+  stream.write_ulong (TAO_TAG_UIOP_PROFILE);
 
   // Create the encapsulation....
   TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
