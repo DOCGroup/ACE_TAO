@@ -22,11 +22,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "LocalObject.h"
+
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "PortableInterceptorC.h"
-#include "LocalObject.h"
-#include "PICurrent.h"
+#include "PICurrent.h" 
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

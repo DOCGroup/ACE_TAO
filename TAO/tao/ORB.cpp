@@ -1197,9 +1197,12 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #if TAO_HAS_INTERCEPTORS == 1
+  PortableInterceptor::ORBInitializer_ptr temp_pi_initializer =
+    PortableInterceptor::ORBInitializer::_nil ();
+  PortableInterceptor::ORBInitializer_var pi_initializer;
 
   /// Register the PICurrent ORBInitializer.
-  ACE_NEW_THROW_EX (temp_orb_initializer,
+  ACE_NEW_THROW_EX (temp_pi_initializer,
                     TAO_PICurrent_ORBInitializer,
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
@@ -1207,9 +1210,9 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
-  orb_initializer = temp_orb_initializer;
+  pi_initializer = temp_pi_initializer;
 
-  PortableInterceptor::register_orb_initializer (orb_initializer.in (),
+  PortableInterceptor::register_orb_initializer (pi_initializer.in (),
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
