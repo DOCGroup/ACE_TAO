@@ -172,7 +172,7 @@ Server::run (void)
     }
     ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::run\n");
       return -1;
     }
   ACE_ENDTRY;

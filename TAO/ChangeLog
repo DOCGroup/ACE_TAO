@@ -1,3 +1,16 @@
+Wed Dec 22 11:38:23 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+
+          The size of the test date file generated was incorrect for all
+          platforms.  It assumed a 64KB maximum packet size which is
+          incorrect for windows and some additional platforms.
+
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+
+          Fixed copy and paste error in error message.
+
 Wed Dec 22 08:10:47 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/FTORB.mpc:

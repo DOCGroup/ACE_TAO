@@ -22,7 +22,9 @@ $debug = 0;
 unlink $nsior;
 
 # generate test stream data
-$input = PerlACE::generate_test_file("test_input", 102400);
+# the size of this file is limited by the maximum packet size
+# windows has a maximum size of 8KB
+$input = PerlACE::generate_test_file("test_input", 32000);
 
 @protocols = ("TCP",
  	      "UDP"
