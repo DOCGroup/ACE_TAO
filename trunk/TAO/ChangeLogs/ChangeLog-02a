@@ -1,16 +1,32 @@
+Thu Mar 29 07:47:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/tutorials/Quoter/AMI/Handler_i.h:
+        * docs/tutorials/Quoter/AMI/Handler_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp:
+          Fixed throw spec problems.
+
+        * tests/Client_Leaks/Test.idl:
+        * tests/Client_Leaks/Client_Task.cpp:
+        * tests/Client_Leaks/Process_Factory.h:
+        * tests/Client_Leaks/Process_Factory.cpp:
+          Add explicit noop() operation used instead of _non_existent() or
+          validate_connection() because the test should work in minimum
+          CORBA configurations.
+
 Thu Mar 29 06:27:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
-	  Fixed warnings in g++.
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+          Fixed warnings in g++.
 
 Thu Mar 29 06:15:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/Simple/Persistent/server.cpp:
-	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp:
 
-	  Fixed warnings in g++. 
+          Fixed warnings in g++.
 
 Thu Mar 29 00:11:12 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -26,56 +42,56 @@ Wed Mar 28 21:46:24 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Mar 28 21:44:45 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Consumer_Input_Handler.cpp:
-	* examples/Callback_Quoter/notifier.cpp:
-	* examples/Content_Server/AMI_Iterator/client.cpp:
-	* examples/Content_Server/AMI_Observer/client.cpp:
-	* examples/Content_Server/SMI_Iterator/client.cpp:
-	* examples/Event_Comm/Notifier_Server.cpp:
-	* tests/Exposed_Policies/Counter_i.cpp:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
-	* tests/RTCORBA/RTMutex/server.cpp:
-	  Fixed ACE_TRY_CATCH errors detected by the fuzz script.
+        * examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+        * examples/Callback_Quoter/notifier.cpp:
+        * examples/Content_Server/AMI_Iterator/client.cpp:
+        * examples/Content_Server/AMI_Observer/client.cpp:
+        * examples/Content_Server/SMI_Iterator/client.cpp:
+        * examples/Event_Comm/Notifier_Server.cpp:
+        * tests/Exposed_Policies/Counter_i.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/RTCORBA/RTMutex/server.cpp:
+          Fixed ACE_TRY_CATCH errors detected by the fuzz script.
 
-	* tao/RTCORBAC.{cpp,h,i}:
-	* tao/RTCORBAS.{cpp,h,i}:
-	* tao/RTCORBAS_T.{cpp,h,i}:
-	* tao/diffs/RTCORBAC.cpp.diff:
-	* tao/diffs/RTCORBAC.h.diff:
-	* tao/diffs/RTCORBAS.cpp.diff:
-	* tao/diffs/RTCORBAS.h.diff:
-	  Regenerated RTCORBA.pidl files to fix ACE_TRY_CATCH
-	  macro warnings detected by the fuzz script.
+        * tao/RTCORBAC.{cpp,h,i}:
+        * tao/RTCORBAS.{cpp,h,i}:
+        * tao/RTCORBAS_T.{cpp,h,i}:
+        * tao/diffs/RTCORBAC.cpp.diff:
+        * tao/diffs/RTCORBAC.h.diff:
+        * tao/diffs/RTCORBAS.cpp.diff:
+        * tao/diffs/RTCORBAS.h.diff:
+          Regenerated RTCORBA.pidl files to fix ACE_TRY_CATCH
+          macro warnings detected by the fuzz script.
 
 Wed Mar 28 21:40:36 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp (ServerObject_i): Added ACE_CHECK;
+        * tao/PortableServer/POA.cpp (ServerObject_i): Added ACE_CHECK;
 
 Wed Mar 28 20:16:32 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	  Changed reference to opdetails.service_context () to
-	  opdetails.request_service_context () to be consistent
-	  with the fix for bug #806 which separates the request
-	  and reply service contexts.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Changed reference to opdetails.service_context () to
+          opdetails.request_service_context () to be consistent
+          with the fix for bug #806 which separates the request
+          and reply service contexts.
 
 Wed Mar 28 17:24:57 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* orbsvcs/tests/ImplRepo/NameService/Makefile : Added
-	  libTAO_PortableServer and libTAO_IORTable to LinkList to make
-	  QNX happy. Thanks to Thomas Groth <groth.th@nord-com.net> for
-	  the suggestion.
+        * orbsvcs/tests/ImplRepo/NameService/Makefile : Added
+          libTAO_PortableServer and libTAO_IORTable to LinkList to make
+          QNX happy. Thanks to Thomas Groth <groth.th@nord-com.net> for
+          the suggestion.
 
 Wed Mar 28 17:12:06 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* orbsvcs/examples/Log/test/Makefile : Added libTAO_DynamicAny and
-	  libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas
+        * orbsvcs/examples/Log/test/Makefile : Added libTAO_DynamicAny and
+          libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas
           Groth <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:54:47 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
-	* orbsvcs/examples/Log/Client/Makefile: Added libTAO_DynamicAny to
-	  LinkList to make QNX happy. Thanks to Thomas Groth
+        * orbsvcs/examples/Log/Client/Makefile: Added libTAO_DynamicAny to
+          LinkList to make QNX happy. Thanks to Thomas Groth
           <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:51:01 2001  Carlos O'Ryan  <coryan@uci.edu>
@@ -503,9 +519,9 @@ Tue Mar 27 14:20:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Mar 27 12:46:46 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
-	  Receivers are stored in the map with their flownames.
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+          Receivers are stored in the map with their flownames.
 
 Tue Mar 27 08:15:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 

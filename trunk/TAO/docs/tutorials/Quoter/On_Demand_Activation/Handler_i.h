@@ -17,7 +17,8 @@ public:
                            const char *full_name)
       throw (CORBA::SystemException);
 
-  void get_price_and_names_excep (Quoter::AMI_Single_Query_StockExceptionHolder_ptr);
+  void get_price_and_names_excep (Quoter::AMI_Single_Query_StockExceptionHolder_ptr)
+    throw (CORBA::SystemException);
 
 private:
   int *response_count_;

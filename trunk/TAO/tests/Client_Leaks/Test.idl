@@ -21,6 +21,9 @@ module Test
     /// Create a new process and return its object reference
     Process create_new_process () raises (Spawn_Failed);
 
+    /// Empty method, used to validate the connection
+    void noop ();
+
     /// Shutdown the process factory
     oneway void shutdown ();
   };
