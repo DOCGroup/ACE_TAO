@@ -1,3 +1,18 @@
+Tue Nov 14 14:59:47 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo.cpp:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
+
+          Added the ability to get some options from the registry 
+          when running as a service.  Will be updating the docs
+          soon to explain how this works.
+         
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Fixed to run both_ir_test () instead of both_ir () by
+          default.
+
 Tue Nov 14 10:41:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/RTCORBA/Server_Protocol/client_nt.conf: 

@@ -17,8 +17,9 @@
 #include "tao/ORB.h"
 #include "ace/Singleton.h"
 
-// Forward declaration, so we don't to include ace/Configuration.h yet.
+// Forward declarations
 class ACE_Configuration;
+class ACE_ARGV;
 
 /**
  * @class Options
@@ -38,7 +39,7 @@ public:
   ~Options();
 
   /// Parse the command-line arguments and initialize the options.
-  int parse_args (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
 
   /// Service Mode
   int service (void) const;
@@ -62,6 +63,9 @@ public:
   CORBA::ORB_ptr orb (void) const;
 
 private:
+  /// Parses and pulls out arguments for the ImR
+  int parse_args (int &argc, ACE_TCHAR *argv[]);
+
   /// Print the usage information.
   void print_usage (void) const;
 
@@ -76,6 +80,9 @@ private:
 
   /// Run a service command.
   int run_service_command (ACE_TCHAR *command);
+
+  /// Loads ORB options from the registry
+  int load_registry_options (ACE_ARGV &orb_options);
 
   /// Are we running as a service?
   int service_;
