@@ -1,3 +1,20 @@
+Fri Nov 19 08:54:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_home.cpp:
+        
+          Fixed call to wrong member of accessor/mutator pair
+          for the seen_in_operation member of the home's
+          managed component.
+          
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+        
+          Added a missing check for locality constraint in the decision
+          to generate/not generate Any and CDR operators for forward
+          declared interfaces to changes made to these files in
+          
+          Thu Nov 18 13:17:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Thu Nov 18 18:00:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Object_T.cpp:
