@@ -1,3 +1,11 @@
+Sun Jan  2 12:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/PSS/PSDL_Interface_Visitor.cpp:
+        * orbsvcs/PSS/PSDL_Struct_Visitor.cpp:
+        * orbsvcs/PSS/PSDL_Type_Dcl_Visitor.cpp:
+          Removed generation of check for ACE_HAS_GNUG_PRE_2_8, this is not
+          set anywhere anymore
+
 Sat Jan  1 13:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
