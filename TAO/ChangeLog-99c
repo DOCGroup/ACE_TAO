@@ -1,3 +1,11 @@
+Tue May  4 14:11:43 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/sfp.cpp: Fixed the misinterpretation of the
+	  credit message where I was adding the cred_num field to the
+	  allowed credit. Its actually a sequence number and the credit
+	  doesn't change for a session. Thanks to Leif Jakobsmeier
+	  <leif@cs.uni-frankfurt.de> for pointing this out. 
+
 Tue May  4 12:34:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/orbconf.h:
