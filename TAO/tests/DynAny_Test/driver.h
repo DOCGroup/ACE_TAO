@@ -37,7 +37,7 @@ enum TEST_TYPE
     TEST_DYNENUM,
     TEST_DYNSEQUENCE,
     TEST_DYNSTRUCT,
-    TEST_DYNUNION,
+    TEST_DYNUNION
   };
   
   int init (int argc, char* argv[]);
