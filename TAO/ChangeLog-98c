@@ -22,12 +22,41 @@ Tue Nov 04 01:00:51 1997    <nw1@COYOTE>
 
 Mon Nov 03 23:16:06 1997    <nw1@COYOTE>
 
+	* TAO_IDL/ast/ast_expression.cpp (coerce_value): Added an explicit
+	  cast (float) to avoid NT warnging messages.
+
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (svc): Removed
+	  declaration of function print_exception.  It's now a member
+	  function of CORBA_Environment.
+
+	* TAO_IDL/fe/y.tab.cpp: Commented out include <values.h>.  This
+ 	  was causing compilation errors on NT.
+
 	* tests/Cubit/TAO/DII_Cubit/svr.cpp:
 	* tests/Cubit/TAO/DII_Cubit/clnt.cpp: Changed to use the new
 	  CORBA_Environment::print_exception.
 
 	* tao/except.h (CORBA_Environment):  Added ACE_Svc_Export to this
 	  class. 
+
+	* tests/Cubit/TAO/MT_Cubit/MTCubit.dsw:
+	* tests/Cubit/TAO/MT_Cubit/client/client.dsp:
+	* tests/Cubit/TAO/MT_Cubit/server/server.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/test.dsw:  Added new workspace and
+	  project files.
+
+	* TAO_IDL/tao_idl.dsp:  Moved the output executables to the usual
+	  place.
+
+	* TAO_IDL/be/be.h: Added #ifdef'ed pragma to diable warning 4250
+	  on NT.  This is only temporary and should be fixed later.
+
+	* TAO_IDL/be/be_union.cpp (gen_var_defn):
+	* TAO_IDL/be/be_structure.cpp (gen_var_defn):
+	* TAO_IDL/be/be_array.cpp (gen_var_defn): Removed unused local
+	  variables declaration (s).
 
 Mon Nov  3 23:25:30 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
@@ -58,15 +87,11 @@ Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): Fixed comparison of
 	">=" on an unsigned variable to compare only ">".
 
-Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
+	* TAO_IDL/be/be_typedef.cpp (gen_client_stubs): Removed unused
+	variable warning.
 
-	* tests/Cubit/TAO/MT_Cubit/MTCubit.dsw:
-	* tests/Cubit/TAO/MT_Cubit/client/client.dsp:
-	* tests/Cubit/TAO/MT_Cubit/server/server.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/test.dsw:  Added new workspace and
-	  project files.
+	* TAO_IDL/fe/y.tab.cpp (yytoks): Added brackets to the array
+	 of structures being initialized.
 
 Mon Nov 03 18:43:37 1997  Carlos O'Ryan  <coryan@MILONGA>
 
@@ -96,35 +121,6 @@ Mon Nov 03 18:43:37 1997  Carlos O'Ryan  <coryan@MILONGA>
 	  tc_name_ and type_name_ were not initialized, producing some
 	  segfaults under NT.
 
-Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
-
-	* TAO_IDL/fe/y.tab.cpp: Commented out include <values.h>.  This
- 	  was causing compilation errors on NT.
-
-Mon Nov  3 16:52:19 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
-
-	* TAO_IDL/be/be_typedef.cpp (gen_client_stubs): Removed unused
-	variable warning.
-
-	* TAO_IDL/fe/y.tab.cpp (yytoks): Added brackets to the array
-	 of structures being initialized.
-
-Mon Nov 03 13:22:12 1997    <nw1@CHA-CHA>
-
-	* TAO_IDL/tao_idl.dsp:  Moved the output executables to the usual
-	  place.
-
-	* TAO_IDL/be/be.h: Added #ifdef'ed pragma to diable warning 4250
-	  on NT.  This is only temporary and should be fixed later.
-
-	* TAO_IDL/be/be_union.cpp (gen_var_defn):
-	* TAO_IDL/be/be_structure.cpp (gen_var_defn):
-	* TAO_IDL/be/be_array.cpp (gen_var_defn): Removed unused local
-	  variables declaration (s).
-
-	* TAO_IDL/ast/ast_expression.cpp (coerce_value): Added an explicit
-	  cast (float) to avoid NT warnging messages.
-
 Mon Nov  3 13:45:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* {tao,TAO_IDL/util,TAO_IDL/narrow,TAO_IDL/fe,TAO_IDL/driver,
@@ -132,12 +128,6 @@ Mon Nov  3 13:45:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	Fixed definition so that the extension was $(SOEXT) rather than
  	hard-coded to "so".  This makes things compile on VxWorks better.
   	Thanks to David Levine for pointing this out.
-
-Mon Nov  3 10:52:32 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
-
-	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (svc): Removed
-	  declaration of function print_exception.  It's now a member
-	  function of CORBA_Environment.
 
 Sun Nov 02 19:42:08 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -163,8 +153,6 @@ Sun Nov  2 19:20:57 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	the "print_exception" which is now defined on class
 	CORBA::Environment. The clnt still needs improvement in terms of
 	handling invalid parameters and gracefully exiting.
-
-Sun Nov  2 13:28:19 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IDL_Compiler: The bug resulting out of encoding object
 	references has been fixed atleast on Solaris using g++ as well as
