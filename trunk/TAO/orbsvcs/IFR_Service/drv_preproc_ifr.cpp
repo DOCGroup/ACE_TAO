@@ -602,6 +602,7 @@ DRV_pre_proc (const char *myfile)
       ACE_Log_Msg *out = ACE_Log_Msg::instance ();
       out->msg_ostream (&cout);
       out->clr_flags (ACE_Log_Msg::STDERR);
+      out->set_flags (ACE_Log_Msg::OSTREAM);
 
       while ((bytes = ACE_OS::fread (buffer, 
                                      sizeof (char), 
