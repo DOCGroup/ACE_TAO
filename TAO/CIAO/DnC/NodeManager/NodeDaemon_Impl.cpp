@@ -18,18 +18,7 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
 
 CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
 {
-  for (Iterator i = this->table_.begin ();
-       i != this->table_.end ();
-       ++i)
-    {
-      // Deallocate the id.
-      CORBA::string_free (ACE_const_cast (char *, (*i).ext_id_));
 
-      // Release the Object.
-      CORBA::release ((*i).int_id_);
-    }
-
-  this->table_.unbind_all ();
 }
 
 PortableServer::POA_ptr
@@ -51,60 +40,6 @@ CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-}
-
-int
-CIAO::NodeDaemon_Impl::bind (const char *id,
-                             CORBA::Object_ptr obj)
-{
-  // Make sure that the supplied Object reference is valid,
-  // i.e. not nil.
-  if (id == 0 || CORBA::is_nil (obj))
-    {
-      errno = EINVAL;
-      return -1;
-    };
-
-  CORBA::String_var name = CORBA::string_dup (id);
-  CORBA::Object_var object = CORBA::Object::_duplicate (obj);
-
-  int result = this->table_.bind (name.in (),
-                                  object.in ());
-
-  if (result == 0)
-    {
-      // Transfer ownership to the Object Table.
-      (void) name._retn ();
-      (void) object._retn ();
-    }
-
-  return result;
-}
-
-int
-CIAO::NodeDaemon_Impl::unbind (const char *id)
-{
-  Table::ENTRY *entry = 0;
-
-  int result = this->table_.find (id, entry);
-
-  if (result == 0)
-    {
-      // Deallocate the external ID and obtain the ORB core pointer
-      // before unbinding the entry since the entry is deallocated
-      // during the call to unbind().
-      CORBA::string_free (ACE_const_cast (char *, entry->ext_id_));
-      CORBA::Object_ptr obj = entry->int_id_;
-
-      result = this->table_.unbind (entry);
-
-      if (result != 0)
-        return result;
-
-      CORBA::release (obj);
-    }
-
-  return result;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -133,38 +68,41 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                    Deployment::StartError,
                    Deployment::PlanError))
 {
-  //Implementation undefined.
-  CIAO::NodeApplicationManager_Impl *app_mgr;
-  ACE_NEW_THROW_EX (app_mgr,
-                    CIAO::NodeApplicationManager_Impl (this->orb_.in (),
-                                                       this->poa_.in ()),
-                    CORBA::NO_MEMORY ());
+  // Return cached manager
+  if (CORBA::is_nil (this->manager_.in ()))
 
-  CIAO::NodeApplicationManager_Impl * mgr =
-    app_mgr->init (this->nodeapp_location_,
-                   this->spawn_delay_,
-                   plan);
-
-  // Obtain the Object Reference
-  CORBA::Object_ptr obj =
-    this->poa_->servant_to_reference (mgr);
-
-  Deployment::NodeApplicationManager_ptr obj_ref =
-    Deployment::NodeApplicationManager::_narrow (obj);
-
-  if (CORBA::is_nil (obj_ref))
     {
-      ACE_DEBUG ((LM_DEBUG, "preparePlan: NodeApplicationManager ref\
-                             is nil\n"));
-      ACE_THROW (Deployment::StartError ());
+      //Implementation undefined.
+      CIAO::NodeApplicationManager_Impl *app_mgr;
+      ACE_NEW_THROW_EX (app_mgr,
+                        CIAO::NodeApplicationManager_Impl (this->orb_.in (),
+                                                           this->poa_.in ()),
+                        CORBA::NO_MEMORY ());
+
+      CIAO::NodeApplicationManager_Impl * mgr =
+        app_mgr->init (this->nodeapp_location_,
+                       this->spawn_delay_,
+                       plan);
+
+      // Obtain the Object Reference
+      CORBA::Object_ptr obj =
+        this->poa_->servant_to_reference (mgr);
+
+      Deployment::NodeApplicationManager_ptr obj_ref =
+        Deployment::NodeApplicationManager::_narrow (obj);
+
+      if (CORBA::is_nil (obj_ref))
+        {
+          ACE_DEBUG ((LM_DEBUG, "preparePlan: NodeApplicationManager ref is nil\n"));
+          ACE_THROW (Deployment::StartError ());
+        }
+
+      // This manager takes ownership of the Object Reference
+      this->manager_ = obj_ref;
     }
-
-  // This manager takes ownership of the Object Reference
-  this->manager_ = obj_ref;
-
-  // Duplicate this reference to the caller
-  return
-    Deployment::NodeApplicationManager::_duplicate (this->manager_.in ());
+      // Duplicate this reference to the caller
+      return
+      Deployment::NodeApplicationManager::_duplicate (this->manager_.in ());
 }
 
 

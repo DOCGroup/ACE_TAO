@@ -45,19 +45,13 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       if ( ! this->get_plan_info () )
         ACE_THROW (Deployment::PlanError ());
 
-      ACE_DEBUG ((LM_DEBUG, "after: get_plan_info...\n"));
-
       // Check the validity of the global deployment plan.
-      //if ( ! this->check_validity () )
-      //  ACE_THROW (Deployment::PlanError ());
-
-      ACE_DEBUG ((LM_DEBUG, "after: check_validity...\n"));
+      if ( ! this->check_validity () )
+        ACE_THROW (Deployment::PlanError ());
 
       // Call split_plan()
       if ( ! this->split_plan () )
         ACE_THROW (Deployment::PlanError ());
-
-      ACE_DEBUG ((LM_DEBUG, "after: split_plan...\n"));
 
       // Invoke preparePlan for each child deployment plan.
       for (size_t i = 0; i < this->num_child_plans_; i++)
@@ -78,21 +72,24 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
           Chained_Artifacts artifacts = entry->int_id_;
 
-          // Dump the contents
-          ::Deployment::DnC_Dump::dump (artifacts.child_plan_);
-
-
           // Call preparePlan() method on the NodeManager with the
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.  @@TODO: Does
           // preparePlan take a _var type variable?
-          //::Deployment::NodeApplicationManager_var my_nam =
-          //  my_node_manager->preparePlan (artifacts.child_plan_
-          //                                ACE_ENV_ARG_PARAMETER);
-          //ACE_TRY_CHECK;
+          ::Deployment::NodeApplicationManager_var my_nam =
+            my_node_manager->preparePlan (artifacts.child_plan_
+                                          ACE_ENV_ARG_PARAMETER);
+
+          if (CORBA::is_nil (my_nam.in ()))
+            {
+              ACE_DEBUG ((LM_DEBUG, "DomainAppMgr::init () received a nil\
+                                     reference for NodeApplicationManager\n"));
+              ACE_THROW (Deployment::StartError ());
+            }
+          ACE_TRY_CHECK;
 
           // Cache the NodeApplicationManager object reference.
-          //artifacts.node_application_manager_ = my_nam;
+          artifacts.node_application_manager_ = my_nam._retn ();
         }
     }
   ACE_CATCHANY
@@ -103,8 +100,6 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-
-  return;
 }
 
 bool
