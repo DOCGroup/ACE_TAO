@@ -3710,7 +3710,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            &process_info))
 #   else
       if (::CreateProcess (0,
-                           (LPTSTR) ACE_WIDE_STRING (buf),
+                           (LPTSTR) buf,
                            0, // No process attributes.
                            0,  // No thread attributes.
                            FALSE, // Can's inherit handles on CE
