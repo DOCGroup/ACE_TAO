@@ -26,6 +26,9 @@
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+// for VC6.  Otherwise calling Tao_Notify::TopologyObject::init confuses the parser
+using namespace TAO_Notify;
+
 ACE_RCSID(Notify, TAO_Notify_EventChannel, "$Id$")
 
 typedef TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin
@@ -57,14 +60,16 @@ TAO_Notify_EventChannel::~TAO_Notify_EventChannel ()
   this->ecf_->_decr_refcnt ();
 }
 
+// for VC6.  Otherwise calling Tao_Notify::TopologyObject::init confuses the parser
+typedef TAO_Notify::Topology_Object TAO_Notify_Topology_Object;
+
 void
 TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            , const CosNotification::QoSProperties & initial_qos
                            , const CosNotification::AdminProperties & initial_admin
                            ACE_ENV_ARG_DECL)
 {
-  // this-> on the following line confuses VC6
-  TAO_Notify::Topology_Object::initialize (ecf ACE_ENV_ARG_PARAMETER);
+  TAO_Notify_Topology_Object::init (ecf ACE_ENV_ARG_PARAMETER);
 
   this->ecf_ = ecf;
 
@@ -130,8 +135,7 @@ void
 TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent * parent
                            ACE_ENV_ARG_DECL)
 {
-  // this-> on the following line confuses VC6
-  TAO_Notify::Topology_Parent::initialize (parent ACE_ENV_ARG_PARAMETER);
+  Topology_Object::init (parent ACE_ENV_ARG_PARAMETER);
 
   this->ecf_ = dynamic_cast <TAO_Notify_EventChannelFactory*>(parent);
   ACE_ASSERT (this->ecf_ != 0);

@@ -17,6 +17,9 @@ ACE_RCSID(RT_Notify, TAO_Notify_ProxySupplier, "$Id$")
 #include "Properties.h"
 #include "ConsumerAdmin.h"
 
+// for VC6.  Otherwise calling Tao_Notify::TopologyObject::init confuses the parser
+using namespace TAO_Notify;
+
 TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier (void)
   : consumer_admin_ (0)
   , consumer_ (0)
@@ -28,10 +31,13 @@ TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier ()
   this->consumer_admin_->_decr_refcnt ();
 }
 
+// for VC6.  Otherwise calling Tao_Notify::TopologyObject::init confuses the parser
+typedef TAO_Notify::Topology_Object TAO_Notify_Topology_Object;
+
 void
 TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Proxy::initialize (consumer_admin ACE_ENV_ARG_PARAMETER);
+  TAO_Notify_Topology_Object::init (consumer_admin ACE_ENV_ARG_PARAMETER);
 
   this->consumer_admin_ = consumer_admin;
 
