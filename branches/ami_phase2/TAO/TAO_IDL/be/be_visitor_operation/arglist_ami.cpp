@@ -60,6 +60,10 @@ be_visitor_operation_arglist_ami::visit_operation (be_operation *node)
                          "codegen for scope failed\n"),
                         -1);
     }
+
+
+  // @@ When some out arguments are skipped, the indentation seems to
+  //    get messed up. Fix that. (Alex).
   
   // Last argument - is always CORBA::Environment.
   os->indent ();

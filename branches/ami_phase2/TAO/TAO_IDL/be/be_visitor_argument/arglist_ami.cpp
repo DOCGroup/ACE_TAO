@@ -61,7 +61,8 @@ be_visitor_args_arglist_ami::visit_argument (be_argument *node)
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
 
-  if (bt->accept (this) == -1)
+  int result = bt->accept (this);
+  if (result == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_args_arglist::"
@@ -69,8 +70,75 @@ be_visitor_args_arglist_ami::visit_argument (be_argument *node)
                          "cannot accept visitor\n"),
                         -1);
     }
+  
+  // Print the variable name only if the type was printed already. 
+  if (result)
+    *os << " " << node->local_name () << ",\n";
 
-  *os << " " << node->local_name () << ",\n";
+  return 0;
+}
+
+int
+be_visitor_args_arglist_ami::visit_array (be_array *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << "const " << this->type_name (node);
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+int
+be_visitor_args_arglist_ami::visit_enum (be_enum *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << this->type_name (node);
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+int
+be_visitor_args_arglist_ami::visit_interface (be_interface *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT: // inout
+      *os << this->type_name (node, "_ptr");
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+int
+be_visitor_args_arglist_ami::visit_interface_fwd (be_interface_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT: // inout
+      *os << this->type_name (node, "_ptr");
+      return 1;
+      /* NOT REACHED */
+    }
   return 0;
 }
 
@@ -78,14 +146,176 @@ int
 be_visitor_args_arglist_ami::visit_native (be_native *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  
+
   switch (this->direction ())
     {
-      // No out Parameters in the AMI stub:
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node);
-      break;
+      return 1;
+      /* NOT REACHED */
     }
   return 0;
 }
+
+int
+be_visitor_args_arglist_ami::visit_predefined_type (be_predefined_type *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  
+  // check if the type is an any
+  if (node->pt () == AST_PredefinedType::PT_any)
+    {
+      switch (this->direction ())
+        {
+        case AST_Argument::dir_IN:
+        case AST_Argument::dir_INOUT:
+          *os << "const " << this->type_name (node) << " &";
+          return 1;
+          /* NOT REACHED */
+        }
+    }
+  else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
+    {
+      switch (this->direction ())
+        {
+        case AST_Argument::dir_IN:
+        case AST_Argument::dir_INOUT:
+          *os << this->type_name (node, "_ptr");
+          return 1;
+          /* NOT REACHED */
+        } // end switch direction
+    } // end else if
+  else // simple predefined types
+    {
+      switch (this->direction ())
+        {
+        case AST_Argument::dir_IN:
+        case AST_Argument::dir_INOUT:
+          *os << this->type_name (node);
+          return 1;
+          /* NOT REACHED */
+        } // end switch direction
+    } // end of else
+
+  return 0;
+}
+
+int
+be_visitor_args_arglist_ami::visit_sequence (be_sequence *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << "const " << this->type_name (node) << " &";
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+int
+be_visitor_args_arglist_ami::visit_string (be_string *)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << "const char *";
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+int
+be_visitor_args_arglist_ami::visit_structure (be_structure *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << "const " << this->type_name (node) << " &";
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+int be_visitor_args_arglist_ami::visit_union (be_union *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << "const " << this->type_name (node) << " &";
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+int be_visitor_args_arglist_ami::visit_typedef (be_typedef *node)
+{
+  this->ctx_->alias (node);
+  
+  int result = node->primitive_base_type ()->accept (this);
+  if (result == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_arglist_ami::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+
+  this->ctx_->alias (0);
+
+  return result;
+}
+
+
+#ifdef IDL_HAS_VALUETYPE
+
+int
+be_visitor_args_arglist_ami::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << this->type_name (node) << " *";
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+int
+be_visitor_args_arglist_ami::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      *os << "const " << this->type_name (node) << " *";
+      return 1;
+      /* NOT REACHED */
+    }
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
