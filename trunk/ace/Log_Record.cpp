@@ -36,7 +36,7 @@ ACE_Log_Record::dump (void) const
 }
 
 void 
-ACE_Log_Record::msg_data (const char *data)
+ACE_Log_Record::msg_data (const ASYS_TCHAR *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
   ACE_OS::strncpy (this->msg_data_, data, ACE_Log_Record::MAXLOGMSGLEN);
@@ -91,7 +91,7 @@ ACE_Log_Record::ACE_Log_Record (void)
 // format.
 
 int
-ACE_Log_Record::print (const char *host_name,
+ACE_Log_Record::print (const ASYS_TCHAR *host_name,
 		       int verbose, 
 		       FILE *fp)
 {
@@ -102,7 +102,7 @@ ACE_Log_Record::print (const char *host_name,
   if (verbose)
     {
       time_t now = this->time_stamp_.sec ();
-      char ctp[26]; // 26 is a magic number...
+      ASYS_TCHAR ctp[26]; // 26 is a magic number...
 
       if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
 	return -1;
@@ -113,9 +113,10 @@ ACE_Log_Record::print (const char *host_name,
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
-      const char *lhost_name = host_name == 0 ? "<local_host>" : host_name;
+      const ASYS_TCHAR *lhost_name = host_name ==
+        0 ? ASYS_TEXT ("<local_host>") : host_name;
 
-      ret =  ACE_OS::fprintf (fp, "%s.%d %s@%s@%d@%d@%s",
+      ret =  ACE_OS::fprintf (fp, ASYS_TEXT ("%s.%d %s@%s@%d@%d@%s"),
 			      ctp + 4, 
 			      this->time_stamp_.usec () / 1000,
 			      ctp + 20, 
@@ -125,15 +126,16 @@ ACE_Log_Record::print (const char *host_name,
 			      this->msg_data_);
     }
   else
-    ret =  ACE_OS::fprintf (fp, "%s", this->msg_data_);
+    ret =  ACE_OS::fprintf (fp, ASYS_TEXT ("%s"), this->msg_data_);
 
   if (ret > 0)
     ACE_OS::fflush (fp);
   return ret;
 }
 
+#if !defined (ACE_HAS_WINCE)
 int
-ACE_Log_Record::print (const char host_name[],
+ACE_Log_Record::print (const ASYS_TCHAR host_name[],
 		       int verbose, 
 		       ostream &s)
 {
@@ -142,7 +144,7 @@ ACE_Log_Record::print (const char host_name[],
   if (verbose)
     {
       time_t now = this->time_stamp_.sec ();
-      char ctp[26]; // 26 is a magic number...
+      ASYS_TCHAR ctp[26]; // 26 is a magic number...
 
       if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
 	return -1;
@@ -153,7 +155,8 @@ ACE_Log_Record::print (const char host_name[],
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
-      const char *lhost_name = host_name == 0 ? "<local_host>" : host_name;
+      const ASYS_TCHAR *lhost_name = host_name ==
+        0 ? ASYS_TEXT ("<local_host>") : host_name;
 
       s << (ctp + 4) << '.'
 	// The following line isn't portable, so I've commented it out...
@@ -173,3 +176,4 @@ ACE_Log_Record::print (const char host_name[],
   s.flush ();
   return 0;
 }
+#endif /* ! ACE_HAS_WINCE */

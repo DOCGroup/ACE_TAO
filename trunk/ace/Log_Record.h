@@ -55,17 +55,19 @@ public:
   // Create a <Log_Record> and set its priority, time stamp, and
   // process id.
 
-  int print (const char host_name[], 
+  int print (const ASYS_TCHAR host_name[], 
 	     int verbose = 1, 
 	     FILE *fp = stderr);
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
-  int print (const char host_name[], 
+#if !defined (ACE_HAS_WINCE)    // @@ Sould this be ACE_LACKS_IOSTREAM_TOTALLY?
+  int print (const ASYS_TCHAR host_name[], 
 	     int verbose, 
 	     ostream &stream);
   // Write the contents of the logging record to the appropriate
   // <ostream>.
+#endif /* ! ACE_HAS_WINCE */
 
   // = Marshall/demarshall
   void encode (void);
@@ -109,10 +111,10 @@ public:
   void pid (long);
   // Set the process id of the <Log_Record>.
 
-  char *msg_data (void);
+  ASYS_TCHAR *msg_data (void);
   // Get the message data of the <Log_Record>.
 
-  void msg_data (const char *data);
+  void msg_data (const ASYS_TCHAR *data);
   // Set the message data of the <Log_Record>.
 
   void msg_data_len (size_t len);
@@ -143,7 +145,7 @@ private:
   long pid_;         
   // Id of process that generated the logging record.
 
-  char msg_data_[MAXLOGMSGLEN]; 
+  ASYS_TCHAR msg_data_[MAXLOGMSGLEN]; 
   // Logging record data 
 };
 

@@ -436,18 +436,13 @@ public:
   // Returns the "basename" of a <pathname>.
 #endif /* ACE_HAS_UNICODE */
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
-  static char *timestamp (char date_and_time[],
-			  int time_len);
+  static ASYS_TCHAR *timestamp (ASYS_TCHAR date_and_time[],
+                                int time_len);
   // Returns the current timestamp in the form
   // "hour:minute:second:microsecond."  The month, day, and year are
   // also stored in the beginning of the date_and_time array.  Returns
   // 0 if unsuccessful, else returns pointer to beginning of the
   // "time" portion of <day_and_time>.
-#else
-  static wchar_t *timestamp (wchar_t date_and_time[],
-                             int time_len);
-#endif /* ACE_HAS_UNICODE_ONLY */
 
   static int daemonize (const char pathname[] = "/",
                         int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES);
@@ -507,15 +502,10 @@ public:
   static size_t round_to_pagesize (off_t length);
   // Rounds the request to a multiple of the page size.
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
-  static int format_hexdump (const char *buffer, int size, char *obuf,
-                             int obuf_sz);
+  static int format_hexdump (const ASYS_TCHAR *buffer, int size,
+                             ASYS_TCHAR *obuf, int obuf_sz);
   // Format buffer into printable format.  This is useful for
   // debugging.
-#else
-  static int format_hexdump (const wchar_t *buffer, int size, wchar_t *obuf,
-                             int obuf_sz);
-#endif /* ACE_HAS_UNICODE_ONLY */  
 
   static u_long hash_pjw (const char *str);
   // Computes the hash value of <str> using the ``Hash PJW'' routine.

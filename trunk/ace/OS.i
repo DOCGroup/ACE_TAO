@@ -485,7 +485,7 @@ extern "C" char *mktemp (char *);
 #define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
 #endif /* VXWORKS */
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
@@ -497,7 +497,7 @@ ACE_OS::chdir (const char *path)
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 #endif /* VXWORKS */
 }
-#endif /* ACE_HAS_UNICODE_ONLY */
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
@@ -569,7 +569,7 @@ ACE_OS::isatty (ACE_HANDLE fd)
   ACE_OSCALL_RETURN (::isatty (fd), int, -1);
 }
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::mkfifo (const char *file, mode_t mode)
 {
@@ -590,7 +590,7 @@ ACE_OS::mktemp (char *s)
   return ::mktemp (s);
 }
 #endif /* !ACE_LACKS_MKTEMP */
-#endif /* !ACE_HAS_UNICODE_ONLY */
+#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
@@ -680,7 +680,7 @@ ACE_OS::umask (mode_t cmask)
   } \
   return RESULT; } while (0)
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
@@ -695,7 +695,7 @@ ACE_OS::mktemp (char *s)
   return ::mktemp (s);
 }
 #endif /* !ACE_LACKS_MKTEMP */
-#endif /* !ACE_HAS_UNICODE_ONLY */
+#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
@@ -746,7 +746,7 @@ ACE_OS::isatty (ACE_HANDLE handle)
 #endif /* ACE_HAS_WINCE */
 }
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::mkfifo (const char *file, mode_t mode)
 {
@@ -756,7 +756,7 @@ ACE_OS::mkfifo (const char *file, mode_t mode)
   // ACE_TRACE ("ACE_OS::mkfifo");
   ACE_NOTSUP_RETURN (-1);
 }
-#endif /* ACE_HAS_UNICODE_ONLY */
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
@@ -934,7 +934,7 @@ ACE_OS::rand (void)
   ACE_OSCALL_RETURN (::rand (), int, -1);
 }
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::unlink (const char *path)
 {
@@ -967,8 +967,6 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
 #endif /* WIN32 */
 #endif /* VXWORKS */
 }
-#endif /* !ACE_HAS_UNICODE_ONLY */
-
 
 ACE_INLINE int
 ACE_OS::shm_unlink (const char *path)
@@ -981,7 +979,7 @@ ACE_OS::shm_unlink (const char *path)
   return ACE_OS::unlink (path);
 #endif /* ! ACE_HAS_SHM_OPEN */
 }
-
+#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE LPTSTR
 ACE_OS::cuserid (LPTSTR user, size_t maxlen)
@@ -7085,7 +7083,7 @@ ACE_OS::open (const char *filename,
 #endif /* ACE_WIN32 */
 }
 
-
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE ACE_HANDLE
 ACE_OS::shm_open (const char *filename,
                   int mode,
@@ -7101,7 +7099,7 @@ ACE_OS::shm_open (const char *filename,
   return ACE_OS::open (filename, mode, perms, sa);
 #endif /* ! ACE_HAS_SHM_OPEN */
 }
-
+#endif /* ! ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
@@ -7113,23 +7111,16 @@ ACE_OS::difftime (time_t t1, time_t t0)
 #endif /* ACE_DIFFTIME */
 }
 
-
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE char *
 ACE_OS::ctime (const time_t *t)
 {
   // ACE_TRACE ("ACE_OS::ctime");
-#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_HAS_BROKEN_CTIME)
   ACE_OSCALL_RETURN (::asctime (::localtime (t)), char *, 0);
 #else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
 #endif    /* ACE_HAS_BROKEN_CTIME) */
-#else /* ACE_HAS_WINCE */
-  // @@ Okey, this shouldn't be too hard to implement it using
-  //    Win32 API.  Or, is it?
-  ACE_UNUSED_ARG (t);
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE char *
@@ -7156,20 +7147,15 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 # endif /* ACE_CTIME_R_RETURNS_INT */
 
 #endif /* defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) */
-#elif !defined (ACE_HAS_WINCE)
+#else
   char *result;
   ACE_OSCALL (::ctime (t), char *, 0, result);
   if (result != 0)
     ::strncpy (buf, result, buflen);
   return buf;
-#else
-  // @@ Again, WinCE doesn't have ctime.  Need to emulate it.
-  ACE_UNUSED_ARG (t);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (buflen);
-  ACE_NOTSUP_RETURN (0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
+#endif /* !ACE_HAS_WINCE */
 
 ACE_INLINE struct tm *
 ACE_OS::localtime (const time_t *t)
@@ -8040,7 +8026,7 @@ ACE_OS::sigaction (int signum,
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE char *
 ACE_OS::getcwd (char *buf, size_t size)
 {
@@ -8051,7 +8037,7 @@ ACE_OS::getcwd (char *buf, size_t size)
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
 #endif /* ACE_WIN32 */
 }
-#endif /* !ACE_HAS_UNICODE_ONLY */
+#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::sleep (u_int seconds)
@@ -8149,7 +8135,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
 #endif /* ACE_HAS_CLOCK_GETTIME */
 }
 
-#if !defined (ACE_HAS_UNICODE_ONLY)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::mkdir (const char *path, mode_t mode)
 {
@@ -8164,7 +8150,7 @@ ACE_OS::mkdir (const char *path, mode_t mode)
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif /* VXWORKS */
 }
-#endif /* ACE_HAS_UNICODE_ONLY */
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE char *
 ACE_OS::getenv (const char *symbol)

@@ -83,7 +83,7 @@ ACE_Log_Record::pid (long p)
   this->pid_ = p;
 }
 
-inline char *
+inline ASYS_TCHAR *
 ACE_Log_Record::msg_data (void)
 {
   ACE_TRACE ("ACE_Log_Record::msg_data");
