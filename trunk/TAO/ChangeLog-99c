@@ -24,7 +24,7 @@ Fri Oct 15 17:47:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/qt_resource.i: The default resources that needs to be
 	  initialised by the application programmer  who intends to use
 	  the QtReactor. Thanks to Hamish Friedlander <ullexco@wave.co.nz>
-	  for donating this TAO. 
+	  for donating this TAO.
 
 	  An application that uses QtReactor is yet to be written. That
 	  should be available in the next couple of days.
