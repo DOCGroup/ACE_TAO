@@ -1452,6 +1452,12 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   countdown.update ();
 #endif /* ACE_MT_SAFE */
 
+  return this->handle_events_i (max_wait_time);
+}
+
+int 
+ACE_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
+{
   int result;
 
   ACE_SEH_TRY {
@@ -1463,7 +1469,7 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 
     result = this->dispatch (number_of_active_handles, dispatch_set);
   }
-  ACE_SEH_EXCEPT (this->release_mutex (this->token_)) {
+  ACE_SEH_EXCEPT (this->release_token ()) {
     // As it stands now, we catch and then rethrow all Win32
     // structured exceptions so that we can make sure to release the
     // <token_> lock correctly.

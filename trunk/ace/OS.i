@@ -6,6 +6,10 @@
 #define ACE_INLINE
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
+// Don't put this in the class since it will expand the size!  Also,
+// can't make this an enum due to compiler bugs on some platforms...
+static const long ONE_SECOND = 1000000L;
+
 #if !defined (ACE_HAS_STRERROR)
 #if defined (ACE_HAS_SYS_ERRLIST)
 extern char *sys_errlist[];
@@ -186,10 +190,6 @@ extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
 #define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
 #define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
 #endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
-
-// Don't put this in the class since it will expand the size!  Also,
-// can't make this an enum due to compiler bugs on some platforms...
-static const long ONE_SECOND = 1000000L;
 
 // Initializes the ACE_Time_Value object.
 
