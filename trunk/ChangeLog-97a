@@ -1,3 +1,9 @@
+Mon May 26 14:19:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* ace/OS.{h,i}: Fixed difftime implementation for cases where
+	  systems implement it as a macro.  Fixed tempnam by adding
+	  ACE_LACKS_TEMPNAM.
+
 Sun May 25 11:36:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/Reactor/Misc: Removed test_handle_set.cpp since it 
