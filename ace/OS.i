@@ -520,9 +520,10 @@ extern "C" char *mktemp (char *);
 #   include /**/ <ctype.h>
 # endif /* UNIXWARE */
 
-// Adapt the weird threading and synchronization routines (which don't
-// return -1 normally) so that they return -1 and work correctly with
-// the ACE_OSCALL macros.
+// Adapt the weird threading and synchronization routines (which
+// return errno rather than -1) so that they return -1 and set errno.
+// This is more consistent with the rest of ACE_OS and enables use to
+// use the ACE_OSCALL* macros.
 # if defined (VXWORKS)
 #   define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? (errno = RESULT, -1) : 0)
 # else
