@@ -7100,6 +7100,8 @@ DEP_CPP_SERVICE=\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
@@ -13837,6 +13839,8 @@ DEP_CPP_WFMO_=\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\
@@ -18316,6 +18320,8 @@ DEP_CPP_SERVICE=\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
@@ -24628,6 +24634,8 @@ DEP_CPP_WFMO_=\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Timer_Heap.h"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Heap_T.h"\

@@ -85,6 +85,9 @@ public:
   // the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it
   // will contain the address of the connected peer.
 
+  int reset_new_handle (ACE_HANDLE handle);
+  // Resets any event associations on this handle
+
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
   typedef ACE_SOCK_Stream PEER_STREAM;
