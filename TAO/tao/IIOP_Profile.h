@@ -23,6 +23,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/IIOP_Endpoint.h"
 
 
@@ -68,58 +69,16 @@ public:
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_IIOP_Profile (void);
 
-  /// Initialize this object using the given input string.
-  /// Url-style string contain only one endpoint.
-  virtual void parse_string (const char *string
-                             ACE_ENV_ARG_DECL);
-
-  /**
-   * Return a string representation for this profile.
-   * client must deallocate memory.
-   * This is used to create url-style reference.  Only one
-   * endpoint is included into the string.
-   */
+  /// Template methods. Please see Profile.h for documentation.
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Initialize this object using the given CDR octet string.
-  virtual int decode (TAO_InputCDR& cdr);
-
-  /// Encode this profile in a stream, i.e. marshal it.
-  virtual int encode (TAO_OutputCDR &stream) const;
-
-  /**
-   * Encodes this profile's endpoints into a tagged component.
-   * This is done only if RTCORBA is enabled, since currently this is
-   * the only case when we have more than one endpoint per profile.
-   * Returns 0 on success and -1 on failure.
-   *
-   * Endpoints are transmitted using TAO-proprietory tagged component.
-   * Component tag is TAO_TAG_ENDPOINTS and component data is an
-   * encapsulation of a sequence of structs, each representing a
-   * single endpoint.  Data format is specified in iiop_endpoins.pidl.
-   *
-   * Multiple TAG_ALTERNATE_IIOP_ADDRESS components can be used
-   * instead of a single proprietory component to transmit multiple
-   * endpoints.  This is somewhat slower and less convenient.  Also,
-   * TAG_ALTERNATE_IIOP_ADDRESS does not provide for transmission of
-   * endpoint priorities.
-   *
-   */
   virtual int encode_endpoints (void);
-
-  /// @@ deprecated. return a reference to the Object Key.
   virtual const TAO::ObjectKey &object_key (void) const;
-
-  /// Return a pointer to the Object Key.  The caller owns the memory
-  /// allocated for the returned key.
   virtual TAO::ObjectKey *_key (void) const;
-
-  /// Return pointer to the head of this profile's endpoints list.
   virtual TAO_Endpoint *endpoint (void);
-
-  /// Return how many endpoints this profile contains.
   virtual size_t endpoint_count (void);
-
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
+  virtual CORBA::ULong hash (CORBA::ULong max
+                             ACE_ENV_ARG_DECL);
   /**
    * Add <endp> to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
@@ -127,30 +86,14 @@ public:
    */
   void add_endpoint (TAO_IIOP_Endpoint *endp);
 
-  /**
-   * Return true if this profile is equivalent to other_profile.  Two
-   * profiles are equivalent iff their tag, object_key, version and
-   * all endpoints are the same.
-   */
-  virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
+protected:
 
-  /// Return a hash value for this object.
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL);
-
-private:
-
-  /// Creates an encapsulation of the ProfileBody struct in the <cdr>
+  /// Template methods. Please see Profile.h for the documentation.
+  virtual int decode_profile (TAO_InputCDR &cdr);
+  virtual int decode_endpoints (void);
+  virtual void parse_string_i (const char *string
+                               ACE_ENV_ARG_DECL);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
-
-  /**
-   * Helper for <decode>.  Decodes endpoints from a tagged component.
-   * Decode only if RTCORBA is enabled.  Furthermore, we may not find
-   * TAO_TAG_ENDPOINTS component, e.g., if we are talking to nonRT
-   * version of TAO or some other ORB.  This is not an error, and we
-   * must proceed.  Return 0 on success and -1 on failure.
-   */
-  int decode_endpoints (void);
 
 protected:
 

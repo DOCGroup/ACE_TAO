@@ -95,44 +95,11 @@ TAO_UIOP_Profile::endpoint_count (void)
 }
 
 void
-TAO_UIOP_Profile::parse_string (const char *string
+TAO_UIOP_Profile::parse_string_i (const char *string
                                 ACE_ENV_ARG_DECL)
 {
-  if (!string || !*string)
-    {
-      ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
-    }
-
-  // Remove the "N.n@" version prefix, if it exists, and verify the
-  // version is one that we accept.
-
-  // Check for version
-  if (isdigit (string [0]) &&
-      string[1] == '.' &&
-      isdigit (string [2]) &&
-      string[3] == '@')
-    {
-      // @@ This may fail for non-ascii character sets [but take that
-      // with a grain of salt]
-      this->version_.set_version ((char) (string [0] - '0'),
-                                  (char) (string [2] - '0'));
-      string += 4;
-      // Skip over the "N.n@"
-    }
-
-  if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
-      this->version_.minor  > TAO_DEF_GIOP_MINOR)
-    {
-      ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
-    }
+  // Skip over the "N.n@"
+  string += 4;
 
   // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
@@ -277,37 +244,9 @@ TAO_UIOP_Profile::prefix (void)
   return ::prefix_;
 }
 
-// return codes:
-// -1 -> error
-//  0 -> can't understand this version
-//  1 -> success.
 int
-TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
+TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
-  CORBA::ULong encap_len = cdr.length ();
-
-  // Read and verify major, minor versions, ignoring UIOP
-  // profiles whose versions we don't understand.
-  // FIXME:  Version question again,  what do we do about them for this
-  //         protocol?
-  CORBA::Octet major, minor;
-
-  if (!(cdr.read_octet (major)
-        && (major == TAO_DEF_GIOP_MAJOR)
-        && cdr.read_octet (minor)))
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "detected new v%d.%d UIOP profile\n",
-                major,
-                minor));
-    return -1;
-  }
-
-  this->version_.major = major;
-
-  if (minor <= TAO_DEF_GIOP_MINOR)
-    this->version_.minor = minor;
-
   char *rendezvous = 0;
 
   // Get rendezvous_point
@@ -335,63 +274,6 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
 
   // Clean up
   delete [] rendezvous;
-
-  // ... and object key.
-
-  if ((cdr >> this->object_key_) == 0)
-    return -1;
-
-  if (this->version_.major > 1
-      || this->version_.minor > 0)
-    if (this->tagged_components_.decode (cdr) == 0)
-      return -1;
-
-  if (cdr.length () != 0 && TAO_debug_level)
-    {
-      // If there is extra data in the profile we are supposed to
-      // ignore it, but print a warning just in case...
-      ACE_DEBUG ((LM_DEBUG,
-                  "%d bytes out of %d left after UIOP profile data\n",
-                  cdr.length (),
-                  encap_len));
-    }
-
-  // Decode any additional endpoints per profile.  (At the present,
-  // only RTCORBA takes advantage of this feature.)
-  if (this->decode_endpoints () == -1)
-    return -1;
-
-  if (cdr.good_bit ())
-    return 1;
-
-  return -1;
-}
-
-int
-TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
-{
-  // UNSIGNED LONG, tag for this protocol profile;
-  // @@ it seems like this is not a good separation of concerns, why
-  // do we write the TAG here? That's generic code and should be
-  // handled by the object reference writer (IMHO).
-  stream.write_ulong (TAO_TAG_UIOP_PROFILE);
-
-  // Create the encapsulation....
-  TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
-                       TAO_ENCAP_BYTE_ORDER,
-                       this->orb_core ()->output_cdr_buffer_allocator (),
-                       this->orb_core ()->output_cdr_dblock_allocator (),
-                       this->orb_core ()->output_cdr_msgblock_allocator (),
-                       this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
-                       TAO_DEF_GIOP_MAJOR,
-                       TAO_DEF_GIOP_MINOR);
-
-  // Create the profile body
-  this->create_profile_body (encap);
-
-  // write the encapsulation as an octet sequence...
-  stream << CORBA::ULong (encap.total_length ());
-  stream.write_octet_array_mb (encap.begin ());
 
   return 1;
 }

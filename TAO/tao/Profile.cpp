@@ -102,6 +102,84 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
   this->tagged_components_.set_component (component);
 }
 
+int
+TAO_Profile::encode (TAO_OutputCDR &stream) const
+{
+  // UNSIGNED LONG, protocol tag
+  stream.write_ulong (this->tag_);
+
+  // Create the encapsulation....
+  TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
+                       TAO_ENCAP_BYTE_ORDER,
+                       this->orb_core ()->output_cdr_buffer_allocator (),
+                       this->orb_core ()->output_cdr_dblock_allocator (),
+                       this->orb_core ()->output_cdr_msgblock_allocator (),
+                       this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                       TAO_DEF_GIOP_MAJOR,
+                       TAO_DEF_GIOP_MINOR);
+
+  // Create the profile body
+  this->create_profile_body (encap);
+
+  // write the encapsulation as an octet sequence...
+
+  stream << CORBA::ULong (encap.total_length ());
+  stream.write_octet_array_mb (encap.begin ());
+
+  return 1;
+}
+
+int
+TAO_Profile::decode (TAO_InputCDR& cdr)
+{
+  CORBA::ULong encap_len = cdr.length ();
+
+  // Read and verify major, minor versions, ignoring profiles
+  // whose versions we don't understand.
+  if (!(cdr.read_octet (this->version_.major)
+        && this->version_.major == TAO_DEF_GIOP_MAJOR
+        && cdr.read_octet (this->version_.minor)
+        && this->version_.minor <= TAO_DEF_GIOP_MINOR))
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - Profile::decode - v%d.%d\n"),
+                    this->version_.major,
+                    this->version_.minor));
+      return -1;
+    }
+
+  // Transport specific details
+  if (this->decode_profile (cdr) < 0)
+    return -1;
+
+  // ... and object key.
+  if ((cdr >> this->object_key_) == 0)
+    return -1;
+
+  // Tagged Components *only* exist after version 1.0!
+  // For GIOP 1.2, IIOP and GIOP have same version numbers!
+  if (this->version_.major > 1
+      || this->version_.minor > 0)
+    if (this->tagged_components_.decode (cdr) == 0)
+      return -1;
+
+  if (cdr.length () != 0 && TAO_debug_level)
+    // If there is extra data in the profile we are supposed to
+    // ignore it, but print a warning just in case...
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("%d bytes out of %d left after profile data\n"),
+                cdr.length (),
+                encap_len));
+
+  // Decode any additional endpoints per profile.  (At the present,
+  // only RTCORBA takes advantage of this feature.)
+  if (this->decode_endpoints () == -1)
+    return -1;
+
+  return 1;
+}
+
 IOP::TaggedProfile *
 TAO_Profile::create_tagged_profile (void)
 {
@@ -483,6 +561,54 @@ TAO_Profile::addressing_mode (CORBA::Short addr
     }
 }
 
+void
+TAO_Profile::parse_string (const char *ior
+                           ACE_ENV_ARG_DECL)
+{
+  if (!ior || !*ior)
+    {
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA::SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
+
+  // Remove the "N.n@" version prefix, if it exists, and verify the
+  // version is one that we accept.
+
+  // Check for version
+  if (isdigit (ior [0]) &&
+      ior[1] == '.' &&
+      isdigit (ior [2]) &&
+      ior[3] == '@')
+    {
+      // @@ This may fail for non-ascii character sets [but take that
+      // with a grain of salt]
+      this->version_.set_version ((char) (ior[0] - '0'),
+                                  (char) (ior[2] - '0'));
+      ior += 4;
+      // Skip over the "N.n@"
+    }
+  else
+    {
+      // CORBA spec requires 1.0 if a version isn't specified.
+      this->version_.set_version (1, 0);
+    }
+
+  if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
+      this->version_.minor >  TAO_DEF_GIOP_MINOR)
+    {
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA::SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
+
+  this->parse_string_i (ior
+                        ACE_ENV_ARG_PARAMETER);
+}
 
 // ****************************************************************
 
@@ -514,6 +640,13 @@ TAO_Unknown_Profile::parse_string (const char *
   // @@ THROW something????
 }
 
+void
+TAO_Unknown_Profile::parse_string_i (const char *
+                                     ACE_ENV_ARG_DECL_NOT_USED)
+{
+  // @@ THROW something????
+}
+
 char
 TAO_Unknown_Profile::object_key_delimiter (void) const
 {
@@ -532,6 +665,18 @@ TAO_Unknown_Profile::decode (TAO_InputCDR& cdr)
 {
   if ((cdr >> this->body_) == 0)
     return -1;
+  return 0;
+}
+
+int
+TAO_Unknown_Profile::decode_profile (TAO_InputCDR &)
+{
+  return 0;
+}
+
+int
+TAO_Unknown_Profile::decode_endpoints (void)
+{
   return 0;
 }
 

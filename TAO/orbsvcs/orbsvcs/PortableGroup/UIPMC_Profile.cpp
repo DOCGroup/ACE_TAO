@@ -105,80 +105,44 @@ TAO_UIPMC_Profile::~TAO_UIPMC_Profile (void)
 {
 }
 
-// return codes:
-// -1 -> error
-//  0 -> can't understand this version
-//  1 -> success.
-
 int
-TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
+TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
 {
-  CORBA::ULong encap_len = cdr.length ();
-
-  // Read and verify major, minor versions, ignoring UIPMC profiles
-  // whose versions we don't understand.
-  CORBA::Octet major = 0, minor = 0;
-
-  if (!(cdr.read_octet (major)
-        && major == TAO_DEF_MIOP_MAJOR
-        && cdr.read_octet (minor)))
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - v%d.%d\n"),
-                    major,
-                    minor));
-      return -1;
-    }
-
-  this->version_.major = major;
-
-  if (minor <= TAO_DEF_MIOP_MINOR)
-    this->version_.minor = minor;
-
-  // Decode the endpoint.
+  CORBA::UShort port = 0;
   ACE_CString address;
-  CORBA::UShort port;
-
   if (!(cdr.read_string (address)
         && cdr.read_ushort (port)))
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - Couldn't unmarshal address and port!\n")));
+                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - ")
+                    ACE_TEXT ("Couldn't unmarshal address and port!\n")));
       return -1;
     }
-
-  if (this->tagged_components_.decode (cdr) == 0)
-    return -1;
-
-  if (cdr.length () != 0 && TAO_debug_level)
-    // If there is extra data in the profile we are supposed to
-    // ignore it, but print a warning just in case...
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%d bytes out of %d left after UIPMC profile data\n"),
-                cdr.length (),
-                encap_len));
 
   if (cdr.good_bit ())
     {
       // If everything was successful, update the endpoint's address
       // and port with the new data.
-
       ACE_INET_Addr addr (port, address.c_str ());
-
       this->endpoint_.object_addr (addr);
-
       return 1;
     }
 
   return -1;
 }
 
-
 void
 TAO_UIPMC_Profile::parse_string (const char *string
                                  ACE_ENV_ARG_DECL)
+{
+  this->parse_string_i (string
+                        ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_UIPMC_Profile::parse_string_i (const char *string
+                                   ACE_ENV_ARG_DECL)
 {
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
@@ -462,28 +426,6 @@ TAO_UIPMC_Profile::prefix (void)
 {
   return ::prefix_;
 }
-
-int
-TAO_UIPMC_Profile::encode (TAO_OutputCDR &stream) const
-{
-  // UNSIGNED LONG, protocol tag
-  stream.write_ulong (this->tag ());
-
-  // Create the encapsulation....
-  TAO_OutputCDR encap;
-
-
-  // Create the profile body
-  this->create_profile_body (encap);
-
-  // write the encapsulation as an octet sequence...
-
-  stream << CORBA::ULong (encap.total_length ());
-  stream.write_octet_array_mb (encap.begin ());
-
-  return 1;
-}
-
 
 IOP::TaggedProfile &
 TAO_UIPMC_Profile::create_tagged_profile (void)

@@ -1,3 +1,30 @@
+Sat Apr 12 22:42:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Profile.cpp:
+	* tao/Profile.h: 
+	* tao/IIOP_Profile.cpp:
+	* tao/IIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/UIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h: Removed a bunch
+	  of duplicated code in encode (), decode (), parse_string ().
+	  New methods by name encode_profiles (), decode_profiles (),
+	  parse_string_i () have been added to do protocol specific
+	  stuff. 
+
+	  Rearranged the documentation for the Profiles classes. We had
+	  the same documentation repeated, and that too inconsistently
+	  across all the profiles. Fixed them across the board. 
+
+	  Looks like we have atleast 2 other protocols based on
+	  TCP/IP. The next step is going to change the inheritance
+	  hierarchy so that they could share all their code.
+
 Sat Apr 12 22:33:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Notify/Test_Filter/Makefile:
