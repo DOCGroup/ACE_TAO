@@ -1,3 +1,9 @@
+Fri Feb 14 21:12:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+
+	  Changed a misapplied static_cast to const_cast.
+
 Fri Feb 14 18:27:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
