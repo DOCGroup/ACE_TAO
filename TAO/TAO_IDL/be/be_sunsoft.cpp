@@ -167,7 +167,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("%d", ev->u.oval);
           break;
         case AST_Expression::EV_bool:
-          this->TAO_OutStream::print ("%ld", ev->u.bval);
+          this->TAO_OutStream::print ("%s", ev->u.bval ? "true" : "false");
           break;
         case AST_Expression::EV_string:
           this->TAO_OutStream::print ("\"%s\"", ev->u.strval->get_string ());
