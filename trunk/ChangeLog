@@ -1,3 +1,10 @@
+Thu Dec 27 11:39:48 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp: Changed ACE_TEXT to
+          ACE_TEXT_ALWAYS_CHAR for the file names passed to ACE_SSL_Context.
+          The underlying SSL calls want a char *, so it appears pointless
+          to change ACE_SSL_Context to accept wide chars.
+
 Thu Dec 27 09:38:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_timeout.cpp: 

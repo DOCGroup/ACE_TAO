@@ -301,8 +301,8 @@ main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_SSL_Test"));
 
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
-  context->certificate (ACE_TEXT ("dummy.pem"), SSL_FILETYPE_PEM);
-  context->private_key (ACE_TEXT ("key.pem"), SSL_FILETYPE_PEM);
+  context->certificate (ACE_TEXT_ALWAYS_CHAR ("dummy.pem"), SSL_FILETYPE_PEM);
+  context->private_key (ACE_TEXT_ALWAYS_CHAR ("key.pem"), SSL_FILETYPE_PEM);
 
   parse_arg (argc, argv);
 
