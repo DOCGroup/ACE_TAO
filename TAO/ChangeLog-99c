@@ -1,3 +1,24 @@
+Thu Jun 17 10:48:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/default_server.cpp:
+	* tao/CDR_Interpreter.cpp:
+	* tao/Operation_Table.cpp:
+	* tao/ORB.cpp:
+	* tao/Stub.cpp:
+	* tao/Typecode.cpp:
+	* tao/ValueBase.cpp:
+	* tao/GIOP.cpp:
+	* tao/Resource_Factory.cpp:
+	* tao/Transport_mux_Strategy.cpp:
+	* tao/Context.cpp:
+	* tao/Messaging_Policy_i.cpp:
+	* tao/Pluggable.cpp:
+	* tao/Protocol_Factory.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/UIOP_Factory.cpp:
+	* tao/UIOP_Connect.cpp:
+	  Removed unused arg warnings from AIX 4.3 w/ egcs 1.1.2.
+
 Thu Jun 17 10:05:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* */run_test.pl:
