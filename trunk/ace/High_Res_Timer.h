@@ -89,10 +89,10 @@ public:
   void reset (void);
   // Reinitialize the timer.
 
-  void start (void);
+  void start (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
   // Start timing.
 
-  void stop (void);
+  void stop (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
   // Stop timing.
 
   void elapsed_time (ACE_Time_Value &tv);
@@ -109,10 +109,10 @@ public:
   void elapsed_microseconds (ACE_hrtime_t &usecs) const;
   // Sets <usecs> to the elapsed (stop - start) time in microseconds.
 
-  void start_incr (void);
+  void start_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
   // Start incremental timing.
 
-  void stop_incr (void);
+  void stop_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
   // Stop incremental timing.
 
   void elapsed_time_incr (ACE_Time_Value &tv);
@@ -141,7 +141,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  static ACE_Time_Value gettimeofday (void);
+  static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
+                                        ACE_OS::ACE_HRTIMER_GETTIME);
   // THIS FUNCTION IS DEPRECATED.  PLEASE USE ACE_OS::gettimeofday ()
   // INSTEAD!
   // Calls ACE_High_Res_Timer::hrtime_to_tv passing ACE_OS::gethrtime.
@@ -168,7 +169,8 @@ private:
                             ACE_hrtime_t hrt);
   // Converts an <hrt> to <tv> using global_scale_factor_.
 
-  static ACE_hrtime_t gettime ();
+  static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
+                                 ACE_OS::ACE_HRTIMER_GETTIME);
   // For internal use:  gets the high-resolution time using
   // ACE_OS::gethrtime ().  Except on platforms that require
   // that the global_scale_factor_ be set, such as ACE_WIN32,

@@ -40,12 +40,12 @@
 #define ACE_CORBA_2(TYPE, NAME) CORBA_##TYPE##_##NAME
 #define ACE_CORBA_3(TYPE, NAME) CORBA_##TYPE::NAME
 #define ACE_NESTED_CLASS(TYPE, NAME) NAME
-#else
+#else  /* ! ACE_HAS_BROKEN_NAMESPACES */
 #define ACE_CORBA_1(NAME) CORBA::NAME
 #define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
 #define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
 #define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
-#endif /* ACE_WIN32 */
+#endif /* ! ACE_HAS_BROKEN_NAMESPACES */
 
 // Define some helpful macros.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
@@ -2980,6 +2980,7 @@ unsigned long inet_network(const char *);
 #include /**/ <sys/signal.h>
 #include /**/ <sys/wait.h>
 #include /**/ <pwd.h>
+#include /**/ <timer/chBench.h>
 extern_C int      getgid          __((void));
 extern_C int      getuid          __((void));
 extern_C char*    getcwd          __((char* buf, size_t size));
@@ -3935,6 +3936,21 @@ class ACE_Export ACE_OS
 
 public:
 
+  enum ACE_HRTimer_Op
+    {
+#if defined (CHORUS)
+      ACE_HRTIMER_START = K_BSTART,
+      ACE_HRTIMER_INCR = K_BPOINT,
+      ACE_HRTIMER_STOP = K_BSTOP,
+      ACE_HRTIMER_GETTIME = 0xFFFF
+#else  /* ! CHORUS */
+      ACE_HRTIMER_START = 0x0,  // Only use these if you can stand
+      ACE_HRTIMER_INCR = 0x1,   // for interrupts to be disabled during
+      ACE_HRTIMER_STOP = 0x2    // the timed interval!!!!
+      ACE_HRTIMER_GETTIME = 0xFFFF
+#endif /* ! CHORUS */
+    };
+
   class ace_flock_t
   {
     // = TITLE
@@ -4129,7 +4145,7 @@ public:
                        u_int interval = 0);
   static u_int ualarm (const ACE_Time_Value &tv,
                        const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
-  static ACE_hrtime_t gethrtime (void);
+  static ACE_hrtime_t gethrtime (const ACE_HRTimer_Op = ACE_HRTIMER_GETTIME);
 #if defined (ACE_HAS_POWERPC) && defined (ghs)
   static void readPPCTimeBase (u_long &most,
                                u_long &least);

@@ -7794,12 +7794,14 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 }
 
 ACE_INLINE ACE_hrtime_t
-ACE_OS::gethrtime (void)
+ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 {
   // ACE_TRACE ("ACE_OS::gethrtime");
 #if defined (ACE_HAS_HI_RES_TIMER)
+  ACE_UNUSED_ARG (op);
   return ::gethrtime ();
 #elif defined (ACE_HAS_AIX_HI_RES_TIMER)
+  ACE_UNUSED_ARG (op);
   timebasestruct_t tb;
 
   ::read_real_time(&tb, TIMEBASE_SZ);
@@ -7841,8 +7843,9 @@ ACE_OS::gethrtime (void)
   // pointing us to intel's RDTSC instruction.  See
   // http://www.sandpile.org/80x86/rdtsc.shtml for a description of
   // the RDTSC instruction.  Or see Frank van Gilluwe's "The
-  // Undocumented PC" published by Adisson Wesley Developers Press.
+  // Undocumented PC" published by Addison Wesley Developers Press.
 
+  ACE_UNUSED_ARG (op);
   unsigned long least;
   unsigned long most;
 
@@ -7857,9 +7860,42 @@ ACE_OS::gethrtime (void)
       }
 
   return ACE_MAKE_QWORD (least, most);
+#elif defined (CHORUS)
+  if (op == ACE_OS::ACE_HRTIMER_GETTIME)
+    {
+      struct timespec ts;
+
+      ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
+
+      // Carefully create the return value to avoid arithmetic overflow
+      // if ACE_hrtime_t is ACE_U_LongLong.
+      ACE_hrtime_t now = ts.tv_sec;
+      now *= (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS;
+      now += ts.tv_nsec;
+
+      return now;
+    }
+  else
+    {
+      // Use the sysBench timer on Chorus.  On MVME177, at least, it only
+      // has 32 bits.  Be careful, because using it disables interrupts!
+      ACE_UINT32 now;
+      if (::sysBench (op, (int *) &now) == K_OK)
+        {
+          now *= 1000u /* nanoseconds/microsecond */;
+          return (ACE_hrtime_t) now;
+        }
+      else
+        {
+          // Something went wrong.  Just return 0.
+          return (ACE_hrtime_t) 0;
+        }
+    }
+
 #elif defined (ACE_HAS_POWERPC) && defined (ghs)
   // PowerPC w/ GreenHills compiler on VxWorks
 
+  ACE_UNUSED_ARG (op);
   u_long most;
   u_long least;
   ACE_OS::readPPCTimeBase (most, least);
@@ -7867,6 +7903,7 @@ ACE_OS::gethrtime (void)
 
 #elif defined (ACE_HAS_CLOCK_GETTIME) || defined (ACE_PSOS)
   // e.g., VxWorks (besides POWERPC && GreenHills) . . .
+  ACE_UNUSED_ARG (op);
   struct timespec ts;
 
   ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
@@ -7879,6 +7916,7 @@ ACE_OS::gethrtime (void)
 
   return now;
 #else
+  ACE_UNUSED_ARG (op);
   const ACE_Time_Value now = ACE_OS::gettimeofday ();
   return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
 #endif /* ACE_HAS_HI_RES_TIMER */
