@@ -1,6 +1,7 @@
 Tue Dec 30 10:11:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Event/Mcast/Simple/supplier.cpp:
+	* orbsvcs/tests/Event/Mcast/Complex/supplier.cpp:
 
 	  #included ace/Log_Msg.h
 
