@@ -1,3 +1,8 @@
+Wed Jun  9 21:13:00 1999  Chris Gill <cdgill@cs.wustl.edu>
+
+        * examples/Simulator/DOVEMIB/clnt.h: moved CORBA::ORB_var
+          member declaration first in the class.
+
 Wed Jun  9 20:16:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Started the work on GIOP 1.1, the current version is still
