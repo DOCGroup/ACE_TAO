@@ -4,7 +4,7 @@
 #include "ace/ACE.h"
 #include "ace/Synch.h"
 
-#include "ace_Cache_Manager.h"
+#include "ace/Cache_Manager.h"
 
 ACE_RCSID(ace, Cache_Manager, "$Id$")
 

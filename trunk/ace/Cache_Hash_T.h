@@ -10,7 +10,7 @@
 #include "ace/OS.h"
 
 // @@ James, I think that this #include is wrong...
-#include "ace_Cache_Object.h"
+#include "ace/Cache_Object.h"
 
 // Forward declaration
 template <class EXT_ID, class INT_ID, class EQ_FUNC>
@@ -68,7 +68,7 @@ private:
 // stuff as well... (see other template files to see how this works).
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace_Cache_Hash_T.cpp"
+#include "ace/Cache_Hash_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_CACHE_HASH_T_H */

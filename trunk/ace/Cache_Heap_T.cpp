@@ -3,8 +3,8 @@
 #ifndef ACE_CACHE_HEAP_T_CPP
 #define ACE_CACHE_HEAP_T_CPP
 
-#include "ace_Cache_Heap_T.h"
-#include "ace_Cache_Manager_T.h"
+#include "ace/Cache_Heap_T.h"
+#include "ace/Cache_Manager_T.h"
 
 ACE_RCSID(ace, Cache_Heap_T, "$Id$")
 
