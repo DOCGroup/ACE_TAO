@@ -40,6 +40,7 @@ Echo_Client_ORBInitializer::post_init (
 
   info->add_client_request_interceptor (client_interceptor.in ()
                                         TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Transfer ownership to the ORB.
   (void) client_interceptor._retn ();
