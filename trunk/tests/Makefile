@@ -122,6 +122,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
+ifdef purify
+  #### SIGINT is used by Thread_Manager_Test.
+  #### SIGHUP and SIGTERM are used by Signal_Test.
+  PURELINK += -ignore-signals=SIGHUP,SIGINT,SIGTERM
+endif # purify
+
 ifndef SOEXT
   SOEXT=so
 endif

@@ -1,72 +1,82 @@
+Wed Sep 08 16:48:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.gnu (purify): moved
+          -ignore-signals option to tests/Makefile, because that's
+          where it's needed.
+
+        * tests/Makefile (purify): added SIGHUP and SIGTERM to
+          -ignore-signals, to prevent warnings from Signal_Test.
+          [Bug 309]
+
 Wed Sep  8 15:58:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Log_Msg_Test.cpp (test_ostream): Make sure to add 1
-	  to the buffer we allocate dynamically so we can put a NUL at the
- 	  end of it!  Thanks to David Levine for reporting this.
+        * tests/Log_Msg_Test.cpp (test_ostream): Make sure to add 1
+          to the buffer we allocate dynamically so we can put a NUL at the
+          end of it!  Thanks to David Levine for reporting this. [Bug 312]
 
-	* examples/Service_Configurator/Misc/main.cpp (main): Changed the
-	  test of the -f Service Configurator option so that it links two
- 	  different svc.conf files to avoid reentrancy problems.
+        * examples/Service_Configurator/Misc/main.cpp (main): Changed the
+          test of the -f Service Configurator option so that it links two
+          different svc.conf files to avoid reentrancy problems.
 
-	* examples/Service_Configurator/Misc/svc.conf: Revised this
-	  svc.conf file (and the application) to illustrate the use of
- 	  both static *and* dynamic service.  Thanks to Amir Bahmanyari
- 	  <amir@peakstone.com> for motivating this.
+        * examples/Service_Configurator/Misc/svc.conf: Revised this
+          svc.conf file (and the application) to illustrate the use of
+          both static *and* dynamic service.  Thanks to Amir Bahmanyari
+          <amir@peakstone.com> for motivating this.
 
 Wed Sep  8 14:05:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp: Shifted the instantiations to the top to keep
-	  SunCC5.0 debug=0 build happy.
+        * ace/Log_Msg.cpp: Shifted the instantiations to the top to keep
+          SunCC5.0 debug=0 build happy.
 
-	* tests/Cached_Accept_Conn_Test.cpp: Repositioned global
-	  declarations to ward off compilation errors on HP-UX.
-	
+        * tests/Cached_Accept_Conn_Test.cpp: Repositioned global
+          declarations to ward off compilation errors on HP-UX.
+
 Wed Sep  8 13:13:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process.h (ACE_Process): Made the spawn() method virtual
-	  so code can be executed just before and/or after the actual
- 	  fork().  Thanks to Dave Madden for this fix.
+        * ace/Process.h (ACE_Process): Made the spawn() method virtual
+          so code can be executed just before and/or after the actual
+          fork().  Thanks to Dave Madden for this fix.
 
 Tue Sep 07 19:55:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Map_Manager.h (ACE_Map_Manager): The old map manager (the
-	  one before the changes made to support the active map manager)
-	  used to allow deletion of entries from the map during iteration
-	  (note that this feature was accidental since typically changes
-	  to container invalidates the iterators).  The new design did not
-	  support this "feature".  However, some users had come to depend
-	  on this feature.
+        * ace/Map_Manager.h (ACE_Map_Manager): The old map manager (the
+          one before the changes made to support the active map manager)
+          used to allow deletion of entries from the map during iteration
+          (note that this feature was accidental since typically changes
+          to container invalidates the iterators).  The new design did not
+          support this "feature".  However, some users had come to depend
+          on this feature.
 
-	  The solution was to delay the movement of freed slots from the
-	  occupied list to the free list until we run out of free slots in
-	  the free list when binding new entries into the map.  However,
-	  this change requires additional state in each entry that keeps
-	  track of whether this entry has been freed.  Also, the time
-	  required for binding new entries is less predictable since the
-	  bind may require moving of freed slots from the occupied list to
-	  the free list because of the initial lazy unbind.
+          The solution was to delay the movement of freed slots from the
+          occupied list to the free list until we run out of free slots in
+          the free list when binding new entries into the map.  However,
+          this change requires additional state in each entry that keeps
+          track of whether this entry has been freed.  Also, the time
+          required for binding new entries is less predictable since the
+          bind may require moving of freed slots from the occupied list to
+          the free list because of the initial lazy unbind.
 
-	  Changes were also required to the Active_Map_Manager since it
-	  directly depends on the internals of the Map_Manager.
+          Changes were also required to the Active_Map_Manager since it
+          directly depends on the internals of the Map_Manager.
 
-	  Since this lazy feature is not required in the majority of cases
-	  and results in increased memory consumption, this feature is
-	  only support if ACE_HAS_LAZY_MAP_MANAGER is defined.
+          Since this lazy feature is not required in the majority of cases
+          and results in increased memory consumption, this feature is
+          only support if ACE_HAS_LAZY_MAP_MANAGER is defined.
 
-	  A new test Lazy_Map_Manager_Test.cpp was added to check the new
-	  changes.
+          A new test Lazy_Map_Manager_Test.cpp was added to check the new
+          changes.
 
-	  Thanks for Dr. Schmidt for helping with this solution and to
-	  Murphy Ivan <Ivan.Murphy@med.siemens.de> for pointing out this
-	  problem.
+          Thanks for Dr. Schmidt for helping with this solution and to
+          Murphy Ivan <Ivan.Murphy@med.siemens.de> for pointing out this
+          problem.
 
-	  Bug fixed: id 228.
+          Bug fixed: id 228.
 
 Tue Sep  7 15:19:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Log_Msg_Test.cpp (test_ostream): NUL-terminated the buffer
-	  to avoid an array bounds overflow!  Thanks to David Levine for
- 	  reporting this.
+        * tests/Log_Msg_Test.cpp (test_ostream): NUL-terminated the buffer
+          to avoid an array bounds overflow!  Thanks to David Levine for
+          reporting this.
 
 Tue Sep  7 12:38:37 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
