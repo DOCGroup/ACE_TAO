@@ -1,3 +1,10 @@
+Tue Apr  3 13:06:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+
+          Fixed fuzz warnings.
+
 Tue Apr  3 12:23:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp: Fixed a typo in
