@@ -1,3 +1,15 @@
+Wed Jan 06 09:04:46 1999  Carlos O'Ryan  <coryan@JIG>
+
+	* docs/releasenotes/TODO.html: 
+	  Updated the information about EC related tasks.
+
+	* docs/releasenotes/ec.html: 
+	  Added the new features in the EC; removed the entries about a
+	  missing CosEventChannel, because we have one now!
+
+	* docs/releasenotes/index.html: 
+	  Added some comments for Pradeep.
+
 Wed Jan  6 07:44:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/DynStruct_i.cpp: 
