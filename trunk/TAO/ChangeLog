@@ -1,7 +1,21 @@
+Fri Jan 30 16:43:43 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.inl:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.inl:
+        * orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+
+          Integrated two new adaptive load balancing strategies
+          with the TAO Load Balancing Service - Cygnus.
+
+
 Thu Jan 29 18:14:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
-        
+
           When executing validate_included_idl_files() on a non-windows
           platform, the system function realpath() is called. Denny
           Kolb <kolb@g2ss.com> has submitted a version for use on LynxOS,
@@ -10,7 +24,7 @@ Thu Jan 29 18:14:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Jan 29 15:33:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-        
+
           Added missing parenthesis is a block of code compiled only
           when ACE_SWAP_ON_WRITE is defined. This closes [BUGID:1732].
           Thanks to Mouna Seri <seri@crhc.uiuc.edu> for making the
@@ -75,7 +89,7 @@ Thu Jan 29 14:10:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
   	  Thanks to Duane Binder<duane.binder@veritas.com> for providing
 	  patches to fix some of the messages printed out using
-	  ACE_Log_Msg. 
+	  ACE_Log_Msg.
 
 Thu Jan 29 14:03:42 2004  Chad Elliott  <elliott_c@ociweb.com>
 
