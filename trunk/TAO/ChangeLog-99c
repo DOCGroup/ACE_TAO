@@ -1,3 +1,9 @@
+Fri Jun 11 14:33:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/test_dynenum.cpp:
+	  Changed test code to match the change in enum labels
+	  made in the IDL file a while back.
+
 Fri Jun 11 14:17:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/include/be_extern.h:
