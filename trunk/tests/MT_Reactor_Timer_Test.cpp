@@ -29,9 +29,9 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if defined (ACE_HAS_THREADS)
-
 static ACE_Reactor *the_reactor;
+
+#if defined (ACE_HAS_THREADS)
 
 Time_Handler::Time_Handler (void)
 {
