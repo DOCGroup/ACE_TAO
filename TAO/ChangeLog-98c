@@ -1,45 +1,51 @@
+Thu Jun 11 09:39:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
+          changed types of local i, and global num_of_objs, to u_int
+          to avoid signed/unsigned comparisons.
+
 Thu Jun 11 00:14:25 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Connect.cpp (TAO_Server_Connection_Handler): Reordered base
- 	  class / member initialization.
+        * tao/Connect.cpp (TAO_Server_Connection_Handler): Reordered base
+          class / member initialization.
 
 Wed Jun 10 20:00:21 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/POA/Forwarding/*: enhanced the Forwarding test enormously.
+        * tests/POA/Forwarding/*: enhanced the Forwarding test enormously.
 
 Wed Jun 10 19:00:21 1998  Carlos O'Ryan  <coryan@JIG>
 
-	* tao/Sequence.cpp: 
-	  Fixed small bug in octet sequence assignment operator.
+        * tao/Sequence.cpp:
+          Fixed small bug in octet sequence assignment operator.
 
 Wed Jun 10 16:09:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB.cpp: fixed template instantiations: ACE_SYNCH_MUTEX
- 	  instead of ACE_SYNCH_RW_MUTEX.
+          instead of ACE_SYNCH_RW_MUTEX.
 
-	* tao/POAS.h (POA_PortableServer): Added missing TAO_Exports.
+        * tao/POAS.h (POA_PortableServer): Added missing TAO_Exports.
 
-	* tests/POA/DSI: New test directory to show DSI features in TAO.
+        * tests/POA/DSI: New test directory to show DSI features in TAO.
 
-	* tests/POA/TIE: New test directory to show TIE features in TAO.
+        * tests/POA/TIE: New test directory to show TIE features in TAO.
 
 1998-06-10  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.{h,cpp}
-	  Added multiple possesion semantics. CC_Lock.{h,cpp} is
-	  not used anymore.
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.{h,cpp}
+          Added multiple possesion semantics. CC_Lock.{h,cpp} is
+          not used anymore.
 
 Wed Jun 10 14:29:55 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.{h,cpp}:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.{h,cpp}:
 
           Moved included header files from .cpp to .h to
-          fix incomplete types error when compiling files 
+          fix incomplete types error when compiling files
           that include the header file and are using the
           strategized scheduler implementation
 
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h 
-	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h: 
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
+          orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h:
 
           Fixed warning when compiling file that include these
           header files: set all Info_Type values to 0 (Operation).
@@ -47,90 +53,90 @@ Wed Jun 10 14:29:55 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 Wed Jun 10 13:03:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Explicit_Activation/server.cpp,
- 	  tests/POA/Generic_Servant/client.cpp,
- 	  tests/POA/NewPOA/NewPOA.cpp, and tests/POA/RootPOA/RootPOA.cpp:
- 	  Use ACE_DEBUG instead of cout.
+        * tests/POA/Explicit_Activation/server.cpp,
+          tests/POA/Generic_Servant/client.cpp,
+          tests/POA/NewPOA/NewPOA.cpp, and tests/POA/RootPOA/RootPOA.cpp:
+          Use ACE_DEBUG instead of cout.
 
-	* tao/Server_Request.cpp (dsi_marshal): Only marshal if the params
- 	  are valid.
+        * tao/Server_Request.cpp (dsi_marshal): Only marshal if the params
+          are valid.
 
-	* tao/ORB_Core.h: Changed the lock used by
- 	  ACE_Cached_Connect_Strategy from a rw_mutex to a regular mutex.
+        * tao/ORB_Core.h: Changed the lock used by
+          ACE_Cached_Connect_Strategy from a rw_mutex to a regular mutex.
 
-	* tao/ORB.cpp: Changed CORBA::B_TRUE and CORBA::B_FALSE from enums
- 	  to CORBA::Boolean.
+        * tao/ORB.cpp: Changed CORBA::B_TRUE and CORBA::B_FALSE from enums
+          to CORBA::Boolean.
 
-	* tao/{Connect.cpp, ORB.cpp}: Fixed the template instantiations in
- 	  lieu of the changes to Hash_Addr.
+        * tao/{Connect.cpp, ORB.cpp}: Fixed the template instantiations in
+          lieu of the changes to Hash_Addr.
 
-	* tao/Any.h: Added ACE_Export to nested structs.
+        * tao/Any.h: Added ACE_Export to nested structs.
 
 Wed Jun 10 10:28:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	  Added support to automatically create the publication and
-	  subscription lists for the gateways.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Added support to automatically create the publication and
+          subscription lists for the gateways.
 
-	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
-	  Added fields to the QOS structures so gateways can be
-	  distinguished in the EC.
-	  Several field names were inconsistent (some had a trailing _ and
-	  others won't).
+        * orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+          Added fields to the QOS structures so gateways can be
+          distinguished in the EC.
+          Several field names were inconsistent (some had a trailing _ and
+          others won't).
 
-	* orbsvcs/orbsvcs/Event_Utilities.h:
-	* orbsvcs/orbsvcs/Event_Utilities.i:
-	  Adapted to use the changes in the QOS structures.
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.i:
+          Adapted to use the changes in the QOS structures.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
-	  As part of the plan to support UDP and multicast gateways we
-	  have a base class to handle all the different configurations for
-	  a gateway.
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          As part of the plan to support UDP and multicast gateways we
+          have a base class to handle all the different configurations for
+          a gateway.
 
-	* orbsvcs/orbsvcs/Event/Local_ESTypes.h:
-	  Removed a lot of BOAImpl typesdefs, they were completely
-	  outdated and quite ugly.
+        * orbsvcs/orbsvcs/Event/Local_ESTypes.h:
+          Removed a lot of BOAImpl typesdefs, they were completely
+          outdated and quite ugly.
 
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
-	  Added code to call ORB_init() no each thread, but it is
-	  commented out until we know what arguments to pass and how.
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+          Added code to call ORB_init() no each thread, but it is
+          commented out until we know what arguments to pass and how.
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.h:
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
-	  We cannot use enums in the POD_RTInfo because those are hard to
-	  generate correctly.
+        * orbsvcs/orbsvcs/Scheduler_Factory.h:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+          We cannot use enums in the POD_RTInfo because those are hard to
+          generate correctly.
 
-	* orbsvcs/tests/EC_Multiple/svc.conf:
-	  I'm starting to set a more realistic config for the Event
-	  Channel, but we still have a lot of work to do in this area.
+        * orbsvcs/tests/EC_Multiple/svc.conf:
+          I'm starting to set a more realistic config for the Event
+          Channel, but we still have a lot of work to do in this area.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.h:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	  The test uses the automatic gateway connection now.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          The test uses the automatic gateway connection now.
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
-	  The ConsumerQOS and SupplierQOS structure have changed.
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+          The ConsumerQOS and SupplierQOS structure have changed.
 
-	* TAO_IDL/driver/drv_preproc.cpp:
-	  Fixed type in comment.
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Fixed type in comment.
 
 Tue Jun 09 17:27:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Connect.{h,cpp} (activate): Added this method to
-	  Default_Server_Connection_Handler so we can prepare information
- 	  for inheriting some objects/properties from the spawning thread.
-  	  (svc): Inherit and setup some properties/objects from the parent
-	  thread.  Currently, only root poa is inherited in spawned
-	  threads.  I should probably add another method called inherit ()
-	  to handle this.  Anyhow, this solved the thread-per-connection
-	  problem.
+        * tao/Connect.{h,cpp} (activate): Added this method to
+          Default_Server_Connection_Handler so we can prepare information
+          for inheriting some objects/properties from the spawning thread.
+          (svc): Inherit and setup some properties/objects from the parent
+          thread.  Currently, only root poa is inherited in spawned
+          threads.  I should probably add another method called inherit ()
+          to handle this.  Anyhow, this solved the thread-per-connection
+          problem.
 
-	* tao/ORB_Core.cpp (add_to_collocation_table): Removed the
-	  explicit conversion from ACE_INET_Addr to ACE_Hash_Addr since
-	  Irfan fixed ACE_Hash_Addr::operator==.
+        * tao/ORB_Core.cpp (add_to_collocation_table): Removed the
+          explicit conversion from ACE_INET_Addr to ACE_Hash_Addr since
+          Irfan fixed ACE_Hash_Addr::operator==.
 
 Tue Jun 09 16:18:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
