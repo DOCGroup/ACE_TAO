@@ -6,10 +6,6 @@ ACE_RCSID (ace,
            OS_Thread_Adapter,
            "$Id$")
 
-#if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_Thread_Adapter.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
-
 #include "ace/Thread_Hook.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/Global_Macros.h"

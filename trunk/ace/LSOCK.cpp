@@ -9,9 +9,9 @@ ACE_RCSID(ace, LSOCK, "$Id$")
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_socket.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/LSOCK.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK)
 

@@ -5,10 +5,6 @@
 
 ACE_RCSID(ace, Object_Manager_Base, "$Id$")
 
-#if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/Object_Manager_Base.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
-
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_sys_socket.h"

@@ -4,11 +4,11 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
-#include "ace/os_include/netinet/os_tcp.h"
+#include "ace/OS_NS_sys_socket.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/Pipe.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Pipe, "$Id$")
 

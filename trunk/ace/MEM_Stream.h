@@ -139,9 +139,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/MEM_Stream.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 

@@ -983,14 +983,6 @@ ACE_Dev_Poll_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 }
 
 int
-ACE_Dev_Poll_Reactor::set_timer_queue (ACE_Timer_Queue *tq)
-{
-  // @note This method is deprecated.
-
-  return this->timer_queue (tq);
-}
-
-int
 ACE_Dev_Poll_Reactor::timer_queue (ACE_Timer_Queue *tq)
 {
   if (this->delete_timer_queue_ && this->timer_queue_)

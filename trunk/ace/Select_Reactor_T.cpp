@@ -528,13 +528,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue
   return 0;
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_timer_queue
-  (ACE_Timer_Queue *tq)
-{
-  return this->timer_queue (tq);
-}
-
 template <class ACE_SELECT_REACTOR_TOKEN>
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
   (ACE_Sig_Handler *sh,

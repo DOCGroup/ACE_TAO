@@ -102,9 +102,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/UPIPE_Connector.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */
 #include /**/ "ace/post.h"

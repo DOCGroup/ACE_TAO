@@ -127,9 +127,9 @@ private:
   int get_remote_addr (ACE_Addr &) const;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Bcast.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SOCK_DGRAM_BCAST_H */

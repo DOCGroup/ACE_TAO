@@ -4,6 +4,9 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/os_include/os_fcntl.h"
 
 #if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"

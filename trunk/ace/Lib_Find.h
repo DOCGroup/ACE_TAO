@@ -99,9 +99,5 @@ class ACE_Export ACE_Lib_Find
 #endif /* ACE_HAS_WCHAR */
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Lib_Find.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include /**/ "ace/post.h"
 #endif  /* ACE_LIB_FIND_H */

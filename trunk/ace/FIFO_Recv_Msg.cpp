@@ -3,11 +3,11 @@
 
 #include "ace/FIFO_Recv_Msg.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FIFO_Recv_Msg.i"
-#endif
-
 #include "ace/Log_Msg.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/FIFO_Recv_Msg.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FIFO_Recv_Msg, "$Id$")
 

@@ -103,10 +103,6 @@ private:
   ACE_FlReactor &operator = (const ACE_FlReactor &);
 };
 
-#if defined(__ACE_INLINE__)
-#include "ace/FlReactor.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_HAS_FL */
 
 #include /**/ "ace/post.h"

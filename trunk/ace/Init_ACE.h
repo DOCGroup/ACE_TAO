@@ -60,10 +60,6 @@ private:
   static unsigned int init_fini_count_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Init_ACE.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include /**/ "ace/post.h"
 
 #endif  /* ACE_INIT_ACE_H */

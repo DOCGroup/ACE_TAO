@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SOCK_Dgram_Mcast::set_option (int option,
                                   char optval)
 {
@@ -22,7 +22,7 @@ ACE_SOCK_Dgram_Mcast::set_option (int option,
                                      sizeof (optval));
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram_Mcast::send (const void *buf,
                             size_t n,
                             int flags) const
@@ -34,7 +34,7 @@ ACE_SOCK_Dgram_Mcast::send (const void *buf,
                                      flags);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram_Mcast::send (const iovec iov[],
                             int n,
                             int flags) const

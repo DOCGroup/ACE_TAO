@@ -106,10 +106,6 @@ public:
     ACE_Condition<ACE_Recursive_Thread_Mutex> (m) {}
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Condition_Recursive_Thread_Mutex.inl"
-#endif /* __ACE_INLINE__ */
-
 #endif /* !ACE_HAS_THREADS */
 
 #include /**/ "ace/post.h"

@@ -28,7 +28,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
+// Forward declarations.
+class ACE_Time_Value;
 
 /**
  * @class ACE_SOCK_SEQPACK_Connector
@@ -317,9 +318,9 @@ protected:
                              int result);
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/SOCK_SEQPACK_Connector.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

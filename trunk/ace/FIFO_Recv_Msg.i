@@ -5,8 +5,13 @@
 // FIFO_Recv_Msg.i
 
 #include "ace/Min_Max.h"
+#include "ace/OS_NS_stropts.h"
 
-ASYS_INLINE ssize_t
+#if !defined (ACE_HAS_STREAM_PIPES)
+#include "ace/OS_NS_unistd.h"
+#endif
+
+ACE_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
@@ -60,7 +65,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (void *buf, size_t max_len)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
@@ -70,7 +75,7 @@ ACE_FIFO_Recv_Msg::recv (void *buf, size_t max_len)
 }
 
 #if defined (ACE_HAS_STREAM_PIPES)
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
 			 ACE_Str_Buf *cntl,
 			 int *flags)
@@ -85,7 +90,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
     return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (int *band,
 			 ACE_Str_Buf *data,
 			 ACE_Str_Buf *cntl,

@@ -1,9 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// DEV.i
-
-ASYS_INLINE int
+ACE_INLINE int
 ACE_DEV::disable (int signum) const
 {
 #if defined (ACE_WIN32)

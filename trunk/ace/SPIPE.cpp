@@ -1,19 +1,18 @@
-// SPIPE.cpp
 // $Id$
 
 #include "ace/SPIPE.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SPIPE.i"
-#endif
-
 #include "ace/OS_NS_unistd.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/SPIPE.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SPIPE, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE)
 
-// This is the do-nothing constructor. 
+// This is the do-nothing constructor.
 
 ACE_SPIPE::ACE_SPIPE (void)
 {
@@ -28,7 +27,7 @@ ACE_SPIPE::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Close down a ACE_SPIPE. 
+// Close down a ACE_SPIPE.
 
 int
 ACE_SPIPE::get_local_addr (ACE_SPIPE_Addr &local_sap) const

@@ -1,30 +1,29 @@
 /* -*- C++ -*- */
 // $Id$
 
-// MEM_Stream.i
-
 #include "ace/MEM_Stream.h"
+#include "ace/OS_NS_sys_socket.h"
 
-ASYS_INLINE
+ACE_INLINE
 ACE_MEM_Stream::ACE_MEM_Stream (void)
 {
   // ACE_TRACE ("ACE_MEM_Stream::ACE_MEM_Stream");
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_MEM_Stream::ACE_MEM_Stream (ACE_HANDLE h)
 {
   // ACE_TRACE ("ACE_MEM_Stream::ACE_MEM_Stream");
   this->set_handle (h);
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_MEM_Stream::~ACE_MEM_Stream (void)
 {
   // ACE_TRACE ("ACE_MEM_Stream::~ACE_MEM_Stream");
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_MEM_Stream::close_reader (void)
 {
   ACE_TRACE ("ACE_MEM_Stream::close_reader");
@@ -36,7 +35,7 @@ ACE_MEM_Stream::close_reader (void)
 
 // Shut down just the writing end of a ACE_SOCK.
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_MEM_Stream::close_writer (void)
 {
   ACE_TRACE ("ACE_MEM_Stream::close_writer");
@@ -46,33 +45,33 @@ ACE_MEM_Stream::close_writer (void)
     return 0;
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::send_n (const void *buf, int n)
 {
   return this->send (buf, n);
 }
 
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::recv_n (void *buf, int n)
 {
   return this->recv (buf, n);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::send_n (const void *buf, int n, int flags)
 {
   return this->send (buf, n, flags);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::recv_n (void *buf, int n, int flags)
 {
   return this->recv (buf, n, flags);
 }
 
 #if 0
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::recv_n (void *buf,
                          size_t len,
                          int flags,
@@ -86,7 +85,7 @@ ACE_MEM_Stream::recv_n (void *buf,
                       timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::recv_n (void *buf,
                          size_t len,
                          const ACE_Time_Value *timeout) const
@@ -98,7 +97,7 @@ ACE_MEM_Stream::recv_n (void *buf,
                       timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::recvv_n (iovec iov[],
                           size_t n,
                           const ACE_Time_Value *timeout) const
@@ -110,7 +109,7 @@ ACE_MEM_Stream::recvv_n (iovec iov[],
                        timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::send_n (const void *buf,
                          size_t len,
                          int flags,
@@ -124,7 +123,7 @@ ACE_MEM_Stream::send_n (const void *buf,
                       timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::send_n (const void *buf,
                          size_t len,
                          const ACE_Time_Value *timeout) const
@@ -136,7 +135,7 @@ ACE_MEM_Stream::send_n (const void *buf,
                       timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::sendv_n (iovec iov[],
                           size_t n,
                           const ACE_Time_Value *timeout) const
@@ -148,7 +147,7 @@ ACE_MEM_Stream::sendv_n (iovec iov[],
                        timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::send_urg (const void *ptr,
                            size_t len,
                            const ACE_Time_Value *timeout) const
@@ -161,7 +160,7 @@ ACE_MEM_Stream::send_urg (const void *ptr,
                     timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_Stream::recv_urg (void *ptr,
                            size_t len,
                            const ACE_Time_Value *timeout) const

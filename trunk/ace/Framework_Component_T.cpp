@@ -5,10 +5,6 @@
 
 #include "ace/Framework_Component_T.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Framework_Component_T.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(ace, Framework_Component_T, "$Id$")
 
 template <class Concrete>

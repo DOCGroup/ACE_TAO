@@ -141,12 +141,6 @@ ACE_Reactor::timer_queue (ACE_Timer_Queue *tq)
   return this->implementation ()->timer_queue (tq);
 }
 
-ACE_INLINE int
-ACE_Reactor::set_timer_queue (ACE_Timer_Queue *tq)
-{
-  return this->timer_queue (tq);
-}
-
 ACE_INLINE ACE_Timer_Queue *
 ACE_Reactor::timer_queue (void) const
 {

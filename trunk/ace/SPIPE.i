@@ -1,9 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// SPIPE.i
-
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SPIPE::disable (int signum) const
 {
 #if defined (ACE_WIN32)

@@ -69,9 +69,9 @@ public:
   int get_remote_addr (ACE_Addr &) const;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/LSOCK_Stream.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #include /**/ "ace/post.h"

@@ -20,7 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
+class ACE_QoS_Params;
+class ACE_Time_Value;
 
 /**
  * @class ACE_SOCK_Connector

@@ -248,13 +248,5 @@ public:
   friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
 };
 
-# if defined (ACE_HAS_INLINED_OSCALLS)
-#   if defined (ACE_INLINE)
-#     undef ACE_INLINE
-#   endif /* ACE_INLINE */
-#   define ACE_INLINE inline
-#   include "ace/Object_Manager_Base.inl"
-# endif /* ACE_HAS_INLINED_OSCALLS */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_OBJECT_MANAGER_BASE_H */

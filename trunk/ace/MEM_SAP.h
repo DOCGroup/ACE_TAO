@@ -151,9 +151,9 @@ protected:
   ACE_MEM_SAP (void);
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/MEM_SAP.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 

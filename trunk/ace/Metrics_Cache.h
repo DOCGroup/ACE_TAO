@@ -70,7 +70,7 @@ METRICS_PTR->report_##NAME##_stop(X); \
  *
  * @param METRICS_PTR - Pointer to a initialized metrics cache
  * @param NAME - Name of defining function (e.g. ACE: enqueue/dequeue)
- * @param X - Argument (ACE: u_int, TAO: RtecScheduler::handle_t) 
+ * @param X - Argument (ACE: u_int, TAO: RtecScheduler::handle_t)
  */
 #  define PAUSE_DISPATCH_METRIC(METRICS_PTR,NAME,X) \
 do { if((METRICS_PTR->metrics_enabled())) { \
@@ -85,7 +85,7 @@ METRICS_PTR->report_##NAME##_suspend(X); \
  *
  * @param METRICS_PTR - Pointer to a initialized metrics cache
  * @param NAME - Name of defining function (e.g. ACE: enqueue/dequeue)
- * @param X - Argument (ACE: u_int, TAO: RtecScheduler::handle_t) 
+ * @param X - Argument (ACE: u_int, TAO: RtecScheduler::handle_t)
  */
 #  define RESUME_DISPATCH_METRIC(METRICS_PTR,NAME,X) \
 do { if((METRICS_PTR->metrics_enabled())) { \
@@ -106,10 +106,6 @@ METRICS_PTR->report_##NAME##_start(); \
 do { if((METRICS_PTR->metrics_enabled())) { \
 METRICS_PTR->report_##NAME##_stop(); \
 } } while (0)
-
-#if defined (__ACE_INLINE__)
-#include "ace/Metrics_Cache.i"
-#endif /* __ACE_INLINE__ */
 
 #include "ace/Metrics_Cache_T.h"
 #include "ace/Singleton.h"

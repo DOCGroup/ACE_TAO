@@ -5,7 +5,7 @@
 
 // Creates a Local ACE_FILE.
 
-ASYS_INLINE
+ACE_INLINE
 ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
 					const ACE_FILE_Addr &remote_sap,
 					ACE_Time_Value *timeout,
@@ -24,7 +24,7 @@ ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
                 ACE_LIB_TEXT ("ACE_FILE_IO")));
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_FILE_Connector::reset_new_handle (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);

@@ -1204,7 +1204,7 @@ public:
    * @a message_block->total_length bytes will be sent, beginning at the
    * read pointer. The @a message_block read pointer will be updated to
    * reflect the sent bytes if the send operation is successful completed.
-   * 
+   *
    * Priority of the operation is specified by @a priority. On POSIX,
    * this is supported. Works like @c nice in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
@@ -1313,11 +1313,6 @@ protected:
   ACE_HANDLE handle_;
 
 };
-
-
-#if defined (__ACE_INLINE__)
-#include "ace/POSIX_Asynch_IO.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS */
 #endif /* ACE_POSIX_ASYNCH_IO_H */

@@ -168,9 +168,9 @@ protected:
   key_t name_2_key (const char *name);
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/SV_Semaphore_Simple.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

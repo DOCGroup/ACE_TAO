@@ -22,6 +22,7 @@
 
 #include "ace/Addr.h"
 #include "ace/IPC_SAP.h"
+#include "ace/OS_NS_stropts.h"
 
 /**
  * @class ACE_SOCK

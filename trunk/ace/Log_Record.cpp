@@ -2,14 +2,14 @@
 
 #include "ace/Log_Record.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-# include "ace/Log_Record.i"
-#endif
-
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
+
+#if !defined (__ACE_INLINE__)
+# include "ace/Log_Record.i"
+#endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include

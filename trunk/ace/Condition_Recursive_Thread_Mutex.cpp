@@ -13,10 +13,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Condition_Recursive_Thread_Mutex.inl"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_HAS_DUMP)
 #  include "ace/Log_Msg.h"
 #endif /* ACE_HAS_DUMP */
@@ -35,7 +31,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  // No dump method for ACE_cond_t even in emulated mode. 
+  // No dump method for ACE_cond_t even in emulated mode.
   // cond_.dump ();
   this->mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));

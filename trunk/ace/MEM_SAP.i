@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
-// MEM_SAP.i
-
 #include "ace/RW_Thread_Mutex.h"
 
-ASYS_INLINE
+ACE_INLINE
 ACE_MEM_SAP_Node::ACE_MEM_SAP_Node (size_t cap)
   : capacity_ (cap),
     size_ (0),
@@ -13,25 +11,25 @@ ACE_MEM_SAP_Node::ACE_MEM_SAP_Node (size_t cap)
 {
 }
 
-ASYS_INLINE size_t
+ACE_INLINE size_t
 ACE_MEM_SAP_Node::size (void) const
 {
   return this->size_;
 }
 
-ASYS_INLINE size_t
+ACE_INLINE size_t
 ACE_MEM_SAP_Node::capacity (void) const
 {
   return this->capacity_;
 }
 
-ASYS_INLINE void *
+ACE_INLINE void *
 ACE_MEM_SAP_Node::data (void)
 {
   return  this + 1;
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_MEM_SAP::~ACE_MEM_SAP (void)
 {
   // ACE_TRACE ("ACE_MEM_SAP::~ACE_MEM_SAP");
@@ -39,7 +37,7 @@ ACE_MEM_SAP::~ACE_MEM_SAP (void)
 }
 
 
-ASYS_INLINE ACE_MEM_SAP_Node *
+ACE_INLINE ACE_MEM_SAP_Node *
 ACE_MEM_SAP::acquire_buffer (const ssize_t size)
 {
   ACE_TRACE ("ACE_MEM_SAP::acquire_buffer");
@@ -56,7 +54,7 @@ ACE_MEM_SAP::acquire_buffer (const ssize_t size)
   return buf;
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_MEM_SAP::release_buffer (ACE_MEM_SAP_Node *buf)
 {
   ACE_TRACE ("ACE_MEM_SAP::release_buffer");

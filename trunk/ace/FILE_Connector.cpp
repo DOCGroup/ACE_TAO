@@ -3,10 +3,11 @@
 
 #include "ace/FILE_Connector.h"
 #include "ace/Handle_Ops.h"
+#include "ace/OS_NS_stdlib.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/FILE_Connector.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FILE_Connector, "$Id$")
 

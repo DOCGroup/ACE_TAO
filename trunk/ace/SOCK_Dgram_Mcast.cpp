@@ -1,15 +1,15 @@
-// SOCK_Dgram_Mcast.cpp
+// $Id$
 
 #include "ace/SOCK_Dgram_Mcast.h"
-
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram_Mcast.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/os_include/arpa/os_inet.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/SOCK_Dgram_Mcast.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,
            SOCK_Dgram_Mcast,
