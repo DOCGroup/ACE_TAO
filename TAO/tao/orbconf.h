@@ -299,15 +299,18 @@
 // ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
 // of course, no guarantees are made that the call will return
 // something useful.
-#define TAO_OBJID_NAMESERVICE      "NameService"
-#define TAO_OBJID_TRADINGSERVICE   "TradingService"
-#define TAO_OBJID_IMPLREPOSERVICE  "ImplRepoService"
-#define TAO_OBJID_ROOTPOA          "RootPOA"
-#define TAO_OBJID_POACURRENT       "POACurrent"
-#define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
-#define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
-#define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
-#define TAO_OBJID_IORMANIPULATION  "IORManipulation"
+#define TAO_OBJID_NAMESERVICE         "NameService"
+#define TAO_OBJID_TRADINGSERVICE      "TradingService"
+#define TAO_OBJID_IMPLREPOSERVICE     "ImplRepoService"
+#define TAO_OBJID_ROOTPOA             "RootPOA"
+#define TAO_OBJID_POACURRENT          "POACurrent"
+#define TAO_OBJID_INTERFACEREP        "InterfaceRepository"
+#define TAO_OBJID_POLICYMANAGER       "ORBPolicyManager"
+#define TAO_OBJID_POLICYCURRENT       "PolicyCurrent"
+#define TAO_OBJID_IORMANIPULATION     "IORManipulation"
+#define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
+#define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
+#define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
