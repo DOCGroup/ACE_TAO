@@ -1,3 +1,11 @@
+Fri Aug 29 07:45:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PollableC.cpp:
+
+          Fixed two occurrences of 'const const' in method signatures.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+          pointing out the problem.
+
 Thu Aug 28 22:04:40 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IOP_IORC.h:
