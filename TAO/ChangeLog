@@ -1,3 +1,38 @@
+Sun Nov  9 19:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IOP_CodecA.cpp
+	* tao/IOP_CodecA.h:
+	* tao/IOP_IORA.cpp:
+	* tao/IOP_IORA.h:
+	* tao/PolicyA.cpp:
+	* tao/PolicyA.h:
+	* tao/PortableInterceptorA.cpp:
+	* tao/PortableInterceptorA.h:
+
+	  New files that were created using the new IDL compiler
+	  options which puts the Any operators in a seperate file.  This
+	  is just a test. If this gives good wins, we can go ahead fix all
+	  the generated code in $TAO_ROOT/tao to maintain the Any's in a
+	  seperate file. This can be used by the application by just
+	  including the header.  
+	  
+	* tao/IOP_CodecC.cpp:
+	* tao/IOP_CodecC.i:
+	* tao/IOP_IOR.pidl
+	* tao/IOP_IORC.cpp:
+	* tao/IOP_IORC.i:
+	* tao/Makefile.tao:
+	* tao/Policy.pidl:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.i:
+	* tao/PortableInterceptor.pidl:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.i:
+
+	  Regenretad the code to keep the Any operators away. We will
+	  update the diffss and such if we are damn sure that this is
+	  going to give us wins.
+
 Sun Nov  9 18:09:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTCosScheduling:

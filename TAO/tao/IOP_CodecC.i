@@ -27,22 +27,6 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_IOP_CODEC___CI_)
-#define _IOP_CODEC___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_IOP_CODECFACTORY___CI_)
-#define _IOP_CODECFACTORY___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
 // be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
@@ -53,8 +37,8 @@ CORBA::Boolean operator<< (
 {
   return
     (strm << _tao_aggregate.format) &&
-    (strm << ACE_OutputCDR::from_octet (_tao_aggregate.major_version)) &&
-    (strm << ACE_OutputCDR::from_octet (_tao_aggregate.minor_version));
+    (strm << CORBA::Any::from_octet (_tao_aggregate.major_version)) &&
+    (strm << CORBA::Any::from_octet (_tao_aggregate.minor_version));
 }
 
 ACE_INLINE
@@ -65,7 +49,7 @@ CORBA::Boolean operator>> (
 {
   return
     (strm >> _tao_aggregate.format) &&
-    (strm >> ACE_InputCDR::to_octet (_tao_aggregate.major_version)) &&
-    (strm >> ACE_InputCDR::to_octet (_tao_aggregate.minor_version));
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.major_version)) &&
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor_version));
 }
 
