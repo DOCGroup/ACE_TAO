@@ -66,7 +66,6 @@ public:
   /////////////////
   // Implementation
 private:
-  int readIORFile(const char * fileName, CORBA::String_var & ior);
 
   ////////////////////
   // Forbidden methods
@@ -104,9 +103,9 @@ private:
   const char * readyFile_;
 
   /**
-   * A file from which the detecor's IOR should be read.
+   * Detecor's IOR
    */
-  const char * iorDetectorFile_;
+  const char * detector_ior_;
 
   /**
    * The FaultDetectorFactory object reference.
@@ -114,20 +113,19 @@ private:
   ::FT::FaultDetectorFactory_var factory_;
 
   /**
-   * A collection of files containing replica IORs
+   * A collection of replica IORs
    */
-  ACE_Vector < const char * > iorReplicaFiles_;
-  char * replicaIorBuffer_;
+  ACE_Vector < const char * > replica_iors_;
 
   /**
-   * A collection of replica IORs
+   * A collection of replica references.
    */
   ACE_Vector < FT::PullMonitorable_var > replicas_;
 
   /**
    * A file from which the notifier's IOR should be read.
    */
-  const char * iorNotifierFile_;
+  const char * notifier_ior_;
 
   /**
    * the fault notifier

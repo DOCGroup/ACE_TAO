@@ -1,3 +1,13 @@
+Tue Oct 14 15:21:19 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.h:
+          change command line option that specify multiple
+          eliminate read_ior_file.  Expect file:// ior on command line instead.
+
+
+        These changes were made in the oci_haft branch.
+
 Tue Oct 14 13:52:18 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
