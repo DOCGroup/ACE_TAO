@@ -1,3 +1,18 @@
+Tue Sep 14 22:44:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Inet_Addr.cpp:
+
+	  Fix for the problem reported by Charlie Duke, which is that
+	  ACE_INET_Addr::string_to_addr cannot accept an address string
+	  produced by ACE_INET_Addr::addr_to_string method. The output of
+	  addr_to_string method is of the form "[ipv4]:port" while the
+	  string_to_addr accepts "ipv4:port" i.e. cannot handle "[]". 
+
+	  The fix for this is not to include "[]" in
+	  string_to_addr. Thanks to Charlie Duke <cduke at fvc dot com>. 
+
+	* THANKS: Updated Charlie's email address.
+
 Tue Sep 14 15:02:05 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * NEWS:
