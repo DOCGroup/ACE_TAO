@@ -1,14 +1,19 @@
+Tue Sep 14 15:02:05 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * NEWS:
+          Updated: TSS leak has been conquered.
+
 Tue Sep 14 11:07:25 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Malloc_T.{h inl}: Added ACE_Cached_Allocator<>::pool_depth()
-	  and ACE_Dynamic_Cached_Allocator<>::pool_depth(). Each returns the
-	  number of items in the cache available for allocating. Thank you to
-	  Jeff Jones <jjones@zonetrading.com> for this addition.
+        * ace/Malloc_T.{h inl}: Added ACE_Cached_Allocator<>::pool_depth()
+          and ACE_Dynamic_Cached_Allocator<>::pool_depth(). Each returns the
+          number of items in the cache available for allocating. Thank you to
+          Jeff Jones <jjones@zonetrading.com> for this addition.
 
-	* tests/Cached_Allocator_Test.cpp: Added tests of the new pool_depth()
-	  method.
+        * tests/Cached_Allocator_Test.cpp: Added tests of the new pool_depth()
+          method.
 
-	* THANKS: Added Jeff Jones to the Hall of Fame.
+        * THANKS: Added Jeff Jones to the Hall of Fame.
 
 Tue Sep 14 11:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -28,44 +33,44 @@ Tue Sep 14 07:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Sep 13 19:09:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
+        * configure.ac:
+        * m4/config_h.m4:
 
-	  Changed to use ACE_CHECK_HAS_FUNC([scandir]) and get rid of
-	  explicit definition, autoconf template macro, etc.
+          Changed to use ACE_CHECK_HAS_FUNC([scandir]) and get rid of
+          explicit definition, autoconf template macro, etc.
 
 Mon Sep 13 20:33:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
   	* ace/Select_Reactor_Base.cpp: Changed the
-	  ACE_Select_Reactor_Handler_Repository::open() method so that it
+          ACE_Select_Reactor_Handler_Repository::open() method so that it
  	  uses the generalized ACE::set_handle_limit() method to not lower
  	  the handles, which caused problems for applications that want to
  	  use small reactor sizes but not limit the number of handles in
  	  the process.  Thanks to Eider Oliveira <eider at oliveira dot
  	  gmail at com> for suggesting this.
 
-	* ace/ACE.cpp,
-	  ace/ACE.h: Generalized ACE::set_handle_limit() so
-	  it can be told not to lower the handle limit.
+        * ace/ACE.cpp,
+          ace/ACE.h: Generalized ACE::set_handle_limit() so
+          it can be told not to lower the handle limit.
 
 Mon Sep 13 18:15:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACE_wrappers/m4/platform.m4:
+        * ACE_wrappers/m4/platform.m4:
 
-	  Added new ACE_FUNC_IOCTL_ARGTYPES macro, used to set
-	  ACE_IOCTL_TYPE_ARG2.
+          Added new ACE_FUNC_IOCTL_ARGTYPES macro, used to set
+          ACE_IOCTL_TYPE_ARG2.
 
-	* ACE_wrappers/ace/config-netbsd.h:
+        * ACE_wrappers/ace/config-netbsd.h:
 
-	  Added ACE_IOCTL_TYPE_ARG2 definition.
+          Added ACE_IOCTL_TYPE_ARG2 definition.
 
-	* ACE_wrappers/ace/OS_NS_stropts.h:
-	* ACE_wrappers/ace/OS_NS_stropts.inl:
+        * ACE_wrappers/ace/OS_NS_stropts.h:
+        * ACE_wrappers/ace/OS_NS_stropts.inl:
 
-	  Added feature test macro ACE_IOCTL_TYPE_ARG2 (which defaults to
-	  int) so that ACE_OS::ioctl uses the same type as ::ioctl.  This
-	  help avoid sign extension problems on 64 bit platforms that use
-	  unsigned long.
+          Added feature test macro ACE_IOCTL_TYPE_ARG2 (which defaults to
+          int) so that ACE_OS::ioctl uses the same type as ::ioctl.  This
+          help avoid sign extension problems on 64 bit platforms that use
+          unsigned long.
 
 Mon Sep 13 15:52:04 2004  Dale Wilson  <wilson_d@ociweb.com>
 
