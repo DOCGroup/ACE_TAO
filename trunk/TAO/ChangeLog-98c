@@ -1,3 +1,18 @@
+Wed Nov  5 22:46:47 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/orbobj: Began adding the hooks for a multicast-based
+ 	  implementation of resolve_initial_references().
+
+	* tao/params: Added a new set/get interface to optionally set/get
+ 	  the IOR of the configured Naming Service.
+
+	* tao/orb_core.cpp (init): Added a -ORBnameservice command-line
+ 	  option.  If this option is given, it indicates the IOR where the
+ 	  Naming Service resides.
+
+	* tao/params: Changed the signature of TAO_ORB_Parameters::addr()
+ 	  to return a const ACE_INET_Addr & rather than an ACE_INET_Addr.
+
 Wed Nov  5 22:38:08 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* tests/Cubit/TAO/DII_Cubit/README (server): Changed comment on

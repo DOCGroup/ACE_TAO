@@ -25,6 +25,10 @@
 #  include <objbase.h>
 #endif
 
+#if defined (minor)
+#undef minor
+#endif /* minor */
+
 class ACE_Svc_Export CORBA_Exception : public IUnknown
 {
   // = TITLE
@@ -93,7 +97,7 @@ public:
 
   CORBA_SystemException (CORBA::TypeCode_ptr tc,
 			 CORBA::ULong code,
-			 CORBA::CompletionStatus	completed);
+			 CORBA::CompletionStatus completed);
 
   ~CORBA_SystemException (void);
 

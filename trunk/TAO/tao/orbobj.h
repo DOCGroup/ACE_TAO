@@ -34,13 +34,14 @@
 #include "tao/connect.h"
 
 class ACE_Svc_Export CORBA_ORB : public IUnknown
-{
   // = TITLE
-  // ORB pseudo-objref
+  // ORB pseudo-objref.
+{
 public:
   CORBA::POA_ptr POA_init (int &argc, 
                            char **argv, 
                            const char *poa_identifier = 0);
+  // Initialize the Portable Object Adapter (POA).
 
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   static CORBA::ORB_ptr _nil (void);
@@ -116,6 +117,11 @@ public:
   ULONG __stdcall AddRef (void);
   ULONG __stdcall Release (void);
 
+  CORBA_Object_ptr resolve_initial_references (CORBA::String name);
+  // This method acts as a miniature name service provided by the ORB
+  // for certain well-known object references.  TAO will shortly
+  // support the "NameService" and "RootPOA" via this method.
+
   // = TAO-specific methods.
   TAO_Client_Strategy_Factory *client_factory (void);
   // Returns pointer to the client factory.
@@ -128,10 +134,17 @@ public:
   // else 0.
 
 protected:
+  // We must be created via the <ORB_init> call.
   CORBA_ORB (void);
   virtual ~CORBA_ORB (void);
 
 private:
+  CORBA_Object_ptr resolve_name_service (void);
+  // Resolve the name service object reference.
+
+  CORBA_Object_ptr resolve_poa (void);
+  // Resolve the POA.
+
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> open_called_;
@@ -153,6 +166,10 @@ private:
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> should_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should
   // return.
+
+  CORBA_Object_ptr name_service_;
+  // If this is non-_nil(), then this is the object reference to our
+  // configured Naming Context.
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);

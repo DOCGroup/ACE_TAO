@@ -66,6 +66,7 @@ TAO_OA_Parameters::userdef_lookup_strategy (void)
 
 ACE_INLINE
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
+  : name_service_ior_ (0)
 {
 }
 
@@ -80,9 +81,21 @@ TAO_ORB_Parameters::addr (ACE_INET_Addr &addr)
   this->addr_ = addr;
 }
 
-ACE_INLINE ACE_INET_Addr
+ACE_INLINE const ACE_INET_Addr &
 TAO_ORB_Parameters::addr (void)
 {
   return this->addr_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::name_service_ior (CORBA::String &ns)
+{
+  this->name_service_ior_ = ns;
+}
+
+ACE_INLINE const CORBA::String &
+TAO_ORB_Parameters::name_service_ior (void)
+{
+  return this->name_service_ior_;
 }
 

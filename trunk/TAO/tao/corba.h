@@ -6,7 +6,7 @@
 //    TAO
 // 
 // = FILENAME
-//    orb.h
+//    corba.h
 //
 // = DESCRIPTION
 //     MASTER HEADER file for C/C++ Win32 interface to a CORBA 2.0 ORB.

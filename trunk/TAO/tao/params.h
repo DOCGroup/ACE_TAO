@@ -51,33 +51,42 @@ public:
   LOCAL_INLINE void addr (ACE_INET_Addr &addr);
   // Set the address on which we're listening.
 
-  LOCAL_INLINE ACE_INET_Addr addr (void);
+  LOCAL_INLINE const ACE_INET_Addr &addr (void);
   // Get the address on which we're listening.
+
+  LOCAL_INLINE void name_service_ior (CORBA::String &ns);
+  // Set the IOR of our name service.
+
+  LOCAL_INLINE const CORBA::String &name_service_ior (void);
+  // Get the IOR of our name service.
 
 private:
   ACE_INET_Addr addr_;          
   // host + port number we are listening on
+
+  CORBA::String name_service_ior_;
+  // The IOR of our configured Naming Service.
 };
 
 typedef enum 
-  {
-    TAO_NONE,
-    TAO_LINEAR,
-    TAO_DYNAMIC_HASH,
-    TAO_ACTIVE_DEMUX,
-    TAO_USER_DEFINED
-  } TAO_Demux_Strategy;
+{
+  TAO_NONE,
+  TAO_LINEAR,
+  TAO_DYNAMIC_HASH,
+  TAO_ACTIVE_DEMUX,
+  TAO_USER_DEFINED
+} TAO_Demux_Strategy;
 
 class ACE_Svc_Export TAO_OA_Parameters
-// = TITLE
-//    Parameters specific to an Object Adapter.  By definition, this
-//    is only on the server side, since a client does not have an object
-//    adapter.
-//
-// = NOTES
-//    This can be subclassed in order to have OA-specific parameters, e.g.,
-//    the Realtime Object Adapter might subclass this and add its own
-//    parameters.
+  // = TITLE
+  //    Parameters specific to an Object Adapter.  By definition, this
+  //    is only on the server side, since a client does not have an
+  //    object adapter.
+  //
+  // = NOTES
+  //    This can be subclassed in order to have OA-specific
+  //    parameters, e.g., the Realtime Object Adapter might subclass
+  //    this and add its own parameters.
 {
 public:
   LOCAL_INLINE TAO_OA_Parameters (void);
@@ -99,8 +108,8 @@ public:
   // Return the demultiplexing strategy being used.
 
   LOCAL_INLINE void userdef_lookup_strategy (TAO_Object_Table *&ot);
-  // provide a way for user defined object key lookup strategies to be plugged
-  // in 
+  // Provide a way for user defined object key lookup strategies to be
+  // plugged in.
 
   LOCAL_INLINE TAO_Object_Table *userdef_lookup_strategy (void);
   // return the lookup strategy
