@@ -1,3 +1,18 @@
+Tue Sep 14 08:49:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/orbsvcs/tests/AVStreams/Asynch_Three_Stage/input:
+        * tao/orbsvcs/tests/AVStreams/Bidirectional_Flows/input:
+        * tao/orbsvcs/tests/AVStreams/Component_Switching/input:
+        * tao/orbsvcs/tests/AVStreams/Modify_QoS/input:
+        * tao/orbsvcs/tests/AVStreams/Multiple_Flows/input:
+        * tao/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/input:
+        * tao/orbsvcs/tests/AVStreams/Simple_Three_Stage/input:
+        * tao/orbsvcs/tests/AVStreams/Simple_Two_Stage/input:
+        * tao/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/input:
+
+          Removed achived test inputfiles because these are now generated (and
+          removed) at runtime.
+
 Tue Sep 14 08:41:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/Run_test.pm:
