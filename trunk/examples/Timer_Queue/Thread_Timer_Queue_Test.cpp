@@ -134,7 +134,7 @@ Input_Task::add_timer (void *argument)
 int
 Input_Task::cancel_timer (void *argument)
 {
-  return  this->queue_->cancel (*(int *) argument);
+  return this->queue_->cancel (*(int *) argument);
 }
 
 // Lists the timers in the queue.  Ignores the argument. This method
@@ -162,12 +162,15 @@ Input_Task::shutdown_timer (void *argument)
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (argument);
 
-#if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  // Cancel the thread timer queue task "preemptively."
-  ACE_Thread::cancel (this->queue_->thr_id ());
-#else
+#if defined (ACE_LACKS_PTHREAD_CANCEL)
   // Cancel the thread timer queue task "voluntarily."
   this->queue_->deactivate ();
+#else
+  // Cancel the thread timer queue task "preemptively."
+  if (ACE_Thread::cancel (this->queue_->thr_id ()) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n", 
+                "cancel"));
 #endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   // -1 indicates we are shutting down the application.
