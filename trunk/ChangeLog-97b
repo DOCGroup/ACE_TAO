@@ -32,6 +32,10 @@ Mon Oct 27 11:36:39 1997  David L. Levine  <levine@cs.wustl.edu>
         * tests/run_tests.vxworks: re-enabled Reactors_Test, because it
           works with the ACE_LACKS_FCNTL mods.
 
+        * include/makeinclude/platform_osf1_4.0.GNU: -pthread instead of
+          -lpthread in LIBS.  Thanks to James Johnson <jcej@lads.com> for
+          pointing this out.
+
 Mon Oct 27 11:11:33 1997  Nanbor Wang  <nw1@CUECA>
 
         * netsvcs/servers/servers.dsp
