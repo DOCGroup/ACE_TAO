@@ -42,6 +42,10 @@ public:
                 CORBA::Environment &env);
   // add args to NVList for DII
 
+  int add_args (CORBA::Request_ptr &req,
+                CORBA::Environment &env);
+  // add args to NVList using << operator
+
   const char *opname (void) const;
   // return operation name
 

@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "bd_struct_seq.h"
 
 ACE_RCSID(Param_Test, bd_struct_seq, "$Id$")
@@ -108,9 +109,20 @@ Test_Bounded_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                       CORBA::B_FALSE);
 
   // add parameters
-  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Bounded_StructSeq,

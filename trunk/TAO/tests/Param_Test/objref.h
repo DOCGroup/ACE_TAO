@@ -76,6 +76,12 @@ private:
 
   Coffee_var ret_;
   // return value
+
+  Coffee_ptr dii_out_;
+  // DII out parameter
+
+  Coffee_ptr dii_ret_;
+  // DII return value
 };
 
 #endif /* PARAM_TEST_OBJREF_H */

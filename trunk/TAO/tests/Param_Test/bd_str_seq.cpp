@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "bd_str_seq.h"
 
 ACE_RCSID(Param_Test, bd_str_seq, "$Id$")

@@ -130,7 +130,7 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr param_list,
                         CORBA::B_FALSE);
 
   CORBA::Any out_arg (Param_Test::_tc_Coffee_Mix,
-                      this->out_.out (),
+                      &this->out_.inout (),
                       CORBA::B_FALSE);
 
   // add parameters

@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "var_array.h"
 
 ACE_RCSID(Param_Test, var_array, "$Id$")

@@ -19,7 +19,6 @@
 #if !defined (PARAM_TEST_SHORT_H)
 #define PARAM_TEST_SHORT_H
 
-#include "helper.h"
 #include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
