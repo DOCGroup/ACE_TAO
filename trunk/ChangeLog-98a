@@ -2,6 +2,8 @@ Sat Nov 29 21:31:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/Proactor.cpp (~ACE_Proactor_Timer_Handler): Removed explicit
 	  call to thr_mgr_.close().
+	  (ACE_Proactor):  Be sure to ask Thread_Manager not to wait for
+	  the timer_handler_ thread.
 
 	* ace/Thread_Manager.cpp (close_singleton):  Only reset
 	  exit_on_wait status if we are responsible for deleting the
