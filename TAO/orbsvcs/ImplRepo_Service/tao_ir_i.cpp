@@ -774,7 +774,7 @@ void
 TAO_IR_Op::display_server_information (const ImplementationRepository::ServerInformation &info)
 {
   // Figure out what the activation string is.
-  const char *act;
+  const char *act = "UNKNOWN STARTUP";
   if (info.startup.activation == ImplementationRepository::NORMAL)
     act = "NORMAL";
   else if (info.startup.activation == ImplementationRepository::MANUAL)
