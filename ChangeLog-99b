@@ -1,6 +1,9 @@
 Sun Jul  4 17:06:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Test.cpp: Fixed a couple of
+	* tests/Notify_Performance_Test.cpp,
+	  tests/Message_Block_Test.cpp,
+	  tests/Priority_Task_Test.cpp,
+	  tests/Thread_Pool_Reactor_Test.cpp: Fixed a couple of
 	  warnings related to initializing char *'s with const char *'s.
   	  Thanks to SunC++ 5.0 for reporting this.
 
