@@ -15,8 +15,8 @@ ACE_Process::ACE_Process (void)
 #endif /* !defined (ACE_WIN32) */
 {
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &this->process_info_, 
-		  0, sizeof this->process_info_);
+  ACE_OS::memset ((void *) &this->process_info_,
+                  0, sizeof this->process_info_);
 #endif /* ACE_WIN32 */
 }
 
@@ -33,17 +33,17 @@ pid_t
 ACE_Process::spawn (ACE_Process_Options &options)
 {
 #if defined (ACE_WIN32)
-  BOOL fork_result = 
+  BOOL fork_result =
     ::CreateProcess (0,
-		     options.command_line_buf (), // command-line options
-		     options.get_process_attributes (),
-		     options.get_thread_attributes (),
-		     options.handle_inheritence (),
-		     options.creation_flags (),
-		     options.env_buf (), // environment variables
-		     options.working_directory (),
-		     options.startup_info (),
-		     &this->process_info_);
+                     options.command_line_buf (), // command-line options
+                     options.get_process_attributes (),
+                     options.get_thread_attributes (),
+                     options.handle_inheritence (),
+                     options.creation_flags (),
+                     options.env_buf (), // environment variables
+                     options.working_directory (),
+                     options.startup_info (),
+                     &this->process_info_);
 
   if (fork_result) // If success.
     return this->getpid ();
@@ -66,52 +66,52 @@ ACE_Process::spawn (ACE_Process_Options &options)
     case 0:
       // Child process.
       {
-	if (options.get_stdin () != ACE_INVALID_HANDLE
-	    && ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
-	  ACE_OS::exit (errno);
-	else if (options.get_stdout () != ACE_INVALID_HANDLE
-		 && ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
-	  ACE_OS::exit (errno);
-	else if (options.get_stderr () != ACE_INVALID_HANDLE
-		 && ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
-	  ACE_OS::exit (errno);
+        if (options.get_stdin () != ACE_INVALID_HANDLE
+            && ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
+          ACE_OS::exit (errno);
+        else if (options.get_stdout () != ACE_INVALID_HANDLE
+                 && ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
+          ACE_OS::exit (errno);
+        else if (options.get_stderr () != ACE_INVALID_HANDLE
+                 && ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
+          ACE_OS::exit (errno);
 
         // close down unneeded descriptors
         ACE_OS::close (options.get_stdin ());
         ACE_OS::close (options.get_stdout ());
         ACE_OS::close (options.get_stderr ());
 
-	// If we must, set the working directory for the child process.
-	if (options.working_directory () != 0)
-	  ::chdir (options.working_directory ());
+        // If we must, set the working directory for the child process.
+        if (options.working_directory () != 0)
+          ::chdir (options.working_directory ());
 
-	// Child process executes the command.
-	int result;
-      
-	if (options.env_argv ()[0] == 0)
+        // Child process executes the command.
+        int result;
+
+        if (options.env_argv ()[0] == 0)
           // command-line args
-	  result = ACE_OS::execvp (options.command_line_argv ()[0],
-				   options.command_line_argv ());
-	else
+          result = ACE_OS::execvp (options.command_line_argv ()[0],
+                                   options.command_line_argv ());
+        else
           {
 #if defined( ghs )
-	    // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile
-	    // this code.  Processes aren't supported on VxWorks
-	    // anyways.
-	    ACE_NOTSUP_RETURN (-1);
+            // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile
+            // this code.  Processes aren't supported on VxWorks
+            // anyways.
+            ACE_NOTSUP_RETURN (-1);
 #else
-	    // command-line args and environment variables
-	    result = ACE_OS::execve (options.command_line_argv ()[0],
-				     options.command_line_argv (),
-				     options.env_argv ());
+            // command-line args and environment variables
+            result = ACE_OS::execve (options.command_line_argv ()[0],
+                                     options.command_line_argv (),
+                                     options.env_argv ());
 #endif /* ghs */
           }
 
-	if (result == -1)
-	  // If the execv fails, this child needs to exit.
-	  ACE_OS::exit (errno);
+        if (result == -1)
+          // If the execv fails, this child needs to exit.
+          ACE_OS::exit (errno);
 
-	return 0;
+        return 0;
       }
 
     default:
@@ -145,9 +145,12 @@ ACE_Process::wait (const ACE_Time_Value &tv)
 // ************************************************************
 
 ACE_Process_Options::ACE_Process_Options (int ie,
-					  int cobl)
+                                          int cobl)
 #if !defined (ACE_HAS_WINCE)
   : inherit_environment_ (ie),
+#endif
+    creation_flags_ (0),
+#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
     environment_inherited_ (0),
     handle_inheritence_ (TRUE),
@@ -164,9 +167,8 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #else
   :
 #endif /* !ACE_HAS_WINCE */
-    creation_flags_ (0),
-    command_line_buf_ (0),
-    command_line_argv_calculated_ (0)
+    command_line_argv_calculated_ (0),
+    command_line_buf_ (0)
 {
   ACE_NEW (command_line_buf_, TCHAR[cobl]);
   command_line_buf_[0] = '\0';
@@ -175,11 +177,11 @@ ACE_Process_Options::ACE_Process_Options (int ie,
   working_directory_[0] = '\0';
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
-  
+
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &this->startup_info_, 
-		  0, 
-		  sizeof this->startup_info_);
+  ACE_OS::memset ((void *) &this->startup_info_,
+                  0,
+                  sizeof this->startup_info_);
   this->startup_info_.cb = sizeof this->startup_info_;
 #endif /* ACE_WIN32 */
 #endif /* !ACE_HAS_WINCE */
@@ -208,11 +210,11 @@ ACE_Process_Options::inherit_environment (void)
 
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment+index, len) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "%p.\n",
-		      "ACE_Process_Options::ACE_Process_Options"));
-	  break;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "ACE_Process_Options::ACE_Process_Options"));
+          break;
+        }
 
       // Skip to the next word.
       index += len + 1;
@@ -239,16 +241,16 @@ ACE_Process_Options::command_line_argv (void)
 
       int x = 0;
       do
-	{
-	  command_line_argv_[x] = parser.next ();
-	}
+        {
+          command_line_argv_[x] = parser.next ();
+        }
       while (command_line_argv_[x] != 0 &&
-	     // substract one for the ending zero.
-	     ++x < MAX_COMMAND_LINE_OPTIONS-1);
+             // substract one for the ending zero.
+             ++x < MAX_COMMAND_LINE_OPTIONS-1);
 
       command_line_argv_[x] = 0;
     }
-			
+
   return command_line_argv_;
 }
 
@@ -308,7 +310,7 @@ ACE_Process_Options::setenv (LPCTSTR format, ...)
 
 int
 ACE_Process_Options::setenv (LPCTSTR variable_name,
-			     LPCTSTR format, ...)
+                             LPCTSTR format, ...)
 {
   TCHAR newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
 
@@ -351,16 +353,16 @@ ACE_Process_Options::setenv_i (LPTSTR assignment, int len)
 
   // Copy the new environment string.
   ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
-		  assignment, len);
+                  assignment, len);
 
   // Update the argv array.
-  environment_argv_[environment_argv_index_++] = 
+  environment_argv_[environment_argv_index_++] =
     environment_buf_ + environment_buf_index_;
   environment_argv_[environment_argv_index_] = 0;
 
   // Update our index.
   environment_buf_index_ += len;
-  
+
   // Make sure the buffer is null-terminated.
   environment_buf_[environment_buf_index_] = '\0';
   return 0;
@@ -368,8 +370,8 @@ ACE_Process_Options::setenv_i (LPTSTR assignment, int len)
 
 int
 ACE_Process_Options::set_handles (ACE_HANDLE std_in,
-				  ACE_HANDLE std_out,
-				  ACE_HANDLE std_err)
+                                  ACE_HANDLE std_out,
+                                  ACE_HANDLE std_err)
 {
   this->set_handles_called_ = 1;
 #if defined (ACE_WIN32)
@@ -385,30 +387,30 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
     std_err = ACE_STDERR;
 
   if (!::DuplicateHandle (::GetCurrentProcess(),
-			  std_in,
-			  ::GetCurrentProcess(),
-			  &this->startup_info_.hStdInput,
-			  NULL,
-			  TRUE,
-			  DUPLICATE_SAME_ACCESS))
+                          std_in,
+                          ::GetCurrentProcess(),
+                          &this->startup_info_.hStdInput,
+                          NULL,
+                          TRUE,
+                          DUPLICATE_SAME_ACCESS))
     return -1;
 
   if (!::DuplicateHandle (::GetCurrentProcess(),
-			  std_out,
-			  ::GetCurrentProcess(),
-			  &this->startup_info_.hStdOutput,
-			  NULL,
-			  TRUE,
-			  DUPLICATE_SAME_ACCESS))
+                          std_out,
+                          ::GetCurrentProcess(),
+                          &this->startup_info_.hStdOutput,
+                          NULL,
+                          TRUE,
+                          DUPLICATE_SAME_ACCESS))
     return -1;
 
   if (!::DuplicateHandle (::GetCurrentProcess(),
-			  std_err,
-			  ::GetCurrentProcess(),
-			  &this->startup_info_.hStdError,
-			  NULL,
-			  TRUE,
-			  DUPLICATE_SAME_ACCESS))
+                          std_err,
+                          ::GetCurrentProcess(),
+                          &this->startup_info_.hStdError,
+                          NULL,
+                          TRUE,
+                          DUPLICATE_SAME_ACCESS))
     return -1;
 #else /* ACE_WIN32 */
   this->stdin_ = ACE_OS::dup (std_in);
@@ -475,7 +477,7 @@ ACE_Process_Options::command_line (LPCTSTR format, ...)
   return 0;
 }
 
-LPTSTR 
+LPTSTR
 ACE_Process_Options::env_buf (void)
 {
 #if !defined (ACE_HAS_WINCE)
