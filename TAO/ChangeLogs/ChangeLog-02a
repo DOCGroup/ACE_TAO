@@ -1,5 +1,6 @@
 Thu Jan 10 11:53:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* tao/GIOP.pidl: Added come comments.
 	* tao/GIOPC.h:
 	* tao/GIOPC.cpp:
 	* tao/GIOPC.i (Version_var): Added GIOP::Version_var to the
