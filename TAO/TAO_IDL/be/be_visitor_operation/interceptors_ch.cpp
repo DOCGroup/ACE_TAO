@@ -114,9 +114,9 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
     }
 
   *os << " (" << be_idt_nl 
-      << "const char *  operation,"<< be_nl 
-      << "IOP::ServiceContextList &service_context_list," << be_nl
-      << "CORBA::Object * target" << be_uidt;
+      << "const char *_tao_operation,"<< be_nl 
+      << "IOP::ServiceContextList &_tao_service_context_list," << be_nl
+      << "CORBA::Object *_tao_target" << be_uidt;
 
   //generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing
