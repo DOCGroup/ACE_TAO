@@ -11,10 +11,10 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Default_Servant \
-	Explicit_Activation \
 	FindPOA \
 	Forwarding \
 	Generic_Servant \
+	Explicit_Activation \
 	NewPOA \
 	On_Demand_Activation \
 	RootPOA \
