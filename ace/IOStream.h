@@ -513,8 +513,8 @@ class ACE_IOStream : public iostream, public STREAM
   //     customize only one or two.
 {
 public:
-  ACE_IOStream ( STREAM & stream, u_int streambuf_size = ACE_STREAMBUF_SIZE);
-  ACE_IOStream ( u_int streambuf_size = ACE_STREAMBUF_SIZE);
+  ACE_IOStream (STREAM & stream, u_int streambuf_size = ACE_STREAMBUF_SIZE);
+  ACE_IOStream (u_int streambuf_size = ACE_STREAMBUF_SIZE);
   // The default constructor.  This will initiailze your STREAM and
   // then setup the iostream baseclass to use a custom streambuf based
   // on STREAM.
@@ -528,19 +528,19 @@ public:
   // function.
 
 #if defined (ACE_HAS_STRING_CLASS)
-  virtual ACE_IOStream & operator>>(ACE_IOStream_String & v);
+  virtual ACE_IOStream<STREAM> & operator>>(ACE_IOStream_String & v);
   // A simple string operator.  The base iostream has 'em for char*
   // but that isn't always the best thing for a String.  If we don't
   // provide our own here, we may not get what we want.
 
-  virtual ACE_IOStream & operator<<(ACE_IOStream_String & v);
+  virtual ACE_IOStream<STREAM> & operator<<(ACE_IOStream_String & v);
   // The converse of the String put operator.
 
-  virtual ACE_IOStream & operator>>(QuotedString &v);
+  virtual ACE_IOStream<STREAM> & operator>>(QuotedString &v);
   // A more clever operator that handles quoted strings so that we
   // can get strings containing whitespace!
 
-  virtual ACE_IOStream & operator<<(QuotedString &v);
+  virtual ACE_IOStream<STREAM> & operator<<(QuotedString &v);
   // The converse of the QuotedString put operator.
 #endif /* ACE_HAS_STRING_CLASS */
 
@@ -570,7 +570,7 @@ public:
   virtual void osfx (void)        {  iostream::osfx(); return; }
 #endif /* ACE_LACKS_IOSTREAM_FX */
 
-  ACE_IOStream & operator>>( ACE_Time_Value *& tv );
+  ACE_IOStream<STREAM> & operator>>(ACE_Time_Value *&tv);
   // Allow the programmer to provide a timeout for read operations.
   // Give it a pointer to NULL to block forever.
 
@@ -600,81 +600,83 @@ class ACE_SOCK_Dgram_SC : public STREAM
 // on a datagram can go to a different peer if you want.  If you're
 // using datagrams for stream activity, you probably want 'em all to
 // go to (and come from) the same place.  That's what this class is
-// for.  BTW:  'Dgram_SC' is short for 'Datagram-Self-Contained'.
+// for.  BTW: 'Dgram_SC' is short for 'Datagram-Self-Contained'.
 // Here, we keep an address object so that we can remember who last
-// sent us data.  When we write back, we're then able to write back
-// to that same address.
+// sent us data.  When we write back, we're then able to write back to
+// that same address.
 {
 protected:
-	ACE_INET_Addr peer_;
+  ACE_INET_Addr peer_;
 
 public:
-	ACE_SOCK_Dgram_SC() : STREAM()
-	{
-	}
+  ACE_SOCK_Dgram_SC (void)
+    {
+    }
 
-	ACE_SOCK_Dgram_SC ( STREAM & source, ACE_INET_Addr & dest )
-	 : STREAM( source ), peer_ ( dest )
-	{
-	}
+  ACE_SOCK_Dgram_SC (STREAM &source, ACE_INET_Addr &dest)
+    : STREAM (source), peer_ (dest)
+    {
+    }
 
-	inline ssize_t send_n( char * buf,ssize_t len )
+  inline ssize_t send_n (char *buf, ssize_t len)
+    {
+      return STREAM::send (buf, len, peer_);
+    }
+
+  inline ssize_t recv  (char * buf, ssize_t len, ACE_Time_Value * tv = NULL)
+    {
+      return recv (buf, len, 0, tv);
+    }
+
+  inline ssize_t recv (char * buf, ssize_t len, int flags, ACE_Time_Value * tv = NULL)
+    {
+      if (tv != 0)
 	{
-		return STREAM::send(buf,len,peer_);
-	}
-	inline ssize_t recv  ( char * buf,ssize_t len, ACE_Time_Value * tv = NULL)
-	{
-		return recv( buf, len, 0, tv );
-	}
-	inline ssize_t recv  ( char * buf,ssize_t len, int flags, ACE_Time_Value * tv = NULL)
-	{
-		if( tv != 0 )
-		{
-		    ACE_HANDLE handle = this->get_handle();
-		    ACE_Handle_Set handle_set;
+	  ACE_HANDLE handle = this->get_handle ();
+	  ACE_Handle_Set handle_set;
 		
-		    handle_set.set_bit (handle);
+	  handle_set.set_bit (handle);
 		
-		    switch (ACE_OS::select (int (handle) + 1,
-					      (fd_set *) handle_set, // read_fds.
-					      (fd_set *) 0,          // write_fds.
-					      (fd_set *) 0,          // exception_fds.
-					      tv))
-			{
-			case 0:
-			  errno = ETIME;
-			case -1:
-			  return -1;
-			default:
-			  ;	// Do the 'recv' below
-			}
-		}
+	  switch (ACE_OS::select (int (handle) + 1,
+				  (fd_set *) handle_set, // read_fds.
+				  (fd_set *) 0,          // write_fds.
+				  (fd_set *) 0,          // exception_fds.
+				  tv))
+	    {
+	    case 0:
+	      errno = ETIME;
+	    case -1:
+	      return -1;
+	    default:
+	      ;	// Do the 'recv' below
+	    }
+	}
 
-		int rval = STREAM::recv (buf,len,peer_,flags);
+      int rval = STREAM::recv (buf, len, peer_, flags);
 #ifdef WIN32
-		if( rval == SOCKET_ERROR )
-			if( WSAGetLastError() == WSAEMSGSIZE )
-				if( flags & MSG_PEEK )
-					rval = len;
+      if (rval == SOCKET_ERROR)
+	if (WSAGetLastError() == WSAEMSGSIZE)
+	  if (flags & MSG_PEEK)
+	    rval = len;
 #endif
 	
-		return (rval<len)?rval:len;
-	}
-	inline ssize_t recv_n( char * buf,ssize_t len, int flags = 0, ACE_Time_Value * tv = NULL )
-	{
-		int rval = this->recv( buf, len, flags, tv );
-		return rval;
-	}
-	inline int get_remote_addr (ACE_INET_Addr & addr) const
-	{
-		addr = peer_;
-		return 0;
-	}
+      return rval < len ? rval : len;
+    }
+  inline ssize_t recv_n (char * buf,
+			 ssize_t len, int flags = 0, 
+			 ACE_Time_Value * tv = NULL)    
+    {
+      int rval = this->recv (buf, len, flags, tv);
+      return rval;
+    }
+
+  inline int get_remote_addr (ACE_INET_Addr &addr) const
+    {
+      addr = peer_;
+      return 0;
+    }
 
 };
-
-///////////////////////////////////////////////////////////////////////////
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #  if ! defined( ACE_IOSTREAM_C )
