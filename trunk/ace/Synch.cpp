@@ -928,7 +928,7 @@ ACE_Static_Object_Lock::atexit (void)
 }
 
 ACE_Thread_Mutex *
-ACE_Static_Object_Lock::get_lock (void)
+ACE_Static_Object_Lock::instance (void)
 {
   // We assume things before main are single threaded.
   if (ACE_Static_Object_Lock::mutex_ == 0)
