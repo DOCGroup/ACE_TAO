@@ -1,3 +1,10 @@
+Thu Jul 24 08:27:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* README:
+
+	  Reverted accidental changes. Thanks to Johnny Willemsen for
+	  pointing this out.
+
 Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>		
 
 	Two example schedulers were plugged into the Dynamic Scheduling
