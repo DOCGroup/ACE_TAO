@@ -21,6 +21,14 @@ include $(TAO_ROOT)/rules.tao.GNU
 #----------------------------------------------------------------------------
 #       Define local rules and targets
 #---------------------------------------------------------------------------
+ifneq ($(CROSS-COMPILE),)
+  all debug profile optimize install deinstall:  
+	@echo The IFR Service requires a TAO_IDL library which isn\'t be built for CROSS-COMPILE platforms.
+
+  clean realclean:
+	@echo Nothing to clean in IFR_Service on CROSS-COMPILE platforms.
+else  # ! CROSS-COMPILE
+
 MKLIST = Makefile.TypeCodeFactory Makefile.IFR_Service Makefile.tao_ifr
 
 all debug profile optimize install deinstall clean realclean clobber depend:
@@ -33,6 +41,7 @@ else  # ! Windows
         done
 endif # ! Windows
 
+endif # ! CROSS-COMPILE
 
 #----------------------------------------------------------------------------
 #       Dependencies

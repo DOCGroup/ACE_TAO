@@ -1,3 +1,32 @@
+Wed Mar 28 13:10:22 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/IFR_Service/Makefile:
+          Disable building this when cross-compiling.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+          Removed warning when multicast is not enabled.
+
+        * orbsvcs/examples/CosEC/RtEC_Based/Makefile:
+          Don't build these examples on VxWorks; they aren't linking
+          due to library conflicts.
+
+        * orbsvcs/examples/CosEC/Simple/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+          Remove unnecessary libraries from link line.  This was causing
+          failures under VxWorks.
+
+        * orbsvcs/examples/Notify/Filter/Filter.cpp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+          Fixed VxWorks compilation error due to multiply instantiated
+          templates.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+          Removed VxWorks warning about incompatible pointer assignment.
+
+        * performance-tests/Thruput/TAO/utils.cpp:
+          Removed warning of unused variables when compiling with VxWorks
+          5.4.
+
 Wed Mar 28 09:45:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Naming_Service/NT_Naming_Service.cpp:

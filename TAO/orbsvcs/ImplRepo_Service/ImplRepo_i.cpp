@@ -974,6 +974,7 @@ ImplRepo_i::setup_multicast (ACE_Reactor *reactor)
 
   return 0;
 #else /* ACE_HAS_IP_MULTICAST */
+  ACE_UNUSED_ARG(reactor);
   if (OPTIONS::instance ()->multicast ())
     ACE_ERROR ((LM_ERROR,
                 "Implementation Repository: "
