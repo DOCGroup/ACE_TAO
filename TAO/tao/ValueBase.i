@@ -82,10 +82,9 @@ CORBA_ValueBase_var::operator= (const CORBA_ValueBase_var &p)
 }
 
 ACE_INLINE
-CORBA_ValueBase_var::operator const CORBA::ValueBase *&() const // cast
+CORBA_ValueBase_var::operator const CORBA::ValueBase *() const // cast
 {
-  return ACE_const_cast (const CORBA::ValueBase *&,
-                         this->ptr_);
+  return this->ptr_;
 }
 
 ACE_INLINE
