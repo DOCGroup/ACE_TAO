@@ -45,7 +45,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\lib\TAO_FT_ClientORB.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib TAO_FTORB_Utils.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Valuetype.lib TAO_IORManip.lib TAO.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\lib\TAO_FT_ClientORB.pdb" /machine:I386 /out:"..\..\..\bin\Release\TAO_FT_ClientORB.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /version:1.3.5
+# ADD LINK32 advapi32.lib user32.lib TAO_Messaging.lib TAO_FTORB_Utils.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Valuetype.lib TAO_IORManip.lib TAO.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\lib\TAO_FT_ClientORB.pdb" /machine:I386 /out:"..\..\..\bin\Release\TAO_FT_ClientORB.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\tao\Messaging" /version:1.3.5
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "FT_ClientORB - Win32 Debug"
