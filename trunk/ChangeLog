@@ -1,3 +1,16 @@
+Wed Jul 23 18:03:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-cygwin32.h:
+          Include os_math.h here so it always gets included before
+          ACE.h, since math.h defines log2 as macro that conflicts with
+          the method ACE::log2().
+
+        * ace/ace/String_Base.cpp:
+          Remove #include "ace/streams.h" and let the cpp's that acutally
+          use it include it themselves.  This helps reduce both footprint
+          and compile-times.  Thanks to Bala Natarajan
+          <bala@dre.vanderbilt.edu> for motivating this change.
+
 Wed Jul 23 17:34:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration_Import_Export.h:

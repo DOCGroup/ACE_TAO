@@ -5,6 +5,7 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
 
 #include "tao/ORB_Core.h"
 

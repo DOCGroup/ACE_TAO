@@ -7,7 +7,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
-
+#include "ace/streams.h"
 
 
 

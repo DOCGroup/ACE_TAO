@@ -18,7 +18,8 @@
 // ============================================================================
 // IDL generated headers
 #include "simpleC.h"
-#include <ace/ace_wchar.h>
+#include "ace/ace_wchar.h"
+#include "ace/streams.h"
 
 wchar_t *
 make_wstring (const char *str)

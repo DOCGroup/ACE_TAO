@@ -4,6 +4,7 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "testC.h"
+#include "ace/streams.h"
 
 ACE_RCSID(MT_Server, client, "$Id$")
 
