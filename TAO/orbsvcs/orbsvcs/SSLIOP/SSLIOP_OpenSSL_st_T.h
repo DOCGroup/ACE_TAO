@@ -35,27 +35,7 @@ namespace TAO
      * specific to a given OpenSSL data structure.
      */
     template <typename T>
-    struct OpenSSL_traits
-    {
-      /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference
-      /// count manipulation function.
-      static const long LOCK_ID = -1;
-
-      /// Perform deep copy of the given OpenSSL structure.
-      static T * copy (T const & st)
-      {
-        // Unimplemented.
-
-        return 0;
-      }
-
-      /// Decrease the reference count on the given OpenSSL
-      /// structure.
-      static void release (T * st)
-      {
-        // Unimplemented.
-      }
-    };
+    struct OpenSSL_traits;
 
     /**
      * @name CORBA-style Reference Count Manipulation Methods
