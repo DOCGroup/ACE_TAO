@@ -52,6 +52,8 @@ module CORBA
 
   typedef sequence<PolicyType> PolicyTypeSeq;
 
+  local interface PolicyCurrent;
+
   enum SetOverrideType
   {
     SET_OVERRIDE,
