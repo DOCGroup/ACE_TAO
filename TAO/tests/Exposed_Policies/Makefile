@@ -49,7 +49,6 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
-
 server: $(addprefix $(VDIR),$(SERVER_OBJ))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^  $(TAO_SRVR_LIBS) $(POSTLINK)
 
@@ -57,9 +56,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJ))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
-
-
+	-$(RM) $(foreach ext, $(IDL_EXT), Counter$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

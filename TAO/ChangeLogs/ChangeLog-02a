@@ -1,188 +1,197 @@
+Thu Nov 16 09:36:43 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+        * performance-tests/Callback/Makefile:
+        * tests/Exposed_Policies/Makefile:
+        * tests/Policies/Makefile:
+          Fixed or add realclean target, the directory was not completely
+          clean after a 'make realclean'.
+
 Thu Nov 16 09:32:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/DynamicInterface/Dynamic_Implementation.cpp:
 
-          In TAO_DynamicImplementation::_dispatch, removed the 
+          In TAO_DynamicImplementation::_dispatch, removed the
           environment argument from init_reply ().
 
 Thu Nov 16 11:16:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Asynch_Invocation.cpp:
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.i:
-	* tao/Asynch_Reply_Dispatcher.cpp:
-	* tao/Asynch_Reply_Dispatcher.h:
-	* tao/Asynch_Reply_Dispatcher.i:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.i:
 
-	  Changed the logic of the #if preprocessor directives to
-	  avoid build errors on old g++, where CORBA messaging
-	  code is not compiled. Base classes have been added to the
-	  above files recently that are not used by messaging, but
-	  are used by DII.
+          Changed the logic of the #if preprocessor directives to
+          avoid build errors on old g++, where CORBA messaging
+          code is not compiled. Base classes have been added to the
+          above files recently that are not used by messaging, but
+          are used by DII.
 
 Thu Nov 16 08:13:42 2000  Ossama Othman  <ossama@uci.edu>
 
-	* VERSION:
+        * VERSION:
 
-	  Corrected TAO mailing list address.  It should be "tao-users,"
-	  not "ace-users."
+          Corrected TAO mailing list address.  It should be "tao-users,"
+          not "ace-users."
 
 Thu Nov 16 10:23:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/GIOP_Messsage_Acceptors.cpp:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Utils.cpp:
-	* tao/GIOP_Utils.h:
+        * tao/GIOP_Messsage_Acceptors.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Utils.cpp:
+        * tao/GIOP_Utils.h:
 
-	  Removed temporary and call to conversion function in
-	  TAO_GIOP_Message_Acceptors::send_reply_exception() and
-	  TAO_GIOP_Message_Lite::send_reply_exception(). These
-	  were the only uses of the conversion function, so that
-	  was removed from TAO_GIOP_Utils as well.
+          Removed temporary and call to conversion function in
+          TAO_GIOP_Message_Acceptors::send_reply_exception() and
+          TAO_GIOP_Message_Lite::send_reply_exception(). These
+          were the only uses of the conversion function, so that
+          was removed from TAO_GIOP_Utils as well.
 
 Thu Nov 16 09:57:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO_Server_Request.cpp:
-	* tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
 
-	  Removed the environment argument from init_reply() - it's
-	  not used.
+          Removed the environment argument from init_reply() - it's
+          not used.
 
-	* tao/PortableServer/DomainS.cpp:
-	* tao/PortableServer/ImplRepoS.cpp:
-	* tao/PortableServer/MessagingS.cpp:
-	* tao/PortableServer/PolicyS.cpp:
-	* tao/orbsvcs/IFR_Service/InterfaceS.cpp:
+        * tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/orbsvcs/IFR_Service/InterfaceS.cpp:
 
-	  Modified these files to conform to the change above.
+          Modified these files to conform to the change above.
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
 
-	  Modified code generation to conform to the change above.
+          Modified code generation to conform to the change above.
 
 Thu Nov 16 08:15:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/InterfaceC.cpp:
-	* tao/Object.cpp:
-	* tao/DomainC.cpp: The last set of changes broke the code guarded
-	  by TAO_HAS_INTERFACE_REPOSITORY == 1. Fixed the problem. 
+        * tao/InterfaceC.cpp:
+        * tao/Object.cpp:
+        * tao/DomainC.cpp: The last set of changes broke the code guarded
+          by TAO_HAS_INTERFACE_REPOSITORY == 1. Fixed the problem.
 
 Wed Nov 15 21:52:10 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Table.cpp (bind):
+        * tao/ORB_Table.cpp (bind):
 
-	  Made this method exception safe by storing the duplicated ID in
-	  a CORBA::String_var until it safe to transfer ownership to the
-	  ORB table.
+          Made this method exception safe by storing the duplicated ID in
+          a CORBA::String_var until it safe to transfer ownership to the
+          ORB table.
 
-	* orbsvcs/orbsvcs/SSLIOP.idl:
+        * orbsvcs/orbsvcs/SSLIOP.idl:
 
-	  Added ASN.1 (DER) certificate typedefs.  These typedefs are
-	  defined by the Firewall specification.  They are used by the
-	  soon to be added SSLIOP::Current object to return the peer
-	  certificate chain for the current SSL session as a sequence of
-	  octet sequences.
+          Added ASN.1 (DER) certificate typedefs.  These typedefs are
+          defined by the Firewall specification.  They are used by the
+          soon to be added SSLIOP::Current object to return the peer
+          certificate chain for the current SSL session as a sequence of
+          octet sequences.
 
-	  Added new TAO-specific SSLIOP::Current interface definition.
-	  This interface can be used to obtain SSL session related
-	  information about the current execution context.  Its
-	  implementation will soon be added.
+          Added new TAO-specific SSLIOP::Current interface definition.
+          This interface can be used to obtain SSL session related
+          information about the current execution context.  Its
+          implementation will soon be added.
 
 Wed Nov 15 21:35:17 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	  This set of changes have been motivated by the CORBA 2.4
-	  spec. The spec specifies that the GIOP request header should not
-	  be padded to a 8 byte boundary, if there is no information or
-	  data that is sent along. In other words, Request headers for
-	  operations with no arguments should not be padded to a 8 byte
-	  boundary.  Actually, the CORBA 2.4 spec has specified this only
-	  for the request header. But, the same argument has been extended
-	  to the reply header too. ORBIX 2000 already does this. If the
-	  operation returns a void and has no arguments, the reply header
-	  is not padded to an 8 byte boundary. So, the same has been done
-	  for TAO too.
+          This set of changes have been motivated by the CORBA 2.4
+          spec. The spec specifies that the GIOP request header should not
+          be padded to a 8 byte boundary, if there is no information or
+          data that is sent along. In other words, Request headers for
+          operations with no arguments should not be padded to a 8 byte
+          boundary.  Actually, the CORBA 2.4 spec has specified this only
+          for the request header. But, the same argument has been extended
+          to the reply header too. ORBIX 2000 already does this. If the
+          operation returns a void and has no arguments, the reply header
+          is not padded to an 8 byte boundary. So, the same has been done
+          for TAO too.
 
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Set a flag
-	  for one of the arguments to the constructors of
-	  TAO_GIOP_invocation classes. The flag is set 1 if there are any
-	  arguments that are marshalled and 0 if there are no arguments
-	  that are marshalled.
-	  
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Added a line
-	  of generated code to set a flag in the TAO_Server_Request class
-	  if there are no arguments and return types for the operation
-	  that need to be marshalled.
-	
-	* tao/Invocation.h:
-	* tao/Invocation.cpp:
-	* tao/Invocation.i: 
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.cpp:
-	* tao/Asynch_Invocation.i: Added an extra argument to the
-	  TAO_GIOP_Invocation classes. This argument is passed to the
-	  constructor of TAO_Operation_details. 
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Set a flag
+          for one of the arguments to the constructors of
+          TAO_GIOP_invocation classes. The flag is set 1 if there are any
+          arguments that are marshalled and 0 if there are no arguments
+          that are marshalled.
 
-	* tao/DynamicInterface/DII_Invocation.h:
-	* tao/DynamicInterface/DII_Invocation.inl:
-	* tao/DynamicInterface/Request.cpp: Made the above changes to
-	  these classes too.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Added a line
+          of generated code to set a flag in the TAO_Server_Request class
+          if there are no arguments and return types for the operation
+          that need to be marshalled.
 
-	* tao/operation_details.h:
-	* tao/operation_details.i: Added a argument to the
-	  constructor. Stored the argument in the class and provided an
-	  accessor for it. 
-	
-	* tao/GIOP_Message_Accept_State.cpp:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Connectors.cpp: Added a check to check to see
-	  whether the GIOP message is going to carry any data before we
-	  align the pointer to an 8 byte boundary. 
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+        * tao/Invocation.i:
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Invocation.i: Added an extra argument to the
+          TAO_GIOP_Invocation classes. This argument is passed to the
+          constructor of TAO_Operation_details.
 
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/TAO_Server_Request.h:
-	* tao/TAO_Server_Request.cpp
-	* tao/TAO_Server_Request.i: Added an extra flag and accessor for a
-	  flag that would be set by the generated code to 0 if there are no
-	  data that needs to be marshalled. 
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation.inl:
+        * tao/DynamicInterface/Request.cpp: Made the above changes to
+          these classes too.
 
-	* tao/CORBANAME_Parser.cpp:
-	* tao/DomainC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PortableServer/ImplRepoC.cpp: Changed the arguments for the
-	  TAO_GIOP_invocation calls.
+        * tao/operation_details.h:
+        * tao/operation_details.i: Added a argument to the
+          constructor. Stored the argument in the class and provided an
+          accessor for it.
+
+        * tao/GIOP_Message_Accept_State.cpp:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Connectors.cpp: Added a check to check to see
+          whether the GIOP message is going to carry any data before we
+          align the pointer to an 8 byte boundary.
+
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.cpp
+        * tao/TAO_Server_Request.i: Added an extra flag and accessor for a
+          flag that would be set by the generated code to 0 if there are no
+          data that needs to be marshalled.
+
+        * tao/CORBANAME_Parser.cpp:
+        * tao/DomainC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PortableServer/ImplRepoC.cpp: Changed the arguments for the
+          TAO_GIOP_invocation calls.
 
 
-	* tao/IIOP_Connector.h:
-	* tao/IIOP_Connector.cpp:
-	* tao/Strategies/SHMIOP_Connector.cpp
-	* tao/Strategies/SHMIOP_Connector.h
-	* tao/Strategies/UIOP_Connector.cpp
-	* tao/Strategies/UIOP_Connector.h: Totally unrelated to the above
-	  change. Added default constructors and derstructors as g++2.7.2
-	  seems to be looking for it.
-	
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp
+        * tao/Strategies/SHMIOP_Connector.h
+        * tao/Strategies/UIOP_Connector.cpp
+        * tao/Strategies/UIOP_Connector.h: Totally unrelated to the above
+          change. Added default constructors and derstructors as g++2.7.2
+          seems to be looking for it.
+
 Wed Nov 15 19:11:28 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security.idl:
-	* orbsvcs/orbsvcs/SecurityAdmin.idl:
-	* orbsvcs/orbsvcs/SecurityLevel1.idl:
-	* orbsvcs/orbsvcs/SecurityLevel2.idl:
-	* orbsvcs/orbsvcs/SecurityReplaceabpe.idl:
+        * orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/SecurityAdmin.idl:
+        * orbsvcs/orbsvcs/SecurityLevel1.idl:
+        * orbsvcs/orbsvcs/SecurityLevel2.idl:
+        * orbsvcs/orbsvcs/SecurityReplaceabpe.idl:
 
-	  Updated against Security Service 1.8 final specification
-	  (security/00-11-03).
+          Updated against Security Service 1.8 final specification
+          (security/00-11-03).
 
 Wed Nov 15 18:45:45 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ClientRequestInfo.cpp (target, operation):
-	* tao/PortableServer/ServerRequestInfo.cpp (operation):
+        * tao/ClientRequestInfo.cpp (target, operation):
+        * tao/PortableServer/ServerRequestInfo.cpp (operation):
 
-	  According to the C++ mapping, the caller is responsible for
-	  releasing returned values for both these cases (an object
-	  reference and a string, respectively).  These methods now
-	  return duplicated value.  This is the correct behavior.
+          According to the C++ mapping, the caller is responsible for
+          releasing returned values for both these cases (an object
+          reference and a string, respectively).  These methods now
+          return duplicated value.  This is the correct behavior.
 
 Wed Nov 15 18:38:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
