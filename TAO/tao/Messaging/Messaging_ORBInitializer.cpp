@@ -128,7 +128,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
         }
       ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
         {
-          if (ex.minor () == (TAO_OMG_VMCID | 16))
+          if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
               // The factory is already there, it happens because the
               // magic initializer in Messaging.cpp registers with the

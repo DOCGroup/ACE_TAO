@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           operation, 
+ACE_RCSID (be_visitor_operation,
+           operation,
            "$Id$")
 
 // ************************************************************
@@ -142,7 +142,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 
   /***************************************************************************/
   // 2.6
-  // Generate the Right Throw Spec if it is an AMH ExceptionHolder 
+  // Generate the Right Throw Spec if it is an AMH ExceptionHolder
   /***************************************************************************/
   // Check if this is (IF and it's not VT) or (it is an AMH ExceptionHolder).
   if (iface != 0)
@@ -154,7 +154,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
         {
           *os << be_nl << throw_spec_open;
           *os << be_idt_nl << "CORBA::SystemException";
-          
+
           if (node->exceptions ())
             {
               // Initialize an iterator to iterate thru the exception list.
@@ -164,7 +164,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
                 {
                   be_exception *excp =
                     be_exception::narrow_from_decl (ei.item ());
-                  
+
                   if (excp == 0)
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
@@ -172,9 +172,9 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
                                          "gen_throw_spec - "
                                          "bad exception node\n"),
                                         -1);
-                      
+
                     }
-                  
+
                   *os << be_nl << ", ";
                   *os << excp->name ();
                 }
@@ -202,8 +202,8 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
   // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
   // whether the operation node has parameters.
   const char *env_decl = "ACE_ENV_SINGLE_ARG_DECL";
-  
-  if (this->ctx_->sub_state () 
+
+  if (this->ctx_->sub_state ()
         == TAO_CodeGen::TAO_AMH_RESPONSE_HANDLER_OPERATION
       && node->argument_count () == 0)
     {
@@ -378,7 +378,7 @@ be_visitor_operation::gen_check_interceptor_exception (be_type *return_type)
   return 0;
 }
 
-int 
+int
 be_visitor_operation::gen_stub_operation_body (
     be_operation *node,
     be_type *return_type
@@ -834,7 +834,7 @@ be_visitor_operation::gen_marshal_and_invoke (
           << "{" << be_idt_nl;
 
       // If marshaling fails, raise exception.
-      if (this->gen_raise_interceptor_exception (bt, "CORBA::MARSHAL", "") 
+      if (this->gen_raise_interceptor_exception (bt, "CORBA::MARSHAL", "")
             == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -894,7 +894,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   int status = this->gen_raise_interceptor_exception (
                          bt,
                          "CORBA::UNKNOWN",
-                         "TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES"
+                         "CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES"
                        );
 
   if (status == -1)
@@ -930,8 +930,8 @@ be_visitor_operation::gen_marshal_and_invoke (
   // If we reach here, we are ready to proceed.
   // the code below this is for twoway operations only.
 
-  if (!this->void_return_type (bt) 
-      || this->has_param_type (node, AST_Argument::dir_INOUT) 
+  if (!this->void_return_type (bt)
+      || this->has_param_type (node, AST_Argument::dir_INOUT)
       || this->has_param_type (node, AST_Argument::dir_OUT))
 
     {
@@ -981,7 +981,7 @@ be_visitor_operation::gen_marshal_and_invoke (
       // return val (if any) and parameters (if any) that came with
       // the response message.
       *os << be_nl
-          << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" 
+          << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();"
           << be_nl << be_nl
           << "if (!(" << be_idt << be_idt_nl;
 
@@ -1033,11 +1033,11 @@ be_visitor_operation::gen_marshal_and_invoke (
 
       // If marshaling fails, raise exception.
       int status = this->gen_raise_interceptor_exception (
-                             bt, 
+                             bt,
                              "CORBA::MARSHAL",
                              "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES"
                            );
-                             
+
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -1161,7 +1161,7 @@ be_visitor_operation::gen_marshal_and_invoke (
 
   *os << be_nl
       << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION" << be_nl
-      << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)" 
+      << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)"
       << be_idt_nl
       << "{" << be_idt_nl;
 
@@ -1177,8 +1177,50 @@ be_visitor_operation::gen_marshal_and_invoke (
   *os << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl;
 
-  *os << "}" << be_uidt_nl
-      << "ACE_ENDTRY;" << be_nl;
+  *os << "}" << be_uidt_nl;
+
+  // Convert non-CORBA C++ exceptions to CORBA::UNKNOWN.
+  *os << "\n# if defined (ACE_HAS_EXCEPTIONS) \\\n"
+      << "     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)" << be_nl
+      << "ACE_CATCHALL" << be_idt_nl
+      << "{" << be_idt_nl
+      << "CORBA::UNKNOWN ex;" << be_nl
+      << be_nl
+      << "_tao_ri.exception (&ex);"<< be_nl
+      << "_tao_vfr.receive_exception (" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  // The receive_exception() interception point may have thrown a
+  // PortableInterceptor::ForwardRequest exception.  In that event,
+  // the connection retry loop must be restarted so do not throw the
+  // CORBA::UNKNOWN exception to convert the unhandled C++ exception.
+  *os << be_nl
+      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  *os << be_nl
+      << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)"
+      << be_idt_nl;
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << "throw ";
+    }
+  else
+    {
+      *os << "ACE_TRY_THROW ";
+    }
+
+  *os << "(ex);" << be_uidt << be_uidt_nl
+      << "}" << be_uidt
+      << "\n# endif  /* ACE_HAS_EXCEPTIONS"
+      << " && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */" << be_nl << be_nl;
+
+  *os << "ACE_ENDTRY;" << be_nl;
 
   if (this->gen_check_exception (bt) == -1)
     {

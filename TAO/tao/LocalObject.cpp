@@ -120,7 +120,7 @@ CORBA_LocalObject::_create_request (CORBA::Context_ptr,
 {
   // @@ Correct minor code?  CCM spec says one thing CORBA spec says
   //    another!
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_OMG_VMCID | 4,
+  ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
                                   CORBA::COMPLETED_NO));
 }
 
@@ -137,7 +137,7 @@ CORBA_LocalObject::_create_request (CORBA::Context_ptr,
 {
   // @@ Correct minor code?  CCM spec says one thing CORBA spec says
   //    another!
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_OMG_VMCID | 4,
+  ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
                                   CORBA::COMPLETED_NO));
 }
 
@@ -147,7 +147,7 @@ CORBA_LocalObject::_request (const CORBA::Char *
 {
   // @@ Correct minor code?  CCM spec says one thing CORBA spec says
   //    another!
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_OMG_VMCID | 4,
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
                                          CORBA::COMPLETED_NO),
                     0);
 }

@@ -1,4 +1,3 @@
-
 #include "IIOP_Connector.h"
 #include "IIOP_Profile.h"
 #include "debug.h"
@@ -50,7 +49,7 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connec
 
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
-  : TAO_Connector (TAO_TAG_IIOP_PROFILE),
+  : TAO_Connector (IOP::TAG_INTERNET_IOP),
     lite_flag_ (flag),
     connect_strategy_ (),
     base_connector_ ()
@@ -392,7 +391,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 TAO_IIOP_Endpoint *
 TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
-  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
+  if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
     return 0;
 
   TAO_IIOP_Endpoint *iiop_endpoint =

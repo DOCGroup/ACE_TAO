@@ -42,7 +42,7 @@ TAO_PICurrent::get_slot (PortableInterceptor::SlotId id
 
   if (impl == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                               CORBA::COMPLETED_NO),
                         0);
     }
@@ -64,7 +64,7 @@ TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
 
   if (impl == 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                        CORBA::COMPLETED_NO));
     }
 

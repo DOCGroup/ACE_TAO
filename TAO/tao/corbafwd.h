@@ -1,4 +1,3 @@
-
 // -*- C++ -*-
 
 //=============================================================================
@@ -1499,127 +1498,213 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // http://www.omg.org/cgi-bin/doc?ptc/99-02-01
 //
 
-// These numbers were assigned by the OMG.  Do *NOT* change.
-// The ASCII representation is "TAO\x00", we can request more ORB
-// types later.
-#define TAO_ORB_TYPE 0x54414f00U
-
 // The standard profile tags, they are listed here only to avoid
-// putting the raw literal in the code, it is *NOT* necessary to list
-// your own protocols here.
-#define TAO_TAG_INVALID_PROFILE -1
-#define TAO_TAG_IIOP_PROFILE 0
-#define TAO_TAG_MULTIPLE_COMPONENT_PROFILE 1
+// putting the raw literal in the code,
+// #define TAO_TAG_INVALID_PROFILE -1
+// #define TAO_TAG_IIOP_PROFILE 0
+// #define TAO_TAG_MULTIPLE_COMPONENT_PROFILE 1
 
-// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
-// define our own profile ids in TAO.
-#define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Local IPC (Unix Domain) */
-// @@ The values below are suggestions for some of the protocols
-//    we have thought of, subject to change at any point
-// #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
-#define TAO_TAG_SHMEM_PROFILE  0x54414f02U /* Shared memory */
-// #define TAO_TAG_MSGQ_PROFILE   0x54414f03U /* Message Queue */
-#define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
-// #define TAO_TAG_MCAST_PROFILE  0x54414f05U /* IP/Multicast */
-// #define TAO_TAG_CPCI_PROFILE   0x54414f06U /* Compact/PCI */
-// #define TAO_TAG_VME_PROFILE    0x54414f07U /* VME Bus */
-// #define TAO_TAG_NTNP_PROFILE   0x54414f08U /* NT Named Pipes */
-// #define TAO_TAG_HTTPNG_PROFILE 0x54414f09U /* HTTP-NG */
-// #define TAO_TAG_PIPE_PROFILE   0x54414f0AU /* Pipe */
-// #define TAO_TAG_XXXX_PROFILE   0x54414f0BU /* ???? */
-#define TAO_TAG_UIPMC_PROFILE  0x54414f0CU /* Unreliable IP Multicast */
-#define TAO_TAG_BIOP_PROFILE   0x54414f0FU /* Boeing Custom Protocol */
+/**
+ * @name TAO-Specific Profile IDs
+ *
+ * The TAO @c IOP::ProfileId range 0x54414f00 - 0x54414f0f has been
+ * reserved with the OMG.
+ *
+ * @note It is *NOT* necessary to list your own protocols here.
+ *
+ * @note The values below are subject to change at any point.
+ */
+//@{
+/// Local IPC (Unix Domain)
+const CORBA::ULong TAO_TAG_UIOP_PROFILE = 0x54414f00U;
 
-// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
-// define our own profile tagged components in TAO.
+/// ATM/AAL5
+// const CORBA::ULong TAO_TAG_AIOP_PROFILE = 0x54414f01U;
+
+/// Shared memory
+const CORBA::ULong TAO_TAG_SHMEM_PROFILE = 0x54414f02U;
+
+/// Message Queue
+// const CORBA::ULong TAO_TAG_MSGQ_PROFILE = 0x54414f03U;
+
+/// UDP
+const CORBA::ULong TAO_TAG_UDP_PROFILE = 0x54414f04U;
+
+/// IP/Multicast
+// const CORBA::ULong TAO_TAG_MCAST_PROFILE = 0x54414f05U;
+
+/// Compact/PCI
+// const CORBA::ULong TAO_TAG_CPCI_PROFILE = 0x54414f06U;
+
+/// VME Bus
+// const CORBA::ULong TAO_TAG_VME_PROFILE = 0x54414f07U;
+
+/// NT Named Pipes
+// const CORBA::ULong TAO_TAG_NTNP_PROFILE = 0x54414f08U;
+
+/// HTTP-NG
+// const CORBA::ULong TAO_TAG_HTTPNG_PROFILE = 0x54414f09U;
+
+/// Pipe
+// const CORBA::ULong TAO_TAG_PIPE_PROFILE = 0x54414f0AU;
+
+/// ????
+// const CORBA::ULong TAO_TAG_XXXX_PROFILE = 0x54414f0BU;
+
+/// Unreliable IP Multicast
+const CORBA::ULong TAO_TAG_UIPMC_PROFILE = 0x54414f0CU;
+
+/// Boeing Custom Protocol
+const CORBA::ULong TAO_TAG_BIOP_PROFILE = 0x54414f0FU;
+//@}
+
+/**
+ * @name TAO-Specific Profile Tagged Component IDs
+ *
+ * The TAO @c IOP::TaggedComponent range 0x54414f00 - 0x54414f0f has
+ * been reserved with the OMG.
+ */
+//@{
+
+/// The TAO-specific OMG assigned value for the TAG_ORB_TYPE tagged
+/// component.
+/**
+ * This number was assigned by the OMG.  Do *NOT* change.  The ASCII
+ * representation is "TA\x00".  If necessary, we can request more ORB
+ * types later.
+ */
+const CORBA::ULong TAO_ORB_TYPE = 0x54414f00U;
 
 // This tag is no longer used in TAO.  It will not be reused for a
 // period of time to preserve backward compatibility with servers
 // running older versions of TAO.
+// ********* CHANGE THE VALUE!!!! IT IS THE SAME AS THE TAO_ORB_TYPE
+// VALUE.  THE ORB TYPE IS A TAGGED COMPONENT TOO SO TAO_TAG_PRIORITY
+// SHOULD HAVE A DIFFERENT VALUE.
 // #define TAO_TAG_PRIORITY 0x54414f00U
 
 //  Tag 0x54414f01U is defined/used by SSLIOP.
 
-// Tag for storing multiple endpoints within a single profile.
-#define TAO_TAG_ENDPOINTS 0x54414f02U
-//#define TAO_TAG_SOME_OTHER_TAG 0x54414f03U
-// Tag for specifying object groups - see MIOP specification
-#define TAO_TAG_GROUP 0x54414f03U
-#define TAO_TAG_GROUP_IIOP 0x54414f04U
+/// Tag for storing multiple endpoints within a single profile.
+/**
+ * This is TAO-specific, and is mostly used by TAO's RTCORBA support.
+ * The standard TAG_ALTERNATE_IIOP_ADDRESSES tagged component is the
+ * portable alternative.
+ */
+const CORBA::ULong TAO_TAG_ENDPOINTS =  0x54414f02U;
 
+//const CORBA::ULong TAO_TAG_SOME_OTHER_TAG = 0x54414f03U;
 
-// We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
-// define our own service context list entries.
+//@}
 
-// We insert a dummy service context in the service context list to
-// preserve the alignment in DSI based gateways, so no
-// marshaling/demarshaling is required.  This is *extremely* brittle,
-// but works.
-#define TAO_SVC_CONTEXT_ALIGN 0x54414f00U
+/**
+ * @name TAO-Specific @c IOP::ServiceId Values
+ *
+ * The TAO @c IOP::ServiceId range 0x54414f00 - 0x54414f0f has been
+ * reserved with the OMG.
+ * @par
+ * These values are used in service contexts that are inserted into a
+ * request or reply @c IOP::ServiceContextList.
+ */
+//@{
 
-// This number is reserver by the OMG as a prefix to all the standard
-// minor codes.  Check the CORBA/IIOP spec for details
-#define TAO_OMG_VMCID 0x4f4d0000
+/// A dummy service context that is inserted in the service context
+/// list to preserve the alignment in DSI based gateways, so no
+/// marshaling/demarshaling is required.
+/**
+ * @note This is *extremely* brittle but works.
+ */
+const CORBA::ULong TAO_SVC_CONTEXT_ALIGN = 0x54414f00U;
+
+namespace CORBA
+{
+  /// The OMG Vendor Minor Codeset ID.
+  /**
+   * This number is reserved by the OMG as a prefix to all the
+   * standard system exception minor codes.  Check the CORBA/IIOP
+   * specification for details.
+   */
+  const CORBA::ULong OMGVMCID = 0x4f4d0000U;
+}
 
 // This number was assigned by the OMG.  Do *NOT* change at random.
 // The ASCII representation is TA0xxxx, close enough since they only
 // take 20 bits, the first 16 are TA, the next 4 are 0000.  Remember
 // that we can only play with the last 12 bits, TAO_MAX_MINOR_CODE is
 // there to remind us of that.
-#define TAO_DEFAULT_MINOR_CODE 0x54410000
-#define TAO_MAX_MINOR_CODE 0x54410FFF
+const CORBA::ULong TAO_DEFAULT_MINOR_CODE = 0x54410000U;
+const CORBA::ULong TAO_MAX_MINOR_CODE = 0x54410fffU;
 
-// Minor code encoding.  Encode the location in 5 bits, and the errno
-// in 7 bits:
-// 0x   0101 0100   0100 0001   0000   ____ _     ___ ____
-//          T           A        0    location      errno
-
-// Location encoding:  5 bits, after the errno encoding.
-#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x01U << 7)
-#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x02U << 7)
-#define TAO_POA_DISCARDING                         (0x03U << 7)
-#define TAO_POA_HOLDING                            (0x04U << 7)
-#define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x05U << 7)
-#define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x06U << 7)
-#define TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  (0x07U << 7)
-#define TAO_MPROFILE_CREATION_ERROR                (0x08U << 7)
-#define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x09U << 7)
-#define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0AU << 7)
-#define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0BU << 7)
-#define TAO_IMPLREPO_MINOR_CODE                    (0x0CU << 7)
-#define TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   (0x0DU << 7)
-#define TAO_ORB_CORE_INIT_LOCATION_CODE            (0x0EU << 7)
-#define TAO_POLICY_NARROW_CODE                     (0x0FU << 7)
-#define TAO_GUARD_FAILURE                          (0x10U << 7)
-#define TAO_POA_BEING_DESTROYED                    (0x11U << 7)
-#define TAO_POA_INACTIVE                           (0x12U << 7)
-#define TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE  (0x13U << 7)
-#define TAO_AMH_REPLY_LOCATION_CODE                (0x14U << 7)
+/**
+ * @name Minor Code Encoding
+ *
+ * Encode the location in 5 bits, and the errno in 7 bits:
+ *
+ * @verbatim
+ * 0x   0101 0100   0100 0001   0000   ____ _     ___ ____
+ *          T           A        0    location      errno
+ * @endverbatim
+ **/
+//@{
+/**
+ * @name Location Encoding
+ *
+ * The location encoding is the 5 bits, after the @ errno encoding.
+ */
+//@{
+const CORBA::ULong TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE = (0x01U << 7);
+const CORBA::ULong TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     = (0x02U << 7);
+const CORBA::ULong TAO_POA_DISCARDING                         = (0x03U << 7);
+const CORBA::ULong TAO_POA_HOLDING                            = (0x04U << 7);
+const CORBA::ULong TAO_UNHANDLED_SERVER_CXX_EXCEPTION         = (0x05U << 7);
+const CORBA::ULong TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     = (0x06U << 7);
+const CORBA::ULong TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  = (0x07U << 7);
+const CORBA::ULong TAO_MPROFILE_CREATION_ERROR                = (0x08U << 7);
+const CORBA::ULong TAO_TIMEOUT_CONNECT_MINOR_CODE             = (0x09U << 7);
+const CORBA::ULong TAO_TIMEOUT_SEND_MINOR_CODE                = (0x0AU << 7);
+const CORBA::ULong TAO_TIMEOUT_RECV_MINOR_CODE                = (0x0BU << 7);
+const CORBA::ULong TAO_IMPLREPO_MINOR_CODE                    = (0x0CU << 7);
+const CORBA::ULong TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   = (0x0DU << 7);
+const CORBA::ULong TAO_ORB_CORE_INIT_LOCATION_CODE            = (0x0EU << 7);
+const CORBA::ULong TAO_POLICY_NARROW_CODE                     = (0x0FU << 7);
+const CORBA::ULong TAO_GUARD_FAILURE                          = (0x10U << 7);
+const CORBA::ULong TAO_POA_BEING_DESTROYED                    = (0x11U << 7);
+const CORBA::ULong TAO_POA_INACTIVE                           = (0x12U << 7);
+const CORBA::ULong TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE  = (0x13U << 7);
+const CORBA::ULong TAO_AMH_REPLY_LOCATION_CODE                = (0x14U << 7);
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
+//@}
 
-// errno encoding:  bottom 7 bits.
-#define TAO_UNSPECIFIED_MINOR_CODE        0x0U
-#define TAO_ETIMEDOUT_MINOR_CODE          0x1U
-#define TAO_ENFILE_MINOR_CODE             0x2U
-#define TAO_EMFILE_MINOR_CODE             0x3U
-#define TAO_EPIPE_MINOR_CODE              0x4U
-#define TAO_ECONNREFUSED_MINOR_CODE       0x5U
-#define TAO_ENOENT_MINOR_CODE             0x6U
-#define TAO_EBADF_MINOR_CODE              0x7U
-#define TAO_ENOSYS_MINOR_CODE             0x8U
-#define TAO_EPERM_MINOR_CODE              0x9U
-#define TAO_EAFNOSUPPORT_MINOR_CODE       0xAU
-#define TAO_EAGAIN_MINOR_CODE             0xBU
-#define TAO_ENOMEM_MINOR_CODE             0xCU
-#define TAO_EACCES_MINOR_CODE             0xDU
-#define TAO_EFAULT_MINOR_CODE             0xEU
-#define TAO_EBUSY_MINOR_CODE              0xFU
-#define TAO_EEXIST_MINOR_CODE             0x10U
-#define TAO_EINVAL_MINOR_CODE             0x11U
-#define TAO_ECOMM_MINOR_CODE              0x12U
-#define TAO_ECONNRESET_MINOR_CODE         0x13U
-#define TAO_ENOTSUP_MINOR_CODE            0x14U
+/**
+ * @name @c errno Encoding
+ *
+ * The @c errno encoding is located in the bottom 7 bits.
+ */
+//@{
+const CORBA::ULong TAO_UNSPECIFIED_MINOR_CODE        = 0x0U;
+const CORBA::ULong TAO_ETIMEDOUT_MINOR_CODE          = 0x1U;
+const CORBA::ULong TAO_ENFILE_MINOR_CODE             = 0x2U;
+const CORBA::ULong TAO_EMFILE_MINOR_CODE             = 0x3U;
+const CORBA::ULong TAO_EPIPE_MINOR_CODE              = 0x4U;
+const CORBA::ULong TAO_ECONNREFUSED_MINOR_CODE       = 0x5U;
+const CORBA::ULong TAO_ENOENT_MINOR_CODE             = 0x6U;
+const CORBA::ULong TAO_EBADF_MINOR_CODE              = 0x7U;
+const CORBA::ULong TAO_ENOSYS_MINOR_CODE             = 0x8U;
+const CORBA::ULong TAO_EPERM_MINOR_CODE              = 0x9U;
+const CORBA::ULong TAO_EAFNOSUPPORT_MINOR_CODE       = 0xAU;
+const CORBA::ULong TAO_EAGAIN_MINOR_CODE             = 0xBU;
+const CORBA::ULong TAO_ENOMEM_MINOR_CODE             = 0xCU;
+const CORBA::ULong TAO_EACCES_MINOR_CODE             = 0xDU;
+const CORBA::ULong TAO_EFAULT_MINOR_CODE             = 0xEU;
+const CORBA::ULong TAO_EBUSY_MINOR_CODE              = 0xFU;
+const CORBA::ULong TAO_EEXIST_MINOR_CODE             = 0x10U;
+const CORBA::ULong TAO_EINVAL_MINOR_CODE             = 0x11U;
+const CORBA::ULong TAO_ECOMM_MINOR_CODE              = 0x12U;
+const CORBA::ULong TAO_ECONNRESET_MINOR_CODE         = 0x13U;
+const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
 // *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
+//@}
+//@}
 
 // These numbers are assigned by the OpenGroup, a database is
 // available at
