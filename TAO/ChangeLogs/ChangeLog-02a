@@ -1,40 +1,50 @@
 Wed Mar 28 09:31:54 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
-	
-	* tests/RTCORBA/Client_Propagated/Client_ORBInitializer.{cpp,h}:
-	* tests/RTCORBA/Client_Propagated/Makefile:
-	* tests/RTCORBA/Client_Propagated/client.dsp:
-	* tests/RTCORBA/Client_Propagated/client.cpp:
-	* tests/RTCORBA/Client_Propagated/interceptors.{cpp,h}:
-	  Added portable interceptor code to verify that the client
-	  propagated priority is passed in the service context list
-	  back from the server.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
-	  Added Ossama's changes to replicate Bug #806.  Also added many 
-	  checks to verify the functionality of the service context 
-	  manipulation methods for requests and replies, and added checks 
-	  to verify that proper service context list contents are received 
-	  from both the client and the server.  The test no longer relies 
-	  on visual inspection of the results to show proper execution.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+          Added #if ACE_HAS_PURIFY == 1 checks to initialize some
+          structures before they are used.  This just removes the
+          100,000+ warnings with Purify that the cubit clients and
+          servers give.  This should be ok since any performance
+          measurements have ACE_HAS_PURIFY == 0 anyway.
 
-	* tao/ClientRequestInfo.{cpp,h}:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/GIOP_Message_Generator_Parser_12.cpp:
-	* tao/GIOP_Message_Handler.cpp:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/IIOP_Transport.cpp:
-	* tao/Invocation.{cpp,h,i}:
-	* tao/RT_Protocols_Hooks.cpp:
-	* tao/Service_Context.{cpp,h}:
-	* tao/TAO_Server_Request.{cpp,h,i}:
-	* tao/operation_details.{h,i}:
-	* tao/PortableServer/Object_Adapter.{cpp,h}:
-	* tao/PortableServer/ServerRequestInfo.{cpp,h}:
-	  Separated out request and reply service context lists to fix 
-	  Bug #806.  Refactored out code duplication in 
-	  ClientRequestInfo.{cpp,h} and ServerRequestInfo.{cpp,h} 
-	  using the TAO_Service_Context class.
+Wed Mar 28 09:31:54 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+        * tests/RTCORBA/Client_Propagated/Client_ORBInitializer.{cpp,h}:
+        * tests/RTCORBA/Client_Propagated/Makefile:
+        * tests/RTCORBA/Client_Propagated/client.dsp:
+        * tests/RTCORBA/Client_Propagated/client.cpp:
+        * tests/RTCORBA/Client_Propagated/interceptors.{cpp,h}:
+          Added portable interceptor code to verify that the client
+          propagated priority is passed in the service context list
+          back from the server.
+
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+          Added Ossama's changes to replicate Bug #806.  Also added many
+          checks to verify the functionality of the service context
+          manipulation methods for requests and replies, and added checks
+          to verify that proper service context list contents are received
+          from both the client and the server.  The test no longer relies
+          on visual inspection of the results to show proper execution.
+
+        * tao/ClientRequestInfo.{cpp,h}:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Handler.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation.{cpp,h,i}:
+        * tao/RT_Protocols_Hooks.cpp:
+        * tao/Service_Context.{cpp,h}:
+        * tao/TAO_Server_Request.{cpp,h,i}:
+        * tao/operation_details.{h,i}:
+        * tao/PortableServer/Object_Adapter.{cpp,h}:
+        * tao/PortableServer/ServerRequestInfo.{cpp,h}:
+          Separated out request and reply service context lists to fix
+          Bug #806.  Refactored out code duplication in
+          ClientRequestInfo.{cpp,h} and ServerRequestInfo.{cpp,h}
+          using the TAO_Service_Context class.
 
 Wed Mar 28 08:18:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -774,14 +784,14 @@ Sun Mar 25 11:17:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.RTSched:
-	  Added guards for old g++.
+          Added guards for old g++.
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
-	  Removed redundant guards  in the files. This should fix a small
-	  compilation problem in LYNX-I386 builds.
+          Removed redundant guards  in the files. This should fix a small
+          compilation problem in LYNX-I386 builds.
 
 Sun Mar 25 07:42:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
