@@ -38,7 +38,11 @@ SO_Group::add_executable (const char * path)
 
   opts.set_handles (ACE_STDIN,pipe[1]);
 
-  ACE_ASSERT(opts.command_line ("ldd %s",path) == 0);
+  int result = opts.command_line ("ldd %s",path);
+  // Prevent compiler warning about "unused variable" if ACE_ASSERT is
+  // an empty macro.
+  ACE_UNUSED_ARG (result);
+  ACE_ASSERT (result == 0);
 
   proc.spawn (opts);
   if (ACE_OS::close(pipe[1]) == -1)
