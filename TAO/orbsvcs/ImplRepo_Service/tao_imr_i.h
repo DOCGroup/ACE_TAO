@@ -143,6 +143,9 @@ public:
   virtual int run (void);
 
 protected:
+  void setenv (ASYS_TCHAR *optarg);
+  // Sets one of the environment variables
+
   void print_usage (void);
   // Prints a message about the usage.
 
@@ -151,6 +154,9 @@ protected:
 
   ACE_TString command_line_;
   // Command line.
+
+  ImplementationRepository::EnvironmentList environment_vars_;
+  // Environment Variables.
 
   ACE_TString working_dir_;
   // Working directory.
@@ -301,6 +307,9 @@ public:
   virtual int run (void);
 
 protected:
+  void setenv (ASYS_TCHAR *optarg);
+  // Sets one environment variable.
+
   void print_usage (void);
   // Prints a message about the usage.
 
@@ -313,8 +322,14 @@ protected:
   ACE_TString command_line_;
   // Startup command.
 
+  int set_environment_vars_;
+  // True if the environment_vars_ needs to be updated.
+
   int set_working_dir_;
   // True if the working_dir_ needs to be updated.
+
+  ImplementationRepository::EnvironmentList environment_vars_;
+  // Environment Variables.
 
   ACE_TString working_dir_;
   // Working directory.

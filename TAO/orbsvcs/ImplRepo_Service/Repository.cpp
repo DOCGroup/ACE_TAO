@@ -23,7 +23,7 @@ convert_mode_to_str (Server_Info::ActivationMode mode)
   return "NORMAL";
 }
 
-Server_Info::ActivationMode 
+Server_Info::ActivationMode
 convert_str_to_mode (const char *str)
 {
   if (ACE_OS::strcasecmp (str, "NORMAL") == 0)
@@ -45,12 +45,15 @@ convert_str_to_mode (const char *str)
 Server_Info::Server_Info (const ACE_TString POA_name,
                           const ACE_TString logical_server_name,
                           const ACE_TString startup_command,
+                          const ImplementationRepository::EnvironmentList
+                                environment_vars,
                           const ACE_TString working_dir,
                           const ActivationMode activation)
 : starting_up_ (0),
   logical_server_name_ (logical_server_name),
   POA_name_ (POA_name),
   startup_command_ (startup_command),
+  environment_vars_ (environment_vars),
   working_dir_ (working_dir),
   location_ (""),
   server_object_ior_ (""),
@@ -83,11 +86,14 @@ Server_Info::update_running_info (const ACE_TString location,
 void
 Server_Info::get_startup_info (ACE_TString &logical_server_name,
                                ACE_TString &startup_command,
+                               ImplementationRepository::EnvironmentList
+                                  &environment_vars,
                                ACE_TString &working_dir,
                                ActivationMode &activation)
 {
   logical_server_name = this->logical_server_name_;
   startup_command = this->startup_command_;
+  environment_vars = this->environment_vars_;
   working_dir = this->working_dir_;
   activation = this->activation_;
 }
@@ -128,31 +134,35 @@ Server_Repository::init (ACE_Configuration* config)
 {
   delete this->config_;
   this->config_ = config;
-  
+ 
   // iterate through the list of registered servers and register them
   this->config_->open_section(config_->root_section(), "Servers", 1, this->servers_);
   int index = 0;
   ACE_TString name;
-  
+ 
   while (this->config_->enumerate_sections (servers_, index, name) == 0)
     {
       ACE_TString logical, startup, working_dir, activation_str;
       Server_Info::ActivationMode activation;
+
+      ImplementationRepository::EnvironmentList environment_vars;
+
       ACE_Configuration_Section_Key server_key;
       int error = 0;
-    
+   
       error += this->config_->open_section (this->servers_, name.c_str(), 0, server_key);
       error += this->config_->get_string_value (server_key, "LogicalServer", logical);
       error += this->config_->get_string_value (server_key, "StartupCommand", startup);
       error += this->config_->get_string_value (server_key, "WorkingDir", working_dir);
       error += this->config_->get_string_value (server_key, "Activation", activation_str);
-
       activation = convert_str_to_mode (activation_str.c_str ());
+
+      // Maybe environments variables?? need a straight forward way to store env vars
 
       if(error)
         ACE_DEBUG ((LM_DEBUG, "Error reading configuration data for service '%s', skipping\n", name.rep()));
       else
-        this->add (name, logical, startup, working_dir, activation);
+        this->add (name, logical, startup, environment_vars, working_dir, activation);
 
       index++;
     }
@@ -166,10 +176,12 @@ int
 Server_Repository::add (const ACE_TString POA_name,
                         const ACE_TString logical_server_name,
                         const ACE_TString startup_command,
+                        const ImplementationRepository::EnvironmentList
+                              environment_vars,
                         const ACE_TString working_dir,
                         const Server_Info::ActivationMode activation)
 {
-  // Add this to the persistent configuration
+  // Add this to the persistent configuration; environment_vars??
   ACE_Configuration_Section_Key server;
   this->config_->open_section (this->servers_, POA_name.c_str(), 1, server);
   this->config_->set_string_value (server, "LogicalServer", logical_server_name);
@@ -179,10 +191,11 @@ Server_Repository::add (const ACE_TString POA_name,
 
   Server_Info *new_server;
   ACE_NEW_RETURN (new_server,
-                  Server_Info (POA_name, 
-                               logical_server_name, 
-                               startup_command, 
-                               working_dir, 
+                  Server_Info (POA_name,
+                               logical_server_name,
+                               startup_command,
+                               environment_vars,
+                               working_dir,
                                activation),
                   -1);
 
@@ -214,6 +227,8 @@ int
 Server_Repository::get_startup_info (const ACE_TString POA_name,
                                      ACE_TString &logical_server_name,
                                      ACE_TString &startup_command,
+                                     ImplementationRepository::EnvironmentList
+                                        &environment_vars,
                                      ACE_TString &working_dir,
                                      Server_Info::ActivationMode &activation)
 {
@@ -222,7 +237,11 @@ Server_Repository::get_startup_info (const ACE_TString POA_name,
 
   // Only fill in data if it was found
   if (retval == 0)
-    server->get_startup_info (logical_server_name, startup_command, working_dir, activation);
+    server->get_startup_info (logical_server_name, 
+                              startup_command, 
+                              environment_vars, 
+                              working_dir, 
+                              activation);
 
   return retval;
 }

@@ -145,10 +145,12 @@ ImplRepo_i::activate_server_i (const char *server,
     ACE_DEBUG ((LM_DEBUG, "Activating Server: %s\n", server));
 
   ACE_TString logical, startup, working;
+  ImplementationRepository::EnvironmentList environment;
   Server_Info::ActivationMode activation;
   if (this->repository_.get_startup_info (server,
                                           logical,
                                           startup,
+                                          environment,
                                           working,
                                           activation) != 0)
     {
@@ -249,8 +251,11 @@ ImplRepo_i::activate_server_i (const char *server,
           proc_opts.command_line (startup.c_str ());
           proc_opts.working_directory (working.c_str ());
 
+          for (size_t i = 0; i < environment.length(); ++i)
+            proc_opts.setenv (environment[i].name.in (), environment[i].value.in ());
+
           spawned_pid = this->process_mgr_.spawn (proc_opts);
-          
+
           if (spawned_pid == ACE_INVALID_PID)
             {
               ACE_ERROR ((LM_ERROR,
@@ -262,7 +267,7 @@ ImplRepo_i::activate_server_i (const char *server,
             }
           else if (OPTIONS::instance ()->debug () >= 2)
             ACE_DEBUG ((LM_DEBUG, "Process ID is %d\n", spawned_pid));
-          
+         
         }
 
       // Now that the server has been started up, we need to go back into the event
@@ -290,7 +295,7 @@ ImplRepo_i::activate_server_i (const char *server,
 
               // Kill the server
               this->process_mgr_.terminate (spawned_pid);
-              
+             
               ACE_THROW_RETURN (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("Timeout")),
                                 "");
             }
@@ -303,8 +308,8 @@ ImplRepo_i::activate_server_i (const char *server,
       if (starting_up == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                     "Error: Cannot find startup info for server <%s>\n",
-                     server));
+                      "Error: Cannot find startup info for server <%s>\n",
+                      server));
           ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), "");
         }
 
@@ -342,19 +347,27 @@ ImplRepo_i::register_server (const char *server,
                      ImplementationRepository::Administration::AlreadyRegistered))
 {
   if (OPTIONS::instance()->debug () >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
-                              "Command Line: %s\n"
-                              "Working Directory: %s\n"
-                              "Activation Mode: %s\n\n",
-                              server,
-                              options.command_line.in (),
-                              options.working_directory.in (),
-                              convert_str (options.activation)));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
+                            "Command Line: %s\n"
+                            "Working Directory: %s\n"
+                            "Activation Mode: %s\n\n",
+                            server,
+                            options.command_line.in (),
+                            options.working_directory.in (),
+                            convert_str (options.activation)));
+
+      for (size_t i = 0; i < options.environment.length (); ++i)
+         ACE_DEBUG ((LM_DEBUG, "Environment variable %s=%s\n",
+                     options.environment[i].name.in (),
+                     options.environment[i].value.in ()));
+    }
 
   // Add the server
   int status = this->repository_.add (server,
                                       "",
                                       options.command_line.in (),
+                                      options.environment,
                                       options.working_directory.in (),
                                       convert (options.activation));
 
@@ -372,14 +385,20 @@ ImplRepo_i::register_server (const char *server,
                     "register_server: Server %s Successfully Registered\n",
                     server));
       if (OPTIONS::instance()->debug () >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
-                              "Command Line: %s\n"
-                              "Working Directory: %s\n"
-                              "Activation Mode: %s\n\n",
-                              server,
-                              options.command_line.in (),
-                              options.working_directory.in (),
-                              convert_str (options.activation)));
+        {
+          ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
+                                "Command Line: %s\n"
+                                "Working Directory: %s\n"
+                                "Activation Mode: %s\n\n",
+                                server,
+                                options.command_line.in (),
+                                options.working_directory.in (),
+                                convert_str (options.activation)));
+          for (size_t i = 0; i < options.environment.length(); ++i)
+            ACE_DEBUG ((LM_DEBUG, "Environment variable %s=%s\n",
+                        options.environment[i].name.in (),
+                        options.environment[i].value.in ()));
+        }
     }
 }
 
@@ -405,6 +424,7 @@ ImplRepo_i::reregister_server (const char *server,
   this->repository_.add (server,
                          "",
                          options.command_line.in (),
+                         options.environment,
                          options.working_directory.in (),
                          convert (options.activation));
 
@@ -417,14 +437,20 @@ ImplRepo_i::reregister_server (const char *server,
                 "Server %s Successfully Registered\n",
                 server));
   if (OPTIONS::instance()->debug () >= 2)
-    ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
-                          "Command Line: %s\n"
-                          "Working Directory: %s\n"
-                          "Activation: %s\n\n",
-                          server,
-                          options.command_line.in (),
-                          options.working_directory.in (),
-                          convert_str (options.activation)));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
+                            "Command Line: %s\n"
+                            "Working Directory: %s\n"
+                            "Activation: %s\n\n",
+                            server,
+                            options.command_line.in (),
+                            options.working_directory.in (),
+                            convert_str (options.activation)));
+      for (size_t i = 0; i < options.environment.length (); ++i)
+          ACE_DEBUG ((LM_DEBUG, "Environment variable %s=%s\n",
+                      options.environment[i].name.in (),
+                      options.environment[i].value.in ()));
+    }
 }
 
 
@@ -783,8 +809,13 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
 
       ACE_TString logical, server, command_line, working_directory;
       Server_Info::ActivationMode activation = Server_Info::NORMAL;
+      ImplementationRepository::EnvironmentList environment_vars ;
 
-      server_entry->int_id_->get_startup_info (logical, command_line, working_directory, activation);
+      server_entry->int_id_->get_startup_info (logical, 
+                                               command_line, 
+                                               environment_vars,
+                                               working_directory, 
+                                               activation);
 
       ACE_TRY
         {
@@ -861,6 +892,7 @@ ImplRepo_i::find (const char *server,
 {
   ACE_TString logical, command_line, working_directory;
   ACE_TString location, server_object_ior;
+  ImplementationRepository::EnvironmentList environment_vars;
   Server_Info::ActivationMode activation;
 
   ACE_NEW_THROW_EX (info,
@@ -872,6 +904,7 @@ ImplRepo_i::find (const char *server,
   if (this->repository_.get_startup_info (server,
                                           logical,
                                           command_line,
+                                          environment_vars,
                                           working_directory,
                                           activation) != 0)
     ACE_THROW (ImplementationRepository::Administration::NotFound ());
@@ -883,6 +916,7 @@ ImplRepo_i::find (const char *server,
   info->logical_server = CORBA::string_dup (logical.c_str ());
   info->server = CORBA::string_dup (server);
   info->startup.command_line = CORBA::string_dup (command_line.c_str ());
+  info->startup.environment = environment_vars;
   info->startup.working_directory = CORBA::string_dup (working_directory.c_str ());
   info->startup.activation = convert (activation);
   info->location = CORBA::string_dup (location.c_str ());
@@ -938,14 +972,20 @@ ImplRepo_i::list (CORBA::ULong how_many,
       server_iter->advance ();
 
       ACE_TString logical, server, command_line, working_directory, location, server_ior;
+      ImplementationRepository::EnvironmentList environment_vars;
       Server_Info::ActivationMode activation = Server_Info::NORMAL;
 
       server_entry->int_id_->get_running_info (location, server_ior);
-      server_entry->int_id_->get_startup_info (logical, command_line, working_directory, activation);
+      server_entry->int_id_->get_startup_info (logical, 
+                                               command_line, 
+                                               environment_vars,
+                                               working_directory, 
+                                               activation);
 
       server_list[i].logical_server = CORBA::string_dup (logical.c_str ());
       server_list[i].server = CORBA::string_dup (server_entry->ext_id_.c_str ());
       server_list[i].startup.command_line = CORBA::string_dup (command_line.c_str ());
+      server_list[i].startup.environment = environment_vars;
       server_list[i].startup.working_directory = CORBA::string_dup (working_directory.c_str ());
       server_list[i].startup.activation = convert (activation);
       server_list[i].location = CORBA::string_dup (location.c_str ());
@@ -1250,14 +1290,20 @@ IMR_Iterator::next_n (CORBA::ULong how_many,
       this->iterator_->next (server_entry);
 
       ACE_TString logical, server, command_line, working_directory, location, server_ior;
+      ImplementationRepository::EnvironmentList environment_vars;
       Server_Info::ActivationMode activation = Server_Info::NORMAL;
 
       server_entry->int_id_->get_running_info (location, server_ior);
-      server_entry->int_id_->get_startup_info (logical, command_line, working_directory, activation);
+      server_entry->int_id_->get_startup_info (logical, 
+                                               command_line, 
+                                               environment_vars,
+                                               working_directory, 
+                                               activation);
 
       server_list[i].logical_server = CORBA::string_dup (logical.c_str ());
       server_list[i].server = CORBA::string_dup (server_entry->ext_id_.c_str ());
       server_list[i].startup.command_line = CORBA::string_dup (command_line.c_str ());
+      server_list[i].startup.environment = environment_vars;
       server_list[i].startup.working_directory = CORBA::string_dup (working_directory.c_str ());
       server_list[i].startup.activation = convert (activation);
       server_list[i].location = CORBA::string_dup (location.c_str ());

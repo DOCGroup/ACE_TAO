@@ -167,7 +167,7 @@ TAO_IMR_Op::make_op (const ASYS_TCHAR *op_name)
 
 // Sets the implrepo pointer.
 
-void 
+void
 TAO_IMR_Op::set_imr (ImplementationRepository::Administration_ptr imr)
 {
   this->implrepo_ = imr;
@@ -288,10 +288,10 @@ TAO_IMR_Op_Activate::parse (int argc, ASYS_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "activate" command
   ACE_Get_Opt get_opts (argc, argv, "h");
@@ -312,18 +312,34 @@ TAO_IMR_Op_Activate::parse (int argc, ASYS_TCHAR **argv)
   return 0;
 }
 
+void
+TAO_IMR_Op_Add::setenv (ASYS_TCHAR *optarg)
+{
+   CORBA::ULong length = this->environment_vars_.length ();
+
+   // Increase the length of the sequence
+   this->environment_vars_.length (length + 1);
+   ACE_TString tokens (optarg);
+   int index = tokens.find ("=");
+   // Insert at position length since that is our new element
+   this->environment_vars_ [length].name =
+         CORBA::string_dup (tokens.substr (0, index).c_str ());
+   this->environment_vars_ [length].value =
+         CORBA::string_dup (tokens.substr (index + 1).c_str ());
+}
+
 int
 TAO_IMR_Op_Add::parse (int argc, ASYS_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "add" command
-  ACE_Get_Opt get_opts (argc, argv, "hc:w:a:");
+  ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:");
 
   this->server_name_ = argv[0];
   int c;
@@ -333,6 +349,9 @@ TAO_IMR_Op_Add::parse (int argc, ASYS_TCHAR **argv)
       {
       case 'c':  // Command line arguments
         this->command_line_ = get_opts.optarg;
+        break;
+      case 'e':  // set environment variables
+        this->setenv( get_opts.optarg ) ;
         break;
       case 'w':  // Working Directory
         this->working_dir_ = get_opts.optarg;
@@ -347,8 +366,8 @@ TAO_IMR_Op_Add::parse (int argc, ASYS_TCHAR **argv)
         else if (ACE_OS::strcasecmp (get_opts.optarg, "AUTO_START") == 0)
           this->activation_ = ImplementationRepository::AUTO_START;
         else
-          ACE_ERROR_RETURN ((LM_ERROR, 
-                             "Unknown Activation Mode <%s>!\n", 
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unknown Activation Mode <%s>!\n",
                              get_opts.optarg),
                             -1);
         break;
@@ -421,10 +440,10 @@ TAO_IMR_Op_List::parse (int argc, ASYS_TCHAR **argv)
   int server_flag = 0;
 
   if (argc > 0 && argv[0][0] != '-')
-  {
-    this->server_name_ = argv[0];
-    server_flag = 1;
-  }
+    {
+      this->server_name_ = argv[0];
+      server_flag = 1;
+    }
 
   // Skip both the program name and the "list" command
   ACE_Get_Opt get_opts (argc, argv, "vh", server_flag);
@@ -452,10 +471,10 @@ TAO_IMR_Op_Remove::parse (int argc, ASYS_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "remove" command
   ACE_Get_Opt get_opts (argc, argv, "h");
@@ -481,10 +500,10 @@ TAO_IMR_Op_Shutdown::parse (int argc, ASYS_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "shutdown" command
   ACE_Get_Opt get_opts (argc, argv, "h");
@@ -505,18 +524,34 @@ TAO_IMR_Op_Shutdown::parse (int argc, ASYS_TCHAR **argv)
   return 0;
 }
 
+void
+TAO_IMR_Op_Update::setenv (ASYS_TCHAR *optarg)
+{
+   this->set_environment_vars_ = 1;
+   CORBA::ULong length = this->environment_vars_.length ();
+   // Increase the length of the sequence
+   this->environment_vars_.length (length + 1);
+   ACE_TString tokens (optarg);
+   int index = tokens.find ("=");
+   // Insert at position length since that is our new element
+   this->environment_vars_ [length].name =
+         CORBA::string_dup (tokens.substr (0, index).c_str ());
+   this->environment_vars_ [length].value =
+         CORBA::string_dup (tokens.substr (index + 1).c_str ());
+}
+
 int
 TAO_IMR_Op_Update::parse (int argc, ASYS_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
-  {
-    this->print_usage ();
-    return -1;
-  }
+    {
+      this->print_usage ();
+      return -1;
+    }
 
   // Skip both the program name and the "update" command
-  ACE_Get_Opt get_opts (argc, argv, "hc:w:a:");
+  ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:");
 
   this->server_name_ = argv[0];
   int c;
@@ -527,6 +562,9 @@ TAO_IMR_Op_Update::parse (int argc, ASYS_TCHAR **argv)
       case 'c':  // Command line arguments
         this->set_command_line_ = 1;
         this->command_line_ = get_opts.optarg;
+        break;
+      case 'e':  // set environment variables
+        this->setenv( get_opts.optarg );
         break;
       case 'w':  // Working Directory
         this->set_working_dir_ = 1;
@@ -543,8 +581,8 @@ TAO_IMR_Op_Update::parse (int argc, ASYS_TCHAR **argv)
         else if (ACE_OS::strcasecmp (get_opts.optarg, "AUTO_START") == 0)
           this->activation_ = ImplementationRepository::AUTO_START;
         else
-          ACE_ERROR_RETURN ((LM_ERROR, 
-                             "Unknown Activation Mode <%s>!\n", 
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unknown Activation Mode <%s>!\n",
                              get_opts.optarg),
                             -1);
         break;
@@ -576,11 +614,10 @@ TAO_IMR_Op_Activate::run (void)
     }
   ACE_CATCH (ImplementationRepository::Administration::CannotActivate, ex)
     {
-      ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n", 
-                            this->server_name_.c_str (), 
+      ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n",
+                            this->server_name_.c_str (),
                             ex.reason.in ()));
       return -1;
-
     }
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
     {
@@ -604,7 +641,7 @@ TAO_IMR_Op_Add::run (void)
   ImplementationRepository::StartupOptions startup_options;
 
   startup_options.command_line = CORBA::string_dup (this->command_line_.c_str ());
-  // @@ add environment
+  startup_options.environment = this->environment_vars_;
   startup_options.working_directory = CORBA::string_dup (this->working_dir_.c_str ());
   startup_options.activation = this->activation_;
 
@@ -651,8 +688,8 @@ TAO_IMR_Op_Autostart::run (void)
 
           while (flag)
             {
-              flag = server_iter->next_n (IR_LIST_CHUNK, 
-                                          server_list, 
+              flag = server_iter->next_n (IR_LIST_CHUNK,
+                                          server_list,
                                           ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
@@ -660,13 +697,13 @@ TAO_IMR_Op_Autostart::run (void)
                 {
                   ACE_TRY_EX (inside)
                     {
-                      this->implrepo_->activate_server (server_list[i].server.in (), 
+                      this->implrepo_->activate_server (server_list[i].server.in (),
                                                         ACE_TRY_ENV);
                       ACE_TRY_CHECK_EX (inside);
                     }
                   ACE_CATCHANY
                     {
-                      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                            server_list[i].server.in ());
                       // Ignore exception
                     }
@@ -697,13 +734,13 @@ TAO_IMR_Op_IOR::run (void)
           || !this->implrepo_->_stubobj ()->profile_in_use ())
         ACE_ERROR_RETURN ((LM_ERROR, "Invalid Implementation Repository IOR\n"), -1);
 
-      CORBA::String_var imr_str = 
+      CORBA::String_var imr_str =
         this->implrepo_->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       char *pos = ACE_OS::strstr (imr_str.inout (), "://");
 
-      pos = ACE_OS::strchr (pos + 3, 
+      pos = ACE_OS::strchr (pos + 3,
                             this->implrepo_->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
       if (pos)
@@ -871,12 +908,15 @@ TAO_IMR_Op_Update::run (void)
       if (this->set_command_line_ == 1)
         server_information->startup.command_line =
           CORBA::string_dup (this->command_line_.c_str ());
+      if (this->set_environment_vars_ == 1)
+        server_information->startup.environment = this->environment_vars_;
       if (this->set_working_dir_ == 1)
         server_information->startup.working_directory =
           CORBA::string_dup (this->working_dir_.c_str ());
       if (this->set_activation_ == 1)
         server_information->startup.activation = this->activation_;
-      // @@ add environment and logical server
+
+      // @@ Add logical server support here also
 
       this->implrepo_->reregister_server (this->server_name_.c_str (),
                                           server_information->startup,
@@ -1035,9 +1075,14 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
               info.startup.command_line.in (),
               info.startup.working_directory.in (),
               act));
-  // @@ add environment and logical server once implemented
+  for (size_t i = 0; i < info.startup.environment.length (); ++i)
+    ACE_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s \n",
+                info.startup.environment[i].name.in (),
+                info.startup.environment[i].value.in ()));
+ 
+  // @@ add logical server once implemented
 
-  
+ 
   if (info.startup.activation == ImplementationRepository::PER_CLIENT)
     ACE_DEBUG ((LM_DEBUG, "  No running info available for PER_CLIENT mode\n"));
   else if (ACE_OS::strlen (info.location) > 0)
@@ -1061,3 +1106,6 @@ TAO_IMR_Op_List::display_server_information (const ImplementationRepository::Ser
   else
     ACE_DEBUG ((LM_DEBUG, "<%s>\n", info.server.in ()));
 }
+
+
+
