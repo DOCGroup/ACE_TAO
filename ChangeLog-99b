@@ -1,3 +1,14 @@
+Wed Jul 21 11:40:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix4_cset++.GNU:
+        * include/makeinclude/platform_hpux_aCC.GNU: Replaced lines like
+          "debug=1" with ifeq (,$(debug)) debug=1 endif.
+
+        * include/makeinclude/platform_aix4_g++.GNU:
+          Above change for variables, also added -Wl,-bbigtoc when linking
+          TAO_IDL, else it runs out of toc space. Don't do it for all links
+          because bigtoc introduces a run-time performance penalty.
+
 Wed Jul 21 10:25:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp} (tss_base,tss_open): with TSS emulation,
