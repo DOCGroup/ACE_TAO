@@ -1,3 +1,13 @@
+Tue May 27 18:23:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.cidl:
+        * examples/handcrafted/BasicSP/EC/EC.cidl:
+
+          New CIDL files added to the appropriate directory of the
+          BasicSP example.
+
 Tue May 27 17:44:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Components.idl:
