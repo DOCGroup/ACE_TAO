@@ -1,3 +1,10 @@
+Fri Oct 22 11:49:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+
+	  Reversed this change "Thu Oct 21 18:37:12 2004  Gan Deng
+	  <dengg@dre.vanderbilt.edu>" 
+
 Fri Oct 22 08:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCCM/DiffServ/Controller/Controller.mpc:
