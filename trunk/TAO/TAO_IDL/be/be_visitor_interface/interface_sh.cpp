@@ -27,12 +27,12 @@
 ACE_RCSID(be_visitor_interface, interface_sh, "$Id$")
 
 
-  // ************************************************************
-  // Interface visitor for server header
-  // ************************************************************
+// ************************************************************
+// Interface visitor for server header
+// ************************************************************
 
-  be_visitor_interface_sh::be_visitor_interface_sh (be_visitor_context *ctx)
-    : be_visitor_interface (ctx)
+be_visitor_interface_sh::be_visitor_interface_sh (be_visitor_context *ctx)
+  : be_visitor_interface (ctx)
 {
 }
 
@@ -49,17 +49,13 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // if we are to generate AMH classes, do it now
   if (be_global->gen_amh_classes ())
     {
-      //be_visitor_amh_interface_sh amh_intf (this->ctx_);
-      //amh_intf.visit_interface (node);
+      be_visitor_amh_interface_sh amh_intf (this->ctx_);
+      amh_intf.visit_interface (node);
     }
-
-  // Generate the normal skeleton as usual
-  static char namebuf [NAMEBUFSIZE]; // holds the class name
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
 
   TAO_OutStream *os  = this->ctx_->stream (); // output stream
 
-  // Generate the skeleton class name.
+  ACE_CString class_name; // holds the class name
 
   os->indent ();
 
@@ -67,17 +63,19 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (!node->is_nested ())
     {
       // We are outermost.
-      ACE_OS::sprintf (namebuf, "POA_%s", node->local_name ());
+      class_name += "POA_";
+      class_name += node->local_name ();
     }
   else
     {
-      ACE_OS::sprintf (namebuf, "%s", node->local_name ());
+      class_name +=  node->local_name ();
     }
 
-  *os << "class " << namebuf << ";" << be_nl;
+  // Generate the skeleton class name.
+  *os << "class " << class_name.c_str () << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "typedef " << namebuf << " *" << namebuf
+  *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
       << "_ptr;" << be_nl;
 
   // Forward class declaration.
@@ -104,13 +102,13 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // Now generate the class definition.
   *os << "class " << be_global->skel_export_macro ()
-      << " " << namebuf << be_idt_nl << ": " << be_idt;
+      << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
 
   long n_parents = node->n_inherits ();
 
   if (n_parents > 0)
     {
-      for (long i = 0; i < n_parents; ++i)
+      for (int i = 0; i < n_parents; ++i)
         {
           *os << "public virtual " << "POA_"
               << node->inherits ()[i]->name ();
@@ -131,12 +129,12 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
-      << namebuf << " (void);\n" << be_uidt_nl
+      << class_name.c_str () << " (void);\n" << be_uidt_nl
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
-  *os << namebuf << " (const " << namebuf << "& rhs);" << be_nl
-      << "virtual ~" << namebuf << " (void);\n\n"
+  *os << class_name.c_str () << " (const " << class_name.c_str () << "& rhs);" << be_nl
+      << "virtual ~" << class_name.c_str () << " (void);\n\n"
       << be_nl
       << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_nl

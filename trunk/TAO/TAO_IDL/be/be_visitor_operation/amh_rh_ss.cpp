@@ -33,17 +33,17 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
     {
       return 0;
     }
-  
+
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   *os << "\n// \t *** AMH-RH operation definition starts here ***\n";
-  
+
   be_interface *intf;
   intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
-  
+
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -52,12 +52,12 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
                          "bad interface scope\n"),
                         -1);
     }
-  
+
   // Step 1 : Generate return type: always void
   os->indent ();
   *os << "virtual void "
       << "TAO_" << intf->full_skel_name () << "::";
-  
+
   // Check if we are an attribute node in disguise
   if (this->ctx_->attribute ())
     {
@@ -67,7 +67,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       else
         *os << "_get_";
     }
-  
+
   *os << node->local_name ();
 
   // Step 2 : Generate the params of the method
@@ -106,18 +106,13 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       << "}" << be_nl;
 
   return 0;
-  
+
 }
 
 
 int
-be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
+be_visitor_amh_rh_operation_ss::marshal_params (be_operation *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
-  
-  // cut and paste code here that marshalls out and return parameters
-  
+  // @@ TODO!!!
   return 0;
 }
