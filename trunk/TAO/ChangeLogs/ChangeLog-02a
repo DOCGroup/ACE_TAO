@@ -1,7 +1,15 @@
+Fri Jan 26 22:13:16 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp (run):
+
+	  Added missing ACE_TRY_CHECKs.  This fixes a compile-time
+	  warning.
+
 Fri Jan 26 19:37:50 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-        * tao/DynamicInterface/DII_Invocation.h
-          Add #include "Unknown_User_Exception.h" to appease gcc 2.97
+        * tao/DynamicInterface/DII_Invocation.h:
+
+          Add #include "Unknown_User_Exception.h" to appease gcc 2.97.
 
 Fri Jan 26 17:33:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 
