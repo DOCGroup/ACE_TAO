@@ -83,3 +83,67 @@ be_visitor_operation::has_param_type (be_operation *node,
   return 0;
 }
 
+//Method to generate the throw specs for exceptions that are thrown by the
+//operation 
+int
+be_visitor_operation::gen_throw_spec (be_operation *node)
+{
+
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+
+  *os << be_idt_nl << "ACE_THROW_SPEC (("
+      << be_idt_nl << "CORBA::SystemException";
+   if (node->exceptions ())
+     {
+     
+      // initialize an iterator to iterate thru the exception list
+      UTL_ExceptlistActiveIterator *ei;
+      ACE_NEW_RETURN (ei,
+                      UTL_ExceptlistActiveIterator (node->exceptions ()),
+                      -1);
+      // continue until each element is visited
+      while (!ei->is_done ())
+        {
+          be_exception *excp = be_exception::narrow_from_decl (ei->item ());
+
+          if (excp == 0)
+            {
+              delete ei;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation"
+                                 "gen_throw_spec - "
+                                 "bad exception node\n"), -1);
+
+            }
+   
+          *os << "," << be_nl;
+          // allocator method
+          *os << excp->name ();
+          ei->next ();
+        } // end of while loop
+      delete ei;
+    } // end of if
+   *os << be_uidt_nl << "))"<< be_uidt;
+
+   return 0;
+
+}
+
+//Method that returns the appropriate CORBA::Environment variable
+const char *
+be_visitor_operation::gen_environment_var ()
+{
+  static const char *ace_try_env_decl = "ACE_DECLARE_NEW_CORBA_ENV;";
+  static const char *null_env_decl = "";
+
+  // check if we are generating stubs/skeletons for true C++ exception support
+  if (idl_global->exception_support ())
+    {
+      return ace_try_env_decl;
+    }
+  else
+    {
+      return null_env_decl;
+    }
+}
+

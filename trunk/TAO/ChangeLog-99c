@@ -1,3 +1,61 @@
+Sat Jun 12 14:28:20 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_union.cpp:
+	  TAO_IDL/be_include/be_union.h:
+	  
+	  Removed the cast to long for the case when the union member is
+	  of type boolean. We handled this by making the blval union
+	  member as a long.
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	  TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+	
+	  We were not handling the code generation of union defined inside
+	  a structure or another union.
+
+	* TAO_IDL/be/be_visitor_field/field_ci.cpp:
+	 	
+	  Cosmetic changes.
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+
+	  Fixed indentation problem in generated code.
+
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	  TAO_IDL/be/be_visitor_operation/argument.cpp:
+	  TAO_IDL/be_include/be_visitor_operation/arglist.h:
+	  TAO_IDL/be_include/be_visitor_operation/argument.h:
+
+	  These operation visitors now inherit from the be_operation
+	  visitor so that we can use the base operations defined on the
+	  base class operation visitor. Additional changes are described below.
+
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	  TAO_IDL/be/be_visitor_operation/argument.cpp:
+	  TAO_IDL/be/be_visitor_operation/collocated_ss.cpp:
+	  TAO_IDL/be/be_visitor_operation/operation.cpp:
+	  TAO_IDL/be_include/be_visitor_operation/operation.h:
+	  TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	  TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+	  TAO_IDL/be_include/be_visitor_operation/operation_ih.h:
+	  TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+	  TAO_IDL/be_include/be_visitor_operation/operation_is.h:
+	  TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+	  TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	  TAO_IDL/be/be_visitor_operation/tie_si.cpp:
+
+	  Generated stubs/skeletons now support real C++ exceptions as
+	  specified by the IDL->C++ mapping. We also generate the
+	  ACE_THROW_SPEC macro for the stubs and skeletons. To support
+	  this, some common code was factored out and put into the base
+	  operation visitor. Users will need to use the -Ge option to the
+	  IDL compiler to enable support for C++ exceptions.
+
+	* docs/releasenotes/index.html:
+	  docs/compiler.html:
+
+	  Updated documentation.
+
 Fri Jun 11 20:36:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/TIE/run_test.pl: Changed the way the client process

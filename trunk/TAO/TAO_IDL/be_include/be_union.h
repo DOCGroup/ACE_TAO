@@ -72,7 +72,7 @@ public:
     union PermittedTypes
     {
       char char_val;
-      idl_bool bool_val;
+      unsigned long bool_val;
       ACE_INT16 short_val;
       ACE_UINT16 ushort_val;
       ACE_INT32 long_val;
