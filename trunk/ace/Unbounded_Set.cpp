@@ -287,18 +287,25 @@ ACE_Unbounded_Set<T>::end (void)
 }
 
 template <class T> void
-ACE_Unbounded_Set<T>::iterator_add (void)
+ACE_Unbounded_Set<T>::iterator_add (void) const
 {
   number_of_iterators_++;
 }
 
 template <class T> void
-ACE_Unbounded_Set<T>::iterator_leave (void)
+ACE_Unbounded_Set<T>::iterator_leave (void) const
 {
-  ACE_ASSERT (number_of_iterators_>0);
+  ACE_ASSERT (number_of_iterators_ > 0);
   number_of_iterators_--;
-  if (number_of_iterators_==0)
+  if (number_of_iterators_ == 0)
     cleanup ();
+}
+
+template <class T> void
+ACE_Unbounded_Set<T>::const_iterator_leave (void) const
+{
+  ACE_ASSERT (number_of_iterators_ > 0);
+  number_of_iterators_--;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Iterator)
@@ -471,7 +478,7 @@ void ACE_Unbounded_Set_Const_Iterator<T>::operator=(const ACE_Unbounded_Set_Cons
 template <class T>
 ACE_Unbounded_Set_Const_Iterator<T>::~ACE_Unbounded_Set_Const_Iterator()
 {
-  set_->iterator_leave ();
+  set_->const_iterator_leave ();
 }
 
 template <class T> int

@@ -1,3 +1,14 @@
+Mon Mar 24 18:03:34 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* ace/Unbounded_Set.{h,cpp}:
+
+	Added method const_iterator_leave() in class ACE_Unbounded_Set.
+	The destructor of the ACE_Unbounded_Set_Const_Iterator calls it.
+	Deleted elements are not cleaned up in that case, but they
+	probably don't need to, given that we are dealing with a "const"
+	set.
+	Thanks to Jeff Parsons for noticing the problem.
+
 Mon Mar 24 06:54:55 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/config-linux-common.h: Change the ACE_DEFAULT_BASE_ADDR for

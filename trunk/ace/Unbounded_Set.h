@@ -285,9 +285,11 @@ public:
   ACE_Unbounded_Set_Iterator<T> end (void);
 
   /// An Iterator has to register itself here.
-  void iterator_add ();
-  /// An Iterator has to unregister itself here.
-  void iterator_leave ();
+  void iterator_add () const;
+  /// A non-const Iterator has to unregister itself here.
+  void iterator_leave () const;
+  /// A Const_Iterator has to unregister itself here.
+  void const_iterator_leave () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -312,7 +314,7 @@ private:
   ACE_Allocator *allocator_;
   
   /// Number of iterators working on this set.
-  int number_of_iterators_;
+  mutable int number_of_iterators_;
 };
 
 #if defined (__ACE_INLINE__)
