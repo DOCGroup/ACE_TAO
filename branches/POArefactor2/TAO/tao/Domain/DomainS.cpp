@@ -35,6 +35,7 @@
 
 #include "DomainS.h"
 #include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
