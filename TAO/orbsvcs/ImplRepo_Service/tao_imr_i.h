@@ -152,7 +152,7 @@ public:
 
 protected:
   /// Sets one of the environment variables
-  void setenv (ACE_TCHAR *optarg);
+  void setenv (ACE_TCHAR *opt);
 
   /// Prints a message about the usage.
   void print_usage (void);
@@ -328,7 +328,7 @@ public:
 
 protected:
   /// Sets one environment variable.
-  void setenv (ACE_TCHAR *optarg);
+  void setenv (ACE_TCHAR *opt);
 
   /// Prints a message about the usage.
   void print_usage (void);

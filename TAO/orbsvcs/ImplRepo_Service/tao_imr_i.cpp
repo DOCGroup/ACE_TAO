@@ -324,13 +324,13 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Add::setenv (ACE_TCHAR .opt_arg ())
+TAO_IMR_Op_Add::setenv (ACE_TCHAR *opt)
 {
    CORBA::ULong length = this->environment_vars_.length ();
 
    // Increase the length of the sequence
    this->environment_vars_.length (length + 1);
-   ACE_TString tokens .opt_arg ());
+   ACE_TString tokens (opt);
    int index = tokens.find ("=");
    // Insert at position length since that is our new element
    this->environment_vars_ [length].name =
@@ -536,13 +536,13 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Update::setenv (ACE_TCHAR .opt_arg ())
+TAO_IMR_Op_Update::setenv (ACE_TCHAR *opt)
 {
    this->set_environment_vars_ = 1;
    CORBA::ULong length = this->environment_vars_.length ();
    // Increase the length of the sequence
    this->environment_vars_.length (length + 1);
-   ACE_TString tokens .opt_arg ());
+   ACE_TString tokens (opt);
    int index = tokens.find ("=");
    // Insert at position length since that is our new element
    this->environment_vars_ [length].name =
