@@ -4892,6 +4892,50 @@ private:
   u_long callback_data_;
 };
 
+/// Helper for the ACE_OS::timezone() function
+/**
+ * On some platforms timezone is a macro.  Defining ACE_OS::timezone()
+ * becomes really hard, as there is no way to save the macro
+ * definition using the pre-processor.
+ * This inline function achieves the same effect, without namespace
+ * pollution or performance penalties.
+ */
+inline long ace_timezone()
+{
+  return timezone;
+}
+
+/// Helper for the ACE_OS::difftime() function
+/**
+ * On some platforms difftime() is a macro.  Defining ACE_OS::difftime()
+ * becomes really hard, as there is no way to save the macro
+ * definition using the pre-processor.
+ * This inline function achieves the same effect, without namespace
+ * pollution or performance penalties.
+ */
+#if !defined(ACE_PSOS) || defined(ACE_PSOS_HAS_TIME)
+inline double ace_difftime(time_t t1, time_t t0)
+{
+  return difftime (t1, t0);
+}
+#endif /* !ACE_PSOS || ACE_PSOS_HAS_TIME */
+
+/// Helper for the ACE_OS::cuserid() function
+/**
+ * On some platforms cuserid is a macro.  Defining ACE_OS::cuserid()
+ * becomes really hard, as there is no way to save the macro
+ * definition using the pre-processor.
+ * This inline function achieves the same effect, without namespace
+ * pollution or performance penalties.
+ */
+#if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID)
+# include /**/ <unistd.h>
+inline char *ace_cuserid(char *user)
+{
+  return cuserid(user);
+}
+#endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID */
+
 /**
  * @class ACE_OS
  *
@@ -5057,6 +5101,9 @@ public:
 
   //@{ @name Wrappers to obtain the current user id
 # if !defined (ACE_LACKS_CUSERID)
+#if defined(cuserid)
+# undef cuserid
+#endif /* cuserid */
   static char *cuserid (char *user,
                         size_t maxlen = ACE_MAX_USERID);
 
@@ -5314,11 +5361,6 @@ public:
 #   undef rand_r
 #   undef getpwnam_r
 # endif /* ACE_HAS_BROKEN_R_ROUTINES */
-
-# if defined (difftime)
-#   define ACE_DIFFTIME(t1, t0) difftime(t1,t0)
-#   undef difftime
-# endif /* difftime */
   //@}
 
   //@{ @name A set of wrappers for operations on time.
@@ -5330,11 +5372,13 @@ public:
   static void tzset (void);
 
 # if defined (timezone)
-#   define ACE_TIMEZONE timezone
 #   undef timezone
 # endif /* timezone */
   static long timezone (void);
 
+# if defined (difftime)
+#   undef difftime
+# endif /* difftime */
   static double difftime (time_t t1,
                           time_t t0);
   static time_t time (time_t *tloc = 0);
