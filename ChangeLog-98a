@@ -1,3 +1,16 @@
+Fri Dec 12 19:41:42 1997    <irfan@TWOSTEP>
+
+	* ace, tests, version_tests: Updated Win32 makefiles (VC4.2 and
+ 	  VC5.0) to include new Basic_Types_Tests.
+
+	* tests/Basic_Types_Test.cpp (main): Updated to use
+ 	  ACE_OS::getpagesize().
+
+	* ace/ACE.cpp (round_to_pagesize): Updated to use
+ 	  ACE_OS::getpagesize().
+
+	* ace/OS.i (getpagesize): Added this to ACE_OS.
+
 Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (inet_addr): changed type of "valid" from bool to u_int.

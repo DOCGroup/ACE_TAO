@@ -1239,18 +1239,7 @@ ACE::round_to_pagesize (off_t len)
 
   if (ACE::pagesize_ == 0)
     {
-#if defined (ACE_WIN32)
-      SYSTEM_INFO sys_info;
-      ::GetSystemInfo (&sys_info);
-      ACE::pagesize_ = (size_t) sys_info.dwPageSize;
-#elif defined (_SC_PAGESIZE)
-      ACE::pagesize_ = (size_t) ::sysconf (_SC_PAGESIZE);
-#elif defined (ACE_HAS_GETPAGESIZE)
-      ACE::pagesize_ = (size_t) ::getpagesize ();
-#else
-      // Use the default set in config.h
-      ACE::pagesize_ = ACE_PAGE_SIZE;
-#endif /* ACE_WIN32 */
+      ACE::pagesize_ = ACE_OS::getpagesize ();
     }
 
   return (len + (ACE::pagesize_ - 1)) & ~(ACE::pagesize_ - 1);
