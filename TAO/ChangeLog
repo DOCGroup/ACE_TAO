@@ -1,6 +1,7 @@
 Thu Feb 20 10:20:51 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Exception.h (TAO_SYSTEM_EXCEPTION):
+	* tao/Exception.cpp (TAO_SYSTEM_EXCEPTION):
 
 	  Removed "##" preprocessor concatenation token for the
 	  "CORBA::name" case.  It isn't needed in this case.  Fixes a g++
