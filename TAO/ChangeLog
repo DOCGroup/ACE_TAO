@@ -1,3 +1,10 @@
+Tue May 06 11:46:17 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * examples\Content_Server\AMI_Observer\Makefile:
+        * examples\Content_Server\AMI_Iterator\Makefile:
+
+          Fixed build errors.
+
 Tue May 06 11:31:55 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs\tests\Notify\lib\TAO_NotifyTests_Static.dsp:
