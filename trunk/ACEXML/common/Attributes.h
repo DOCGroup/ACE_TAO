@@ -12,6 +12,7 @@
 
 #ifndef _ACEXML_ATTRIBUTES_H_
 #define _ACEXML_ATTRIBUTES_H_
+#include "ace/pre.h"
 
 #include "ACEXML/common/XML_Types.h"
 
