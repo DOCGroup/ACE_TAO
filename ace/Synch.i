@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Synch.i
-
 ACE_INLINE int
 ACE_File_Lock::acquire_read (short whence, off_t start, off_t len)
 {
@@ -56,7 +54,7 @@ ACE_INLINE int
 ACE_File_Lock::remove (void)
 {
 // ACE_TRACE ("ACE_File_Lock::remove");
-  
+
   return ACE_OS::flock_destroy (&this->lock_);
 }
 
@@ -93,72 +91,74 @@ ACE_RW_Mutex::acquire_read (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::acquire_read");
   return ACE_OS::rw_rdlock (&this->lock_);
-}  
+}
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_RW_Mutex::acquire_write (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::acquire_write");
   return ACE_OS::rw_wrlock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_RW_Mutex::acquire (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::acquire");
   return ACE_OS::rw_wrlock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_RW_Mutex::tryacquire_read (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::tryacquire_read");
   return ACE_OS::rw_tryrdlock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_RW_Mutex::tryacquire_write (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::tryacquire_write");
   return ACE_OS::rw_trywrlock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_RW_Mutex::tryacquire (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::tryacquire");
   return this->tryacquire_write ();
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_RW_Mutex::release (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::release");
   return ACE_OS::rw_unlock (&this->lock_);
 }
 
-ACE_INLINE int 
+#if defined (ACE_HAS_THREADS)
+ACE_INLINE int
 ACE_RW_Thread_Mutex::tryacquire_write_upgrade (void)
 {
 // ACE_TRACE ("ACE_RW_Thread_Mutex::tryacquire_write_upgrade");
   return ACE_OS::rw_trywrlock_upgrade (&this->lock_);
 }
+#endif /* ACE_HAS_THREADS */
 
 ACE_INLINE int
 ACE_Mutex::acquire_read (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire_read");
   return ACE_OS::mutex_lock (&this->lock_);
-}  
+}
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Mutex::acquire_write (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire_write");
   return ACE_OS::mutex_lock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Mutex::tryacquire_read (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire_read");
@@ -172,20 +172,20 @@ ACE_Mutex::lock (void) const
   return this->lock_;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Mutex::tryacquire_write (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire_write");
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Mutex::acquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire");
   return ACE_OS::mutex_lock (&this->lock_);
 }
- 
+
 ACE_INLINE int
 ACE_Mutex::tryacquire (void)
 {
@@ -193,7 +193,7 @@ ACE_Mutex::tryacquire (void)
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Mutex::release (void)
 {
 // ACE_TRACE ("ACE_Mutex::release");
@@ -260,7 +260,7 @@ ACE_Semaphore::release (size_t release_count)
 // here to make the <ACE_Semaphore> interface consistent with the
 // other synchronization APIs.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Semaphore::acquire_read (void)
 {
   return this->acquire ();
@@ -270,7 +270,7 @@ ACE_Semaphore::acquire_read (void)
 // here to make the <ACE_Semaphore> interface consistent with the
 // other synchronization APIs.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Semaphore::acquire_write (void)
 {
   return this->acquire ();
@@ -280,7 +280,7 @@ ACE_Semaphore::acquire_write (void)
 // <tryacquire> and is only here to make the <ACE_Semaphore>
 // interface consistent with the other synchronization APIs.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Semaphore::tryacquire_read (void)
 {
   return this->tryacquire ();
@@ -290,7 +290,7 @@ ACE_Semaphore::tryacquire_read (void)
 // <tryacquire> and is only here to make the <ACE_Semaphore>
 // interface consistent with the other synchronization APIs.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Semaphore::tryacquire_write (void)
 {
   return this->tryacquire ();
@@ -316,7 +316,7 @@ ACE_Process_Semaphore::lock (void) const
 // to make the <ACE_Process_Semaphore> interface consistent with the
 // other synchronization APIs.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Process_Semaphore::acquire_read (void)
 {
   return this->acquire ();
@@ -326,7 +326,7 @@ ACE_Process_Semaphore::acquire_read (void)
 // to make the <ACE_Process_Semaphore> interface consistent with the
 // other synchronization APIs.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Process_Semaphore::acquire_write (void)
 {
   return this->acquire ();
@@ -336,7 +336,7 @@ ACE_Process_Semaphore::acquire_write (void)
 // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
 // interface consistent with the other synchronization APIs.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Process_Semaphore::tryacquire_read (void)
 {
   return this->tryacquire ();
@@ -346,7 +346,7 @@ ACE_Process_Semaphore::tryacquire_read (void)
 // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
 // interface consistent with the other synchronization APIs.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Process_Semaphore::tryacquire_write (void)
 {
   return this->tryacquire ();
@@ -366,36 +366,36 @@ ACE_Thread_Mutex::acquire_read (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::acquire_read");
   return ACE_OS::thread_mutex_lock (&this->lock_);
-}  
+}
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Thread_Mutex::acquire_write (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::acquire_write");
   return ACE_OS::thread_mutex_lock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Thread_Mutex::tryacquire_read (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::tryacquire_read");
   return ACE_OS::thread_mutex_trylock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Thread_Mutex::tryacquire_write (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::tryacquire_write");
   return ACE_OS::thread_mutex_trylock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Thread_Mutex::acquire (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::acquire");
   return ACE_OS::thread_mutex_lock (&this->lock_);
 }
- 
+
 ACE_INLINE int
 ACE_Thread_Mutex::tryacquire (void)
 {
@@ -403,7 +403,7 @@ ACE_Thread_Mutex::tryacquire (void)
   return ACE_OS::thread_mutex_trylock (&this->lock_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Thread_Mutex::release (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::release");
@@ -417,38 +417,38 @@ ACE_Thread_Mutex::remove (void)
   return ACE_OS::thread_mutex_destroy (&this->lock_);
 }
 
-ACE_INLINE int 
-ACE_Thread_Mutex_Guard::locked (void) 
-{ 
+ACE_INLINE int
+ACE_Thread_Mutex_Guard::locked (void)
+{
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::locked");
-  return this->owner_ != -1; 
+  return this->owner_ != -1;
 }
 
 // Explicitly acquire the lock.
 
-ACE_INLINE int 
-ACE_Thread_Mutex_Guard::acquire (void) 
-{ 
+ACE_INLINE int
+ACE_Thread_Mutex_Guard::acquire (void)
+{
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::acquire");
-  return this->owner_ = this->lock_.acquire (); 
+  return this->owner_ = this->lock_.acquire ();
 }
 
 // Conditionally acquire the lock (i.e., won't block).
 
-ACE_INLINE int 
-ACE_Thread_Mutex_Guard::tryacquire (void) 
-{ 
+ACE_INLINE int
+ACE_Thread_Mutex_Guard::tryacquire (void)
+{
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::tryacquire");
-  return this->owner_ = this->lock_.tryacquire (); 
+  return this->owner_ = this->lock_.tryacquire ();
 }
 
 // Implicitly and automatically acquire the lock.
 
 ACE_INLINE
 ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m,
-						int block)
-  : lock_ (m) 
-{ 
+                                                int block)
+  : lock_ (m)
+{
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard");
   if (block)
     this->acquire ();
@@ -458,14 +458,14 @@ ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m,
 
 // Explicitly release the lock.
 
-ACE_INLINE int 
-ACE_Thread_Mutex_Guard::release (void) 
-{ 
+ACE_INLINE int
+ACE_Thread_Mutex_Guard::release (void)
+{
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::release");
   if (this->owner_ != -1)
     {
       this->owner_ = -1;
-      return this->lock_.release (); 
+      return this->lock_.release ();
     }
   else
     return 0;
@@ -474,17 +474,17 @@ ACE_Thread_Mutex_Guard::release (void)
 // Implicitly release the lock.
 
 ACE_INLINE
-ACE_Thread_Mutex_Guard::~ACE_Thread_Mutex_Guard (void) 
-{ 
+ACE_Thread_Mutex_Guard::~ACE_Thread_Mutex_Guard (void)
+{
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::~ACE_Thread_Mutex_Guard");
   this->release ();
 }
 
 // Explicitly release the lock.
 
-ACE_INLINE int 
-ACE_Thread_Mutex_Guard::remove (void) 
-{ 
+ACE_INLINE int
+ACE_Thread_Mutex_Guard::remove (void)
+{
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::remove");
   this->owner_ = -1;
   return this->release ();
@@ -504,7 +504,7 @@ ACE_Condition_Thread_Mutex::remove (void)
   int result = 0;
 
   while ((result = ACE_OS::cond_destroy (&this->cond_)) == -1
-	 && errno == EBUSY)
+         && errno == EBUSY)
     {
       ACE_OS::cond_broadcast (&this->cond_);
       ACE_OS::thr_yield ();
@@ -620,7 +620,7 @@ ACE_Process_Mutex::acquire_read (void)
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Process_Mutex::acquire_write (void)
 {
   return this->lock_->acquire_write ();
@@ -676,7 +676,7 @@ ACE_RW_Process_Mutex::acquire_read (void)
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
-ACE_INLINE int 
+ACE_INLINE int
 ACE_RW_Process_Mutex::acquire_write (void)
 {
   return this->lock_.acquire_write ();
