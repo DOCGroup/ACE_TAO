@@ -1,3 +1,9 @@
+Sat May 08 17:09:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * apps/Gateway/Gateway/Event_Channel.cpp (bind_proxy,subscribe):
+          wrapped final return statement with ACE_NOTREACHED, to please
+          DU cxx 6.2.
+
 Sat May 08 08:49:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/CDR_Stream.h: only use unsigned long for Boolean
