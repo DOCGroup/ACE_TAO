@@ -37,7 +37,12 @@ ifdef PRELIB
 # it may decide to recompile some of the objects), before we can safely build
 # any libraries or shared objects.  Comment this line if no shared
 # libraries or objects are used.
-$(VSHOBJS): $(VSHLIB)
+#
+# I have no idea why this dependency has any effect similar to what is
+# described above, so I will comment it out.  This eliminates the VERY
+# annoying messages from make such as:
+# make: Circular .shobj/interp.so <- libcorba.so dependency dropped.
+#$(VSHOBJS): $(VSHLIB)
 endif
 
 # Comment these lines out if you want to build both *.a and *.so libraries...
