@@ -377,13 +377,13 @@ make: *** [libACE.so] Error 8
 
       FreeBSD is a fast evolving platform.  However, it has the
       advantage of having standard releases.  At this moment, ACE
-      supports both -stable (2.2.x) and -current (3.0).  Threaded version of ACE is
-      only supported on -current.  It might just work for -stable but
-      we never tried that.  <p>
+      is only perodically tested against -stable (3.1R) and we rely
+      a lot on FreeBSD users' feedbacks.  <p>
 
-      Notice that on FreeBSD, <code>ld.so</code> only looks for so
+      Notice that on older FreeBSD, <code>ld.so</code> only looks for so
       libraries with <b>version number</b> appended.  ACE makefiles
-      create symlink for most libraries they generate to
+      create symlink for most shared libraries if
+      <code>versioned_so</code> is defined to 1 in
       <code>$ACE_ROOT/ace</code> with appropriate ACE version.
       However, this does not work for libACE.so itself so you have to
       create it manually (If you figure out how to do this, please
@@ -391,9 +391,11 @@ make: *** [libACE.so] Error 8
 
       <code>ln -sf $ACE_ROOT/ace/libACE.so $ACE_ROOT/ace/libACE.so.4.5</code><p>
 
+      On newer FreeBSD (3.0 or later,) this is no longer necessary.<p>
+
   <li><b>NetBSD</b><p>
 
-      Like FreeBSD, NetBSD's <code>ld.so</code> also requires
+      Like older FreeBSD, NetBSD's <code>ld.so</code> also requires
       versioned .so files.<p>
 
   <LI><B> UnixWare </B> <P>
@@ -901,7 +903,7 @@ for the pointer to the STL fixes.
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h.<BR>
       <br>
-  <li>If ACE will be used with MFC programs, also add the following to
+  <li>To use ACE with MFC libraries, also add the following to
       your <code>config.h</code> file.  Notice that if you want to
       spawn a new thread with CWinThread, make sure you spawn the
       thread with THR_USE_AFX flag set.<br>
@@ -917,8 +919,15 @@ for the pointer to the STL fixes.
       you prefer to link MFC as a static library into ACE, you can do
       this by defining <code>ACE_USES_STATIC_MFC</code> in your
       <code>config.h</code> file.  If you insist on linking everything
-      statically, you'll have to modify the project file yourself.<br>
+      statically, you'll have to modify the project file yourself.<p>
+  <li>Static version of ACE libraries are build with the following macros defined:<br>
       <br>
+      <code>ACE_HAS_DLL=0</code><br>
+      <code>ACE_NO_INLINE</code><br>
+      <br>
+      You should also have them defined in you application projects if you 
+      want to use the default static ACE libraries with them.<p>
+
   <li>If you are building for Windows CE, you need to add the line <BR>
       <br>
       <code>#define ACE_HAS_WINCE</code>
