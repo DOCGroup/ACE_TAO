@@ -940,79 +940,81 @@ ACE_TSS_Cleanup::exit (void *status)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
-  ACE_thread_key_t key_arr[TLS_MINIMUM_AVAILABLE];
-  int index = 0;
+  {
+    ACE_thread_key_t key_arr[TLS_MINIMUM_AVAILABLE];
+    int index = 0;
 
-  ACE_TSS_Info *key_info = 0;
-  ACE_TSS_Info info_arr[TLS_MINIMUM_AVAILABLE];
-  int info_ix = 0;
+    ACE_TSS_Info *key_info = 0;
+    ACE_TSS_Info info_arr[TLS_MINIMUM_AVAILABLE];
+    int info_ix = 0;
 
   // While holding the lock, we only collect the ACE_TSS_Info objects
   // in an array without invoking the according destructors.
 
-  {
-    ACE_GUARD (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
+    {
+      ACE_GUARD (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
 
-    // Prevent recursive deletions
+      // Prevent recursive deletions
 
-    if (this->check_cleanup_i () == 0) // Are we already performing cleanup?
-      return;
+      if (this->check_cleanup_i () == 0) // Are we already performing cleanup?
+	return;
 
-    // If we can't insert our thread_id into the list, we will not be
-    // able to detect recursive invocations for this thread. Therefore
-    // we better risk memory and key leakages, resulting also in
-    // missing close() calls as to be invoked recursively.
+      // If we can't insert our thread_id into the list, we will not be
+      // able to detect recursive invocations for this thread. Therefore
+      // we better risk memory and key leakages, resulting also in
+      // missing close() calls as to be invoked recursively.
 
-    if (this->mark_cleanup_i () != 0) // Insert our thread_id in list
-      return;
+      if (this->mark_cleanup_i () != 0) // Insert our thread_id in list
+	return;
 
-    // Iterate through all the thread-specific items and free them all
-    // up.
+      // Iterate through all the thread-specific items and free them all
+      // up.
 
-    for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-	 iter.next (key_info) != 0;
-	 iter.advance ())
+      for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
+	   iter.next (key_info) != 0;
+	   iter.advance ())
+	{
+	  void *tss_info = 0;
+
+	  int val = key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
+
+	  if ((ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0)
+	      && (key_info->destructor_) 
+	      && tss_info)
+	    info_arr[info_ix++] = *key_info; // copy this information into array
+
+	  if (key_info->ref_table_.size () == 0 
+	      && key_info->tss_obj_ == 0)
+	    key_arr[index++] = key_info->key_;
+	}
+    }
+
+    // Now we have given up the ACE_TSS_Cleanup::lock_ and we start
+    // invoking destructors.
+
+    for (int i = 0; i < info_ix; i++)
       {
 	void *tss_info = 0;
 
-	int val = key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
+	ACE_OS::thr_getspecific (info_arr[i].key_, &tss_info);
 
-	if ((ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0)
-	    && (key_info->destructor_) 
-	    && tss_info)
-          info_arr[info_ix++] = *key_info; // copy this information into array
-
- 	if (key_info->ref_table_.size () == 0 
-	    && key_info->tss_obj_ == 0)
-	  key_arr[index++] = key_info->key_;
-      }
-   }
-
-   // Now we have given up the ACE_TSS_Cleanup::lock_ and we start
-   // invoking destructors.
-
-   for (int i = 0; i < info_ix; i++)
-     {
-       void *tss_info = 0;
-
-       ACE_OS::thr_getspecific (info_arr[i].key_, &tss_info);
-
-       (*info_arr[i].destructor_)(tss_info);
-     }
-
-   // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
-   // entries from ACE_TSS_Info table.
-   {
-    ACE_GUARD (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
-
-    for (int i = 0; i < index; i++)
-      {
-	::TlsFree (key_arr[i]);
-	this->table_.remove (ACE_TSS_Info (key_arr[i]));
+	(*info_arr[i].destructor_)(tss_info);
       }
 
-    this->exit_cleanup_i (); // remove thread id from reference list.
-   }
+    // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
+    // entries from ACE_TSS_Info table.
+    {
+      ACE_GUARD (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
+
+      for (int i = 0; i < index; i++)
+	{
+	  ::TlsFree (key_arr[i]);
+	  this->table_.remove (ACE_TSS_Info (key_arr[i]));
+	}
+
+      this->exit_cleanup_i (); // remove thread id from reference list.
+    }
+  }
 
 #if defined (ACE_HAS_MFC)	
   // allow CWinThread-destructor to be invoked from AfxEndThread
