@@ -9,7 +9,8 @@ pdb             = 1
 
 Release {
   use_debug_libraries   = 0
-  compile_flags         = /W3 /GX /O2 /MD /Zi /GR
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Release
@@ -19,7 +20,8 @@ Release {
 
 Debug {
   use_debug_libraries   = 1
-  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   intermediate_dir      = Debug
@@ -28,7 +30,8 @@ Debug {
 
 MFC Release {
   use_debug_libraries   = 0
-  compile_flags         = /W3 /GX /O2 /MD /Zi /GR
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = MFC_Release
@@ -40,7 +43,8 @@ MFC Release {
 
 MFC Debug {
   use_debug_libraries   = 1
-  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = MFC_Debug

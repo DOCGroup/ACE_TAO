@@ -4,15 +4,15 @@ conditional_include "common"
 type_description      = "Static Library"
 type_code             = 0x0104
 configurations        = Release Debug
-default_configuration = Debug
-common_defines        = WIN32 _WINDOWS
 type_is_static        = 1
-need_staticflags         = 1
+need_staticflags      = 1
+common_defines        = WIN32 _WINDOWS
 
 
 Release {
   use_debug_libraries   = 0
-  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Release
@@ -23,7 +23,8 @@ Release {
 
 Debug {
   use_debug_libraries   = 1
-  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = Debug
@@ -34,7 +35,8 @@ Debug {
 
 MFC Release {
   use_debug_libraries   = 0
-  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = MFC_Release
@@ -46,7 +48,8 @@ MFC Release {
 
 MFC Debug {
   use_debug_libraries   = 1
-  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = MFC_Debug
