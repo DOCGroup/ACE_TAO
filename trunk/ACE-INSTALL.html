@@ -2642,37 +2642,25 @@ that for entry points named <code>main</code>.
 
 On UNIX platforms, we typically like to support multiple platform
 builds using the same ACE source tree.  This idiom is supported by ACE
-using the $ACE_ROOT/bin/create_ace_build.pl script or
-$ACE_ROOT/bin/clone.cpp program.
+using the $ACE_ROOT/bin/create_ace_build.pl script.
 
-To use build and use the clone program, first make sure there's a file
-called <code>platform_macros.GNU</code> that contains the correct platform-specific
-Makefile configurations in the <code>$ACE_ROOT/include/makeinclude/</code>
-directory, as well as making sure there's a $ACE_ROOT/ace/config.h
-file that includes the desired platform/compiler specific
-configuration header.  Then perform the following steps:<p>
+To clone the source tree, create ./build and ./build/{your build name}
+subdirectories under the ACE_wrappers directory.
+Then invoke the create_ace_build.pl script to clone the source tree using
+soft links from your build directory back to the actual sources.
+Here is an example:</p><p>
 
-</p><pre>% cd $ACE_ROOT/bin
-% make -f GNUmakefile.clone
-% mv clone ~/bin
-% rehash
-</pre><p>
-
-Then create a ./build subdirectory someplace, e.g., under $ACE_ROOT.
-Once this is done, then invoke the top-level Makefile with the
-"clone" target, e.g.:</p><p>
-
-</p><pre>% cd $ACE_ROOT
-% mkdir build-SunOS5
-% cd build-SunOS5
-% make -f ../Makefile clone
+</p><pre>% cd ACE_wrappers
+% mkdir build build/build-SunOS5
+% perl bin/create_ace_build.pl -a -v build-SunOS5
+% cd build/build-SunOS5
 % setenv ACE_ROOT $cwd
 % make
 </pre><p>
 
 This will establish a complete tree of links.  In addition, make sure
 you set your <code>LD_LIBRARY_PATH</code> to
-<code>$ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH</code> on SVR4 UNIX
+<code>$ACE_ROOT/lib:$LD_LIBRARY_PATH</code> on SVR4 UNIX
 platforms.</p><p>
 
 When you do a make in the $ACE_ROOT directory you will be producing
@@ -2680,26 +2668,8 @@ object code that is not stored in the same place as the original
 source tree.  This way, you can easily build another platform in a
 parallel tree structure.</p><p>
 
-<b> VERY IMPORTANT! </b></p><p>
-
-If you use the "clone trick" discussed above, make sure that the
-symbolic links are correctly in place before starting the build.  In
-particular, if you plan to clone the tree, it is preferable to do so
-before you start a build procedure on the original tree.  This is
-because the build procedure create object directories (.obj and
-.shobj) and the cloning procedure will clone these directories also.
-You would end up with links pointing to object files of another
-platform.  If you clone the tree after you've done a build on the
-original tree, make sure to remove all ".obj", ".shobj" and (any other
-files or directories) in all subdirectories before starting the build
-on your cloned tree.</p><p>
-
-Alternatively, the perl script
-<code>ACE_wrappers/bin/create_ace_build.pl</code> can be used to create
-build trees.  It creates them below <code>ACE_wrappers/build</code>.
-It filters out all but the necessary files, so the warning above does
-not apply.  See the comments at the top of the script itself for usage
-information.
+See the comments at the top of the create_ace_build.pl script for
+further usage information.
 
 </p><p></p><hr align="left" width="50%"><p>
 </p><h4><a name="mvs">Additional Build Tips for MVS</a></h4>

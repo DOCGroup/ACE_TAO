@@ -1,3 +1,16 @@
+Mon Dec  6 16:34:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Removed mention and instructions for the 'clone'
+	  program. Favor use of bin/create_ace_build.pl since it is more
+	  reliable, simpler, doesn't rely on Makefile content that's not
+	  there, and doesn't need to be built first.
+
+	* bin/clone.1:
+	* bin/clone.cpp: Removed; this program has been superseded by the
+	  bin/create_ace_build.pl script. See ACE-INSTALL.html for details.
+
+	  Thanks to Neil Cohen <nbc@cisco.com> for bringing this up.
+
 Mon Dec  6 10:46:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/APG/Threads/Guards.cpp:
