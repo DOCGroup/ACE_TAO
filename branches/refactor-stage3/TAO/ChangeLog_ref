@@ -1,3 +1,16 @@
+Wed Jun 18 22:57:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+
+	  New files, for bounded string and wstring arguments.
+
+        * tao/Arg_Traits_T.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.cpp:
+
+	  Fixed mistakes in comments.
+
 Wed Jun 18 19:09:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Arg_Traits_T.h:

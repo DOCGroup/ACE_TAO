@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/Special_Basic_Arguments.h"
+#include "tao/UB_String_Arguments.h"
 
 ACE_RCSID (tao,
            Special_Basic_Arguments,
