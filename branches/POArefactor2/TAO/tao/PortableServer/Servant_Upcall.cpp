@@ -400,6 +400,14 @@ namespace TAO
     }
 
     void
+    Servant_Upcall::increment_servant_refcount (void)
+    {
+      // Cleanup servant related stuff.
+      if (this->active_object_map_entry_ != 0)
+        ++this->active_object_map_entry_->reference_count_;
+    }
+
+    void
     Servant_Upcall::servant_cleanup (void)
     {
       // Cleanup servant related stuff.

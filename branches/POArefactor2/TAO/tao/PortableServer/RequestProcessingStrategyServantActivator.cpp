@@ -254,8 +254,8 @@ namespace TAO
         }
       else
         {
-          // Increment the reference count.
-          ++servant_upcall.active_object_map_entry ()->reference_count_;
+          // Increment the reference count on the servant upcall.
+          servant_upcall.increment_servant_refcount ();
 
           // Success
           return servant;

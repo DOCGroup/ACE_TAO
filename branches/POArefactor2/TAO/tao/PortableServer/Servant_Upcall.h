@@ -173,6 +173,9 @@ namespace TAO
       /// Set the state.
       void state (State);
 
+      /// Increment the refcount
+      void increment_servant_refcount (void);
+
     protected:
 
       void servant_locator_cleanup (void);

@@ -1,3 +1,13 @@
+Wed Nov 10 14:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Upcall.h:
+          Added increment_servant_refcount method to increment the refcount on
+          the active object map entry
+
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+          Use the new method above instead of getting the active object map
+          entry here.
+
 Wed Nov 10 14:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategy*.*:
