@@ -27,9 +27,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SSL_SOCK_Connector.h"
-#include "tao/Resource_Factory.h"
+#include "SSL_SOCK_Connector.h"
 #include "SSLIOP_Connect.h"
+#include "tao/Resource_Factory.h"
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 #if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8

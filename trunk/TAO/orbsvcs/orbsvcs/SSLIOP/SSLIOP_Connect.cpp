@@ -51,12 +51,12 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_SSLIOP_Connect_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_SSLIOP_Handler_Base::TAO_SSLIOP_Handler_Base (TAO_ORB_Core *orb_core)
-  : TAO_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
+  : TAO_SSL_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
 {
 }
 
 TAO_SSLIOP_Handler_Base::TAO_SSLIOP_Handler_Base (ACE_Thread_Manager *t)
-  : TAO_SVC_HANDLER (t, 0, 0)
+  : TAO_SSL_SVC_HANDLER (t, 0, 0)
 {
 }
 
@@ -168,16 +168,16 @@ TAO_SSLIOP_Server_Connection_Handler::activate (long flags,
                  flags,
                  THR_BOUND));
 
-  return TAO_SVC_HANDLER::activate (flags,
-                                    n_threads,
-                                    force_active,
-                                    priority,
-                                    grp_id,
-                                    task,
-                                    thread_handles,
-                                    stack,
-                                    stack_size,
-                                    thread_names);
+  return TAO_SSL_SVC_HANDLER::activate (flags,
+                                        n_threads,
+                                        force_active,
+                                        priority,
+                                        grp_id,
+                                        task,
+                                        thread_handles,
+                                        stack,
+                                        stack_size,
+                                        thread_names);
 }
 
 int
@@ -193,7 +193,7 @@ TAO_SSLIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    return TAO_SVC_HANDLER::handle_close (handle, rm);
+    return TAO_SSL_SVC_HANDLER::handle_close (handle, rm);
 
   return 0;
 }
@@ -279,7 +279,7 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
     {
       --this->refcount_;
       if (this->refcount_ == 0)
-        this->TAO_SVC_HANDLER::handle_close ();
+        this->TAO_SSL_SVC_HANDLER::handle_close ();
       return result;
     }
 
@@ -316,7 +316,7 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    this->TAO_SVC_HANDLER::handle_close ();
+    this->TAO_SSL_SVC_HANDLER::handle_close ();
 
   return result;
 }

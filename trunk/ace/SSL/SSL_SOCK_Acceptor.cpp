@@ -1,10 +1,13 @@
-// SSL_SOCK_Acceptor.cpp
+//
 // $Id$
+//
+
 #define ACE_BUILD_DLL
-#include "ace/SSL_SOCK_Acceptor.h"
+
+#include "SSL_SOCK_Acceptor.h"
+#include "SSL.h"
 
 #include "ace/Synch.h"
-#include "ace/SSL.h"
 
 #if defined (ACE_HAS_SSL)
 

@@ -17,10 +17,11 @@
 #ifndef ACE_SSL_SOCK_STREAM_H
 #define ACE_SSL_SOCK_STREAM_H
 
+#include "SSL.h"
+
 #if defined (ACE_HAS_SSL)
 
-#include "SSL.h"
-#include "SOCK_Stream.h"
+#include "ace/SOCK_Stream.h"
 #include <openssl/ssl.h>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -259,7 +260,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SSL_SOCK_Stream.i"
+#include "SSL_SOCK_Stream.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SSL_SOCK_STREAM_H */

@@ -17,33 +17,33 @@ ACE_RCSID(tao, SSLIOP_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
 template class ACE_Creation_Strategy<TAO_SSLIOP_Server_Connection_Handler>;
 template class ACE_Concurrency_Strategy<TAO_SSLIOP_Server_Connection_Handler>;
 template class ACE_Scheduling_Strategy<TAO_SSLIOP_Server_Connection_Handler>;
 template class TAO_Creation_Strategy<TAO_SSLIOP_Server_Connection_Handler>;
 template class TAO_Concurrency_Strategy<TAO_SSLIOP_Server_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Creation_Strategy<TAO_SSLIOP_Server_Connection_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_SSLIOP_Server_Connection_Handler>
 #pragma instantiate ACE_Scheduling_Strategy<TAO_SSLIOP_Server_Connection_Handler>
 #pragma instantiate TAO_Creation_Strategy<TAO_SSLIOP_Server_Connection_Handler>
 #pragma instantiate TAO_Concurrency_Strategy<TAO_SSLIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
   : TAO_IIOP_Acceptor (),
-    base_acceptor_ (),
+    ssl_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0)
@@ -107,14 +107,15 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   IOP::TaggedComponent component;
   component.tag = IOP::TAG_SSL_SEC_TRANS;
-  // @@???? Check this code, only intended as guidelines...
+  // @@???? Check this code, only intended as guideline...
   TAO_OutputCDR cdr;
   CORBA::Boolean byte_order = ACE_CDR_BYTE_ORDER;
+  cdr << TAO_OutputCDR::from_boolean (byte_order);
   cdr << this->ssl_component_;
   // TAO extension, replace the contents of the octet sequence with
   // the CDR stream
   component.component_data.replace (cdr.total_length (),
-				    cdr.start ());
+				    cdr.begin ());
   
   pfile->tagged_components ().set_component (component);
 
@@ -135,7 +136,10 @@ TAO_SSLIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
 int
 TAO_SSLIOP_Acceptor::close (void)
 {
-  return this->base_acceptor_.close ();
+  int r = this->ssl_acceptor_.close ();
+  if (this->TAO_IIOP_Acceptor::close () != 0)
+    r = -1;
+  return r;
 }
 
 int
@@ -152,57 +156,10 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 				     options) != 0)
     return -1;
 
-  if (this->base_acceptor_.open (orb_core,
-                                 major,
-                                 minor,
-                                 address,
-                                 options) != 0)
-    return -1;
-
-  if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
-  // Parse options
-  if (this->parse_options (options) == -1)
-    return -1;
-
-  ACE_INET_Addr addr;
-
-  if (ACE_OS::strchr (address, ':') == address)
-    {
-      // The address is a port number or port name, and obtain the
-      // fully qualified domain name.  No hostname was specified.
-
-      char buffer[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (buffer,
-                              sizeof (buffer)) != 0)
-        return -1;
-
-      // First convert the port into a usable form.
-      if (addr.set (address + sizeof (':')) != 0)
-        return -1;
-
-      // Now reset the port and set the host.
-      if (addr.set (this->ssl_address_.get_port_number (),
-                    buffer,
-                    1) != 0)
-        return -1;
-    }
-  else if (ACE_OS::strchr (address, ':') == 0)
-    {
-      // The address is a hostname.  No port was specified, so assume
-      // port zero (port will be chosen for us).
-      if (addr.set (this->ssl_address_.get_port_number (),
-                    address) != 0)
-        return -1;
-    }
-  else if (addr.set (this->ssl_address_.get_port_number (),
-                     address) != 0)
-    // Host and port were specified.
-    return -1;
-
+  // The SSL port is set in the parse_options() method. All we have
+  // to do is call open_i()
+  ACE_INET_Addr addr (this->ssl_component_.port,
+                      this->address_.get_host_addr());
   return this->open_i (orb_core, addr);
 }
 
@@ -210,40 +167,22 @@ int
 TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                    const char *options)
 {
-  if (this->iiop_acceptor_.open (orb_core, options) != 0)
-    return -1;
-
-  // Parse options
-  if (this->parse_options (options) == -1)
+  if (this->TAO_IIOP_Acceptor::open_default (orb_core, options) == -1)
     return -1;
 
   // @@ Until we can support multihomed machines correctly we must
   //    pick the "default interface" and only listen on that IP
   //    address.
 
-  ACE_INET_Addr addr;
-  char buffer[MAXHOSTNAMELEN + 1];
-  if (addr.get_host_name (buffer,
-                          sizeof (buffer)) != 0)
-    return -1;
+  ACE_INET_Addr addr (u_short(0), this->address_.get_host_addr ());
 
-  if (addr.set (this->ssl_address_.get_port_number (),
-                buffer,
-                1) != 0)
-    return -1;
-
-  this->host_ = buffer;
-
-  return this->open_i (orb_core,
-                       addr);
+  return this->open_i (orb_core, addr);
 }
 
 int
 TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                              const ACE_INET_Addr& addr)
 {
-  this->orb_core_ = orb_core;
-
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_SSLIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
@@ -270,7 +209,8 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     }
 
   // @@ Should this be a catastrophic error???
-  if (this->ssl_acceptor_.acceptor ().get_local_addr (this->ssl_address_) != 0)
+  ACE_INET_Addr ssl_address;
+  if (this->ssl_acceptor_.acceptor ().get_local_addr (ssl_address) != 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -332,7 +272,7 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
 {
   // Set the SSL port to the default value...
   // @@ Do we really need to do this...
-  this->ssl_address_.set_port_number (0);
+  this->ssl_component_.port = 0;
 
   if (str == 0)
     return 0;  // No options to parse.  Not a problem.
@@ -369,6 +309,8 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
   int begin = 0;
   int end = -1;
 
+  // @@ We should add options to set the security association options, 
+  // or are those controlled by Policies?
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
       begin += end + 1;
@@ -429,7 +371,7 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
               int ssl_port = ACE_OS::atoi (value.c_str ());
 
               if (ssl_port >= 0 && ssl_port < 65536)
-                this->ssl_address_.set_port_number (ssl_port);
+                this->ssl_component_.port = ssl_port;
               else
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    "TAO (%P|%t) Invalid IIOP/SSL endpoint "

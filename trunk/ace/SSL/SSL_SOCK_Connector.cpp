@@ -4,15 +4,15 @@
 
 #define ACE_BUILD_DLL
 
-#include "ace/SSL_SOCK_Connector.h"
+#include "SSL_SOCK_Connector.h"
+#include "SSL.h"
 #include "ace/Handle_Set.h"
 #include "ace/INET_Addr.h"
-#include "ace/SSL.h"
 
 #if defined (ACE_HAS_SSL)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SSL_SOCK_Connector.i"
+#include "SSL_SOCK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 

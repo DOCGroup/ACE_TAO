@@ -23,7 +23,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SSL_SOCK_Stream.h"
+#include "SSL_SOCK_Stream.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 
@@ -38,11 +38,11 @@ class TAO_ORB_Core_TSS_Resources;
 
 
 typedef ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_SVC_HANDLER;
+        TAO_SSL_SVC_HANDLER;
 
 // ****************************************************************
 
-class TAO_SSLIOP_Handler_Base : public TAO_SVC_HANDLER
+class TAO_SSLIOP_Handler_Base : public TAO_SSL_SVC_HANDLER
 {
 public:
   TAO_SSLIOP_Handler_Base (ACE_Thread_Manager *t);

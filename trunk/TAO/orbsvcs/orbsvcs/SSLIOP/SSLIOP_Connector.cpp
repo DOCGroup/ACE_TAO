@@ -109,7 +109,7 @@ TAO_SSLIOP_Connector::make_caching_strategy (void)
 
 #if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>
-#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
+#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler, ACE_SSL_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 #define TAO_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 #define TAO_HANDLER TAO_SSLIOP_Client_Connection_Handler
 #define TAO_HASH_KEY ACE_Hash<TAO_ADDR>
@@ -137,8 +137,8 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
 template class ACE_NOOP_Creation_Strategy<TAO_HANDLER>;
 template class ACE_Concurrency_Strategy<TAO_HANDLER>;
-template class ACE_Connect_Strategy<TAO_HANDLER, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector<TAO_HANDLER, ACE_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_Connector<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_Creation_Strategy<TAO_HANDLER>;
 template class ACE_Hash_Map_Entry<TAO_ADDR, TAO_HANDLER *>;
 template class ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >;
@@ -150,7 +150,7 @@ template class ACE_Map_Iterator<ACE_HANDLE, TAO_SVC_TUPLE *, ACE_SYNCH_RW_MUTEX>
 template class ACE_Map_Reverse_Iterator<ACE_HANDLE, TAO_SVC_TUPLE *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_NOOP_Concurrency_Strategy<TAO_HANDLER>;
 template class ACE_Recycling_Strategy<TAO_HANDLER>;
-template class ACE_Strategy_Connector<TAO_HANDLER, ACE_SOCK_CONNECTOR>;
+template class ACE_Strategy_Connector<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR>;
 template class TAO_SVC_TUPLE;
 
 template class ACE_Hash_Map_Manager<TAO_ADDR, TAO_HANDLER *, ACE_Null_Mutex>;
@@ -203,8 +203,8 @@ template class ACE_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP, TAO_
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
-template class ACE_Cached_Connect_Strategy_Ex<TAO_HANDLER, ACE_SOCK_CONNECTOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES, TAO_Cached_Connector_Lock>;
-template class ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>;
+template class ACE_Cached_Connect_Strategy_Ex<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES, TAO_Cached_Connector_Lock>;
+template class ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>;
 
 template class ACE_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>;
 template class ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>;
@@ -231,8 +231,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 #pragma instantiate ACE_NOOP_Creation_Strategy<TAO_HANDLER>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_HANDLER>
-#pragma instantiate ACE_Connect_Strategy<TAO_HANDLER, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector<TAO_HANDLER, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_Creation_Strategy<TAO_HANDLER>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_ADDR, TAO_HANDLER *>
 #pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
@@ -244,7 +244,7 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, TAO_SVC_TUPLE *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_HANDLER>
 #pragma instantiate ACE_Recycling_Strategy<TAO_HANDLER>
-#pragma instantiate ACE_Strategy_Connector<TAO_HANDLER, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Strategy_Connector<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate TAO_SVC_TUPLE
 
 #pragma instantiate ACE_Hash_Map_Manager<TAO_ADDR, TAO_HANDLER *, ACE_Null_Mutex>
@@ -297,8 +297,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
-#pragma instantiate ACE_Cached_Connect_Strategy_Ex<TAO_HANDLER, ACE_SOCK_CONNECTOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES, TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Cached_Connect_Strategy_Ex<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES, TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_SSL_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 
 #pragma instantiate ACE_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>
 #pragma instantiate ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>
@@ -332,7 +332,7 @@ TAO_SSLIOP_Connect_Creation_Strategy::make_svc_handler
 
 #if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 typedef ACE_Cached_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler,
-                                    ACE_SOCK_CONNECTOR,
+                                    ACE_SSL_SOCK_CONNECTOR,
                                     TAO_Cached_Connector_Lock>
         TAO_CACHED_CONNECT_STRATEGY;
 #endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
@@ -444,12 +444,14 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
                              TAO_Transport *&transport,
                              ACE_Time_Value *max_wait_time)
 {
-  if (!using_ssl) {
+  // @@ Use the policies to decide if SSL is the right protocol... 
+  int using_ssl = 0;
+  if (!using_ssl)
     return this->TAO_IIOP_Connector::connect (pfile,
 					      transport,
 					      max_wait_time);
 
-  if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
+  if (pfile->tag () != TAO_IOP_TAG_INTERNET_IOP)
     return -1;
 
   TAO_SSLIOP_Profile *profile =
@@ -460,7 +462,7 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
 
   ACE_INET_Addr oa =
     profile->object_addr ();
-  oa->set_port_number (profile->ssl_port ());
+  oa.set_port_number (profile->ssl_port ());
 
   ACE_Synch_Options synch_options;
   if (max_wait_time != 0)
@@ -473,7 +475,7 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
   // object; but we obtain the transport in the <result>
   // variable. Other threads may modify the hint, but we are not
   // affected.
-  if (this->base_connector_.connect (profile->hint (),
+  if (this->base_connector_.connect (profile->ssl_hint (),
                                      result,
                                      oa,
                                      synch_options) == -1)
@@ -510,7 +512,7 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
   transport = result->transport ();
   return 0;
 }
-
+  
 TAO_Profile *
 TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
@@ -542,6 +544,7 @@ TAO_SSLIOP_Connector::make_profile (const char *endpoint,
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (endpoint,
 					this->orb_core_,
+                                        0, // @@ ssl_port
 					ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
 

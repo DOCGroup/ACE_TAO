@@ -7,11 +7,13 @@
 
 // Do nothing routine for constructor.
 
+ACE_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 }
 
+ACE_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               int reuse_addr,
                                               int protocol_family,
@@ -23,6 +25,7 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
 }
 // Performs the timed accept operation.
 
+ACE_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               ACE_Protocol_Info *protocolinfo,
                                               ACE_SOCK_GROUP g,
@@ -43,9 +46,7 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 }
 
-
-
-int
+ACE_INLINE int
 ACE_SSL_SOCK_Acceptor::open (const ACE_Addr &local_sap,
                                 int reuse_addr,
                                 int protocol_family,
@@ -59,7 +60,8 @@ ACE_SSL_SOCK_Acceptor::open (const ACE_Addr &local_sap,
                          backlog,
                          protocol);
 }
-int
+
+ACE_INLINE int
 ACE_SSL_SOCK_Acceptor::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::close ()");
@@ -67,41 +69,41 @@ ACE_SSL_SOCK_Acceptor::close (void)
 }
 
 
+ACE_INLINE
 ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor");
 }
 
-
-int
+ACE_INLINE int
 ACE_SSL_SOCK_Acceptor::control (int cmd, void* dummy) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::control");
   return acceptor_.control (cmd, dummy);
 }
 
-ACE_HANDLE
+ACE_INLINE ACE_HANDLE
 ACE_SSL_SOCK_Acceptor::get_handle (void) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::get_handle");
   return acceptor_.get_handle ();
 }
 
-void
+ACE_INLINE void
 ACE_SSL_SOCK_Acceptor::set_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::set_handle");
   acceptor_.set_handle (handle);
 }
 
-int
+ACE_INLINE int
 ACE_SSL_SOCK_Acceptor::get_local_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::get_local_addr");
   return acceptor_.get_local_addr (addr);
 }
 
-void
+ACE_INLINE void
 ACE_SSL_SOCK_Acceptor::dump (void) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::dump");
