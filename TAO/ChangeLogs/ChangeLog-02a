@@ -2,7 +2,7 @@ Thu Mar 16 09:15:02 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/target_identifier.h (class TAO_Target_Specification):
 	  Removed the return type qualifier const for the method iop_ior
-	  (). IRIX & KAI compiler complained about this.
+	  (). IRIX & KAI compilers complained about this.
 
 Wed Mar 15 23:56:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
