@@ -1,3 +1,9 @@
+Sun Aug  3 21:56:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+	* orbsvcs/tests/ImplRepo/nestea_client_i.cpp: #included ACE.h to  
+	  get rid of compile  errors on full reactor build. 
+
 Sun Aug  3 21:05:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/EventType.cpp:
