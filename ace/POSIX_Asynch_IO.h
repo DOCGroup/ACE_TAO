@@ -33,6 +33,10 @@
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Map_Manager.h"
+#if defined(INTEGRITY)
+#include "ace/Event_Handler.h"
+#include "ace/ACE.h"
+#endif
 
 // Forward declarations
 class ACE_POSIX_Proactor;

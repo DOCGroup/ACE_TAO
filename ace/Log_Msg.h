@@ -99,7 +99,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__Lynx__)
+#if defined (__Lynx__) || defined (INTEGRITY)
 # undef STDERR
 #endif /* __Lynx__ */
 
@@ -640,7 +640,7 @@ private:
   /// Process id of the current process.
   static pid_t pid_;
 
-  /// Options flags used to hold the logger flag options, e.g., 
+  /// Options flags used to hold the logger flag options, e.g.,
   /// STDERR, LOGGER, OSTREAM, MSG_CALLBACK, etc.
   static u_long flags_;
 

@@ -93,7 +93,7 @@ int const ACE_FD_SETSIZE = FD_SETSIZE;
 // ACE.
 #include "ace/Global_Macros.h"
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (INTEGRITY)
 #define ACE_MAX_USERID L_cuserid
 #endif /*!ACE_WIN32*/
 
@@ -2625,6 +2625,9 @@ typedef void (__cdecl *ACE_SignalHandlerV)(int);
 # elif defined (ACE_HAS_UNIXWARE_SVR4_SIGNAL_T)
 typedef void (*ACE_SignalHandler)(int);
 typedef void (*ACE_SignalHandlerV)(...);
+# elif defined (INTEGRITY)
+typedef void (*ACE_SignalHandler)();
+typedef void (*ACE_SignalHandlerV)(int);
 # else /* This is necessary for some older broken version of cfront */
 #   if defined (SIG_PF)
 #     define ACE_SignalHandler SIG_PF
@@ -3303,7 +3306,7 @@ extern "C"
   int select (int n, fd_set *readfds, fd_set *writefds,
               fd_set *exceptfds, const struct timeval *timeout);
 };
-#   elif ! defined (VXWORKS)
+#   elif ! defined (VXWORKS) && ! defined (INTEGRITY)
 #     include /**/ <sys/uio.h>
 #     include /**/ <sys/ipc.h>
 #     if !defined(ACE_LACKS_SYSV_SHMEM)
@@ -4171,7 +4174,7 @@ typedef int ACE_Sched_Priority;
 class ACE_Sched_Params;
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (VXWORKS) && ! defined (ACE_PSOS) && ! defined (__rtems__)
+#   if ! defined (VXWORKS) && ! defined (ACE_PSOS) && ! defined (__rtems__) && !defined (INTEGRITY)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
 // appear to support flock ().  RTEMS defines struct flock but
 // currently does not support locking.

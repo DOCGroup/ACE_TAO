@@ -1,3 +1,38 @@
+Fri Apr 11 18:05:00 2003  Roy Pollock  <rpollock@ghs.com>
+
+        * ace/config-integritySCA.h
+        * tests/ACE.bsp
+        * tests/INTEGRITY.ld
+
+          Add configuration and build files for INTEGRITY 4.0.9+SCA
+
+        * ace/Default_Constants.h
+        * ace/Log_Msg.h
+        * ace/Mem_Map.cpp
+        * ace/OS.cpp
+        * ace/OS.h
+        * ace/SOCK_Dgram_Mcast.i
+
+          Add defined(INTEGRITY) cases
+
+        * ace/OS.i
+        
+          Cast the ACE_NOTSUP_RETURN of umask to mode_t
+          Add defined(INTEGRITY) cases
+
+        * ace/POSIX_Asynch_IO.h
+
+          Add two header includes under defined(INTEGRITY).  I'm not sure
+          why these aren't needed on other platforms.
+
+        * ace/SString.cpp
+        * ace/RMCast/RMCast_Reassembly.cpp
+        * ace/RMCast/RMCast_Retransmission.cpp
+        * tests/Token_Strategy_Test.cpp
+
+          Fix #pragma instatiate cases to have correct syntax and match
+          the explicit template instantiation case.
+
 Fri Apr 11 13:37:34 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:

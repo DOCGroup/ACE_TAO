@@ -363,7 +363,7 @@ ACE_INLINE int
 ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 {
   ACE_OS_TRACE ("ACE_OS::getopt");
-#if defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (optstring);
@@ -381,7 +381,7 @@ ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
 {
   ACE_OS_TRACE ("ACE_OS::pipe");
-# if defined (VXWORKS) || defined (ACE_PSOS)
+# if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_UNUSED_ARG (fds);
   ACE_NOTSUP_RETURN (-1);
 # else
@@ -440,7 +440,7 @@ ACE_INLINE pid_t
 ACE_OS::setsid (void)
 {
   ACE_OS_TRACE ("ACE_OS::setsid");
-# if defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
+# if defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::setsid (), int, -1);
@@ -451,9 +451,9 @@ ACE_INLINE mode_t
 ACE_OS::umask (mode_t cmask)
 {
   ACE_OS_TRACE ("ACE_OS::umask");
-# if defined (VXWORKS) || defined (ACE_PSOS)
+# if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_UNUSED_ARG (cmask);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN ((mode_t)-1);
 # else
   return ::umask (cmask); // This call shouldn't fail...
 # endif /* VXWORKS || ACE_PSOS */
@@ -850,6 +850,10 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
 #endif /* VXWORKS */
 }
 
+#if defined (ACE_HAS_SHM_OPEN) && defined(INTEGRITY)
+#include <sys/mman.h>
+#endif
+
 ACE_INLINE ACE_HANDLE
 ACE_OS::shm_open (const ACE_TCHAR *filename,
                   int mode,
@@ -1077,7 +1081,7 @@ ACE_INLINE long
 ACE_OS::sysconf (int name)
 {
   ACE_OS_TRACE ("ACE_OS::sysconf");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
 #else
@@ -7717,8 +7721,21 @@ ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
 ACE_INLINE int
 ACE_OS::uname (ACE_utsname *name)
 {
+#if defined (INTEGRITY)
+  if(!name) {
+      errno = EFAULT;
+      return -1;
+  }
+  strcpy(name->sysname,"INTEGRITY");
+  int status = gethostname(name->nodename,_SYS_NMLN);
+  strcpy(name->release,"4.0");
+  strcpy(name->version,"4.0.9");
+  strcpy(name->machine,"a standard name");
+  return status;
+#else
   ACE_OS_TRACE ("ACE_OS::uname");
   ACE_OSCALL_RETURN (::uname (name), int, -1);
+#endif
 }
 #endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
 
@@ -9983,7 +10000,7 @@ ACE_OS::waitpid (pid_t pid,
                  ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::waitpid");
-#if defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (status);
   ACE_UNUSED_ARG (wait_options);
@@ -10065,7 +10082,7 @@ ACE_INLINE pid_t
 ACE_OS::wait (int *status)
 {
   ACE_OS_TRACE ("ACE_OS::wait");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined(CHORUS) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined(CHORUS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_UNUSED_ARG (status);
 
   ACE_NOTSUP_RETURN (0);
@@ -10458,6 +10475,12 @@ ACE_OS::getenv (const wchar_t *symbol)
 #endif /* ACE_LACKS_ENV */
 }
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
+
+#if defined(INTEGRITY)
+extern "C" {
+  int putenv(char *string);
+}
+#endif
 
 ACE_INLINE int
 ACE_OS::putenv (const ACE_TCHAR *string)
@@ -10895,7 +10918,7 @@ ACE_INLINE int
 ACE_OS::setuid (uid_t uid)
 {
   ACE_OS_TRACE ("ACE_OS::setuid");
-#if defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   // setuid() is not supported:  just one user anyways
   ACE_UNUSED_ARG (uid);
   return 0;
@@ -10911,7 +10934,7 @@ ACE_INLINE uid_t
 ACE_OS::getuid (void)
 {
   ACE_OS_TRACE ("ACE_OS::getuid");
-#if defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   // getuid() is not supported:  just one user anyways
   return 0;
 # elif defined (ACE_WIN32) || defined (CHORUS)
@@ -10925,7 +10948,7 @@ ACE_INLINE int
 ACE_OS::setgid (gid_t gid)
 {
   ACE_OS_TRACE ("ACE_OS::setgid");
-#if defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   // setgid() is not supported:  just one user anyways
   ACE_UNUSED_ARG (gid);
   return 0;
@@ -10941,7 +10964,7 @@ ACE_INLINE gid_t
 ACE_OS::getgid (void)
 {
   ACE_OS_TRACE ("ACE_OS::getgid");
-#if defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   // getgid() is not supported:  just one user anyways
   return 0;
 # elif defined (ACE_WIN32) || defined (CHORUS)

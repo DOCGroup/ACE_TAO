@@ -14,6 +14,11 @@
 # include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#if defined(INTEGRITY) && defined(ACE_HAS_SHM_OPEN)
+char* shm_area_name = "ACE_Area";
+char* shm_area_password = "******";
+#endif
+
 ACE_RCSID(ace, OS, "$Id$")
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -4804,14 +4809,14 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
       *res = *res_ptr;
       return res;
     }
-#elif defined (ACE_HAS_WINCE) 
+#elif defined (ACE_HAS_WINCE)
   // This is really stupid, converting FILETIME to timeval back and
   // forth.  It assumes FILETIME and DWORDLONG are the same structure
   // internally.
-  
+ 
   TIME_ZONE_INFORMATION pTz;
  
-  const unsigned short int __mon_yday[2][13] = 
+  const unsigned short int __mon_yday[2][13] =
   {
     /* Normal years.  */
     { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 },
@@ -4826,12 +4831,12 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   FILETIME file_time;
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
-   
+
   FILETIME localtime;
   SYSTEMTIME systime;
   FileTimeToLocalFileTime (&file_time, &localtime);
   FileTimeToSystemTime (&localtime, &systime);
- 
+
   res->tm_hour = systime.wHour;
  
   if(pTz.DaylightBias!=0)
@@ -5239,6 +5244,14 @@ ACE_OS::open (const char *filename,
     }
   return ACE_static_cast (ACE_HANDLE, handle);
 # endif /* defined (ACE_PSOS_LACKS_PHILE) */
+#elif defined (INTEGRITY)
+  ACE_UNUSED_ARG (sa);
+  if(!strcmp(filename,ACE_DEV_NULL)) {
+      ACE_OSCALL_RETURN (::AllocateNullConsoleDescriptor(), ACE_HANDLE, -1);
+  }
+  else {
+      ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
+  }
 #else
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
