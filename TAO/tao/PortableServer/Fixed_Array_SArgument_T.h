@@ -151,7 +151,7 @@ namespace TAO
     typedef ret_type &                                  ret_arg_type;
 
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/Fixed_Array_SArgument_T.inl"
