@@ -1,3 +1,8 @@
+Fri May 30 16:25:25 1997    <irfan@TWOSTEP>
+
+	* tests/UPIPE_SAP_Test.cpp (connector): Changed the eof marker in
+ 	  the strings.
+
 Fri May 30 14:04:44 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.4_sgic++.GNU: added to make
