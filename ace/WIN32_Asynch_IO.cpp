@@ -109,7 +109,7 @@ ACE_WIN32_Asynch_Result::~ACE_WIN32_Asynch_Result (void)
 }
 
 ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result
-   (ACE_Handler::Proxy_Ptr &handler_proxy,
+   (const ACE_Handler::Proxy_Ptr &handler_proxy,
     const void* act,
     ACE_HANDLE event,
     u_long offset,
