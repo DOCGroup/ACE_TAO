@@ -805,6 +805,10 @@ CORBA_SystemException::_tao_get_omg_exception_description (
       && minor_code < sizeof IMP_LIMIT_TABLE / sizeof (char *))
     return IMP_LIMIT_TABLE[minor_code];
 
+  if (exc._is_a ("IDL:omg.org/CORBA/INITIALIZE:1.0")
+      && minor_code < sizeof INITIALIZE_TABLE / sizeof (char *))
+    return INITIALIZE_TABLE[minor_code];
+
   if (exc._is_a ("IDL:omg.org/CORBA/INV_OBJREF:1.0")
       && minor_code < sizeof INV_OBJREF_TABLE / sizeof (char *))
     return INV_OBJREF_TABLE[minor_code];
