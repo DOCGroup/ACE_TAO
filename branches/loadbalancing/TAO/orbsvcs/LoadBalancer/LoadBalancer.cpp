@@ -17,7 +17,7 @@ TAO_LoadBalancer::TAO_LoadBalancer (void)
 
 TAO_LoadBalancer::~TAO_LoadBalancer (void)
 {
-  // @@ 
+  // @@
 }
 
 void
@@ -109,4 +109,10 @@ TAO_LoadBalancer::usage (const char *cmd) const
               ASYS_TEXT ("-h ")
               ASYS_TEXT ("\n"),
               cmd));
+}
+
+void
+TAO_LoadBalancer::run (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->orb_->run (ACE_TRY_ENV);
 }

@@ -34,6 +34,8 @@ class Load_Balancing_Strategy
   //    strategies should implement.
 
 public:
+  virtual ~Load_Balancing_Strategy (void);
+  // Destructor
 
   virtual CORBA::Object_ptr replica (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;

@@ -64,3 +64,17 @@ Round_Robin_Strategy::remove (ReplicaProxy_Impl *proxy)
 {
   return this->proxies_.remove (proxy);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Node<ReplicaProxy_Impl*>;
+template class ACE_Unbounded_Set<ReplicaProxy_Impl*>;
+template class ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl*>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Node<ReplicaProxy_Impl*>
+#pragma instantiate ACE_Unbounded_Set<ReplicaProxy_Impl*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl*>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

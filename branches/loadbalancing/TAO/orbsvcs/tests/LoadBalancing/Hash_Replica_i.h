@@ -14,13 +14,11 @@
 //
 // ============================================================================
 
-#include "orbsvcs/LoadBalancingS.h"
-
-#include "Hash_ReplicaS.h"
-
 #ifndef TAO_HASH_REPLICA_I_H
 #define TAO_HASH_REPLICA_I_H
 
+#include "Hash_ReplicaS.h"
+#include "orbsvcs/LoadBalancingC.h"
 
 class Hash_Replica_Impl : public virtual POA_Hash_Replica
 {
@@ -38,6 +36,9 @@ public:
   void reject_requests (int reject);
   // Inform the Replica that it should or should not accept client
   // requests.  0 == accept requests, ~0 == reject requests
+
+  void set_proxy (LoadBalancing::ReplicaProxy_ptr proxy);
+  // Set the proxy
 
 private:
   CORBA::Object_var load_balanced_group_;
@@ -60,4 +61,3 @@ private:
 
 
 #endif  /* TAO_HASH_REPLICA_I_H */
-
