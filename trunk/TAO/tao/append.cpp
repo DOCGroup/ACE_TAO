@@ -23,6 +23,7 @@
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/Any.h"
+#include "tao/ValueBase.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, append, "$Id$")
@@ -206,6 +207,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
             case CORBA::tk_array:
             case CORBA::tk_alias:
             case CORBA::tk_except:
+            case CORBA::tk_value:
               {
                 // write the encapsulation i.e., octet sequence
                 retval =
@@ -1152,6 +1154,99 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_WString::append detected error\n")));
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                    CORBA::COMPLETED_MAYBE),
+                    CORBA::TypeCode::TRAVERSE_STOP);
+}
+
+CORBA::TypeCode::traverse_status
+TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
+                           TAO_InputCDR *src,
+                           TAO_OutputCDR *dest
+                           TAO_ENV_ARG_DECL)
+{
+  CORBA::TypeCode::traverse_status retval =
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
+  CORBA::TypeCode_var param;
+
+  // Use the same method to append our base valuetype.
+  // To achive this we'll need to distinguish between 
+  // first-time/nested appends so that we won't attempt to 
+  // append rep_id several times.
+  //
+  if (nested_processing_ == 0)
+    {
+      nested_processing_ = 1;
+
+      CORBA::ULong value_tag;
+
+      if (!src->read_ulong (value_tag) ||
+          !dest->write_ulong (value_tag))
+        {
+          return CORBA::TypeCode::TRAVERSE_STOP;
+        }
+
+      if (value_tag == 0) // Null value type pointer.
+        {
+          //We are done.
+          return retval;
+        }
+      else if (value_tag & TAO_OBV_GIOP_Flags::Type_info_single)
+        {
+          // Append repository id which is of type string.
+          dest->append_string (*src);
+        }
+      else
+        {
+          //@@ boris: VT CDR
+          return CORBA::TypeCode::TRAVERSE_STOP;
+        }
+    }
+
+  // Handle our base valuetype if any.
+  param = tc->concrete_base_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  if (param->kind () != CORBA::tk_null)
+    {
+      retval = this->append (param.in (), 
+                             src,
+                             dest
+                             TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        {
+          return retval;
+        }
+    }
+
+  // Number of fields in the struct.
+  int member_count = tc->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  for (int i = 0;
+       i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
+       i++)
+    {
+      // get member type
+      param = tc->member_type (i TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+      retval =
+        TAO_Marshal_Object::perform_append (param.in (),
+                                            src,
+                                            dest
+                                             TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+    }
+
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO_Marshal_Value::append detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     CORBA::TypeCode::TRAVERSE_STOP);

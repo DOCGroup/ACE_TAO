@@ -748,6 +748,134 @@ be_valuetype::accept (be_visitor *visitor)
   return visitor->visit_valuetype (this);
 }
 
+ACE_CDR::ULong 
+be_valuetype::data_members_count (AST_Field::Visibility vis)
+{
+  ACE_CDR::ULong count = 0;
+
+  // proceed if the number of members in our scope is greater than 0
+  if (this->nmembers () > 0)
+    {      
+      // initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator *si;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      0);
+
+      // continue until each element is visited
+      for (;!si->is_done ();si->next())
+        {
+          AST_Decl *d = si->item ();
+
+          if (!d)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  "(%N:%l) be_valuetype::data_members_count - "
+                  "bad node in this scope\n"), 0);
+            }
+
+          AST_Field *field = AST_Field::narrow_from_decl (d);
+
+          if (!field)
+            {
+              continue;     
+            }
+
+          if (vis != AST_Field::vis_NA)
+            {
+              if (vis == field->visibility ()) ++count;
+            }
+          else
+            {
+              ++count;
+            }
+
+        } // end of for loop
+
+      delete si;
+    }
+  return count;
+}
+
+idl_bool 
+be_valuetype::in_recursion (AST_Type *node)
+{
+  if (node == 0)
+    {
+      node = this;
+    }
+
+  // proceed if the number of members in our scope is greater than 0
+  if (this->nmembers () > 0)
+    {      
+      // initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator *si;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      0);
+
+      // continue until each element is visited
+      for (;!si->is_done ();si->next())
+        {
+          AST_Decl *d = si->item ();
+
+          if (!d)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  "(%N:%l) be_valuetype::in_recursion - "
+                  "bad node in this scope\n"), 0);
+            }
+
+          AST_Field *field = AST_Field::narrow_from_decl (d);
+
+          if (!field)
+            {
+              continue;
+            }
+
+          // IDL doesn't have such a feature as name reuse so
+          // just compare fully qualified names
+          
+          AST_Type *type = AST_Type::narrow_from_decl (field->field_type ());
+          
+          if (!type)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  "(%N:%l) be_valuetype::in_recursion - "                  
+                  "bad base type\n"), 0);
+            }
+
+          if (!ACE_OS::strcmp (node->full_name (),
+                               type->full_name ()))
+            {
+              delete si;
+              return 1;
+            }
+
+          // Now hand over to our field type
+          if (type->in_recursion (node))
+            {
+              delete si;
+              return 1;
+            }
+
+        } // end of for loop
+
+      delete si;
+    }
+
+  return 0;
+}
+
+
 // Narrowing.
 IMPL_NARROW_METHODS1 (be_valuetype, be_interface)
 IMPL_NARROW_FROM_DECL (be_valuetype)

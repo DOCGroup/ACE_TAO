@@ -216,6 +216,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "static const char* "
       << "_tao_obv_static_repository_id ();" << be_nl << be_nl;
 
+  // Ugly TAO any support routine
+  *os << "static void _tao_any_destructor (void *);" 
+      << be_nl << be_nl;
+
+
   // Generate code for the valuetype definition.
   if (this->visit_valuetype_scope (node) == -1)
     {
@@ -314,6 +319,24 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   delete visitor;
+
+  // Step last: generate typecode declaration
+  {
+    be_visitor *visitor;
+    be_visitor_context ctx (*this->ctx_);
+    ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+    visitor = tao_cg->make_visitor (&ctx);
+    
+    if (!visitor || (node->accept (visitor) == -1))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_valuetype_ch::"
+                           "visit_structure - "
+                           "TypeCode declaration failed\n"
+                           ), 
+                          -1);
+      }
+  }
 
   node->cli_hdr_gen (I_TRUE);
 

@@ -16,6 +16,7 @@
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
+//    Boris Kolpackov <bosk@ipmce.ru>
 //
 // ============================================================================
 
@@ -46,12 +47,30 @@ be_visitor_valuetype_any_op_ch::~be_visitor_valuetype_any_op_ch (void)
 int
 be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
 {
-  if (node->cli_hdr_any_op_gen () || node->imported () || node->is_local ())
+  if (node->cli_hdr_any_op_gen () 
+      || node->imported () 
+      || node->is_local ())
     {
       return 0;
     }
 
-  // TODO
+  TAO_OutStream *os = this->ctx_->stream ();
+    
+  // Generate the Any <<= and >>= operator declarations.
+  os->indent ();
+  *os << "// Any operators for valuetype " << node->name () << be_nl;
+
+  *os << be_global->stub_export_macro () << "void"
+      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " *); // copying" << be_nl;
+
+  *os << be_global->stub_export_macro () << "void"
+      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " **); // non-copying" << be_nl;
+
+  *os << be_global->stub_export_macro () << "CORBA::Boolean"
+      << " operator>>= (const CORBA::Any &, "
+      << node->name () << " *&);\n";
 
   node->cli_hdr_any_op_gen (1);
 

@@ -154,6 +154,13 @@ public:
   /// for tk_sequence, tk_array, and tk_alias.
   CORBA::TypeCode_ptr content_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
+
+  /// Returns the concrete base type. Raises (BadKind); Useful
+  /// for tk_value only.
+  CORBA::TypeCode_ptr concrete_base_type (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      ) const;
+
   // = Creation/refcounting
 
   // These aren't really public APIs, but an IDL compiler will need to
@@ -348,6 +355,10 @@ private:
       TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) const;
 
+  CORBA::TypeCode_ptr private_concrete_base_type (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    ) const;
+
   // = All the private helpers testing for equality of typecodes
 
   /// test equality for typecodes of objrefs
@@ -399,6 +410,13 @@ private:
   CORBA::Boolean private_equal_except (CORBA::TypeCode_ptr tc,
                                        CORBA::Boolean equiv_only
                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS) const;
+
+  /// test equality for typecodes of exceptions
+  CORBA::Boolean private_equal_valuetype (CORBA::TypeCode_ptr tc,
+                                          CORBA::Boolean equiv_only
+                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS) 
+      const;
+
 
   /// if refcount reaches 0, free this typecode
   CORBA::ULong refcount_;
@@ -475,6 +493,7 @@ public:
   CORBA::Boolean tc_length_known_;
   CORBA::Boolean tc_content_type_known_;
   CORBA::Boolean tc_discrim_pad_size_known_;
+  CORBA::Boolean tc_concrete_base_type_known_;
 
   // = These data members store the precomputed values
   char *  tc_id_;
@@ -487,6 +506,7 @@ public:
   CORBA::Long   tc_default_index_used_;
   CORBA::ULong   tc_length_;
   CORBA::TypeCode_ptr  tc_content_type_;
+  CORBA::TypeCode_ptr  tc_concrete_base_type_;
 };
 
 /**
