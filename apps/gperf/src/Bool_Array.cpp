@@ -24,7 +24,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111, USA.  */
 
 // Prints out debugging diagnostics.
 
-Bool_Array::~Bool_Array (void) 
+Bool_Array::~Bool_Array (void)
 {
   if (option[DEBUG])
     fprintf (stderr, "\ndumping boolean array information\n"
@@ -33,7 +33,7 @@ Bool_Array::~Bool_Array (void)
 }
 
 Bool_Array::Bool_Array (void)
-  : storage_array (0), 
+  : storage_array (0),
     generation_number (0),
     size (0)
 {
@@ -50,11 +50,11 @@ Bool_Array::init (STORAGE_TYPE *buffer, STORAGE_TYPE s)
 
   if (option[DEBUG])
     fprintf (stderr, "\nbool array size = %d, total bytes = %d\n",
-             size, size * sizeof *storage_array);
+             size, size * (int) sizeof *storage_array);
 }
 
-int  
-Bool_Array::find (int index) 
+int
+Bool_Array::find (int index)
 {
   if (storage_array[index] == generation_number)
     return 1;
@@ -65,9 +65,9 @@ Bool_Array::find (int index)
     }
 }
 
-void 
-Bool_Array::reset (void) 
-{ 
+void
+Bool_Array::reset (void)
+{
   if (++generation_number == 0)
     {
       if (option[DEBUG])
