@@ -1,3 +1,11 @@
+Mon Jan 24 13:17:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	  Russell L. Carter <rcarter@pinyon.org> reported a bug when
+	  the return type of an operation is CORBA::Object. It turns
+	  out that CORBA::TypeCode, interface, forward declared interface,
+	  valuetype, and forward declared valuetype needed the same fix.
+
 Sun Jan 23 18:15:32 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: 
