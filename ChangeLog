@@ -1,3 +1,11 @@
+Sat Feb 21 08:30:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/CDR_Base.h:
+	* ace/CDR_Base.cpp:
+	  Reverted this change "Fri Feb 20 17:14:46 2004  Irfan Pyarali
+	  <irfan@oomworks.com>" as I work aout a way to handle
+	  this.
+
 Fri Feb 20 18:21:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
@@ -10,7 +18,7 @@ Fri Feb 20 18:21:39 2004  Steve Huston  <shuston@riverace.com>
 
 Fri Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/CDR_Base (NonNative LongLong and LongDouble): 
+	* ace/CDR_Base.{h,cpp} (NonNative LongLong and LongDouble): 
 
 	  Added assignment operators for these two types. 
 
