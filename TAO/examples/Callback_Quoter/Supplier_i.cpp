@@ -197,16 +197,14 @@ Supplier::run (void)
                                               "Periodic stockfeed",
                                               period,
                                               period);
-  if ( timer_id== -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "schedule_timer"),
-                          -1);
+  if (timer_id == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "schedule_timer"),
+                      -1);
 
   // The reactor starts executing in a loop.
-   this->reactor_used ()->run_event_loop ();
-
-   return 0;
+  return this->reactor_used ()->run_reactor_event_loop ();
 }
 
 
