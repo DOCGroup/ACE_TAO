@@ -91,7 +91,7 @@ public:
   // the Notifier-server.
 
 private:
-  
+
   CORBA::ORB_var orb_;
   // Our orb.
 
@@ -135,6 +135,8 @@ private:
  Consumer_Signal_Handler *consumer_signal_handler_;
   // Reference to the signal_event_handler.
 
+  int interactive_;
+  // Is the example interactive?
 };
 
 #endif /* CONSUMER_HANDLER_H */

@@ -14,20 +14,20 @@ module Callback_Quoter
   {
     // = TITLE
     //   Requested stock does not exist.
-    
+
     string reason;
     // The message which declares the reason for this execption.
-  
+
   };
 
   exception Invalid_Handle
   {
     // = TITLE
     //   Requested object does not exist.
-   
+
     string reason;
     // The actual reason which caused the exception.
-    
+
   };
 
   struct Info
@@ -36,9 +36,9 @@ module Callback_Quoter
     // The information passed by the Notifier to the consumer.
 
     string stock_name;
-    // This is the name of the stock about whom the consumer 
+    // This is the name of the stock about whom the consumer
     // is seeking information.
-    
+
     long value;
     // This is the market price of the stock.
   };
