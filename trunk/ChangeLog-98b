@@ -1,3 +1,12 @@
+Tue Sep 22 17:20:53 1998  James Hu <jxh@entera.com>
+
+        * ace/Containers_T.{h,i}:
+          Added a remove method to the ACE_DLList_Iterator.  This is
+          needed since ACE_DLList is actually an abstraction over
+          ACE_Double_Linked_List, so the user of ACE_DLList does not hold
+          the address of the "real" node that ACE_Double_Linked_List is
+          managing.
+
 Tue Sep 22 16:07:53 1998  Steve Huston  <shuston@riverace.com>
 
 	* bin/Makefile: Will now only build envinfo if make is invoked
