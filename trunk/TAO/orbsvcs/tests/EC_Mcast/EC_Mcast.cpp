@@ -74,43 +74,43 @@ ECM_Driver::run (int argc, char* argv[])
                   this->event_period_,
                   this->event_count_,
 
-		  this->config_filename_?this->config_filename_:"nil",
+                  this->config_filename_?this->config_filename_:"nil",
                   this->pid_filename_?this->pid_filename_:"nil") );
 
       int i;
       for (i = 0; i < this->local_federations_count_; ++i)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "    name = <%s>\n"
-		      "    port = <%d>\n"
-		      "    supplier types:\n",
-		      this->local_federations_[i]->name ()?this->local_federations_[i]->name ():"nil",
-		      this->local_federations_[i]->mcast_port ()));
-	  int j;
-	  for (j = 0;
-	       j < this->local_federations_[i]->supplier_types ();
-	       ++j)
-	    {
-	      
-	      ACE_DEBUG ((LM_DEBUG,
-			  "    name = <%s>\n"
-			  "    ipadd = <%x>\n",
-			  this->local_federations_[i]->supplier_name (j),
-			  this->local_federations_[i]->supplier_ipaddr (j)));
-	    }
-	  ACE_DEBUG ((LM_DEBUG,
-		      "    consumer types:\n"));
-	  for (j = 0;
-	       j < this->local_federations_[i]->consumer_types ();
-	       ++j)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "    name = <%s>\n"
-			  "    ipadd = <%x>\n",
-			  this->local_federations_[i]->consumer_name (j),
-			  this->local_federations_[i]->consumer_ipaddr (j)));
-	    }
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "    name = <%s>\n"
+                      "    port = <%d>\n"
+                      "    supplier types:\n",
+                      this->local_federations_[i]->name ()?this->local_federations_[i]->name ():"nil",
+                      this->local_federations_[i]->mcast_port ()));
+          int j;
+          for (j = 0;
+               j < this->local_federations_[i]->supplier_types ();
+               ++j)
+            {
+
+              ACE_DEBUG ((LM_DEBUG,
+                          "    name = <%s>\n"
+                          "    ipadd = <%x>\n",
+                          this->local_federations_[i]->supplier_name (j),
+                          this->local_federations_[i]->supplier_ipaddr (j)));
+            }
+          ACE_DEBUG ((LM_DEBUG,
+                      "    consumer types:\n"));
+          for (j = 0;
+               j < this->local_federations_[i]->consumer_types ();
+               ++j)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "    name = <%s>\n"
+                          "    ipadd = <%x>\n",
+                          this->local_federations_[i]->consumer_name (j),
+                          this->local_federations_[i]->consumer_ipaddr (j)));
+            }
+        }
 
       if (this->pid_filename_ != 0)
         {
@@ -226,29 +226,29 @@ ECM_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "located local EC\n"));
 
       this->open_federations (local_ec.in (),
-			      scheduler.in (),
-			      TAO_TRY_ENV);
+                              scheduler.in (),
+                              TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_federations done\n"));
 
       this->open_senders (local_ec.in (),
-			  scheduler.in (),
-			  TAO_TRY_ENV);
+                          scheduler.in (),
+                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_senders done\n"));
 
       this->open_receivers (local_ec.in (),
-			    scheduler.in (),
-			    TAO_TRY_ENV);
+                            scheduler.in (),
+                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_receivers done\n"));
 
       this->activate_federations (local_ec.in (),
-				  scheduler.in (),
-				  TAO_TRY_ENV);
+                                  scheduler.in (),
+                                  TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: activate_federations done\n"));
@@ -300,10 +300,10 @@ ECM_Driver::run (int argc, char* argv[])
 
 void
 ECM_Driver::federation_has_shutdown (ECM_Local_Federation *federation,
-				     CORBA::Environment &)
+                                     CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG, "Federation <%s> shuting down\n",
-	      federation->name ()));
+              federation->name ()));
   this->federations_running_--;
   if (this->federations_running_ <= 0)
     this->orb_->shutdown ();
@@ -311,28 +311,28 @@ ECM_Driver::federation_has_shutdown (ECM_Local_Federation *federation,
 
 void
 ECM_Driver::open_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
-			      RtecScheduler::Scheduler_ptr scheduler,
-			      CORBA::Environment &_env)
+                              RtecScheduler::Scheduler_ptr scheduler,
+                              CORBA::Environment &_env)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->open (this->event_count_,
-					 this->event_period_,
-					 ec, scheduler, _env);
+                                         this->event_period_,
+                                         ec, scheduler, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
 
 void
 ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
-				  RtecScheduler::Scheduler_ptr scheduler,
-				  CORBA::Environment &_env)
+                                  RtecScheduler::Scheduler_ptr scheduler,
+                                  CORBA::Environment &_env)
 {
   this->federations_running_ = this->local_federations_count_;
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->activate (this->event_period_,
-					     ec, scheduler, _env);
+                                             ec, scheduler, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
@@ -349,8 +349,8 @@ ECM_Driver::close_federations (CORBA::Environment &_env)
 
 void
 ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
-			  RtecScheduler::Scheduler_ptr scheduler,
-			  CORBA::Environment &_env)
+                          RtecScheduler::Scheduler_ptr scheduler,
+                          CORBA::Environment &_env)
 {
   if (this->send_dgram_.open (ACE_Addr::sap_any) == -1)
     {
@@ -361,9 +361,9 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
       this->all_federations_[i]->open (&this->send_dgram_,
-				       ec,
-				       scheduler,
-				       _env);
+                                       ec,
+                                       scheduler,
+                                       _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
@@ -381,14 +381,14 @@ ECM_Driver::close_senders (CORBA::Environment &_env)
 
 void
 ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec,
-			    RtecScheduler::Scheduler_ptr scheduler,
-			    CORBA::Environment &_env)
+                            RtecScheduler::Scheduler_ptr scheduler,
+                            CORBA::Environment &_env)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->open_receiver (ec,
-						  scheduler,
-						  _env);
+                                                  scheduler,
+                                                  _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
@@ -412,7 +412,7 @@ ECM_Driver::dump_results (void)
     }
 }
 
-  
+
 // ****************************************************************
 
 int
@@ -433,43 +433,43 @@ ECM_Driver::parse_args (int argc, char *argv [])
           this->pid_filename_ = get_opt.optarg;
           break;
 
-	case 'c':
-	  this->config_filename_ = get_opt.optarg;
-	  break;
-       
-	case 't':
-	  this->event_period_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 'c':
+          this->config_filename_ = get_opt.optarg;
+          break;
 
-	case 'n':
-	  this->event_count_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 't':
+          this->event_period_ = ACE_OS::atoi (get_opt.optarg);
+          break;
 
-	case 'f':
-	  {
+        case 'n':
+          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+          break;
+
+        case 'f':
+          {
             char* aux;
-	    int i = 0;
+            int i = 0;
             for (char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
-		 arg != 0 && i < ECM_Driver::MAX_LOCAL_FEDERATIONS;
-		 arg = ACE_OS::strtok_r (0, ",", &aux), ++i)
-	      {
-		this->local_names_[i] = arg;
-	      }
-	    this->local_federations_count_ = i;
-	  }
-	  break;
+                 arg != 0 && i < ECM_Driver::MAX_LOCAL_FEDERATIONS;
+                 arg = ACE_OS::strtok_r (0, ",", &aux), ++i)
+              {
+                this->local_names_[i] = arg;
+              }
+            this->local_federations_count_ = i;
+          }
+          break;
 
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "[ORB options] "
-		      "-n <event_count> "
-		      "-t <event_period> "
-		      "-l <localname> "
+                      "-n <event_count> "
+                      "-t <event_period> "
+                      "-l <localname> "
                       "-p <pid file name> "
                       "-c <config file name> "
-		      "-g federation,federation,... "
+                      "-g federation,federation,... "
                       "\n",
                       argv[0]));
           return -1;
@@ -502,14 +502,14 @@ ECM_Driver::parse_config_file (void)
   if (cfg == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "cannot open config file <%s>\n",
-			 this->config_filename_), -1);
+                         this->config_filename_), -1);
     }
 
   int s = fscanf (cfg, "%d", &this->all_federations_count_);
   if (s == 0 || s == EOF)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "problem reading federation count\n"), -1);
+                         "problem reading federation count\n"), -1);
     }
   // ACE_DEBUG ((LM_DEBUG,
   // "total federations = %d\n",
@@ -517,7 +517,7 @@ ECM_Driver::parse_config_file (void)
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
       if (this->skip_blanks (cfg, "reading federation name"))
-	return -1;
+        return -1;
       ACE_Read_Buffer reader(cfg);
       char* buf = reader.read (' ', ' ', '\0');
       char* name = CORBA::string_dup (buf);
@@ -526,29 +526,29 @@ ECM_Driver::parse_config_file (void)
 
       int port;
       if (this->skip_blanks (cfg, "reading federation port number"))
-	return -1;
+        return -1;
       fscanf (cfg, "%d", &port);
       CORBA::UShort mcast_port = ACE_static_cast(CORBA::UShort, port);
 
       int ns, nc;
       if (this->skip_blanks (cfg, "reading supplier count"))
-	return -1;
+        return -1;
       s = fscanf (cfg, "%d", &ns);
       if (s == 0 || s == EOF)
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "problem reading supplier count (%d)\n",
-			     i), -1);
-	}
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "problem reading supplier count (%d)\n",
+                             i), -1);
+        }
       if (this->skip_blanks (cfg, "reading constumer count"))
-	return -1;
+        return -1;
       s = fscanf (cfg, "%d", &nc);
       if (s == 0 || s == EOF)
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "problem reading consumer count (%d)\n",
-			     i), -1);
-	}
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "problem reading consumer count (%d)\n",
+                             i), -1);
+        }
       // ACE_DEBUG ((LM_DEBUG, "i = %d <%s> <%d> <%d> <%d>\n",
       // i, name, mcast_port, ns, nc));
 
@@ -558,25 +558,25 @@ ECM_Driver::parse_config_file (void)
       ACE_NEW_RETURN (consumer_names, char*[nc], -1);
 
       if (this->parse_name_list (cfg, ns, supplier_names,
-				 "reading supplier list"))
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "error parsing supplier list for <%s>\n",
-			     name), -1);
-	}
+                                 "reading supplier list"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "error parsing supplier list for <%s>\n",
+                             name), -1);
+        }
 
       if (this->parse_name_list (cfg, nc, consumer_names,
-				 "reading consumer list"))
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "error parsing consumer list for <%s>\n",
-			     name), -1);
-	}
+                                 "reading consumer list"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "error parsing consumer list for <%s>\n",
+                             name), -1);
+        }
 
       ACE_NEW_RETURN (this->all_federations_[i],
-		      ECM_Federation (name, mcast_port,
-				      ns, supplier_names,
-				      nc, consumer_names), -1);
+                      ECM_Federation (name, mcast_port,
+                                      ns, supplier_names,
+                                      nc, consumer_names), -1);
     }
   ACE_OS::fclose (cfg);
 
@@ -584,21 +584,21 @@ ECM_Driver::parse_config_file (void)
     {
       int k = 0;
       for (; k < this->all_federations_count_; ++k)
-	{
-	  if (ACE_OS::strcmp (this->local_names_[j],
-			      this->all_federations_[k]->name ()) == 0)
-	    {
-	      ACE_NEW_RETURN (this->local_federations_[j],
-			      ECM_Local_Federation (this->all_federations_[k],
-						    this),
-			      -1);
-	      break;
-	    }
-	}
+        {
+          if (ACE_OS::strcmp (this->local_names_[j],
+                              this->all_federations_[k]->name ()) == 0)
+            {
+              ACE_NEW_RETURN (this->local_federations_[j],
+                              ECM_Local_Federation (this->all_federations_[k],
+                                                    this),
+                              -1);
+              break;
+            }
+        }
       if (k == this->all_federations_count_)
-	ACE_ERROR ((LM_ERROR,
-		    "Cannot find federations <%s>\n",
-		    this->local_names_[j]));
+        ACE_ERROR ((LM_ERROR,
+                    "Cannot find federations <%s>\n",
+                    this->local_names_[j]));
     }
 
   return 0;
@@ -606,18 +606,18 @@ ECM_Driver::parse_config_file (void)
 
 int
 ECM_Driver::parse_name_list (FILE* file,
-			     int n,
-			     char** names,
-			     const char* error_msg)
+                             int n,
+                             char** names,
+                             const char* error_msg)
 {
   for (int i = 0; i < n; ++i)
     {
       if (this->skip_blanks (file, error_msg))
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "error on item %d while %s\n",
-			     i, error_msg), -1);
-	}
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "error on item %d while %s\n",
+                             i, error_msg), -1);
+        }
       ACE_Read_Buffer tmp(file);
       char* buf = tmp.read ('\n', '\n', '\0');
       names[i] = CORBA::string_dup (buf);
@@ -628,7 +628,7 @@ ECM_Driver::parse_name_list (FILE* file,
 
 int
 ECM_Driver::skip_blanks (FILE* file,
-			 const char* error_msg)
+                         const char* error_msg)
 {
   int c;
   // Consume all the blanks.
@@ -636,9 +636,9 @@ ECM_Driver::skip_blanks (FILE* file,
   if (c == EOF)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "Unexpected EOF in config file while %s\n",
-			 error_msg),
-			-1);
+                         "Unexpected EOF in config file while %s\n",
+                         error_msg),
+                        -1);
     }
   ungetc (c, file);
   return 0;
@@ -646,11 +646,11 @@ ECM_Driver::skip_blanks (FILE* file,
 // ****************************************************************
 
 ECM_Federation::ECM_Federation (char* name,
-				CORBA::UShort mcast_port,
-				int supplier_types,
-				char** supplier_names,
-				int consumer_types,
-				char** consumer_names)
+                                CORBA::UShort mcast_port,
+                                int supplier_types,
+                                char** supplier_names,
+                                int consumer_types,
+                                char** consumer_names)
   :  name_ (name),
      mcast_port_ (mcast_port),
      supplier_types_ (supplier_types),
@@ -677,9 +677,9 @@ ECM_Federation::ECM_Federation (char* name,
 
 void
 ECM_Federation::open (ACE_SOCK_Dgram *dgram,
-		      RtecEventChannelAdmin::EventChannel_ptr ec,
-		      RtecScheduler::Scheduler_ptr scheduler,
-		      CORBA::Environment &_env)
+                      RtecEventChannelAdmin::EventChannel_ptr ec,
+                      RtecScheduler::Scheduler_ptr scheduler,
+                      CORBA::Environment &_env)
 {
   const int bufsize = 512;
   char buf[bufsize];
@@ -691,10 +691,10 @@ ECM_Federation::open (ACE_SOCK_Dgram *dgram,
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->sender_.init (ec, scheduler,
-		      buf,
-		      addr_server.in (),
-		      dgram,
-		      _env);
+                      buf,
+                      addr_server.in (),
+                      dgram,
+                      _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   RtecScheduler::handle_t rt_info =
@@ -707,14 +707,14 @@ ECM_Federation::open (ACE_SOCK_Dgram *dgram,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   scheduler->set (rt_info,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  0,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  0,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  0,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  0,
+                  RtecScheduler::OPERATION,
+                  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   ACE_ConsumerQOS_Factory qos;
@@ -747,10 +747,10 @@ ECM_Supplier::ECM_Supplier (ECM_Local_Federation* federation)
 
 void
 ECM_Supplier::open (const char* name,
-		    RtecScheduler::Period period,
-		    RtecEventChannelAdmin::EventChannel_ptr ec,
-		    RtecScheduler::Scheduler_ptr scheduler,
-		    CORBA::Environment &_env)
+                    RtecScheduler::Period period,
+                    RtecEventChannelAdmin::EventChannel_ptr ec,
+                    RtecScheduler::Scheduler_ptr scheduler,
+                    CORBA::Environment &_env)
 {
   RtecScheduler::handle_t rt_info =
     scheduler->create (name, _env);
@@ -765,30 +765,30 @@ ECM_Supplier::open (const char* name,
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
 
   scheduler->set (rt_info,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  period,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  1,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  period,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  1,
+                  RtecScheduler::OPERATION,
+                  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->supplier_id_ = ACE::crc32 (name);
   ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
-	      this->supplier_id_));
+              this->supplier_id_));
 
   ACE_SupplierQOS_Factory qos;
   for (int i = 0; i < this->federation_->supplier_types (); ++i)
     {
       qos.insert (this->supplier_id_,
-		  this->federation_->supplier_ipaddr (i),
-		  rt_info, 1);
+                  this->federation_->supplier_ipaddr (i),
+                  rt_info, 1);
     }
   qos.insert (this->supplier_id_,
-	      ACE_ES_EVENT_SHUTDOWN,
-	      rt_info, 1);
+              ACE_ES_EVENT_SHUTDOWN,
+              rt_info, 1);
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     ec->for_suppliers (_env);
@@ -802,8 +802,8 @@ ECM_Supplier::open (const char* name,
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
-						qos.get_SupplierQOS (),
-						_env);
+                                                qos.get_SupplierQOS (),
+                                                _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
@@ -821,10 +821,10 @@ ECM_Supplier::close (CORBA::Environment &_env)
 
 void
 ECM_Supplier::activate (const char* name,
-			RtecScheduler::Period period,
-			RtecEventChannelAdmin::EventChannel_ptr ec,
-			RtecScheduler::Scheduler_ptr scheduler,
-			CORBA::Environment &_env)
+                        RtecScheduler::Period period,
+                        RtecEventChannelAdmin::EventChannel_ptr ec,
+                        RtecScheduler::Scheduler_ptr scheduler,
+                        CORBA::Environment &_env)
 {
   const int bufsize = 512;
   char buf[bufsize];
@@ -842,28 +842,28 @@ ECM_Supplier::activate (const char* name,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   scheduler->set (rt_info,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  period,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  1,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  period,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  1,
+                  RtecScheduler::OPERATION,
+                  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // Also connect our consumer for timeout events from the EC.
   int interval = period / 10;
   ACE_Time_Value tv_timeout (interval / ACE_ONE_SECOND_IN_USECS,
-			     interval % ACE_ONE_SECOND_IN_USECS);
+                             interval % ACE_ONE_SECOND_IN_USECS);
   TimeBase::TimeT timeout;
   ORBSVCS_Time::Time_Value_to_TimeT (timeout, tv_timeout);
 
   ACE_ConsumerQOS_Factory consumer_qos;
   consumer_qos.start_disjunction_group ();
   consumer_qos.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
-			    timeout,
-			    rt_info);
+                            timeout,
+                            rt_info);
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
@@ -879,8 +879,8 @@ ECM_Supplier::activate (const char* name,
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->supplier_proxy_->connect_push_consumer (cref.in (),
-						consumer_qos.get_ConsumerQOS (),
-						_env);
+                                                consumer_qos.get_ConsumerQOS (),
+                                                _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
@@ -892,7 +892,7 @@ ECM_Supplier::supplier_id (void) const
 
 void
 ECM_Supplier::push (const RtecEventComm::EventSet& events,
-		    CORBA::Environment& _env)
+                    CORBA::Environment& _env)
 {
   for (u_int i = 0; i < events.length (); ++i)
     {
@@ -901,7 +901,7 @@ ECM_Supplier::push (const RtecEventComm::EventSet& events,
         continue;
 
       this->federation_->supplier_timeout (this->consumer_proxy_.in (),
-					   _env);
+                                           _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
@@ -926,9 +926,9 @@ ECM_Consumer::ECM_Consumer (ECM_Local_Federation *federation)
 
 void
 ECM_Consumer::open (const char* name,
-		    RtecEventChannelAdmin::EventChannel_ptr ec,
-		    RtecScheduler::Scheduler_ptr scheduler,
-		    CORBA::Environment& _env)
+                    RtecEventChannelAdmin::EventChannel_ptr ec,
+                    RtecScheduler::Scheduler_ptr scheduler,
+                    CORBA::Environment& _env)
 {
   RtecScheduler::handle_t rt_info =
     scheduler->create (name, _env);
@@ -940,14 +940,14 @@ ECM_Consumer::open (const char* name,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   scheduler->set (rt_info,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  0,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  0,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  0,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  0,
+                  RtecScheduler::OPERATION,
+                  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   ACE_ConsumerQOS_Factory qos;
@@ -972,8 +972,8 @@ ECM_Consumer::open (const char* name,
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
-						qos.get_ConsumerQOS (),
-						_env);
+                                                qos.get_ConsumerQOS (),
+                                                _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
@@ -991,7 +991,7 @@ ECM_Consumer::close (CORBA::Environment &_env)
 
 void
 ECM_Consumer::push (const RtecEventComm::EventSet& events,
-		    CORBA::Environment &_env)
+                    CORBA::Environment &_env)
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
   this->federation_->consumer_push (arrival, events, _env);
@@ -1005,7 +1005,7 @@ ECM_Consumer::disconnect_push_consumer (CORBA::Environment &)
 // ****************************************************************
 
 ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
-					    ECM_Driver *driver)
+                                            ECM_Driver *driver)
   :  federation_ (federation),
      driver_ (driver),
      consumer_ (this),
@@ -1023,10 +1023,10 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
 
 void
 ECM_Local_Federation::open (int event_count,
-			    RtecScheduler::Period period,
-			    RtecEventChannelAdmin::EventChannel_ptr ec,
-			    RtecScheduler::Scheduler_ptr scheduler,
-			    CORBA::Environment& _env)
+                            RtecScheduler::Period period,
+                            RtecEventChannelAdmin::EventChannel_ptr ec,
+                            RtecScheduler::Scheduler_ptr scheduler,
+                            CORBA::Environment& _env)
 {
   this->event_count_ = event_count;
 
@@ -1056,18 +1056,18 @@ ECM_Local_Federation::close (CORBA::Environment &_env)
 
 void
 ECM_Local_Federation::activate (RtecScheduler::Period period,
-				RtecEventChannelAdmin::EventChannel_ptr ec,
-				RtecScheduler::Scheduler_ptr scheduler,
-				CORBA::Environment& _env)
+                                RtecEventChannelAdmin::EventChannel_ptr ec,
+                                RtecScheduler::Scheduler_ptr scheduler,
+                                CORBA::Environment& _env)
 {
   this->supplier_.activate (this->federation_->name (),
-			    period,
-			    ec, scheduler, _env);
+                            period,
+                            ec, scheduler, _env);
 }
 
 void
 ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer,
-					CORBA::Environment &_env)
+                                        CORBA::Environment &_env)
 {
   RtecEventComm::EventSet sent (1);
   sent.length (1);
@@ -1087,7 +1087,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   this->event_count_--;
 
   // ACE_DEBUG ((LM_DEBUG, "Federation <%s> event count <%d>\n",
-  // 	      this->name (), this->event_count_));
+  //          this->name (), this->event_count_));
 
   if (this->event_count_ < 0)
     {
@@ -1105,9 +1105,11 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 
 void
 ECM_Local_Federation::consumer_push (ACE_hrtime_t,
-				     const RtecEventComm::EventSet &event,
-				     CORBA::Environment &_env)
+                                     const RtecEventComm::EventSet &event,
+                                     CORBA::Environment &_env)
 {
+  ACE_UNUSED_ARG (_env);
+
   if (event.length () == 0)
     {
       return;
@@ -1121,23 +1123,24 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
 
       int j = 0;
       for (; j < this->federation_->consumer_types (); ++j)
-	{
-	  if (e.header.type == this->federation_->consumer_ipaddr(j))
-	    {
-	      // @@ TODO check if the type is in the current
-	      // subscription list.
-	      break;
-	    }
-	}
+        {
+          if (ACE_static_cast (CORBA::ULong, e.header.type) ==
+              this->federation_->consumer_ipaddr(j))
+            {
+              // @@ TODO check if the type is in the current
+              // subscription list.
+              break;
+            }
+        }
       if (j == this->federation_->consumer_types ())
-	this->invalid_count_++;
+        this->invalid_count_++;
     }
 }
 
 void
 ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
-				     RtecScheduler::Scheduler_ptr scheduler,
-				     CORBA::Environment &_env)
+                                     RtecScheduler::Scheduler_ptr scheduler,
+                                     CORBA::Environment &_env)
 {
   const int bufsize = 512;
   char buf[bufsize];
@@ -1147,9 +1150,9 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   ACE_INET_Addr local_addr;
   this->federation_->sender_local_addr (local_addr);
   this->receiver_.init (ec, scheduler,
-			buf,
-			local_addr,
-			_env);
+                        buf,
+                        local_addr,
+                        _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   RtecScheduler::handle_t rt_info =
@@ -1162,14 +1165,14 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   scheduler->set (rt_info,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  0,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  1,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  0,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  1,
+                  RtecScheduler::OPERATION,
+                  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   RtecEventComm::EventSourceID source = ACE::crc32 (buf);
@@ -1180,21 +1183,21 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   for (int i = 0; i < this->consumer_types (); ++i)
     {
       qos.insert (source,
-		  this->consumer_ipaddr (i),
-		  rt_info, 1);
+                  this->consumer_ipaddr (i),
+                  rt_info, 1);
       ACE_INET_Addr mcast_addr (this->mcast_port (),
-				this->consumer_ipaddr (i));
+                                this->consumer_ipaddr (i));
       this->mcast_eh_.subscribe (mcast_addr);
     }
 
   this->mcast_eh_.open ();
 
-  RtecEventChannelAdmin::SupplierQOS qos_copy = 
+  RtecEventChannelAdmin::SupplierQOS qos_copy =
     qos.get_SupplierQOS ();
   this->receiver_.open (qos_copy, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  
+
 }
 
 void
@@ -1217,20 +1220,20 @@ ECM_Local_Federation::dump_results (void) const
     invalid_ratio = double(this->invalid_count_)/this->recv_count_;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Federation: %s\n"
-	      "    events received: %d\n"
-	      "    unfiltered events received: %d\n"
-	      "                         ratio: %f\n"
-	      "    invalid events received: %d\n"
-	      "                      ratio: %f\n"
-	      "    events sent: %d\n",
-	      this->name (),
-	      this->recv_count_,
-	      this->unfiltered_count_,
-	      unfiltered_ratio,
-	      this->invalid_count_,
-	      invalid_ratio,
-	      this->send_count_));
+              "Federation: %s\n"
+              "    events received: %d\n"
+              "    unfiltered events received: %d\n"
+              "                         ratio: %f\n"
+              "    invalid events received: %d\n"
+              "                      ratio: %f\n"
+              "    events sent: %d\n",
+              this->name (),
+              this->recv_count_,
+              this->unfiltered_count_,
+              unfiltered_ratio,
+              this->invalid_count_,
+              invalid_ratio,
+              this->send_count_));
 }
 
 // ****************************************************************
