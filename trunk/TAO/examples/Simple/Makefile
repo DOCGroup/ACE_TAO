@@ -12,7 +12,8 @@ DIRS  = bank \
 	chat \
 	echo \
 	grid \
-	time
+	time \
+	time-date
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -1,7 +1,8 @@
 // $Id$
 
-#include "tao/TAO.h"
 #include "Time_Date_i.h"
+#include "tao/TAO.h"
+#include "ace/Task.h"
 
 class ACE_Svc_Export DLL_ORB : public ACE_Task_Base
 {
@@ -14,7 +15,7 @@ public:
 
   virtual int fini (void);
   // Shutdown the <TAO_ORB_Manager>.
-  
+
   virtual int svc (void);
   // Concurrency hook.
 
@@ -47,7 +48,7 @@ private:
 };
 
 // The following Factory is used by the <ACE_Service_Config> and
-// dll_orb.conf file to dynamically initialize the state of the 
+// dll_orb.conf file to dynamically initialize the state of the
 // Time_Date service.
 ACE_SVC_FACTORY_DECLARE (DLL_ORB)
 ACE_SVC_FACTORY_DECLARE (Time_Date_Servant)

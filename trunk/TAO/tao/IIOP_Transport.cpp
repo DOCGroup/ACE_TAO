@@ -2,7 +2,7 @@
 // $Id$
 
 #include "tao/IIOP_Transport.h"
-#include "tao/Connect.h"
+#include "tao/IIOP_Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Request_Mux_Strategy.h"
@@ -58,7 +58,7 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 }
 
 TAO_IIOP_Server_Transport::
-    TAO_IIOP_Server_Transport (TAO_Server_Connection_Handler *handler,
+    TAO_IIOP_Server_Transport (TAO_IIOP_Server_Connection_Handler *handler,
                                TAO_ORB_Core* orb_core)
   : TAO_IIOP_Transport (handler, orb_core),
     server_handler_ (handler)
@@ -88,7 +88,7 @@ TAO_IIOP_Client_Transport::client_handler (void)
   return this->client_handler_;
 }
 
-TAO_Server_Connection_Handler *
+TAO_IIOP_Server_Connection_Handler *
 TAO_IIOP_Server_Transport::server_handler (void)
 {
   return this->server_handler_;
@@ -544,4 +544,3 @@ TAO_IIOP_Transport::send_request (TAO_ORB_Core *  /* orb_core */,
 {
   return -1;
 }
-

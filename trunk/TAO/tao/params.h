@@ -21,7 +21,6 @@
 
 // Forward decls.
 
-class TAO_Server_Connection_Handler;
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
 class TAO_IOR_LookupTable;
