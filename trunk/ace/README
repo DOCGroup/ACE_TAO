@@ -391,6 +391,8 @@ ACE_HAS_PTHREAD_T                       Platform has pthread_t
                                         defined.
 ACE_HAS_PTHREAD_YIELD_VOIDPTR           pthread_yield() takes a void
                                         pointer arg.
+ACE_HAS_PURIFY                          Purify'ing.  Set by wrapper_macros.GNU.
+ACE_HAS_QUANTIFY                        Quantify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    Platform will recurse
                                         infinitely on thread exits
                                         from TSS cleanup routines
@@ -820,7 +822,7 @@ ACE_LACKS_TIMEDWAIT_PROTOTYPES          MIT pthreads platform lacks
 ACE_LACKS_TIMESPEC_T                    Platform does not define
                                         timepec_t as a typedef for
                                         struct timespec.
-ACE_LACKS_TRUNCATE                      Platform doesn't have truncate() 
+ACE_LACKS_TRUNCATE                      Platform doesn't have truncate()
                                         (e.g., vxworks)
 ACE_LACKS_U_LONGLONG_T                  Platform does not have
                                         u_longlong_t typedef, and
