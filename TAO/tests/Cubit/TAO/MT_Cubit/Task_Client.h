@@ -81,13 +81,11 @@ enum Cubit_Datatypes
   CB_STRUCT,
 
   // = Rate constants.
-  CB_40HZ_CONSUMER = 0,
-  CB_20HZ_CONSUMER = 1,
-  CB_10HZ_CONSUMER = 2,
-  CB_5HZ_CONSUMER = 3,
-  CB_1HZ_CONSUMER = 4,
+  CB_20HZ_CONSUMER = 0,
+  CB_10HZ_CONSUMER = 1,
+  CB_5HZ_CONSUMER = 2,
+  CB_1HZ_CONSUMER = 3,
 
-  CB_40HZ_CONSUMER_RATE = 40,
   CB_20HZ_CONSUMER_RATE = 20,
   CB_10HZ_CONSUMER_RATE = 10,
   CB_5HZ_CONSUMER_RATE = 5,
@@ -151,6 +149,10 @@ public:
   double **global_jitter_array_;
   // This array stores the latency seen by each client for each
   // request, to be used later to compute jitter.
+
+  u_int *count_;
+  // This array stores the call count of each thread.  They will not
+  // always have the same call count.
 
   u_int shutdown_;
   // Flag that indicates if we are going to call the shutdown methos
@@ -224,6 +226,7 @@ public:
   double get_high_priority_jitter (void);
   double get_low_priority_jitter (void);
   double get_latency (u_int thread_id);
+  double get_jitter (u_int id);
   // Accessors to get the various measured quantities.
 
 private:
@@ -236,7 +239,8 @@ private:
 
   void put_latency (double *jitter,
                     double latency,
-                    u_int thread_id);
+                    u_int thread_id,
+		    u_int count);
   // Records the latencies in the <Task_State>.
 
   int parse_args (int, char **);

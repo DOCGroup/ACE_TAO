@@ -124,12 +124,12 @@ Task_State::Task_State (int argc, char **argv)
       int j = 0;
 
       while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
-        {
-          j = ACE_OS::strlen (buf);
-          buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
-          iors_[i] = ACE_OS::strdup (buf);
-          i++;
-        }
+	{
+	  j = ACE_OS::strlen (buf);
+	  buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
+	  iors_[i] = ACE_OS::strdup (buf);
+	  i++;
+	}
 
       ACE_OS::fclose (ior_file);
     }
@@ -166,6 +166,8 @@ Task_State::Task_State (int argc, char **argv)
            double [thread_count_]);
   ACE_NEW (global_jitter_array_,
            double *[thread_count_]);
+  ACE_NEW (count_,
+           u_int [thread_count_]);
 }
 
 Client::Client (ACE_Thread_Manager &thread_manager, Task_State *ts, u_int id)
@@ -178,12 +180,14 @@ Client::Client (ACE_Thread_Manager &thread_manager, Task_State *ts, u_int id)
 void
 Client::put_latency (double *jitter,
                      double latency,
-                     u_int thread_id)
+                     u_int thread_id,
+		     u_int count)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
 
   ts_->latency_[thread_id] = latency;
   ts_->global_jitter_array_[thread_id] = jitter;
+  ts_->count_[thread_id] = count;
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
@@ -261,7 +265,8 @@ Client::get_low_priority_jitter (void)
 
   double jitter = 0.0;
   double average = get_low_priority_latency ();
-  double number_of_samples = (ts_->thread_count_ - 1) * (ts_->loop_count_ / ts_->granularity_);
+  double number_of_samples = 0;
+  //(ts_->thread_count_ - 1) * (ts_->loop_count_ / ts_->granularity_);
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
@@ -271,15 +276,48 @@ Client::get_low_priority_jitter (void)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
   for (u_int j = 1; j < ts_->thread_count_; j ++)
-    for (u_int i = 0; i < ts_->loop_count_ / ts_->granularity_; i ++)
-      {
-        double difference =
-          ts_->global_jitter_array_[j][i] - average;
-        jitter += difference * difference;
-        stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [j][i] * 1000 + 0.5));
-      }
+    {
+      number_of_samples += ts_->count_[j];
+      for (u_int i = 0; i < ts_->count_[j] / ts_->granularity_; i ++)
+	{
+	  double difference =
+	    ts_->global_jitter_array_[j][i] - average;
+	  jitter += difference * difference;
+	  stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [j][i] * 1000 + 0.5));
+	}
+    }
 
   ACE_OS::fprintf (stderr, "low priority jitter:\n");
+  stats.print_summary (3, 1000, stderr);
+
+  // Return the square root of the sum of the differences computed
+  // above, i.e. jitter.
+  return sqrt (jitter / (number_of_samples - 1));
+}
+
+double
+Client::get_jitter (u_int id)
+{
+  double jitter = 0.0;
+  double average = get_latency (id);
+  double number_of_samples = ts_->count_[id]  / ts_->granularity_;
+
+  // Compute the standard deviation (i.e. jitter) from the values
+  // stored in the global_jitter_array_.
+
+  ACE_Stats stats;
+
+  // We first compute the sum of the squares of the differences each
+  // latency has from the average.
+  for (u_int i = 0; i < ts_->count_[id] / ts_->granularity_; i ++)
+    {
+      double difference =
+	ts_->global_jitter_array_[id][i] - average;
+      jitter += difference * difference;
+      stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [id][i] * 1000 + 0.5));
+    }
+
+  ACE_OS::fprintf (stderr, "jitter for thread id %d:\n", id);
   stats.print_summary (3, 1000, stderr);
 
   // Return the square root of the sum of the differences computed
@@ -369,14 +407,6 @@ Client::svc (void)
     else
       switch (this->id_)
         {
-        case CB_40HZ_CONSUMER:
-          frequency = CB_40HZ_CONSUMER_RATE;
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n", 
-		      CB_40HZ_CONSUMER_RATE,
-		      this->id_));
-          break;
         case CB_20HZ_CONSUMER:
           frequency = CB_20HZ_CONSUMER_RATE;
           ACE_DEBUG ((LM_DEBUG,
@@ -589,11 +619,11 @@ Client::run_tests (Cubit_ptr cb,
 
   if (id_ == 0)
     ACE_NEW_RETURN (my_jitter_array,
-                    double [(loop_count/ts_->granularity_)*10], // magic number, for now.
+                    double [(loop_count/ts_->granularity_)*30], // magic number, for now.
                     -1);
   else
     ACE_NEW_RETURN (my_jitter_array,
-                    double [loop_count/ts_->granularity_], 
+                    double [loop_count/ts_->granularity_*15], 
                     -1);
 
   double latency = 0;
@@ -674,7 +704,7 @@ Client::run_tests (Cubit_ptr cb,
 
                 if (arg_octet != ret_octet)
                   {
-                    ACE_DEBUG ((LM_DEBUG,
+                    ACE_ERROR ((LM_ERROR,
                                 "** cube_octet(%d)  (--> %d)\n",
                                 arg_octet,
                                 ret_octet));
@@ -714,7 +744,7 @@ Client::run_tests (Cubit_ptr cb,
 
                 if (arg_short != ret_short)
                   {
-                    ACE_DEBUG ((LM_DEBUG,
+                    ACE_ERROR ((LM_ERROR,
                                 "** cube_short(%d)  (--> %d)\n",
                                 arg_short ,
                                 ret_short));
@@ -755,7 +785,7 @@ Client::run_tests (Cubit_ptr cb,
 
                 if (arg_long != ret_long)
                   {
-                    ACE_DEBUG ((LM_DEBUG,
+                    ACE_ERROR ((LM_ERROR,
                                 "** cube_long(%d)  (--> %d)\n",
                                 arg_long,
                                 ret_long));
@@ -800,7 +830,7 @@ Client::run_tests (Cubit_ptr cb,
                     || arg_struct.s  != ret_struct.s
                     || arg_struct.o  != ret_struct.o )
                   {
-                    ACE_DEBUG ((LM_DEBUG, "**cube_struct error!\n"));
+                    ACE_ERROR ((LM_ERROR, "**cube_struct error!\n"));
                     error_count++;
                   }
 
@@ -873,8 +903,7 @@ Client::run_tests (Cubit_ptr cb,
 
           delta = ((0.4 * fabs (real_time * ACE_ONE_SECOND_IN_USECS)) + (0.6 * delta)); // pow(10,6)
           latency += (real_time * ts_->granularity_);
-	  if (ts_->thread_per_rate_ == 0)
-	    my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS;
+	  my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS;
 #endif /* !ACE_LACKS_FLOATING_POINT */
         }
 
@@ -923,7 +952,8 @@ Client::run_tests (Cubit_ptr cb,
 
               this->put_latency (my_jitter_array,
                                  latency,
-                                 thread_id);
+                                 thread_id,
+				 call_count);
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
@@ -933,7 +963,8 @@ Client::run_tests (Cubit_ptr cb,
 
               this->put_latency (my_jitter_array,
                                  latency * ACE_ONE_SECOND_IN_MSECS,
-                                 thread_id);
+                                 thread_id,
+				 call_count);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
             }
           else
@@ -941,7 +972,9 @@ Client::run_tests (Cubit_ptr cb,
               // still we have to call this function to store a valid array pointer.
               this->put_latency (my_jitter_array,
                                  0,
-                                 thread_id);
+                                 thread_id,
+				 call_count);
+
               ACE_DEBUG ((LM_DEBUG,
                           "*** Warning: Latency, %f, is less than or equal to zero."
                           "  Precision may have been lost.\n, latency"));

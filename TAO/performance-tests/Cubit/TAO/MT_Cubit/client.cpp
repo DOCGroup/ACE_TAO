@@ -587,107 +587,90 @@ int
 do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
                          Task_State &ts)
 {
-  // First activate the high priority client.
-//    Client CB_40Hz_client (thread_manager, &ts, CB_40HZ_CONSUMER);
-    Client CB_20Hz_client (thread_manager, &ts, CB_20HZ_CONSUMER);
-    Client CB_10Hz_client (thread_manager, &ts, CB_10HZ_CONSUMER);
-    Client CB_5Hz_client (thread_manager, &ts, CB_5HZ_CONSUMER);
-    Client CB_1Hz_client (thread_manager, &ts, CB_1HZ_CONSUMER);
+  Client CB_20Hz_client (thread_manager, &ts, CB_20HZ_CONSUMER);
+  Client CB_10Hz_client (thread_manager, &ts, CB_10HZ_CONSUMER);
+  Client CB_5Hz_client (thread_manager, &ts, CB_5HZ_CONSUMER);
+  Client CB_1Hz_client (thread_manager, &ts, CB_1HZ_CONSUMER);
 
-    ACE_Sched_Priority priority;
+  ACE_Sched_Priority priority;
 
 #if defined (VXWORKS)
   priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
   priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                    ACE_SCOPE_THREAD);
+					     ACE_SCOPE_THREAD);
 #else  /* ! VXWORKS */
   priority = ACE_THR_PRI_FIFO_DEF + 25;
 #endif /* ! ACE_WIN32 */
 
-//      ACE_DEBUG ((LM_DEBUG,
-//                  "Creating 40 Hz client with priority %d\n",
-//                  priority));
-//      if (CB_40Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-//        ACE_ERROR ((LM_ERROR,
-//                    "%p\n",
-//                    "activate failed"));
+  ACE_DEBUG ((LM_DEBUG,
+	      "Creating 20 Hz client with priority %d\n",
+	      priority));
+  if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
+    ACE_ERROR ((LM_ERROR,
+		"%p\n",
+		"activate failed"));
 
-    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
-    ACE_DEBUG ((LM_DEBUG,
-                "Creating 20 Hz client with priority %d\n",
-                priority));
-    if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "activate failed"));
+  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+						  priority,
+						  ACE_SCOPE_THREAD);
+  ACE_DEBUG ((LM_DEBUG,
+	      "Creating 10 Hz client with priority %d\n",
+	      priority));
+  if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
+    ACE_ERROR ((LM_ERROR,
+		"%p\n",
+		"activate failed"));
 
-    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
-    ACE_DEBUG ((LM_DEBUG,
-                "Creating 10 Hz client with priority %d\n",
-                priority));
-    if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "activate failed"));
+  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+						  priority,
+						  ACE_SCOPE_THREAD);
+  ACE_DEBUG ((LM_DEBUG,
+	      "Creating 5 Hz client with priority %d\n",
+	      priority));
+  if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
+    ACE_ERROR ((LM_ERROR,
+		"%p\n",
+		"activate failed"));
 
-    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
-    ACE_DEBUG ((LM_DEBUG,
-                "Creating 5 Hz client with priority %d\n",
-                priority));
-    if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "activate failed"));
+  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+						  priority,
+						  ACE_SCOPE_THREAD);
+  ACE_DEBUG ((LM_DEBUG,
+	      "Creating 1 Hz client with priority %d\n",
+	      priority));
+  if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
+    ACE_ERROR ((LM_ERROR,
+		"%p\n",
+		"activate failed"));
 
-    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
-    ACE_DEBUG ((LM_DEBUG,
-                "Creating 1 Hz client with priority %d\n",
-                priority));
-    if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "activate failed"));
-
-    // Wait for all the threads to exit.
-    thread_manager.wait ();
+  // Wait for all the threads to exit.
+  thread_manager.wait ();
 
 #if defined (ACE_LACKS_FLOATING_POINT)
-    ACE_DEBUG ((LM_DEBUG,
-                "Test done.\n"
-                "40Hz client latency : %u usec\n"
-                "20Hz client latency : %u usec\n"
-                "10Hz client latency : %u usec\n"
-                "5Hz client latency : %u usec\n"
-                "1Hz client latency : %u usec\n",
-	        CB_40Hz_client.get_latency (0),
-                CB_20Hz_client.get_latency (1),
-                CB_10Hz_client.get_latency (2),
-                CB_5Hz_client.get_latency (3),
-                CB_1Hz_client.get_latency (4)));
+  ACE_DEBUG ((LM_DEBUG,
+	      "Test done.\n"
+	      "20Hz client latency : %u usec, jitter: %u usec\n"
+	      "10Hz client latency : %u usec, jitter: %u usec\n"
+	      "5Hz client latency : %u usec, jitter: %u usec\n"
+	      "1Hz client latency : %u usec, jitter: %u usec\n",
+	      CB_20Hz_client.get_latency (0), CB_20Hz_client.get_jitter (0)
+	      CB_10Hz_client.get_latency (1), CB_10Hz_client.get_jitter (1)
+	      CB_5Hz_client.get_latency (2),  CB_5Hz_client.get_jitter (2),
+	      CB_1Hz_client.get_latency (3),  CB_1Hz_client.get_jitter (3) ));
 #else
-    ACE_DEBUG ((LM_DEBUG,
-                "Test done.\n"
-    //                "40Hz client latency : %f msec\n"
-                "20Hz client latency : %f msec\n"
-                "10Hz client latency : %f msec\n"
-                "5Hz client latency : %f msec\n"
-                "1Hz client latency : %f msec\n",
-		//        CB_40Hz_client.get_latency (0),
-                CB_20Hz_client.get_latency (1),
-                CB_10Hz_client.get_latency (2),
-                CB_5Hz_client.get_latency (3),
-                CB_1Hz_client.get_latency (4)));
+  ACE_DEBUG ((LM_DEBUG,
+	      "Test done.\n"
+	      "20Hz client latency : %f msec, jitter: %f msec\n"
+	      "10Hz client latency : %f msec, jitter: %f msec\n"
+	      "5Hz client latency : %f msec, jitter: %f msec\n"
+	      "1Hz client latency : %f msec, jitter: %f msec\n",
+	      CB_20Hz_client.get_latency (0), CB_20Hz_client.get_jitter (0),
+	      CB_10Hz_client.get_latency (1), CB_10Hz_client.get_jitter (1),
+	      CB_5Hz_client.get_latency (2),  CB_5Hz_client.get_jitter (2),
+	      CB_1Hz_client.get_latency (3),  CB_1Hz_client.get_jitter (3) ));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
-    return 0;
+  return 0;
 }
 
 // This is the main routine of the client, where we create a high
