@@ -87,13 +87,33 @@ TAO_LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  DsLogAdmin::LogIdList* ret_val;
-  ACE_NEW_THROW_EX (ret_val,
-    DsLogAdmin::LogIdList (this->logid_list_),
-                     CORBA::NO_MEMORY ());
+  DsLogAdmin::LogIdList* list;
+
+  // Figure out the length of the list.
+  CORBA::ULong len = ACE_static_cast (CORBA::ULong, hash_map_.current_size ());
+
+  // Allocate the list of <len> length.
+  ACE_NEW_THROW_EX (list,
+                    DsLogAdmin::LogIdList (len),
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  return ret_val;
+  list->length (len);
+
+  // Create an iterator
+  HASHMAP::ITERATOR iter (hash_map_);
+
+  // Iterate over and populate the list.
+  HASHMAP::ENTRY *hash_entry;
+
+  for (CORBA::ULong i = 0; i < len; i++)
+    {
+      iter.next (hash_entry);
+      iter.advance ();
+      (*list)[i] = hash_entry->ext_id_;
+    }
+
+  return list;
 }
 
 int
