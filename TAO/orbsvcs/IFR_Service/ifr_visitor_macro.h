@@ -8,7 +8,7 @@
 #define TAO_IFR_VISITOR_WRITE_GUARD \
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, \
                             monitor, \
-                            visitor->lock (), \
+                            visitor.lock (), \
                             CORBA::INTERNAL ( \
                               CORBA_SystemException::_tao_minor_code ( \
                                 TAO_GUARD_FAILURE, \

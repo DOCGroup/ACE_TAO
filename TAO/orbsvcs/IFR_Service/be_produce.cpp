@@ -182,19 +182,16 @@ BE_produce (void)
       BE_abort ();
     }
 
-  ifr_visitor *visitor = 0;
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       if (be_global->removing ())
         {
-          ifr_removing_visitor removing_visitor;
-          visitor = &removing_visitor;
+          ifr_removing_visitor visitor;
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
-          if (root->ast_accept (visitor) == -1)
+          if (root->ast_accept (&visitor) == -1)
             {
               ACE_ERROR ((
                   LM_ERROR,
@@ -207,12 +204,11 @@ BE_produce (void)
         }
       else
         {
-          ifr_adding_visitor adding_visitor;
-          visitor = &adding_visitor;
+          ifr_adding_visitor visitor;
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
-          if (root->ast_accept (visitor) == -1)
+          if (root->ast_accept (&visitor) == -1)
             {
               ACE_ERROR ((
                   LM_ERROR,
