@@ -372,7 +372,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::resume (void)
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::resume");
 
   // First resume ourselves.
-  if (ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::suspend () == -1)
+  if (ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::resume () == -1)
     return -1;
   else // Then resume the SVC_HANDLER's we've created.
     return this->scheduling_strategy_->resume ();
