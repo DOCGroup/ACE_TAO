@@ -28,7 +28,11 @@ loop: while  (<FILE>)
     if (/^\!IF/) {
         ++$if_depth;
     }
-    elsif (/^\!ENDIF/) {
+
+    push @saved_lines, $_ 
+        if ($if_depth > 0);
+
+    if (/^\!ENDIF/) {
         --$if_depth;
         print @saved_lines 
             if ($if_depth == 0 && $dirty == 1);
@@ -38,10 +42,6 @@ loop: while  (<FILE>)
     elsif ($if_depth == 0) {
         print;
     }
-    
-    
-    push @saved_lines, $_ 
-        if ($if_depth > 0);
   
     $dirty = 1
         if ($if_depth > 0 && !/^\!/ && !/^\s+$/);    
