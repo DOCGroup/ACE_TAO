@@ -931,11 +931,16 @@ public:
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
 
+  int next (T *&);
+  // Pass back the <next_item> that hasn't been seen in the Stack.
+  // Returns 0 when all items have been seen, else 1.
+
   T *next (void) const;
   // Delegates to ACE_Double_Linked_List_Iterator, except that whereas 
   // the Double_Linked_List version of next returns the node, this next
   // returns the contents of the node
-  
+  // DEPRECATED
+
   int remove (void);
   // Removes the current item (i.e., this->next()) from the list.
   
@@ -970,8 +975,13 @@ public:
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
 
+  int next (T *&);
+  // Pass back the <next_item> that hasn't been seen in the Stack.
+  // Returns 0 when all items have been seen, else 1.
+
   T *next (void) const;
   // Delegates to ACE_Double_Linked_List_Iterator.
+  // DEPRECATED 
 
   int remove (void);
   // Removes the current item (i.e., this->next()) from the list.
