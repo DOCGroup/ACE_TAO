@@ -6,7 +6,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -17,7 +17,7 @@
 #if defined (TAO_EXPORT_MACRO)
 # undef TAO_EXPORT_MACRO
 #endif /* TAO_EXPORT_MACRO */
-#define TAO_EXPORT_MACRO TAO_Notify_Serv_Export
+#define TAO_EXPORT_MACRO TAO_Notify_Export
 
 namespace TAO_Notify_Extensions
 {
