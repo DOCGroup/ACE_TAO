@@ -81,16 +81,19 @@ TAO_LB_Random::next_member (
   //       is supposed to have a larger period than rand(), in
   //       addition to the fact that the lower order bits should be as
   //       random as the higher order bits.
+
+  const CORBA::Float flen = len;  // Prevent integer arithmetic
+                                  // overflow.
   const CORBA::ULong i =
     ACE_static_cast (CORBA::ULong,
-                     (len * ACE_OS::rand () / (RAND_MAX + 1.0)));
+                     flen * ACE_OS::rand () / (RAND_MAX + 1.0));
 
   ACE_ASSERT (i < len);
 
 //   ACE_DEBUG ((LM_DEBUG,
-//               "** Len = %u\n"
-//               "Location # %u\n"
-//               "Loc Name = %s\n",
+//               "** Len = %u\t"
+//               "Location # %u\t"
+//               "Loc Name = \"%s\"\n",
 //               len,
 //               i,
 //               locations[i][0].id.in ()));

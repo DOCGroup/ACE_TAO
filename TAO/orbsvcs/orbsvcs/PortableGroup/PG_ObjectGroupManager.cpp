@@ -134,6 +134,9 @@ TAO_PG_ObjectGroupManager::add_member (
       (void) safe_groups.release ();
     }
 
+  // No object group member of the object group with the given
+  // ObjectGroupId resides at the location.  Add the object group
+  // entry to array of object groups residing at the location.
   const size_t groups_len = groups->size ();
   groups->size (groups_len + 1);
   (*groups)[groups_len] = group_entry;
@@ -512,7 +515,10 @@ TAO_PG_ObjectGroupManager::member_already_present (
   size_t len = groups.size ();
   for (size_t i = 0; i < len; ++i)
     {
-      if (groups[i] == group_entry)
+      // It should be enough just to compare the group_entry pointers,
+      // but that seems brittle.  Better to check a controlled value,
+      // like the ObjectGroupId.
+      if (groups[i]->group_id == group_entry->group_id)
         {
           // Member with given type ID exists at the given
           // location.
