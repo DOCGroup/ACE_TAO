@@ -125,7 +125,7 @@ Client_i::echo_list (const char *message)
           ACE_DEBUG ((LM_DEBUG,
                       "list elem %d = %s\n",
                       i,
-                      ior));
+                      ior.in ()));
         }
     }
   TAO_CATCHANY
