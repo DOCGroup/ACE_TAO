@@ -123,6 +123,9 @@ Command_Handler::open (void *)
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Command_Handler::open ()\n"));
  
   javaSocket = this->peer ().get_handle ();
+
+  ACE_DEBUG ((LM_DEBUG, "open, javaSocket: %d\n", javaSocket));
+  
   if (TAO_ORB_Core_instance ()->reactor ()->register_handler (this->peer ().get_handle (),
                                                               this,
                                                               ACE_Event_Handler::READ_MASK) == -1)
@@ -266,22 +269,32 @@ Command_Handler::get_handle (void) const
 int
 Command_Handler::handle_input (ACE_HANDLE fd)
 {
-  //  cerr << "(" << getpid () << " Command_Handler::handle_input:busy_ = " << this->busy_ << endl;
+  cerr << "(" << getpid () << " Command_Handler::handle_input:busy_ = " << this->busy_ << endl;
   unsigned char cmd;
   int val;
+
+  ACE_DEBUG ((LM_DEBUG, "handle_input, fd: %d\n", fd));
   
   if (!(this->busy_))
     {
-      val = OurCmdRead ((char*)&cmd, 1);
-      this->busy_ = 1;
-      ::TimerProcessing ();
+      // Weird hack coming up:
+      if (fd == cmdSocket)
+	{
+	  val = OurCmdRead ((char*)&cmd, 1);
+	  this->busy_ = 1;
+	  ::TimerProcessing ();
+	  
+	}
+      else
+	val = javaCmdRead ((char*) &cmd, 1);
 
+      ACE_DEBUG ((LM_DEBUG, "val: %d, cmd: %d\n", val, cmd));
       // if we get an interrupt while reading we go back to the event loop    
       if (val == 1)
-        {
-          this->busy_ = 0;
-          return 0;
-        }
+	{
+	  this->busy_ = 0;
+	  return -1;
+	}	           
 
       FILE * fp = NULL;   /* file pointer for experiment plan */
       usr1_flag = 0;
@@ -293,6 +306,10 @@ Command_Handler::handle_input (ACE_HANDLE fd)
             {
             case CmdJINIT:
               ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdJINIT received from GUI\n"));
+	      if (this->init_java_av (fd) == -1)
+                {
+                  ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_java_av failed\n"));
+                }
               break;
             case CmdINIT:
               ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdINIT received\n"));
@@ -366,7 +383,7 @@ Command_Handler::handle_input (ACE_HANDLE fd)
       TAO_ENDTRY;
       //      cerr << "returning from Command_Handler::handle_input \n";
     }
-  return 0;
+  return -1;
 }
 
 int 
@@ -527,10 +544,10 @@ Command_Handler::init_av (void)
 }
 
 int 
-Command_Handler::init_java_av (void)
+Command_Handler::init_java_av (ACE_HANDLE fd)
 {
   cerr << "inside init_av \n";
-  int i, j;
+  int j;
 
   /* try to stop and close previous playing */
   if (audioSocket >= 0 || videoSocket >= 0)
@@ -581,15 +598,27 @@ Command_Handler::init_java_av (void)
   af [0]=0;
   
   NewCmd(CmdINIT);
-  i = 0;
-  result = javaCmdRead((char*)&i, 4);
+  unsigned char i = 0;
+  result = javaCmdRead((char*)&i, 1);
+
+  ACE_DEBUG ((LM_DEBUG, "ior len = %d\n", i));
   ACE_NEW_RETURN (this->audio_mmdevice_ior_,
                   char [i],
                   -1);
   result = javaCmdRead (this->audio_mmdevice_ior_,i);
-  result = javaCmdRead((char*)&i, 4);
-  result = javaCmdRead(af, i);
-  af[i] = 0;
+  //result = ACE::read_n (fd, this->audio_mmdevice_ior_, i);
+
+  result = javaCmdRead ((char *) &i, 1);
+  //result = ACE::read_n (fd, (char*)&i, 1);  
+  ACE_DEBUG ((LM_DEBUG, "movie name len = %d\n", i));
+  
+  result = javaCmdRead (af, i);
+  //result = ACE::read_n (fd, af, i);  
+  //  af[i] = 0;
+
+  ACE_DEBUG ((LM_DEBUG, "Java init: Ior %s; movie name: %s\n",
+	      this->audio_mmdevice_ior_, af));
+	     
   /*
     fprintf(stderr, "INIT: vh-%s, vf-%s, ah-%s, af-%s\n", vh, vf, ah, af);
   */

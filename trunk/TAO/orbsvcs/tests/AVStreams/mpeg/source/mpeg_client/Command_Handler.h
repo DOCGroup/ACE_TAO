@@ -338,7 +338,7 @@ public:
   int init_av (void);
   // Initialize both the audio and video
   
-  int init_java_av (void);
+  int init_java_av (ACE_HANDLE fd);
   // initialize both the audio and video reading the iors from java GUI thru a socket.
 
   int init_video_channel (char *phostname,char *videofile);
