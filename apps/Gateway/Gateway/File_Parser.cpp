@@ -51,7 +51,7 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
 
       // check if the buf is a decimal or not
       if (value == 0 && ptr == buf)
-	return FP::ERROR;
+	return FP::PARSE_ERROR;
       else
 	return FP::SUCCESS;
     }
