@@ -1,3 +1,22 @@
+Tue Mar 25 10:17:08 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* OS.cpp (thr_create): on VxWorks, always pass 0 as first arg to
+	  ::taskSpawn () so that VxWorks will generate the task ID.
+	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com>
+	  for providing this fix, without which random task names would
+	  be assigned.
+
+	* examples/Reactor/Multicast/client.cpp: Log_Wrapper::LOG_DEBUG
+	  instead of LM_DEBUG.
+
+	* examples/Threads/context_switch_time.cpp: use ACE_Sched_Params
+	  to get platform-dependent thread priorities.  Also, moved #includes
+	  so that config.h is read before testing for ACE_HAS_THREADS.
+
+	* examples/Threads/{auto_event.cpp,barrier2.cpp,future1.cpp,
+                            future2.cpp,reader_writer.cpp,tss1.cpp,tss2.cpp}:
+	  added template specializations.
+
 Tue Mar 25 10:01:05 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* config-linux.h: Added
@@ -6,14 +25,6 @@ Tue Mar 25 10:01:05 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* platform_linux.GNU: Added -ldl to LIBS.  Thanks to
  	alex@aureus.sublink.org (Sandro Doro) for the change.
-
-Tue Mar 25 09:27:00 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* OS.cpp (thr_create): on VxWorks, always pass 0 as first arg to
-	  ::taskSpawn () so that VxWorks will generate the task ID.
-	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com>
-	  for providing this fix, without which random task names would
-	  be assigned.
 
 Mon Mar 24 14:08:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
