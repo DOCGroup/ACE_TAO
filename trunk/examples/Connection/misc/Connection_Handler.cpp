@@ -1,7 +1,7 @@
 // $Id$
 
 // ============================================================================
-// 
+//
 // = FILENAME
 //    Connection_Handler.cpp
 //
@@ -9,11 +9,11 @@
 //      This test illustrates how to use the Acceptor pattern to
 //      create multiple threads, each running its own Reactor.  You
 //      can connect to this via telnet and keep typing until you enter
-//      '^D'. 
+//      '^D'.
 //
 // = AUTHOR
 //    Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Acceptor.h"
@@ -34,14 +34,14 @@ public:
   // Run the <Connection_Handler>'s main event loop.
 
 protected:
-  virtual int handle_close (ACE_HANDLE, 
+  virtual int handle_close (ACE_HANDLE,
 			    ACE_Reactor_Mask);
   // Signal the Active Object to stop when called.
 
   virtual int handle_input (ACE_HANDLE);
   // Handle input from the client.
 
-  virtual int handle_timeout (const ACE_Time_Value &tv, 
+  virtual int handle_timeout (const ACE_Time_Value &tv,
 			      const void *arg);
   // Handle timeouts.
 
@@ -54,7 +54,7 @@ protected:
   // Keeps track of whether we're done.
 };
 
-int 
+int
 Connection_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) in open()\n"));
@@ -73,7 +73,7 @@ Connection_Handler::close (u_long)
   return 0;
 }
 
-int 
+int
 Connection_Handler::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) in svc()\n"));
@@ -93,14 +93,14 @@ Connection_Handler::svc (void)
 
   // Register ourselves to handle input in this thread without
   // blocking.
-  if (this->reactor ()->register_handler 
+  if (this->reactor ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "can' (%P|%t) t register with reactor\n"), -1);
 
   // Schedule a timer.
-  else if (this->reactor ()->schedule_timer (this, 
-					     (const void *) this, 
-					     ACE_Time_Value (2), 
+  else if (this->reactor ()->schedule_timer (this,
+					     (const void *) this,
+					     ACE_Time_Value (2),
 					     ACE_Time_Value (2)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);
   else
@@ -118,7 +118,7 @@ Connection_Handler::svc (void)
   ACE_Reactor::instance ()->cancel_timer (this);
 
   // Remove ourselves from the Reactor.
-  this->reactor ()->remove_handler 
+  this->reactor ()->remove_handler
     (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
 
   // Zero-out the Reactor field so it isn't accessed later on.
@@ -126,10 +126,10 @@ Connection_Handler::svc (void)
 
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) exiting svc\n"));
   return 0;
-} 
+}
 
-int 
-Connection_Handler::handle_close (ACE_HANDLE, 
+int
+Connection_Handler::handle_close (ACE_HANDLE,
 				  ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) in handle_close \n"));
@@ -139,7 +139,7 @@ Connection_Handler::handle_close (ACE_HANDLE,
   return 0;
 }
 
-int 
+int
 Connection_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
@@ -151,11 +151,11 @@ Connection_Handler::handle_input (ACE_HANDLE)
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) %p bad read\n", "client logger"), -1);
     case 0:
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
 			 " (%P|%t) closing log daemon (fd = %d)\n", this->get_handle ()), -1);
     default:
       if (((int) buf[0]) == EOF)
-	ACE_ERROR_RETURN ((LM_ERROR, 
+	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) closing log daemon (fd = %d)\n", this->get_handle ()), -1);
       else
 	ACE_DEBUG ((LM_DEBUG, " (%P|%t) from client: %s", buf));
@@ -164,7 +164,7 @@ Connection_Handler::handle_input (ACE_HANDLE)
   return 0;
 }
 
-int 
+int
 Connection_Handler::handle_signal (int signum,
 				   siginfo_t *,
 				   ucontext_t *)
@@ -174,8 +174,8 @@ Connection_Handler::handle_signal (int signum,
   return 0;
 }
 
-int 
-Connection_Handler::handle_timeout (const ACE_Time_Value &tv, 
+int
+Connection_Handler::handle_timeout (const ACE_Time_Value &tv,
 				    const void *arg)
 {
   ACE_UNUSED_ARG (tv);
@@ -187,10 +187,10 @@ Connection_Handler::handle_timeout (const ACE_Time_Value &tv,
 
 // Define an Acceptor for the <Connection_Handler>.
 
-typedef ACE_Acceptor <Connection_Handler, ACE_SOCK_ACCEPTOR> 
+typedef ACE_Acceptor <Connection_Handler, ACE_SOCK_ACCEPTOR>
 	Connection_Acceptor;
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
@@ -226,7 +226,11 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

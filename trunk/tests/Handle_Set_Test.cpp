@@ -4,18 +4,18 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Handle_Set_Test.cpp
 //
 // = DESCRIPTION
 //      This test illustrates the use of ACE_Handle_Set to maintain a
 //      set of handles. No command line arguments are needed to run
-//      the test. 
+//      the test.
 //
 // = AUTHOR
 //    Prashant Jain
-// 
+//
 // ============================================================================
 
 #include "ace/Profile_Timer.h"
@@ -61,18 +61,18 @@ test_duplicates (size_t count)
 }
 
 // This is the vector of handles to test.  These numbers are chosen to
-// test for boundaries conditions. 
-static ACE_HANDLE handle_vector[] = 
+// test for boundaries conditions.
+static ACE_HANDLE handle_vector[] =
 {
-  (ACE_HANDLE) 0, 
-  (ACE_HANDLE) 1, 
-  (ACE_HANDLE) 32, 
-  (ACE_HANDLE) 63, 
-  (ACE_HANDLE) 64, 
-  (ACE_HANDLE) 65, 
-  (ACE_HANDLE) 127, 
-  (ACE_HANDLE) 128, 
-  (ACE_HANDLE) 129, 
+  (ACE_HANDLE) 0,
+  (ACE_HANDLE) 1,
+  (ACE_HANDLE) 32,
+  (ACE_HANDLE) 63,
+  (ACE_HANDLE) 64,
+  (ACE_HANDLE) 65,
+  (ACE_HANDLE) 127,
+  (ACE_HANDLE) 128,
+  (ACE_HANDLE) 129,
   (ACE_HANDLE) 255,
   ACE_INVALID_HANDLE
 };
@@ -103,7 +103,7 @@ test_boundaries (void)
 
   int count = 0;
 
-  ACE_Handle_Set_Iterator i2 (handle_set); 
+  ACE_Handle_Set_Iterator i2 (handle_set);
 
   while ((handle = i2 ()) != ACE_INVALID_HANDLE)
     {
@@ -117,7 +117,7 @@ test_boundaries (void)
 }
 
 static void
-test_performance (size_t max_handles, 
+test_performance (size_t max_handles,
 		  size_t max_iterations)
 {
   ACE_Handle_Set handle_set;
@@ -177,8 +177,13 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Queue<ACE_HANDLE>;
 template class ACE_Unbounded_Queue_Iterator<ACE_HANDLE>;
 template class ACE_Node<ACE_HANDLE>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Queue<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_HANDLE>
+#pragma instantiate ACE_Node<ACE_HANDLE>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

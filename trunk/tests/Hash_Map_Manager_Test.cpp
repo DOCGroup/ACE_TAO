@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Hash_Map_Manager_Test.cpp
 //
@@ -15,7 +15,7 @@
 //
 // = AUTHOR
 //    James Hu
-// 
+//
 // ============================================================================
 
 #include <iostream.h>
@@ -186,7 +186,7 @@ main(void)
   // Scoping below so that result of destruction can be seen in the log.
   {
     HASH_STRING_MAP hash (MAX_HASH);
-     
+
     hash.bind ("hello", "guten Tag");
     hash.bind ("goodbye", "auf wiedersehen");
     hash.bind ("funny", "lustig");
@@ -215,8 +215,13 @@ main(void)
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>;
 template class ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>
+#pragma instantiate ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

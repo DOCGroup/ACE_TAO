@@ -18,7 +18,7 @@ Peer_Handler::~Peer_Handler ()
 {
 }
 
-int 
+int
 Peer_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "activating %d\n", this->get_handle ()));
@@ -31,12 +31,12 @@ Peer_Handler::open (void *)
 				      ACE_Reactor::instance (),
 					  ACE_Thread_Manager::instance ()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_stdin_handler"), -1);
-      else 
+      else
 	return 0;
     }
   else // If iterations_ has been set, send iterations_ buffers.
     {
-      char *buffer = 
+      char *buffer =
 	"Oh give me a home\n"
 	"Where the buffalo roam,\n"
 	"And the deer and the antelope play.\n"
@@ -44,18 +44,18 @@ Peer_Handler::open (void *)
 	"A discouraging word,\n"
 	"And the skies are not cloudy all day.\n";
       int length = ACE_OS::strlen (buffer);
-      
+
       while (iterations_-- > 0
 	     && this->peer ().send_n (buffer, length) == length)
 	continue;
-      
+
       this->peer ().close ();
       ACE_Reactor::end_event_loop();
       return 0;
     }
 }
 
-int 
+int
 Peer_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
@@ -67,7 +67,7 @@ Peer_Handler::handle_input (ACE_HANDLE)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write failed"), -1);
     else if (n == 0) /* Explicitly close the connection. */
       {
-	if (this->peer ().close () == -1) 
+	if (this->peer ().close () == -1)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 1);
 	return -1;
       }
@@ -76,7 +76,7 @@ Peer_Handler::handle_input (ACE_HANDLE)
   return 0;
 }
 
-int 
+int
 Peer_Handler::handle_close (ACE_HANDLE,
 			    ACE_Reactor_Mask)
 {
@@ -84,7 +84,7 @@ Peer_Handler::handle_close (ACE_HANDLE,
   return 0;
 }
 
-ACE_HANDLE 
+ACE_HANDLE
 Peer_Handler::get_handle (void) const
 {
   return this->peer ().get_handle ();
@@ -109,7 +109,7 @@ IPC_Client::~IPC_Client (void)
 
 // Dynamic linking hooks.
 
-int 
+int
 IPC_Client::init (int argc, char *argv[])
 {
   if (this->parse_args (argc, argv) == -1)
@@ -122,7 +122,7 @@ IPC_Client::init (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "Opening %s\n", ACE_MULTIBYTE_STRING (rendezvous_)));
 
   Peer_Handler *ph;
-  
+
   ACE_NEW_RETURN (ph, Peer_Handler (iterations_), -1);
 
   // Connect to the peer, reusing the local addr if necessary.
@@ -138,20 +138,20 @@ IPC_Client::init (int argc, char *argv[])
   return 0;
 }
 
-int 
+int
 IPC_Client::fini (void)
 {
   return 0;
 }
 
-int 
+int
 IPC_Client::svc (void)
 {
   ACE_Reactor::run_event_loop ();
   return 0;
 }
 
-int 
+int
 IPC_Client::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   return 0;
@@ -169,7 +169,7 @@ IPC_Client::parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'r':
-	  ACE_OS::strncpy (rendezvous_, 
+	  ACE_OS::strncpy (rendezvous_,
 			   ACE_WIDE_STRING (get_opt.optarg),
 			   sizeof rendezvous_ / sizeof TCHAR);
 	  break;
@@ -192,10 +192,17 @@ IPC_Client::parse_args (int argc, char *argv[])
 #endif /* SPIPE_CONNECTOR */
 
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Peer_Handler>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Svc_Tuple<Peer_Handler>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Test_Future.cpp
 //
@@ -13,8 +13,8 @@
 //
 // = AUTHOR
 //    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
-// 
+//    <schmidt@cs.wustl.edu>
+//
 // ============================================================================
 
 #include "ace/ACE.h"
@@ -88,14 +88,14 @@ private:
 };
 
 Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
-				        u_long new_param, 
-				        int new_count, 
+				        u_long new_param,
+				        int new_count,
 					ACE_Future<u_long> &new_result)
   :   scheduler_ (new_Scheduler),
       param_ (new_param),
       count_ (new_count),
       future_result_ (new_result)
-{ 
+{
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Method_Object_work created\n"));
 }
@@ -137,7 +137,7 @@ Method_Object_name::Method_Object_name (Scheduler *new_scheduler,
 
 Method_Object_name::~Method_Object_name (void)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Method_Object_name will be deleted.\n"));
 }
 
@@ -161,7 +161,7 @@ private:
 };
 
 // Constructor.
-Scheduler::Scheduler (const char *newname, 
+Scheduler::Scheduler (const char *newname,
 		      Scheduler *new_scheduler)
 {
   ACE_NEW (this->name_, char[ACE_OS::strlen (newname) + 1]);
@@ -178,7 +178,7 @@ Scheduler::~Scheduler (void)
 }
 
 // open
-int 
+int
 Scheduler::open (void *)
 {
   task_count++;
@@ -187,7 +187,7 @@ Scheduler::open (void *)
 }
 
 // close
-int 
+int
 Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s close\n", this->name_));
@@ -196,10 +196,10 @@ Scheduler::close (u_long)
 }
 
 // service..
-int 
+int
 Scheduler::svc (void)
 {
-  for (;;) 
+  for (;;)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
@@ -216,7 +216,7 @@ Scheduler::svc (void)
   return 0;
 }
 
-void 
+void
 Scheduler::end (void)
 {
   this->activation_queue_.enqueue (new Method_Object_end (this));
@@ -224,8 +224,8 @@ Scheduler::end (void)
 
 
 // Here's where the Work takes place.
-u_long 
-Scheduler::work_i (u_long param, 
+u_long
+Scheduler::work_i (u_long param,
 		   int count)
 {
   ACE_UNUSED_ARG (count);
@@ -244,26 +244,26 @@ Scheduler::name_i (void)
   return the_name;
 }
 
-ACE_Future<const char *> 
+ACE_Future<const char *>
 Scheduler::name (void)
 {
-  if (this->scheduler_) 
+  if (this->scheduler_)
     // Delegate to the Scheduler.
     return this->scheduler_->name ();
-  else 
+  else
     {
       ACE_Future<const char*> new_future;
 
       // @@ What happens if new fails here?
-      this->activation_queue_.enqueue 
+      this->activation_queue_.enqueue
 	(new Method_Object_name (this, new_future));
 
       return new_future;
     }
 }
 
-ACE_Future<u_long> 
-Scheduler::work (u_long newparam, 
+ACE_Future<u_long>
+Scheduler::work (u_long newparam,
 		 int newcount)
 {
   if (this->scheduler_) {
@@ -284,11 +284,11 @@ Scheduler::work (u_long newparam,
 static size_t n_loops = 100;
 
 int
-main (int, char *[]) 
+main (int, char *[])
 {
   Scheduler *andres, *peter, *helmut, *matias;
 
-  // Create active objects..  
+  // Create active objects..
   // @@ Should "open" be subsumed within the constructor of
   // Scheduler()?
   ACE_NEW_RETURN (andres, Scheduler ("andres"), -1);
@@ -302,7 +302,7 @@ main (int, char *[])
   ACE_NEW_RETURN (matias, Scheduler ("matias", andres), -1);
   matias->open ();
 
-  for (size_t i = 0; i < n_loops; i++) 
+  for (size_t i = 0; i < n_loops; i++)
     {
       {
 	ACE_Future<u_long> fresulta, fresultb, fresultc, fresultd, fresulte;
@@ -326,7 +326,7 @@ main (int, char *[])
 
 	fresulte = fresulta;
 
-	if (i % 3 == 0) 
+	if (i % 3 == 0)
 	  {
 	    // Every 3rd time... disconnect the futures...
 	    // but "fresulte" should still contain the result...
@@ -373,7 +373,7 @@ main (int, char *[])
   matias->end ();
 
   ACE_OS::sleep (2);
-  
+
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
 	      (int) task_count,
@@ -387,7 +387,7 @@ main (int, char *[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Future<const char *>;
 template class ACE_Future<u_long>;
@@ -395,10 +395,19 @@ template class ACE_Future_Rep<char const *>;
 template class ACE_Future_Rep<u_long>;
 template class auto_ptr<ACE_Method_Object>;
 template class auto_basic_ptr<ACE_Method_Object>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Future<const char *>
+#pragma instantiate ACE_Future<u_long>
+#pragma instantiate ACE_Future_Rep<char const *>
+#pragma instantiate ACE_Future_Rep<u_long>
+#pragma instantiate auto_ptr<ACE_Method_Object>
+#pragma instantiate auto_basic_ptr<ACE_Method_Object>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

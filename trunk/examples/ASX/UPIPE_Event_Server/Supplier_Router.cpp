@@ -11,7 +11,7 @@ int
 Supplier_Handler::open (void *a)
 {
   SUPPLIER_FACTORY *af = (SUPPLIER_FACTORY *) a;
-  this->router_task_ = af->router (); 
+  this->router_task_ = af->router ();
   return this->Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>::open (a);
 }
 
@@ -29,7 +29,7 @@ Supplier_Router::Supplier_Router (ACE_Thread_Manager *tm)
 
 // Handle incoming messages in a separate thread..
 
-int 
+int
 Supplier_Router::svc (void)
 {
   ACE_ASSERT (this->is_writer ());
@@ -85,7 +85,7 @@ Supplier_Router::close (u_long)
 
 // Send a MESSAGE_BLOCK to the supplier(s)..
 
-int 
+int
 Supplier_Router::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   ACE_ASSERT (this->is_writer ());
@@ -104,7 +104,7 @@ Supplier_Router::put (ACE_Message_Block *mb, ACE_Time_Value *)
 
 // Return information about the Supplier_Router ACE_Module..
 
-int 
+int
 Supplier_Router::info (char **strp, size_t length) const
 {
   char       buf[BUFSIZ];
@@ -114,11 +114,11 @@ Supplier_Router::info (char **strp, size_t length) const
 
   if (sa.get_local_addr (addr) == -1)
     return -1;
-  
+
   ACE_OS::sprintf (buf, "%s\t %s/ %s",
 	     mod_name,  "upipe",
 	     "# supplier router\n");
-  
+
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
     return -1;
   else
@@ -126,7 +126,7 @@ Supplier_Router::info (char **strp, size_t length) const
   return ACE_OS::strlen (mod_name);
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>;
 template class ACE_Acceptor<Supplier_Handler, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH>;
@@ -139,6 +139,20 @@ template class ACE_Read_Guard<ACE_RW_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Mutex>;
 template class ACE_Guard<ACE_RW_Mutex>;
 template class ACE_TSS<ACE_Dynamic>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>
+#pragma instantiate ACE_Acceptor<Supplier_Handler, ACE_UPIPE_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH>
+#pragma instantiate Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>
+#pragma instantiate Peer_Router<Supplier_Handler, SUPPLIER_KEY>
+#pragma instantiate ACE_Map_Entry<SUPPLIER_KEY, Supplier_Handler *>
+#pragma instantiate ACE_Map_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
+#pragma instantiate ACE_Map_Manager<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
+#pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_TSS<ACE_Dynamic>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_HAS_THREADS */

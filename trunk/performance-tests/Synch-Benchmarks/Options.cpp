@@ -179,7 +179,7 @@ Options::parse_args (int argc, char *argv[])
 		   "\t[-B] (THR_BOUND)\n"
 		   "\t[-c] + number of logical connections\n"
 		   "\t[-c] - number of physical connections\n"
-		   "\t[-C] (enable checksumming)\n"		      
+		   "\t[-C] (enable checksumming)\n"
 		   "\t[-d] (enable debugging)\n"
 		   "\t[-D] (THR_DETACHED)\n"
 		   "\t[-e] (eager exit)\n"
@@ -189,9 +189,9 @@ Options::parse_args (int argc, char *argv[])
 		   "\t[-i] number of test iterations [%d]\n"
 		   "\t[-L] low water mark\n"
 		   "\t[-m] mapped file\n"
-		   "\t[-M] message size\n" 
-		   "\t[-n] number of LWPs\n" 		      
-		   "\t[-N] (THR_NEW_LWP)\n" 
+		   "\t[-M] message size\n"
+		   "\t[-n] number of LWPs\n"
+		   "\t[-N] (THR_NEW_LWP)\n"
 		   "\t[-p] (print benchmark summary)\n"
 		   "\t[-P] number of consecutive ports\n"
 		   "\t[-s] sleep time\n"
@@ -246,7 +246,7 @@ Options::parse_args (int argc, char *argv[])
 		  "%8d = free dynamic memory\n"
 		  "%8d = print summary only\n"
 		  "%8d = eager exit\n"
-		  "%8d = UDP\n"		  
+		  "%8d = UDP\n"
 		  "%8d = send ack\n"
 		  "%8d = THR_DETACHED\n"
 		  "%8d = THR_BOUND\n"
@@ -307,8 +307,8 @@ Options::print_results (void)
 		    "%8.2f Mbit/sec\n"
 		    "%8d (voluntary context switches)\n"
 		    "%8d (involuntary context switches)\n"
-		    "%8d (total context switches)\n"		    
-		    "%8d.%d sec (wait-cpu time)\n"		
+		    "%8d (total context switches)\n"
+		    "%8d.%d sec (wait-cpu time)\n"
 		    "%8d.%d sec (user lock wait sleep time)\n"
 		    "%8d.%d sec (all other sleep time)\n"
 		    "%8d (major page faults)\n"
@@ -351,7 +351,7 @@ Options::print_results (void)
 		    "%8d = messages sent\n"
 		    "%8d = messages received\n"
 		    "%8d = signals received\n"
-		    "%8ds, %dms = wait-cpu (latency) time\n"		
+		    "%8ds, %dms = wait-cpu (latency) time\n"
 		    "%8ds, %dms = user lock wait sleep time\n"
 		    "%8ds, %dms = all other sleep time\n"
 		    "%8d = voluntary context switches\n"
@@ -394,9 +394,14 @@ Options::print_results (void)
 #endif /* ACE_HAS_THREADS */
 
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, size_t>;
 #endif /* ACE_MT_SAFE */
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, size_t>
+#endif /* ACE_MT_SAFE */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 

@@ -21,9 +21,9 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (const char rendezvous[])
   else if (ACE_Reactor::instance ()->register_handler
 	   (this->message_fifo_.get_handle (), this,
 	    ACE_Event_Handler::READ_MASK | ACE_Event_Handler::EXCEPT_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, "%n: %p\n", 
+    ACE_ERROR ((LM_ERROR, "%n: %p\n",
 		"register_handler (message_fifo)"));
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "opened fifo at %s on handle %d\n",
 	     rendezvous,
 	     this->message_fifo_.get_handle ()));
@@ -38,7 +38,7 @@ ACE_Client_Logging_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
   return -1;
 }
 
-int  
+int
 ACE_Client_Logging_Handler::open (void *)
 {
   ACE_INET_Addr server_addr;
@@ -49,15 +49,15 @@ ACE_Client_Logging_Handler::open (void *)
   // reconnections.
 #if !defined (ACE_WIN32)
   if (ACE_Reactor::instance ()->register_handler (SIGPIPE, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n",
 		       "register_handler (SIGPIPE)"), -1);
 #endif /* ACE_WIN32 */
 
   // Figure out what remote port we're really bound to.
   if (this->peer ().get_remote_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_remote_addr"), -1);
-  
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
 	      "starting up Client Logging Daemon, "
 	      "connected to port %d on handle %d\n",
 	     server_addr.get_port_number (),
@@ -65,7 +65,7 @@ ACE_Client_Logging_Handler::open (void *)
   return 0;
 }
 
-/* VIRTUAL */ ACE_HANDLE 
+/* VIRTUAL */ ACE_HANDLE
 ACE_Client_Logging_Handler::get_handle (void) const
 {
   ACE_TRACE ("ACE_Client_Logging_Handler::get_handle");
@@ -100,7 +100,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   return 0;
 }
 
-// Receive a logging record from an application send via a non-0 MSG_BAND...  
+// Receive a logging record from an application send via a non-0 MSG_BAND...
 // This just calls handle_input().
 
 int
@@ -111,17 +111,17 @@ ACE_Client_Logging_Handler::handle_exception (ACE_HANDLE handle)
 
 // Called when object is removed from the ACE_Reactor
 
-int 
+int
 ACE_Client_Logging_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "shutting down!!!\n"));
 
   if (ACE_Reactor::instance ()->remove_handler
-      (this->message_fifo_.get_handle (), 
+      (this->message_fifo_.get_handle (),
        ACE_Event_Handler::READ_MASK | ACE_Event_Handler::EXCEPT_MASK | ACE_Event_Handler::DONT_CALL) == -1)
-    ACE_ERROR ((LM_ERROR, "%n: %p\n", 
+    ACE_ERROR ((LM_ERROR, "%n: %p\n",
 		"remove_handler (message_fifo)"));
-  
+
   this->message_fifo_.close ();
   this->destroy ();
   return 0;
@@ -136,7 +136,7 @@ ACE_Client_Logging_Handler::handle_output (ACE_HANDLE)
 // Encodes the contents of log_record object using network byte-order
 // and sends it to the logging server.
 
-int  
+int
 ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 {
   if (this->logging_output_ == ACE_STDOUT)
@@ -145,10 +145,10 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
     {
       long len = log_record.length ();
       long encoded_len = htonl (len);
-      
+
       log_record.encode ();
 
-      if (this->peer ().send (4, &encoded_len, sizeof encoded_len, 
+      if (this->peer ().send (4, &encoded_len, sizeof encoded_len,
 			      (char *) &log_record, len) == -1)
 	// Switch over to logging to stdout for now.  In the long
 	// run, we'll need to queue up the message, try to
@@ -179,18 +179,18 @@ protected:
   // = Scheduling hooks.
   virtual int suspend (void);
   virtual int resume (void);
-  
+
 private:
   int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.
 
   const char *server_host_;
   // Host where the logging server is located.
-  
+
   u_short server_port_;
   // Port number where the logging server is listening for
   // connections.
-  
+
   ACE_INET_Addr server_addr_;
   // Address of the logging server.
 
@@ -202,7 +202,7 @@ private:
   // Pointer to the handler that does the work.
 };
 
-int 
+int
 ACE_Client_Logging_Connector::fini (void)
 {
   if (this->handler_ != 0)
@@ -210,13 +210,13 @@ ACE_Client_Logging_Connector::fini (void)
   return 0;
 }
 
-int 
+int
 ACE_Client_Logging_Connector::info (char **strp, size_t length) const
 {
   char buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, "%d/%s %s", 
-		   this->server_addr_.get_port_number (), "tcp", 
+  ACE_OS::sprintf (buf, "%d/%s %s",
+		   this->server_addr_.get_port_number (), "tcp",
 		   "# client logging daemon\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
@@ -226,7 +226,7 @@ ACE_Client_Logging_Connector::info (char **strp, size_t length) const
   return ACE_OS::strlen (buf);
 }
 
-int  
+int
 ACE_Client_Logging_Connector::init (int argc, char *argv[])
 {
   ACE_LOG_MSG->open ("Client Logging Service");
@@ -235,16 +235,16 @@ ACE_Client_Logging_Connector::init (int argc, char *argv[])
   // options.
   this->parse_args (argc, argv);
 
-  ACE_NEW_RETURN (this->handler_, 
+  ACE_NEW_RETURN (this->handler_,
 		  ACE_Client_Logging_Handler (this->rendezvous_key_),
 		  -1);
 
   // Establish connection with the server.
-  if (this->connect (this->handler_, 
-		     this->server_addr_, 
+  if (this->connect (this->handler_,
+		     this->server_addr_,
 		     ACE_Synch_Options::synch) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "%p, using stdout\n", 
+      ACE_ERROR ((LM_ERROR, "%p, using stdout\n",
 		  "can't connect to logging server"));
       this->handler_ = 0;
     }
@@ -274,7 +274,7 @@ ACE_Client_Logging_Connector::parse_args (int argc, char *argv[])
 	  this->server_port_ = ACE_OS::atoi (get_opt.optarg);
 	  break;
 	default:
-	  ACE_ERROR_RETURN ((LM_ERROR, 
+	  ACE_ERROR_RETURN ((LM_ERROR,
 			    "%n:\n[-p server-port]\n%a", 1),
 			   -1);
 	}
@@ -284,14 +284,14 @@ ACE_Client_Logging_Connector::parse_args (int argc, char *argv[])
   return 0;
 }
 
-int  
+int
 ACE_Client_Logging_Connector::suspend (void)
 {
   // To be done...
   return 0;
 }
 
-int  
+int
 ACE_Client_Logging_Connector::resume (void)
 {
   // To be done...
@@ -304,10 +304,17 @@ ACE_Client_Logging_Connector::resume (void)
 
 ACE_SVC_FACTORY_DEFINE (ACE_Client_Logging_Connector)
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Connector<ACE_Client_Logging_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<ACE_Client_Logging_Handler>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<ACE_Client_Logging_Handler> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<ACE_Client_Logging_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<ACE_Client_Logging_Handler> *, ACE_SYNCH_RW_MUTEX>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector<ACE_Client_Logging_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Svc_Tuple<ACE_Client_Logging_Handler>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<ACE_Client_Logging_Handler> *>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<ACE_Client_Logging_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<ACE_Client_Logging_Handler> *, ACE_SYNCH_RW_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    TSS_Test.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "TSS_Data.h"
@@ -52,7 +52,7 @@ TSS_Obj::~TSS_Obj (void)
 Test_Task::Test_Task (void)
 {
   Test_Task::count_++;
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Test_Task+: %d\n", (int) Test_Task::count_));
 }
 
@@ -60,7 +60,7 @@ Test_Task::~Test_Task (void)
 {
   Test_Task::count_--;
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Test_Task-: %d\n", (int) Test_Task::count_));
   Test_Task::wait_count_--;
 }
@@ -77,7 +77,7 @@ Test_Task::svc (void *arg)
   Test_Task::wait_count_++;
   Test_Task::max_count_++;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting (data = %u)\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting (data = %u)\n",
 	      arg));
 
   // Do a bunch of set operations on the TSS data just to make sure
@@ -89,7 +89,7 @@ Test_Task::svc (void *arg)
       ACE_Thread::yield ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished (data = %u)\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished (data = %u)\n",
 	      arg));
 
 #if 0
@@ -101,7 +101,7 @@ Test_Task::svc (void *arg)
   return 0;
 }
 
-int 
+int
 Test_Task::open (void *arg)
 {
   if (ACE_Thread::spawn (Test_Task::svc, arg) == -1)
@@ -110,18 +110,18 @@ Test_Task::open (void *arg)
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   num_tasks = argc > 1 ? atoi (argv[1]) : MAX_TASKS;
 
   Test_Task **task_arr;
-  
+
   ACE_NEW_RETURN (task_arr, Test_Task *[num_tasks], -1);
 
   for (int i = 0; i < MAX_ITERATIONS; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "(%t) ********* iteration %d **********\n"
 		  "Test_Task::max_count_ %d\n",
 		  i,
@@ -149,17 +149,17 @@ main (int argc, char *argv[])
 
       for (;;)
 	{
-	  if (!(Test_Task::max_count_ == num_tasks 
+	  if (!(Test_Task::max_count_ == num_tasks
 		&& Test_Task::wait_count_ == 0))
 	    {
 	      ACE_Thread::yield ();
 	      continue;
 	    }
-	  ACE_DEBUG ((LM_DEBUG, 
+	  ACE_DEBUG ((LM_DEBUG,
 		      "(%t) Test_Task::max_count_ = %d,"
 		      " Test_Task::wait_count_ = %d",
 		      (int) Test_Task::max_count_,
-		      (int) Test_Task::wait_count_)); 
+		      (int) Test_Task::wait_count_));
 	  break;
 	}
 
@@ -169,17 +169,24 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op<ACE_Token, int>;
 template class ACE_TSS<TSS_Data>;
 template class ACE_TSS<TSS_Obj>;
 template class ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Atomic_Op<ACE_Token, int>
+#pragma instantiate ACE_TSS<TSS_Data>
+#pragma instantiate ACE_TSS<TSS_Obj>
+#pragma instantiate ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
 
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

@@ -12,7 +12,7 @@
 
 // Dump the state of an object.
 
-template <class T> void 
+template <class T> void
 ACE_Future_Rep<T>::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -39,7 +39,7 @@ ACE_Future_Rep<T>::create (void)
   return new ACE_Future_Rep<T>();
 }
 
-template <class T> ACE_Future_Rep<T> * 
+template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 {
   ACE_ASSERT (rep != 0);
@@ -49,13 +49,13 @@ ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
   return rep;
 }
 
-template <class T> void 
+template <class T> void
 ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
 {
   ACE_ASSERT(rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, rep->value_ready_mutex_));
-  
+
   if (rep->ref_count_-- == 0)
     {
       r_mon.release ();
@@ -66,17 +66,17 @@ ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
     }
 }
 
-template <class T> void 
+template <class T> void
 ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
 {
   ACE_ASSERT(rep != 0);
   ACE_ASSERT(new_rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, rep->value_ready_mutex_));
-  
+
   ACE_Future_Rep<T>* old = rep;
   rep = new_rep;
-  
+
   // detached old last for exception safety
   if (old->ref_count_-- == 0)
     {
@@ -88,7 +88,7 @@ ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
     }
 }
 
-template <class T> 
+template <class T>
 ACE_Future_Rep<T>::ACE_Future_Rep (void)
   : value_ (0),
     ref_count_ (0),
@@ -96,7 +96,7 @@ ACE_Future_Rep<T>::ACE_Future_Rep (void)
 {
 }
 
-template <class T> 
+template <class T>
 ACE_Future_Rep<T>::~ACE_Future_Rep (void)
 {
   delete this->value_;
@@ -141,7 +141,7 @@ ACE_Future_Rep<T>::get (T &value,
       // If the value is not yet defined we must block until the
       // producer writes to it.
 
-      while (this->value_ == 0) 
+      while (this->value_ == 0)
         // Perform a timed wait.
         if (this->value_ready_.wait (tv) == -1)
           return -1;
@@ -167,12 +167,12 @@ ACE_Future_Rep<T>::operator T ()
 
       // Wait ``forever.''
 
-      while (this->value_ == 0) 
+      while (this->value_ == 0)
         if (this->value_ready_.wait () == -1)
           // What to do in this case since we've got to indicate
           // failure somehow?  Exceptions would be nice, but they're
           // not portable...
-          return 0; 
+          return 0;
 
       // Destructor releases the mutex
     }
@@ -180,7 +180,7 @@ ACE_Future_Rep<T>::operator T ()
   return *this->value_;
 }
 
-template <class T> 
+template <class T>
 ACE_Future<T>::ACE_Future (void)
   : future_rep_ (FUTURE_REP::create ())
 {
@@ -200,19 +200,19 @@ ACE_Future<T>::ACE_Future (const T &r)
   this->future_rep_->set (r);
 }
 
-template <class T> 
+template <class T>
 ACE_Future<T>::~ACE_Future (void)
 {
   FUTURE_REP::detach (future_rep_);
 }
 
-template <class T> int 
+template <class T> int
 ACE_Future<T>::operator== (const ACE_Future<T> &r) const
 {
   return r.future_rep_ == this->future_rep_;
 }
 
-template <class T> int 
+template <class T> int
 ACE_Future<T>::operator!= (const ACE_Future<T> &r) const
 {
   return r.future_rep_ != this->future_rep_;
@@ -227,7 +227,7 @@ ACE_Future<T>::cancel (const T &r)
 
 template <class T> int
 ACE_Future<T>::cancel (void)
-{  
+{
   // If this ACE_Future is already attached to a ACE_Future_Rep,
   // detach it (maybe delete the ACE_Future_Rep).
   FUTURE_REP::assign (this->future_rep_, FUTURE_REP::create ());
@@ -235,7 +235,7 @@ ACE_Future<T>::cancel (void)
 }
 
 template <class T> int
-ACE_Future<T>::set (const T &r) 
+ACE_Future<T>::set (const T &r)
 {
   // Give the pointer to the result to the ACE_Future_Rep.
   return this->future_rep_->set (r);
@@ -257,7 +257,7 @@ ACE_Future<T>::get (T &value, ACE_Time_Value *tv)
 template <class T>
 ACE_Future<T>::operator T ()
 {
-  // note that this will fail (and COREDUMP!) 
+  // note that this will fail (and COREDUMP!)
   // if future_rep_ == 0 !
   //
   // but...
@@ -273,7 +273,7 @@ ACE_Future<T>::operator T ()
 }
 
 template <class T> void
-ACE_Future<T>::operator = (const ACE_Future<T> &rhs) 
+ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
 {
   // assignment:
   //
@@ -281,11 +281,11 @@ ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
 
   // This will work if &r == this, by first increasing the ref count
   ACE_Future<T> &r = ( ACE_Future<T> &) rhs;
-  FUTURE_REP::assign (this->future_rep_, 
+  FUTURE_REP::assign (this->future_rep_,
 		      FUTURE_REP::attach (r.future_rep_));
 }
 
-template <class T> void 
+template <class T> void
 ACE_Future<T>::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -301,7 +301,7 @@ ACE_Future<T>::operator new (size_t)
   return 0;
 }
 
-template <class T> void 
+template <class T> void
 ACE_Future<T>::operator delete (void *)
 {
 }
@@ -311,11 +311,16 @@ ACE_Future<T>::operator &()
 {
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // This should probably be moved elsewhere now that ACE_Atomic_Op<>
 // isn't used.
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+// This should probably be moved elsewhere now that ACE_Atomic_Op<>
+// isn't used.
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_FUTURE_CPP */

@@ -18,10 +18,10 @@ typedef ACE_IOStream_T<ACE_SOCK_Stream> ACE_SOCK_IOStream ;
 // Create a service handler object based on our new
 // iostream/SOCK_Stream hybrid.
 
-typedef ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_INET_Addr, ACE_NULL_SYNCH>       
+typedef ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_INET_Addr, ACE_NULL_SYNCH>
 	Service_Handler;
 
-class Handler : public Service_Handler 
+class Handler : public Service_Handler
   // = TITLE
   //     Extend the <Service_Handler> object to do our bidding.  All of
   //     this is fairly standard until we get to the <handle_input>
@@ -30,30 +30,30 @@ class Handler : public Service_Handler
 {
 public:
   Handler (void) {}
-		
+
   virtual int open (void *)
   {
-    if (this->reactor () ->register_handler 
-	(this, ACE_Event_Handler::READ_MASK) == - 1) 
-      ACE_ERROR_RETURN ((LM_ERROR, 
-			 "registering connection handler with ACE_Reactor\n"), 
+    if (this->reactor () ->register_handler
+	(this, ACE_Event_Handler::READ_MASK) == - 1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+			 "registering connection handler with ACE_Reactor\n"),
 			- 1);
 
     return 0;
   }
-		
+
   virtual void destroy (void)
   {
     this->peer ().close ();
     delete this ;
   }
-		
+
   virtual int close (u_long)
   {
     this->destroy ();
     return 0 ;
   }
-		
+
   virtual int handle_input (ACE_HANDLE)
   {
     int i;
@@ -61,7 +61,7 @@ public:
 
 #if defined (ACE_HAS_STRING_CLASS)
     String s;
-		
+
     if (!(this -> peer () >> i >> f >> s))
       {
 	cerr << "Error getting data" << endl ;
@@ -106,7 +106,7 @@ public:
 typedef ACE_Acceptor<Handler, ACE_SOCK_ACCEPTOR> Logging_Acceptor;
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
 
-int 
+int
 main (int argc, char *argv [])
 {
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
@@ -125,16 +125,16 @@ main (int argc, char *argv [])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
 
   Logging_Acceptor peer_acceptor ;
-	
+
   if (peer_acceptor.open (ACE_INET_Addr (argc > 1 ? atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT)) == - 1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), - 1);
 
-  else if (ACE_Reactor::instance ()->register_handler 
-	   (&peer_acceptor, ACE_Event_Handler::READ_MASK) == - 1) 
+  else if (ACE_Reactor::instance ()->register_handler
+	   (&peer_acceptor, ACE_Event_Handler::READ_MASK) == - 1)
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), - 1);
-	
+
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) starting up daemon\n"));
-	
+
   ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) shutting down server daemon\n"));
@@ -147,10 +147,16 @@ main (int argc, char *argv [])
 
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor <Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_IOStream_T <ACE_SOCK_Stream>;
 template class ACE_Streambuf_T <ACE_SOCK_Stream>;
 template class ACE_Svc_Handler <ACE_SOCK_IOStream, ACE_INET_Addr, ACE_NULL_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Acceptor <Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_IOStream_T <ACE_SOCK_Stream>
+#pragma instantiate ACE_Streambuf_T <ACE_SOCK_Stream>
+#pragma instantiate ACE_Svc_Handler <ACE_SOCK_IOStream, ACE_INET_Addr, ACE_NULL_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* !ACE_LACKS_ACE_IOSTREAM */

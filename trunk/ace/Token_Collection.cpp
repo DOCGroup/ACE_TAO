@@ -73,7 +73,7 @@ ACE_Token_Collection::is_member (const ACE_Token_Proxy &token)
   return collection_.find (token_name) == 0;
 }
 
-int 
+int
 ACE_Token_Collection::acquire (int notify,
 			       void (*sleep_hook)(void *),
 			       ACE_Synch_Options &options)
@@ -101,7 +101,7 @@ ACE_Token_Collection::acquire (int notify,
   return 0;
 }
 
-int 
+int
 ACE_Token_Collection::acquire (const char *token_name,
 			       int notify,
 			       void (*sleep_hook)(void *),
@@ -120,7 +120,7 @@ ACE_Token_Collection::acquire (const char *token_name,
 }
 
 
-int 
+int
 ACE_Token_Collection::tryacquire (const char *token_name,
 				  void (*sleep_hook)(void *))
 {
@@ -137,7 +137,7 @@ ACE_Token_Collection::tryacquire (const char *token_name,
   return temp->tryacquire (sleep_hook);
 }
 
-int 
+int
 ACE_Token_Collection::tryacquire (void (*sleep_hook)(void *))
 {
   ACE_TRACE ("ACE_Token_Collection::tryacquire");
@@ -159,7 +159,7 @@ ACE_Token_Collection::tryacquire (void (*sleep_hook)(void *))
   return 0;
 }
 
-int 
+int
 ACE_Token_Collection::renew (int requeue_position,
 			     ACE_Synch_Options &options)
 {
@@ -181,7 +181,7 @@ ACE_Token_Collection::renew (int requeue_position,
   return 0;
 }
 
-int 
+int
 ACE_Token_Collection::renew (const char *token_name,
 			     int requeue_position,
 			     ACE_Synch_Options &options)
@@ -202,7 +202,7 @@ ACE_Token_Collection::renew (const char *token_name,
   return temp->renew (requeue_position, options);
 }
 
-int 
+int
 ACE_Token_Collection::release (ACE_Synch_Options &)
 
 {
@@ -222,7 +222,7 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
   return 0;
 }
 
-int 
+int
 ACE_Token_Collection::release (const char *token_name,
 			       ACE_Synch_Options &options)
 {
@@ -281,11 +281,16 @@ ACE_Token_Collection::dump (void) const
   collection_.dump ();
   ACE_DEBUG ((LM_DEBUG, "base:\n"));
   ACE_Token_Proxy::dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Manager<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
 template class ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map_Manager<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -9,13 +9,13 @@
 ACE_Svc_Export int synch_count;
 int buffer;
 
-// Initialize the static variables. 
+// Initialize the static variables.
 /* static */
 sig_atomic_t Benchmark::done_ = 0;
 
 sig_atomic_t
 Benchmark::done (void)
-{ 
+{
   return Benchmark::done_;
 }
 
@@ -32,8 +32,8 @@ Benchmark::thr_id (void)
 
 void
 Benchmark::done (sig_atomic_t d)
-{ 
-  Benchmark::done_ = d; 
+{
+  Benchmark::done_ = d;
 }
 
 int
@@ -88,8 +88,11 @@ Thr_ID::thr_id (int i)
   this->thr_id_ = i;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_TSS<Thr_ID>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<Thr_ID>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 #endif /* ACE_HAS_THREADS */

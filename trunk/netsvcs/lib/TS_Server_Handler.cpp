@@ -26,7 +26,7 @@ ACE_TS_Server_Acceptor::parse_args (int argc, char *argv[])
 	  this->service_port_ = ACE_OS::atoi (get_opt.optarg);
 	  break;
 	default:
-	  ACE_ERROR_RETURN ((LM_ERROR, 
+	  ACE_ERROR_RETURN ((LM_ERROR,
 			    "%n:\n[-p server-port]\n%a", 1),
 			   -1);
 	}
@@ -47,11 +47,11 @@ ACE_TS_Server_Acceptor::init (int argc, char *argv[])
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
   if (this->open (this->service_addr_, ACE_Reactor::instance (),
-		  0, 0, 0, 
+		  0, 0, 0,
 		  &this->scheduling_strategy_,
 		  "Time Server", "ACE time service") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p on port %d\n", 
-		       "acceptor::open failed", 
+    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p on port %d\n",
+		       "acceptor::open failed",
 		       this->service_addr_.get_port_number ()), -1);
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
@@ -64,9 +64,9 @@ ACE_TS_Server_Acceptor::init (int argc, char *argv[])
   // Figure out what port we're really bound to.
   if (this->acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
-    
-  ACE_DEBUG ((LM_DEBUG, 
-	      "starting up Time Server at port %d on handle %d\n", 
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "starting up Time Server at port %d on handle %d\n",
 	     server_addr.get_port_number (),
 	     this->acceptor ().get_handle ()));
   return 0;
@@ -87,7 +87,7 @@ ACE_TS_Server_Handler::ACE_TS_Server_Handler (ACE_Thread_Manager *tm)
 // Activate this instance of the ACE_TS_Server_Handler (called by the
 // ACE_TS_Server_Acceptor).
 
-/* VIRTUAL */ int 
+/* VIRTUAL */ int
 ACE_TS_Server_Handler::open (void *)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::open");
@@ -113,12 +113,12 @@ ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
   ACE_TRACE ("ACE_TS_Server_Handler::send_request");
   void    *buffer;
   ssize_t length = request.encode (buffer);
- 
+
   if (length == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "encode failed"), -1);
- 
+
   // Transmit request via a blocking send.
- 
+
   if (this->peer ().send_n (buffer, length) != length)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n failed"), -1);
 
@@ -127,14 +127,14 @@ ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
 
 // Give up waiting (e.g., when a timeout occurs or a client shuts down
 // unexpectedly).
- 
+
 /* VIRTUAL */ int
 ACE_TS_Server_Handler::abandon (void)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::abandon");
 
   // Note we are using the time field to report the errno in case of
-  // failure. 
+  // failure.
   ACE_Time_Request rq (ACE_Time_Request::FAILURE, errno);
   return this->send_request (rq);
 }
@@ -149,7 +149,7 @@ ACE_TS_Server_Handler::handle_timeout (const ACE_Time_Value &, const void *)
 
 // Return the underlying ACE_HANDLE.
 
-/* VIRTUAL */ ACE_HANDLE 
+/* VIRTUAL */ ACE_HANDLE
 ACE_TS_Server_Handler::get_handle (void) const
 {
   ACE_TRACE ("ACE_TS_Server_Handler::get_handle");
@@ -158,7 +158,7 @@ ACE_TS_Server_Handler::get_handle (void) const
 
 // Dispatch the appropriate operation to handle the client request.
 
-/* VIRTUAL */ int 
+/* VIRTUAL */ int
 ACE_TS_Server_Handler::dispatch (void)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::dispatch");
@@ -167,11 +167,11 @@ ACE_TS_Server_Handler::dispatch (void)
   ACE_Time_Request rq (ACE_Time_Request::TIME_UPDATE, t);
   return this->send_request (rq);
 }
-  
+
 // Receive, frame, and decode the client's request.  Note, this method
 // should use non-blocking I/O.
 
-/* VIRTUAL */ int 
+/* VIRTUAL */ int
 ACE_TS_Server_Handler::recv_request (void)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::recv_request");
@@ -188,7 +188,7 @@ ACE_TS_Server_Handler::recv_request (void)
 	  /* FALLTHROUGH */
 	  ACE_DEBUG ((LM_DEBUG, "****************** recv_request returned -1\n"));
 	default:
-	  ACE_ERROR ((LM_ERROR, "%p got %d bytes, expected %d bytes\n", 
+	  ACE_ERROR ((LM_ERROR, "%p got %d bytes, expected %d bytes\n",
 		      "recv failed", n, bytes_expected));
 	  /* FALLTHROUGH */
 	case 0:
@@ -213,7 +213,7 @@ ACE_TS_Server_Handler::recv_request (void)
 // Callback method invoked by the ACE_Reactor when events arrive from
 // the client.
 
-/* VIRTUAL */ int 
+/* VIRTUAL */ int
 ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::handle_input");
@@ -231,7 +231,7 @@ ACE_TS_Server_Handler::~ACE_TS_Server_Handler (void)
 	      this->get_handle ()));
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Accept_Strategy<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<ACE_TS_Server_Handler>;
@@ -240,4 +240,14 @@ template class ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Scheduling_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Accept_Strategy<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Concurrency_Strategy<ACE_TS_Server_Handler>
+#pragma instantiate ACE_Creation_Strategy<ACE_TS_Server_Handler>
+#pragma instantiate ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<ACE_TS_Server_Handler>
+#pragma instantiate ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

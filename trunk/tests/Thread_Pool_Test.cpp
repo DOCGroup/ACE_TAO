@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Thread_Pool_Test.cpp
 //
@@ -19,7 +19,7 @@
 //
 // = AUTHOR
 //    Karlheinz Dorn, Doug Schmidt, and Prashant Jain
-// 
+//
 // ============================================================================
 
 #include "ace/Task.h"
@@ -37,7 +37,7 @@ class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 public:
   Thread_Pool (int n_threads);
   // Create the thread pool containing <n_threads>.
-  
+
   ~Thread_Pool (void);
 
   virtual int open (void * = 0);
@@ -64,34 +64,34 @@ Thread_Pool::~Thread_Pool (void)
 {
 }
 
-int 
-Thread_Pool::close (u_long) 
-{ 
+int
+Thread_Pool::close (u_long)
+{
   ACE_DEBUG ((LM_DEBUG, "(%t) close of worker\n"));
   return 0;
 }
 
-Thread_Pool::Thread_Pool (int n_threads) 
+Thread_Pool::Thread_Pool (int n_threads)
 {
   // Create a pool of worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 }
-  
+
 // Simply enqueue the Message_Block into the end of the queue.
 
 int
 Thread_Pool::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
-{ 
-  return this->putq (mb, tv); 
+{
+  return this->putq (mb, tv);
 }
 
 // Iterate <n_iterations> printing off a message and "waiting" for all
 // other threads to complete this iteration.
 
-int 
-Thread_Pool::svc (void) 
-{  
+int
+Thread_Pool::svc (void)
+{
   ACE_NEW_THREAD;
   // The <ACE_Task::svc_run()> method automatically adds us to the
   // <ACE_Service_Config>'s <ACE_Thread_Manager> when the thread
@@ -101,7 +101,7 @@ Thread_Pool::svc (void)
   // message with a length == 0, which signals us to quit.
 
   for (int count = 1; ; count++)
-    {       
+    {
       ACE_Message_Block *mb;
 
       ACE_ASSERT (this->getq (mb) != -1);
@@ -109,7 +109,7 @@ Thread_Pool::svc (void)
       int length = mb->length ();
 
       if (length > 0)
-	ACE_DEBUG ((LM_DEBUG, 
+	ACE_DEBUG ((LM_DEBUG,
 		    "(%t) in iteration %d, queue len = %d, length = %d, text = \"%*s\"\n",
 		    count, this->msg_queue ()->message_count (),
 		    length, length - 1, mb->rd_ptr ()));
@@ -119,7 +119,7 @@ Thread_Pool::svc (void)
 
       if (length == 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG, 
+	  ACE_DEBUG ((LM_DEBUG,
 		      "(%t) in iteration %d, queue len = %d, got NULL message, exiting\n",
 		      count, this->msg_queue ()->message_count ()));
 	  break;
@@ -134,7 +134,7 @@ Thread_Pool::svc (void)
 int
 Thread_Pool::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) producer start, dumping the Thread_Pool\n"));
   this->dump ();
 
@@ -143,8 +143,8 @@ Thread_Pool::open (void *)
       ACE_Message_Block *mb = 0;
 
       // Allocate a new message.
-      ACE_NEW_RETURN (mb, 
-		      ACE_Message_Block (BUFSIZ, ACE_Message_Block::MB_DATA, 
+      ACE_NEW_RETURN (mb,
+		      ACE_Message_Block (BUFSIZ, ACE_Message_Block::MB_DATA,
 					 0, 0, 0, &this->lock_adapter_),
 		      -1);
 
@@ -164,22 +164,22 @@ Thread_Pool::open (void *)
     }
 
   // Send a shutdown message to the waiting threads and exit.
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "\n(%t) sending shutdown message to %d threads, dump of task:\n",
 	      this->thr_count ()));
   this->dump ();
 
   ACE_Message_Block *mb = 0;
 
-  ACE_NEW_RETURN (mb, 
-		  ACE_Message_Block (0, ACE_Message_Block::MB_DATA, 
+  ACE_NEW_RETURN (mb,
+		  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,
 				     0, 0, 0, &this->lock_adapter_),
 		  -1);
 
   for (int i = this->thr_count (); i > 0; i--)
     {
-      ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) EOF, enqueueing NULL block for thread = %d\n", 
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%t) EOF, enqueueing NULL block for thread = %d\n",
 		  i));
 
       // Enqueue an empty message to flag each consumer to shutdown.
@@ -199,20 +199,23 @@ Thread_Pool::open (void *)
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)   
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_HAS_THREADS */
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Thread_Pool_Test");
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
-  
+
   ACE_DEBUG ((LM_DEBUG, "(%t) threads = %d\n", n_threads));
 
   // Create the worker tasks.
@@ -229,7 +232,7 @@ main (int, char *[])
 
   ACE_ASSERT (thread_pool.msg_queue ()->is_empty ());
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying worker tasks and exiting...\n"));
-  
+
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */

@@ -17,14 +17,14 @@ class Errno
 public:
   int error (void) { return this->errno_; }
   void error (int i) { this->errno_ = i; }
-  
+
   int line (void) { return this->lineno_; }
   void line (int l) { this->lineno_ = l; }
 
   // Errno::flags_ is a static variable, so we've got to protect it
   // with a mutex since it isn't kept in thread-specific storage.
-  int flags (void) 
-  { 
+  int flags (void)
+  {
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Errno::lock_, -1);
 
     return Errno::flags_;
@@ -39,13 +39,13 @@ public:
 
 private:
   // = errno_ and lineno_ will be thread-specific data so they don't
-  // need a lock.  
+  // need a lock.
   int errno_;
   int lineno_;
 
   static int flags_;
 #if defined (ACE_HAS_THREADS)
-  // flags_ needs a lock. 
+  // flags_ needs a lock.
   static ACE_Thread_Mutex lock_;
 #endif /* ACE_HAS_THREADS */
 };
@@ -66,7 +66,7 @@ typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
 typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 
-extern "C" void 
+extern "C" void
 cleanup (void *ptr)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) in cleanup, ptr = %x\n", ptr));
@@ -166,14 +166,14 @@ worker (void *c)
   return 0;
 }
 
-extern "C" void 
+extern "C" void
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "signal = %S\n", signum));
   ACE_Thread_Manager::instance ()->exit (0);
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   // The Service_Config must be the first object defined in main...
@@ -187,8 +187,8 @@ main (int argc, char *argv[])
   ACE_UNUSED_ARG (sa);
 
 #if defined (ACE_HAS_THREADS)
-  if (ACE_Thread_Manager::instance ()->spawn_n (threads, 
-					       ACE_THR_FUNC (&worker), 
+  if (ACE_Thread_Manager::instance ()->spawn_n (threads,
+					       ACE_THR_FUNC (&worker),
 					       (void *) count,
 					       THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread_Manager::spawn_n"), -1);
@@ -200,15 +200,18 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_TSS<Errno>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<Errno>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (void)
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
 		     "ACE doesn't support support threads on this platform (yet)\n"),
 		    -1);
 }

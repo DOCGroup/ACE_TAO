@@ -4,18 +4,18 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Map_Manager_Test.cpp
 //
 // = DESCRIPTION
 //      This is a simple test of the ACE_Map_Manager and
 //      ACE_Hash_Map_Manager that illustrates how to use the forward
-//      and reverse iterators. 
+//      and reverse iterators.
 //
 // = AUTHOR
 //    Irfan Pyarali and Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Map_Manager.h"
@@ -46,7 +46,7 @@ typedef ACE_Hash_Map_Manager <KEY, VALUE, MUTEX> HASH_MAP_MANAGER;
 typedef ACE_Hash_Map_Iterator <KEY, VALUE, MUTEX> HASH_ITERATOR;
 typedef ACE_Hash_Map_Entry <KEY, VALUE> HASH_ENTRY;
 
-static void 
+static void
 test_hash_map_manager (size_t table_size, size_t iterations)
 {
   HASH_MAP_MANAGER map (table_size);
@@ -57,7 +57,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
     ACE_ASSERT (map.bind (KEY (i), i) != -1);
 
   {
-    HASH_ITERATOR iterator (map);  
+    HASH_ITERATOR iterator (map);
 
     for (HASH_ENTRY *entry = 0;
 	 iterator.next (entry) != 0;
@@ -97,7 +97,7 @@ test_map_manager (size_t table_size, size_t iterations)
     ACE_ASSERT (map.bind (KEY (i), i) != -1);
 
   {
-    ITERATOR iterator (map);  
+    ITERATOR iterator (map);
 
     for (ENTRY *entry = 0;
 	 iterator.next (entry) != 0;
@@ -144,7 +144,7 @@ test_map_manager (size_t table_size, size_t iterations)
   ACE_ASSERT (map.current_size () == 0);
 }
 
-static void 
+static void
 run_test (void (*ptf) (size_t, size_t),
 	  size_t table_size,
 	  size_t iterations,
@@ -161,16 +161,16 @@ run_test (void (*ptf) (size_t, size_t),
 
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, "time to test a %d item map for %d iterations using %s\n", 
+  ACE_DEBUG ((LM_DEBUG, "time to test a %d item map for %d iterations using %s\n",
 	      table_size, iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
-  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
 	      (et.real_time / double (iterations)) * 1000000));
 }
 
-int 
-main (int argc, char *argv[]) 
+int
+main (int argc, char *argv[])
 {
   ACE_START_TEST ("Map_Manager_Test");
 
@@ -189,7 +189,7 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager<KEY, VALUE, MUTEX>;
 template class ACE_Hash_Map_Iterator<KEY, VALUE, MUTEX>;
 template class ACE_Hash_Map_Entry<KEY, VALUE>;
@@ -197,4 +197,13 @@ template class ACE_Map_Manager<KEY, VALUE, MUTEX>;
 template class ACE_Map_Iterator<KEY, VALUE, MUTEX>;
 template class ACE_Map_Reverse_Iterator<KEY, VALUE, MUTEX>;
 template class ACE_Map_Entry<KEY, VALUE>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager<KEY, VALUE, MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<KEY, VALUE, MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<KEY, VALUE>
+#pragma instantiate ACE_Map_Manager<KEY, VALUE, MUTEX>
+#pragma instantiate ACE_Map_Iterator<KEY, VALUE, MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<KEY, VALUE, MUTEX>
+#pragma instantiate ACE_Map_Entry<KEY, VALUE>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

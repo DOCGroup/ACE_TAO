@@ -6,20 +6,20 @@
 
 ACE_System_Time::ACE_System_Time (LPCTSTR poolname)
   : delta_time_ (0)
-{ 
+{
   ACE_TRACE ("ACE_System_Time::ACE_System_Time");
   ACE_NEW (this->shmem_, ALLOCATOR (poolname));
 }
 
 ACE_System_Time::~ACE_System_Time (void)
-{  
+{
   delete this->shmem_;
   ACE_TRACE ("ACE_System_Time::~ACE_System_Time");
 }
 
 // Get the local system time.
 
-int 
+int
 ACE_System_Time::get_local_system_time (ACE_UINT32 &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_local_system_time");
@@ -27,7 +27,7 @@ ACE_System_Time::get_local_system_time (ACE_UINT32 &time_out)
   return 0;
 }
 
-int 
+int
 ACE_System_Time::get_local_system_time (ACE_Time_Value &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_local_system_time");
@@ -37,7 +37,7 @@ ACE_System_Time::get_local_system_time (ACE_Time_Value &time_out)
 
 // Get the system time of the central time server.
 
-int 
+int
 ACE_System_Time::get_master_system_time (ACE_UINT32 &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_master_system_time");
@@ -76,7 +76,7 @@ ACE_System_Time::get_master_system_time (ACE_UINT32 &time_out)
   return 0;
 }
 
-int 
+int
 ACE_System_Time::get_master_system_time (ACE_Time_Value &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_master_system_time");
@@ -90,14 +90,18 @@ ACE_System_Time::get_master_system_time (ACE_Time_Value &time_out)
 // Synchronize local system time with the central time server using
 // specified mode (currently unimplemented).
 
-int 
+int
 ACE_System_Time::sync_local_system_time (ACE_System_Time::Sync_Mode)
 {
   ACE_TRACE ("ACE_System_Time::sync_local_system_time");
   ACE_NOTSUP_RETURN (-1);
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

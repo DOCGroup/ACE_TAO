@@ -77,8 +77,13 @@ ACE_Object_Manager::at_exit_i (void *object,
   return registered_objects_.enqueue_head (new_info);
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Queue<ACE_Object_Manager::object_info_t>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::object_info_t>;
 template class ACE_Node<ACE_Object_Manager::object_info_t>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Queue<ACE_Object_Manager::object_info_t>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::object_info_t>
+#pragma instantiate ACE_Node<ACE_Object_Manager::object_info_t>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

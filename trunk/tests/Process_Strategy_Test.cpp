@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Process_Strategy_Test.cpp
 //
@@ -33,7 +33,7 @@
 //
 // = AUTHOR
 //    Doug Schmidt and Kevin Boyle <kboyle@sanwafp.com>
-// 
+//
 // ============================================================================
 
 #include "ace/Acceptor.h"
@@ -66,7 +66,7 @@ public:
 
 protected:
   // = Methods invoked via "pointer to method" table entry.
-  
+
   virtual int svc (void);
   // Handle the THREAD case.
 
@@ -86,7 +86,7 @@ protected:
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
 
-typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR> 
+typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR>
 	ACCEPTOR;
 
 class Options : public ACE_Event_Handler
@@ -159,7 +159,7 @@ Options::filename (void)
 }
 
 Options::Options (void)
-  : 
+  :
 #if !defined (ACE_LACKS_EXEC)
     concurrency_type_ (PROCESS)
 #elif defined (ACE_HAS_THREADS)
@@ -196,20 +196,20 @@ Options::parse_args (int argc, char *argv[])
 	this->filename_ = get_opt.optarg;
 	break;
       default:
-	ACE_DEBUG ((LM_DEBUG, 
+	ACE_DEBUG ((LM_DEBUG,
 		    "usage: %n [-f (filename)] [-c (concurrency strategy)]\n%a", 1));
 	/* NOTREACHED */
       }
 
   // Initialize the file lock.
-  if (this->file_lock_.open (ACE_WIDE_STRING (this->filename_), 
-			     O_RDWR | O_CREAT, 
+  if (this->file_lock_.open (ACE_WIDE_STRING (this->filename_),
+			     O_RDWR | O_CREAT,
 			     ACE_DEFAULT_FILE_PERMS) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   // Note that this object lives beyond the lifetime of the Acceptor.
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) opening %s on handle %d.\n",
 	      this->filename_, this->file_lock_.get_handle ()));
 
@@ -226,8 +226,8 @@ Options::parse_args (int argc, char *argv[])
     {
     case Options::PROCESS:
 #if !defined (ACE_LACKS_EXEC)
-      ACE_NEW_RETURN (this->concurrency_strategy_, 
-		      ACE_Process_Strategy<Counting_Service> 
+      ACE_NEW_RETURN (this->concurrency_strategy_,
+		      ACE_Process_Strategy<Counting_Service>
 		      (1, this, ACE_Reactor::instance()),
 		      -1);
       break;
@@ -236,8 +236,8 @@ Options::parse_args (int argc, char *argv[])
 #endif /* !defined (ACE_LACKS_EXEC) */
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)
-      ACE_NEW_RETURN (this->concurrency_strategy_, 
-		      ACE_Thread_Strategy<Counting_Service> 
+      ACE_NEW_RETURN (this->concurrency_strategy_,
+		      ACE_Thread_Strategy<Counting_Service>
 			  (ACE_Thread_Manager::instance (),
 		       THR_NEW_LWP, 1),
 		      -1);
@@ -247,8 +247,8 @@ Options::parse_args (int argc, char *argv[])
 #endif /* !ACE_HAS_THREADS */
     case Options::REACTIVE:
       // Settle for the purely Reactive strategy.
-      ACE_NEW_RETURN (this->concurrency_strategy_, 
-		      ACE_Reactive_Strategy<Counting_Service> 
+      ACE_NEW_RETURN (this->concurrency_strategy_,
+		      ACE_Reactive_Strategy<Counting_Service>
 		      (ACE_Reactor::instance()),
 		      -1);
       break;
@@ -264,13 +264,13 @@ Options::parse_args (int argc, char *argv[])
   return 0;
 }
 
-Options::Concurrency_Type 
+Options::Concurrency_Type
 Options::concurrency_type (void)
 {
   return this->concurrency_type_;
 }
 
-void 
+void
 Options::concurrency_type (Options::Concurrency_Type cs)
 {
   this->concurrency_type_ = cs;
@@ -317,7 +317,7 @@ Counting_Service::read (void)
 	      OPTIONS::instance ()->file_lock ().get_handle ()));
 
   int count;
-  if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (), 
+  if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),
 		     (void *) &count,
 		     sizeof count,
 		     0) != sizeof count)
@@ -343,7 +343,7 @@ Counting_Service::inc (void)
 {
   ACE_WRITE_GUARD_RETURN (ACE_File_Lock, ace_mon, OPTIONS::instance ()->file_lock (), -1);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) incrementing on handle %d.\n",
 	      OPTIONS::instance ()->file_lock ().get_handle ()));
 
@@ -359,7 +359,7 @@ Counting_Service::inc (void)
 	      count, count + 1));
   count++;
 
-  if (ACE_OS::pwrite (OPTIONS::instance ()->file_lock ().get_handle (), 
+  if (ACE_OS::pwrite (OPTIONS::instance ()->file_lock ().get_handle (),
 		      (const void *) &count,
 		      sizeof count,
 		      0) != sizeof count)
@@ -370,12 +370,12 @@ Counting_Service::inc (void)
 // Receive the request from the client and call the appropriate
 // operation.
 
-int 
+int
 Counting_Service::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) reading from peer on %d\n",
 	      this->peer ().get_handle ()));
 
@@ -392,7 +392,7 @@ Counting_Service::handle_input (ACE_HANDLE)
     return -1;
   else
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "(%P|%t) %d bytes of input on %d is %*s\n",
 		  len, this->peer ().get_handle (), bytes, buf));
 
@@ -423,10 +423,10 @@ Counting_Service::svc (void)
 // This method is called back by the <Acceptor> once the client has
 // connected and the process is forked or spawned.
 
-int 
+int
 Counting_Service::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) opening service\n"));
 
   if (OPTIONS::instance ()->concurrency_type () == Options::PROCESS)
@@ -437,7 +437,7 @@ Counting_Service::open (void *)
       while (this->handle_input () >= 0)
 	continue;
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "(%P|%t) About to exit from the child\n"));
 
       // Exit the child.
@@ -453,7 +453,7 @@ client (void *arg)
 {
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
   // Insert thread into thr_mgr
-	ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());  
+	ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
@@ -493,8 +493,8 @@ client (void *arg)
       else if (stream.recv (buf, sizeof buf) <= 0)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 0);
 
-      //      ACE_DEBUG ((LM_DEBUG, 
-      //		  "(%P|%t) client iteration %d, buf = %s\n", 
+      //      ACE_DEBUG ((LM_DEBUG,
+      //		  "(%P|%t) client iteration %d, buf = %s\n",
       //		  i, buf));
 
       if (stream.close () == -1)
@@ -540,7 +540,7 @@ server (void *)
 {
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
   // Insert thread into thr_mgr
-	ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());  
+	ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
@@ -606,31 +606,31 @@ main (int argc, char *argv[])
 	  /* NOTREACHED */
 	}
 #elif defined (ACE_HAS_THREADS)
-      if (ACE_Thread_Manager::instance ()->spawn 
-	  (ACE_THR_FUNC (server), 
+      if (ACE_Thread_Manager::instance ()->spawn
+	  (ACE_THR_FUNC (server),
 	   (void *) 0,
 	   THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
-      if (ACE_Thread_Manager::instance ()->spawn 
-	  (ACE_THR_FUNC (client), 
-	   (void *) &server_addr, 
+      if (ACE_Thread_Manager::instance ()->spawn
+	  (ACE_THR_FUNC (client),
+	   (void *) &server_addr,
 	   THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       // Wait for the threads to exit.
 	  ACE_Thread_Manager::instance ()->wait ();
 #else
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
       "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
-#endif /* ACE_HAS_THREADS */	
+#endif /* ACE_HAS_THREADS */
     }
 
   ACE_END_TEST;
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>;
 template class ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
 template class ACE_Creation_Strategy<Counting_Service>;
@@ -645,4 +645,20 @@ template class ACE_Scheduling_Strategy<Counting_Service>;
 template class ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Write_Guard<ACE_File_Lock>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<Counting_Service>
+#pragma instantiate ACE_Concurrency_Strategy<Counting_Service>
+#pragma instantiate ACE_Guard<ACE_File_Lock>
+#pragma instantiate ACE_Singleton<Options, ACE_Null_Mutex>
+#pragma instantiate ACE_Process_Strategy<Counting_Service>
+#pragma instantiate ACE_Thread_Strategy<Counting_Service>
+#pragma instantiate ACE_Reactive_Strategy<Counting_Service>
+#pragma instantiate ACE_Read_Guard<ACE_File_Lock>
+#pragma instantiate ACE_Scheduling_Strategy<Counting_Service>
+#pragma instantiate ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Write_Guard<ACE_File_Lock>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

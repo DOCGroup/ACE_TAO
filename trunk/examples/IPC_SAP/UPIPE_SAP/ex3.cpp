@@ -25,17 +25,17 @@ static void *
 supplier (void *)
 {
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
+  ACE_Thread_Control thread_control (&thr_mgr);
 
   ACE_UPIPE_Stream s_stream;
   ACE_UPIPE_Addr c_addr ("pattern");
 
   ACE_UPIPE_Connector con;
-  
+
   ACE_DEBUG ((LM_DEBUG, "(%t) supplier starting connect thread\n"));
 
   if (con.connect (s_stream, c_addr) == -1)
-    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", 
+    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n",
 		"ACE_UPIPE_Acceptor.connect failed"));
 
   auto_builtin_ptr <char> mybuf = new char[size];
@@ -58,7 +58,7 @@ supplier (void *)
       return 0;
     }
 
-  s_stream.close ();    
+  s_stream.close ();
   return 0;
 }
 
@@ -66,13 +66,13 @@ static void *
 consumer (void *)
 {
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
+  ACE_Thread_Control thread_control (&thr_mgr);
 
   ACE_UPIPE_Stream c_stream;
   ACE_UPIPE_Addr serv_addr ("pattern");
 
   // Accept will wait up to 4 seconds
-  ACE_UPIPE_Acceptor acc (serv_addr);  
+  ACE_UPIPE_Acceptor acc (serv_addr);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) consumer spawning the supplier thread\n"));
 
@@ -80,11 +80,11 @@ consumer (void *)
   if (thr_mgr.spawn (ACE_THR_FUNC (supplier), (void *) 0,
 		     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 0);
-  
+
   ACE_DEBUG ((LM_DEBUG, "(%t) consumer starting accept\n"));
 
   if (acc.accept (c_stream) == -1)
-    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", 
+    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n",
 		"ACE_UPIPE_Acceptor.accept failed"));
 
   // Ensure deletion upon exit.
@@ -111,7 +111,7 @@ consumer (void *)
   ACE_OS::time (&currsec);
   time_t secs = (time_t) currsec - start;
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Transferred %d blocks of size %d\n"
 	      "The program ran %d seconds\n",
 	      blocks, size, secs));
@@ -120,7 +120,7 @@ consumer (void *)
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   size = argc > 1 ? ACE_OS::atoi (argv[1]) : 32;
@@ -136,7 +136,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ( (LM_ERROR, "threads not supported on this platform\n"));
@@ -145,6 +145,9 @@ main (int, char *[])
 #endif /* ACE_HAS_THREADS */
 
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_builtin_ptr <char>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate auto_builtin_ptr <char>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

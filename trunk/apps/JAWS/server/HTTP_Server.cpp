@@ -13,16 +13,16 @@
 class HTTP_Server_Anchor
 {
 public:
-  enum 
-  { 
+  enum
+  {
     POOL = 0,
-    PER_REQUEST = 1 
+    PER_REQUEST = 1
   };
 
-  enum 
-  { 
+  enum
+  {
     SYNCH = 0,
-    ASYNCH = 2 
+    ASYNCH = 2
   };
 };
 
@@ -44,7 +44,7 @@ HTTP_Server::parse_args (int argc,
   ACE_Get_Opt get_opt (argc, argv, "p:n:t:i:b:");
 
   while ((c = get_opt ()) != -1)
-    switch (c) 
+    switch (c)
       {
       case 'p':
 	this->port_ = ACE_OS::atoi (get_opt.optarg);
@@ -93,7 +93,7 @@ HTTP_Server::parse_args (int argc,
       default:
 	break;
       }
-  
+
   if (this->port_ == 0)
     this->port_ = 5432;
   if (this->threads_ == 0)
@@ -117,18 +117,18 @@ HTTP_Server::init (int argc, char *argv[])
 
   this->parse_args (argc, argv);
 
-  switch (this->strategy_) 
+  switch (this->strategy_)
     {
     case 2:
-      return this->asynch_thread_pool ();      
+      return this->asynch_thread_pool ();
 
-    case 1: 
+    case 1:
       return this->thread_per_request ();
-      
-    case 0: 
-    default: 
-      return this->synch_thread_pool ();      
-    } 
+
+    case 0:
+    default:
+      return this->synch_thread_pool ();
+    }
   return 0;
 }
 
@@ -145,8 +145,8 @@ HTTP_Server::synch_thread_pool (void)
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
-  
-  for (int i = 0; i < this->threads_; i++) 
+
+  for (int i = 0; i < this->threads_; i++)
     {
       Synch_Thread_Pool_Task *t;
 
@@ -154,9 +154,9 @@ HTTP_Server::synch_thread_pool (void)
 		      Synch_Thread_Pool_Task (this->acceptor_, this->tm_),
                       -1);
 
-      if (t->open () != 0) 
+      if (t->open () != 0)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Pool_Task::open"), -1);
-    }      
+    }
 
   this->tm_.wait ();
   return 0;
@@ -174,7 +174,7 @@ Synch_Thread_Pool_Task::open (void *args)
 {
   ACE_UNUSED_ARG (args);
 
-  if (this->activate (THR_DETACHED | THR_NEW_LWP) == -1) 
+  if (this->activate (THR_DETACHED | THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"),
                       -1);
 
@@ -186,7 +186,7 @@ Synch_Thread_Pool_Task::svc (void)
 {
   Synch_HTTP_Handler_Factory factory;
 
-  for (;;) 
+  for (;;)
     {
       ACE_SOCK_Stream stream;
 
@@ -204,7 +204,7 @@ Synch_Thread_Pool_Task::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   " (%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
     }
-  
+
   // This stinks, because I am afraid that if I remove this line, some
   // compiler will issue a warning that this routine could exit
   // without returning a value.  But, leaving it in makes the VXWORKS
@@ -224,11 +224,11 @@ HTTP_Server::thread_per_request (void)
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
-  
+
   ACE_SOCK_Stream stream;
   const ACE_Time_Value wait_time (0,10);
 
-  for (;;) 
+  for (;;)
     {
       if (this->acceptor_.accept (stream) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
@@ -239,14 +239,14 @@ HTTP_Server::thread_per_request (void)
                       -1);
 
 
-      if (t->open (&grp_id) != 0) 
+      if (t->open (&grp_id) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "Thread_Per_Request_Task::open"),
                           -1);
 
       // Throttling is not allowing too many threads to run away.
       // Should really use some sort of condition variable here.
-      if (!this->throttle_) 
+      if (!this->throttle_)
 	continue;
 
       // This works because each task has only one thread.
@@ -330,7 +330,7 @@ Thread_Per_Request_Task::close (u_long)
 
 int
 HTTP_Server::asynch_thread_pool (void)
-{  
+{
 // This only works on Win32
 #if defined (ACE_WIN32)
   // Create the appropriate acceptor for this concurrency strategy and
@@ -343,9 +343,9 @@ HTTP_Server::asynch_thread_pool (void)
 		     HTTP_Handler::MAX_REQUEST_SIZE + 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
                        "ACE_Asynch_Acceptor::open"), -1);
-  
+
   // Create the thread pool.
-  for (int i = 0; i < this->threads_; i++) 
+  for (int i = 0; i < this->threads_; i++)
     {
       // Register threads with the proactor and thread manager.
       Asynch_Thread_Pool_Task *t;
@@ -353,11 +353,11 @@ HTTP_Server::asynch_thread_pool (void)
 		      Asynch_Thread_Pool_Task (*ACE_Proactor::instance (),
 					       this->tm_),
 		      -1);
-      if (t->open () != 0) 
+      if (t->open () != 0)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
                            "Thread_Pool_Task::open"), -1);
       // The proactor threads are waiting on the I/O Completion Port.
-    }   
+    }
 
   // Wait for the threads to finish.
   return this->tm_.wait ();
@@ -378,7 +378,7 @@ Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
 int
 Asynch_Thread_Pool_Task::open (void *args)
 {
-  if (this->activate () == -1) 
+  if (this->activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Asynch_Thread_Pool_Task::open"),
                       -1);
 
@@ -388,7 +388,7 @@ Asynch_Thread_Pool_Task::open (void *args)
 int
 Asynch_Thread_Pool_Task::svc (void)
 {
-  for (;;) 
+  for (;;)
     if (this->proactor_.handle_events () == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Proactor::handle_events"),
                         -1);
@@ -400,13 +400,16 @@ Asynch_Thread_Pool_Task::svc (void)
 
 // Define the factory function.
 ACE_SVC_FACTORY_DEFINE (HTTP_Server)
- 
+
 // Define the object that describes the service.
 ACE_STATIC_SVC_DEFINE (HTTP_Server, "HTTP_Server", ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (HTTP_Server),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ, 0)
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

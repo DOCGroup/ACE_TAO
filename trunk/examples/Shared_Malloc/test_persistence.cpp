@@ -43,7 +43,7 @@ public:
   u_long id (void) const { return id_; }
 
   void id (u_long id) { id_ = id; }
-  
+
   friend ostream &operator<<(ostream &stream, const Employee &employee)
     {
       stream << endl;
@@ -53,7 +53,7 @@ public:
 
       return stream;
     }
-  
+
   void *operator new (size_t)
     {
       return shmem_manager->malloc (sizeof (Employee));
@@ -69,13 +69,13 @@ private:
   // Employee ID.
 };
 
-class GUI_Handler 
+class GUI_Handler
 {
 public:
   GUI_Handler (void) { menu(); }
 
-  ~GUI_Handler (void) 
-    { 
+  ~GUI_Handler (void)
+    {
       MALLOC::MEMORY_POOL &pool = shmem_manager->memory_pool();
       pool.sync ();
     }
@@ -91,7 +91,7 @@ public:
 	  ACE_ERROR ((LM_ERROR, "try again\n"));
 	  return 0;
 	}
-      
+
       int result = 0;
       switch (option[0])
 	{
@@ -128,9 +128,9 @@ public:
 	cout << "Last operation was successful!!" << endl;
       else
 	cout << "Last operation failed!! " << endl;
-      
+
       menu ();
-      
+
       return 0;
     }
 
@@ -167,9 +167,9 @@ private:
       if (shmem_manager->find (name, temp) == 0)
 	{
 	  Employee *employee = (Employee *) temp;
-	  
+
 	  ACE_DEBUG ((LM_DEBUG, "The following employee was found.......\n\n"));
-	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n", 
+	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
 		      employee->name (), employee->id ()));
 	  return 0;
 	}
@@ -180,15 +180,15 @@ private:
   int list_employees (void)
     {
       MALLOC_ITERATOR iterator (*shmem_manager);
-      
+
       ACE_DEBUG ((LM_DEBUG, "The following employees were found.......\n\n"));
-      
+
       for (void* temp = 0;
-	  iterator.next (temp) != 0; 
+	  iterator.next (temp) != 0;
 	  iterator.advance ())
 	{
 	  Employee *employee = (Employee *) temp;
-	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n", 
+	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
 		      employee->name (), employee->id ()));
 	}
       return 0;
@@ -201,11 +201,11 @@ private:
       if (shmem_manager->unbind (name, temp) == 0)
 	{
 	  Employee *employee = (Employee *) temp;
-	  
-	  ACE_DEBUG ((LM_DEBUG, 
+
+	  ACE_DEBUG ((LM_DEBUG,
 		      "The following employee was found and deleted.......\n\n"));
 
-	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n", 
+	  ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
 		      employee->name (), employee->id ()));
 
 	  delete employee;
@@ -214,7 +214,7 @@ private:
 
       ACE_DEBUG ((LM_DEBUG, "There is no employee with name %s", name));
       return -1;
-    }      
+    }
 };
 
 void
@@ -222,13 +222,13 @@ parse_args (int argc, char *argv[])
 {
   if (argc > 1);
     backing_store = argv[1];
-}  
+}
 
-int 
+int
 main (int argc, char *argv[])
 {
   parse_args (argc, argv);
-  
+
   shmem_manager = new MALLOC (backing_store);
 
   GUI_Handler handler;
@@ -239,11 +239,15 @@ main (int argc, char *argv[])
 	ACE_DEBUG ((LM_DEBUG, "closing down ....\n"));
 	break;
       }
-  
+
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
+#pragma instantiate ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

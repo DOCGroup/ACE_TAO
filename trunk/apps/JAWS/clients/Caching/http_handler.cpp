@@ -4,13 +4,13 @@
 //
 // = LIBRARY
 //    apps/JAWS/clients/Caching
-// 
+//
 // = FILENAME
 //    http_handler.cpp
 //
 // = AUTHOR
 //    James Hu
-// 
+//
 // ============================================================================
 
 #include "http_handler.h"
@@ -24,7 +24,7 @@ HTTP_Handler::HTTP_Handler (const char * path)
 {
   // How long is the request going to be?
   this->request_[0] = '\0';
-  this->request_size_ = 
+  this->request_size_ =
     ACE_OS::strlen ("GET ")
     + ACE_OS::strlen (path)
     + ACE_OS::strlen (" HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
@@ -83,15 +83,15 @@ HTTP_Handler::svc (void)
              && ((u_int) count < sizeof (buf)))
         {
           buf[count] = '\0';
-          if (count < 2) 
+          if (count < 2)
 	    continue;
           done = ACE_OS::strcmp (buf+count-4, "\n\n") == 0;
-          if (done) 
+          if (done)
 	    break;
-          if (count < 4) 
+          if (count < 4)
 	    continue;
           done = ACE_OS::strcmp (buf+count-4, "\r\n\r\n") == 0;
-          if (done) 
+          if (done)
 	    break;
         }
 
@@ -114,10 +114,10 @@ HTTP_Handler::svc (void)
 	  contentlength = ACE_OS::strstr (buf, "\nContent-length:");
 
           if (!contentlength)
-            contentlength = 
+            contentlength =
 	      ACE_OS::strstr (buf, "\nContent-Length:");
         }
-          
+
     }
   while (!done);
 
@@ -145,7 +145,7 @@ HTTP_Handler::svc (void)
 
       // Perhaps make ACE_Filecache_Handle more savvy, and allow a
       // constructor which accepts a PEER as a parameter.
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "HTTP_Handler, no content-length header!\n"));
     }
 
@@ -197,18 +197,18 @@ HTTP_Connector::parseurl (const char *url,
   int status = 0;
 
   // hackish, but useful
-  if (3 != ::sscanf (url, "http://%[^:/]:%hu%s", host, port, path)) 
+  if (3 != ::sscanf (url, "http://%[^:/]:%hu%s", host, port, path))
     {
-      if (2 != ::sscanf (url, "http://%[^:/]:%hu", host, port)) 
+      if (2 != ::sscanf (url, "http://%[^:/]:%hu", host, port))
 	{
-	  if (2 != ::sscanf (url, "http://%[^:/]%s", host, path)) 
+	  if (2 != ::sscanf (url, "http://%[^:/]%s", host, path))
 	    {
-	      if (1 != ::sscanf (url, "http://%[^:/]", host)) 
+	      if (1 != ::sscanf (url, "http://%[^:/]", host))
 		status = -1;
 	      else
-		{ 
+		{
 		  *port = DEFAULT_SERVER_PORT;
-		  ACE_OS::strcpy (path, "/"); 
+		  ACE_OS::strcpy (path, "/");
 		}
 	    }
 	  else
@@ -222,7 +222,7 @@ HTTP_Connector::parseurl (const char *url,
   return status;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Connector<HTTP_Handler,ACE_SOCK_CONNECTOR>;
 
 template class ACE_Svc_Tuple<HTTP_Handler>;
@@ -231,4 +231,14 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH>;
 template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<HTTP_Handler>*>;
 template class ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<HTTP_Handler>*,ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<HTTP_Handler>*,ACE_SYNCH_RW_MUTEX>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector<HTTP_Handler,ACE_SOCK_CONNECTOR>
+
+#pragma instantiate ACE_Svc_Tuple<HTTP_Handler>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH>
+
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<HTTP_Handler>*>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<HTTP_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<HTTP_Handler>*,ACE_SYNCH_RW_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -37,10 +37,10 @@ ACE_Name_Node::ACE_Name_Node (void)
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
 }
 
-ACE_Name_Node::ACE_Name_Node (const char *name, 
-			      void *ptr, 
+ACE_Name_Node::ACE_Name_Node (const char *name,
+			      void *ptr,
 			      ACE_Name_Node *next)
-  : pointer_ (ptr), 
+  : pointer_ (ptr),
     next_ (next)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
@@ -51,7 +51,7 @@ void
 ACE_Name_Node::dump (void) const
 {
   ACE_TRACE ("ACE_Name_Node");
-  
+
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "pointer = %x", this->pointer_));
   ACE_DEBUG ((LM_DEBUG, "\nnext_ = %x", this->next_));
@@ -120,9 +120,9 @@ ACE_Allocator::~ACE_Allocator (void)
 
 #if defined (ACE_MALLOC_STATS)
 ACE_Malloc_Stats::ACE_Malloc_Stats (void)
-  : nblocks_ (0), 
-    nchunks_ (0), 
-    ninuse_ (0) 
+  : nblocks_ (0),
+    nchunks_ (0),
+    ninuse_ (0)
 {
   ACE_TRACE ("ACE_Malloc_Stats::ACE_Malloc_Stats");
 }
@@ -144,9 +144,12 @@ ACE_Malloc_Stats::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_MALLOC_STATS */
 #endif /* ACE_MALLOC_C */

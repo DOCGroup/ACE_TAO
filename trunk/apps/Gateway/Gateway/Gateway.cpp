@@ -42,7 +42,7 @@ protected:
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Shut down the Gateway when a signal arrives.
 
-  int parse_args (int argc, char *argv[]); 
+  int parse_args (int argc, char *argv[]);
   // Parse gateway configuration arguments obtained from svc.conf
   // file.
 
@@ -110,7 +110,7 @@ Gateway::parse_args (int argc, char *argv[])
 	  break;
 	case 'C': // Use a different proxy config filename.
 	  ACE_OS::strncpy (this->consumer_config_file_,
-			   get_opt.optarg, 
+			   get_opt.optarg,
 			   sizeof this->consumer_config_file_);
 	  break;
 	case 'c': // We are (also?) playing the Connector role.
@@ -120,16 +120,16 @@ Gateway::parse_args (int argc, char *argv[])
 	  this->debug_ = 1;
 	  break;
 	case 'P': // Use a different consumer config filename.
-	  ACE_OS::strncpy (this->proxy_config_file_, 
-			   get_opt.optarg, 
+	  ACE_OS::strncpy (this->proxy_config_file_,
+			   get_opt.optarg,
 			   sizeof this->proxy_config_file_);
 	  break;
 	case 'p': // Use a different acceptor port.
-	  this->event_channel_.options ().acceptor_port_ = 
+	  this->event_channel_.options ().acceptor_port_ =
 	    ACE_OS::atoi (get_opt.optarg);
 	  break;
 	case 'q': // Use a different socket queue size.
-	  this->event_channel_.options ().socket_queue_size_ = 
+	  this->event_channel_.options ().socket_queue_size_ =
 	    ACE_OS::atoi (get_opt.optarg);
 	  break;
 	case 't': // Use a different threading strategy.
@@ -139,10 +139,10 @@ Gateway::parse_args (int argc, char *argv[])
 		 flag = ACE_OS::strtok (0, "|"))
 	      {
 		if (ACE_OS::strcmp (flag, "OUTPUT_MT") == 0)
-		  ACE_SET_BITS (this->event_channel_.options ().threading_strategy_, 
+		  ACE_SET_BITS (this->event_channel_.options ().threading_strategy_,
 				ACE_Event_Channel_Options::OUTPUT_MT);
 		else if (ACE_OS::strcmp (flag, "INPUT_MT") == 0)
-		  ACE_SET_BITS (this->event_channel_.options ().threading_strategy_, 
+		  ACE_SET_BITS (this->event_channel_.options ().threading_strategy_,
 				ACE_Event_Channel_Options::INPUT_MT);
 	      }
 
@@ -152,7 +152,7 @@ Gateway::parse_args (int argc, char *argv[])
 	  this->event_channel_.options ().verbose_ = 1;
 	  break;
 	case 'w': // Time performance for a designated amount of time.
-	  this->event_channel_.options ().performance_window_ = 
+	  this->event_channel_.options ().performance_window_ =
 	    ACE_OS::atoi (get_opt.optarg);
 	  // Use blocking connection semantics so that we get accurate
 	  // timings (since all connections start at once).
@@ -162,7 +162,7 @@ Gateway::parse_args (int argc, char *argv[])
 	  break;
 	}
     }
-  
+
   return 0;
 }
 
@@ -178,13 +178,13 @@ Gateway::init (int argc, char *argv[])
 
   // Register ourselves to receive SIGINT and SIGQUIT so we can shut
   // down gracefully via signals.
-  
+
 #if defined (ACE_WIN32)
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (SIGINT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 #else
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 #endif
@@ -200,12 +200,12 @@ Gateway::init (int argc, char *argv[])
 
   if (this->event_channel_.options ().performance_window_ > 0)
     {
-      if (ACE_Reactor::instance ()->schedule_timer 
-	  (&this->event_channel_, 0, 
+      if (ACE_Reactor::instance ()->schedule_timer
+	  (&this->event_channel_, 0,
 	   this->event_channel_.options ().performance_window_) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "schedule_timer"));
       else
-	ACE_DEBUG ((LM_DEBUG, "starting timer for %d seconds...\n", 
+	ACE_DEBUG ((LM_DEBUG, "starting timer for %d seconds...\n",
 		   this->event_channel_.options ().performance_window_));
     }
 
@@ -232,14 +232,14 @@ Gateway::fini (void)
   return this->event_channel_.close ();
 }
 
-// Returns information on the currently active service. 
+// Returns information on the currently active service.
 
 int
 Gateway::info (char **strp, size_t length) const
 {
   char buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, "%s\t %s", "Gateway daemon", 
+  ACE_OS::sprintf (buf, "%s\t %s", "Gateway daemon",
 	     "# Application-level gateway\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
@@ -260,9 +260,9 @@ Gateway::parse_proxy_config_file (void)
   int line_number = 0;
 
   if (proxy_file.open (this->proxy_config_file_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "(%t) %p\n", 
-		       this->proxy_config_file_), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "(%t) %p\n",
+		       this->proxy_config_file_),
 		      -1);
 
   // Read config file one line at a time.
@@ -273,21 +273,21 @@ Gateway::parse_proxy_config_file (void)
       file_empty = 0;
 
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG, 
+	ACE_DEBUG ((LM_DEBUG,
 		    "(%t) conn id = %d, host = %s, remote port = %d, proxy role = %c, "
 		    "max retry timeout = %d, local port = %d, priority = %d\n",
-		    pci.proxy_id_, 
-		    pci.host_, 
-		    pci.remote_port_, 
+		    pci.proxy_id_,
+		    pci.host_,
+		    pci.remote_port_,
 		    pci.proxy_role_,
-		    pci.max_retry_timeout_, 
+		    pci.max_retry_timeout_,
 		    pci.local_port_,
 		    pci.priority_));
 
       pci.event_channel_ = &this->event_channel_;
 
       // Create the appropriate type of Proxy.
-      Proxy_Handler *proxy_handler = 
+      Proxy_Handler *proxy_handler =
 	this->proxy_handler_factory_.make_proxy_handler (pci);
 
       if (proxy_handler == 0)
@@ -298,7 +298,7 @@ Gateway::parse_proxy_config_file (void)
     }
 
   if (file_empty)
-    ACE_ERROR ((LM_WARNING, 
+    ACE_ERROR ((LM_WARNING,
 	       "warning: connection proxy_handler configuration file was empty\n"));
   return 0;
 }
@@ -325,8 +325,8 @@ Gateway::parse_consumer_config_file (void)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "(%t) conn id = %d, supplier id = %d, payload = %d, "
 		      "number of consumers = %d\n",
-		      cci.proxy_id_, 
-		      cci.supplier_id_, 
+		      cci.proxy_id_,
+		      cci.supplier_id_,
 		      cci.type_,
 		      cci.total_consumers_));
 
@@ -338,8 +338,8 @@ Gateway::parse_consumer_config_file (void)
       Consumer_Dispatch_Set *dispatch_set;
       ACE_NEW_RETURN (dispatch_set, Consumer_Dispatch_Set, -1);
 
-      Event_Key event_addr (cci.proxy_id_, 
-			    cci.supplier_id_, 
+      Event_Key event_addr (cci.proxy_id_,
+			    cci.supplier_id_,
 			    cci.type_);
 
       // Add the Consumers to the Dispatch_Set.
@@ -349,11 +349,11 @@ Gateway::parse_consumer_config_file (void)
 
 	  // Lookup destination and add to Consumer_Dispatch_Set set
 	  // if found.
-	  if (this->event_channel_.find_proxy (cci.consumers_[i], 
+	  if (this->event_channel_.find_proxy (cci.consumers_[i],
 					       proxy_handler) != -1)
 	    dispatch_set->insert (proxy_handler);
 	  else
-	    ACE_ERROR ((LM_ERROR, "(%t) not found: destination[%d] = %d\n", 
+	    ACE_ERROR ((LM_ERROR, "(%t) not found: destination[%d] = %d\n",
 		       i, cci.consumers_[i]));
 	}
 
@@ -361,7 +361,7 @@ Gateway::parse_consumer_config_file (void)
     }
 
   if (file_empty)
-    ACE_ERROR ((LM_WARNING, 
+    ACE_ERROR ((LM_WARNING,
 	       "warning: consumer map configuration file was empty\n"));
   return 0;
 }
@@ -371,7 +371,11 @@ Gateway::parse_consumer_config_file (void)
 
 ACE_SVC_FACTORY_DEFINE (Gateway)
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<Proxy_Handler *>;
 template class ACE_Unbounded_Set<Proxy_Handler *>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<Proxy_Handler *>
+#pragma instantiate ACE_Unbounded_Set<Proxy_Handler *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

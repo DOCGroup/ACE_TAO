@@ -39,31 +39,31 @@ private:
 
 ACE_Thread_Mutex Task_Test::lock_;
 
-int 
+int
 Task_Test::open (void *)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Task_Test::lock_, -1);
 
   task_count++;
-  ACE_DEBUG ((LM_DEBUG, "(%t) creating Task_Test, task count = %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%t) creating Task_Test, task count = %d\n",
 	      (int) task_count));
 
   return this->activate (THR_BOUND);
 }
 
-int 
+int
 Task_Test::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Task_Test::lock_, -1);
 
   task_count--;
-  ACE_DEBUG ((LM_DEBUG, "(%t) destroying Task_Test, task count = %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%t) destroying Task_Test, task count = %d\n",
 	      (int) task_count));
   wait_count--;
   return 0;
 }
 
-int 
+int
 Task_Test::svc (void)
 {
   wait_count++;
@@ -81,7 +81,7 @@ Task_Test::svc (void)
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : default_threads;
@@ -91,11 +91,11 @@ main (int argc, char *argv[])
 
   for (int i = 1; i <= n_iterations; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) iteration = %d, max_count %d\n", 
+      ACE_DEBUG ((LM_DEBUG, "(%t) iteration = %d, max_count %d\n",
 		  i, (int) max_count));
       max_count = 0;
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) starting %d task%s\n", 
+      ACE_DEBUG ((LM_DEBUG, "(%t) starting %d task%s\n",
 		  n_threads, n_threads == 1 ? "" : "s"));
 
       // Launch the new tasks.
@@ -109,14 +109,14 @@ main (int argc, char *argv[])
       // Wait for initialization to kick in.
       while (max_count == 0)
 	ACE_Thread::yield ();
-      
+
       ACE_DEBUG ((LM_DEBUG, "(%t) waiting for threads to finish\n"));
 
       // Wait for the threads to finish this iteration.
       while (max_count != n_threads && wait_count != 0)
 	ACE_Thread::yield ();
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "(%t) iteration %d finished, max_count %d, wait_count %d, waiting for tasks to exit\n",
 		  i, (int) max_count, (int) wait_count));
 
@@ -134,12 +134,15 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

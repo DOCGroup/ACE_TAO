@@ -48,8 +48,12 @@ int main (int argc, char *argv[])
 
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_IOStream_T <ACE_SOCK_Stream>;
 template class ACE_Streambuf_T <ACE_SOCK_Stream>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_IOStream_T <ACE_SOCK_Stream>
+#pragma instantiate ACE_Streambuf_T <ACE_SOCK_Stream>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* !ACE_LACKS_ACE_IOSTREAM */

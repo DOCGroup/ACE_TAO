@@ -44,9 +44,9 @@ ACE_TSS_C_cleanup (void *object)
     {
       ACE_TSS_Adapter *tss_adapter = (ACE_TSS_Adapter *) object;
       // Perform cleanup on the real TS object.
-      tss_adapter->cleanup ();    
+      tss_adapter->cleanup ();
       // Delete the adapter object.
-      delete tss_adapter;        
+      delete tss_adapter;
     }
 }
 
@@ -86,35 +86,35 @@ ACE_Process_Mutex::~ACE_Process_Mutex (void)
 }
 
 // Explicitly destroy the mutex.
-int 
+int
 ACE_Process_Mutex::remove (void)
 {
   return this->lock_->remove ();
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
-int 
+int
 ACE_Process_Mutex::acquire (void)
 {
   return this->lock_->acquire ();
 }
 
 // Conditionally acquire lock (i.e., don't wait on queue).
-int 
+int
 ACE_Process_Mutex::tryacquire (void)
 {
   return this->lock_->tryacquire ();
 }
 
 // Release lock and unblock a thread at head of priority queue.
-int 
+int
 ACE_Process_Mutex::release (void)
 {
   return this->lock_->release ();
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
-int 
+int
 ACE_Process_Mutex::acquire_read (void)
 {
   return this->lock_->acquire_read ();
@@ -127,20 +127,20 @@ int ACE_Process_Mutex::acquire_write (void)
 }
 
 // Conditionally acquire a lock (i.e., won't block).
-int 
+int
 ACE_Process_Mutex::tryacquire_read (void)
 {
   return this->lock_->tryacquire_read ();
 }
 
 // Conditionally acquire a lock (i.e., won't block).
-int 
+int
 ACE_Process_Mutex::tryacquire_write (void)
 {
   return this->lock_->tryacquire_write ();
 }
 
-ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name, 
+ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name,
 					    void *arg)
   : ACE_Process_Mutex (name, arg)
 {
@@ -189,14 +189,14 @@ ACE_Semaphore::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Semaphore::ACE_Semaphore (u_int count, 
-			      int type, 
-			      LPCTSTR name, 
+ACE_Semaphore::ACE_Semaphore (u_int count,
+			      int type,
+			      LPCTSTR name,
 			      void *arg,
 			      int max)
 {
 // ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
-  if (ACE_OS::sema_init (&this->semaphore_, count, type, 
+  if (ACE_OS::sema_init (&this->semaphore_, count, type,
 			 name, arg, max) != 0)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Semaphore::ACE_Semaphore"));
 }
@@ -225,8 +225,8 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
   this->set_handle (h);
 }
 
-ACE_File_Lock::ACE_File_Lock (LPCTSTR name, 
-			      int flags, 
+ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
+			      int flags,
 			      mode_t perms)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
@@ -236,8 +236,8 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
 }
 
 int
-ACE_File_Lock::open (LPCTSTR name, 
-		     int flags, 
+ACE_File_Lock::open (LPCTSTR name,
+		     int flags,
 		     mode_t perms)
 {
 // ACE_TRACE ("ACE_File_Lock::open");
@@ -260,8 +260,8 @@ ACE_Process_Semaphore::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count, 
-					      LPCTSTR name, 
+ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
+					      LPCTSTR name,
 					      void *arg,
 					      int max)
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
@@ -284,7 +284,7 @@ ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
 
 // Explicitly destroy the semaphore.
 
-int 
+int
 ACE_Process_Semaphore::remove (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::remove");
@@ -294,17 +294,17 @@ ACE_Process_Semaphore::remove (void)
 // Block the thread until the semaphore count becomes
 // greater than 0, then decrement it.
 
-int 
+int
 ACE_Process_Semaphore::acquire (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::acquire");
   return this->lock_.acquire ();
 }
 
-// Conditionally decrement the semaphore if count is greater 
+// Conditionally decrement the semaphore if count is greater
 // than 0 (i.e., won't block).
 
-int 
+int
 ACE_Process_Semaphore::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::tryacquire");
@@ -314,7 +314,7 @@ ACE_Process_Semaphore::tryacquire (void)
 // Increment the semaphore, potentially unblocking
 // a waiting thread.
 
-int 
+int
 ACE_Process_Semaphore::release (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::release");
@@ -347,16 +347,16 @@ ACE_Mutex::~ACE_Mutex (void)
   this->remove ();
 }
 
-ACE_Event::ACE_Event (int manual_reset, 
+ACE_Event::ACE_Event (int manual_reset,
 		      int initial_state,
-		      int type, 
+		      int type,
 		      LPCTSTR name,
 		      void *arg)
 {
   if (ACE_OS::event_init (&this->handle_,
-			  manual_reset, 
+			  manual_reset,
 			  initial_state,
-			  type, 
+			  type,
 			  name,
 			  arg) != 0)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Event::ACE_Event"));
@@ -367,50 +367,50 @@ ACE_Event::~ACE_Event (void)
   this->remove ();
 }
 
-int 
+int
 ACE_Event::remove (void)
 {
   return ACE_OS::event_destroy (&this->handle_);
 }
 
-ACE_event_t 
+ACE_event_t
 ACE_Event::handle (void) const
 {
   return this->handle_;
 }
 
 void
-ACE_Event::handle (ACE_event_t new_handle) 
+ACE_Event::handle (ACE_event_t new_handle)
 {
   this->handle_ = new_handle;
 }
 
-int 
+int
 ACE_Event::wait (void)
 {
   return ACE_OS::event_wait (&this->handle_);
 }
 
-int 
+int
 ACE_Event::wait (const ACE_Time_Value *abstime)
 {
   return ACE_OS::event_timedwait (&this->handle_,
 				  (ACE_Time_Value *) abstime);
 }
 
-int 
+int
 ACE_Event::signal (void)
 {
   return ACE_OS::event_signal (&this->handle_);
 }
 
-int 
+int
 ACE_Event::pulse (void)
 {
   return ACE_OS::event_pulse (&this->handle_);
 }
 
-int 
+int
 ACE_Event::reset (void)
 {
   return ACE_OS::event_reset (&this->handle_);
@@ -424,12 +424,12 @@ ACE_Event::dump (void) const
 }
 
 ACE_Manual_Event::ACE_Manual_Event (int initial_state,
-				    int type, 
+				    int type,
 				    LPCTSTR name,
 				    void *arg)
   : ACE_Event (1,
 	       initial_state,
-	       type, 
+	       type,
 	       name,
 	       arg)
 {
@@ -442,12 +442,12 @@ ACE_Manual_Event::dump (void) const
 }
 
 ACE_Auto_Event::ACE_Auto_Event (int initial_state,
-				int type, 
+				int type,
 				LPCTSTR name,
 				void *arg)
   : ACE_Event (0,
 	       initial_state,
-	       type, 
+	       type,
 	       name,
 	       arg)
 {
@@ -472,8 +472,8 @@ ACE_Thread_Semaphore::dump (void) const
   ACE_Semaphore::dump ();
 }
 
-ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count, 
-					    LPCTSTR name, 
+ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
+					    LPCTSTR name,
 					    void *arg,
 					    int max)
   : ACE_Semaphore (count, USYNC_THREAD, name, arg, max)
@@ -491,7 +491,7 @@ ACE_Thread_Mutex_Guard::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_thread_t 
+ACE_thread_t
 ACE_Recursive_Thread_Mutex::get_thread_id (void)
 {
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_thread_id");
@@ -516,7 +516,7 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
 							void *arg)
   : nesting_mutex_ (name, arg),
     lock_available_ (nesting_mutex_, name, arg),
-    nesting_level_ (0), 
+    nesting_level_ (0),
     owner_id_ (ACE_OS::NULL_thread)
 {
 #if defined (ACE_HAS_FSU_PTHREADS)
@@ -541,11 +541,11 @@ ACE_Recursive_Thread_Mutex::acquire (void)
 
   // Acquire the guard.
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
-  
+
   // If there's no contention, just grab the lock immediately (since
   // this is the common case we'll optimize for it).
   if (this->nesting_level_ == 0)
-    this->set_thread_id (t_id);      
+    this->set_thread_id (t_id);
   // If we already own the lock, then increment the nesting level and
   // return.
   else if (ACE_OS::thr_equal (t_id, this->owner_id_) == 0)
@@ -556,7 +556,7 @@ ACE_Recursive_Thread_Mutex::acquire (void)
 	this->lock_available_.wait ();
 
       // Note that at this point the nesting_mutex_ is held...
-      this->set_thread_id (t_id);  
+      this->set_thread_id (t_id);
     }
 
   // At this point, we can safely increment the nesting_level_ no
@@ -575,7 +575,7 @@ ACE_Recursive_Thread_Mutex::release (void)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
 
 #if !defined (ACE_NDEBUG)
-  if (this->nesting_level_ == 0 
+  if (this->nesting_level_ == 0
       || ACE_OS::thr_equal (t_id, this->owner_id_) == 0)
     {
       errno = EINVAL;
@@ -603,11 +603,11 @@ ACE_Recursive_Thread_Mutex::tryacquire (void)
   ACE_thread_t t_id = ACE_Thread::self ();
 
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
-  
+
   // If there's no contention, just grab the lock immediately.
   if (this->nesting_level_ == 0)
     {
-      this->set_thread_id (t_id);  
+      this->set_thread_id (t_id);
       this->nesting_level_ = 1;
     }
   // If we already own the lock, then increment the nesting level and
@@ -649,7 +649,7 @@ ACE_Condition_Thread_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "\n"));
 #if defined (ACE_WIN32)
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "waiters = %d\n",
 	      this->cond_.waiters ()));
 #endif /* ACE_WIN32 */
@@ -670,7 +670,7 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
 
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_, USYNC_THREAD, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", 
+    ACE_ERROR ((LM_ERROR, "%p\n",
 		"ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex"));
 }
 
@@ -701,7 +701,7 @@ ACE_Condition_Thread_Mutex::wait (ACE_Thread_Mutex &mutex,
   if (abstime == 0)
     return ACE_OS::cond_wait (&this->cond_, &mutex_.lock_);
   else
-    return ACE_OS::cond_timedwait (&this->cond_, 
+    return ACE_OS::cond_timedwait (&this->cond_,
 				   &mutex.lock_,
 				   (ACE_Time_Value *) abstime);
 }
@@ -772,7 +772,7 @@ ACE_Barrier::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Barrier::ACE_Barrier (u_int count, 
+ACE_Barrier::ACE_Barrier (u_int count,
 			  LPCTSTR name,
 			  void *arg)
   : lock_ (name, arg),
@@ -792,7 +792,7 @@ ACE_Barrier::wait (void)
 // ACE_TRACE ("ACE_Barrier::wait");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  ACE_Sub_Barrier *sbp = 
+  ACE_Sub_Barrier *sbp =
     this->sub_barrier_[this->current_generation_];
 
   // Check for shutdown...
@@ -858,7 +858,7 @@ ACE_Process_Condition<MUTEX>::dump (void) const
 }
 
 template <class MUTEX>
-ACE_Process_Condition<MUTEX>::ACE_Process_Condition (MUTEX &m, 
+ACE_Process_Condition<MUTEX>::ACE_Process_Condition (MUTEX &m,
 						     LPCTSTR name,
 						     void *arg)
   : ACE_Condition<MUTEX> (m, USYNC_PROCESS, name, arg)
@@ -895,7 +895,7 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
 
-ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (LPCTSTR name, 
+ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (LPCTSTR name,
 					  void *arg)
   : ACE_RW_Mutex (USYNC_THREAD, name, arg)
 {
@@ -913,7 +913,7 @@ ACE_RW_Thread_Mutex::dump (void) const
 #include "ace/Malloc.h"
 
 #if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" static void 
+extern "C" static void
 ace_static_object_lock_atexit (void)
 {
   ACE_Static_Object_Lock::atexit ();
@@ -943,18 +943,30 @@ ACE_Static_Object_Lock::instance (void)
   return ACE_Static_Object_Lock::mutex_;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These are only specialized with ACE_HAS_THREADS.
 template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+// These are only specialized with ACE_HAS_THREADS.
+#pragma instantiate ACE_Guard<ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_THREADS */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These are specialized both with and without ACE_HAS_THREADS.
 template class ACE_Guard<ACE_Null_Mutex>;
 template class ACE_Read_Guard<ACE_Null_Mutex>;
 template class ACE_Write_Guard<ACE_Null_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+// These are specialized both with and without ACE_HAS_THREADS.
+#pragma instantiate ACE_Guard<ACE_Null_Mutex>
+#pragma instantiate ACE_Read_Guard<ACE_Null_Mutex>
+#pragma instantiate ACE_Write_Guard<ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_SYNCH_C */

@@ -15,25 +15,25 @@
 #endif /* __ACE_INLINE__ */
 
 // Shorthand names.
-#define SH SVC_HANDLER 
+#define SH SVC_HANDLER
 #define PR_AC_1 ACE_PEER_ACCEPTOR_1
 #define PR_AC_2 ACE_PEER_ACCEPTOR_2
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
 
-template <class SH, PR_AC_1> 
+template <class SH, PR_AC_1>
 Handle_Thr_Acceptor<SH, PR_AC_2>::~Handle_Thr_Acceptor (void)
 {
 }
 
-template <class SH, PR_AC_1> 
+template <class SH, PR_AC_1>
 Handle_Thr_Acceptor<SH, PR_AC_2>::Handle_Thr_Acceptor (void)
   : thr_flags_ (THR_DETACHED | THR_NEW_LWP)
 {
 }
 
-template <class SH, PR_AC_1> int 
-Handle_Thr_Acceptor<SH, PR_AC_2>::info (char **strp, 
+template <class SH, PR_AC_1> int
+Handle_Thr_Acceptor<SH, PR_AC_2>::info (char **strp,
 					size_t length) const
 {
   char buf[BUFSIZ];
@@ -63,7 +63,7 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
-      case 'p': 
+      case 'p':
 	local_addr.set (ACE_OS::atoi (get_opt.optarg));
 	break;
       case 't':
@@ -74,8 +74,8 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
       }
 
   // Initialize the threading strategy.
-  if (this->thr_strategy_.open (&this->thr_mgr_, 
-				this->thr_flags_, 
+  if (this->thr_strategy_.open (&this->thr_mgr_,
+				this->thr_flags_,
 				n_threads) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
@@ -88,10 +88,10 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
     return 0;
 }
 
-template <class SH, PR_AC_1> int 
+template <class SH, PR_AC_1> int
 Handle_Thr_Acceptor<SH, PR_AC_2>::fini (void)
 {
-  return ACE_Reactor::instance ()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
@@ -106,8 +106,8 @@ CLI_Stream<PR_ST_2>::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) client stream object closing down\n"));
   this->peer ().close ();
-      
-  // Must be allocated dynamically! 
+
+  // Must be allocated dynamically!
   delete this;
   return 0;
 }
@@ -117,13 +117,13 @@ CLI_Stream<PR_ST_2>::open (void *)
 {
   ACE_INET_Addr sa;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) client handle = %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%t) client handle = %d\n",
 	      this->peer ().get_handle ()));
 
   if (this->peer ().get_remote_addr (sa) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) accepted at port %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%t) accepted at port %d\n",
 	     sa.get_port_number ()));
   return 0;
 }
@@ -145,8 +145,8 @@ CLI_Stream<PR_ST_2>::svc (void)
 
   time_t t = ACE_OS::time (0L);
   ACE_OS::cuserid (login_name);
-  ACE_OS::sprintf (buf, "user %s %s", 
-		   login_name, 
+  ACE_OS::sprintf (buf, "user %s %s",
+		   login_name,
 		   ACE_OS::ctime ((const time_t *) &t));
 
   if (this->peer ().send_n (buf, ACE_OS::strlen (buf) + 1) == -1)
@@ -167,13 +167,13 @@ CLI_Stream<PR_ST_2>::svc (void)
 #if defined (ACE_HAS_TLI)
 #include "ace/TLI_Stream.h"
 #include "ace/TLI_Acceptor.h"
-#define THR_STREAM ACE_TLI_STREAM 
-#define THR_ACCEPTOR ACE_TLI_ACCEPTOR 
+#define THR_STREAM ACE_TLI_STREAM
+#define THR_ACCEPTOR ACE_TLI_ACCEPTOR
 #else
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
-#define THR_STREAM ACE_SOCK_STREAM 
-#define THR_ACCEPTOR ACE_SOCK_ACCEPTOR 
+#define THR_STREAM ACE_SOCK_STREAM
+#define THR_ACCEPTOR ACE_SOCK_ACCEPTOR
 #endif /* ACE_HAS_TLI */
 #include "ace/INET_Addr.h"
 
@@ -188,7 +188,7 @@ u_short HANDLE_THR_ACCEPTOR::DEFAULT_PORT_ = ACE_DEFAULT_THR_PORT;
 HANDLE_THR_ACCEPTOR remote_thr_stream;
 ACE_Service_Object_Type rts (&remote_thr_stream, "Remote_Thr_Stream");
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
 template class ACE_Accept_Strategy<CLI_STREAM, THR_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<CLI_STREAM>;
@@ -199,7 +199,19 @@ template class ACE_Svc_Handler<THR_STREAM, ACE_MT_SYNCH>;
 template class ACE_Thread_Strategy<CLI_STREAM>;
 template class CLI_Stream <THR_STREAM>;
 template class Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Acceptor<CLI_STREAM, THR_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<CLI_STREAM, THR_ACCEPTOR>
+#pragma instantiate ACE_Concurrency_Strategy<CLI_STREAM>
+#pragma instantiate ACE_Creation_Strategy<CLI_STREAM>
+#pragma instantiate ACE_Scheduling_Strategy<CLI_STREAM>
+#pragma instantiate ACE_Strategy_Acceptor<CLI_STREAM, THR_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<THR_STREAM, ACE_MT_SYNCH>
+#pragma instantiate ACE_Thread_Strategy<CLI_STREAM>
+#pragma instantiate CLI_Stream <THR_STREAM>
+#pragma instantiate Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_HANDLE_THR_STREAM_C */

@@ -12,7 +12,7 @@ public:
   SOCK (void) { ACE_REGISTER_OBJECT (SOCK); }
   ~SOCK (void) { ACE_REMOVE_OBJECT; }
 
-  void dump (void) const { 
+  void dump (void) const {
     cerr << "hello from SOCK = " << (u_long) this << endl;
   }
 
@@ -25,7 +25,7 @@ public:
   SOCK_Acceptor (void) { ACE_REGISTER_OBJECT (SOCK_Acceptor); }
   ~SOCK_Acceptor (void) { ACE_REMOVE_OBJECT; }
 
-  void dump (void) const { 
+  void dump (void) const {
     cerr << "hello from SOCK_Acceptor = " << (u_long) this << endl;
   }
 
@@ -45,7 +45,7 @@ public:
   // ...
 };
 
-int 
+int
 main (void)
 {
   SOCK outer_sock;
@@ -60,12 +60,17 @@ main (void)
     SOCK_Acceptor inner_acceptor;
     ACE_ODB::instance ()->dump_objects ();
   }
-  ACE_ODB::instance ()->dump_objects ();  
+  ACE_ODB::instance ()->dump_objects ();
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dumpable_Adapter<SOCK_Stream>;
 template class ACE_Dumpable_Adapter<SOCK>;
 template class ACE_Dumpable_Adapter<SOCK_Acceptor>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Dumpable_Adapter<SOCK_Stream>
+#pragma instantiate ACE_Dumpable_Adapter<SOCK>
+#pragma instantiate ACE_Dumpable_Adapter<SOCK_Acceptor>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

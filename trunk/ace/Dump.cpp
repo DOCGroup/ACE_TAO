@@ -24,23 +24,23 @@ ACE_Dumpable::ACE_Dumpable (const void *this_ptr)
 }
 
 ACE_Dumpable_Ptr::ACE_Dumpable_Ptr (const ACE_Dumpable *dumper)
-  : dumper_ (dumper) 
+  : dumper_ (dumper)
 {
   ACE_TRACE ("ACE_Dumpable_Ptr::ACE_Dumpable_Ptr");
 }
 
 const ACE_Dumpable *
 ACE_Dumpable_Ptr::operator->() const
-{ 
+{
   ACE_TRACE ("ACE_Dumpable_Ptr::operator->");
-  return this->dumper_; 
+  return this->dumper_;
 }
 
-void 
+void
 ACE_Dumpable_Ptr::operator= (const ACE_Dumpable *dumper) const
 {
   ACE_TRACE ("ACE_Dumpable_Ptr::operator=");
-  if (this->dumper_ != dumper) 
+  if (this->dumper_ != dumper)
     {
       delete (ACE_Dumpable *) this->dumper_;
       ((ACE_Dumpable_Ptr *) this)->dumper_ = dumper;
@@ -68,7 +68,7 @@ ACE_ODB::instance (void)
   return ACE_ODB::instance_;
 }
 
-void 
+void
 ACE_ODB::dump_objects (void)
 {
   ACE_TRACE ("ACE_ODB::dump_objects");
@@ -83,7 +83,7 @@ ACE_ODB::dump_objects (void)
 // This method registers a new <dumper>.  It detects
 // duplicates and simply overwrites them.
 
-void 
+void
 ACE_ODB::register_object (const ACE_Dumpable *dumper)
 {
   ACE_TRACE ("ACE_ODB::register_object");
@@ -110,7 +110,7 @@ ACE_ODB::register_object (const ACE_Dumpable *dumper)
   this->object_table_[slot].dumper_ = dumper;
 }
 
-void 
+void
 ACE_ODB::remove_object (const void *this_ptr)
 {
   ACE_TRACE ("ACE_ODB::remove_object");
@@ -131,6 +131,11 @@ ACE_ODB::remove_object (const void *this_ptr)
 
 ACE_ODB *ACE_ODB::instance_ = 0;
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 ACE_MT (template class ACE_Guard<ACE_Thread_Mutex>);
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#pragma instantiate ACE_Guard<ACE_Thread_Mutex>
+#endif /* ACE_MT_SAFE */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

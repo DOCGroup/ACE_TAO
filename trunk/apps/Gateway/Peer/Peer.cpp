@@ -3,7 +3,7 @@
 // These classes process Supplier/Consumer events sent from the gateway
 // (gatewayd) to its various peers (peerd).  These classes works as
 // follows:
-//   
+//
 // 1. Gateway_Acceptor creates a listener endpoint and waits passively
 //    for gatewayd to connect with it.
 //
@@ -33,7 +33,7 @@
 
 static int verbose = 0;
 
-// Handle Peer events arriving as events. 
+// Handle Peer events arriving as events.
 
 class ACE_Svc_Export Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
@@ -57,11 +57,11 @@ public:
   virtual int handle_output (ACE_HANDLE);
   // Finish sending a event when flow control conditions abate.
 
-  virtual int handle_timeout (const ACE_Time_Value &, 
+  virtual int handle_timeout (const ACE_Time_Value &,
 			      const void *arg);
   // Periodically send events via ACE_Reactor timer mechanism.
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE, 
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
 			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform object termination.
 
@@ -93,7 +93,7 @@ protected:
   // Pointer-to-member-function for the current action to run in this state.
 
   int await_supplier_id (void);
-  // Action that receives the route id.  
+  // Action that receives the route id.
 
   int await_events (void);
   // Action that receives events.
@@ -119,7 +119,7 @@ Peer_Handler::Peer_Handler (void)
 int
 Peer_Handler::open (void *a)
 {
-  ACE_DEBUG ((LM_DEBUG, "Gateway handler's handle = %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "Gateway handler's handle = %d\n",
 	     this->peer ().get_handle ()));
 
   // Call down to the base class to activate and register this
@@ -128,7 +128,7 @@ Peer_Handler::open (void *a)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enable"), -1);    
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enable"), -1);
 
   char *to = ACE_OS::getenv ("TIMEOUT");
   int timeout = to == 0 ? 100000 : ACE_OS::atoi (to);
@@ -141,7 +141,7 @@ Peer_Handler::open (void *a)
   // If there are events left in the queue, make sure we enable the
   // ACE_Reactor appropriately to get them sent out.
   if (this->msg_queue ()->is_empty () == 0
-      && ACE_Reactor::instance ()->schedule_wakeup 
+      && ACE_Reactor::instance ()->schedule_wakeup
           (this, ACE_Event_Handler::WRITE_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_wakeup"), -1);
 
@@ -159,7 +159,7 @@ Peer_Handler::xmit_stdin (void)
     {
       ACE_Message_Block *mb;
 
-      ACE_NEW_RETURN (mb, 
+      ACE_NEW_RETURN (mb,
 		      ACE_Message_Block (sizeof (Event)),
 		      -1);
 
@@ -174,7 +174,7 @@ Peer_Handler::xmit_stdin (void)
 
 	  // Take stdin out of the ACE_Reactor so we stop trying to
 	  // send events.
-	  ACE_Reactor::instance ()->remove_handler 
+	  ACE_Reactor::instance ()->remove_handler
 	    (ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 	  mb->release ();
 	  break;
@@ -198,11 +198,11 @@ Peer_Handler::xmit_stdin (void)
 	  if (this->put (mb) == -1)
 	    {
 	      if (errno == EWOULDBLOCK) // The queue has filled up!
-		ACE_ERROR ((LM_ERROR, "%p\n", 
+		ACE_ERROR ((LM_ERROR, "%p\n",
 			   "gateway is flow controlled, so we're dropping events"));
 	      else
 		ACE_ERROR ((LM_ERROR, "%p\n", "transmission failure in xmit_stdin"));
-	      
+
 	      // Caller is responsible for freeing a ACE_Message_Block
 	      // if failures occur.
 	      mb->release ();
@@ -230,15 +230,15 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
     return -1;
   else if (errno == EWOULDBLOCK) // Didn't manage to send everything.
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "queueing activated on handle %d to supplier id %d\n",
 		 this->get_handle (), this->proxy_id_));
 
       // ACE_Queue in *front* of the list to preserve order.
-      if (this->msg_queue ()->enqueue_head 
+      if (this->msg_queue ()->enqueue_head
 	  (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enqueue_head"), -1);
-      
+
       // Tell ACE_Reactor to call us back when we can send again.
       if (ACE_Reactor::instance ()->schedule_wakeup
 	  (this, ACE_Event_Handler::WRITE_MASK) == -1)
@@ -252,15 +252,15 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
 // Finish sending a event when flow control conditions abate.  This
 // method is automatically called by the ACE_Reactor.
 
-int 
+int
 Peer_Handler::handle_output (ACE_HANDLE)
 {
   ACE_Message_Block *mb = 0;
-  
+
   ACE_DEBUG ((LM_DEBUG, "in handle_output\n"));
   // The list had better not be empty, otherwise there's a bug!
 
-  if (this->msg_queue ()->dequeue_head 
+  if (this->msg_queue ()->dequeue_head
       (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) != -1)
     {
       switch (this->nonblk_put (mb))
@@ -274,12 +274,12 @@ Peer_Handler::handle_output (ACE_HANDLE)
 	  // Caller is responsible for freeing a ACE_Message_Block if
 	  // failures occur.
 	  mb->release ();
-	  ACE_ERROR ((LM_ERROR, "%p\n", 
+	  ACE_ERROR ((LM_ERROR, "%p\n",
 		      "transmission failure in handle_output"));
 
 	  /* FALLTHROUGH */
 	default: // Sent the whole thing.
-	  
+
 	  // If we succeed in writing the entire event (or we did not
 	  // fail due to EWOULDBLOCK) then check if there are more
 	  // events on the Message_Queue.  If there aren't, tell the
@@ -288,9 +288,9 @@ Peer_Handler::handle_output (ACE_HANDLE)
 
 	  if (this->msg_queue ()->is_empty ())
 	    {
-	      ACE_DEBUG ((LM_DEBUG, 
+	      ACE_DEBUG ((LM_DEBUG,
 			  "queue now empty on handle %d to supplier id %d\n",
-			  this->get_handle (), 
+			  this->get_handle (),
 			  this->proxy_id_));
 
 	      if (ACE_Reactor::instance ()->cancel_wakeup
@@ -299,24 +299,24 @@ Peer_Handler::handle_output (ACE_HANDLE)
 	    }
 	}
     }
-  else 
+  else
     ACE_ERROR ((LM_ERROR, "%p\n", "dequeue_head"));
-  return 0;      
+  return 0;
 }
 
 // Send an event to a peer (may block if necessary).
 
-int 
+int
 Peer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   if (this->msg_queue ()->is_empty ())
     // Try to send the event *without* blocking!
-    return this->nonblk_put (mb); 
+    return this->nonblk_put (mb);
   else
     // If we have queued up events due to flow control then just
     // enqueue and return.
-    return this->msg_queue ()->enqueue_tail 
-      (mb, (ACE_Time_Value *) &ACE_Time_Value::zero); 
+    return this->msg_queue ()->enqueue_tail
+      (mb, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
 // Send an Peer event to gatewayd.
@@ -324,7 +324,7 @@ Peer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
 int
 Peer_Handler::send (ACE_Message_Block *mb)
 {
-  ssize_t n;	
+  ssize_t n;
   size_t len = mb->length ();
 
   if ((n = this->peer ().send (mb->rd_ptr (), len)) <= 0)
@@ -352,31 +352,31 @@ Peer_Handler::send (ACE_Message_Block *mb)
 
 int
 Peer_Handler::recv (ACE_Message_Block *&mb)
-{ 
+{
   if (this->msg_frag_ == 0)
     // No existing fragment...
-    ACE_NEW_RETURN (this->msg_frag_, 
-		    ACE_Message_Block (sizeof (Event)), 
+    ACE_NEW_RETURN (this->msg_frag_,
+		    ACE_Message_Block (sizeof (Event)),
 		    -1);
 
   Event *event = (Event *) this->msg_frag_->rd_ptr ();
   ssize_t header_received = 0;
 
   const ssize_t HEADER_SIZE = sizeof (Event_Header);
-  ssize_t header_bytes_left_to_read = 
+  ssize_t header_bytes_left_to_read =
     HEADER_SIZE - this->msg_frag_->length ();
 
   if (header_bytes_left_to_read > 0)
     {
-      header_received = this->peer ().recv 
+      header_received = this->peer ().recv
 	(this->msg_frag_->wr_ptr (), header_bytes_left_to_read);
 
       if (header_received == -1 /* error */
 	  || header_received == 0  /* EOF */)
 	{
-	  ACE_ERROR ((LM_ERROR, "%p\n", 
+	  ACE_ERROR ((LM_ERROR, "%p\n",
 		      "Recv error during header read"));
-	  ACE_DEBUG ((LM_DEBUG, 
+	  ACE_DEBUG ((LM_DEBUG,
 		      "attempted to read %d bytes\n",
 		      header_bytes_left_to_read));
 	  this->msg_frag_ = this->msg_frag_->release ();
@@ -389,7 +389,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       // At this point we may or may not have the ENTIRE header.
       if (this->msg_frag_->length () < HEADER_SIZE)
 	{
-	  ACE_DEBUG ((LM_DEBUG, 
+	  ACE_DEBUG ((LM_DEBUG,
 		      "Partial header received: only %d bytes\n",
 		     this->msg_frag_->length ()));
 	  // Notify the caller that we didn't get an entire event.
@@ -405,7 +405,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
 	{
 	  // This data_ payload is too big!
 	  errno = EINVAL;
-	  ACE_DEBUG ((LM_DEBUG, 
+	  ACE_DEBUG ((LM_DEBUG,
 		      "Data payload is too big (%d bytes)\n",
 		      event->header_.len_));
 	  return -1;
@@ -421,10 +421,10 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
   // subtracting how much we've already read from the
   // event->header_.len_ we complete the data_bytes_left_to_read...
 
-  ssize_t data_bytes_left_to_read = 
+  ssize_t data_bytes_left_to_read =
     ssize_t (event->header_.len_ - (msg_frag_->wr_ptr () - event->data_));
 
-  ssize_t data_received = 
+  ssize_t data_received =
     this->peer ().recv (this->msg_frag_->wr_ptr (), data_bytes_left_to_read);
 
   // Try to receive the remainder of the event.
@@ -432,7 +432,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
   switch (data_received)
     {
     case -1:
-      if (errno == EWOULDBLOCK) 
+      if (errno == EWOULDBLOCK)
 	// This might happen if only the header came through.
 	return -1;
       else
@@ -450,7 +450,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
         {
           errno = EWOULDBLOCK;
 	  // Inform caller that we didn't get the whole event.
-          return -1; 
+          return -1;
         }
       else
         {
@@ -460,7 +460,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
 	  mb = this->msg_frag_;
 
           // Reset the pointer to indicate we've got an entire event.
-          this->msg_frag_ = 0; 
+          this->msg_frag_ = 0;
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
@@ -474,7 +474,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
 // Receive various types of input (e.g., Peer event from the
 // gatewayd, as well as stdio).
 
-int 
+int
 Peer_Handler::handle_input (ACE_HANDLE sd)
 {
   ACE_DEBUG ((LM_DEBUG, "in handle_input, sd = %d\n", sd));
@@ -491,17 +491,17 @@ Peer_Handler::handle_input (ACE_HANDLE sd)
 int
 Peer_Handler::await_supplier_id (void)
 {
-  ssize_t n = this->peer ().recv (&this->proxy_id_, 
+  ssize_t n = this->peer ().recv (&this->proxy_id_,
 				  sizeof this->proxy_id_);
 
   if (n != sizeof this->proxy_id_)
     {
       if (n == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, 
+	ACE_ERROR_RETURN ((LM_ERROR,
 			   "gatewayd has closed down unexpectedly\n"), -1);
       else
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "%p, bytes received on handle %d = %d\n", 
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "%p, bytes received on handle %d = %d\n",
 			  "recv", this->get_handle (), n), -1);
     }
   else
@@ -554,10 +554,10 @@ Peer_Handler::await_events (void)
 	Event *event = (Event *) mb->rd_ptr ();
 	this->total_bytes_ += mb->length ();
 
-	ACE_DEBUG ((LM_DEBUG, 
+	ACE_DEBUG ((LM_DEBUG,
 		    "route id = %d, cur len = %d, total len = %d\n",
-		    event->header_.supplier_id_, 
-		    event->header_.len_, 
+		    event->header_.supplier_id_,
+		    event->header_.len_,
 		    this->total_bytes_));
       if (verbose)
 	ACE_DEBUG ((LM_DEBUG, "data_ = %s\n", event->data_));
@@ -591,7 +591,7 @@ Peer_Handler::handle_close (ACE_HANDLE,
 {
   if (this->get_handle () != ACE_INVALID_HANDLE)
     {
-      ACE_DEBUG ((LM_DEBUG, "shutting down Peer on handle %d\n", 
+      ACE_DEBUG ((LM_DEBUG, "shutting down Peer on handle %d\n",
 		 this->get_handle ()));
 
       // Explicitly remove ourselves for ACE_STDIN (the ACE_Reactor
@@ -599,13 +599,13 @@ Peer_Handler::handle_close (ACE_HANDLE,
       // ACE_Event_Handler::DONT_CALL instructs the ACE_Reactor *not*
       // to call this->handle_close(), which would otherwise lead to
       // recursion!).
-      ACE_Reactor::instance ()->remove_handler 
+      ACE_Reactor::instance ()->remove_handler
 	(ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 
       // Deregister this handler with the ACE_Reactor.
-      if (ACE_Reactor::instance ()->remove_handler 
+      if (ACE_Reactor::instance ()->remove_handler
 	  (this, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "handle = %d: %p\n", 
+	ACE_ERROR_RETURN ((LM_ERROR, "handle = %d: %p\n",
 			  this->get_handle (), "remove_handler"), -1);
 
       // Close down the peer.
@@ -619,7 +619,7 @@ Peer_Handler::handle_close (ACE_HANDLE,
 
 class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
 {
-public:  
+public:
   // = Initialization and termination methods.
   Peer_Acceptor (void);
   // Create the Peer.
@@ -668,7 +668,7 @@ Peer_Acceptor::make_svc_handler (Peer_Handler *&sh)
   return 0;
 }
 
-int 
+int
 Peer_Acceptor::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "signal %S occurred\n", signum));
@@ -725,7 +725,7 @@ Peer_Acceptor::parse_args (int argc, char *argv[])
     {
       switch (c)
 	{
-	case 'p': 
+	case 'p':
 	  this->addr_.set (ACE_OS::atoi (get_opt.optarg));
 	  break;
 	case 'd':
@@ -765,11 +765,11 @@ Peer_Acceptor::init (int argc, char *argv[])
 
   // Call down to the Acceptor's open() method.
   if (this->inherited::open (this->addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);    
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   else if (this->acceptor ().get_local_addr (this->addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);    
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
   else
-    ACE_DEBUG ((LM_DEBUG, "listening at port %d\n", 
+    ACE_DEBUG ((LM_DEBUG, "listening at port %d\n",
 		this->addr_.get_port_number ()));
   return 0;
 }
@@ -779,7 +779,11 @@ Peer_Acceptor::init (int argc, char *argv[])
 
 ACE_SVC_FACTORY_DEFINE (Peer_Acceptor)
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    TSS_Test.cpp
 //
@@ -18,7 +18,7 @@
 //
 // = AUTHOR
 //    Detlef Becker
-// 
+//
 // ============================================================================
 
 #include "ace/Service_Config.h"
@@ -35,13 +35,13 @@ class Errno
 public:
   int error (void) { return this->errno_; }
   void error (int i) { this->errno_ = i; }
-  
+
   int line (void) { return this->lineno_; }
   void line (int l) { this->lineno_ = l; }
 
   // Errno::flags_ is a static variable, so we've got to protect it
   // with a mutex since it isn't kept in thread-specific storage.
-  int flags (void) { 
+  int flags (void) {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_Mon, Errno::lock_, -1));
 
     return Errno::flags_;
@@ -56,13 +56,13 @@ public:
 
 private:
   // = errno_ and lineno_ will be thread-specific data so they don't
-  // need a lock.  
+  // need a lock.
   int errno_;
   int lineno_;
 
   static int flags_;
 #if defined (ACE_HAS_THREADS)
-  // flags_ needs a lock. 
+  // flags_ needs a lock.
   static ACE_Thread_Mutex lock_;
 #endif /* ACE_HAS_THREADS */
 };
@@ -106,7 +106,7 @@ public:
   virtual int close (u_long args = 0);
 };
 
-template <ACE_SYNCH_1> int 
+template <ACE_SYNCH_1> int
 Tester<ACE_SYNCH_2>::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: setting error code to 1\n"));
@@ -115,14 +115,14 @@ Tester<ACE_SYNCH_2>::svc (void)
   for (int i = 0; i < iterations; i++)
     // Print out every tenth iteration.
     if ((i % 10) == 1)
-      ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));  
+      ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));
 
   this->close ();
 
   return 0;
 }
 
-template <ACE_SYNCH_1> int 
+template <ACE_SYNCH_1> int
 Tester<ACE_SYNCH_2>::open (void *)
 {
   // Make this an Active Object.
@@ -141,7 +141,7 @@ int Tester<ACE_SYNCH_2>::close (u_long)
   return 0;
 }
 
-int 
+int
 main (int, char *[])
 {
   Tester<ACE_MT_SYNCH> tester;
@@ -168,16 +168,20 @@ main (int, char *[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_TSS<Errno>;
 template class Tester<ACE_MT_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<Errno>
+#pragma instantiate Tester<ACE_MT_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (void)
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
 		     "ACE doesn't support support threads on this platform (yet)\n"),
 		    -1);
 }
