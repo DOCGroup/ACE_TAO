@@ -301,10 +301,22 @@ ifeq ($(<%require%>),1)
 <%foreach(avoids)%>
 ifneq ($(<%avoid%>),1)
 <%endfor%>
+<%if(sharedname)%>
+ifneq ($(SHLIB),)
+<%endif%>
+<%if(staticname)%>
+ifneq ($(LIB),)
+<%endif%>
 <%foreach(comps)%>
 ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
 <%endfor%>
   BUILD += <%grouped_source_files->component_name%>
+<%if(staticname)%>
+endif
+<%endif%>
+<%if(sharedname)%>
+endif
+<%endif%>
 <%foreach(comps avoids requires)%>
 endif
 <%endfor%>
@@ -388,13 +400,6 @@ CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%endif%>
 <%if(macros)%>
 CPPFLAGS     +=<%foreach(macros)%> -D<%macro%><%endfor%>
-<%endif%>
-<%if(idlpreprocessor)%>
-ifeq ($(TAO_IDL_PREPROCESSOR),)
-  CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
-else
-  CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(subst \,\,$(TAO_IDL_PREPROCESSOR))\"
-endif
 <%endif%>
 <%if(dynamicflags)%>
 ifeq ($(shared_libs),1)
