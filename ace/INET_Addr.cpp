@@ -94,7 +94,8 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
-  this->ACE_Addr::base_set (sa.get_type (), sa.get_size ());
+  this->ACE_Addr::base_set (sa.get_type (),
+                            sa.get_size ());
 
   if (sa.get_type () == AF_ANY)
     // Ugh, this is really a base class, so don't copy it.
@@ -232,9 +233,11 @@ ACE_INET_Addr::set (u_short port_number,
       errno = EINVAL;
       return -1;
     }
-  else if (ACE_OS::inet_aton (ASYS_ONLY_MULTIBYTE_STRING (host_name), (struct in_addr *) &addr) == 1)
-    return this->set (port_number, encode ? ntohl (addr) : addr, encode);
-
+  else if (ACE_OS::inet_aton (ASYS_ONLY_MULTIBYTE_STRING (host_name),
+                              (struct in_addr *) &addr) == 1)
+    return this->set (port_number,
+                      encode ? ntohl (addr) : addr,
+                      encode);
   else
     {
 #if defined (VXWORKS) || defined (CHORUS)
