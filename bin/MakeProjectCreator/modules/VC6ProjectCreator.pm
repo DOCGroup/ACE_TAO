@@ -21,35 +21,16 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my($dynamiclib) = 'DLL';
-my($staticlib)  = 'LIB';
-my($dynamicexe) = 'EXE';
-my($staticexe)  = 'Static EXE';
-my($sname)      = '_Static';
+my($sname) = '_Static';
 
 # ************************************************************
 # Subroutine Section
 # ************************************************************
 
-sub remove_type_append {
-  my($self) = shift;
-  my($str)  = shift;
-
-  foreach my $type ($staticexe, $dynamicexe, $staticlib, $dynamiclib) {
-    if ($str =~ /(.*)\s+$type$/) {
-      $str = $1;
-      last;
-    }
-  }
-
-  return $str;
-}
-
-
 sub base_project_name {
   my($self) = shift;
   return $self->transform_file_name(
-               $self->remove_type_append($self->project_name()) .
+               $self->project_name() .
                ($self->get_writing_type() == 1 ? $sname : ''));
 }
 
@@ -60,31 +41,6 @@ sub get_static_append {
 }
 
 
-sub get_type_append {
-  my($self) = shift;
-  my($type) = '';
-  if ($self->lib_target()) {
-    ## Set the type_append preserving whitespace
-    if ($self->get_writing_type() == 1) {
-      $type = " $staticlib";
-    }
-    else {
-      $type = " $dynamiclib";
-    }
-  }
-  else {
-    ## Set the type_append preserving whitespace
-    if ($self->get_writing_type() == 1) {
-      $type = " $staticexe";
-    }
-    else {
-      $type = " $dynamicexe";
-    }
-  }
-  return $type;
-}
-
-
 sub translate_value {
   my($self) = shift;
   my($key)  = shift;
@@ -92,29 +48,14 @@ sub translate_value {
 
   if ($key eq 'depends' && $val ne '') {
     my($arr) = $self->create_array($val);
-    my($app) = $dynamiclib;
     $val = '';
 
     ## Only write dependencies for non-static projects
     ## and static exe projects
     my($wt) = $self->get_writing_type();
     if ($wt == 0 || $self->exe_target()) {
-      if ($wt == 1) {
-        $app = $staticlib;
-      }
       foreach my $entry (@$arr) {
-        my($dep) = $app;
-        ## Hack for executable dependencies
-        if ($entry =~ /exe/i) {
-          if ($wt == 1) {
-            $dep = $staticexe;
-          }
-          else {
-            $dep = $dynamicexe;
-          }
-        }
-
-        $val .= "\"$entry $dep\" ";
+        $val .= "\"$entry\" ";
       }
       $val =~ s/\s+$//;
     }
