@@ -1,27 +1,33 @@
+Wed Feb 18 11:36:44 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+
+          Added a missing <%endif%>.
+
 Wed Feb 18 10:41:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_sys_stat.inl: Removed an extra endif. Thanks to Don
-	  Hinton for sending the patch.
+        * ace/OS_NS_sys_stat.inl: Removed an extra endif. Thanks to Don
+          Hinton for sending the patch.
 
 Wed Feb 18 07:04:55 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_sys_stat.{h,inl}: Changed the first parameter of
-	  lstat() to be ACE_TCHAR rather than just char and revised the
- 	  #defines so things should work better on Windows.  Thanks to
- 	  Johnny Willemsen for reporting this.
+        * ace/OS_NS_sys_stat.{h,inl}: Changed the first parameter of
+          lstat() to be ACE_TCHAR rather than just char and revised the
+          #defines so things should work better on Windows.  Thanks to
+          Johnny Willemsen for reporting this.
 
-	* tests/Dirent_Test.cpp (dirent_count): Rearranged some
-	  code so the test would work.  Thanks to Zvika Ashani
- 	  <zvika@aspectusvi.com> for reporting this and testing it.
+        * tests/Dirent_Test.cpp (dirent_count): Rearranged some
+          code so the test would work.  Thanks to Zvika Ashani
+          <zvika@aspectusvi.com> for reporting this and testing it.
 
-	* ace/os_include/sys/os_stat.h: Changed S_IFLNK to 0200000.
-	  Thanks to Zvika Ashani <zvika@aspectusvi.com> for reporting
- 	  this and testing it.
+        * ace/os_include/sys/os_stat.h: Changed S_IFLNK to 0200000.
+          Thanks to Zvika Ashani <zvika@aspectusvi.com> for reporting
+          this and testing it.
 
 Tue Feb 17 19:55:56 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/SOCK_SEQPACK_Connector.cpp:
-	  Add #include <ace/OS_NS_string.h> to get ACE_OS::memcpy().
+        * ace/SOCK_SEQPACK_Connector.cpp:
+          Add #include <ace/OS_NS_string.h> to get ACE_OS::memcpy().
 
 Tue Feb 17 10:29:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
