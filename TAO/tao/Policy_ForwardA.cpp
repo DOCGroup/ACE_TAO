@@ -29,7 +29,6 @@
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Enumerator.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
 #include "tao/CDR.h"
@@ -38,9 +37,11 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_PolicyType (
     "IDL:omg.org/CORBA/PolicyType:1.0",
@@ -56,12 +57,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -72,7 +73,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_PolicyList_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_Policy,
@@ -85,6 +87,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_PolicyList (
     "IDL:omg.org/CORBA/PolicyList:1.0",
@@ -100,18 +104,19 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_PolicyTypeSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_PolicyType,
@@ -124,6 +129,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_PolicyTypeSeq (
     "IDL:omg.org/CORBA/PolicyTypeSeq:1.0",
@@ -139,17 +146,17 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/enum_typecode.cpp:34
+// be/be_visitor_typecode/enum_typecode.cpp:34
 
-static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_CORBA_SetOverrideType[] =
+static char const * const _tao_enumerators_CORBA_SetOverrideType[] =
   {
-    { "SET_OVERRIDE" },
-    { "ADD_OVERRIDE" }
+    "SET_OVERRIDE",
+    "ADD_OVERRIDE"
     
   };
 
 static TAO::TypeCode::Enum<char const *,
-                           TAO::TypeCode::Enumerator<char const *> const *,
+                           char const * const *,
                            TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_SetOverrideType (
     "IDL:omg.org/CORBA/SetOverrideType:1.0",
@@ -166,7 +173,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -224,7 +231,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -282,7 +289,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_cs.cpp:52
+// be/be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,

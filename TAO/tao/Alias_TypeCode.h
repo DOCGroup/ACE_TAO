@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  Header file for a @c tk_alias CORBA::TypeCode.
+ *  Header file for a @c tk_alias and @c tk_value_box
+ *  @c CORBA::TypeCode.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
@@ -23,6 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/TypeCode_Base_Attributes.h"
 
 
@@ -30,6 +32,43 @@ namespace TAO
 {
   namespace TypeCode
   {
+    template <CORBA::TCKind KIND> struct Alias_Traits;
+
+    template<>
+    struct Alias_Traits<CORBA::tk_alias>
+    {
+      static
+      CORBA::TypeCode_ptr
+      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
+                               char const * id,
+                               CORBA::TypeCode_ptr compact_content_type
+                               ACE_ENV_ARG_DECL)
+      {
+        return factory->create_alias_tc (id,
+                                         "",  /* empty name */
+                                         compact_content_type
+                                         ACE_ENV_ARG_PARAMETER);
+      }
+    };
+
+    template<>
+    struct Alias_Traits<CORBA::tk_value_box>
+    {
+      static
+      CORBA::TypeCode_ptr
+      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
+                               char const * id,
+                               CORBA::TypeCode_ptr compact_content_type
+                               ACE_ENV_ARG_DECL)
+      {
+        return factory->create_value_box_tc (id,
+                                             "",  /* empty name */
+                                             compact_content_type
+                                             ACE_ENV_ARG_PARAMETER);
+      }
+    };
+
+
 
     /**
      * @class Alias
@@ -40,7 +79,10 @@ namespace TAO
      * This class implements a @c CORBA::TypeCode for an OMG IDL
      * @c typedef.
      */
-    template <typename StringType, class RefCountPolicy>
+    template <typename StringType,
+              typename TypeCodeType,
+              CORBA::TCKind Kind,
+              class RefCountPolicy>
     class Alias
       : public CORBA::TypeCode,
         private RefCountPolicy
@@ -50,10 +92,7 @@ namespace TAO
       /// Constructor.
       Alias (char const * id,
              char const * name,
-             CORBA::TypeCode_ptr const * tc);
-
-      /// Destructor.
-      ~Alias (void);
+             TypeCodeType const & tc);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -74,7 +113,8 @@ namespace TAO
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
-       * @c tk_alias @c CORBA::TypeCode -specific template methods.
+       * @c tk_alias and @c tk_value_box @c CORBA::TypeCode -specific
+       * template methods.
        *
        * @see @c CORBA::TypeCode
        */
@@ -108,7 +148,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c TypeCode::Alias.
        */
-      CORBA::TypeCode_ptr const * const content_type_;
+      TypeCodeType const content_type_;
 
     };
 

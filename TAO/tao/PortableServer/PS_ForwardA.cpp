@@ -33,9 +33,11 @@
 #include "tao/Any.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableServer_ObjectId (
     "IDL:omg.org/PortableServer/ObjectId:2.3",

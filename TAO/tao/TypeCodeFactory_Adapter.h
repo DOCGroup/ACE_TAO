@@ -25,22 +25,27 @@
 #include "tao/ValueModifierC.h"
 #include "tao/Typecode_typesC.h"
 
+
+template<class T> class ACE_Array_Base;
+
 namespace CORBA
 {
   class EnumMemberSeq;
   class StructMemberSeq;
   class UnionMemberSeq;
   class ValueMemberSeq;
+
+  typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
+  typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
 }
 
 namespace TAO
 {
   namespace TypeCode
   {
-    template<typename STRING_TYPE> class Case;
-    template<typename STRING_TYPE> struct Enumerator;
-    template<typename STRING_TYPE> struct Struct_Field;
-    template<typename STRING_TYPE> struct Value_Field;
+    template<typename StringType, typename TypeCodeType> class Case;
+    template<typename StringType, typename TypeCodeType> struct Struct_Field;
+    template<typename StringType, typename TypeCodeType> struct Value_Field;
   }
 }
 
@@ -211,48 +216,62 @@ public:
 
   // --
 
-  // Factory methods that has no corresponding TypeCodeFactory IDL,
-  // i.e. it is TAO-specific.
+  /**
+   * @name TAO-specific TypeCode factory methods.
+   *
+   * Factory methods that has no corresponding TypeCodeFactory IDL,
+   * i.e. they are specific to TAO.
+   */
+  //@{
+  /// Extract a TypeCode @a tc from the given CDR stream @a cdr.
+  virtual bool extract_typecode (TAO_InputCDR & cdr,
+                                 CORBA::TypeCode_ptr & tc) = 0;
 
-  virtual bool _tao_make_typecode (TAO_InputCDR & cdr,
-                                   CORBA::TypeCode *& tc) = 0;
-
-  virtual CORBA::TypeCode_ptr _tao_create_enum_tc (
-    CORBA::TCKind,
+  /// Create an enumeration TypeCode.
+  virtual CORBA::TypeCode_ptr create_enum_tc (
     char const * id,
     char const * name,
-    TAO::TypeCode::Enumerator<char const *> const *,
+    ACE_Array_Base<CORBA::String_var> const & enumerators,
     CORBA::ULong ncases
     ACE_ENV_ARG_DECL) = 0;
 
-  virtual CORBA::TypeCode_ptr _tao_create_struct_except_tc (
+  /// Create a structure or exception TypeCode.
+  virtual CORBA::TypeCode_ptr create_struct_except_tc (
     CORBA::TCKind,
     char const * id,
     char const * name,
-    TAO::TypeCode::Struct_Field<char const *> const * fields,
+    ACE_Array_Base<
+      TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                  CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields
     ACE_ENV_ARG_DECL) = 0;
 
-    virtual CORBA::TypeCode_ptr _tao_create_union_tc (
-      char const * id,
-      char const * name,
-      CORBA::TypeCode_ptr * discriminant_type,
-      TAO::TypeCode::Case<char const *> const *,
-      CORBA::ULong ncases,
-      CORBA::Long default_index,
-      char const * default_case_name,
-      CORBA::TypeCode_ptr * default_case_type
-      ACE_ENV_ARG_DECL) = 0;
+  /// Create a union TypeCode.
+  virtual CORBA::TypeCode_ptr create_union_tc (
+    char const * id,
+    char const * name,
+    CORBA::TypeCode_ptr discriminant_type,
+    ACE_Array_Base<TAO::TypeCode::Case<CORBA::String_var,
+                                       CORBA::TypeCode_var> > const & cases,
+    CORBA::ULong ncases,
+    CORBA::Long default_index,
+    char const * default_case_name,
+    CORBA::TypeCode_ptr default_case_type
+    ACE_ENV_ARG_DECL) = 0;
 
-  virtual CORBA::TypeCode_ptr _tao_create_value_event_tc (
+  /// Create a valuetype or eventtype TypeCode.
+  virtual CORBA::TypeCode_ptr create_value_event_tc (
     CORBA::TCKind,
     char const * id,
     char const * name,
     CORBA::ValueModifier modifier,
-    CORBA::TypeCode_ptr const * concrete_base,
-    TAO::TypeCode::Value_Field<char const *> const * fields,
+    CORBA::TypeCode_ptr concrete_base,
+    ACE_Array_Base<
+      TAO::TypeCode::Value_Field<CORBA::String_var,
+                                 CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields
     ACE_ENV_ARG_DECL) = 0;
+  //@}
 
 };
 

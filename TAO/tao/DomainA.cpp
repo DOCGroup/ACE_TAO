@@ -37,7 +37,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_objref,
@@ -55,7 +55,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_objref,
@@ -73,18 +73,19 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_DomainManagerList_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_DomainManager,
@@ -97,6 +98,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_DomainManagerList (
     "IDL:omg.org/CORBA/DomainManagerList:1.0",
@@ -112,7 +115,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -167,7 +170,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -222,7 +225,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

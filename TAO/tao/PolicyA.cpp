@@ -40,6 +40,8 @@
 // be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_PolicyErrorCode (
     "IDL:omg.org/CORBA/PolicyErrorCode:1.0",
@@ -57,16 +59,18 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_PolicyError[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_PolicyError[] =
   {
     { "reason", &CORBA::_tc_PolicyErrorCode }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_PolicyError (
+    CORBA::tk_except,
     "IDL:omg.org/CORBA/PolicyError:1.0",
     "PolicyError",
     _tao_fields_CORBA_PolicyError,
@@ -83,16 +87,18 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_InvalidPolicies[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_InvalidPolicies[] =
   {
     { "indices", &CORBA::_tc_UShortSeq }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_InvalidPolicies (
+    CORBA::tk_except,
     "IDL:omg.org/CORBA/InvalidPolicies:1.0",
     "InvalidPolicies",
     _tao_fields_CORBA_InvalidPolicies,
@@ -340,7 +346,7 @@ TAO::Any_Impl_T<CORBA::Policy>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -395,7 +401,7 @@ TAO::Any_Impl_T<CORBA::PolicyManager>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -464,7 +470,7 @@ TAO::Any_Impl_T<CORBA::PolicyCurrent>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>

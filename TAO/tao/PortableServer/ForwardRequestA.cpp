@@ -35,18 +35,20 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_PortableServer_ForwardRequest[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableServer_ForwardRequest[] =
   {
     { "forward_reference", &CORBA::_tc_Object }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_PortableServer_ForwardRequest (
+    CORBA::tk_except,
     "IDL:omg.org/PortableServer/ForwardRequest:2.3",
     "ForwardRequest",
     _tao_fields_PortableServer_ForwardRequest,
@@ -60,10 +62,8 @@ namespace PortableServer
 
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -162,5 +162,3 @@ CORBA::Boolean operator>>= (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

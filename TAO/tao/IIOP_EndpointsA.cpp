@@ -37,9 +37,9 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TAO_IIOP_Endpoint_Info[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_TAO_IIOP_Endpoint_Info[] =
   {
     { "host", &CORBA::_tc_string },
     { "port", &CORBA::_tc_short },
@@ -47,10 +47,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TAO_IIOP_Endp
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IIOP_Endpoint_Info (
+    CORBA::tk_struct,
     "IDL:TAO/IIOP_Endpoint_Info:1.0",
     "IIOP_Endpoint_Info",
     _tao_fields_TAO_IIOP_Endpoint_Info,
@@ -65,18 +67,19 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       TAO_IIOPEndpointSequence_0 (
         CORBA::tk_sequence,
         &TAO::_tc_IIOP_Endpoint_Info,
@@ -89,6 +92,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IIOPEndpointSequence (
     "IDL:TAO/IIOPEndpointSequence:1.0",
@@ -104,7 +109,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -162,7 +167,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

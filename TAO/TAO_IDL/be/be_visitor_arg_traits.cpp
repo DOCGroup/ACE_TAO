@@ -125,7 +125,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "template<>" << be_nl
           << "class "
-          << (stub ? b->stub_export_macro () : b->skel_export_macro ())
+//           << (stub ? b->stub_export_macro () : b->skel_export_macro ())
           << " " << this->S_ << "Arg_Traits<"
           << node->name () << ">" << be_idt_nl
           << ": public" << be_idt << be_idt_nl
@@ -206,7 +206,8 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
 
       os << be_nl << be_nl
          << "template<>" << be_nl
-         << "class " << be_global->stub_export_macro () << " "
+         << "class "
+//          << be_global->stub_export_macro () << " "
          << this->S_ << "Arg_Traits<"
          << node->name () << ">" << be_idt_nl
          << ": public" << be_idt << be_idt_nl
@@ -325,7 +326,8 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
             }
 
           *os << "template<>" << be_nl
-              << "class " << be_global->stub_export_macro () << " "
+              << "class "
+//               << be_global->stub_export_macro () << " "
               << this->S_ << "Arg_Traits<" << node->flat_name ()
               << ">" << be_idt_nl
               << ": public" << be_idt << be_idt_nl
@@ -398,7 +400,8 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
     }
 
   *os << "template<>" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      << "class "
+//       << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<" << node->flat_name ()
       << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
@@ -463,7 +466,8 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
     }
 
   *os << "template<>" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      << "class "
+//       << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<" << node->flat_name ()
       << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
@@ -500,7 +504,8 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      << "class "
+//       << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << alias->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
@@ -576,7 +581,8 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      << "class "
+//       << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<";
 
   if (alias == 0)
@@ -652,7 +658,8 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      << "class "
+//       << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
@@ -710,7 +717,8 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      << "class "
+//       << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
@@ -751,7 +759,8 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      << "class "
+//       << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
@@ -865,7 +874,8 @@ be_visitor_arg_traits::visit_union (be_union *node)
 
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      << "class "
+//       << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;

@@ -29,7 +29,6 @@
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Enumerator.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
@@ -45,6 +44,8 @@
 // be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ScopedName (
     "IDL:omg.org/CORBA/ScopedName:1.0",
@@ -62,49 +63,49 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/enum_typecode.cpp:34
 
-static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_CORBA_DefinitionKind[] =
+static char const * const _tao_enumerators_CORBA_DefinitionKind[] =
   {
-    { "dk_none" },
-    { "dk_all" },
-    { "dk_Attribute" },
-    { "dk_Constant" },
-    { "dk_Exception" },
-    { "dk_Interface" },
-    { "dk_Module" },
-    { "dk_Operation" },
-    { "dk_Typedef" },
-    { "dk_Alias" },
-    { "dk_Struct" },
-    { "dk_Union" },
-    { "dk_Enum" },
-    { "dk_Primitive" },
-    { "dk_String" },
-    { "dk_Sequence" },
-    { "dk_Array" },
-    { "dk_Repository" },
-    { "dk_Wstring" },
-    { "dk_Fixed" },
-    { "dk_Value" },
-    { "dk_ValueBox" },
-    { "dk_ValueMember" },
-    { "dk_Native" },
-    { "dk_AbstractInterface" },
-    { "dk_LocalInterface" },
-    { "dk_Component" },
-    { "dk_Home" },
-    { "dk_Factory" },
-    { "dk_Finder" },
-    { "dk_Emits" },
-    { "dk_Publishes" },
-    { "dk_Consumes" },
-    { "dk_Provides" },
-    { "dk_Uses" },
-    { "dk_Event" }
+    "dk_none",
+    "dk_all",
+    "dk_Attribute",
+    "dk_Constant",
+    "dk_Exception",
+    "dk_Interface",
+    "dk_Module",
+    "dk_Operation",
+    "dk_Typedef",
+    "dk_Alias",
+    "dk_Struct",
+    "dk_Union",
+    "dk_Enum",
+    "dk_Primitive",
+    "dk_String",
+    "dk_Sequence",
+    "dk_Array",
+    "dk_Repository",
+    "dk_Wstring",
+    "dk_Fixed",
+    "dk_Value",
+    "dk_ValueBox",
+    "dk_ValueMember",
+    "dk_Native",
+    "dk_AbstractInterface",
+    "dk_LocalInterface",
+    "dk_Component",
+    "dk_Home",
+    "dk_Factory",
+    "dk_Finder",
+    "dk_Emits",
+    "dk_Publishes",
+    "dk_Consumes",
+    "dk_Provides",
+    "dk_Uses",
+    "dk_Event"
     
   };
 
 static TAO::TypeCode::Enum<char const *,
-                           TAO::TypeCode::Enumerator<char const *> const *,
+                           char const * const *,
                            TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_DefinitionKind (
     "IDL:omg.org/CORBA/DefinitionKind:1.0",
@@ -142,6 +143,8 @@ namespace CORBA
 // be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_VersionSpec (
     "IDL:omg.org/CORBA/VersionSpec:1.0",
@@ -159,17 +162,19 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Contained_Description[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_Contained_Description[] =
   {
     { "kind", &CORBA::_tc_DefinitionKind },
     { "value", &CORBA::_tc_any }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_Contained_Description (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/Contained/Description:1.0",
     "Description",
     _tao_fields_CORBA_Contained_Description,
@@ -202,7 +207,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -213,7 +218,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_InterfaceDefSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_InterfaceDef,
@@ -226,6 +232,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_InterfaceDefSeq (
     "IDL:omg.org/CORBA/InterfaceDefSeq:1.0",
@@ -246,7 +254,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -257,7 +265,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ValueDefSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ValueDef,
@@ -270,6 +279,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ValueDefSeq (
     "IDL:omg.org/CORBA/ValueDefSeq:1.0",
@@ -290,7 +301,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -301,7 +312,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_AbstractInterfaceDefSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_AbstractInterfaceDef,
@@ -314,6 +326,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_AbstractInterfaceDefSeq (
     "IDL:omg.org/CORBA/AbstractInterfaceDefSeq:1.0",
@@ -334,7 +348,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -345,7 +359,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_LocalInterfaceDefSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_LocalInterfaceDef,
@@ -358,6 +373,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_LocalInterfaceDefSeq (
     "IDL:omg.org/CORBA/LocalInterfaceDefSeq:1.0",
@@ -378,7 +395,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -389,7 +406,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ExtInterfaceDefSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ExtInterfaceDef,
@@ -402,6 +420,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExtInterfaceDefSeq (
     "IDL:omg.org/CORBA/ExtInterfaceDefSeq:1.0",
@@ -422,7 +442,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -433,7 +453,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ExtValueDefSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ExtValueDef,
@@ -446,6 +467,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExtValueDefSeq (
     "IDL:omg.org/CORBA/ExtValueDefSeq:1.0",
@@ -466,7 +489,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -477,7 +500,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ExtAbstractInterfaceDefSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ExtAbstractInterfaceDef,
@@ -490,6 +514,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExtAbstractInterfaceDefSeq (
     "IDL:omg.org/CORBA/ExtAbstractInterfaceDefSeq:1.0",
@@ -510,7 +536,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace CORBA
 {
@@ -521,7 +547,8 @@ namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ExtLocalInterfaceDefSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ExtLocalInterfaceDef,
@@ -534,6 +561,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExtLocalInterfaceDefSeq (
     "IDL:omg.org/CORBA/ExtLocalInterfaceDefSeq:1.0",
@@ -554,13 +583,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ContainedSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_Contained,
@@ -573,6 +603,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ContainedSeq (
     "IDL:omg.org/CORBA/ContainedSeq:1.0",
@@ -590,7 +622,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_StructMember[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_StructMember[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "type", &CORBA::_tc_TypeCode },
@@ -598,10 +630,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_StructM
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_StructMember (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/StructMember:1.0",
     "StructMember",
     _tao_fields_CORBA_StructMember,
@@ -621,13 +655,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_StructMemberSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_StructMember,
@@ -640,6 +675,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_StructMemberSeq (
     "IDL:omg.org/CORBA/StructMemberSeq:1.0",
@@ -657,17 +694,19 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Initializer[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_Initializer[] =
   {
     { "members", &CORBA::_tc_StructMemberSeq },
     { "name", &CORBA::_tc_Identifier }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_Initializer (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/Initializer:1.0",
     "Initializer",
     _tao_fields_CORBA_Initializer,
@@ -687,13 +726,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_InitializerSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_Initializer,
@@ -706,6 +746,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_InitializerSeq (
     "IDL:omg.org/CORBA/InitializerSeq:1.0",
@@ -723,7 +765,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ExceptionDescription[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ExceptionDescription[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "id", &CORBA::_tc_RepositoryId },
@@ -733,10 +775,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Excepti
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExceptionDescription (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/ExceptionDescription:1.0",
     "ExceptionDescription",
     _tao_fields_CORBA_ExceptionDescription,
@@ -756,13 +800,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ExcDescriptionSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ExceptionDescription,
@@ -775,6 +820,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExcDescriptionSeq (
     "IDL:omg.org/CORBA/ExcDescriptionSeq:1.0",
@@ -792,7 +839,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ExtInitializer[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ExtInitializer[] =
   {
     { "members", &CORBA::_tc_StructMemberSeq },
     { "exceptions", &CORBA::_tc_ExcDescriptionSeq },
@@ -800,10 +847,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ExtInit
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExtInitializer (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/ExtInitializer:1.0",
     "ExtInitializer",
     _tao_fields_CORBA_ExtInitializer,
@@ -823,13 +872,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ExtInitializerSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ExtInitializer,
@@ -842,6 +892,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExtInitializerSeq (
     "IDL:omg.org/CORBA/ExtInitializerSeq:1.0",
@@ -859,7 +911,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_UnionMember[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_UnionMember[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "label", &CORBA::_tc_any },
@@ -868,10 +920,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_UnionMe
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_UnionMember (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/UnionMember:1.0",
     "UnionMember",
     _tao_fields_CORBA_UnionMember,
@@ -891,13 +945,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_UnionMemberSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_UnionMember,
@@ -910,6 +965,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_UnionMemberSeq (
     "IDL:omg.org/CORBA/UnionMemberSeq:1.0",
@@ -930,13 +987,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_EnumMemberSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_Identifier,
@@ -949,6 +1007,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_EnumMemberSeq (
     "IDL:omg.org/CORBA/EnumMemberSeq:1.0",
@@ -966,7 +1026,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Container_Description[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_Container_Description[] =
   {
     { "contained_object", &CORBA::_tc_Contained },
     { "kind", &CORBA::_tc_DefinitionKind },
@@ -974,10 +1034,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Contain
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_Container_Description (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/Container/Description:1.0",
     "Description",
     _tao_fields_CORBA_Container_Description,
@@ -992,13 +1054,14 @@ static TAO::TypeCode::Struct<char const *,
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_Container_DescriptionSeq_0 (
         CORBA::tk_sequence,
         &CORBA::Container::_tc_Description,
@@ -1011,6 +1074,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_Container_DescriptionSeq (
     "IDL:omg.org/CORBA/Container/DescriptionSeq:1.0",
@@ -1077,7 +1142,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_TypeDescription[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_TypeDescription[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "id", &CORBA::_tc_RepositoryId },
@@ -1087,10 +1152,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_TypeDes
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_TypeDescription (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/TypeDescription:1.0",
     "TypeDescription",
     _tao_fields_CORBA_TypeDescription,
@@ -1142,7 +1209,7 @@ TAO::Any_Impl_T<CORBA::IRObject>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -1197,7 +1264,7 @@ TAO::Any_Impl_T<CORBA::Contained>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -2470,7 +2537,7 @@ TAO::Any_Impl_T<CORBA::Container>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -2641,7 +2708,7 @@ TAO::Any_Impl_T<CORBA::IDLType>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -2696,7 +2763,7 @@ TAO::Any_Impl_T<CORBA::TypedefDef>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.

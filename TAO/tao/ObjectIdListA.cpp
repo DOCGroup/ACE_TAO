@@ -39,6 +39,8 @@
 // be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ORB_ObjectId (
     "IDL:omg.org/CORBA/ORB_ObjectId:1.0",
@@ -59,13 +61,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ORB_ObjectIdList_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ORB_ObjectId,
@@ -78,6 +81,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ORB_ObjectIdList (
     "IDL:omg.org/CORBA/ORB_ObjectIdList:1.0",

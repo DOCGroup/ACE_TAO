@@ -10,18 +10,16 @@
 #endif /* __ACE_INLINE__ */
 
 
-template <typename STRING_TYPE>
-TAO::TypeCode::Case<STRING_TYPE>::~Case (void)
+template <typename StringType, typename TypeCodeType>
+TAO::TypeCode::Case<StringType, TypeCodeType>::~Case (void)
 {
-  if (this->type_)
-    CORBA::release (*(this->type_));
 }
 
-template <typename STRING_TYPE>
+template <typename StringType, typename TypeCodeType>
 bool
-TAO::TypeCode::Case<STRING_TYPE>::equal (CORBA::ULong index,
-                                         CORBA::TypeCode_ptr tc
-                                         ACE_ENV_ARG_DECL) const
+TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
+                                                      CORBA::TypeCode_ptr tc
+                                                      ACE_ENV_ARG_DECL) const
 {
   // Check case names.
   char const * const lhs_name = this->name ();
@@ -53,11 +51,12 @@ TAO::TypeCode::Case<STRING_TYPE>::equal (CORBA::ULong index,
                             ACE_ENV_ARG_PARAMETER);
 }
 
-template <typename STRING_TYPE>
+template <typename StringType, typename TypeCodeType>
 bool
-TAO::TypeCode::Case<STRING_TYPE>::equivalent (CORBA::ULong index,
-                                              CORBA::TypeCode_ptr tc
-                                              ACE_ENV_ARG_DECL) const
+TAO::TypeCode::Case<StringType, TypeCodeType>::equivalent (
+  CORBA::ULong index,
+  CORBA::TypeCode_ptr tc
+  ACE_ENV_ARG_DECL) const
 {
   // Member names are ignore when determining equivalence.
 

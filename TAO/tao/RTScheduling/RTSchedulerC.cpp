@@ -26,21 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be/be_codegen.cpp:291
 
 
 #include "RTScheduler.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Enumerator.h"
-#include "tao/Enum_TypeCode.h"
-#include "tao/Objref_TypeCode.h"
-#include "tao/Sequence_TypeCode.h"
-#include "tao/String_TypeCode.h"
-#include "tao/Struct_TypeCode.h"
 #include "tao/Var_Size_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
@@ -53,14 +44,14 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be/be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:492
+  // be/be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_POLICYLIST__ARG_TRAITS_CS_)
 #define _CORBA_POLICYLIST__ARG_TRAITS_CS_
@@ -81,7 +72,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for RTScheduling::ThreadAction.
 
@@ -214,7 +205,7 @@ RTScheduling::ThreadAction::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for RTScheduling::DistributableThread.
 
@@ -347,7 +338,7 @@ RTScheduling::DistributableThread::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for RTScheduling::Current.
 
@@ -383,7 +374,7 @@ TAO::Objref_Traits<RTScheduling::Current>::marshal (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::UNSUPPORTED_SCHEDULING_DISCIPLINE (void)
   : CORBA::UserException (
@@ -471,7 +462,7 @@ CORBA::TypeCode_ptr RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_t
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/sequence_cs.cpp:65
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTSCHEDULING_CURRENT_IDTYPE_CS_)
 #define _RTSCHEDULING_CURRENT_IDTYPE_CS_
@@ -515,7 +506,7 @@ RTScheduling::Current::IdType::~IdType (void)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/sequence_cs.cpp:65
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTSCHEDULING_CURRENT_NAMELIST_CS_)
 #define _RTSCHEDULING_CURRENT_NAMELIST_CS_
@@ -658,7 +649,7 @@ RTScheduling::Current::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for RTScheduling::ResourceManager.
 
@@ -795,7 +786,7 @@ RTScheduling::ResourceManager::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for RTScheduling::Scheduler.
 
@@ -831,7 +822,7 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::marshal (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::INCOMPATIBLE_SCHEDULING_DISCIPLINES (void)
   : CORBA::UserException (
@@ -1016,7 +1007,7 @@ RTScheduling::Scheduler::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
+// be/be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -40,7 +40,10 @@ namespace TAO
      * This class implements a @c CORBA::TypeCode for an OMG IDL
      * @c union.
      */
-    template <typename StringType, class CaseArrayType, class RefCountPolicy>
+    template <typename StringType,
+              typename TypeCodeType,
+              class CaseArrayType,
+              class RefCountPolicy>
     class Union
       : public CORBA::TypeCode,
         private RefCountPolicy
@@ -49,13 +52,13 @@ namespace TAO
 
       /// @typedef Type of individual case array element, not the
       ///          array itself.
-      typedef TAO::TypeCode::Case<StringType> const case_type;
+      typedef TAO::TypeCode::Case<StringType, TypeCodeType> const case_type;
 
       /// Constructor.
       Union (char const * id,
              char const * name,
-             CORBA::TypeCode_ptr const * discriminant_type,
-             case_type * const * cases,
+             TypeCodeType const & discriminant_type,
+             CaseArrayType const & cases,
              CORBA::ULong ncases,
              CORBA::Long default_index);
 
@@ -104,11 +107,6 @@ namespace TAO
       virtual CORBA::Long default_index_i (ACE_ENV_SINGLE_ARG_DECL) const;
       //@}
 
-    private:
-
-      /// Get pointer to the underlying @c Case array.
-//       case_type const * cases (void) const;
-
       /// Return the number of cases in the IDL @c union, including
       /// the @c default case.
       CORBA::ULong case_count (void) const;
@@ -149,7 +147,7 @@ namespace TAO
       Base_Attributes<StringType> const base_attributes_;
 
       /// Type of IDL @c union discriminant.
-      CORBA::TypeCode_ptr const * const discriminant_type_;
+      TypeCodeType const discriminant_type_;
 
       /// Index of the default union case.
       /**

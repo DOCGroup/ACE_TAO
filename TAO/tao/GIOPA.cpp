@@ -39,9 +39,11 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_GIOP_AddressingDisposition (
     "IDL:omg.org/GIOP/AddressingDisposition:1.0",
@@ -57,19 +59,21 @@ namespace GIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_GIOP_Version[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_GIOP_Version[] =
   {
     { "major", &CORBA::_tc_octet },
     { "minor", &CORBA::_tc_octet }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_GIOP_Version (
+    CORBA::tk_struct,
     "IDL:omg.org/GIOP/Version:1.0",
     "Version",
     _tao_fields_GIOP_Version,
@@ -84,19 +88,21 @@ namespace GIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_GIOP_IORAddressingInfo[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_GIOP_IORAddressingInfo[] =
   {
     { "selected_profile_index", &CORBA::_tc_ulong },
     { "ior", &IOP::_tc_IOR }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_GIOP_IORAddressingInfo (
+    CORBA::tk_struct,
     "IDL:omg.org/GIOP/IORAddressingInfo:1.0",
     "IORAddressingInfo",
     _tao_fields_GIOP_IORAddressingInfo,
@@ -111,13 +117,13 @@ namespace GIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/union_typecode.cpp:29
+// be/be_visitor_typecode/union_typecode.cpp:29
 
-static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_0 (0, "object_key", &CORBA::_tc_OctetSeq);
-static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_1 (1, "profile", &IOP::_tc_TaggedProfile);
-static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_2 (2, "ior", &GIOP::_tc_IORAddressingInfo);
+static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *, CORBA::TypeCode_ptr const *> const _tao_cases_GIOP_TargetAddress_0 (0, "object_key", &CORBA::_tc_OctetSeq);
+static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *, CORBA::TypeCode_ptr const *> const _tao_cases_GIOP_TargetAddress_1 (1, "profile", &IOP::_tc_TaggedProfile);
+static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *, CORBA::TypeCode_ptr const *> const _tao_cases_GIOP_TargetAddress_2 (2, "ior", &GIOP::_tc_IORAddressingInfo);
 
-static TAO::TypeCode::Case<char const *> const * const _tao_cases_GIOP_TargetAddress[] =
+static TAO::TypeCode::Case<char const *, CORBA::TypeCode_ptr const *> const * const _tao_cases_GIOP_TargetAddress[] =
   {
     &_tao_cases_GIOP_TargetAddress_0,
     &_tao_cases_GIOP_TargetAddress_1,
@@ -126,7 +132,9 @@ static TAO::TypeCode::Case<char const *> const * const _tao_cases_GIOP_TargetAdd
   };
 
 static TAO::TypeCode::Union<char const *,
-                            TAO::TypeCode::Case<char const *> const * const *,
+                            CORBA::TypeCode_ptr const *,
+                            TAO::TypeCode::Case<char const *,
+                                                CORBA::TypeCode_ptr const *> const * const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_GIOP_TargetAddress (
     "IDL:omg.org/GIOP/TargetAddress:1.0",
@@ -144,7 +152,7 @@ namespace GIOP
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -202,7 +210,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -260,7 +268,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_union/any_op_cs.cpp:54
+// be/be_visitor_union/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

@@ -37,7 +37,7 @@ namespace TAO
      * This class implements a @c CORBA::TypeCode for OMG IDL
      * @c sequence and array types.
      */
-    template <class RefCountPolicy>
+    template <typename TypeCodeType, class RefCountPolicy>
     class Sequence
       : public CORBA::TypeCode
       , private RefCountPolicy
@@ -46,11 +46,8 @@ namespace TAO
 
       /// Constructor.
       Sequence (CORBA::TCKind kind,
-                CORBA::TypeCode_ptr const * content_type,
+                TypeCodeType const & content_type,
                 CORBA::ULong length);
-
-      /// Destructor.
-      ~Sequence (void);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -108,7 +105,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c TypeCode::Sequence.
        */
-      CORBA::TypeCode_ptr const * const content_type_;
+      TypeCodeType const content_type_;
 
       /// Length of the @c sequence or array.  A length of zero
       /// indicates an unbounded @c sequence.

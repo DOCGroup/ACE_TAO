@@ -32,7 +32,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template<typename StringType> struct Struct_Field;
+    template<typename StringType, typename TypeCodeType> struct Struct_Field;
 
     /**
      * @class Struct
@@ -44,8 +44,8 @@ namespace TAO
      * @c struct or @c exception.
      */
     template <typename StringType,
+              typename TypeCodeType,
               class FieldArrayType,
-              CORBA::TCKind Kind,
               class RefCountPolicy>
     class Struct
       : public CORBA::TypeCode,
@@ -54,9 +54,10 @@ namespace TAO
     public:
 
       /// Constructor.
-      Struct (char const * id,
+      Struct (CORBA::TCKind kind,
+              char const * id,
               char const * name,
-              Struct_Field<StringType> const * fields,
+              FieldArrayType const & fields,
               CORBA::ULong nfields);
 
       /**
@@ -102,10 +103,12 @@ namespace TAO
 
     private:
 
-      /// Get pointer to the underlying @c Field array.
-      Struct_Field<StringType> const * fields (void) const;
-
-    private:
+      /// The kind of TypeCode.
+      /**
+       * The @c kind_ may be either @c CORBA::tk_struct or
+       * @c CORBA::tk_except.
+       */
+      CORBA::TCKind const kind_;
 
       /**
        * @c Struct Attributes

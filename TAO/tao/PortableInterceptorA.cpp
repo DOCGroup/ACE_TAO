@@ -58,17 +58,19 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_PortableInterceptor_ForwardRequest[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableInterceptor_ForwardRequest[] =
   {
     { "forward", &CORBA::_tc_Object },
     { "permanent", &CORBA::_tc_boolean }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ForwardRequest (
+    CORBA::tk_except,
     "IDL:omg.org/PortableInterceptor/ForwardRequest:1.0",
     "ForwardRequest",
     _tao_fields_PortableInterceptor_ForwardRequest,
@@ -86,6 +88,8 @@ namespace PortableInterceptor
 // be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ReplyStatus (
     "IDL:omg.org/PortableInterceptor/ReplyStatus:1.0",
@@ -104,6 +108,8 @@ namespace PortableInterceptor
 // be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_SlotId (
     "IDL:omg.org/PortableInterceptor/SlotId:1.0",
@@ -121,12 +127,14 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableInterceptor_InvalidSlot = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_InvalidSlot = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_InvalidSlot (
+    CORBA::tk_except,
     "IDL:omg.org/PortableInterceptor/InvalidSlot:1.0",
     "InvalidSlot",
     _tao_fields_PortableInterceptor_InvalidSlot,
@@ -270,6 +278,8 @@ namespace PortableInterceptor
 // be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ORBInitInfo_ObjectId (
     "IDL:omg.org/PortableInterceptor/ORBInitInfo/ObjectId:1.0",
@@ -282,16 +292,18 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_PortableInterceptor_ORBInitInfo_DuplicateName[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableInterceptor_ORBInitInfo_DuplicateName[] =
   {
     { "name", &CORBA::_tc_string }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ORBInitInfo_DuplicateName (
+    CORBA::tk_except,
     "IDL:omg.org/PortableInterceptor/ORBInitInfo/DuplicateName:1.0",
     "DuplicateName",
     _tao_fields_PortableInterceptor_ORBInitInfo_DuplicateName,
@@ -303,12 +315,14 @@ static TAO::TypeCode::Struct<char const *,
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableInterceptor_ORBInitInfo_InvalidName = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_ORBInitInfo_InvalidName = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ORBInitInfo_InvalidName (
+    CORBA::tk_except,
     "IDL:omg.org/PortableInterceptor/ORBInitInfo/InvalidName:1.0",
     "InvalidName",
     _tao_fields_PortableInterceptor_ORBInitInfo_InvalidName,
@@ -363,7 +377,7 @@ TAO::Any_Impl_T<PortableInterceptor::Interceptor>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -602,7 +616,7 @@ TAO::Any_Impl_T<PortableInterceptor::Current>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -671,7 +685,7 @@ TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -740,7 +754,7 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -809,7 +823,7 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -878,7 +892,7 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -947,7 +961,7 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -1016,7 +1030,7 @@ TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -1085,7 +1099,7 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -1298,7 +1312,7 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>

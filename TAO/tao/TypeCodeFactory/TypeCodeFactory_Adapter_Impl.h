@@ -190,6 +190,64 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /**
+   * @name TAO-specific TypeCode factory methods.
+   *
+   * Factory methods that has no corresponding TypeCodeFactory IDL,
+   * i.e. they are specific to TAO.
+   */
+  //@{
+  /// Extract a TypeCode @a tc from the given CDR stream @a cdr.
+  virtual bool extract_typecode (TAO_InputCDR & cdr,
+                                 CORBA::TypeCode_ptr & tc);
+
+  /// Create an enumeration TypeCode.
+  virtual CORBA::TypeCode_ptr create_enum_tc (
+    char const * id,
+    char const * name,
+    ACE_Array_Base<CORBA::String_var> const & enumerators,
+    CORBA::ULong ncases
+    ACE_ENV_ARG_DECL);
+
+  /// Create a structure or exception TypeCode.
+  virtual CORBA::TypeCode_ptr create_struct_except_tc (
+    CORBA::TCKind,
+    char const * id,
+    char const * name,
+    ACE_Array_Base<
+      TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                  CORBA::TypeCode_var> > const & fields,
+    CORBA::ULong nfields
+    ACE_ENV_ARG_DECL);
+
+  /// Create a union TypeCode.
+  virtual CORBA::TypeCode_ptr create_union_tc (
+    char const * id,
+    char const * name,
+    CORBA::TypeCode_ptr discriminant_type,
+    ACE_Array_Base<TAO::TypeCode::Case<CORBA::String_var,
+                                       CORBA::TypeCode_var> > const & cases,
+    CORBA::ULong ncases,
+    CORBA::Long default_index,
+    char const * default_case_name,
+    CORBA::TypeCode_ptr default_case_type
+    ACE_ENV_ARG_DECL);
+
+  /// Create a valuetype or eventtype TypeCode.
+  virtual CORBA::TypeCode_ptr create_value_event_tc (
+    CORBA::TCKind,
+    char const * id,
+    char const * name,
+    CORBA::ValueModifier modifier,
+    CORBA::TypeCode_ptr concrete_base,
+    ACE_Array_Base<
+      TAO::TypeCode::Value_Field<CORBA::String_var,
+                                 CORBA::TypeCode_var> > const & fields,
+    CORBA::ULong nfields
+    ACE_ENV_ARG_DECL);
+  //@}
+
+
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 };

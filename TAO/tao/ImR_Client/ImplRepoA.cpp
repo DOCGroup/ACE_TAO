@@ -29,7 +29,6 @@
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Enumerator.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
@@ -42,14 +41,16 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_ImplementationRepository_AlreadyRegistered = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_ImplementationRepository_AlreadyRegistered = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_AlreadyRegistered (
+    CORBA::tk_except,
     "IDL:ImplementationRepository/AlreadyRegistered:1.0",
     "AlreadyRegistered",
     _tao_fields_ImplementationRepository_AlreadyRegistered,
@@ -64,18 +65,20 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_ImplementationRepository_CannotActivate[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_ImplementationRepository_CannotActivate[] =
   {
     { "reason", &CORBA::_tc_string }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_CannotActivate (
+    CORBA::tk_except,
     "IDL:ImplementationRepository/CannotActivate:1.0",
     "CannotActivate",
     _tao_fields_ImplementationRepository_CannotActivate,
@@ -90,14 +93,16 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_ImplementationRepository_NotFound = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_ImplementationRepository_NotFound = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_NotFound (
+    CORBA::tk_except,
     "IDL:ImplementationRepository/NotFound:1.0",
     "NotFound",
     _tao_fields_ImplementationRepository_NotFound,
@@ -112,19 +117,21 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_ImplementationRepository_EnvironmentVariable[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_ImplementationRepository_EnvironmentVariable[] =
   {
     { "name", &CORBA::_tc_string },
     { "value", &CORBA::_tc_string }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_EnvironmentVariable (
+    CORBA::tk_struct,
     "IDL:ImplementationRepository/EnvironmentVariable:1.0",
     "EnvironmentVariable",
     _tao_fields_ImplementationRepository_EnvironmentVariable,
@@ -139,18 +146,19 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       ImplementationRepository_EnvironmentList_0 (
         CORBA::tk_sequence,
         &ImplementationRepository::_tc_EnvironmentVariable,
@@ -163,6 +171,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_EnvironmentList (
     "IDL:ImplementationRepository/EnvironmentList:1.0",
@@ -178,19 +188,19 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/enum_typecode.cpp:34
+// be/be_visitor_typecode/enum_typecode.cpp:34
 
-static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_ImplementationRepository_ActivationMode[] =
+static char const * const _tao_enumerators_ImplementationRepository_ActivationMode[] =
   {
-    { "NORMAL" },
-    { "MANUAL" },
-    { "PER_CLIENT" },
-    { "AUTO_START" }
+    "NORMAL",
+    "MANUAL",
+    "PER_CLIENT",
+    "AUTO_START"
     
   };
 
 static TAO::TypeCode::Enum<char const *,
-                           TAO::TypeCode::Enumerator<char const *> const *,
+                           char const * const *,
                            TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_ActivationMode (
     "IDL:ImplementationRepository/ActivationMode:1.0",
@@ -207,9 +217,9 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_ImplementationRepository_StartupOptions[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_ImplementationRepository_StartupOptions[] =
   {
     { "command_line", &CORBA::_tc_string },
     { "environment", &ImplementationRepository::_tc_EnvironmentList },
@@ -220,10 +230,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_Implementatio
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_StartupOptions (
+    CORBA::tk_struct,
     "IDL:ImplementationRepository/StartupOptions:1.0",
     "StartupOptions",
     _tao_fields_ImplementationRepository_StartupOptions,
@@ -238,9 +250,9 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_ImplementationRepository_ServerInformation[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_ImplementationRepository_ServerInformation[] =
   {
     { "server", &CORBA::_tc_string },
     { "startup", &ImplementationRepository::_tc_StartupOptions },
@@ -248,10 +260,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_Implementatio
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_ServerInformation (
+    CORBA::tk_struct,
     "IDL:ImplementationRepository/ServerInformation:1.0",
     "ServerInformation",
     _tao_fields_ImplementationRepository_ServerInformation,
@@ -266,18 +280,19 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       ImplementationRepository_ServerInformationList_0 (
         CORBA::tk_sequence,
         &ImplementationRepository::_tc_ServerInformation,
@@ -290,6 +305,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_ImplementationRepository_ServerInformationList (
     "IDL:ImplementationRepository/ServerInformationList:1.0",
@@ -305,7 +322,7 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_objref,
@@ -323,7 +340,7 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_objref,
@@ -341,7 +358,7 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -426,7 +443,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -511,7 +528,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -596,7 +613,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -654,7 +671,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -712,7 +729,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_cs.cpp:52
+// be/be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -740,7 +757,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -798,7 +815,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -856,7 +873,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -914,7 +931,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -969,7 +986,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean

@@ -38,7 +38,7 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
                                       + node->flat_name ());
 
   // Generate array containing enum field characteristics.
-  os << "static TAO::TypeCode::Enumerator<char const *> const "
+  os << "static char const * const "
      << enumerators_name.c_str ()
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
@@ -52,7 +52,7 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Enum<char const *," << be_nl
-    << "                           TAO::TypeCode::Enumerator<char const *> const *," << be_nl
+    << "                           char const * const *," << be_nl
     << "                           TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
@@ -81,7 +81,7 @@ TAO::be_visitor_enum_typecode::visit_members (be_enum * node)
       AST_EnumVal * const item = AST_EnumVal::narrow_from_decl (d);
 
       // os << item->name ();
-      os << "{ \"" << item->original_local_name () << "\" }";
+      os << "\"" << item->original_local_name () << "\"";
 
       if (n < count - 1)
         os << ",";

@@ -332,9 +332,10 @@ namespace TAO
     char const tc_value_base_id[]   = "IDL:omg.org/CORBA/ValueBase:1.0";
     char const tc_value_base_name[] = "ValueBase";
     Value<char const *,
-          Value_Field<char const *> const *,
-          CORBA::tk_value,
-          TAO::Null_RefCount_Policy> tc_ValueBase (tc_value_base_id,
+          CORBA::TypeCode_ptr const *,
+          Value_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+          TAO::Null_RefCount_Policy> tc_ValueBase (CORBA::tk_value,
+                                                   tc_value_base_id,
                                                    tc_value_base_name,
                                                    CORBA::VM_NONE,
                                                    &CORBA::_tc_null,
@@ -344,9 +345,10 @@ namespace TAO
     char const tc_event_base_id[]   = "IDL:omg.org/CORBA/EventBase:1.0";
     char const tc_event_base_name[] = "EventBase";
     Value<char const *,
-          Value_Field<char const *> const *,
-          CORBA::tk_event,
-          TAO::Null_RefCount_Policy> tc_EventBase (tc_event_base_id,
+          CORBA::TypeCode_ptr const *,
+          Value_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+          TAO::Null_RefCount_Policy> tc_EventBase (CORBA::tk_event,
+                                                   tc_event_base_id,
                                                    tc_event_base_name,
                                                    CORBA::VM_NONE,
                                                    &CORBA::_tc_null,
@@ -354,12 +356,16 @@ namespace TAO
                                                    0); // Field count
 
     Alias<char const *,
+          CORBA::TypeCode_ptr const *,
+          CORBA::tk_alias,
           TAO::Null_RefCount_Policy> tc_Visibility (
      "IDL:omg.org/CORBA/Visibility:1.0",
      "Visibility",
      &CORBA::_tc_short);
 
     Alias<char const *,
+          CORBA::TypeCode_ptr const *,
+          CORBA::tk_alias,
           TAO::Null_RefCount_Policy> tc_ValueModifier (
      "IDL:omg.org/CORBA/ValueModifier:1.0",
      "ValueModifier",
@@ -370,6 +376,7 @@ namespace TAO
 namespace CORBA
 {
   TypeCode_ptr const _tc_ValueBase     = &TAO::TypeCode::tc_ValueBase;
+  TypeCode_ptr const _tc_EventBase     = &TAO::TypeCode::tc_EventBase;
   TypeCode_ptr const _tc_Visibility    = &TAO::TypeCode::tc_Visibility;
   TypeCode_ptr const _tc_ValueModifier = &TAO::TypeCode::tc_ValueModifier;
 }
