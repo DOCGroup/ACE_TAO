@@ -343,23 +343,30 @@ test_ostream (void)
   // Open up the file.
   if (connector.connect (file,
                          ACE_FILE_Addr (filename)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+  {
+	  // Set the ostream back to NULL to prevent "later functions using myostream".
+	  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+      ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("connect failed for %p\n"),
                        filename),
                       1);
+  }
+
   // Unlink this file right away so that it is automatically removed
-  // when the process exits.
-  else if (ACE_OS::unlink (filename) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("unlink failed for %p\n"),
-                       filename),
-                      1);
+  // when the process exits.Ignore error returns in case this operation
+  // is not supported.
+  ACE_OS::unlink(filename);
+ 
   ACE_FILE_Info info;
   if (file.get_info (info) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+  {
+	  // Set the ostream back to NULL to prevent "later functions using myostream".
+	  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+	  ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("get_info failed on %p\n"),
                        filename),
                       -1);
+  }
 
   // Allocate the input buffer
   char *buffer;
@@ -373,11 +380,15 @@ test_ostream (void)
   ssize_t size = file.recv (buffer,
                             info.size_);
   if (size != info.size_)
+  {
+	// Set the ostream back to NULL to prevent "later functions using myostream".
+	ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
                        size,
                        info.size_),
                       -1);
+  }
   // Make sure to NUL-terminate this turkey!
   buffer[size] = '\0';
 
@@ -404,7 +415,6 @@ int
 main (int, char *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Log_Msg_Test"));
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("**** running ostream test\n")));
 
