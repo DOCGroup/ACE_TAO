@@ -4202,6 +4202,8 @@ public:
                         FILE *fp);
   static void rewind (FILE *fp);
 
+  static int fseek (FILE *fp, long offset, int ptrname);
+
   // = A set of wrappers for file locks.
   static int flock_init (ACE_OS::ace_flock_t *lock,
                          int flags = 0,
@@ -4923,9 +4925,9 @@ public:
 #     endif /* 0 */
   // the following three are newly added for CE.
   // but they can also be use on Win32.
-//   static char *fgets (wchar_t *buf,
-//                       int size,
-//                       FILE *fp);
+  //   static char *fgets (wchar_t *buf,
+  //                       int size,
+  //                       FILE *fp);
   static int fprintf (FILE *fp,
                       const wchar_t *format,
                       ...);
