@@ -1,0 +1,236 @@
+#
+# Makefile for building the TAO orbsvcs library
+#
+
+NAME = orbsvcs
+
+TAO_IDL = $(BINDIR)\tao_idl$(DECORATOR) -g \
+        $(BINDIR)\gperf$(DECORATOR).exe \
+	-I..\.. -Wb,export_macro=TAO_ORBSVCS_Export \
+        -Wb,export_include=orbsvcs_export.h
+
+OBJFILES = \
+	$(OBJDIR)\CosConcurrencyControlC.obj \
+	$(OBJDIR)\CosConcurrencyControlS.obj \
+	$(OBJDIR)\CosEventCommC.obj \
+	$(OBJDIR)\CosEventCommS.obj \
+	$(OBJDIR)\CosEventChannelAdminC.obj \
+	$(OBJDIR)\CosEventChannelAdminS.obj \
+	$(OBJDIR)\CosNamingC.obj \
+	$(OBJDIR)\CosNamingS.obj \
+	$(OBJDIR)\CosLifeCycleC.obj \
+	$(OBJDIR)\CosLifeCycleS.obj \
+	$(OBJDIR)\CosPropertyServiceC.obj \
+	$(OBJDIR)\CosPropertyServiceS.obj \
+	$(OBJDIR)\AVStreamsC.obj \
+	$(OBJDIR)\AVStreamsS.obj \
+	$(OBJDIR)\CosTradingC.obj \
+	$(OBJDIR)\CosTradingS.obj \
+	$(OBJDIR)\CosTradingDynamicC.obj \
+	$(OBJDIR)\CosTradingDynamicS.obj \
+	$(OBJDIR)\CosTradingReposC.obj \
+	$(OBJDIR)\CosTradingReposS.obj \
+	$(OBJDIR)\PingC.obj \
+	$(OBJDIR)\PingS.obj \
+	$(OBJDIR)\ImplRepoC.obj \
+	$(OBJDIR)\ImplRepoS.obj \
+	$(OBJDIR)\LifeCycleServiceC.obj \
+	$(OBJDIR)\LifeCycleServiceS.obj \
+	$(OBJDIR)\LoggerC.obj \
+	$(OBJDIR)\LoggerS.obj \
+	$(OBJDIR)\Null_MediaCtrlC.obj \
+	$(OBJDIR)\Null_MediaCtrlS.obj \
+	$(OBJDIR)\TimeBaseC.obj \
+	$(OBJDIR)\TimeBaseS.obj \
+	$(OBJDIR)\RtecEventCommC.obj \
+	$(OBJDIR)\RtecEventCommS.obj \
+	$(OBJDIR)\RtecSchedulerC.obj \
+	$(OBJDIR)\RtecSchedulerS.obj \
+	$(OBJDIR)\RtecEventChannelAdminC.obj \
+	$(OBJDIR)\RtecEventChannelAdminS.obj \
+	$(OBJDIR)\RtecUDPAdminC.obj \
+	$(OBJDIR)\RtecUDPAdminS.obj \
+	$(OBJDIR)\sfpC.obj \
+	$(OBJDIR)\sfpS.obj \
+	$(OBJDIR)\TimeServiceC.obj \
+	$(OBJDIR)\TimeServiceS.obj \
+	$(OBJDIR)\AVStreams_i.obj \
+	$(OBJDIR)\BCU.obj \
+	$(OBJDIR)\CC_LockSet.obj \
+	$(OBJDIR)\CC_LockSetFactory.obj \
+	$(OBJDIR)\Concurrency_Utils.obj \
+	$(OBJDIR)\Config_Scheduler.obj \
+	$(OBJDIR)\Constraint_Interpreter.obj \
+	$(OBJDIR)\Constraint_l.obj \
+	$(OBJDIR)\Constraint_Nodes.obj \
+	$(OBJDIR)\Constraint_Visitors.obj \
+	$(OBJDIR)\Constraint_y.obj \
+	$(OBJDIR)\ConsumerAdmin_i.obj \
+	$(OBJDIR)\CosEvent_Utilities.obj \
+	$(OBJDIR)\CosPropertyService_i.obj \
+	$(OBJDIR)\Dispatching_Modules.obj \
+	$(OBJDIR)\DynSched.obj \
+	$(OBJDIR)\EC_Basic_Factory.obj \
+	$(OBJDIR)\EC_Basic_Filter_Builder.obj \
+	$(OBJDIR)\EC_Busy_Lock.obj \
+	$(OBJDIR)\EC_Conjunction_Filter.obj \
+	$(OBJDIR)\EC_ConsumerAdmin.obj \
+	$(OBJDIR)\EC_Default_Factory.obj \
+	$(OBJDIR)\EC_Disjunction_Filter.obj \
+	$(OBJDIR)\EC_Dispatching.obj \
+	$(OBJDIR)\EC_Dispatching_Task.obj \
+	$(OBJDIR)\EC_Event_Channel.obj \
+	$(OBJDIR)\EC_Factory.obj \
+	$(OBJDIR)\EC_Filter.obj \
+	$(OBJDIR)\EC_Filter_Builder.obj \
+	$(OBJDIR)\EC_Gateway.obj \
+	$(OBJDIR)\EC_Gateway_UDP.obj \
+	$(OBJDIR)\EC_MT_Dispatching.obj \
+	$(OBJDIR)\EC_Null_Factory.obj \
+	$(OBJDIR)\EC_Null_Scheduling.obj \
+	$(OBJDIR)\EC_ObserverStrategy.obj \
+	$(OBJDIR)\EC_Per_Supplier_Filter.obj \
+	$(OBJDIR)\EC_Priority_Dispatching.obj \
+	$(OBJDIR)\EC_Priority_Scheduling.obj \
+	$(OBJDIR)\EC_ProxyConsumer.obj \
+	$(OBJDIR)\EC_ProxyPushSupplier_Set.obj \
+	$(OBJDIR)\EC_ProxySupplier.obj \
+	$(OBJDIR)\EC_QOS_Info.obj \
+	$(OBJDIR)\EC_Reactive_Timeout_Generator.obj \
+	$(OBJDIR)\EC_Sched_Filter.obj \
+	$(OBJDIR)\EC_Sched_Filter_Builder.obj \
+	$(OBJDIR)\EC_Scheduling_Strategy.obj \
+	$(OBJDIR)\EC_Supplier_Filter_Builder.obj \
+	$(OBJDIR)\EC_SupplierAdmin.obj \
+	$(OBJDIR)\EC_SupplierFiltering.obj \
+	$(OBJDIR)\EC_Timeout_Filter.obj \
+	$(OBJDIR)\EC_Timeout_Generator.obj \
+	$(OBJDIR)\EC_Trivial_Supplier_Filter.obj \
+	$(OBJDIR)\EC_Type_Filter.obj \
+	$(OBJDIR)\EC_UDP_Admin.obj \
+	$(OBJDIR)\Endpoint_Strategy.obj \
+	$(OBJDIR)\Entries.obj \
+	$(OBJDIR)\Event_Channel.obj \
+	$(OBJDIR)\Event_Manip.obj \
+	$(OBJDIR)\Event_Utilities.obj \
+	$(OBJDIR)\EventChannel_i.obj \
+	$(OBJDIR)\Hash_Naming_Context.obj \
+	$(OBJDIR)\IOR_Multicast.obj \
+	$(OBJDIR)\Local_ESTypes.obj \
+	$(OBJDIR)\Logger_i.obj \
+	$(OBJDIR)\Memory_Pools.obj \
+	$(OBJDIR)\Module_Factory.obj \
+	$(OBJDIR)\Naming_Context.obj \
+	$(OBJDIR)\Naming_Utils.obj \
+	$(OBJDIR)\Offer_Iterators.obj \
+	$(OBJDIR)\Persistent_Context_Index.obj \
+	$(OBJDIR)\Persistent_Entries.obj \
+	$(OBJDIR)\Persistent_Naming_Context.obj \
+	$(OBJDIR)\ProxyPushConsumer_i.obj \
+	$(OBJDIR)\ProxyPushSupplier_i.obj \
+	$(OBJDIR)\ReactorTask.obj \
+	$(OBJDIR)\RT_Task.obj \
+	$(OBJDIR)\Runtime_Scheduler.obj \
+	$(OBJDIR)\SchedEntry.obj \
+	$(OBJDIR)\Scheduler.obj \
+	$(OBJDIR)\Scheduler_Factory.obj \
+	$(OBJDIR)\Scheduler_Generic.obj \
+	$(OBJDIR)\Scheduler_Utilities.obj \
+	$(OBJDIR)\Service_Type_Repository.obj \
+	$(OBJDIR)\sfp.obj \
+	$(OBJDIR)\Strategy_Scheduler.obj \
+	$(OBJDIR)\SupplierAdmin_i.obj \
+	$(OBJDIR)\TAO_Time_Service_Clerk.obj \
+	$(OBJDIR)\TAO_Time_Service_Server.obj \
+	$(OBJDIR)\TAO_TIO.obj \
+	$(OBJDIR)\TAO_UTO.obj \
+	$(OBJDIR)\Time_Utilities.obj \
+	$(OBJDIR)\Timer_Helper.obj \
+	$(OBJDIR)\Timer_Module.obj \
+	$(OBJDIR)\Trader.obj \
+	$(OBJDIR)\Trader_Utils.obj \
+	$(OBJDIR)\Transient_Naming_Context.obj
+
+CFLAGS = -I..\..\.. -I..\.. -I.. $(ACE_CFLAGS) $(TAO_CFLAGS) \
+	$(ORBSVCS_BUILD_CFLAGS) $(ORBSVCS_CFLAGS)
+
+CPPDIR = .;AV;Event;concurrency;Sched;Trader;Naming;CosEvent;Time;Property;Log
+BASE_OBJDIR = .\bor\obj
+BINDIR = $(ACE_ROOT)\bin
+IDLDIR = .
+
+LIBFILES = \
+	$(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib \
+	$(ACE_ROOT)\bin\tao$(LIB_DECORATOR).lib
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\AVStreamsC.cpp $(IDLDIR)\AVStreamsS.cpp: $(IDLDIR)\AVStreams.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosConcurrencyControlC.cpp $(IDLDIR)\CosConcurrencyControlS.cpp: $(IDLDIR)\CosConcurrencyControl.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosEventCommC.cpp $(IDLDIR)\CosEventCommS.cpp: $(IDLDIR)\CosEventComm.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosEventChannelAdminC.cpp $(IDLDIR)\CosEventChannelAdminS.cpp: $(IDLDIR)\CosEventChannelAdmin.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosNamingC.cpp $(IDLDIR)\CosNamingS.cpp: $(IDLDIR)\CosNaming.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosLifeCycleC.cpp $(IDLDIR)\CosLifeCycleS.cpp: $(IDLDIR)\CosLifeCycle.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosPropertyServiceC.cpp $(IDLDIR)\CosPropertyServiceS.cpp: $(IDLDIR)\CosPropertyService.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosTradingC.cpp $(IDLDIR)\CosTradingS.cpp: $(IDLDIR)\CosTrading.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosTradingDynamicC.cpp $(IDLDIR)\CosTradingDynamicS.cpp: $(IDLDIR)\CosTradingDynamic.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\CosTradingReposC.cpp $(IDLDIR)\CosTradingReposS.cpp: $(IDLDIR)\CosTradingRepos.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\PingC.cpp $(IDLDIR)\PingS.cpp: $(IDLDIR)\Ping.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\ImplRepoC.cpp $(IDLDIR)\ImplRepoS.cpp: $(IDLDIR)\ImplRepo.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\LifeCycleServiceC.cpp $(IDLDIR)\LifeCycleServiceS.cpp: $(IDLDIR)\LifeCycleService.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\LoggerC.cpp $(IDLDIR)\LoggerS.cpp: $(IDLDIR)\Logger.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\Null_MediaCtrlC.cpp $(IDLDIR)\Null_MediaCtrlS.cpp: $(IDLDIR)\Null_MediaCtrl.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\RtecEventCommC.cpp $(IDLDIR)\RtecEventCommS.cpp: $(IDLDIR)\RtecEventComm.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\RtecSchedulerC.cpp $(IDLDIR)\RtecSchedulerS.cpp: $(IDLDIR)\RtecScheduler.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\RtecEventChannelAdminC.cpp $(IDLDIR)\RtecEventChannelAdminS.cpp: $(IDLDIR)\RtecEventChannelAdmin.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\RtecUDPAdminC.cpp $(IDLDIR)\RtecUDPAdminS.cpp: $(IDLDIR)\RtecUDPAdmin.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\sfpC.cpp $(IDLDIR)\sfpS.cpp: $(IDLDIR)\sfp.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\TimeBaseC.cpp $(IDLDIR)\TimeBaseS.cpp: $(IDLDIR)\TimeBase.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\TimeServiceC.cpp $(IDLDIR)\TimeServiceS.cpp: $(IDLDIR)\TimeService.idl
+	$(TAO_IDL) $**
