@@ -1,6 +1,4 @@
-project(* sequence server) : server, strategies {
-  after += DynamicInterface
-  libs    += TAO_DynamicInterface
+project(* sequence server) : server, strategies, dynamicinterface {
   avoids  += minimum_corba
 
   IDL_Files {

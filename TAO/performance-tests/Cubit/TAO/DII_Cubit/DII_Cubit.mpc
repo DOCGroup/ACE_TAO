@@ -1,7 +1,6 @@
 project(*client): taoserver, strategies, dynamicinterface {
   exename   = client
   after    += IDL_Cubit_Server_Exe 
-  libs     += 
   idlflags += -Gd
 
   Source_Files {
