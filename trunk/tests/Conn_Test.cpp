@@ -573,29 +573,24 @@ spawn_threads (ACCEPTOR *acceptor,
 #if defined (VXWORKS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *server_name;
-  ACE_NEW (server_name,
-           ACE_thread_t[n_servers]);
+  ACE_NEW_RETURN (server_name, ACE_thread_t[n_servers], -1);
 
   // And test ability to provide stacks.
   size_t *stack_size;
-  ACE_NEW (stack_size,
-           size_t[n_servers]);
+  ACE_NEW_RETURN (stack_size, size_t[n_servers], -1);
   char **stack;
-  ACE_NEW (stack,
-           char *[n_servers]);
+  ACE_NEW_RETURN (stack, char *[n_servers], -1);
 
   int i;
 
   for (i = 0; i < n_servers; ++i)
     {
-      ACE_NEW (server_name[i],
-               ASYS_TCHAR[32]);
+      ACE_NEW_RETURN (server_name[i], ASYS_TCHAR[32], -1);
       ACE_OS::sprintf (server_name[i],
                        ASYS_TEXT ("server%u"),
                        i);
       stack_size[i] = 40000;
-      ACE_NEW (stack[i],
-               char[stack_size[i]]);
+      ACE_NEW_RETURN (stack[i], char[stack_size[i]], -1);
 
       // Initialize the stack for checkStack.
       ACE_OS::memset (stack[i], 0xEE, stack_size[i]);
