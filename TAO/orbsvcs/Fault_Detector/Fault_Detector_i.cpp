@@ -11,7 +11,6 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#include "ace/pre.h"
 #include "Fault_Detector_i.h"
 #include "FT_FaultDetectorFactory_i.h"
 
@@ -186,4 +185,3 @@ ACE_THR_FUNC_RETURN Fault_Detector_i::thr_func (void * arg)
   return 0;
 }
 
-#include "ace/post.h"

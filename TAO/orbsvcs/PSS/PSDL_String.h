@@ -12,7 +12,7 @@
 
 #ifndef TAO_PSDL_STRING_H
 #define TAO_PSDL_STRING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "psdl_export.h"
 
@@ -81,5 +81,5 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PSDL_STRING_H */

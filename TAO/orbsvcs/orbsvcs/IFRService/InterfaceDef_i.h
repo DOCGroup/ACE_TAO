@@ -36,9 +36,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_InterfaceDef_i : public virtual TAO_Container_i,
-                                                 public virtual TAO_Contained_i,
-                                                 public virtual TAO_IDLType_i
+class TAO_IFRService_Export TAO_InterfaceDef_i 
+  : public virtual TAO_Container_i,
+    public virtual TAO_Contained_i,
+    public virtual TAO_IDLType_i
 {
   // = TITLE
   //    TAO_InterfaceDef_i

@@ -16,7 +16,7 @@
 #ifndef TAO_SSLIOP_ACCEPT_STRATEGY_H
 #define TAO_SSLIOP_ACCEPT_STRATEGY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -82,6 +82,6 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_ACCEPT_STRATEGY_H */

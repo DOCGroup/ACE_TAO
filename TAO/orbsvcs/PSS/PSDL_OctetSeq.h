@@ -14,7 +14,7 @@
 
 #ifndef TAO_PSDL_OCTETSEQ_H
 #define TAO_PSDL_OCTETSEQ_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "psdl_export.h"
 #include "tao/OctetSeqC.h"
@@ -74,5 +74,5 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PSDL_OCTETSEQ_H */

@@ -5,6 +5,10 @@
 
 #if ! defined (VXWORKS)
 
+#if defined (ACE_METRICS_COLLECTION)
+
+#if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
+
 // Comment out both of these to disable output
 #  define METRICS_LOGGER_ERROR_OUTPUT_ENABLED
 #  define METRICS_LOGGER_DEBUG_OUTPUT_ENABLED
@@ -208,5 +212,7 @@ TAO_METRICS_LOGGER_REF_SINGLETON;
 typedef ACE_Singleton<TAO_Metrics_Logger, ACE_SYNCH_MUTEX>
 TAO_METRICS_LOGGER_SINGLETON;
 
+#endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
+#endif /* ACE_METRICS_COLLECTION */
 
 #endif /* METRICS_LOGGER_H */

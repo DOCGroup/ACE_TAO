@@ -18,7 +18,7 @@
 #ifndef TAO_LOG_CONSTRAINT_INTERPRETER_H
 #define TAO_LOG_CONSTRAINT_INTERPRETER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "orbsvcs/ETCL/ETCL_Interpreter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -61,5 +61,5 @@ public:
   /// the evaluator.
   CORBA::Boolean evaluate (TAO_Log_Constraint_Visitor &evaluator);
 };
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_LOG_CONSTRAINT_INTERPRETER_H */

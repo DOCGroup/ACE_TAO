@@ -41,7 +41,7 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
 
 TAO_IOR_Multicast::~TAO_IOR_Multicast (void)
 {
-  this->mcast_dgram_.unsubscribe ();
+  this->mcast_dgram_.leave (this->mcast_addr_);
 }
 
 int

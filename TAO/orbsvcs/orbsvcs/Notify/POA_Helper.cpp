@@ -9,6 +9,7 @@
 ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")
 
 #include "tao/debug.h"
+#include "ID_Factory.h"
 
 TAO_Notify_POA_Helper::TAO_Notify_POA_Helper (void)
 {
@@ -16,7 +17,6 @@ TAO_Notify_POA_Helper::TAO_Notify_POA_Helper (void)
 
 TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper ()
 {
-
 }
 
 ACE_CString
@@ -125,8 +125,11 @@ TAO_Notify_POA_Helper::long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const
 CORBA::Object_ptr
 TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& id ACE_ENV_ARG_DECL)
 {
+  /// ID Factory for objects.
+  static TAO_Notify_ID_Factory id_factory;
+
   // Generate a new ID.
-  id = this->id_factory_.id ();
+  id = id_factory.id ();
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Activating object with id = %d in  POA : %s\n", id, this->poa_->the_name ()));

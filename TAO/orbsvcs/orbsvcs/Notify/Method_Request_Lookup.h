@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_LOOKUP_METHOD_REQUEST_H
 #define TAO_Notify_LOOKUP_METHOD_REQUEST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -86,5 +86,5 @@ public:
 #include "Method_Request_Lookup.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_LOOKUP_METHOD_REQUEST_H */

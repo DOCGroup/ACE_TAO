@@ -19,7 +19,7 @@
 
 #ifndef TAO_EC_EVENT_MANIP_H
 #define TAO_EC_EVENT_MANIP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventCommC.h"
 #include "old_event_export.h"
@@ -144,5 +144,5 @@ private:
 #include "Event_Manip.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_EVENT_MANIP_H */

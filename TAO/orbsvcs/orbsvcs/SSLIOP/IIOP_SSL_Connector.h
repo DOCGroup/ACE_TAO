@@ -16,7 +16,7 @@
 #ifndef TAO_IIOP_SSL_CONNECTOR_H
 #define TAO_IIOP_SSL_CONNECTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSLIOP_Export.h"
 
@@ -97,6 +97,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_IIOP_SSL_CONNECTOR_H */

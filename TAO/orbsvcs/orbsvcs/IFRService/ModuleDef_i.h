@@ -20,8 +20,9 @@
 #ifndef TAO_MODULEDEF_I_H
 #define TAO_MODULEDEF_I_H
 
-#include "Container_i.h"
+//#include "Container_i.h"
 #include "Contained_i.h"
+#include "ComponentModuleDef_i.h"
 #include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,8 +36,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_ModuleDef_i : public virtual TAO_Container_i,
-                                              public virtual TAO_Contained_i
+class TAO_IFRService_Export TAO_ModuleDef_i 
+  : public virtual TAO_Contained_i,
+    public virtual TAO_ComponentModuleDef_i
 {
   // = TITLE
   //    TAO_ModuleDef_i

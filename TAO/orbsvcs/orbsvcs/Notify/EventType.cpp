@@ -1,6 +1,7 @@
 // $Id$
 
 #include "EventType.h"
+#include "ace/ACE.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EventType.inl"

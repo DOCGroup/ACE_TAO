@@ -17,9 +17,9 @@
 
 #ifndef ACE_BCU_H
 #define ACE_BCU_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/os_include/os_stdint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,5 +34,5 @@ TAO_RTOLDEvent_Export u_long ACE_BCU (u_long n);
 // Check if <number> is prime (via ACE::is_prime ()) <n> times.
 TAO_RTOLDEvent_Export u_long ACE_BCU (u_long number, u_long n);
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_BCU_H */

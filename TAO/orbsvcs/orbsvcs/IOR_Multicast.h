@@ -20,7 +20,7 @@
 
 #ifndef TAO_IOR_MULTICAST_H
 #define TAO_IOR_MULTICAST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/svc_utils_export.h"
 #include "tao/corba.h"
@@ -107,5 +107,5 @@ private:
   const char *mcast_nic_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_IOR_MULTICAST_H */

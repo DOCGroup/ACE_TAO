@@ -6,16 +6,17 @@
  *
  * $Id$
  *
- * @author 
+ * @author
  */
 //=============================================================================
 
 #ifndef TAO_INTERPRETER_UTILS_H
 #define TAO_INTERPRETER_UTILS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 #include "tao/corba.h"
 #include "orbsvcs/Trader/trading_export.h"
 
@@ -72,6 +73,6 @@ public:
   // is <code>.
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_INTERPRETER_UTILS_H */

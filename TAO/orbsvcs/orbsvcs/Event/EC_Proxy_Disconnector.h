@@ -8,7 +8,7 @@
 #ifndef EC_PROXY_DISCONNECTOR__H_
 #define EC_PROXY_DISCONNECTOR__H_
 
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 #include "orbsvcs/orbsvcs/RtecEventCommC.h"
 #include "tao/Utils/Auto_Functor.h"
 

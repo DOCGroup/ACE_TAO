@@ -19,7 +19,7 @@
 #ifndef TAO_TLS_BASICLOG_I_H
 #define TAO_TLS_BASICLOG_I_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 
@@ -97,6 +97,6 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_TLS_BASICLOG_I_H */

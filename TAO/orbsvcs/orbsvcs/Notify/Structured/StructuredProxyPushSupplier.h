@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_STRUCTUREDPROXYPUSHSUPPLIER_H
 #define TAO_Notify_STRUCTUREDPROXYPUSHSUPPLIER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "../notify_export.h"
 
@@ -94,5 +94,5 @@ public:
 #include "StructuredProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_STRUCTUREDPROXYPUSHSUPPLIER_H */

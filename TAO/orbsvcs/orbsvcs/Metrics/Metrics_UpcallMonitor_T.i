@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 // @METRICS@
@@ -5,12 +7,12 @@
 #ifndef METRICS_UPCALL_MONITOR_T_I
 #define METRICS_UPCALL_MONITOR_T_I
 
-//# if defined (METRICS_USES_OP_CANCELLATION) 
+//# if defined (METRICS_USES_OP_CANCELLATION)
 //# undef METRICS_USES_OP_CANCELLATION
 //# endif /* METRICS_USES_OP_CANCELLATION */
 
-# if ! defined (METRICS_USES_OP_CANCELLATION) 
-#   define METRICS_USES_OP_CANCELLATION 
+# if ! defined (METRICS_USES_OP_CANCELLATION)
+#   define METRICS_USES_OP_CANCELLATION
 # endif /* ! METRICS_USES_OP_CANCELLATION */
 
 
@@ -56,7 +58,7 @@ TAO_Metrics_UpcallMonitorAdapter (
   // Store the RT_Info execution time.
   ORBSVCS_Time::TimeT_to_Time_Value(this->execution_time_,
                                     wcet);
-  this->is_critical_ = 
+  this->is_critical_ =
     (criticality == RtecScheduler::HIGH_CRITICALITY
      || criticality == RtecScheduler::VERY_HIGH_CRITICALITY)
     ? 1 : 0;
@@ -65,7 +67,7 @@ TAO_Metrics_UpcallMonitorAdapter (
   // reference which is fine everywhere but here.
   if (cache_register)
     {
-	  if (cache.metrics_enabled())
+          if (cache.metrics_enabled())
          cache.register_upcall_adapter (this->handle_,
                                         entry_point,
                                         this->is_critical_);
@@ -122,7 +124,7 @@ push (const RtecEventComm::EventSet & data,
   // Take current time stamp and add expected execution to get
   // projected completion.  Done this way for efficiency, to minimize
   // temporaries and their copies and constructor and destructor calls.
-  ACE_Time_Value projected_tv; 
+  ACE_Time_Value projected_tv;
   ACE_hrtime_t hrtime_now = ACE_OS::gethrtime ();
   ACE_High_Res_Timer::hrtime_to_tv (projected_tv,
                                     hrtime_now);
@@ -133,7 +135,7 @@ push (const RtecEventComm::EventSet & data,
   // dispatched unconditionally.  A zero deadline indicates an
   // operation is not deadline-bound and thus is not subject to
   // cancellation.
-  if (this->is_critical_ 
+  if (this->is_critical_
       || deadline_tv >= projected_tv
       || deadline_tv == ACE_Time_Value::zero)
     {
@@ -148,16 +150,17 @@ push (const RtecEventComm::EventSet & data,
 
       // Push to the actual consumer.
       consumer_.push (data, ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Record the end of the upcall in the cache, and report whether
       // the deadline was made or missed to the monitor.
 
 #if 0
       if ( this->handle_ != TAO_Metrics_Utils::timeoutEvent ())
-	{
+        {
 #else /* 1 */
       if (1)
-	{
+        {
 #endif /* 0 */
         if (cache_.metrics_enabled())
         {
@@ -174,15 +177,15 @@ push (const RtecEventComm::EventSet & data,
           }
 # if defined (METRICS_MONITOR_ERROR_OUTPUT_ENABLED)
           else
-	       {
+            {
               ACE_ERROR ((LM_ERROR,
                           "TAO_Metrics_UpcallMonitorAdapter::push"
                           " upcall stop reporting failed .\n"));
-          }
+            }
 
 # endif /* METRICS_MONITOR_ERROR_OUTPUT_ENABLED */
         }
-	}
+        }
 # if defined (METRICS_USES_OP_CANCELLATION)
     }
   else

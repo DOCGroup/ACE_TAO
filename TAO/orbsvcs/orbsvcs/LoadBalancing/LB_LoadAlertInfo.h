@@ -14,7 +14,7 @@
 #ifndef TAO_LB_LOAD_ALERT_INFO_H
 #define TAO_LB_LOAD_ALERT_INFO_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -47,6 +47,6 @@ struct TAO_LB_LoadAlertInfo
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_LOAD_ALERT_INFO_H */

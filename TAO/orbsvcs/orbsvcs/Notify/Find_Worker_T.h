@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_FIND_WORKER_T_H
 #define TAO_Notify_FIND_WORKER_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -22,6 +22,7 @@
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "Container_T.h"
+#include "Object.h"
 
 /**
  * @class TAO_Notify_Find_Worker_T
@@ -68,5 +69,5 @@ protected:
 #pragma implementation ("Find_Worker_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_FIND_WORKER_T_H */

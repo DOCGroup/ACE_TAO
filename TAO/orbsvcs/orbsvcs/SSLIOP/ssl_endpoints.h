@@ -10,7 +10,7 @@
 #ifndef _TAO_IDL_SSL_ENDPOINTSC_H_
 #define _TAO_IDL_SSL_ENDPOINTSC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -192,5 +192,5 @@ TAO_SSLIOP_Export CORBA::Boolean operator>> (
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

@@ -12,7 +12,7 @@
 
 #ifndef TAO_TRANSIENT_NAMING_CONTEXT_H
 #define TAO_TRANSIENT_NAMING_CONTEXT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Hash_Naming_Context.h"
 #include "Entries.h"
@@ -194,5 +194,5 @@ protected:
   TAO_Transient_Bindings_Map *transient_context_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TRANSIENT_NAMING_CONTEXT_H */

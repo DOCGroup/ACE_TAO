@@ -14,7 +14,7 @@
 #ifndef TAO_SSLIOP_VAULT_H
 #define TAO_SSLIOP_VAULT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/SecurityReplaceableC.h"
 
@@ -147,6 +147,6 @@ protected:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_VAULT_H */

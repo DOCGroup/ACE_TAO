@@ -2,11 +2,15 @@
 
 #include "Trader.h"
 #include "Offer_Iterators_T.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/RW_Thread_Mutex.h"
 
 // The following #include is needed only for the instantiation pragmas.
 #include "Trader_Interfaces.h"
 
-ACE_RCSID(Trader, Trader, "$Id$")
+ACE_RCSID (Trader,
+           Trader,
+           "$Id$")
 
 TAO_Trader_Base::TAO_Trader_Base (void)
   : trading_components_ (*this),

@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_SERVICE_H
 #define TAO_Notify_SERVICE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -56,5 +56,5 @@ public:
 
 #define TAO_RT_NOTIFICATION_SERVICE_NAME "TAO_RT_Notify_Service"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_SERVICE_H */

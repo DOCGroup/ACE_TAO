@@ -29,6 +29,7 @@
 
 #include "ComponentContainer_i.h"
 
+class TAO_ModuleDef_i;
 class TAO_ComponentDef_i;
 class TAO_HomeDef_i;
 class TAO_FinderDef_i;
@@ -95,6 +96,7 @@ protected:
 #endif
 
 #define CONCRETE_IR_OBJECT_TYPES \
+  GEN_IR_OBJECT (ModuleDef) \
   GEN_IR_OBJECT (ComponentDef) \
   GEN_IR_OBJECT (HomeDef) \
   GEN_IR_OBJECT (FinderDef) \

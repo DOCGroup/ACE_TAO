@@ -19,7 +19,7 @@
 
 #ifndef SCHEDENTRY_H
 #define SCHEDENTRY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "sched_export.h"
 #include "orbsvcs/RtecSchedulerC.h"
@@ -638,7 +638,7 @@ private:
 #include "SchedEntry.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* SCHEDENTRY_H */
 
 // EOF

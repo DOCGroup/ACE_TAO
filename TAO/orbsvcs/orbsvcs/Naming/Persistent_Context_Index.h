@@ -13,7 +13,7 @@
 
 #ifndef TAO_PERSISTENT_CONTEXT_INDEX_H
 #define TAO_PERSISTENT_CONTEXT_INDEX_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Persistent_Entries.h"
 #include "naming_export.h"
@@ -162,5 +162,5 @@ private:
   CosNaming::NamingContext_var root_context_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PERSISTENT_CONTEXT_INDEX_H */

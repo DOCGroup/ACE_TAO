@@ -31,7 +31,7 @@
 
 #ifndef _CC_LOCKSET_H
 #define _CC_LOCKSET_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -186,5 +186,5 @@ private:
   ACE_Unbounded_Queue <CC_LockModeEnum> lock_queue_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* _CC_LOCKSET_H */

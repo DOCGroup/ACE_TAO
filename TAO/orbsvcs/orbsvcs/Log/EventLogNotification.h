@@ -18,7 +18,7 @@
 #ifndef TAO_TLS_EVENT_LOG_NOTIFICATION_H
 #define TAO_TLS_EVENT_LOG_NOTIFICATION_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
 
@@ -88,5 +88,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TLS_EVENT_LOG_NOTIFICATION_H */

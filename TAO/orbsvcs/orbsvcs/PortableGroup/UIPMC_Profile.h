@@ -14,7 +14,7 @@
 
 #ifndef TAO_UIPMC_PROFILE_H
 #define TAO_UIPMC_PROFILE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Profile.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -155,5 +155,5 @@ private:
 # include "UIPMC_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_PROFILE_H */

@@ -12,10 +12,13 @@
 #include "tao/Object_KeyC.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/Lock_Adapter_T.h"
+
 
 ACE_RCSID (IFR_Service,
            Repository_i,
            "$Id$")
+
 
 TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
@@ -93,7 +96,7 @@ TAO_Repository_i::lookup_id_i (const char *search_id
   CORBA::DefinitionKind def_kind =
     ACE_static_cast (CORBA::DefinitionKind, kind);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (def_kind,
                                           path.c_str (),
                                           this->repo_
@@ -208,7 +211,7 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc
         }
       else
         {
-          TAO_IDLType_i *impl = 
+          TAO_IDLType_i *impl =
             TAO_IFR_Service_Utils::path_to_idltype (path,
                                                     this);
           impl->section_key (key);
@@ -227,7 +230,7 @@ TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind
 
   obj_id += this->pkind_to_string (kind);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Primitive,
                                           obj_id.c_str (),
                                           this->repo_
@@ -287,7 +290,7 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound
   ACE_TString obj_id ("strings\\");
   obj_id += name;
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_String,
                                           obj_id.c_str (),
                                           this->repo_
@@ -347,7 +350,7 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound
   ACE_TString obj_id ("wstrings\\");
   obj_id += name;
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Wstring,
                                                obj_id.c_str (),
                                                this->repo_
@@ -421,7 +424,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
   ACE_TString obj_id ("sequences\\");
   obj_id += name;
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Sequence,
                                           obj_id.c_str (),
                                           this->repo_
@@ -495,7 +498,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
   ACE_TString obj_id ("arrays\\");
   obj_id += name;
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Array,
                                           obj_id.c_str (),
                                           this->repo_
@@ -769,20 +772,20 @@ TAO_Repository_i::create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL)
 
   // ID Assignment Policy.
   policies[0] =
-    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID 
+    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Lifespan Policy.
   policies[1] =
-    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT 
+    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1); 
+  ACE_CHECK_RETURN (-1);
 
   // Request Processing Policy.
   policies[2] =
     this->root_poa_->create_request_processing_policy (
-        PortableServer::USE_DEFAULT_SERVANT 
+        PortableServer::USE_DEFAULT_SERVANT
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK_RETURN (-1);
@@ -790,7 +793,7 @@ TAO_Repository_i::create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL)
   // Servant Retention Policy.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
-        PortableServer::NON_RETAIN 
+        PortableServer::NON_RETAIN
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK_RETURN (-1);
@@ -798,7 +801,7 @@ TAO_Repository_i::create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL)
   // Id Uniqueness Policy.
   policies[4] =
     this->root_poa_->create_id_uniqueness_policy (
-        PortableServer::MULTIPLE_ID 
+        PortableServer::MULTIPLE_ID
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK_RETURN (-1);
@@ -829,7 +832,7 @@ TAO_Repository_i::create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL)
       this-> name ## _servant_ \
     ); \
   this-> name ## _poa_->set_servant (this-> name ## _servant_ \
-                                        ACE_ENV_ARG_PARAMETER); \
+                                     ACE_ENV_ARG_PARAMETER); \
   ACE_CHECK_RETURN (-1);
 
   CONCRETE_IR_OBJECT_TYPES
@@ -883,7 +886,7 @@ TAO_Repository_i::select_idltype (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_ValueBox:
       return this->ValueBoxDef_servant_->_tied_object ();
     case CORBA::dk_Value:
-      return this->ValueDef_servant_->_tied_object ();
+      return this->ExtValueDef_servant_->_tied_object ();
     case CORBA::dk_Wstring:
       return this->WstringDef_servant_->_tied_object ();
     default:
@@ -904,8 +907,6 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
       return this->InterfaceDef_servant_->_tied_object ();
     case CORBA::dk_LocalInterface:
       return this->LocalInterfaceDef_servant_->_tied_object ();
-    case CORBA::dk_Module:
-      return this->ModuleDef_servant_->_tied_object ();
     case CORBA::dk_Repository:
       return ACE_const_cast (TAO_Repository_i *, this);
     case CORBA::dk_Struct:
@@ -913,7 +914,7 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Union:
       return this->UnionDef_servant_->_tied_object ();
     case CORBA::dk_Value:
-      return this->ValueDef_servant_->_tied_object ();
+      return this->ExtValueDef_servant_->_tied_object ();
     default:
       return 0;
   }
@@ -940,8 +941,6 @@ TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
       return this->InterfaceDef_servant_->_tied_object ();
     case CORBA::dk_LocalInterface:
       return this->LocalInterfaceDef_servant_->_tied_object ();
-    case CORBA::dk_Module:
-      return this->ModuleDef_servant_->_tied_object ();
     case CORBA::dk_Native:
       return this->NativeDef_servant_->_tied_object ();
     case CORBA::dk_Operation:
@@ -953,7 +952,7 @@ TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_ValueBox:
       return this->ValueBoxDef_servant_->_tied_object ();
     case CORBA::dk_Value:
-      return this->ValueDef_servant_->_tied_object ();
+      return this->ExtValueDef_servant_->_tied_object ();
     case CORBA::dk_ValueMember:
       return this->ValueMemberDef_servant_->_tied_object ();
     default:
@@ -986,8 +985,6 @@ TAO_Repository_i::select_poa (CORBA::DefinitionKind def_kind) const
       return this->InterfaceDef_poa_.in ();
     case CORBA::dk_LocalInterface:
       return this->LocalInterfaceDef_poa_.in ();
-    case CORBA::dk_Module:
-      return this->ModuleDef_poa_.in ();
     case CORBA::dk_Native:
       return this->NativeDef_poa_.in ();
     case CORBA::dk_Operation:
@@ -1005,7 +1002,7 @@ TAO_Repository_i::select_poa (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_ValueBox:
       return this->ValueBoxDef_poa_.in ();
     case CORBA::dk_Value:
-      return this->ValueDef_poa_.in ();
+      return this->ExtValueDef_poa_.in ();
     case CORBA::dk_ValueMember:
       return this->ValueMemberDef_poa_.in ();
     case CORBA::dk_Wstring:

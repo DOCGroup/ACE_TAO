@@ -10,7 +10,7 @@
 //=============================================================================
 #ifndef TAO_UTILS_IMPLICIT_DEACTIVATOR_H
 #define TAO_UTILS_IMPLICIT_DEACTIVATOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Auto_Functor.h"
 
@@ -54,5 +54,5 @@ namespace TAO
   } // namespace Utils
 } // namespace TAO
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_UTILS_IMPLICIT_DEACTIVATOR_H*/

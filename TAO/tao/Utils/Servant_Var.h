@@ -11,7 +11,7 @@
 //=============================================================================
 #ifndef TAO_UTILS_SERVANT_VAR_H
 #define TAO_UTILS_SERVANT_VAR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -163,5 +163,5 @@ namespace TAO
 #pragma implementation ("Servant_Var.cpp")
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_UTILS_SERVANT_VAR_H*/

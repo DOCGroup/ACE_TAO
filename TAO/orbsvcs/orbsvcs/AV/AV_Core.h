@@ -12,7 +12,7 @@
 
 #ifndef TAO_AV_CORE_H
 #define TAO_AV_CORE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/AVStreamsC.h"
@@ -20,6 +20,7 @@
 
 #include "ace/Singleton.h"
 #include "ace/Unbounded_Set.h"
+#include "ace/Null_Mutex.h"
 
 class TAO_Base_StreamEndPoint;
 class TAO_AV_Connector_Registry;
@@ -167,5 +168,5 @@ TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
 # endif
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_CORE_H */

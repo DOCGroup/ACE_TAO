@@ -21,7 +21,7 @@
 #ifndef TAO_PSDL_ENUM_TYPE_VISITOR_H
 #define TAO_PSDL_ENUM_TYPE_VISITOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Node_Visitor.h"
 
@@ -50,6 +50,6 @@ class TAO_PSDL_Enum_Type_Visitor : public TAO_PSDL_Node_Visitor
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_ENUM_TYPE_VISITOR_H */

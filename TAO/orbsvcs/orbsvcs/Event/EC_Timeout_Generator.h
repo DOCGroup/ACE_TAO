@@ -14,9 +14,9 @@
 
 #ifndef TAO_EC_TIMEOUT_GENERATOR_H
 #define TAO_EC_TIMEOUT_GENERATOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -90,5 +90,5 @@ private:
 #include "EC_Timeout_Generator.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_TIMEOUT_GENERATOR_H */

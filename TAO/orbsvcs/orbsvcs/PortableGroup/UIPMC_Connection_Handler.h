@@ -12,7 +12,7 @@
 
 #ifndef TAO_UIPMC_CONNECTION_HANDLER_H
 #define TAO_UIPMC_CONNECTION_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Reactor.h"
 
@@ -172,5 +172,5 @@ private:
 #include "UIPMC_Connection_Handler.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_UIPMC_CONNECTION_HANDLER_H */

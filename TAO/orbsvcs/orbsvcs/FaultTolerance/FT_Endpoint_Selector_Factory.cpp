@@ -22,13 +22,21 @@ TAO_Invocation_Endpoint_Selector *
 TAO_FT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *
                                                 ACE_ENV_ARG_DECL)
 {
-  if (this->ft_endpoint_selector_ == 0)
+    if (this->ft_endpoint_selector_ == 0)
     {
-      ACE_NEW_THROW_EX (ft_endpoint_selector_,
-                        TAO_FT_Invocation_Endpoint_Selector (),
-                        CORBA::NO_MEMORY ());
-    }
+      ACE_MT (ACE_GUARD_RETURN  (TAO_SYNCH_MUTEX,
+                                 guard,
+                                 this->mutex_,
+                                 0));
 
+      // Double checked locking..
+      if (this->ft_endpoint_selector_ == 0)
+        {
+          ACE_NEW_THROW_EX (ft_endpoint_selector_,
+                            TAO_FT_Invocation_Endpoint_Selector (),
+                            CORBA::NO_MEMORY ());
+        }
+    }
   return this->ft_endpoint_selector_;
 }
 

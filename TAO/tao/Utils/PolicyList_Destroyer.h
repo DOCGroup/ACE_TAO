@@ -10,7 +10,7 @@
 //=============================================================================
 #ifndef TAO_UTILS_POLICYLIST_DESTROYER_H
 #define TAO_UTILS_POLICYLIST_DESTROYER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PolicyC.h"
 
@@ -45,5 +45,5 @@ namespace TAO
 # include "PolicyList_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_UTILS_POLICYLIST_DESTROYER_H*/

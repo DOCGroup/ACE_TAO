@@ -17,7 +17,7 @@
 #ifndef TAO_SSLIOP_FACTORY_H
 #define TAO_SSLIOP_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSLIOP_Export.h"
 
@@ -96,6 +96,6 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 ACE_STATIC_SVC_REQUIRE (TAO_SSLIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_SSLIOP_FACTORY_H */

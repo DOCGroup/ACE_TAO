@@ -19,7 +19,7 @@
 
 #ifndef TAO_LOG_RECORD_STORE_PERSIST_H
 #define TAO_LOG_RECORD_STORE_PERSIST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 
@@ -151,5 +151,5 @@ class TAO_Log_Export TAO_LogRecordStore
   char file_name_[256];
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_LOG_RECORD_STORE_PERSIST_H*/

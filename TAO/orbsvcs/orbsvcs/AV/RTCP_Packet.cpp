@@ -631,10 +631,10 @@ RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
 //==============================================================================
 
 void
-RTCP_SDES_Packet::add_item(ACE_UINT32 ssrc,
-                           unsigned char type,
-                           unsigned char length,
-                           const char *data)
+RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
+                            unsigned char type,
+                            unsigned char length,
+                            const char *data)
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
@@ -643,12 +643,15 @@ RTCP_SDES_Packet::add_item(ACE_UINT32 ssrc,
     {
       this->add_chunk(ssrc);
     }
+
   cp = this->chunk_;
 
   while (cp != 0)
     {
       if (cp->ssrc_ == ssrc)
-        break;
+        {
+          break;
+        }
 
       if (!cp->next_)
         {
@@ -656,46 +659,52 @@ RTCP_SDES_Packet::add_item(ACE_UINT32 ssrc,
           cp = cp->next_;
           break;
         }
+
       cp = cp->next_;
     }
 
   ip = cp->item_;
+
   if (ip == 0)
     {
       ACE_NEW (cp->item_,
                sdesItem_t);
+
       ip = cp->item_;
       ip->next_= 0;
     }
   else
     {
       while (ip->next_)
-        ip = ip->next_;
+        {
+          ip = ip->next_;
+        }
 
       ACE_NEW (ip->next_,
                sdesItem_t);
+
       ip = ip->next_;
       ip->next_ = 0;
     }
+
   ip->type_ = type;
-  if (length > 255)
-    {
-      length = 255;
-      ACE_DEBUG ((LM_DEBUG,
-                  "RTCP_SDES_Packet::add_item - item too long"));
-    }
+  
   ip->info_.standard_.length_ = length;
+
   ACE_NEW (ip->info_.standard_.data_,
            char[length]);
+
   memcpy(ip->info_.standard_.data_, data, length);
 }
 
 //==============================================================================
 
 void
-RTCP_SDES_Packet::add_priv_item(ACE_UINT32 ssrc,
-                                unsigned char nameLength, const char* name,
-                                unsigned char dataLength, const char* data)
+RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
+                                 unsigned char nameLength, 
+                                 const char* name,
+                                 unsigned char dataLength, 
+                                 const char* data)
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
@@ -704,12 +713,15 @@ RTCP_SDES_Packet::add_priv_item(ACE_UINT32 ssrc,
     {
       this->add_chunk(ssrc);
     }
+
   cp = this->chunk_;
 
   while (cp != 0)
     {
       if (cp->ssrc_ == ssrc)
-        break;
+        {
+          break;
+        }
 
       if (!cp->next_)
         {
@@ -717,47 +729,45 @@ RTCP_SDES_Packet::add_priv_item(ACE_UINT32 ssrc,
           cp = cp->next_;
           break;
         }
+
       cp = cp->next_;
     }
 
   ip = cp->item_;
+
   if (ip == 0)
     {
       ACE_NEW (cp->item_,
                sdesItem_t);
+
       ip = cp->item_;
       ip->next_ = 0;
     }
   else
     {
       while (ip->next_)
-        ip = ip->next_;
+        {
+          ip = ip->next_;
+        }
 
       ACE_NEW (ip->next_,
                sdesItem_t);
+
       ip = ip->next_;
       ip->next_ = 0;
     }
 
   ip->type_ = RTCP_SDES_PRIV;
-  if (nameLength > 255)
-    {
-      nameLength = 255;
-      ACE_DEBUG ((LM_DEBUG,
-                  "RTCP_SDES_Packet::add_priv_item - name too long"));
-    }
-    if (dataLength > 255)
-    {
-      dataLength = 255;
-      ACE_DEBUG ((LM_DEBUG,
-                  "RTCP_SDES_Packet::add_priv_item - data too long"));
-    }
+
   ip->info_.priv_.name_length_ = nameLength;
   ip->info_.priv_.data_length_ = dataLength;
+
   ACE_NEW (ip->info_.priv_.name_,
            char[nameLength]);
+
   ACE_NEW (ip->info_.priv_.data_,
            char[dataLength]);
+
   memcpy(ip->info_.priv_.name_, name, nameLength);
   memcpy(ip->info_.priv_.data_, data, dataLength);
 }

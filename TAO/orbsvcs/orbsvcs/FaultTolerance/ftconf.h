@@ -16,7 +16,7 @@
 
 #ifndef TAO_FTCONF_H
 #define TAO_FTCONF_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -38,5 +38,5 @@
 #define TAO_DEF_FT_CORBA_MINOR 0
 #endif /* TAO_DEF_FT_CORBA_MINOR */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_FTCONF_H*/

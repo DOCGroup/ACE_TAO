@@ -180,7 +180,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
       attr.section_key (key);
 
       attr.fill_description (fifd->attributes[i]
-                                 ACE_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -289,14 +289,15 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
                                              "mode",
                                              mode);
 
-  TAO_ExtAttributeDef_i xattr (this->repo_);
-  xattr.section_key (new_key);
+  TAO_IFR_Service_Utils::set_exceptions (this->repo_->config (),
+                                         new_key,
+                                         "get_excepts",
+                                         get_exceptions);
 
-  xattr.exceptions ("get_excepts",
-                    get_exceptions);
-
-  xattr.exceptions ("set_excepts",
-                    set_exceptions);
+  TAO_IFR_Service_Utils::set_exceptions (this->repo_->config (),
+                                         new_key,
+                                         "put_excepts",
+                                         set_exceptions);
 
   // Create the object reference.
   CORBA::Object_var obj =

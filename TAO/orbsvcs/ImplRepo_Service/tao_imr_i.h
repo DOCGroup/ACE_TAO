@@ -12,13 +12,12 @@
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #ifndef TAO_IMR_I_H
 #define TAO_IMR_I_H
 
 #include "tao/PortableServer/ImR_LocatorC.h"
 #include "tao/corba.h"
+#include "ace/SString.h"
 
 // Forward Declaration
 class TAO_IMR_Op;

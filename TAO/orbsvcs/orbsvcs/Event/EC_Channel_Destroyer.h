@@ -8,8 +8,8 @@
 #ifndef EC_CHANNEL_DESTROYER__H_
 #define EC_CHANNEL_DESTROYER__H_
 
-#include "orbsvcs/Event/event_export.h"
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h"
+#include /**/ "event_export.h"
+#include "EC_Event_Channel_Base.h"
 #include "tao/Utils/Auto_Functor.h"
 
 /**

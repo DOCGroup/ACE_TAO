@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_COSEC_PROXYPUSHSUPPLIER_H
 #define TAO_Notify_COSEC_PROXYPUSHSUPPLIER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "../notify_export.h"
 
@@ -83,5 +83,5 @@ public:
 #include "CosEC_ProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_COSEC_PROXYPUSHSUPPLIER_H */

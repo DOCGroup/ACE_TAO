@@ -18,7 +18,7 @@
 //=============================================================================
 #ifndef TAO_EC_CRC_H
 #define TAO_EC_CRC_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -47,5 +47,5 @@ namespace TAO_Event_CRC
                      int iovcnt);
  }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_EC_CRC*/

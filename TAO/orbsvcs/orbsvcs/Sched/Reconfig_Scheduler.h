@@ -16,7 +16,7 @@
 
 #ifndef TAO_RECONFIG_SCHEDULER_H
 #define TAO_RECONFIG_SCHEDULER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -39,5 +39,5 @@
 #include "Reconfig_Scheduler_T.h"
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHEDULER_H */

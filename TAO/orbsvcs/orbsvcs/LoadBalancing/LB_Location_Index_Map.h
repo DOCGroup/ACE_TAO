@@ -14,7 +14,7 @@
 #ifndef TAO_LB_LOCATION_INDEX_MAP_H
 #define TAO_LB_LOCATION_INDEX_MAP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
@@ -36,6 +36,6 @@ typedef ACE_Hash_Map_Manager_Ex<
   ACE_Equal_To<ACE_UINT64>,
   ACE_Null_Mutex> TAO_LB_Location_Index_Map;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_LOCATION_INDEX_MAP_H */

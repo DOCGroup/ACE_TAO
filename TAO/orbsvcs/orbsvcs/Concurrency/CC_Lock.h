@@ -17,7 +17,7 @@
 
 #ifndef _CC_LOCK_H
 #define _CC_LOCK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -140,5 +140,5 @@ private:
   CosConcurrencyControl::lock_mode current_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* !defined (_CC_LOCK_H) */

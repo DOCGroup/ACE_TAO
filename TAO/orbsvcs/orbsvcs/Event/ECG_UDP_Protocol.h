@@ -14,7 +14,7 @@
  */
 #ifndef TAO_ECG_UDP_PROTOCOL_H
 #define TAO_ECG_UDP_PROTOCOL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -67,5 +67,5 @@ public:
   };
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_UDP_PROTOCOL_H */

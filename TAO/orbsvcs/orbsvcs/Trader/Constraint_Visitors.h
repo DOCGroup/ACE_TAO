@@ -13,7 +13,7 @@
 
 #ifndef TAO_CONSTRAINT_VISITOR_H
 #define TAO_CONSTRAINT_VISITOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/Trader/Interpreter_Utils.h"
 #include "orbsvcs/Trader/trading_export.h"
@@ -437,5 +437,5 @@ public:
                    const char* element) const;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CONSTRAINT_VISITORS_H */

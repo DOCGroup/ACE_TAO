@@ -43,6 +43,7 @@ CPP_SRCS += \
 	FaultTolerance/FT_Invocation_Endpoint_Selectors \
 	FaultTolerance/FT_Service_Activate \
 	FaultTolerance/FT_ORBInitializer \
+	FaultTolerance/FT_ClientRequest_Interceptor \
 	FaultTolerance/FT_PolicyFactory \
         FaultTolerance/FT_Policy_i
 

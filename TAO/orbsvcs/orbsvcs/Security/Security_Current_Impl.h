@@ -13,7 +13,7 @@
 #ifndef TAO_SECURITY_CURRENT_IMPL_H
 #define TAO_SECURITY_CURRENT_IMPL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -77,6 +77,6 @@ public:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SECURITY_CURRENT_IMPL_H */

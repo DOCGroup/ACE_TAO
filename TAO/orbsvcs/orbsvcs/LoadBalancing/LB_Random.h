@@ -14,7 +14,7 @@
 #ifndef LB_RANDOM_H
 #define LB_RANDOM_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosLoadBalancingS.h"
 
@@ -116,6 +116,6 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* LB_RANDOM_H */

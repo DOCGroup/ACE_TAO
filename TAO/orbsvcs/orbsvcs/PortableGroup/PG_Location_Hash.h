@@ -14,7 +14,7 @@
 #ifndef TAO_PG_LOCATION_HASH_H
 #define TAO_PG_LOCATION_HASH_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -44,6 +44,6 @@ public:
 #include "PG_Location_Hash.inl"
 #endif  /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_LOCATION_HASH_H */

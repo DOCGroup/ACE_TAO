@@ -14,11 +14,11 @@
 
 #ifndef TAO_EC_SUPPLIER_FILTER_H
 #define TAO_EC_SUPPLIER_FILTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "event_export.h"
+#include /**/ "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -139,5 +139,5 @@ private:
 #include "EC_Supplier_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_SUPPLIER_FILTER_H */

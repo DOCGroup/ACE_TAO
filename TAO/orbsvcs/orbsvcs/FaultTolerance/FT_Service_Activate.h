@@ -12,7 +12,7 @@
 
 #ifndef TAO_FT_ACTIVATE_H
 #define TAO_FT_ACTIVATE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "fault_tol_export.h"
 
@@ -45,9 +45,6 @@ public:
   /// The destructor
   virtual ~TAO_FT_Service_Activate (void);
 
-  /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-
   /**
    * Create and activate the service callbacks into the orb.
    * This method cannot throw any exception, but it can return a nil
@@ -58,6 +55,7 @@ public:
 
   /// Used to force the initialization.
   static int Initializer (void);
+
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_FT_Service_Activate)
@@ -77,9 +75,5 @@ TAO_FT_Requires_Service_Activate = TAO_FT_Service_Activate::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
-#define TAO_FT_SERVICE_SAFE_INCLUDE
-#include "FT_IOGR_Property.h"
-#undef TAO_FT_SERVICE_SAFE_INCLUDE
-
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_FT_ACTIVATE_H*/

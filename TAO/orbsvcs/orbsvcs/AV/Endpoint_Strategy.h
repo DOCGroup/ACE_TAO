@@ -14,7 +14,7 @@
 
 #ifndef TAO_AV_ENDPOINT_STRATEGY_H
 #define TAO_AV_ENDPOINT_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "AVStreams_i.h"
 #include "tao/PortableServer/ORB_Manager.h"
@@ -174,5 +174,5 @@ protected:
 // Include the templates here.
 #include "Endpoint_Strategy_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_ENDPOINT_STRATEGY_H */

@@ -4,7 +4,7 @@
 #ifndef TAO_NOTIFY_EXTENSIONS_H
 #define TAO_NOTIFY_EXTENSIONS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,5 +24,5 @@ TAO_NAMESPACE TAO_Notify_Extensions
 }
 TAO_NAMESPACE_CLOSE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_EXTENSIONS_H */

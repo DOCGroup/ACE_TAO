@@ -20,9 +20,11 @@
 
 #ifndef FAULT_DETECTOR_I_H_
 #define FAULT_DETECTOR_I_H_
+#include <ace/ACE.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+#include <ace/pre.h>
 
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicaC.h"
@@ -163,5 +165,5 @@ private:
    */
   int quitRequested_;
 };
-
+#include <ace/post.h>
 #endif // FAULT_DETECTOR_I_H_

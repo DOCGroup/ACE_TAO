@@ -16,7 +16,7 @@
 
 #ifndef TAO_TIO_H
 #define TAO_TIO_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/TimeServiceS.h"
@@ -88,5 +88,5 @@ private:
   TimeBase::IntervalT attr_time_interval;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TIO_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_PERSISTENT_ENTRIES_H
 #define TAO_PERSISTENT_ENTRIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "tao/corba.h"
@@ -226,5 +226,5 @@ public:
   const char * poa_id_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PERSISTENT_ENTRIES_H */

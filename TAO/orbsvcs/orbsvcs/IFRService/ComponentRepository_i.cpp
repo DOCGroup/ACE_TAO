@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ComponentRepository_i.h"
+#include "ModuleDef_i.h"
 #include "ComponentDef_i.h"
 #include "HomeDef_i.h"
 #include "EventDef_i.h"
@@ -77,7 +78,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
   // Servant Retention Policy.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
-        PortableServer::RETAIN 
+        PortableServer::NON_RETAIN 
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK_RETURN (-1);
@@ -159,6 +160,8 @@ TAO_ComponentRepository_i::select_container (
 {
   switch (def_kind)
   {
+    case CORBA::dk_Module:
+      return this->ModuleDef_servant_->_tied_object ();
     case CORBA::dk_Component:
       return this->ComponentDef_servant_->_tied_object ();
     case CORBA::dk_Home:
@@ -175,6 +178,8 @@ TAO_ComponentRepository_i::select_contained (
 {
   switch (def_kind)
   {
+    case CORBA::dk_Module:
+      return this->ModuleDef_servant_->_tied_object ();
     case CORBA::dk_Component:
       return this->ComponentDef_servant_->_tied_object ();
     case CORBA::dk_Home:
@@ -207,6 +212,8 @@ TAO_ComponentRepository_i::select_poa (
 {
   switch (def_kind)
   {
+    case CORBA::dk_Module:
+      return this->ModuleDef_poa_.in ();
     case CORBA::dk_Component:
       return this->ComponentDef_poa_.in ();
     case CORBA::dk_Home:

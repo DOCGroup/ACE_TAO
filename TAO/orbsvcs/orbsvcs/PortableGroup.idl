@@ -187,6 +187,70 @@ module PortableGroup
 
   }; // end GenericFactory
 
+  ///////////////////////
+  // The following FactoryRegistry interface is not included in the OMG PortableGroup IDL.
+  // It's an extension needed as part of implementing the FT CORBA specification.
+
+  /**
+   * Interface to allow generic factories for replicas to register themselves.
+   * Factories are distinguished by the type of object created (TypeId) and the
+   * location at which they create the object (FactoryInfo.the_location)
+   */
+  interface FactoryRegistry
+  {
+    /**
+     * register a factory to create objects of the given type
+     * at the location given in the FactoryInfo.
+     * @param type_id the type of object to be created.
+     * @param factory_info information about the factory including its location.
+     * @throws MemberAlreadyPresent if there is already a factory for this type of object
+     *         at this location.
+     */
+    void register_factory(in _TypeId type_id, in FactoryInfo factory_info)
+      raises (MemberAlreadyPresent);
+
+    /**
+     * Remove the registration of a factory.
+     * @param type_id the type of object formerly created by this factory.
+     * @param location where the factory formerly created objects.
+     * @throws MemberNotPresent if no factory is available for the given type at this location.
+     */
+    void unregister_factory(in _TypeId type_id, in Location location)
+      raises (MemberNotFound);
+
+    /**
+     * Remove the registration of all factories that create a particular type of object.
+     * If no factories exist for the given type, the registry is unchanged.
+     * This is not an error.
+     * @param type_id the type of object formerly created by the factories to be unregistered.
+     */
+    void unregister_factory_by_type(in _TypeId type_id);
+
+    /**
+     * Remove the registration of all factories that create objects at a particular location.
+     * If the location is unknown the registry is unchanged.
+     * This is not an error.
+     * @param location where the factories formerly created objects.
+     */
+    void unregister_factory_by_location(in Location location);
+
+    /**
+     * List all the factories that create a given type of object.
+     * If the type is unknown, an empty list is returned.  This is not an error.
+     * @param type_id the type of object the factories create.
+     */
+    FactoryInfos list_factories_by_type(in _TypeId type_id);
+
+    /**
+     * List all the factories that create a objects at a given location.
+     * If no factories are registered for this location, an empty list is returned.
+     * This is not an error.
+     * @param location where the factories create objects.
+     */
+    FactoryInfos list_factories_by_location(in Location location);
+
+  }; // end of FactoryRegistry
+
 }; // end PortableGroup
 
 #endif  /* _PORTABLEGROUP_IDL_ */

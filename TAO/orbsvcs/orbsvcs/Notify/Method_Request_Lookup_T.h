@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_METHOD_REQUEST_LOOKUP_T_H
 #define TAO_Notify_METHOD_REQUEST_LOOKUP_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -64,5 +64,5 @@ protected:
 #pragma implementation ("Method_Request_Lookup_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_METHOD_REQUEST_LOOKUP_T_H */

@@ -16,9 +16,9 @@
 
 #ifndef ACE_SCHEDULER_FACTORY_H
 #define ACE_SCHEDULER_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/Containers_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,6 +27,11 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Sched/sched_export.h"
+
+class TAO_Reconfig_Scheduler_Entry;
+struct TAO_RT_Info_Tuple;
+typedef ACE_Ordered_MultiSet<TAO_RT_Info_Tuple *> TUPLE_SET;
+typedef ACE_Ordered_MultiSet_Iterator<TAO_RT_Info_Tuple *> TUPLE_SET_ITERATOR;
 
 class TAO_RTSched_Export ACE_Scheduler_Factory
 {
@@ -75,11 +80,13 @@ public:
     CORBA::Long criticality;
     CORBA::Long importance;
     RtecScheduler::Quantum_t quantum;
-    CORBA::Long threads;
+    RtecScheduler::Threads_t threads;
     RtecScheduler::OS_Priority priority;
     RtecScheduler::Preemption_Subpriority_t static_subpriority;
     RtecScheduler::Preemption_Priority_t preemption_priority;
     CORBA::Long info_type;
+    RtecScheduler::RT_Info_Enabled_Type_t enabled;
+
   };
 
 
@@ -93,10 +100,11 @@ public:
     //   dependencies between RT_Infos.  This is useful for implementing
     //   arrays of those.
 
-    RtecScheduler::handle_t info_that_depends;
-    RtecScheduler::handle_t info_depended_on;
     RtecScheduler::Dependency_Type_t dependency_type;
     CORBA::Long number_of_calls;
+    RtecScheduler::handle_t info_that_depends;
+    RtecScheduler::handle_t info_depended_on;
+    RtecScheduler::Dependency_Enabled_Type_t enabled;
   };
 
   struct POD_Config_Info
@@ -155,16 +163,38 @@ public:
   // from main, after resolve_initial_references.
 
   static int dump_schedule (const RtecScheduler::RT_Info_Set& infos,
+                            const RtecScheduler::Dependency_Set& dependencies,
                             const RtecScheduler::Config_Info_Set& configs,
                             const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
                             const char* file_name = 0,
                             const char* rt_info_format = 0,
-                            const char* config_info_format = 0);
+                            const char* dependency_format = 0,
+                            const char* config_info_format = 0,
+                            int dump_disabled_infos = 0,
+                            int dump_disabled_dependencies = 0);
   // This helper function will dump the schedule returned by a
   // RtecScheduler::Scheduler into a file, the file can be compiled to
   // create an efficient local implementation of the Scheduler.
 
   // TODO: How to do cleanup()? Use the ACE_Object_Manager stuff?
+
+  static void log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * entry,
+                                   FILE* file);
+  // This helper function prints out a single scheduling entry contents
+
+  static int log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array, 
+                                     long entry_ptr_array_size,
+                                     const char* file_name);
+  // This helper function prints out the intermediate scheduling entries
+
+  static void log_scheduling_tuples(TAO_RT_Info_Tuple ** tuple_ptr_array,
+                                    long tuple_ptr_array_size,
+                                    const char* file_name);
+  // This helper function prints out the arry used to create scheduling entries
+  // sorted in topological order then priority order
+
+  static void log_tuple_subset(TUPLE_SET & tuple_subset,
+                               FILE* file);
 
   static Factory_Status status (void);
   // This helper function allows the application to determine whether
@@ -182,7 +212,34 @@ public:
   // that the preemption priority is set before any access of the
   // preemption priority.
 
+  // Accessor for obtaining the default period (Boeing Extension)
+  static RtecScheduler::Period_t period_default();
+  // Method for setting the default period (Boeing Extension)
+  static void period_default(RtecScheduler::Period_t period_default);
+
+  // Accessor for obtaining the default threads (Boeing Extension)
+  static RtecScheduler::Threads_t threads_default();
+  // Method for setting the default threads (Boeing Extension)
+  static void threads_default(RtecScheduler::Threads_t threads_default);
+
+  // Accessor for obtaining the default importance (VERY_LOW_IMPORTANCE to VERY_HIGH_IMPORTANCE).  (Boeing Extension)
+  static RtecScheduler::Importance_t importance_default();
+  // Method for setting the default importance (VERY_LOW_IMPORTANCE to VERY_HIGH_IMPORTANCE).  (Boeing Extension)
+  static void importance_default(RtecScheduler::Importance_t importance_default);
+
+  // Accessor for obtaining the default criticality (VERY_LOW_CRITICALITY to VERY_HIGH_CRITICALITY).  (Boeing Extension)
+  static RtecScheduler::Criticality_t criticality_default();
+  // Method for setting the default criticality (VERY_LOW_CRITICALITY to VERY_HIGH_CRITICALITY).  (Boeing Extension)
+  static void criticality_default(RtecScheduler::Criticality_t criticality_default);
+
+  // Accessor for obtaining the default rt_info enabled state.  (RT_INFO_DISABLED, RT_INFO_ENABLED, or RT_INFO_NON_VOLATILE)
+  static RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default();
+
+  // Method for setting the default rt_info enabled state.  (RT_INFO_DISABLED, RT_INFO_ENABLED, or RT_INFO_NON_VOLATILE)
+  static void rt_info_enable_state_default(RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default);
+
 protected:
+
   static int no_config_run (void);
   // By default this factory assumes we are runnning a config
   // run. Calling this method disables that.  Since the methods
@@ -193,14 +250,28 @@ protected:
 
 private:
   static RtecScheduler::Scheduler_ptr server_;
+  
   static Factory_Status status_;
+  // Default period configuration.  (Boeing Extension)
+  static RtecScheduler::Period_t period_default_;
+  // Default threads configuration.  (Boeing Extension)
+  static RtecScheduler::Threads_t threads_default_;
+
+  // Default importance configuration.  (Boeing Extension)
+  static RtecScheduler::Importance_t importance_default_;
+  // Default criticality.  (Boeing Extension)
+  static RtecScheduler::Criticality_t criticality_default_;
+
+  // Default rt_info enabled state.  (Boeing Extension)
+  static RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default_;
+
 };
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Scheduler_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SCHEDULER_FACTORY_H */
 
 

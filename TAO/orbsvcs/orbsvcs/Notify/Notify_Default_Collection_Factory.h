@@ -12,7 +12,7 @@
 
 #ifndef NOTIFY_DEFAULT_COLLECTION_FACTORY_H
 #define NOTIFY_DEFAULT_COLLECTION_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -36,5 +36,5 @@ public:
   static int init_svc (void);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* NOTIFY_DEFAULT_COLLECTION_FACTORY_H */

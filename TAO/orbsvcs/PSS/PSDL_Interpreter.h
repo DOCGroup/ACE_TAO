@@ -16,7 +16,7 @@
 
 #ifndef TAO_PSDL_INTERPRETER_H
 #define TAO_PSDL_INTERPRETER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "psdl_export.h"
 
@@ -95,5 +95,5 @@ private:
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PSDL_INTERPRETER_H */

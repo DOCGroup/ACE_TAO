@@ -9,6 +9,6 @@
 #include "Refcountable_Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Refcountable_Guard_T, "$id$")
+ACE_RCSID (Notify, TAO_Notify_Refcountable_Guard_T, "$Id$")
 
 #endif /* TAO_Notify_REFCOUNTABLE_GUARD_T_CPP */
