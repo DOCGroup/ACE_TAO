@@ -58,11 +58,6 @@ LIST   = http://tao.doc.wustl.edu/bugzilla/wchar/
 WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
 STATUS = http://tao.doc.wustl.edu/bugzilla/wchar/status.txt
 
-[WinCE_All]
-LIST   = http://ringil.ece.uci.edu/bugzilla/wince/
-WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?wince
-STATUS = http://ringil.ece.uci.edu/bugzilla/wince/status.txt
-
 [Debian_Minimum]
 LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Minimum
@@ -97,21 +92,6 @@ STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_GCC_3.0/status
 LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_Static/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?maglor_Static
 STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_Static/status.txt
-
-[RedHat_Single_Threaded]
-LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/curufin_SingleThreaded/
-WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?curufin_SingleThreaded
-STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/curufin_SingleThreaded/status.txt
-
-[RedHat_Implicit_Templates]
-LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/amrod_ImplicitTemplates/
-WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?amrod_ImplicitTemplates
-STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/amrod_ImplicitTemplates/status.txt
-
-[RedHat_GCC_3.1]
-LIST   = http://www.dist-systems.bbn.com/projects/AIRES/UAV/scoreboard/linux/
-WEB    = http://www.dist-systems.bbn.com/projects/AIRES/UAV/scoreboard/linux/
-STATUS = http://www.dist-systems.bbn.com/projects/AIRES/UAV/scoreboard/linux/status.txt
 
 [SunOS_FORTE_UP_1]
 LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_FORTE_UPDATE_1/
