@@ -1,3 +1,13 @@
+Tue Sep 28 12:46:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_exception_holder_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_exception_holder_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_exception_holder_cs.cpp:
+	  Replaced several bare casts with ACE_reinterpret_cast
+	  because HP/UX complained. If possible, it would be better to
+	  do this with one of the narrow_from_decl macros.
+
 Mon Sep 27 19:29:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.cpp:
