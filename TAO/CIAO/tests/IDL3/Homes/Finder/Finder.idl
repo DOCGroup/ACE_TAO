@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file Factory.idl
+ * @file Finder.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
  * Tests the compilation of Homes with Factorys.

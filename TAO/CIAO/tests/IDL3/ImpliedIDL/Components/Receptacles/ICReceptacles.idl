@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file Receptacles.idl
+ * @file ICReceptacles.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  * 
  * Tests equivalent idl for receptacles.

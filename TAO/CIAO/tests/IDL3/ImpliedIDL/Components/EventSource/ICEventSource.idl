@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file EventSource.idl
+ * @file ICEventSource.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
  * Tests implied IDL of event sources.
