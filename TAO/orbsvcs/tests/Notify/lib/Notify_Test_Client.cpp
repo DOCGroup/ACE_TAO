@@ -148,7 +148,7 @@ Notify_Test_Client::notify_factory (void)
 CosNotifyChannelAdmin::EventChannel_ptr
 Notify_Test_Client::create_event_channel (const char* cname,
                                           int resolve
-                                          TAO_ENV_ARG_PARAMETER)
+                                          TAO_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
   CosNaming::Name name (1);
