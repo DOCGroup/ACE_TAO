@@ -1,3 +1,10 @@
+Thu Jul 12 20:29:42 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.i (resolve_rt_orb, resolve_rt_current):
+
+	  Fixed broken emulated exception code.  ACE_CHECK_RETURN should
+	  have been used instead of ACE_TRY_FLAG.
+
 Thu Jul 12 20:21:36 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/tutorials/Quoter/Makefile (DIRS):
