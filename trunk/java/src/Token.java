@@ -45,7 +45,9 @@ class WaitObject extends TimedWait
  *     semantics, where a thread that owns the token can reacquire it
  *     without deadlocking.  In addition, threads that are blocked
  *     awaiting the token are serviced in strict FIFO order as other
- *     threads release the token.
+ *     threads release the token. The solution makes use of the
+ *     Specific Notification pattern presented by Tom Cargill in
+ *     "Specific Notification for Java Thread Synchronization," PLoP96.
  *</blockquote>
  */
 public class Token
@@ -140,7 +142,7 @@ public class Token
       else
 	{
 	  // Will have to block to acquire the token, so call
-	  // sleep_hook and return 
+	  // sleepHook and return 
 	  sleepHook ();
 	  result = 1;
 	}
