@@ -24,7 +24,6 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(corba_messaging),1)
 
-
 CPP_SRCS += \
    RTScheduler \
    RTSchedulerC \
@@ -55,10 +54,24 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
+
 ifeq ($(corba_messaging),1)
 
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)
+
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS += -DTAO_RTSCHEDULER_BUILD_DLL
+endif
+endif
+
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS += -DTAO_AS_STATIC_LIBS
+endif
+endif
+
 
 else
 all:
