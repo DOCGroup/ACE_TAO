@@ -10,8 +10,8 @@ clerks and the clerks in turn keep their time synchronized
 globally. The clerks do this by talking to the servers running on
 different machines. 
 
-There needs to be atleast one time server running in the network. The Clerks
-update their time periofically from the servers. The servers and clerks
+There needs to be at least one time server running in the network. The Clerks
+update their time periodically from the servers. The servers and clerks
 export their IORs through the
   * Naming Service.
   * Files

@@ -2,9 +2,9 @@
 
 #include "Constants.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventCommS.h"
 
 class EC_Consumer:
   public POA_RtecEventComm::PushConsumer,

@@ -42,7 +42,7 @@ Command line arguments:
                           created and registered with the Naming Service.
                           This option is disabled by default.
 
-"-ChannelName channel_name" : Specifes the <channel_name> to register with the
+"-ChannelName channel_name" : Specifies the <channel_name> to register with the
                               Naming Service.
                               The default is "NotifyEventChannel".
 
@@ -57,7 +57,7 @@ option instead.
                                number of worker threads to utilize.
 
 
-Note that the svc.conf file must instruct the oRB to use a TP reactor
+Note that the svc.conf file must instruct the ORB to use a TP reactor
 e.g. static Resource_Factory "-ORBReactorType tp -ORBReactorMaskSignals 0"
 Please look up the ORB configuration options to get more information
 on this.
@@ -135,7 +135,7 @@ The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the fo
                                        "-MTDispatching",
                                        "-MTSourceEval"
                                        "-MTListenerEval"
-                                       *see footnote below for explaination*
+                                       *see footnote below for explanation*
 
 e.g. svc.conf
 static Notify_Default_Event_Manager_Objects_Factory "-MTSourceEval -MTDispatching -DispatchingThreads 2"
@@ -156,7 +156,7 @@ This is the default case.
 When you specify "-AllocateTaskperProxy" it asks notify to create a
 dispatching task (with the specified thread pool size) PER
 PROXYSUPPLIER. So if you use this option and connect 50 consumers with
-1 thread for the dispaching task you will have created 50 dispatching
+1 thread for the dispatching task you will have created 50 dispatching
 threads! so use this option with care and you might not need it in
 most cases.
 
@@ -169,17 +169,17 @@ throughput to it's consumers. (Eventually i want to be able to set the
 thread pool size via a QoS property)
 
 Similarly, the "-MTSourceEval" specifies a thread pool for the filter
-evauation at the proxyconsumer ("Source").
+evaluation at the proxyconsumer ("Source").
 and the "-MTListenerEval" specifies a thread pool for the filter
-evauation at the proxyconsumer ("Listener").
+evaluation at the proxyconsumer ("Listener").
 
 How to use the NT_Notify_Service
 ================================
 
-To set the options for the TAO Notification Sevice, go to the Services
+To set the options for the TAO Notification Service, go to the Services
 icon in the Settings group under the start menu (start menu ->
 settings -> services).  There, highlight the NT_Notify_Service, which
-is the name used by the Notificiation Service when it is registered.
+is the name used by the Notification Service when it is registered.
 After it's highlighted, you should see at the bottom of the dialog box
 an area to specify options.  Just enter the options you wish in that
 edit box and everything should just work.  However, some options, such

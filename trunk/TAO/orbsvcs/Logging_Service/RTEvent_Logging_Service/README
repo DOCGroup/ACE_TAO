@@ -7,7 +7,7 @@ To run the RTEvent Logging Service:
    if not, start one at $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
 
 2. execute the Event_Logging_Service
-   at $TAO_ROOT/orbsvcs/Logging_Service/RTEventLogging_Service/RTEvent_Logging_Service
+   at $TAO_ROOT/orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service
 
 
 The idl spec is $TAO_ROOT/orbsvcs/orbsvcs/RTEventLogAdmin.idl
