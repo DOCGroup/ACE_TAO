@@ -6,6 +6,13 @@ Fri Apr 11 15:14:59 1997  David L. Levine  <levine@cs.wustl.edu>
 	  reporting this.  Also, removed a few unnecessary template
 	  specializations.
 
+	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp: fixed template
+	  specializations for no-thread platforms.  Thanks to Ganesh Pai
+	  <gpai@voicetek.com> for reporting this.
+
+	* performance-tests/Misc/context_switch_time.cpp (main):
+	  removed call to ACE_High_Res_Timer::supported ().
+
 Fri Apr 11 14:31:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp: Added several explicit template
