@@ -204,14 +204,14 @@ Peer_Router<PH, PK>::~Peer_Router (void)
 {
 }
 
-template <class PH, class PK> ACE_INLINE int
+template <class PH, class PK> int
 Peer_Router<PH, PK>::fini (void)
 {
   delete this->acceptor_;
   return 0;
 }
 
-template <class PH, class PK> ACE_INLINE int
+template <class PH, class PK> int
 Peer_Router<PH, PK>::control (ACE_Message_Block *mb)
 {
   ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
@@ -229,20 +229,20 @@ Peer_Router<PH, PK>::control (ACE_Message_Block *mb)
   return 0;
 }
 
-template <class PH, class PK> ACE_INLINE int
+template <class PH, class PK> int
 Peer_Router<PH, PK>::unbind_peer (PK key)
 {
   return this->peer_map_.unbind (key);
 }
 
-template <class PH, class PK> ACE_INLINE int
+template <class PH, class PK> int
 Peer_Router<PH, PK>::bind_peer (PK key, Peer_Handler<Peer_Router<PH, PK>, PK> *ph)
 {
   PH *peer_handler = (PH *) ph;
   return this->peer_map_.bind (key, peer_handler);
 }
 
-template <class PH, class PK> ACE_INLINE int 
+template <class PH, class PK> int 
 Peer_Router<PH, PK>::init (int argc, char *argv[])
 {
   this->acceptor_ = new Acceptor_Factory <PH, PK> (this);

@@ -10,7 +10,7 @@
 
 /* Bind the EXT_ID to the INT_ID. */
 
-template <class EXT_ID, class INT_ID, class LOCK> ACE_INLINE int 
+template <class EXT_ID, class INT_ID, class LOCK> int 
 Routing_Table<EXT_ID, INT_ID, LOCK>::bind (EXT_ID ext_id, INT_ID *int_id)
 {
   return this->map_.bind (ext_id, int_id);
@@ -18,7 +18,7 @@ Routing_Table<EXT_ID, INT_ID, LOCK>::bind (EXT_ID ext_id, INT_ID *int_id)
 
 /* Find the INT_ID corresponding to the EXT_ID. */
 
-template <class EXT_ID, class INT_ID, class LOCK> ACE_INLINE int 
+template <class EXT_ID, class INT_ID, class LOCK> int 
 Routing_Table<EXT_ID, INT_ID, LOCK>::find (EXT_ID ext_id, INT_ID *&int_id)
 {
   return this->map_.find (ext_id, int_id);
@@ -26,13 +26,13 @@ Routing_Table<EXT_ID, INT_ID, LOCK>::find (EXT_ID ext_id, INT_ID *&int_id)
 
 /* Unbind (remove) the EXT_ID from the map. */
 
-template <class EXT_ID, class INT_ID, class LOCK> ACE_INLINE int
+template <class EXT_ID, class INT_ID, class LOCK> int
 Routing_Table<EXT_ID, INT_ID, LOCK>::unbind (EXT_ID ext_id)
 {
   return this->map_.unbind (ext_id);
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> ACE_INLINE
+template <class EXT_ID, class INT_ID, class LOCK>
 Routing_Iterator<EXT_ID, INT_ID, LOCK>::Routing_Iterator (Routing_Table<EXT_ID, 
 							  INT_ID, LOCK> &rt,
 							  int ignore_inactive)
@@ -41,7 +41,7 @@ Routing_Iterator<EXT_ID, INT_ID, LOCK>::Routing_Iterator (Routing_Table<EXT_ID,
 {
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> ACE_INLINE int 
+template <class EXT_ID, class INT_ID, class LOCK> int 
 Routing_Iterator<EXT_ID, INT_ID, LOCK>::next (INT_ID *&ss)
 {
   // Loop in order to skip over inactive entries if necessary.
@@ -61,7 +61,7 @@ Routing_Iterator<EXT_ID, INT_ID, LOCK>::next (INT_ID *&ss)
   return 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> ACE_INLINE int
+template <class EXT_ID, class INT_ID, class LOCK> int
 Routing_Iterator<EXT_ID, INT_ID, LOCK>::advance (void)
 {
   return this->map_iter_.advance ();
