@@ -13,10 +13,12 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
 IDL_HDR	= dataC dataS
 IDL_SRC	= dataC dataS
 
-ECT_Supplier_OBJS=$(addsuffix .o,ECT_Supplier $(IDL_SRC))
-ECT_Consumer_OBJS=$(addsuffix .o,ECT_Consumer $(IDL_SRC))
+ECT_Supplier_OBJS=$(addsuffix .o,ECT_Supplier ECT_Data $(IDL_SRC))
+ECT_Consumer_OBJS=$(addsuffix .o,ECT_Consumer ECT_Data $(IDL_SRC))
 
-SRC = $(addsuffix .cpp, $(BUILD)) $(addsuffix .cpp, $(IDL_SRC))
+SRC =   $(addsuffix .cpp, $(BUILD)) \
+	$(addsuffix .cpp, $(IDL_SRC)) \
+	ECT_Data.cpp
 
 ifdef quantify
   CCFLAGS += -Dquantify
