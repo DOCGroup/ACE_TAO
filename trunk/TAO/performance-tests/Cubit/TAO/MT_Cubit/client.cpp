@@ -547,22 +547,15 @@ Client_i::print_util_stats (void)
       this->total_latency_high_ =
         this->total_latency_ - this->total_util_task_duration_;
 
-      // Calc and print the CPU percentage.  I add 0.5 to round to the
-      // nearest integer before casting it to int.
       ACE_DEBUG ((LM_DEBUG,
-                  "\t%% ORB Client CPU utilization: %u %%\n"
-                  "\t%% Idle time: %u %%\n\n",
-                  (u_int) (this->total_latency_high_ * 100 / this->total_latency_ + 0.5),
-                  (u_int) (this->total_util_task_duration_ * 100 / this->total_latency_ + 0.5)));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) UTILIZATION task performed \t%u computations\n"
-                  "(%t) CLIENT task performed \t\t%u CORBA calls\n"
-                  "(%t) Utilization test time is \t\t%f seconds\n"
+                  "(%t) Scavenger task performed \t%u computations\n"
+                  "(%t) CLIENT task performed \t\t%u CORBA calls as requested\n\n"
+                  "(%t) Utilization test time is \t\t%f seconds\n\t%s\n"
                   "\t Ratio of computations to CORBA calls is %u.%u:1\n\n",
                   this->util_thread_->get_number_of_computations (),
                   this->ts_->loop_count_,
                   this->ts_->util_test_time_,
+                  this->ts_->remote_invocations_ == 1? "NOW run the same test again, adding the \"-l\" option.  See README file for explanation.":" ",
                   this->util_thread_->get_number_of_computations () / this->ts_->loop_count_,
                   (this->util_thread_->get_number_of_computations () % this->ts_->loop_count_)
                   * 100 / this->ts_->loop_count_));
@@ -854,6 +847,8 @@ int
 main (int argc, char *argv[])
 {
 #endif /* VXWORKS */
+  ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::LOGGER);
+
   Client_i client;
 
   int result = client.init (argc,argv);

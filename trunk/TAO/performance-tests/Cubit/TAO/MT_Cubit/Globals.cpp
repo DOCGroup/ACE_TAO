@@ -14,8 +14,8 @@ Globals::Globals (void)
 {
   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
     ACE_DEBUG ((LM_DEBUG,
-                "%p\n",
-                "gethostname"));
+                "ACE_OS::hostname () returned %s\n",
+                hostname));
 }
 
 int
@@ -23,10 +23,6 @@ Globals::parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt opts (argc, argv, "h:p:t:f:rm");
   int c;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "%s",
-              hostname));
 
   while ((c = opts ()) != -1)
     {
@@ -59,11 +55,11 @@ Globals::parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s \t"
-                           "[-p <port_num>]                // starting port                      \n\t\t"
-                           "[-h <my_hostname>]             // IP address to use                  \n\t\t"
-                           "[-t <number_of_servants>]      // # of servant threads to create     \n\t\t"
-                           "[-f <ior_file> ]               // specify a file to output all ior's \n\t\t"
-                           "[-m ]                          // Use multiple priorities for threads\n\t\t"
+                           "[-p <port_num>]                // starting port                      \n\t\t\t"
+                           "[-h <my_hostname>]             // IP address to use                  \n\t\t\t"
+                           "[-t <number_of_servants>]      // # of servant threads to create     \n\t\t\t"
+                           "[-f <ior_file> ]               // specify a file to output all ior's \n\t\t\t"
+                           "[-m ]                          // Use multiple priorities for threads\n\t\t\t"
                            "[-r ]                          // Run the thread-per-rate test       \n"
                            ,argv [0]),
                           -1);

@@ -37,6 +37,16 @@ Cubit_Task::svc (void)
   if (ACE_OS::thr_getprio (thr_handle, prio) == -1)
     return -1;
 
+  //   char buffer[BUFSIZ];
+  //   sprintf (buffer, "server%d.log", this->task_id_);
+  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::OSTREAM);
+  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR);
+  //   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::LOGGER);
+  //  ofstream log (buffer);
+  // log.setf (ios::unitbuf);
+  //  log.rdbuf()->unbuffered (1);
+  //ACE_Log_Msg::instance()->msg_ostream (&log);
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Beginning Cubit task with args = '%s' and priority %d\n",
               orbargs_,
@@ -45,7 +55,7 @@ Cubit_Task::svc (void)
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n", "ORB initialization failed"),
+                       "ORB initialization failed\n"),
                       -1);
   result = this->create_servants ();
   if (result == -1)
