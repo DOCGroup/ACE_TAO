@@ -19,7 +19,7 @@ $ES = Process::Create ("../../Event_Service/Event_Service".$Process::EXE_EXT);
 
 sleep $sleeptime;
 
-$status = system ("Event_Latency".$Process::EXE_EXT.
+$status = system ($EXEPREFIX."Event_Latency".$Process::EXE_EXT.
 		  " -j -m 100");
 
 $NS->Kill ();

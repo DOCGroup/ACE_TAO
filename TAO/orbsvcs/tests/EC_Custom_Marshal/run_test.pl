@@ -22,11 +22,11 @@ $ES = Process::Create ("..".$DIR_SEPARATOR.
                        "Event_Service".$DIR_SEPARATOR.
                        "Event_Service".$Process::EXE_EXT);
 
-$C = Process::Create ('.' . $DIR_SEPARATOR . "ECM_Consumer".$Process::EXE_EXT);
+$C = Process::Create ($EXEPREFIX."ECM_Consumer".$Process::EXE_EXT);
 
 sleep $sleeptime;
 
-$S = Process::Create ('.' . $DIR_SEPARATOR . "ECM_Supplier".$Process::EXE_EXT);
+$S = Process::Create ($EXEPREFIX."ECM_Supplier".$Process::EXE_EXT);
 
 $C->Wait ();
 $S->Wait ();

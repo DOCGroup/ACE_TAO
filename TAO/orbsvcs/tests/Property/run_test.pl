@@ -32,7 +32,7 @@ sub server
 {
     my $args = "-ORBnameserviceport $nsport";
     print ("\nServer: server$Process::EXE_EXT $args\n");
-    $SV = Process::Create ("server$Process::EXE_EXT", $args);
+    $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", $args);
 }
 
 
@@ -40,7 +40,7 @@ sub client
 {
     my $args = "-ORBnameserviceport $nsport";
     print ("\nclient: client $args\n");
-    $CL = Process::Create ("client$Process::EXE_EXT", $args);
+    $CL = Process::Create ($EXEPREFIX."client$Process::EXE_EXT", $args);
 }
 
 name_server ();
