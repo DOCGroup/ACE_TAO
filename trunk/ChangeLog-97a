@@ -1,3 +1,10 @@
+Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main): 
+	  Changed ACE::INVALID_HANDLE to ACE_INVALID_HANDLE.
+	  Thanks to Dani Flexer <danif@alice.actcom.co.il> for
+	  reporting this.
+
 Tue May 06 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Containers.cpp (dequeue_head): fixed typos in variable names.
