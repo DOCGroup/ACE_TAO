@@ -1,3 +1,9 @@
+Wed Nov 29 09:19:38 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/NestedUpcall/Triangle_Test/run_test.pl:
+          The test hanged if the server_A was started but server_B
+          crashed.
+
 Wed Nov 29 09:00:22 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/lib/Makefile:
