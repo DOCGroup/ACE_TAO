@@ -122,7 +122,9 @@ public class ImageApp extends Applet
     Image image = null;
     try
       {
+	System.out.println("Getting image");
 	image = getImage (new URL (url));
+	System.out.println("Done");
       }
     catch (MalformedURLException e)
       {
@@ -181,10 +183,15 @@ public class ImageApp extends Applet
 	this.configFile_ = "http://www.cs.wustl.edu/~pjain/java/ACE_wrappers/java/ImageProcessing/framework/filter.conf";
 	*/
 
+    if (this.configFile_ == null)
+      this.configFile_ = this.getCodeBase().toString() + "../ImageProcessing/framework/filter.conf";
+
     String configInfo = null;
 
-    // Only get the file as a URL if it was specified as a parameter!
-    if ((this.configFile_ == null) || (!this.configFile_.startsWith("http://"))) {
+    // Only get the file as a URL if it was specified as an http style parameter!
+    if ((this.configFile_ != null) && ((this.configFile_.startsWith("http://")) ||
+				       (this.configFile_.startsWith("file://")) ||
+				       (this.configFile_.startsWith("ftp://")))) {
 
       URL url;
 
