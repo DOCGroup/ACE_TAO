@@ -1,17 +1,62 @@
 $Id$
 
-@@ Michael, can you please give a brief overview of what this test "tests"?!
+Documentation for the location forwarding example.
 
-Documentation for the Forwarding example.
+For detailed explanation on location forwarding, see
 
-run it as follows:
+$TAO_ROOT/docs/forwarding.html
 
-server -o server1 -ORBport 10040 -ORBobjrefstyle url
-server -f server1 -o server2 -ORBport 10041 -ORBobjrefstyle url
-client -f server2 -i 5
+The test sets up two servers, the first writes its objects 
+object reference to a file. The second server reads it 
+recognizes it as forwarding location and writes
+its own to a file too. This object reference is then read
+by the client, which then issues a number of requests.
+Where every thrid request is a forwarding request to the object.
 
-This will set up two servers, of which the second one is called first,
-for the first to calls, then a forwarding message is called on the
-first server.  After that the last two calls are called on the first
-server.
+Example:  number of requests 5
+first call (request no 1)  
+second call (request no 2)
+forwarding call (request no 3)
+thrid call (request no 4)
+fourth call (request no 5)
+(no six would be a forwarding call again) 
+
+To kind of location forwardings are implemented, the 
+POA approach and the servant locator approach, both 
+are mentioned in the above documentation about location
+forwarding.
+
+Run it as follows for the POA approach:
+
+server -o server2 -ORBport 10040 -ORBobjrefstyle url
+server -f server2 -o server1 -ORBport 10041 -ORBobjrefstyle url
+client -f server1 -i 5
+
+
+Similar invocation for the servant locator approach:
+(basically just the switches are different)
+
+server -p server2 -ORBport 10040 -ORBobjrefstyle url
+server -g server2 -p server1 -ORBport 10041 -ORBobjrefstyle url
+client -g server1 -i 5
+
+
+To do some fun stuff, how about this, the first server uses 
+the POA apporach, and the second uses the servant locator approach.
+
+
+server -o server3 -ORBport 10040 -ORBobjrefstyle url  
+server -g server3 -p server2 -ORBport 10041 -ORBobjrefstyle url
+server -f server2 -o server1 -ORBport 10043 -ORBobjrefstyle url
+client -f server1 -i 8
+
+The first two calls will be called on server1, then the location
+forwarding is called on this one and the next two calls are going
+to be called on the second one. Location forwarding is then called
+on the second one and the last two calls are then done on the 
+thrid server.
+
+
+
+
 
