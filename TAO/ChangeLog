@@ -1,3 +1,10 @@
+Mon Oct 11 18:31:10 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* examples/PluggableUDP/DIOP/README: 
+
+	  Forgot to change TAO_TAG_UDP_PROFILE to TAO_TAG_DIOP_PROFILE in
+	  this file.
+
 Mon Oct 11 17:46:48 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao/ORB_Constants.h: 

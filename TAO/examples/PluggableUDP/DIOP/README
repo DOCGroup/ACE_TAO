@@ -37,7 +37,7 @@ $TAO_ROOT/tao/Strategies/ directory):
 
 - Uncomment the following line in TAO/tao/corbafwd.h:
 
-  #define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
+  #define TAO_TAG_DIOP_PROFILE    0x54414f04U /* UDP */
 
 - The application using DIOP should have a svc.conf file with the
   following entry:
