@@ -16,8 +16,9 @@
 #include "server.h"
 
 // Global options used to configure various parameters.
-static char *hostname = NULL;
-static int base_port = 0;
+static char *hostname = ACE_OS::strdup ("localhost");
+static char *ior_file = 0;
+static int base_port = ACE_DEFAULT_SERVER_PORT;
 static int num_of_objs = 1;
 static u_int use_name_service = 1;
 
@@ -501,7 +502,7 @@ Cubit_Factory_Task::initialize_orb (void)
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "sh:p:t:");
+  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:");
   int c;
 
   while ((c = opts ()) != -1)
@@ -509,6 +510,9 @@ parse_args (int argc, char *argv[])
       {
       case 's':
         use_name_service = 0;
+        break;
+      case 'f':
+        ior_file = opts.optarg;
         break;
       case 'h':
         hostname = opts.optarg;
@@ -568,9 +572,10 @@ initialize (int argc, char **argv)
    if (hostname == 0 || base_port == 0)
      ACE_ERROR_RETURN ((LM_ERROR,
                         "usage:  %s"
-                        " -p port"
-                        " -h my_hostname"
-                        " -t num_objects"
+			" [-s Means NOT to use the name service] "
+                        " [-p port]"
+                        " [-h my_hostname]"
+                        " [-t num_objects]"
                         "\n", argv [0]),
                        1);
 
@@ -689,10 +694,21 @@ start_servants ()
   for (i = 0; i < num_of_objs-1; ++i)
     cubits[i+1] = low_priority_task[i]->get_servant_ior (0);
 
+  if (ior_file != 0)
+      FILE *iorFile = fopen (ior_file, "w"); 
+
   for (i = 0; i < num_of_objs; ++i)
-    printf ("cubits[%d] ior = %s\n", i, cubits[i]);
+    {
+      if (ior_file != 0)
+	{
+	  fputs (cubits[i], iorFile); 
+	  fputs ("\n", iorFile);
+	}
+      printf ("cubits[%d] ior = %s\n", i, cubits[i]);
+    }
 
-
+  if (ior_file != 0)
+    fclose (iorFile);
 
   ACE_NEW_RETURN (factory_task,
                   Cubit_Factory_Task (args, "internet", cubits, num_of_objs),

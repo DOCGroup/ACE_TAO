@@ -59,19 +59,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #CPPFLAGS += -DACE_NLOGGING
 
 #CXX := purify $(CXX)
-##DCFLAGS = -g
-OCFLAGS =
+
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/tao/compat
-
+##POSTLINK += -lnk="-n -T $(VME_ROOT)/src/act/slots/act_s2.ld" 
 .PRECIOUS: cubitC.h cubitC.i cubitC.cpp cubitS.h cubitS.i cubitS.cpp
 
 server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(CUBIT_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)  $(POSTLINK)
+## -lnk="-n -T $(VME_ROOT)/src/act/slots/act_s2.ld"
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 

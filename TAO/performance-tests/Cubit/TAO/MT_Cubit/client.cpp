@@ -47,19 +47,19 @@ do_priority_inversion_test (Task_State &ts)
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager thr_mgr;
 
-  Util_Thread util_thread (&ts, &thr_mgr);
+  //  Util_Thread util_thread (&ts, &thr_mgr);
 
   ACE_Sched_Priority priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
-
+#if 0
   // First activate the Utilization thread.  It will wait until all
   // threads have finished binding.
   util_thread.activate (THR_BOUND,
                         1,
                         0,
                         priority);
-
+#endif
   // Now activate the high priority client.
 
   // @@ The ifdef here is temporarily placed here until
@@ -104,6 +104,7 @@ do_priority_inversion_test (Task_State &ts)
       // priority thread is the utilization thread.
 
       // get the next higher priority
+      ACE_OS::sleep (5);
       priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                       priority,
                                                       ACE_SCOPE_THREAD);
@@ -117,14 +118,19 @@ do_priority_inversion_test (Task_State &ts)
     }
     // Wait for all the threads to exit.
     ACE_Thread_Manager::instance ()->wait ();
-
 #if defined (VXWORKS)
     ACE_OS::printf ("Test done.\n"
                     "High priority client latency : %d usec\n"
                     "Low priority client latency : %d usec\n",
                     high_priority_client.get_high_priority_latency (),
-                    low_priority_client.get_low_priority_latency ());
-#else  /* !defined (VXWORKS) */
+		    low_priority_client.get_low_priority_latency ());
+#elif defined (CHORUS)
+    ACE_OS::printf ("Test done.\n"
+                    "High priority client latency : %u usec\n"
+                    "Low priority client latency : %u usec\n",
+                    high_priority_client.get_high_priority_latency (),
+		    low_priority_client.get_low_priority_latency ());
+#else /* !defined (CHORUS) */
     ACE_DEBUG ((LM_DEBUG, "Test done.\n"
                 "High priority client latency : %f msec, jitter: %f msec\n"
                 "Low priority client latency : %f msec, jitter: %f msec\n",
@@ -132,10 +138,11 @@ do_priority_inversion_test (Task_State &ts)
                 high_priority_client.get_high_priority_jitter (),
                 low_priority_client.get_low_priority_latency (),
                 low_priority_client.get_low_priority_jitter ()));
-#endif /* !defined (VXWORKS) */
+#endif /* !defined (VXWORKS) && !defined (CHORUS) */
+
  util_thread.done_ = 1;
  thr_mgr.wait ();
- ACE_DEBUG ((LM_DEBUG, "utilization task performed %g computations\n",
+ ACE_DEBUG ((LM_DEBUG, "(%t) utilization task performed %g computations\n",
                         util_thread.get_number_of_computations ()));
  return 0;
 }
