@@ -1,5 +1,9 @@
 Tue Oct 27 21:54:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* man: Added the ACE_Service_Repository_Iterator.{html,3} files.
+  	  Thanks to Erik Koerber <erik.koerber@siemens.at> for reporting
+ 	  this.
+
 	* Updated the manual pages to reflect the latest APIs in
 	  the new release.
 
