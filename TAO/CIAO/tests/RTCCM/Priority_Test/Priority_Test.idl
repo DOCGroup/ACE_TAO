@@ -33,10 +33,14 @@ module Priority_Test
    * receptacle.  All operations in the interface are rather generic
    * and the actualy component implmenetion should decide what they
    * actually do.
+   *
+   * @param work the amount of work to be done
+   * @param aux auxiliary parameter
    */
-  interface position
+  interface Common_Ops
   {
-    long do_something (in long in_param);
+    unsigned long do_work (in unsigned long work,
+                           in unsigned long aux);
   };
 };
 
