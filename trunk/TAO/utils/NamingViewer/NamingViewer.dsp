@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 tao.lib ace.lib TAO_CosNaming.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../tao" /libpath:"../../../ace" /libpath:"../../orbsvcs/orbsvcs"
+# ADD LINK32 TAO_PortableServer.lib tao.lib ace.lib TAO_CosNaming.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../tao/PortableServer" /libpath:"../../tao" /libpath:"../../../ace" /libpath:"../../orbsvcs/orbsvcs"
 
 !ELSEIF  "$(CFG)" == "NamingViewer - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 taod.lib aced.lib TAO_CosNamingd.lib /nologo /subsystem:windows /debug /machine:I386 /out:"Debug/NamingViewerd.exe" /pdbtype:sept /libpath:"../../tao" /libpath:"../../../ace" /libpath:"../../orbsvcs/orbsvcs"
+# ADD LINK32 TAO_PortableServerd.lib taod.lib aced.lib TAO_CosNamingd.lib /nologo /subsystem:windows /debug /machine:I386 /out:"Debug/NamingViewerd.exe" /pdbtype:sept /libpath:"../../tao/PortableServer" /libpath:"../../tao" /libpath:"../../../ace" /libpath:"../../orbsvcs/orbsvcs"
 
 !ENDIF 
 

@@ -90,20 +90,20 @@ PortableInterceptor::OctetSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::OctetSeq_var::operator const ::PortableInterceptor::OctetSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::OctetSeq_var::operator ::PortableInterceptor::OctetSeq &() // cast 
+ACE_INLINE
+PortableInterceptor::OctetSeq_var::operator ::PortableInterceptor::OctetSeq &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::OctetSeq_var::operator ::PortableInterceptor::OctetSeq &() const // cast 
+ACE_INLINE
+PortableInterceptor::OctetSeq_var::operator ::PortableInterceptor::OctetSeq &() const // cast
 {
   return *this->ptr_;
 }
@@ -126,7 +126,7 @@ PortableInterceptor::OctetSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::PortableInterceptor::OctetSeq *&
 PortableInterceptor::OctetSeq_var::out (void)
 {
@@ -187,7 +187,7 @@ PortableInterceptor::OctetSeq_out::operator= (OctetSeq *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::OctetSeq_out::operator ::PortableInterceptor::OctetSeq *&() // cast
 {
   return this->ptr_;
@@ -278,32 +278,32 @@ PortableInterceptor::StringSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::StringSeq_var::operator const ::PortableInterceptor::StringSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::StringSeq_var::operator ::PortableInterceptor::StringSeq &() // cast 
+ACE_INLINE
+PortableInterceptor::StringSeq_var::operator ::PortableInterceptor::StringSeq &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::StringSeq_var::operator ::PortableInterceptor::StringSeq &() const // cast 
+ACE_INLINE
+PortableInterceptor::StringSeq_var::operator ::PortableInterceptor::StringSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableInterceptor::StringSeq_var::operator ::PortableInterceptor::StringSeq *&() // cast 
+PortableInterceptor::StringSeq_var::operator ::PortableInterceptor::StringSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_SeqElem_String_Manager 
+ACE_INLINE TAO_SeqElem_String_Manager
 PortableInterceptor::StringSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -321,7 +321,7 @@ PortableInterceptor::StringSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::PortableInterceptor::StringSeq *&
 PortableInterceptor::StringSeq_var::out (void)
 {
@@ -382,7 +382,7 @@ PortableInterceptor::StringSeq_out::operator= (StringSeq *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::StringSeq_out::operator ::PortableInterceptor::StringSeq *&() // cast
 {
   return this->ptr_;
@@ -400,7 +400,7 @@ PortableInterceptor::StringSeq_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE TAO_SeqElem_String_Manager 
+ACE_INLINE TAO_SeqElem_String_Manager
 PortableInterceptor::StringSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -414,8 +414,8 @@ PortableInterceptor::StringSeq_out::operator[] (CORBA::ULong index)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR___CI_
 
 ACE_INLINE
-PortableInterceptor::Interceptor::Interceptor (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::Interceptor::Interceptor (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -470,14 +470,14 @@ PortableInterceptor::Interceptor_var::operator= (const ::PortableInterceptor::In
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::Interceptor_var::operator const ::PortableInterceptor::Interceptor_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::Interceptor_var::operator ::PortableInterceptor::Interceptor_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::Interceptor_var::operator ::PortableInterceptor::Interceptor_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -569,7 +569,7 @@ PortableInterceptor::Interceptor_out::operator= (Interceptor_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::Interceptor_out::operator ::PortableInterceptor::Interceptor_ptr &() // cast
 {
   return this->ptr_;
@@ -603,8 +603,8 @@ PortableInterceptor::Interceptor_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_CURRENT___CI_
 
 ACE_INLINE
-PortableInterceptor::Current::Current (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::Current::Current (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -659,14 +659,14 @@ PortableInterceptor::Current_var::operator= (const ::PortableInterceptor::Curren
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::Current_var::operator const ::PortableInterceptor::Current_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::Current_var::operator ::PortableInterceptor::Current_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::Current_var::operator ::PortableInterceptor::Current_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -758,7 +758,7 @@ PortableInterceptor::Current_out::operator= (Current_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::Current_out::operator ::PortableInterceptor::Current_ptr &() // cast
 {
   return this->ptr_;
@@ -784,8 +784,8 @@ PortableInterceptor::Current_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_REQUESTINFO___CI_
 
 ACE_INLINE
-PortableInterceptor::RequestInfo::RequestInfo (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::RequestInfo::RequestInfo (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -840,14 +840,14 @@ PortableInterceptor::RequestInfo_var::operator= (const ::PortableInterceptor::Re
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::RequestInfo_var::operator const ::PortableInterceptor::RequestInfo_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::RequestInfo_var::operator ::PortableInterceptor::RequestInfo_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::RequestInfo_var::operator ::PortableInterceptor::RequestInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -939,7 +939,7 @@ PortableInterceptor::RequestInfo_out::operator= (RequestInfo_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::RequestInfo_out::operator ::PortableInterceptor::RequestInfo_ptr &() // cast
 {
   return this->ptr_;
@@ -965,8 +965,8 @@ PortableInterceptor::RequestInfo_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_
 
 ACE_INLINE
-PortableInterceptor::ClientRequestInfo::ClientRequestInfo (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::ClientRequestInfo::ClientRequestInfo (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -1021,14 +1021,14 @@ PortableInterceptor::ClientRequestInfo_var::operator= (const ::PortableIntercept
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ClientRequestInfo_var::operator const ::PortableInterceptor::ClientRequestInfo_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::ClientRequestInfo_var::operator ::PortableInterceptor::ClientRequestInfo_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::ClientRequestInfo_var::operator ::PortableInterceptor::ClientRequestInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1120,7 +1120,7 @@ PortableInterceptor::ClientRequestInfo_out::operator= (ClientRequestInfo_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ClientRequestInfo_out::operator ::PortableInterceptor::ClientRequestInfo_ptr &() // cast
 {
   return this->ptr_;
@@ -1146,8 +1146,8 @@ PortableInterceptor::ClientRequestInfo_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_
 
 ACE_INLINE
-PortableInterceptor::ServerRequestInfo::ServerRequestInfo (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::ServerRequestInfo::ServerRequestInfo (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -1202,14 +1202,14 @@ PortableInterceptor::ServerRequestInfo_var::operator= (const ::PortableIntercept
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ServerRequestInfo_var::operator const ::PortableInterceptor::ServerRequestInfo_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::ServerRequestInfo_var::operator ::PortableInterceptor::ServerRequestInfo_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::ServerRequestInfo_var::operator ::PortableInterceptor::ServerRequestInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1301,7 +1301,7 @@ PortableInterceptor::ServerRequestInfo_out::operator= (ServerRequestInfo_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ServerRequestInfo_out::operator ::PortableInterceptor::ServerRequestInfo_ptr &() // cast
 {
   return this->ptr_;
@@ -1327,8 +1327,8 @@ PortableInterceptor::ServerRequestInfo_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_
 
 ACE_INLINE
-PortableInterceptor::ClientRequestInterceptor::ClientRequestInterceptor (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::ClientRequestInterceptor::ClientRequestInterceptor (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -1383,14 +1383,14 @@ PortableInterceptor::ClientRequestInterceptor_var::operator= (const ::PortableIn
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ClientRequestInterceptor_var::operator const ::PortableInterceptor::ClientRequestInterceptor_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::ClientRequestInterceptor_var::operator ::PortableInterceptor::ClientRequestInterceptor_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::ClientRequestInterceptor_var::operator ::PortableInterceptor::ClientRequestInterceptor_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1482,7 +1482,7 @@ PortableInterceptor::ClientRequestInterceptor_out::operator= (ClientRequestInter
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ClientRequestInterceptor_out::operator ::PortableInterceptor::ClientRequestInterceptor_ptr &() // cast
 {
   return this->ptr_;
@@ -1508,8 +1508,8 @@ PortableInterceptor::ClientRequestInterceptor_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_
 
 ACE_INLINE
-PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -1564,14 +1564,14 @@ PortableInterceptor::ServerRequestInterceptor_var::operator= (const ::PortableIn
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ServerRequestInterceptor_var::operator const ::PortableInterceptor::ServerRequestInterceptor_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::ServerRequestInterceptor_var::operator ::PortableInterceptor::ServerRequestInterceptor_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::ServerRequestInterceptor_var::operator ::PortableInterceptor::ServerRequestInterceptor_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1663,7 +1663,7 @@ PortableInterceptor::ServerRequestInterceptor_out::operator= (ServerRequestInter
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ServerRequestInterceptor_out::operator ::PortableInterceptor::ServerRequestInterceptor_ptr &() // cast
 {
   return this->ptr_;
@@ -1689,8 +1689,8 @@ PortableInterceptor::ServerRequestInterceptor_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_IORINFO___CI_
 
 ACE_INLINE
-PortableInterceptor::IORInfo::IORInfo (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::IORInfo::IORInfo (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -1745,14 +1745,14 @@ PortableInterceptor::IORInfo_var::operator= (const ::PortableInterceptor::IORInf
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::IORInfo_var::operator const ::PortableInterceptor::IORInfo_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::IORInfo_var::operator ::PortableInterceptor::IORInfo_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::IORInfo_var::operator ::PortableInterceptor::IORInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1844,7 +1844,7 @@ PortableInterceptor::IORInfo_out::operator= (IORInfo_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::IORInfo_out::operator ::PortableInterceptor::IORInfo_ptr &() // cast
 {
   return this->ptr_;
@@ -1870,8 +1870,8 @@ PortableInterceptor::IORInfo_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___CI_
 
 ACE_INLINE
-PortableInterceptor::IORInterceptor::IORInterceptor (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::IORInterceptor::IORInterceptor (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -1926,14 +1926,14 @@ PortableInterceptor::IORInterceptor_var::operator= (const ::PortableInterceptor:
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::IORInterceptor_var::operator const ::PortableInterceptor::IORInterceptor_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::IORInterceptor_var::operator ::PortableInterceptor::IORInterceptor_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::IORInterceptor_var::operator ::PortableInterceptor::IORInterceptor_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2025,7 +2025,7 @@ PortableInterceptor::IORInterceptor_out::operator= (IORInterceptor_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::IORInterceptor_out::operator ::PortableInterceptor::IORInterceptor_ptr &() // cast
 {
   return this->ptr_;
@@ -2051,8 +2051,8 @@ PortableInterceptor::IORInterceptor_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY___CI_
 
 ACE_INLINE
-PortableInterceptor::PolicyFactory::PolicyFactory (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::PolicyFactory::PolicyFactory (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -2107,14 +2107,14 @@ PortableInterceptor::PolicyFactory_var::operator= (const ::PortableInterceptor::
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::PolicyFactory_var::operator const ::PortableInterceptor::PolicyFactory_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::PolicyFactory_var::operator ::PortableInterceptor::PolicyFactory_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::PolicyFactory_var::operator ::PortableInterceptor::PolicyFactory_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2206,7 +2206,7 @@ PortableInterceptor::PolicyFactory_out::operator= (PolicyFactory_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::PolicyFactory_out::operator ::PortableInterceptor::PolicyFactory_ptr &() // cast
 {
   return this->ptr_;
@@ -2240,8 +2240,8 @@ PortableInterceptor::PolicyFactory_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO___CI_
 
 ACE_INLINE
-PortableInterceptor::ORBInitInfo::ORBInitInfo (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::ORBInitInfo::ORBInitInfo (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -2296,14 +2296,14 @@ PortableInterceptor::ORBInitInfo_var::operator= (const ::PortableInterceptor::OR
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ORBInitInfo_var::operator const ::PortableInterceptor::ORBInitInfo_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::ORBInitInfo_var::operator ::PortableInterceptor::ORBInitInfo_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::ORBInitInfo_var::operator ::PortableInterceptor::ORBInitInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2395,7 +2395,7 @@ PortableInterceptor::ORBInitInfo_out::operator= (ORBInitInfo_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ORBInitInfo_out::operator ::PortableInterceptor::ORBInitInfo_ptr &() // cast
 {
   return this->ptr_;
@@ -2421,8 +2421,8 @@ PortableInterceptor::ORBInitInfo_out::operator-> (void)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_
 
 ACE_INLINE
-PortableInterceptor::ORBInitializer::ORBInitializer (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+PortableInterceptor::ORBInitializer::ORBInitializer (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 #endif /* end #if !defined */
@@ -2477,14 +2477,14 @@ PortableInterceptor::ORBInitializer_var::operator= (const ::PortableInterceptor:
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ORBInitializer_var::operator const ::PortableInterceptor::ORBInitializer_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-PortableInterceptor::ORBInitializer_var::operator ::PortableInterceptor::ORBInitializer_ptr &() // cast 
+ACE_INLINE
+PortableInterceptor::ORBInitializer_var::operator ::PortableInterceptor::ORBInitializer_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2576,7 +2576,7 @@ PortableInterceptor::ORBInitializer_out::operator= (ORBInitializer_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ORBInitializer_out::operator ::PortableInterceptor::ORBInitializer_ptr &() // cast
 {
   return this->ptr_;

@@ -1,6 +1,6 @@
 // $Id$
 #include "ace/Dynamic_Service.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "AVStreams_i.h"
 #include "sfp.h"
 #include "MCast.h"
@@ -47,7 +47,7 @@ TAO_AV_Core::init (int &argc,
   int result = this->orb_manager_.init (argc,argv,env);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"orb_manager::init"),result);
- 
+
   this->orb_ = this->orb_manager_.orb ();
   this->reactor (this->orb_->orb_core ()->reactor ());
   this->init_transport_factories ();
@@ -350,16 +350,16 @@ TAO_AV_Core::get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
 TAO_AV_Acceptor*
 TAO_AV_Core::get_acceptor (const char *flowname)
 {
- 
+
   ACE_TRY_NEW_ENV
     {
-      
+
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
       ACE_TRY_CHECK;
-      
+
       TAO_AV_AcceptorSetItor end =
         this->acceptor_registry_->end ();
-      
+
       for (;acceptor != end; ++acceptor)
         {
           if (ACE_OS::strcmp ((*acceptor)->flowname (),flowname) == 0)
@@ -368,7 +368,7 @@ TAO_AV_Core::get_acceptor (const char *flowname)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_AV_Core::get_acceptor"); 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_AV_Core::get_acceptor");
     }
   ACE_ENDTRY;
   return 0;

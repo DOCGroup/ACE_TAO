@@ -21,7 +21,7 @@
 #ifndef IDENTITY_SERVER_H_
 #define IDENTITY_SERVER_H_
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "Load_BalancerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -47,14 +47,14 @@ public:
 
   int parse_args (int argc, char *argv[]);
   // Parses the commandline arguments.
-  
+
   int init (int argc, char *argv[]);
   // Performs all the initializations necessary before going into the
   // ORB event loop.
 
   int register_groups (CORBA::Environment &ACE_TRY_ENV);
-  
-    
+
+
   int run (CORBA::Environment &ACE_TRY_ENV);
   // Run the server.
 
@@ -69,7 +69,7 @@ private:
   // given names
   //"Identity object 1" .... "Identity object <number_of_objects>".
 
- 
+
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 

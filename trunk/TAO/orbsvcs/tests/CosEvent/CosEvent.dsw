@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "CECTest"=.\lib\CECTest.dsp - Package Owner=<4>
+Project: "CECTest DLL"=.\lib\CECTest.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -26,6 +26,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name CECTest
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CECTest DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -40,6 +43,9 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name CECTest
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CECTest DLL
     End Project Dependency
 }}}
 
@@ -56,6 +62,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name CECTest
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CECTest DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -70,6 +79,9 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name CECTest
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CECTest DLL
     End Project Dependency
 }}}
 
@@ -86,6 +98,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name CECTest
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CECTest DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -100,6 +115,9 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name CECTest
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CECTest DLL
     End Project Dependency
 }}}
 

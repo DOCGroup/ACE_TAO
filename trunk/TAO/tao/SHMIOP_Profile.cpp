@@ -10,7 +10,6 @@
 #include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
-#include "tao/POA.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, SHMIOP_Profile, "$Id$")
@@ -310,7 +309,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
 
   start = ++okd;  // increment past the object key separator
 
-  TAO_POA::decode_string_to_sequence (this->object_key_, start);
+  TAO_ObjectKey::decode_string_to_sequence (this->object_key_, start);
 
   return 1;
 }
@@ -389,8 +388,8 @@ char *
 TAO_SHMIOP_Profile::to_string (CORBA::Environment &)
 {
   CORBA::String_var key;
-  TAO_POA::encode_sequence_to_string (key.inout(),
-                                      this->object_key_);
+  TAO_ObjectKey::encode_sequence_to_string (key.inout(),
+                                             this->object_key_);
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
                   3 /* "loc" */ +

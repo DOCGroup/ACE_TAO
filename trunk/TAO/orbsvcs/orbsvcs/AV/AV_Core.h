@@ -20,7 +20,7 @@
 #define TAO_AV_CORE_H
 #include "ace/pre.h"
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/AVStreamsC.h"
 #include "AV_export.h"
 

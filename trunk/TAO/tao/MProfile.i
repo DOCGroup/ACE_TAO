@@ -45,7 +45,7 @@ TAO_MProfile::~TAO_MProfile (void)
         (*policy_list_)[i]->destroy ();
     }
   delete policy_list_;
-  
+
   this->cleanup ();
 }
 
@@ -258,11 +258,11 @@ TAO_MProfile::create_policy_list (void)
   ACE_ASSERT (this->policy_list_ == 0);
 
   ACE_NEW (this->policy_list_, CORBA::PolicyList ());
- 
+
   // Post-Condition: Make sure that the memory get allcated
   // for real.
   ACE_ASSERT (this->policy_list_ != 0);
-  
+
   // @@ Marina & Irfan I would raise an exception in this case.
 }
 
@@ -273,15 +273,15 @@ TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
   this->policy_list_ = policy_list;
 }
 
-ACE_INLINE CORBA::PolicyList* 
-TAO_MProfile::policy_list (void) 
+ACE_INLINE CORBA::PolicyList*
+TAO_MProfile::policy_list (void)
 {
-  
+
   // Here we use Double-Checked Loking to
-  // avoid to create more then one policy list 
+  // avoid to create more then one policy list
   // if more thread try to get a policy for
   // the first time, at the same time.
-  
+
   if (this->is_policy_list_initialized_)
     return this->policy_list_;
   else
@@ -294,7 +294,7 @@ TAO_MProfile::policy_list (void)
           this->get_current_profile ()->policies ();
           // Right now all the profile share the same
           // policies, so any profile can be picked up
-          // to parse the policy. 
+          // to parse the policy.
           // So we pick the current profile, so that no
           // state is changed in the MProfile.
 
@@ -302,5 +302,4 @@ TAO_MProfile::policy_list (void)
         }
     }
   return this->policy_list_;
-  
-}  
+}

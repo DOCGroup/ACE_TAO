@@ -2,7 +2,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "Offer_Exporter.h"
 #include "Offer_Importer.h"
 #include "Service_Type_Exporter.h"
@@ -78,9 +78,9 @@ main (int argc, char** argv)
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter
-	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
+        (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
          verbose,
-	 ACE_TRY_ENV);
+         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       offer_exporter.withdraw_offers (ACE_TRY_ENV);
@@ -116,7 +116,7 @@ main (int argc, char** argv)
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));
       TAO_Offer_Importer offer_importer
-	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()), verbose);
+        (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()), verbose);
 
       offer_importer.perform_queries (ACE_TRY_ENV);
       ACE_TRY_CHECK;

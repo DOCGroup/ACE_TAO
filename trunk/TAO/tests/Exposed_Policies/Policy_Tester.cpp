@@ -11,7 +11,7 @@
 // -- TAO Include --
 #include "tao/RT_ORB.h"
 #include "tao/RT_Policy_i.h"
-
+#include "tao/PortableServer/POA.h"
 
 ACE_RCSID (tao, Policy_Tester, "$Id$");
 
@@ -34,7 +34,7 @@ Policy_Tester::run (CORBA::Environment &ACE_TRY_ENV)
     {
       this->create_objects (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       PortableServer::POAManager_var poa_manager =
         this->child_poa_->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -56,56 +56,56 @@ Policy_Tester::run (CORBA::Environment &ACE_TRY_ENV)
 int
 Policy_Tester::init (int argc,
                      char *argv[],
-                     CORBA::Environment &ACE_TRY_ENV) 
+                     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY 
+  ACE_TRY
     {
       // ORB Initialization.
       this->orb_  = CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Get a reference to the RT-ORB.
-      CORBA::Object_var object = 
+      CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB", ACE_TRY_ENV);
-      
+
       ACE_TRY_CHECK;
-  
+
       this->rt_orb_ = RTCORBA::RTORB::_narrow (object.in (),
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // Here we parse the command line paramether passed
       // to the application.
-      
+
       ACE_Arg_Shifter arg_shifter (argc, argv);
-  
+
       while (arg_shifter.is_anything_left ())
         {
           char *arg;
           // IOR File Name Option.
           if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
             {
-              this->rt_poa_properties_ = 
+              this->rt_poa_properties_ =
                 RT_Properties::read_from (arg, ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
           else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
             {
-              this->rt_object_properties_ = 
+              this->rt_object_properties_ =
                 RT_Properties::read_from (arg, ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
           else
             arg_shifter.consume_arg ();
-      
+
         }
-  
+
       if ((this->rt_poa_properties_ == 0) || (this->rt_object_properties_ == 0))
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Configuration file missing!")));
           return 0;
         }
-      
+
     }
   ACE_CATCHANY
     {
@@ -130,14 +130,14 @@ Policy_Tester::check_reference (CORBA::Object_ptr object,
 }
 
 
-int 
+int
 Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (3);
-      
+
       // Create the priority policy using the RT-ORB.
       RTCORBA::Priority priority = this->rt_poa_properties_->priority ();
       poa_policy_list[0] =
@@ -147,7 +147,7 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
       ACE_TRY_CHECK;
 
       // Create priority Banded Connection Policy.
-      RTCORBA::PriorityBands poa_priority_bands = 
+      RTCORBA::PriorityBands poa_priority_bands =
         this->rt_poa_properties_->priority_bands ();
 
       poa_policy_list[1] =
@@ -162,57 +162,57 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
       protocol_list[0].protocol_type = IOP::TAG_INTERNET_IOP;
       protocol_list[0].orb_protocol_properties =
         TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::TAG_INTERNET_IOP);
-      
+
       protocol_list[0].transport_protocol_properties =
         TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::TAG_INTERNET_IOP);
-      
+
       poa_policy_list[2] =
         this->rt_orb_->create_client_protocol_policy (protocol_list);
-      
-      CORBA::Object_var object = 
+
+      CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       this->poa_ =
         PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       PortableServer::POAManager_var poa_mgr =
         PortableServer::POAManager::_nil ();
-      
+
       this->child_poa_ =
         this->poa_->create_POA ("Child_POA",
                                 poa_mgr ,
                                 poa_policy_list);
-      
+
       // Create a Corba Object reference, using the policies
       // set at the POA level.
       object =
         this->child_poa_->create_reference ("IDL:Counter:1.0",
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Reference Created!\n")));
-      
+
       if (!check_reference (object,
                             "Unable to create Object!\n"))
         return 0;
-      
+
       Counter_var base_object = Counter::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (!check_reference (base_object.in(),
                             "Unable to create a Object!\n"))
         return 0;
-      
+
       CORBA::String_var ior =
         this->orb_->object_to_string (base_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Activated as <%s>\n"), ior.in ()));
-      
+
       FILE *output_file = ACE_OS::fopen (this->rt_poa_properties_->ior_source (), "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -234,13 +234,13 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
       //               method that isn't currently accessible otherwise.
 
       object =
-        ((TAO_POA*)this->child_poa_.ptr ())->create_reference_with_priority 
+        ((TAO_POA*)this->child_poa_.ptr ())->create_reference_with_priority
         ("IDL:Counter:1.0",
          this->rt_object_properties_->priority (),
          ACE_TRY_ENV);
-      
+
       ACE_TRY_CHECK;
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Reference Created!\n")));
 
@@ -282,7 +282,7 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
   return 1;
 }
 
-void 
+void
 Policy_Tester::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   this->orb_->shutdown (0, ACE_TRY_ENV);
@@ -294,10 +294,3 @@ Policy_Tester::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->poa_->destroy (1, 1, ACE_TRY_ENV);
   ACE_TRY_CHECK;
 }
-
-
-
-
-
-
-

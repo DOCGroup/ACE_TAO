@@ -3199,7 +3199,7 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::allocbuf (this->length_);
         this->buffer_ = result;
-	this->release_ = 1;
+        this->release_ = 1;
       }
       else
       {
@@ -3857,8 +3857,8 @@ Messaging::ReplyHandler::ReplyHandler (void) // default constructor
 {}
 
 ACE_INLINE
-Messaging::ReplyHandler::ReplyHandler (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+Messaging::ReplyHandler::ReplyHandler (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 ACE_INLINE

@@ -16,7 +16,7 @@
 #ifndef _TRADING_SERVICE_H
 #define _TRADING_SERVICE_H
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -71,7 +71,7 @@ public:
   int shutdown (void);
 
 protected:
-  
+
   auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader_;
   // Pointer to the linked trader.
 

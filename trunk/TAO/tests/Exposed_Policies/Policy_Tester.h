@@ -25,6 +25,7 @@
 
 // -- TAO Include --
 #include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
 
 class Policy_Tester
 {
@@ -32,29 +33,29 @@ public:
   // Ctor/Dtor.
   Policy_Tester (void);
   ~Policy_Tester (void);
-  
-  void run (CORBA::Environment &ACE_TRY_ENV 
+
+  void run (CORBA::Environment &ACE_TRY_ENV
             = TAO_default_environment ());
   // Runs the test.
 
-  int init (int argc, 
+  int init (int argc,
             char *argv[],
-            CORBA::Environment &ACE_TRY_ENV 
+            CORBA::Environment &ACE_TRY_ENV
             = TAO_default_environment ());
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV 
-                 = TAO_default_environment ());  
+  void shutdown (CORBA::Environment &ACE_TRY_ENV
+                 = TAO_default_environment ());
 private:
   // Helper method used internally.
-  int create_objects (CORBA::Environment &ACE_TRY_ENV 
+  int create_objects (CORBA::Environment &ACE_TRY_ENV
                        = TAO_default_environment ());
 public:
-  
-  static CORBA::Boolean check_reference (CORBA::Object_ptr object, 
+
+  static CORBA::Boolean check_reference (CORBA::Object_ptr object,
                                          const char *msg);
-  
+
 private:
-  
+
   int is_initialized_;
 
   RTCORBA::RTORB_var rt_orb_;

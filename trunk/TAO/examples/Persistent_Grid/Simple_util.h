@@ -12,14 +12,14 @@
 //    The classe define the templates for the client and server.
 //
 // = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu> 
+//   Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
 
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
@@ -28,7 +28,7 @@ class Server
 {
   // = TITLE
   //   A set of useful class Templates for using the TAO CORBA
-  //   implementation. 
+  //   implementation.
   //
   // = DESCRIPTION
   //   A template server definition. This template can be used by
@@ -44,9 +44,9 @@ public:
   ~Server (void);
   // Destructor.
 
-  int init (const char *servant_name, 
-            int argc, 
-            char *argv[], 
+  int init (const char *servant_name,
+            int argc,
+            char *argv[],
             CORBA::Environment &env);
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
@@ -97,7 +97,7 @@ class Client
   //
   // = DESCRIPTION
   //   A template client implementation for a single server/client
-  //   model. The example usage of these usage can be found in the 
+  //   model. The example usage of these usage can be found in the
   //   sub-directories below
 public:
 
@@ -116,7 +116,7 @@ public:
 
   int shutdown (void );
   // Returns the shutdown flag.
-  
+
   void shutdown (int);
   // Fills in the shutdwon flag.
 
@@ -150,7 +150,7 @@ protected:
 
   int shutdown_;
   // Flag for shutting down the server
-  
+
   Var server_;
   // Server object
 };
