@@ -1,3 +1,8 @@
+Tue Apr 11 12:52:04 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Removed the #ifdef
+	  for template instantiation.
+
 Tue Apr 11 11:32:03 2000  Chad Elliott  <elliott_c@ociweb.com>
         * bin/ACEutils.pm
 
