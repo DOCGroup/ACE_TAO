@@ -3699,7 +3699,7 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
 
   for (int i = 0; argv[i] != 0; i++)
     {
-      ASYS_TCHAR *temp;
+      ASYS_TCHAR *temp = 0;
 
       // Account for environment variables.
       if (substitute_env_args
@@ -3727,7 +3727,7 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
 
   for (j = 0; argv[j] != 0; j++)
     {
-      ASYS_TCHAR *temp;
+      ASYS_TCHAR *temp = 0;
 
       // Account for environment variables.
       if (substitute_env_args
