@@ -1,3 +1,14 @@
+Mon Mar  6 16:49:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/deep_free.cpp:
+	  Plugged a memory leak in TAO_Marshal_Union. When the
+	  typecode of the union's discriminator is fetched, a
+	  duplicate is returned, but the return value was not
+	  disposed of after use. Thanks to
+	  Lothar Werzinger <werzinger.lothar@krones.de> for
+	  sending in the IDL file and test code that revealed
+	  this bug.
+
 Sun Mar  5 18:36:34 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
