@@ -1,8 +1,6 @@
 Tue Dec 01 13:54:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/IOStream_T.i (recv,recv_n): use 0 instead of ESUCCESS,
-          because ESUCCESS isn't defined on Linux (RedHat 5.0/2.0.30)
-          or Solaris, at least.
+        * ace/OS.h: added ESUCCESS definition (to 0), if not #defined.
 
 Tue Dec 01 13:48:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
