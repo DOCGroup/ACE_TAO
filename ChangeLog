@@ -1,3 +1,10 @@
+Fri Jun  2 11:06:33 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Bumped up the levels for the 80 char lines and preprocessor
+          comment tests.  The latter should now not run by default.
+
 Thu Jun  2 12:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Caching_Utility.cpp: Changed the cache entries limit to 0 so
