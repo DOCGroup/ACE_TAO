@@ -353,7 +353,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "ace/Cache_Map_Manager_T.cpp"
+#pragma implementation ("ace/Cache_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CACHE_MAP_MANAGER_T_H */
