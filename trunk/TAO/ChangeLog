@@ -1,3 +1,46 @@
+Sun May 11 22:48:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/LoadBalancer/Makefile.LoadManager:
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Latency/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+	* orbsvcs/tests/Event/Performance/Makefile:
+	* orbsvcs/tests/ImplRepo/Makefile:
+	* orbsvcs/tests/ImplRepo/NameService/Makefile:
+	* orbsvcs/tests/Interoperable_Naming/Makefile:
+	* orbsvcs/tests/Notify/Basic/Makefile:
+	* orbsvcs/tests/Notify/Blocking/Makefile:
+	* orbsvcs/tests/Notify/Destroy/Makefile:
+	* orbsvcs/tests/Notify/Discarding/Makefile:
+	* orbsvcs/tests/Notify/Driver/Makefile:
+	* orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+	* orbsvcs/tests/Notify/Ordering/Makefile:
+	* orbsvcs/tests/Notify/RT_lib/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+	* orbsvcs/tests/Notify/Structured_Filter/Makefile:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+	* orbsvcs/tests/Notify/Test_Filter/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+	* orbsvcs/tests/Trading/Makefile:
+	* orbsvcs/tests/ior_corbaname/Makefile:
+
+	  Yet another setof fixes to get the static builds linking fine. 
+	
+	* orbsvcs/tests/Notify/notify_tests.GNU: Removed all the common
+	  libraries to a GNU file. Probably this idea needs to be done for
+	  all the tests.
+
 Sun May 11 11:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TAO.dsp:

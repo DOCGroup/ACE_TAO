@@ -24,7 +24,6 @@ SUPPLIER_OBJS = Structured_Supplier.o Notify_Push_Supplier.o controlS.o controlC
 CONSUMER_OBJS = Structured_Consumer.o Notify_Push_Consumer.o controlC.o controlS.o
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I../lib
-LDLIBS = -lTAO_NotifyTests -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -37,6 +36,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/orbsvcs/tests/Notify/notify_tests.GNU
 
 #----------------------------------------------------------------------------
 #       Local targets
