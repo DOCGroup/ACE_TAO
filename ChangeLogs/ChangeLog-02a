@@ -1,3 +1,60 @@
+Thu Jan 20 09:15:50 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/bootstrap:
+
+	  Create of NEWS file before automake is run.  Automake complains
+	  about missing NEWS file.
+
+Thu Jan 20 09:03:37 2000  Ossama Othman  <ossama@uci.edu>
+
+	* NEWS:
+
+	  This file is currently generated during the autoconf support
+	  bootstrapping process.  As such, it shouldn't be placed under
+	  version control.  Removed this file from the repository.
+
+	* configure.in:
+
+	  Added thread related preprocessor flags to CPPFLAGS prior to
+	  running the tests that check for the pthread_cancel() strtok_r()
+	  prototypes in case such flags are needed on some platforms.
+
+	  If the configure script determines that no usable thread library
+	  was found it then removes any thread related preprocessor flags
+	  from the CPPFLAGS preprocessor flags variable.
+
+	* ace/README:
+
+	  Added description of ACE_HAS_ALT_CUSERID.
+
+	* m4/threads.m4 (ACE_CHECK_THREADS):
+
+	  Remove any definitions of _REENTRANT and _THREAD_SAFE from the
+	  preprocessor flags prior to checking if the compiler defines
+	  either one, and prior to searching for compiler thread flags by
+	  using the sed stream editor.  This is done instead of using the
+	  "-U" preproccesor flag since using that flag may undefine the
+	  same preprocessor macros potentially defined by the thread flag
+	  being tested.
+
+	  Added "kthread" to the list of thread flags to be searched.
+	  FreeBSD uses "-kthread" to enable support for kernel threads.
+
+	  (ACE_CHECK_THREAD_FLAGS):
+
+	  Relaxed criteria used to determine if compiler provides thread
+	  support by removing requirement that either _REENTRANT or
+	  _THREAD_SAFE should be defined.
+
+	  (ACE_CHECK_THREAD_CPPFLAGS):
+
+	  Added this test.  It checks if the compiler defines thread
+	  related preprocessor flags, such as _REENTRANT and
+	  _THREAD_SAFE.  The test is a compile-time test that is performed
+	  after the thread flag search test so that the thread flag (if
+	  any) is used during this test in case it defines any
+	  preprocessor flags.
+
 Wed Jan 19 23:21:07 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Thread_Pool_Test.cpp (test_queue_deactivation_shutdown): Make
@@ -23,7 +80,7 @@ Tue Jan 18 20:56:58 2000  Ossama Othman  <ossama@uci.edu>
 	* configure.in:
 
 	  Thanks to Daniel Lang <dl@leo.org> for motivating the following
-	  ACE+autoconf related FreeBSD 4 fixes.
+	  ACE+autoconf related FreeBSD 3.4 fixes.
 
 	  (ACE_LACKS_SEMBUF_T):
 
@@ -48,7 +105,7 @@ Tue Jan 18 20:56:58 2000  Ossama Othman  <ossama@uci.edu>
 	  exist then don't use pthread_cancel(), i.e. define
 	  ACE_LACKS_PTHREAD_CANCEL.  It it probably a bad idea to create a
 	  prototype for pthread_cancel in ACE, so just don't use
-	  pthread_cancel().  FreeBSD 4 appears to have the
+	  pthread_cancel().  FreeBSD 3.4 appears to have the
 	  pthread_cancel() function but no prototype for it.
 
 	* ace/OS.i (cuserid):
