@@ -2,11 +2,12 @@
 
 //=============================================================================
 /**
- *  @file     Messaging_PolicyFactory.h
+ * @file Messaging_PolicyFactory.h
  *
- *  $Id$
+ * $Id$
  *
- *  @author  Carlos O'Ryan <coryan@uci.edu>  Ossama Othman <ossama@uci.edu>
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
@@ -37,9 +38,9 @@
 #endif /* _MSC_VER */
 
 /// Policy factory for all Messaging related policies.
-class TAO_Export TAO_Messaging_PolicyFactory :
-  public PortableInterceptor::PolicyFactory,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Messaging_PolicyFactory
+  : public PortableInterceptor::PolicyFactory,
+    public CORBA::LocalObject
 {
 public:
 
