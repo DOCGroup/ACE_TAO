@@ -87,7 +87,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_T
              "ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt)");
   ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
   allocator_ = rbt.allocator_;
-  
+
   // Make a deep copy of the passed tree.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
 
@@ -627,7 +627,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
                                 this->allocator_->malloc (sizeof(ACE_RB_Tree_Node<EXT_ID, INT_ID>)),
                                 0);
               tmp = new (ptr) ACE_RB_Tree_Node<EXT_ID, INT_ID>(k, t, *this);
-                              
+
               current->right (tmp);
 
               // If the node was successfully inserted, set its
@@ -684,7 +684,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
                         this->allocator_->malloc (sizeof(ACE_RB_Tree_Node<EXT_ID, INT_ID>)),
                         0);
       root_ = new (ptr) ACE_RB_Tree_Node<EXT_ID, INT_ID>(k, t, *this);
-      
+
       if (root_)
         {
           root_->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -801,7 +801,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
                         this->allocator_->malloc (sizeof(ACE_RB_Tree_Node<EXT_ID, INT_ID>)),
                         -1);
       root_ = new (ptr) ACE_RB_Tree_Node<EXT_ID, INT_ID>(k, t, *this);
-      
+
       root_->color (ACE_RB_Tree_Node_Base::BLACK);
       ++current_size_;
       entry = root_;
