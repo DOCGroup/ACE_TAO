@@ -1,3 +1,10 @@
+Sun Jul 25 22:16:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Fixed some simple mistakes which prevented the release form
+	  happening. 
+
 Sun Jul 25 22:13:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release:
