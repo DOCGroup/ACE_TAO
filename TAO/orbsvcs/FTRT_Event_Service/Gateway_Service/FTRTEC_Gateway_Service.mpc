@@ -7,7 +7,7 @@
 
   Source_Files {
     FTRTEC_Gateway_Service.cpp
-    $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup_DSC.cpp
+    $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup_Simple_DSC.cpp
   }
 
   specific(gnuace) {
