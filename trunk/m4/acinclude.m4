@@ -169,15 +169,16 @@ dnl Run given test(s) with warnings converted to errors
 dnl Usage: ACE_CONVERT_WARNINGS_TO_ERRORS(TEST-BLOCK)
 AC_DEFUN(ACE_CONVERT_WARNINGS_TO_ERRORS, dnl
 [
-dnl If we are using GNU C++, add the "-Werror" compiler flag to the 
-dnl current set of flags so that compiler warnings become errors.  We
-dnl do this to cause certain tests to fail when they are supposed to
-dnl fail.  Some of the tests pass because the GNU C++ compiler issues
-dnl warnings instead of errors when errors should occur.
-dnl Other "treat warnings as errors" flags for other compilers should
-dnl be added if possible.
-  ace_pre_warning_CXXFLAGS="$CXXFLAGS"
+dnl $WERROR is set in the ACE_SET_COMPILER_FLAGS macro.
+ AC_REQUIRE([ACE_SET_COMPILER_FLAGS])dnl
 
+dnl Some tests may pass because the compiler issues warnings
+dnl instead of errors when errors should occur.  This macro converts
+dnl warnings to errors when executing the action/test passed to this
+dnl macro so that action/test fails when it is supposed to fail; at
+dnl least that is the idea.
+
+  ace_pre_warning_CXXFLAGS="$CXXFLAGS"
   CXXFLAGS="$CXXFLAGS $WERROR"
 
   $1
@@ -295,11 +296,12 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
         $3
        ],
        [
-dnl Some compilers don't like the "struct" but we need the struct for some
-dnl platforms to resolve ambiguities between functions and structures with
-dnl with the same name.  So, we try the same test but without "struct" if
-dnl the above test with "struct" fails.  If both tests fail, then we can
-dnl be reasonably sure that we don't have the structure we are testing for.
+dnl Some compilers don't like the "struct" but we need the struct for
+dnl some platforms to resolve ambiguities between functions and
+dnl structures with with the same name.  So, we try the same test but
+dnl without "struct" if the above test with "struct" fails.  If both
+dnl tests fail, then we can be reasonably sure that we don't have the
+dnl structure we are testing for.
         AC_TRY_COMPILE(
           [
 #include <$2>

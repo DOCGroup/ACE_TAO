@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.74 $)dnl
+AC_REVISION($Revision 0.76 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -113,19 +113,6 @@ AC_PROG_CC_C_O
 dnl Check the C++ compiler and preprocessor.
 AC_PROG_CXX
 AC_PROG_CXXCPP
-
-if test -n "$GXX"; then
-dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
-changequote(, )dnl
-  if g++ --version | egrep -v '^2\.[0-7]' > /dev/null; then
-changequote([, ])dnl
-    ace_has_old_gcc=no
-  else
-    AC_DEFINE(ACE_HAS_GNUG_PRE_2_8)dnl
-    AC_DEFINE(ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)dnl
-    ace_has_old_gcc=yes
-  fi
-fi
 
 dnl If we are cross compiling disable certain things in the Makefiles.
 AM_CONDITIONAL(ACE_CROSS_COMPILED, test X$cross_compiling = Xyes)dnl
