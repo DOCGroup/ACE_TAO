@@ -38,8 +38,6 @@ iioporb.cpp
 	C++
 interp.cpp
 	C++
-invoke.cpp
-	C++
 marshal.cpp
 	C++
 nvlist.cpp

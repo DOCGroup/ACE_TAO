@@ -18,6 +18,7 @@
 // construction.
 
 #include "tao/corba.h"
+#include "tao/interp.h"
 
 // Constructor for CONSTANT typecodes with empty parameter lists.
 // These are only created once, and those constants are shared.

@@ -410,13 +410,10 @@ private:
   int old_type_;
 };
 
-// "stub interpreter" for static stubs.  IDL compiler (or human
+// "Stub interpreter" for static stubs.  IDL compiler (or human
 // equivalent thereof :-) should just dump a read-only description of
 // the call into "calldata" and do varargs calls to this routine,
 // which does all the work.
-//
-// NOTE: This routine includes stub interpreter code, upon which a
-// patent application is pending.
 
 void
 IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting

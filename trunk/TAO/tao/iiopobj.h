@@ -143,7 +143,9 @@ public:
   void do_static_call (CORBA::Environment &env,
                        const TAO_Call_Data *info,
                        ...);
-  // SII-based invocation.
+  // SII-based "Stub interpreter" for static stubs.  IDL compiler just
+  // dumps a read-only description of the call into "calldata" and do
+  // varargs calls to this routine, which does all the work.
 
   void do_dynamic_call (const char *opname,
                         CORBA::Boolean is_roundtrip,
@@ -152,7 +154,10 @@ public:
                         CORBA::Flags flags,
                         CORBA::ExceptionList &exceptions,
                         CORBA::Environment &env);
-  // DII-based invocation.
+  // DII-based invocation analogue of the <do_static_call> above.
+  // Differs in how the vararg calling convention is implemented --
+  // DII doesn't use the normal call stack with its implicit typing,
+  // but instead uses heap-based arguments with explicit typing.
 
   // = Support for tables keyed by objrefs.
 
