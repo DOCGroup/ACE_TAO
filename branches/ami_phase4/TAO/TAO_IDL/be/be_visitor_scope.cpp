@@ -118,7 +118,7 @@ be_visitor_scope::visit_scope (be_scope *node)
   // For debugging the prefix...
   be_decl* decl = node->decl ();
   ACE_DEBUG ((LM_DEBUG, "Enter scope <%s> : [%s]\n",
-              decl->fullname (), decl->prefix ()));
+              decl->full_name (), decl->prefix ()));
   if (decl->pragmas () != 0)
     {
       for (UTL_StrlistActiveIterator i(decl->pragmas ());

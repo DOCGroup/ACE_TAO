@@ -53,11 +53,28 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   os->indent ();
 
   // Generate the stub factory function pointer declaration
-  *os << "extern " << node->name () << "_ptr (*_TAO_collocation_"
-      << node->flatname () << "_Stub_Factory_function_pointer) ("
+  *os << "extern " << node->full_name () << "_ptr (*_TAO_collocation_"
+      << node->flat_name () << "_Stub_Factory_function_pointer) ("
       << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_uidt_nl
       << ");" << be_uidt_nl;
+
+  // @@ Michael: This might not be the right place .. 
+  if (idl_global->ami_call_back () == I_TRUE)
+  {
+    // AMI Handler stuff
+    be_interface_type_strategy *old_strategy =  
+      node->set_strategy (new be_interface_ami_handler_strategy (node));
+
+    // Generate the stub factory function pointer declaration
+    *os << "extern " << node->full_name () << "_ptr (*_TAO_collocation_"
+        << node->flat_name () << "_Stub_Factory_function_pointer) ("
+        << be_idt << be_idt_nl
+        << "CORBA::Object_ptr obj" << be_uidt_nl
+        << ");" << be_uidt_nl;
+
+    delete node->set_strategy (old_strategy);
+  }
 
   // generate the Any <<= and >>= operator declarations
   os->indent ();

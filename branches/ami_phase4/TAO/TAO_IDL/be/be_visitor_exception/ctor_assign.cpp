@@ -94,7 +94,7 @@ int be_visitor_exception_ctor_assign::visit_array (be_array *node)
 
   os->indent ();
 
-  if (ACE_OS::strcmp (bd->flatname (), node->flatname ()))
+  if (ACE_OS::strcmp (bd->flat_name (), node->flat_name ()))
     {
       // We are typedef'd.
       *os << node->name ();
