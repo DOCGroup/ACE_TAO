@@ -1,3 +1,9 @@
+Thu Sep  9 07:05:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Notify/lib/Notify_lib.mpc:
+
+	  Changed to inherit from notification_skel.
+
 Thu Sep  9 06:46:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/CosNotification.mpc:
