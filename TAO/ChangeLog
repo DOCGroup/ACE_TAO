@@ -1,3 +1,15 @@
+Fri Nov  7 18:40:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Big_Request/Makefile:
+	* orbsvcs/tests/Security/Callback/Makefile:
+	* orbsvcs/tests/Security/Crash_Test/Makefile:
+	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
+	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+
+	  Fixed the dependencies.
+
 Fri Nov  7 16:37:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Object_KeyC.cpp:
