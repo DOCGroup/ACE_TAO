@@ -4168,7 +4168,7 @@ union semun
 // Create some useful typedefs.
 
 typedef const char **SYS_SIGLIST;
-typedef void *(*ACE_THR_FUNC)(void *);
+
 // This is for C++ static methods.
 # if defined (VXWORKS)
 typedef int ACE_THR_FUNC_INTERNAL_RETURN_TYPE;
@@ -4183,19 +4183,6 @@ extern "C" {
 typedef void (*ACE_THR_C_DEST)(void *);
 }
 typedef void (*ACE_THR_DEST)(void *);
-
-extern "C"
-{
-# if defined (VXWORKS)
-typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
-# elif defined (ACE_PSOS)
-// needed to handle task entry point type inconsistencies in pSOS+
-typedef void (*PSOS_TASK_ENTRY_POINT)();
-typedef void (*ACE_THR_C_FUNC)(void *);
-# else
-typedef void *(*ACE_THR_C_FUNC)(void *);
-# endif /* VXWORKS */
-}
 
 # if !defined (MAP_FAILED) || defined (ACE_HAS_BROKEN_MAP_FAILED)
 #   undef MAP_FAILED
@@ -4455,7 +4442,7 @@ private:
   // ACE_Cleanup_Info).
 };
 
-class ACE_Thread_Adapter;
+class ACE_Base_Thread_Adapter;
 class ACE_Thread_Hook;
 
 # if defined (ACE_HAS_PHARLAP_RT)
@@ -5797,7 +5784,7 @@ public:
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack = 0,
                          size_t stacksize = 0,
-                         ACE_Thread_Adapter *thread_adapter = 0);
+                         ACE_Base_Thread_Adapter *thread_adapter = 0);
   // Creates a new thread having <flags> attributes and running <func>
   // with <args> (if <thread_adapter> is non-0 then <func> and <args>
   // are ignored and are obtained from <thread_adapter>).  <thr_id>

@@ -139,7 +139,8 @@ libACE_OS_la_SOURCES = \
   OS_String.cpp \
   OS_TLI.cpp \
   Thread_Hook.cpp \
-  Thread_Adapter.cpp \
+  Base_Thread_Adapter.cpp \
+  OS_Thread_Adapter.cpp \
   Thread_Exit.cpp \
   Thread_Control.cpp \
   Sched_Params.cpp
@@ -192,6 +193,7 @@ libACE_Threads_la_SOURCES = \
   Synch.cpp \
   Synch_Options.cpp \
   Thread.cpp \
+  Thread_Adapter.cpp \
   Thread_Manager.cpp \
   Token.cpp
 

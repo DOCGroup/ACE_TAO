@@ -636,6 +636,9 @@ private:
   static void sync_hook (const ACE_TCHAR *prg_name);
   // Decouple the OS layer from the Log_Msg layer.
 
+  static ACE_OS_Thread_Descriptor *thr_desc_hook (void);
+  // Return the TSS singleton thread descriptor
+
   friend void ACE_OS::cleanup_tss (const u_int);
 
   // = Disallow these operations.

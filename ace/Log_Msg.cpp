@@ -378,6 +378,12 @@ ACE_Log_Msg::sync_hook (const ACE_TCHAR *prg_name)
   ACE_LOG_MSG->sync (prg_name);
 }
 
+ACE_OS_Thread_Descriptor *
+ACE_Log_Msg::thr_desc_hook (void)
+{
+  return ACE_LOG_MSG->thr_desc ();
+}
+
 // Call after a fork to resynchronize the PID and PROGRAM_NAME
 // variables.
 void
@@ -515,7 +521,8 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     ACE_Thread_Adapter::set_log_msg_hooks (ACE_Log_Msg_Attributes::init_hook,
                                            ACE_Log_Msg_Attributes::inherit_hook,
                                            ACE_Log_Msg::close,
-                                           ACE_Log_Msg::sync_hook);
+                                           ACE_Log_Msg::sync_hook,
+                                           ACE_Log_Msg::thr_desc_hook);
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -1901,8 +1908,8 @@ ACE_Log_Msg_Attributes::inherit_log_msg (ACE_OS_Thread_Descriptor *thr_desc)
   if (thr_desc != 0)
     // This downcast is safe.  We do it to avoid having to #include
     // ace/Thread_Manager.h.
-    ACE_LOG_MSG->thr_desc (ACE_reinterpret_cast (ACE_Thread_Descriptor *,
-                                                 thr_desc));
+    ACE_LOG_MSG->thr_desc (ACE_static_cast (ACE_Thread_Descriptor *,
+                                            thr_desc));
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
 
