@@ -80,22 +80,28 @@ TAO_ServerRequest::object_key (void)
   return this->profile_.object_key ();
 }
 
-ACE_INLINE IOP::ServiceContextList &
-TAO_ServerRequest::service_info (void)
+ACE_INLINE TAO_Service_Context &
+TAO_ServerRequest::request_service_context (void)
 {
-  return this->service_context_.service_info ();
-}
-
-ACE_INLINE void
-TAO_ServerRequest::service_info (IOP::ServiceContextList &service_info)
-{
-  this->service_context_.service_info () = service_info;
+  return this->request_service_context_;
 }
 
 ACE_INLINE TAO_Service_Context &
-TAO_ServerRequest::service_context (void)
+TAO_ServerRequest::reply_service_context (void)
 {
-  return this->service_context_;
+  return this->reply_service_context_;
+}
+
+ACE_INLINE IOP::ServiceContextList &
+TAO_ServerRequest::request_service_info (void)
+{
+  return this->request_service_context ().service_info ();
+}
+
+ACE_INLINE IOP::ServiceContextList &
+TAO_ServerRequest::reply_service_info (void)
+{
+  return this->reply_service_context ().service_info ();
 }
 
 ACE_INLINE TAO_Transport *
@@ -103,7 +109,6 @@ TAO_ServerRequest::transport (void)
 {
   return this->transport_;
 }
-
 
 ACE_INLINE CORBA::ULong
 TAO_ServerRequest::request_id (void)

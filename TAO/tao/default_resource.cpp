@@ -433,7 +433,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
 
       if (protocol_factory == 0)
         {
-          if (TAO_orbdebug)
+          if (TAO_debug_level > 0)
             ACE_ERROR ((LM_WARNING,
                         ACE_TEXT ("TAO (%P|%t) No %s found in ")
                         ACE_TEXT ("Service Repository. ")

@@ -321,7 +321,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // First lookup at the services to see whether they have anything to
   // add to the service context lists
   this->orb_core_->service_context_list (this->stub_,
-                                         this->service_info (),
+                                         this->request_service_context().service_info (),
                                          this->restart_flag_,
                                          ACE_TRY_ENV);
   ACE_CHECK;
@@ -443,8 +443,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
             );
         }
       this->transport_->close_connection ();
-      TAO_Transport::release (this->transport_);
-      this->transport_ = 0;
 
       this->endpoint_->reset_hint ();
 
@@ -474,8 +472,6 @@ TAO_GIOP_Invocation::close_connection (void)
 
   this->transport_->close_connection ();
   // this->transport_->idle ();
-  TAO_Transport::release (this->transport_);
-  this->transport_ = 0;
 
   this->endpoint_->reset_hint ();
   this->endpoint_ = 0;
@@ -572,7 +568,7 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
   this->rt_context_initialized_ = 1;
 
 #else
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 }
@@ -581,7 +577,7 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
 
 TAO_GIOP_Synch_Invocation::TAO_GIOP_Synch_Invocation (void)
   : rd_ (0,
-         this->op_details_.service_info ())
+         this->op_details_.reply_service_info ())
 {
 }
 

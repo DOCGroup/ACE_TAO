@@ -24,7 +24,6 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
-#include "tao/Abstract_Servant_Base.h"
 #include "tao/Object_Proxy_Broker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,6 +32,8 @@
 
 class IR_InterfaceDef;
 class TAO_Stub;
+
+class TAO_Abstract_ServantBase;
 
 class TAO_Export CORBA_Object
 {

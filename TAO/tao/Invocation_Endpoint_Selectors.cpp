@@ -96,7 +96,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
       if (invocation->orb_core_->get_protocols_hooks ()
           ->get_thread_priority (invocation->orb_core_,
                                  state.client_priority_,
-                                 ACE_TRY_ENV) 
+                                 ACE_TRY_ENV)
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1,
                                            CORBA::COMPLETED_NO));
@@ -167,9 +167,9 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
           invocation->orb_core_->protocol_endpoint_selector ();
     }
 #else /* TAO_HAS_RT_CORBA == 1 */
-  
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  
+
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
+
   invocation->endpoint_selector_ =
     invocation->orb_core_->default_endpoint_selector ();
 
@@ -229,7 +229,7 @@ check_client_priority_policy (TAO_GIOP_Invocation *invocation,
               if (invocation->orb_core_->get_protocols_hooks
                   ()->get_thread_priority (invocation->orb_core_,
                                            priority,
-                                           ACE_TRY_ENV) 
+                                           ACE_TRY_ENV)
                   == -1)
                 ACE_THROW (CORBA::DATA_CONVERSION (1,
                                                    CORBA::COMPLETED_NO));
@@ -245,7 +245,7 @@ check_client_priority_policy (TAO_GIOP_Invocation *invocation,
 #else
 
       ACE_UNUSED_ARG (invocation);
-      ACE_UNUSED_ARG (ACE_TRY_ENV);
+      ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 }
@@ -336,6 +336,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
       this->next (invocation, ACE_TRY_ENV);
       ACE_CHECK;
       this->select_endpoint (invocation, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 

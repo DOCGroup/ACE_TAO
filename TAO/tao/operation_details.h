@@ -62,12 +62,16 @@ public:
   CORBA::Octet response_flags (void) const;
 
   /// Get the service context list
-  IOP::ServiceContextList &service_info (void);
-  const IOP::ServiceContextList &service_info (void) const;
+  IOP::ServiceContextList &request_service_info (void);
+  const IOP::ServiceContextList &request_service_info (void) const;
+  IOP::ServiceContextList &reply_service_info (void);
+  const IOP::ServiceContextList &reply_service_info (void) const;
 
   /// Access the TAO_Service_Context
-  TAO_Service_Context &service_context (void);
-  const TAO_Service_Context &service_context (void) const;
+  TAO_Service_Context &request_service_context (void);
+  const TAO_Service_Context &request_service_context (void) const;
+  TAO_Service_Context &reply_service_context (void);
+  const TAO_Service_Context &reply_service_context (void) const;
 
   void request_id (CORBA::ULong id);
 
@@ -77,8 +81,6 @@ public:
   /// Get for request id
   CORBA::ULong request_id (void);
   CORBA::ULong request_id (void) const;
-
-
 
   /// Get method        for the addressing mode
   TAO_Target_Specification::TAO_Target_Address addressing_mode (void);
@@ -109,9 +111,13 @@ private:
   /// Response flags
   CORBA::Octet response_flags_;
 
-  /// The ServiceContextList sent to the server side.  Only valid
+  /// The ServiceContextList sent to the server side. Only valid
   /// when sending a request.
-  TAO_Service_Context service_info_;
+  TAO_Service_Context request_service_info_;
+
+  /// The ServiceContextList received from the server side. Only
+  /// valid when sending a request.
+  TAO_Service_Context reply_service_info_;
 
   // The first element of header is service context list;
   // transactional context would be acquired here using the

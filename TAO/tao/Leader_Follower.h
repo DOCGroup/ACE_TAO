@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers_T.h"
+#include "ace/Unbounded_Queue.h"
 
 class TAO_Export TAO_Leader_Follower
 {

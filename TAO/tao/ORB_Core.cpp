@@ -1,5 +1,7 @@
 // $Id$
 
+
+
 #include "ORB_Core.h"
 #include "ORB_Table.h"
 
@@ -369,7 +371,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // later, replace all of these
           // warning this turns on a daemon
           ACE::debug (1);
-          TAO_orbdebug = 1;
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -1306,7 +1307,7 @@ TAO_ORB_Core::resource_factory (void)
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
       // platforms.
-      if (TAO_orbdebug)
+      if (TAO_debug_level > 0)
         ACE_ERROR ((LM_WARNING,
                     ACE_TEXT ("(%P|%t) WARNING - No Resource Factory found ")
                     ACE_TEXT ("in Service Repository.\n")
@@ -1518,7 +1519,7 @@ TAO_ORB_Core::client_factory (void)
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
       // platforms.
-      if (TAO_orbdebug)
+      if (TAO_debug_level > 0)
         ACE_ERROR ((LM_WARNING,
                     ACE_TEXT ("(%P|%t) WARNING - No Client Strategy Factory found ")
                     ACE_TEXT ("in Service Repository.\n")
@@ -1557,7 +1558,7 @@ TAO_ORB_Core::server_factory (void)
   if (this->server_factory_ == 0)
     {
       // Still don't have one, so let's allocate the default.
-      if (TAO_orbdebug)
+      if (TAO_debug_level > 0)
         ACE_ERROR ((LM_WARNING,
                     ACE_TEXT ("(%P|%t) WARNING - No %s found in Service Repository.")
                     ACE_TEXT ("  Using default instance.\n"),
@@ -2116,7 +2117,7 @@ TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #ifdef TAO_HAS_EXCEPTIONS
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 #endif  /* TAO_HAS_EXCEPTIONS */
 
   TAO_IORInterceptor_List::TYPE &ior_interceptors =
@@ -2279,7 +2280,10 @@ TAO_ORB_Core::resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV)
   // @@ Not exception safe
   TAO_Adapter *iortable_adapter = factory->create (this);
   this->adapter_registry_.insert (iortable_adapter, ACE_TRY_ENV);
+  ACE_CHECK;
+
   iortable_adapter->open (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->ior_table_ = iortable_adapter->root ();
 }
@@ -3015,27 +3019,27 @@ TAO_ORB_Core_instance (void)
 }
 
 
-TAO_ORB_Core::TAO_Collocation_Strategies
+int
 TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
 {
 
   TAO_Stub *stub = object->_stubobj ();
-  if (stub->servant_orb_ptr () != 0 &&
+  if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0 &&
       object->_servant () != 0)
     {
       switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
         {
         case THRU_POA:
-          return TAO_ORB_Core::THRU_POA_STRATEGY;
+          return TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY;
 
         case DIRECT:
-          return TAO_ORB_Core::DIRECT_STRATEGY;
+          return TAO_Collocation_Strategies::CS_DIRECT_STRATEGY;
         }
     }
 
   // In this case the Object is a client.
-  return TAO_ORB_Core::REMOTE_STRATEGY;
+  return TAO_Collocation_Strategies::CS_REMOTE_STRATEGY;
 }
 
 

@@ -110,6 +110,17 @@ TAO_Transport_Cache_Manager::purge_entry (HASH_MAP_ENTRY *&entry)
   return this->purge_entry_i (entry);
 }
 
+ACE_INLINE void
+TAO_Transport_Cache_Manager::mark_invalid (HASH_MAP_ENTRY *&entry)
+{
+  ACE_MT (ACE_GUARD (ACE_Lock,
+                     guard,
+                     *this->cache_lock_));
+
+  this->mark_invalid_i (entry);
+}
+
+
 
 ACE_INLINE int
 TAO_Transport_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)

@@ -544,9 +544,8 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
           reply_params.svc_ctx_.length (0);
 
-          // Sending back the same service context list we received in the
-          // Request.  (Important for RT CORBA).
-          reply_params.service_context_notowned (&request.service_info ());
+          // Send back the reply service context.
+          reply_params.service_context_notowned (&request.reply_service_info ());
 
           // Make the GIOP header and Reply header
           this->generate_reply_header (*this->output_,
@@ -580,7 +579,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           result = this->send_reply_exception (transport,
                                                orb_core,
                                                request_id,
-                                               &request.service_info (),
+                                               &request.reply_service_info (),
                                                &ACE_ANY_EXCEPTION);
           if (result == -1)
             {
@@ -640,7 +639,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           result = this->send_reply_exception (transport,
                                                orb_core,
                                                request_id,
-                                               &request.service_info (),
+                                               &request.reply_service_info (),
                                                &exception);
           if (result == -1)
             {
@@ -880,8 +879,6 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
                   (const u_char *) error_message,
                   TAO_GIOP_MESSAGE_HEADER_LEN );
 
-  ACE_HANDLE which = transport->handle ();
-
   ACE_Data_Block data_block (TAO_GIOP_MESSAGE_HEADER_LEN,
                              ACE_Message_Block::MB_DATA,
                              error_message,
@@ -897,8 +894,8 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to %d\n"),
-                    which));
+                    ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %lu\n"),
+                    transport->id ()));
     }
 
   return result;
@@ -997,6 +994,14 @@ TAO_GIOP_Message_Base::
                   (const u_char *) close_message,
                   TAO_GIOP_MESSAGE_HEADER_LEN);
 
+#if 0
+  // @@CJC I don't think we need this check b/c the transport's send()
+  // will simply return -1.  However, I guess we could create something
+  // like TAO_Tranport::is_closed() that returns whether the connection
+  // is already closed.  The problem with that, however, is that it's
+  // entirely possible that is_closed() could return TRUE, and then the
+  // transport could get closed down btw. the time it gets called and the
+  // time that the send actually occurs.
   ACE_HANDLE which = transport->handle ();
   if (which == ACE_INVALID_HANDLE)
     {
@@ -1006,6 +1011,7 @@ TAO_GIOP_Message_Base::
                     " connection already closed\n"));
       return;
     }
+#endif
 
   ACE_Data_Block data_block (TAO_GIOP_MESSAGE_HEADER_LEN,
                              ACE_Message_Block::MB_DATA,
@@ -1017,18 +1023,18 @@ TAO_GIOP_Message_Base::
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-  if (transport->send (&message_block) == -1)
+  if (transport->send (&message_block) == -1 && errno != ENOENT)
     {
-      if (TAO_orbdebug)
+      if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) error closing connection %d\n",
-                    which));
+                    "(%P|%t) error closing connection %lu, errno = %d\n",
+                    transport->id (), errno));
     }
 
   transport->close_connection ();
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) shut down transport, handle %d\n",
-              which));
+              transport-> id ()));
 
 }
 
