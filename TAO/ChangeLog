@@ -1,8 +1,17 @@
+Mon Jun 28 08:12:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Protocols/Protocols.mpc:
+          Replaced requires under_construction_not_build_nightly_yet
+          with dummy_label. Features are enabled by default with MPC,
+          so the first one doesn't work, dummy_label is disabled
+          in global.features. This prevents this test from building
+
 Sun Jun 27 21:49:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
 	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
 	* tests/Xt_Stopwatch/server.cpp:
+          Added missing includes
 
 Sun Jun 27 11:20:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
