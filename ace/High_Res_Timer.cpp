@@ -105,11 +105,13 @@ ACE_High_Res_Timer::get_cpuinfo (void)
             }
           // Pentium CPU model?
           else if (supported == 0
-                   && ::sscanf (buf, "model : Pentium %s\n", arg) == 1)
+                   && ::sscanf (buf, "model name : Pentium %s\n", arg) == 1)
             {
               // But if we don't have the right kind of Intel chip,
               // just quit.
               if (ACE_OS::strcmp (arg, "II") == 0
+		  || ACE_OS::strcmp (arg, "III") == 0
+ 		  || ACE_OS::strcmp (arg, "IV") == 0
                   || ACE_OS::strcmp (arg, "Pro") == 0)
                 {
                   supported = 1;
