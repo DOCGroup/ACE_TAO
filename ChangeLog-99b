@@ -1,4 +1,9 @@
-Mon Jul 12 14:46:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jul 12 16:40:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32.h:
+	* ace/Object_Manager.h: Updated some unclear comments regarding
+	  the use and instantiation of non-static object manager.  Thanks
+	  to John Morey and David for pointing this out.
 
 	* ace/ace_dll.dsp: Merged additional MFC configuration.  Thanks to
 	  John Morey <jmorey@tbi.com> for submitting the patch.
