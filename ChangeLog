@@ -1,3 +1,9 @@
+Wed Jan 24 09:41:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Configuration.cpp:
+          Fixed warning under gcc.  Also made the for() loop more
+          ACE-like, not better, but at least consistent.
+
 Wed Jan 24 08:56:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:

@@ -173,13 +173,18 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
   parser.delimiter_replace ('\\', '\0');
   parser.delimiter_replace ('/', '\0');
 
-  for (ACE_TCHAR *temp = 0; temp = parser.next (); current_section = key_out)
-    // Open the section
-    if (open_section (current_section,
-                      temp,
-                      create,
-                      key_out))
-      return -1;
+  for (ACE_TCHAR *temp = parser.next ();
+       temp != 0;
+       temp = parser.next ())
+    {
+      // Open the section
+      if (open_section (current_section,
+                        temp,
+                        create,
+                        key_out))
+        return -1;
+      current_section = key_out;
+    }
 
   return 0;
 }
