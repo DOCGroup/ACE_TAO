@@ -431,13 +431,12 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   return result;
 }
 
-ACE_INLINE long
+ACE_INLINE int
 ACE_WFMO_Reactor::reset_timer_interval
   (const long timer_id, 
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::reset_timer_interval");
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   long result = this->timer_queue_->reset_interval
     (timer_id,
