@@ -1,8 +1,16 @@
+Thu Sep 26 09:30:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
+
+	  Use the CORBA 3.0 "typeprefix" keyword instead of "#pragma
+	  prefix" to declare the type prefix for the CosLoadBalancing
+	  module.
+
 Thu Sep 26 09:25:19 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
 
-	  Removed comment that wasn't relevant to the corresponding code.
+	  Removed comment that wasn't relevant to the code.
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp (enable_alert):
 	  (disable_alert):

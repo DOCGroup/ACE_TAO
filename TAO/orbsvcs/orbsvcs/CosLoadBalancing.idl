@@ -17,8 +17,6 @@
 #include "PortableGroup.idl"
 #include "orb.idl"
 
-#pragma prefix "omg.org"
-
 /**
  * @class CosLoadBalancing
  *
@@ -37,6 +35,8 @@
  */
 module CosLoadBalancing
 {
+  typeprefix CosLoadBalancing "omg.org";
+
   const IOP::ServiceId LOAD_MANAGED = 123456;  // @todo TBA by OMG
 
   typedef PortableGroup::Location Location;
@@ -98,8 +98,8 @@ module CosLoadBalancing
     // at object group members residing at appropriate locations.
     // oneway void analyze_loads (in LoadManager load_manager);
 
-    // The given loads at the given location should no longer be
-    // considered when performing load analysis.
+    // The loads at the given location should no longer be considered
+    // when performing load analysis.
     void location_removed (in PortableGroup::Location the_location)
       raises (LocationNotFound);
   };
