@@ -2811,7 +2811,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
               TAO_ORB_Core::iorinterceptor_adapter_factory_name ()
               );
           this->ior_interceptor_adapter_ =
-            the_ior_interceptor_adapter_factory->create (ACE_ENV_ARG_PARAMETER);
+            the_ior_interceptor_adapter_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
     }

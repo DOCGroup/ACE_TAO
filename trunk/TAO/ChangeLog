@@ -1,3 +1,10 @@
+Fri Jul 18 14:02:42 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+
+        Fixed parse error on line 2814 by replacing ACE_ENV_ARG_PARAMETER with
+        ACE_ENV_SINGLE_ARG_PARAMETER.
+
 Fri Jul 18 10:35:23 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tao/IORInterceptor_Adapter.cpp:
