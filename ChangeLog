@@ -1,11 +1,28 @@
+Thu May 24 20:26:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Heap_T.{h cpp}: Fixed some problems in managing the
+          free timer ID list.
+
+        * ace/Timer_Hash_T.cpp (expire): Changed this to peek at the first
+          timer node from each table, do reschedule iterative timers, and
+          do the upcall, then _cancel_ the original, rather than try to
+          manage a remove_first()/reschedule-or-free sequence. The ID
+          assigned by the underlying table is not important, since its not
+          seen by the ACE_Timer_Hash_T caller anyway, and that's the main
+          impetus for using remove_first/reschedule (or free_node).
+
+        * tests/Timer_Queue_Test.cpp (test_functionality): Added a test
+          to verify empty timer queue after adding/removing two timers
+          right at the start.
+
 Thu May 24 12:15:35 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS.h: Added #defines for RTLD_LAZY, RTLD_NOW, RTLD_GLOBAL.
 	  Thanks to Kobi Cohen-Arazi <kobic@bvr.co.il> for suggesting
  	  this.
   
-	* ace/OS.h: Updated the ACE_Time_Value class to point out that the values 
-	  are in secs and usecs.  Thanks to Israel Illescas Gomez
+	* ace/OS.h: Updated the ACE_Time_Value class to point out that the
+          values are in secs and usecs.  Thanks to Israel Illescas Gomez
  	  <illescas@dycsa.es> for motivating this.
 
 Thu May 24 18:08:27 2001  Steve Huston  <shuston@riverace.com>

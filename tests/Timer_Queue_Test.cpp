@@ -115,6 +115,7 @@ test_functionality (ACE_Timer_Queue *tq)
 
   tq->cancel (timer_id);
   tq->cancel (timer_id2);
+  ACE_ASSERT (tq->is_empty () == 1);
 
   timer_id = tq->schedule (&eh,
                            (const void *) 1, 
