@@ -2331,6 +2331,7 @@ extern_C int      getgid          __((void));
 extern_C int      getuid          __((void));
 extern_C char*    getcwd          __((char* buf, size_t size));
 extern_C int      pipe            __((int* fildes));
+extern_C int      gethostname     __((char*, size_t));
 
 // This must come after limits.h is included
 #define MAXPATHLEN _POSIX_PATH_MAX
