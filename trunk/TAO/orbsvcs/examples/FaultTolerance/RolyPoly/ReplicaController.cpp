@@ -387,7 +387,7 @@ ReplicaController::send_reply (
       }
     }
 
-    CORBA::Octet* buf (msg->get_buffer ());
+    CORBA::Octet* buf = msg->get_buffer ();
 
     // Crash point 1.
     //
