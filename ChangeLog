@@ -1,3 +1,8 @@
+Mon Mar 12 16:30:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Logging_Strategy_Test.cpp (main): Fixed the rest of the
+	  warnings in VxWorks builds.
+
 Mon Mar 12 16:21:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Logging_Strategy_Test.cpp (main): Fixed a couple of
