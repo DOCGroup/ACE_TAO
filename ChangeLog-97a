@@ -1,3 +1,8 @@
+Thu May 15 23:34:30 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp (spawn_n): Changed
+	  ACE_Process_Manager::start_n to ACE_Process_Manager::spawn_n.
+
 Thu May 15 22:19:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/lib/Server_Logging_Handler.cpp (handle_input): Fixed
