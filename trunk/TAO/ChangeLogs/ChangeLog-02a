@@ -1,3 +1,21 @@
+Tue Oct 17 16:08:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+
+	  Replaced the several checks for the necessity of using
+	  the ACE_NESTED_CLASS macro in portable interceptor
+	  generated code with a single check: whether or not the
+	  scope of the declaration of the argument type in question 
+	  is the same the scope of the visitor's context. This change
+	  also eliminates the need for the extra context sub-state
+	  added recently, so that was removed, along with the code to
+	  set and unset it. Thanks to Francois Bernier 
+	  <fbernier@gel.ulaval.ca> for reporting the bug that led to
+	  these changes.
+
 Tue Oct 17 01:13:25 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile
