@@ -80,7 +80,7 @@ TAO_Naming_Service::parse_args (int argc,
 // Initialize the state of the TAO_Naming_Service object
 int
 TAO_Naming_Service::init (int argc,
-                          char* argv[])
+                          char *argv[])
 {
   int result;
   CORBA::ORB_var orb;
@@ -155,20 +155,17 @@ TAO_Naming_Service::~TAO_Naming_Service (void)
 int
 main (int argc, char* argv[])
 {
-  int init_result;
-
   TAO_Naming_Service naming_service;
 
-  init_result = naming_service.init (argc,argv);
+  int init_result = naming_service.init (argc, argv);
 
   if (init_result == -1)
-    return init_result;
+    return -1;
 
   TAO_TRY
     {
       naming_service.run (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
     }
   TAO_CATCHANY
     {

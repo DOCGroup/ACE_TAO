@@ -22,7 +22,7 @@ Logger_Client::~Logger_Client (void)
 }
 
 int
-Logger_Client::init (int argc, char **argv)
+Logger_Client::init (int argc, char *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -75,7 +75,7 @@ int
 Logger_Client::init_naming_service (CORBA::Environment &env)
 {
   // Initialize the naming services
-  if (my_name_client_.init (orb_, argc_, argv_) != 0)
+  if (my_name_client_.init (orb_) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Unable to initialize "
 		       "the TAO_Naming_Client. \n"),
