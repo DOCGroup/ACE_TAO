@@ -263,6 +263,10 @@ return
 _env.exception (TAO_TRY_ENV.exception ()); \
 return RETURN
 
+#define TAO_RETHROW_RETURN_VOID \
+_env.exception (TAO_TRY_ENV.exception ()); \
+return
+
 #define TAO_RETHROW_SAME_ENV_RETURN(RETURN) return RETURN
 #define TAO_RETHROW_SAME_ENV_RETURN_VOID return
 
