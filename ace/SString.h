@@ -35,7 +35,7 @@ class ACE_Export ACE_CString
   //   This is a place holder until all compilers implement the
   //   ANSI/ISO C++ standard String class.  Note that we need to use
   //   this class since the ACE ACE_Map_Manager requires an object
-  //   that supports the operator== and operator!=.  This class uses
+  //   that supports the operator == and operator !=.  This class uses
   //   an ACE_Allocator to allocate memory.  The user can make this a
   //   persistant class by providing an ACE_Allocator with a
   //   persistable memory pool.  NOTE: if an instance of this class is
@@ -70,15 +70,15 @@ public:
   ~ACE_CString (void);
   // Deletes the memory...
 
-  const char &operator[] (size_t index) const;
+  const char &operator [] (size_t index) const;
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
 
-  char &operator[] (size_t index);
+  char &operator [] (size_t index);
   // Return the <index'th> character by reference in the string
   // (doesn't perform bounds checking).
 
-  ACE_CString &operator= (const ACE_CString &);
+  ACE_CString &operator = (const ACE_CString &);
   // Assignment operator (does copy memory).
 
   void set (const char *s, int release = 1);
@@ -95,7 +95,7 @@ public:
   ACE_CString substr (size_t offset, ssize_t length = -1) const;
   // Same as substring
 
-  ACE_CString &operator+= (const ACE_CString &);
+  ACE_CString &operator += (const ACE_CString &);
   // Concat operator (copies memory).
 
   u_long hash (void) const;
@@ -135,10 +135,16 @@ public:
   // Find <c> starting at pos (counting from the end).  Returns the
   // index of the first location that matches, else npos.
 
-  int operator== (const ACE_CString &s) const;
+  int operator == (const ACE_CString &s) const;
   // Equality comparison operator (must match entire string).
 
-  int operator!= (const ACE_CString &s) const;
+  int operator < (const ACE_CString &s) const;
+  // Less than comparison operator.
+
+  int operator > (const ACE_CString &s) const;
+  // Greater than comparison operator.
+
+  int operator != (const ACE_CString &s) const;
   // Inequality comparison operator.
 
   int compare (const ACE_CString &s) const;
@@ -167,9 +173,9 @@ private:
   // Represents the "NULL" string to simplify the internal logic.
 };
 
-ACE_Export ACE_INLINE ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
+ACE_Export ACE_INLINE ACE_CString operator + (const ACE_CString &, const ACE_CString &);
 #if !defined (ACE_HAS_WINCE)
-ACE_Export ostream &operator<< (ostream &, const ACE_CString &);
+ACE_Export ostream &operator << (ostream &, const ACE_CString &);
 #endif /* ! ACE_HAS_WINCE */
 
 class ACE_Export ACE_SString
@@ -185,7 +191,7 @@ class ACE_Export ACE_SString
   //   understand how it works.  In particular, its destructor does
   //   not deallocate its memory when it is destroyed...  We need this
   //   class since the <ACE_Map_Manager> requires an object that
-  //   supports the operator== and operator!=.  This class uses an
+  //   supports the operator == and operator !=.  This class uses an
   //   <ACE_Allocator> to allocate memory.  The user can make this a
   //   persistant class by providing an <ACE_Allocator> with a
   //   persistable memory pool.
@@ -212,15 +218,15 @@ public:
   ~ACE_SString (void);
   // Default dtor.
 
-  char operator[] (size_t index) const;
+  char operator [] (size_t index) const;
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
 
-  char &operator[] (size_t index);
+  char &operator [] (size_t index);
   // Return the <index'th> character by reference in the string
   // (doesn't perform bounds checking).
 
-  ACE_SString &operator= (const ACE_SString &);
+  ACE_SString &operator = (const ACE_SString &);
   // Assignment operator (does copy memory).
 
   ACE_SString substring (size_t offset, ssize_t length = -1) const;
@@ -270,10 +276,16 @@ public:
   // Find <c> starting at pos (counting from the end).  Returns the
   // index of the first location that matches, else npos.
 
-  int operator== (const ACE_SString &s) const;
+  int operator == (const ACE_SString &s) const;
   // Equality comparison operator (must match entire string).
 
-  int operator!= (const ACE_SString &s) const;
+  int operator < (const ACE_SString &s) const;
+  // Less than comparison operator.
+
+  int operator > (const ACE_SString &s) const;
+  // Greater than comparison operator.
+
+  int operator != (const ACE_SString &s) const;
   // Inequality comparison operator.
 
   int compare (const ACE_SString &s) const;
@@ -297,7 +309,7 @@ private:
 };
 
 #if !defined (ACE_HAS_WINCE)
-ACE_Export ostream &operator<< (ostream &, const ACE_SString &);
+ACE_Export ostream &operator << (ostream &, const ACE_SString &);
 #endif /* ! ACE_HAS_WINCE */
 
 class ACE_Export ACE_WString
@@ -307,7 +319,7 @@ class ACE_Export ACE_WString
   //
   // = DESCRIPTION
   //   We need to use this class since the <ACE_Map_Manager> requires
-  //   an object that supports the operator== and operator!=.  This
+  //   an object that supports the operator == and operator !=.  This
   //   class uses an <ACE_Allocator> to allocate memory.  The user can
   //   make this a persistant class by providing an <ACE_Allocator>
   //   with a persistable memory pool
@@ -345,15 +357,15 @@ public:
   ~ACE_WString (void);
   // Deletes the memory...
 
-  ACE_USHORT16 operator[] (size_t index) const;
+  ACE_USHORT16 operator [] (size_t index) const;
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
 
-  ACE_USHORT16 &operator[] (size_t index);
+  ACE_USHORT16 &operator [] (size_t index);
   // Return the <index'th> character by reference in the string
   // (doesn't perform bounds checking).
 
-  ACE_WString &operator= (const ACE_WString &);
+  ACE_WString &operator = (const ACE_WString &);
   // Assignment operator (does copy memory).
 
   void set (const ACE_USHORT16 *s);
@@ -370,7 +382,7 @@ public:
   ACE_WString substr (size_t offset, ssize_t length = -1) const;
   // Same as substring
 
-  ACE_WString &operator+= (const ACE_WString &);
+  ACE_WString &operator += (const ACE_WString &);
   // Concat operator (does copy memory).
 
   u_long hash (void) const;
@@ -411,10 +423,16 @@ public:
   // Find <c> starting at pos (counting from the end).  Returns the
   // index of the first location that matches, else npos.
 
-  int operator== (const ACE_WString &s) const;
+  int operator == (const ACE_WString &s) const;
   // Equality comparison operator (must match entire string).
 
-  int operator!= (const ACE_WString &s) const;
+  int operator < (const ACE_WString &s) const;
+  // Less than comparison operator.
+
+  int operator > (const ACE_WString &s) const;
+  // Greater than comparison operator.
+
+  int operator != (const ACE_WString &s) const;
   // Inequality comparison operator.
 
   int compare (const ACE_WString &s) const;
@@ -449,9 +467,9 @@ private:
   // Pointer to data.
 };
 
-ACE_Export ACE_INLINE ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
+ACE_Export ACE_INLINE ACE_WString operator + (const ACE_WString &, const ACE_WString &);
 #if !defined (ACE_HAS_WINCE)
-ACE_Export ostream &operator<< (ostream &, const ACE_WString &);
+ACE_Export ostream &operator << (ostream &, const ACE_WString &);
 #endif /* ! ACE_HAS_WINCE */
 
 // ************************************************************

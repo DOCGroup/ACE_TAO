@@ -130,11 +130,15 @@ HTTP_Headers::value_reset (void)
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Const_Binary_Functor_Base<int, int>;
+template class ACE_Less_Than_Functor<int, int>;
 template class ACE_RB_Tree<int, const HTTP_Hdr_Node *>;
 template class ACE_RB_Tree_Node<int, const HTTP_Hdr_Node *>;
 template class ACE_RB_Tree_Iterator<int, const HTTP_Hdr_Node *>;
 template class ACE_Singleton<HTTP_Header_Nodes, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Const_Binary_Functor_Base<int, int>
+#pragma instantiate ACE_Less_Than_Functor<int, int>
 #pragma instantiate ACE_RB_Tree<int, const HTTP_Hdr_Node *>
 #pragma instantiate ACE_RB_Tree_Node<int, const HTTP_Hdr_Node *>
 #pragma instantiate ACE_RB_Tree_Iterator<int, const HTTP_Hdr_Node *>

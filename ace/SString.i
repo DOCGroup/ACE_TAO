@@ -193,6 +193,31 @@ ACE_CString::operator== (const ACE_CString &s) const
     && ACE_OS::strncmp (this->rep_, s.rep_, this->len_) == 0;
 }
 
+// Less than comparison operator.
+
+ACE_INLINE int
+ACE_CString::operator < (const ACE_CString &s) const
+{
+  ACE_TRACE ("ACE_CString::operator <");
+
+  return (this->rep_ && s.rep_)
+    ? ACE_OS::strcmp (this->rep_, s.rep_) < 0
+    : ((s.rep_) ? 1 : 0 );
+}
+
+// Greater than comparison operator.
+
+ACE_INLINE int
+ACE_CString::operator > (const ACE_CString &s) const
+{
+  ACE_TRACE ("ACE_CString::operator >");
+
+  return (this->rep_ && s.rep_)
+    ? ACE_OS::strcmp (this->rep_, s.rep_) > 0
+    : ((this->rep_) ? 1 : 0 );
+}
+
+
 // Comparison operator.
 
 ACE_INLINE int
@@ -347,6 +372,30 @@ ACE_SString::operator== (const ACE_SString &s) const
     && ACE_OS::strcmp (this->rep_, s.rep_) == 0;
 }
 
+// Less than comparison operator.
+
+ACE_INLINE int
+ACE_SString::operator < (const ACE_SString &s) const
+{
+  ACE_TRACE ("ACE_SString::operator <");
+
+  return (this->rep_ && s.rep_)
+    ? ACE_OS::strcmp (this->rep_, s.rep_) < 0
+    : ((s.rep_) ? 1 : 0 );
+}
+
+// Greater than comparison operator.
+
+ACE_INLINE int
+ACE_SString::operator > (const ACE_SString &s) const
+{
+  ACE_TRACE ("ACE_SString::operator >");
+
+  return (this->rep_ && s.rep_)
+    ? ACE_OS::strcmp (this->rep_, s.rep_) > 0
+    : ((this->rep_) ? 1 : 0 );
+}
+
 // Comparison operator.
 
 ACE_INLINE int
@@ -480,6 +529,37 @@ ACE_WString::operator== (const ACE_WString &s) const
                        (const void *) s.rep_,
                        this->len_ * sizeof (ACE_USHORT16)) == 0;
 }
+
+// Less than comparison operator.
+
+ACE_INLINE int
+ACE_WString::operator < (const ACE_WString &s) const
+{
+  ACE_TRACE ("ACE_WString::operator <");
+  return (this->len_ < s.len_) 
+          ? (ACE_OS::memcmp ((const void *) this->rep_,
+                             (const void *) s.rep_,
+                             this->len_ * sizeof (ACE_USHORT16)) <= 0)
+          : (ACE_OS::memcmp ((const void *) this->rep_,
+                             (const void *) s.rep_,
+                             s.len_ * sizeof (ACE_USHORT16)) < 0);
+}
+
+// Greater than comparison operator.
+
+ACE_INLINE int
+ACE_WString::operator > (const ACE_WString &s) const
+{
+  ACE_TRACE ("ACE_WString::operator >");
+  return (this->len_ <= s.len_) 
+          ? (ACE_OS::memcmp ((const void *) this->rep_,
+                             (const void *) s.rep_,
+                             this->len_ * sizeof (ACE_USHORT16)) > 0)
+          : (ACE_OS::memcmp ((const void *) this->rep_,
+                             (const void *) s.rep_,
+                             s.len_ * sizeof (ACE_USHORT16)) >= 0);
+}
+
 
 // Comparison operator.
 
