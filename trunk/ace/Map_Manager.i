@@ -16,7 +16,7 @@ ACE_Map_Entry<EXT_ID, INT_ID>::next (void) const
 }
 
 template <class EXT_ID, class INT_ID> ACE_INLINE void
-ACE_Map_Entry<EXT_ID, INT_ID>::next (size_t n) 
+ACE_Map_Entry<EXT_ID, INT_ID>::next (size_t n)
 {
   this->next_ = n;
 }
@@ -28,7 +28,7 @@ ACE_Map_Entry<EXT_ID, INT_ID>::prev (void) const
 }
 
 template <class EXT_ID, class INT_ID> ACE_INLINE void
-ACE_Map_Entry<EXT_ID, INT_ID>::prev (size_t p) 
+ACE_Map_Entry<EXT_ID, INT_ID>::prev (size_t p)
 {
   this->prev_ = p;
 }
@@ -76,7 +76,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind (const EXT_ID &ext_id,
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  return this->bind_i (ext_id, 
+  return this->bind_i (ext_id,
                        int_id);
 }
 
@@ -88,9 +88,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  return this->rebind_i (ext_id, 
-                         int_id, 
-                         old_ext_id, 
+  return this->rebind_i (ext_id,
+                         int_id,
+                         old_ext_id,
                          old_int_id);
 }
 
@@ -101,8 +101,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  return this->rebind_i (ext_id, 
-                         int_id, 
+  return this->rebind_i (ext_id,
+                         int_id,
                          old_int_id);
 }
 
@@ -112,7 +112,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  return this->rebind_i (ext_id, 
+  return this->rebind_i (ext_id,
                          int_id);
 }
 
@@ -122,7 +122,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind (const EXT_ID &ext_id,
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  return this->trybind_i (ext_id, 
+  return this->trybind_i (ext_id,
                           int_id);
 }
 
@@ -132,7 +132,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id)
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
   size_t index = 0;
-  return this->find_and_return_index (ext_id, 
+  return this->find_and_return_index (ext_id,
                                       index);
 }
 
@@ -142,7 +142,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id,
 {
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  return this->find_i (ext_id, 
+  return this->find_i (ext_id,
                        int_id);
 }
 
@@ -151,7 +151,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id)
 {
   // Unbind the entry.
   size_t index = 0;
-  return this->unbind_and_return_index (ext_id, 
+  return this->unbind_and_return_index (ext_id,
                                         index);
 }
 
@@ -161,7 +161,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (const EXT_ID &ext_id,
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  return this->unbind_i (ext_id, 
+  return this->unbind_i (ext_id,
                          int_id);
 }
 
@@ -322,19 +322,6 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
-ACE_Map_Entry<EXT_ID, INT_ID>&
-ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void) const
-{
-  ACE_Map_Entry<EXT_ID, INT_ID> *retv = 0;
-
-  int result = this->next (retv);
-  ACE_ASSERT (result != 0);
-  ACE_UNUSED_ARG (result);
-
-  return *retv;
-}
-
-template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>&
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void)
 {
@@ -344,7 +331,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void)
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
-  return (&this->map_man_ == &rhs.map_man_ && 
+  return (&this->map_man_ == &rhs.map_man_ &&
           this->next_ == rhs.next_);
 }
 
@@ -355,7 +342,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!= (const ACE_Map_Itera
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
-ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm, 
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                                               int pass_end)
   : ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm)
 {
@@ -404,7 +391,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm, 
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                                                               int pass_end)
   : ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm)
 {
