@@ -1,3 +1,9 @@
+Sat Jun  6 17:35:59 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Added a simple-minded
+ 	  implementation of the log() method.  This can certainly be
+ 	  improved...
+
 Fri Jun  5 16:02:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.h: 
