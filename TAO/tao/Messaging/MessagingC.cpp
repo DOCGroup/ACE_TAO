@@ -95,14 +95,11 @@ void
 Messaging::ExceptionHolder::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExceptionHolder *_tao_tmp_pointer =
-    static_cast<
-        ExceptionHolder *> (
-        _tao_void_pointer
-      );
+    static_cast<ExceptionHolder *> (_tao_void_pointer);
   CORBA::remove_ref (_tao_tmp_pointer);
 }
 
-CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm)
+CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return this->_tao_marshal__Messaging_ExceptionHolder (strm);
 }
@@ -355,7 +352,7 @@ OBV_Messaging::ExceptionHolder::~ExceptionHolder (void)
 {}
 
 CORBA::Boolean
-OBV_Messaging::ExceptionHolder::_tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &strm)
+OBV_Messaging::ExceptionHolder::_tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &strm) const
 {
   return _tao_marshal_state (strm);
 }
@@ -459,7 +456,7 @@ operator<< (
   return
     CORBA::ValueBase::_tao_marshal (
         strm,
-        const_cast<Messaging::ExceptionHolder *> (_tao_valuetype),
+        _tao_valuetype,
         reinterpret_cast<ptrdiff_t> (&Messaging::ExceptionHolder::_downcast)
       );
 }
@@ -477,7 +474,7 @@ operator>> (
 // be\be_visitor_valuetype/marshal_cs.cpp:44
 
 CORBA::Boolean
-OBV_Messaging::ExceptionHolder::_tao_marshal_state (TAO_OutputCDR &strm)
+OBV_Messaging::ExceptionHolder::_tao_marshal_state (TAO_OutputCDR &strm) const
 {
   return (
       (strm << CORBA::Any::from_boolean (_pd_is_system_exception)) &&

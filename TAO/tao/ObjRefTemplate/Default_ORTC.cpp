@@ -53,7 +53,6 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_cs.cpp:66
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::add_ref (
     TAO_Default_ORT::ObjectReferenceTemplate * p
@@ -62,7 +61,6 @@ TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::add_ref (
   CORBA::add_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::remove_ref (
     TAO_Default_ORT::ObjectReferenceTemplate * p
@@ -71,7 +69,6 @@ TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::remove_ref (
   CORBA::remove_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::release (
     TAO_Default_ORT::ObjectReferenceTemplate * p
@@ -96,14 +93,11 @@ void
 TAO_Default_ORT::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_void_pointer)
 {
   ObjectReferenceTemplate *_tao_tmp_pointer =
-    static_cast<
-        ObjectReferenceTemplate *> (
-        _tao_void_pointer
-      );
+    static_cast<ObjectReferenceTemplate *> (_tao_void_pointer);
   CORBA::remove_ref (_tao_tmp_pointer);
 }
 
-CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_v (TAO_OutputCDR & strm)
+CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return this->_tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (strm);
 }
@@ -166,7 +160,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
 {}
 
 CORBA::Boolean
-OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &strm)
+OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &strm) const
 {
   return _tao_marshal_state (strm);
 }
@@ -210,7 +204,7 @@ operator<< (
   return
     CORBA::ValueBase::_tao_marshal (
         strm,
-        const_cast<TAO_Default_ORT::ObjectReferenceTemplate *> (_tao_valuetype),
+        _tao_valuetype,
         reinterpret_cast<ptrdiff_t> (&TAO_Default_ORT::ObjectReferenceTemplate::_downcast)
       );
 }
@@ -228,10 +222,10 @@ operator>> (
 // be\be_visitor_valuetype/marshal_cs.cpp:44
 
 CORBA::Boolean
-OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_state (TAO_OutputCDR &)
+OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_state (TAO_OutputCDR &) const
 {
   return (
-      1
+      true
     );
 }
 
@@ -239,12 +233,12 @@ CORBA::Boolean
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR &)
 {
   return (
-    1
+    true
   );
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1620
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
