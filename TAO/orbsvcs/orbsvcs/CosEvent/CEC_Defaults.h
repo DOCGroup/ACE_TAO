@@ -1,22 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel
-//
-// = FILENAME
-//   CEC_Defaults
-//
-// = DESCRIPTION
-//   In this file we set the compile time defaults for the event
-//   channel.
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_Defaults
+ *
+ *  $Id$
+ *
+ * In this file we set the compile time defaults for the event
+ * channel.
+ *
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_DEFAULTS_H
 #define TAO_CEC_DEFAULTS_H

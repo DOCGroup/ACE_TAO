@@ -1,20 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel
-//
-// = FILENAME
-//   CEC_Pulling_Strategy
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_Pulling_Strategy
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_PULLING_STRATEGY_H
 #define TAO_CEC_PULLING_STRATEGY_H
@@ -26,39 +20,42 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_CEC_Pulling_Strategy
+ *
+ * @brief Define the interface for the pulling strategies.
+ *
+ * The EC may be configured with different pulling strategies,
+ * for instance, it can use a pool of threads to dispatch the
+ * events, or a set of queues with threads at different priorities
+ * for each queue or can simply push the event to the consumer in
+ * FIFO order.
+ */
 class TAO_Event_Export TAO_CEC_Pulling_Strategy
 {
-  // = TITLE
-  //   Define the interface for the pulling strategies.
-  //
-  // = DESCRIPTION
-  //   The EC may be configured with different pulling strategies,
-  //   for instance, it can use a pool of threads to dispatch the
-  //   events, or a set of queues with threads at different priorities
-  //   for each queue or can simply push the event to the consumer in
-  //   FIFO order.
-  //
 public:
+  /// destructor...
   virtual ~TAO_CEC_Pulling_Strategy (void);
-  // destructor...
 
+  /// Initialize all the data structures, activate any internal threads,
+  /// etc.
   virtual void activate (void) = 0;
-  // Initialize all the data structures, activate any internal threads,
-  // etc.
 
+  /**
+   * Deactivate any internal threads and cleanup internal data
+   * structures, it should only return once the threads have finished
+   * their jobs.
+   */
   virtual void shutdown (void) = 0;
-  // Deactivate any internal threads and cleanup internal data
-  // structures, it should only return once the threads have finished
-  // their jobs.
 
 #if 0
+  /// Some strategies may want to keep track of connected consumers.
   virtual void connected (TAO_CEC_ProxyPullConsumer *,
                           CORBA::Environment &) = 0;
   virtual void reconnected (TAO_CEC_ProxyPullConsumer *,
                             CORBA::Environment &) = 0;
   virtual void diconnected (TAO_CEC_ProxyPullConsumer *,
                             CORBA::Environment &) = 0;
-  // Some strategies may want to keep track of connected consumers.
 #endif /* 0 */
 };
 

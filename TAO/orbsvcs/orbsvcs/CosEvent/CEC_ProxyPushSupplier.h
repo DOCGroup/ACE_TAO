@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel
-//
-// = FILENAME
-//   CEC_ProxyPushSupplier
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_ProxyPushSupplier
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_PROXYPUSHSUPPLIER_H
 #define TAO_CEC_PROXYPUSHSUPPLIER_H
@@ -28,72 +24,75 @@
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
 
+/**
+ * @class TAO_CEC_ProxyPushSupplier
+ *
+ * @brief ProxyPushSupplier
+ *
+ * Implement the CosEventChannelAdmin::ProxyPushSupplier interface,
+ * remember that this class is used to communicate with a
+ * PushConsumer, so, in effect, this is the ambassador for a
+ * consumer inside the event channel.
+ * = MEMORY MANAGMENT
+ * It does not assume ownership of the TAO_CEC_Dispatching object.
+ * It makes a copy of the ConsumerQOS and the consumer object
+ * reference.
+ * = LOCKING
+ * Locking is strategized, the event channel acts as a factory for
+ * the locking strategies.
+ */
 class TAO_Event_Export TAO_CEC_ProxyPushSupplier : public POA_CosEventChannelAdmin::ProxyPushSupplier
 {
-  // = TITLE
-  //   ProxyPushSupplier
-  //
-  // = DESCRIPTION
-  //   Implement the CosEventChannelAdmin::ProxyPushSupplier interface,
-  //   remember that this class is used to communicate with a
-  //   PushConsumer, so, in effect, this is the ambassador for a
-  //   consumer inside the event channel.
-  //
-  // = MEMORY MANAGMENT
-  //   It does not assume ownership of the TAO_CEC_Dispatching object.
-  //   It makes a copy of the ConsumerQOS and the consumer object
-  //   reference.
-  //
-  // = LOCKING
-  //   Locking is strategized, the event channel acts as a factory for
-  //   the locking strategies.
-  //
 public:
   typedef CosEventChannelAdmin::ProxyPushSupplier_ptr _ptr_type;
   typedef CosEventChannelAdmin::ProxyPushSupplier_var _var_type;
 
+  /// constructor...
   TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel);
-  // constructor...
 
+  /// destructor...
   virtual ~TAO_CEC_ProxyPushSupplier (void);
-  // destructor...
 
+  /// Activate in the POA
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC ((CORBA::SystemException));
-  // Activate in the POA
 
+  /// Deactivate from the POA
   virtual void deactivate (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Deactivate from the POA
 
+  /// Return 0 if no consumer is connected...
   CORBA::Boolean is_connected (void) const;
-  // Return 0 if no consumer is connected...
 
+  /**
+   * Return the consumer object reference. It returns nil() if it has
+   * not connected yet.
+   * NOTE: This method does not return a new reference!!! Doing so
+   * will increase the locking overhead on the critical path.
+   */
   CosEventComm::PushConsumer_ptr consumer (void) const;
-  // Return the consumer object reference. It returns nil() if it has
-  // not connected yet.
-  // NOTE: This method does not return a new reference!!! Doing so
-  // will increase the locking overhead on the critical path.
 
+  /// The event channel is shutting down
   virtual void shutdown (CORBA::Environment &env);
-  // The event channel is shutting down
 
+  /// Internal methods to push an event to each consumer.
   virtual void push (const CORBA::Any &event,
                      CORBA::Environment &ACE_TRY_ENV);
   virtual void push_nocopy (CORBA::Any &event,
                             CORBA::Environment &ACE_TRY_ENV);
-  // Internal methods to push an event to each consumer.
 
+  /// Pushes to the consumer, verifies that it is connected.
   void push_to_consumer (const CORBA::Any &event,
                          CORBA::Environment &env);
   void reactive_push_to_consumer (const CORBA::Any &event,
                                   CORBA::Environment &env);
-  // Pushes to the consumer, verifies that it is connected.
 
+  /**
+   * Invoke the _non_existent() pseudo-operation on the consumer. If
+   * it is disconnected then it returns true and sets the
+   * <disconnected> flag.
+   */
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected,
                                         CORBA::Environment &ACE_TRY_ENV);
-  // Invoke the _non_existent() pseudo-operation on the consumer. If
-  // it is disconnected then it returns true and sets the
-  // <disconnected> flag.
 
   // = The CosEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
@@ -105,9 +104,9 @@ public:
   virtual void disconnect_push_supplier (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
-  // Increment and decrement the reference count.
 
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
@@ -115,32 +114,32 @@ public:
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV);
 
 protected:
+  /// Set the consumer, used by some implementations to change the
+  /// policies used when invoking operations on the consumer.
   void consumer (CosEventComm::PushConsumer_ptr consumer);
   void consumer_i (CosEventComm::PushConsumer_ptr consumer);
-  // Set the consumer, used by some implementations to change the
-  // policies used when invoking operations on the consumer.
 
+  /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i (void) const;
-  // The private version (without locking) of is_connected().
 
+  /// Release the child and the consumer
   void cleanup_i (void);
-  // Release the child and the consumer
 
 private:
+  /// The Event Channel that owns this object.
   TAO_CEC_EventChannel* event_channel_;
-  // The Event Channel that owns this object.
 
+  /// The locking strategy.
   ACE_Lock* lock_;
-  // The locking strategy.
 
+  /// The reference count.
   CORBA::ULong refcount_;
-  // The reference count.
 
+  /// The consumer....
   CosEventComm::PushConsumer_var consumer_;
-  // The consumer....
 
+  /// Store the default POA.
   PortableServer::POA_var default_POA_;
-  // Store the default POA.
 };
 
 #if defined (__ACE_INLINE__)

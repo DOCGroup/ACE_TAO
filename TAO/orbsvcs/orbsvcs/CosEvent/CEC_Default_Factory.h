@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel
-//
-// = FILENAME
-//   CEC_Default_Factory
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_Default_Factory
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_DEFAULT_FACTORY_H
 #define TAO_CEC_DEFAULT_FACTORY_H
@@ -27,30 +23,30 @@
 #include "CEC_Defaults.h"
 #include "ace/Service_Config.h"
 
+/**
+ * @class TAO_CEC_Default_Factory
+ *
+ * @brief A generic factory for EC experimentation.
+ *
+ * This class allows the user to experiment with different EC
+ * configurations.  Using a command-line like interface the user
+ * can specify which strategies will this factory generate.
+ * Since the class can be dynamically loaded the strategies can be
+ * set in the service configurator file.
+ * = MEMORY MANAGMENT
+ */
 class TAO_Event_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
-  // = TITLE
-  //   A generic factory for EC experimentation.
-  //
-  // = DESCRIPTION
-  //   This class allows the user to experiment with different EC
-  //   configurations.  Using a command-line like interface the user
-  //   can specify which strategies will this factory generate.
-  //   Since the class can be dynamically loaded the strategies can be
-  //   set in the service configurator file.
-  //
-  // = MEMORY MANAGMENT
-  //
 public:
+  /// Constructor
   TAO_CEC_Default_Factory (void);
-  // Constructor
 
+  /// destructor...
   virtual ~TAO_CEC_Default_Factory (void);
-  // destructor...
 
+  /// Helper function to register the default factory into the service
+  /// configurator.
   static int init_svcs (void);
-  // Helper function to register the default factory into the service
-  // configurator.
 
   // = The Service_Object entry points
   virtual int init (int argc, char* argv[]);
@@ -121,39 +117,39 @@ public:
       destroy_supplier_control (TAO_CEC_SupplierControl*);
 
 private:
+  /// Parse an argument to set the type of collections used.
   int parse_collection_arg (char *opt);
-  // Parse an argument to set the type of collections used.
 
 private:
+  /// Several flags to control the kind of object created.
   int dispatching_;
   int pulling_strategy_;
   int consumer_collection_;
   int supplier_collection_;
   int consumer_lock_;
   int supplier_lock_;
-  // Several flags to control the kind of object created.
 
+  /// The MT dispatching priority has several arguments that could be
+  /// controlled here...
   int dispatching_threads_;
   int dispatching_threads_flags_;
   int dispatching_threads_priority_;
   int dispatching_threads_force_active_;
-  // The MT dispatching priority has several arguments that could be
-  // controlled here...
 
+  /// How often (in microseconds) are the pull suppliers polled by the
+  /// reactive pulling strategy.
   int reactive_pulling_period_;
-  // How often (in microseconds) are the pull suppliers polled by the
-  // reactive pulling strategy.
 
+  /// Use this ORB to locate global resources.
   const char *orbid_;
-  // Use this ORB to locate global resources.
 
+  /// The consumer and supplier control policies.
   int consumer_control_;
   int supplier_control_;
-  // The consumer and supplier control policies.
 
+  /// The consumer and supplier control periods in usecs
   int consumer_control_period_;
   int supplier_control_period_;
-  // The consumer and supplier control periods in usecs
 };
 
 #if defined (__ACE_INLINE__)
