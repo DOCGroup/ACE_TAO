@@ -140,7 +140,7 @@ Notify_Test_Updates_Client::run_test (CORBA::Environment &ACE_TRY_ENV)
   added.length (0);
   removed.length (update_count);
 
-  for (int i = 0; i < update_count; ++i)
+  for (i = 0; i < update_count; ++i)
     {
       ACE_OS::sprintf (update_test_buf, "%s_%d", DOMAIN, i);
       removed[i].domain_name =  CORBA::string_dup (update_test_buf);
