@@ -14,9 +14,9 @@ Mon Jul  8 11:05:44 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  deprecated use.  On feedback from Craig Rodrigues
 	  <crodrigu@bbn.com> who also reported this warning, fixed this by
 	  copying the const char * with ACE_OS::strdup ().  The alternate
-	  approach by Balachandran Natarajan <bala@cs.wustl.edu> of making an
-	  explicit cast and declaring ior_output_file_ as static seemed a
-	  bit less elegant.
+	  approach by Balachandran Natarajan <bala@cs.wustl.edu> of making
+	  an explicit cast and declaring ior_output_file_ as static char *
+	  seemed a little inelegant.
 
 Mon Jul  8 10:59:41 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
