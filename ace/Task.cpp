@@ -67,7 +67,7 @@ ACE_Task_Base::activate (long flags,
                          ACE_Task_Base *task,
                          ACE_hthread_t thread_handles[],
                          void *stack[],
-                         size_t stack_size[]);
+                         size_t stack_size[])
 {
   ACE_TRACE ("ACE_Task_Base::activate");
 
