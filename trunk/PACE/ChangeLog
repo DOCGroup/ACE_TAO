@@ -1,3 +1,17 @@
+Sun May 13 14:18:34 2001  Luther J Baker  <luther@cs.wustl.edu>
+
+	* docs/index.html:
+	* docs/overview.html:
+	* docs/legend.html:
+	* docs/todo.html:	
+	* docs/PACE_POSIX_support.txt:
+
+	  Superfluous files removed.
+
+	* docs/README:	
+
+	  Added identification line of text.
+
 Mon Apr 23 10:43:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * pace/config/compiler.h:
