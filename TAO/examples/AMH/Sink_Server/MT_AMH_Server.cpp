@@ -3,6 +3,7 @@
 //
 
 #include "MT_AMH_Server.h"
+#include "tao/Strategies/advanced_resource.h"
 
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"

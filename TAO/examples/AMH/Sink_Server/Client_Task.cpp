@@ -3,6 +3,7 @@
 //
 
 #include "Client_Task.h"
+#include "tao/Strategies/advanced_resource.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
