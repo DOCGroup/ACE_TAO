@@ -54,8 +54,8 @@ foreach $o (@opts)
   name_server ();
 
   sleep $sleeptime;
-  print "\n";
-  print "          ".$comments[$test_number];
+  print STDERR "\n";
+  print STDERR "          ".$comments[$test_number];
 
   client ($o);
 
