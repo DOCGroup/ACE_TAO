@@ -4,7 +4,6 @@
 project: property, naming, qos {
   after     += AV
   libs      += TAO_AV
-  comps     += AV
   tagchecks += AV
 }
 

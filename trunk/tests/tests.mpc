@@ -882,9 +882,8 @@ project(Upgradable RW Test) : acetest {
 }
 
 project(Naming Test) : acetest {
-  exename  = Naming_Test
-  compname = --ace
-  comps   += Other
+  exename   = Naming_Test
+  requires += ace_other
 
   Source_Files {
     Naming_Test.cpp
@@ -892,9 +891,8 @@ project(Naming Test) : acetest {
 }
 
 project(Thread Pool Reactor Test) : acetest {
-  exename  = Thread_Pool_Reactor_Test
-  compname = --ace
-  comps   += Other
+  exename   = Thread_Pool_Reactor_Test
+  requires += ace_other
 
   Source_Files {
     Thread_Pool_Reactor_Test.cpp
@@ -902,9 +900,8 @@ project(Thread Pool Reactor Test) : acetest {
 }
 
 project(Thread Pool Reactor Resume Test) : acetest {
-  exename  = Thread_Pool_Reactor_Resume_Test
-  compname = --ace
-  comps   += Other
+  exename   = Thread_Pool_Reactor_Resume_Test
+  requires += ace_other
 
   Source_Files {
     Thread_Pool_Reactor_Resume_Test.cpp
@@ -912,9 +909,8 @@ project(Thread Pool Reactor Resume Test) : acetest {
 }
 
 project(XtReactor Test) : acetest {
-  exename  = XtReactor_Test
-  compname = --ace
-  comps   += Other
+  exename   = XtReactor_Test
+  requires += ace_other
 
   Source_Files {
     XtReactor_Test.cpp
@@ -922,9 +918,8 @@ project(XtReactor Test) : acetest {
 }
 
 project(FlReactor Test) : acetest {
-  exename  = FlReactor_Test
-  compname = --ace
-  comps   += Other
+  exename   = FlReactor_Test
+  requires += ace_other
 
   Source_Files {
     FlReactor_Test.cpp
@@ -932,9 +927,8 @@ project(FlReactor Test) : acetest {
 }
 
 project(TkReactor Test) : acetest {
-  exename  = TkReactor_Test
-  compname = --ace
-  comps   += Other
+  exename   = TkReactor_Test
+  requires += ace_other
 
   Source_Files {
     TkReactor_Test.cpp
@@ -942,9 +936,8 @@ project(TkReactor Test) : acetest {
 }
 
 project(Codecs Test) : acetest {
-  exename  = Codecs_Test
-  compname = --ace
-  comps   += Codecs
+  exename   = Codecs_Test
+  requires += ace_codecs
 
   Source_Files {
     Codecs_Test.cpp
@@ -952,9 +945,8 @@ project(Codecs Test) : acetest {
 }
 
 project(Tokens Test) : acetest {
-  exename  = Tokens_Test
-  compname = --ace
-  comps   += Token
+  exename   = Tokens_Test
+  requires += ace_token
 
   Source_Files {
     Tokens_Test.cpp

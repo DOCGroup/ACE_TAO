@@ -781,6 +781,14 @@ ifndef wfmo
   wfmo = 0
 endif
 
+# In MPC, these are now features that are enabled by default.
+ace_other     ?= 1
+ace_codecs    ?= 1
+ace_token     ?= 1
+ace_svcconf   ?= 1
+ace_uuid      ?= 1
+ace_filecahce ?= 1
+
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
 #----------------------------------------------------------------------------

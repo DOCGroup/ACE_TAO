@@ -4,6 +4,5 @@
 project : ftorbutils, rtevent, naming {
   after     += FtRtEvent
   libs      += TAO_FtRtEvent
-  comps     += FtRtEvent
   tagchecks += FtRtEvent
 }

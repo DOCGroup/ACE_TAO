@@ -1,13 +1,79 @@
+Thu Jan 22 12:19:42 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+        * ace/codecs.mpb:
+        * ace/filecache.mpb:
+        * ace/other.mpb:
+        * ace/svcconf.mpb:
+        * ace/token.mpb:
+        * ace/uuid.mpb:
+
+          Split some of the components into features that are enabled by
+          default.  The use of comps and compname are no longer supported.
+
+        * bin/MakeProjectCreator/README:
+
+          Removed descriptions of comps and compname.  They have been
+          replaced by features specific to the gnuace type.
+
+        * bin/MakeProjectCreator/config/avstreams.mpb:
+        * bin/MakeProjectCreator/config/concurrency.mpb:
+        * bin/MakeProjectCreator/config/event.mpb:
+        * bin/MakeProjectCreator/config/ftclientorb.mpb:
+        * bin/MakeProjectCreator/config/ftorbutils.mpb:
+        * bin/MakeProjectCreator/config/ftrtevent.mpb:
+        * bin/MakeProjectCreator/config/ftrteventclient.mpb:
+        * bin/MakeProjectCreator/config/ftserverorb.mpb:
+        * bin/MakeProjectCreator/config/ifrservice.mpb:
+        * bin/MakeProjectCreator/config/lifecycle.mpb:
+        * bin/MakeProjectCreator/config/loadbalancing.mpb:
+        * bin/MakeProjectCreator/config/naming.mpb:
+        * bin/MakeProjectCreator/config/notification.mpb:
+        * bin/MakeProjectCreator/config/orbsvcsexe.mpb:
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
+        * bin/MakeProjectCreator/config/portablegroup.mpb:
+        * bin/MakeProjectCreator/config/property.mpb:
+        * bin/MakeProjectCreator/config/rtcorbaevent.mpb:
+        * bin/MakeProjectCreator/config/rtcosscheduling.mpb:
+        * bin/MakeProjectCreator/config/rtevent.mpb:
+        * bin/MakeProjectCreator/config/rtoldevent.mpb:
+        * bin/MakeProjectCreator/config/rtsched.mpb:
+        * bin/MakeProjectCreator/config/rtschedevent.mpb:
+        * bin/MakeProjectCreator/config/security.mpb:
+        * bin/MakeProjectCreator/config/ssliop.mpb:
+        * bin/MakeProjectCreator/config/time.mpb:
+        * bin/MakeProjectCreator/config/trading.mpb:
+
+          Removed the use of comps and compname.
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Removed code specific to comps and compname.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Removed comps and compname related code and replaced it with a
+          more generic mechanism.
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Set some ace related features to 1 by default.
+
+        * tests/tests.mpc:
+
+          Use feature requirement instead of comps.
+
 Thu Jan 22 17:23:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/APG/Config/HASTATUS_export.h:
+        * examples/APG/Config/HASTATUS_export.h:
           Added check for ACE_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
 Thu Jan 22 17:16:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/JAWS/server/server.mpc:
-	  Added missing cpp extension to main
+        * apps/JAWS/server/server.mpc:
+          Added missing cpp extension to main
 
 Thu Jan 22 09:47:04 2004  Chad Elliott  <elliott_c@ociweb.com>
 
