@@ -27,6 +27,13 @@
       Recently Completed Work:
 
       <BLOCKQUOTE>
+	<li>Use <code>truss</code> to verify for <a
+	href="mailto:PAUL.G.WEHLAGE@cdev.com">Paul Wehlage</a> that
+	TAO really uses <code>select</code> vs. <code>recv</code> for
+	<b>-R</b> vs. <b>-T</b>.</li>
+
+	<li>Rename <code>boa.*</code> to <code>poa.*</code>.</li>
+
 	<LI>Rename following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
 	&amp;&nbsp;orbobj.* -> corba_orb.*.</LI>
 
@@ -80,13 +87,6 @@
       Critical Work:
 
       <BLOCKQUOTE>
-	<li>Use <code>truss</code> to verify for <a
-	href="mailto:PAUL.G.WEHLAGE@cdev.com">Paul Wehlage</a> that
-	TAO really uses <code>select</code> vs. <code>recv</code> for
-	<b>-R</b> vs. <b>-T</b>.</li>
-
-	<li>Rename <code>boa.*</code> to <code>poa.*</code>.</li>
-
 	<LI>Implement <code>CORBA_ORB::shutdown()</code> as a manner
 	in which a thread of control can request that
 	<code>CORBA_ORB::run()</code> should return and no longer
