@@ -28,6 +28,11 @@ Sat Jun 28 08:27:27 1997  David L. Levine  <levine@cs.wustl.edu>
 	  "result" if ! ACE_HAS_STREAM_PIPES, because it's not used in
 	  that case.
 
+	* ace/config-vxworks5.x-g++.h: added ACE_LACKS_IOSTREAM_FX,
+	  ACE_LACKS_LINEBUFFERED_STREAMBUF, and ACE_LACKS_SIGNED_CHAR.
+
+	* ace/IOStream_T.h (ipfx): comment out unused variable "need".
+
 	* platform_vxworks5.2_g++.GNU: added -Wall now that the ACE library
 	  builds cleanly with it.
 
