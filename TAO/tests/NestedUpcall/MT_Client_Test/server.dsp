@@ -134,7 +134,7 @@ SOURCE=.\MT_Client_Test.idl
 !IF  "$(CFG)" == "Nested Upcall MT_Client Server - Win32 Release"
 
 USERDEP__MT_CL="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL compiler
+# Begin Custom Build - Invoking TAO IDL Compiler
 InputPath=.\MT_Client_Test.idl
 InputName=MT_Client_Test
 
