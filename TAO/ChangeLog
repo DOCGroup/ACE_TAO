@@ -1,3 +1,14 @@
+Sun Mar 28 18:13:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+	  Borland C++ 6 Update Pack 4 and earlier give a warning about
+          comparing signed and unsigned values in the
+          minimum_polulate() and initial_populate() warnings.
+          The comparison uses a unsigned long and unsigned short and it
+          seems that the compiler promotes the unsigned short of an int
+          and this then gives the warning. Just for Borland disabled the
+          warning in this file.
+
 Sun Mar 28 15:57:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/Notify_lib.mpc:
