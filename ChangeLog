@@ -1,3 +1,17 @@
+Wed Jan 24 14:44:12 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/FILE.cpp:
+	* ace/Filecache.cpp:
+	* ace/Filecache.h:
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/OS.cpp: Changed the signature of <stat>, <fstat>, and
+	  <lstat> to use ACE_stat instead of "struct stat".  Also changed
+	  to use _fstat and _stat on win32 instead of <fstat> and <stat>
+	  directly.  Also replaced several use of "struct stat" to
+	  ACE_stat.  Thanks to Mike Anderson <manderson@sonusnet.com> for
+	  reporting this.  [Bug 762]
+
 Wed Jan 24 16:13:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS_Dirent.cpp: Fixed a bug in the readdir_emulation() method.
@@ -5,8 +19,8 @@ Wed Jan 24 16:13:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Connector.{h,cpp}: Added a new connector() accessor to
 	  return the underlying ACE_PEER_CONNECTOR.  Thanks to Pedro
- 	  Brandao <pbrandao@inescn.pt> for suggesting this.	
-  
+ 	  Brandao <pbrandao@inescn.pt> for suggesting this.
+
 Wed Jan 24 10:17:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Makefile:

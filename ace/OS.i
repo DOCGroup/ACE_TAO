@@ -619,7 +619,7 @@ extern "C" char *mktemp (char *);
 # endif /* VXWORKS */
 
 ACE_INLINE int
-ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
+ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::fstat");
 #if defined (ACE_HAS_PACE)
@@ -637,13 +637,13 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
     // causes compile and runtime problems.
     ACE_OSCALL_RETURN (::_fxstat (_STAT_VER, handle, stp), int, -1);
 # else  /* !ACE_HAS_X86_STAT_MACROS */
-    ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
+    ACE_OSCALL_RETURN (::_fstat (handle, stp), int, -1);
 # endif /* !ACE_HAS_X86_STAT_MACROS */
 #endif /* defined (ACE_HAS_PACE) */
 }
 
 ACE_INLINE int
-ACE_OS::lstat (const char *file, struct stat *stp)
+ACE_OS::lstat (const char *file, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::lstat");
 # if defined (ACE_LACKS_LSTAT) || \
@@ -657,7 +657,7 @@ ACE_OS::lstat (const char *file, struct stat *stp)
    // wrapper for _lxstat().
   ACE_OSCALL_RETURN (::_lxstat (_STAT_VER, file, stp), int, -1);
 #else /* !ACE_HAS_X86_STAT_MACROS */
-  ACE_OSCALL_RETURN (::lstat (file, stp), int, -1);
+  ACE_OSCALL_RETURN (::_lstat (file, stp), int, -1);
 #endif /* !ACE_HAS_X86_STAT_MACROS */
 # endif /* VXWORKS */
 }
@@ -878,7 +878,7 @@ ACE_OS::umask (mode_t cmask)
 }
 
 ACE_INLINE int
-ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
+ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::fstat");
 #if defined (ACE_HAS_PACE)
@@ -915,7 +915,7 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
   int retval = -1;
   int fd = ::_open_osfhandle ((long) handle, 0);
   if (fd != -1)
-      retval = ::_fstat (fd, (struct _stat *) stp);
+      retval = ::_fstat (fd, stp);
 
   ::_close (fd);
   // Remember to close the file handle.
@@ -1014,7 +1014,7 @@ ACE_OS::gettimeofday (void)
 }
 
 ACE_INLINE int
-ACE_OS::stat (const ACE_TCHAR *file, struct stat *stp)
+ACE_OS::stat (const ACE_TCHAR *file, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::stat");
 #if defined (ACE_HAS_PACE)
@@ -1059,7 +1059,7 @@ ACE_OS::stat (const ACE_TCHAR *file, struct stat *stp)
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
 #else /* VXWORKS */
-  ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
+  ACE_OSCALL_RETURN (::_stat (file, stp), int, -1);
 #endif /* ACE_HAS_PACE */
 }
 

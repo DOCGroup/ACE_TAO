@@ -4609,7 +4609,7 @@ ACE_OS::mktemp (ACE_TCHAR *s)
       else
         {
           ACE_TCHAR unique_letter = ACE_LIB_TEXT ('a');
-          struct stat sb;
+          ACE_stat sb;
 
           // Find an unused filename for this process.  It is assumed
           // that the user will open the file immediately after

@@ -18,13 +18,13 @@ ACE_RCSID(ace, Filecache, "$Id$")
 #if defined (ACE_WIN32)
 // See if you can get rid of some of these.
 #define READ_FLAGS (FILE_FLAG_SEQUENTIAL_SCAN | \
-		    FILE_FLAG_OVERLAPPED | \
-		    O_RDONLY)
+                    FILE_FLAG_OVERLAPPED | \
+                    O_RDONLY)
 // static const int RCOPY_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
 //                                 O_RDONLY);
 #define WRITE_FLAGS (FILE_FLAG_SEQUENTIAL_SCAN | \
-		     FILE_FLAG_OVERLAPPED | \
-		     O_RDWR | O_CREAT | O_TRUNC)
+                     FILE_FLAG_OVERLAPPED | \
+                     O_RDWR | O_CREAT | O_TRUNC)
 // static const int WCOPY_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
 //                                 O_RDWR | O_CREAT | O_TRUNC);
 #else
@@ -720,7 +720,7 @@ ACE_Filecache_Object::update (void) const
 {
   // The existence of the object means a read lock is being held.
   int result;
-  struct stat statbuf;
+  ACE_stat statbuf;
 
   if (ACE_OS::stat (this->filename_, &statbuf) == -1)
     result = 1;

@@ -5390,7 +5390,7 @@ public:
 # endif /* fdopen */
   static FILE *fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode);
   static ACE_TCHAR *fgets (ACE_TCHAR *buf, int size, FILE *fp);
-  static int stat (const ACE_TCHAR *file, struct stat *);
+  static int stat (const ACE_TCHAR *file, ACE_stat *);
   static int truncate (const ACE_TCHAR *filename, off_t length);
 
   static int fprintf (FILE *fp, const char *format, ...);
@@ -5429,9 +5429,9 @@ public:
                     long offset,
                     int ptrname);
   static int fstat (ACE_HANDLE,
-                    struct stat *);
+                    ACE_stat *);
   static int lstat (const char *,
-                    struct stat *);
+                    ACE_stat *);
   static int ftruncate (ACE_HANDLE,
                         off_t);
   static size_t fwrite (const void *ptr,
