@@ -196,8 +196,8 @@ public:
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_TPQ_Entry &))
+  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &);
+  void operator= (const ACE_TSS_TPQ_Entry &);
   // Private: should not be used
 
   // = These are passed to the constructor of ACE_TPQ_Entry in

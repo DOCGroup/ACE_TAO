@@ -124,8 +124,8 @@ public: // Should be protected:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task &operator= (const ACE_Task<ACE_SYNCH_USE> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Task<ACE_SYNCH_USE> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE> &));
 };
 
 #if defined (__ACE_INLINE__)

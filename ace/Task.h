@@ -195,8 +195,8 @@ public:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Base &operator= (const ACE_Task_Base &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Base (const ACE_Task_Base &))
+  ACE_Task_Base &operator= (const ACE_Task_Base &);
+  ACE_Task_Base (const ACE_Task_Base &);
 };
 
 #if defined (__ACE_INLINE__)
