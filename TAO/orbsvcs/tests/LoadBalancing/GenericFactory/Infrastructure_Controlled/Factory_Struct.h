@@ -5,7 +5,7 @@
 #ifndef FACTORY_STRUCT_H
 #define FACTORY_STRUCT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -29,6 +29,6 @@ struct Factory_Node
 typedef ACE_Array_Base<Factory_Node> Factory_Struct;
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* FACTORY_STRUCT_H */

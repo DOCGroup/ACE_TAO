@@ -1,3 +1,11 @@
+Wed Aug 13 10:36:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Map.h: 
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Struct.h: 
+
+	  Fixed fuzz errors.
+	  
 Wed Aug 13 10:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bench/wire:

@@ -5,7 +5,7 @@
 #ifndef FACTORY_MAP_H
 #define FACTORY_MAP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,4 +23,5 @@ typedef ACE_Hash_Map_Manager_Ex<
   ACE_Null_Mutex> Factory_Map;
 
 
+#include /**/ "ace/post.h"
 #endif /* FACTORY_MAP_H */
