@@ -9,16 +9,21 @@ ACE_RCSID(MT_Client, client, "$Id$")
 const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
+int debug = 0;
+
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:");
+  ACE_Get_Opt get_opts (argc, argv, "dk:n:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'd':
+        debug = 1;
+        break;
       case 'k':
         ior = get_opts.optarg;
         break;
@@ -32,6 +37,7 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
+                           "-d "
                            "-k <ior> "
                            "-n <nthreads> "
                            "-i <niterations> "
@@ -58,21 +64,40 @@ public:
   virtual int svc (void);
   // The thread entry point.
 
-private:
+  // private:
   Simple_Server_var server_;
   // The server.
 
   int niterations_;
   // The number of iterations on each client thread.
+
+  AMI_Simple_Server_Handler_var the_handler_;
+  // Var for ReplyHandler object.
 };
 
 class Handler : public POA_AMI_Simple_Server_Handler
 {
 public:
   Handler (void) {};
+
+  void get_put_number (CORBA::Long result,
+                       CORBA::Long out_l,
+                       CORBA::Environment&)
+    {
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P | %t) : Callback method called: result <%d>, out_arg <%d>\n",
+                      result, 
+                      out_l));
+        }
+    };
  
   ~Handler (void) {};
 };
+
+// ReplyHandler.
+Handler handler;
 
 int
 main (int argc, char *argv[])
@@ -129,9 +154,20 @@ main (int argc, char *argv[])
                            "Cannot activate client threads\n"),
                           1);
 
+      // Main thread collects replies. It needs to collect 
+      // <nthreads*niterations> replies.
+      size_t number_of_replies = nthreads * niterations;
+      
+      while (orb->work_pending () && number_of_replies--)
+        {
+          orb->perform_work ();
+        }
+
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
+
+      client.server_->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -151,6 +187,7 @@ Client::Client (Simple_Server_ptr server,
   :  server_ (Simple_Server::_duplicate (server)),
      niterations_ (niterations)
 {
+  the_handler_ = handler._this (/* ACE_TRY_ENV */);
 }
 
 int
@@ -168,26 +205,21 @@ Client::svc (void)
       ACE_TRY_CHECK;
 #endif
 
-      Handler handler;
-      AMI_Simple_Server_Handler_var the_handler =
-        handler._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::Long number = 0;
+      CORBA::Long number = 931232;
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          server_->sendc_get_number (the_handler.in (),
-                                     ACE_TRY_ENV);
+          server_->sendc_get_put_number (the_handler_.in (),
+                                         number,
+                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          if (TAO_debug_level > 0 && i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
-
-      number = server_->get_number (ACE_TRY_ENV);
-      
-      ACE_DEBUG ((LM_DEBUG, "(%P | %t) get_number = %d\n", number));
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P | %t):<%d> Asynchronous methods issued\n",
+                      niterations));
+        }
     }
   ACE_CATCHANY
     {
