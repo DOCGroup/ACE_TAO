@@ -277,6 +277,9 @@ public:
                                CORBA::Boolean release);
   // constructor from address of an element
 
+  TAO_SeqElem_WString_Manager (const TAO_SeqElem_WString_Manager &);
+  // copy constructor
+
   ~TAO_SeqElem_WString_Manager (void);
   // destructor
 
@@ -321,9 +324,6 @@ private:
 
   TAO_SeqElem_WString_Manager (void);
   // default ctor
-
-  TAO_SeqElem_WString_Manager (const TAO_SeqElem_WString_Manager &);
-  // copy constructor
 
 };
 
