@@ -27,7 +27,7 @@ TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (void)
 }
 
 template <class T> ACE_INLINE T *
-TAO_Unbounded_Sequence<T>::ptr (void) const
+TAO_Unbounded_Sequence<T>::buffer (void) const
 {
   return (T *) this->buffer_;
 }
@@ -81,7 +81,7 @@ TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 // ***************************************************
 
 template <class T, CORBA::ULong MAX> ACE_INLINE T *
-TAO_Bounded_Sequence<T, MAX>::ptr (void) const
+TAO_Bounded_Sequence<T, MAX>::buffer (void) const
 {
   return (T *) this->buffer_;
 }
