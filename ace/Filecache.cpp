@@ -6,8 +6,8 @@
 
 ACE_RCSID(ace, Filecache, "$Id$")
 
-#if defined (__BORLANDC__) //VSB
-// Third parameter will be ignored in ACE_OS::open
+#if defined (ACE_WIN32)
+// Specifies no sharing flags.
 #define R_MASK 0
 #define W_MASK 0
 #else

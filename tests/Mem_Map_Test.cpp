@@ -67,7 +67,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 
   ACE_HANDLE file_handle = ACE_OS::open (filename,
                                          O_RDWR | O_CREAT | O_TRUNC,
-                                         0666);
+                                         ACE_DEFAULT_FILE_PERMS);
 
   if (file_handle  == ACE_INVALID_HANDLE)
     {
@@ -146,7 +146,7 @@ main (int, ACE_TCHAR *[])
   // Now create a temporary file for intermediate processing
   ACE_HANDLE temp_file_handle = ACE_OS::open (temp_file1,
                                               O_RDWR | O_TRUNC | O_CREAT,
-                                              0666);
+                                              ACE_DEFAULT_FILE_PERMS);
 
   if (temp_file_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Open failed\n")), -1);
@@ -167,7 +167,8 @@ main (int, ACE_TCHAR *[])
 
   if ((temp_file_handle = ACE_OS::open (temp_file2,
                                         O_RDWR | O_TRUNC | O_CREAT,
-                                        0666)) == ACE_INVALID_HANDLE)
+                                        ACE_DEFAULT_FILE_PERMS))
+               == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Open failed\n")), -1);
 
   // Now reverse the temporary file and write everything to the second
