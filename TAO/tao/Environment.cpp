@@ -127,13 +127,7 @@ CORBA_Environment::default_environment ()
   TAO_ORB_Core_instance ()->default_environment ()->clear ();
 #endif /* TAO_HAS_EXCEPTIONS */
 
-  return *TAO_ORB_Core_instance ()->default_environment ();
-}
-
-CORBA_Environment&
-CORBA::default_environment ()
-{
-  return CORBA_Environment::default_environment ();
+  return CORBA::default_environment ();
 }
 
 // Convenience -- say if the exception is a system exception or not.
