@@ -780,9 +780,10 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
       //
       // Both will result in us returning -1 and this connection getting closed
       //
-      ACE_DEBUG ((LM_WARNING,
-                  "Client_Connection_Handler::handle_input: closing connection on fd %d\n",
-                  this->peer().get_handle ()));
+      if (TAO_orbdebug)
+        ACE_DEBUG ((LM_WARNING,
+                    "Client_Connection_Handler::handle_input: closing connection on fd %d\n",
+                    this->peer().get_handle ()));
       break;
 
     case 1:
