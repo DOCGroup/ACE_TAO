@@ -194,10 +194,13 @@ void Oid::init_value(const SmiLPOID srcOid, size_t len)
 
 void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
 {
+  if (smival.value.oid.ptr)
+    delete [] smival.value.oid.ptr;
+
   ACE_NEW(smival.value.oid.ptr, SmiUINT32[ oid_len]);
   ACE_OS::memcpy((SmiLPBYTE) smival.value.oid.ptr,
 		 (SmiLPBYTE) raw_oid,
-		 (size_t) (oid_len*sizeof(SmiUINT32)));
+		 (size_t) (oid_len * sizeof(SmiUINT32)));
   smival.value.oid.len = oid_len;
 }
 
