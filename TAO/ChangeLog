@@ -1,8 +1,14 @@
+Thu Aug 26 22:46:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Fixed tipo I introduced when adding Shutdown_Utilities.cpp.
+
 Thu Aug 26 22:54:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/GIOP.pidl:
-        
-          Added missing #ifndef guard around the file. With recent 
+
+          Added missing #ifndef guard around the file. With recent
           changes that have tightened up redefinition checking in
           reopened modules, we were getting a redefinition error
           from GIOP.pidl being included in FT_CORBA_ORB.idl by
@@ -21,7 +27,7 @@ Thu Aug 26 22:07:30 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
         * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
-        
+
           Removed the overridden visit_scope() method. It does
           nothing different from the be_visitor_scope base class
           method. This closes [BUGID:1882].
