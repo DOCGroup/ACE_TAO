@@ -99,17 +99,6 @@ namespace TAO
           TAO_Root_POA::imr_client_adapter_name ()
         );
 
-      if (adapter == 0)
-        {
-          ACE_Service_Config::process_directive (
-            ACE_TEXT("dynamic ImR_Client_Adapter Service_Object *")
-            ACE_TEXT("TAO_ImR_Client:_make_ImR_Client_Adapter_Impl()"));
-
-          adapter =
-            ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-              TAO_Root_POA::imr_client_adapter_name ());
-        }
-
       if (adapter != 0)
         {
           adapter->imr_notify_shutdown (this->poa_ ACE_ENV_ARG_PARAMETER);
