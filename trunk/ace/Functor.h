@@ -115,77 +115,60 @@ public:
   // Simply returns t
 };
 
+
+// @@ ADD HASHES FOR ACE TYPES
+
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<short>
+class ACE_Export ACE_Hash<ACE_INT16>
 {
   // = TITLE
-  //     Function object for hashing a short
+  //     Function object for hashing a 16-bit signed number
 public:
-  u_long operator () (short t) const;
+  u_long operator () (ACE_INT16 t) const;
   // Simply returns t
 };
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<unsigned short>
+class ACE_Export ACE_Hash<ACE_UINT16>
 {
   // = TITLE
-  //     Function object for hashing an unsigned short
+  //     Function object for hashing a 16-bit unsigned number
 public:
-  u_long operator () (unsigned short t) const;
+  u_long operator () (ACE_UINT16 t) const;
   // Simply returns t
 };
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<int>
+class ACE_Export ACE_Hash<ACE_INT32>
 {
   // = TITLE
-  //     Function object for hashing an int
+  //     Function object for hashing a 32-bit signed number
 public:
-  u_long operator () (int t) const;
+  u_long operator () (ACE_INT32 t) const;
   // Simply returns t
 };
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<unsigned int>
+class ACE_Export ACE_Hash<ACE_UINT32>
 {
   // = TITLE
-  //     Function object for hashing an unsigned int
+  //     Function object for hashing a 32-bit unsigned number
 public:
-  u_long operator () (unsigned int t) const;
+  u_long operator () (ACE_UINT32 t) const;
   // Simply returns t
 };
 
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<long>
-{
-  // = TITLE
-  //     Function object for hashing a long
-public:
-  u_long operator () (long t) const;
-  // Simply returns t
-};
-
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<unsigned long>
-{
-  // = TITLE
-  //     Function object for hashing an unsigned long
-public:
-  u_long operator () (unsigned long t) const;
-  // Simply returns t
-};
-
-#if ACE_SIZEOF_LONG != 8
 ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<ACE_UINT64>
 {
   // = TITLE
-  //     Function object for hashing an unsigned long
+  //     Function object for hashing a 64-bit unsigned number
 public:
   u_long operator () (ACE_UINT64 t) const;
   // Simply returns t
 };
-#endif /* ACE_SIZEOF_LONG != 8 */
+
+// @@ DONE ADDING HASHES FOR ACE TYPES
 
 ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<const char *>
