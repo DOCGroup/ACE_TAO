@@ -1,3 +1,10 @@
+Wed Apr 28 20:21:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch_T.h (class ACE_Anti_*_Guard): I had accidentally
+	  checked in the anti guard classes.  These are not needed since
+	  we decided to stick with the reverse lock class rather than the
+	  anti guard classes.
+
 Wed Apr 28 18:02:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Added a new macro called
