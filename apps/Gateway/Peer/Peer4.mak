@@ -14,7 +14,7 @@ CFG=Peer - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Peer.mak" CFG="Peer - Win32 Debug"
+!MESSAGE NMAKE /f "Peer4.mak" CFG="Peer - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -133,6 +133,7 @@ INTDIR=.\Peer_Debug
 ALL : "$(OUTDIR)\Peer.dll"
 
 CLEAN : 
+	-@erase "$(INTDIR)\Options.obj"
 	-@erase "$(INTDIR)\Peer.obj"
 	-@erase "$(INTDIR)\vc40.idb"
 	-@erase "$(INTDIR)\vc40.pdb"
@@ -197,6 +198,7 @@ LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  /pdb:"$(OUTDIR)/Peer.pdb" /debug /machine:I386 /out:"$(OUTDIR)/Peer.dll"\
  /implib:"$(OUTDIR)/Peer.lib" 
 LINK32_OBJS= \
+	"$(INTDIR)\Options.obj" \
 	"$(INTDIR)\Peer.obj"
 
 "$(OUTDIR)\Peer.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
@@ -218,7 +220,7 @@ LINK32_OBJS= \
 !IF  "$(CFG)" == "peerd - Win32 Debug"
 
 "Peer - Win32 Debug" : 
-   $(MAKE) /$(MAKEFLAGS) /F ".\Peer.mak" CFG="Peer - Win32 Debug" 
+   $(MAKE) /$(MAKEFLAGS) /F ".\Peer4.mak" CFG="Peer - Win32 Debug" 
 
 !ENDIF 
 
@@ -229,19 +231,27 @@ LINK32_OBJS= \
 SOURCE=.\peerd.cpp
 DEP_CPP_PEERD=\
 	"..\..\..\ace\config-win32.h"\
+	"..\Gateway\Event.h"\
+	".\Options.h"\
 	".\Peer.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\Basic_Types.h"\
+	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Connector.cpp"\
+	{$(INCLUDE)}"\ace\Connector.h"\
+	{$(INCLUDE)}"\ace\Connector.i"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
 	{$(INCLUDE)}"\ace\Containers.i"\
@@ -256,15 +266,13 @@ DEP_CPP_PEERD=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -274,6 +282,9 @@ DEP_CPP_PEERD=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -293,37 +304,41 @@ DEP_CPP_PEERD=\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
 	{$(INCLUDE)}"\ace\SOCK_IO.h"\
 	{$(INCLUDE)}"\ace\SOCK_IO.i"\
 	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -338,6 +353,7 @@ DEP_CPP_PEERD=\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
 	{$(INCLUDE)}"\ace\Task_T.cpp"\
@@ -348,23 +364,17 @@ DEP_CPP_PEERD=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	{$(INCLUDE)}"\sys\stat.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\peerd.obj" : $(SOURCE) $(DEP_CPP_PEERD) "$(INTDIR)"
@@ -383,6 +393,7 @@ SOURCE=.\Peer.cpp
 DEP_CPP_PEER_=\
 	"..\..\..\ace\config-win32.h"\
 	"..\Gateway\Event.h"\
+	".\Options.h"\
 	".\Peer.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
@@ -391,14 +402,17 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\Basic_Types.h"\
+	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Connector.cpp"\
+	{$(INCLUDE)}"\ace\Connector.h"\
+	{$(INCLUDE)}"\ace\Connector.i"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
 	{$(INCLUDE)}"\ace\Containers.i"\
@@ -409,21 +423,17 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
-	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Local_Tokens.h"\
-	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -433,6 +443,9 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -452,39 +465,41 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Pipe.h"\
-	{$(INCLUDE)}"\ace\Pipe.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\ReactorEx.h"\
-	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
 	{$(INCLUDE)}"\ace\SOCK_IO.h"\
 	{$(INCLUDE)}"\ace\SOCK_IO.i"\
 	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -499,6 +514,7 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
 	{$(INCLUDE)}"\ace\Task_T.cpp"\
@@ -509,26 +525,67 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Token.h"\
-	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	{$(INCLUDE)}"\sys\stat.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Peer.obj" : $(SOURCE) $(DEP_CPP_PEER_) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\Options.cpp
+DEP_CPP_OPTIO=\
+	"..\..\..\ace\config-win32.h"\
+	"..\Gateway\Event.h"\
+	".\Options.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\Basic_Types.h"\
+	{$(INCLUDE)}"\ace\Basic_Types.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\inc_user_config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	{$(INCLUDE)}"\sys\stat.h"\
+	{$(INCLUDE)}"\sys\types.h"\
+	
+
+"$(INTDIR)\Options.obj" : $(SOURCE) $(DEP_CPP_OPTIO) "$(INTDIR)"
 
 
 # End Source File
