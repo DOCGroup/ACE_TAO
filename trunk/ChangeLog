@@ -1,3 +1,15 @@
+Mon Mar 31 08:19:16 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Fixed a bug in the Microsoft related template files where the
+          installed executable would not be put in the install directory.
+          It was previously placed in a subdirectory of the install
+          directory.
+
 Mon Mar 31 15:51:54 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* tests/Unbounded_Set_Test.cpp:
@@ -79,14 +91,14 @@ Wed Mar 26 16:48:31 2003  Steve Huston  <shuston@riverace.com>
 
 Wed Mar 26 16:15:39 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* ace/Unbounded_Set.h: 
-	* ace/Unbounded_Set.cpp: 
-	* ace/Unbounded_Set.inl: 
-	* ace/Node.h: 
+	* ace/Unbounded_Set.h:
+	* ace/Unbounded_Set.cpp:
+	* ace/Unbounded_Set.inl:
+	* ace/Node.h:
 	* ace/Node.cpp:
 	* tests/Makefile:
 	* tests/Makefile.am:
-	* tests/Makefile.bor: 
+	* tests/Makefile.bor:
 
 	  Reverted changes to the above to position before changelog entry:
 	  Mon Mar 24 13:16:29 CET 2003  Oliver Kellog
@@ -97,7 +109,7 @@ Wed Mar 26 16:48:54 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 	
 	  Corrected signature of main program and inserted an
 	  ACE_START_TEST/ACE_END_TEST.  Thanks to Johnny Willemsen for
-	  suggesting this. 
+	  suggesting this.
 
 Wed Mar 26 11:33:15 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
