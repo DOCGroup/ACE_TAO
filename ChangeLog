@@ -1,8 +1,14 @@
+Mon Jul 30 13:41:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (ACE_Time_Value::FILETIME_to_timval_skew): Updated
+	  docuementation to better explain the meaning of this constant.
+	  Thanks to <mvitalo@sprynet.com> for motivating the change.
+
 Mon Jul 30 09:43:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.i (mutex_lock): Missing an argument to the ACE_OSCALL macro.
-	  Thanks to Bala for reporting this.	
-  
+	  Thanks to Bala for reporting this.
+
 Mon Jul 30 05:43:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Synch.h (ACE_Semaphore): Corrected the comment on
@@ -26,7 +32,7 @@ Sun Jul 29 19:03:56 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* ace/OS.{h,i}: Added support for ACE_OS::sema_wait(),
 	  ACE_OS::mutex_lock(), ACE_OS::thread_mutex_lock() that take
  	  ACE_Time_Value *.
-	
+
 	* ace/OS.i: For some odd reason the timeouts for the timed version
 	  of mutex_lock() were returning a random smattering of errnos.
   	  I've changed them to all be consistent with the
@@ -35,7 +41,7 @@ Sun Jul 29 19:03:56 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* ace/Synch.h: Updated the documentation of all the timed
 	  acquire() methods to explain what the various return values
  	  mean.
-	
+
 Sun Jul 29 22:10:40 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Service_Config_DLL.cpp:
@@ -81,7 +87,7 @@ Sun Jul 29 19:06:11 2001  Ossama Othman  <ossama@uci.edu>
 
 Sun Jul 29 10:50:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf_Lexer_Guard.cpp: 
+	* ace/Svc_Conf_Lexer_Guard.cpp:
 
 	  There is no longer any need to include "ace/Object_Manager.h"
 
@@ -163,7 +169,7 @@ Sat Jul 28 23:03:24 2001  Ossama Othman  <ossama@uci.edu>
 	  from a string instead of a pointer to "FILE."
 
 	  (ace_yydirective):
-	
+
 	  This global variable is no longer needed due to the fact that
 	  the new buffer stack implementation handles directives read from
 	  both a string and a file.
@@ -184,7 +190,7 @@ Sat Jul 28 23:03:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	  No need to deallocate the lexer buffer since the buffer stack
 	  implementation handles that.
-	
+
 	* ace/Svc_Conf_Lexer_Guard.h:
 	* ace/Svc_Conf_Lexer_Guard.cpp:
 
@@ -204,8 +210,8 @@ Sat Jul 28 23:03:24 2001  Ossama Othman  <ossama@uci.edu>
 Sat Jul 28 14:58:30 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Svc_Conf_l.cpp:
-  	* ace/Svc_Conf_y.cpp: Reran BYACC and FLEX on the Svc_Conf.l and 
-	  Svc_Conf.y files to regenerate them.  Thanks to Bala for 
+  	* ace/Svc_Conf_y.cpp: Reran BYACC and FLEX on the Svc_Conf.l and
+	  Svc_Conf.y files to regenerate them.  Thanks to Bala for
 	  motivating this.
 
 	* netsvcs/clients/Tokens/collection/Makefile,
@@ -219,7 +225,7 @@ Sat Jul 28 14:58:30 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  examples/Reactor/Ntalker/Makefile,
 	  examples/Shared_Malloc/Makefile,
 	  performance-tests/TCP/Makefile,
-	  performance-tests/UDP/Makefile: Removed the line 
+	  performance-tests/UDP/Makefile: Removed the line
 	  include $(ACE_ROOT)/include/makeinclude/rules.LIB.GNU
 	  so that these projects will build correctly on VxWorks with
 	  Make 3.79.1.  Thanks to Frank Wolf for reporting this.
