@@ -1,0 +1,35 @@
+/* -*- C++ -*- */
+// $Id$
+
+#if !defined (_CONSUMER_IDL)
+#define _CONSUMER_IDL
+
+module Callback_Quoter
+{
+
+  // = TITLE
+  // The Consumer interface is implemented by the consumer-client.
+  // The interface functions are called by the Supplier.
+
+  // Requested stock does not exist
+  exception Invalid_Stock {};
+
+  struct Info
+  {
+    string stock_name;
+    long value;
+  };
+
+
+  interface Consumer
+    {
+      // supplier sends data to the consumer.
+      void push (in Callback_Quoter::Info data);
+
+      // Called by the chat server before it goes away.
+      oneway void shutdown ();
+    };
+};
+
+
+#endif // _CONSUMER_IDL
