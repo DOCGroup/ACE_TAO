@@ -1,3 +1,18 @@
+Tue Nov  2 13:51:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ASNMP/asnmp/asn1.cpp:
+
+          Cast literal integer to u_long to match the type of the variable.
+
+        * ace/config-linux-common.h:
+
+          Check for __x86_64__ similarly to __ia64 to get rid of some build
+          warnings.
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+
+          Use size_t instead of int to match the size of void*.
+
 Tue Nov  2 10:15:01 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/SOCK_SEQPACK_SCTP_Test.cpp:
