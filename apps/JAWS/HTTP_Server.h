@@ -28,10 +28,15 @@ private:
   LOCK lock_;
 };
 
+#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+#define ONESHOT_SOCK_ACCEPTOR HTTP_SOCK_Acceptor
+#else /* TEMPLATES are broken */
+#define ONESHOT_SOCK_ACCEPTOR HTTP_SOCK_Acceptor, HTTP_SOCK_Acceptor::PEER_ADDR
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
 typedef LOCK_SOCK_Acceptor<ACE_Thread_Mutex> HTTP_SOCK_Acceptor;
 typedef ACE_Oneshot_Acceptor
-	<HTTP_Handler, HTTP_SOCK_Acceptor, HTTP_SOCK_Acceptor::PEER_ADDR>
-        HTTP_Acceptor;
+	<HTTP_Handler, ONESHOT_SOCK_ACCEPTOR> HTTP_Acceptor;
 
 class HTTP_Server : public ACE_Service_Object
 {
@@ -57,9 +62,6 @@ public:
   virtual int close (u_long flags = 0);
 
   virtual int svc (void);
-
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0) {return 0;}
-  // defining this is not required in the newer ACE
 
 private:
   HTTP_Acceptor &acceptor_;

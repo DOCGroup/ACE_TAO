@@ -2334,6 +2334,7 @@ public:
   static size_t fread (void *ptr, size_t size, size_t nelems, FILE
                        *fp); 
   static int fstat (ACE_HANDLE, struct stat *);
+  static int stat (const char *file, struct stat *);
   static int ftruncate (ACE_HANDLE, off_t);
   static size_t fwrite (const void *ptr, size_t size, size_t nitems,
                         FILE *fp); 
@@ -2670,6 +2671,7 @@ public:
 
   static int access (const wchar_t *path, int amode);
   static FILE *fopen (const wchar_t *filename, const wchar_t *mode);
+  static int stat (const wchar_t *file, struct stat *);
   static wchar_t *getenv (const wchar_t *symbol);
   static int system (const wchar_t *s);
   static int hostname (wchar_t *name, size_t maxnamelen);

@@ -89,6 +89,7 @@ public:
     current_ = i;
     return theList_[current_]->item_; }
 
+  /*
   void Isort()
   { unsigned long i = 0, j;
     while ((j = ++i) < count_)
@@ -96,6 +97,7 @@ public:
       while (j-- && (*x < *theList_[j]))
         theList_[j+1] = theList_[j];
       theList_[j+1] = x; } }
+  */
 
 protected:
   // = Protected Interfaces

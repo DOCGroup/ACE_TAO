@@ -30,6 +30,10 @@ HTTP_Handler::svc (void)
     this->peer().close();
     HTTP_VFS::close(handle);
   }
+  else if (result == -1) {
+    this->peer().close();
+    return -1;
+  }
   else {
     serve_result = this->serve_error(result);
     this->peer().close();
@@ -62,8 +66,8 @@ HTTP_Handler::parse_request (void)
   //  if (ACE_OS::select(handle+1, handle_set, 0, 0, (ACE_Time_Value *)0) == -1)
   //    return HTTP_Status_Code::STATUS_BAD_REQUEST;
 
-  while (this->sockgets(buf_, sizeof(buf_)) == 0)
-    ;
+  if (this->sockgets(buf_, sizeof(buf_)) == 0)
+    return -1;
 
   do {
 

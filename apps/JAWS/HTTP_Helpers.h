@@ -37,7 +37,7 @@ public:
   enum {MAX_STATUS_CODE=599};
 
 private:
-  static char * Reason[MAX_STATUS_CODE+1];
+  static const char * Reason[MAX_STATUS_CODE+1];
   static int instance_;
   static ACE_Thread_Mutex lock_;
 
