@@ -793,7 +793,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #elif defined (VXWORKS)
   // Type includes these options: SEM_Q_PRIORITY, SEM_Q_FIFO, SEM_DELETE_SAFE,
   // and SEM_INVERSION_SAFE that are currently outside of the ACE mutex model.
-  return (*m = ::semMCreate (type)) == NULL ? -1 : 0;
+  return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -3544,10 +3544,8 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
 #elif defined (VXWORKS)
   // second arg is a struct siginfo *, which we don't need (the selected
   // signal number is returned)
-  // third arg is timeout:  NULL means forever
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigtimedwait (set,
-                                                       (struct siginfo *) NULL,
-                                                       (struct timespec *) NULL),
+  // third arg is timeout:  0 means forever
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigtimedwait (set, 0, 0),
 				       ace_result_),
 		     int, -1);   // yes, the doc says -1, not ERROR
 #endif /* ACE_HAS_STHREADS */
@@ -5781,7 +5779,7 @@ ACE_OS::sleep (u_int seconds)
   // Initializer doesn't work with Green Hills 1.8.7
   rqtp.tv_sec = seconds;
   rqtp.tv_nsec = 0L;
-  ACE_OSCALL_RETURN (::nanosleep (&rqtp, (struct timespec *) NULL), int, -1);
+  ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
 #endif /* ACE_WIN32 */
