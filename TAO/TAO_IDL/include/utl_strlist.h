@@ -69,12 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_list.h"
 #include "ace/OS.h"
-
-// Needed to recognize ACE_OSTREAM_TYPE, and for BCB it's
-// not included in ace/OS.h, so we include it here.
-#if defined (__BORLANDC__)
-# include "ace/streams.h"
-#endif
+#include "ace/streams.h"
 
 class UTL_String;
 

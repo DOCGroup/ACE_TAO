@@ -1,6 +1,15 @@
+Mon Jul 21 11:41:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/include/utl_indenter.h:
+        * TAO_IDL/include/utl_strlist.h:
+
+	  Added include of ace/streams.h to each of these files, necessitated
+	  by changes of include structure in ACE.
+
 Mon Jul 21 07:19:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/CORBA_String.cpp: Include ace/string.h for getting it to
+	* tao/CORBA_String.cpp: Include ace/streams.h for getting it to
 	  compile properly.  Thanks to Jeff for reporting this.
 
 Sun Jul 20 14:02:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
