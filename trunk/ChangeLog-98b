@@ -5,6 +5,9 @@ Fri May 22 20:01:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i (ACE_IO_Vector::buffer): added static cast of new_buffer
           to char *.
 
+        * ace/OS.i (writev): changed return type from int to ssize_t to
+          match declaration in OS.h.
+
 Fri May 22 12:20:11 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace: Other parts of ACE were modified to use the new
