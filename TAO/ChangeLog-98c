@@ -1,3 +1,9 @@
+Mon Mar 30 17:59:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.i: Only _NOT_ specialize
+	  ACE_Hash_Addr<ACE_INET_Addr> when ACE needs to instantiate
+	  template explicitly and it is not inlined.  
+
 Mon Mar 30 13:13:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/Typecode.cpp:
