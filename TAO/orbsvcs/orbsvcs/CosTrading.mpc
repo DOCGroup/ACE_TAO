@@ -32,7 +32,7 @@ project(CosTrading) : orbsvcslib, core {
 }
 
 
-project(CosTrading_Skel) : orbsvcslib, core, trading {
+project(CosTrading_Skel) : orbsvcslib, core, trading, portableserver {
   sharedname   = TAO_CosTrading_Skel
   dynamicflags = TAO_TRADING_BUILD_DLL
 
