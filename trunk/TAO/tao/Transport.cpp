@@ -1402,35 +1402,37 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
           if (eh == 0)
             return -1;
 
-          // Get the reactor associated with the event handler
-          ACE_Reactor *reactor = eh->reactor ();
-          if (reactor == 0)
-            return -1;
-
-          if (TAO_debug_level > 0)
+          if (this->ws_->is_registered ())
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - Transport[%d]::notify to Reactor\n",
-                          this->id ()));
+              // Get the reactor associated with the event handler
+              ACE_Reactor *reactor = eh->reactor ();
+              if (reactor == 0)
+                return -1;
+
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) - Transport[%d]::notify to Reactor\n",
+                              this->id ()));
+                }
+
+              // Let the class know that it doesn't need to resume  the
+              // handle..
+              rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+
+              // Send a notification to the reactor...
+              int retval = reactor->notify (eh,
+                                            ACE_Event_Handler::READ_MASK);
+
+              if (retval < 0 && TAO_debug_level > 2)
+                {
+                  // @@todo: need to think about what is the action that
+                  // we can take when we get here.
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO (%P|%t) - Transport::process_queue_head ")
+                              ACE_TEXT ("notify to the reactor failed.. \n")));
+                }
             }
-
-          // Let the class know that it doesn't need to resume  the
-          // handle..
-          rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
-
-          // Send a notification to the reactor...
-          int retval = reactor->notify (eh,
-                                        ACE_Event_Handler::READ_MASK);
-
-          if (retval < 0 && TAO_debug_level > 2)
-            {
-              // @@todo: need to think about what is the action that
-              // we can take when we get here.
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Transport::process_queue_head ")
-                          ACE_TEXT ("notify to the reactor failed.. \n")));
-            }
-
         }
       else
         {
