@@ -1296,8 +1296,8 @@ namespace PortableInterceptor
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 
     virtual void tao_ft_interception_point (
-        PortableInterceptor::ServerRequestInfo_ptr ri,
-        CORBA::OctetSeq_out os
+        PortableInterceptor::ServerRequestInfo_ptr ,
+        CORBA::OctetSeq_out 
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
