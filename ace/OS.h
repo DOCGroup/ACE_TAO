@@ -382,11 +382,11 @@ typedef XDIR ACE_DIR;
 // Use pSOS semaphores, wrapped . . .
 typedef struct
 {
+  /// Semaphore handle.  This is allocated by pSOS.
   u_long sema_;
-  // Semaphore handle.  This is allocated by pSOS.
 
+  /// Name of the semaphore: really a 32 bit number to pSOS
   char name_[4];
-  // Name of the semaphore: really a 32 bit number to pSOS
 } ACE_sema_t;
 
 // Used for dynamic linking.
@@ -1153,9 +1153,14 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 # if defined (ACE_LACKS_SEMBUF_T)
 struct sembuf
 {
-  unsigned short sem_num; // semaphore #
-  short sem_op; // semaphore operation
-  short sem_flg; // operation flags
+  /// semaphore #
+  unsigned short sem_num;
+
+  /// semaphore operation
+  short sem_op;
+
+  /// operation flags
+  short sem_flg;
 };
 # endif /* ACE_LACKS_SEMBUF_T */
 
@@ -1173,8 +1178,10 @@ struct strrecvfd {};
 
 # if defined(__rtems__)
 struct iovec {
-  char *iov_base; // Base address.
-  size_t iov_len; // Length.
+  /// Base address.
+  char *iov_base;
+  /// Length.
+  size_t iov_len;
 };
 # endif
 
@@ -1217,14 +1224,14 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 
 typedef struct
 {
+  /// Pointer to semaphore handle.  This is allocated by ACE if we are
+  /// working with an unnamed POSIX semaphore or by the OS if we are
+  /// working with a named POSIX semaphore.
   pace_sem_t *sema_;
-  // Pointer to semaphore handle.  This is allocated by ACE if we are
-  // working with an unnamed POSIX semaphore or by the OS if we are
-  // working with a named POSIX semaphore.
 
+  /// Name of the semaphore (if this is non-NULL then this is a named
+  /// POSIX semaphore, else its an unnamed POSIX semaphore).
   char *name_;
-  // Name of the semaphore (if this is non-NULL then this is a named
-  // POSIX semaphore, else its an unnamed POSIX semaphore).
 } ACE_sema_t;
 
 # elif defined (ACE_HAS_POSIX_SEM)
@@ -1235,32 +1242,32 @@ typedef struct
 
 typedef struct
 {
+  /// Pointer to semaphore handle.  This is allocated by ACE if we are
+  /// working with an unnamed POSIX semaphore or by the OS if we are
+  /// working with a named POSIX semaphore.
   sem_t *sema_;
-  // Pointer to semaphore handle.  This is allocated by ACE if we are
-  // working with an unnamed POSIX semaphore or by the OS if we are
-  // working with a named POSIX semaphore.
 
+  /// Name of the semaphore (if this is non-NULL then this is a named
+  /// POSIX semaphore, else its an unnamed POSIX semaphore).
   char *name_;
-  // Name of the semaphore (if this is non-NULL then this is a named
-  // POSIX semaphore, else its an unnamed POSIX semaphore).
 
 #if defined (ACE_LACKS_NAMED_POSIX_SEM)
+  /// this->sema_ doesn't always get created dynamically if a platform
+  /// doesn't support named posix semaphores.  We use this flag to
+  /// remember if we need to delete <sema_> or not.
   int new_sema_;
-  // this->sema_ doesn't always get created dynamically if a platform
-  // doesn't support named posix semaphores.  We use this flag to
-  // remember if we need to delete <sema_> or not.
 #endif /* ACE_LACKS_NAMED_POSIX_SEM */
 } ACE_sema_t;
 # endif /* ACE_HAS_PACE && !ACE_WIN32 */
 
 struct cancel_state
 {
+  /// e.g., PTHREAD_CANCEL_ENABLE, PTHREAD_CANCEL_DISABLE,
+  /// PTHREAD_CANCELED.
   int cancelstate;
-  // e.g., PTHREAD_CANCEL_ENABLE, PTHREAD_CANCEL_DISABLE,
-  // PTHREAD_CANCELED.
 
+  /// e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
   int canceltype;
-  // e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
 };
 
 # if defined (ACE_HAS_WINCE)
@@ -1284,14 +1291,29 @@ typedef unsigned int dev_t;
 
 struct stat
 {
-    dev_t st_dev;             // always 0 on Windows platforms
-    dev_t st_rdev;            // always 0 on Windows platforms
-    unsigned short st_mode;   // file attribute
-    short st_nlink;           // number of hard links
-    ACE_Time_Value st_atime; // time of last access
-    ACE_Time_Value st_mtime; // time of last data modification
-    ACE_Time_Value st_ctime;  // time of creation
-    off_t st_size;           // file size, in bytes
+    /// always 0 on Windows platforms
+    dev_t st_dev;
+
+    /// always 0 on Windows platforms
+    dev_t st_rdev;
+
+    /// file attribute
+    unsigned short st_mode;
+
+    /// number of hard links
+    short st_nlink;
+
+    /// time of last access
+    ACE_Time_Value st_atime;
+
+    /// time of last data modification
+    ACE_Time_Value st_mtime;
+
+    /// time of creation
+    ACE_Time_Value st_ctime;
+
+    /// file size, in bytes
+    off_t st_size;
 
     // Following members do not have direct conversion in Window platforms.
 //    u_long st_blksize;        // optimal blocksize for I/O
@@ -1917,15 +1939,15 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 // Use VxWorks semaphores, wrapped ...
 typedef struct
 {
+  /// Semaphore handle.  This is allocated by VxWorks.
 #       if defined (ACE_HAS_PACE)
   pace_pthread_mutex_t sema_;
 #       else
   SEM_ID sema_;
 #       endif /* ACE_HAS_PACE */
-  // Semaphore handle.  This is allocated by VxWorks.
 
+  /// Name of the semaphore:  always NULL with VxWorks.
   char *name_;
-  // Name of the semaphore:  always NULL with VxWorks.
 } ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
 #     if defined (ACE_HAS_PACE)
@@ -1953,7 +1975,8 @@ typedef pace_pthread_mutex_t ACE_mutex_t;
 #     else
 typedef struct
 {
-  int type_; // Either USYNC_THREAD or USYNC_PROCESS
+  /// Either USYNC_THREAD or USYNC_PROCESS
+  int type_;
   union
   {
     HANDLE proc_mutex_;
@@ -2778,8 +2801,8 @@ typedef void (*ACE_SignalHandlerV)(...);
 struct shmaddr { };
 struct msqid_ds {};
 
-// Fake the UNIX rusage structure.  Perhaps we can add more to this
-// later on?
+/// Fake the UNIX rusage structure.  Perhaps we can add more to this
+/// later on?
 struct rusage
 {
   FILETIME ru_utime;
@@ -2947,12 +2970,14 @@ typedef DWORD ACE_exitcode;
 #   define MAXNAMLEN   _MAX_FNAME
 #   define EADDRINUSE WSAEADDRINUSE
 
-// The ordering of the fields in this struct is important.  It has to
-// match those in WSABUF.
+/// The ordering of the fields in this struct is important.  It has to
+/// match those in WSABUF.
 struct iovec
 {
-  size_t iov_len; // byte count to read/write
-  char *iov_base; // data to be read/written
+  /// byte count to read/write
+  size_t iov_len;
+  /// data to be read/written
+  char *iov_base;
 
   // WSABUF is a Winsock2-only type.
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -2962,20 +2987,20 @@ struct iovec
 
 struct msghdr
 {
+  /// optional address
   sockaddr * msg_name;
-  // optional address
 
+  /// size of address
   int msg_namelen;
-  // size of address
 
+  /// scatter/gather array
   iovec *msg_iov;
-  /* scatter/gather array */
 
+  /// # elements in msg_iov
   int msg_iovlen;
-  // # elements in msg_iov
 
+  /// access rights sent/received
   caddr_t msg_accrights;
-  // access rights sent/received
 
   int msg_accrightslen;
 };
@@ -4017,9 +4042,12 @@ typedef char ACE_PROTOENT_DATA[ACE_PROTOENT_DATA_SIZE];
 # if !defined (ACE_HAS_SEMUN) || (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED))
 union semun
 {
-  int val; // value for SETVAL
-  struct semid_ds *buf; // buffer for IPC_STAT & IPC_SET
-  u_short *array; // array for GETALL & SETALL
+  /// value for SETVAL
+  int val;
+  /// buffer for IPC_STAT & IPC_SET
+  struct semid_ds *buf;
+  /// array for GETALL & SETALL
+  u_short *array;
 };
 # endif /* !ACE_HAS_SEMUN || (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED)) */
 
@@ -4066,11 +4094,11 @@ struct ACE_OS_Export siginfo_t
   siginfo_t (ACE_HANDLE handle);
   siginfo_t (ACE_HANDLE *handles);      // JCEJ 12/23/96
 
+  /// Win32 HANDLE that has become signaled.
   ACE_HANDLE si_handle_;
-  // Win32 HANDLE that has become signaled.
 
+  /// Array of Win32 HANDLEs all of which have become signaled.
   ACE_HANDLE *si_handles_;
-  // Array of Win32 HANDLEs all of which have become signaled.
 };
 #    endif /* ACE_HAS_PACE */
 # endif /* ACE_HAS_SIGINFO_T */
@@ -4172,19 +4200,22 @@ struct flock
   // (presumably in netinet/in.h).
   struct ip_mreq
   {
+    /// IP multicast address of group
     struct in_addr imr_multiaddr;
-    // IP multicast address of group
+    /// local IP address of interface
     struct in_addr imr_interface;
-    // local IP address of interface
   };
 # endif /* ! ACE_HAS_IP_MULTICAST  &&  ACE_LACKS_IP_ADD_MEMBERSHIP */
 
 # if !defined (ACE_HAS_STRBUF_T)
 struct strbuf
 {
-  int maxlen; // no. of bytes in buffer.
-  int len;    // no. of bytes returned.
-  void *buf;  // pointer to data.
+  /// no. of bytes in buffer.
+  int maxlen;
+  /// no. of bytes returned.
+  int len;
+  /// pointer to data.
+  void *buf;
 };
 # endif /* ACE_HAS_STRBUF_T */
 
