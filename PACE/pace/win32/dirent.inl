@@ -16,6 +16,7 @@
 #include "pace/string.h"
 #include "pace/stdlib.h"
 
+#if (PACE_HAS_POSIX_FS_UOF)
 int
 pace_win32_emulate_closedir (PACE_DIR * dirp)
 {
@@ -27,7 +28,10 @@ pace_win32_emulate_closedir (PACE_DIR * dirp)
   dirp->started_reading_ = 0;
   return 1;
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
+#endif /* PACE_HAS_POSIX_FS_UOF */
 PACE_DIR *
 pace_win32_emulate_opendir (const char * dirname)
 {
@@ -39,7 +43,9 @@ pace_win32_emulate_opendir (const char * dirname)
   dirp->started_reading_ = 0;
   return dirp;
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 pace_dirent *
 pace_win32_emulate_readdir (PACE_DIR * dirp)
 {
@@ -89,7 +95,9 @@ pace_win32_emulate_readdir (PACE_DIR * dirp)
       return (pace_dirent*)0;
     }
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 int
 pace_win32_emulate_readdir_r (PACE_DIR * dirp,
                               pace_dirent * entry,
@@ -100,7 +108,9 @@ pace_win32_emulate_readdir_r (PACE_DIR * dirp,
   PACE_UNUSED_ARG (result);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 void
 pace_win32_emulate_rewinddir (PACE_DIR * dirp)
 {
@@ -108,6 +118,7 @@ pace_win32_emulate_rewinddir (PACE_DIR * dirp)
   PACE_ERRNO_NO_SUPPORT ();
   return;
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
 #if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
@@ -156,4 +167,3 @@ pace_closedir (PACE_DIR * dirp)
   return pace_win32_emulate_closedir (dirp);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
-
