@@ -495,7 +495,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name)
 // Create an objref
 
 CORBA::Object_ptr
-CORBA_ORB::key_to_object (const TAO::ObjectKey &key,
+CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
                           const char *type_id,
                           CORBA::Environment &env)
 {

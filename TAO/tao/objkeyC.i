@@ -10,120 +10,120 @@
 #define _TAO__TAO_SEQ_OCTET___VAR_CI_
 
 // *************************************************************
-// Inline operations for class TAO::_tao_seq_Octet_var
+// Inline operations for class TAO_tao_seq_Octet_var
 // *************************************************************
 
 ACE_INLINE
-TAO::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
+TAO_tao_seq_Octet_var::TAO_tao_seq_Octet_var (void) // default constructor
 	: ptr_ (0)
 {}
 
 ACE_INLINE
-TAO::_tao_seq_Octet_var::_tao_seq_Octet_var (TAO::_tao_seq_Octet *p)
+TAO_tao_seq_Octet_var::TAO_tao_seq_Octet_var (TAO_tao_seq_Octet *p)
 	: ptr_ (p)
 {}
 
 ACE_INLINE
-TAO::_tao_seq_Octet_var::_tao_seq_Octet_var (const TAO::_tao_seq_Octet_var &p) // copy constructor
+TAO_tao_seq_Octet_var::TAO_tao_seq_Octet_var (const TAO_tao_seq_Octet_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new TAO::_tao_seq_Octet(*p.ptr_);
+  	this->ptr_ = new TAO_tao_seq_Octet(*p.ptr_);
   else
   	this->ptr_ = 0;
 }
 
 ACE_INLINE
-TAO::_tao_seq_Octet_var::~_tao_seq_Octet_var (void) // destructor
+TAO_tao_seq_Octet_var::~TAO_tao_seq_Octet_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet_var &
-TAO::_tao_seq_Octet_var::operator= (TAO::_tao_seq_Octet *p)
+ACE_INLINE TAO_tao_seq_Octet_var &
+TAO_tao_seq_Octet_var::operator= (TAO_tao_seq_Octet *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet_var &
-TAO::_tao_seq_Octet_var::operator= (const TAO::_tao_seq_Octet_var &p) // deep copy
+ACE_INLINE TAO_tao_seq_Octet_var &
+TAO_tao_seq_Octet_var::operator= (const TAO_tao_seq_Octet_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new TAO::_tao_seq_Octet (*p.ptr_);
+    this->ptr_ = new TAO_tao_seq_Octet (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const TAO::_tao_seq_Octet *
-TAO::_tao_seq_Octet_var::operator-> (void) const
+ACE_INLINE const TAO_tao_seq_Octet *
+TAO_tao_seq_Octet_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet *
-TAO::_tao_seq_Octet_var::operator-> (void)
+ACE_INLINE TAO_tao_seq_Octet *
+TAO_tao_seq_Octet_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-TAO::_tao_seq_Octet_var::operator const TAO::_tao_seq_Octet &() const // cast
+TAO_tao_seq_Octet_var::operator const TAO_tao_seq_Octet &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-TAO::_tao_seq_Octet_var::operator TAO::_tao_seq_Octet &() // cast 
+TAO_tao_seq_Octet_var::operator TAO_tao_seq_Octet &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-TAO::_tao_seq_Octet_var::operator TAO::_tao_seq_Octet &() const// cast 
+TAO_tao_seq_Octet_var::operator TAO_tao_seq_Octet &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE CORBA::Octet &
-TAO::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
+TAO_tao_seq_Octet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const TAO::_tao_seq_Octet &
-TAO::_tao_seq_Octet_var::in (void) const
+ACE_INLINE const TAO_tao_seq_Octet &
+TAO_tao_seq_Octet_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet &
-TAO::_tao_seq_Octet_var::inout (void)
+ACE_INLINE TAO_tao_seq_Octet &
+TAO_tao_seq_Octet_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE TAO::_tao_seq_Octet *&
-TAO::_tao_seq_Octet_var::out (void)
+ACE_INLINE TAO_tao_seq_Octet *&
+TAO_tao_seq_Octet_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet *
-TAO::_tao_seq_Octet_var::_retn (void)
+ACE_INLINE TAO_tao_seq_Octet *
+TAO_tao_seq_Octet_var::_retn (void)
 {
-  TAO::_tao_seq_Octet *tmp = this->ptr_;
+  TAO_tao_seq_Octet *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet *
-TAO::_tao_seq_Octet_var::ptr (void) const
+ACE_INLINE TAO_tao_seq_Octet *
+TAO_tao_seq_Octet_var::ptr (void) const
 {
   return this->ptr_;
 }
@@ -136,18 +136,18 @@ TAO::_tao_seq_Octet_var::ptr (void) const
 #define _TAO__TAO_SEQ_OCTET___OUT_CI_
 
 // *************************************************************
-// Inline operations for class TAO::_tao_seq_Octet_out
+// Inline operations for class TAO_tao_seq_Octet_out
 // *************************************************************
 
 ACE_INLINE
-TAO::_tao_seq_Octet_out::_tao_seq_Octet_out (TAO::_tao_seq_Octet *&p)
+TAO_tao_seq_Octet_out::TAO_tao_seq_Octet_out (TAO_tao_seq_Octet *&p)
 	: ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-TAO::_tao_seq_Octet_out::_tao_seq_Octet_out (TAO::_tao_seq_Octet_var &p) // constructor from _var
+TAO_tao_seq_Octet_out::TAO_tao_seq_Octet_out (TAO_tao_seq_Octet_var &p) // constructor from _var
 	: ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -155,44 +155,44 @@ TAO::_tao_seq_Octet_out::_tao_seq_Octet_out (TAO::_tao_seq_Octet_var &p) // cons
 }
 
 ACE_INLINE
-TAO::_tao_seq_Octet_out::_tao_seq_Octet_out (TAO::_tao_seq_Octet_out &p) // copy constructor
+TAO_tao_seq_Octet_out::TAO_tao_seq_Octet_out (TAO_tao_seq_Octet_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
-ACE_INLINE TAO::_tao_seq_Octet_out &
-TAO::_tao_seq_Octet_out::operator= (TAO::_tao_seq_Octet_out &p)
+ACE_INLINE TAO_tao_seq_Octet_out &
+TAO_tao_seq_Octet_out::operator= (TAO_tao_seq_Octet_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet_out &
-TAO::_tao_seq_Octet_out::operator= (TAO::_tao_seq_Octet *p)
+ACE_INLINE TAO_tao_seq_Octet_out &
+TAO_tao_seq_Octet_out::operator= (TAO_tao_seq_Octet *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-TAO::_tao_seq_Octet_out::operator TAO::_tao_seq_Octet *&() // cast
+TAO_tao_seq_Octet_out::operator TAO_tao_seq_Octet *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet *&
-TAO::_tao_seq_Octet_out::ptr (void) // ptr
+ACE_INLINE TAO_tao_seq_Octet *&
+TAO_tao_seq_Octet_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO::_tao_seq_Octet *
-TAO::_tao_seq_Octet_out::operator-> (void)
+ACE_INLINE TAO_tao_seq_Octet *
+TAO_tao_seq_Octet_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::Octet &
-TAO::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
+TAO_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }

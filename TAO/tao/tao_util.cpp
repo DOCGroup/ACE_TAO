@@ -76,7 +76,7 @@ TAO_ORB_Manager::init (int argc,
   return 0;
 }
 
-CORBA::String_var
+CORBA::String
 TAO_ORB_Manager::activate (const char *object_name,
                            PortableServer::Servant servant,
                            CORBA_Environment &env)
@@ -101,7 +101,7 @@ TAO_ORB_Manager::activate (const char *object_name,
                                     env);
   TAO_CHECK_ENV_RETURN (env, 0);
 
-  CORBA::String_var str =
+  CORBA::String str =
     this->orb_->object_to_string (obj.in (),
                                   env);
 
