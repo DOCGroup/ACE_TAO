@@ -212,6 +212,8 @@ private:
 
 // *********************************************************************
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class TAO_Export TAO_DII_Deferred_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
   // = TITLE
@@ -269,6 +271,8 @@ private:
   const CORBA::Request_ptr req_;
   // Where the reply needs to go.
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // *********************************************************************
 

@@ -87,6 +87,8 @@ private:
 
 //***********************************************************************
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class TAO_Export TAO_GIOP_DII_Deferred_Invocation : public TAO_GIOP_Invocation
 {
   // = TITLE
@@ -132,6 +134,8 @@ private:
   TAO_DII_Deferred_Reply_Dispatcher *rd_;
   // Reply dispatcher for the current synchronous Asynch_Invocation.
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if defined (__ACE_INLINE__)
 #  include "tao/Asynch_Invocation.i"

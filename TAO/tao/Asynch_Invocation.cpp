@@ -111,6 +111,8 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
 //**************************************************************************
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 void
 TAO_GIOP_DII_Deferred_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -166,4 +168,6 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   return TAO_INVOKE_OK;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 

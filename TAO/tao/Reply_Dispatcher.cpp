@@ -235,6 +235,8 @@ TAO_Asynch_Reply_Dispatcher::message_state (void)
 
 // *********************************************************************
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 // Constructor.
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     const CORBA::Request_ptr req
@@ -321,4 +323,6 @@ TAO_DII_Deferred_Reply_Dispatcher::message_state (void)
 {
   return this->message_state_;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
