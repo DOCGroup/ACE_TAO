@@ -23,7 +23,7 @@
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template <class CONTAINER>
+template <class KEY, class VALUE, class CONTAINER>
 class ACE_Cleanup_Strategy
 {
   // = TITLE
@@ -35,11 +35,7 @@ class ACE_Cleanup_Strategy
   //    can be decoupled from other strategies which need to do it.
   //    The cleanup method provided needs to be implemented as needed.
   
- public:
-  
-  // Traits.
-  typedef ACE_TYPENAME CONTAINER::KEY KEY;
-  typedef ACE_TYPENAME CONTAINER::VALUE VALUE;
+ public:  
 
   // = Termination.
 
@@ -55,8 +51,8 @@ class ACE_Cleanup_Strategy
 
 //////////////////////////////////////////////////////////////////////////
 
-template <class CONTAINER>
-class ACE_Default_Cleanup_Strategy : public ACE_Cleanup_Strategy<CONTAINER>
+template <class KEY, class VALUE, class CONTAINER>
+class ACE_Default_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
 {
   // = TITLE
   //     Defines a default strategy to be followed for cleaning up
@@ -67,15 +63,15 @@ class ACE_Default_Cleanup_Strategy : public ACE_Cleanup_Strategy<CONTAINER>
   //     container.
 
 public:
-
+ 
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
   // The method which will do the cleanup of the entry in the container.
 
 };
 
 //////////////////////////////////////////////////////////////////////
-template <class CONTAINER>
-class ACE_Svc_Cleanup_Strategy : public ACE_Cleanup_Strategy<CONTAINER>
+template <class KEY, class VALUE, class CONTAINER>
+class ACE_Svc_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
 {
   // = TITLE
   //     Defines a strategy to be followed for cleaning up
@@ -84,10 +80,33 @@ class ACE_Svc_Cleanup_Strategy : public ACE_Cleanup_Strategy<CONTAINER>
   // = DESCRIPTION
   //     The entry to be cleaned up is removed from the container.
   //     Here, since we are dealing with svc_handlers specifically, we
-  //     perform a couple of extra operations.
+  //     perform a couple of extra operations. Note: To be used when
+  //     the handler is recyclable.
 
 public:
+ 
+  virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
+  // The method which will do the cleanup of the entry in the container.
 
+};
+
+//////////////////////////////////////////////////////////////////////
+template <class KEY, class VALUE, class CONTAINER>
+class ACE_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
+{
+  // = TITLE
+  //     Defines a strategy to be followed for cleaning up
+  //     entries which are svc_handlers from a container. 
+  //
+  // = DESCRIPTION
+  //     The entry to be cleaned up is removed from the container.
+  //     Here, since we are dealing with svc_handlers specifically, we
+  //     perform a couple of extra operations. Note: This cleanup strategy
+  //     should be used in the case when the handler has the caching
+  //     attributes.
+
+public:
+  
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
   // The method which will do the cleanup of the entry in the container.
 
@@ -95,8 +114,9 @@ public:
 
 //////////////////////////////////////////////////////////////////////
 
-template <class CONTAINER>
-class ACE_Null_Cleanup_Strategy : public ACE_Cleanup_Strategy<CONTAINER>
+
+template <class KEY, class VALUE, class CONTAINER>
+class ACE_Null_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
 {
   // = TITLE
   //     Defines a do-nothing implementation of the cleanup strategy.
@@ -106,9 +126,9 @@ class ACE_Null_Cleanup_Strategy : public ACE_Cleanup_Strategy<CONTAINER>
   //     the effect of the Cleanup Strategy.
 
 public:
-
+ 
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
-  // the dummy cleanup method.
+  // The dummy cleanup method.
 
 };
 
