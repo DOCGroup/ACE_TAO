@@ -45,7 +45,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -61,6 +60,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

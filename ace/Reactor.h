@@ -33,9 +33,9 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 class ACE_Reactor;
 
 class ACE_Export ACE_Reactor_Handle_Set
-{
-  // = TITLE 
+  // = TITLE
   //      Track handles we are interested for various events.
+{
 public:
   ACE_Handle_Set rd_mask_;
   // Read events (e.g., input pending, accept pending).
@@ -702,6 +702,9 @@ protected:
   friend class ACE_Reactor_Handler_Repository;
 
 private:
+  int release_token (void);
+  // Release the token lock when a Win32 structured exception occurs.
+
   // Deny access since member-wise won't work...
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);

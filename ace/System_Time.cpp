@@ -2,7 +2,6 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/Time_Value.h"
 #include "ace/System_Time.h"
 
 ACE_System_Time::ACE_System_Time (LPCTSTR poolname)

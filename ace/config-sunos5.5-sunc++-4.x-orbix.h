@@ -9,6 +9,8 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_EXCEPTIONS
+
 // Platform contains the Orbix CORBA implementation.
 #define ACE_HAS_ORBIX
 

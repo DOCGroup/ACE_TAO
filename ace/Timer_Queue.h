@@ -95,7 +95,7 @@ public:
 };
 
 class ACE_Export ACE_Timer_Queue
-  // = TITLE 
+  // = TITLE
   //      Provides an interface to timers.
   //
   // = DESCRIPTION

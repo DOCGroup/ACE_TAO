@@ -3,7 +3,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Thread.h"
-#include "ace/Time_Value.h"
 #include "ace/Token.h"
 
 #if defined (ACE_HAS_THREADS)

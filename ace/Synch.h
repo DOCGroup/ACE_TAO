@@ -491,7 +491,7 @@ public:
 };
 
 class ACE_Null_Barrier
-  // = TITLE 
+  // = TITLE
   //     Implements "NULL barrier synchronization".
 {
 public:
@@ -1063,7 +1063,7 @@ struct ACE_Export ACE_Sub_Barrier
 };
 
 class ACE_Export ACE_Barrier
-  // = TITLE 
+  // = TITLE
   //     Implements "barrier synchronization".
   //
   // = DESCRIPTION
@@ -1135,7 +1135,7 @@ public:
 
 #if 0
 class ACE_Export ACE_Process_Barrier : public ACE_Barrier
-  // = TITLE 
+  // = TITLE
   //     Implements "barrier synchronization" using ACE_Process_Mutexes! 
   //
   // = DESCRIPTION
@@ -1155,7 +1155,7 @@ public:
 #endif /* 0 */
 
 class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
-  // = TITLE 
+  // = TITLE
   //     Implements "barrier synchronization" using ACE_Thread_Mutexes!
   //
   // = DESCRIPTION

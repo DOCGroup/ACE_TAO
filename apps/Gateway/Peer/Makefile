@@ -52,7 +52,6 @@ INCLDIRS += -I../Gateway
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -78,6 +77,7 @@ INCLDIRS += -I../Gateway
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
@@ -91,7 +91,6 @@ INCLDIRS += -I../Gateway
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Proactor.h \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \

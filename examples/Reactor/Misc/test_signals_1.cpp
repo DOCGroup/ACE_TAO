@@ -1,5 +1,4 @@
 #include "ace/Service_Config.h"
-#include "ace/Time_Value.h"
 
 static void 
 my_signal_function (int sig)

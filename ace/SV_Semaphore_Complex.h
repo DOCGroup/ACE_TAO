@@ -20,7 +20,7 @@
 #include "ace/SV_Semaphore_Simple.h"
 
 class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
-  // = TITLE 
+  // = TITLE
   //     This is a more complex semaphore wrapper that handles race
   //     conditions for initialization correctly...
   //

@@ -702,17 +702,16 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
   if (do_thr_exit)
     {
       // Note, destructor is never called, so we must manually release
-      // the lock...
+      // the lock...  Note that once we release the lock, it marks it
+      // as being "free" so that the Guard's destructor won't try to
+      // release it again.
 
       ACE_MT (ace_mon.release ()); 
 
       ACE_Thread::exit (status);
       // On reasonable systems ACE_Thread::exit() should not return.
       // However, due to horrible semantics with Win32 thread-specific
-      // storage this call can return (don't ask...).  Therefore, we
-      // need to reacquire the mutex so that we don't get burned when
-      // the Guard automatically releases it when this method returns.
-      ACE_MT (ace_mon.acquire ()); 
+      // storage this call can return (don't ask...).
     }
   return 0;
 }

@@ -1,8 +1,6 @@
-
 // $Id$
 
 #include "ace/SPIPE_Addr.h"
-#include "ace/Time_Value.h"
 #include "ace/SPIPE_Acceptor.h"
 
 #if defined (ACE_WIN32)

@@ -1,9 +1,7 @@
-
 // $Id$
 
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"                              
-#include "ace/Time_Value.h"
 
 #if defined (ACE_HAS_TLI)
 

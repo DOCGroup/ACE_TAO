@@ -7,6 +7,12 @@
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 
+// highest possible errno.
+#define ERRMAX 100              
+
+// Platform does not define sys_nerr
+#define ACE_LACKS_SYS_NERR
+
 // The following #defines are hacks to get around things
 // that seem to be missing or different in MVS land
 #define MAXPATHLEN 1024          /* sys/param.h not on MVS */

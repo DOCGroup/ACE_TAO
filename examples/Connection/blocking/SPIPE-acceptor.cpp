@@ -1,11 +1,9 @@
-#if !defined (SPIPE_ACCEPTOR_C)
 // $Id$
 
+#if !defined (SPIPE_ACCEPTOR_C)
 #define SPIPE_ACCEPTOR_C
 
-
 #include "ace/SPIPE_Addr.h"
-#include "ace/Time_Value.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Get_Opt.h"
 #include "SPIPE-acceptor.h"

@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id: test_timeout.cpp
 
+// ============================================================================
 //
 // = LIBRARY
 //    examples
@@ -20,7 +20,6 @@
 
 #include "ace/ReactorEx.h"
 #include "ace/Proactor.h"
-#include "ace/Time_Value.h"
 #include "ace/Service_Config.h"
 #include "ace/OS.h"
 

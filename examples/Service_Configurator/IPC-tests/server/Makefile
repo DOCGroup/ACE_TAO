@@ -64,7 +64,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -82,20 +81,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -108,15 +100,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/LSOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.i \
@@ -132,7 +132,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -150,20 +149,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -176,15 +168,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/LSOCK_CODgram.h \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
@@ -200,7 +200,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -218,20 +217,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -244,15 +236,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/FIFO_Recv_Msg.h \
  $(WRAPPER_ROOT)/ace/FIFO_Recv.h \
  $(WRAPPER_ROOT)/ace/FIFO.h \
@@ -266,7 +266,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -284,20 +283,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -310,15 +302,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
  $(WRAPPER_ROOT)/ace/LSOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
@@ -334,7 +334,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -352,20 +351,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -378,15 +370,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
  $(WRAPPER_ROOT)/ace/LSOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
@@ -402,7 +402,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -420,20 +419,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -446,15 +438,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.i \
  Handle_R_Dgram.i \
@@ -465,7 +465,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -483,20 +482,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -509,15 +501,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
  Handle_R_Stream.i \
  $(WRAPPER_ROOT)/ace/Get_Opt.h
@@ -527,7 +527,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -545,20 +544,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -571,15 +563,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  Handle_Timeout.i \
  $(WRAPPER_ROOT)/ace/Get_Opt.h
 .obj/Handle_Broadcast.o .shobj/Handle_Broadcast.so: Handle_Broadcast.cpp Handle_Broadcast.h \
@@ -588,7 +588,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -606,20 +605,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -632,15 +624,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.i \
  Handle_Broadcast.i \
@@ -651,7 +651,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -669,20 +668,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -695,15 +687,23 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SPIPE_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SPIPE_Stream.h \
  $(WRAPPER_ROOT)/ace/SPIPE.h \
@@ -716,7 +716,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -741,20 +740,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -765,15 +757,22 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Svc_Handler.h \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
- $(WRAPPER_ROOT)/ace/Strategies.h \
  $(WRAPPER_ROOT)/ace/Acceptor.i \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
@@ -791,7 +790,6 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -809,20 +807,13 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -835,7 +826,17 @@ LDFLAGS += -L./
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -30,7 +30,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Get_Opt.h"
-#include "ace/Time_Value.h"
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"

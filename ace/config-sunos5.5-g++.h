@@ -7,6 +7,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_EXCEPTIONS
 #define ACE_HAS_UNICODE
 
 // G++ doesn't support template typedefs fully (yet).

@@ -37,7 +37,7 @@ typedef ACE_Token ACE_REACTOREX_MUTEX;
 class ACE_ReactorEx;
  
 class ACE_Export ACE_ReactorEx_Handle_Set
-  // = TITLE 
+  // = TITLE
   //      Track handles we are interested for various events.
 {
 public:

@@ -45,7 +45,6 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -68,6 +67,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
@@ -122,7 +122,6 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
@@ -145,6 +144,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
