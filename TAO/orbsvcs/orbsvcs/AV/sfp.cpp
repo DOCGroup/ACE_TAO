@@ -171,7 +171,7 @@ TAO_SFP::start_stream (const char *receiver_addr)
 
 // Start the passive end of the stream.
 int
-TAO_SFP::start_stream (const char *local_addr,int Credit)
+TAO_SFP::start_stream (const char *local_addr,int /* Credit */)
 {
   int result;
   ACE_INET_Addr sender;
@@ -557,8 +557,8 @@ TAO_SFP::send_startReply (void)
 }
 
 int
-TAO_SFP::handle_timeout (const ACE_Time_Value &tv,
-                     const void *arg)
+TAO_SFP::handle_timeout (const ACE_Time_Value &/* tv */,
+                         const void *arg)
 {
   int result;
   // Handle the timeout for timeout1 and timeout2.
@@ -598,7 +598,7 @@ TAO_SFP::handle_timeout (const ACE_Time_Value &tv,
 // socket. Currently both the receiver and sender side input is
 // handled in this same handle_input ().
 int
-TAO_SFP::handle_input (ACE_HANDLE fd)
+TAO_SFP::handle_input (ACE_HANDLE /* fd */)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP::handle_input\n"));
   flowProtocol::MsgType msg_type = flowProtocol::Start_Msg;
