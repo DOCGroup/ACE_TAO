@@ -1,8 +1,8 @@
 Wed Jun 16 11:25:49 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCORBA\Diffserv\server.cpp: 
-	* performance-tests\Protocols\client.cpp: 
-	* performance-tests\Protocols\server.cpp: 
+	* tests/RTCORBA/Diffserv/server.cpp: 
+	* performance-tests/Protocols/client.cpp: 
+	* performance-tests/Protocols/server.cpp: 
 
 	  Minor fixes.  Thanks to Johnny for pointing them out.
 
@@ -16,7 +16,7 @@ Sun Jun 13 00:38:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
 	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
 
-	  Fixed improper assigned of a non-boolean value to a bool
+	  Fixed improper assignment of a non-boolean value to a bool
 	  member.
 
 Tue Jun 15 20:53:28 2004  Irfan Pyarali  <irfan@oomworks.com>
