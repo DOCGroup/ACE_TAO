@@ -455,7 +455,6 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context,
     {
       TAO_RETHROW;
     }
-  
   TAO_ENDTRY;
 }
 
