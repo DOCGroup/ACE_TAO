@@ -9,6 +9,12 @@ Wed Mar 19 16:06:32 1997  David L. Levine  <levine@cs.wustl.edu>
 	Thanks to Daniel Montalibet <daniel_montalibet@stortek.com> for
 	both of the above modifications.
 
+	* platform_{dgux4_epc,irix5.3_g++,linux*,m88k,osf1_3.2,sco*,
+	  sunos4_g++,sunos5_centerline*,sunos5_g++,sunos5_sunc++*,
+	  unixware_g++,vxworks5.2_g++}.GNU: split out CFLAGS and CCFLAGS.
+	  Also, removed -lstdc++/-lm from g++ versions, because we now set
+	  CXX to g++ instead of gcc, so those libraries are picked up.
+
 Wed Mar 19 15:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-sunos4.*.h: Added #define ACE_HAS_UNION_WAIT based
