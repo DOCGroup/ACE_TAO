@@ -1,3 +1,24 @@
+Wed Jun 10 13:03:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Explicit_Activation/server.cpp,
+ 	  tests/POA/Generic_Servant/client.cpp,
+ 	  tests/POA/NewPOA/NewPOA.cpp, and tests/POA/RootPOA/RootPOA.cpp:
+ 	  Use ACE_DEBUG instead of cout.
+
+	* tao/Server_Request.cpp (dsi_marshal): Only marshal if the params
+ 	  are valid.
+
+	* tao/ORB_Core.h: Changed the lock used by
+ 	  ACE_Cached_Connect_Strategy from a rw_mutex to a regular mutex.
+
+	* tao/ORB.cpp: Changed CORBA::B_TRUE and CORBA::B_FALSE from enums
+ 	  to CORBA::Boolean.
+
+	* tao/{Connect.cpp, ORB.cpp}: Fixed the template instantiations in
+ 	  lieu of the changes to Hash_Addr.
+
+	* tao/Any.h: Added ACE_Export to nested structs.
+
 Wed Jun 10 10:28:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Event_Channel.h: 

@@ -62,8 +62,10 @@ main (int argc, char **argv)
       return -1;
     }
 
-  cout << "The RootPOA is : " << poa_name.in () << endl;
-
+  ACE_DEBUG ((LM_DEBUG,
+              "The RootPOA is : %s\n",
+              poa_name.in ()));
+  
   // Destroy the POA object,also destroys the child POAs if any.
   root_poa->destroy (CORBA::B_TRUE,
                      CORBA::B_TRUE,

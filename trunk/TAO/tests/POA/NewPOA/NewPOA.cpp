@@ -170,11 +170,13 @@ main (int argc, char **argv)
       return -1;
     }
 
-  cout << root_poa_name.in () << endl;
-  cout << first_poa_name.in () << endl;
-  cout << second_poa_name.in () << endl;
-  cout << fifth_poa_name.in () << endl;
-
+  ACE_DEBUG ((LM_DEBUG,
+              "%s\n%s\n%s\n%s\n",
+              root_poa_name.in (),
+              first_poa_name.in (),
+              second_poa_name.in (),
+              fifth_poa_name.in ()));
+  
   // This should destroy all its children
   root_poa->destroy (CORBA::B_TRUE,
                      CORBA::B_TRUE,

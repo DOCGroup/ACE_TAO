@@ -227,9 +227,11 @@ main (int argc, char **argv)
       return -1;
     }
 
-  cout << first_ior.in () << endl;
-  cout << second_ior.in () << endl;
-  cout << third_ior.in () << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              "%s\n%s\n%s\n",
+              first_ior.in (),
+              second_ior.in (),
+              third_ior.in ()));
 
   // Activate thirdPOA using its ObjectID.
   MyFooServant third_foo_impl (second_poa.in (), 29);
