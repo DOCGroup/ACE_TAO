@@ -19,3 +19,17 @@ namespace Kokyu
   {
   }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
+(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
+template class ACE_Array<Kokyu::ConfigInfo>;
+template class ACE_Array_Base<Kokyu::ConfigInfo>;
+#  endif /* __GNUC__ */
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
+(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
+#pragma instantiate ACE_Array<Kokyu::ConfigInfo>
+#pragma instantiate ACE_Array_Base<Kokyu::ConfigInfo>;
+#  endif /* __GNUC__ */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

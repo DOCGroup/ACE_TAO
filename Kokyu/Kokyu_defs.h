@@ -72,6 +72,7 @@ namespace Kokyu
 
     // type of dispatching queue
     Dispatching_Type_t dispatching_type_;
+
   };
 
   typedef ACE_Array<ConfigInfo> ConfigInfoSet;
@@ -126,6 +127,9 @@ namespace Kokyu
       int dont_delete_;
     };
 } //end of namespace
+
+//to satisfy ACE_Array<ConfigInfo>
+int operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_defs.i"
