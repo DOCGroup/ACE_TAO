@@ -35,6 +35,9 @@ public:
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void remove_member (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
@@ -44,8 +47,8 @@ private:
   /// object group.
   CosLoadBalancing::LoadManager_var lm_;
 
-  /// Location of the object group member.
-  PortableGroup::Location location_ ;
+  /// location of the servant
+  const char *location_ ;
 
   /// Object Group reference.
   CORBA::Object_var object_group_;
