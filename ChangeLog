@@ -1,19 +1,49 @@
+Thu Jul  1 14:00:09 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/default.rel:
+
+          Reworded some comments.
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+
+          Removed an unused variable.
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Added a generic target that just passes the target on to the
+          children makefiles.  This is the last target in the generated
+          workspace to avoid problems with explicitly listed targets such as
+          all, clean, realclean, etc.
+
+          Also removed the deprecated "reverseclean" target.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added support for the new MPC 'postcommand' keyword for custom
+          definitions.  See $MPC_ROOT/README for more details.
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Changed the default INSLIB location from $(ACE_ROOT)/ace to
+          $(ACE_ROOT)/lib.
+
 Thu Jul  1 13:34:51 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Basic_Types.h: Change the ACE_UINT64_FORMAT_SPECIFIER and
-	  ACE_INT64_FORMAT_SPECIFIER to depend on the value of
-	  ACE_SIZEOF_LONG. If long is an 8-byte type, then the 'l'
-	  format modifier is correct instead of 'll'. Fixes compile
-	  warnings from g++ in 64-bite mode. Thanks to Andre Kostur
-	  <akostur@incognito.com> for this fix.
+        * ace/Basic_Types.h: Change the ACE_UINT64_FORMAT_SPECIFIER and
+          ACE_INT64_FORMAT_SPECIFIER to depend on the value of
+          ACE_SIZEOF_LONG. If long is an 8-byte type, then the 'l'
+          format modifier is correct instead of 'll'. Fixes compile
+          warnings from g++ in 64-bite mode. Thanks to Andre Kostur
+          <akostur@incognito.com> for this fix.
 
 Thu Jul  1 07:54:11 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_Thread.inl: Changed the thr_min_stack() wrapper method
-	  so it just calls the underlying OS function without using
- 	  ACE_ADAPT_RETVAL.  Thanks to Mattias Nilsson
- 	  <mattias.o.nilsson@ericsson.com> for reporting this bug and
- 	  providing a fix.
+        * ace/OS_NS_Thread.inl: Changed the thr_min_stack() wrapper method
+          so it just calls the underlying OS function without using
+          ACE_ADAPT_RETVAL.  Thanks to Mattias Nilsson
+          <mattias.o.nilsson@ericsson.com> for reporting this bug and
+          providing a fix.
 
 Thu Jul  1 09:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -28,17 +58,17 @@ Thu Jul  1 09:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun 30 10:56:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_component_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_component_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
 
-	  Use the DnC version of the libraries for linking and related
-	  tasks instead of the regular core libraries.
+          Use the DnC version of the libraries for linking and related
+          tasks instead of the regular core libraries.
 
-	* bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/global.features:
 
-	  removed 'dnc = 0' nonsense.
+          removed 'dnc = 0' nonsense.
 
 Wed Jun 30 08:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -62,16 +92,16 @@ Wed Jun 30 06:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 29 19:30:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Dev_Poll_Reactor.h (mask_ops, mask_ops_i):
+        * ace/Dev_Poll_Reactor.h (mask_ops, mask_ops_i):
 
-	  Added return value documentation for these methods.
+          Added return value documentation for these methods.
 
-	* ace/Dev_Poll_Reactor.cpp (remove_handler_i):
+        * ace/Dev_Poll_Reactor.cpp (remove_handler_i):
 
-	  Corrected problem where error condition may be incorrectly
-	  detected in some cases.  Thanks to Jaroslaw Nozderko
-	  <jaroslaw.nozderko@polkomtel.com.pl> for pointing out the
-	  problem.
+          Corrected problem where error condition may be incorrectly
+          detected in some cases.  Thanks to Jaroslaw Nozderko
+          <jaroslaw.nozderko@polkomtel.com.pl> for pointing out the
+          problem.
 
 Tue Jun 29 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -95,10 +125,10 @@ Tue Jun 29 06:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 28 23:42:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-lynxos.h (ACE_HAS_NONCONST_MSGSND):
+        * ace/config-lynxos.h (ACE_HAS_NONCONST_MSGSND):
 
-	  LynxOS 4's msgsnd() function accepts a non-const "void *" buffer
-	  argument.  Addresses a compile-time error.
+          LynxOS 4's msgsnd() function accepts a non-const "void *" buffer
+          argument.  Addresses a compile-time error.
 
 Tue Jun 29 06:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -109,26 +139,26 @@ Tue Jun 29 06:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 28 16:39:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS.h:
-	  Removed preprocessor conditional with identical contents
-	  for both cases.
+        * ace/OS.h:
+          Removed preprocessor conditional with identical contents
+          for both cases.
 
 Mon Jun 28 16:34:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: If wcstok() is detected, added a check for whether it
-	  has 2 or 3 parameters; set ACE_HAS_3_PARAM_WCSTOK if it's 3.
+        * configure.ac: If wcstok() is detected, added a check for whether it
+          has 2 or 3 parameters; set ACE_HAS_3_PARAM_WCSTOK if it's 3.
 
-	* m4/subsets.m4: Added the Filecache, Metrics, and UUID components
-	  to the selectable subsets of ACE.
+        * m4/subsets.m4: Added the Filecache, Metrics, and UUID components
+          to the selectable subsets of ACE.
 
-	* m4/config_h.m4: Added a template for ACE_LACKS_ACE_UUID and
-	  ACE_HAS_3_PARAM_WCSTOK.
+        * m4/config_h.m4: Added a template for ACE_LACKS_ACE_UUID and
+          ACE_HAS_3_PARAM_WCSTOK.
 
-	Note that I also removed the subset-building support from the MPC
-	template for automake files. So, these subset-selecting options are
-	still here as a placeholder for now, but will likely be removed in
-	the future. If subset building is required, then more effort will
-	need to be put into the automake support in MPC.
+        Note that I also removed the subset-building support from the MPC
+        template for automake files. So, these subset-selecting options are
+        still here as a placeholder for now, but will likely be removed in
+        the future. If subset building is required, then more effort will
+        need to be put into the automake support in MPC.
 
 Mon Jun 28 17:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -208,36 +238,36 @@ Mon Jun 28 06:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 27 21:42:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Misc/test_XtReactor1.cpp:
-	* examples/Misc/test_XtReactor2.cpp:
+        * examples/Misc/test_XtReactor1.cpp:
+        * examples/Misc/test_XtReactor2.cpp:
 
-	  Fixed compile-time errors due to missing headers.
+          Fixed compile-time errors due to missing headers.
 
-	  Fixed compile-time warning about deprecated conversion from a
-	  string constant to char *.
+          Fixed compile-time warning about deprecated conversion from a
+          string constant to char *.
 
-	* tests/TkReactor_Test.cpp:
+        * tests/TkReactor_Test.cpp:
 
-	  Fixed compile-time errors due to missing headers.
+          Fixed compile-time errors due to missing headers.
 
 Sun Jun 27 10:22:03 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Logging_Strategy.h: Clarified the use of the ACE_Reactor.
-	  Thanks to Randy Secrest <secrest@ieee.org> for motivating this.
+        * ace/Logging_Strategy.h: Clarified the use of the ACE_Reactor.
+          Thanks to Randy Secrest <secrest@ieee.org> for motivating this.
 
 Sat Jun 26 11:44:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/XtReactor_Test.cpp:
+        * tests/XtReactor_Test.cpp:
 
-	  Added missing #include "ace/OS_NS_unistd.h".  It is needed for
-	  the ACE_OS::sleep() declaration.
+          Added missing #include "ace/OS_NS_unistd.h".  It is needed for
+          the ACE_OS::sleep() declaration.
 
 Fri Jun 25 17:40:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Max_Default_Port_Test.cpp (client): Specify AF_INET when
-	  giving both a port and hostname string. The listener was set up
-	  at IPv4, so make sure this one is as well. Fixes this test's failures
-	  when running on an IPv6-enabled system.
+        * tests/Max_Default_Port_Test.cpp (client): Specify AF_INET when
+          giving both a port and hostname string. The listener was set up
+          at IPv4, so make sure this one is as well. Fixes this test's failures
+          when running on an IPv6-enabled system.
 
 Fri Jun 25 18:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -277,112 +307,112 @@ Fri Jun 25 07:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 24 08:55:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-lite.h (ACE_WIN32CALL_RETURN):
+        * ace/config-lite.h (ACE_WIN32CALL_RETURN):
 
-	  Reverted usage of static_cast<> back to C style cast.  Some
-	  compilers on Windows fail to compile some ACE code when using
-	  the former.
+          Reverted usage of static_cast<> back to C style cast.  Some
+          compilers on Windows fail to compile some ACE code when using
+          the former.
 
 Thu Jun 24 07:03:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS_NS_dlfcn.inl:
-	* ace/OS_NS_signal.inl:
-	* ace/OS_NS_stdio.inl:
-	* ace/OS_NS_sys_shm.inl:
-	* ace/OS_NS_sys_socket.inl:
-	* ace/OS_NS_unistd.inl:
-	* ace/config-openvms.h:
-	* ace/config-tandem-nsk-mips-v2.h:
-	  Removed conditional code enabled by ACE_LACKS_POSIX_PROTOTYPES
-	  and ACE_LACKS_SOME_POSIX_PROTOTYPES, as those macros have been
-	  obsolete for some time.
+        * ace/OS_NS_dlfcn.inl:
+        * ace/OS_NS_signal.inl:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_sys_shm.inl:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_unistd.inl:
+        * ace/config-openvms.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+          Removed conditional code enabled by ACE_LACKS_POSIX_PROTOTYPES
+          and ACE_LACKS_SOME_POSIX_PROTOTYPES, as those macros have been
+          obsolete for some time.
 
 Thu Jun 24 06:59:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
-	  Added checks for ACE_LACKS_WCSCAT, ACE_LACKS_WCSCHR,
-	  ACE_LACKS_WCSCMP, ACE_LACKS_WCSCPY, ACE_LACKS_WCSCSPN,
-	  ACE_LACKS_WCSDUP, ACE_LACKS_WCSICMP, ACE_LACKS_WCSLEN,
-	  ACE_LACKS_WCSNCAT, ACE_LACKS_WCSNCMP, ACE_LACKS_WCSNCPY
-	  ACE_LACKS_WCSNICMP, ACE_LACKS_WCSPBRK, ACE_LACKS_WCSRCHR,
-	  ACE_LACKS_WCSSPN, ACE_LACKS_WCSSTR, ACE_LACKS_WCSTOD,
-	  ACE_LACKS_WCSTOK, ACE_LACKS_WCSTOL, and ACE_LACKS_WCSTOUL.
+        * configure.ac:
+        * m4/config_h.m4:
+          Added checks for ACE_LACKS_WCSCAT, ACE_LACKS_WCSCHR,
+          ACE_LACKS_WCSCMP, ACE_LACKS_WCSCPY, ACE_LACKS_WCSCSPN,
+          ACE_LACKS_WCSDUP, ACE_LACKS_WCSICMP, ACE_LACKS_WCSLEN,
+          ACE_LACKS_WCSNCAT, ACE_LACKS_WCSNCMP, ACE_LACKS_WCSNCPY
+          ACE_LACKS_WCSNICMP, ACE_LACKS_WCSPBRK, ACE_LACKS_WCSRCHR,
+          ACE_LACKS_WCSSPN, ACE_LACKS_WCSSTR, ACE_LACKS_WCSTOD,
+          ACE_LACKS_WCSTOK, ACE_LACKS_WCSTOL, and ACE_LACKS_WCSTOUL.
 
 Wed Jun 23 17:31:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-lite.h: For ACE_OSCALL[_RETURN] macros, changed the
-	  static_cast back to a C-style cast. Not enough type information
-	  was known in all cases. Particularly, on HP-UX, the return value
-	  from shl_load() is a pointer to a struct, and the struct internals
-	  aren't known. This caused aC++ to refuse to do the static_cast.
-	  Also see:
-	  Mon Jun 21 13:37:57 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+        * ace/config-lite.h: For ACE_OSCALL[_RETURN] macros, changed the
+          static_cast back to a C-style cast. Not enough type information
+          was known in all cases. Particularly, on HP-UX, the return value
+          from shl_load() is a pointer to a struct, and the struct internals
+          aren't known. This caused aC++ to refuse to do the static_cast.
+          Also see:
+          Mon Jun 21 13:37:57 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Wed Jun 23 11:25:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	  Changed to not check for SysV IPC functions unless the
-	  cooresponding header files are present.  OS X does not support
-	  SysV IPC, but it's C library contains stubs for all the system
-	  calls (probably left over from the BSD libc).
+        * configure.ac:
+          Changed to not check for SysV IPC functions unless the
+          cooresponding header files are present.  OS X does not support
+          SysV IPC, but it's C library contains stubs for all the system
+          calls (probably left over from the BSD libc).
 
-	* ace/README:
-	* ace/config-openvms.h:
-	* ace/os_include/sys/os_shm.h:
-	  Removed ACE_LACKS_SHMID_DS_T.  Replaced conditional definition
-	  with an opaque declaration.
+        * ace/README:
+        * ace/config-openvms.h:
+        * ace/os_include/sys/os_shm.h:
+          Removed ACE_LACKS_SHMID_DS_T.  Replaced conditional definition
+          with an opaque declaration.
 
-	* ace/README:
-	* ace/config-openvms.h:
-	* ace/config-win32-common:
-	* ace/os_include/sys/os_msg.h:
-	  Removed ACE_LACKS_MSQID_DS_T.  Replaced conditional definition
-	  with an opaque declaration.
+        * ace/README:
+        * ace/config-openvms.h:
+        * ace/config-win32-common:
+        * ace/os_include/sys/os_msg.h:
+          Removed ACE_LACKS_MSQID_DS_T.  Replaced conditional definition
+          with an opaque declaration.
 
-	* configure.ac:
-	* ace/README:
-	* ace/config-mvs.h:
-	* ace/config-qnx-neutrino.h:
-	* ace/config-qnx-rtp-62x.h:
-	* ace/config-qnx-rtp-pre62x.h:
-	* ace/config-tandem-nsk-mips-v2.h:
-	* ace/config-tandem.h:
-	* ace/config-win32-common.h:
-	* ace/os_include/sys/os_msg.h:
-	* m4/config_h.m4:
-	  Removed ACE_LACKS_MSGBUF_T.  Previous changed removed last
-	  instance where msgbuf was used.
+        * configure.ac:
+        * ace/README:
+        * ace/config-mvs.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem.h:
+        * ace/config-win32-common.h:
+        * ace/os_include/sys/os_msg.h:
+        * m4/config_h.m4:
+          Removed ACE_LACKS_MSGBUF_T.  Previous changed removed last
+          instance where msgbuf was used.
 
-	* ace/OS_NS_sys_msg.inl:
-	  Fixed case where C-style cast was being used to cast away const
-	  when it didn't need to.
+        * ace/OS_NS_sys_msg.inl:
+          Fixed case where C-style cast was being used to cast away const
+          when it didn't need to.
 
-	* ace/OS_NS_sys_msg.inl:
-	  Removed conditional code enabled by ACE_LACKS_POSIX_PROTOTYPES
-	  and ACE_LACKS_SOME_POSIX_PROTOTYPES, as those macros have been
-	  obsolete for some time.
+        * ace/OS_NS_sys_msg.inl:
+          Removed conditional code enabled by ACE_LACKS_POSIX_PROTOTYPES
+          and ACE_LACKS_SOME_POSIX_PROTOTYPES, as those macros have been
+          obsolete for some time.
 
 Wed Jun 23 11:24:39 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_macros.h:
+        * ace/OS_NS_macros.h:
 
-	  Missed one static_cast<> reversion in the Win32 case.  See the
-	  "Tue Jun 22 12:33:49 2004  Ossama Othman
-	  <ossama@dre.vanderbilt.edu>" ChangeLog entry for details.
+          Missed one static_cast<> reversion in the Win32 case.  See the
+          "Tue Jun 22 12:33:49 2004  Ossama Othman
+          <ossama@dre.vanderbilt.edu>" ChangeLog entry for details.
 
 Wed Jun 23 12:18:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/String_Base.{h inl}: Added new method, fast_clear(), which
-	  sets the string length to 0. Doesn't release string-allocated
-	  memory, but if the memory was externally supplied, it is no
-	  longer referenced from the string object. Thanks to
-	  Sergei Kuchin <skuchin@mqsoftware.com> for contributing this
-	  method.
+        * ace/String_Base.{h inl}: Added new method, fast_clear(), which
+          sets the string length to 0. Doesn't release string-allocated
+          memory, but if the memory was externally supplied, it is no
+          longer referenced from the string object. Thanks to
+          Sergei Kuchin <skuchin@mqsoftware.com> for contributing this
+          method.
 
-	* tests/SString_Test.cpp: Added smoke test for fast_clear().
+        * tests/SString_Test.cpp: Added smoke test for fast_clear().
 
-	* THANKS: Added Sergei Kuchin to the Hall of Fame.
+        * THANKS: Added Sergei Kuchin to the Hall of Fame.
 
 Wed Jun 23 14:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -401,55 +431,55 @@ Wed Jun 23 06:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 22 16:54:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	  Changed ACE_HAS_LIMITED_RUSAGE_T and ACE_HAS_BROKEN_SETRLIMIT
-	  checks to include <sys/time.h> before <sys/resource.h>.
-	  Changed ACE_HAS_BROKEN_WRITEV check to use !ACE_LACKS_UNISTD_H
-	  instead of ACE_HAS_UNISTD_H (which is never set).
+        * configure.ac:
+          Changed ACE_HAS_LIMITED_RUSAGE_T and ACE_HAS_BROKEN_SETRLIMIT
+          checks to include <sys/time.h> before <sys/resource.h>.
+          Changed ACE_HAS_BROKEN_WRITEV check to use !ACE_LACKS_UNISTD_H
+          instead of ACE_HAS_UNISTD_H (which is never set).
 
 Tue Jun 22 13:54:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-macosx-panther.h:
-	* ace/config-macosx.h:
-	  Changed to define only ACE_HAS_TIMEZONE_GETTIMEOFDAY.
-	  ACE_HAS_VOIDPTR_GETTIMEOFDAY had also been defined.
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx.h:
+          Changed to define only ACE_HAS_TIMEZONE_GETTIMEOFDAY.
+          ACE_HAS_VOIDPTR_GETTIMEOFDAY had also been defined.
 
 Tue Jun 22 12:33:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_macros.h (ACE_SOCKCALL_RETURN):
+        * ace/OS_NS_macros.h (ACE_SOCKCALL_RETURN):
 
-	  Reverted my change that turned the C style cast into a
-	  static_cast<> in the Win32 case.   ACE uses Win32 HANDLES (a
-	  void * type), and MSVC++ 6 won't accept a static_cast<> from a
-	  pointer type to an integral type.
+          Reverted my change that turned the C style cast into a
+          static_cast<> in the Win32 case.   ACE uses Win32 HANDLES (a
+          void * type), and MSVC++ 6 won't accept a static_cast<> from a
+          pointer type to an integral type.
 
 Tue Jun 22 07:27:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* ace/OS_NS_sys_time.inl:
-	* ace/README:
-	* ace/config-cygwin32.h:
-	* ace/config-hpux-10.x.h:
-	* ace/config-hpux-11.00.h:
-	* ace/config-hpux11.h:
-	* ace/config-linux-common.h:
-	* ace/config-macosx-panther.h:
-	* ace/config-macosx.h:
-	* ace/config-rtems.h:
-	* ace/config-sco-4.2-nothread.h:
-	* ace/config-sco-5.0.0-mit-pthread.h:
-	* ace/config-sunos4-lucid3.2.h:
-	* ace/config-sunos4-sun3.x.h:
-	* ace/config-sunos4-sun4.1.4.h:
-	* ace/config-sunos4-sun4.x.h:
-	* ace/config-tandem.h:
-	* ace/config-unixware-7.1.0.h:
-	* ace/config-unixware-7.1.0.udk.h:
-	* ace/os_include/sys/os_time.h:
-	* m4/config_h.m4:
-	  Renamed ACE_HAS_SUNOS4_GETTIMEOFDAY to ACE_HAS_VOIDPTR_GETTIMEOFDAY.
-	  Changed canned SunOS 4 configs to use ACE_HAS_TIMEZONE_GETTIMEOFDAY,
-	  as SunOS wasn't changed to use a void * until SunOS 5/Solaris 2.
+        * configure.ac:
+        * ace/OS_NS_sys_time.inl:
+        * ace/README:
+        * ace/config-cygwin32.h:
+        * ace/config-hpux-10.x.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-hpux11.h:
+        * ace/config-linux-common.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx.h:
+        * ace/config-rtems.h:
+        * ace/config-sco-4.2-nothread.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+        * ace/config-sunos4-lucid3.2.h:
+        * ace/config-sunos4-sun3.x.h:
+        * ace/config-sunos4-sun4.1.4.h:
+        * ace/config-sunos4-sun4.x.h:
+        * ace/config-tandem.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/os_include/sys/os_time.h:
+        * m4/config_h.m4:
+          Renamed ACE_HAS_SUNOS4_GETTIMEOFDAY to ACE_HAS_VOIDPTR_GETTIMEOFDAY.
+          Changed canned SunOS 4 configs to use ACE_HAS_TIMEZONE_GETTIMEOFDAY,
+          as SunOS wasn't changed to use a void * until SunOS 5/Solaris 2.
 
 Tue Jun 22 13:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -501,89 +531,89 @@ Tue Jun 22 07:07:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 21 23:19:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ftorbutils.mpb:
+        * bin/MakeProjectCreator/config/ftorbutils.mpb:
 
-	  This base project requires minimum CORBA support to be disabled.
-	  Projects that depend on these base projects must be aware of
-	  this.  Added an "avoids += minimum_corba" entry.
+          This base project requires minimum CORBA support to be disabled.
+          Projects that depend on these base projects must be aware of
+          this.  Added an "avoids += minimum_corba" entry.
 
 Mon Jun 21 22:31:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-freebsd.h:
-	* ace/config-netbsd.h:
-	* ace/config-openbsd.h:
-	  Changed to define ACE_HAS_TIMEZONE_GETTIMEOFDAY instead of
-	  ACE_HAS_SUNOS4_GETTIMEOFDAY.
+        * ace/config-freebsd.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+          Changed to define ACE_HAS_TIMEZONE_GETTIMEOFDAY instead of
+          ACE_HAS_SUNOS4_GETTIMEOFDAY.
 
 Mon Jun 21 13:49:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_macros.h:
+        * ace/OS_NS_macros.h:
 
-	  Use a static_cast<> instead of a C style cast.  ANSI C++ casts
-	  are the preferred method of casting in ACE.
+          Use a static_cast<> instead of a C style cast.  ANSI C++ casts
+          are the preferred method of casting in ACE.
 
 Mon Jun 21 13:37:57 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-lite.h:
+        * ace/config-lite.h:
 
-	  Removed versions of ACE_OSCALL and ACE_OSCALL_RETURN macros that
-	  restarted the given operation when ACE_HAS_SIGNAL_SAFE_OS_CALLS
-	  was defined.  That capability was never enabled by any of our
-	  supported platforms.  In fact, some parts of ACE would not
-	  function properly when that ability was enabled.  Furthermore,
-	  they assumed that ability to restart system calls was determined
-	  statically.  That assumption does not hold for modern platforms,
-	  where that ability is determined dynamically at run-time.
-	  Thanks to J.T. Conklin for pointing out the problems with
-	  defining ACE_HAS_SIGNAL_SAFE_OS_CALLS.
+          Removed versions of ACE_OSCALL and ACE_OSCALL_RETURN macros that
+          restarted the given operation when ACE_HAS_SIGNAL_SAFE_OS_CALLS
+          was defined.  That capability was never enabled by any of our
+          supported platforms.  In fact, some parts of ACE would not
+          function properly when that ability was enabled.  Furthermore,
+          they assumed that ability to restart system calls was determined
+          statically.  That assumption does not hold for modern platforms,
+          where that ability is determined dynamically at run-time.
+          Thanks to J.T. Conklin for pointing out the problems with
+          defining ACE_HAS_SIGNAL_SAFE_OS_CALLS.
 
-	  These changes also fixe a problem with self-assignment of the
-	  variable used to store the return value of an operation wrapped
-	  within an ACE_ADAPT_RETVAL macro (e.g. ACE_OSCALL_RETURN
-	  (ACE_ADAPT_RETVAL (..., ace_result_),...).  Thanks to Andrew
-	  G. Harvey <agh@cisco.com> for poiniting out the
-	  self-assignment.
+          These changes also fixe a problem with self-assignment of the
+          variable used to store the return value of an operation wrapped
+          within an ACE_ADAPT_RETVAL macro (e.g. ACE_OSCALL_RETURN
+          (ACE_ADAPT_RETVAL (..., ace_result_),...).  Thanks to Andrew
+          G. Harvey <agh@cisco.com> for poiniting out the
+          self-assignment.
 
-	* ace/OS_NS_Thread.cpp:
-	* ace/OS_NS_Thread.inl:
-	* ace/OS_NS_signal.inl:
-	* ace/OS_NS_unistd.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_signal.inl:
+        * ace/OS_NS_unistd.inl:
 
-	  Updated ACE_OSCALL_RETURN(ACE_ADAPT_RETVAL()) macro calls to use
-	  a locally declared result variable instead of the one that
-	  existed in the ACE_OSCALL_RETURN macro.  The latter no longer
-	  exists.
+          Updated ACE_OSCALL_RETURN(ACE_ADAPT_RETVAL()) macro calls to use
+          a locally declared result variable instead of the one that
+          existed in the ACE_OSCALL_RETURN macro.  The latter no longer
+          exists.
 
-	* ace/README:
+        * ace/README:
 
-	  Removed documentation for ACE_HAS_SIGNAL_SAFE_OS_CALLS macro.
-	  It is no longer used.
+          Removed documentation for ACE_HAS_SIGNAL_SAFE_OS_CALLS macro.
+          It is no longer used.
 
 Mon Jun 21 13:13:09 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
-	  Removed ACE_HAS_SIGNAL_SAFE_OS_CALLS test.  The macro has
-	  been deprecated.
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed ACE_HAS_SIGNAL_SAFE_OS_CALLS test.  The macro has
+          been deprecated.
 
 Mon Jun 21 13:21:38 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/String_Base.cpp (resize): Don't free() the existing buffer if
-	  release_ is 0. Caller controls the memory area and freeing it may
-	  be a very bad thing to do. The larger allocated area causes the
-	  release_ flag to be set to 1. Thanks to Kelly Hickel
-	  <kfh@mqsoftware.com> for reporting this.
+        * ace/String_Base.cpp (resize): Don't free() the existing buffer if
+          release_ is 0. Caller controls the memory area and freeing it may
+          be a very bad thing to do. The larger allocated area causes the
+          release_ flag to be set to 1. Thanks to Kelly Hickel
+          <kfh@mqsoftware.com> for reporting this.
 
 Mon Jun 21 12:45:20 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_SOCK_Connector.cpp: Added #include "ace/OS_NS_errno.h"
-	  so Visual Age C++ can see ACE_OS::set_errno_to_last_error().
+        * ace/SSL/SSL_SOCK_Connector.cpp: Added #include "ace/OS_NS_errno.h"
+          so Visual Age C++ can see ACE_OS::set_errno_to_last_error().
 
 Mon Jun 21 09:17:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_Thread.cpp (thr_create): Only try to close down the
- 	  tmp_handle if it's not NULL.  Thanks to chdommreis@t-online.de
- 	  for reporting this and providing a fix.  This fixes bugid 1859.
+        * ace/OS_NS_Thread.cpp (thr_create): Only try to close down the
+          tmp_handle if it's not NULL.  Thanks to chdommreis@t-online.de
+          for reporting this and providing a fix.  This fixes bugid 1859.
 
 Mon Jun 21 11:56:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -598,18 +628,18 @@ Mon Jun 21 10:19:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 20 22:09:58 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
-	* tests/Makefile.am:
+        * m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
+        * tests/Makefile.am:
 
-	  Added support for conditionally building IPv6 tests.
+          Added support for conditionally building IPv6 tests.
 
-	* tests/Dirent_Test.cpp (TEST_ENTRY):
+        * tests/Dirent_Test.cpp (TEST_ENTRY):
 
-	  Changed filename detected in test to one that always exists in
-	  configure-based VPATH builds (run_test.lst).  Addresses a
-	  problem where the test would fail since the file in question
-	  only existed in the source directory.  Thanks to J.T. Conklin
-	  for reporting this problem.
+          Changed filename detected in test to one that always exists in
+          configure-based VPATH builds (run_test.lst).  Addresses a
+          problem where the test would fail since the file in question
+          only existed in the source directory.  Thanks to J.T. Conklin
+          for reporting this problem.
 
 Sun Jun 20 23:35:05 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
@@ -620,26 +650,26 @@ Sun Jun 20 23:35:05 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Sun Jun 20 13:03:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/loadbalancing.mpb:
+        * bin/MakeProjectCreator/config/loadbalancing.mpb:
 
-	  TAO's load balancing service requries AMI support, not just the
-	  messaging library.  Added missing "requires += ami".
+          TAO's load balancing service requries AMI support, not just the
+          messaging library.  Added missing "requires += ami".
 
 Sun Jun 20 12:33:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ftrteventchannel.mpb:
+        * bin/MakeProjectCreator/config/ftrteventchannel.mpb:
 
-	  The FTRT_EventChannel requires CORBA messaging support.  Added
-	  missing "requires += corba_messaging" to this base project.
+          The FTRT_EventChannel requires CORBA messaging support.  Added
+          missing "requires += corba_messaging" to this base project.
 
 Sun Jun 20 12:17:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/event.mpb:
-	* bin/MakeProjectCreator/config/ftrtevent.mpb:
+        * bin/MakeProjectCreator/config/event.mpb:
+        * bin/MakeProjectCreator/config/ftrtevent.mpb:
 
-	  These base projects require minimum CORBA support to be
-	  disabled.  Projects that depend on these base projects must be
-	  aware of this.  Added an "avoids += minimum_corba" entry.
+          These base projects require minimum CORBA support to be
+          disabled.  Projects that depend on these base projects must be
+          aware of this.  Added an "avoids += minimum_corba" entry.
 
 Sun Jun 20 18:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -690,33 +720,33 @@ Sun Jun 20 00:25:17 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sat Jun 19 07:11:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
-	* ace/README:
-	* ace/config-chorus.h:
-	* ace/config-cygwin32.h:
-	* ace/config-integritySCA.h:
-	* ace/config-macosx-panther.h:
-	* ace/config-macosx.h:
-	* ace/config-psos-diab-mips.h:
-	* ace/config-psos-diab-ppc.h:
-	* ace/config-psos-diab.h:
-	* ace/config-psos-tm.h:
-	* ace/config-psosim-g++.h:
-	* ace/config-qnx-neutrino.h:
-	* ace/config-qnx-rtp-62x.h:
-	* ace/config-qnx-rtp-pre62x.h:
-	* ace/config-rtems.h:
-	* ace/config-tandem.h:
-	* ace/config-vxworks5.x.h:
-	  Changed ACE_LACKS_SYSV_MSG_H to ACE_LACKS_SYS_MSG_H.  Both
-	  were used in various places throughout ACE.
+        * configure.ac:
+        * m4/config_h.m4:
+        * ace/README:
+        * ace/config-chorus.h:
+        * ace/config-cygwin32.h:
+        * ace/config-integritySCA.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psosim-g++.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-rtems.h:
+        * ace/config-tandem.h:
+        * ace/config-vxworks5.x.h:
+          Changed ACE_LACKS_SYSV_MSG_H to ACE_LACKS_SYS_MSG_H.  Both
+          were used in various places throughout ACE.
 
 Sat Jun 19 11:23:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/minimumTAO.html:
+        * docs/minimumTAO.html:
 
-	  This document doesn't belong in ACE. Moving it to TAO/docs.
+          This document doesn't belong in ACE. Moving it to TAO/docs.
 
 Sat Jun 19 13:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -761,81 +791,81 @@ Sat Jun 19 07:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jun 18 18:36:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* docs/index.html: Changed title of the ACE-tutorial.pdf/ps link to
-	  say it's a tutorial, not the ACE programmer's guide, so as not to
-	  confuse this with "The ACE Programmer's Guide" (APG). Thanks to
-	  Johnny Willemsen for pointing out this confusion.
+        * docs/index.html: Changed title of the ACE-tutorial.pdf/ps link to
+          say it's a tutorial, not the ACE programmer's guide, so as not to
+          confuse this with "The ACE Programmer's Guide" (APG). Thanks to
+          Johnny Willemsen for pointing out this confusion.
 
-	* docs/ACE-tutorials.html: Removed. All of the pertinent information
-	  is on the index.html page.
+        * docs/ACE-tutorials.html: Removed. All of the pertinent information
+          is on the index.html page.
 
 Fri Jun 18 12:42:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS_NS_time.cpp:
-	* ace/OS_NS_time.inl:
-	* ace/OS_NS_time.h:
-	  Changed GNU C version of readPPCTimeBase() so it can be
-	  inlined in ACE_OS::gethrtime() and compiled on Mac OS X
-	  where "r" register prefixes are required in inline asm.
+        * ace/OS_NS_time.cpp:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_time.h:
+          Changed GNU C version of readPPCTimeBase() so it can be
+          inlined in ACE_OS::gethrtime() and compiled on Mac OS X
+          where "r" register prefixes are required in inline asm.
 
 Fri Jun 18 12:04:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACE_INSTALL.html:
-	  Added description of --enable-ipv6 and --enable-ipv4-ipv6
-	  flags.
+        * ACE_INSTALL.html:
+          Added description of --enable-ipv6 and --enable-ipv4-ipv6
+          flags.
 
-	* m4/ace.m4:
-	  Added --enable-ipv6 flag which sets ACE_HAS_IPV6.
-	  Added --enable-ipv4-ipv6 flag which sets
-	  ACE_USES_IPV4_IPV6_MIGRATION.
+        * m4/ace.m4:
+          Added --enable-ipv6 flag which sets ACE_HAS_IPV6.
+          Added --enable-ipv4-ipv6 flag which sets
+          ACE_USES_IPV4_IPV6_MIGRATION.
 
-	* m4/config_h.m4:
-	  Added ACE_USES_IPV4_IPV6_MIGRATION template.
+        * m4/config_h.m4:
+          Added ACE_USES_IPV4_IPV6_MIGRATION template.
 
 Fri Jun 18 10:23:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ACE-INSTALL.html:
+        * ACE-INSTALL.html:
 
-	  Updated some more URLs, and improved formatting of some text.
+          Updated some more URLs, and improved formatting of some text.
 
 Fri Jun 18 11:49:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/ACE-inheritance.pdf:
-	* docs/ACE-inheritance.ps.gz:
+        * docs/ACE-inheritance.pdf:
+        * docs/ACE-inheritance.ps.gz:
 
-	  These are simply out dated files. Doxygen produces better
-	  things. Users should refer to doxygen and not this.
+          These are simply out dated files. Doxygen produces better
+          things. Users should refer to doxygen and not this.
 
 Fri Jun 18 11:47:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* docs/ACE-SSL.html:
-	* docs/ACE-bug-process.html:
-	* docs/ACE-development-process.html:
-	* docs/ACE-guidelines.html:
-	* docs/ACE-porting.html:
-	* docs/msvc_notes.txt:
-	* docs/usage-bugzilla.html:
+        * docs/ACE-SSL.html:
+        * docs/ACE-bug-process.html:
+        * docs/ACE-development-process.html:
+        * docs/ACE-guidelines.html:
+        * docs/ACE-porting.html:
+        * docs/msvc_notes.txt:
+        * docs/usage-bugzilla.html:
 
-	  Updated all these documents with new links. Tried removing
-	  outdated information as much as possible.
+          Updated all these documents with new links. Tried removing
+          outdated information as much as possible.
 
 Fri Jun 18 10:12:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* ACE-INSTALL.html:
+        * ACE-INSTALL.html:
 
-	  Updated ACE-INSTALL with information about a bunch of things
-	  related to MPC. Haven't updated anything about using MPC other
-	  than pointing out the documentation. Need to see what else
-	  should be added.
+          Updated ACE-INSTALL with information about a bunch of things
+          related to MPC. Haven't updated anything about using MPC other
+          than pointing out the documentation. Need to see what else
+          should be added.
 
-	* docs/msvc_notes.txt:
+        * docs/msvc_notes.txt:
 
-	  Updated this file about the location of libraries.
+          Updated this file about the location of libraries.
 
-	* include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
 
-	  Added documentation for the option stlport=1 which can be used
-	  in platform_macros.GNU.
+          Added documentation for the option stlport=1 which can be used
+          in platform_macros.GNU.
 
 Fri Jun 18 11:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -853,73 +883,73 @@ Fri Jun 18 10:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 17 21:54:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/configure.ac:
-	  Changed ACE_LACKS_UNIX_DOMAIN_SOCKETS check to #include
-	  <sys/types.h> before <sys/un.h>; it is required by many
-	  systems.
+        * ace/configure.ac:
+          Changed ACE_LACKS_UNIX_DOMAIN_SOCKETS check to #include
+          <sys/types.h> before <sys/un.h>; it is required by many
+          systems.
 
 Thu Jun 17 22:10:18 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Timer_Wheel_T.cpp:
+        * ace/Timer_Wheel_T.cpp:
 
           Fixed recalc_earliest() to remember the spoke with the earliest
- 	  time not from the current wheel iteration.  If the entire wheel
- 	  is searched and no earliest time from the current iteration is
- 	  found, then the remembered spoke is the earliest_spoke_.  Thanks
- 	  to Ken Descoteaux <ken@proquent.com> for this fix.  This fixes
- 	  bugid 1853.
+          time not from the current wheel iteration.  If the entire wheel
+          is searched and no earliest time from the current iteration is
+          found, then the remembered spoke is the earliest_spoke_.  Thanks
+          to Ken Descoteaux <ken@proquent.com> for this fix.  This fixes
+          bugid 1853.
 
 Thu Jun 17 12:48:09 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/configure.ac:
-	  Added small part of change:
-	  Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
-	  that was not committed at the time.
+        * ace/configure.ac:
+          Added small part of change:
+          Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+          that was not committed at the time.
 
-	* ace/OS_NS_time.h:
-	  Changed to avoid use of gettimeofday() for timezone info
-	  on *BSD systems.  Changed to always call tzset() for all
-	  systems that get timezone info from global variable.
-	  This fixes bugzilla bug 1845.
+        * ace/OS_NS_time.h:
+          Changed to avoid use of gettimeofday() for timezone info
+          on *BSD systems.  Changed to always call tzset() for all
+          systems that get timezone info from global variable.
+          This fixes bugzilla bug 1845.
 
 Thu Jun 17 09:19:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
-	  Added checks for pthread_suspend(), pthread_suspend_np(),
-	  pthread_continue(), pthread_continue_np(), and pthread_
-	  resume_np() which set ACE_HAS_PTHREAD_SUSPEND, etc...
+        * configure.ac:
+        * m4/config_h.m4:
+          Added checks for pthread_suspend(), pthread_suspend_np(),
+          pthread_continue(), pthread_continue_np(), and pthread_
+          resume_np() which set ACE_HAS_PTHREAD_SUSPEND, etc...
 
-	* ace/OS_NS_Thread.inl:
-	  Changed to call pthread_suspend_np(), pthead_continue_np(), or
-	  pthread_resume_np() as appropriate, depending on the values of
-	  the above macros.
-	  This fixes bugzilla bug 1839.
+        * ace/OS_NS_Thread.inl:
+          Changed to call pthread_suspend_np(), pthead_continue_np(), or
+          pthread_resume_np() as appropriate, depending on the values of
+          the above macros.
+          This fixes bugzilla bug 1839.
 
 Thu Jun 17 11:52:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_SOCK_Stream.cpp:
-	* examples/C++NPv2/AC_CLient_Logging_Daemon.cpp:
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
-	* tests/CDR_Array_Test.cpp:
-	* tests/CDR_File_Test.cpp:
-	* tests/CDR_Test.cpp:
-	* tests/Config_Test.cpp:
-	* tests/MEM_Stream_Test.cpp:
-	* tests/Pipe_Test.cpp:
-	* tests/Proactor_Test.cpp:
-	* tests/Proactor_Test_IPV6.cpp:
-	* tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
-	  Added needed includes to fix AIX Visual Age C++ compile problems.
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+        * examples/C++NPv2/AC_CLient_Logging_Daemon.cpp:
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+        * tests/CDR_Array_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Config_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+          Added needed includes to fix AIX Visual Age C++ compile problems.
 
 Thu Jun 17 09:43:49 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* docs/ACE-porting.html: Updated this file so that it mentions
-	  CIAO and also provides additional information on porting
- 	  logistics for people who want to contribute a port back to the
- 	  DOC group.  Thanks to Thomas Rohner <thomas.rohner@hp.com>
-	  for motivating this.
+        * docs/ACE-porting.html: Updated this file so that it mentions
+          CIAO and also provides additional information on porting
+          logistics for people who want to contribute a port back to the
+          DOC group.  Thanks to Thomas Rohner <thomas.rohner@hp.com>
+          for motivating this.
 
 Thu Jun 17 09:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -931,7 +961,7 @@ Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
         * configure.ac:
         * m4/config_h.m4:
           Added check for getifaddrs() which sets ACE_HAS_GETIFADDRS if it
-	  does not exist.
+          does not exist.
 
         * configure.ac:
         * m4/config_h.m4:
@@ -952,73 +982,73 @@ Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Wed Jun 16 16:51:52 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_Context.h: Changed include of os_include/os_pthread.h to
-	  OS_NS_Thread.h so ACE_mutex_t is picked up correctly on all
-	  platforms.
+        * ace/SSL/SSL_Context.h: Changed include of os_include/os_pthread.h to
+          OS_NS_Thread.h so ACE_mutex_t is picked up correctly on all
+          platforms.
 
-	* ace/SSL/SSL_SOCK_Acceptor.cpp:
-	* ace/SSL/SSL_SOCK_Connector.cpp:
-	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
-	* tests/SOCK_Test_IPv6.cpp:
-	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
-	* tests/Proactor_Test_IPV6.cpp: Added missing #include directives
-	  to fix compiler errors.
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * tests/SOCK_Test_IPv6.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/Proactor_Test_IPV6.cpp: Added missing #include directives
+          to fix compiler errors.
 
 Wed Jun 16 15:02:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_Acceptor.cpp:
-	* ace/Get_Opt.cpp:
-	* ace/MEM_Acceptor.cpp:
-	* ace/SOCK_SEQPACK_Acceptor.cpp:
-	* ace/SOCK_SEQPACK_Association.cpp:
-	* ace/SOCK_SEQPACK_Connector.cpp:
-	* ACEXML/common/SAXExceptions.cpp:
-	* ACEXML/common/URL_Addr.cpp:
-	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
-	* examples/C++NPv2/display_logfile.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
-	* examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
-	* examples/Logger/Acceptor-server/server_loggerd.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp:
-	* examples/Synch/proc_sema.cpp:
-	* netsvcs/lib/Client_Logging_Handler.cpp:
-	* performance-tests/Misc/basic_perf.cpp:
-	* performance-tests/TCP/tcp_test.cpp:
-	* performance-tests/UDP/udp_test.cpp: Added missing #include
-	  directives to fix compile errors on AIX Visual Age C++.
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ace/SOCK_SEQPACK_Association.cpp:
+        * ace/SOCK_SEQPACK_Connector.cpp:
+        * ACEXML/common/SAXExceptions.cpp:
+        * ACEXML/common/URL_Addr.cpp:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv2/display_logfile.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp:
+        * examples/Synch/proc_sema.cpp:
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * performance-tests/Misc/basic_perf.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * performance-tests/UDP/udp_test.cpp: Added missing #include
+          directives to fix compile errors on AIX Visual Age C++.
 
-	* ace/Flag_Manip.h: Added #include "ace/os_include/os_fcntl.h" to
-	  make the values for ACE_Flag_Manip available to callers.
+        * ace/Flag_Manip.h: Added #include "ace/os_include/os_fcntl.h" to
+          make the values for ACE_Flag_Manip available to callers.
 
-	* ace/POSIX_Proactor.cpp:
-	* ace/POSIX_Asynch_IO.cpp: Added #include "ace/Flag_Manip.h" and
-	  changed ACE::set_flags() to ACE_Flag_Manip::set_flags().
+        * ace/POSIX_Proactor.cpp:
+        * ace/POSIX_Asynch_IO.cpp: Added #include "ace/Flag_Manip.h" and
+          changed ACE::set_flags() to ACE_Flag_Manip::set_flags().
 
-	* Kokyu/DSRT_Dispatcher_Impl_T.h: Added #includes to pick up needed
-	  declarations for ACE_SYNCH_RECURSIVE_MUTEX.
+        * Kokyu/DSRT_Dispatcher_Impl_T.h: Added #includes to pick up needed
+          declarations for ACE_SYNCH_RECURSIVE_MUTEX.
 
 Wed Jun 16 12:48:21 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_unistd.inl (access): Fixed the ACE_HAS_WINCE part of this
-	  to check the opened handle for 0,  not ACE_INVALID_HANDLE, since it's
-	  a FILE *, not a handle. With this fix, the WinCE part and the VxWorks
-	  part are the same, so they were combined.
+        * ace/OS_NS_unistd.inl (access): Fixed the ACE_HAS_WINCE part of this
+          to check the opened handle for 0,  not ACE_INVALID_HANDLE, since it's
+          a FILE *, not a handle. With this fix, the WinCE part and the VxWorks
+          part are the same, so they were combined.
 
-	* tests/OS_Test.cpp: Added access_test() to test ACE_OS::access()
-	  features.
+        * tests/OS_Test.cpp: Added access_test() to test ACE_OS::access()
+          features.
 
 Wed Jun 16 06:58:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
-	  Fixed typo.
+        * ace/Makefile.am:
+          Fixed typo.
 
 Wed Jun 16 12:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1090,14 +1120,14 @@ Wed Jun 16 08:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Tue Jun 15 23:31:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-	  Changed ACE_HAS_UCONTEXT_T test to include <signal.h> and
-	  <ucontext.h> (if it exists).
-	  This fixes bugzilla bug 1844.
+          Changed ACE_HAS_UCONTEXT_T test to include <signal.h> and
+          <ucontext.h> (if it exists).
+          This fixes bugzilla bug 1844.
 
         * configure.ac:
           Set ACE_SIG_MACROS if any of sigemptyset, sigdelset, sigaddset,
           sigdelset, or sigismember are macros.
-	  This fixes bugzilla bug 1836.
+          This fixes bugzilla bug 1836.
 
 Wed Jun 16 06:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1109,10 +1139,10 @@ Wed Jun 16 06:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 15 22:11:09 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/IOStream/client/iostream_client.cpp:
+        * examples/IOStream/client/iostream_client.cpp:
 
-	  Added missing "ace/OS_NS_stdlib.h" and "ace/OS_NS_unistd.h"
-	  includes.
+          Added missing "ace/OS_NS_stdlib.h" and "ace/OS_NS_unistd.h"
+          includes.
 
 Tue Jun 15 20:27:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -1151,20 +1181,20 @@ Tue Jun 15 08:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 14 16:46:35 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* include/makeinclude/rules.local.GNU:
-	* bin/DependencyGenerator/GNUObjectGenerator.pm:
-	* bin/DependencyGenerator/GNUDependencyWriter.pm:
-	  Generated dependencies that do not depend on the particular
-	  values of VDIR, VSHDIR, OBJEXT and SOEXT at the time of the
-	  dependency generation.  Using the values is silly, as they can
-	  easily be expanded when the dependencies are used.  This new
-	  style makes dependencies "portable."
+        * include/makeinclude/rules.local.GNU:
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+        * bin/DependencyGenerator/GNUDependencyWriter.pm:
+          Generated dependencies that do not depend on the particular
+          values of VDIR, VSHDIR, OBJEXT and SOEXT at the time of the
+          dependency generation.  Using the values is silly, as they can
+          easily be expanded when the dependencies are used.  This new
+          style makes dependencies "portable."
 
-	* bin/DependencyGenerator/Preprocessor.pm:
-	  Only consider lines that match '^\s*#', preprocessor directives
-	  follow that pattern.  The old code could have added #includes
-	  inside comments (except that most comments were stripped.)
-	  Reduce the depth of those nested ifs() a little bit.
+        * bin/DependencyGenerator/Preprocessor.pm:
+          Only consider lines that match '^\s*#', preprocessor directives
+          follow that pattern.  The old code could have added #includes
+          inside comments (except that most comments were stripped.)
+          Reduce the depth of those nested ifs() a little bit.
 
 Mon Jun 14 20:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1178,10 +1208,10 @@ Mon Jun 14 19:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 14 13:58:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* docs/ACE-guidelines.html: Updated the guidelines to
-	  recommend the use of ".inl" suffices for inline files, rather
- 	  than ".i".  Thanks to Patrick Bennett <patrick.bennett@inin.com>
- 	  for motivating this change.
+        * docs/ACE-guidelines.html: Updated the guidelines to
+          recommend the use of ".inl" suffices for inline files, rather
+          than ".i".  Thanks to Patrick Bennett <patrick.bennett@inin.com>
+          for motivating this change.
 
 Mon Jun 14 18:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1550,16 +1580,16 @@ Mon Jun 14 13:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 14 08:28:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* docs/ACE-development-process.html: The link to
+        * docs/ACE-development-process.html: The link to
 
-	  http://ace.cs.wustl.edu/bugs/index.cgi
+          http://ace.cs.wustl.edu/bugs/index.cgi
 
           should point to
 
           http://deuce.doc.wustl.edu/bugzilla/index.cgi
 
           Thanks to Patrick Bennett <Patrick.Bennett@inin.com> for
- 	  reporting this.
+          reporting this.
 
 Mon Jun 14 11:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1613,8 +1643,8 @@ Mon Jun 14 11:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun 13 15:44:23 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tests/Message_Queue_Test.cpp: Enhanced this test so that it
-	  checks to see whether dequeue_prio() works properly.
+        * tests/Message_Queue_Test.cpp: Enhanced this test so that it
+          checks to see whether dequeue_prio() works properly.
 
 Sun Jun 13 18:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1754,24 +1784,24 @@ Sun Jun 13 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jun 12 17:16:53 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Message_Queue_T.cpp (dequeue_prio_i): Change the use of
-	 < to <= so that we'll find the earliest message in a group of
- 	  messages with the same priority to preserve FIFO order.  Thanks
- 	  to Olivier Brunet <o.brunet@free.fr> for reporting this problem.
+        * ace/Message_Queue_T.cpp (dequeue_prio_i): Change the use of
+         < to <= so that we'll find the earliest message in a group of
+          messages with the same priority to preserve FIFO order.  Thanks
+          to Olivier Brunet <o.brunet@free.fr> for reporting this problem.
 
-	* ace/Message_Queue_T.h (class ACE_Message_Queue): Updated the
-	  documentation to be accurate about preserving FIFO order within
- 	  a priority level.
+        * ace/Message_Queue_T.h (class ACE_Message_Queue): Updated the
+          documentation to be accurate about preserving FIFO order within
+          a priority level.
 
-	* ace/Message_Queue_T.cpp (enqueue_i): Fixed an incorrect comment
-	  - the tail is where the lowest priority message is and the head
-	  is where the higest priority message is!
+        * ace/Message_Queue_T.cpp (enqueue_i): Fixed an incorrect comment
+          - the tail is where the lowest priority message is and the head
+          is where the higest priority message is!
 
 Fri Jun 11 17:16:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/README.tutorials:
+        * docs/README.tutorials:
 
-	  New README file pointing users to C++NPv{1,2} and APG examples.
+          New README file pointing users to C++NPv{1,2} and APG examples.
 
 Fri Jun 11 14:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1787,41 +1817,41 @@ Fri Jun 11 13:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 10 21:40:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/tutorials:
+        * docs/tutorials:
 
-	  Removed obsolete ACE tutorials.  They are not maintained, and
-	  have been superseded by the C++NPv{1,2} and APG examples in
-	  their corresponding `ACE_wrappers/examples' directories.
+          Removed obsolete ACE tutorials.  They are not maintained, and
+          have been superseded by the C++NPv{1,2} and APG examples in
+          their corresponding `ACE_wrappers/examples' directories.
 
 Thu Jun 10 18:41:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* apps/JAWS3/jaws3/Asynch_IO.cpp:
-	* apps/JAWS3/jaws3/IO.h:
-	* apps/JAWS3/jaws3/Config_File.cpp:
-	* apps/JAWS3/jaws3/Datagram.h:
-	* apps/JAWS3/jaws3/Export.h:
-	* apps/JAWS3/jaws3/Options.cpp:
-	* apps/JAWS3/jaws3/Protocol_Handler.h:
-	* apps/JAWS3/jaws3/Symbol_Table.h
-	* apps/JAWS3/jaws3/Synch_IO.cpp:
-	* apps/JAWS3/jaws3/THYBRID_Concurrency.cpp:
-	* apps/JAWS3/jaws3/TPOOL_Concurrency.cpp:
-	* apps/JAWS3/jaws3/TPR_Concurrency.cpp:
-	* apps/JAWS3/jaws3/Task_Timer.h:
-	* apps/JAWS3/jaws3/Templates.cpp:
-	* apps/JAWS3/jaws3/Timer.h:
-	* apps/JAWS3/jaws3/Timer_Helpers.h:
-	* examples/APG/Misc_IPC/UDP_Broadcast.cpp:
-	* examples/APG/Misc_IPC/UDP_Multicast.cpp:
-	* examples/APG/Misc_IPC/UDP_Unicast.cpp:
-	* examples/APG/Shared_Memory/Mem_Map.cpp:
-	* examples/APG/Svc_Config/HA_Configurable_Server_Dynamic.cpp:
-	* examples/APG/Svc_Config/HA_Configurable_Server_Static.cpp:
-	* examples/APG/Svc_Config/HA_Status_Dynamic.cpp:
-	* examples/APG/Svc_Config/HA_Status_Static.cpp:
-	* examples/APG/ThreadManagement/Async_Cancel.cpp:
-	  Don't include "ace/OS.h" - it screws up HP aC++ and somehow starts
-	  complaining about mismatched t_bind things in OS_TLI.inl. Weird.
+        * apps/JAWS3/jaws3/Asynch_IO.cpp:
+        * apps/JAWS3/jaws3/IO.h:
+        * apps/JAWS3/jaws3/Config_File.cpp:
+        * apps/JAWS3/jaws3/Datagram.h:
+        * apps/JAWS3/jaws3/Export.h:
+        * apps/JAWS3/jaws3/Options.cpp:
+        * apps/JAWS3/jaws3/Protocol_Handler.h:
+        * apps/JAWS3/jaws3/Symbol_Table.h
+        * apps/JAWS3/jaws3/Synch_IO.cpp:
+        * apps/JAWS3/jaws3/THYBRID_Concurrency.cpp:
+        * apps/JAWS3/jaws3/TPOOL_Concurrency.cpp:
+        * apps/JAWS3/jaws3/TPR_Concurrency.cpp:
+        * apps/JAWS3/jaws3/Task_Timer.h:
+        * apps/JAWS3/jaws3/Templates.cpp:
+        * apps/JAWS3/jaws3/Timer.h:
+        * apps/JAWS3/jaws3/Timer_Helpers.h:
+        * examples/APG/Misc_IPC/UDP_Broadcast.cpp:
+        * examples/APG/Misc_IPC/UDP_Multicast.cpp:
+        * examples/APG/Misc_IPC/UDP_Unicast.cpp:
+        * examples/APG/Shared_Memory/Mem_Map.cpp:
+        * examples/APG/Svc_Config/HA_Configurable_Server_Dynamic.cpp:
+        * examples/APG/Svc_Config/HA_Configurable_Server_Static.cpp:
+        * examples/APG/Svc_Config/HA_Status_Dynamic.cpp:
+        * examples/APG/Svc_Config/HA_Status_Static.cpp:
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+          Don't include "ace/OS.h" - it screws up HP aC++ and somehow starts
+          complaining about mismatched t_bind things in OS_TLI.inl. Weird.
 
 Thu Jun 10 19:41:02 2004  Olli Savia  <ops@iki.fi>
 
@@ -2396,7 +2426,7 @@ Mon May 17 19:19:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
         * tests/SOCK_Dgram_Bcast_Test.cpp (run_auto_test):
 
           Removed warning on declared, but not used function. Added
-	  OS_NS_unistd.h include to make sure ACE_OD::sleep is declared.
+          OS_NS_unistd.h include to make sure ACE_OD::sleep is declared.
 
 Mon May 17 13:22:18 2004  Steve Huston  <shuston@riverace.com>
 
@@ -2512,12 +2542,12 @@ Sat May 15 19:48:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * ace/Sock_Connect.cpp (get_bcast_addr):
           The loop over interfaces was buggy the same way as previously in
-	  mk_broadcast. Fixed. It seems sa_len is serious portability
-	  problem. Shall ACE_HAS_SA_LEN macro be defined and respected?
+          mk_broadcast. Fixed. It seems sa_len is serious portability
+          problem. Shall ACE_HAS_SA_LEN macro be defined and respected?
 
         * ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
           FreeBSD also has sockaddr.sa_len, hence the loop over interfaces
-	  shall work correctly.
+          shall work correctly.
 
 Sat May 15 19:48:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
@@ -3035,9 +3065,9 @@ Sun May 9 16:07:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * bin/fuzz.pl:
           Script checks now if file names are not too long. Names
-	  exceeding 50 characters are classified as an error (QNX limit),
-	  MPC files longer than 30 characters lead to warnings as MPC can
-	  add some characters eg. .depend.GNUmakefile.
+          exceeding 50 characters are classified as an error (QNX limit),
+          MPC files longer than 30 characters lead to warnings as MPC can
+          add some characters eg. .depend.GNUmakefile.
 
 Sun May  9 13:20:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

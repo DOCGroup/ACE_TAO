@@ -334,7 +334,7 @@ ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
 endif
 INSBIN          ?= $(ACE_ROOT)/bin
 INSINC          ?= $(ACE_ROOT)/ace
-INSLIB          ?= $(ACE_ROOT)/ace
+INSLIB          ?= $(ACE_ROOT)/lib
 INSMAN          ?= $(ACE_ROOT)/man
 
 ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
