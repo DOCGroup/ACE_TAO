@@ -1,3 +1,39 @@
+Tue Nov 26 17:03:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Typecode.cpp:
+
+          Changed handling of valuetypes to skip a long when skipping the
+          valuetype typecode members ValueModifier and Visibility.
+          Even though these quanitities are defined as constant short types
+          by the spec, the IDL compiler creates typecodes with a hard-coded
+          array of longs. Skipping a short can cause an alignment problem depending
+          on what comes previously in the CDR stream. Thanks to Pablo d'Angelo
+          <pablo@mathematik.uni-ulm.de> for reporting the problem and for
+          sending in example code.
+
+        * tests/OBV/TC_Alignment/Makefile:
+        * tests/OBV/TC_Alignment/Makefile.bor:
+        * tests/OBV/TC_Alignment/OBV TC Alignment Client.dsp:
+        * tests/OBV/TC_Alignment/OBV TC Alignment Server.dsp:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/OBV/TC_Alignment/README:
+        * tests/OBV/TC_Alignment/TC_Alignment.dsw:
+        * tests/OBV/TC_Alignment/client.bor:
+        * tests/OBV/TC_Alignment/client.cpp:
+        * tests/OBV/TC_Alignment/run_test.pl:
+        * tests/OBV/TC_Alignment/server.bor:
+        * tests/OBV/TC_Alignment/server.cpp:
+        * tests/OBV/TC_Alignment/test.idl:
+        * tests/OBV/TC_Alignment/test_i.cpp:
+        * tests/OBV/TC_Alignment/test_i.h:
+
+          New test added to check for recurrence of the above problem.
+
+        * tests/OBV/Makefile:
+        * tests/OBV/Makefile.bor:
+
+          Added new test to parent directory makefiles.
+
 Wed Nov 27 12:30:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin:
@@ -186,6 +222,7 @@ Tue Nov 26 22:32:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  Thanks to Duane Binder <duane.binder@veritas.com> for donating
 	  this test case.
 
+>>>>>>> 1.896
 Tue Nov 26 16:03:52 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1020_Basic_Regression/run_test.pl:
