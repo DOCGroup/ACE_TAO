@@ -382,7 +382,10 @@ char
 TAO_Connector_Registry::object_key_delimiter (const char *ior)
 {
   if (!ior)
-    return 0; // Failure: Null IOR string pointer
+    {
+      errno = EINVAL;
+      return 0; // Failure: Null IOR string pointer
+    }
 
   TAO_ConnectorSetIterator first_connector = this->begin ();
   TAO_ConnectorSetIterator last_connector =  this->end ();

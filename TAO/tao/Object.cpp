@@ -110,7 +110,12 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          EINVAL),
+                        CORBA::COMPLETED_NO),
+                      _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -224,12 +229,22 @@ CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
 // TAO's extensions
 
 TAO_ObjectKey *
-CORBA::Object::_key (CORBA::Environment &)
+CORBA::Object::_key (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
     return this->_stubobj ()->profile_in_use ()->_key ();
 
-  ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("(%P|%t) Null stub obj!!!\n")), 0);
+  if (TAO_debug_level > 2)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) Null object key return from ")
+                ACE_TEXT ("profile in use\n")));
+
+  ACE_THROW_RETURN (CORBA::INTERNAL (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        EINVAL),
+                      CORBA::COMPLETED_NO),
+                    0);
 }
 
 const TAO_ObjectKey &
@@ -288,7 +303,12 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
       // propagating the exception.
       TAO_Stub *istub = this->_stubobj ();
       if (istub == 0)
-        ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+                            CORBA_SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                          _tao_retval);
 
 
       TAO_GIOP_Twoway_Invocation _tao_call (
@@ -358,7 +378,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
   // Neither can we create a request object from locality constraint
   // object references.
   if (ctx || this->protocol_proxy_ == 0)
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+    ACE_THROW (CORBA::NO_IMPLEMENT ());
 
   ACE_NEW_THROW_EX (request,
                     CORBA::Request (this,
@@ -368,7 +388,11 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                     result,
                                     req_flags,
                                     ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_MAYBE));
 }
 
 void
@@ -397,7 +421,11 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                     result,
                                     req_flags,
                                     ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_MAYBE));
 }
 
 CORBA::Request_ptr
@@ -413,7 +441,11 @@ CORBA_Object::_request (const CORBA::Char *operation,
                                         this->protocol_proxy_->orb_core ()->orb (),
                                         operation,
                                         ACE_TRY_ENV),
-                        CORBA::NO_MEMORY ());
+                        CORBA::NO_MEMORY (
+                          CORBA_SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          ENOMEM),
+                        CORBA::COMPLETED_MAYBE));
       ACE_CHECK_RETURN (CORBA::Request::_nil ());
 
       return req;
@@ -431,7 +463,12 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          EINVAL),
+                        CORBA::COMPLETED_NO),
+                      _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -539,7 +576,11 @@ CORBA_Object::_set_policy_overrides (
                     CORBA_Object (stub,
                                   this->servant_,
                                   this->is_collocated_),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return obj;

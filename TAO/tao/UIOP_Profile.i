@@ -9,13 +9,6 @@ TAO_UIOP_Profile::object_key (void) const
   return this->object_key_;
 }
 
-ACE_INLINE TAO_ObjectKey &
-TAO_UIOP_Profile::object_key (TAO_ObjectKey& objkey)
-{
-  this->object_key_ = objkey;
-  return this->object_key_;
-}
-
 ACE_INLINE TAO_ObjectKey *
 TAO_UIOP_Profile::_key (void) const
 {
