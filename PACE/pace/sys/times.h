@@ -6,35 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    times.h
+ *    pace/sys/times.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_SYS_TIMES_H
 #define PACE_SYS_TIMES_H
 
-
-#include "pace/defines.h"
-#include <sys/times.h>
-
-
-# if defined (PACE_HAS_CPLUSPLUS)
-extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
-
-  PACE_INLINE clock_t pace_times (struct tms * buffer);
-
-# if defined (PACE_HAS_CPLUSPLUS)
-}
-# endif /* PACE_HAS_CPLUSPLUS */
-
-# if defined (PACE_HAS_INLINE)
-# include "times.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_POSIX)
+# include "posix/times.h"
+#elif defined (PACE_VXWORKS)
+# include "vxworks/times.h"
+#elif defined (PACE_WIN32)
+# include "win32/times.h"
+#endif
 
 #endif /* PACE_SYS_TIMES_H */
