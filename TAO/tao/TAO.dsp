@@ -1229,21 +1229,6 @@ SOURCE=.\Request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request_Mux_Strategy.cpp
-
-!IF  "$(CFG)" == "TAO - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -1410,6 +1395,21 @@ SOURCE=.\TimeBaseC.cpp
 # Begin Source File
 
 SOURCE=.\TimeBaseS.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Mux_Strategy.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
 
@@ -1828,10 +1828,6 @@ SOURCE=.\request.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request_Mux_Strategy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.h
 # End Source File
 # Begin Source File
@@ -1877,6 +1873,10 @@ SOURCE=.\TAO_Internal.h
 # Begin Source File
 
 SOURCE=.\Timeprobe.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Mux_Strategy.h
 # End Source File
 # Begin Source File
 
