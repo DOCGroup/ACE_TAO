@@ -125,7 +125,7 @@ namespace TAO
 
       /**/
 
-      RequestProcessingStrategyFactory *request_processing_strategy_factory_ =
+      request_processing_strategy_factory_ =
         ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyFactory");
 
       if (request_processing_strategy_factory_ == 0)
@@ -181,7 +181,7 @@ namespace TAO
           ACE_CHECK;
         }
 
-      if (thread_strategy_ != 0)
+      if (request_processing_strategy_ != 0)
         {
           request_processing_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
@@ -235,7 +235,7 @@ namespace TAO
           ACE_CHECK;
 
           request_processing_strategy_factory_->destroy (request_processing_strategy_);
-          servant_retention_strategy_ = 0;
+          request_processing_strategy_ = 0;
         }
 
       if (id_uniqueness_strategy_ != 0)
