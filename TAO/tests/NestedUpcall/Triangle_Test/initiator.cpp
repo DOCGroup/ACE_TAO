@@ -149,7 +149,7 @@ Initiator_Server::init (int argc,
       CORBA::Object_var object_A_obj_var =
         this->orb_manager_.orb()->string_to_object (this->object_A_key_,
                                                     ACE_TRY_ENV);
-      TAO_TRY_CHECK;
+      ACE_TRY_CHECK;
 
       this->object_A_var_ =
         Object_A::_narrow (object_A_obj_var.in(), ACE_TRY_ENV);
@@ -211,7 +211,7 @@ Initiator_Server::init (int argc,
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("initiator",
                                                  this->initiator_i_ptr_,
-                                                 env);
+                                                 ACE_TRY_ENV);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
