@@ -122,11 +122,11 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyAOMOnlyFactoryImpl
     );
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyDefaultServantFactoryImpl
     );
 
-#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyServantActivatorFactoryImpl
     );
