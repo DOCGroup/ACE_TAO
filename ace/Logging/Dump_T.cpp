@@ -4,7 +4,7 @@
 #ifndef ACE_DUMP_T_C
 #define ACE_DUMP_T_C
 
-#include "ace/Dump_T.h"
+#include "ace/Logging/Dump_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

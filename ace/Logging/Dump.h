@@ -52,7 +52,7 @@
 #define ACE_DUMP_H
 #include "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -162,7 +162,7 @@ private:
 };
 
 // Include the templates classes at this point.
-#include "ace/Dump_T.h"
+#include "ace/Logging/Dump_T.h"
 
 #include "ace/post.h"
 #endif /* ACE_DUMP_H */

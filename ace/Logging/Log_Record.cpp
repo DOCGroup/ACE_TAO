@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ace/Log_Record.h"
-#include "ace/Log_Msg.h"
+#include "ace/Logging/Log_Record.h"
+#include "ace/Logging/Log_Msg.h"
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -9,7 +9,7 @@
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-# include "ace/Log_Record.i"
+# include "ace/Logging/Log_Record.i"
 #endif
 
 ACE_RCSID(ace, Log_Record, "$Id$")

@@ -22,7 +22,7 @@
 
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
 
-#include "ace/Log_Msg_Backend.h"
+#include "ace/Logging/Log_Msg_Backend.h"
 
 /**
  * @class ACE_Log_Msg_UNIX_Syslog

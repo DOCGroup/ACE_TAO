@@ -9,23 +9,24 @@
 #endif /* ACE_NTRACE */
 #define ACE_NTRACE 1
 
+#include "ace/Logging/Trace.h"
 #include "ace/ACE.h"
-#include "ace/Thread_Manager.h"
-#include "ace/OS.h"
+#include "ace/Threads/Thread_Manager.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
-# include "ace/Object_Manager.h"
+# include "ace/Utils/Object_Manager.h"
 #endif /* ! ACE_MT_SAFE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-#include "ace/Log_Msg.h"
-#include "ace/Log_Msg_Callback.h"
-#include "ace/Log_Msg_IPC.h"
-#include "ace/Log_Msg_NT_Event_Log.h"
-#include "ace/Log_Msg_UNIX_Syslog.h"
+#include "ace/Logging/Log_Msg.h"
+#include "ace/Logging/Log_Msg_Callback.h"
+#include "ace/Logging/Log_Msg_IPC.h"
+#include "ace/Logging/Log_Msg_NT_Event_Log.h"
+#include "ace/Logging/Log_Msg_UNIX_Syslog.h"
 
 ACE_RCSID(ace, Log_Msg, "$Id$")
 

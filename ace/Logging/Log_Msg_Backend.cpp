@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Log_Msg_Backend.h"
+#include "ace/Logging/Log_Msg_Backend.h"
 
 ACE_RCSID(ace, Log_Msg_Backend, "$Id$")
 

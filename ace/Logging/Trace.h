@@ -14,7 +14,7 @@
 #define ACE_TRACE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 /**
  * @class ACE_Trace
