@@ -1,3 +1,15 @@
+Mon May  5 21:37:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block: Revised the release() logic for
+ 	  ACE_Message_Block and ACE_Data_Block so that we will delete both
+ 	  within the same block of code in order to hold the lock.  This
+ 	  should prevent nasty race conditions in multi-threaded programs.
+  	  Thanks to Craig Perras <craig.perras@CyberSafe.COM> for
+ 	  reporting this problem.
+
+	* ace/Message_Block.cpp: Replaced an explicit acquire()/release()
+ 	  of ACE_Lock::locking_strategy_ with a call to an ACE_Guard.
+
 Mon May 05 21:01:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-linux*.h: added ACE_HAS_STRING_CLASS.  Thanks to

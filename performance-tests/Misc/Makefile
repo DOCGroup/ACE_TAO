@@ -83,8 +83,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Containers.h \
+ $(WRAPPER_ROOT)/ace/Containers.i \
  $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/Mem_Map.i \
@@ -131,6 +131,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/ReactorEx.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/Hash_Map_Manager.h \
  $(WRAPPER_ROOT)/ace/Message_Queue.i \
  $(WRAPPER_ROOT)/ace/Task_T.i \
  $(WRAPPER_ROOT)/ace/High_Res_Timer.h \
@@ -200,8 +201,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/SString.i \
  $(WRAPPER_ROOT)/ace/Naming_Context.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Containers.h \
+ $(WRAPPER_ROOT)/ace/Containers.i \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.i \
@@ -275,6 +276,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Strategies.h \
  $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/Hash_Map_Manager.h \
  $(WRAPPER_ROOT)/ace/Message_Queue.i \
  $(WRAPPER_ROOT)/ace/ReactorEx.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
