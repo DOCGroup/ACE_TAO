@@ -52,20 +52,15 @@ public:
   virtual int server_connection_thread_flags (void);
   virtual int server_connection_thread_count (void);
 
-  /**
-   * If the ORB is single threaded or some form of ORB-per-thread then
-   * it is more efficient to use a Null_Mutex for the variables
-   * controlling the event loop (termination). Otherwise a
-   * Recursive_Thread_Mutex or Thread_Mutex may be required.
-   */
-  virtual ACE_Lock *create_event_loop_lock (void);
-
   /// Parse the arguments, check the documentation in
   /// $TAO_ROOT/docs/Options.html for details
   int parse_args (int argc, char *argv[]);
 
 protected:
   void tokenize (char *flag_string);
+
+  void report_option_value_error (const char* option_name,
+                                  const char* option_value);
 
 protected:
   /// Should the server connection handlers run in their own thread?
@@ -82,9 +77,6 @@ protected:
 
   /// The type of lock to be returned by <create_poa_lock()>.
   Lock_Type poa_lock_type_;
-
-  /// The type of lock to be returned by <create_event_loop_lock()>.
-  Lock_Type event_loop_lock_type_;
 
   /// The timeout flag and value for the thread-per-connection model
   int thread_per_connection_use_timeout_;

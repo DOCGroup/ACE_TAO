@@ -27,7 +27,7 @@
  * ORB.
  *
  * Many services and components of the ORB can be dynamically
- * loaded, often this components are returned to the application via
+ * loaded, often these components are returned to the application via
  * an object reference (CORBA::Object_ptr).  This class is used to
  * dynamically load such components, and encapsulate the creation of
  * the object reference.

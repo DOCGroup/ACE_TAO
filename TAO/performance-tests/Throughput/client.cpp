@@ -3,6 +3,7 @@
 #include "TestC.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
+#include "tao/Strategies/advanced_resource.h"
 
 ACE_RCSID(Throughput, client, "$Id$")
 

@@ -13,7 +13,6 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),
     thread_flags_ (THR_BOUND | THR_DETACHED),
     poa_lock_type_ (TAO_THREAD_LOCK),
-    event_loop_lock_type_ (TAO_NULL_LOCK),
     thread_per_connection_use_timeout_ (-1)
 {
 }
@@ -59,23 +58,6 @@ int
 TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
 {
   return 1;
-}
-
-ACE_Lock *
-TAO_Default_Server_Strategy_Factory::create_event_loop_lock (void)
-{
-  ACE_Lock *the_lock = 0;
-
-  if (this->event_loop_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
-                    0);
-  else
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX>,
-                    0);
-
-  return the_lock;
 }
 
 // Evil macros b/c I'm lazy!
@@ -144,6 +126,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             else if (ACE_OS::strcasecmp (name,
                                          "thread-per-connection") == 0)
               this->activate_server_connections_ = 1;
+            else
+              this->report_option_value_error ("-ORBConcurrency", name);
           }
       }
 
@@ -245,6 +229,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                          "linear") == 0)
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_user_id_policy_ =
                 TAO_LINEAR;
+            else
+              this->report_option_value_error ("-ORBUseridPolicyDemuxStrategy", name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -267,6 +253,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                          "active") == 0)
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ =
                 TAO_ACTIVE_DEMUX;
+            else
+              this->report_option_value_error ("-ORBSystemidPolicyDemuxStrategy", name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -286,6 +274,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                          "linear") == 0)
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_persistent_id_policy_ =
                 TAO_LINEAR;
+            else
+              this->report_option_value_error ("-ORBPersistentidPolicyDemuxStrategy", name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -308,6 +298,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                          "active") == 0)
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ =
                 TAO_ACTIVE_DEMUX;
+            else
+              this->report_option_value_error ("-ORBTransientidPolicyDemuxStrategy", name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -326,15 +318,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                          "linear") == 0)
               this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ =
                 TAO_LINEAR;
+            else
+              this->report_option_value_error ("-ORBUniqueidPolicyReverseDemuxStrategy", name);
           }
-      }
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBDemuxStrategy") == 0)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Warning: -ORBDemuxStrategy is deprecated.  Please use ")
-                    ACE_TEXT ("-ORBSystemidPolicyDemuxStrategy or -ORBUseridPolicyDemuxStrategy instead.\n")));
-        curarg++;
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBPOALock") == 0)
@@ -350,34 +336,10 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
               this->poa_lock_type_ = TAO_NULL_LOCK;
+            else
+              this->report_option_value_error ("-ORBPOALock", name);
           }
       }
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBEventLoopLock") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "thread") == 0)
-              this->event_loop_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name,
-                                         "null") == 0)
-              this->event_loop_lock_type_ = TAO_NULL_LOCK;
-          }
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBConnectorLock") == 0)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) WARNING: the ")
-                    ACE_TEXT ("-ORBConnectorLock option is in the client ")
-                    ACE_TEXT ("strategy factory now\n")));
-      }
-
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBThreadFlags") == 0)
       {
@@ -387,7 +349,35 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
           this->tokenize (argv[curarg]);
       }
 
+    else if (ACE_OS::strncmp (argv[curarg], "-ORB", 4) == 0)
+      {
+        // Can we assume there is an argument after the option?
+        // curarg++;
+        ACE_ERROR ((LM_ERROR,
+                    "Server_Strategy_Factory - "
+                    "unknown option <%s>\n",
+                    argv[curarg]));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Server_Strategy_Factory - "
+                    "ignoring option <%s>\n",
+                    argv[curarg]));
+      }
+
   return 0;
+}
+
+void
+TAO_Default_Server_Strategy_Factory::report_option_value_error (
+                                 const char* option_name,
+                                 const char* option_value)
+{
+  ACE_DEBUG((LM_DEBUG,
+             ACE_TEXT ("Server_Strategy_Factory - unknown argument")
+             ACE_TEXT (" <%s> for <%s>\n"),
+             option_value, option_name));
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

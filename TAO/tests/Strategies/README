@@ -8,7 +8,7 @@ the advanced TAO strategies are defined in
 tao/Strategies/advanced_resource.cpp. 
 
 	The advanced TAO strategies can be loaded dynamically or
-staticallu linked. To load these startegies dynamically, we need to
+statically linked. To load these strategies dynamically, we need to
 use the service configurator files. But, if we need to link them
 statically, we need to link the library and include the header file.
 

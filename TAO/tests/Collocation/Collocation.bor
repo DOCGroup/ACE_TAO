@@ -19,6 +19,7 @@ LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_STRATEGIES_LIB) \
 	$(BINDIR)\Diamond$(LIB_DECORATOR).lib \
 	$(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib
 

@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lRTCORBA_Common -lTAO_Strategies 
+LDLIBS = -lRTCORBA_Common
 
 BIN_UNCHECKED = server client
 
@@ -46,6 +46,9 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
+
+RT_TAO_SRVR_LIBS := -lTAO_Strategies $(RT_TAO_SRVR_LIBS)
+RT_TAO_CLNT_LIBS := -lTAO_Strategies $(RT_TAO_CLNT_LIBS)
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_SRVR_LIBS) $(LDLIBS) $(POSTLINK)

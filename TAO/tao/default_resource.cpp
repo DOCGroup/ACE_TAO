@@ -39,6 +39,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
     dynamically_allocated_reactor_ (0),
+    options_processed_ (0),
+    factory_disabled_ (0),
     cached_connection_lock_type_ (TAO_THREAD_LOCK),
     flushing_strategy_type_ (TAO_REACTIVE_FLUSHING)
 {
@@ -69,6 +71,17 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
 {
   ACE_TRACE ("TAO_Default_Resource_Factory::init");
 
+  // If this factory has already been disabled then
+  // print a warning and exit because any options
+  // are useless
+  if (this->factory_disabled_) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
+                ACE_TEXT ("Default Resource Factory is disabled\n")));
+    return 0;
+  }
+  this->options_processed_ = 1;
+  
   this->parser_names_count_ = 0;
 
   int curarg = 0;
@@ -113,6 +126,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             else if (ACE_OS::strcasecmp (name,
                                          "tss") == 0)
               this->use_tss_resources_ = 1;
+            else
+              this->report_option_value_error ("-ORBResources", name);
           }
       }
 
@@ -128,6 +143,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->reactor_mask_signals_ = 0;
             else if (ACE_OS::strcasecmp (name, "1") == 0)
               this->reactor_mask_signals_= 1;
+            else
+              this->report_option_value_error ("-ORBReactorMaskSignals", name);
           }
       }
 
@@ -174,9 +191,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->connection_caching_type_ =
                   TAO_Resource_Factory::NOOP;
             else
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO_Default_Factory - unknown argument")
-                          ACE_TEXT (" <%s> for -ORBConnectionCachingStrategy\n"), name));
+              this->report_option_value_error ("-ORBConnectionCachingStrategy", name);
           }
       }
 
@@ -187,9 +202,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
         if (curarg < argc)
             this->cache_maximum_ = ACE_OS::atoi (argv[curarg]);
         else
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO_Default_Factory - unknown argument")
-                       ACE_TEXT ("for -ORBConnectionCacheMax\n")));
+          this->report_option_value_error ("-ORBConnectionCacheMax", argv[curarg]);
       }
 
    else if (ACE_OS::strcasecmp (argv[curarg],
@@ -199,9 +212,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
         if (curarg < argc)
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
         else
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO_Default_Factory - unknown argument")
-                       ACE_TEXT ("for -ORBConnectionCachePurgePercentage\n")));
+          this->report_option_value_error ("-ORBConnectionCachePurgePercentage",
+                                           argv[curarg]);
       }
 
    else if (ACE_OS::strcasecmp (argv[curarg],
@@ -216,9 +228,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
         if (curarg < argc)
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
         else
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO_Default_Factory - unknown argument")
-                       ACE_TEXT ("for -ORBConnectionCachePurgePercentage\n")));
+          this->report_option_value_error ("-ORBPurgePercentage",
+                                           argv[curarg]);
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -247,11 +258,13 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                                          "null") == 0)
               {
                 // @@ Bug 940 :This is a sort of hack now. We need to put
-                // this in a common place once we get teh common
+                // this in a common place once we get the common
                 // switch that is documented in bug 940...
                 this->use_locked_data_blocks_  = 0;
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
+            else
+              this->report_option_value_error ("-ORBConnectionCacheLock", name);
           }
       }
 
@@ -279,6 +292,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                 this->use_locked_data_blocks_  = 0;
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
+            else
+              this->report_option_value_error ("-ORBConnectionLock", name);
           }
       }
 
@@ -306,6 +321,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                 this->use_locked_data_blocks_  = 0;
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
+            else
+              this->report_option_value_error ("-ORBConnectorLock", name);
           }
       }
 
@@ -323,7 +340,25 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             else if (ACE_OS::strcasecmp (name,
                                          "blocking") == 0)
               this->flushing_strategy_type_ = TAO_BLOCKING_FLUSHING;
+            else
+              this->report_option_value_error ("-ORBFlushingStrategy", name);
           }
+      }
+    else if (ACE_OS::strncmp (argv[curarg], "-ORB", 4) == 0)
+      {
+        // Can we assume there is an argument after the option?
+        // curarg++;
+        ACE_ERROR ((LM_ERROR,
+                    "Default_Resource_Factory - "
+                    "unknown option <%s>\n",
+                    argv[curarg]));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Default_Resource_Factory - "
+                    "ignoring option <%s>\n",
+                    argv[curarg]));
       }
 
   return 0;
@@ -853,6 +888,29 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
                   0);
 
   return strategy;
+}
+
+void
+TAO_Default_Resource_Factory::report_option_value_error (
+                                 const char* option_name,
+                                 const char* option_value)
+{
+  ACE_DEBUG((LM_DEBUG,
+             ACE_TEXT ("Default_Resource_Factory - unknown argument")
+             ACE_TEXT (" <%s> for <%s>\n"),
+             option_value, option_name));
+}
+
+void
+TAO_Default_Resource_Factory::disable_factory (void)
+{
+  this->factory_disabled_ = 1;
+  if (this->options_processed_)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
+                  ACE_TEXT ("Default Resource Factory is disabled\n")));
+    }
 }
 
 // ****************************************************************

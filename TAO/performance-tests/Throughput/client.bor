@@ -16,7 +16,8 @@ CFLAGS = \
 
 LIBFILES = \
 	$(ACE_LIB) \
-	$(TAO_LIB)
+	$(TAO_LIB) \
+	$(TAO_STRATEGIES_LIB)
 
 IDLFILES = \
         $(IDLDIR)\Test.idl

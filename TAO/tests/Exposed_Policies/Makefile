@@ -54,6 +54,8 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
+RT_TAO_SRVR_LIBS := -lTAO_Strategies $(RT_TAO_SRVR_LIBS)
+
 server: $(addprefix $(VDIR),$(SERVER_OBJ))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^  $(RT_TAO_SRVR_LIBS) $(POSTLINK)
 

@@ -15,6 +15,7 @@ MAKEFILE = Makefile.test
 
 LDLIBS = -lCollocation_Test_Stub \
          -lCollocation_Diamond \
+         -lTAO_Strategies \
          -lTAO_PortableServer \
          -lTAO
 
