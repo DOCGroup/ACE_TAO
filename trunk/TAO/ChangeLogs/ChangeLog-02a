@@ -1,3 +1,12 @@
+Sat Aug 19 13:50:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:	
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+	Made the formal arguments to the RequestInfo constructor unique to
+	resolve name clashing errors.
+	
 Fri Aug 18 23:20:56 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RTCORBA.pidl
