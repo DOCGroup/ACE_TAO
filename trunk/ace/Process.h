@@ -44,7 +44,6 @@ public:
 #endif /* ACE_WIN32 */
   };
 
-
 // Default settings not part of public Iface
 protected:
   enum {
