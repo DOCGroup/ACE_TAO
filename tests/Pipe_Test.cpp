@@ -55,7 +55,7 @@ parse_args (int argc, char *argv[])
       child_process = 1;
       break;
     case 'i':
-      iterations = atoi (get_opt.opt_arg ());
+      iterations = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     default:
       print_usage_and_die ();

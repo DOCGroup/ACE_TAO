@@ -124,7 +124,7 @@ Options::set_options (int argc, char *argv[])
           Options::set_opt (Options::USE_VERBOSE_FORMAT);
           break;
         case 'p':
-          Options::port_number = atoi (getopt.opt_arg ());
+          Options::port_number = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'R':
           Options::protocol_type = PROTO_RUSER;
@@ -139,7 +139,7 @@ Options::set_options (int argc, char *argv[])
           Options::set_opt (Options::SORT_BY_REAL_NAME);
           break;
         case 't':
-          Options::max_server_timeout = atoi (getopt.opt_arg ());
+          Options::max_server_timeout = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'w':
           Options::user_name = getopt.opt_arg ();

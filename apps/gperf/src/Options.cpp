@@ -328,7 +328,7 @@ Options::parse_args (int argc, char *argv[])
         case 'f':
           {
             ACE_SET_BITS (option_word_, FAST);
-            iterations_ = atoi (getopt.opt_arg ());
+            iterations_ = ACE_OS::atoi (getopt.opt_arg ());
             if (iterations_ < 0)
               {
                 ACE_ERROR ((LM_ERROR, "iterations value must not be negative, assuming 0\n"));
@@ -454,7 +454,7 @@ Options::parse_args (int argc, char *argv[])
         // Sets the initial value for the associated values array.
         case 'i':
           {
-            initial_asso_value_ = atoi (getopt.opt_arg ());
+            initial_asso_value_ = ACE_OS::atoi (getopt.opt_arg ());
             if (initial_asso_value_ < 0)
               ACE_ERROR ((LM_ERROR,
                           "Initial value %d should be non-zero, ignoring and continuing.\n",
@@ -472,7 +472,7 @@ Options::parse_args (int argc, char *argv[])
          // Sets the jump value, must be odd for later algorithms.
         case 'j':
           {
-            jump_ = atoi (getopt.opt_arg ());
+            jump_ = ACE_OS::atoi (getopt.opt_arg ());
             if (jump_ < 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Jump value %d must be a positive number.\n%r",
@@ -631,7 +631,7 @@ Options::parse_args (int argc, char *argv[])
         // Range of associated values, determines size of final table.
         case 's':
           {
-            size_ = atoi (getopt.opt_arg ());
+            size_ = ACE_OS::atoi (getopt.opt_arg ());
             if (abs (size_) > 50)
               ACE_ERROR ((LM_ERROR,
                           "%d is excessive, did you really mean this?! (type %n -h for help)\n",
@@ -642,7 +642,7 @@ Options::parse_args (int argc, char *argv[])
         case 'S':
           {
             ACE_SET_BITS (option_word_, SWITCH);
-            total_switches_ = atoi (getopt.opt_arg ());
+            total_switches_ = ACE_OS::atoi (getopt.opt_arg ());
             if (total_switches_ <= 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "number of switches %s must be a positive number\n%r",

@@ -81,8 +81,8 @@ int main (int argc, char *argv[])
        Give the user a chance to override the default number of
        iterations and pool threads.
      */
-  int iterations = argc > 1 ? atoi (argv[1]) : 4;
-  int threads = argc > 2 ? atoi (argv[2]) : 2;
+  int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : 4;
+  int threads = argc > 2 ? ACE_OS::atoi (argv[2]) : 2;
 
    /*
      Use the function above to do the actual test.  As I said, this

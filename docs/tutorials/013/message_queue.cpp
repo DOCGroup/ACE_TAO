@@ -63,11 +63,11 @@ int run_test (int iterations, int threads, int subtasks)
 int main (int argc, char *argv[])
 {
         // Number of Work objects to put into the Task pool
-    int iterations = argc > 1 ? atoi (argv[1]) : 4;
+    int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : 4;
         // Number of threads for each Task
-    int threads = argc > 2 ? atoi (argv[2]) : 2;
+    int threads = argc > 2 ? ACE_OS::atoi (argv[2]) : 2;
         // Number of tasks to chain after the primary task
-    int subtasks = argc > 3 ? atoi (argv[3]) : 1;
+    int subtasks = argc > 3 ? ACE_OS::atoi (argv[3]) : 1;
 
     (void) run_test (iterations, threads, subtasks);
 
