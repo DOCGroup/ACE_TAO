@@ -9,6 +9,7 @@
 #include "ace/SPIPE_Connector.h"
 #include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 #include "SPIPE-connector.h"
 
 ACE_RCSID(blocking, SPIPE_connector, "$Id$")
