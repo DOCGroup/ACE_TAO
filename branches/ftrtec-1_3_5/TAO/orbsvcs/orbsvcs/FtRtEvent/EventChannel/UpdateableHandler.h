@@ -21,6 +21,13 @@
 class AMI_Primary_Replication_Strategy;
 class Update_Manager;
 
+/**
+ * @class UpdateableHandler
+ *
+ * @brief Implementation of AMI callback object for Update interface.
+ *
+ */
+
 class UpdateableHandler : public  POA_FTRT::AMI_UpdateableHandler
 {
 public:

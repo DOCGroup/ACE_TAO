@@ -4,6 +4,7 @@
 #include "Request_Context_Repository.h"
 #include "Replication_Service.h"
 #include "../Utils/activate_with_id.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_ProxyPushConsumer,
@@ -58,6 +59,7 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected))
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_ProxyPushConsumer::connect_push_supplier");
   if (Request_Context_Repository().is_executed_request())
     return;
 

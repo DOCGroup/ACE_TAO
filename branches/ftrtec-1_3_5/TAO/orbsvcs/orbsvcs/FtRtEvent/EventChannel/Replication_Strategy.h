@@ -31,16 +31,31 @@ public:
   Replication_Strategy();
   virtual ~Replication_Strategy();
 
+  /**
+   * Check if the incoming set_update() request is out of sequence. This is only 
+   * used for basic replication strategy. 
+   */
   virtual void check_validity(ACE_ENV_SINGLE_ARG_DECL);
 
   typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
     (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+  /**
+   * Replicate a request.
+   *
+   * @param state The request to be replicated.
+   * @param rollback The rollback operation when the replication failed.
+   * @param oid The object id used for rollback operation.
+   */
   virtual void replicate_request(const FTRT::State& state,
                                  RollbackOperation rollback,
                                  const FtRtecEventChannelAdmin::ObjectId& oid
                                  ACE_ENV_ARG_DECL)=0;
 
+  /**
+   * Inform the backup replicas that a new replica has joined the object
+   * group.
+   */
   virtual void add_member(const FTRT::ManagerInfo & info,
                           CORBA::ULong object_group_ref_version
                           ACE_ENV_ARG_DECL)=0;

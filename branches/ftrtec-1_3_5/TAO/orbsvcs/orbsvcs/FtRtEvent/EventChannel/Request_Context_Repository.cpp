@@ -3,6 +3,7 @@
 #include "Request_Context_Repository.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/UUID.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            Request_Context_Repository,
@@ -39,6 +40,7 @@ void Request_Context_Repository::generate_object_id(
   FtRtecEventChannelAdmin::ObjectId& oid
   ACE_ENV_ARG_DECL)
 {
+  TAO_FTRTEC::Trace("Request_Context_Repository::generate_object_id");
   oid.length(sizeof(UUID));
   UUID::create(oid.get_buffer());
   set_object_id(oid
@@ -125,6 +127,8 @@ Request_Context_Repository::set_cached_result(
 CORBA::Any_ptr
 Request_Context_Repository::get_cached_result(ACE_ENV_SINGLE_ARG_DECL)
 {
+  TAO_FTRTEC::Trace("Request_Context_Repository::get_cached_result");
+
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
                                                ACE_ENV_ARG_PARAMETER);
@@ -138,6 +142,7 @@ Request_Context_Repository::get_cached_result(ACE_ENV_SINGLE_ARG_DECL)
 
 bool Request_Context_Repository::is_executed_request()
 {
+  TAO_FTRTEC::Trace("Request_Context_Repository::is_executed_request");
   ACE_TRY_NEW_ENV {
     CORBA::Any_var any = get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
