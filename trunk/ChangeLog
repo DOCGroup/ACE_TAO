@@ -1,3 +1,10 @@
+Sun May 16 12:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+          Print an info message in the TerminateWaitKill so that we can see in
+          the build log files that a process is tried to terminate.
+
 Sun May 16 12:47:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SOCK_Dgram_Bcast_Test.cpp:

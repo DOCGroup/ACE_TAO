@@ -273,6 +273,7 @@ sub TerminateWaitKill ($)
     my $timeout = shift;
 
     if ($self->{RUNNING}) {
+        print STDERR "INFO: $self->{EXECUTABLE} being killed.\n";
         kill ('TERM', $self->{PROCESS});
     }
 
