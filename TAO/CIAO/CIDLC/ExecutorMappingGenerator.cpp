@@ -1311,9 +1311,14 @@ namespace
     }
 
     virtual void
-    pre (Type&)
+    pre (Type& i)
     {
-      os << "local interface ";
+      //@@ This code temporarily generates typedef. Should be changed
+      //   when we have proper C++ generated code.
+      //
+      // os << "local interface ";
+      os << "typedef ";
+      Traversal::ComponentExecutor::implements (i, implements_traverser_);
     }
 
     virtual void
@@ -1321,24 +1326,24 @@ namespace
     {
       //@@ need to check if spec prescribes this name.
       //
-      os << i.name () << "_Context";
+      os << " " << i.name () << "_Context;";
     }
 
     virtual void
     implements (Type& i)
     {
-      os << " : ";
+      // os << " : ";
 
-      Traversal::ComponentExecutor::implements (i, implements_traverser_);
+      // Traversal::ComponentExecutor::implements (i, implements_traverser_);
 
-      os << ", "
-         << "::Components::SessionContext";
+      // os << ", "
+      //    << "::Components::SessionContext";
     }
 
     virtual void
     post (Type&)
     {
-      os << "{};";
+      // os << "{};";
     }
 
   private:
