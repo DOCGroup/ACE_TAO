@@ -90,6 +90,10 @@ public:
     }
     return ret;
   }
+  virtual int handle_events (ACE_Time_Value &max_wait_time)
+  {
+    return this->handle_events (&max_wait_time);
+  }
 };
 
 static int

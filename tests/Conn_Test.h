@@ -27,17 +27,4 @@ public:
 
   int close (u_long = 0);
   // Shutdown the <Svc_Handler>.
-
-  void in_use (int);
-  // Set the use flag (i.e., 1 means "in use", 0 means "not in use").
-
-  int in_use (void);
-  // Returns the current use flag.
-
-  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-		    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
-
-private:
-  int in_use_;
-  // Are we currently in use?
 };

@@ -34,19 +34,34 @@
 
 HASH_STRING_ENTRY::ACE_Hash_Map_Entry (char *const &ext_id,
                                        char *const &int_id,
-                                       HASH_STRING_ENTRY *ptr)
+                                       HASH_STRING_ENTRY *next,
+                                       HASH_STRING_ENTRY *prev)
   : ext_id_ (ACE_OS::strdup (ext_id)),
     int_id_ (ACE_OS::strdup (int_id)),
-    next_ (ptr)
+    next_ (next),
+    prev_ (prev)
 {
   ACE_DEBUG ((LM_DEBUG, "Creating `%s' and `%s'\n", ext_id_, int_id_));
 }
 
+HASH_STRING_ENTRY::ACE_Hash_Map_Entry (HASH_STRING_ENTRY *next,
+                                       HASH_STRING_ENTRY *prev)
+  : ext_id_ (0),
+    int_id_ (0),
+    next_ (next),
+    prev_ (prev)
+{
+}
+
 HASH_STRING_ENTRY::~ACE_Hash_Map_Entry (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Freeing `%s' and `%s'\n", ext_id_, int_id_));
-  ACE_OS::free (ext_id_);
-  ACE_OS::free (int_id_);
+  char *key = ext_id_;
+  char *value = int_id_;
+  
+  if (key != 0 && value != 0)
+    ACE_DEBUG ((LM_DEBUG, "Freeing `%s' and `%s'\n", key, value));
+  ACE_OS::free (key);
+  ACE_OS::free (value);
 }
 
 // We need this template specialization since KEY is defined as a

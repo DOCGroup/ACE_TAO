@@ -509,70 +509,60 @@ public:
   // This is a no-op.
 };
 
-template <class ADDR_T, class SVC_HANDLER>
+template <class ADDR_T>
 class ACE_Hash_Addr
   // = TITLE
   //     Internal class to compute hash values on addresses in
   //     <ACE_Cached_Connect_Strategy>.  
   //
   // = DESCRIPTION
-  //     Intended to be used as a key to an <ACE_Hash_Map_Manager>.  The
-  //     <SVC_HANDLER> class is expected to implement the following
-  //     methods:
-  // = BEGIN<INDENT>
-  // = BEGIN<CODE>
-  // int in_use() const;
-  // void in_use(int is_used);
-  // = END<CODE>
-  // = END<INDENT>
-  //     Likewise, the <ADDR_T> parameter/subclass is typically
-  //     <ACE_INET_Addr>.  It is expected to implement operator==().
+  //
+  //     Intended to be used as a key to an <ACE_Hash_Map_Manager>.
+  //     <ADDR_T> parameter/subclass is typically <ACE_INET_Addr>.  It
+  //     is expected to implement operator==().
 {
 public:
   // = Initialization methods.
   ACE_Hash_Addr (void);
   // Default constructor.
 
-  ACE_Hash_Addr (const ADDR_T &a, 
-		 SVC_HANDLER *sh = 0);
+  ACE_Hash_Addr (const ADDR_T &a);
   // Pre-compute hash value.
-
+  
+  ACE_Hash_Addr (const ADDR_T &a, int recyclable);
+  // Pre-compute hash value.
+  
   u_long hash (void) const;		
   // Computes and returns hash value.  This "caches" the hash value to
   // improve performance.
 
-  int operator== (const ACE_Hash_Addr<ADDR_T, SVC_HANDLER> &rhs) const;
+  int operator== (const ACE_Hash_Addr<ADDR_T> &rhs) const;
   // Compares two hash values.
 
-  operator ADDR_T& (void);
-  operator const ADDR_T& (void) const;
-  // Conversion operators allowing <ACE_Hash_Addr> to be used in place
-  // of an <{ADDR_T}>.
+  // = Set/Get the recyclable bit
+  int recyclable (void) const;
+  void recyclable (int new_value);
 
 private:
   size_t hash_i (const ADDR_T &) const;
   // This is the method that actually performs the non-cached hash
   // computation.  It should typically be specialized.
 
-  int compare_i (const ADDR_T &b1, const ADDR_T &bs) const;
-  // Compares two hash values.  This is the method that actually
-  // performs the non-cached hash computation.  It should typically be
-  // specialized.
-
   u_long hash_value_;		
   // Pre-computed hash-value.
 
-  SVC_HANDLER *svc_handler_;
-  // Pointer to associated <SVC_HANDLER> which is used to detect
-  // "in-use" <SVC_HANDLER>s so we can ignore them.  See <DESCRIPTION>
-  // for details on methods required on <SVC_HANDLER>.
+  int recyclable_;
+  // We need to know if the <SVC_HANDLER> is "in-use".  If it is, we
+  // can operator==() can skip the comparison.
 
   ADDR_T addr_;
   // The underlying address.
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
-class ACE_Cached_Connect_Strategy : public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+class ACE_Cached_Connect_Strategy 
+  : public ACE_Connection_Recycling_Strategy,
+    public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
   // = TITLE
   //     A connection strategy which caches connections to peers
   //     (represented by <SVC_HANDLER> instances), thereby allowing
@@ -603,6 +593,10 @@ class ACE_Cached_Connect_Strategy : public ACE_Connect_Strategy<SVC_HANDLER, ACE
   //     <ACE_Hash_Addr>.
 {
 public:
+
+  virtual ~ACE_Cached_Connect_Strategy (void);
+  // Destructor
+
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
 				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
 				   ACE_Time_Value *timeout,
@@ -623,8 +617,24 @@ public:
   // to consider enhancing the interface at some point so that this also
   // controls re-use of the cache.}>
 
+  virtual int purge (const void *recycling_act);
+  // Remove from cache.
+
+  virtual int cache (const void *recycling_act);
+  // Add to cache.
+
 private:
-  ACE_Hash_Map_Manager <ACE_Hash_Addr <ACE_PEER_CONNECTOR_ADDR,SVC_HANDLER>, SVC_HANDLER*, ACE_Null_Mutex> connection_cache_;  
+
+  // = Super class
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> CONNECT_STRATEGY;
+
+  // = Typedefs for managing the map
+  typedef ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> ADDRESS;
+  typedef ACE_Hash_Map_Manager <ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP;
+  typedef ACE_Hash_Map_Iterator <ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP_ITERATOR;
+  typedef ACE_Hash_Map_Entry<ADDRESS, SVC_HANDLER *> CONNECTION_MAP_ENTRY;
+
+  CONNECTION_MAP connection_cache_;  
   // Table that maintains the cache of connected <SVC_HANDLER>s.
 
   MUTEX lock_;
