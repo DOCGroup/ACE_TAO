@@ -24,18 +24,6 @@ HTTP_Hdr_Node::format (void) const
   return this->format_;
 }
 
-ACE_INLINE
-HTTP_Header_Nodes::HTTP_Header_Nodes (void)
-  : num_header_strings_ (0)
-{
-}
-
-ACE_INLINE
-HTTP_HCodes::HTTP_HCodes (void)
-  : header_nodes_ (HTTP_Header_Nodes_Singleton::instance ())
-{
-}
-
 ACE_INLINE const HTTP_Hdr_Node &
 HTTP_HCodes::hcode (int type) const
 {
@@ -43,11 +31,6 @@ HTTP_HCodes::hcode (int type) const
 
   // No error checking!
   return **hn;
-}
-
-ACE_INLINE
-HTTP_Headers::HTTP_Headers (void)
-{
 }
 
 ACE_INLINE const char *
