@@ -25,7 +25,9 @@ TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
   : removing_ (0),
-    enable_locking_ (0)
+    holding_scope_name_ (CORBA::string_dup ("TAO_IFR_holding_scope_module")),
+    enable_locking_ (0),
+    do_included_files_ (1)
 {
 }
 
@@ -69,6 +71,24 @@ BE_GlobalData::repository (CORBA_Repository_ptr repo)
   this->repository_ = repo;
 }
 
+CORBA_ModuleDef_ptr 
+BE_GlobalData::holding_scope (void) const
+{
+  return this->holding_scope_.in ();
+}
+
+void 
+BE_GlobalData::holding_scope (CORBA_ModuleDef_ptr scope)
+{
+  this->holding_scope_ = scope;
+}
+
+const char *
+BE_GlobalData::holding_scope_name (void) const
+{
+  return this->holding_scope_name_.in ();
+}
+
 ACE_Unbounded_Stack<CORBA_Container_ptr> &
 BE_GlobalData::ifr_scopes (void)
 {
@@ -76,7 +96,7 @@ BE_GlobalData::ifr_scopes (void)
 }
 
 const char *
-BE_GlobalData::filename (void)
+BE_GlobalData::filename (void) const
 {
   return this->filename_;
 }
@@ -88,7 +108,7 @@ BE_GlobalData::filename (char *fname)
 }
 
 idl_bool
-BE_GlobalData::enable_locking (void)
+BE_GlobalData::enable_locking (void) const
 {
   return this->enable_locking_;
 }
@@ -97,6 +117,18 @@ void
 BE_GlobalData::enable_locking (idl_bool value)
 {
   this->enable_locking_ = value;
+}
+
+idl_bool 
+BE_GlobalData::do_included_files (void) const
+{
+  return this->do_included_files_;
+}
+
+void 
+BE_GlobalData::do_included_files (idl_bool val)
+{
+  this->do_included_files_ = val;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -134,9 +134,6 @@ public:
   void cli_inline_cdr_op_gen (idl_bool);
   void cli_inline_cdr_decl_gen (idl_bool);
 
-  idl_bool is_child (be_decl *node);
-  // Am I a direct child of node?
-
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);
   DEF_NARROW_FROM_DECL (be_decl);

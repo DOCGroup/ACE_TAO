@@ -7,9 +7,11 @@
 ACE_RCSID(IFR_Service, ifr_adding_visitor_union, "$Id$")
 
 ifr_adding_visitor_union::ifr_adding_visitor_union (
+    AST_Decl *scope,
     CORBA::Boolean is_nested
   )
-  : is_nested_ (is_nested)
+  : ifr_adding_visitor (scope),
+    is_nested_ (is_nested)
 {
 }
 
@@ -60,18 +62,21 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
           AST_Type *ft = (*f)->field_type ();
 
-          if (ft->node_type () == AST_Decl::NT_union)
+          idl_bool defined_here = ft->is_child (this->scope_);
+
+          // If the struct member is defined in the struct, we have to
+          // do some visiting - otherwise we can just look up the entry.
+          if (defined_here)
             {
-              CORBA_Contained_var prev_def =
-                be_global->repository ()->lookup_id (ft->repoID (),
-                                                     ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              if (CORBA::is_nil (prev_def.in ()))
+              if (ft->node_type () == AST_Decl::NT_union)
                 {
-                  ifr_adding_visitor_union visitor (1);
+                  // Since the enclosing scope hasn't been created yet,
+                  // we make a special visitor to create this member
+                  // at global scope and move it into the struct later.
+                  ifr_adding_visitor_union visitor (ft,
+                                                    1);
 
-                  if ((*f)->ast_accept (&visitor) == -1)
+                  if (ft->ast_accept (&visitor) == -1)
                     {
                       ACE_ERROR_RETURN ((
                           LM_ERROR,
@@ -95,25 +100,25 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                 }
               else
                 {
-                  this->ir_current_ = 
-                    CORBA_IDLType::_narrow (prev_def.in (),
-                                            ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
+                  if (ft->ast_accept (this) == -1)
+                    {
+                      ACE_ERROR_RETURN ((
+                          LM_ERROR,
+                          ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
+                          ACE_TEXT ("visit_scope -")
+                          ACE_TEXT (" failed to accept visitor\n")
+                        ),  
+                        -1
+                      );
+                    }
                 }
             }
           else
             {
-              if ((*f)->ast_accept (this) == -1)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
-                      ACE_TEXT ("visit_scope -")
-                      ACE_TEXT (" failed to accept visitor\n")
-                    ),  
-                    -1
-                  );
-                }
+              // Updates ir_current_.
+              this->get_referenced_type (ft,
+                                         ACE_TRY_ENV);
+              ACE_TRY_CHECK;
             }
 
           // Get the case label(s).
@@ -187,7 +192,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                 CORBA::string_dup ((*f)->local_name ()->get_string ());
 
               // IfR method create_union does not use this - it just needs
-              // to be non-null for marshaling.
+              // to be non-zero for marshaling.
               this->members_[index].type = 
                 CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
@@ -225,7 +230,8 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_structure visitor (1);
+          ifr_adding_visitor_structure visitor (node,
+                                                1);
 
           int retval = visitor.visit_structure (node);
 
@@ -251,32 +257,23 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
         }
       else
         {
-          // There is already an entry in the repository, so just update
-          // the current IR object holder.
+          // If the line below is true, we are clobbering a previous
+          // entry (from another IDL file) of another type. In that
+          // case we do what other ORB vendors do, and destroy the
+          // original entry, create the new one, and let the user beware.
+          if (node->ifr_added () == 0)
+            {
+              prev_def->destroy (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              // This call will take the other branch.
+              return this->visit_structure (node);
+            }
+
           this->ir_current_ =
             CORBA_IDLType::_narrow (prev_def.in (),
                                     ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          // Nothing prevents this struct's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before the repository
-          // gets corrupted.
-          if (CORBA::is_nil (this->ir_current_.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
-                  ACE_TEXT ("visit_structure -")
-                  ACE_TEXT (" struct %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
         }
     }
   ACE_CATCHANY
@@ -345,35 +342,28 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
           // (which was created at global scope) goes on the
           // queue to be moved later.
           this->move_queue_.enqueue_tail (tmp);
+
+          node->ifr_added (1);
         }
       else
         {
-          // There is already an entry in the repository, so just update
-          // the current IR object holder.
+          // If the line below is true, we are clobbering a previous
+          // entry (from another IDL file) of another type. In that
+          // case we do what other ORB vendors do, and destroy the
+          // original entry, create the new one, and let the user beware.
+          if (node->ifr_added () == 0)
+            {
+              prev_def->destroy (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              // This call will take the other branch.
+              return this->visit_enum (node);
+            }
+
           this->ir_current_ = 
             CORBA_IDLType::_narrow (prev_def.in (),
                                     ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          // Nothing prevents this enum's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before the repository
-          // gets corrupted.
-          if (CORBA::is_nil (this->ir_current_.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
-                  ACE_TEXT ("visit_enum -")
-                  ACE_TEXT (" enum %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
         }
     }
   ACE_CATCHANY
@@ -463,7 +453,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           if (this->is_nested_)
             {
               this->ir_current_ = 
-                be_global->repository ()->create_union (
+                be_global->holding_scope ()->create_union (
                     node->repoID (),
                     node->local_name ()->get_string (),
                     this->gen_version (node),
@@ -530,33 +520,28 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                   ACE_TRY_CHECK;
                 }
             }
+
+          node->ifr_added (1);
         } // if (CORBA::is_nil (...))
       else
         {
+          // If the line below is true, we are clobbering a previous
+          // entry (from another IDL file) of another type. In that
+          // case we do what other ORB vendors do, and destroy the
+          // original entry, create the new one, and let the user beware.
+          if (node->ifr_added () == 0)
+            {
+              prev_def->destroy (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              // This call will take the other branch.
+              return this->visit_union (node);
+            }
+
           this->ir_current_ =
             CORBA_IDLType::_narrow (prev_def.in (),
                                     ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          // Nothing prevents this union's repo id from already being
-          // in the repository as another type, if it came from another
-          // IDL file whose generated code is not linked to the generated
-          // code from this IDL file. So we check here before the repository
-          // gets corrupted.
-          if (CORBA::is_nil (this->ir_current_.in ()))
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
-                  ACE_TEXT ("visit_union -")
-                  ACE_TEXT (" union %s, in IDL file %s,  already entered")
-                  ACE_TEXT (" in repository as a different type\n"),
-                  node->full_name (),
-                  be_global->filename ()
-                ),
-                -1
-              );
-            }
         }
     }
   ACE_CATCHANY

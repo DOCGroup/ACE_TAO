@@ -61,15 +61,25 @@ public:
 
   void repository (CORBA_Repository_ptr repo);
 
+  CORBA_ModuleDef_ptr holding_scope (void) const;
+
+  void holding_scope (CORBA_ModuleDef_ptr scope);
+
+  const char *holding_scope_name (void) const;
+
   ACE_Unbounded_Stack<CORBA_Container_ptr> &ifr_scopes (void);
 
-  const char *filename (void);
+  const char *filename (void) const;
 
   void filename (char *fname);
 
-  idl_bool enable_locking (void);
+  idl_bool enable_locking (void) const;
 
   void enable_locking (idl_bool value);
+
+  idl_bool do_included_files (void) const;
+
+  void do_included_files (idl_bool val);
 
 private:
   idl_bool removing_;
@@ -81,6 +91,13 @@ private:
   CORBA_Repository_var repository_;
   // Reference to the interface repository.
 
+  CORBA_ModuleDef_var holding_scope_;
+  // Used to hold struct/union/exception member defns until
+  // they are moved into their permanent scope.
+
+  CORBA::String_var holding_scope_name_;
+  // Must be something unlikely to clash.
+
   ACE_Unbounded_Stack<CORBA_Container_ptr> ifr_scopes_;
   // IR object scope stack.
 
@@ -89,6 +106,9 @@ private:
 
   idl_bool enable_locking_;
   // Option to lock at the IDL file level.
+
+  idl_bool do_included_files_;
+  // Option to process included IDL files.
 };
 
 #endif /* TAO_IFR_BE_GLOBAL_H */

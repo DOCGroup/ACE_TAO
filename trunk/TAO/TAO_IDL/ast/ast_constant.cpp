@@ -130,7 +130,8 @@ exprtype_to_string (AST_Expression::ExprType et)
 // Default constructor.
 AST_Constant::AST_Constant (void)
   : pd_constant_value (0), 
-    pd_et (AST_Expression::EV_none)
+    pd_et (AST_Expression::EV_none),
+    ifr_added_ (0)
 {
 }
 
@@ -144,7 +145,8 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
               n, 
               p),
 	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
-	  pd_et (t)
+	  pd_et (t),
+    ifr_added_ (0)
 {
 }
 
@@ -157,7 +159,8 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
               n, 
               p),
 	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
-	  pd_et (t)
+	  pd_et (t),
+    ifr_added_ (0)
 {
 }
 
@@ -200,6 +203,18 @@ AST_Expression::ExprType
 AST_Constant::et (void)
 {
   return this->pd_et;
+}
+
+idl_bool 
+AST_Constant::ifr_added (void)
+{
+  return this->ifr_added_;
+}
+
+void 
+AST_Constant::ifr_added (idl_bool val)
+{
+  this->ifr_added_ = val;
 }
 
 // Narrowing methods.

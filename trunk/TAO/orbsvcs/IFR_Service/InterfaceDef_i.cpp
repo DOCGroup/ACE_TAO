@@ -1155,7 +1155,7 @@ TAO_InterfaceDef_i::create_attr_ops (const char *id,
       params.length (1);
 
       params[0].name = name;
-      params[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
+      params[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
       params[0].type_def = CORBA::IDLType::_duplicate (type);
       params[0].mode = CORBA::PARAM_IN;
 
