@@ -1,3 +1,18 @@
+Mon Mar 15 10:42:27 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/POAManager.{h,i,cpp}:
+
+	  There were some compile errors in teh changes that Nanbor
+	  made. There was a need to include the poa_macros.h file and
+	  change "env" to "ACE_TRY_ENV".
+
+	* tao/encode.cpp (Alias::encode):
+
+	  The "data" parameter was first cast to char* and then passed to
+	  stream->encode. Instead, we now pass data itself. I am not sure,
+	  however, if this will fix some of the runtime errors we are
+	  getting in the Trading Service.
+	
 Mon Mar 15 02:27:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POA.{h,cpp}: Applied "some" ACE try macros into POA.
