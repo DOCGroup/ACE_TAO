@@ -59,7 +59,7 @@ LIB_FLAGS =<%foreach(libflags)%> -D<%libflag%>=1<%endfor%>
 DLL_FLAGS =
 !else
 LIB_FLAGS =
-DLL_FLAGS =<%foreach(dllflags)%> -D<%dllflag%>=1<%endfor%>
+DLL_FLAGS =<%foreach(dllflags)%> -D<%dllflag%><%endfor%>
 !endif
 
 CFLAGS = \
