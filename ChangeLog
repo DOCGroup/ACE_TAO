@@ -1,3 +1,8 @@
+Thu Mar  3 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Only use mkdir to create a directory when it not exists yet
+
 Wed Mar  2 21:44:22 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Socket.cpp:
