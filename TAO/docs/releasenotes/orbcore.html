@@ -94,6 +94,16 @@
     Recently Completed Work:
 
     <UL>
+      <li>Added documentation for <a
+      href="../Options.html#-ORBpoa"><b>-ORBpoa</b></a>, which allows
+      individual tweaking of the POA's locality (global
+      vs. thread-specific) independent of the locality of other ORB
+      resources.  Also, <a
+      href="../Options.html#-ORBpoalock"><b>-ORBpoalock</b></a> and <a
+      href="../Options.html#-ORBpoamgrlock"><b>-ORBpoamgrlock</b></a>
+      control locking in the POA and POA manager, respectively,
+      according to application needs.</li>
+
       <li>Began the process of changing the internals of TAO to use
       the "underbar" namespace mapping.  This should be completed
       soon.</li>
@@ -359,6 +369,11 @@
 	<ol>
 	  <li>Improve connection cache so that it won't crash when there
 	    are no more slots or sockets.</li>
+
+	  <li>Add an option to the ORB core, e.g.,
+	  <b>-ORBnameservicetimeout</b>, to allow specification of an
+	  upper bound on the itime-to-wait for a response from the
+	  ORB's multicast "search" for a running name server.</li>
 	</ol>
       </li>
 
