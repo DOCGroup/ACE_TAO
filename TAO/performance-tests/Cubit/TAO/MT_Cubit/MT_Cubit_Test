@@ -56,7 +56,7 @@ trap 'kill -15 $server_pid; /bin/rm -f $ior_file' 0 1 2 15
 ########
 ######## Start server and save its pid.
 ########
-$server_exec_prefix ./server -s -f $ior_file -t $threads $iiop_lite > \
+$server_exec_prefix ./server -f $ior_file -t $threads $iiop_lite > \
   ${tmp}server.log 2>&1 &
 server_pid=$!
 
@@ -71,10 +71,10 @@ done
 if [ "$remote_host" ]; then
   rsh $remote_host \
     "cd $PWD; LD_LIBRARY_PATH=$LD_LIBRARY_PATH $client_exec_prefix \
-    ./client -s -f $ior_file -t $threads -n $iterations $iiop_lite" > \
+    ./client -f $ior_file -t $threads -n $iterations $iiop_lite" > \
     ${tmp}client-${threads}.log 2>&1
 else
   $client_exec_prefix \
-    ./client -s -f $ior_file -t $threads -n $iterations $iiop_lite  > \
+    ./client -f $ior_file -t $threads -n $iterations $iiop_lite  > \
     ${tmp}client-${threads}.log 2>&1
 fi
