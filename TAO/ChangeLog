@@ -1,3 +1,9 @@
+Sun Jun 27 21:49:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
+	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
+	* tests/Xt_Stopwatch/server.cpp:
+
 Sun Jun 27 11:20:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.cpp:

@@ -4,6 +4,13 @@
 
 #if defined (ACE_HAS_XT)
 
+#include "ace/OS_NS_stdio.h"
+
+ACE_RCSID (Xt_Stopwatch,
+           Stopwatch_display,
+           "$Id$)
+
+
 Stopwatch_display::Stopwatch_display (Widget &parent)
 {
   // Instantiate the  sub-components of the Stopwatch_display
