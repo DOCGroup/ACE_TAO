@@ -252,10 +252,10 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
           os->indent ();
           *os << bt->name () << "_var _tao_var_"
 	      << arg->local_name () << ";" << be_nl;
-          *os << bt->name () << "_ptr _tao_ptr_" << arg->local_name ()
-              << ";" << be_nl;
+          *os << bt->name () << "_ptr &_tao_ptr_" << arg->local_name ()
+              << " = _tao_var_" << arg->local_name () << ".out ();" << be_nl;
           *os << bt->name () << "_out " << arg->local_name ()
-              << " (_tao_var_" << arg->local_name () << ".out ());" << be_nl;
+              << " (_tao_ptr_" << arg->local_name () << ");" << be_nl;
           break;
 	} // end switch direction
     } // end else if
