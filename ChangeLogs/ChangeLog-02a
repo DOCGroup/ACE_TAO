@@ -1,3 +1,17 @@
+Thu May 24 10:26:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Event_Handler.cpp:
+	* tao/Event_Handler.h: A starter for bug #575. Please see the
+	  documentation of bug 575 for details of this change. In short
+	  the Event Handler class has an extra method called
+	  resume_handler (). Applications that use the TP_Reactor and
+	  would like to take control of resuming the handler can overload
+	  this method in their implementation and return a value other
+	  than zero. 
+	
+	* tao/TP_Reactor.cpp: Added a check by calling the resume_handler
+	  () on the event handler object before resuming the handler. 
+
 Wed May 23 16:35:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Sock_Connect.h,

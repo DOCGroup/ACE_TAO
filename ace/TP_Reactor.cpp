@@ -138,7 +138,16 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
     {
       if (this->notify_handle (dispatch_info) == 0)
         ++result;                // Dispatched one more event
-      if (dispatch_info.event_handler_ != this->notify_handler_)
+      int flag = 0;
+
+      if (dispatch_info.event_handler_ != 0)
+        {
+         flag =
+           dispatch_info.event_handler_->resume_handler ();
+        }
+
+      if (dispatch_info.event_handler_ != this->notify_handler_ &&
+          flag == 0)
         this->resume_handler (dispatch_info.handle_);
     }
 
@@ -408,7 +417,14 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
 
   // If negative, remove from Reactor
   if (status < 0)
-    return this->remove_handler (handle, mask);
+    {
+      int retval =
+        this->remove_handler (handle, mask);
+
+      // As the handler is no longer valid, invalidate the handle
+      dispatch_info.event_handler_ = 0;
+      return retval;
+    }
 
   // assert (status >= 0);
   return 0;
@@ -442,14 +458,7 @@ ACE_EH_Dispatch_Info::reset (void)
   this->handle_ = ACE_INVALID_HANDLE;
   this->event_handler_ = 0;
   this->mask_ = ACE_Event_Handler::NULL_MASK;
-#if defined (ACE_HAS_BROKEN_PTMF)
-  ACE_OS::memset ((void *) &this->callback_,
-                  0,
-                  sizeof this->callback_);
-
-#else
   this->callback_ = 0;
-#endif /* ACE_HAS_BROKEN_PTMF */
 }
 
 int
