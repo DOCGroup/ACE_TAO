@@ -27,7 +27,7 @@ ACE_RCSID (Strategies,
            "$Id$")
 
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
-  : TAO_Acceptor (TAO_TAG_UDP_PROFILE),
+  : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
     addrs_ (0),
     hosts_ (0),
     endpoint_count_ (0),
@@ -137,7 +137,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
-      if (pfile->tag () == TAO_TAG_UDP_PROFILE)
+      if (pfile->tag () == TAO_TAG_DIOP_PROFILE)
       {
         iiop_profile = ACE_dynamic_cast (TAO_DIOP_Profile *,
                                          pfile);

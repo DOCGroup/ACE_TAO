@@ -1001,7 +1001,7 @@ TAO_SharedMemory_Protocol_Properties::dont_route (CORBA::Boolean dont_route
   this->dont_route_ = dont_route;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_SharedMemory_Protocol_Properties::no_delay (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1315,7 +1315,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       CORBA::Boolean keep_alive = 1;
       CORBA::Boolean dont_route = 0;
       CORBA::Boolean enable_network_priority = 0;
-      
+
       ACE_NEW_RETURN (property,
                       TAO_TCP_Protocol_Properties (send_buffer_size,
                                                    recv_buffer_size,
@@ -1325,7 +1325,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
                                                    enable_network_priority),
                       0);
     }
-  
+
   else if (id == TAO_TAG_SHMEM_PROFILE)
     {
       int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
@@ -1359,8 +1359,8 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
                                                           recv_buffer_size),
                       0);
     }
-  
-  else if (id == TAO_TAG_UDP_PROFILE)
+
+  else if (id == TAO_TAG_DIOP_PROFILE)
     {
       CORBA::Boolean enable_network_priority = 0;
 
@@ -1377,7 +1377,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       CORBA::Boolean keep_alive = 1;
       CORBA::Boolean dont_route = 0;
       CORBA::Boolean enable_network_priority = 0;
-      
+
       ACE_NEW_RETURN (property,
                       TAO_StreamControl_Protocol_Properties (send_buffer_size,
                                                              recv_buffer_size,

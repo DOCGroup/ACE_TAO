@@ -353,7 +353,7 @@ TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_DIOP_Protoc
                                                                  ACE_ENV_ARG_DECL)
 {
   RTCORBA::ProtocolProperties_var from =
-    this->server_protocol_properties_at_orb_level (TAO_TAG_UDP_PROFILE
+    this->server_protocol_properties_at_orb_level (TAO_TAG_DIOP_PROFILE
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -369,7 +369,7 @@ TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_DIOP_Protoc
                                                                  ACE_ENV_ARG_DECL)
 {
   RTCORBA::ProtocolProperties_var from =
-    this->client_protocol_properties_at_orb_level (TAO_TAG_UDP_PROFILE
+    this->client_protocol_properties_at_orb_level (TAO_TAG_DIOP_PROFILE
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -446,7 +446,7 @@ TAO_RT_Protocols_Hooks::set_network_priority (IOP::ProfileId protocol_tag,
       return tcp_protocol_properties->enable_network_priority ();
     }
 
-  if (protocol_tag == TAO_TAG_UDP_PROFILE)
+  if (protocol_tag == TAO_TAG_DIOP_PROFILE)
     {
       RTCORBA::UserDatagramProtocolProperties_var udp_protocol_properties =
         RTCORBA::UserDatagramProtocolProperties::_narrow (protocol_properties
@@ -475,7 +475,7 @@ TAO_RT_Protocols_Hooks::set_client_network_priority (IOP::ProfileId protocol_tag
                                                      ACE_ENV_ARG_DECL)
 {
   if (protocol_tag != IOP::TAG_INTERNET_IOP &&
-      protocol_tag != TAO_TAG_UDP_PROFILE &&
+      protocol_tag != TAO_TAG_DIOP_PROFILE &&
       protocol_tag != TAO_TAG_SCIOP_PROFILE)
     return false;
 
@@ -496,7 +496,7 @@ TAO_RT_Protocols_Hooks::set_server_network_priority (IOP::ProfileId protocol_tag
                                                      ACE_ENV_ARG_DECL)
 {
   if (protocol_tag != IOP::TAG_INTERNET_IOP &&
-      protocol_tag != TAO_TAG_UDP_PROFILE &&
+      protocol_tag != TAO_TAG_DIOP_PROFILE &&
       protocol_tag != TAO_TAG_SCIOP_PROFILE)
     return false;
 

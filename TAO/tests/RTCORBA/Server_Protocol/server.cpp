@@ -144,7 +144,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb
                         tcp_properties->send_buffer_size (),
                         tcp_properties->recv_buffer_size (),
                         tcp_properties->keep_alive (),
-                        tcp_properties->dont_route (),                      
+                        tcp_properties->dont_route (),
                         tcp_properties->no_delay (),
                         tcp_properties->enable_network_priority ()));
         }
@@ -169,7 +169,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb
             RTCORBA::SharedMemoryProtocolProperties::_narrow (properties.in ()
                                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-          
+
           if (!CORBA::is_nil (shmem_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
                         "     Properties: \n"
@@ -184,13 +184,13 @@ check_default_server_protocol (CORBA::ORB_ptr orb
                         shmem_properties->send_buffer_size (),
                         shmem_properties->recv_buffer_size (),
                         shmem_properties->keep_alive (),
-                        shmem_properties->dont_route (),                      
+                        shmem_properties->dont_route (),
                         shmem_properties->no_delay (),
                         shmem_properties->preallocate_buffer_size (),
                         shmem_properties->mmap_filename (),
                         shmem_properties->mmap_lockname ()));
         }
-      else if (protocol_type == TAO_TAG_UDP_PROFILE)
+      else if (protocol_type == TAO_TAG_DIOP_PROFILE)
         {
           RTCORBA::UserDatagramProtocolProperties_var diop_properties =
             RTCORBA::UserDatagramProtocolProperties::_narrow (properties.in ()
@@ -222,7 +222,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb
                         sciop_properties->send_buffer_size (),
                         sciop_properties->recv_buffer_size (),
                         sciop_properties->keep_alive (),
-                        sciop_properties->dont_route (),                      
+                        sciop_properties->dont_route (),
                         sciop_properties->no_delay (),
                         sciop_properties->enable_network_priority ()));
         }
