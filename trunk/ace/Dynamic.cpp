@@ -9,7 +9,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_Dynamic::ACE_Dynamic (void)
-  : instance_ (0) 
+  : is_dynamic_ (0) 
 {
   ACE_TRACE ("ACE_Dynamic::ACE_Dynamic");
 }
