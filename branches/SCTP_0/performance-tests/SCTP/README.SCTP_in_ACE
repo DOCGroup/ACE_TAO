@@ -1,4 +1,5 @@
-Release 1.0 - January 2003
+Release 1.0 - April 2003
+Last Updated - April 2003
 
 SCTP Features Accessible Within ACE
 -----------------------------------
@@ -19,9 +20,8 @@ SCTP Features Accessible Within ACE
    and ACE_SOCK::get_option(...) for both SOCK_STREAM and
    SOCK_SEQPACKET sockets
 
- * Multiplexing of lightweight "SCTP Streams" and "SCTP Associations"
-   (over the SOCK_STREAM and SOCK_SEQPACKET services, respectively)
-   via ACE_SOCK::set_option(...)
+ * Multiplexing of lightweight "SCTP Streams" (over the SOCK_STREAM
+   and SOCK_SEQPACKET services) via ACE_SOCK::set_option(...)
 
  * Network path multiplexing (provided opaquely by the protocol---no
    explicit support required in ACE other than the ability to
@@ -33,7 +33,8 @@ Supported SCTP Implementations
 ------------------------------
 
  * OpenSS7's Linux Implementation (Berkeley UNIX Network API) 
-   (www.openss7.org) 
+   Available for free at http://www.openss7.org/linux-sctp-0.2.14.tgz
+   (as of April 2003)
 
 
 BUGS
@@ -41,14 +42,9 @@ BUGS
 
  * OpenSS7 BUGS 
 
-    - implementation is flaky for message sizes greater than PATH MTU 
-      SIZE where message size includes SCTP and IP headers and data.
-
-    - Variably long delays in data transmission when 
-      RTO_Init = RTO_Min = 0 and link failures are occurring.
-
-    - Strange "connection refused" errors (even though link and server
-      are up) when RTO_Min = RTO_Init = 0.
+    - protocol crashes when transmitting message sizes greater than
+      PATH MTU in the pressence of network failures (message size
+      includes SCTP and IP headers and data.)
 
 TO-DO
 ----
@@ -60,7 +56,7 @@ TO-DO
    service only. We want to avoid changing the existing interfaces for
    the SOCK_STREAM service).
 
- * Integrate management and use of "SCTP Associations" into the
+ * Integrate management and use of "SCTP Streams" into the
    ACE_SOCK_SEQPACK_* wrapper-facade. (currently they can only be
    accessed indirectly through ACE_SOCK::set_option(...))
 
@@ -70,7 +66,11 @@ TO-DO
 
  * Support SOCK_RDM service within ACE.
 
-Usage
+ * Convert ATL's histogram utility (located under
+   performance-tests/SCTP) into a ACE utility and integrate with other
+   ACE provided statistics classes.
+
+USAGE
 -----
 
  SOCK_STREAM - Use the ACE_SOCK_Connector, ACE_SOCK_Stream and
@@ -119,13 +119,69 @@ Usage
                   ACE_SOCK::get_local_addr(...)  and
                   ACE_SOCK::get_remote_addr(...) methods will work
                   properly with an active mode SCTP socket, but each
-                  will only return a single address.
+                  will only return a single address. These functions
+                  are only NOT available on ACE_SOCK_SEQPACK_Acceptor
+                  even though that is an SCTP socket as well. This is
+                  because the functions getpeername() and
+                  getsockname() called on a passive SCTP acceptor
+                  socket returns the same values as a TCP socket. As
+                  such, the current ACE methods get_local_addr() and
+                  get_remote_addr() defined in ACE_SOCK are sufficient.
 
 
 DESIGN
 ------
 
-Explanation TBD. Class diagram TBD.
+SCTP supports two types of network service: SOCK_STREAM and
+SOCK_SEQPACKET.  To integrate SCTP's SOCK_STREAM service into ACE we
+had to make a small modification to the current SOCK_STREAM wrapper
+facade. We had to add a protocol parameter to one constructor and one
+connect method of the ACE_SOCK_Connector class. After this
+modification the ACE SOCK_STREAM wrapper facade worked properly over
+both TCP and SCTP.
+
+To integrate SCTP's SOCK_SEQPACKET service into ACE we had to create a
+new wrapper facade, which we refer to as SOCK_SEQPACK. We closely
+emulated the current SOCK_STREAM wrapper facade to develop our new
+SOCK_SEQPACK wrapper facade. SOCK_SEQPACK_wrapper_facade.jpg depicts
+the classes that implement this new wrapper facade. Also indicated are
+those methods that have a substantial change from their SOCK_STREAM
+wrapper façade counterparts. Not depicted in the figure but noteworthy
+is the removal of the QoS enabled constructor and accept method that
+were imported to SOCK_SEQPACK_Acceptor from SOCK_Acceptor and the
+removal of the QoS enabled constructor and connect method that were
+imported into SOCK_SEQPACK_Connector from SOCK_Connector. SOCK_SEQPACK
+association provides two methods to get the list of secondary
+addresses associated with the local and remote socket (explained in
+more detail in the usage section above).
+
+
+To enable the user to fully exploit the network path multiplexing
+features of SCTP we created a new subclass of ACE_INET_Addr called
+ACE_INET_Multihomed_Addr. This class enables applications to specify
+restricted subsets of network interfaces for inclusion on SCTP
+associations on the client and server side. Multihomed_INET_Addr
+provides a subset of the ACE_INET_Addr API with the addition of
+optional parameters for lists of secondary addresses or hostnames.  If
+just a primary address or hostname is provided
+ACE_Multihomed_INET_Addr behaves as an ACE_INET_Addr (in fact it just
+populates the base ACE_INET_Addr) This is also depicted in
+SOCK_SEQPACK_wrapper_facade.jpg. Multihomed_INET_Addr is only used by
+the SOCK_SEQPACK wrapper facade.
+
+
+All SCTP socket options can be read and written from the current
+socket options methods provided by ACE_SOCK. 
+
+Finally, the current implementation of the SOCK_SEQPACK wrapper facade
+uses the Berkely Unix Networking API that is preserved for the OpenSS7
+SCTP implementation. SOCK_SEQPACK will not function properly with
+other SCTP implementations that provide only the draft SCTP API. In
+the future we hope to modify either OS.{c,h} or the SOCK_SEQPACK
+wrapper facade to handle both API variants.
+
+Finally, our SOCK_SEQPACK wrapper facade does not yet support SCTP
+stream multiplexing.
 
 Here are the files under $(ACE_ROOT) that were either modified or
 added. NO files were removed.
