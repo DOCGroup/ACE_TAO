@@ -1,3 +1,9 @@
+Mon Sep 27 01:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	  Fixed some switch statements which were incorrectly causing
+	  error messages.
+
 Sun Sep 26 22:44:50 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/GIOP.cpp (parse_reply):
