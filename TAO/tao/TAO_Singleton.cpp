@@ -20,7 +20,9 @@
 #include "tao/TAO_Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, TAO_Singleton, "$Id$")
+ACE_RCSID (tao,
+           TAO_Singleton,
+           "$Id$")
 
 template <class TYPE, class ACE_LOCK> void
 TAO_Singleton<TYPE, ACE_LOCK>::dump (void)
@@ -89,9 +91,11 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
           if (singleton == 0)
             {
               ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
+#endif /* ACE_MT_SAFE */
 
               // Register for destruction with TAO_Singleton_Manager.
               TAO_Singleton_Manager::at_exit (singleton);
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
         }
 #endif /* ACE_MT_SAFE */
@@ -185,9 +189,11 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
             {
               ACE_NEW_RETURN (singleton, (TAO_TSS_Singleton<TYPE, ACE_LOCK>),
                               0);
+#endif /* ACE_MT_SAFE */
 
               // Register for destruction with TAO_Singleton_Manager.
               TAO_Singleton_Manager::at_exit (singleton);
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
         }
 #endif /* ACE_MT_SAFE */
