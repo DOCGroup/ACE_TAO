@@ -1,3 +1,19 @@
+// $Id$
+//
+//===================================================================
+//
+// = FILENAME
+//     File_i.cpp
+//
+// = DESCRIPTION
+//      Implementation of the File IDL module and the interfaces 
+//      Descriptor and System in it.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//====================================================================
+
 #include "File_i.h"
 
 FileImpl::System::System (PortableServer::POA_ptr poa)
