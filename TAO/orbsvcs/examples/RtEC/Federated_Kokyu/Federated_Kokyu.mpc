@@ -1,0 +1,22 @@
+project(Consumer_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu {
+  exename = Consumer_EC
+  idlflags    = -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+
+  Source_Files {
+    Kokyu_EC.cpp
+    Consumer_EC.cpp
+    Consumer.cpp
+  }
+}
+
+project(Supplier_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu {
+  exename = Supplier_EC
+  idlflags    = -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+  Source_Files {
+    Consumer.cpp
+    Kokyu_EC.cpp
+    Supplier_EC.cpp
+    Supplier.cpp
+  }
+}
+
