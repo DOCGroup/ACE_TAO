@@ -1,3 +1,8 @@
+Sun Sep 17 07:09:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance:
+	* orbsvcs/orbsvcs/FT_CORBA.idl: IDl and make files for FT_CORBA.
+
 Sun Sep 17 07:00:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
