@@ -22,6 +22,7 @@ static const char corbaloc_prefix[] = "corbaloc:";
 static const char iiop_prefix[] = "iiop:";
 static const char uiop_prefix[] = "uiop:";
 static const char shmiop_prefix[] = "shmiop:";
+static const char miop_prefix[] = "miop:";
 static const char rir_prefix[] = "rir:";
 
 int
@@ -375,6 +376,10 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
         (ACE_OS::strncmp (end_point,
                           uiop_prefix,
                           sizeof uiop_prefix - 1) == 0) ||
+
+        (ACE_OS::strncmp (end_point,
+                          miop_prefix,
+                          sizeof miop_prefix - 1) == 0) ||
 
         (ACE_OS::strncmp (end_point,
                           rir_prefix,

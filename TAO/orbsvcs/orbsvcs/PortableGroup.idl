@@ -1,0 +1,203 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO_PortableGroup
+//
+// = FILENAME
+//   PortableGroup.pidl
+//
+// = DESCRIPTION
+//
+//   This file was used to generate the code in PortableGroupC.{h,i,cpp}
+//
+// ================================================================
+
+#ifndef _PortableGroup_IDL_
+#define _PortableGroup_IDL_
+
+//#include <PortableServer.pidl>
+#include <CosNaming.idl>
+#include <tao/IOP.pidl>
+#include <tao/GIOP.pidl>
+#include <orb.idl>
+
+#pragma prefix "omg.org"
+
+module PortableGroup {
+
+  // Specification for Interoperable Object Group References
+  typedef string GroupDomainId;
+  typedef unsigned long long ObjectGroupId;
+  typedef unsigned long ObjectGroupRefVersion;
+
+  typedef GIOP::Version Version;
+
+  struct TagGroupTaggedComponent { // tag = TAG_GROUP;
+    Version component_version;
+    GroupDomainId group_domain_id;
+    ObjectGroupId object_group_id;
+    ObjectGroupRefVersion object_group_ref_version;
+  };
+  typedef sequence <octet> GroupIIOPProfile; // tag = TAG_GROUP_IIOP
+
+  // Specification of Common Types and Exceptions
+  // for GroupManagement
+  local interface GenericFactory;
+
+  typedef CORBA::RepositoryId TypeId;
+  typedef Object ObjectGroup;
+  typedef CosNaming::Name Name;
+  typedef any Value;
+
+  struct Property {
+    Name nam;
+    Value val;
+  };
+
+  typedef sequence<Property> Properties;
+  typedef Name Location;
+  typedef sequence<Location> Locations;
+  typedef Properties Criteria;
+
+  struct FactoryInfo {
+    GenericFactory the_factory;
+    Location the_location;
+    Criteria the_criteria;
+  };
+
+  typedef sequence<FactoryInfo> FactoryInfos;
+  typedef long MembershipStyleValue;
+
+  const MembershipStyleValue MEMB_APP_CTRL = 0;
+  const MembershipStyleValue MEMB_INF_CTRL = 1;
+
+  typedef unsigned short InitialNumberReplicasValue;
+  typedef unsigned short MinimumNumberReplicasValue;
+
+  exception InterfaceNotFound {};
+  exception ObjectGroupNotFound {};
+  exception MemberNotFound {};
+  exception ObjectNotFound {};
+  exception MemberAlreadyPresent {};
+  exception BadReplicationStyle {};
+  exception ObjectNotCreated {};
+  exception ObjectNotAdded {};
+  exception UnsupportedProperty {
+    Name nam;
+  };
+
+  exception InvalidProperty {
+    Name nam;
+    Value val;
+  };
+
+  exception NoFactory {
+    Location the_location;
+    TypeId type_id;
+  };
+
+  exception InvalidCriteria {
+    Criteria invalid_criteria;
+  };
+
+  exception CannotMeetCriteria {
+    Criteria unmet_criteria;
+  };
+
+  // Specification of PropertyManager Interface
+  local interface PropertyManager {
+
+    void set_default_properties (in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    Properties get_default_properties();
+
+    void remove_default_properties (in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    void set_type_properties (in TypeId type_id, in Properties overrides)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    Properties get_type_properties(in TypeId type_id);
+
+    void remove_type_properties (in TypeId type_id, in Properties props)
+      raises (InvalidProperty, UnsupportedProperty);
+
+    void set_properties_dynamically
+      (in ObjectGroup object_group, in Properties overrides)
+      raises
+        (ObjectGroupNotFound,
+         InvalidProperty,
+         UnsupportedProperty);
+
+    Properties get_properties (in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+  }; // endPropertyManager
+
+
+  // Specification of ObjectGroupManager Interface
+  local interface ObjectGroupManager {
+    ObjectGroup create_member (in ObjectGroup object_group,
+                               in Location the_location,
+                               in TypeId type_id,
+                               in Criteria the_criteria)
+      raises (ObjectGroupNotFound,
+              MemberAlreadyPresent,
+              NoFactory,
+              ObjectNotCreated,
+              InvalidCriteria,
+              CannotMeetCriteria);
+
+    ObjectGroup add_member (in ObjectGroup object_group,
+                            in Location the_location,
+                            in Object member)
+      raises (ObjectGroupNotFound,
+//              CORBA::INV_OBJREF,
+              MemberAlreadyPresent,
+              ObjectNotAdded);
+
+    ObjectGroup remove_member (in ObjectGroup object_group,
+                               in Location the_location)
+      raises (ObjectGroupNotFound, MemberNotFound);
+
+    Locations locations_of_members (in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+
+    ObjectGroupId get_object_group_id (in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+
+    ObjectGroup get_object_group_ref (in ObjectGroup object_group)
+      raises(ObjectGroupNotFound);
+
+    Object get_member_ref (in ObjectGroup object_group,
+                           in Location loc)
+      raises(ObjectGroupNotFound, MemberNotFound);
+
+  }; // end ObjectGroupManager
+
+
+  // Specification of GenericFactory Interface
+  local interface GenericFactory {
+    typedef any FactoryCreationId;
+
+    Object create_object (in TypeId type_id,
+                          in Criteria the_criteria,
+                          out FactoryCreationId factory_creation_id)
+      raises
+        (NoFactory,
+        ObjectNotCreated,
+        InvalidCriteria,
+        InvalidProperty,
+        CannotMeetCriteria);
+
+    void delete_object (in FactoryCreationId factory_creation_id)
+      raises (ObjectNotFound);
+
+  }; // end GenericFactory
+
+}; // end PortableGroup
+
+#endif // for #ifndef _PortableGroup_IDL_

@@ -30,6 +30,9 @@
 #include "tao/Collocation_Resolver.h"
 #include "tao/Stub_Factory.h"
 
+#include "tao/Endpoint_Selector_Factory.h"
+#include "tao/Request_Dispatcher.h"
+
 #include "IORInfo.h"
 
 #include "Flushing_Strategy.h"
@@ -109,6 +112,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_table_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (),
+    portable_group_poa_hooks_ (0),
     orb_params_ (),
     init_ref_map_ (),
     object_ref_table_ (),
@@ -198,6 +202,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
+
+  // Initialize the default request dispatcher.
+  ACE_NEW (this->request_dispatcher_,
+           TAO_Request_Dispatcher);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -227,6 +235,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   delete this->transport_sync_strategy_;
+
+  delete this->request_dispatcher_;
 }
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -1328,7 +1338,7 @@ TAO_ORB_Core::parse_bidir_policy (CORBA::Policy_ptr policy
   if (this->bidir_adapter_)
     return this->bidir_adapter_->parse_policy (this,
                                                policy
-                                                TAO_ENV_ARG_PARAMETER);
+                                               TAO_ENV_ARG_PARAMETER);
   else
     // @@ The BiDirectional library hasn't been loaded. What do we do?
     // We are just returning an error which will be processd by the
@@ -1523,11 +1533,19 @@ TAO_ORB_Core::create_stub (const char *repository_id,
     this->stub_factory ()->create_stub (repository_id,
                                         profiles,
                                         this
-                                         TAO_ENV_ARG_PARAMETER);
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
   return retval;
 }
 
+void
+TAO_ORB_Core::request_dispatcher (TAO_Request_Dispatcher *request_dispatcher)
+{
+  // Assume ownership of the request dispatcher.
+  TAO_Request_Dispatcher *tmp = this->request_dispatcher_;
+  this->request_dispatcher_ = request_dispatcher;
+  delete tmp;
+}
 
 TAO_Stub *
 TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,

@@ -171,6 +171,12 @@ TAO_ORB_Core::adapter_registry (void)
   return &this->adapter_registry_;
 }
 
+ACE_INLINE TAO_Request_Dispatcher *
+TAO_ORB_Core::request_dispatcher (void)
+{
+  return this->request_dispatcher_;
+}
+
 ACE_INLINE void
 TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
 {
@@ -395,6 +401,18 @@ TAO_ORB_Core::resolve_typecodefactory (TAO_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   return CORBA::Object::_duplicate (this->typecode_factory_);
+}
+
+ACE_INLINE TAO_POA_PortableGroup_Hooks *
+TAO_ORB_Core::portable_group_poa_hooks (void) const
+{
+  return this->portable_group_poa_hooks_;
+}
+
+ACE_INLINE void 
+TAO_ORB_Core::portable_group_poa_hooks(TAO_POA_PortableGroup_Hooks *poa_hooks)
+{
+  this->portable_group_poa_hooks_ = poa_hooks;
 }
 
 ACE_INLINE CORBA::Object_ptr

@@ -285,19 +285,6 @@ TAO_Stub::servant_orb (CORBA::ORB_ptr orb)
   this->servant_orb_ = CORBA::ORB::_duplicate (orb);
 }
 
-
-ACE_INLINE void
-TAO_Stub::addressing_mode (CORBA::Short addr)
-{
-  this->addressing_mode_ = addr;
-}
-
-ACE_INLINE CORBA::Short
-TAO_Stub::addressing_mode (void)
-{
-  return this->addressing_mode_;
-}
-
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
 ACE_INLINE
 TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub *p)

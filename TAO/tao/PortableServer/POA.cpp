@@ -23,6 +23,8 @@
 
 #include "Default_Acceptor_Filter.h"
 
+#include "PortableGroup_Hooks.h"
+
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
@@ -3514,6 +3516,87 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
           TAO_POA_BEING_DESTROYED,
           0),
         CORBA::COMPLETED_NO));
+}
+
+PortableServer::ObjectId *
+TAO_POA::create_id_for_reference (CORBA::Object_ptr the_ref
+                                  TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ))
+{
+  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
+  if (hooks == 0)
+    {
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+    }
+
+  PortableServer::ObjectId *obj_id =
+    hooks->create_id_for_reference (*this, the_ref TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return obj_id;
+}
+
+PortableServer::IDs *
+TAO_POA::reference_to_ids (CORBA::Object_ptr the_ref
+                           TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ))
+{
+  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
+  if (hooks == 0)
+    {
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                        0);
+    }
+
+  PortableServer::IDs *id_list =
+    hooks->reference_to_ids (*this, the_ref TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (PortableServer::IDs::_nil ());
+
+  return id_list;
+}
+
+void 
+TAO_POA::associate_reference_with_id (CORBA::Object_ptr ref,
+                                      const PortableServer::ObjectId & oid
+                                      TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ))
+{
+  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
+  if (hooks == 0)
+    {
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+    }
+
+  hooks->associate_reference_with_id (*this, ref, oid TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void 
+TAO_POA::disassociate_reference_with_id (CORBA::Object_ptr ref,
+                                         const PortableServer::ObjectId & oid
+                                         TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ))
+{
+  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
+  if (hooks == 0)
+    {
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+    }
+
+  hooks->disassociate_reference_with_id (*this, ref, oid TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -94,6 +94,12 @@ module IOP
   const ServiceId FT_GROUP_VERSION = 12;
   const ServiceId FT_REQUEST = 13;
 
+  // The following are not defined yet in the Unreliable Multicast
+  // InterORB Protocol (orbos/2001-11-08)
+  const ProfileId TAG_UIPMC = 0x54414f0c;  // @@ Get real number
+  const ComponentId TAG_GROUP = 0x54414f03;  // @@ Get real number
+  const ComponentId TAG_GROUP_IIOP = 0x54414f04; // @@ Get real number
+
   local interface Codec {
     exception InvalidTypeForEncoding {};
     exception FormatMismatch {};

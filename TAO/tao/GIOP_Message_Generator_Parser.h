@@ -37,7 +37,6 @@ class TAO_Pluggable_Reply_Params;
 class TAO_Pluggable_Reply_Params_Base;
 class TAO_GIOP_Locate_Status_Msg;
 class TAO_GIOP_Locate_Request_Header;
-class TAO_Tagged_Profile;
 
 /**
  * @class TAO_GIOP_Message_Generator_Parser
@@ -108,18 +107,6 @@ protected:
   /// Marshall the reply status
   void marshal_reply_status (TAO_OutputCDR &output,
                              TAO_Pluggable_Reply_Params_Base &reply);
-
-  /// Unmarshals the received object key
-  CORBA::Boolean unmarshall_object_key (TAO_ObjectKey &object_key,
-                                        TAO_InputCDR &cdr);
-
-  /// Unmarshall the IOP::TaggedProfile
-  CORBA::Boolean unmarshall_iop_profile (TAO_Tagged_Profile &profile,
-                                         TAO_InputCDR &cdr);
-
-  /// Unmarshalls the GIOP::IORAddressingInfo
-  CORBA::Boolean unmarshall_ref_addr (TAO_Tagged_Profile &profile,
-                                      TAO_InputCDR &cdr);
 
 };
 
