@@ -2,11 +2,11 @@
 
 //============================================================
 /**
- * @file Test_exec.h
+ * @file RoundTrip_exec.h
  *
  * Header file for the Executor implementation.
  *
- * @author Diego Sevilla <dsevilla@um.es> 
+ * @author Diego Sevilla <dsevilla@um.es>
 *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
 //============================================================
@@ -41,13 +41,13 @@ namespace MyImpl
     ~RoundTrip_exec_i ();
 
     /// Operation to test the data
-    virtual CORBA::Long 
+    virtual CORBA::Long
       makeCall (CORBA::Long data)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Benchmark::CCM_LatencyTest*
-			get_latency (ACE_ENV_SINGLE_ARG_DECL)
-  		ACE_THROW_SPEC ((CORBA::SystemException));
+                        get_latency (ACE_ENV_SINGLE_ARG_DECL)
+                ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
     virtual void set_session_context (Components::SessionContext_ptr ctx
