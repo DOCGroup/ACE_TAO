@@ -1,3 +1,9 @@
+Fri Jul 03 16:38:12 1998  Steve Huston  <shuston@riverace.com>
+
+	* tao/Sequence.h (TAO_Unbounded_Sequence<CORBA::Octet>) Removed the
+	  template type specification from constructor names so that this
+	  compiles on AIX xlC as well as Sun C++ and HPUX aCC.
+
 Fri Jul 03 13:58:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.37 released.
