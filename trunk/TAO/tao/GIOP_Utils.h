@@ -9,7 +9,8 @@
  *   GIOP utility definitions
  *
  *
- *  @author  Chris Cleeland <cleeland@cs.wustl.edu>  Carlos O' Ryan <coryan@uci.edu>
+ *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
+ *  @author  Carlos O' Ryan <coryan@uci.edu>
  */
 //=============================================================================
 
@@ -27,6 +28,7 @@
 #include "tao/IOP_IORC.h"
 
 class TAO_Transport;
+class ACE_Time_Value;
 
 /**
  * All GIOP messages include a header and message type.  Not
