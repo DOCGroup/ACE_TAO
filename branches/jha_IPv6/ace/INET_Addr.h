@@ -315,6 +315,8 @@ public:
            const char protocol[] = "tcp");
 #endif
 
+  void *addr_pointer(void) const;
+  size_t addr_size(void) const;
 private:
   /// Underlying representation.
   ace_sockaddr_in_t inet_addr_;
