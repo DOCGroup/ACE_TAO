@@ -1,31 +1,39 @@
+Sun Jun 13 00:38:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
+
+	  Fixed improper assigned of a non-boolean value to a bool
+	  member.
+
 Tue Jun 15 20:53:28 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples\PluggableUDP\tests\Basic\server.cpp: 
+	* examples/PluggableUDP/tests/Basic/server.cpp:
 
 	  Added missing header file.
-	
-	* examples\PluggableUDP\tests\Basic\run_test.pl: 
+
+	* examples/PluggableUDP/tests/Basic/run_test.pl:
 
 	  Added -ORBdebuglevel option.
 
-	* performance-tests\RTCorba\Thread_Pool\client.cpp: 
+	* performance-tests/RTCorba/Thread_Pool/client.cpp:
 
 	   Fixed options help error.
 
 Tue Jun 15 20:28:30 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Strategies/SCIOP_Endpoint.cpp: 
+	* tao/Strategies/SCIOP_Endpoint.cpp:
 
 	  Added missing include files.
 
 	* performance-tests/Protocols/server.cpp:
-	* performance-tests/Protocols/client.cpp: 
+	* performance-tests/Protocols/client.cpp:
 
 	  Minor fix.
-	
+
 Tue Jun 15 16:13:30 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\Protocols:
+	* performance-tests/Protocols:
 
 	  New test for measuring the performance of protocols under
 	  varying network conditions.
@@ -334,6 +342,7 @@ Fri Jun 11 13:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           we don't mix virtual and non-virtual bases. This fixes warnings
           from the HP aCC compiler.
 
+>>>>>>> 1.4232
 Thu Jun 10 19:44:55 2004  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
