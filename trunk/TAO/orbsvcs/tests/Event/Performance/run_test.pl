@@ -18,7 +18,7 @@ $status = 0;
 print STDERR "\n\nThroughput/Latency single threaded configuration\n";
 $T = Process::Create ($prefix . "Throughput".$EXE_EXT,
 		      " -ORBsvcconf ec.st.conf "
-		      . "-burstsize 100000 -burstcount 1");
+		      . "-burstsize 2000 -burstcount 1");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;
@@ -28,7 +28,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration\n";
 $T = Process::Create ($prefix . "Throughput".$EXE_EXT,
-		      " -burstsize 100000"
+		      " -burstsize 2000"
 		      ." -burstcount 1");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
@@ -39,7 +39,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration, 4 consumers\n";
 $T = Process::Create ($prefix . "Throughput".$EXE_EXT,
-		      " -burstsize 100000"
+		      " -burstsize 2000"
 		      ." -burstcount 1 -consumers 4");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
@@ -51,7 +51,7 @@ if ($T->TimedWait (60) == -1) {
 print STDERR "\n\nThroughput/Latency MT-safe configuration,",
   " 4 consumers 4 suppliers\n";
 $T = Process::Create ($prefix . "Throughput".$EXE_EXT,
-		      " -burstsize 100000"
+		      " -burstsize 2000"
 		      ." -burstcount 1 -consumers 4 -suppliers 4");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
@@ -63,7 +63,7 @@ if ($T->TimedWait (60) == -1) {
 print STDERR "\n\nThroughput/Latency MT-safe configuration,",
   " 4 consumers 4 suppliers\n";
 $T = Process::Create ($prefix . "Throughput".$EXE_EXT,
-		      " -burstsize 100000"
+		      " -burstsize 2000"
 		      ." -burstcount 1 -consumers 4 -suppliers 4"
 		      ." -consumers_tshift 0 -suppliers_tshift 0");
 if ($T->TimedWait (60) == -1) {
