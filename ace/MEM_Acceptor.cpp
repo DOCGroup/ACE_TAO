@@ -95,7 +95,8 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
       if (remote_sap != 0)
         {
-          ACE_INET_Addr temp ((sockaddr_in *) addr, *len_ptr);
+          ACE_INET_Addr temp (ACE_reinterpret_cast (sockaddr_in *, addr),
+                              *len_ptr);
           remote_sap->set_port_number(temp.get_port_number ());
         }
     }
