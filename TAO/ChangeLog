@@ -1,3 +1,24 @@
+Thu Sep 23 22:21:22 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+	  Try to work around an (apparent) MSVC7.1 problem.  It somehow
+	  got confused about template to template member functions.  No
+	  biggie, I can wrap them through an extra call, so:
+	    &Class::member<parameter>
+	  becomes
+	    &Class::member_parameter
+	  and the implementation of the last function reads:
+	    Class::member_parameter() {
+	      member<parameter>();
+	    }
+	  Thanks to Jeff Parson for testing that platform.  He also
+	  pointed out that he is using boost-1.30.2, so I'll use the
+	  backwards compatible unit test features in a future commit.
+
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	  Add the testing_allocation_traits_ut to the list of tests.
+	  Somehow I missed it earlier.
+
 Thu Sep 23 22:14:01 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* Bala found the following problems for me:

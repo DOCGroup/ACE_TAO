@@ -25,31 +25,6 @@ struct Tester : public boost::enable_shared_from_this<Tester<value_type> >
   typedef unbounded_allocation_traits<value_type,true> unbounded;
   typedef bounded_allocation_traits<value_type,MAXIMUM,true> bounded;
 
-  void add_all(test_suite * ts)
-  {
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_default_buffer_allocation_value,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_default_buffer_allocation<unbounded>,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_default_buffer_allocation<bounded>,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_allocbuf<unbounded>,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_allocbuf<bounded>,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_freebuf<unbounded>,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_freebuf<bounded>,
-                shared_from_this()));
-  }
-
   template<class aspect>
   void test_allocbuf()
   {
@@ -118,6 +93,61 @@ struct Tester : public boost::enable_shared_from_this<Tester<value_type> >
     aspect::freebuf(s);
 
     BOOST_CHECK_MESSAGE(c.expect(3), c);
+  }
+
+  void test_default_buffer_allocation_unbounded()
+  {
+    test_default_buffer_allocation<unbounded>();
+  }
+
+  void test_default_buffer_allocation_bounded()
+  {
+    test_default_buffer_allocation<bounded>();
+  }
+
+  void test_allocbuf_unbounded()
+  {
+    test_allocbuf<unbounded>();
+  }
+
+  void test_allocbuf_bounded()
+  {
+    test_allocbuf<bounded>();
+  }
+
+  void test_freebuf_unbounded()
+  {
+    test_freebuf<unbounded>();
+  }
+
+  void test_freebuf_bounded()
+  {
+    test_freebuf<bounded>();
+  }
+
+  void add_all(test_suite * ts)
+  {
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_default_buffer_allocation_value,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_default_buffer_allocation_unbounded,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_default_buffer_allocation_bounded,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_allocbuf_unbounded,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_allocbuf_bounded,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_freebuf_unbounded,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_freebuf_bounded,
+                shared_from_this()));
   }
 
 };
