@@ -72,16 +72,6 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
         }
 
       *cp = 0;
-      if (this->optimize_collocation_objects_)
-        {
-          IIOP_Object *iiopobj;
-          if (obj->QueryInterface (IID_IIOP_Object, (void **) &iiopobj) != TAO_NOERROR)
-            {
-              env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-              return 0;
-            }
-          this->_register_collocation (iiopobj->profile.object_addr ());
-        }
       return string;
     }
   else
@@ -133,7 +123,6 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
                        obj2->profile.host, obj2->profile.port,
                        key.in ());
 
-      this->_register_collocation (obj2->profile.object_addr ());
       return buf;
     }
 }
@@ -319,25 +308,6 @@ IIOP_ORB::string_to_object (CORBA::String str,
   return obj;
 }
 
-int
-IIOP_ORB::_register_collocation (ACE_Addr &addr)
-{
-  if (this->optimize_collocation_objects_)
-    {
-      ACE_INET_Addr& ia =
-	ACE_reinterpret_cast (ACE_INET_Addr&, addr);
-
-#if 0
-      ACE_DEBUG ((LM_DEBUG,
-		  "IIOP_ORB: register collocation addr <%s:%d>\n",
-		  ia.get_host_name(),
-		  ia.get_port_number()));
-#endif
-      return this->collocation_record_.insert (ia);
-    }
-  return 0;
-}
-
 TAO_ServantBase *
 IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 {
@@ -364,61 +334,46 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 		  iiopobj->profile.object_addr().get_host_name(),
 		  iiopobj->profile.object_addr().get_port_number()));
 #endif
+      CORBA::Environment env;
+      TAO_ObjectKey_var objkey = iiopobj->key (env);
+
+      if (env.exception ())
+        {
+#if 0
+          ACE_DEBUG ((LM_DEBUG,
+                      "IIOP_ORB: cannot find key for <%s:%d>\n",
+                      iiopobj->profile.object_addr().get_host_name(),
+                      iiopobj->profile.object_addr().get_port_number()));
+#endif
+          return 0;
+        }
 
       // Check if the object requested is a collocated object.
-      if (this->collocation_record_.find (iiopobj->profile.object_addr ()) == 0)
+      TAO_POA *poa = TAO_ORB_Core_instance ()->
+        get_collocated_poa (iiopobj->profile.object_addr());
+
+      if (poa != 0)
         {
-          CORBA::Environment env;
-          TAO_ObjectKey_var objkey = iiopobj->key (env);
-
-#if 0
-	  ACE_DEBUG ((LM_DEBUG,
-		      "IIOP_ORB: the addr is collocated <%s:%d>\n",
-		      iiopobj->profile.object_addr().get_host_name(),
-		      iiopobj->profile.object_addr().get_port_number()));
-#endif
-
+          PortableServer::Servant servant =
+            poa->find_servant (objkey.in (), env);
           if (env.exception ())
             {
 #if 0
-	      ACE_DEBUG ((LM_DEBUG,
-			  "IIOP_ORB: cannot find key for <%s:%d>\n",
-			  iiopobj->profile.object_addr().get_host_name(),
-			  iiopobj->profile.object_addr().get_port_number()));
+              ACE_DEBUG ((LM_DEBUG,
+                          "IIOP_ORB: cannot find servant for <%s:%d>\n",
+                          iiopobj->profile.object_addr().get_host_name(),
+                          iiopobj->profile.object_addr().get_port_number()));
 #endif
               return 0;
             }
-          TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-
-          if (poa != 0)
-            {
-              PortableServer::Servant servant =
-		poa->find_servant (objkey.in (), env);
-              if (env.exception ())
-                {
-#if 0
-		  ACE_DEBUG ((LM_DEBUG,
-			      "IIOP_ORB: cannot find servant for <%s:%d>\n",
-			      iiopobj->profile.object_addr().get_host_name(),
-			      iiopobj->profile.object_addr().get_port_number()));
-#endif
-                  return 0;
-                }
 
 #if 0
-	      ACE_DEBUG ((LM_DEBUG,
-			  "IIOP_ORB: object at <%s:%d> is collocated\n",
-			  iiopobj->profile.object_addr().get_host_name(),
-			  iiopobj->profile.object_addr().get_port_number()));
+          ACE_DEBUG ((LM_DEBUG,
+                      "IIOP_ORB: object at <%s:%d> is collocated\n",
+                      iiopobj->profile.object_addr().get_host_name(),
+                      iiopobj->profile.object_addr().get_port_number()));
 #endif
-              return servant;
-            }
-#if 0
-	  ACE_DEBUG ((LM_DEBUG,
-		      "IIOP_ORB: cannot find poa for <%s:%d>\n",
-		      iiopobj->profile.object_addr().get_host_name(),
-		      iiopobj->profile.object_addr().get_port_number()));
-#endif
+          return servant;
         }
     }
 

@@ -113,6 +113,12 @@ TAO_ORB_Core::poa_current (TAO_POA_Current *new_current)
   return old;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::using_collocation (void)
+{
+  return this->opt_for_collocation_;
+}
+
 // Template specializations that allow the cached connection manager
 // to work better.
 

@@ -15,6 +15,78 @@
 typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>
         TAO_ORB_CORE;
 
+ACE_Lock *TAO_COLTBL_Lock::coltbl_lock_ = 0;
+
+TAO_COLTBL_Lock::TAO_COLTBL_Lock (void)
+{
+  if (TAO_COLTBL_Lock::coltbl_lock_ == 0)
+    TAO_COLTBL_Lock::coltbl_lock_ =TAO_ORB_Core_instance ()->server_factory ()->create_coltbl_lock ();
+  // We don't need to worry about the race condition here because this
+  // is called from within the ctor of Hash_Map_Manager which is
+  // placed inside a ACE_Singleton.
+}
+
+TAO_COLTBL_Lock::~TAO_COLTBL_Lock (void)
+{
+  delete TAO_COLTBL_Lock::coltbl_lock_;
+  TAO_COLTBL_Lock::coltbl_lock_ = 0;
+}
+
+int
+TAO_COLTBL_Lock::remove (void)
+{
+  return TAO_COLTBL_Lock::coltbl_lock_->remove ();
+}
+
+int
+TAO_COLTBL_Lock::acquire (void)
+{
+  return TAO_COLTBL_Lock::coltbl_lock_->acquire ();
+}
+
+int
+TAO_COLTBL_Lock::tryacquire (void)
+{
+  return TAO_COLTBL_Lock::coltbl_lock_->tryacquire ();
+}
+
+int
+TAO_COLTBL_Lock::release (void)
+{
+  return TAO_COLTBL_Lock::coltbl_lock_->release ();
+}
+
+int
+TAO_COLTBL_Lock::acquire_read (void)
+{
+  return TAO_COLTBL_Lock::coltbl_lock_->acquire_read ();
+}
+
+int
+TAO_COLTBL_Lock::acquire_write (void)
+{
+  return TAO_COLTBL_Lock::coltbl_lock_->acquire_write ();
+}
+
+int
+TAO_COLTBL_Lock::tryacquire_read (void)
+{
+  return TAO_COLTBL_Lock::coltbl_lock_->tryacquire_read ();
+}
+
+int
+TAO_COLTBL_Lock::tryacquire_write (void)
+{
+  return TAO_COLTBL_Lock::coltbl_lock_->tryacquire_write ();
+}
+
+void
+TAO_COLTBL_Lock::dump (void) const
+{
+  //  return TAO_COLTBL_Lock::coltbl_lock_->dump ();
+}
+
+
 TAO_ORB_Core::TAO_ORB_Core (void)
   : reactor_ (0),
     thr_mgr_ (0),
@@ -32,6 +104,7 @@ TAO_ORB_Core::TAO_ORB_Core (void)
     client_factory_from_service_config_ (CORBA::B_FALSE),
     server_factory_ (0),
     server_factory_from_service_config_ (CORBA::B_FALSE),
+    opt_for_collocation_ (CORBA::B_TRUE),
     preconnections_ (0)
 {
 }
@@ -72,7 +145,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   // In some instances, we may actually build another vector of
   // arguments and stash it for use initializing other components such
   // as the ACE_Service_Config or the RootPOA.
-  // 
+  //
   // Prepare a copy of the argument vector.
 
   char **svc_config_argv;
@@ -90,7 +163,6 @@ TAO_ORB_Core::init (int& argc, char** argv)
   CORBA::String_var host = CORBA::string_dup ("");
   CORBA::UShort port = defport;
   CORBA::Boolean use_ior = CORBA::B_TRUE;
-  CORBA::Boolean opt_collocation = CORBA::B_TRUE;
   int cdr_tradeoff = TAO_DEFAULT_CDR_MEMCPY_TRADEOFF;
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
@@ -115,7 +187,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
 
   // Should debugging be on (1) or off (0)?
   int debugging = 0;
-  
+
   while (arg_shifter.is_anything_left ())
     {
       char *current_arg = arg_shifter.get_current ();
@@ -123,7 +195,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
       if (ACE_OS::strcmp (current_arg, "-ORBsvcconf") == 0)
         {
           // Specify the name of the svc.conf file to be used.
-          svc_config_argv[svc_config_argc++] = 
+          svc_config_argv[svc_config_argc++] =
             CORBA::string_dup ("-f");
           arg_shifter.consume_arg ();
 
@@ -279,9 +351,9 @@ TAO_ORB_Core::init (int& argc, char** argv)
             {
               char *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "YES") == 0)
-                opt_collocation = CORBA::B_TRUE;
+                this->opt_for_collocation_ = CORBA::B_TRUE;
               else if (ACE_OS::strcasecmp (opt, "NO") == 0)
-                opt_collocation = CORBA::B_FALSE;
+                this->opt_for_collocation_ = CORBA::B_FALSE;
 
               arg_shifter.consume_arg ();
             }
@@ -445,7 +517,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   // This should probably move into the ORB Core someday rather then
   // being done at this level.
   this_orb->_use_omg_ior_format (use_ior);
-  this_orb->_optimize_collocation_objects (opt_collocation);
+  this_orb->_optimize_collocation_objects (this->opt_for_collocation_);
 
   // Set all kinds of orb parameters whose setting needed to be
   // deferred until after the service config entries had been
@@ -612,7 +684,6 @@ TAO_ORB_Core::preconnect (const char* the_preconnections)
             {
               handlers[index]->idle ();
               successes++;
-              this->orb ()->_register_collocation (remote_addrs[index]);
             }
         }
     }
@@ -716,7 +787,7 @@ TAO_ORB_Core::server_factory (void)
     {
       // Look in the service repository for an instance.
       this->server_factory_ =
-        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance 
+        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance
           ("Server_Strategy_Factory");
       this->server_factory_from_service_config_ = CORBA::B_TRUE;
     }
@@ -792,9 +863,44 @@ TAO_ORB_Core::create_and_set_root_poa (void)
   this->root_poa (poa);
 }
 
+int
+TAO_ORB_Core::add_to_collocation_table (void)
+{
+  if (this->using_collocation ())
+    {
+      TAO_GLOBAL_COLTBL *coltbl = this->resource_factory ()->get_global_collocation_table ();
+      if (coltbl != 0)
+        return coltbl->bind (this->addr (), this->root_poa ());
+    }
+  return 0;
+}
+
+TAO_POA *
+TAO_ORB_Core::get_collocated_poa (ACE_INET_Addr &addr)
+{
+  if (this->using_collocation ())
+    {
+      TAO_GLOBAL_COLTBL *coltbl = this->resource_factory ()->get_global_collocation_table ();
+      if (coltbl != 0)
+        {
+          TAO_POA *poa;
+          if (coltbl->find (addr, poa) == 0)
+            return poa;
+        }
+      else
+        {
+          if (addr == this->addr ())
+            return this->root_poa ();
+        }
+    }
+  return 0;
+}
+
+
 TAO_Resource_Factory::TAO_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
-    poa_source_ (TAO_GLOBAL)
+    poa_source_ (TAO_GLOBAL),
+    coltbl_source_ (TAO_GLOBAL)
 {
 }
 
@@ -882,6 +988,19 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
               local_poa_source = TAO_GLOBAL;
             else if (ACE_OS::strcasecmp (name, "tss") == 0)
               local_poa_source = TAO_TSS;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBcoltable") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name, "global") == 0)
+              coltbl_source_ = TAO_GLOBAL;
+            else if (ACE_OS::strcasecmp (name, "orb") == 0)
+              coltbl_source_ = TAO_TSS;
           }
       }
 
@@ -1013,6 +1132,12 @@ TAO_Resource_Factory::get_allocator (void)
   return 0;
 }
 
+TAO_GLOBAL_COLTBL *
+TAO_Resource_Factory::get_global_collocation_table (void)
+{
+  return (coltbl_source_ == TAO_GLOBAL ? GLOBAL_COLTBL::instance () : 0);
+}
+
 // This function exists because of Win32's proclivity for expanding
 // templates at link time.  Since DLLs are just executables, templates
 // get expanded and instantiated at link time.  Thus, if there are
@@ -1067,6 +1192,8 @@ template class ACE_TSS<TAO_Resource_Factory::Pre_Allocated>;
 template class ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_Resource_Factory::App_Allocated>;
+template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>;
+template class ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Env_Value<int>
@@ -1097,6 +1224,8 @@ template class ACE_TSS<TAO_Resource_Factory::App_Allocated>;
 #pragma instantiate ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_Resource_Factory::App_Allocated>
+#parama instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>
+#pragma instantiate ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Resource_Factory)
