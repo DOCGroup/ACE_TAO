@@ -187,12 +187,15 @@ HTTP_Response::cgi_response (void)
 {
   ACE_Process_Options cgi_options;
 
-  // Build command line and arguments
-  cgi_options.path (this->request_.path ());
-
   if (this->request_.cgi_args ())
     {
-      cgi_options.cl_options ("%s", this->request_.cgi_args ());
+      cgi_options.command_line ("%s %s",
+                                this->request_.path (),
+                                this->request_.cgi_args ());
+    }
+  else
+    {
+      cgi_options.command_line ("%s", this->request_.path ());
     }
 
   // Build environment variables
