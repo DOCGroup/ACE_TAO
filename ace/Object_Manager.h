@@ -19,7 +19,6 @@
 
 #include "ace/OS.h"
 
-
 // Forward declarations.
 class ACE_Object_Manager_Preallocations;
 class ACE_Sig_Adapter;
@@ -59,7 +58,7 @@ class ACE_Export ACE_Object_Manager_Base
   // = DESCRIPTION
   //     Encapsulates the most useful ACE_Object_Manager data structures.
 # if defined (ACE_PSOS) && defined (__DIAB)
-// the Diab compiler got confused and complained about access rights 
+// the Diab compiler got confused and complained about access rights
 // if this section was protected (changing this to public makes it happy)
 public:
 # else /* ! defined (ACE_PSOS) && defined (__DIAB) */
@@ -296,9 +295,9 @@ public:
       ACE_TOKEN_MANAGER_CREATION_LOCK,
       ACE_TOKEN_INVARIANTS_CREATION_LOCK,
       ACE_TSS_CLEANUP_LOCK,
-# if defined (ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+# if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
       ACE_TSS_BASE_LOCK,
-# endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
+# endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #endif /* ACE_MT_SAFE */
 
       // Hook for preallocated objects provided by application.
