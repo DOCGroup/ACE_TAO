@@ -1,38 +1,44 @@
+Tue Sep 14 16:01:04 1999  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * ace/Process_Manager.cpp (wait): moved declaration of
+          loop index i out of the loop, because it is used outside
+          the scope of the loop.
+
 Tue Sep 14 15:03:21 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* bin/run_all_list.pm:
+        * bin/run_all_list.pm:
 
-	  Added ORB_init test to the list of tests to run.
+          Added ORB_init test to the list of tests to run.
 
-	* configure.in:
-	* configure:
+        * configure.in:
+        * configure:
 
-	  Do not define ACE_USE_POLL, even if system poll() works.
+          Do not define ACE_USE_POLL, even if system poll() works.
 
 Tue Sep 14 11:02:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Hash_Map_With_Allocator_T.h:
-	* ace/Hash_Map_With_Allocator_T.cpp:Added a find () method that
-	  would lookup at the underlying Hash_Map_Manager_Ex to do the
-	  find. 
+        * ace/Hash_Map_With_Allocator_T.h:
+        * ace/Hash_Map_With_Allocator_T.cpp:Added a find () method that
+          would lookup at the underlying Hash_Map_Manager_Ex to do the
+          find.
 
 Sat Sep 11 12:18:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Pipe.cpp: Make sure to use SOCK_STREAM rather than SOCK_DGRAM
-	  when creating a socketpair.  Thanks to Dave Madden for reporting
- 	  this.
+        * ace/Pipe.cpp: Make sure to use SOCK_STREAM rather than SOCK_DGRAM
+          when creating a socketpair.  Thanks to Dave Madden for reporting
+          this.
 
 Mon Sep 13 13:31:23 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* ace/Arg_Shifter.cpp (get_the_parameter): continued -ORB parsing
-	  fixes. Allows one simple method to return a parameter value for
-	  defined flag is it exists.
+        * ace/Arg_Shifter.cpp (get_the_parameter): continued -ORB parsing
+          fixes. Allows one simple method to return a parameter value for
+          defined flag is it exists.
 
 Mon Sep 13 11:01:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_persistence.cpp: Added comments on
-	  the use of scanf.  Thanks to Wenli Bai <bai@gsao.med.ge.com> for
-	  reporting the problem.
+        * examples/Shared_Malloc/test_persistence.cpp: Added comments on
+          the use of scanf.  Thanks to Wenli Bai <bai@gsao.med.ge.com> for
+          reporting the problem.
 
 Sun Sep 12 19:23:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -40,68 +46,68 @@ Sun Sep 12 19:23:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sat Sep 11 12:18:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp: Reverted the following change so that we
-	  just add a fake "friend" to keep G++ happy...  Also, fixed a
- 	  typo where we should have allocated an ACE_Managed_Process
- 	  rather than an ACE_Process.  Thanks to Dave Madden for reporting
- 	  this.
+        * ace/Process_Manager.cpp: Reverted the following change so that we
+          just add a fake "friend" to keep G++ happy...  Also, fixed a
+          typo where we should have allocated an ACE_Managed_Process
+          rather than an ACE_Process.  Thanks to Dave Madden for reporting
+          this.
 
-	* ace/Process_Manager.cpp: Added the ACE_CLASS_IS_NAMESPACE method
-	  to ACE_Managed_Process to make G++ happy.  Also, removed the
- 	  trailing '_' since we don't need this because we've prefixed
- 	  "ACE_" already.
+        * ace/Process_Manager.cpp: Added the ACE_CLASS_IS_NAMESPACE method
+          to ACE_Managed_Process to make G++ happy.  Also, removed the
+          trailing '_' since we don't need this because we've prefixed
+          "ACE_" already.
 
 Fri Sep 10 16:58:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.cpp (open,shared_malloc): Added several placement
-	  new's if position independent malloc is enabled to avoid reading
-	  uninitialized memory.
+        * ace/Malloc_T.cpp (open,shared_malloc): Added several placement
+          new's if position independent malloc is enabled to avoid reading
+          uninitialized memory.
 
 Fri Sep 10 16:39:13 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* examples/QOS/README:
-	* examples/QOS/server.cpp:
-	* examples/QOS/client.cpp:
-	* examples/QOS/Sender_QOS_Event_Handler.h:
-	* examples/QOS/Sender_QOS_Event_Handler.cpp:
+        * examples/QOS/README:
+        * examples/QOS/server.cpp:
+        * examples/QOS/client.cpp:
+        * examples/QOS/Sender_QOS_Event_Handler.h:
+        * examples/QOS/Sender_QOS_Event_Handler.cpp:
 
-	  Removed the Win32-isms from the above files and used cleaner ACE
-	  interfaces. Added a README file that describes the test.
+          Removed the Win32-isms from the above files and used cleaner ACE
+          interfaces. Added a README file that describes the test.
 
 Fri Sep 10 16:38:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/WinCE/*.dsp: VC 6 changed all the dsp files format.
+        * tests/WinCE/*.dsp: VC 6 changed all the dsp files format.
 
 Fri Sep 10 11:20:47 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SOCK_Acceptor.h,
-	  ace/SOCK_Connector.h: Updated the documentation to clarify what
- 	  happens wrt blocking vs. non-blocking connects and accepts.
-  	  Thanks to Jose Rubio <jrubio@tr.comm.mot.com> for motivating
- 	  this change.
+        * ace/SOCK_Acceptor.h,
+          ace/SOCK_Connector.h: Updated the documentation to clarify what
+          happens wrt blocking vs. non-blocking connects and accepts.
+          Thanks to Jose Rubio <jrubio@tr.comm.mot.com> for motivating
+          this change.
 
 Thu Sep  9 16:27:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager,
-	  ace/Process: Added some new patches from Dave Madden to obtain
- 	  greater control over the spawn() behavior.
+        * ace/Process_Manager,
+          ace/Process: Added some new patches from Dave Madden to obtain
+          greater control over the spawn() behavior.
 
 Fri Sep 10 14:30:17 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.i:
-	* ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast.i:
+        * ace/SOCK_Dgram_Mcast.h:
 
-	  Added two send () functions using overlapped I/O to the
-	  ACE_SOCK_Dgram_Mcast class. These simply call the parent
-	  class functions with the same signature. The recv () functions
-	  need not be added as there is currently no recv () function
-	  within SOCK_Dgram_Mcast class to hide any parent class recv ()
-	  functions.
+          Added two send () functions using overlapped I/O to the
+          ACE_SOCK_Dgram_Mcast class. These simply call the parent
+          class functions with the same signature. The recv () functions
+          need not be added as there is currently no recv () function
+          within SOCK_Dgram_Mcast class to hide any parent class recv ()
+          functions.
 
 Fri Sep 10 12:24:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* THANKS:
-	  Added Joerg Pommnitz to the list of contributors.
+        * THANKS:
+          Added Joerg Pommnitz to the list of contributors.
 
 Thu Sep  9 22:48:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -112,9 +118,9 @@ Thu Sep  9 22:48:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Thu Sep  9 18:22:21 CDT 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Future.cpp:
-	  HP/aCC was giving bogus warning about function without a return
-	  statement (the function only has a throw).
+        * ace/Future.cpp:
+          HP/aCC was giving bogus warning about function without a return
+          statement (the function only has a throw).
 
 Thu Sep 09 14:56:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
