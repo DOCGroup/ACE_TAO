@@ -8,6 +8,10 @@ Fri Mar 21 11:41:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	  Added generated file to the project.
 
+	* tests/Param_Test/anyop.cpp:
+
+	  Added missing .inout() to a _var reference.
+
 Thu Mar 20 18:29:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/ImplRepoC.cpp:
