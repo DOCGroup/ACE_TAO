@@ -243,7 +243,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
     {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       *out_stream << flush;
-      out_stream->close ();
+      ((ofstream*)out_stream)->close ();
 #else
 	  ACE_OS::fflush(out_stream);
 	  ACE_OS::fclose(out_stream);
