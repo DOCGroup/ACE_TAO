@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-04-03 17:08 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-04-03 17:13 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/021'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,11 +13,11 @@
 # ------ ---------- ------------------------------------------
 #    409 -rw-rw-r-- hdr
 #     47 -rw-rw-r-- bodies
-#   2301 -rw-rw-r-- page01.pre
+#   2302 -rw-rw-r-- page01.pre
 #    282 -rw-rw-r-- page02.pre
 #    202 -rw-rw-r-- page03.pre
 #    288 -rw-rw-r-- page04.pre
-#    288 -rw-rw-r-- page05.pre
+#     61 -rw-rw-r-- page05.pre
 #    604 -rw-rw-r-- page06.pre
 #    786 -rw-rw-r-- page04.pst
 #
@@ -66,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh12922; then
+if mkdir _sh14864; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -197,12 +197,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-98ac048e325c4933d10e44f97bf27791  page01.pre
+45c14d3a6d1c0cf26b68e83f6878a854  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2301 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2301,' 'current size' "$shar_count!"
+    test 2302 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2302,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -300,28 +300,22 @@ if test -f 'page05.pre' && test "$first_param" != -c; then
 else
   $echo 'x -' extracting 'page05.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
-X	  Everything common the server & client is kept here.  In
-X	  particular, the Constants class where we keep the names &
-X	  semaphore keys.
-X	<p>
-X	  The Allocator class is just a thin wrapper around
-X	  ACE_Malloc&lt;&gt; that moves some of the details out of the
-X	  application logic.
+And here we have the implementation of the Allocator...
 <hr>
 SHAR_EOF
-  $shar_touch -am 0106140399 'page05.pre' &&
+  $shar_touch -am 0403171399 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pre:' 'MD5 check failed'
-2366f1603bd1e71955eb8ee3429ca402  page05.pre
+eef6d56514a448ce6cd962b7d34dd50f  page05.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
-    test 288 -eq "$shar_count" ||
-    $echo 'page05.pre:' 'original size' '288,' 'current size' "$shar_count!"
+    test 61 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '61,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page06.pre ==============
@@ -400,5 +394,5 @@ SHAR_EOF
     $echo 'page04.pst:' 'original size' '786,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh12922
+rm -fr _sh14864
 exit 0
