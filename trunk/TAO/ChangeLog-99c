@@ -7,6 +7,12 @@ Sat Mar 13 11:58:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* TAO-INSTALL.html:
 	  Updated the notes on how to compile TAO.
 
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: 
+	  Added the new event channel files to the static library.
+	  Also removed some old files that are no longer used
+	  (Event/Task_Manager.cpp) thanks to Francois Bernier
+	  <fbernier@gel.ulaval.ca> for reporting this problem.
+
 Sat Mar 13 11:57:27 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/ORB.cpp (ORB_init): Revised the multicast_query() stuff just
