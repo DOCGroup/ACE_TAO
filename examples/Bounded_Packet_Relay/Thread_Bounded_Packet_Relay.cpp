@@ -174,9 +174,9 @@ User_Input_Task::User_Input_Task (Bounded_Packet_Relay *relay,
                                   Thread_Timer_Queue *queue,
                                   Thread_Bounded_Packet_Relay_Driver &tbprd)
   : ACE_Task_Base (ACE_Thread_Manager::instance ()),
+    usecs_ (ACE_ONE_SECOND_IN_USECS),
     relay_ (relay),
     queue_ (queue),
-    usecs_ (ACE_ONE_SECOND_IN_USECS),
     driver_ (tbprd)
 {
 }
@@ -800,6 +800,9 @@ template class ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_T
 template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
 template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
 template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
+template class ACE_Unbounded_Queue <ACE_Command_Base*>;
+template class ACE_Node <ACE_Command_Base *>;
+template class ACE_Unbounded_Queue_Iterator <ACE_Command_Base *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Thread_Condition<ACE_Thread_Mutex>
 #pragma instantiate ACE_Condition<ACE_Thread_Mutex>

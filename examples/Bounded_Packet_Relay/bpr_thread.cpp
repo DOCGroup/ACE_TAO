@@ -111,7 +111,9 @@ main (int, char *[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_ptr <THREAD_BOUNDED_PACKET_RELAY_DRIVER>;
 template class ACE_Auto_Basic_Ptr <THREAD_BOUNDED_PACKET_RELAY_DRIVER>;
+ACE_Command_Callback <Bounded_Packet_Relay, Bounded_Packet_Relay::ACTION>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate auto_ptr <THREAD_BOUNDED_PACKET_RELAY_DRIVER>
 #pragma instantiate ACE_Auto_Basic_Ptr <THREAD_BOUNDED_PACKET_RELAY_DRIVER>
+#pragma instantiate ACE_Command_Callback <Bounded_Packet_Relay, Bounded_Packet_Relay::ACTION>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
