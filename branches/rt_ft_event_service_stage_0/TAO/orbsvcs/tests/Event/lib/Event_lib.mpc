@@ -1,0 +1,11 @@
+project(Event Test Lib): orbsvcslib {
+  sharedname = ECTests
+  depends   += RTEvent CosNaming Svc_Utils IORTable PortableServer
+  libs      += TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+  dllflags   = EC_TEST_BUILD_DLL
+  comps     += RTEvent
+
+  Header_Files {
+    ectest_export.h
+  }
+}

@@ -1,0 +1,24 @@
+project: server, orbsvcsexe {
+  depends += LoadBalancing
+  libs    += TAO_LoadBalancing
+  comps   += LoadBalancing
+
+  Source_Files {
+    Hash_ReplicaControl.cpp
+    Hash_Replica_i.cpp
+    server.cpp
+  }
+}
+
+project(client): server, orbsvcsexe {
+  depends += LoadBalancing
+  libs    += TAO_LoadBalancing
+  exename  = client
+  comps   += LoadBalancing
+
+  Source_Files {
+    Hash_ReplicaC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,13 @@
+project(ETCL) : orbsvcslib {
+  sharedname = TAO_ETCL
+  libs      += TAO
+  dllflags   = TAO_ETCL_BUILD_DLL
+  tagchecks  = Notify
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ETCL
+  }
+}
