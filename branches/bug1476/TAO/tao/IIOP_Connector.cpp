@@ -137,12 +137,14 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *timeout)
 {
-  TAO_IIOP_Endpoint *iiop_endpoint = this->remote_endpoint (desc.endpoint ());
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    this->remote_endpoint (desc.endpoint ());
 
   if (iiop_endpoint == 0)
     return 0;
 
-  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address =
+    iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
     {
@@ -151,7 +153,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                   "to <%s:%d> which should %s\n",
                   ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
                   iiop_endpoint->port(),
-                  r->connected() ? ACE_TEXT("block") : ACE_TEXT("not block")));
+                  r->blocked () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
     }
 
   // Get the right synch options
@@ -160,11 +162,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  // If we don't need to return a completely connected transport we overrule the
-  // timeout to zero.
-  if (!r->connected())
+
+
+  // If we don't need to block for a transport just set the timeout to
+  // be zero.
+  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
+  if (!r->blocked ())
     {
       synch_options.timeout (ACE_Time_Value::zero);
+      timeout = &tmp_zero;
     }
 
   TAO_IIOP_Connection_Handler *svc_handler = 0;
@@ -196,66 +202,41 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   if (result == -1 && errno == EWOULDBLOCK)
     {
-      // We just issued connect and don't want to block, just call wait with zero
-      // timeout
-      if (!r->connected())
+      // @@ Johnny, I removed the extra condition here since the
+      // timeout is already set to zero. Please see above..
+      // Poll for connection completion. When the connection is complete
+      // in the connection handler the connected will be set.
+      result =
+        this->active_connect_strategy_->wait (svc_handler,
+                                              timeout);
+
+      if (TAO_debug_level > 2)
         {
-          // Poll for connection completion. When the connection is complete
-          // in the connection handler the connected will be set.
-          ACE_Time_Value zero(ACE_Time_Value::zero);
-          result =
-            this->active_connect_strategy_->wait (svc_handler,
-                                                  &zero);
-
-// testing, now it always returns a not connected transport, comment out the
-// wait above
-//          result = 1;
-
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                          "non blocking wait done for handle[%d], result = %d\n",
-                          svc_handler->get_handle (), result));
-            }
-
-// is this correct, the wait() can return anything, so overrule to 0, so that
-// we don't output incorrect errors?
-          result = 0;
-// check closure??
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                      "going to wait for connection completion on local"
+                      "handle [%d]\n",
+                      svc_handler->get_handle ()));
         }
-      else
-        {
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                          "going to wait for connection completion on local"
-                          "handle [%d]\n",
-                          svc_handler->get_handle ()));
-            }
 
-          // Wait for connection completion.
-          result =
-            this->active_connect_strategy_->wait (svc_handler,
-                                                  timeout);
 
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                          "wait done for handle[%d], result = %d\n",
-                          svc_handler->get_handle (), result));
-            }
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                    "wait done for handle[%d], result = %d\n",
+                    svc_handler->get_handle (), result));
 
-          // There are three possibilities when wait() returns: (a)
-          // connection succeeded; (b) connection failed; (c) wait()
-          // failed because of some other error.  It is easy to deal with
-          // (a) and (b).  (c) is tricky since the connection is still
-          // pending and may get completed by some other thread.  The
-          // following method deals with (c).
-          result = this->check_connection_closure (svc_handler, result);
-        }
+      /// @@ Johnny, where is timeout from wait () handled?
+
+      // There are three possibilities when wait() returns: (a)
+      // connection succeeded; (b) connection failed; (c) wait()
+      // failed because of some other error.  It is easy to deal with
+      // (a) and (b).  (c) is tricky since the connection is still
+      // pending and may get completed by some other thread.  The
+      // following method deals with (c).
+      result =
+        this->check_connection_closure (svc_handler,
+                                        result);
     }
 
   // Irrespective of success or failure, remove the extra #REFCOUNT#.
@@ -265,19 +246,20 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   if (result == -1)
     {
       // Give users a clue to the problem.
-      if (TAO_debug_level)
+      if (TAO_debug_level > 3)
         {
           ACE_DEBUG ((LM_ERROR,
                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
                       "connection to <%s:%d> failed (%p)\n",
-                      ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()), iiop_endpoint->port (),
+                      iiop_endpoint->host (), iiop_endpoint->port (),
                       ACE_TEXT("errno")));
         }
 
       return 0;
     }
 
-  TAO_Transport *transport = svc_handler->transport ();
+  TAO_Transport *transport =
+    svc_handler->transport ();
 
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
@@ -438,7 +420,8 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   int no_delay = this->orb_core ()->orb_params ()->nodelay ();
   int enable_network_priority = 0;
 
-  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (tph != 0)

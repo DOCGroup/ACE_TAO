@@ -231,11 +231,9 @@ namespace TAO
                            TAO_Stub *stub
                            ACE_ENV_ARG_DECL);
 
-    /// Helper method to set the needed info in the operation details. This
-    /// also returns whether we want to block until the connection is ready
-    /// or not.
-    bool setup_operation_details_i (TAO_Stub *stub,
-                                    TAO_Operation_Details &details);
+    /// Helper method to set syncscope_policy within @a details
+    void set_syncscope_policy (TAO_Stub *stub,
+                               TAO_Operation_Details &details);
 
   protected:
 

@@ -1,3 +1,51 @@
+Sat Jul 24 18:08:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Connect_Strategy.h:
+
+	  Added a new wait () method which takes in a transport. 
+	
+ 	* tao/Blocked_Connect_Strategy.cpp:
+	* tao/Blocked_Connect_Strategy.h:
+	  
+	  Provided a default implementation for the new wait () method.
+
+	* tao/LF_Connect_Strategy.cpp:
+	* tao/LF_Connect_Strategy.h:
+	* tao/Reactive_Connect_Strategy.cpp:
+	* tao/Reactive_Connect_Strategy.h:	
+
+	  Provided an implementation of the new wait () method. 
+
+	* tao/Invocation_Adapter.h:	
+	  
+	  Changed the setup_operation_details_i () to set_syncscope_policy
+	  () since that is what it does. 
+	
+	* tao/Invocation_Adapter.cpp:
+
+	  Changed the operation name in the implementation of the above
+	  method. Did a bunch of cosmetic changes to keep the line lengths
+	  smaller. 
+
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl:
+
+	  Changed the name of the connected () method as blocked
+	  (). Improved const correctness so that the blocked_ data member
+	  is const. 
+	
+	* tao/Invocation_Endpoint_Selectors.cpp:
+
+	  Use TAO::ProfileTransportResolver::blocked () instead of
+	  TAO::ProfileTransportResolver::connected (). 
+
+	* tao/Transport_Connector.cpp:
+	* tao/IIOP_Connector.cpp:
+
+	  Made a bunch of changes to improve readability of the code. Left
+	  a couple of questions for Johnny. There are a few more things
+	  that need to be addressed here. 
+	
 Fri Jul 22 09:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp (make_connection):

@@ -49,7 +49,11 @@ public:
                               ACE_Synch_Options &opt);
 
   virtual int wait (TAO_Connection_Handler *ch,
-                    ACE_Time_Value *val);
+                     ACE_Time_Value *val);
+
+
+  virtual int wait (TAO_Transport *t,
+                     ACE_Time_Value *val);
 
 };
 

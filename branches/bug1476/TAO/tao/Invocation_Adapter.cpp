@@ -166,9 +166,10 @@ namespace TAO
                                     details,
                                     this->type_ == TAO_TWOWAY_INVOCATION);
 
-    status = coll_inv.invoke (this->cpb_,
-                              strat
-                              ACE_ENV_ARG_PARAMETER);
+    status =
+      coll_inv.invoke (this->cpb_,
+                       strat
+                       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     if (status == TAO_INVOKE_RESTART &&
@@ -186,33 +187,29 @@ namespace TAO
     return status;
   }
 
-  bool
-  Invocation_Adapter::setup_operation_details_i(TAO_Stub *stub,
-                                                TAO_Operation_Details &details)
+  void
+  Invocation_Adapter::set_syncscope_policy (
+    TAO_Stub *stub,
+    TAO_Operation_Details &details)
   {
-    bool block = true;
-
     if (this->type_ == TAO_ONEWAY_INVOCATION)
       {
         // Grab the syncscope policy from the ORB.
         bool has_synchronization = false;
+
         Messaging::SyncScope sync_scope;
 
         stub->orb_core ()->call_sync_scope_hook (stub,
                                                  has_synchronization,
                                                  sync_scope);
-        if (has_synchronization && sync_scope == Messaging::SYNC_NONE)
-          {
-            block = false;
-          }
-
         if (has_synchronization)
           details.response_flags (CORBA::Octet (sync_scope));
         else
-          details.response_flags (CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
+          details.response_flags (
+            CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
       }
 
-    return block;
+    return;
   }
 
   Invocation_Status
@@ -230,14 +227,15 @@ namespace TAO
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
 
-    bool block = setup_operation_details_i(stub,
-                                           details);
+    (void) this->set_syncscope_policy (stub,
+                                       details);
 
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
-    Profile_Transport_Resolver resolver (effective_target,
-                                         stub,
-                                         block);
+    Profile_Transport_Resolver resolver (
+      effective_target,
+      stub,
+      (details.response_flags () == Messaging::SYNC_NONE));
 
     resolver.resolve (max_wait_time
                       ACE_ENV_ARG_PARAMETER);
@@ -302,7 +300,8 @@ namespace TAO
     if (status == TAO_INVOKE_RESTART &&
         synch.is_forwarded ())
       {
-        effective_target = synch.steal_forwarded_reference ();
+        effective_target =
+          synch.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target,
                                 r.stub ()
@@ -332,7 +331,8 @@ namespace TAO
     if (s == TAO_INVOKE_RESTART &&
         synch.is_forwarded ())
       {
-        effective_target = synch.steal_forwarded_reference ();
+        effective_target =
+          synch.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target,
                                 r.stub ()

@@ -47,7 +47,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       // If we shouldn't block but the profile doesn't support this
       // we can't use this profile
 // shouldn't we just loop and try the next?
-      if (!r->connected() && !r->profile()->supports_non_blocking_oneways())
+      if (!r->blocked () && !r->profile ()->supports_non_blocking_oneways ())
         {
           break;
         }

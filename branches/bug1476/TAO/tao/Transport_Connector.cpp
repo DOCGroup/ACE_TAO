@@ -219,122 +219,106 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         ACE_Time_Value *timeout
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if ((this->set_validate_endpoint (desc->endpoint ()) == -1) || desc == 0)
+  if ((this->set_validate_endpoint (
+         desc->endpoint ()) == -1) || desc == 0)
     {
       return 0;
     }
 
   TAO_Transport *base_transport = 0;
+  TAO_Transport_Cache_Manager &tcm =
+    this->orb_core ()->lane_resources ().transport_cache ();
 
   // Check the Cache first for connections
   // If transport found, reference count is incremented on assignment
   // @@todo: We need to send the timeout value to the cache registry
   // too. That should be the next step!
-  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
-        desc,
-        base_transport) == 0)
+  if (tcm.find_transport (desc,
+                          base_transport) != 0)
     {
-      if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) - Transport_Connector::connect, ")
-                      ACE_TEXT("got an existing %s Transport[%d]\n"),
-                      base_transport->is_connected() ? "connected" : "not connected",
-                      base_transport->id ()));
-        }
+      // @@TODO: This is not the right place for this!
+      // Purge connections (if necessary)
+      tcm.purge ();
 
-      // If we get a transport that is connected we can just use that, if not
-      // not, we must see if it is maybe now connected, in case of an
-      // intermediate close we have to remove that transport from the cache
-      // and try to create a new one
-      if (base_transport->is_connected())
-        {
-          // No need to _duplicate since things are taken care within the
-          // cache manager.
-          return base_transport;
-        }
-      else
-        {
-          // We have a transport that is not connected, now see if we must
-          // deliver a connected transport or not
-          if (r->connected())
-            {
-              // Now wait until the connection is ready
-              int result =
-                 this->active_connect_strategy_->wait (base_transport->connection_handler(),
-                                                       timeout);
-
-              if (TAO_debug_level > 2)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) - Transport_Connector::connect, "
-                              "wait done result = %d\n",
-                              result));
-                }
-
-// todo, how to do this in a generic way?
-//             this->check_connection_closure (base_transport->connection_handler(), result);
-// handle failure
-              return base_transport;
-            }
-          else
-            {
-              // just do a wait of zero
-              // time to see if it is maybe now connected
-              // here
-              ACE_Time_Value zero(ACE_Time_Value::zero);
-              int result = this->active_connect_strategy_->wait(base_transport->connection_handler(),
-                                                                &zero);
-
-              if (base_transport->is_connected())
-                {
-                  // We now have a connection
-
-                  // If the wait strategy wants us to be registered with the reactor
-                  // then we do so. If registeration is required and it succeeds,
-                  // #REFCOUNT# becomes two.
-                  result = base_transport->wait_strategy ()->register_handler ();
-
-                  // Registration failures.
-                  if (result != 0)
-                    {
-                      // Purge from the connection cache.
-                      base_transport->purge_entry ();
-
-                      // Close the handler.
-                      base_transport->connection_handler()->close_connection ();
-
-                      if (TAO_debug_level > 0)
-                        {
-                          ACE_ERROR ((LM_ERROR,
-                                      "TAO (%P|%t) - TAO_Connector::connect, "
-                                      "could not register the connected connection in the reactor, get a new one\n"));
-                        }
-                    }
-                }
-              else
-                {
-                   // Connection not ready yet, just use this base_transport, if
-                   // we need a connected one we will block later one to make sure
-                   // it is connected
-                   return base_transport;
-                }
-            }
-
-// todo
-// what now then thsi is closed, then we should close it, zap it from the cache and make
-      // a new connection, this is protocol dependent, so should we define a virtual
-            // method that is overruled for each protocol?
-      }
+      return this->make_connection (r,
+                                    *desc,
+                                    timeout);
     }
 
-  // @@TODO: This is not the right place for this!
-  // Purge connections (if necessary)
-  this->orb_core_->lane_resources ().transport_cache ().purge ();
+  if (base_transport->is_connected())
+    return base_transport;
 
-  return this->make_connection (r,
-                                *desc,
-                                timeout);
+  if (TAO_debug_level > 4)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - Transport_Connector::connect, ",
+                "got an existing %s Transport[%d]\n",
+                base_transport->is_connected() ? "connected" : "unconnected",
+                base_transport->id ()));
+
+  // Now if we are not completely connected...
+  if (r->blocked ())
+    {
+      // Now wait until the connection is ready
+      int result =
+        this->active_connect_strategy_->wait (
+            base_transport,
+            timeout);
+
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Transport_Connector::connect, "
+                    "wait done result = %d\n",
+                    result));
+
+      // todo, how to do this in a generic way?
+      // @@ Johnny, we will get back here soon.
+//             this->check_connection_closure (base_transport->connection_handler(), result);
+// handle failure
+      return base_transport;
+    }
+
+  // Now, if we are supossed to be non-blocking, drive the reactor
+  // event loop for a 0 timeout
+  ACE_Time_Value zero (ACE_Time_Value::zero);
+  int result =
+    this->active_connect_strategy_->wait (base_transport,
+                                          &zero);
+
+  if (base_transport->is_connected ())
+    {
+      // We now have a connection
+
+      // @@ TODO: This code can be factored out..
+
+      // If the wait strategy wants us to be registered with the reactor
+      // then we do so. If registeration is required and it succeeds,
+      // #REFCOUNT# becomes two.
+      result =
+        base_transport->wait_strategy ()->register_handler ();
+
+      // Registration failures.
+      if (result != 0)
+        {
+          // Purge from the connection cache.
+          base_transport->purge_entry ();
+
+          // Close the handler.
+          base_transport->connection_handler()->close_connection ();
+
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) - TAO_Connector::connect, "
+                        "could not register the connected connection"
+                        " in the reactor, get a new one\n"));
+        }
+
+      return 0;
+    }
+
+  // Connection not ready yet, just use this base_transport, if
+  // we need a connected one we will block later one to make sure
+  // it is connected
+  return base_transport;
 }
 
 
@@ -355,4 +339,3 @@ TAO_Connector::create_connect_strategy (void)
 
   return 0;
 }
-

@@ -64,13 +64,16 @@ namespace TAO
   public:
     /// Constructor
     /**
-     * With @a must_connect we tell whether this resolved should always deliver
-     * a connected transport or whether it is allowed to deliver a not
-     * connected transport.
+     * With @a block we tell whether this resolved should always deliver
+     * a connection by blocking or unblock before the connection is
+     * completely established. Please note that this has *nothing* to
+     * do with the synchronous or asynch connect strategy used for
+     * making connections. This is a local flag used by the clients of
+     * this to dictate some local behavior.
      */
     Profile_Transport_Resolver (CORBA::Object *p,
                                 TAO_Stub *stub,
-                                bool connected);
+                                bool block = true);
 
     ~Profile_Transport_Resolver (void);
 
@@ -88,7 +91,8 @@ namespace TAO
     //@{
     /**
      * Accessors and mutators for this class. The following methods
-     * are used by the clients of this class to access.
+     * are used by the clients of this class to access strategies and
+     * other internal workings.
      */
 
     /// Mutator for profile.
@@ -106,8 +110,9 @@ namespace TAO
     /// Accessor for the transport reserved for this invocation.
     TAO_Transport *transport (void) const;
 
-    /// Accessor whether we must deliver a connected transport
-    bool connected (void) const;
+    /// Accessor to indicate whether we should deliver a connection
+    /// blocking for completed connections
+    bool blocked (void) const;
     //@}
 
     /// Signal to let the resolver know that the transport has been
@@ -172,8 +177,8 @@ namespace TAO
      */
     CORBA::PolicyList *inconsistent_policies_;
 
-    /// Must we deliver a connected transport
-    bool connected_;
+    /// Should we block while trying to make a connection
+    const bool blocked_;
   };
 } // TAO namespace end
 
