@@ -1,3 +1,103 @@
+Thu Feb 24 12:35:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/ARGV_Test.icc:
+        * tests/Auto_IncDec_Test.icc:
+        * tests/CDR_File_Test.icc:
+        * tests/Cache_Map_Manager_Test.icc:
+        * tests/Cached_Accept_Conn_Test.icc:
+        * tests/Cached_Conn_Test.icc:
+        * tests/Capabilities_Test.icc:
+        * tests/FlReactor_Test.icc:
+        * tests/Future_Set_Test.icc:
+        * tests/Hash_Map_Bucket_Iterator_Test.icc:
+        * tests/Lazy_Map_Manager_Test.icc:
+        * tests/Log_Msg_Test.icc:
+        * tests/Malloc_Test.icc:
+        * tests/New_Fail_Test.icc:
+        * tests/Object_Manager_Test.icc:
+        * tests/Process_Manager_Test.icc:
+        * tests/Reverse_Lock_Test.icc:
+        * tests/SOCK_Send_Recv_Test.icc:
+        * tests/Signal_Test.icc:
+        * tests/Svc_Handler_Test.icc:
+        * tests/TkReactor_Test.icc:
+            New test configuration files for use w/ Visual Age C++, NT and AIX.
+
+        * tests/Aio_Platform_Test.icc:
+        * tests/Atomic_Op_Test.icc:
+        * tests/Barrier_Test.icc:
+        * tests/Basic_Types_Test.icc:
+        * tests/Buffer_Stream_Test.icc:
+        * tests/CDR_Test.icc:
+        * tests/Collection_Test.icc:
+        * tests/Conn_Test.icc:
+        * tests/DLL_Test.icc:
+        * tests/DLList_Test.icc:
+        * tests/Dynamic_Priority_Test.icc:
+        * tests/Enum_Interfaces_Test.icc:
+        * tests/Env_Value_Test.icc:
+        * tests/Future_Test.icc:
+        * tests/Handle_Set_Test.icc:
+        * tests/Hash_Map_Manager_Test.icc:
+        * tests/High_Res_Timer_Test.icc:
+        * tests/IOStream_Test.icc:
+        * tests/MM_Shared_Memory_Test.icc:
+        * tests/MT_Reactor_Timer_Test.icc:
+        * tests/MT_SOCK_Test.icc:
+        * tests/Map_Manager_Test.icc:
+        * tests/Map_Test.icc:
+        * tests/Mem_Map_Test.icc:
+        * tests/Message_Block_Test.icc:
+        * tests/Message_Queue_Notifications_Test.icc:
+        * tests/Message_Queue_Test.icc:
+        * tests/Naming_Test.icc:
+        * tests/Notify_Performance_Test.icc:
+        * tests/OrdMultiSet_Test.icc:
+        * tests/Pipe_Test.icc:
+        * tests/Priority_Buffer_Test.icc:
+        * tests/Priority_Reactor_Test.icc:
+        * tests/Priority_Task_Test.icc:
+        * tests/Process_Mutex_Test.icc:
+        * tests/Process_Strategy_Test.icc:
+        * tests/Purgable_Map_Manager_Test.icc:
+        * tests/RB_Tree_Test.icc:
+        * tests/Reactor_Exceptions_Test.icc:
+        * tests/Reactor_Notify_Test.icc:
+        * tests/Reactor_Performance_Test.icc:
+        * tests/Reactor_Timer_Test.icc:
+        * tests/Reactors_Test.icc:
+        * tests/Reader_Writer_Test.icc:
+        * tests/Recursive_Mutex_Test.icc:
+        * tests/SOCK_Connector_Test.icc:
+        * tests/SOCK_Test.icc:
+        * tests/SPIPE_Test.icc:
+        * tests/SString_Test.icc:
+        * tests/SV_Shared_Memory_Test.icc:
+        * tests/Semaphore_Test.icc:
+        * tests/Service_Config_Test.icc:
+        * tests/Sigset_Ops_Test.icc:
+        * tests/Simple_Message_Block_Test.icc:
+        * tests/TSS_Test.icc:
+        * tests/Task_Test.icc:
+        * tests/Thread_Manager_Test.icc:
+        * tests/Thread_Mutex_Test.icc:
+        * tests/Thread_Pool_Reactor_Test.icc:
+        * tests/Thread_Pool_Test.icc:
+        * tests/Time_Service_Test.icc:
+        * tests/Time_Value_Test.icc:
+        * tests/Timeprobe_Test.icc:
+        * tests/Timer_Queue_Test.icc:
+        * tests/Tokens_Test.icc:
+        * tests/UPIPE_SAP_Test.icc:
+        * tests/Upgradable_RW_Test.icc:
+        * tests/XtReactor_Test.icc:
+             Changed to work for both NT and AIX Visual Age C++, using new
+             vacpp_setup.icc file, added below.
+
+Thu Feb 24 12:15:46 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/makeicc.pl: Corrected to write $Id$ in .icc file properly.
+
 Thu Feb 24 01:52:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (append_thr): Moved the setting of
@@ -38,6 +138,15 @@ Wed Feb 23 18:58:06 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           removed when the filelock is destroyed.  By default, this is
           "enabled" so the existing semantics don't change.  Thanks to
           Sanwoo Jin <swjinjin@sei.co.kr> for suggesting this.
+
+Wed Feb 23 17:02:34 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/vacpp_setup.icc: Settings for Visual Age C++ which are included
+          in the individual tests' VAC++ configurations. Captures all of the
+          platform (AIX vs. NT) differences in one place.
+
+        * tests/makeicc.pl: Changed to generate .icc files that work on either
+          NT or AIX, using the above vacpp_setup.icc.
 
 Wed Feb 23 16:54:31 2000  Steve Huston  <shuston@riverace.com>
 
