@@ -5245,31 +5245,31 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                            SOCKET_ERROR);
       
       ACE_Flow_Spec sending_flowspec (qos.SendingFlowspec.TokenRate,
-										qos.SendingFlowspec.TokenBucketSize,
-										qos.SendingFlowspec.PeakBandwidth,
-										qos.SendingFlowspec.Latency,
-										qos.SendingFlowspec.DelayVariation,
+                                      qos.SendingFlowspec.TokenBucketSize,
+                                      qos.SendingFlowspec.PeakBandwidth,
+                                      qos.SendingFlowspec.Latency,
+                                      qos.SendingFlowspec.DelayVariation,
 #if defined(ACE_HAS_WINSOCK2_GQOS)
-										qos.SendingFlowspec.ServiceType,
-										qos.SendingFlowspec.MaxSduSize,
-										qos.SendingFlowspec.MinimumPolicedSize,
+                                      qos.SendingFlowspec.ServiceType,
+                                      qos.SendingFlowspec.MaxSduSize,
+                                      qos.SendingFlowspec.MinimumPolicedSize,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
-										0,
-										0);
-
-		ACE_Flow_Spec receiving_flowspec (qos.ReceivingFlowspec.TokenRate,
-										  qos.ReceivingFlowspec.TokenBucketSize,
-										  qos.ReceivingFlowspec.PeakBandwidth,
-										  qos.ReceivingFlowspec.Latency,
-										  qos.ReceivingFlowspec.DelayVariation,
+                                      0,
+                                      0);
+      
+      ACE_Flow_Spec receiving_flowspec (qos.ReceivingFlowspec.TokenRate,
+                                        qos.ReceivingFlowspec.TokenBucketSize,
+                                        qos.ReceivingFlowspec.PeakBandwidth,
+                                        qos.ReceivingFlowspec.Latency,
+                                        qos.ReceivingFlowspec.DelayVariation,
 #if defined(ACE_HAS_WINSOCK2_GQOS)
-										  qos.ReceivingFlowspec.ServiceType,
-										  qos.ReceivingFlowspec.MaxSduSize,
-										  qos.ReceivingFlowspec.MinimumPolicedSize,
+                                        qos.ReceivingFlowspec.ServiceType,
+                                        qos.ReceivingFlowspec.MaxSduSize,
+                                        qos.ReceivingFlowspec.MinimumPolicedSize,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
-										  0,
-										  0);
-										  
+                                        0,
+                                        0);
+      
       ace_qos.sending_flowspec (sending_flowspec);
       ace_qos.receiving_flowspec (receiving_flowspec);
       ace_qos.provider_specific (*((struct iovec *) (&qos.ProviderSpecific)));
