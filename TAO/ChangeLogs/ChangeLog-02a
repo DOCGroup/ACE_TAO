@@ -1,3 +1,8 @@
+Tue Mar  5 13:11:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+          Fixed small typing error in comment
+
 Tue Mar  5 00:07:13 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tests/LongUpcalls/Makefile:
