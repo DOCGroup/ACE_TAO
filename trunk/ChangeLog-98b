@@ -1,3 +1,10 @@
+Sun Sep 20 16:38:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.i (get_next): Changed to use static_cast.
+
+	* ace/Thread_Manager.cpp: Shielded off terminated_thr_list_ from
+	  compilation on VxWorks.  Thanks to David for noticing this.
+
 Sun Sep 20 12:17:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
