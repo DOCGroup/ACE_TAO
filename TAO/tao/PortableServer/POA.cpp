@@ -352,7 +352,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
   // Must increase ref count since this->obj_ref_factory_ will
   // descrease it upon destruction.
-  CORBA::add_ref (this->ort_template_);
+  CORBA::add_ref (this->ort_template_.in ());
   this->obj_ref_factory_ = this->ort_template_;
 
   // Iterate over the registered IOR interceptors so that they may be

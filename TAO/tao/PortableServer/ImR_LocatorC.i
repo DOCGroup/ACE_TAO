@@ -44,6 +44,17 @@ ImplementationRepository::Locator::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<ImplementationRepository::Locator>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from

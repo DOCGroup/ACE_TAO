@@ -44,6 +44,17 @@ CORBA::FixedDef::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::FixedDef>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -739,6 +750,17 @@ CORBA::ValueMemberDef::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::ValueMemberDef>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -974,6 +996,17 @@ CORBA::Boolean
 CORBA::ValueDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::ValueDef>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #endif /* end #if !defined */
@@ -1424,6 +1457,17 @@ CORBA::ExtValueDef::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::ExtValueDef>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -1448,6 +1492,17 @@ CORBA::Boolean
 CORBA::ValueBoxDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::ValueBoxDef>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #endif /* end #if !defined */

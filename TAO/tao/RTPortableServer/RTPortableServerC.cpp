@@ -470,30 +470,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTPortableServer::POA,RTPortableServer::POA_var>;
