@@ -1,3 +1,28 @@
+Mon Jul 14 12:55:13 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Lanes/run_test.pl:
+	* orbsvcs/tests/Notify/ThreadPool/run_test.pl:
+
+	  Use <Kill> instead of <Wait> to stop the "Still Running on
+	  exit.." error by perl. 
+
+	* orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp:	
+	* orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+	* orbsvcs/tests/Notify/*.conf:
+	
+	  Changed inconsistent use of "ThreadPoolLanes" string to the
+	  easily readable "Lanes".
+	  
+	* orbsvcs/tests/Notify/lib/Driver.cpp:
+ 	* orbsvcs/tests/Notify/lib/Driver.h:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/run_test.pl:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/run_test.pl:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/run_test.pl:
+
+	  Added the "-Skip_Priority_Levels_Check" option. We need some
+	  Notify tests to run regardless of the available priority levels.
+	
 Mon Jul 14 11:12:25 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp:
