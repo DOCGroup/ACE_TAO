@@ -1,3 +1,8 @@
+Sun Mar 28 13:27:15 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/exceptions.html: 
+	Added a new example
+
 Fri Mar 26 23:35:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: Added ACE_NEEDS_SCHED_H.
