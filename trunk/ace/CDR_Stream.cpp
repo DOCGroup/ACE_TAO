@@ -165,6 +165,24 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
 }
 
 ACE_CDR::Boolean
+ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
+{
+  if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
+          && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
+    {
+      ACE_CDR::Octet len = ACE_static_cast (ACE_CDR::Octet, sizeof(x));
+      if (this->write_1 (&len))
+        return this->write_octet_array (ACE_reinterpret_cast
+                                         (const ACE_CDR::Octet*, &x),
+                                         ACE_static_cast (ACE_CDR::ULong, len));
+    }
+  else
+    if (this->wchar_translator_ == 0)
+      return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort*, &x));
+  return this->wchar_translator_->write_wchar (*this, x);
+}
+
+ACE_CDR::Boolean
 ACE_OutputCDR::write_string (ACE_CDR::ULong len,
                              const char *x)
 {
@@ -197,24 +215,6 @@ ACE_OutputCDR::write_string (ACE_CDR::ULong len,
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
-{
-  if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
-          && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
-    {
-      ACE_CDR::Octet len = ACE_static_cast (ACE_CDR::Octet, sizeof(x));
-      if (this->write_1 (&len))
-        return this->write_octet_array (ACE_reinterpret_cast
-                                         (const ACE_CDR::Octet*, &x),
-                                         ACE_static_cast (ACE_CDR::ULong, len));
-    }
-  else
-    if (this->wchar_translator_ == 0)
-      return this->write_2 (ACE_reinterpret_cast (const ACE_CDR::UShort*, &x));
-  return this->wchar_translator_->write_wchar (*this, x);
-}
-
-ACE_CDR::Boolean
 ACE_OutputCDR::write_string (const ACE_CString &x)
 {
   // @@ Leave this method in here, not the `.i' file so that we don't
@@ -229,23 +229,41 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
   // @@ This is a slight violation of "Optimize for the common case",
   // i.e. normally the translator will be 0, but OTOH the code is
   // smaller and should be better for the cache ;-) ;-)
+  // What do we do for GIOP 1.2???
   if (this->wchar_translator_ != 0)
     return this->wchar_translator_->write_wstring (*this, len, x);
 
-  if (x != 0)
+  if (ACE_static_cast (ACE_CDR::Short, this->major_version_) == 1
+          && ACE_static_cast (ACE_CDR::Short, this->minor_version_) == 2)
     {
-      if (this->write_ulong (len + 1))
+      if (x != 0)
         {
-          return this->write_wchar_array (x, len + 1);
+          //In GIOP 1.2 the length field contains the number of bytes
+          //the wstring occupies rather than number of wchars
+          //Taking sizeof might not be a good way! This is a temporary fix.
+          if (this->write_ulong (sizeof(ACE_CDR::WChar)*len))
+            {
+              return this->write_wchar_array (x, len);
+            }
+        }
+      else
+        {
+          //In GIOP 1.2 zero length wstrings are legal
+          return this->write_ulong (0);
         }
     }
+
   else
-    {
-      if (this->write_ulong (1))
-        {
+    if (x != 0)
+      {
+        if (this->write_ulong (len + 1))
+          return this->write_wchar_array (x, len + 1);
+      }
+    else
+      {
+        if (this->write_ulong (1))
           return this->write_wchar (0);
-        }
-    }
+      }
   return 0;
 }
 
@@ -834,16 +852,43 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
 
   ACE_CDR::ULong len;
   this->read_ulong (len);
+
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
   // the memory is allocated.
   if (len > 0 && len <= this->length())
     {
-      ACE_NEW_RETURN (x,
-                      ACE_CDR::WChar[len],
-                      0);
-      if (this->read_wchar_array (x, len))
-        return 1;
+
+      if (ACE_static_cast (ACE_CDR::Short, this->major_version_) == 1
+          && ACE_static_cast (ACE_CDR::Short, this->minor_version_) == 2)
+        {
+          len = len / sizeof (ACE_CDR::WChar);
+
+          //allocating one extra for the null character needed by applications
+          ACE_NEW_RETURN (x,
+                          ACE_CDR::WChar [len + 1],
+                          0);
+
+          if (this->read_wchar_array (x, len))
+            {
+
+              //Null character used by applications to find the end of
+              //the wstring
+              //Is this okay with the GIOP 1.2 spec??
+              x[len] = '\x00';
+
+              return 1;
+            }
+        }
+      else
+        {
+          ACE_NEW_RETURN (x,
+                          ACE_CDR::WChar [len],
+                          0);
+
+          if (this->read_wchar_array (x, len))
+            return 1;
+        }
 
       delete [] x;
     }
@@ -1085,6 +1130,26 @@ ACE_InputCDR::skip_string (void)
     }
 
   return 0;
+}
+
+ACE_CDR::Boolean
+ACE_InputCDR::skip_wstring (void)
+{
+  ACE_CDR::Boolean continue_skipping = 1;
+  ACE_CDR::ULong len;
+
+  continue_skipping = read_ulong (len);
+
+  if (continue_skipping != 0 && len != 0)
+    {
+      if (ACE_static_cast (ACE_CDR::Short, this->major_version_) == 1
+            && ACE_static_cast (ACE_CDR::Short, this->minor_version_) == 2)
+          continue_skipping = this->skip_bytes ((size_t)len);
+      else
+        while (continue_skipping != 0 && len--)
+          continue_skipping = this->skip_wchar ();
+    }
+  return continue_skipping;
 }
 
 ACE_CDR::Boolean
