@@ -18,8 +18,8 @@ Wed Oct 16 17:16:38 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
           the call goes into an endless loop. For MSVC, identical
           methods using the flat name are generated for each class,
           and called by derived classes. Thanks to Don Hinton
-          <dhinton@ieee.org> for reporting the bug and for sending in
-          a patch.
+          <dhinton@ieee.org> for reporting the bug and Jon Franklin 
+	  <jfranklin@dctd.saic.com> for providing a patch.
 
 Wed Oct 16 12:37:07 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
