@@ -99,11 +99,11 @@ main (int argc, char *argv[])
 
       ACE_Process_Options options;
       if (release_mutex == 0)
-	options.command_line ("Process_Mutex_Test" ACE_PLATFORM_EXE_SUFFIX
-			      " -c -n %s -d", mutex_name);
+	options.command_line (__TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
+			      __TEXT (" -c -n %s -d"), ACE_WIDE_STRING (mutex_name));
       else
-	options.command_line ("Process_Mutex_Test" ACE_PLATFORM_EXE_SUFFIX
-			      " -c -n %s", mutex_name);
+	options.command_line (__TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
+			      __TEXT (" -c -n %s"), ACE_WIDE_STRING (mutex_name));
       
       // Spawn ACE_MAX_PROCESSES processes that will contend for the
       // lock.

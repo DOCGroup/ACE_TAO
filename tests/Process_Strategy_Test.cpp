@@ -175,7 +175,7 @@ Options::parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "p:c:f:");
 
-  this->filename_ = ACE_TEMP_FILE_NAME;
+  this->filename_ = ACE_TEMP_FILE_NAME_A;
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -202,7 +202,7 @@ Options::parse_args (int argc, char *argv[])
       }
 
   // Initialize the file lock.
-  if (this->file_lock_.open (this->filename_, 
+  if (this->file_lock_.open (ACE_WIDE_STRING (this->filename_), 
 			     O_RDWR | O_CREAT, 
 			     ACE_DEFAULT_FILE_PERMS) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
