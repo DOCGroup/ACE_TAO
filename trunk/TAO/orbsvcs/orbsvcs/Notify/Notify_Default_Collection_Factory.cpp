@@ -108,7 +108,6 @@ template class TAO_ESF_Worker<TAO_Notify_UpdateListener>;
 
 template class TAO_ESF_Immediate_Changes<TAO_Notify_EventListener, TAO_ESF_Proxy_List<TAO_Notify_EventListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener *>, TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Immediate_Changes<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, TAO_SYNCH_MUTEX>;
-template class TAO_ESF_Immediate_Changes<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, ACE_Null_Mutex>;
 
 template class TAO_ESF_Copy_On_Write<TAO_Notify_EventListener, TAO_ESF_Proxy_List<TAO_Notify_EventListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener *>, ACE_SYNCH>;
 template class TAO_ESF_Copy_On_Write<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, ACE_SYNCH>;
