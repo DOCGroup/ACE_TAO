@@ -1,3 +1,14 @@
+Thu Aug  5 09:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        The following changes are from Martin Corino <mcorino@remedy.nl>
+
+        * bin/mwc.pl:
+        * bin/mpc.pl:
+        * bin/depgen.pl:
+        * bin/cle.pl:
+          Added various changes to support autobuild MPC generation on
+          OpenVMS.
+
 Wed Aug  4 18:09:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
