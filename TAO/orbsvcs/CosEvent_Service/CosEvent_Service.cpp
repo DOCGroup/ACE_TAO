@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "CosEvent_Service.h"
 #include "orbsvcs/CosEC_Utility_Methods_T.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 CosEvent_Service::CosEvent_Service (void)
   : service_name ("CosEventService"),
@@ -138,7 +139,7 @@ CosEvent_Service::startup (int argc, char *argv[],
   ACE_DEBUG ((LM_DEBUG,
               "The CosEC IOR is <%s>\n", str.in ()));
 
-  CosEC_Utility_Methods<CosEC_Utility_NIL>::
+  CosEC_Utility_Methods<CORBA::Object>::
     bind (this->naming_.in (),
           this->service_name,
           obj,
@@ -230,7 +231,7 @@ CosEvent_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
 
   // Unbind from the naming service.
   if (!CORBA::is_nil (this->naming_.in ()))
-  CosEC_Utility_Methods<CosEC_Utility_NIL>::
+  CosEC_Utility_Methods<CORBA::Object>::
     unbind (this->naming_.in (),
             this->service_name,
             ACE_TRY_ENV);
@@ -244,6 +245,8 @@ CosEvent_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
 int
 main (int argc, char *argv[])
 {
+  TAO_EC_Default_Factory::init_svcs ();
+
   CosEvent_Service service;
 
   // check command line args.
@@ -255,7 +258,7 @@ main (int argc, char *argv[])
       service.startup (argc,
                        argv,
                        ACE_TRY_ENV);
-      ACE_CHECK_RETURN (1);
+      ACE_TRY_CHECK;
 
       if (service.run () == -1)
         {
@@ -269,6 +272,7 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Failed to start CosEventService");
+      return 1;
     }
   ACE_ENDTRY;
 
@@ -279,12 +283,10 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class CosEC_Utility_Methods<CosEC_Utility_NIL>;
-template class CosEC_Utility_Methods_T<RtecEventChannelAdmin::EventChannel>;
+template class CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate CosEC_Utility_Methods<CosEC_Utility_NIL>
-#pragma instantiate CosEC_Utility_Methods_T<RtecEventChannelAdmin::EventChannel>
+#pragma instantiate CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>
 
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
