@@ -1,3 +1,12 @@
+Wed Nov 05 19:26:44 1997    <nw1@COYOTE>
+
+	* tests/Cubit/TAO/DII_Cubit/DII_Cubit.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsp:
+	* tests/Cubit/TAO/MT_Cubit/client/client.dsp:
+	* tests/Cubit/TAO/MT_Cubit/server/server.dsp:
+	* tao/TAO.dsp: Renamed debeg version of TAO library to TAO.dll for
+ 	  NT.
+
 Wed Nov 05 13:39:19 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: more hacks to not build the IDL compiler
