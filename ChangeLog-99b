@@ -1,3 +1,12 @@
+Wed Jul  7 17:17:10 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/ARGV.cpp (ACE_ARGV):
+	* ace/OS.cpp (ACE_OS_Recursive_Thread_Mutex_Guard):
+	* ace/Sched_Params.i (ACE_Sched_Priority_Iterator):
+
+	  Added some class members to the member initializer lists to fix
+	  some "Effective C++" warnings from EGCS.
+
 Wed Jul  7 16:33:29 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Cached_Conn_Test.cpp (main): Added default testing of LRU,
