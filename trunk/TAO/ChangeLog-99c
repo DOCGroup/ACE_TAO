@@ -156,7 +156,7 @@ Tue Sep 14 11:57:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Sep 14 11:32:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* examples/Evnet_Comm.idl:
+	* examples/Event_Comm.idl:
 	  As the IDL compiler gets ever more strict about
 	  name resolution, more name clashes turn up. There
 	  were two in this file.
