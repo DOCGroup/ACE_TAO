@@ -1,3 +1,8 @@
+Sat Nov 25 22:08:46 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* apps/drwho/Makefile:
+	  Disabled drwho compilation on Vxworks - its missing protocols/rwhod.h.
+
 Fri Nov 24 16:58:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/IPC_SAP.cpp:
