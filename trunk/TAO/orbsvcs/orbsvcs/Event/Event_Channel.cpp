@@ -65,7 +65,7 @@ IntervalToPriority (RtecScheduler::Time interval)
 
 // ************************************************************
 
-class Shutdown_Consumer : public ACE_ES_Dispatch_Request
+class TAO_ORBSVCS_Export Shutdown_Consumer : public ACE_ES_Dispatch_Request
 // = TITLE
 //    Shutdown Consumer command
 //
@@ -128,7 +128,7 @@ public:
 
 // ************************************************************
 
-class Shutdown_Channel : public ACE_ES_Dispatch_Request
+class TAO_ORBSVCS_Export Shutdown_Channel : public ACE_ES_Dispatch_Request
 {
 public:
   Shutdown_Channel (ACE_EventChannel *channel) :
@@ -155,7 +155,7 @@ public:
 
 // ************************************************************
 
-class ACE_ES_Priority_Timer : public ACE_Event_Handler
+class TAO_ORBSVCS_Export ACE_ES_Priority_Timer : public ACE_Event_Handler
 // = TITLE
 //    Event Service Timer
 //
@@ -194,7 +194,7 @@ private:
 
 // ************************************************************
 
-class Flush_Queue_ACT : public ACE_ES_Timer_ACT
+class TAO_ORBSVCS_Export Flush_Queue_ACT : public ACE_ES_Timer_ACT
 // = TITLE
 //    Flush Queue Asynchronous Completion Token
 //

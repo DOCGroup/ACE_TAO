@@ -270,7 +270,7 @@ typedef ACE_ES_ReactorEx_NS ACE_ES_Notification_Strategy;
 
 #else // *******************************************************
 
-class ACE_ES_Reactor_NS : public ACE_Reactor_Notification_Strategy
+class TAO_ORBSVCS_Export ACE_ES_Reactor_NS : public ACE_Reactor_Notification_Strategy
 // = TITLE 
 //     Event Service Reactor Notification Strategy
 //
@@ -296,7 +296,7 @@ typedef ACE_ES_Reactor_NS ACE_ES_Notification_Strategy;
 
 // ************************************************************
 
-class ACE_ES_MQ : public ACE_ES_QUEUE
+class TAO_ORBSVCS_Export ACE_ES_MQ : public ACE_ES_QUEUE
 // = TITLE
 //    Event Service Message Queue
 {

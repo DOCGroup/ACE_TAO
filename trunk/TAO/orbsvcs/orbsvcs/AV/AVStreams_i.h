@@ -21,7 +21,7 @@
 
 #include "orbsvcs/AVStreamsS.h"
 
-class TAO_Basic_StreamCtrl : public virtual POA_AVStreams::Basic_StreamCtrl
+class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl : public virtual POA_AVStreams::Basic_StreamCtrl
 // = DESCRIPTION
 //    Base class for StreamCtrl, implements basic stream start
 //    and stop functionality 
@@ -90,8 +90,7 @@ class TAO_Basic_StreamCtrl : public virtual POA_AVStreams::Basic_StreamCtrl
   AVStreams::StreamEndPoint_B_var stream_endpoint_b_;
 };
 
-class TAO_StreamCtrl : public virtual POA_AVStreams::StreamCtrl, 
-                       public virtual TAO_Basic_StreamCtrl
+class TAO_ORBSVCS_Export TAO_StreamCtrl : public virtual POA_AVStreams::StreamCtrl, public virtual TAO_Basic_StreamCtrl
 {
 public:
   // Constructor
@@ -130,7 +129,7 @@ public:
 
 };  
 
-class TAO_StreamEndPoint : public virtual POA_AVStreams::StreamEndPoint
+class TAO_ORBSVCS_Export TAO_StreamEndPoint : public virtual POA_AVStreams::StreamEndPoint
 {
   // = DESCRIPTION
   //    The Stream EndPoint. Used to implement one endpoint of a stream
@@ -214,8 +213,7 @@ public:
    
 };
 
-class TAO_StreamEndPoint_A : public virtual POA_AVStreams::StreamEndPoint_A,
-                             public virtual TAO_StreamEndPoint
+class TAO_ORBSVCS_Export TAO_StreamEndPoint_A : public virtual POA_AVStreams::StreamEndPoint_A, public virtual TAO_StreamEndPoint
 {
   // = DESCRIPTION
   //     The "A" side of a streamendpoint
@@ -244,8 +242,7 @@ public:
 
 };
 
-class TAO_StreamEndPoint_B : public virtual POA_AVStreams::StreamEndPoint_B,
-                             public virtual TAO_StreamEndPoint
+class TAO_ORBSVCS_Export TAO_StreamEndPoint_B : public virtual POA_AVStreams::StreamEndPoint_B, public virtual TAO_StreamEndPoint
 {
   // = DESCRIPTION
   //     The "B" side of a streamendpoint
@@ -262,7 +259,7 @@ public:
   virtual ~TAO_StreamEndPoint_B (void);
 };
 
-class TAO_VDev : public virtual POA_AVStreams::VDev
+class TAO_ORBSVCS_Export TAO_VDev : public virtual POA_AVStreams::VDev
 // = DESCRIPTION
 //    Implements the VDev interface. One of these is created per connection,
 //    and represents device-specific parameters
@@ -314,7 +311,7 @@ class TAO_VDev : public virtual POA_AVStreams::VDev
   AVStreams::VDev_var peer_;
 };
 
-class TAO_MMDevice : public POA_AVStreams::MMDevice
+class TAO_ORBSVCS_Export TAO_MMDevice : public POA_AVStreams::MMDevice
 // = DESCRIPTION
 //     Implements a factory to create Endpoints and VDevs
 {

@@ -29,7 +29,7 @@ class ACE_Scheduler_Strategy;
 // Strategized scheduler class //
 /////////////////////////////////
 
-class ACE_Strategy_Scheduler : public ACE_Scheduler
+class TAO_ORBSVCS_Export ACE_Strategy_Scheduler : public ACE_Scheduler
   // = TITLE
   //    ACE_Strategy_Scheduler
   //
@@ -98,7 +98,7 @@ public:
 // Scheduler Strategies //
 //////////////////////////
 
-class ACE_Scheduler_Strategy
+class TAO_ORBSVCS_Export ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_Scheduler_Strategy
   //
@@ -159,7 +159,7 @@ protected:
 
 
 
-class ACE_MUF_Scheduler_Strategy : public ACE_Scheduler_Strategy
+class TAO_ORBSVCS_Export ACE_MUF_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_MUF_Scheduler_Strategy
   //
@@ -211,7 +211,7 @@ private:
 };
 
 
-class ACE_RMS_Scheduler_Strategy : public ACE_Scheduler_Strategy
+class TAO_ORBSVCS_Export ACE_RMS_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_RMS_Scheduler_Strategy
   //
@@ -262,7 +262,7 @@ private:
 
 
 
-class ACE_MLF_Scheduler_Strategy : public ACE_Scheduler_Strategy
+class TAO_ORBSVCS_Export ACE_MLF_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_MLF_Scheduler_Strategy
   //
@@ -309,7 +309,7 @@ private:
 };
 
 
-class ACE_EDF_Scheduler_Strategy : public ACE_Scheduler_Strategy
+class TAO_ORBSVCS_Export ACE_EDF_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_EDF_Scheduler_Strategy
   //
@@ -356,7 +356,7 @@ private:
 };
 
 
-class ACE_RMS_Dyn_Scheduler_Strategy : public ACE_Scheduler_Strategy
+class TAO_ORBSVCS_Export ACE_RMS_Dyn_Scheduler_Strategy : public ACE_Scheduler_Strategy
   // = TITLE
   //    ACE_RMS_Dyn_Scheduler_Strategy
   //
