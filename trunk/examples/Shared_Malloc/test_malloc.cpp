@@ -102,7 +102,7 @@ spawn (void)
 	  ACE_OS::sprintf (iterations, "%d", Options::instance ()->iteration_count ());
 	  ACE_OS::sprintf (msg_size, "%d", Options::instance ()->max_msg_size ());
 
-	  char *argv[8];
+	  const char *argv[8];
 	  argv[0] = (char *) Options::instance ()->slave_name ();
 	  argv[1] = "-p";
 	  argv[2] = "-n";

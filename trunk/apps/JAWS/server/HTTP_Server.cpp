@@ -33,7 +33,7 @@ HTTP_Server::parse_args (int argc,
   int c;
   int thr_strategy = 0;
   int io_strategy = 0;
-  char *prog = argc > 0 ? argv[0] : "Sock_Server";
+  const char *prog = argc > 0 ? argv[0] : "Sock_Server";
 
   // Set some defaults
   this->port_ = 0;
