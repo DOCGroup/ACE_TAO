@@ -735,11 +735,11 @@ TC_Private_State::~TC_Private_State (void)
           CORBA::release (this->tc_discriminator_type_);
           this->tc_discriminator_type_ = 0;
         }
-        break;
 
+        break;
       case CORBA::tk_value:
         {
-          // free up the member name list
+          // Free up the member name list.
           if (this->tc_member_name_list_known_)
             {
               for (CORBA::ULong i = 0;
@@ -754,7 +754,7 @@ TC_Private_State::~TC_Private_State (void)
               this->tc_member_name_list_ = 0;
             }
 
-          // free up member type list
+          // Free up member type list.
           if (this->tc_member_type_list_known_)
             {
               for (CORBA::ULong i = 0;
@@ -771,24 +771,24 @@ TC_Private_State::~TC_Private_State (void)
 
           this->tc_member_count_ = 0;
 
+          // Free up the member visibility list.
           if (this->tc_member_visibility_list_known_)
             {
               delete [] this->tc_member_visibility_list_;
               this->tc_member_visibility_list_ = 0;
             }
 
-          // free up concrete base value typecode
+          // Free up concrete base value typecode.
           if (this->tc_concrete_base_type_known_)
             {
               CORBA::release (this->tc_concrete_base_type_);
               this->tc_concrete_base_type_ = 0;
-              this->tc_concrete_base_type_known_ = 0;
             }
+
           break;
       }
 
       default:
-        // nothing to do
         break;
     }
 }
