@@ -62,11 +62,6 @@ public:
   virtual ~TAO_EC_Gateway (void);
   // Destructor
 
-  virtual void open (const RtecEventChannelAdmin::ConsumerQOS& subscriptions,
-                     const RtecEventChannelAdmin::SupplierQOS& publications,
-                     CORBA::Environment& env) = 0;
-  // This method is invoked to create the first connection to the ECs
-
   virtual void close (CORBA::Environment& env) = 0;
   // The gateway must disconnect from all the relevant event channels,
   // or any other communication media (such as multicast groups).
@@ -143,9 +138,6 @@ public:
   // Disconnect and shutdown the gateway
 
   // The following methods are documented in the base class.
-  virtual void open (const RtecEventChannelAdmin::ConsumerQOS& subscriptions,
-                     const RtecEventChannelAdmin::SupplierQOS& publications,
-                     CORBA::Environment &_env);
   virtual void close (CORBA::Environment& _env);
   virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
                                 CORBA::Environment& env);
@@ -167,8 +159,14 @@ private:
   ACE_PushSupplier_Adapter<TAO_EC_Gateway_IIOP> supplier_;
   // Our supplier personality....
 
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
-  // We talk to the EC (as a supplier) using this proxy.
+  // We use a different Consumer_Proxy 
+  typedef ACE_Map_Manager<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map;
+  typedef ACE_Map_Iterator<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map_Iterator;
+  
+  Consumer_Map consumer_proxy_map_;
+  RtecEventChannelAdmin::ProxyPushConsumer_var default_consumer_proxy_;
+  // We talk to the EC (as a supplier) using either an per-supplier
+  // proxy or a generic proxy for the type only subscriptions.
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a consumer) using this proxy.
