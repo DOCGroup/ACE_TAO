@@ -227,58 +227,6 @@ test (ACE_Configuration *config)
 }
 
 static int
-test_io (ACE_Configuration *config)
-{
-  // Populate with some data
-  ACE_Configuration_Section_Key root =
-    config->root_section ();
-  ACE_Configuration_Section_Key test;
-
-  if (config->open_section (root,
-                           ACE_TEXT ("test"),
-                           1,
-                           test))
-    return -1;
-
-  ACE_TString value ("string value");
-
-  if (config->set_string_value (test,
-                                ACE_TEXT ("stvalue"),
-                                value))
-    return -2;
-  else if (config->set_string_value (test,
-                                     ACE_TEXT ("stvalue1"),
-                                     value))
-    return -3;
-  else if (config->set_integer_value (test,
-                                      ACE_TEXT ("intvalue"),
-                                      42))
-    return -4;
-
-  ACE_Configuration_Section_Key test2;
-
-  if (config->open_section (test,
-                            ACE_TEXT ("test2"),
-                            1,
-                            test2))
-    return -5;
-  else if (config->set_string_value (test2,
-                                     ACE_TEXT ("2stvalue"),
-                                     value))
-    return -6;
-  else if (config->set_string_value (test2,
-                                     ACE_TEXT ("2stvalue1"),
-                                     value))
-    return -7;
-  else if (config->set_integer_value (test2,
-                                      ACE_TEXT ("2intvalue"),
-                                      42))
-    return -8;
-
-  return 0;
-}
-
-static int
 run_tests (void)
 {
 #if defined (ACE_WIN32)
@@ -1239,10 +1187,6 @@ main (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_DEBUG, "Failed the INI Format Test\n"));
 
   run_tests ();
-
-  // @@ We should remove the function test_io from the file. Just to
-  // avoid the risk of removing something that is useful...
-  ACE_UNUSED_ARG (test_io);
 
   ACE_END_TEST;
   return 0;
