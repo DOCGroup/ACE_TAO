@@ -1,3 +1,15 @@
+Fri Dec  3 21:54:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Notify_Service/Notify_Service.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+	* orbsvcs/orbsvcs/Notify/Consumer.cpp:
+	* orbsvcs/tests/HTIOP/Hello/server.cpp:
+	* orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+
+	  Changed #include "orbsvcs/orbsvcs/..." to #include "orbsvcs/..."
+	  in files where it was missed or was inadvertantly reintroduced.
+
 Fri Dec  3 20:06:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

@@ -9,7 +9,7 @@
 ACE_RCSID (RT_Notify, TAO_Notify_Consumer, "$Id$")
 
 #include "Timer.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Queue.h"
 #include "tao/debug.h"
