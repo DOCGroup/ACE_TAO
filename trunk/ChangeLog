@@ -15,7 +15,7 @@ Thu Jan 25 05:34:58 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Connector.cpp (connector): Added an ACE_const_cast() to
 	  get rid of the const for the accessor method!
-  
+
 	* ace/Acceptor.cpp (acceptor): Added an ACE_const_cast() to
 	  get rid of the const for the accessor method!
 
