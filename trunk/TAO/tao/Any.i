@@ -83,11 +83,20 @@ CORBA_Any::operator<<= (CORBA::Double d)
   this->replace (CORBA::_tc_double, new CORBA::Double (d), 1, env);
 }
 
+// insertion of Any - copying
 ACE_INLINE void
 CORBA_Any::operator<<= (const CORBA_Any& a)
 {
   CORBA::Environment env;
   this->replace (CORBA::_tc_any, new CORBA_Any (a), 1, env);
+}
+
+// insertion of Any - non-copying
+ACE_INLINE void
+CORBA::Any::operator<<= (CORBA::Any_ptr anyptr)
+{
+  CORBA::Environment env;
+  this->replace (CORBA::_tc_any, anyptr, 1, env);
 }
 
 // implementing the special types
