@@ -1,3 +1,9 @@
+Thu Jan  7 19:07:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h (TAO_CATCHANY):  Don't treat the macro
+	  differently in either cases.  Simply reuse TAO_CATCH to catch
+	  CORBA_Exception.
+
 Thu Jan 07 14:34:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h (TAO_CATCHANY,TAO_CATCHALL): Changed
