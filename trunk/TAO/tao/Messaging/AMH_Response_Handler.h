@@ -14,7 +14,7 @@
 #ifndef TAO_AMH_RESPONSE_HANDLER_H
 #define TAO_AMH_RESPONSE_HANDLER_H
 
-#include "portableserver_export.h"
+#include "messaging_export.h"
 
 #include "tao/Allocator.h"
 #include "tao/Service_Context.h"
@@ -57,7 +57,7 @@ typedef ACE_Allocator TAO_AMH_BUFFER_ALLOCATOR;
  * code which in turn reduces the overall code size for an
  * application.
  */
-class TAO_PortableServer_Export TAO_AMH_Response_Handler
+class TAO_Messaging_Export TAO_AMH_Response_Handler
 // @@ Mayur, this is not the correct way to use
 //    TAO_LocalRefCounted_Object.  Application code is supposed to use
 //    it when necessary.  You're forcing applications to use a
@@ -204,7 +204,7 @@ namespace TAO
    * @todo Ideally, this class can be a generic class. But that
    * requires quite a bit of cleanup within TAO to be more useful.
    */
-  class TAO_PortableServer_Export ARH_Refcount_Functor
+  class TAO_Messaging_Export ARH_Refcount_Functor
   {
   public:
     void operator() (TAO_AMH_Response_Handler *arh)
