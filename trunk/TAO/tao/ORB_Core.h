@@ -357,21 +357,21 @@ public:
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory (void);
   //
 
-  TAO_Invocation_Endpoint_Selector *default_endpoint_selector (void);
+  TAO_Default_Endpoint_Selector *default_endpoint_selector (void);
   //
-  
+
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_Invocation_Endpoint_Selector *protocol_endpoint_selector (void);
+  TAO_Protocol_Endpoint_Selector *protocol_endpoint_selector (void);
   //
 
-  TAO_Invocation_Endpoint_Selector *priority_endpoint_selector (void);
+  TAO_Priority_Endpoint_Selector *priority_endpoint_selector (void);
   //
 
-  TAO_Invocation_Endpoint_Selector *priority_protocol_selector (void);
+  TAO_Priority_Protocol_Selector *priority_protocol_selector (void);
   //
 
-  TAO_Invocation_Endpoint_Selector *client_priority_policy_selector (void);
+  TAO_Client_Priority_Policy_Selector *client_priority_policy_selector (void);
   //
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
