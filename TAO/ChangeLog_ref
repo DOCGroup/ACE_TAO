@@ -1,3 +1,7 @@
+Tue Sep 23 10:26:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Makefile.tao: Added the new file into our daily builds. 
+
 Tue Sep 23 10:10:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ParameterMode.cpp:
