@@ -1,3 +1,17 @@
+Sat Jan 29 02:31:21 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        
+          Modified the handler-creating behavior to allow limited
+          processing of imported nodes. This is so a base interface
+          from another file will get a handler created and its
+          operations added so that the child handler will have all
+          the inherited operations in its operation table. The
+          restriction is that exception holders cannot be created
+          for imported nodes. Thanks to Don Sharp <dws@prismtech.com>
+          for reporting the 'operation not found' error with his
+          example IDL files.
+
 Fri Jan 28 21:48:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h:
