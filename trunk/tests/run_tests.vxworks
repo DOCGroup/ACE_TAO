@@ -23,7 +23,6 @@
 # These tests are not run because they fail, catastrophically:
 #  Naming_Test (page fault)
 #  Reactor_Performance_Test (unknown? doesn't appear to do anything)
-#  Reactor_Notify_Test (unknown? doesn't appear to do anything)
 #  Service_Config_Test (page fault)
 # A few other tests now fail; these tests have run in previous ACE
 # versions.  Their invocations are commented out below.
@@ -108,6 +107,10 @@ ace_main; unld "Future_Test"
 ld < Reactors_Test
 write 2, "Reactors_Test ", 14
 ace_main; unld "Reactors_Test"
+
+ld < Reactor_Notify_Test
+write 2, "Reactor_Notify_Test ", 20
+ace_main; unld "Reactor_Notify_Test"
 
 ld < Reactor_Timer_Test
 write 2, "Reactor_Timer_Test ", 19
