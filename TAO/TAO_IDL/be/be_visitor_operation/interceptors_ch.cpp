@@ -125,7 +125,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
       os->indent ();
       *os << be_uidt_nl << "private:" <<be_nl;
 
-      *os << "class TAO_ClientRequest_Info_"<< node->flat_name () 
+      *os << "TAO_ClientRequest_Info_"<< node->flat_name () 
           << " (const "<< "TAO_ClientRequest_Info_"<< node->flat_name ()
           << " &);" << be_nl 
           << "void operator= (const "
