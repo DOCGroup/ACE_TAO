@@ -10,7 +10,7 @@
 
 BIN   	= server_test
 LIB   	= libServer.a
-SHLIB 	= libServer.so
+SHLIB 	= libServer.$(SOEXT)
 
 FILES	= Handle_L_Dgram \
 	  Handle_L_CODgram \
