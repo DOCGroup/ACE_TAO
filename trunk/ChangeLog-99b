@@ -1,3 +1,7 @@
+Mon Dec 27 09:28:40 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* QoS_Session_Impl.h: Fixed a warning in g++.
+
 Sun Dec 26 23:45:44 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* QoS_Session.h: Provided a definition for the virtual destructor 
