@@ -6,36 +6,36 @@ ACE_RCSID (ace,
            Init_ACE,
            "$Id$")
 
-// Static data members.
-unsigned int ACE_Init_ACE::init_fini_count_ = 0;
+
+unsigned int ACE::init_fini_count_ = 0;
 
 int
-ACE_Init_ACE::init (void)
+ACE::init (void)
 {
   // Don't use ACE_TRACE, because Object_Manager might not have been
   // instantiated yet.
-  // ACE_TRACE ("ACE_Init_ACE::init");
+  // ACE_TRACE ("ACE::init");
 
-  ++init_fini_count_;
+  ++ACE::init_fini_count_;
 
   return ACE_Object_Manager::instance ()->init ();
 }
 
 int
-ACE_Init_ACE::fini (void)
+ACE::fini (void)
 {
-  ACE_TRACE ("ACE_Init_ACE::fini");
+  ACE_TRACE ("ACE::fini");
 
-  if (init_fini_count_ > 0)
+  if (ACE::init_fini_count_ > 0)
     {
-      if (--init_fini_count_ == 0)
+      if (--ACE::init_fini_count_ == 0)
         return ACE_Object_Manager::instance ()->fini ();
       else
         // Wait for remaining fini () calls.
         return 1;
     }
   else
-    // More ACE_Init_ACE::fini () calls than ACE_Init_ACE::init () calls.  Bad
+    // More ACE::fini () calls than ACE::init () calls.  Bad
     // application!
     return -1;
 }

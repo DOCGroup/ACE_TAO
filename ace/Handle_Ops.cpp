@@ -6,16 +6,18 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Time_Value.h"
 
-ACE_RCSID(ace, Handle_Ops, "$Id$")
+ACE_RCSID (ace,
+           Handle_Ops,
+           "$Id$")
 
 ACE_HANDLE
-ACE_Handle_Ops::handle_timed_open (ACE_Time_Value *timeout,
-                                   const ACE_TCHAR *name,
-                                   int flags,
-                                   int perms,
-                                   LPSECURITY_ATTRIBUTES sa)
+ACE::handle_timed_open (ACE_Time_Value *timeout,
+                        const ACE_TCHAR *name,
+                        int flags,
+                        int perms,
+                        LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_TRACE ("ACE_Handle_Ops::handle_timed_open");
+  ACE_TRACE ("ACE::handle_timed_open");
 
   if (timeout != 0)
     {

@@ -40,7 +40,7 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
   ACE_TRACE ("ACE_UPIPE_Connector::connect");
   ACE_ASSERT (new_stream.get_handle () == ACE_INVALID_HANDLE);
 
-  ACE_HANDLE handle = ACE_Handle_Ops::handle_timed_open (timeout,
+  ACE_HANDLE handle = ACE::handle_timed_open (timeout,
                                                          addr.get_path_name (),
                                                          flags, perms);
 

@@ -31,7 +31,7 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
       ACE_OS::strcpy (this->filename_,
                       ACE_DEFAULT_TEMP_FILE);
 #else /* ACE_DEFAULT_TEMP_FILE */
-      if (ACE_Lib_Find::get_temp_dir (this->filename_,
+      if (ACE::get_temp_dir (this->filename_,
                                       MAXPATHLEN - 15) == -1)
         // -15 for ace-file-XXXXXX
         {

@@ -1,14 +1,91 @@
+Fri Aug 13 23:26:56 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/IfThenElse.h:
+
+	  New template that allows one to choose between two types at
+	  compile-time based on a boolean value.  This is basically the
+	  IfThenElse template described in the book "C++ Templates" by
+	  Vandevoorde and Josuttis.
+
+	* ace/CDR_Base.h (ACE_CDR::Boolean):
+
+	  Detect at compile-time whether the C++ "bool" type can be used
+	  as the underlying ACE_CDR::Boolean type using the new
+	  ACE::IfThenElse template.
+
+	* ace/ACE.h:
+	* ace/Flag_Manip.cpp:
+	* ace/Flag_Manip.h:
+	* ace/Flag_Manip.inl:
+	* ace/Handle_Ops.cpp:
+	* ace/Handle_Ops.h:
+	* ace/Init_ACE.cpp:
+	* ace/Init_ACE.h:
+	* ace/Lib_Find.cpp:
+	* ace/Lib_Find.h:
+	* ace/Sock_Connect.cpp:
+	* ace/Sock_Connect.h:
+
+	  Functions that were in the pseudo "ACE" namespace are now in a
+	  true "ACE" C++ namespace.
+
+	* ace/ACE.inl (log2):
+
+	  Use the prefix increment operator when incrementing the loop
+	  index.  It is generally more efficient than the postfix
+	  increment operator.
+
+	* ace/Asynch_Acceptor.cpp:
+	* ace/Asynch_Connector.cpp:
+	* ace/DEV_Connector.cpp:
+	* ace/DLL_Manager.cpp:
+	* ace/FILE_Addr.cpp:
+	* ace/FILE_Connector.cpp:
+	* ace/INET_Addr.inl:
+	* ace/IO_SAP.cpp:
+	* ace/IPC_SAP.cpp:
+	* ace/Logging_Strategy.cpp:
+	* ace/MEM_Acceptor.cpp:
+	* ace/Memory_Pool.cpp:
+	* ace/Naming_Context.cpp:
+	* ace/POSIX_Asynch_IO.cpp:
+	* ace/POSIX_Proactor.cpp:
+	* ace/SOCK_Acceptor.cpp:
+	* ace/SOCK_Dgram.cpp:
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/SOCK_SEQPACK_Acceptor.cpp:
+	* ace/SPIPE_Connector.cpp:
+	* ace/System_Time.cpp:
+	* ace/UPIPE_Connector.cpp:
+	* tests/Enum_Interfaces_Test.cpp:
+	* tests/FIFO_Test.cpp:
+	* tests/INET_Addr_Test.cpp:
+	* tests/INET_Addr_Test_IPV6.cpp:
+
+	  Updated all calls to functions that were in the pseudo "ACE"
+	  namespace through a former ACE class base class
+	  (e.g. ACE_Sock_Connect, ACE_Flag_Manip, etc) to use the correct
+	  "ACE" namespace.  Use of the base class names should never have
+	  been used since it was known long ago that the "ACE" pseudo
+	  namespace would be changed to true C++ namespace.
+
+	* ace/Basic_Types.h:
+	* ace/OS_NS_fcntl.inl:
+	* ace/OS_NS_stdio.h:
+	* ace/OS_NS_stdlib.h:
+
+	  Nuked trailing whitespace.
+
 Sat Aug 14 03:44:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* ace/TSS_T.cpp:
 
-	  Fixed compilation errors in the SIngleThreaded builds.
-
+	  Fixed compilation errors in the SingleThreaded builds.
 
 Sat Aug 14 03:37:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.cpp:
-	  
+
 	  Fixed a unused variable warning in the daily builds.
 
 Sat Aug 14 01:58:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -20,11 +97,11 @@ Sat Aug 14 01:58:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Fri Aug 13 16:17:32 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Module.h (class ACE_Module): 
-	* ace/Task.h (ACE_Task_Base): 
+	* ace/Module.h (class ACE_Module):
+	* ace/Task.h (ACE_Task_Base):
 	  Updated the documentation so it's more clear.  Thanks to Andrew
- 	  Athan <aathan-ace-bugs-1524@cloakmail.com> for motivating this.	
-  
+ 	  Athan <aathan-ace-bugs-1524@cloakmail.com> for motivating this.
+
 	* ace/Stream.h: Updated the documentation for push() and pop() to
 	  clarify how it affects open() and close() hooks on the tasks.
   	  Thanks to Andrew Athan <aathan-ace-bugs-1524@cloakmail.com> for

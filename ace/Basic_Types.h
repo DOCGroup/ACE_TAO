@@ -559,17 +559,17 @@ typedef ptrdiff_t ptr_arith_t;
 # endif /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
 
 #if !defined (ACE_UINT64_FORMAT_SPECIFIER)
-#  if ACE_SIZEOF_LONG == 8 
-#    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu") 
-#  else 
+#  if ACE_SIZEOF_LONG == 8
+#    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
+#  else
 #    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%llu")
 #  endif /* ACE_SIZEOF_LONG == 8*/
 #endif /* ACE_UINT64_FORMAT_SPECIFIER */
 
 #if !defined (ACE_INT64_FORMAT_SPECIFIER)
-#  if ACE_SIZEOF_LONG == 8 
-#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld") 
-#  else 
+#  if ACE_SIZEOF_LONG == 8
+#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
+#  else
 #    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lld")
 #  endif /* ACE_SIZEOF_LONG == 8 */
 #endif /* ACE_INT64_FORMAT_SPECIFIER */

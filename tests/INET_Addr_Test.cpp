@@ -189,7 +189,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
     }
 
 #if defined (ACE_HAS_IPV6)
-  if (ACE_Sock_Connect::ipv6_enabled ())
+  if (ACE::ipv6_enabled ())
     {
       const char *ipv6_addresses[] = {
         "1080::8:800:200c:417a", // unicast address

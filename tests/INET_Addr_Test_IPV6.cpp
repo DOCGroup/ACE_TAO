@@ -64,7 +64,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   int status = 0;     // Innocent until proven guilty
 
 #if defined (ACE_HAS_IPV6)
-  if (ACE_Sock_Connect::ipv6_enabled ())
+  if (ACE::ipv6_enabled ())
     {
       ACE_INET_Addr addr ("::");
 

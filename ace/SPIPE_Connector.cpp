@@ -104,7 +104,7 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
           if (relative_time <= ACE_Time_Value::zero)
             {
               // Mimick the errno value returned by
-              // ACE_Handle_Ops::handle_timed_open.
+              // ACE::handle_timed_open.
               if (*timeout == ACE_Time_Value::zero)
                 errno = EWOULDBLOCK;
               else
@@ -146,7 +146,7 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
         }
     }
 #else /* ACE_WIN32 && !ACE_HAS_PHARLAP */
-  handle = ACE_Handle_Ops::handle_timed_open (timeout,
+  handle = ACE::handle_timed_open (timeout,
                                               remote_sap.get_path_name (),
                                               flags, perms, sa);
 #endif /* !ACE_WIN32 || ACE_HAS_PHARLAP || ACE_HAS_WINCE */
