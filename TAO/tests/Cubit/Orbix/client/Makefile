@@ -49,7 +49,7 @@ IDLFLAGS = -s S.cpp -c C.cpp -B
 all: client 
 
 client: $(addprefix $(VDIR),$(CLT_OBJS))
-	$(LINK.cc) -o client $(addprefix $(VDIR),$(CLT_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITCLT) $(VLDLIBS)
+	$(LINK.cc) -o client $(addprefix $(VDIR),$(CLT_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITCLT) $(VLDLIBS) $(POSTLINK)
 
 
 #----------------------------------------------------------------------------

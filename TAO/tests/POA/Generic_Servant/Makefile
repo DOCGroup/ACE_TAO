@@ -57,7 +57,7 @@ DCFLAGS = -g
 #	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
 
 client: $(POA_CLT_OBJS)
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ########
 # Sanity check builds by running basic functionality tests.

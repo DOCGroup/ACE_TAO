@@ -55,10 +55,10 @@ $(IDL_SRC): ttcp.idl
 	-/bin/mv ttcp.C ttcp.cpp
 
 server: $(addprefix $(VDIR),$(SVR_OBJS))
-	$(LINK.cc) -o server $(addprefix $(VDIR),$(SVR_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITSRV) $(VLDLIBS)
+	$(LINK.cc) -o server $(addprefix $(VDIR),$(SVR_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITSRV) $(VLDLIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLT_OBJS))
-	$(LINK.cc) -o client $(addprefix $(VDIR),$(CLT_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITCLT) $(VLDLIBS)
+	$(LINK.cc) -o client $(addprefix $(VDIR),$(CLT_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITCLT) $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-/bin/rm -rf ttcp.cpp ttcp.H sk_ttcp.C sk_ttcp.H server client

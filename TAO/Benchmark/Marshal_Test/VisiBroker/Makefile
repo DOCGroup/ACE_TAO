@@ -50,10 +50,10 @@ endif
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/Benchmark -D_PMC_INCLUDE_DSI
 
 server:	$(addprefix $(VDIR),$(MARSHAL_SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(MARSHAL_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 marshalC.h marshalS.h marshalC.cpp marshalS.cpp: marshal.idl
 	$(IDL) $(IDLFLAGS) $< 

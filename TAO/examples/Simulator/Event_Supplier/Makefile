@@ -53,10 +53,10 @@ $(IDL_SRC): NavWeap.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl NavWeap.idl
 
 Event_Sup: $(addprefix $(VDIR),$(EVENT_SUP_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 Event_Con: $(addprefix $(VDIR),$(EVENT_CON_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 
 #----------------------------------------------------------------------------
