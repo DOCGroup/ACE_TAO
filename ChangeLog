@@ -1,13 +1,28 @@
+Mon Mar 24 10:23:08 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Context.h:
+
+	  No longer any need to include "ace/Singleton.h" due to the below
+	  change.
+
+	From David Kinder <david.kinder@sophos.com>
+	* ace/SSL/SSL_Context.inl (instance):
+	* ace/SSL/SSL_Context.cpp (instance):
+
+	  Uninlined this method.  Fixes a problem found in Win32 "release"
+	  builds where an application could end up with multiple
+	  ACE_SSL_Context singleton instances.  [Bug 1475]
+
 Mon Mar 24 18:03:34 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* ace/Unbounded_Set.{h,cpp}:
 
-	  Added method const_iterator_leave() in class ACE_Unbounded_Set. 
+	  Added method const_iterator_leave() in class ACE_Unbounded_Set.
 	  The destructor of the ACE_Unbounded_Set_Const_Iterator calls
-	  it. Deleted elements are not cleaned up in that case, but they 
-	  probably don't need to, given that we are dealing with a "const" 
-	  set. 
-	  
+	  it. Deleted elements are not cleaned up in that case, but they
+	  probably don't need to, given that we are dealing with a "const"
+	  set.
+
 	  Thanks to Jeff Parsons for noticing the problem.
 
 Mon Mar 24 06:54:55 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
@@ -38,20 +53,20 @@ Sat Mar 22 11:58:12 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  deleted.  Added two new lines after
 	  if (index_->unbind (SectionExtId, allocator_))
 	    return -1;
-  
+
           as follows:
 
-	  value_hash_map->close();  
-	  section_entry->int_id_.section_hash_map_->close(allocator_); 
-  
+	  value_hash_map->close();
+	  section_entry->int_id_.section_hash_map_->close(allocator_);
+
           Thanks to Sandip Patel <spatel@pwcwireless.com> for reporting
  	  this.
 
 	* ace/Message_Queue_T.cpp: Moved the notify() hook calls within
 	  the protection of the guard lock critical section to prevent
- 	  race conditions on cleanup.  Thanks to Ron Muck <rlm@sdiusa.com> 
+ 	  race conditions on cleanup.  Thanks to Ron Muck <rlm@sdiusa.com>
 	  for this suggestion.
- 
+
 Fri Mar 21 13:07:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
