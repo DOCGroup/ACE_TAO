@@ -1,0 +1,16 @@
+//$Id$
+#include "../BasicSP.idl"
+
+module BasicSP
+{
+  component BMDisplay
+    {
+      consumes  DataAvailable data_ready;
+      uses ReadData comp_data;
+      uses multiple ReadData gather_data;
+    };
+
+  home BMDisplayHome manages BMDisplay
+    {
+    };
+};
