@@ -1,3 +1,8 @@
+Sat Dec  6 18:01:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Fixed compile problem in the change of Doug.
+
 Sat Dec  6 10:41:50 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/PortableServer/Object_Adapter.cpp: Replaced the use of
