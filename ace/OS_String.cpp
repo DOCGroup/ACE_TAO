@@ -390,6 +390,7 @@ ACE_OS_String::wcsnicmp_emulation (const wchar_t *s,
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNICMP */
 
+#if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
 char *
 ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 {
@@ -406,6 +407,7 @@ ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
     *lasts += 1;
   return s ;
 }
+#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
 const void *
 ACE_OS_String::memchr_emulation (const void *s, int c, size_t len)
