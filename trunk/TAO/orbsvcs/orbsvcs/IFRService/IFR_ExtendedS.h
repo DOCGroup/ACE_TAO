@@ -71,7 +71,7 @@ namespace POA_CORBA
   class _TAO_FixedDef_ThruPOA_Proxy_Impl;
   class _TAO_FixedDef_Strategized_Proxy_Broker;
   
-  class TAO_IFR_Client_Export FixedDef
+  class  FixedDef
     : public virtual POA_CORBA::IDLType
   {
   protected:
@@ -236,7 +236,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
-  class TAO_IFR_Client_Export _TAO_FixedDef_Strategized_Proxy_Broker
+  class  _TAO_FixedDef_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
   public: 
@@ -280,7 +280,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
-  class TAO_IFR_Client_Export _TAO_FixedDef_ThruPOA_Proxy_Impl
+  class  _TAO_FixedDef_ThruPOA_Proxy_Impl
     : public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
   {
   public:
@@ -390,7 +390,7 @@ namespace POA_CORBA
   class _TAO_ValueMemberDef_ThruPOA_Proxy_Impl;
   class _TAO_ValueMemberDef_Strategized_Proxy_Broker;
   
-  class TAO_IFR_Client_Export ValueMemberDef
+  class  ValueMemberDef
     : public virtual POA_CORBA::Contained
   {
   protected:
@@ -648,7 +648,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
-  class TAO_IFR_Client_Export _TAO_ValueMemberDef_Strategized_Proxy_Broker
+  class  _TAO_ValueMemberDef_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
   public: 
@@ -692,7 +692,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
-  class TAO_IFR_Client_Export _TAO_ValueMemberDef_ThruPOA_Proxy_Impl
+  class  _TAO_ValueMemberDef_ThruPOA_Proxy_Impl
     : public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl
   {
   public:
@@ -922,7 +922,7 @@ namespace POA_CORBA
   class _TAO_ValueDef_ThruPOA_Proxy_Impl;
   class _TAO_ValueDef_Strategized_Proxy_Broker;
   
-  class TAO_IFR_Client_Export ValueDef
+  class  ValueDef
     : public virtual POA_CORBA::Container,
       public virtual POA_CORBA::Contained,
       public virtual POA_CORBA::IDLType
@@ -1648,7 +1648,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
-  class TAO_IFR_Client_Export _TAO_ValueDef_Strategized_Proxy_Broker
+  class  _TAO_ValueDef_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
   public: 
@@ -1692,7 +1692,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
-  class TAO_IFR_Client_Export _TAO_ValueDef_ThruPOA_Proxy_Impl
+  class  _TAO_ValueDef_ThruPOA_Proxy_Impl
     : public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl,
       public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl,
       public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
@@ -2381,7 +2381,7 @@ namespace POA_CORBA
   class _TAO_ExtValueDef_ThruPOA_Proxy_Impl;
   class _TAO_ExtValueDef_Strategized_Proxy_Broker;
   
-  class TAO_IFR_Client_Export ExtValueDef
+  class  ExtValueDef
     : public virtual POA_CORBA::ValueDef
   {
   protected:
@@ -2985,7 +2985,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
-  class TAO_IFR_Client_Export _TAO_ExtValueDef_Strategized_Proxy_Broker
+  class  _TAO_ExtValueDef_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
   public: 
@@ -3029,7 +3029,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
-  class TAO_IFR_Client_Export _TAO_ExtValueDef_ThruPOA_Proxy_Impl
+  class  _TAO_ExtValueDef_ThruPOA_Proxy_Impl
     : public virtual ::POA_CORBA::_TAO_ValueDef_ThruPOA_Proxy_Impl
   {
   public:
@@ -3716,7 +3716,7 @@ namespace POA_CORBA
   class _TAO_ValueBoxDef_ThruPOA_Proxy_Impl;
   class _TAO_ValueBoxDef_Strategized_Proxy_Broker;
   
-  class TAO_IFR_Client_Export ValueBoxDef
+  class  ValueBoxDef
     : public virtual POA_CORBA::TypedefDef
   {
   protected:
@@ -3928,7 +3928,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
-  class TAO_IFR_Client_Export _TAO_ValueBoxDef_Strategized_Proxy_Broker
+  class  _TAO_ValueBoxDef_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
   public: 
@@ -3972,7 +3972,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
-  class TAO_IFR_Client_Export _TAO_ValueBoxDef_ThruPOA_Proxy_Impl
+  class  _TAO_ValueBoxDef_ThruPOA_Proxy_Impl
     : public virtual ::POA_CORBA::_TAO_TypedefDef_ThruPOA_Proxy_Impl
   {
   public:
