@@ -69,7 +69,7 @@ See the $TAO_ROOT/docs/Options.html for details on "-ORBEndPoint"
 
 A client program can obtain the factory object reference in the following
 manner:
-./client -ORBInitRef "NotifyEventChannelFactory=iioploc://flamenco.cs:9999/NotifyEventChannelFactory"
+./client -ORBInitRef "NotifyEventChannelFactory=corbaloc:iiop:flamenco.cs:9999/NotifyEventChannelFactory"
 
 Note that the client uses:
  resolve_initial_references ("NotifyEventChannelFactory");

@@ -90,7 +90,7 @@ main (int argc, char *argv[])
 
           {
             CORBA::Object_var obj =
-              orb->string_to_object ("iioploc://localhost:1234/Foo/Bar",
+              orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar",
                                      ACE_TRY_ENV);
             ACE_TRY_CHECK;
 
