@@ -62,6 +62,38 @@ main (int argc, char **argv)
   // Create an array of objects
   test_var *objects = new test_var[iterations];
 
+  // Size of the active object map
+  u_long active_object_map_size = TAO_ORB_Core_instance ()->server_factory ()->active_object_map_size ();
+
+  // Hash counters
+  u_long *hash_counter = new u_long[active_object_map_size];
+
+  // Index counter
+  int i = 0;
+
+  // Initialize the hash counters
+  for (i = 0; i < active_object_map_size; i++)
+    {      
+      hash_counter[i] = 0;
+    }
+
+  // Calculate the effectiveness of the hash.
+  for (i = 0; i < iterations; i++)
+    {      
+      u_long hash_index = u_long (&servants[i]) % active_object_map_size;
+      hash_counter[hash_index]++;
+    }
+
+  for (i = 0; i < active_object_map_size; i++)
+    {            
+      if (((i) % 10) == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
+      ACE_DEBUG ((LM_DEBUG, "%d = %d, ", i, hash_counter[i]));          
+    }
+  ACE_DEBUG ((LM_DEBUG, "\n\n"));
+
   // Profile timer
   ACE_Profile_Timer timer;
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
@@ -76,7 +108,6 @@ main (int argc, char **argv)
   QuantifyStartRecordingData ();
 #endif /* USING_PURIFY */
 
-  int i = 0;
   for (i = 0; i < iterations; i++)
     {
       objects[i] = servants[i]._this ();

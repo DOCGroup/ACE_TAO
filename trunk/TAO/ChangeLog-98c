@@ -1,3 +1,15 @@
+Wed Dec 30 21:12:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (root_poa): Reset the root_poa_reference_ when
+ 	  the root_poa_ is changed.
+
+	* tao/Servant_Base.cpp (_default_POA): Changed implementation to
+ 	  use new ORB_Core::root_poa_reference() routine.
+
+	* tao/ORB_Core.i (root_poa_reference): Added this method so that
+ 	  we do not have to create a new reference every time the POA
+ 	  reference is needed.
+
 Wed Dec 30 23:04:44 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/Servant_Manager.h:

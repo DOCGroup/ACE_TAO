@@ -415,19 +415,10 @@ CORBA_ORB::resolve_root_poa (const char *adapter_name,
 {
   CORBA::Environment env;
 
-  TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa (adapter_name,
-                                                     poa_manager,
-                                                     policies);
-
-  if (env.exception () != 0)
-    return CORBA_Object::_nil ();
-
-  PortableServer::POA_var result = poa->_this (env);
-
-  if (env.exception () != 0)
-    return CORBA_Object::_nil ();
-  else
-    return result._retn ();
+  return TAO_ORB_Core_instance ()->root_poa_reference (env,
+                                                       adapter_name,
+                                                       poa_manager,
+                                                       policies);
 }
 
 CORBA_Object_ptr
