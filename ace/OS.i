@@ -5786,7 +5786,7 @@ ACE_OS::gethrtime (void)
 
   return tb.tb_high * 1000000000L + tb.tb_low;
 #elif defined (ACE_HAS_PENTIUM)
-  // for WIN32 only . . .
+  // for WIN32 only (see OS.cpp for the GCC version) . . .
   // Issue the RDTSC assembler instruction to get the number of clock
   // ticks since system boot.  RDTSC is only available on Pentiums and
   // higher.  Thanks to Wayne Vucenic <wvucenic@netgate.net> for
@@ -5809,6 +5809,13 @@ ACE_OS::gethrtime (void)
       }
 
   return ACE_MAKE_QWORD (least, most);
+#elif defined (ACE_HAS_CLOCK_GETTIME)
+  // e.g., VxWorks . . .
+  struct timespec ts;
+
+  ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
+
+  return ts.tv_sec * 1000000000 + ts.tv_nsec;
 #else
   const ACE_Time_Value now = ACE_OS::gettimeofday ();
   return now.msec () * 1000000L /* nanoseconds/millsecond */;
