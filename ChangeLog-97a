@@ -1,3 +1,9 @@
+Sun Mar 02 19:58:00 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config*.h: removed #define of ACE_HAS_INLINED_OSCALLS
+	  because it's no longer needed in the config files:  it's
+	  #defined in OS.h if needed.
+
 Sun Mar  2 17:14:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude: Updated all the platform-*g++.GNU files so
