@@ -15,7 +15,7 @@ BIN   	= Transcoder_Test \
 LSRC   	= $(addsuffix .cpp,$(BIN))
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
 #SHOBJ	= $(addsuffix .so,$(BIN))
-CCFLAGS += -I ../
+CCFLAGS += -I..
 
 BUILD 	= $(VBIN)
 

@@ -41,7 +41,7 @@ public:
     NMTOKENS,
     NOTATION,
     ENUMERATION,
-    ERROR_TYPE,
+    ERROR_TYPE
   } ATT_TYPE;
 
   typedef enum {
