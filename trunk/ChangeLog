@@ -1,3 +1,9 @@
+Fri Jul 28 11:12:39 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/Thread_Mutex_Test.cpp (spawn): use 3 threads instead
+          of 4 (ACE_MAX_THREADS) on LynxOS, otherwise the test doesn't
+          seem to terminate.
+
 Fri Jul 28 10:47:27 2000  David L. Levine <levine@cs.wustl.edu>
 
         * bin/ace-install: added this handy build+install script.
