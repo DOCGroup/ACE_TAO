@@ -1,9 +1,9 @@
 // $Id$
 
-#if (TAO_HAS_RT_CORBA == 1)
-
 #include "testC.h"
 #include "ace/Get_Opt.h"
+
+#if (TAO_HAS_RT_CORBA == 1)
 
 const char *ior = "file://test.ior";
 
