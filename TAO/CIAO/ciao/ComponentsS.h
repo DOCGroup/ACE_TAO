@@ -59,10 +59,6 @@
 
 #include "ComponentsS_T.h"
 
-#if defined (__ACE_INLINE__)
-#include "ComponentsS.i"
-#endif /* defined INLINE */
-
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
