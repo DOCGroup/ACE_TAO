@@ -626,7 +626,7 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                                  0) == ERROR_SUCCESS)
         return -1;
     }
-  else if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
+  if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
     return -1;
 #endif
 

@@ -244,7 +244,7 @@ test (ACE_Configuration *config)
 
   int ret_val = test (config, testsection);
   if (ret_val)
-	  return ret_val;
+    return ret_val;
 
   // Try to remove the testsection root, it should fail since it still
   // has subkeys
@@ -294,7 +294,7 @@ test_subkey_path (ACE_Configuration* config)
 
   int ret_val = test (config, testsection);
   if (ret_val)
-	  return ret_val;
+    return ret_val;
 
   if (config->open_section (root,
                             ACE_TEXT ("Software"),
@@ -326,8 +326,8 @@ run_tests (void)
     // This one should work...
     status = import.import_config (ACE_TEXT ("Config_Test_Import_1.ini"));
     if (status != 0) {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Config_Test_Import_1.ini failed, %d\n"),
-                  status));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Config_Test_Import_1.ini failed")));
     }
     else {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config_Test_Import_1.ini imported\n")));
@@ -348,7 +348,8 @@ run_tests (void)
                       ACE_TEXT ("Enumerated %d sections; expected 2\n"),
                       index + 1));
         else {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Enumerated to section %s\n"),
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Enumerated to section %s\n"),
                       sect_name.c_str ()));
           if (sect_name == ACE_TEXT ("SectionOne")) {
             if (section1_seen)
@@ -367,15 +368,19 @@ run_tests (void)
               while ((val_status =
                       cf.enumerate_values
                       (sect1, val_index, val_name, val_type)) == 0) {
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Enumerated %s, type %d\n"),
-                            val_name.c_str (), val_type));
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("Enumerated %s, type %d\n"),
+                            val_name.c_str (),
+                            val_type));
                 if (val_type != ACE_Configuration::STRING)
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("Expected %s to be STRING, but %d\n"),
-                              val_name.c_str (), val_type));
+                              val_name.c_str (),
+                              val_type));
                 if (val_name == ACE_TEXT ("SomeKey")) {
                   if (somekey_seen)
-                    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Saw %s more than once\n"),
+                    ACE_ERROR ((LM_ERROR,
+                                ACE_TEXT ("Saw %s more than once\n"),
                                 val_name.c_str ()));
                   somekey_seen = 1;
                 }
@@ -410,23 +415,26 @@ run_tests (void)
           }
           else if (sect_name == ACE_TEXT ("SectionTwo")) {
             if (section2_seen)
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Saw %s multiple times!\n"),
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Saw %s multiple times!\n"),
                           sect_name.c_str ()));
             section2_seen = 1;
             // Check for values in this section.
             ACE_Configuration_Section_Key sect2;
             if (cf.open_section (root, sect_name.c_str (), 0, sect2) != 0)
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to open section: %s\n"),
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Failed to open section: %s\n"),
                           sect_name.c_str ()));
             else {
               int val_index = 0, val_status;
               ACE_TString val_name, value;
               ACE_Configuration::VALUETYPE val_type;
-              while ((val_status =
-                      cf.enumerate_values
-                      (sect2, val_index, val_name, val_type)) == 0) {
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Enumerated %s, type %d\n"),
-                            val_name.c_str (), val_type));
+              while ((val_status = cf.enumerate_values
+                        (sect2, val_index, val_name, val_type)) == 0) {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("Enumerated %s, type %d\n"),
+                            val_name.c_str (),
+                            val_type));
                 if (val_type != ACE_Configuration::STRING)
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("Expected %s to be STRING, but %d\n"),
@@ -490,7 +498,8 @@ run_tests (void)
     int result = test_subkey_path (&RegConfig);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Win32 registry test failed (%d)\n", result),
+                         ACE_TEXT ("Win32Registry test HKEY_LOCAL_MACHINE")
+                         ACE_TEXT (" failed (%d)\n"), result),
                         -1);
   }
   // test win32 registry implementation.
@@ -499,7 +508,7 @@ run_tests (void)
                                                   ACE_TEXT ("Software\\ACE\\test"));
   if (!root)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      "resolve_key is broken\n"),-2);
+                       ACE_TEXT ("resolve_key is broken\n")), -2);
 
   // test resolving of forward slashes
   HKEY root_fs =
@@ -507,17 +516,18 @@ run_tests (void)
                                                   ACE_TEXT ("Software/ACE/test"), 0);
   if (!root_fs)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      "resolve_key is broken\n"),-2);
+                       ACE_TEXT ("resolve_key resolving slashes is broken\n")),
+                      -2);
 
   ACE_Configuration_Win32Registry RegConfig (root);
   {
     int result = test (&RegConfig);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Win32 registry test failed (%d)\n", result),
+                         ACE_TEXT ("Win32 registry test root failed (%d)\n"),
+                         result),
                         -1);
   }
-
 
 #endif /* ACE_WIN32 */
   // Test Heap version
@@ -529,7 +539,8 @@ run_tests (void)
     int result = test_subkey_path (&heap_config);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Heap Configuration test failed (%d)\n", result),
+                         ACE_TEXT ("Heap Config subkey test failed (%d)\n"),
+                         result),
                         -1);
   }
 
@@ -537,7 +548,7 @@ run_tests (void)
     int result = test (&heap_config);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Heap Configuration test failed (%d)\n",
+                         ACE_TEXT ("Heap Configuration test failed (%d)\n"),
                          result),
                         -1);
   }
@@ -552,12 +563,12 @@ run_tests (void)
     int result = test (&pers_config);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Persistent Heap Configuration test failed (%d)\n",
+                         ACE_TEXT ("Persistent Heap Config test failed (%d)\n"),
                          result),
                         -1);
   }
 
-  ACE_DEBUG ((LM_DEBUG, "Test passed\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test passed\n")));
   return 0;
 }
 
@@ -570,14 +581,14 @@ build_config_object (ACE_Configuration& cfg)
   ACE_Configuration_Section_Key BinarySection;
 
   if (cfg.open_section (root,
-                      ACE_TEXT ("network"),
-                      1,
-                      NetworkSection))
+                        ACE_TEXT ("network"),
+                        1,
+                        NetworkSection))
     return -1;
 
   if (cfg.set_integer_value (NetworkSection,
-                           ACE_TEXT ("TimeToLive"),
-                           100))
+                             ACE_TEXT ("TimeToLive"),
+                             100))
     return -2;
   else if (cfg.set_string_value (NetworkSection,
                                  ACE_TEXT ("Delay"),
@@ -597,11 +608,10 @@ build_config_object (ACE_Configuration& cfg)
     return -6;
 
   if (cfg.open_section (root,
-                      ACE_TEXT ("logger"),
-                      1,
-                      LoggerSection))
+                        ACE_TEXT ("logger"),
+                        1,
+                        LoggerSection))
     return -7;
-
 
   if (cfg.set_string_value (LoggerSection,
                             ACE_TEXT ("Heading"),
@@ -660,14 +670,14 @@ Config_Test::testEquality ()
   if ((heap1.open ()) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open heap1\n"),
+                         ACE_TEXT ("Cannot open heap1\n")),
                         -1);
 
     }
   else if ((heap2.open ()) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open heap2\n"),
+                         ACE_TEXT ("Cannot open heap2\n")),
                         -1);
     }
 
@@ -676,15 +686,16 @@ Config_Test::testEquality ()
   build_config_object (heap2);
 
   // test equality
-  ACE_DEBUG ((LM_DEBUG, "The objects should equal...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The objects should equal...\n")));
   if (heap1 == heap2)
     {
-      ACE_DEBUG ((LM_DEBUG, "And they do ;-)\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they do ;-)\n")));
     }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "And they do not :- (\nThe Equality Operator Failed when objects equal\n"),
+                         ACE_TEXT ("And they do not :-(\n")
+                         ACE_TEXT ("operator== Failed when objects equal\n")),
                         -1);
     }
 
@@ -696,23 +707,24 @@ Config_Test::testEquality ()
                           1,
                           NewSection))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding section to heap1\n"),
+                       ACE_TEXT ("Error adding section to heap1\n")),
                       -1);
   else if (heap1.set_integer_value (NewSection,
                                     ACE_TEXT ("TestIntValue"),
                                     100))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding value to heap1\n"),
+                       ACE_TEXT ("Error adding value to heap1\n")),
                       -2);
 
   // test equality
-  ACE_DEBUG ((LM_DEBUG, "The objects should NOT equal...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The objects should NOT equal...\n")));
   if (heap1 == heap2)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "They Do :- (\nThe Equality Operator Failed when lhs contains data not in rhs\n"),
+                       ACE_TEXT ("They Do :-(\noperator== Failed ")
+                       ACE_TEXT ("when lhs contains data not in rhs\n")),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG, "And they do not ;-)\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they do not ;-)\n")));
 
   //
   // add same section to heap2
@@ -724,45 +736,47 @@ Config_Test::testEquality ()
                           1,
                           NewSection2))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding section to heap2\n"),
+                       ACE_TEXT ("Error adding section to heap2\n")),
                       -1);
   else if (heap2.set_integer_value (NewSection2,
                                     ACE_TEXT ("TestIntValue"),
                                     100))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding value to heap2\n"),
+                       ACE_TEXT ("Error adding value to heap2\n")),
                       -2);
   else if (heap2.set_integer_value (NewSection2,
                                     ACE_TEXT ("TestIntValue2"),
                                     100))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding second value to heap2\n"),
+                       ACE_TEXT ("Error adding second value to heap2\n")),
                       -2);
 
   // test equality
-  ACE_DEBUG ((LM_DEBUG, "The objects should NOT equal...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The objects should NOT equal...\n")));
   if (heap1 == heap2)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "And They Do :- (\nThe Equality Operator Failed when rhs contains value not in lhs\n"),
+                       ACE_TEXT ("And They Do :-(\noperator== Failed ")
+                       ACE_TEXT ("when rhs contains value not in lhs\n")),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG, "And they do not ;-)\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they do not ;-)\n")));
 
   // add new value in heap 1
   if (heap1.set_integer_value (NewSection,
                                ACE_TEXT ("TestIntValue2"),
                                100))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding second value to heap1\n"),
+                       ACE_TEXT ("Error adding second value to heap1\n")),
                       -2);
 
   // test equality
-  ACE_DEBUG ((LM_DEBUG, "The objects should be equal...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The objects should be equal...\n")));
   if (heap1 == heap2)
-    ACE_DEBUG ((LM_DEBUG, "And they are ;-)\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they are ;-)\n")));
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "And they are not :- (\nThe Equality Operator Failed\n"),
+                       ACE_TEXT ("And they are not :-(\n")
+                       ACE_TEXT ("operator== Failed\n")),
                       -1);
 
   // Add a new section to heap2
@@ -772,23 +786,25 @@ Config_Test::testEquality ()
                           1,
                           AnotherNewSection2))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding second section to heap2\n"),
+                       ACE_TEXT ("Error adding second section to heap2\n")),
                       -1);
   else if (heap2.set_integer_value (AnotherNewSection2,
                                     ACE_TEXT ("TestIntValue"),
                                     100))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding value in second section to heap2\n"),
+                       ACE_TEXT ("Error adding value in second section")
+                       ACE_TEXT (" to heap2\n")),
                       -2);
 
   // test equality
-  ACE_DEBUG ((LM_DEBUG, "The objects should NOT equal...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The objects should NOT equal...\n")));
   if (heap1 == heap2)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "And they do :- (\nThe Equality Operator Failed when rhs contains data not in lhs\n"),
+                       ACE_TEXT ("And they do :-(\noperator== Failed ")
+                       ACE_TEXT ("when rhs contains data not in lhs\n")),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG, "And they do not :-)\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they do not :-)\n")));
 
   // add section back to heap1
   ACE_Configuration_Section_Key AnotherNewSection1;
@@ -797,22 +813,24 @@ Config_Test::testEquality ()
                           1,
                           AnotherNewSection1))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding second section to heap1\n"),
+                       ACE_TEXT ("Error adding second section to heap1\n")),
                       -1);
   else if (heap1.set_integer_value (AnotherNewSection1,
                                     ACE_TEXT ("TestIntValue"),
                                     100))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error adding second value to second section in heap1\n"),
+                       ACE_TEXT ("Error adding second value to second ")
+                       ACE_TEXT ("section in heap1\n")),
                       -2);
 
   // test equality
-  ACE_DEBUG ((LM_DEBUG, "The objects should be equal...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The objects should be equal...\n")));
   if (heap1 == heap2)
-    ACE_DEBUG ((LM_DEBUG, "And they are ;-)\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("And they are ;-)\n")));
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "And they are not :-)\nThe Equality Operator Failed\n"),
+                       ACE_TEXT ("And they are not :-(\n")
+                       ACE_TEXT ("operator== Failed\n")),
                       -1);
 
   this->equality_tested_ = 1;
@@ -845,16 +863,17 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
   // loop through each section in the fromFile object
   while ((rc) &&
- (!fromFile.enumerate_sections (fromFileRoot,
+         (!fromFile.enumerate_sections (fromFileRoot,
                                         sectionIndex,
                                         sectionName)) )
     {
       // find that section in the original object
       if (original.open_section (originalRoot,
-                                  sectionName.c_str (),
-                                  0,
-                                  originalSection) != 0)
-        // If the original object does not contain the section then we are not equal.
+                                 sectionName.c_str (),
+                                 0,
+                                 originalSection) != 0)
+        // If the original object does not contain the section then we
+        // are not equal.
         rc = 0;
       else if (fromFile.open_section (fromFileRoot,
                                       sectionName.c_str (),
@@ -872,15 +891,15 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
           // Enumerate each value in the fromFile section
           while ((rc) &&
- (!fromFile.enumerate_values (fromFileSection,
+                 (!fromFile.enumerate_values (fromFileSection,
                                               valueIndex,
                                               valueName,
                                               valueType)))
             {
               // look for the same value in the original section
               if (original.find_value (originalSection,
-                                        valueName.c_str (),
-                                        originalType) != 0)
+                                       valueName.c_str (),
+                                       originalType) != 0)
                 // We're not equal if the same value cannot be found
                 // in the original object.
                 rc = 0;
@@ -918,9 +937,9 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                           size_t binary_length;
 
                           if (original.get_binary_value (originalSection,
-                                                          valueName.c_str (),
-                                                          binary_data,
-                                                          binary_length))
+                                                         valueName.c_str (),
+                                                         binary_data,
+                                                         binary_length))
                             // we're not equal if we cannot get this string
                             rc = 0;
                           else
@@ -933,7 +952,9 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                   if (ptr != binary_data)
                                     originalString += ACE_LIB_TEXT (",");
 
-                                  ACE_OS::sprintf (bin_value, ACE_LIB_TEXT ("%02x"), *ptr);
+                                  ACE_OS::sprintf (bin_value,
+                                                   ACE_LIB_TEXT ("%02x"),
+                                                   *ptr);
                                   originalString += bin_value;
                                   --binary_length;
                                   ++ptr;
@@ -949,8 +970,8 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                   else
                     {
                       if (original.get_string_value (originalSection,
-                                                      valueName.c_str (),
-                                                      originalString) != 0)
+                                                     valueName.c_str (),
+                                                     originalString) != 0)
                         {
                           // we're not equal if we cannot get rhs string
                           rc = 0;
@@ -975,10 +996,10 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
           // for values in the original section
           valueIndex = 0;
           while ((rc) &&
- (!original.enumerate_values (originalSection,
-                                               valueIndex,
-                                               valueName,
-                                               originalType)))
+                 (!original.enumerate_values (originalSection,
+                                              valueIndex,
+                                              valueName,
+                                              originalType)))
             valueIndex++;
 
           // having a value indicates a mismatch
@@ -999,9 +1020,9 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
   // Finally, if the original has any sections, then we're not equal
   sectionIndex = 0;
   while ((rc) &&
- (!original.enumerate_sections (originalRoot,
-                                         sectionIndex,
-                                         sectionName)))
+         (!original.enumerate_sections (originalRoot,
+                                        sectionIndex,
+                                        sectionName)))
     sectionIndex++;
 
   rc = sectionIndex == 0;
@@ -1020,11 +1041,11 @@ Config_Test::testIniFormat ()
       rc = this->testEquality ();
       if (rc != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Equality Test Failed\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equality Test Failed\n")));
           return rc;
         }
     }
-  ACE_DEBUG ((LM_DEBUG, "Testing INI Format Import/Export\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing INI Format Import/Export\n")));
   ACE_Configuration_Heap  fromFile;
 
   //  1. Creates an ACE_Configuration_Heap object
@@ -1037,7 +1058,8 @@ Config_Test::testIniFormat ()
       //  2. Calls build_config_object to populate
       if (rc != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error populating original config object (%d)\n",
+                           ACE_TEXT ("Error populating original config ")
+                           ACE_TEXT ("object (%d)\n"),
                            rc),
                           -1);
 
@@ -1047,13 +1069,13 @@ Config_Test::testIniFormat ()
       rc = importExport.export_config (ACE_TEXT ("testConfig.ini"));
       if (rc != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error Exporting (%d)\n",
+                           ACE_TEXT ("Error Exporting (%d)\n"),
                            rc),
                           -1);
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not open original object (%d)\n",
+                       ACE_TEXT ("Could not open original object (%d)\n"),
                        rc),
                       -1);
 
@@ -1069,7 +1091,7 @@ Config_Test::testIniFormat ()
       rc = importExport.import_config (ACE_TEXT ("testConfig.ini"));
       if (rc != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error Exporting (%d)\n",
+                           ACE_TEXT ("Error Exporting (%d)\n"),
                            rc),
                           -1);
 
@@ -1081,13 +1103,14 @@ Config_Test::testIniFormat ()
       //
       if (!iniCompare (fromFile, original))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object read from file does not equal original (%d)\n",
+                           ACE_TEXT ("Object read from file does not ")
+                           ACE_TEXT ("equal original (%d)\n"),
                            rc),
                           -1);
     }// end if heap could not be opened.
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not open fromFile object (%d)\n",
+                       ACE_TEXT ("Could not open fromFile object (%d)\n"),
                        rc),
                       -1);
 
@@ -1183,7 +1206,7 @@ Config_Test::testIniFormat ()
     }// end of "logger" section
 
   if (!rc)
-    ACE_DEBUG ((LM_DEBUG, "INI Format Import/Export Works ;-)\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INI Format Import/Export Works ;-)\n")));
   return rc;
 }
 
@@ -1198,12 +1221,12 @@ Config_Test::testRegFormat ()
       rc = this->testEquality ();
       if (rc != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Equality Test Failed\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equality Test Failed\n")));
           return rc;
         }
 
     }
-  ACE_DEBUG ((LM_DEBUG, "Testing Registry Format Import/Export\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Registry Format Import/Export\n")));
   ACE_Configuration_Heap  fromFile;
 
   //  1. Creates an ACE_Configuration_Heap object
@@ -1216,7 +1239,8 @@ Config_Test::testRegFormat ()
       rc = build_config_object (original);
       if (rc != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error populating original config object (%d)\n",
+                           ACE_TEXT ("Error populating original config ")
+                           ACE_TEXT ("object (%d)\n"),
                            rc),
                           -1);
       //  3. Export
@@ -1225,13 +1249,13 @@ Config_Test::testRegFormat ()
       rc = importExport.export_config (ACE_TEXT ("testConfig.ini"));
       if (rc != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error Exporting (%d)\n",
+                           ACE_TEXT ("Error Exporting (%d)\n"),
                            rc),
                           -1);
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not open original object (%d)\n",
+                       ACE_TEXT ("Could not open original object (%d)\n"),
                        rc),
                       -1);
 
@@ -1247,25 +1271,27 @@ Config_Test::testRegFormat ()
       rc = importExport.import_config (ACE_TEXT ("testConfig.ini"));
       if (rc != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error Exporting (%d)\n",
+                           ACE_TEXT("Error Exporting (%d)\n"),
                            rc),
                           -1);
 
       //  7. Compares to original.
       if (fromFile != original)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object read from file does not equal original (%d)\n",
+                           ACE_TEXT ("Object read from file does not ")
+                           ACE_TEXT ("equal original (%d)\n"),
                            rc),
                           -1);
     }// end if heap could not be opened.
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not open fromFile object (%d)\n",
+                       ACE_TEXT ("Could not open fromFile object (%d)\n"),
                        rc),
                       -1);
 
   if (!rc)
-    ACE_DEBUG ((LM_DEBUG, "Registry Format Import/Export Works ;-)\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Registry Format Import/Export Works ;-)\n")));
   return rc;
 }
 
@@ -1295,7 +1321,8 @@ Config_Test::get_section_string (ACE_Configuration&             config,
     }
 }
 
-// Reads an integer value from a congifuration object (when it's stored as a string)
+// Reads an integer value from a configuration object (when it's
+// stored as a string)
 void
 Config_Test::get_section_integer (ACE_Configuration&             config,
                                   ACE_Configuration_Section_Key& SectionKey,
@@ -1317,7 +1344,7 @@ Config_Test::get_section_integer (ACE_Configuration&             config,
                        StringValue.c_str (),
                        30);
       ACE_DEBUG ((LM_DEBUG,
-                  "%s = %s\n",
+                  ACE_TEXT ("%s = %s\n"),
                   pszName,
                   pszString));
     }
@@ -1377,16 +1404,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Config_Test manager;
 
   if (manager.testEquality () != 0)
-    ACE_DEBUG ((LM_DEBUG, "Failed the equality Test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the equality Test\n")));
 
   if (manager.testRegFormat () != 0)
-    ACE_DEBUG ((LM_DEBUG, "Failed the REG Format Test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the REG Format Test\n")));
 
   if (manager.testIniFormat () != 0)
-    ACE_DEBUG ((LM_DEBUG, "Failed the INI Format Test\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the INI Format Test\n")));
 
   if (run_tests () != 0)
-    ACE_DEBUG ((LM_DEBUG, "Failed in run_tests\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed in run_tests\n")));
 
   ACE_END_TEST;
   return 0;
