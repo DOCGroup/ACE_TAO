@@ -1,16 +1,17 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Sched_Params.h"
+#include "ECM_Consumer.h"
+#include "ECM_Data.h"
 
-#include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ECM_Consumer.h"
-#include "ECM_Data.h"
+#include "tao/Timeprobe.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Sched_Params.h"
 
 ACE_RCSID(EC_Custom_Marshal, ECM_Consumer, "$Id$")
 
@@ -33,7 +34,7 @@ Driver::Driver (void)
 {
 }
 
-
+// ****************************************************************
 
 int
 Driver::run (int argc, char* argv[])
@@ -148,8 +149,9 @@ Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
-      if (orb->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       this->disconnect_consumers (ACE_TRY_ENV);

@@ -1,17 +1,28 @@
+Tue Feb 13 17:24:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.h:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+          Fixed problems with the ORB::run() method
+
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+          Fixed dependencies, my builds failed to recompile some files in
+          this directory even after the ORB::run() changes, thus the
+	  previous problem went undetected.
+
 Tue Feb 13 12:54:33 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/RT_ORB.h:
-	  Changed TAO_RT_ORB to inherit from TAO_Local_RefCounted_Object
-	  to fix memory leak found with Purify.
+        * tao/RT_ORB.h:
+          Changed TAO_RT_ORB to inherit from TAO_Local_RefCounted_Object
+          to fix memory leak found with Purify.
 
 Tue Feb 13 09:48:53 2001  Ossama Othman  <ossama@uci.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
-	  (cube_any, cube_any_struct):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+          (cube_any, cube_any_struct):
 
-	  Call delete() on the returned Any once it is no longer needed.
-	  This fixes a memory leak.  The caller is responsible for
-	  storage.
+          Call delete() on the returned Any once it is no longer needed.
+          This fixes a memory leak.  The caller is responsible for
+          storage.
 
 Tue Feb 13 11:25:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -23,9 +34,9 @@ Tue Feb 13 11:25:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Feb 13 11:37:03 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/ORB.cpp:
-	  Changed ACE_CHECK_RETURN macros to be ACE_CHECK in
-	  ORB::run() and ORB::perform_work().
+        * tao/ORB.cpp:
+          Changed ACE_CHECK_RETURN macros to be ACE_CHECK in
+          ORB::run() and ORB::perform_work().
 
 Tue Feb 13 09:17:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -35,7 +46,7 @@ Tue Feb 13 09:17:30 2001  Carlos O'Ryan  <coryan@uci.edu>
           void.  If there are errors an exception is raised.  Having both
           exceptions and error codes only results in confusing and broken
           code.
-	  This fixes bug #785
+          This fixes bug #785
 
         * tao/PortableServer/ORB_Manager.cpp:
         * examples/Borland/ORBThread.cpp:
