@@ -458,7 +458,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
 			    // CORBA::Object is a little different.
 			    // @@ TODO maybe equivalent() is the right
 			    // method here.
-			    CORBA::Boolean is_corba_object = 
+			    CORBA::Boolean is_corba_object =
 			      param->equal (CORBA::_tc_Object, env);
 			    if (env.exception () == 0)
 			      {
@@ -617,8 +617,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                   {
                                     CORBA::Long l;
                                     TAO_InputCDR stream ((ACE_Message_Block *)
-                                                         member_label->value
-                                                         ());
+                                                         member_label->_tao_get_cdr ());
                                     (void)stream.decode (discrim_tc, &l, 0, env);
                                     if (l == *(CORBA::Long *) discrim_val)
                                       discrim_matched = 1;
