@@ -30,6 +30,8 @@ ACE_RCSID(Strategies, advanced_resource, "$Id$")
 
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
+  TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
+
 #if TAO_HAS_UIOP == 1
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);
@@ -60,8 +62,6 @@ int
 TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 {
   ACE_TRACE ("TAO_Advanced_Resource_Factory::parse_args");
-
-  TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
 
   int curarg = 0;
 
