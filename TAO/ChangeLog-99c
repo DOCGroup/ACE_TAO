@@ -1,94 +1,102 @@
+Fri Nov 19 17:44:36 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simulator/DOVEMIB/Makefile: added -I$(TAO_ROOT)
+          to TAO_IDLFLAGS, and ran make depend.
+
+        * examples/Simulator/DOVEMIB/PrintVisitor.cpp (Print_Visitor):
+          ACE_TRY_NEW_ENV instead of ACE_TRY.
+
 Fri Nov 19 17:43:31 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
-	  Added Log to the build
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp: 
+        * orbsvcs/orbsvcs/Makefile:
+          Added Log to the build
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
 
 Thu Nov 18 22:32:55 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Direct_Priority_Mapping.cpp
-	* tao/Linear_Priority_Mapping.cpp:
-	  Priority conversion routines were not functioning correctly on
-	  NT due to native priorities being noncontiguous.  Fixed by
-	  adding conditionally compiled code to handle NT case.
+        * tao/Direct_Priority_Mapping.cpp
+        * tao/Linear_Priority_Mapping.cpp:
+          Priority conversion routines were not functioning correctly on
+          NT due to native priorities being noncontiguous.  Fixed by
+          adding conditionally compiled code to handle NT case.
 
 Thu Nov 18 20:51:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Interceptor.pidl:
-	* docs/interceptors.html:  Updated the information and status of
-	  portable intercetors and added hints on transitting from the
-	  temporary implementation to the draft standard.
+        * tao/Interceptor.pidl:
+        * docs/interceptors.html:  Updated the information and status of
+          portable intercetors and added hints on transitting from the
+          temporary implementation to the draft standard.
 
 Thu Nov 18 20:37:25 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	  Added some explicit template instantiations that were missing. Thanks
-	  to Marcelo Matus <mmatus@dinha.acms.arizona.edu> for reporting this.
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+          Added some explicit template instantiations that were missing. Thanks
+          to Marcelo Matus <mmatus@dinha.acms.arizona.edu> for reporting this.
 
 Thu Nov 18 19:47:11 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	  Removed Log from the build because of errors for VxWorks
+        * orbsvcs/orbsvcs/Makefile:
+          Removed Log from the build because of errors for VxWorks
 
 Thu Nov 18 10:16:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
-	* orbsvcs/orbsvcs/CosNotification.idl:
-	* orbsvcs/orbsvcs/CosNotifyComm.idl:
-	* orbsvcs/orbsvcs/CosNotifyFilter.idl:
-	  added these files for the Notification Service.
+        * orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
+        * orbsvcs/orbsvcs/CosNotification.idl:
+        * orbsvcs/orbsvcs/CosNotifyComm.idl:
+        * orbsvcs/orbsvcs/CosNotifyFilter.idl:
+          added these files for the Notification Service.
 
 Wed Nov 17 11:54:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
-	  Added a case for wchar discriminants to the generation
-	  of the _default() method. Also changed the output format
-	  of the char default discriminant value to make more
-	  sense.
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+          Added a case for wchar discriminants to the generation
+          of the _default() method. Also changed the output format
+          of the char default discriminant value to make more
+          sense.
 
 Wed Nov 17 10:29:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
-	  Removed unused arguments, thanks to David for pointing this
-	  out.
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+          Removed unused arguments, thanks to David for pointing this
+          out.
 
 Wed Nov 17 01:45:00 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify:
-	  created a new directory for the Notification Service.
+        * orbsvcs/orbsvcs/Notify:
+          created a new directory for the Notification Service.
         * orbsvcs/orbsvcs/Notify/ID_Pool_T.h:
         * orbsvcs/orbsvcs/Notify/ID_Pool_T.i:
-	* orbsvcs/orbsvcs/Notify/NotifyPublish_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/NotifySubscribe_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_Dispatcher.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
-	  created these files for the Notification Service implementation.
+        * orbsvcs/orbsvcs/Notify/NotifyPublish_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/NotifySubscribe_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_Dispatcher.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+          created these files for the Notification Service implementation.
 
 Wed Nov 17 01:24:27 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h (class LogRecordStore):
-	  Changed to use RecordId as key in Hash_Map_Manager instead
-	  of LogId.
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h (class LogRecordStore):
+          Changed to use RecordId as key in Hash_Map_Manager instead
+          of LogId.
 
 Wed Nov 17 01:08:02 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (LogRecordStore):
-	  Used prefix operators because ACE emulation of U Long Long
-	  (for platforms that don't have one) does not define postfix
-	  operators. Thanks to Bill Tovrea <gwtovrea@west.raytheon.com>
-	  for reporting this problem.
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp (LogRecordStore):
+          Used prefix operators because ACE emulation of U Long Long
+          (for platforms that don't have one) does not define postfix
+          operators. Thanks to Bill Tovrea <gwtovrea@west.raytheon.com>
+          for reporting this problem.
 
-	  Also used the RecordId as key in Hash_Map_Manager instead
-	  of LogId.
+          Also used the RecordId as key in Hash_Map_Manager instead
+          of LogId.
 
 Tue Nov 16 20:55:52 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -108,171 +116,171 @@ Tue Nov 16 20:55:52 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Tue Nov 16 19:31:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
-	  Fixed generation of _default() method. It was happening
-	  only for enum discriminants. Thanks to
-	  Jason Topaz <topaz@panix.com> for pointing out this
-	  bug.
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+          Fixed generation of _default() method. It was happening
+          only for enum discriminants. Thanks to
+          Jason Topaz <topaz@panix.com> for pointing out this
+          bug.
 
 Tue Nov 16 12:33:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_module.cpp:
-	  Added missing semicolon to ACE_ERROR message, and some
-	  ASYS_TEXT macros to be ACE-ified. Thanks to Andy for
-	  pointing this out.
+        * TAO_IDL/ast/ast_module.cpp:
+          Added missing semicolon to ACE_ERROR message, and some
+          ASYS_TEXT macros to be ACE-ified. Thanks to Andy for
+          pointing this out.
 
 Tue Nov 16 10:29:33 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO/TAO_IDL/be/be_sequence.cpp
-	  TAO/TAO_IDL/be/be_visitor_ami_pre_proc.cpp: Removed
-	  some superfluous ACE_DEBUG messages.
+        * TAO/TAO_IDL/be/be_sequence.cpp
+          TAO/TAO_IDL/be/be_visitor_ami_pre_proc.cpp: Removed
+          some superfluous ACE_DEBUG messages.
 
 Mon Nov 15 20:29:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_module.cpp:
-	  Modified fe_add_module() so 'reopened module' warning
-	  will not be output if the result of the lookup is a
-	  module from an #include file. No code is generated for
-	  such a module, so platforms without namespaces will
-	  have no problem with it.
+        * TAO_IDL/ast/ast_module.cpp:
+          Modified fe_add_module() so 'reopened module' warning
+          will not be output if the result of the lookup is a
+          module from an #include file. No code is generated for
+          such a module, so platforms without namespaces will
+          have no problem with it.
 
 Mon Nov 15 19:58:19 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao-config.in:
+        * tao-config.in:
 
-	  Added missing "-lTAO" to the library list.  Thanks to Benedikt
-	  Eric Heinen <beh@icemark.ch> for pointing this out.
+          Added missing "-lTAO" to the library list.  Thanks to Benedikt
+          Eric Heinen <beh@icemark.ch> for pointing this out.
 
 Mon Nov 15 15:44:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/mfc/client.cpp (main): There was a memory leak
-	  here because we weren't deallocating the string returned by the
- 	  server.
+        * examples/mfc/client.cpp (main): There was a memory leak
+          here because we weren't deallocating the string returned by the
+          server.
 
-	* examples/mfc:  Replaced CORBA::String with char *.
+        * examples/mfc:  Replaced CORBA::String with char *.
           Thanks to for Hani Mawlawi <hmawlawi@wecan.com> reporting this
- 	  and providing the fix.
+          and providing the fix.
 
 Sat Nov 13 19:07:53 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init):
-	  Added functionality to close file if one is opened for Log_Msg
-	  ACE_DEBUG redirection.
+        * tao/ORB_Core.cpp (init):
+          Added functionality to close file if one is opened for Log_Msg
+          ACE_DEBUG redirection.
 
 Sat Nov 13 18:25:52 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* tao/Exception.h (ostream& operator<<)
-	* tao/Exception.cpp (ostream& operator<<)
-	  Added #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) to surround
+        * tao/Exception.h (ostream& operator<<)
+        * tao/Exception.cpp (ostream& operator<<)
+          Added #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) to surround
           ostream& operator<< (ostream&os, const CORBA_Exception& e)
-	  to facilitate building without streams.
+          to facilitate building without streams.
 
 Sat Nov 13 17:17:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynArray_i.cpp:
-	* tao/DynEnum_i.cpp:
-	* tao/DynSequence_i.cpp:
-	* tao/DynStruct_i.cpp:
-	* tao/DynUnion_i.cpp:
-	* tao/Exception.cpp:
-	  Patches sent in by Philippe Merle <Philippe.Merle@lifl.fr>.
-	  In all Dyn*_i.cpp files, type () functions now returns a
-	  duplicate. In DynStruct_i.cpp, code was added to from_any (0
-	  and to_any () to facilitate the case where the struct is an
-	  exception. In Exception.cpp, UnknownUserException constructor
-	  with Any argument now calls base class constructor explicitly,
-	  similarly to the default constructor.
+        * tao/DynArray_i.cpp:
+        * tao/DynEnum_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+        * tao/Exception.cpp:
+          Patches sent in by Philippe Merle <Philippe.Merle@lifl.fr>.
+          In all Dyn*_i.cpp files, type () functions now returns a
+          duplicate. In DynStruct_i.cpp, code was added to from_any (0
+          and to_any () to facilitate the case where the struct is an
+          exception. In Exception.cpp, UnknownUserException constructor
+          with Any argument now calls base class constructor explicitly,
+          similarly to the default constructor.
 
 Fri Nov 12 13:24:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Exception.cpp:
-	  Added #include "ace/streams.h". If
- 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION is in the config.h file, the
- 	  body of the ostream operator definition will cause 'operator
- 	  ambiguous' errors. Thanks to Irfan for pointing this out and
- 	  finding the solution.
+        * tao/Exception.cpp:
+          Added #include "ace/streams.h". If
+          ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION is in the config.h file, the
+          body of the ostream operator definition will cause 'operator
+          ambiguous' errors. Thanks to Irfan for pointing this out and
+          finding the solution.
 
 Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp (connect):
-	* tao/UIOP_Connector.cpp (connect):
+        * tao/IIOP_Connector.cpp (connect):
+        * tao/UIOP_Connector.cpp (connect):
 
-	  If the connect() call fails, the svc_handler is closed by the
-	  Connector.  In case of the Cached Connector, it will not only
-	  close the svc_handler, but also zero it out.  No further action
-	  is required by the user.
+          If the connect() call fails, the svc_handler is closed by the
+          Connector.  In case of the Cached Connector, it will not only
+          close the svc_handler, but also zero it out.  No further action
+          is required by the user.
 
-	* tao/IIOP_Profile.cpp (reset_hint):
-	* tao/UIOP_Profile.cpp (reset_hint):
+        * tao/IIOP_Profile.cpp (reset_hint):
+        * tao/UIOP_Profile.cpp (reset_hint):
 
-	  <this->hint_> can only be changed under the protection of the
-	  connector lock.  Therefore, it is passed to the cleanup_hint()
-	  function.
+          <this->hint_> can only be changed under the protection of the
+          connector lock.  Therefore, it is passed to the cleanup_hint()
+          function.
 
-	  The above changes should fix BUG 310. Thanks to Eric Mitchell
-	  <emitchell@altaira.com> for reporting it.
+          The above changes should fix BUG 310. Thanks to Eric Mitchell
+          <emitchell@altaira.com> for reporting it.
 
 Fri Nov 12 08:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/UIOP_Profile.cpp:
-	  Fixed typo in the latest changed by Irfan.
+        * tao/UIOP_Profile.cpp:
+          Fixed typo in the latest changed by Irfan.
 
 Thu Nov 11 21:05:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	  Broke up some long lines of generated code relating
-	  to interceptors.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+          Broke up some long lines of generated code relating
+          to interceptors.
 
 Thu Nov 11 20:53:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/orb.idl:
-	  Added missing typedefs.
+        * tao/orb.idl:
+          Added missing typedefs.
 
-	* tao/IIOP_Acceptor.h:
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Connector.h:
-	* tao/IIOP_Connector.cpp:
-	  Move some fields from the private section to the protected
-	  section, to facilitate the implementation of specialized
-	  versions of the protocol.
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Connector.cpp:
+          Move some fields from the private section to the protected
+          section, to facilitate the implementation of specialized
+          versions of the protocol.
 
 Thu Nov 11 20:32:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Faults/ping.idl:
-	* tests/Faults/ping_i.h:
-	* tests/Faults/ping_i.i:
-	* tests/Faults/ping_i.cpp:
-	* tests/Faults/ping.cpp:
-	* tests/Faults/pong.cpp:
-	  The IDL file had some identifiers clashing (their only
-	  difference was case), the IDL compiler is now correctly
-	  detecting that error. Updated to conform to the spec.
+        * tests/Faults/ping.idl:
+        * tests/Faults/ping_i.h:
+        * tests/Faults/ping_i.i:
+        * tests/Faults/ping_i.cpp:
+        * tests/Faults/ping.cpp:
+        * tests/Faults/pong.cpp:
+          The IDL file had some identifiers clashing (their only
+          difference was case), the IDL compiler is now correctly
+          detecting that error. Updated to conform to the spec.
 
 Thu Nov 11 19:46:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
-	  Fixed a couple of memory leaks in the test, thanks to Jovan
-	  Kilibarda <jovank@realtimeint.com> for reporting this bug.
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+          Fixed a couple of memory leaks in the test, thanks to Jovan
+          Kilibarda <jovank@realtimeint.com> for reporting this bug.
 
 Thu Nov 11 17:18:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* Exception.h:
-	* Exception.cpp:
-	  Added Steve Totten's <stotten@primary.net> code for
-	  the ostream operator.
+        * Exception.h:
+        * Exception.cpp:
+          Added Steve Totten's <stotten@primary.net> code for
+          the ostream operator.
 
-	* TAO_IDL/be/be_exception.cpp:
-	  Modified the generated ostream operator for
-	  exceptions to output the same thing(s) in the same
-	  format as Steve's operator for CORBA_Exception.
+        * TAO_IDL/be/be_exception.cpp:
+          Modified the generated ostream operator for
+          exceptions to output the same thing(s) in the same
+          format as Steve's operator for CORBA_Exception.
 
 Thu Nov 11 15:52:03 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynAny_i.cpp:
-	  Added some more patches sent in by Philippe Merle
-	  <Philippe.Merle@lifl.fr> which modify get_string,
-	  get_reference and get_typecode to return duplicates,
-	  so the return value can be put into a _var.
+        * tao/DynAny_i.cpp:
+          Added some more patches sent in by Philippe Merle
+          <Philippe.Merle@lifl.fr> which modify get_string,
+          get_reference and get_typecode to return duplicates,
+          so the return value can be put into a _var.
 
 Wed Nov 10 17:16:19 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -283,362 +291,362 @@ Wed Nov 10 17:16:19 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Nov 10 14:59:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile.am:
-	* tao/Makefile.am:
+        * Makefile.am:
+        * tao/Makefile.am:
 
-	  Additional updates to bring files in synch with stock TAO
-	  Makefiles.
+          Additional updates to bring files in synch with stock TAO
+          Makefiles.
 
 Wed Nov 10 14:46:51 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* TAO_IDL/driver/Makefile.am (AM_CPPFLAGS):
+        * TAO_IDL/driver/Makefile.am (AM_CPPFLAGS):
 
-	  Defined TAO_IDL_INCLUDE_DIR macro to be equal to the
-	  pkgincludedir Makefile variable in automatically generated
-	  Makefiles.
+          Defined TAO_IDL_INCLUDE_DIR macro to be equal to the
+          pkgincludedir Makefile variable in automatically generated
+          Makefiles.
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
 
-	  If the TAO_IDL_INCLUDE_DIR macro is defined, then add it to the
-	  include file search path.  This allows an "installed" tao_idl to
-	  find IDL files such as `orb.idl' without the need for setting an
-	  ACE_ROOT or a TAO_ROOT environment variable.
-	  TAO_IDL_INCLUDE_DIR must be the exact directory that contains
-	  IDL files destined for inclusion.
+          If the TAO_IDL_INCLUDE_DIR macro is defined, then add it to the
+          include file search path.  This allows an "installed" tao_idl to
+          find IDL files such as `orb.idl' without the need for setting an
+          ACE_ROOT or a TAO_ROOT environment variable.
+          TAO_IDL_INCLUDE_DIR must be the exact directory that contains
+          IDL files destined for inclusion.
 
 Wed Nov 10 14:40:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.1:
+        * TAO_IDL/tao_idl.1:
 
-	  Added this man page to the repository.  It's been sitting in my
-	  workspace.
+          Added this man page to the repository.  It's been sitting in my
+          workspace.
 
-	* TAO_IDL/Makefile.am:
-	* TAO_IDL/ast/Makefile.am:
-	* TAO_IDL/be/Makefile.am:
-	* TAO_IDL/be_include/Makefile.am:
-	* TAO_IDL/driver/Makefile.am:
-	* TAO_IDL/fe/Makefile.am:
-	* TAO_IDL/include/Makefile.am:
-	* TAO_IDL/narrow/Makefile.am:
-	* TAO_IDL/util/Makefile.am:
+        * TAO_IDL/Makefile.am:
+        * TAO_IDL/ast/Makefile.am:
+        * TAO_IDL/be/Makefile.am:
+        * TAO_IDL/be_include/Makefile.am:
+        * TAO_IDL/driver/Makefile.am:
+        * TAO_IDL/fe/Makefile.am:
+        * TAO_IDL/include/Makefile.am:
+        * TAO_IDL/narrow/Makefile.am:
+        * TAO_IDL/util/Makefile.am:
 
-	  Synchronized with stock TAO_IDL Makefiles.
+          Synchronized with stock TAO_IDL Makefiles.
 
 Wed Nov 10 11:11:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/reopened_modules.idl:
-	  Reopened a module a forward declared an interface
-	  that had been defined when the module was first
-	  opened. The recently-added check for undefined
-	  forward declarations caught this error.
+        * tests/IDL_Test/reopened_modules.idl:
+          Reopened a module a forward declared an interface
+          that had been defined when the module was first
+          opened. The recently-added check for undefined
+          forward declarations caught this error.
 
 Tue Nov  9 18:54:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.cpp:
-	  Added call to function which checks to make sure all
-	  forward declared interfaces are defined. Thanks to
-	  Devesh Kothari <dkothari@atdsprint.com> for sending
-	  in the example that pointed out this bug.
+        * TAO_IDL/tao_idl.cpp:
+          Added call to function which checks to make sure all
+          forward declared interfaces are defined. Thanks to
+          Devesh Kothari <dkothari@atdsprint.com> for sending
+          in the example that pointed out this bug.
 
 Tue Nov  9 17:12:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/Endpoint_Per_Priority/client.dsp:
-	* tests/Endpoint_Per_Priority/server.dsp:
-	  I forgot to configure the compile settings for test.idl. It
-	  had been done only in the server project. Thanks to
-	  Marina for pointing this out. Also set 'additional library
-	  paths' in both projects, thanks to Irfan's advice.
+        * tests/Endpoint_Per_Priority/client.dsp:
+        * tests/Endpoint_Per_Priority/server.dsp:
+          I forgot to configure the compile settings for test.idl. It
+          had been done only in the server project. Thanks to
+          Marina for pointing this out. Also set 'additional library
+          paths' in both projects, thanks to Irfan's advice.
 
 Tue Nov  9 16:16:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/POA_CORBA.h: Removed a stray "#pragma warning(pop)".  Thanks
-	  to Marina for reporting this.
+        * tao/POA_CORBA.h: Removed a stray "#pragma warning(pop)".  Thanks
+          to Marina for reporting this.
 
 Tue Nov  9 16:11:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/CONV_FRAMES_T.cpp:
-	* tao/DomainS_T.cpp:
-	* IOPS_T.cpp:
-	* MessagingS_T.cpp:
-	* PollableS_T.cpp:
-	* TAOS_T.cpp:L
-	* TimeBaseS_T.cpp:
-	  Removed unnecessary #pragma warning (disable:4250).
-	  Now that we are doing this in push/pop pairs (see
-	  entries below), this lone disable could cause
-	  problems.
+        * tao/CONV_FRAMES_T.cpp:
+        * tao/DomainS_T.cpp:
+        * IOPS_T.cpp:
+        * MessagingS_T.cpp:
+        * PollableS_T.cpp:
+        * TAOS_T.cpp:L
+        * TimeBaseS_T.cpp:
+          Removed unnecessary #pragma warning (disable:4250).
+          Now that we are doing this in push/pop pairs (see
+          entries below), this lone disable could cause
+          problems.
 
 Tue Nov  9 16:06:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	  Added Sync_Strategies.h to project.
+        * tao/TAO.dsp:
+          Added Sync_Strategies.h to project.
 
 Tue Nov  9 15:12:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
-	  Changed
-
-	  #if defined(_MSC_VER)
-	  #pragma warning(disable:4250)
-	  #endif /* _MSC_VER */
-
-	  // ...
+        * TAO_IDL/be/be_codegen.cpp:
+          Changed
 
           #if defined(_MSC_VER)
-	  #pragma warning(default:4250)
-	  #endif /* _MSC_VER */
+          #pragma warning(disable:4250)
+          #endif /* _MSC_VER */
 
-	  to
-
-	  #if defined(_MSC_VER)
-	  #pragma warning(push)
-	  #pragma warning(disable:4250)
-	  #endif /* _MSC_VER */
-
-	  // ...
+          // ...
 
           #if defined(_MSC_VER)
-	  #pragma warning(pop)
-	  #endif /* _MSC_VER */
+          #pragma warning(default:4250)
+          #endif /* _MSC_VER */
+
+          to
+
+          #if defined(_MSC_VER)
+          #pragma warning(push)
+          #pragma warning(disable:4250)
+          #endif /* _MSC_VER */
+
+          // ...
+
+          #if defined(_MSC_VER)
+          #pragma warning(pop)
+          #endif /* _MSC_VER */
 
           in all generated header files. This will restore the original
-	  value even if it was modified from the default. Also removed
-	  the first half of the pair from generated *S_T.cpp file - it
-	  is unneeded.
-	  Thanks to David Hauck <davidh@realtimeint.com> and
-	  Jovan Kilibarda <jovank@realtimeint.com> for
-	  suggesting this.
+          value even if it was modified from the default. Also removed
+          the first half of the pair from generated *S_T.cpp file - it
+          is unneeded.
+          Thanks to David Hauck <davidh@realtimeint.com> and
+          Jovan Kilibarda <jovank@realtimeint.com> for
+          suggesting this.
 
 Tue Nov  9 14:34:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
        * TAO_IDL/be_include/be.h
          orbsvcs/orbsvcs/Log/BasicLog_i.h
-	 orbsvcs/orbsvcs/Log/Iterator_i.h
-	 orbsvcs/orbsvcs/Event/Event_Channel.h
-	 orbsvcs/orbsvcs/Trader/Trader.h
-	 orbsvcs/orbsvcs/Trader/Constraint_Nodes.h
-	 orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h
-	 orbsvcs/orbsvcs/CosEvent/EventChannel_i.h
-	 orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h
-	 orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h
-	 orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h
-	 orbsvcs/orbsvcs/CosEvent_Utilities.h
-	 orbsvcs/CosEvent_Service/CosEvent_Service.h
-	 tao/IOPC.h
-	 tao/CurrentC.h
-	 tao/DomainC.h
-	 tao/DomainS_T.h
-	 tao/DynAnyC.h
-	 tao/InterceptorC.h
-	 tao/InconsistentTypeCodeC.h
-	 tao/MessagingC.h
-	 tao/MessagingS.h
-	 tao/MessagingS_T.h
-	 tao/Messaging_Policy_i.h
-	 tao/POAC.h
-	 tao/ObjectIDList.h
-	 tao/POAS.h
-	 tao/POA_CORBA.h
-	 tao/PollableC.h
-	 tao/PollableS.h
-	 tao/PollableS_T.h
-	 tao/Services.h
-	 tao/IOPS.h
-	 tao/IORC.h
-	 tao/TimeBaseC.h
-	 tao/TimeBaseS_T.h
-	 tao/IORS.h
-	 tao/WrongTransactionC.h
-	 tao/corbafwd.h
-	 tao/CONV_FRAMEC.h
-	 tao/CONV_FRAMES.h
-	 tao/CONV_FRAMES_T.h
-	 tao/IOPS_T.h
-	 tao/InterfaceC.h
-	 tao/BoundsC.h
-	 tao/InterceptorS.h
-	 tao/TAOC.h
-	 tao/Client_Priority_Policy.h
-	 tao/TAOS.h
-	 tao/TAOS_T.h
-	 tao/Buffering_Constraint_Policy.h
-	 examples/OBV/Typed_Events/Event_Types_impl.h: Added
-
-	 #if defined(_MSC_VER)
-	 #pragma warning(push)
-	 #pragma warning(disable:4250)
-	 #endif /* _MSC_VER */
-
-	 // ...
+         orbsvcs/orbsvcs/Log/Iterator_i.h
+         orbsvcs/orbsvcs/Event/Event_Channel.h
+         orbsvcs/orbsvcs/Trader/Trader.h
+         orbsvcs/orbsvcs/Trader/Constraint_Nodes.h
+         orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h
+         orbsvcs/orbsvcs/CosEvent/EventChannel_i.h
+         orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h
+         orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h
+         orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h
+         orbsvcs/orbsvcs/CosEvent_Utilities.h
+         orbsvcs/CosEvent_Service/CosEvent_Service.h
+         tao/IOPC.h
+         tao/CurrentC.h
+         tao/DomainC.h
+         tao/DomainS_T.h
+         tao/DynAnyC.h
+         tao/InterceptorC.h
+         tao/InconsistentTypeCodeC.h
+         tao/MessagingC.h
+         tao/MessagingS.h
+         tao/MessagingS_T.h
+         tao/Messaging_Policy_i.h
+         tao/POAC.h
+         tao/ObjectIDList.h
+         tao/POAS.h
+         tao/POA_CORBA.h
+         tao/PollableC.h
+         tao/PollableS.h
+         tao/PollableS_T.h
+         tao/Services.h
+         tao/IOPS.h
+         tao/IORC.h
+         tao/TimeBaseC.h
+         tao/TimeBaseS_T.h
+         tao/IORS.h
+         tao/WrongTransactionC.h
+         tao/corbafwd.h
+         tao/CONV_FRAMEC.h
+         tao/CONV_FRAMES.h
+         tao/CONV_FRAMES_T.h
+         tao/IOPS_T.h
+         tao/InterfaceC.h
+         tao/BoundsC.h
+         tao/InterceptorS.h
+         tao/TAOC.h
+         tao/Client_Priority_Policy.h
+         tao/TAOS.h
+         tao/TAOS_T.h
+         tao/Buffering_Constraint_Policy.h
+         examples/OBV/Typed_Events/Event_Types_impl.h: Added
 
          #if defined(_MSC_VER)
-	 #pragma warning(pop)
-	 #endif /* _MSC_VER */
+         #pragma warning(push)
+         #pragma warning(disable:4250)
+         #endif /* _MSC_VER */
+
+         // ...
+
+         #if defined(_MSC_VER)
+         #pragma warning(pop)
+         #endif /* _MSC_VER */
 
          to these above files to that things will work better with MSVC++.
-	 Thanks to David Hauck <davidh@realtimeint.com> for
-	 suggesting this.
+         Thanks to David Hauck <davidh@realtimeint.com> for
+         suggesting this.
 
 Tue Nov 09 10:25:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/GIOP_Server_Request.h: Added #include "tao/ORB.h".  I use ORB
-	  function in the .i file.  Thanks to David for noticing this.
+        * tao/GIOP_Server_Request.h: Added #include "tao/ORB.h".  I use ORB
+          function in the .i file.  Thanks to David for noticing this.
 
 Mon Nov  8 23:21:35 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	  Made a minor correction in use of ORBSVCS_Time
-	  Thanks to Keith Brown <kalbrown@ix.netcom.com> for providing
-	  the solution
-	* orbsvcs/orbsvcs/Log/BasicLog_i:
-	* orbsvcs/orbsvcs/Log/Iterator_i.h: Added a
-	  #pragma warning(disable:4250) so that MSVC++ won't complain
- 	  about "dominance violations".  Thanks to Derek Dominish
-	  <Derek.Dominish@Australia.Boeing.com> for reporting this and
-	  providing the solution.
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+          Made a minor correction in use of ORBSVCS_Time
+          Thanks to Keith Brown <kalbrown@ix.netcom.com> for providing
+          the solution
+        * orbsvcs/orbsvcs/Log/BasicLog_i:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h: Added a
+          #pragma warning(disable:4250) so that MSVC++ won't complain
+          about "dominance violations".  Thanks to Derek Dominish
+          <Derek.Dominish@Australia.Boeing.com> for reporting this and
+          providing the solution.
 
 Mon Nov 08 22:10:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Interceptors/run_test.pl: Added -ORBobjrefStyle url to
-	  both client and server process so their outputs are more
-	  readable.
+        * tests/Interceptors/run_test.pl: Added -ORBobjrefStyle url to
+          both client and server process so their outputs are more
+          readable.
 
-	* tests/Interceptors/Interceptors.h:
-	* tests/Interceptors/Interceptors.cpp: The interceptors need to
-	  keep the ORB pointer to use object_to_string to show the
-	  intercepted object's IOR.
+        * tests/Interceptors/Interceptors.h:
+        * tests/Interceptors/Interceptors.cpp: The interceptors need to
+          keep the ORB pointer to use object_to_string to show the
+          intercepted object's IOR.
 
-	* tests/Interceptors/client.cpp:
-	* tests/Interceptors/server.cpp: We now use object_to_string to
-	  show the object reference being intercepted.	The interceptors
-	  will need to get a hold on the orb to do the job.
+        * tests/Interceptors/client.cpp:
+        * tests/Interceptors/server.cpp: We now use object_to_string to
+          show the object reference being intercepted.  The interceptors
+          will need to get a hold on the orb to do the job.
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Do not
-	  construct the dummy NVList if we don't have a valid interceptor.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Do not
+          construct the dummy NVList if we don't have a valid interceptor.
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Reconstruct
-	  the requested object reference for interceptors iff we have a
-	  valid interceptor.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Reconstruct
+          the requested object reference for interceptors iff we have a
+          valid interceptor.
 
-	* tao/Interceptors.h:
-	* tao/Interceptors.i: Added a new inline <valid> method to query
-	  the interceptor adapter whether it has a valid interceptor or
-	  not.
+        * tao/Interceptors.h:
+        * tao/Interceptors.i: Added a new inline <valid> method to query
+          the interceptor adapter whether it has a valid interceptor or
+          not.
 
-	* tao/Server_Request.h:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i: Added a new method <objref> to
-	  reconstruct the requested object reference.
+        * tao/Server_Request.h:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.i: Added a new method <objref> to
+          reconstruct the requested object reference.
 
 Mon Nov  8 20:46:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.h: Added a
-	  #pragma warning(disable:4250) so that MSVC++ won't complain
- 	  about "dominance violations".  Thanks to Jovan Kilibarda
- 	  <jovank@realtimeinc.com> for reporting this and providing the
- 	  solution.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h: Added a
+          #pragma warning(disable:4250) so that MSVC++ won't complain
+          about "dominance violations".  Thanks to Jovan Kilibarda
+          <jovank@realtimeinc.com> for reporting this and providing the
+          solution.
 
 Mon Nov  8 19:25:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_scope.cpp:
-	  Changes to implement the CORBA 2.3 scoping rule that
-	  a type defined or referenced inside an enclosing scope
-	  which is itself inside an interface or valuetype should
-	  also be exported to the interface (or valuetype) scope.
-	  Thanks to Jon Biggar <jon@floorboard.com> for clarifying
-	  this point.
+        * TAO_IDL/util/utl_scope.cpp:
+          Changes to implement the CORBA 2.3 scoping rule that
+          a type defined or referenced inside an enclosing scope
+          which is itself inside an interface or valuetype should
+          also be exported to the interface (or valuetype) scope.
+          Thanks to Jon Biggar <jon@floorboard.com> for clarifying
+          this point.
 
-	* TAO_IDL/ast/ast_interface.cpp:
-	  Changes to implement the CORBA 2.3 name resolution rule
-	  that any parent interface members may be redefined in the
-	  child *except* operations and attributes. Thanks to Michi
-	  Henning <michi@ooc.com.au>, the author of these rules, for
-	  his explanation.
+        * TAO_IDL/ast/ast_interface.cpp:
+          Changes to implement the CORBA 2.3 name resolution rule
+          that any parent interface members may be redefined in the
+          child *except* operations and attributes. Thanks to Michi
+          Henning <michi@ooc.com.au>, the author of these rules, for
+          his explanation.
 
-	  And thanks to Erik Johannes <ejohannes@oresis.com> for
-	  sending in the example IDL file that brought these bugs
-	  to light.
+          And thanks to Erik Johannes <ejohannes@oresis.com> for
+          sending in the example IDL file that brought these bugs
+          to light.
 
 Sun Nov  7 13:34:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods):
-	  Make sure to lseek() to the end of the output file after we've
- 	  opened it again so that things will wor properly on FreeBSD.
-  	  Thanks to John Aughey <jha@FreeBSD.ORG> for suggesting this fix.
+        * TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods):
+          Make sure to lseek() to the end of the output file after we've
+          opened it again so that things will wor properly on FreeBSD.
+          Thanks to John Aughey <jha@FreeBSD.ORG> for suggesting this fix.
 
 Sat Nov  6 21:14:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_rettype.cpp:
+        * TAO_IDL/be/be_visitor_rettype.cpp:
 
-	  Removed this file.  It doesn't appear to be used anywhere.
+          Removed this file.  It doesn't appear to be used anywhere.
 
 Sat Nov  6 20:37:28 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp:
+        * tao/Object_Adapter.cpp:
 
-	  Changed name of typedef used during template instantiation from
-	  "value_type" to "tao_value_type."  This fixes an STL namespace
-	  conflict in TAO+autoconf builds using gcc 2.95.2 on Linux.
+          Changed name of typedef used during template instantiation from
+          "value_type" to "tao_value_type."  This fixes an STL namespace
+          conflict in TAO+autoconf builds using gcc 2.95.2 on Linux.
 
 Sat Nov  6 19:07:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao-config.1.in:
+        * tao-config.1.in:
 
-	  Minor updates.
+          Minor updates.
 
-	* tao-config.in:
+        * tao-config.in:
 
-	  Minor updates.  Modified so that "tao" is the default library if
-	  one isn't specified.
+          Minor updates.  Modified so that "tao" is the default library if
+          one isn't specified.
 
 Sat Nov  6 15:02:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Added SecurityCurrent, TransactionCurrent and DynAnyFactory
-	  object ID macros to the list of object ID macros.  The
-	  corresponding services/components haven't been implemented yet.
-	  The object IDs were added for the sake of being complete.
+          Added SecurityCurrent, TransactionCurrent and DynAnyFactory
+          object ID macros to the list of object ID macros.  The
+          corresponding services/components haven't been implemented yet.
+          The object IDs were added for the sake of being complete.
 
 Fri Nov  5 14:53:23 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* tao/ORB.h (CORBA_ORB): Clarified that the timeout values for
-	  the ORB::run() method are "relative", rather than "absolute".
-	  Thanks to Rob Gabbot <rgabbot@sandia.gov> for motivating this.
+        * tao/ORB.h (CORBA_ORB): Clarified that the timeout values for
+          the ORB::run() method are "relative", rather than "absolute".
+          Thanks to Rob Gabbot <rgabbot@sandia.gov> for motivating this.
 
 Thu Nov  4 09:10:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/Active_Object_Map.h: Added TAO_Export to
-	  TAO_Active_Object_Map so that it can be exported.  Thanks to
- 	  Lothar Werzinger <werzinger.lothar@krones.de> for suggesting
- 	  this.
+        * tao/Active_Object_Map.h: Added TAO_Export to
+          TAO_Active_Object_Map so that it can be exported.  Thanks to
+          Lothar Werzinger <werzinger.lothar@krones.de> for suggesting
+          this.
 
 Thu Nov  4 18:30:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/Endoint_Per_Priority/Endpoint_Per_Priority.dsw:
-	* tests/Endoint_Per_Priority/client.dsp:
-	* tests/Endoint_Per_Priority/server.dsp:
-	  Workspace and project files for NT.
+        * tests/Endoint_Per_Priority/Endpoint_Per_Priority.dsw:
+        * tests/Endoint_Per_Priority/client.dsp:
+        * tests/Endoint_Per_Priority/server.dsp:
+          Workspace and project files for NT.
 
 Thu Nov  4 16:45:55 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/fe/y.tab.cpp.diff:
-	  When parsing an IDL struct with an empty body,
-	  the IDL compiler would not only output an errror
-	  message, it would also crash. Fixing this required
-	  some added error checking in the yacc grammar file,
-	  while avoiding any change to the behavior for
-	  exceptions, which use much of the same code in the
-	  grammar, but may legally have an empty body. Also,
-	  a bare semicolon in a struct or exeption body would
-	  also cause a crash - now there is error checking for
-	  this condition as well. Thanks to
-	  Erik Johannes <ejohannes@oresis.com> for reporting
-	  this bug.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+          When parsing an IDL struct with an empty body,
+          the IDL compiler would not only output an errror
+          message, it would also crash. Fixing this required
+          some added error checking in the yacc grammar file,
+          while avoiding any change to the behavior for
+          exceptions, which use much of the same code in the
+          grammar, but may legally have an empty body. Also,
+          a bare semicolon in a struct or exeption body would
+          also cause a crash - now there is error checking for
+          this condition as well. Thanks to
+          Erik Johannes <ejohannes@oresis.com> for reporting
+          this bug.
 
 Thu Nov 04 15:22:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
