@@ -71,6 +71,9 @@ protected:
   void resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
   // Resolve the naming service.
 
+  void locate_rtec (CORBA::Environment &ACE_TRY_ENV);
+  // Locate a rtec.
+
   // = Data members
   const char* service_name;
   // The name we use to register with the Naming Service.
