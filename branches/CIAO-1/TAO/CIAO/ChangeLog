@@ -1,3 +1,23 @@
+Fri Mar 14 16:08:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/todo.html: Recorded a compilation error in the generated
+	  code that I commented out for later "study."
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl: Fixed a
+	  typo.
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplayE.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.inl:
+	  Added new "generated" code.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/Executor.idl: Updated templates based on the code
+	  they generated.
+
 Thu Mar 13 20:11:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl:

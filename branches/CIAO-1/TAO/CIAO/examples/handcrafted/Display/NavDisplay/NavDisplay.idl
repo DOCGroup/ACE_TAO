@@ -8,11 +8,14 @@
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
+#ifndef NAVDISPLAY_IDL
+#define NAVDISPLAY_IDL
+
 #include "../HUDisplay.idl"
 
 module HUDisplay
 {
-  component navDisplay
+  component NavDisplay
     {
       consumes tick Refresh;
       uses position GPSLocation;
@@ -22,3 +25,5 @@ module HUDisplay
   {
   };
 };
+
+#endif /* NAVDISPLAY_IDL */

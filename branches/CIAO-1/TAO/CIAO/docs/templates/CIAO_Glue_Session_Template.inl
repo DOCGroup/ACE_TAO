@@ -195,7 +195,7 @@ ACE_INLINE [operation return_type]
 
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
 ##  if [receptacle name] is a simplex receptacle ('uses')
-    // Simplex [receptacle name] connection management operations
+// Simplex [receptacle name] connection management operations
 ACE_INLINE void
 [ciao module name]::[component name]_Servant::connect_[receptacle name] ([uses type]_ptr c
                                                                          ACE_ENV_ARG_DECL)
@@ -203,7 +203,8 @@ ACE_INLINE void
                    ::Components::AlreadyConnected,
                    ::Components::InvalidConnection))
 {
-  this->context_->connect_[receptacle name] (c ACE_ENV_ARG_PARAMETER);
+  this->context_->connect_[receptacle name] (c
+                                             ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE [uses type]_ptr
@@ -222,7 +223,7 @@ ACE_INLINE [uses type]_ptr
 }
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
 
-    // Multiplex [receptacle name] connection management operations
+// Multiplex [receptacle name] connection management operations
 ACE_INLINE ::Components::Cookie_ptr
 [ciao module name]::[component name]_Servant::connect_[receptacle name] ([uses type]_ptr c
                                                                          ACE_ENV_ARG_DECL)
@@ -268,7 +269,7 @@ ACE_INLINE [receptacle name]Connections *
 
 // Constructor and destructor.
 ACE_INLINE
-[ciao module name]::[component name]_Servant::[event type]Consumer_[consumer name]_Servant::[event type]Consumer_[consumer name]_Servant
+[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::[eventtype]Consumer_[consumer name]_Servant
   (CCM_[component name]_ptr executor,
    CCM_[component name]_Context_ptr c)
     : executor_ (CCM_[component name]::_duplicate (executor)),
@@ -277,19 +278,19 @@ ACE_INLINE
 }
 
 ACE_INLINE
-[ciao module name]::[component name]_Servant::[event type]Consumer_[consumer name]_Servant::~[event type]Consumer_[consumer name]_Servant ()
+[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::~[eventtype]Consumer_[consumer name]_Servant ()
 {
 }
 
 ACE_INLINE CORBA::Object_ptr
-[ciao module name]::[component name]_Servant::[event type]Consumer_[consumer name]_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->ctx_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE void
-[ciao module name]::[component name]_Servant::[event type]Consumer_[consumer name]_Servant::push_[eventtype]
+[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::push_[eventtype]
   ([eventtype]_ptr evt
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -421,7 +422,7 @@ ACE_INLINE [component name]_ptr
 
 ##  if [home name] is a keyless home
 
-    // Operations for KeylessHome interface
+// Operations for KeylessHome interface
 ACE_INLINE ::Components::CCMObject_ptr
 [ciao module name]::[home name]_Servant::create_component (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -433,8 +434,8 @@ ACE_INLINE ::Components::CCMObject_ptr
 
 ##  else [home basename] is keyed home with [key type]
 
-    // We do not support key'ed home at the moment but we might
-    // as well generate the mapping.
+// We do not support key'ed home at the moment but we might
+// as well generate the mapping.
 ACE_INLINE [component name]_ptr
 [ciao module name]::[home name]_Servant::create ([key type]_ptr key)
   ACE_THROW_SPEC ((CORBA::SystemException,
