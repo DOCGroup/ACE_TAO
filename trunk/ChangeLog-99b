@@ -2,6 +2,8 @@ Thu Apr 22 08:52:48 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/New_Fail_Test.cpp: Fixed to compile clean without exceptions.
 
+        * tests/run_tests.{sh bat}: Added New_Fail_Test.
+
 Wed Apr 21 16:41:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Performance_Test.cpp (main): added 10 second
