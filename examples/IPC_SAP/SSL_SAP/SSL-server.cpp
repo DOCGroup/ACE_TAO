@@ -324,6 +324,8 @@ run_event_loop (u_short port)
   handle_set.set_bit (twoway_acceptor.get_handle ());
   handle_set.set_bit (oneway_acceptor.get_handle ());
 
+  ACE_SSL_SOCK_Stream * new_stream = 0;
+
   // Performs the iterative server activities.
 
   for (;;)
@@ -359,13 +361,12 @@ run_event_loop (u_short port)
           // methods/operators.  However, the user must ensure that
           // the copy or assignment is atomic.
 
-          ACE_SSL_SOCK_Stream * new_stream = 0;
-          ACE_NEW_RETURN (new_stream,
-                          ACE_SSL_SOCK_Stream,
-                          -1);
-
           if (temp.is_set (twoway_acceptor.get_handle ()))
             {
+              ACE_NEW_RETURN (new_stream,
+                              ACE_SSL_SOCK_Stream,
+                              -1);
+
               if (twoway_acceptor.accept (*new_stream) == -1)
                 {
                   ACE_ERROR ((LM_ERROR,
@@ -386,6 +387,10 @@ run_event_loop (u_short port)
             }
           if (temp.is_set (oneway_acceptor.get_handle ()))
             {
+              ACE_NEW_RETURN (new_stream,
+                              ACE_SSL_SOCK_Stream,
+                              -1);
+
               if (oneway_acceptor.accept (*new_stream) == -1)
                 {
                   ACE_ERROR ((LM_ERROR, "%p\n", "accept"));
