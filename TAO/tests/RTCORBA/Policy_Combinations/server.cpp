@@ -46,7 +46,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 CORBA::Short
-test_i::method (CORBA::Environment &ACE_TRY_ENV)
+test_i::method (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

@@ -275,7 +275,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       result =
-        create_POA_and_register_servant (threadpool_policy_1,
+        create_POA_and_register_servant (threadpool_policy_1.in (),
                                          "first_poa",
                                          poa_manager.in (),
                                          root_poa.in (),
@@ -287,7 +287,7 @@ main (int argc, char *argv[])
         return result;
 
       result =
-        create_POA_and_register_servant (threadpool_policy_2,
+        create_POA_and_register_servant (threadpool_policy_2.in (),
                                          "second_poa",
                                          poa_manager.in (),
                                          root_poa.in (),
