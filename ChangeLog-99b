@@ -1,29 +1,36 @@
+Fri May 07 08:58:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,i}: added some QNX support.  In OS.i, this
+          mostly consisted of adding a !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+          check to _POSIX_THREAD_PROCESS_SHARED.  Thanks to
+          Alain Magloire <alain@qnx.com> for providing this support.
+
 Thu May  6 21:48:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
-	* configure.in:
-	* ace/OS.h:
-	* ace/README:
-	* ace/config-hpux11.h: 
-	* ace/config-irix6.x-g++.h: 
-	* ace/config-irix6.x-kcc.h: 
-	* ace/config-irix6.x-sgic++.h: 
-	* ace/config-linux-lxpthreads.h: 
-	* ace/config-osf1-4.0.h: 
-	* ace/config-sco-5.0.0-mit-pthread.h: 
-	* ace/config-sunos5.5.h: 
+        * acconfig.h:
+        * configure.in:
+        * ace/OS.h:
+        * ace/README:
+        * ace/config-hpux11.h:
+        * ace/config-irix6.x-g++.h:
+        * ace/config-irix6.x-kcc.h:
+        * ace/config-irix6.x-sgic++.h:
+        * ace/config-linux-lxpthreads.h:
+        * ace/config-osf1-4.0.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+        * ace/config-sunos5.5.h:
 
-	  Removed all references to ACE_HAS_PTHREAD_SIGMASK.  This macro
-	  has been deprecated.
+          Removed all references to ACE_HAS_PTHREAD_SIGMASK.  This macro
+          has been deprecated.
 
 Thu May  6 20:12:57 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
-	* configure.in:
+        * acconfig.h:
+        * configure.in:
 
-	  Added tests/support for ACE_LACKS_PTHREAD_SIGMASK, 
-	  ACE_LACKS_TCP_NODELAY and ACE_LACKS_NULL_PTHREAD_STATUS.  Thanks
-	  to David for providing a test for ACE_LACKS_NULL_PTHREAD_STATUS.
+          Added tests/support for ACE_LACKS_PTHREAD_SIGMASK,
+          ACE_LACKS_TCP_NODELAY and ACE_LACKS_NULL_PTHREAD_STATUS.  Thanks
+          to David for providing a test for ACE_LACKS_NULL_PTHREAD_STATUS.
 
 Thu May 06 14:26:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
