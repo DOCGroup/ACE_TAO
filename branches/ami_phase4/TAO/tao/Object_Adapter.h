@@ -44,6 +44,7 @@ class TAO_POA;
 class TAO_POA_Manager;
 class TAO_Temporary_Creation_Time;
 class TAO_POA_Current_Impl;
+class TAO_TSS_Resources;
 
 class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
@@ -162,6 +163,9 @@ protected:
   int setup_done_;
   // Is setup complete?
 
+  TAO_TSS_Resources *tss_resources_;
+  // Pointer to tss resources.
+
   // = Hidden because we don't allow these
   TAO_POA_Current_Impl (const TAO_POA_Current_Impl &);
   void operator= (const TAO_POA_Current_Impl &);
@@ -258,7 +262,8 @@ protected:
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
                           const TAO_Temporary_Creation_Time &poa_creation_time,
-                          TAO_POA *&poa);
+                          TAO_POA *&poa,
+                          CORBA_Environment &ACE_TRY_ENV);
 
   int find_persistent_poa (const poa_name &system_name,
                            TAO_POA *&poa,

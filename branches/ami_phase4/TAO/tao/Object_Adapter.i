@@ -95,7 +95,8 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
       return this->find_transient_poa (system_name,
                                        root,
                                        poa_creation_time,
-                                       poa);
+                                       poa,
+                                       ACE_TRY_ENV);
     }
 }
 
