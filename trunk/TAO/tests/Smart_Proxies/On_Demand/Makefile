@@ -59,6 +59,8 @@ CPPFLAGS += -I$(TAO_ROOT)/tao
 
 .PRECIOUS: testC.h testC.i testC.cpp
 .PRECIOUS: testS.h testS.i testS.cpp
+.NOTPARALLEL:
+
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
