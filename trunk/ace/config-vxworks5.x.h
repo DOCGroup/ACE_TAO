@@ -4,17 +4,7 @@
 // The following configuration file is designed to work for VxWorks
 // 5.2/5.3 platforms using one of these compilers:
 // 1) The GNU/Cygnus g++ compiler that is shipped with Tornado 1.0.1.
-// 2) The GreenHills 1.8.8 (not 1.8.7!!!!) and 1.8.9 compilers.
-//    NOTE:  if you're using GreenHills 1.8.9, you'll have to
-//           uncomment the #define ACE_HAS_STANDARD_CPP_LIBRARY 1
-//           line below!  Or, use an ace/config.h that looks like:
-//
-// #ifndef ACE_CONFIG_H
-// // ACE_CONFIG_H is defined by the following #included header.
-//
-// #include "ace/config-vxworks5.x.h"
-// #define ACE_HAS_STANDARD_CPP_LIBRARY 1
-// #endif /* ACE_CONFIG_H */
+// 2) The Green Hills 1.8.8 (not 1.8.7!!!!) and 1.8.9 compilers.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -52,7 +42,7 @@
   // include iostream.h only where they need it.
 # define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
 #elif defined (ghs)
-  // Processor type, if necessary.  GreenHills defines "ppc".
+  // Processor type, if necessary.  Green Hills defines "ppc".
 # if defined (ppc)
 #   define ACE_HAS_POWERPC_TIMER
 # endif /* ppc */
@@ -66,9 +56,10 @@
 #   define ACE_HAS_PENTIUM
 # endif /* i386 */
 
-// The following #define is necessary with 1.8.9, but can't be used
-// with 1.8.8.
-// # define ACE_HAS_STANDARD_CPP_LIBRARY 1
+# if defined (__STANDARD_CXX)
+   // Green Hills 1.8.9, but not 1.8.8.
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
+# endif /* __STANDARD_CXX */
 
 # define ACE_HAS_BROKEN_ENUMS /* Necessary with 1.8.9, harmless with 1.8.8. */
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
