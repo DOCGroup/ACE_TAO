@@ -292,26 +292,6 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     </TD>
   </TR>
   <TR>
-    <TD><CODE>-ORBPreconnect</CODE> <EM>endpoint</EM></TD>
-    <TD><A name="-ORBPreconnect"></a>Pre-establishes a blocking connection to
-        each listed <EM>endpoint</EM>. If a connection cannot be established the
-        failed preconnection will be ignored and the next preconnection in the list
-        will be processed.  Successful and unsuccessful preconnections will be
-        displayed if a debugging level greater than or equal to one is specified by
-        using the <CODE>-ORBDebugLevel</CODE> option.  Listing the same combination
-        multiple times will properly establish multiple connections to that endpoint.
-        The <CODE>-ORBPreconnect</CODE> option uses the same endpoint format as the
-        <CODE>-ORBEndpoint</CODE> option.
-        <P>
-        This is a client-side option.
-        <P>
-        <FONT COLOR=RED>-ORBPreconnect is <STRONG>deprecated</STRONG>.
-        This option will be removed in the near future.  The Real-Time CORBA standard
-        <CODE>validate_connection()</CODE> method should be used
-        instead.
-    </TD>
-  </TR>
-  <TR>
     <TD><CODE>-ORBCDRTradeoff</CODE> <EM>maxsize</EM></TD>
     <TD><A name="-ORBCDRTradeoff"></a>Control the strategy to tradeoff
         between copy vs. no copy marshalling of octet sequences.
@@ -594,6 +574,39 @@ would load all the options listed within "".
       that an inter-thread mutex is used to guarantee exclusive
       access, and <code>null</code>, which specifies that no locking be
       performed. The default is thread.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBCorbaObjectLock</CODE> <EM>locktype</EM></TD>
+  <TD><a name="-ORBCorbaObjectLock"></a>
+      Specify the type of lock to be used by CORBA::Object. The lock
+      is needed within the CORBA object to synchronize the state
+      when the same object is shared by multiple threads.  Possible
+      values for lock type are <code>thread</code>, which specifies
+      that an inter-thread mutex is used to guarantee exclusive
+      access, and <code>null</code>, which specifies that no locking
+      be performed. The default is thread.  
+
+      The <code>null</code> lock option is useful when there is only
+      one thread in the system. This option can be used to minimize
+      the amount of memory consumed by the locks in applications where
+      locks are not needed. The memory growth problem gets
+      particularly exacerbated for applications dealing with hundreds
+      and thousands of objects.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBObjectKeyTableLock</CODE> <EM>locktype</EM></TD>
+  <TD><a name="-ORBObjectKeyTableLock"></a>
+      Specify the type of lock to be used by the ObjectKey
+      table. ObjectKey table keeps track of the ObjectKeys that are
+      generated and made available through IORs. The table manages the
+      life time of the object keys within the ORB through a reference
+      counting mechanism. Possible values for lock type are
+     <code>thread</code>, which specifies   that an inter-thread mutex
+     is used to guarantee exclusive access, and <code>null</code>,
+     which specifies that no locking be performed. The default is
+     thread. 
   </TD>
 </TR>
 <TR>
