@@ -1,3 +1,7 @@
+Wed Dec 11 23:23:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/util/utl_global.cpp: Fixed a warning in the builds.
+
 Wed Dec 11 18:26:09 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
