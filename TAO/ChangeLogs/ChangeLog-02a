@@ -1,3 +1,10 @@
+Mon Aug  7 05:08:32 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Singleton.cpp:
+
+	  Include "ace/Object_Manager.h" to pull in declaration of
+	  ACE_Object_Manager.
+
 Sun Aug  6 17:21:27 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ImplRepoC.h:
