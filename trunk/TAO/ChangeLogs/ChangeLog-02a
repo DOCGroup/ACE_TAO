@@ -1,3 +1,16 @@
+Sat Jul 28 23:29:21 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Internal.cpp (open_services_i):
+
+	  We cannot insert the default resource factory into the Service
+	  Repository before the ORB is created since it will be finalized
+	  before the ORB is finalized.  The ORB requires that a resource
+	  factory exist in order to reclaim the reactor during
+	  finalization.
+
+	  This was only a problem when the ORB was dynamically
+	  loaded/unloaded.
+
 Wed Jul 25 23:48:58 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/Blocking_Sync_None/client.cpp (main): Changed an 
