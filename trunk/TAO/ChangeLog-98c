@@ -1,3 +1,17 @@
+Thu Jan 22 14:20:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Param_Test/{server,client}.dsp:  The project files
+	  somehow got messed up.
+
+	* orbsvcs/orbsvcs_lib.dsp: Changed to use multithreaded
+	  libraries.
+
+	* orbsvcs/Scheduling_Service/Scheduling_Service.dsp:  Removed
+	  unnecessary link-time libraries.
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp:  Changed to use
+	  multithreaded libraries.
+
 Wed Jan 21 20:49:51 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* TAO version 0.0.54, released Wed Jan 21 20:49:51 1998.
