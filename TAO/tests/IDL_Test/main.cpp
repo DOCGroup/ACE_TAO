@@ -47,12 +47,16 @@ main (int argc , char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                            argv, 
+                                            "", 
+                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+        orb->resolve_initial_references ("RootPOA", 
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), 
