@@ -15,7 +15,6 @@ endif # ! TAO_ROOT
 DIRS    = ../IDL_Cubit
 
 LDLIBS = ../IDL_Cubit/.obj/cubitC.o \
-         ../IDL_Cubit/.obj/cubitS.o \
          -lTAO
 
 PROG_SRCS = client.cpp
