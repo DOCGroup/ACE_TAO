@@ -3,6 +3,7 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
+#include "ace/streams.h"
 #include "tao/Exception.h"
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
