@@ -135,7 +135,6 @@
 #define ACE_LACKS_SOCKETPAIR     // Even if the QNX RTP docs says that socket pair are
                                  // available, there is actually no implementation of
 				 // soket-pairs.
-#define ACE_LACKS_SOME_POSIX_PROTOTYPES
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL

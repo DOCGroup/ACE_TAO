@@ -374,17 +374,8 @@
 //
 ////////////////////////////////////////////////////////////////////////
 
-// Platform supports XTI (includes TLI), including SVR4 facilities.
-#define ACE_HAS_TLI
-// ACE_HAS_SVR4_TLI should work on HP-UX, but doesn't yet.  Riverace
-// problem ID P27.
-//#define ACE_HAS_SVR4_TLI
-// Platform uses <xti.h>, not tiuser.h
+// Platform supports XTI (includes TLI).
 #define ACE_HAS_XTI
-// Platform provides ACE_TLI function prototypes.
-#define ACE_HAS_TLI_PROTOTYPES
-// HP-UX 11.00 (at least at initial releases) has some busted macro defs
-#define ACE_HAS_BROKEN_XTI_MACROS
 // HP-UX 11 conforms to the XPG4 spec, which ACE calls broken for the
 // errmsg not being const...
 #define ACE_HAS_BROKEN_T_ERROR

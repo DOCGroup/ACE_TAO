@@ -344,9 +344,15 @@ dnl put reentrant functions such as asctime_r, ctime_r, gmtime_r, and
 dnl localtime_r in -lc_r.
 AC_SEARCH_LIBS([ctime_r],[c_r],,)
 
-dnl TLI library check
-AC_SEARCH_LIBS([t_accept],[xti tli_r tli nsl],
-  [ace_has_tli_funcs=yes],[ace_has_tli_funcs=no])
+dnl XTI/TLI check. Check for XTI first, since it's preferred. If there's
+dnl no XTI, try for TLI. t_getprotaddr() is only in XTI.
+AC_SEARCH_LIBS([t_getprotaddr],[xti nsl],
+  [ace_has_xti_funcs=yes],[ace_has_xti_funcs=no])
+AS_IF([test "$ace_has_xti_funcs" = no],
+ [
+  AC_SEARCH_LIBS([t_accept],[tli_r tli nsl],
+    [ace_has_tli_funcs=yes],[ace_has_tli_funcs=no])
+ ],[])
 
 dnl Check for all of the things we need to compile and link threads
 dnl properly.
@@ -613,79 +619,92 @@ AC_CHECK_HEADER([sys/termios.h],
       ],)
   ],)
 
-AS_IF([test "$ace_has_tli_funcs" = yes],
+dnl If the platform has XTI, don't bother with the TLI checks as XTI is
+dnl preferred.
+AS_IF([test "$ace_has_xti_funcs" = yes],
   [
    AC_CHECK_HEADER([xti.h],
      [
-      ace_has_tli=yes
+      ace_has_xti=yes
       AC_DEFINE([ACE_HAS_XTI])
-      AC_DEFINE([ACE_HAS_TLI])
      ],)
 
    AC_CHECK_HEADER([sys/xti.h],
      [
-      ace_has_tli=yes
+      ace_has_xti=yes
       AC_DEFINE([ACE_HAS_SYS_XTI_H])
       AC_DEFINE([ACE_HAS_XTI])
-      AC_DEFINE([ACE_HAS_TLI])
      ],)
 
-AC_CHECK_HEADER([sys/timod.h],
-  [
-   AC_DEFINE([ACE_HAS_TIMOD_H])
-  ],
-  [
-   AC_CHECK_HEADER([tli/timod.h],
+   AC_CHECK_HEADER([sys/timod.h],
      [
-      AC_DEFINE([ACE_HAS_OSF_TIMOD_H])
+      AC_DEFINE([ACE_HAS_TIMOD_H])
      ],)
-  ])
 
-AC_CHECK_HEADER([tiuser.h],
-  [
-   ace_has_tli=yes
-   AC_DEFINE([ACE_HAS_TIUSER_H])
-   AC_DEFINE([ACE_HAS_TLI])
-  ],)
-
-dnl Check if XTI headers are broken
-if test "$ac_cv_header_xti_h" = yes ||
-   test "$ac_cv_header_sys_xti_h"  = yes ||
-   test "$ac_cv_header_tiuser_h" = yes; then
-  ACE_CACHE_CHECK([if TCP macros are defined in XTI headers],
-    [ace_cv_lib_has_broken_xti_macros],
-    [
-     AC_EGREP_CPP([ACE_BROKEN_XTI_MACROS],
-       [
+dnl Check if XTI headers define TCP macros that conflict with netinet/tcp.h's
+   ACE_CACHE_CHECK([if TCP macros are defined in XTI headers],
+     [ace_cv_lib_has_conflicting_xti_macros],
+     [
+      AC_EGREP_CPP([ACE_CONFLICTING_XTI_MACROS],
+        [
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
 
 #if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
-#  if defined (ACE_HAS_TIUSER_H)
-#    include /**/ <tiuser.h>
-#  elif defined (ACE_HAS_SYS_XTI_H)
-#    include /**/ <sys/xti.h>
+#  if defined (ACE_HAS_XTI)
+#    if defined (ACE_HAS_SYS_XTI_H)
+#      include /**/ <sys/xti.h>
+#    else
+#      include /**/ <xti.h>
+#    endif /* ACE_HAS_SYS_XTI_H */
 #  else
-#    include /**/ <xti.h>
-#  endif /* ACE_HAS_SYS_XTI_H */
+#    if defined (ACE_HAS_TIUSER_H)
+#      include /**/ <tiuser.h>
+#    endif
+#  endif /* ACE_HAS_XTI */
 #endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
 
 #if defined (TCP_NODELAY) || defined (TCP_MAXSEG)
-ACE_BROKEN_XTI_MACROS
+ACE_CONFLICTING_XTI_MACROS
 #endif  /* TCP_NODELAY || TCPMAXSEG  */
-       ],
-       [
-        ace_cv_lib_has_broken_xti_macros=yes
-       ],
-       [
-        ace_cv_lib_has_broken_xti_macros=no
-       ])
-    ],
-    [
-     AC_DEFINE([ACE_HAS_BROKEN_XTI_MACROS])
-    ],)
-fi
+        ],
+        [
+         ace_cv_lib_has_conflicting_xti_macros=yes
+        ],
+        [
+         ace_cv_lib_has_conflicting_xti_macros=no
+        ])
+     ],
+     [
+      AC_DEFINE([ACE_HAS_CONFLICTING_XTI_MACROS])
+     ],)
+
+  ],[])
+
+AS_IF([test "$ace_has_tli_funcs" = yes],
+  [
+   AC_CHECK_HEADER([tiuser.h],
+     [
+      ace_has_tli=yes
+      AC_DEFINE([ACE_HAS_TIUSER_H])
+      AC_DEFINE([ACE_HAS_TLI])
+     ],)
+
+   AC_CHECK_HEADER([sys/timod.h],
+     [
+      AC_DEFINE([ACE_HAS_TIMOD_H])
+     ],
+     [
+      AC_CHECK_HEADER([tli/timod.h],
+        [
+         AC_DEFINE([ACE_HAS_OSF_TIMOD_H])
+        ],)
+     ])
+
+   AC_CHECK_FUNC([t_getname],
+     [AC_DEFINE([ACE_HAS_SVR4_TLI])],)
+
 
 if test "$ac_cv_header_tiuser_h" = yes; then
   ACE_CACHE_CHECK([if tiuser.h is protected by extern "C"],
@@ -708,7 +727,7 @@ AC_CHECK_HEADER([xliuser.h],
   ],)
 
 
-dnl Check for TLI prototypes
+dnl Check for TLI prototypes.
 if test "$ace_has_tli" = yes; then
  ACE_CACHE_CHECK([for TLI prototypes],
   [ace_cv_lib_tli_prototypes],
@@ -728,21 +747,9 @@ dnl We only check for t_accept.  This should hopefully be enough.
 # include <tli/timod.h>
 #endif
 
-#if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
-#  if defined (ACE_HAS_BROKEN_XTI_MACROS)
-#    undef TCP_NODELAY
-#    undef TCP_MAXSEG
-#  endif /* ACE_HAS_BROKEN_XTI_MACROS */
-#  if defined (ACE_HAS_TIUSER_H)
-#    include /**/ <tiuser.h>
-#  elif defined (ACE_HAS_SYS_XTI_H)
-#    define class ace_xti_class
-#    include /**/ <sys/xti.h>
-#    undef class
-#  else
-#    include /**/ <xti.h>
-#  endif /* ACE_HAS_TIUSER_H */
-#endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
+#if defined (ACE_HAS_TIUSER_H)
+#  include /**/ <tiuser.h>
+#endif /* ACE_HAS_TIUSER_H */
 
 #if defined (ACE_HAS_XLI)
 # include <xliuser.h>
@@ -775,21 +782,9 @@ dnl Check for t_errno type in TLI headers
 # include <tli/timod.h>
 #endif
 
-#if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
-#  if defined (ACE_HAS_BROKEN_XTI_MACROS)
-#    undef TCP_NODELAY
-#    undef TCP_MAXSEG
-#  endif /* ACE_HAS_BROKEN_XTI_MACROS */
-#  if defined (ACE_HAS_TIUSER_H)
-#    include /**/ <tiuser.h>
-#  elif defined (ACE_HAS_SYS_XTI_H)
-#    define class ace_xti_class
-#    include /**/ <sys/xti.h>
-#    undef class
-#  else
-#    include /**/ <xti.h>
-#  endif /* ACE_HAS_TIUSER_H */
-#endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
+#if defined (ACE_HAS_TIUSER_H)
+#  include /**/ <tiuser.h>
+#endif /* ACE_HAS_TIUSER_H */
 
 #if defined (ACE_HAS_XLI)
 # include <xliuser.h>
@@ -803,60 +798,50 @@ dnl Check for t_errno type in TLI headers
      ])
   ],,[AC_DEFINE([ACE_LACKS_T_ERRNO])])
 
-dnl Check if t_error incorrectly accepts char *
-ACE_CONVERT_WARNINGS_TO_ERRORS([
- ACE_CACHE_CHECK([if t_error incorrectly accepts char *],
-  [ace_cv_lib_has_broken_t_error],
-  [
-   dnl Check if t_errno is declared in the TLI headers
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+fi dnl test "$ace_has_tli_funcs" = yes
+],[])
+
+dnl These checks are needed for both XTI and TLI.
+AS_IF([test "$ace_has_xti" = yes || test "$ace_has_tli" = yes],
+ [
+  dnl Check if t_error incorrectly accepts char *
+  ACE_CONVERT_WARNINGS_TO_ERRORS([
+   ACE_CACHE_CHECK([if t_error incorrectly accepts char *],
+    [ace_cv_lib_has_broken_t_error],
+    [
+     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
 
-#if defined (ACE_HAS_TIMOD_H)
-# include <sys/timod.h>
-#endif
-
-#if defined (ACE_HAS_OSF_TIMOD_H)
-# include <tli/timod.h>
-#endif
-
-#if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
-#  if defined (ACE_HAS_BROKEN_XTI_MACROS)
-#    undef TCP_NODELAY
-#    undef TCP_MAXSEG
-#  endif /* ACE_HAS_BROKEN_XTI_MACROS */
-#  if defined (ACE_HAS_TIUSER_H)
-#    include /**/ <tiuser.h>
-#  elif defined (ACE_HAS_SYS_XTI_H)
-#    define class ace_xti_class
-#    include /**/ <sys/xti.h>
-#    undef class
+#if defined (ACE_HAS_XTI)
+#  if defined (ACE_HAS_SYS_XTI_H)
+#    include <sys/xti.h>
 #  else
-#    include /**/ <xti.h>
-#  endif /* ACE_HAS_TIUSER_H */
-#endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
+#    include <xti.h>
+#  endif /* ACE_HAS_SYS_XTI_H */
+#elif defined (ACE_HAS_TIUSER_H)
+#  include /**/ <tiuser.h>
+#endif /* ACE_HAS_TIUSER_H */
 
 #if defined (ACE_HAS_XLI)
 # include <xliuser.h>
 #endif
-     ]],[[
-      const char *ace_errmsg = "FOO";
-      t_error (ace_errmsg);
-     ]])],[
-      ace_cv_lib_has_broken_t_error=no
-     ],[
-      ace_cv_lib_has_broken_t_error=yes
-     ])
-  ],
-  [
-   AC_DEFINE([ACE_HAS_BROKEN_T_ERROR])
-  ],)
-]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+       ]],[[
+        const char *ace_errmsg = "FOO";
+        t_error (ace_errmsg);
+       ]])],[
+        ace_cv_lib_has_broken_t_error=no
+       ],[
+        ace_cv_lib_has_broken_t_error=yes
+       ])
+    ],
+    [
+     AC_DEFINE([ACE_HAS_BROKEN_T_ERROR])
+    ],)
+  ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
-fi dnl test "$ace_has_tli_funcs" = yes
-],[])
+ ],[])
 
 AC_CHECK_HEADER([sys/time.h],
   [
@@ -3694,11 +3679,6 @@ AC_CHECK_FUNC([sendmsg],
   ,
   [AC_DEFINE([ACE_LACKS_SENDMSG])])
 
-if test "$ace_has_tli" = yes; then
-  AC_CHECK_FUNC([t_getname],
-    [AC_DEFINE([ACE_HAS_SVR4_TLI])],)
-fi
-
 AC_CHECK_FUNC([getrusage],
   [AC_DEFINE([ACE_HAS_GETRUSAGE])],)
 
@@ -5706,6 +5686,10 @@ AC_CACHE_CHECK([if sigaction() takes a const* second argument],
   ])
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
+if test "$ace_cv_lib_posix_sigaction_constp_2" = yes; then
+  AC_DEFINE([ACE_HAS_SIGACTION_CONSTP2])
+fi
+
 dnl Check if the wait() system call takes a (union wait *) rather than int *
 ACE_CACHE_CHECK([if wait() takes a (union wait *) rather than int *],
   [ace_cv_lib_wait_takes_union_wait_ptr],
@@ -6525,16 +6509,15 @@ dnl
 dnl    ! ACE_HAS_MSGSND_MSGBUFP_2
 dnl    ! ACE_LACKS_MSGRCV_VOIDP_2
 dnl    ! ACE_LACKS_SHMAT_VOIDP_2
-dnl    ! ACE_LACKS_SIGACTION_CONSTP_2
 dnl
 dnl So, for now, we define it if any of those were autoconf'ed.
 
-if test "$ace_cv_lib_posix_msgsnd_msgbufp_2" = yes ||
-   test "$ace_cv_lib_posix_msgrcv_voidp_2" != yes ||
-   test "$ace_cv_lib_posix_shmat_voidp_2" != yes ||
-   test "$ace_cv_lib_posix_sigaction_constp_2" != yes; then
-  AC_DEFINE([ACE_LACKS_SOME_POSIX_PROTOTYPES])
-fi
+dnl @@ THESE NEED TO BE ADDED AS PROPER CONFIG SETTINGS.   --Steve
+dnl if test "$ace_cv_lib_posix_msgsnd_msgbufp_2" = yes ||
+dnl   test "$ace_cv_lib_posix_msgrcv_voidp_2" != yes ||
+dnl   test "$ace_cv_lib_posix_shmat_voidp_2" != yes ; then
+dnl   AC_DEFINE([ACE_LACKS_SOME_POSIX_PROTOTYPES])
+dnl fi
 
 if test "$ac_cv_func_msgctl" = yes &&
    test "$ac_cv_func_msgget" = yes &&
