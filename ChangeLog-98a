@@ -1,5 +1,9 @@
 Mon Jan 12 13:03:07 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Select_Reactor.h: Updated the explanation of how the
+ 	  ACE_Select_Reactor_Token works.  Thanks to Detlef Becker for
+ 	  explaining this in great detail.
+
 	* tests/test_config.h: Changed the type of all the consts to
  	  size_t rather than int.  This may cause a bit of upheaval at
  	  first since we'll need to fix some other types.  But it's the
