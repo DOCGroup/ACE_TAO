@@ -29,7 +29,6 @@ ACE_RCSID (tao,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Unbounded_Sequence<CORBA::Boolean>;
 template class TAO_Unbounded_Sequence<CORBA::Char>;
 template class TAO_Unbounded_Sequence<CORBA::WChar>;
 template class TAO_Unbounded_Sequence<CORBA::Short>;
@@ -54,7 +53,6 @@ template class TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Unbounded_Sequence<CORBA::Boolean>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Char>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::WChar>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Short>

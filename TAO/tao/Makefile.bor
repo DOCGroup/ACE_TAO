@@ -161,6 +161,7 @@ OBJFILES = \
 	$(OBJDIR)\Policy_Validator.obj \
 	$(OBJDIR)\PollableC.obj \
 	$(OBJDIR)\PortableInterceptorC.obj \
+	$(OBJDIR)\PredefinedType_Seq_Tmplinst.obj \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Profile.obj \
 	$(OBJDIR)\Protocol_Factory.obj \

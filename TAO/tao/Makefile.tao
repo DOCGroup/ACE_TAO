@@ -225,6 +225,7 @@ ORB_CORE_FILES = \
   TAO_Internal \
   TAO_Server_Request \
   Typecode_Constants \
+  PredefinedType_Seq_Tmplinst \
   TypeCodeFactory_Adapter \
   Wait_Strategy \
   Wait_On_Read \

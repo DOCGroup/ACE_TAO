@@ -139,6 +139,7 @@ ORB_CORE_FILES = \
   LF_Follower_Auto_Ptr.cpp \
   LF_Follower_Auto_Adder.cpp \
   params.cpp \
+  PredefinedType_Seq_Tmplinst.cpp \
   Resource_Factory.cpp \
   Server_Strategy_Factory.cpp \
   Sync_Strategies.cpp \
