@@ -1,3 +1,13 @@
+Tue Apr 27 11:45:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Collection_Test.cpp (main): Added some additional array
+	  tests and fixed template instantiation errors.  Thanks to David
+	  Levine for pointing them out.
+
+	* ace/OS.h (ACE_DES_FREE): Changed all the ACE_DES* macros to
+	  check for zero pointers.  Thanks to Torsten Kuepper
+	  <kuepper2@uni-wuppertal.de> for pointing this bug out.
+
 Tue Apr 27 11:08:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Basic_Types.h: Forced KAI compiler to use ACE_U_LongLong if

@@ -6531,24 +6531,64 @@ private:
 
 # define ACE_NOOP(x)
 
-# define ACE_DES_NOFREE (POINTER,CLASS) POINTER->~CLASS ()
+# define ACE_DES_NOFREE (POINTER,CLASS) \
+   do { \
+        if (POINTER) \
+          { \
+            POINTER->~CLASS (); \
+          } \
+      } \
+   while (0)
+
 # define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
-   do { POINTER->~CLASS (); DEALLOCATOR (POINTER); } while (0)
+   do { \
+        if (POINTER) \
+          { \
+            POINTER->~CLASS (); \
+            DEALLOCATOR (POINTER); \
+          } \
+      } \
+   while (0)
 
 # if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
 #   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
-     POINTER->~ T_CLASS ()
+     do { \
+          if (POINTER) \
+            { \
+              POINTER->~ T_CLASS (); \
+            } \
+        } \
+     while (0)
+
 #   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-   do { POINTER->~ T_CLASS (); \
-        DEALLOCATOR (POINTER); \
-      } while (0)
+     do { \
+          if (POINTER) \
+            { \
+              POINTER->~ T_CLASS (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+
 #   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
-  do { POINTER->~ T_CLASS (); \
-       DEALLOCATOR (POINTER); \
-     } while (0)
+     do { \
+          if (POINTER) \
+            { \
+              POINTER->~ T_CLASS (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+
 # else /* ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 #   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
-     POINTER -> T_CLASS T_PARAMETER ::~ T_CLASS ()
+     do { \
+          if (POINTER) \
+            { \
+              POINTER -> T_CLASS T_PARAMETER ::~ T_CLASS (); \
+            } \
+        } \
+     while (0)
 
 #   if defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L
   // LynxOS 3.0.0's g++ has trouble with the real versions of these.
@@ -6556,13 +6596,25 @@ private:
 #     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
 #   else
 #     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-    do { POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS (); \
-         DEALLOCATOR (POINTER); \
-       } while (0)
+       do { \
+            if (POINTER) \
+              { \
+                POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS (); \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+
 #     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
-    do { POINTER-> T_CLASS <T_PARAM1, T_PARAM2> ::~ T_CLASS (); \
-         DEALLOCATOR (POINTER); \
-       } while (0)
+       do { \
+            if (POINTER) \
+              { \
+                POINTER-> T_CLASS <T_PARAM1, T_PARAM2> ::~ T_CLASS (); \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+
 #   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
 # endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 
