@@ -18,7 +18,7 @@
 //     acceptor-mode socket.
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Doug Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
