@@ -1,3 +1,7 @@
+Wed May  2 22:39:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Fixed a couple of unused variable warnings.  
+
 Wed May  2 20:26:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Generator_Parser_12.cpp:

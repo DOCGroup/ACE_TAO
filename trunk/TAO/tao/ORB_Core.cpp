@@ -2556,7 +2556,6 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
 ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
-  ACE_Data_Block *nb = 0;
 
   ACE_Allocator *dblock_allocator;
   ACE_Allocator *buffer_allocator;
@@ -2599,15 +2598,10 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 ACE_Data_Block *
 TAO_ORB_Core::data_block_for_message_block (size_t size)
 {
-  ACE_Data_Block *nb = 0;
 
   ACE_Allocator *dblock_allocator;
   ACE_Allocator *buffer_allocator;
 
-  /// @@ We are using the input CDR configurations for this. In a
-  /// @@ generic sense we should be using dishing out datablocks to
-  /// @@ the input and output CDR folks. Will get to this when we have
-  /// @@ time -- NB
   dblock_allocator =
     this->message_block_dblock_allocator ();
   buffer_allocator =
