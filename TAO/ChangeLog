@@ -1,3 +1,13 @@
+Wed Dec  8 18:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PollableC.{h,cpp,i,inl}:
+        * tao/PollableS.{h,cpp,i,inl}:
+        * tao/PollableS_T.{h,cpp,i,inl}:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
 Wed Dec  8 16:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LongSeqA.cpp:
