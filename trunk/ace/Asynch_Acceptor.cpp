@@ -292,60 +292,49 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
 {
   ACE_Message_Block &message_block = result.message_block ();
 #if defined (ACE_HAS_AIO_CALLS)
-  // <message_block> has <remote_address_length> and the
-  // <remote_address> in our case. No data.
-  
-  // Getting the remote address.
-  
-  // Get the length.
-  int remote_size = *(int *)message_block.rd_ptr ();
-  
-  // Update the <rd_ptr>.
-  message_block.rd_ptr (sizeof (int));
-  
-  // @@ Just debugging.
-  ACE_DEBUG ((LM_DEBUG,
-              "ACE_Asynch_Acceptor<HANDLER>::parse_address  : Remote address length = %d\n",
-              remote_size));
-  
-  // Set the address.
-  remote_address.set_addr (ACE_reinterpret_cast (sockaddr_in *,
-                                                 message_block.rd_ptr ()),
-                           remote_size);  
-  
-  // Update the <rd_ptr>.
-  message_block.rd_ptr (remote_size);
-
-  // Getting the local address.
-  
-  // Get the length.
-  int local_size = sizeof (sockaddr_in);
-  
-  // Get the address.
+  // Getting the addresses.
   sockaddr_in local_addr;
+  sockaddr_in remote_addr;
+  
+  // Get the length.
+  int local_size = sizeof (local_addr);
+  int remote_size = sizeof (remote_addr);
+  
+  // Get the local address.
   if (ACE_OS::getsockname (result.accept_handle (),
                            ACE_reinterpret_cast (sockaddr *,
                                                  &local_addr),
                    &local_size) < 0)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "ACE_Asynch_Acceptor::<getsocketname> failed"));
+                "ACE_Asynch_Acceptor::<getsockname> failed"));
 
-  // @@ Just debugging. 
-  ACE_DEBUG ((LM_DEBUG,
-              "ACE_Asynch_Acceptor<HANDLER>::parse_address:Local address size : %d\n",
-              local_size)); 
-  
-  // Set the address.
-  local_address.set_addr (&local_addr, local_size);
+  // Get the remote address.
+  if (ACE_OS::getpeername (result.accept_handle (),
+                           ACE_reinterpret_cast (sockaddr *,
+                                                 &remote_addr),
+                   &remote_size) < 0)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "ACE_Asynch_Acceptor::<getpeername> failed"));
+
+  // Set the addresses.
+  local_address.set_addr  (&local_addr,  local_size);
+  remote_address.set_addr (&remote_addr, remote_size);
   
   // @@ Just debugging.
-  char local_address_buf [BUFSIZ];
+  char local_address_buf  [BUFSIZ];
+  char remote_address_buf [BUFSIZ];
   if (local_address.addr_to_string (local_address_buf, sizeof local_address_buf) == -1)
     ACE_ERROR ((LM_ERROR,  "Error:%p:can't obtain local_address's address string"));
   ACE_DEBUG ((LM_DEBUG,
               "ACE_Asynch_Acceptor<HANDLER>::parse_address : Local address %s\n",
               local_address_buf)); 
+  if (remote_address.addr_to_string (remote_address_buf, sizeof remote_address_buf) == -1)
+    ACE_ERROR ((LM_ERROR,  "Error:%p:can't obtain remote_address's address string"));
+  ACE_DEBUG ((LM_DEBUG,
+              "ACE_Asynch_Acceptor<HANDLER>::parse_address : Remote address %s\n",
+              remote_address_buf)); 
 #elif (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   sockaddr *local_addr = 0;
   sockaddr *remote_addr = 0;
