@@ -138,7 +138,7 @@ main (int argc, char *argv[])
       Test_i servant (orb.in ());
 
       // Create the first object in Root POA
-      create_object (root_poa,
+      create_object (root_poa.in (),
                      orb.in (),
                      &servant,
                      simple_servant_ior_file
