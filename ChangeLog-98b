@@ -1,3 +1,9 @@
+Tue May 26 13:39:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Timeprobe.cpp: 
+	* tests/Timeprobe_Test.cpp: 
+	  Now egcs and Sun/CC are happy with this files.
+
 Tue May 26 00:35:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Timeprobe_Test.cpp: Added new test.
