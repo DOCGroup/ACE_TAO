@@ -31,7 +31,8 @@ if (PerlACE::waitforfile_timed ($ior1file, 15) == -1) {
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($ior2file, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior2file,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior2file>\n";
     $SV2->Kill (); 
     $SV1->Kill (); 
