@@ -24,7 +24,8 @@ Fri Jan 08 13:24:12 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-sunos5.5.h: don't define ACE_HAS_XPG4_MULTIBYTE_CHAR
           with ghs, because its version 1.8.9 doesn't seem to support it.
           Also, with ghs, replaced the __ctype [] declaration with an
-          #include of <stdlib.h>, because that's cleaner.
+          #include of <stdlib.h>, because that's cleaner.  Finally,
+          added ACE_HAS_BROKEN_ENUMS for ghs (1.8.9).
 
 Thu Jan 07 09:05:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
