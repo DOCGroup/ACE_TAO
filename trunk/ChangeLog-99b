@@ -1,3 +1,11 @@
+Tue May 25 13:40:10 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/LSOCK_Acceptor.cpp (get_local_addr): 
+
+	  Only the base class members of ACE_UNIX_Addr were being copied
+	  since the assignment lacked a dynamic cast.  Thanks to Carlos and
+	  Irfan for clarifying this.
+
 Tue May 25 11:41:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Timeprobe_T.h (class ACE_Timeprobe): Moved the default size
