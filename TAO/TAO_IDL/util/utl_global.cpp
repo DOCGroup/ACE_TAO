@@ -266,7 +266,9 @@ IDL_GlobalData::filename (void)
 void
 IDL_GlobalData::set_filename (const char *f)
 {
-  this->pd_filename = (UTL_String *) f;
+  if (this->pd_filename != 0)
+    delete this->pd_filename;
+  ACE_NEW (this->pd_filename, UTL_String(f));
 }
 
 // Get or set main file name
@@ -278,7 +280,9 @@ IDL_GlobalData::main_filename (void)
 void
 IDL_GlobalData::set_main_filename (const char *n)
 {
-  this->pd_main_filename = (UTL_String *) n;
+  if (this->pd_main_filename != 0)
+    delete this->pd_main_filename;
+  ACE_NEW (this->pd_main_filename, UTL_String(n));
 }
 
 // Get or set real file name
@@ -290,7 +294,9 @@ IDL_GlobalData::real_filename (void)
 void
 IDL_GlobalData::set_real_filename (const char *n)
 {
-  this->pd_real_filename = (UTL_String *) n;
+  if (this->pd_real_filename != 0)
+    delete this->pd_real_filename;
+  ACE_NEW (this->pd_real_filename, UTL_String(n));
 }
 
 // Get or set indicator whether import is on
@@ -331,7 +337,10 @@ IDL_GlobalData::stripped_filename (void)
 void
 IDL_GlobalData::set_stripped_filename (const char *nm)
 {
-  this->pd_stripped_filename = (UTL_String *) nm;
+  if (this->pd_stripped_filename != 0)
+    delete this->pd_stripped_filename;
+
+  ACE_NEW (this->pd_stripped_filename, UTL_String(nm));
 }
 
 // Get or set cache value for argv[0]
@@ -392,7 +401,9 @@ IDL_GlobalData::local_escapes (void)
 void
 IDL_GlobalData::set_local_escapes (const char *e)
 {
-  this->pd_local_escapes = (char *) e;
+  if (this->pd_local_escapes != 0)
+    ACE_OS::free (this->pd_local_escapes);
+  this->pd_local_escapes = ACE_OS::strdup (e);
 }
 
 // Get or set indent object
