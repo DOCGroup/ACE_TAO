@@ -238,6 +238,15 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
       if (!this->try_dispatch_reply ())
         return;
 
+      // @@ This check probably is unnecessary..
+      if (this->timeout_handler_)
+        {
+          // If we had registered timeout handlers just cancel them and
+          // loose ownership of the handlers
+          this->timeout_handler_->remove_reference ();
+          this->timeout_handler_ = 0;
+        }
+
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
 
