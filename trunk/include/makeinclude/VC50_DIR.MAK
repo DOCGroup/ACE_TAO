@@ -33,7 +33,7 @@ $(DIR_LIST):
 	@CD
 	@Echo --------------------------------------------------
 #	@Echo NMake $(MYMAKEFLAGS) ACE_PLATFORM="$(ACE_PLATFORM)" ACE_TARGET="$(ACE_TARGET)" /F VCAUTO.MAK
-	NMake $(MYMAKEFLAGS) ACE_PLATFORM="$(ACE_PLATFORM)" ACE_TARGET="$(ACE_TARGET)" ACE_ACTION="$(ACE_ACTION)" /NOLOGO /F VCAUTO.MAK
+	@NMake $(MYMAKEFLAGS) ACE_PLATFORM="$(ACE_PLATFORM)" ACE_TARGET="$(ACE_TARGET)" ACE_ACTION="$(ACE_ACTION)" /NOLOGO /F VCAUTO.MAK
 	@Echo --------------------------------------------------
 	@Echo ----- Leaving directory: -----
 	@CD
@@ -45,7 +45,7 @@ $(DIR_LIST):
 !IFDEF MAK_LIST
 $(MAK_LIST) : 
 #	@Echo NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /f $@.MAK
-	NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /NOLOGO /f $@.MAK $(ACE_ACTION)
+	@NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /NOLOGO /f $@.MAK $(ACE_ACTION)
 	
 !ENDIF
 
