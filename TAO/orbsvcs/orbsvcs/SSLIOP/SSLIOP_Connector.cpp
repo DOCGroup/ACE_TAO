@@ -456,9 +456,11 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       else if (trust.trust_in_target)
         verify_mode = SSL_VERIFY_PEER;
 
-      // Trust in neither the client nor the target is required.
+      // Trust in neither the client nor the target is explicitly
+      // specified.  Use the default setting.
       else
-        verify_mode = SSL_VERIFY_NONE;
+        verify_mode =
+          ACE_SSL_Context::instance ()->default_verify_mode ();
 
       ::SSL_set_verify (svc_handler->peer ().ssl (),
                         verify_mode,
