@@ -4,38 +4,54 @@
 // ============================================================================
 //
 // = LIBRARY
-//    ACE_wrappers/examples/QOS/
+//    ACE_wrappers/examples/QOS
 //
 // = FILENAME
-//    Read_Handler.cpp
+//    Receiver_QOS_Event_Handler.cpp
 //
 // = AUTHOR
 //    Vishal Kachroo
 //
 // ============================================================================
 
-#include "Read_Handler.h"
+#include "Receiver_QOS_Event_Handler.h"
 
 // Constructor.
-ACE_Read_Handler::ACE_Read_Handler ()
-{};
+ACE_QOS_Event_Handler::ACE_QOS_Event_Handler ()
+{}
+
+ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast)
+{
+  this->dgram_mcast_ = dgram_mcast;
+}
 
 // Destructor.
-ACE_Read_Handler::~ACE_Read_Handler ()
-{};
+ACE_QOS_Event_Handler::~ACE_QOS_Event_Handler ()
+{
+}
 
 // Return the handle of the Dgram_Mcast. This method is 
 // called internally by the reactor.
 
 ACE_HANDLE
-ACE_Read_Handler::get_handle (void) const
+ACE_QOS_Event_Handler::get_handle (void) const
 {
   return this->dgram_mcast_.get_handle ();
 }
 
+int
+ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
+{
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\nReceived a QOS event. Inside handle_qos ()\n"));
+
+  return 0;
+}
+
 // Called when there is a READ activity on the dgram_mcast handle.
 int
-ACE_Read_Handler::handle_input (ACE_HANDLE)
+ACE_QOS_Event_Handler::handle_input (ACE_HANDLE)
 {
   char buf[128];
 	
@@ -65,9 +81,3 @@ ACE_Read_Handler::handle_input (ACE_HANDLE)
     return -1;
 }
 
-// Set for a dgram_mcast;
-void
-ACE_Read_Handler::dgram_mcast (const ACE_SOCK_Dgram_Mcast &dgram_mcast)
-{
-  this->dgram_mcast_ = dgram_mcast;
-}

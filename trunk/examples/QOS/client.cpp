@@ -5,6 +5,7 @@
 
 #define QOSEVENT_MAIN
 #include "qosevent.h"
+#include "Sender_QOS_Event_Handler.h"
     
 static u_short SERVER_PORT = MY_DEFPORT;
 static const char *const SERVER_HOST = DEFAULT_MULTICASTGROUP;
@@ -80,7 +81,6 @@ fill_ace_qos_flowspec_default (ACE_QoS *pQos,
                                   1	// Priority. ACE specific. Not used on NT.
                                   );
 	
-
   ACE_Flow_Spec ace_default_notraffic (QOS_NOT_SPECIFIED,
                                        QOS_NOT_SPECIFIED,
                                        QOS_NOT_SPECIFIED,
@@ -266,14 +266,16 @@ main (int argc, char * argv[])
 
   ACE_SOCK_Dgram_Mcast dgram_mcast;
 
+  // It is absolutely necessary that the sender and the receiver subscribe 
+  // to the same multicast addresses to make sure the "multicast sessions"
+  // for the two are the same. This is used to match the RESV<->PATH states.
+
   SOCKADDR_IN addr;
 
   ZeroMemory((PVOID)&addr, sizeof(addr));
   addr.sin_family      = PF_INET;						//protocol_info.iAddressFamily;
   addr.sin_addr.s_addr = inet_addr("234.5.6.7");		//options.szHostname);
-
-  // PORT changed as opposed to the receiver.
-  addr.sin_port        = htons(5002);					//options.port);
+  addr.sin_port        = htons(5001);					//options.port);
 
   ACE_INET_Addr mult_addr (&addr, sizeof (addr));
 
@@ -363,37 +365,23 @@ main (int argc, char * argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "Setting Default QOS with ACE_OS::ioctl succeeds \n"));
 
-  WSAEVENT hevent = WSACreateEvent ();
-  ACE_OVERLAPPED ace_overlapped;
-  ace_overlapped.hEvent = hevent;
+  // Instantiate a QOS Event Handler and pass the Dgram_Mcast into it.
+  ACE_QOS_Event_Handler qos_event_handler (dgram_mcast);
+	
+  // Register the QOS Handler with the Reactor for the QOS_MASK.
+  // Note the receiver registers for both QOS_MASK as well as READ_MASK.
 
-  SOCKADDR_IN sendto_addr;
-  ZeroMemory((PVOID)&sendto_addr, sizeof(sendto_addr));
-  sendto_addr.sin_family = PF_INET;							// protocol_info.iAddressFamily;
-  sendto_addr.sin_addr.s_addr = inet_addr("234.5.6.7");		// options.szHostname);
-  sendto_addr.sin_port = htons(5001);							// options.port);
-
-  const SOCKADDR_IN c_sendto_addr = sendto_addr;
-
-  const iovec iov = {5,"Hello"};
-  size_t bytes_sent;
-
-  if (ACE_OS::sendto (dgram_mcast.get_handle (),
-                      &iov,
-                      1,
-                      bytes_sent,
-                      0,
-                      (const struct sockaddr *) &c_sendto_addr,
-                      sizeof (c_sendto_addr),
-                      &ace_overlapped,
-                      NULL) != 0)
+  if (ACE_Reactor::instance ()->register_handler (&qos_event_handler,
+                                                  ACE_Event_Handler::QOS_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in Sendto\n"),
+                       "Error in registering QOS Handler\n"),
                       -1);
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "SendTO : Bytes sent : %d",
-                bytes_sent));
+
+  // Start the event loop.
+  ACE_DEBUG ((LM_DEBUG,
+              "Running the Event Loop ... \n"));
+
+  ACE_Reactor::instance ()->run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) shutting down Sender\n"));

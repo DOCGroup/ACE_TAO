@@ -4,25 +4,25 @@
 // ============================================================================
 //
 // = LIBRARY
-//    ACE_wrappers/examples/QOS/
+//    ACE_wrappers/examples/QOS
 //
 // = FILENAME
-//    QOS_Event_Handler.h
+//    Receiver_QOS_Event_Handler.h
 //
 // = AUTHOR
 //    Vishal Kachroo
 //
 // ============================================================================
 
-#ifndef QOS_EVENT_HANDLER_H
-#define QOS_EVENT_HANDLER_H
+#ifndef RECEIVER_QOS_EVENT_HANDLER_H
+#define RECEIVER_QOS_EVENT_HANDLER_H
 
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
+#include "ace/INET_Addr.h"
+#include "ace/SOCK_Dgram_Mcast.h"
 
-#include "Read_Handler.h"
-
-ACE_RCSID(QOS_Event_Handler, QOS_Event_Handler, "$Id$")
+ACE_RCSID(Receiver_QOS_Event_Handler, Receiver_QOS_Event_Handler, "$Id$")
 
   class ACE_QOS_Event_Handler : public ACE_Event_Handler
   {
@@ -43,12 +43,15 @@ ACE_RCSID(QOS_Event_Handler, QOS_Event_Handler, "$Id$")
 
     virtual int handle_qos (ACE_HANDLE fd);
     // Handles a QOS event. Right now, just 
-    // registers a handler for the READ events.
+    // prints a message.
+
+    virtual int handle_input (ACE_HANDLE fd);
+    // Handles a READ event.
 
   private:
 
-    ACE_Read_Handler read_handler_;
-
+    ACE_SOCK_Dgram_Mcast dgram_mcast_;
+    ACE_INET_Addr remote_addr_;
   };
 
-#endif  /* QOS_EVENT_HANDLER_H */
+#endif  /* RECEIVER_QOS_EVENT_HANDLER_H */
