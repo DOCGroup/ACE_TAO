@@ -1,16 +1,21 @@
+Fri Mar 31 03:27:28 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTEvent (ACE_SHLIBS): Changed library
+	  name RTSched to TAO_RTSched.
+
 Thu Mar 30 00:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO/tao/Smart_Proxies.{h,i,cpp}: 
-	  A new class TAO_Smart_Proxy_Base was added which is the base class 
-	  for all the smart proxy interface base classes and contains the 
+	* TAO/tao/Smart_Proxies.{h,i,cpp}:
+	  A new class TAO_Smart_Proxy_Base was added which is the base class
+	  for all the smart proxy interface base classes and contains the
 	  <base_proxy_> member.
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
-	  Added <get_proxy> method which downcasts the CORBA_Object member 
-	  of TAO_Smart_Proxy_Base to the appropriate proxy interface. Added 
+	  Added <get_proxy> method which downcasts the CORBA_Object member
+	  of TAO_Smart_Proxy_Base to the appropriate proxy interface. Added
 	  a default constructor definition and removed the previously
 	  defined constructor.
-	* TAO_IDL/be/be_visitor_operation/smart_proxy_cs.cpp: 
+	* TAO_IDL/be/be_visitor_operation/smart_proxy_cs.cpp:
 	  Added delegation of every operation to the <get_proxy> method.
 	* TAO_IDL/be_include/be_type.h:
 	* TAO_IDL/be/be_type.cpp (nested_sp_type_name):
@@ -24,11 +29,11 @@ Thu Mar 30 00:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/Smart_Proxies/Smart_Proxy_Impl.cpp:
 	* tests/Smart_Proxies/On_Demand/Smart_Proxy_Impl.cpp:
 	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
-	  Added delegation of the real proxy to TAO_Smart_Proxy_Base 
+	  Added delegation of the real proxy to TAO_Smart_Proxy_Base
 	  instead of the local proxy base class.
 	* docs/Smart_Proxies.html: Added a paragraph about this addition
 	  to the Smart Proxies in TAO.
-	
+
 	The above changes are a modified version of the implementation
 	inheritance changes contributed by Brian Wallis
 	<brian.wallis.ot.com.au>. Thanks to Brian Wallis for this
