@@ -691,7 +691,7 @@ public:
       CORBA::Short original_CORBA_priority_;
     };
 
-    // @@ PPOA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
+    // @@ POA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
     /// Constructor.
     Servant_Upcall (TAO_ORB_Core *orb_core);
 
@@ -790,6 +790,11 @@ public:
     void single_threaded_poa_cleanup (void);
     void servant_cleanup (void);
     void poa_cleanup (void);
+
+    /// Clean-up / reset state of this Servant_Upcall object.
+    void upcall_cleanup (void);
+
+  protected:
 
     TAO_Object_Adapter *object_adapter_;
 

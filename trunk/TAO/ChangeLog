@@ -1,3 +1,46 @@
+Thu Aug  4 21:59:32 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
+
+	* tao/corbafwd.i (string_alloc, wstring_alloc):
+	* tao/corbafwd.cpp:
+
+	  Uninlined these functions.  They invoke the standard free store
+	  allocator (e.g. new()), meaning that inlining them doesn't
+	  provide a noticeable performance gain.  Reduces static
+	  footprint.
+
+	* tao/corbafwd.h:
+
+	  No longer any need to include "ace/OS_Memory.h".  Improves
+	  compile times.
+
+	* tao/Seq_Var_T.cpp:
+	* tao/Sequence_T.cpp:
+
+	  Include "ace/OS_Memory.h" to pull in ACE_NEW_RETURN macro
+	  definition.
+
+	* tao/ClientRequestInfo.h:
+	* tao/PortableServer/ServerRequestInfo.h:
+
+	  Updated documentation.
+
+	* tao/PortableServer/Object_Adapter.h (upcall_cleanup):
+	* tao/PortableServer/Object_Adapter.cpp (~Servant_Upcall)
+	  (upcall_cleanup):
+
+	  Moved Servant_Upcall cleanup code from ~Servant_Upcall()
+	  destructor to a new upcall_cleanup() method.  This allows the
+	  Servant_Upcall state to be explicitly cleaned up without
+	  destroying the Servant_Upcall object itself.
+
+	  (prepare_for_upcall):
+
+	  Do not invoke the ~Servant_Upcall() destructor to reset the
+	  state of the Servant_Upcall object.  Doing so invokes undefined
+	  behavior since we end up making calls and using state in an
+	  object that no longer exists.  Call the new upcall_cleanup()
+	  method instead.
+
 Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO/tao/Muxed_TMS.h:
