@@ -1291,7 +1291,7 @@
 #undef ACE_NEEDS_REGEXPR_H
 
 /* Platform needs to #include <sched.h> to get thread scheduling defs. */
-#undef ACE_LACKS_SCHED_H
+#undef ACE_NEEDS_SCHED_H
 
 /* <time.h> doesn't automatically #include <sys/time.h> */
 #undef ACE_LACKS_SYSTIME_H
