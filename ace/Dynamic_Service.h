@@ -39,10 +39,11 @@ template <class TYPE>
 class ACE_Dynamic_Service : public ACE_Dynamic_Service_Base
 {
 public:
-  /// Return instance using <name> to search the Service_Repository.
-  static TYPE*instance (const ACE_TCHAR *name);
+  /// Return instance using @a name to search the Service_Repository.
+  static TYPE* instance (const ACE_TCHAR *name);
 
 #if defined (ACE_USES_WCHAR)
+  /// Return instance using @a name to search the Service_Repository.
   static TYPE* instance (const ACE_ANTI_TCHAR *name);
 #endif  // ACE_USES_WCHAR
 };
