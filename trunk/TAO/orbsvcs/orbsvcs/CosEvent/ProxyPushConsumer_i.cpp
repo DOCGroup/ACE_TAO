@@ -129,8 +129,10 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data,
 
   ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time,
                                  t);
+#if !defined(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
   e.header.ec_recv_time = ORBSVCS_Time::zero ();
   e.header.ec_send_time = ORBSVCS_Time::zero ();
+#endif /* TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS */
 
   e.data.any_value = data;
 

@@ -1,3 +1,23 @@
+Wed Oct 27 14:57:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* rules.tao.GNU:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/RtecDefaultEventData.idl:
+	* orbsvcs/orbsvcs/RtecEventComm.idl:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	* orbsvcs/tests/Event/lib/Supplier.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	  Remove unneeded padding fields from the RtecEventData structure.
+	  Made some timestamps in the Event Header optional and let the
+	  user remove the octet sequence field from the EventData
+	  structure also.
+
 Wed Oct 27 13:54:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynAnyC.h:

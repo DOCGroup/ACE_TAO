@@ -12,22 +12,6 @@ LIBNAME  = liborbsvcs
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-# Uncomment out the following line (or invoke make with
-# TAO_LACKS_EVENT_CHANNEL_ANY=1)
-# if you don't want support for anys in the Event Channel.
-# TAO_LACKS_EVENT_CHANNEL_ANY = 1
-ifneq ($(TAO_LACKS_EVENT_CHANNEL_ANY),)
-  override TAO_LACKS_EVENT_CHANNEL_ANY = -DTAO_LACKS_EVENT_CHANNEL_ANY
-endif
-
-# On non-Windows environment, we should at least define
-# the export_include IDL flag.
-override TAO_IDLFLAGS += \
-        -I$(TAO_ROOT) -Ge 1 \
-        -Wb,export_macro=TAO_ORBSVCS_Export \
-        -Wb,export_include=orbsvcs_export.h \
-        $(TAO_LACKS_EVENT_CHANNEL_ANY)
-
 VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:Log:
 
 ACE_SHLIBS = -lTAO -lACE
@@ -38,9 +22,13 @@ ACE_SHLIBS = -lTAO -lACE
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-####
-#### Build customization.
-####
+# On non-Windows environment, we should at least define
+# the export_include IDL flag.
+override TAO_IDLFLAGS += \
+        -I$(TAO_ROOT) -Ge 1 \
+        -Wb,export_macro=TAO_ORBSVCS_Export \
+        -Wb,export_include=orbsvcs_export.h
+
 ifndef TAO_ORBSVCS
   #### Please see docs/configurations.html#orbsvcs for documentation of
   #### TAO_ORBSVCS.

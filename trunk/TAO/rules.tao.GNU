@@ -68,6 +68,39 @@ endif # interface_repo
 
 
 ####
+#### Event Channel customization.
+####
+# Uncomment out the following line (or invoke make with
+# TAO_LACKS_EVENT_CHANNEL_ANY=1)
+# if you don't want support for anys in the Event Channel.
+# TAO_LACKS_EVENT_CHANNEL_ANY = 1
+ifneq ($(TAO_LACKS_EVENT_CHANNEL_ANY),)
+  override TAO_LACKS_EVENT_CHANNEL_ANY = -DTAO_LACKS_EVENT_CHANNEL_ANY
+endif
+
+# TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE = 1
+ifneq ($(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE),)
+  override TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE := \
+ -DTAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE
+endif
+
+# TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS = 1
+ifneq ($(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS),)
+  override TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS := \
+ -DTAO_LACKS_EVENT_CHANNEL_TIMESTAMPS
+endif
+
+TAO_IDLFLAGS += \
+        $(TAO_LACKS_EVENT_CHANNEL_ANY) \
+        $(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
+        $(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
+
+CPPFLAGS += \
+        $(TAO_LACKS_EVENT_CHANNEL_ANY) \
+        $(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
+        $(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
+
+####
 #### Build rules.
 ####
 IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
