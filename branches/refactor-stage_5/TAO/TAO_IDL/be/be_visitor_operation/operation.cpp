@@ -431,7 +431,7 @@ be_visitor_operation::gen_stub_operation_body (
           << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
           << be_idt_nl
           << "{" << be_idt_nl
-          << intf->flat_name () << "_setup_collocation (" 
+          << intf->flat_name () << "_setup_collocation ("
           << be_idt << be_idt_nl
           << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
           << be_uidt_nl
@@ -450,7 +450,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   *os << "TAO::Arg_Traits<";
 
-  this->gen_arg_template_param_name (return_type, 
+  this->gen_arg_template_param_name (return_type,
                                      os);
 
   *os << ">::stub_ret_val _tao_retval;";
@@ -468,7 +468,7 @@ be_visitor_operation::gen_stub_operation_body (
       *os << be_nl
           << "TAO::Arg_Traits<";
 
-      this->gen_arg_template_param_name (arg->field_type (), 
+      this->gen_arg_template_param_name (arg->field_type (),
                                          os);
 
       *os << ">::";
@@ -518,13 +518,36 @@ be_visitor_operation::gen_stub_operation_body (
                         -1);
     }
 
+
+  long tmp_len =
+    ACE_OS::strlen (node->local_name ()->get_string ());
+
   *os << be_nl << be_nl
       << "TAO::Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_tao_signature," << be_nl
       << node->argument_count () + 1 << "," << be_nl
-      << "\"" << node->local_name () << "\"," << be_nl
-      << ACE_OS::strlen (node->local_name ()->get_string ()) << "," << be_nl
+      << "\"";
+
+  // Check if we are an attribute node in disguise.
+  if (this->ctx_->attribute ())
+    {
+      // If we are a attribute node, add th elength of the operation
+      // name.
+      tmp_len += 5;
+
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          *os << "_set_";
+        }
+      else
+        {
+          *os << "_get_";
+        }
+    }
+  *os << node->local_name () << "\"," << be_nl
+      << tmp_len << "," << be_nl
       << "this->the" << intf->base_proxy_broker_name () << "_";
 
   if (node->flags () == AST_Operation::OP_oneway)
