@@ -1124,7 +1124,7 @@ be_interface::gen_operation_table (const char *flat_name,
             temp_file[temp_dir_len + 47] = 0;
           }
 #endif /* defined(__QNX__) */
-     
+
         // Save this file name with the codegen singleton.
         tao_cg->gperf_input_filename (temp_file);
 
@@ -1429,7 +1429,34 @@ be_interface::gen_optable_entries (be_interface *derived)
   return 0;
 }
 
+class be_code_emitter_wrapper : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
 
+  virtual int emit (be_interface *derived_interface,
+                    TAO_OutStream *output_stream,
+                    be_interface *base_interface);
+
+private:
+  be_interface::tao_code_emitter emitter_;
+};
+
+be_code_emitter_wrapper::
+be_code_emitter_wrapper (be_interface::tao_code_emitter emitter)
+  : emitter_ (emitter)
+{
+}
+
+int
+be_code_emitter_wrapper::emit (be_interface *derived_interface,
+                               TAO_OutStream *output_stream,
+                               be_interface *base_interface)
+{
+  return this->emitter_ (derived_interface,
+                         base_interface,
+                         output_stream);
+}
 
 // Template method that traverses the inheritance graph in a breadth-first
 // style. The actual work on each element in the inheritance graph is carried
@@ -1438,9 +1465,15 @@ int
 be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
                                           TAO_OutStream *os)
 {
-  // Loop index.
-  long i;
+  be_code_emitter_wrapper wrapper (gen);
 
+  return this->traverse_inheritance_graph (wrapper, os);
+}
+
+int
+be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+                                          TAO_OutStream *os)
+{
   // Queue data structure needed for breadth-first traversal of
   // inheritance tree.
   ACE_Unbounded_Queue <be_interface*> queue;
@@ -1497,7 +1530,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
       // Use the helper method to generate code for ourself using the
       // properties of the element dequeued. For the first iteration, the
       // element dequeued and "this" will be the same i.e., ourselves.
-      if (gen (this, bi, os) == -1)
+      if (worker.emit (this, os, bi) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
@@ -1507,16 +1540,11 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
 
       // Now check if the dequeued element has any ancestors. If yes, insert
       // them inside the queue making sure that there are no duplicates.
-      for (i=0; i < bi->n_inherits (); i++)
+      for (long i = 0; i < bi->n_inherits (); i++)
         {
-          // Parent of the dequeued element.
-          be_interface *parent;
-
-          // Initialize an iterator to search the queue for duplicates.
-          ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (queue);
-
           // Retrieve the next parent from which the dequeued element inherits.
-          parent = be_interface::narrow_from_decl (bi->inherits ()[i]);
+          be_interface *parent =
+            be_interface::narrow_from_decl (bi->inherits ()[i]);
 
           if (parent == 0)
             {
@@ -1529,6 +1557,9 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
           // Now insert this node at the tail of the queue, but make sure that
           // it doesn't already exist in the queue.
           int found = 0;
+
+          // Initialize an iterator to search the queue for duplicates.
+          ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (queue);
 
           while (!q_iter.done ())
             {
@@ -2475,3 +2506,9 @@ be_interface::server_enclosing_scope (void)
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_interface)
 IMPL_NARROW_FROM_SCOPE (be_interface)
+
+TAO_IDL_Inheritance_Hierarchy_Worker::
+~TAO_IDL_Inheritance_Hierarchy_Worker ()
+{
+}
+

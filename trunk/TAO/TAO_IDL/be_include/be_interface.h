@@ -30,6 +30,7 @@
 #include "ast_interface.h"
 
 class TAO_OutStream;
+class TAO_IDL_Inheritance_Hierarchy_Worker;
 
 // Forward declaration of the strategy
 class be_interface_strategy;
@@ -208,9 +209,15 @@ public:
   // @@ TODO currently the stub class is not implemented.
   //
 
+  /// Iterate over the inheritance hierarchy and call the
+  /// worker->emit() method for each interface on it.
+  virtual int traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+                                          TAO_OutStream *os);
+
+  /// Wrap the @c gen parameter and call the generic version of
+  /// traverse_inheritance_graph()
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);
-  // Template method using breadth first traversal of inheritance graph
 
   int in_mult_inheritance (void);
   // Am I in some form of multiple inheritance
@@ -374,6 +381,54 @@ private:
   // Member for holding the strategy for generating names.
 
   be_interface *original_interface_;
+};
+
+/**
+ * @class TAO_IDL_Inheritance_Hierarcy_Worker
+ *
+ * @brief Implement the 'external form' of the iterator pattern for
+ * the interface inheritance hierarchy.
+ *
+ * Many components in the IDL compiler need to traverse the
+ * inheritance hierarchy for a particular interface, and generate code
+ * for each base class.  The code to perform the traversal is
+ * encapsulated in be_interface, and this class defines the interface
+ * (in the C++ sense) that other IDL components must use to perform
+ * the work on each element on the hierarchy.
+ *
+ * This class is a relatively recent addition to the IDL compiler,
+ * originally just a pointer to function was used to customize the
+ * traversal algorithm.  The class was added because we need to pass
+ * some state to some of the code emitters, thus a function is not
+ * good enough.
+ */
+class TAO_IDL_BE_Export TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  /// Destructor
+  /**
+   * This is a no-op, simply put here to keep compilers happy.
+   */
+  virtual ~TAO_IDL_Inheritance_Hierarchy_Worker ();
+
+  /// Define the method invoked during the inheritance traversal
+  /**
+   * This method is invoked for each base interface in the hierarchy.
+   *
+   * @param derived_interface Pointer to the most derived interface in
+   * the hierarchy, it remains constant during the complete traversal.
+   *
+   * @param output_stream The output stream that should be used to
+   * emit code.
+   *
+   * @param base_interface Pointer to the base interface in the
+   * hierarchy, it changes on each iteration.
+   *
+   * @return 0 if there was no error, -1 if there was one.
+   */
+  virtual int emit (be_interface *derived_interface,
+                    TAO_OutStream *output_stream,
+                    be_interface *base_interface) = 0;
 };
 
 #endif  // if !defined
