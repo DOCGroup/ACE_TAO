@@ -71,8 +71,8 @@ HTTP_Config_Info::proxy_flag (void) const
   return this->proxy_flag_;
 }
 
-char *
-HTTP_Config_Info::document_root (char *dr_string)
+const char *
+HTTP_Config_Info::document_root (const char *dr_string)
 {
   if (dr_string)
     this->document_root_ = dr_string;
@@ -86,8 +86,8 @@ HTTP_Config_Info::document_root (char *dr_string)
   return this->document_root_;
 }
 
-char *
-HTTP_Config_Info::cgi_path (char *cp_string)
+const char *
+HTTP_Config_Info::cgi_path (const char *cp_string)
 {
   if (cp_string)
     this->cgi_path_ = cp_string;
@@ -102,8 +102,8 @@ HTTP_Config_Info::cgi_path (char *cp_string)
   return this->cgi_path_;
 }
 
-char *
-HTTP_Config_Info::user_dir (char *ud_string)
+const char *
+HTTP_Config_Info::user_dir (const char *ud_string)
 {
   if (ud_string)
     this->user_dir_ = ud_string;
@@ -117,8 +117,8 @@ HTTP_Config_Info::user_dir (char *ud_string)
   return this->user_dir_;
 }
 
-char *
-HTTP_Config_Info::dir_index (char *di_string)
+const char *
+HTTP_Config_Info::dir_index (const char *di_string)
 {
   if (di_string)
     this->dir_index_ = di_string;
