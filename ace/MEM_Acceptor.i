@@ -60,7 +60,14 @@ ACE_MEM_Acceptor::mmap_prefix (void) const
 ASYS_INLINE void
 ACE_MEM_Acceptor::mmap_prefix (const ACE_TCHAR *prefix)
 {
-  this->mmap_prefix_ = ACE::strnew (prefix);
+  if (prefix == 0)
+    {
+      this->mmap_prefix_ = 0;
+    }
+  else
+    {
+      this->mmap_prefix_ = ACE::strnew (prefix);
+    }
 }
 
 ASYS_INLINE ACE_MEM_IO::Signal_Strategy
