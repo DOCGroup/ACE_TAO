@@ -1,3 +1,8 @@
+Fri Sep 19 18:05:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Changed the send() to a send_n() so that
+ 	  all the data gets written...
+
 Fri Sep 19 14:52:53 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp (get_handle): Can't use

@@ -883,8 +883,8 @@ ACE_Log_Msg::log (const char *format_str,
 #else
 	  // We're running over sockets, so we'll need to indicate the
 	  // number of bytes to send.
-          result = ACE_Log_Msg_message_queue->send ((void *) &log_record,
-						    log_record.length ());
+          result = ACE_Log_Msg_message_queue->send_n ((void *) &log_record,
+						      log_record.length ());
 #endif /* ACE_HAS_STREAM_PIPES */
         }
       // Format the message and print it to stderr and/or ship it off
