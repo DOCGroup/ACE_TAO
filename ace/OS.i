@@ -6401,37 +6401,6 @@ ACE_TSS_Emulation::tss_base ()
 #endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 ACE_INLINE
-u_int
-ACE_TSS_Emulation::total_keys ()
-{
-  return total_keys_;
-}
-
-
-ACE_INLINE
-int
-ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
-{
-  if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
-    {
-# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-      ACE_OS::memset (&key, 0, sizeof (ACE_thread_key_t));
-      ACE_OS::memcpy (&key, &total_keys_, sizeof (u_int));
-# else
-      key = total_keys_;
-# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
-
-      ++total_keys_;
-      return 0;
-    }
-  else
-    {
-      key = ACE_OS::NULL_key;
-      return -1;
-    }
-}
-
-ACE_INLINE
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key)
 {
