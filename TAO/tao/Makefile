@@ -345,7 +345,8 @@ include $(TAO_ROOT)/taoconfig.mk
 interceptor.target:
 	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl; \
 	$(RM) -f InterceptorS.* InterceptorS_T.*; \
-	patch < diffs/InterceptorC.h.diff
+	patch < diffs/InterceptorC.h.diff; \
+	patch < diffs/InterceptorC.cpp.diff
 .PHONY interceptor.target:
 
 ifeq ($(fakesvcconf),1)
