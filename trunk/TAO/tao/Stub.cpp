@@ -634,72 +634,48 @@ CORBA::Boolean
 TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  inconsistent_policies = 0;
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  // Check if we care about Client Priority policy, and store the
-  // result in the variable called <set>.
-  int set = 1;
-  TAO::ClientPriorityPolicy *policy =
-    this->client_priority ();
-  if (policy == 0)
-    set = 0;
-  else
-    // Policy is set.
-    {
-      TAO::PrioritySpecification priority_spec =
-        policy->priority_specification (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-      TAO::PrioritySelectionMode mode = priority_spec.mode;
-
-      // Don't care about priority.
-      if (mode == TAO::USE_NO_PRIORITY)
-        set = 0;
-    }
-
   // Use Locate Request to establish connection/make sure the object
   // is there ...
   TAO_GIOP_Locate_Request_Invocation locate_request (this,
                                                      this->orb_core_);
 
-  //@@ Currently, if we select profiles based on priorities (i.e.,
-  //   ClientPriorityPolicy is set), and we get a FORWARD reply to our
-  //   location request, we don't go to the new location - just return
-  //   0. This is because we don't yet have full support in
-  //   MProfiles & friends for profiles used based on priorities.
-  //   Once the support is there, we should follow a forwarded object
-  //   to track it down, just like in the case where
-  //   ClientPriorityPolicy is not set.  At that point, we can remove
-  //   a lot of 'special case' code from this function, along with
-  //   this comment ;-) (marina).
-  for (;;)
+  locate_request.init_inconsistent_policies (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // @@ For some combinations of RTCORBA policies, location forwarding
+  // isn't supported.  See <forward> method implementations in
+  // Invocation_Endpoint_Selectors.cpp for more information.
+  // 
+  ACE_TRY
     {
-      locate_request.start (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      int status = locate_request.invoke (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      // We'll get this only if the object was, in fact, forwarded.
-      if (status == TAO_INVOKE_RESTART)
-        if (set)
-          return 0;
-        else
-          continue;
-
-      if (status != TAO_INVOKE_OK)
+      for (;;)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_YES),
-                            0);
+          locate_request.start (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
+          int status = locate_request.invoke (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          
+          // We'll get this only if the object was, in fact, forwarded.
+          if (status == TAO_INVOKE_RESTART)
+              continue;
+          
+          if (status != TAO_INVOKE_OK)
+            {
+              ACE_TRY_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                             CORBA::COMPLETED_YES));
+            }
+          break;
         }
-      break;
     }
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+  ACE_CATCH (CORBA::INV_POLICY, ex)
+    {
+      inconsistent_policies = 
+        locate_request.get_inconsistent_policies ();
+      return 0;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   return 1;
 }

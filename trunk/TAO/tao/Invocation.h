@@ -134,6 +134,15 @@ public:
   // Establishes a connection to the remote server, initializes
   // the GIOP headers in the output CDR.
 
+  void init_inconsistent_policies (CORBA_Environment &ACE_TRY_ENV =
+                                   TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Dynamically allocate <inconsistent_policies_> PolicyList.
+
+  CORBA::PolicyList *get_inconsistent_policies (void);
+  // Return PolicyList stored in <inconsistent_policies_> and give up
+  // its ownership.  User must deallocate memory.
+
 protected:
   int invoke (CORBA::Boolean is_roundtrip,
 	      CORBA_Environment	&ACE_TRY_ENV =
@@ -203,6 +212,19 @@ protected:
   // endpoint selection	decisions.
 
 #endif /* TAO_HAS_RT_CORBA == 1	*/
+
+  CORBA::PolicyList_var inconsistent_policies_;
+  // If current effective policies cause the invocation to raise
+  // CORBA::INV_POLICY exception, the conflicting/problematic policies
+  // are stored in this list.  This is used by
+  // <Object::_validate_connection> method to inform clients about
+  // causes of invocation failure.
+  //
+  // Conflicting policies are only stored in this list if
+  // <init_inconsistent_policies> method has been called prior to the
+  // beginning of invocation.  This saves extra work of conflicting
+  // policies 'logging' when it's not needed.
+  //
 
   TAO_Profile *profile_;
   // This invocation is	using this profile.
