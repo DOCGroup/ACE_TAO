@@ -34,13 +34,11 @@
 #   define ACE_static_cast(TYPE, EXPR)       static_cast<TYPE> (EXPR)
 #   define ACE_const_cast(TYPE, EXPR)        const_cast<TYPE> (EXPR)
 #   define ACE_reinterpret_cast(TYPE, EXPR)  reinterpret_cast<TYPE> (EXPR)
-#   if defined (__SUNPRO_CC) && !defined (ACE_HAS_RTTI)
-      // Sun C++ with castop but without rtti converts dynamic_cast to
-      // static cast.  We do it here, to avoid the warning.
+#   if defined (ACE_LACKS_RTTI)
 #     define ACE_dynamic_cast(TYPE, EXPR)    static_cast<TYPE> (EXPR)
-#   else  /* ! __SUNPRO_CC  ||  ACE_ACE_RTTI */
+#   else  /* ! ACE_LACKS_RTTI */
 #     define ACE_dynamic_cast(TYPE, EXPR)    dynamic_cast<TYPE> (EXPR)
-#   endif /* ! __SUNPRO_CC  ||  ACE_ACE_RTTI */
+#   endif /* ! ACE_LACKS_RTTI */
 # else
 #   define ACE_static_cast(TYPE, EXPR)       ((TYPE) (EXPR))
 #   define ACE_const_cast(TYPE, EXPR)        ((TYPE) (EXPR))
@@ -5999,17 +5997,17 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 
   // Evaluates  to  a  non-zero  value   if status  was  returned for
   // a child process  that  terminated  due   to   the receipt of a
-  // signal.  
+  // signal.
   // 0 means status wasnt returned.
-#define WIFSIGNALED(stat) 0 
-                 
+#define WIFSIGNALED(stat) 0
+
   // If the value of  WIFSIGNALED(stat)  is non-zero,  this macro
   // evaluates to the number of the signal that  caused  the
-  // termination of the child process.  
-#define WTERMSIG(stat) 0 
-                 
+  // termination of the child process.
+#define WTERMSIG(stat) 0
+
 #define WIFSTOPPED(stat) 0
-                 
+
 #define WSTOPSIG(stat) 0
 
 #define WIFCONTINUED(stat) 0
