@@ -217,7 +217,7 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream (void)
   // done.
   if (this->flags_ & SF_STREAM_OPEN)             // open
     if ((this->flags_ & SF_DELETE_ENABLE) == 0)  // but ..
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ACE_SSL_Asynch_Stream::DTOR-")
                   ACE_TEXT("possible access violation ")
                   ACE_TEXT("if proactor still handles events\n")));
@@ -382,6 +382,14 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
   this->do_SSL_state_machine ();
 
   return 0;
+}
+
+void
+ACE_SSL_Asynch_Stream::open (ACE_HANDLE new_handle,
+                             ACE_Message_Block &block)
+{
+  ACE_Service_Handler::open (new_handle,
+                             block);
 }
 
 // ************************************************************
