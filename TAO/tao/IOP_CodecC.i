@@ -20,6 +20,54 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<IOP::Codec::InvalidTypeForEncoding>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<IOP::Codec::InvalidTypeForEncoding>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<IOP::Codec::FormatMismatch>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<IOP::Codec::FormatMismatch>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<IOP::Codec::TypeMismatch>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<IOP::Codec::TypeMismatch>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_ci.cpp:67
 
@@ -27,6 +75,7 @@
 #define _IOP_CODEC___CI_
 
 template<>
+ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<IOP::Codec>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -37,6 +86,7 @@ TAO::Any_Impl_T<IOP::Codec>::to_object (
 }
 
 template<>
+ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<IOP::Codec>::marshal_value (TAO_OutputCDR &)
 {
@@ -44,6 +94,7 @@ TAO::Any_Impl_T<IOP::Codec>::marshal_value (TAO_OutputCDR &)
 }
 
 template<>
+ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<IOP::Codec>::demarshal_value (TAO_InputCDR &)
 {
@@ -215,6 +266,22 @@ IOP::Encoding_var::ptr (void) const
   return this->ptr_;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<IOP::CodecFactory::UnknownEncoding>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<IOP::CodecFactory::UnknownEncoding>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_ci.cpp:67
 
@@ -222,6 +289,7 @@ IOP::Encoding_var::ptr (void) const
 #define _IOP_CODECFACTORY___CI_
 
 template<>
+ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -232,6 +300,7 @@ TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
 }
 
 template<>
+ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<IOP::CodecFactory>::marshal_value (TAO_OutputCDR &)
 {
@@ -239,6 +308,7 @@ TAO::Any_Impl_T<IOP::CodecFactory>::marshal_value (TAO_OutputCDR &)
 }
 
 template<>
+ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
 {
