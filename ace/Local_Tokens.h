@@ -64,11 +64,11 @@ public:
   // ACE platform supports some form of threading.
   typedef ACE_Condition_Thread_Mutex COND_VAR;
   typedef ACE_Thread_Mutex MUTEX;
-  typedef ACE_Thread_Mutex_Guard GUARD;
+  typedef ACE_Guard<ACE_Thread_Mutex> GUARD;
 #else
   typedef ACE_Null_Condition COND_VAR;
   typedef ACE_Null_Mutex MUTEX;
-  typedef ACE_Null_Mutex_Guard GUARD;
+  typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 };
 
