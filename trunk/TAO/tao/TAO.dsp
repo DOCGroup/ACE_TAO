@@ -1720,6 +1720,14 @@ SOURCE=.\Resume_Handle.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SArgument.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SArgument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Seq_Out_T.h
 # End Source File
 # Begin Source File
