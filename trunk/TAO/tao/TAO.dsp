@@ -557,8 +557,16 @@ SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOP_CodecA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOP_CodecC.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_IORA.cpp
 # End Source File
 # Begin Source File
 
@@ -803,6 +811,10 @@ SOURCE=.\Policy_Validator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PolicyA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PolicyC.cpp
 # ADD CPP /GR
 # End Source File
@@ -814,6 +826,10 @@ SOURCE=.\PolicyFactory_Registry.cpp
 
 SOURCE=.\PollableC.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableInterceptorA.cpp
 # End Source File
 # Begin Source File
 
@@ -1575,7 +1591,15 @@ SOURCE=.\Invocation_Utils.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOP_CodecA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOP_CodecC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_IORA.h
 # End Source File
 # Begin Source File
 
@@ -1843,6 +1867,10 @@ SOURCE=.\Policy_Validator.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PolicyA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PolicyC.h
 # End Source File
 # Begin Source File
@@ -1856,6 +1884,10 @@ SOURCE=.\PollableC.h
 # Begin Source File
 
 SOURCE=.\PortableInterceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableInterceptorA.h
 # End Source File
 # Begin Source File
 
