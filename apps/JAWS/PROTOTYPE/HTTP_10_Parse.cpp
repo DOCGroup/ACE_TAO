@@ -24,6 +24,8 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Parse_Task::handle_put");
 
+cerr << "************* Message block in parse: " << data << endl;
+
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_Dispatch_Policy *policy = this->policy ();
   if (policy == 0) policy = data->policy ();
