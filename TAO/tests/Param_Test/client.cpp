@@ -209,18 +209,19 @@ Param_Test_Client<T>::run_dii_test (void)
         ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
 
       // Make the invocation, verify the result.
-      TAO_TRY_VAR (*req->env ())
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
         {
-          this->test_object_->dii_req_invoke (req);
-          TAO_CHECK_ENV;
+          this->test_object_->dii_req_invoke (req, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
           this->results_.error_count (this->results_.error_count () + 1);
-          req->env ()->print_exception (opname);
-          continue;
+          ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,opname);
+          goto loop_around;
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
 
       if (opt->debug ())
         {
@@ -244,6 +245,7 @@ Param_Test_Client<T>::run_dii_test (void)
       // reset parameters for the test
       this->test_object_->reset_parameters ();
 
+    loop_around:;
     } // for loop
 
   // print statistics

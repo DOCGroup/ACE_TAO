@@ -48,9 +48,10 @@ Test_Struct_Sequence::opname (void) const
 }
 
 void
-Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
+Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req,
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int
@@ -262,9 +263,10 @@ Test_Unbounded_Struct_Sequence::opname (void) const
 }
 
 void
-Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
+Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req,
+                                                CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int

@@ -52,9 +52,10 @@ Test_ObjRef::opname (void) const
 }
 
 void
-Test_ObjRef::dii_req_invoke (CORBA::Request *req)
+Test_ObjRef::dii_req_invoke (CORBA::Request *req,
+                             CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 static const char *Coffee_Flavor [] = {

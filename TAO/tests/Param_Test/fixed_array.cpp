@@ -44,9 +44,10 @@ Test_Fixed_Array::opname (void) const
 }
 
 void
-Test_Fixed_Array::dii_req_invoke (CORBA::Request *req)
+Test_Fixed_Array::dii_req_invoke (CORBA::Request *req,
+                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int

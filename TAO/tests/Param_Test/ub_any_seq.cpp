@@ -49,9 +49,10 @@ Test_AnySeq::opname (void) const
 }
 
 void
-Test_AnySeq::dii_req_invoke (CORBA::Request *req)
+Test_AnySeq::dii_req_invoke (CORBA::Request *req,
+                             CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int

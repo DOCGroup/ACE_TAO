@@ -43,9 +43,10 @@ Test_Short::opname (void) const
 }
 
 void
-Test_Short::dii_req_invoke (CORBA::Request *req)
+Test_Short::dii_req_invoke (CORBA::Request *req,
+                            CORBA::Environment &env)
 {
-  req->invoke ();
+  req->invoke (env);
 }
 
 int
