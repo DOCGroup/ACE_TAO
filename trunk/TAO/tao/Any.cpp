@@ -70,10 +70,7 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
 const void *
 CORBA_Any::value (void) const
 {
-  if (this->any_owns_data_)
-    return this->value_;
-  else
-    return this->cdr_;
+  return this->value_;
 }
 
 // Default "Any" constructor -- initializes to nulls per the
