@@ -32,7 +32,7 @@
 #endif
 
 /* Linux is not currently supported */
-#ifdef LINUX
+#ifdef linux
 
 #define FILE_UNIX
 #undef FILE_STDIO
