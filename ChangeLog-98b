@@ -1,3 +1,9 @@
+Fri May 22 07:53:03 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-pthread.h: removed two
+          ACE_LACKS_CONDATTR_PSHARED #defines.  That leaves just
+          one, that's commented out.
+
 Fri May 22 07:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.8 released.
