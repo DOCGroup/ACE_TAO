@@ -139,60 +139,35 @@ int be_visitor_array_ch::visit_array (be_array *node)
     }
   *os << ";\n";
 
-  // typedef the _var, _out, and _forany types
-  if (this->gen_var_defn (node) == -1)
+  // No _var or _out class for an anonymous (non-typedef'd) array.
+  if (this->ctx_->tdef () != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ch::"
-                         "visit_argument - "
-                         "var_defn failed\n"),
-                        -1);
-    }
-  // a class is generated for an out defn only for a variable length struct
-  if (node->size_type () == be_decl::VARIABLE)
-    {
-      if (this->gen_out_defn (node) == -1)
+      // Generate the _var and _out class declarations.
+      if (this->gen_var_defn (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_array_ch::"
                              "visit_argument - "
-                             "out_defn failed\n"),
+                             "var_defn failed\n"),
                             -1);
         }
-    }
-  else
-    {
-      // fixed size
-      os->indent ();
-      // if we are a typedefed array, we can use the TYPE name to define an
-      // _out type. However, for anonymous arrays that do not give rise to a
-      // new type, we use the base type for defining an out type
-      if (this->ctx_->tdef ())
+      // An out defn is generated only for a variable length struct
+      if (node->size_type () == be_decl::VARIABLE)
         {
-          *os << "typedef " << node->local_name () << " "
-              << node->local_name () << "_out;\n";
+          if (this->gen_out_defn (node) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_array_ch::"
+                                 "visit_argument - "
+                                 "out_defn failed\n"),
+                                -1);
+            }
         }
       else
         {
-          *os << "typedef ";
-          if (bt->accept (this) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_array_ch::"
-                                 "visit_array - "
-                                 "base type decl failed\n"),
-                                -1);
-            }
-          *os << " _" << node->local_name () << "_out";
-          if (node->gen_dimensions (os) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_array_ch::"
-                                 "visit_array - "
-                                 "gen dimensions failed\n"),
-                                -1);
-            }
-          *os << ";\n";
+          os->indent ();
+          *os << "typedef " << node->local_name () << " "
+              << node->local_name () << "_out;\n";
         }
     }
 

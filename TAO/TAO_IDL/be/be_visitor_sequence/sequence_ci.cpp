@@ -64,28 +64,33 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
 
   // End of instantiation.
 
-  // Generate the ifdefined macro for the sequence type.
-  os->gen_ifdef_macro (node->flat_name ());
-
-  // All we do is generate the _var and _out implementations.
-  if (this->gen_var_impl (node) == -1)
+  // No _var or _out class for an anonymous (non-typedef'd) sequence.
+  if (this->ctx_->tdef () != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ci::"
-                         "visit_sequence - "
-                         "codegen for _var failed\n"), -1);
+      // Generate the ifdefined macro for the sequence type.
+      os->gen_ifdef_macro (node->flat_name ());
+
+      // All we do is generate the _var and _out implementations.
+      if (this->gen_var_impl (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_ci::"
+                             "visit_sequence - "
+                             "codegen for _var failed\n"), -1);
+        }
+
+      if (this->gen_out_impl (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_ci::"
+                             "visit_sequence - "
+                             "codegen for _out failed\n"), -1);
+        }
+
+      // Generate the endif macro for the sequence type.
+      os->gen_endif ();
     }
 
-  if (this->gen_out_impl (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ci::"
-                         "visit_sequence - "
-                         "codegen for _out failed\n"), -1);
-    }
-
-  // Generate the endif macro for the sequence type.
-  os->gen_endif ();
   node->cli_inline_gen (1);
 
   return 0;
