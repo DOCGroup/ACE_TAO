@@ -509,7 +509,7 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
       return -1;
     }
 
-  if (TAO_debug_level > 6)
+  if (TAO_debug_level == 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - GIOP_Message_Handler::read_messages"

@@ -507,7 +507,7 @@ public:
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
-                            int twoway,
+                            int is_synchronous,
                             ACE_Time_Value *max_time_wait) = 0;
 
   /// This is a request for the transport object to write a request
@@ -536,7 +536,7 @@ public:
   // @@ lockme
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            int twoway = 1,
+                            int is_synchronous = 1,
                             ACE_Time_Value *max_time_wait = 0) = 0;
 
   /// Callback to read incoming data
@@ -639,14 +639,28 @@ public:
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = 0);
 
-  /// Sent the contents of <message_block>, blocking if required by
+  /// Sent the contents of <message_block>
+  /**
+   * @todo This method name sucks, but send_message() was already
+   *       taken by other silly methods!
+   *
+   * @param stub The object reference used for this operation, useful
+   *             to obtain the current policies.
+   * @param is_synchronous If set this method will block until the
+   *             operation is completely written on the wire
+   * @param message_block The CDR encapsulation of the GIOP message
+   *             that must be sent.  The message may consist of
+   *             multiple Message Blocks chained through the cont()
+   *             field.
+   * @param max_wait_time The maximum time that the operation can
+   *             block, used in the implementation of timeouts.
+   *
+   */
   /// the twoway flag or by the current policies in the stub.
   int send_message_i (TAO_Stub *stub,
-                      int twoway_flag,
+                      int is_synchronous,
                       const ACE_Message_Block *message_block,
                       ACE_Time_Value *max_wait_time);
-
-  //  TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *& cache_map_entry (void);
 
   /// Cache management
   void mark_invalid (void);
@@ -661,7 +675,7 @@ public:
   int cancel_output (void);
 
 private:
-  /// Try to send the current message.
+  /// Send some of the data in the queue.
   /**
    * As the outgoing data is drained this method is invoked to send as
    * much of the current message as possible.
@@ -670,6 +684,9 @@ private:
    * and 1 if the message was completely sent.
    */
   int drain_queue (void);
+
+  /// Implement drain_queue() assuming the lock is held
+  int drain_queue_i (void);
 
   /// Cleanup the queue.
   /**
@@ -685,6 +702,12 @@ private:
 
   /// Check if the buffering constraints have been reached
   int must_flush_queue_i (TAO_Stub *stub);
+
+  /// Send a synchronous message, i.e. block until the message is on
+  /// the wire
+  int send_synchronous_message_i (TAO_Stub *stub,
+                                  const ACE_Message_Block *message_block,
+                                  ACE_Time_Value *max_wait_time);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
