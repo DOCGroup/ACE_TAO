@@ -47,7 +47,6 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
 
 # Get filename.
 $fname = $ARGV[0];
-print "Filename = $fname\n";
 open (fp, "$fname");
 
 print $header ;
