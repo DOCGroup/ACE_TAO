@@ -46,6 +46,10 @@
 #include "orbsvcs/CosConcurrencyControlS.h"
 #include "concurrency_export.h"
 
+#if defined (lock_held)
+# undef lock_held
+#endif /* lock_held */
+
 #define NUMBER_OF_LOCK_MODES 5
 // This constant defines the number of lock modes. There is really no
 // way to set this constant dynamically because the nuber of lock
