@@ -1,3 +1,7 @@
+Sat Sep 26 23:20:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Proactor.cpp: Fixed the g++ warnings.
+
 Fri Sep 25 23:19:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Sched_Params.cpp: use both ACE_HAS_STHREADS and
