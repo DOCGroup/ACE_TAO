@@ -147,11 +147,7 @@ TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
 {
   if (tc && tc->kind_ >= 0 && tc->kind_ < CORBA::TC_KIND_COUNT)
     return this->mobj_table_[tc->kind_].obj_;
-  else
-    {
-      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-      return 0;
-    }
+  TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
 }
 
 // *************** deep_free methods ******************

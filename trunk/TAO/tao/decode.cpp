@@ -102,9 +102,9 @@ TAO_Marshal_Primitive::decode (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_Primitive::decode detected error");
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env,
+                            CORBA::TypeCode::TRAVERSE_STOP);
     }
 }
 
@@ -128,78 +128,83 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Decode the typecode description for the element.
-  if ((retval = stream->decode (CORBA::_tc_TypeCode,
-                                &elem_tc.out (),
-                                0,
-                                env))
-      == CORBA::TypeCode::TRAVERSE_CONTINUE)
-    {
-      // Let the Any maintain a pointer to the CDR stream
-      // @@ ASG + CORYAN - The following commented line would have been a great
-      // optimization. However, it turns out that although the Message_Block is
-      // heap-allocated, the actual buffer i.e., data block is allocated on the
-      // function call stack. Once we are out of these chain of functions and
-      // return into the stub, we have lost the activation record for the
-      // actual buffer. Hence it makes no sense keeping pointers to stack
-      // memory.
-      //
-      // See IIOP_Object.cpp::do_static_call in which a GIOP_Invocation is
-      // allocated on stack
+  retval = stream->decode (CORBA::_tc_TypeCode,
+                           &elem_tc.out (),
+                           0,
+                           env);
+  TAO_CHECK_CONDITION_ENV_RETURN (env, \
+                                  || retval != CORBA::TypeCode::TRAVERSE_CONTINUE, \
+                                  retval);
+
+  // Let the Any maintain a pointer to the CDR stream
+  // @@ ASG + CORYAN - The following commented line would have been a great
+  // optimization. However, it turns out that although the Message_Block is
+  // heap-allocated, the actual buffer i.e., data block is allocated on the
+  // function call stack. Once we are out of these chain of functions and
+  // return into the stub, we have lost the activation record for the
+  // actual buffer. Hence it makes no sense keeping pointers to stack
+  // memory.
+  //
+  // See IIOP_Object.cpp::do_static_call in which a GIOP_Invocation is
+  // allocated on stack
 #if 0
-      any->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                stream->start ());
+  any->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                            stream->start ());
 #endif
-      // one solution is to heap allocate the GIOP_Invocation. However, that
-      // would be bad since not all requests will use Anys.
-      //
-      // One solution is to allocate a new Message_Block with its own heap
-      // allocated data_block. (We may optimize this using allocators for known
-      // sizes). We allocate a Message_Block of the size that is required by
-      // the data type held by the Any. To find what is the size of this data
-      // in the CDR, we traverse the CDR by skipping past this data type. We
-      // then get an offset using the "begin" and "end" shown below that tells
-      // us the size. The skipping is done on a temporary CDR stream and not on
-      // the actual incoming CDR stream. Once we have allocated a new
-      // Message_Block, we simply append the data into it from the original CDR
-      // stream.
-      char *begin, *end;
-      TAO_InputCDR temp (*stream);
+  // one solution is to heap allocate the GIOP_Invocation. However, that
+  // would be bad since not all requests will use Anys.
+  //
+  // One solution is to allocate a new Message_Block with its own heap
+  // allocated data_block. (We may optimize this using allocators for known
+  // sizes). We allocate a Message_Block of the size that is required by
+  // the data type held by the Any. To find what is the size of this data
+  // in the CDR, we traverse the CDR by skipping past this data type. We
+  // then get an offset using the "begin" and "end" shown below that tells
+  // us the size. The skipping is done on a temporary CDR stream and not on
+  // the actual incoming CDR stream. Once we have allocated a new
+  // Message_Block, we simply append the data into it from the original CDR
+  // stream.
+  char *begin, *end;
+  TAO_InputCDR temp (*stream);
 
-      begin = stream->rd_ptr ();
-      retval = temp.skip (elem_tc.in (), env);
-      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-        {
-          end = temp.rd_ptr ();
+  begin = stream->rd_ptr ();
+  retval = temp.skip (elem_tc.in (), env);
+  TAO_CHECK_CONDITION_ENV_RETURN (env, \
+                                  || retval != CORBA::TypeCode::TRAVERSE_CONTINUE, \
+                                  retval);
 
-          ACE_Message_Block* cdr;
+  end = temp.rd_ptr ();
 
-          // We need to allocate more memory than in the original
-          // stream, first to guarantee that the buffer is aligned in
-          // memory and next because the realignment may introduce
-          // extra padding. 2*MAX_ALIGNMENT should be enough.
-          ACE_NEW_RETURN (cdr,
-                          ACE_Message_Block (end - begin
-                                             + 2*CDR::MAX_ALIGNMENT),
-                          CORBA::TypeCode::TRAVERSE_STOP);
-          // Align the buffer before creating the CDR stream.
-          CDR::mb_align (cdr);
-          TAO_OutputCDR out (cdr);
+  ACE_Message_Block* cdr;
 
-          retval = out.append (elem_tc.in (), stream, env);
-          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-            {
-              ACE_Message_Block::release (any->cdr_);
-              if (any->any_owns_data_ && any->value_ != 0)
-                DEEP_FREE (any->type_, any->value_, 0, env);
-              if (env.exception () != 0)
-                return CORBA::TypeCode::TRAVERSE_STOP;
-              any->cdr_ = cdr;
-              any->value_ = 0;
-              any->type_ = elem_tc._retn ();
-              any->any_owns_data_ = 1;
-            }
-        }
-    }
+  // We need to allocate more memory than in the original
+  // stream, first to guarantee that the buffer is aligned in
+  // memory and next because the realignment may introduce
+  // extra padding. 2*MAX_ALIGNMENT should be enough.
+  // @@EXC@@ This doesn't seem to be exception safe.
+  ACE_NEW_RETURN (cdr,
+                  ACE_Message_Block (end - begin
+                                     + 2*CDR::MAX_ALIGNMENT),
+                  CORBA::TypeCode::TRAVERSE_STOP);
+  // Align the buffer before creating the CDR stream.
+  CDR::mb_align (cdr);
+  TAO_OutputCDR out (cdr);
+
+  retval = out.append (elem_tc.in (), stream, env);
+  TAO_CHECK_CONDITION_ENV_RETURN (env, \
+                                  || retval != CORBA::TypeCode::TRAVERSE_CONTINUE, \
+                                  retval);
+
+  ACE_Message_Block::release (any->cdr_);
+  if (any->any_owns_data_ && any->value_ != 0)
+    DEEP_FREE (any->type_, any->value_, 0, env);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
+
+  any->cdr_ = cdr;
+  any->value_ = 0;
+  any->type_ = elem_tc._retn ();
+  any->any_owns_data_ = 1;
+
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
