@@ -69,8 +69,6 @@ enum TAO_AMI_Reply_Status
 };
 
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
 typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr,
@@ -103,7 +101,6 @@ namespace TAO_Messaging_Helper
            ACE_ENV_ARG_DECL);
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_MESSAGING_H */
