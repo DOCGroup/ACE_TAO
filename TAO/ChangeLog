@@ -1,3 +1,9 @@
+Fri Oct 10 10:36:01 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Metrics.dsp: Fixed build errors in MSVC release
+	  builds. The release configuration did not have the right include
+	  paths.
+
 Fri Oct 10 09:48:05 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/Kokyu_dsrt_schedulers/fp_example/fp_client.dsp: 
