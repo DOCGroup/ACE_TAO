@@ -24,6 +24,10 @@ Mon Apr  2 20:08:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Updated these with the new example.
 
+        * docs/releasenotes/index.html:
+
+          Added a mention of the new example.
+
 Mon Apr  2 20:01:05 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AVStreams.idl:
