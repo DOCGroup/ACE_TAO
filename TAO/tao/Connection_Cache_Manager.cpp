@@ -221,52 +221,35 @@ TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 int
 TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 {
-
-  // We will loop twice
-
-  // First we look through whether we have entries that have already
-  // been closed. If so we will just purge them from the map
-
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
        iter != this->cache_map_.end ();
        ++iter)
     {
-      if ((*iter).int_id_.recycle_state () == ACE_RECYCLABLE_CLOSED)
+      // First we look through whether we have an entry that has already
+      // been closed.
+
+      if ((*iter).int_id_.recycle_state () != ACE_RECYCLABLE_CLOSED)
         {
-          HASH_MAP_ENTRY *entry = 0;
-          this->cache_map_.find ((*iter).ext_id_,
-                                 entry);
+          // As a first step, check whether the handler has been
+          // registered with the reactor. If registered, then get the
+          // handle and set that in the <handle_set> so that the ORB_Core
+          // would deregister them from the reactor before shutdown.
 
-          // Call the implementation directly.
-          this->purge_entry_i (entry);
+          if ((*iter).int_id_.handler ()->is_registered ())
+            {
+              handle_set.set_bit ((*iter).int_id_.handler ()->fetch_handle ());
+            }
 
+          // Inform the handler that has a reference to the entry in the
+          // map that we are *gone* now. So, the handler should not use
+          // the reference to the entry that he has, to acces us *at any
+          // time*.
+          (*iter).int_id_.handler ()->cache_map_entry (0);
+
+          // Then decrement the reference count on the handler
+          (*iter).int_id_.handler ()->decr_ref_count ();
         }
-    }
-
-  // In the second step do the management of the rest
-  for (HASH_MAP_ITER iter_i = this->cache_map_.begin ();
-       iter_i != this->cache_map_.end ();
-       ++iter_i)
-    {
-      // As a first step, check whether the handler has been
-      // registered with the reactor. If registered, then get the
-      // handle and set that in the <handle_set> so that the ORB_Core
-      // would deregister them from the reactor before shutdown.
-
-      if ((*iter_i).int_id_.handler ()->is_registered ())
-        {
-          handle_set.set_bit ((*iter_i).int_id_.handler ()->fetch_handle ());
-        }
-
-      // Inform the handler that has a reference to the entry in the
-      // map that we are *gone* now. So, the handler should not use
-      // the reference to the entry that he has, to acces us *at any
-      // time*.
-      (*iter_i).int_id_.handler ()->cache_map_entry (0);
-
-      // Then decrement the reference count on the handler
-      (*iter_i).int_id_.handler ()->decr_ref_count ();
-    }
+     }
 
   // Unbind all the entries in the map
   this->cache_map_.unbind_all ();

@@ -1,3 +1,10 @@
+Tue Feb  6 22:39:06 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/Connection_Cache_Manager.cpp:
+	  Fixed core dump in close_i () that was being caused by
+	  unbinding hash map entries while iterating over the
+	  hash map.
+
 Tue Feb 06 15:49:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsw:
