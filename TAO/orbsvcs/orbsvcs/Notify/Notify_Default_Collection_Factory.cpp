@@ -2,7 +2,6 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 #include "Notify_Default_Collection_Factory.h"
 #include "Notify_Factory.h"
 
@@ -47,19 +46,13 @@ TAO_Notify_Default_Collection_Factory::create_event_listener_list (CORBA::Enviro
   // fails with any sort of recursive calls.
 
   TAO_Notify_EventListener_List* listener_list =
-    new TAO_ESF_Copy_On_Write<TAO_Notify_EventListener,
-    TAO_ESF_Proxy_List<TAO_Notify_EventListener>,
-    TAO_Notify_EventListener_List_Iterator,
-    ACE_SYNCH> ();
-  return listener_list;
-
-  /*
   new TAO_ESF_Immediate_Changes<TAO_Notify_EventListener,
     TAO_ESF_Proxy_List<TAO_Notify_EventListener>,
     TAO_Notify_EventListener_List_Iterator,
     ACE_SYNCH_MUTEX> ();
 
-ACE_NEW_THROW_EX (listener_list,
+  return listener_list;
+  /*ACE_NEW_THROW_EX (listener_list,
                     TAO_ESF_Immediate_Changes<TAO_Notify_EventListener,
                     TAO_ESF_Proxy_List<TAO_Notify_EventListener>,
                     TAO_Notify_EventListener_List_Iterator,
@@ -71,23 +64,13 @@ ACE_NEW_THROW_EX (listener_list,
 TAO_Notify_UpdateListener_List*
 TAO_Notify_Default_Collection_Factory::create_update_listener_list (CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-
-  /*  TAO_Notify_UpdateListener_List* listener_list =
+  TAO_Notify_UpdateListener_List* listener_list =
     new TAO_ESF_Immediate_Changes<TAO_Notify_UpdateListener,
     TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>,
     TAO_Notify_UpdateListener_List_Iterator,
     ACE_SYNCH_MUTEX> ();  //  ACE_SYNCH_NULL_MUTEX
 
   return listener_list;
-  */
-
-  TAO_Notify_UpdateListener_List* listener_list =
-    new TAO_ESF_Copy_On_Write<TAO_Notify_UpdateListener,
-    TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>,
-    TAO_Notify_UpdateListener_List_Iterator,
-    ACE_SYNCH> ();
-  return listener_list;
-
 }
 
 // ****************************************************************
@@ -111,13 +94,6 @@ template class TAO_ESF_Immediate_Changes<TAO_Notify_EventListener, TAO_ESF_Proxy
 template class TAO_ESF_Immediate_Changes<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, ACE_SYNCH_MUTEX>;
 template class TAO_ESF_Immediate_Changes<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, ACE_Null_Mutex>;
 
-template class TAO_ESF_Copy_On_Write<TAO_Notify_EventListener, TAO_ESF_Proxy_List<TAO_Notify_EventListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener *>, ACE_SYNCH>;
-template class TAO_ESF_Copy_On_Write<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, ACE_SYNCH>;
-
-template class TAO_ESF_Copy_On_Write_Collection<TAO_ESF_Proxy_List<TAO_Notify_EventListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener *> >;
-
-template class TAO_ESF_Copy_On_Write_Collection<TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *> >;
-
 template class TAO_ESF_Proxy_List<TAO_Notify_EventListener>;
 template class TAO_ESF_Proxy_Collection<TAO_Notify_EventListener>;
 
@@ -132,14 +108,6 @@ template class TAO_ESF_Proxy_Collection<TAO_Notify_UpdateListener>;
 #pragma instantiate TAO_ESF_Immediate_Changes<TAO_Notify_EventListener, TAO_ESF_Proxy_List<TAO_Notify_EventListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener *>, ACE_SYNCH_MUTEX>
 #pragma instantiate TAO_ESF_Immediate_Changes<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, ACE_SYNCH_MUTEX>
 #pragma instantiate TAO_ESF_Immediate_Changes<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, ACE_Null_Mutex>
-
-
-#pragma instantiate TAO_ESF_Copy_On_Write<TAO_Notify_EventListener, TAO_ESF_Proxy_List<TAO_Notify_EventListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener *>, ACE_SYNCH>
-#pragma instantiate TAO_ESF_Copy_On_Write<TAO_Notify_UpdateListener, TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *>, ACE_SYNCH>
-
-#pragma instantiate TAO_ESF_Copy_On_Write_Collection<TAO_ESF_Proxy_List<TAO_Notify_EventListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener *> >
-
-#pragma instantiate TAO_ESF_Copy_On_Write_Collection<TAO_ESF_Proxy_List<TAO_Notify_UpdateListener>, ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener *> >
 
 #pragma instantiate TAO_ESF_Proxy_List<TAO_Notify_EventListener>
 #pragma instantiate TAO_ESF_Proxy_Collection<TAO_Notify_EventListener>
