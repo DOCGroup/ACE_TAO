@@ -1,3 +1,8 @@
+Fri Aug 31 14:57:42 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/MEM_Stream_Test.cpp: Fixed usage of ACE_SYNCH meta-class
+          to work correctly with templates.
+
 Fri Aug 31 11:53:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
          * ace/OS.h:
@@ -26,7 +31,6 @@ Fri Aug 31 11:53:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
            all the above files. Should help in removing some of the errors
            in TAO tests. Any test in ACE/TAO which breaks because of this
            change is broken and should be fixed.
-
 
 Fri Aug 31 12:00:00 2001  Steve Huston  <shuston@riverace.com>
 
