@@ -1,10 +1,17 @@
 # $Id$
 
-Simply run the server and the client, as follows:
+This example illustrates the usage of the XtReactor from TAO.  The
+server creates a small display dialog and the client displays a dialog
+with a start and stop button.  On pressing the start button the server
+dialog box starts a stopwatch.  On the pressing the stop the stopwatch
+stops. On repressing the start the stopwatch resets and start all over
+again.
+
+To run the server and the client simply do the following:
 
 $ server -o foo.ior
 $ client -k file://foo.ior
 
-	The test only does something useful if the Xtoolkit  is
-enabled and the executables linked against the following libraries
-Xm, Xt & X11
+Note: this test only does something useful if the Xtoolkit is enabled
+and the executables linked against the following libraries Xm, Xt &
+X11.
