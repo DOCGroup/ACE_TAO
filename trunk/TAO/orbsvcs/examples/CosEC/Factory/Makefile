@@ -20,6 +20,8 @@ PROG_SRCS = \
 	CosEventChannelFactory_i.cpp \
 	FactoryCosEventChannel_i.cpp \
 	FactoryClient.cpp \
+	FactoryDriver.cpp \
+	main.cpp
 
 SRC = $(IDL_SRC) $(PROG_SRCS)
 
@@ -27,7 +29,9 @@ FACTORY_OBJS = \
 	 CosEventChannelFactoryC.o \
 	 CosEventChannelFactoryS.o \
 	 CosEventChannelFactory_i.o \
-	 FactoryCosEventChannel_i.o
+	 FactoryCosEventChannel_i.o \
+	 FactoryDriver.o \
+	 main.o
 
 CLIENT_OBJS = \
 	FactoryClient.o \
