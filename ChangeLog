@@ -1,3 +1,10 @@
+Wed Nov  5 18:52:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_sys_socket.h:
+
+	  #include'd os_include/net/os_if.h to get the definitions of
+	  if_nametoindex () if_indextoname () etc.
+
 Wed Nov  5 23:45:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_NS_sys_socket.inl:
