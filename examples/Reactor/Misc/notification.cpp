@@ -11,19 +11,19 @@
 #define MAX_ITERATIONS 3
 #else
 #define MAX_ITERATIONS 10000
-#endif
+#endif /* CHORUS */
 
 class Thread_Handler : public ACE_Event_Handler
+{
   // = TITLE
-  //   Illustrate how the ACE_Reactor's thread-safe event notification 
+  //   Illustrate how the ACE_Reactor's thread-safe event notification
   //   mechanism works.
   //     
   // = DESCRIPTION
   //   Handle timeouts in the main thread via the ACE_Reactor and I/O
-  //   events in a separate thread.  Just before the separate I/O thread
-  //   exits it notifies the ACE_Reactor in the main thread using the
-  //   ACE_Reactor's notification mechanism. 
-{
+  //   events in a separate thread.  Just before the separate I/O
+  //   thread exits it notifies the ACE_Reactor in the main thread
+  //   using the ACE_Reactor's notification mechanism.
 public:
   Thread_Handler (int delay, int interval, size_t n_threads);
   Thread_Handler (size_t id): id_ (id) {}
