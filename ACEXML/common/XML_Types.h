@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
+#include "ace/Functor_String.h"
 
 # if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 2)
 typedef wchar_t ACEXML_UTF16;
