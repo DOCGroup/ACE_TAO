@@ -5,6 +5,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/Marshal.h"
 #include "tao/ORB_Constants.h"
+#include "tao/CDR.h"
 
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"
