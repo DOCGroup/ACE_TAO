@@ -1,3 +1,13 @@
+Wed Dec 13 17:57:28 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
+
+	  Fixed compile warnings.
+
 Wed Dec 13 17:45:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.SSLIOP: Updated dependencies.

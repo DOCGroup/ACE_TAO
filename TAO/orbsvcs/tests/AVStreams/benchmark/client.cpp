@@ -27,7 +27,7 @@ Client_StreamEndPoint::handle_close (void)
 // flow spec which is nothing but hostname::port_number of the
 // datagram.
 CORBA::Boolean
-Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
+Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &/*the_spec*/)
 {
   return 0;
 }
@@ -88,7 +88,7 @@ ttcp_Client_StreamEndPoint::ttcp_Client_StreamEndPoint (Client *client)
 }
 
 CORBA::Boolean
-ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
+ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &/*the_spec*/)
 {
   ACE_INET_Addr addr (GLOBALS::instance ()->port_, GLOBALS::instance ()->hostname_);
   
