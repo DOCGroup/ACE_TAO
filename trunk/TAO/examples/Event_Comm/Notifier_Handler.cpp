@@ -43,6 +43,8 @@ Notifier_Handler::shutdown (void)
 int
 Notifier_Handler::run (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Running the Supplier...\n"));
   // Run the ORB.
   this->orb_->run ();
   return 0;
@@ -89,6 +91,23 @@ Notifier_Handler::init (int argc,
                                     argv,
                                     0,
                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var poa_object  =
+        this->orb_->resolve_initial_references("RootPOA",
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa =
+        PortableServer::POA::_narrow (poa_object.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POAManager_var poa_manager =
+        poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Initialization of the naming service.

@@ -90,7 +90,7 @@ Notifier_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Notifier_Server::init_naming_service\n");
       return -1;
     }
@@ -116,22 +116,28 @@ Notifier_Server::init (int argc,
 
    ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
-                       "init_child_poa"),
+                      "init_child_poa"),
                       -1);
  ACE_CHECK_RETURN (-1);
 
-  // Activate the servant in the POA.
-  CORBA::String_var str =
-    this->orb_manager_.activate_under_child_poa (NOTIFIER_BIND_NAME,
-						 &this->servant_,
-						 ACE_TRY_ENV);
+ this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+ ACE_CHECK_RETURN (-1);
 
-  return this->init_naming_service (ACE_TRY_ENV);
+ // Activate the servant in the POA.
+ CORBA::String_var str =
+   this->orb_manager_.activate_under_child_poa (NOTIFIER_BIND_NAME,
+						 &this->servant_,
+                                                ACE_TRY_ENV);
+
+ return this->init_naming_service (ACE_TRY_ENV);
 }
 
 int
 Notifier_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Running the notifier server...\n"));
+
   // Run the main event loop for the ORB.
   if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
