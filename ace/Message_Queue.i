@@ -142,7 +142,7 @@ ACE_Message_Queue_NT::is_empty (void)
   ACE_TRACE ("ACE_Message_Queue_NT::is_empty");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0);
 
-  return (this->cur_bytes_ > 0 && this->cur_count_ > 0 ? 1 : 0);
+  return this->cur_bytes_ > 0 || this->cur_count_ > 0 ? 0 : 1;
 }
 
 ACE_INLINE size_t
