@@ -40,6 +40,7 @@
 
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
+class TAO_EC_SupplierFiltering;
 
 class TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 {
@@ -53,6 +54,8 @@ class TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushCons
   // = MEMORY MANAGMENT
   //   It makes a copy of the SupplierQOS and the supplier object
   //   reference.
+  //   It assumes ownership of the SupplierFiltering, but requests
+  //   destruction through the Event Channel.
   //   The object commits suicide when disconnect_push_consumer() is
   //   called.
   //
@@ -61,7 +64,8 @@ class TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushCons
   //   externally.
   //
 public:
-  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* event_channel);
+  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* event_channel,
+                            TAO_EC_SupplierFiltering* filtering);
   // constructor...
 
   virtual ~TAO_EC_ProxyPushConsumer (void);
@@ -78,9 +82,9 @@ public:
   // The QoS (subscription) used to connect to the EC.
 
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-			  CORBA::Environment &env) = 0;
+			  CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-			     CORBA::Environment &env) = 0;
+			     CORBA::Environment &env);
   // Concrete implementations can use this methods to keep track of
   // the consumers interested in this events.
 
@@ -103,12 +107,15 @@ public:
                 const RtecEventChannelAdmin::SupplierQOS& qos,
                 CORBA::Environment &);
   virtual void push (const RtecEventComm::EventSet& event,
-                     CORBA::Environment &) = 0;
+                     CORBA::Environment &);
   virtual void disconnect_push_consumer (CORBA::Environment &);
 
 private:
   TAO_EC_Event_Channel* event_channel_;
   // The supplier admin, used for activation and memory managment.
+
+  TAO_EC_SupplierFiltering* supplier_filtering_;
+  // The strategy to do filtering close to the supplier
 
   RtecEventComm::PushSupplier_var supplier_;
   // The supplier....

@@ -60,7 +60,7 @@ public:
 
 // ****************************************************************
 
-class TAO_EC_Null_Filter_Builder
+class TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_Builder
 {
   // = TITLE
   //   A simple implementation of the filter builder.

@@ -71,6 +71,13 @@ public:
   virtual ~TAO_EC_ConsumerAdmin (void);
   // destructor...
 
+  typedef ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*> SupplierSet;
+  typedef ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*> SupplierSetIterator;
+
+  SupplierSetIterator begin (void);
+  SupplierSetIterator end (void);
+  // Iterators over the set of ProxyPushSuppliers
+
   void set_default_POA (PortableServer::POA_ptr poa);
   // Set this servant's default POA
 
@@ -102,8 +109,6 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
-  typedef ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*> SupplierSet;
-  typedef ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*> SupplierSetIterator;
   SupplierSet all_suppliers_;
 };
 
