@@ -35,3 +35,10 @@ ifeq ($(templates),explicit)
   endif
   CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 endif
+
+# The correct flags to pass to the linker for ELF dynamic shared library
+# versioning
+#
+ifneq ($(SONAME),)
+  SOFLAGS += -Wl,-soname -Wl,$(SONAME)
+endif

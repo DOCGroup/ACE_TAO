@@ -91,7 +91,7 @@ PIC     = -KPIC
 AR      = ar
 ARFLAGS = rsuv
 RANLIB  = @true
-SOFLAGS = $(CPPFLAGS) -shared
+SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true

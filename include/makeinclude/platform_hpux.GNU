@@ -19,10 +19,12 @@ ARFLAGS         = ruv
 RANLIB          = echo
 LDFLAGS         = -L$(ACE_ROOT)/ace -Wl,+s
 LIBS            += -lxti
-SOFLAGS         = -b
+SOFLAGS         += -b
 SOEXT           = sl
 SOBUILD     = @echo ""; \
   echo "$(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<"; \
   $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
   echo "$(SOLINK.cc) -o $@ $(VSHDIR)$*.o"; \
   $(SOLINK.cc) -o $@ $(VSHDIR)$*.o
+SONAME		=
+SOVERSION	=

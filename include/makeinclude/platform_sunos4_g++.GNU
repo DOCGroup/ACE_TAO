@@ -24,7 +24,7 @@ PIC	= -fpic
 AR	= ar
 ARFLAGS	= ruv
 RANLIB	= ranlib
-SOFLAGS	= -assert pure-text
+SOFLAGS	+= -assert pure-text
 # SOBUILD - compile into .so directly
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<

@@ -41,7 +41,7 @@ LIBS            += -qltli_r -ltli -qlrt_r -lrt -qlcxxstd_r -lcxxstd -qlcxx_r \
 ARFLAGS         = cruv
 RANLIB          = /usr/bin/true
 #### SOFLAGS         = -shared
-SOFLAGS         = -L/usr/lib/cmplrs/cxx -rpath /usr/lib/cmplrs/cxx \
+SOFLAGS         += -L/usr/lib/cmplrs/cxx -rpath /usr/lib/cmplrs/cxx \
                   -L$(ACE_ROOT)/ace -L./ -g2 -O0 -shared
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@

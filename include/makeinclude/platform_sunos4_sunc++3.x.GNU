@@ -12,12 +12,12 @@ CCFLAGS		+= $(CFLAGS)
 DCFLAGS		+= -g
 DLD		= /bin/ld
 LD		= $(CXX)
-LIBS		+= 
+LIBS		+=
 PIC		= -pic
 AR		= ar
 ARFLAGS		= ruv
 RANLIB		= ranlib
-SOFLAGS		= -assert pure-text 
+SOFLAGS		+= -assert pure-text
 SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
 		  $(RM) -rf $(VSHDIR)pt$*; mkdir $(VSHDIR)pt$*; \
 		  YYZ="`$(CXX) $(CCFLAGS) $(CPPFLAGS) \

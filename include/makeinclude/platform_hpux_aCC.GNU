@@ -110,7 +110,7 @@ AR		= $(COMPILE.cc) +inst_close $^; /bin/ar
 ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -Wl,+s -z
-SOFLAGS		= -b
+SOFLAGS		+= -b
 
 ifeq ($(distrib),1)
 
@@ -128,6 +128,8 @@ endif
 endif
 
 SOEXT		= sl
+SONAME		=
+SOVERSION	=
 
 ifeq ($(buildbits),32)
 CCFLAGS		+= +DA1.1 +DS1.1

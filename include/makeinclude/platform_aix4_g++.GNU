@@ -64,7 +64,8 @@ SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
 LIBS           += -ltli_r -ldl
 ARFLAGS         = cruv
 RANLIB          = ranlib
-
+SONAME		=
+SOVERSION	=
 # On AIX, shared libraries are not generally left in .so form to link against.
 # To do so requires the run-time linker and that is an unnecessary evil.
 # So build the .so as usual, but then put in an archive library to link

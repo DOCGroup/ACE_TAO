@@ -21,7 +21,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 CC		= cc
 CXX		= CC
 DLD		= $(CXX)
-LD		= $(CXX) 
+LD		= $(CXX)
 
 # Basic flags
 
@@ -77,7 +77,7 @@ PIC		= -KPIC
 AR		= ar
 ARFLAGS		= r
 RANLIB		= echo
-SOFLAGS		= -shared $(CCFLAGS) $(CPPFLAGS) -all -multigot
+SOFLAGS		+= -shared $(CCFLAGS) $(CPPFLAGS) -all -multigot
 SOBUILD		= $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
 		  /bin/ln $(VSHDIR)$*.o $@
 

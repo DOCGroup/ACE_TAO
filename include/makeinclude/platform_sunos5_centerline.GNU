@@ -17,6 +17,6 @@ PIC		= -PIC
 #ARFLAGS	= -xar -o
 ARFLAGS		= ruv
 RANLIB		= echo
-SOFLAGS		= -G $(CPPFLAGS) $(PTDIRS)
+SOFLAGS		+= -G $(CPPFLAGS) $(PTDIRS)
 SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
 		  $(SOLINK.cc) $(PIC) -o $@ $(LDFLAGS) $(VSHDIR)$*.o

@@ -173,12 +173,13 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
-	@if test $(shell pwd) != $(@D) -o -n "$(ACE_LDSO_Version_Number)" ; then \
+	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F) -> $(@D)" ; \
-			$(RM) $(@); $(LN_S) $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
+			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
 	fi
 ifdef MVSLIB
@@ -204,7 +205,7 @@ clean.local:
 	-$(RM) -r SunWS_cache ir.out core.*
 
 realclean.local: clean.local
-	-$(RM) $(BIN:%=%$(EXEEXT)) $(BIN:%=%_debug$(EXEEXT)) $(BIN:%=%_profile$(EXEEXT)) $(BIN:%=%_optimize$(EXEEXT)) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%.a) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2:%=%$(EXEEXT)) $(BIN2:%=%_debug$(EXEEXT)) $(BIN2:%=%_profile$(EXEEXT)) $(BIN2:%=%_optimize$(EXEEXT)) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
+	-$(RM) $(BIN:%=%$(EXEEXT)) $(BIN:%=%_debug$(EXEEXT)) $(BIN:%=%_profile$(EXEEXT)) $(BIN:%=%_optimize$(EXEEXT)) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%$(SOVERSION)) $(SHLIB:%.so=%.a) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2:%=%$(EXEEXT)) $(BIN2:%=%_debug$(EXEEXT)) $(BIN2:%=%_profile$(EXEEXT)) $(BIN2:%=%_optimize$(EXEEXT)) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
 
 #----------------------------------------------------------------------------
 #       Dependency generation target

@@ -53,7 +53,7 @@ PIC             = -fpic
 AR              = ar
 ARFLAGS         = rsuv
 RANLIB          = @true
-SOFLAGS         = -G $(CPPFLAGS)
+SOFLAGS         += -G $(CPPFLAGS)
 # SOBUILD - compile into .so directly
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true

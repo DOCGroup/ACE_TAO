@@ -36,6 +36,6 @@ PIC             =
 AR              = $(CC)
 ARFLAGS         = $(KCCOPTS) -o
 RANLIB          = @true
-SOFLAGS         = $(CPPFLAGS) $(KCCOPTS) -L$(ACE_ROOT)/ace $(ACELIB)
+SOFLAGS         += $(CPPFLAGS) $(KCCOPTS) -L$(ACE_ROOT)/ace $(ACELIB)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true

@@ -29,6 +29,6 @@ PIC     = -fPIC
 AR      = i386-nto-ar
 ARFLAGS = ruv
 RANLIB  = i386-nto-ranlib
-SOFLAGS = -G $(CPPFLAGS) -shared
+SOFLAGS += -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true

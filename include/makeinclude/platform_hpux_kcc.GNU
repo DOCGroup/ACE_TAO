@@ -119,4 +119,5 @@ else
   endif
 endif
 
-
+SONAME		=
+SOVERSION	=
