@@ -3,8 +3,8 @@
 
 // Thread_Manager.i
 
-// Unique thread id.  
-ACE_INLINE ACE_thread_t 
+// Unique thread id.
+ACE_INLINE ACE_thread_t
 ACE_Thread_Descriptor::self (void)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::self");
@@ -17,19 +17,19 @@ ACE_Thread_Descriptor::task (void)
   ACE_TRACE ("ACE_Thread_Descriptor::task");
   return this->task_;
 }
-  
+
 // Unique kernel-level thread handle.
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Thread_Descriptor::self (ACE_hthread_t &handle)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::self");
   handle = this->thr_handle_;
-}  
+}
 
 // Group ID.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Thread_Descriptor::grp_id (void)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::grp_id");
@@ -37,7 +37,7 @@ ACE_Thread_Descriptor::grp_id (void)
 }
 
 // Current state of the thread.
-ACE_INLINE ACE_Thread_State 
+ACE_INLINE ACE_Thread_State
 ACE_Thread_Descriptor::state (void)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::state");
@@ -110,4 +110,16 @@ ACE_Thread_Manager::open (size_t)
 {
   // Currently no-op.
   return 0;
+}
+
+ACE_INLINE void
+ACE_Thread_Manager::wait_on_exit (int do_wait)
+{
+  this->automatic_wait_ = do_wait;
+}
+
+ACE_INLINE int
+ACE_Thread_Manager::wait_on_exit (void)
+{
+  return this->automatic_wait_;
 }

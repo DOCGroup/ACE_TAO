@@ -177,7 +177,8 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 // Initialize the synchronization variables.
 
 ACE_Thread_Manager::ACE_Thread_Manager (size_t)
-  : grp_id_ (1)
+  : grp_id_ (1),
+    automatic_wait_ (1)
 #if defined (ACE_HAS_THREADS)
     , zero_cond_ (lock_)
 #endif /* ACE_HAS_THREADS */
@@ -229,10 +230,14 @@ ACE_Thread_Manager::close_singleton (void)
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
                      *ACE_Static_Object_Lock::instance ()));
 
+#if defined (ACE_WIN32)
+  this->wait_on_exit (0);
+#endif /* ACE_WIN32 */
+
   if (ACE_Thread_Manager::delete_thr_mgr_)
     {
       // First, we clean up the thread descriptor list.
-      ACE_Thread_Manager::thr_mgr_->close (1);
+      ACE_Thread_Manager::thr_mgr_->close ();
       delete ACE_Thread_Manager::thr_mgr_;
       ACE_Thread_Manager::thr_mgr_ = 0;
       ACE_Thread_Manager::delete_thr_mgr_ = 0;
@@ -242,19 +247,27 @@ ACE_Thread_Manager::close_singleton (void)
 // Close up and release all resources.
 
 int
-ACE_Thread_Manager::close (int automatic_wait)
+ACE_Thread_Manager::close ()
 {
   ACE_TRACE ("ACE_Thread_Manager::close");
 
   // Clean up the thread descriptor list.
-  if (automatic_wait)
+  if (this->automatic_wait_)
     this->wait (0, 1);
   else
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-
-      while (this->thr_list_.is_empty () == 0)
-        delete this->thr_list_.delete_head ();
+      ACE_Thread_Descriptor *td;
+      while ((td = this->thr_list_.delete_head ()) != 0)
+        {
+#if defined (ACE_WIN32)
+          // We need to let go handles if we want to let the threads
+          // run wild.
+          // @@ Do we need to close down AIX thread handles too?
+          ::CloseHandle (td->thr_handle_);
+#endif /* ACE_WIN32 */
+          delete td;
+        }
     }
 
   return 0;
@@ -763,11 +776,18 @@ ACE_Thread_Manager::run_thread_exit_hooks (int i)
 // Remove a thread from the pool.  Must be called with locks held.
 
 void
-ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td)
+ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
+                                int close_handler)
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
   this->thr_list_.remove (td);
+#if defined (ACE_WIN32)
+  if (close_handler != 0)
+    ::CloseHandle (td->thr_handle_);
+#else
+  ACE_UNUSED_ARG (close_handler);
+#endif /* ACE_WIN32 */
   delete td;
 #if defined (ACE_HAS_THREADS)
   // Tell all waiters when there are no more threads left in the pool.
@@ -867,7 +887,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
   while (! this->thr_to_be_removed_.is_empty ()) { \
     ACE_Thread_Descriptor *td; \
     this->thr_to_be_removed_.dequeue_head (td); \
-    this->remove_thr (td); \
+    this->remove_thr (td, 1); \
   } \
   errno = error; \
   return result
@@ -914,7 +934,7 @@ ACE_Thread_Manager::kill (ACE_thread_t t_id, int signum)
   while (! this->thr_to_be_removed_.is_empty ()) {
     ACE_Thread_Descriptor *td;
     this->thr_to_be_removed_.dequeue_head (td);
-    this->remove_thr (td);
+    this->remove_thr (td, 1);
   }
   errno = error;
   return result;
@@ -1028,7 +1048,7 @@ ACE_Thread_Manager::apply_grp (int grp_id,
       int error = errno;
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-        this->remove_thr (td);
+        this->remove_thr (td, 1);
       errno = error;
     }
 
@@ -1097,7 +1117,7 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
       int error = errno;
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-        this->remove_thr (td);
+        this->remove_thr (td, 1);
       errno = error;
     }
 
@@ -1246,7 +1266,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 #endif /* ! VXWORKS */
 
         // Remove thread descriptor from the table.
-        this->remove_thr (td);
+        this->remove_thr (td, 0);
       }
     // Release the guard.
   }
@@ -1294,7 +1314,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 	  {
 	    ACE_Thread_Descriptor *td;
 	    while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-	      this->remove_thr (td);
+	      this->remove_thr (td, 0);
 	  }
       }
 
@@ -1347,7 +1367,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
       int error = errno;
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-        this->remove_thr (td);
+        this->remove_thr (td, 1);
       errno = error;
     }
 
