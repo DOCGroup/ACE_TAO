@@ -3585,7 +3585,8 @@ ServantSourceEmitter::pre (TranslationUnit&)
   os << "#include \"" << file_name << "\"" << endl
      << "#include \"Cookies.h\"" << endl
      << "#include \"ciao/Servant_Activator.h\"" << endl
-     << "#include \"ciao/Port_Activator_T.h\"" << endl << endl;
+     << "#include \"ciao/Port_Activator_T.h\"" << endl
+     << "#include \"ace/OS_NS_string.h\"" << endl << endl;
 }
 
 void
