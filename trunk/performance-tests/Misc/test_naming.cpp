@@ -34,13 +34,13 @@ bind (ACE_Naming_Context *ns_context, int result)
     {
       if (i % 50 == 0)
 	ACE_DEBUG ((LM_DEBUG, "."));
-      sprintf (name, "%s%d", "name", i);
+      ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
       
-      sprintf (value, "%s%d", "value", i);
+      ACE_OS::sprintf (value, "%s%d", "value", i);
       ACE_WString w_value (value);
       
-      sprintf (type, "%s%d", "type", i);
+      ACE_OS::sprintf (type, "%s%d", "type", i);
       ACE_ASSERT (ns_context->bind (w_name, w_value, type) == result);
     }
   ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -52,11 +52,11 @@ rebind (ACE_Naming_Context *ns_context, int result)
   // do the rebinds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", i);
+      ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
-      sprintf (value, "%s%d", "value", -i);
+      ACE_OS::sprintf (value, "%s%d", "value", -i);
       ACE_WString w_value (value);
-      sprintf (type, "%s%d", "type", -i);
+      ACE_OS::sprintf (type, "%s%d", "type", -i);
       ACE_ASSERT (ns_context->rebind (w_name, w_value, type) == result);
     }
 }
@@ -67,7 +67,7 @@ unbind (ACE_Naming_Context *ns_context, int result)
   // do the unbinds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", i);
+      ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
       ACE_ASSERT (ns_context->unbind (w_name) == result);
     }
@@ -82,7 +82,7 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
   // do the finds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", i);
+      ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
       
       ACE_WString w_value;
@@ -90,13 +90,13 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
 
       if (sign == 1)
 	{
-	  sprintf (temp_val, "%s%d", "value", i);
-	  sprintf (temp_type, "%s%d", "type", i);
+	  ACE_OS::sprintf (temp_val, "%s%d", "value", i);
+	  ACE_OS::sprintf (temp_type, "%s%d", "type", i);
 	}	  
       else
 	{
-	  sprintf (temp_val, "%s%d", "value", -i);
-	  sprintf (temp_type, "%s%d", "type", -i);
+	  ACE_OS::sprintf (temp_val, "%s%d", "value", -i);
+	  ACE_OS::sprintf (temp_type, "%s%d", "type", -i);
 	}
 
       ACE_WString val (temp_val);
