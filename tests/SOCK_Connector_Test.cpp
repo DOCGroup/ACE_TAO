@@ -76,7 +76,7 @@ find_another_host (ACE_TCHAR other_host[])
       h = ACE_OS::gethostbyname (un.nodename);
 
       // Use me if can't find another
-      ACE_OS::strcpy (other_host, ASYS_WIDE_STRING (h->h_name));
+      ACE_OS::strcpy (other_host, ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
 
       // @@ We really need to add wrappers for these hostent methods.
 

@@ -111,7 +111,7 @@ int
 ACE_CLASSIX_Port::addr_to_string (ACE_TCHAR s[], size_t) const
 {
   ACE_OS::sprintf (s, ACE_TEXT ("%d:%d"),
-                   ASYS_WIDE_STRING (::agetId()),
+                   ACE_TEXT_CHAR_TO_TCHAR (::agetId()),
                    this->get_port_number ());
 }
 

@@ -1,3 +1,12 @@
+Sun Apr 23 14:27:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/CLASSIX/CLASSIX_Port.cpp:
+        * tests/IOStream_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+
+          Found some old ASYS macros still hanging around in code that wasn't
+          enabled on NT.
+
 Sat Apr 22 22:01:15 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Local_Name_Space_T.cpp:
