@@ -44,7 +44,7 @@ Mon Apr 28 18:59:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 28 12:24:39 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Strategies\advanced_resource.cpp:
+	* tao/Strategies/advanced_resource.cpp:
 
 	  load_default_protocols(): Reset
 	  <TAO_Default_Resource_Factory::protocol_factories_> after
@@ -53,17 +53,17 @@ Mon Apr 28 12:24:39 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  ~TAO_Advanced_Resource_Factory(): delete all protocols in
 	  protocol factory to avoid memory leak.
 
-	* tao\RTPortableServer\RT_POA.cpp (server_protocol):
+	* tao/RTPortableServer/RT_POA.cpp (server_protocol):
 
 	  Fixed code formatting.
 
-	* tao\RTPortableServer\RT_Servant_Dispatcher.cpp:
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
 
 	  Avoid a memory leak in pre_invoke_remote_request() by assigning
 	  the result from POA::server_protocol() to a CORBA::Policy_var
 	  instead of a CORBA::Policy_ptr.
 
-	* tao\orbconf.h:
+	* tao/orbconf.h:
 
 	  Only set TAO_DEFAULT_ROOTPOA_NAME if not already set by the
 	  user.
