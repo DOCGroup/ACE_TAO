@@ -219,7 +219,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
       return *this;
     }
   ACE_ENDTRY;
-  return *this;
+  ACE_CHECK_RETURN (*this);
 }
 
 // Destructor for an "Any" deep-frees memory if needed.
@@ -413,6 +413,7 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
       // do nothing...
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 void
@@ -438,6 +439,7 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
       // do nothing...
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // Insertion of CORBA object - copying.
@@ -477,6 +479,7 @@ CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
       // do nothing...
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // Insertion of from_string.
@@ -539,6 +542,7 @@ CORBA_Any::operator<<= (from_string s)
       // do nothing...
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // Extraction: these are safe and hence we have to check that the
@@ -580,7 +584,7 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -618,7 +622,7 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -656,7 +660,7 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -694,7 +698,7 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -732,7 +736,7 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -770,7 +774,7 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -808,7 +812,7 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -846,7 +850,7 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -890,7 +894,7 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -946,7 +950,7 @@ CORBA_Any::operator>>= (char *&s) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -990,7 +994,7 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 // = extraction into the special types
@@ -1030,7 +1034,7 @@ CORBA_Any::operator>>= (to_boolean b) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -1068,7 +1072,7 @@ CORBA_Any::operator>>= (to_octet o) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -1106,7 +1110,7 @@ CORBA_Any::operator>>= (to_char c) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -1144,7 +1148,7 @@ CORBA_Any::operator>>= (to_wchar wc) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -1200,7 +1204,7 @@ CORBA_Any::operator>>= (to_string s) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 CORBA::Boolean
@@ -1257,7 +1261,7 @@ CORBA_Any::operator>>= (to_object obj) const
       return 0;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_CHECK_RETURN (0);
 }
 
 // this is a copying version for unbounded strings Not inline, to
