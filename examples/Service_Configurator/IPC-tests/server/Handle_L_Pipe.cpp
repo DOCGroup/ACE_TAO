@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Handle_L_Pipe.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(server, Handle_L_Pipe, "$Id$")
 
