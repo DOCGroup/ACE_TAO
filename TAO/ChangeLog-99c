@@ -1,3 +1,9 @@
+Sun Mar 21 22:33:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): The second call to sock_rcvbuf_size()
+ 	  should be sock_sndbuf_size().  Thanks to Russ Noseworthy for
+ 	  reporting this.
+
 Sun Mar 21 21:23:44 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.15 released.
