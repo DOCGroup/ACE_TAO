@@ -207,7 +207,7 @@ public:
   */
   struct Ack_Join
   {
-    ACE_INT32 next_sequence_number;
+    ACE_UINT32 next_sequence_number;
 
     //! Pass the proxy source between layers
     ACE_RMCast_Proxy *source;

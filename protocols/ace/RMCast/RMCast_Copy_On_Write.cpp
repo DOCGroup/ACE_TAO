@@ -39,11 +39,8 @@ ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt (void)
 template<class KEY, class ITEM, class COLLECTION, class ITERATOR>
 ACE_RMCast_Copy_On_Write<KEY,ITEM,COLLECTION,ITERATOR>::
     ACE_RMCast_Copy_On_Write (void)
-  : pending_writes_ (0)
-  , writing_ (0)
-  , cond_ (mutex_)
+      : ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR> ()
 {
-  ACE_NEW (this->collection_, Collection);
 }
 
 template<class KEY, class ITEM, class COLLECTION, class ITERATOR>
@@ -69,8 +66,10 @@ ACE_RMCast_Copy_On_Write<KEY,ITEM,COLLECTION,ITERATOR>::
   for (ITERATOR i = ace_mon.collection->collection.begin (); i != end; ++i)
     {
       int r = worker->work ((*i).key (), (*i).item ());
-      if (r != 0)
-        return r;
+      if (r == 1)
+        return 0; // Abort loop, but no error
+      if (r == -1)
+        return -1;
     }
   return 0;
 }
@@ -79,11 +78,7 @@ template<class KEY, class ITEM, class C, class I> int
 ACE_RMCast_Copy_On_Write<KEY,ITEM,C,I>::bind (KEY const & k,
                                               ITEM const & i)
 {
-  Write_Guard ace_mon (this->mutex_,
-                       this->cond_,
-                       this->pending_writes_,
-                       this->writing_,
-                       this->collection_);
+  Write_Guard ace_mon (*this);
 
   return this->bind_i (ace_mon, k, i);
 }
@@ -91,19 +86,15 @@ ACE_RMCast_Copy_On_Write<KEY,ITEM,C,I>::bind (KEY const & k,
 template<class KEY, class ITEM, class C, class I> int
 ACE_RMCast_Copy_On_Write<KEY,ITEM,C,I>::unbind (KEY const & k)
 {
-  Write_Guard ace_mon (this->mutex_,
-                       this->cond_,
-                       this->pending_writes_,
-                       this->writing_,
-                       this->collection_);
+  Write_Guard ace_mon (*this);
 
   return this->unbind_i (ace_mon, k);
 }
 
 template<class KEY, class ITEM, class C, class I> int
 ACE_RMCast_Copy_On_Write<KEY,ITEM,C,I>::bind_i (Write_Guard &ace_mon,
-                                                  KEY const & k,
-                                                  ITEM const & i)
+                                                KEY const & k,
+                                                ITEM const & i)
 {
   return ace_mon.copy->collection.bind (k, i);
 }
@@ -118,18 +109,25 @@ ACE_RMCast_Copy_On_Write<KEY,ITEM,C,I>::unbind_i (Write_Guard &ace_mon,
 // ****************************************************************
 
 template<class COLLECTION, class ITERATOR>
+ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR>::ACE_RMCast_Copy_On_Write_Container (void)
+  : pending_writes_ (0)
+  , writing_ (0)
+  , cond_ (mutex_)
+{
+  ACE_NEW (this->collection_, Collection);
+}
+
+// ****************************************************************
+
+template<class COLLECTION, class ITERATOR>
 ACE_RMCast_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR>::
-  ACE_RMCast_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX &m,
-                                        ACE_SYNCH_CONDITION &c,
-                                        int &p,
-                                        int &w,
-                                        Collection*& cr)
+  ACE_RMCast_Copy_On_Write_Write_Guard (ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR> &container)
   : copy (0)
-  , mutex (m)
-  , cond (c)
-  , pending_writes (p)
-  , writing_flag (w)
-  , collection (cr)
+  , mutex (container.mutex_)
+  , cond (container.cond_)
+  , pending_writes (container.pending_writes_)
+  , writing_flag (container.writing_)
+  , collection (container.collection_)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex);
@@ -168,6 +166,8 @@ ACE_RMCast_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR>::
     this->cond.signal ();
   }
   // Delete outside the mutex, because it may take a long time.
+  // @@ Is this right?  What happens if several readers are still
+  // using the old copy?
   tmp->_decr_refcnt ();
 }
 

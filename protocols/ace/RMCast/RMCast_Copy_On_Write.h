@@ -57,6 +57,47 @@ private:
 
 // ****************************************************************
 
+template<class COLLECTION, class ITERATOR>
+class ACE_RMCast_Copy_On_Write_Write_Guard;
+
+//! Base class for the Copy_On_Write collection, used to simplify the
+//! declaration of the Write_Guard
+template<class COLLECTION, class ITERATOR>
+class ACE_RMCast_Copy_On_Write_Container
+{
+public:
+  //! Constructor
+  ACE_RMCast_Copy_On_Write_Container (void);
+
+  //! Let the Write_Guard access the internal fields.
+  friend ACE_RMCast_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR>;
+
+  //! A shorter name for the actual collection type
+  typedef ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+
+protected:
+  //! Number of pending writes
+  int pending_writes_;
+
+  //! If non-zero then a thread is changing the collection.
+  /*!
+   * Many threads can use the collection simulatenously, but only one
+   * change it.
+   */
+  int writing_;
+
+  //! A mutex to serialize access to the collection pointer.
+  ACE_SYNCH_MUTEX mutex_;
+
+  //! A condition variable to wait to synchronize multiple writers.
+  ACE_SYNCH_CONDITION cond_;
+
+  //! The collection, with reference counting added
+  Collection *collection_;
+};
+
+// ****************************************************************
+
 //! Implement the write guard for a reference counted collecion
 /*!
  * This helper class atomically increments the reference count of a
@@ -70,11 +111,7 @@ public:
   typedef ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
 
   //! Constructor
-  ACE_RMCast_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX &mutex,
-                                        ACE_SYNCH_CONDITION &cond,
-                                        int &pending_writes,
-                                        int &writing_flag,
-                                        Collection*& collection);
+  ACE_RMCast_Copy_On_Write_Write_Guard (ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR> &container);
 
   //! Destructor
   ~ACE_RMCast_Copy_On_Write_Write_Guard (void);
@@ -100,11 +137,20 @@ private:
   Collection *&collection;
 };
 
+
 // ****************************************************************
 
 //! Implement a copy on write wrapper for a map-like collection
+/*
+ *
+ * <B>WARNING: </B>  This class may be moved away in the future, I'm
+ * investigating how it could be converted into a reusable component
+ * in ACE.   I won't make promises on when will that happen, but I
+ * won't promise that it will stay here either.
+ *
+ */
 template<class KEY, class ITEM, class COLLECTION, class ITERATOR>
-class ACE_RMCast_Copy_On_Write
+class ACE_RMCast_Copy_On_Write : public ACE_RMCast_Copy_On_Write_Container<COLLECTION,ITERATOR>
 {
 public:
   //! The Read_Guard trait
@@ -136,25 +182,6 @@ public:
 
   //! Unbind assuming the Write_Guard is held
   int unbind_i (Write_Guard &guard, KEY const & key);
-
-  //! Number of pending writes
-  int pending_writes_;
-
-  //! If non-zero then a thread is changing the collection.
-  /*!
-   * Many threads can use the collection simulatenously, but only one
-   * change it.
-   */
-  int writing_;
-
-  //! A mutex to serialize access to the collection pointer.
-  ACE_SYNCH_MUTEX mutex_;
-
-  //! A condition variable to wait to synchronize multiple writers.
-  ACE_SYNCH_CONDITION cond_;
-
-  //! The collection, with reference counting added
-  Collection *collection_;
 };
 
 #if defined (__ACE_INLINE__)
