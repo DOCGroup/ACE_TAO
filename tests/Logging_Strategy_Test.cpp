@@ -449,7 +449,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   // though, and you may activate the logging strategy as described in
   // the non-DLL section below under DLL environments as well.
 
-#if !defined (ACE_AS_STATIC_LIBS) && \
+#if !defined (ACE_HAS_STATIC_LIBS) && \
   (defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
    defined (__hpux))
   // Platform support DLLs, and not configured to link statically
@@ -485,7 +485,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
        ((LM_ERROR,
          "Error initializing the ACE_Logging_Strategy.\n"), 
                        1);
-#endif /* !ACE_AS_STATIC_LIBS && (ACE_WIN32 || 
+#endif /* !ACE_HAS_STATIC_LIBS && (ACE_WIN32 || 
           ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux) */
 
   // launch a new Thread

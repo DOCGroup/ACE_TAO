@@ -7,92 +7,116 @@
 //
 // = DESCRIPTION
 //    This program tests both the ACE_Framework_Compondent and ACE_Repository.
+//    Since Framework Components are singletons that can live in dlls loaded
+//    via the Service Configurator framework, this test uses that framework
+//    to load services from a dll that has a singleton based on ACE_DLL_Singleton.
+//    When the dll is finally ready to be unloaded, the singleton will be 
+//    automatically cleaned up just-in-time.
 //
 // = AUTHOR
 //    Don Hinton <dhinton@ieee.org>
 //
 // ============================================================================
 
-#include "ace/Framework_Component.h"
-
-#include "ace/OS.h"
-#include "ace/Get_Opt.h"
+#include "ace/Service_Config.h"
 #include "ace/ARGV.h"
-#include "ace/Object_Manager.h"
-#include "ace/SString.h"
 #include "tests/test_config.h"
-#include "tests/Framework_Component_Test.h"
+#include "ace/DLL_Manager.h"
 
 ACE_RCSID(tests, Framework_Component_Test, "$Id$")
 
+// Define a few macros--because they're so much fun, and keep the 
+// code below a little cleaner...
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-My_Singleton *My_Singleton::instance_ = 0;
+# define ADD_SERVICE(X) ACE_TEXT ( \
+    "dynamic Server_" #X " Service_Object * " \
+    "Framework_Component_DLL:_make_Server_" #X "() ''")
 
-void
-My_Singleton::close_singleton (void)
-{
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("My_Singleton::close_singleton\n")));
-  delete My_Singleton::instance_;
-  My_Singleton::instance_ = 0;
-}
+# define REMOVE_SERVICE(X) ACE_TEXT ( \
+    "remove Server_" #X)
 
-My_Singleton *
-My_Singleton::instance (void)
-{
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("My_Singleton::instance\n")));
+#else /* ACE_USES_CLASSIC_SVC_CONF */ 
 
-  if (My_Singleton::instance_ == 0)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-      if (My_Singleton::instance_ == 0)
-        {
-          ACE_NEW_RETURN (My_Singleton::instance_,
-                          My_Singleton (),
-                          0);
-          ACE_REGISTER_FRAMEWORK_COMPONENT(My_Singleton, My_Singleton::instance_);
-        }
-    }
-  return My_Singleton::instance_;
-}
+# define ADD_SERVICE(X) ACE_TEXT ( \
+    "<?xml version='1.0'?> <dynamic id='Server_" #X "' " \
+    "type='service_object'> <initializer init='_make_Server_" #X "' " \
+    "path='Framework_Component_DLL' params=''/> </dynamic>")
 
+# define REMOVE_SERVICE(X) ACE_TEXT ( \
+    "<?xml version='1.0'?> <remove id='Server_" #X "'> </remove>")
+
+#endif /* ACE_USES_CLASSIC_SVC_CONF */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *argv[])
+run_test (u_long unload_mask = 0)
 {
-  ACE_START_TEST (ACE_LIB_TEXT("Framework_Component_Test"));
-  ACE_UNUSED_ARG (argv);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running test with mask = %s|%s\n"),
+              ACE_BIT_ENABLED(unload_mask, ACE_DLL_Manager_Ex::PER_DLL) == 0
+              ? ACE_TEXT ("PER_PROCESS") : ACE_TEXT ("PER_DLL"),
+              ACE_BIT_ENABLED(unload_mask, ACE_DLL_Manager_Ex::LAZY) == 0
+              ? ACE_TEXT ("EAGER") : ACE_TEXT ("LAZY")));
 
-  // Create an instance of My_Singleton that will be managed
-  // by the ACE_Framework_Repository and keep a pointer to
-  // instance.
-  My_Singleton *first = My_Singleton::instance ();
+  ACE_DLL_Manager::instance ()->unload_strategy (unload_mask);
 
-  // Now, close down the repository.
-  ACE_Framework_Repository::close_singleton ();
+  // Now, let the ACE Service Configurator framework load our service from a
+  // dll, which contains a singleton.
+  ACE_ARGV args;
+  args.add (ACE_TEXT ("Framework_Component_Test"));
+  args.add (ACE_TEXT ("-n"));
+  args.add (ACE_TEXT ("-d"));
 
-  ACE_Framework_Repository::instance ();
+  // Initialize Service Config.
+  ACE_Service_Config::open (args.argc (), args.argv ());
 
-  // Now get another pointer to My_Singleton and make sure
-  // that it's different.  We could also test other pointers
-  // like ACE_Reactor, ACE_Proactor, or the repository itself
-  // if we wanted.
-  My_Singleton *second = My_Singleton::instance ();
+  // Now add server 1.
+  ACE_Service_Config::process_directive (ADD_SERVICE(1));
 
-  if (first == second)
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Pointer are equal, but shouldn't be.\n")));
+  // And unload the first one, could unload the dll.
+  ACE_Service_Config::process_directive (REMOVE_SERVICE(1));
 
-  // Close down the repository again since we are writing debug messages.
-  // And want all of them to go to the log.
-  ACE_Framework_Repository::close_singleton ();
-  
-  ACE_END_TEST;
+  // Now readd server 1.
+  ACE_Service_Config::process_directive (ADD_SERVICE(1));
+
+  // And load another service from the same library.
+  ACE_Service_Config::process_directive (ADD_SERVICE(2));
+
+  // Unload the first one again, should *not* unload the dll this time.
+  ACE_Service_Config::process_directive (REMOVE_SERVICE(1));  
+
+  // And unload the second service.  Since the ACE_DLL_Handle will no longer 
+  // have any references, the ACE_DLL_Manager will apply it's current unloading
+  // strategy and either call ACE_OS::dlclose() immediately, schedule a timeout 
+  // the the reactor to call dlclose() some time in the future, or keep the 
+  // dll loaded until program termination.
+  ACE_Service_Config::process_directive (REMOVE_SERVICE(2));  
+
+  // Force unloading so we'll be ready for the next test.
+  ACE_DLL_Manager::instance ()->unload_strategy (ACE_DLL_Manager_Ex::DEFAULT);
+
+  ACE_Service_Config::close ();
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Framework_Component_T<My_Singleton>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Framework_Component_T<My_Singleton>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT("Framework_Component_Test"));
+
+  int retval = 0;
+
+  // Use defaults, i.e., per process, eager unloading.
+  retval += run_test ();
+
+  // Per process, lazy unloading
+  retval += run_test (ACE_DLL_Manager_Ex::LAZY);
+
+  // Per dll, eager unloading
+  retval += run_test (ACE_DLL_Manager_Ex::PER_DLL);
+
+  // Per dll, lazy unloading.
+  retval += run_test (ACE_DLL_Manager_Ex::PER_DLL | ACE_DLL_Manager_Ex::LAZY);
+
+  ACE_END_TEST;
+  return retval == 0 ? 0 : -1;
+}

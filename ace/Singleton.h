@@ -237,6 +237,77 @@ protected:
   static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
 };
 
+/**
+ * @class ACE_DLL_Singleton_T
+ *
+ * @brief Same as <ACE_Singleton>, except that it registers for
+ * destruction with the <ACE_Framework_Repository> instead of 
+ * with the <ACE_Object_Manager> directly.
+ *
+ * This version of <ACE_Singleton> should be used for singletons
+ * that live in a dll loaded either directly by ACE_DLL or indirectly
+ * by the ACE Service Configuration framework.  Whenever ACE_DLL is ready
+ * to actually unload the dll, ACE_DLL_Singleton based dlls associated
+ * with that dll will be destroyed first.  In fact, any singleton can
+ * safely use ACE_DLL_Singleton, even those that don't live in dlls.  In 
+ * that case, the singleton will be destroyed at normal program shutdown.
+ *
+ * The only additional requirement is that the contained class
+ * export name() and dll_name() methods.  See <ACE_DLL_Singleton_Adapter_T>
+ * below for a convenient example of how to satisfy this
+ * requirement for the dll_name().
+ *
+ * Usage is the same as for <ACE_Singleton>, but note that if you
+ * you declare a friend, the friend class must still be an
+ * *ACE_Singleton*<T, [ACE_LOCK]>, not an ACE_Unmanaged_Singleton.
+ */
+template <class TYPE, class ACE_LOCK>
+class ACE_DLL_Singleton_T
+{
+public:
+  //void cleanup (void *param = 0);
+
+  /// Global access point to the Singleton.
+  static TYPE *instance (void);
+
+  /// Explicitly delete the Singleton instance.
+  static void close (void);
+
+  static void close_singleton (void);
+
+  /// Dump the state of the object.
+  static void dump (void);
+
+  const ACE_TCHAR *dll_name (void);
+ 
+  const ACE_TCHAR *name (void);
+
+protected:
+  /// Default constructor.
+  ACE_DLL_Singleton_T (void);
+
+  /// Destructor.
+  ~ACE_DLL_Singleton_T (void);
+
+  /// Contained instance.
+  TYPE instance_;
+
+#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  /// Pointer to the Singleton instance.
+  static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *singleton_;
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+
+  /// Get pointer to the Singleton instance.
+  static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *&instance_i (void);
+};
+
+template <class TYPE>
+class ACE_DLL_Singleton_Adapter_T : public TYPE
+{
+public:
+  const ACE_TCHAR *dll_name (void);
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Singleton.i"
 #endif /* __ACE_INLINE__ */

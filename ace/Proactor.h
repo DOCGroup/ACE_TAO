@@ -175,6 +175,12 @@ public:
   /// singleton.
   static void cleanup (void *instance, void *arg);
 
+  /// Name of dll in which the singleton instance lives.
+  static const ACE_TCHAR *dll_name (void);
+
+  /// Name of component--ACE_Proactor in this case.
+  static const ACE_TCHAR *name (void);
+
   // = Proactor event loop management methods.
 
   /// Run the event loop until the <ACE_Proactor::handle_events> method
