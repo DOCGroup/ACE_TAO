@@ -1,3 +1,8 @@
+Thu Jul 25 08:09:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Nested_Upcall_Crash/scavenger.cpp: Fixed a unreachable
+	  statement warning on TRU 64.
+
 Thu Jul 25 08:01:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Stack_Recursion/Server_Task.cpp: Fixed a compile error in
