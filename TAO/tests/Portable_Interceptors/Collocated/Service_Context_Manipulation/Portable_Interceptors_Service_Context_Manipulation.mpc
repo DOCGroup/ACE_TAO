@@ -1,5 +1,7 @@
 project(*Collocated): taoserver, taoclient {
+  exename = collocated
   requires += interceptors
+  libpaths += ../../../../../ace,../../../../tao,../../../../tao/PortableServer,../../../../tao/Valuetype,../../../../tao/ObjRefTemplate,../../../../tao/IORInterceptor
   Source_Files {
     testC.cpp
     testS.cpp
