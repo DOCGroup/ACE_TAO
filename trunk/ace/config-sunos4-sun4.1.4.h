@@ -13,11 +13,6 @@
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
 
-// Maximum compensation (10 ms) for early return from timed ::select ().
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
-
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_CHARPTR_SPRINTF
@@ -94,11 +89,6 @@
 #define ACE_LACKS_U_LONGLONG_T
 
 #define ACE_LACKS_DIFFTIME
-
-// 10 millisecond fudge factor to account for Solaris timers...
-#if !defined (ACE_TIMER_SKEW)
-#define ACE_TIMER_SKEW 1000 * 10
-#endif /* ACE_TIMER_SKEW */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)

@@ -120,11 +120,6 @@
 # define ACE_LACKS_SYSV_MSQ_PROTOS
 #endif /* _POSIX_C_SOURCE < 199506L */
 
-// Maximum compensation (10 ms) for early return from timed ::select ().
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
-
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 // NOTE: ACE_HAS_64BIT_LONGS is deprecated.  Instead, use ACE_SIZEOF_LONG == 8.
 #define ACE_HAS_64BIT_LONGS

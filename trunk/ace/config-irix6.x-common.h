@@ -150,10 +150,6 @@
 
 #define ACE_HAS_GPERF
 
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
-
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_BROKEN_DGRAM_SENDV
 

@@ -13,11 +13,6 @@
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 
-// Maximum compensation (10 ms) for early return from timed ::select ().
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
-
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
@@ -152,11 +147,6 @@
 #define ACE_HAS_TLI
 
 #define ACE_NEEDS_DEV_IO_CONVERSION
-
-// 10 millisecond fudge factor to account for Solaris timers...
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 1000 * 10
-#endif /* ACE_TIMER_SKEW */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)

@@ -46,11 +46,6 @@
 // the correct value.
 #define ACE_PAGE_SIZE 4096
 
-// Maximum compensation (10 ms) for early return from timed ::select ().
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
-
 // Let the config-win32.h file do its thing
 #undef ACE_CONFIG_H
 #include "ace/config-win32.h"

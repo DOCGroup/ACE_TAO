@@ -57,7 +57,7 @@
 #    define volatile
 
 #else  // aC++ definitions
- 
+
 // Parts of TAO (at least) use __HP_aCC to detect this compiler, but the
 // macro is not set until A.03.13. If it's not set, set it - it won't be an
 // HP-advertised value, but we don't check the value/version - just whether
@@ -321,12 +321,6 @@
 // Platform lacks a typedef for timespec_t, but has struct timespec
 #define ACE_LACKS_TIMESPEC_T
 
-// Platform needs a timer skew value.  It *may* vary by processor, but this
-// one works.  You can override it in your config.h file if needed.
-// It's in units of microseconds.  This value is 10 msec.
-#if !defined (ACE_TIMER_SKEW)
-#  define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
 
 // Shared library name/path components
 #define ACE_DLL_SUFFIX  ".sl"

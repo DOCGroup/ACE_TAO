@@ -158,13 +158,6 @@
 // Platform lacks a typedef for timespec_t, but has struct timespec
 #define ACE_LACKS_TIMESPEC_T
 
-// Platform needs a timer skew value.  It *may* vary by processor, but this
-// one works.  You can override it in your config.h file if needed.
-// It's in units of microseconds.  This value is 10 msec.
-#if !defined (ACE_TIMER_SKEW)
-#  define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
-
 // Shared library name/path components
 #define ACE_DLL_SUFFIX  ".sl"
 #if defined (__LP64__)
