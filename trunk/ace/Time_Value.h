@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -246,6 +245,40 @@ private:
   
   long tv_usec_;
   // Microseconds.
+};
+
+class ACE_Export ACE_Countdown_Time
+  // = TITLE
+  //     Keeps track of the amount of elapsed time.
+  //
+  // = DESCRIPTION
+  //     This class has a side-effect on the <max_wait_time> -- every
+  //     time the <stop> method is called the <max_wait_time> is
+  //     updated.
+{
+public:
+  // = Initialization and termination methods.
+  ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
+  // Cache the <max_wait_time> and call <start>.  
+
+  ~ACE_Countdown_Time (void);
+  // Call <stop>.
+
+  int start (void);
+  // Cache the start value.
+
+  int stop (void);
+  // Compute the elapsed time.
+
+private:
+  ACE_Time_Value *max_wait_time_;
+  // Maximum time we were willing to wait.
+  
+  ACE_Time_Value start_time_;
+  // Beginning of the start time.
+
+  int stopped_;
+  // Keeps track of whether we've already been stopped.
 };
 
 #if defined (__ACE_INLINE__)

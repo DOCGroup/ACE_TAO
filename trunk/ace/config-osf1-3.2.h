@@ -100,6 +100,7 @@
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 // ACE supports POSIX Pthreads.
 #define ACE_HAS_DCETHREADS
+#define ACE_HAS_THREAD_SELF
 
 // Explicit dynamic linking permits "lazy" symbol resolution
 #define ACE_HAS_RTLD_LAZY_V

@@ -31,7 +31,7 @@ typedef ACE_Map_Reverse_Iterator <KEY, VALUE, MUTEX> REVERSE_ITERATOR;
 typedef ACE_Map_Entry <KEY, VALUE> ENTRY;
 
 int 
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Map_Manager_Test");
 

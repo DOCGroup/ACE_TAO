@@ -53,7 +53,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 // as structures...
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
-ACE_thread_key_t ACE_OS::NULL_key
+ACE_thread_key_t ACE_OS::NULL_key;
 
 ACE_OS::ACE_OS (void)
 {

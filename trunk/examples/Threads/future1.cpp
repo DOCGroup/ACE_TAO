@@ -6,7 +6,7 @@
 //    tests
 // 
 // = FILENAME
-//    Future_Test.cpp
+//    Test_Future.cpp
 //
 // = DESCRIPTION
 //    This example tests the ACE Future.
@@ -26,7 +26,6 @@
 #include "ace/Method_Object.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Auto_Ptr.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -72,6 +71,7 @@ private:
   char *name_;
   ACE_Activation_Queue activation_queue_;
   Scheduler *scheduler_;
+
 };
 
 class Method_Object_work : public ACE_Method_Object
@@ -207,8 +207,6 @@ Scheduler::put (ACE_Message_Block *, ACE_Time_Value *)
 int 
 Scheduler::svc (void)
 {
-  ACE_NEW_THREAD;
-
   for (;;) 
     {
       // Dequeue the next method object (we use an auto pointer in
@@ -238,7 +236,7 @@ double
 Scheduler::work_i (double param, 
 		   int count)
 {
-  double x = 0, y = 0;
+  double x = 0.0, y = 0.0;
   
   // @@ We should probably do something fun here, like compute the
   // Fibonacci sequence or something.
@@ -246,7 +244,7 @@ Scheduler::work_i (double param,
   for (int j = 0; j < count; j++) 
     {
       x = x + param;
-      y = y + ::sin (x);
+      y = y + double(::sin (x));
     }
 
   return y;
@@ -257,7 +255,7 @@ Scheduler::name_i (void)
 {
   char *the_name;
 
-  ACE_NEW_RETURN (the_name, char[ACE_OS::strlen (this->name_) + 1], 0);
+  the_name = new char[ACE_OS::strlen (this->name_) + 1];
   ACE_OS::strcpy (the_name, this->name_);
 
   return the_name;
@@ -304,32 +302,23 @@ static int n_iterations = 50000;
 // Total number of loops.
 static int n_loops = 100;
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
-#endif /* ACE_HAS_THREADS */
-
 int
 main (int, char *[]) 
 {
-  ACE_START_TEST ("Future_Test");
-
-#if defined (ACE_HAS_THREADS)
   Scheduler *andres, *peter, *helmut, *matias;
 
   // Create active objects..  
   // @@ Should "open" be subsumed within the constructor of
   // Scheduler()?
-  ACE_NEW_RETURN (andres, Scheduler ("andres"), -1);
+  andres = new Scheduler ("andres");
   andres->open ();
-  ACE_NEW_RETURN (peter, Scheduler ("peter"), -1);
+  peter = new Scheduler ("peter");
   peter->open ();
-  ACE_NEW_RETURN (helmut, Scheduler ("helmut"), -1);
+  helmut = new Scheduler ("helmut");
   helmut->open ();
 
   // Matias passes all asynchronous method calls on to Andres...
-  ACE_NEW_RETURN (matias, Scheduler ("matias", andres), -1);
+  matias = new Scheduler ("matias", andres);
   matias->open ();
 
   for (int i = 0; i < n_loops; i++) 
@@ -414,10 +403,18 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG,"(%t) th' that's all folks!\n"));
 
   ACE_OS::sleep (5);
-#else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */
-  ACE_END_TEST;
   return 0;
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#else
+int 
+main (int, char *[])
+{
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */

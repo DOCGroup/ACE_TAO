@@ -91,7 +91,7 @@ create_test_file (int size, int num_lines)
 }
 
 int
-main (int, char **argv)
+main (int, char *[])
 {
   ACE_START_TEST ("Mem_Map_Test");
 

@@ -45,10 +45,10 @@ parse_args (int argc, char *argv[])
     switch (c)
     {
     case 'd':
-      ::close_pipe = 0;
+      close_pipe = 0;
       break;
     case 'c':
-      ::child_process = 1;
+      child_process = 1;
       break;
     default:
       print_usage_and_die ();
@@ -65,15 +65,15 @@ open (ACE_Pipe &pipe,
   ACE_ASSERT (pipe.read_handle () != ACE_INVALID_HANDLE
 	      && pipe.write_handle () != ACE_INVALID_HANDLE);
 
-  if (::close_pipe)
+  if (close_pipe)
     pipe.close ();
 }
 
 int 
 main (int argc, char *argv[])
 {
-  ::parse_args (argc, argv);
-  if (::child_process)
+  parse_args (argc, argv);
+  if (child_process)
     {      
       ACE_APPEND_LOG ("Pipe_Test-children");      
       ACE_Pipe a, b, c, d, e;
@@ -94,7 +94,7 @@ main (int argc, char *argv[])
       char *s_argv[4];
       s_argv[0] = "Pipe_Test" ACE_PLATFORM_EXE_SUFFIX;
       s_argv[1] = "-c"; // child/slave process
-      if (::close_pipe == 0)	
+      if (close_pipe == 0)	
 	s_argv[2] = "-d";
       else
 	s_argv[2] = 0;

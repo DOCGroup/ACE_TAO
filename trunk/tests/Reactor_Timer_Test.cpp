@@ -50,7 +50,7 @@ public:
 };
 
 int
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Reactor_Timer_Test");
 

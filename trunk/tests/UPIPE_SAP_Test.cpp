@@ -152,7 +152,7 @@ acceptor (void *args)
 #endif /* ACE_HAS_THREADS */
 
 int 
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("UPIPE_SAP_Test");
 

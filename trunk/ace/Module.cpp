@@ -144,6 +144,8 @@ ACE_Module<ACE_SYNCH_2>::ACE_Module (void)
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::ACE_Module");
   this->name ("<unknown>");
   // Do nothing...
+  this->q_pair_[0] = 0;
+  this->q_pair_[1] = 0;
 }
 
 template <ACE_SYNCH_1> ACE_INLINE

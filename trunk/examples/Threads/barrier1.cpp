@@ -1,27 +1,12 @@
+// This test program illustrates how the ACE barrier synchronization
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-// 
-// = FILENAME
-//    Barrier_Test.cpp
-//
-// = DESCRIPTION
-//     This program illustrates how the ACE barrier synchronization
-//     mechanisms work. 
-//
-// = AUTHOR
-//    Prashant Jain and Doug Schmidt
-// 
-// ============================================================================
+// mechanisms work.
 
 
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -47,8 +32,8 @@ struct Tester_Args
 static void *
 tester (Tester_Args *args)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ()); // Insert thread into thread_manager
-  ACE_NEW_THREAD;
+  // Keeps track of thread exit.
+  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
 
   for (int iterations = 1; 
        iterations <= args->n_iterations_;
@@ -63,16 +48,16 @@ tester (Tester_Args *args)
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
+// Default number of threads to spawn.
+static const int DEFAULT_ITERATIONS = 5;
 
 int 
-main (int, char *[])
+main (int argc, char *argv[])
 {
-  ACE_START_TEST ("Barrier_Test");
+  ACE_Service_Config daemon (argv[0]);
 
-#if defined (ACE_HAS_THREADS)
-  int n_threads = ACE_MAX_THREADS;
-  int n_iterations = ACE_MAX_ITERATIONS;
+  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
+  int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   ACE_Barrier tester_barrier (n_threads);
   
@@ -85,9 +70,15 @@ main (int, char *[])
 
   // Wait for all the threads to reach their exit point.
   ACE_Service_Config::thr_mgr ()->wait ();
-#else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */
-  ACE_END_TEST;
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) done\n"));
   return 0;
 }
+#else
+int 
+main (int, char *[])
+{
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */
