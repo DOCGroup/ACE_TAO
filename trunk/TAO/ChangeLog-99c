@@ -2,6 +2,8 @@ Mon Jul 12 16:10:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/orbconf.h: only use TAO_USE_SEQUENCE_TEMPLATES on _UNICOS.
           This solves the template instantiation problem on ghs/Solaris.
+          Thanks to Carlos for diagnosing the problem.  Ref:
+          Thu Jun 24 22:18:52 1999  Doug Anderson  <doug@clark.net>.
 
 Mon Jul 12 15:49:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
