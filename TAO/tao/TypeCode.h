@@ -406,7 +406,7 @@ namespace CORBA
     virtual void tao_release (void) = 0;
 
     /// Destruction callback for Anys.
-    static void CORBA::TypeCode::_tao_any_destructor (void * x);
+    static void _tao_any_destructor (void * x);
 
     typedef CORBA::TypeCode_var _var_type;
 
