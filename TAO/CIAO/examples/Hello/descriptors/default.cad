@@ -1,5 +1,6 @@
 <?xml version="1.0"?> <!-- -*- SGML -*-  -->
 
+<!-- $Id$: -->
 <!-- This file must be pre-processed for final location based on $CIAO_ROOT -->
 <!DOCTYPE componentassembly SYSTEM "../../../docs/XML/componentassembly.dtd">
 
