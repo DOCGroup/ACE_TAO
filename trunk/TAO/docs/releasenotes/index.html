@@ -1011,7 +1011,7 @@ encounter an object whose interface was not known when the program was
 compiled, yet, be able to determine what operations are valid on the
 object and make invocations on it using the DII.
 
-<p>Current Status (as of July 6, 2000): 
+<p>Current Status (as of July 12, 2000): 
 <ul>
 
 <li> Implementation of Interface.idl completed, for types fully supported
@@ -1062,10 +1062,10 @@ multiple and default case labels have been tested.</li><p>
 <li> Test code for the IFR service has been added in the directory
 ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/IFR_Test.</li><p>
 
-<li> Code to support the acquisition of an object reference for the
-Interface Repository using multicast or 
-resolve_initial_references ("InterfaceRepository") has been added to
-TAO. Multicast has not yet been tested.</li><p>
+<li> Code to support multicast discovery of the Interface Repository
+IOR has been added to TAO. Testing has been done using loopback on NT,
+loopback on Solaris, and remotely between these two platforms in both
+directions.</li><p>
 
 </ul>
 
@@ -1080,8 +1080,6 @@ with their contents at any time.</li><p>
 get_interface (CORBA 2.x), the latter for backward compatibility.</li><p>
 
 <li> Run tests on a persistent IFR.</li><p>
-
-<li> Test the IFR's IOR availability through multicast.</li><p>
 
 <li> Add support for recursive structs and unions to the IFR, and for
 their typecodes to the TypeCodeFactory.</li><p>
