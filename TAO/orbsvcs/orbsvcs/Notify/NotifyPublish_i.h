@@ -25,6 +25,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// @@ Pradeep: it seems like this is not implemented, could you please
+// add a comment stating so? Or is this something that the application
+// must provide.  If the latter, then why do you implement one?
+
 class TAO_ORBSVCS_Export TAO_NotifyPublish_i :
 public virtual POA_CosNotifyComm::NotifyPublish
 {

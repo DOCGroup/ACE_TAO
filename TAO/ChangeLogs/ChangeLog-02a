@@ -1,8 +1,24 @@
+Wed Feb  9 20:56:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Notify/NotifyPublish_i.h:
+        * orbsvcs/orbsvcs/Notify/ID_Pool_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ID_Pool_T.h:
+        * orbsvcs/orbsvcs/Notify/NotifyPublish_i.h:
+        * orbsvcs/orbsvcs/Notify/NotifySubscribe_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Dispatcher.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+          Made a first code review, much work to do.
+
 Wed Feb  9 22:07:44 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
-	  fixes for warnings and link errors with g++ on SunOS7
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+          fixes for warnings and link errors with g++ on SunOS7
 
 Wed Feb  9 14:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 

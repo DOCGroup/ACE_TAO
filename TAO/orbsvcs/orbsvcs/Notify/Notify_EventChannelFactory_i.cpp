@@ -1,4 +1,9 @@
+// @@ Pradeep: this is not the ACE style to add the RCS Identifier and
+// the C++ hint for emacs, please use the standard format.
+//
+
 /* -*- C++ -*- $Id$ */
+
 #include "Notify_EventChannelFactory_i.h"
 #include "Notify_EventChannel_i.h"
 #include "ace/Auto_Ptr.h"
@@ -16,6 +21,10 @@ TAO_Notify_EventChannelFactory_i::~TAO_Notify_EventChannelFactory_i (void)
 void
 TAO_Notify_EventChannelFactory_i::activate (CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: please don't forget to say this->_this()
+  // @@ Pradeep: could please check the comments in the header file,
+  // this two functions seem meaningless...
+
   this->self_ = _this (ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -40,6 +49,10 @@ TAO_Notify_EventChannelFactory_i::create_channel
                    CosNotification::UnsupportedAdmin
                    ))
 {
+  // @@ Pradeep: please use ServantBase_var to automatically destroy
+  // this object, once activated it is incorrect to call 'delete',
+  // because the POA still has a reference to it.
+
   TAO_Notify_EventChannel_i* channel;
   CosNotifyChannelAdmin::EventChannel_var ec_ret;
 
@@ -52,8 +65,18 @@ TAO_Notify_EventChannelFactory_i::create_channel
   channel->init (initial_qos, initial_admin, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
+  // @@ Pradeep, this is C++, not C, please declare the variable the
+  // first time you use it!
+  // @@ Pradeep, having a get_ref() method only makes things more
+  // confusing, are you concerned about performance? Or something
+  // else?
   ec_ret = channel->get_ref (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
+
+  // @@ Pradeep: how is this supposed to work? You have not
+  // initialized id, and then bind it to the map, then you expect that
+  // by initializing it you will be able to retrieve it later? This
+  // looks completely busted.
 
   // Add to the map
   if (ec_map_.bind (id,
@@ -75,6 +98,9 @@ TAO_Notify_EventChannelFactory_i::get_all_channels (CORBA::Environment & ACE_TRY
                    CORBA::SystemException
                    ))
 {
+  // @@ Pradeep: i'm pretty sure there are _var classes for sequences,
+  // please use them....
+
   CosNotifyChannelAdmin::ChannelIDSeq* list;
 
   // Figure out the length of the list.
@@ -87,6 +113,10 @@ TAO_Notify_EventChannelFactory_i::get_all_channels (CORBA::Environment & ACE_TRY
   ACE_CHECK_RETURN (0);
 
   list->length (len);
+
+  // @@ Pradeep: see how you need to lock this data structure during
+  // the complete iteration? Otherwise somebody may invalidate your
+  // iterator.
 
   // Create an iterator
   EC_MAP::ITERATOR iter (ec_map_);;
@@ -121,28 +151,3 @@ TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::Chan
 
   return ec->get_ref (ACE_TRY_ENV);
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *>;
-template class ACE_Hash_Map_Manager<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *>
-#pragma instantiate ACE_Hash_Map_Manager<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
