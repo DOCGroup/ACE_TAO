@@ -49,7 +49,7 @@ ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
                                       this->handler_rep_.handles (),
                                       FALSE,
                                       timeout,
-                                      QS_ALLINPUT)
+                                      QS_ALLINPUT);
 #endif /* (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0400) */
 }
 
