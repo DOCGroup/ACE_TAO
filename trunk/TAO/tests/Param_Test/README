@@ -40,7 +40,8 @@ To run the client, type
 
    [-d]                                 debugging
    [-n loopcount]                       number of times to run the test
-   [-f servant-IOR-file]		reads the servant-IOR from the specified file.
+   [-f servant-IOR-file]		reads the servant-IOR from the
+                                        specified file. 
    [-k Param_Test-obj-ref-key]          object key of Param_Test object
    [-h hostname]                        host to bind to
    [-p port]                            port number of server
@@ -72,9 +73,12 @@ To run the client, type
        bd_long_sequence     for bounded sequences of shorts
        fixed_array          for arrays of fixed sized types (longs)
        var_array            for arrays of var sized types (strings)
+       typecode             for typecode
+       exception            for exceptions
 
 
-	There are 2 options of giving the Param_obj-ref-key i.e IOR to the client:
+	There are 2 options of giving the Param_obj-ref-key i.e IOR to
+the client:
 
 	1. Using the -f option to read the IOR from a file.
 
@@ -83,9 +87,10 @@ To run the client, type
 
 run_test.pl:
 -----------
-	There is a perl script in this directory named run_test.pl to test all
-	the types. It starts the server first and then runs the client with 
-	the different data type parameters. The arguments it takes are:
+	There is a perl script in this directory named run_test.pl to
+        test all the types. It starts the server first and then runs
+        the client with the different data type parameters. The
+        arguments it takes are: 
 	
 	-n num              -- runs the client num times (default is 5)
         -d                  -- runs each in debug mode
@@ -93,4 +98,3 @@ run_test.pl:
         -h                  -- prints this information
         -t type             -- runs only one type of param test
         -i (dii|sii)        -- Changes the type of invocation (default is sii)
-        

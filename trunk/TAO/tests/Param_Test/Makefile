@@ -57,7 +57,8 @@ CLI_FILES =	param_testC	\
 		ub_string	\
 		ub_struct_seq	\
 		var_array	\
-		var_struct
+		var_struct \
+		except
 
 PARAM_TEST_SVR_OBJS = $(addsuffix .o,$(SVR_FILES))
 PARAM_TEST_CLT_OBJS = $(addsuffix .o,$(CLI_FILES))

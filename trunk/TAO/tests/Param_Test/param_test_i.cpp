@@ -56,7 +56,8 @@ Coffee_i::description (const Coffee::Desc &description,
 
 Param_Test_i::Param_Test_i (const char *coffee_name,
                             const char *)
-  : obj_ (coffee_name)
+  : obj_ (coffee_name),
+    test_exception_count_ (0)
 {
 }
 
@@ -227,17 +228,21 @@ Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
     *ret = new Param_Test::StrSeq,
     *out = new Param_Test::StrSeq;
 
-  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*SERVER SIDE=*=*=*=*=*=*=\n"));
-  for (CORBA::ULong i=0; (i < s2.length ()); i++)
+  if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Element #%d\n"
-                  "in : %s\n",
-                  i,
-                  (s2[i]? (const char *)s2[i]:"<nul>")));
+      ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*SERVER SIDE=*=*=*=*=*=*=\n"));
+      for (CORBA::ULong i=0; (i < s2.length ()); i++)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Element #%d\n"
+		      "in : %s\n",
+		      i,
+		      (s2[i]? (const char *)s2[i]:"<nul>")));
+	}
+      if (s2.length () == 0)
+	ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
     }
-  if (s2.length () == 0)
-    ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
+
   // now copy all elements of s1 into the others using the assignment operator
   s2 = s1;
   *out = s1;
@@ -565,21 +570,27 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   // debug the incoming Any
   if (a1 >>= short_in)
     {
-      ACE_DEBUG ((LM_DEBUG, "Received short = %d\n", short_in));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG, "Received short = %d\n", short_in));
       a2 >>= short_in;
-      ACE_DEBUG ((LM_DEBUG, "inout short = %d\n", short_in));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG, "inout short = %d\n", short_in));
       *a3.ptr () >>= short_in;
-      ACE_DEBUG ((LM_DEBUG, "out short = %d\n", short_in));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG, "out short = %d\n", short_in));
       *ret >>= short_in;
-      ACE_DEBUG ((LM_DEBUG, "ret short = %d\n", short_in));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG, "ret short = %d\n", short_in));
     }
   else if (a1 >>= str_in)
     {
-      ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %s\n", str_in));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %s\n", str_in));
     }
   else if (a1 >>= coffee)
     {
-      ACE_DEBUG ((LM_DEBUG, "Received Coffee object\n"));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG, "Received Coffee object\n"));
     }
   else
     {
@@ -619,6 +630,31 @@ Param_Test_i::test_var_array (const Param_Test::Var_Array a1,
   a3 = Param_Test::Var_Array_dup (a1);
   ret = Param_Test::Var_Array_dup (a1);
   return ret;
+}
+
+CORBA::ULong
+Param_Test_i::test_exception (CORBA::ULong s1,
+			      CORBA::ULong& s2,
+			      CORBA::ULong_out s3,
+			      CORBA::Environment &env)
+  TAO_THROW_SPEC ((CORBA::SystemException, Param_Test::Ooops))
+{
+  int d = this->test_exception_count_ % 3;
+  this->test_exception_count_++;
+  if (d == 0)
+    {
+      s2 = s1 * 2;
+      s3 = s1 * 3;
+      return s1 * 4;
+    }
+  else if (d == 1)
+    {
+      env.exception (new Param_Test::Ooops (CORBA::string_dup (" % 3 == 1"),
+					    s1));
+      return 0;
+    }
+  env.exception (new Param_Test::BadBoy);
+  return 0;
 }
 
 void

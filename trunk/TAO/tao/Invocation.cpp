@@ -596,88 +596,65 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
               return TAO_GIOP_SYSTEM_EXCEPTION;
             }
         }
-        // User and system exceptions differ only in what table of
-        // exception typecodes is searched.
-        CORBA::ExceptionList *xlist;
 
-        if (reply_status == TAO_GIOP_USER_EXCEPTION)
-          xlist = &exceptions;
-        else
-          xlist = TAO_Exceptions::system_exceptions;
+	CORBA_Exception *exception = 0;
+	if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
+	  {
+	    exception = 
+	      TAO_Exceptions::create_system_exception (buf, env);
+	    if (env.exception () != 0)
+	      return TAO_GIOP_SYSTEM_EXCEPTION;
 
-        // Find it in the operation description and then use that to
-        // get the typecode.  Use it to unmarshal the exception's
-        // value; if that exception is not allowed by this operation,
-        // fail (next).
+	    this->inp_stream_.decode (exception->_type (),
+				      &exception, 0,
+				      env);
+	  }
+	else
+	  {
+	    // Find it in the operation description and then use that
+	    // to get the typecode.
+	    // This is important to decode the exception.
 
-        for (CORBA::ULong i = 0;
-             i < xlist->count ();
-             i++)
-          {
-            CORBA::TypeCode_ptr tcp = xlist->item (i, env);
+	    for (CORBA::ULong i = 0;
+		 i < exceptions.count ();
+		 i++)
+	      {
+		CORBA::TypeCode_ptr tcp =
+		  exceptions.item (i, env);
+		if (env.exception () != 0)
+		  {
+		    TAO_GIOP::send_error (this->data_->handler ());
+		    return TAO_GIOP_SYSTEM_EXCEPTION;
+		  }
 
-            const char *xid = tcp->id (env);
+		const char *xid = tcp->id (env);
+		if (env.exception () != 0)
+		  {
+		    TAO_GIOP::send_error (this->data_->handler ());
+		    return TAO_GIOP_SYSTEM_EXCEPTION;
+		  }
 
-            if (env.exception () != 0)
-              {
-                dexc (env, "invoke (), get exception ID");
-                TAO_GIOP::send_error (this->data_->handler ());
-                return TAO_GIOP_SYSTEM_EXCEPTION;
-              }
+		if (ACE_OS::strcmp (buf, xid) != 0)
+		    continue;
 
-            if (ACE_OS::strcmp (buf, (char *)xid) == 0)
-              {
-                size_t size;
-                CORBA::Exception *exception;
-
-                size = tcp->size (env);
-                if (env.exception () != 0)
-                  {
-                    dexc (env, "invoke (), get exception size");
-                    TAO_GIOP::send_error (this->data_->handler ());
-                    return TAO_GIOP_SYSTEM_EXCEPTION;
-                  }
-
-                // Create the exception, fill in the generic parts
-                // such as vtable, typecode ptr, refcount ... we need
-                // to clean them all up together, in case of errors
-                // unmarshaling.
-
-                exception = new (new char [size]) CORBA::Exception (tcp);
-
-                if (this->inp_stream_.decode (tcp, exception, 0, env)
-                    != CORBA::TypeCode::TRAVERSE_CONTINUE)
-                  {
-                    delete exception;
-                    ACE_DEBUG ((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s\n",
-                                (reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
-                                buf));
-                    TAO_GIOP::send_error (this->data_->handler ());
-                    return TAO_GIOP_SYSTEM_EXCEPTION;
-                  }
-                env.exception (exception);
-                return (TAO_GIOP_ReplyStatusType) reply_status;
+		// @@ Somehow store the CDR inside the Any, if
+		// necessary add an extension to the Any class.
+		const ACE_Message_Block* cdr = 
+		  this->inp_stream_.start ();
+		CORBA_Any any;
+		exception = 
+		  new CORBA_UnknownUserException (any);
+		break;
               }
           }
 
         // If we couldn't find this exception's typecode, report it as
-        // an OA error since the skeleton passed an exception that was
-        // not allowed by the operation's IDL definition.  In the case
-        // of a dynamic skeleton it's actually an implementation bug.
-        //
-        // It's known to be _very_ misleading to try reporting this as
-        // any kind of marshaling error (unless minor codes are made
-        // to be _very_ useful) ... folk try to find/fix ORB bugs that
-        // don't exist, not bugs in/near the implementation code.
-
-        if (reply_status == TAO_GIOP_USER_EXCEPTION)
-          env.exception (new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_YES));
-        else
-          env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_MAYBE));
-        return TAO_GIOP_SYSTEM_EXCEPTION;
+        // CORBA::UNKNOWN exception.
+	
+	env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE));
+	return TAO_GIOP_SYSTEM_EXCEPTION;
       }
-    // NOTREACHED
-
+	
     case TAO_GIOP_LOCATION_FORWARD:
       return (this->location_forward (this->inp_stream_, env));
     }
@@ -872,7 +849,20 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
         CORBA::Exception *exception = 0;
         CORBA::TypeCode_ptr tcp = 0;
 
-        if (reply_status == TAO_GIOP_USER_EXCEPTION)
+        if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
+          {
+	    exception = 
+	      TAO_Exceptions::create_system_exception (buf, env);
+	    if (env.exception () != 0)
+	      return TAO_GIOP_SYSTEM_EXCEPTION;
+
+	    this->inp_stream_.decode (exception->_type (),
+				      exception, 0,
+				      env);
+	    if (env.exception () != 0)
+	      return TAO_GIOP_SYSTEM_EXCEPTION;
+          }
+        else
           {
             // search the table of exceptions and see if there is a match
             for (CORBA::ULong i = 0;
@@ -900,77 +890,27 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                         TAO_GIOP::send_error (this->data_->handler ());
                         return TAO_GIOP_SYSTEM_EXCEPTION;
                       }
-
+		    this->inp_stream_.decode (exception->_type (),
+					      exception, 0,
+					      env);
+		    if (env.exception () != 0)
+		      return TAO_GIOP_SYSTEM_EXCEPTION;
                     break;
                   }
               } // end of loop
             CORBA::string_free (buf);
           }
-        else
-          {
-            CORBA::ExceptionList *xlist;
-            xlist = TAO_Exceptions::system_exceptions;
-
-            // Find it in the operation description and then use that to
-            // get the typecode.  Use it to unmarshal the exception's
-            // value; if that exception is not allowed by this operation,
-            // fail (next).
-
-            for (CORBA::ULong i = 0;
-                 i < xlist->count ();
-                 i++)
-              {
-                tcp = xlist->item (i, env);
-                const char *xid = tcp->id (env);
-
-                if (env.exception () != 0)
-                  {
-                    dexc (env, "invoke (), get exception ID");
-                    TAO_GIOP::send_error (this->data_->handler ());
-                    return TAO_GIOP_SYSTEM_EXCEPTION;
-                  }
-
-                if (ACE_OS::strcmp (buf, (char *)xid) == 0)
-                  {
-
-                    // must be a system exception
-                    exception = new CORBA::SystemException (tcp,
-                                                            (CORBA::ULong)0,
-                                                            CORBA::COMPLETED_NO);
-                  }
-              }
-          }
 
         // If we couldn't find this exception's typecode, report it as
-        // an OA error since the skeleton passed an exception that was
-        // not allowed by the operation's IDL definition.  In the case
-        // of a dynamic skeleton it's actually an implementation bug.
-        //
-        // It's known to be _very_ misleading to try reporting this as
-        // any kind of marshaling error (unless minor codes are made
-        // to be _very_ useful) ... folk try to find/fix ORB bugs that
-        // don't exist, not bugs in/near the implementation code.
+        // a CORBA::UNKNOWN, i.e. we got an exception that was not the
+	// right type...
 
         if (!exception)
           {
-            if (reply_status == TAO_GIOP_USER_EXCEPTION)
-              env.exception (new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_YES));
-            else
-              env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_MAYBE));
+	    env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_YES));
             return TAO_GIOP_SYSTEM_EXCEPTION;
           }
 
-        // decode the exception
-        if (this->inp_stream_.decode (tcp, exception, 0, env)
-            != CORBA::TypeCode::TRAVERSE_CONTINUE)
-          {
-            delete exception;
-            ACE_DEBUG ((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s\n",
-                        (reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
-                        buf));
-            TAO_GIOP::send_error (this->data_->handler ());
-            return TAO_GIOP_SYSTEM_EXCEPTION;
-          }
         env.exception (exception);
         return (TAO_GIOP_ReplyStatusType) reply_status;
 

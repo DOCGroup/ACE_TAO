@@ -217,11 +217,21 @@ public:
                   CORBA::Environment &env);
   // test for arrays of variable types
 
+  virtual CORBA::ULong test_exception (CORBA::ULong s1,
+				       CORBA::ULong& s2,
+				       CORBA::ULong_out s3,
+				       CORBA::Environment &env)
+    TAO_THROW_SPEC ((CORBA::SystemException, Param_Test::Ooops));
+
   void shutdown (CORBA::Environment &env);
 
 private:
   Coffee_i obj_;
   // the coffee object reference we maintain
+
+  int test_exception_count_;
+  // Count the number of calls to test_exception() so we can throw
+  // every 3 calls or so.
 };
 
 #endif /* PARAM_TEST_I_H */

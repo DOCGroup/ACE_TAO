@@ -161,6 +161,8 @@ TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);
 TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
 #undef TAO_SYSTEM_EXCEPTION
 
+class CORBA_UnknownUserException;
+
 typedef class CORBA_ImplementationDef *
         CORBA_ImplementationDef_ptr;
 
@@ -603,6 +605,8 @@ public:
   TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
 #undef TAO_SYSTEM_EXCEPTION
 
+  typedef CORBA_UnknownUserException UnknownUserException;
+
   // = all the CORBA::is_nil methods.
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
@@ -740,6 +744,8 @@ public:
 
   static TypeCode_ptr _tc_Bounds;
   static TypeCode_ptr _tc_BadKind;
+
+  static TypeCode_ptr _tc_UnknownUserException;
 
   static ORB_ptr ORB_init (int &argc,
                            char *const *argv,

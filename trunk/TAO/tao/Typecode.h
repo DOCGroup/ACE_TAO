@@ -61,12 +61,20 @@ public:
   {
   public:
     Bounds (void);
+
+    virtual void _raise (void);
+    Bounds* _narrow (CORBA_Exception *ex);
+    virtual int _is_a (const char* interface_id) const;
   };
 
   class BadKind : public CORBA_UserException
   {
   public:
     BadKind (void);
+
+    virtual void _raise (void);
+    BadKind* _narrow (CORBA_Exception *ex);
+    virtual int _is_a (const char* interface_id) const;
   };
 
   static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);

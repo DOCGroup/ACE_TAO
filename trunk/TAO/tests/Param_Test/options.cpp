@@ -134,6 +134,8 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_VAR_ARRAY;
         else if (!ACE_OS::strcmp (get_opts.optarg, "multdim_array"))
           this->test_type_ = Options::TEST_MULTDIM_ARRAY;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "exception"))
+          this->test_type_ = Options::TEST_EXCEPTION;
         break;
 
       case '?':

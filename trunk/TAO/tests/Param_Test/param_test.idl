@@ -198,6 +198,20 @@ interface Param_Test
                             inout Var_Array v2,
                             out Var_Array v3);
 
+
+  // Just to test report a problem
+  exception Ooops {
+    string reason;
+    unsigned long input;
+  };
+  // To test what happens when an unexpected exception is thrown.
+  exception BadBoy {
+  };
+  unsigned long test_exception (in unsigned long s1,
+				inout unsigned long s2,
+				out unsigned long s3)
+    raises (Ooops);
+
 #if 0
   // multidimensional arrays (fixed). The following will give rise to a 3
   // dimensional array. The following will define a 3-dimensional array of size

@@ -25,9 +25,53 @@ CORBA_TypeCode::Bounds::Bounds (void)
 {
 }
 
+void
+CORBA_TypeCode::Bounds::_raise (void)
+{
+}
+
+CORBA_TypeCode::Bounds*
+CORBA_TypeCode::Bounds::_narrow (CORBA_Exception *ex)
+{
+  if (ex->_is_a ("IDL:omg.orb/CORBA/TypeCode/Bounds:1.0"))
+    return ACE_dynamic_cast (CORBA_TypeCode::Bounds*, ex);
+  return 0;
+}
+
+int
+CORBA_TypeCode::Bounds::_is_a (const char* interface_id) const
+{
+  return ((ACE_OS::strcmp (interface_id,
+			  "IDL:omg.orb/CORBA/TypeCode/Bounds:1.0") ==
+	   0)
+	  || CORBA_UserException::_is_a (interface_id));
+}
+
 CORBA_TypeCode::BadKind::BadKind (void)
   : CORBA_UserException (CORBA::_tc_BadKind)
 {
+}
+
+void
+CORBA_TypeCode::BadKind::_raise (void)
+{
+}
+
+CORBA_TypeCode::BadKind*
+CORBA_TypeCode::BadKind::_narrow (CORBA_Exception *ex)
+{
+  if (ex->_is_a ("IDL:omg.orb/CORBA/TypeCode/BadKind:1.0"))
+    return ACE_dynamic_cast (CORBA_TypeCode::BadKind*, ex);
+  return 0;
+}
+
+int
+CORBA_TypeCode::BadKind::_is_a (const char* interface_id) const
+{
+  return ((ACE_OS::strcmp (interface_id,
+			  "IDL:omg.orb/CORBA/TypeCode/BadKind:1.0") ==
+	   0)
+	  || CORBA_UserException::_is_a (interface_id));
 }
 
 // decreases the refcount and deletes when refcount reaches 0

@@ -42,5 +42,6 @@
 #include "ub_struct_seq.h"
 #include "var_array.h"
 #include "var_struct.h"
+#include "except.h"
 
 #endif /* if !defined */
