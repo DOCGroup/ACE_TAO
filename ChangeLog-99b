@@ -1,3 +1,12 @@
+Thu Sep  2 14:42:31 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Cached_Accept_Conn_Test.cpp: Repositioned
+	  ACE_HAS_BROKEN_EXTENDED_TEMPLATES macro before the inclusion of
+	  the header since thats where the typedefs had been shifted.
+	  Also, to keep both gcc2.7.3 and sunCC5.0 w.o debugging symbols 
+	  happy it was necessary to move the definitions of
+	  <Accept_Startegy> methods before the instantiations.
+
 Thu Sep  2 12:21:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Added an ACE_static_cast in the ACE_FACTORY_DEFINE macro
