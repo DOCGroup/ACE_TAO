@@ -1,3 +1,92 @@
+Sat Mar 30 13:38:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Resource_Factory.h:
+
+	  No need to include "tao/Protocol_Factory.h".  Forward declaring
+	  TAO_Protocol_Factory is enough.
+
+	  Removed extraneous "tao/Pluggable.h" and "tao/orbconf.h"
+	  includes.
+
+	  Include "ace/SString.h" to pull in ACE_CString typedef.
+
+	* tao/Resource_Factory.cpp:
+
+	  Include "tao/Protocol_Factory.h" to pull in TAO_Protocol_Factory
+	  class declaration.
+
+	* tao/Acceptor_Registry.cpp:
+	* tao/Connector_Registry.cpp:
+
+	  Include "tao/Pluggable.h" to pull in TAO_Acceptor and
+	  TAO_Connector class declarations, respectively, and
+	  "tao/Protocol_Factory.h" for TAO_Protocol_Factory.
+
+	* tao/Transport_Descriptor_Interface.h:
+
+	  No need to include "tao/Endpoint.h".  Forward declaring
+	  TAO_Endpoint is enough.
+
+	* tao/Transport_Descriptor_Interface.cpp:
+
+	  Include "tao/Endpoint.h" to pull in the TAO_Endpoint class
+	  declaration.
+
+	* tao/Transport_Cache_Manager.h:
+
+	  No need to include "tao/Connection_Purging_Strategy.h".  Forward
+	  declaring TAO_Connection_Purging_Strategy is enough.
+
+	  (TAO_Transport_Cache_Manager):
+
+	  Changed underlying hash map from ACE_Hash_Map_Manager to
+	  ACE_Hash_Map_Manager_Ex.  The former requires three additional
+	  template instantiations and used the latter under the hood
+	  anyway.  This reduces TAO's footprint.
+
+	* tao/Transport_Cache_Manager.cpp (TAO_Transport_Cache_Manager):
+
+	  Initialize the underlying hash map's size to be equal to the
+	  maximum number of handles allowed for the current process.  This
+	  addresses a potential problem where more connections may be
+	  opened then the Transport_Cache_Manager is able to contain since
+	  the underlying hash map cannot be resized once it has been
+	  opened.  Furthermore, it reduces the memory requirements for
+	  processes that have a maximum handle limit less than
+	  ACE_DEFAULT_MAP_SIZE, which was the previous default hash map
+	  size.
+
+	  (ACE_Hash_Map_Manager):
+
+	  Removed all explicit template instantiations related to this
+	  template.  They are no longer used or needed.
+
+	* tao/Base_Transport_Property.h:
+
+	  Include "tao/Endpoint.h" to pull in declaration of TAO_Endpoint
+	  class.
+
+	* tao/Cache_Entries.h:
+
+	  No need to include "Transport_Descriptor_Interface.h".  Forward
+	  declaring TAO_Transport_Descriptor_Interface is enough.
+
+	  (TAO_Cache_IntId, TAO_Cache_ExtId):
+
+	  No need to export these classes.  They are only used internally
+	  by TAO.
+
+	  (hash):
+
+	  Updated comment to reflect the fact that an
+	  ACE_Hash_Map_Manager_Ex is used instead of an
+	  ACE_Hash_Map_Manager.
+
+	* tao/Leader_Follower.h:
+
+	  Forward declare TAO_Transport.  Made necessary by above
+	  inter-header dependency reductions.
+
 Thu Mar 28 12:29:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * orbsvcs/Event_Service/Event_Service.cpp:
