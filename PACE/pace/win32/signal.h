@@ -24,7 +24,10 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+#ifndef PACE_SIGATOMIC_T
+#define PACE_SIGATOMIC_T
   typedef sig_atomic_t pace_sig_atomic_t;
+#endif /* PACE_SIGATOMIC_T */
 
 #ifndef PACE_SIGSET_T
 #define PACE_SIGSET_T
@@ -35,7 +38,15 @@ extern "C" {
   } pace_sigset_t;
 #endif /* PACE_SIGSET_T */
 
-  typedef struct sigaction pace_sigaction_s;
+#ifndef PACE_SIGACTION_S
+#define PACE_SIGACTION_S
+  typedef void (__cdecl *pace_sig_pf)(int);
+  typedef struct sigaction {
+    int sa_flags;
+    pace_sig_pf sa_handler;
+    pace_sigset_t sa_mask;
+  }  pace_sigaction_s;
+#endif /* PACE_SIGACTION_S */
 
 #ifndef PACE_SIGINFO_T
 #define PACE_SIGINFO_T
