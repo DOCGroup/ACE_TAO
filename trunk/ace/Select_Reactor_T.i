@@ -184,7 +184,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wakeup_all_threads (void)
 {
   // Send a notification, but don't block if there's no one to receive
   // it.
-  this->notify (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero_time_value());
+  this->notify (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int

@@ -101,7 +101,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
           // The earliest item on the Timer_Queue is now in the past.
           // Therefore, we've got to "poll" the Reactor, i.e., it must
           // just check the descriptors and then dispatch timers, etc.
-          this->timeout_ = ACE_Time_Value::zero_time_value();
+          this->timeout_ = ACE_Time_Value::zero;
           return &this->timeout_;
         }
     }
@@ -144,7 +144,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
           // The earliest item on the Timer_Queue is now in the past.
           // Therefore, we've got to "poll" the Reactor, i.e., it must
           // just check the descriptors and then dispatch timers, etc.
-          *the_timeout = ACE_Time_Value::zero_time_value();
+          *the_timeout = ACE_Time_Value::zero;
         }
     }
   return the_timeout;
@@ -301,7 +301,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info_i (const ACE_Time_Valu
       expired->get_dispatch_info (info);
 
       // Check if this is an interval timer.
-      if (expired->get_interval () > ACE_Time_Value::zero_time_value())
+      if (expired->get_interval () > ACE_Time_Value::zero)
         {
           // Make sure that we skip past values that have already
           // "expired".
