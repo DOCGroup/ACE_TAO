@@ -8,11 +8,11 @@
 #if !defined (VXWORKS)
 #include	<memory.h>
 #endif
-#include	<orb.hh>
+#include	<orb.h>
 
 #include        <initguid.h>
 
-#include	"debug.hh"
+#include	"debug.h"
 
 
 //

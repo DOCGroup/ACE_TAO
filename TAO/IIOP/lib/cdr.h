@@ -33,12 +33,12 @@
 #include	<assert.h>
 
 #if defined(__IIOP_BUILD)
-#  include "orb.hh"
+#  include "orb.h"
 #else
-#  include <corba/orb.hh>
+#  include <corba/orb.h>
 #endif
 
-#include	<align.hh>
+#include	<align.h>
 
 
 //

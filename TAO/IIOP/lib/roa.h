@@ -15,16 +15,16 @@
 #  include <ace/INET_Addr.h>
 
 #  if defined(__IIOP_BUILD)
-#    include "boa.hh"
+#    include "boa.h"
 #  else
-#    include <corba/boa.hh>
+#    include <corba/boa.h>
 #  endif
 
 class ACE_Svc_Export ROA;
 typedef ROA* ROA_ptr;
 
-#  include "params.hh"
-#  include "connect.hh"
+#  include "params.h"
+#  include "connect.h"
 
 extern const IID IID_ROA;
 

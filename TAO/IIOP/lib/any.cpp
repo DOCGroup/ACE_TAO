@@ -33,10 +33,10 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.hh>
+#include	<orb.h>
 
-#include	"debug.hh"
-#include	"thread.hh"
+#include	"debug.h"
+#include	"thread.h"
 
 #include	<initguid.h>
 

@@ -19,11 +19,11 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.hh>
+#include	<orb.h>
 
-#include	"debug.hh"
-#include	"cdr.hh"
-#include	"thread.hh"
+#include	"debug.h"
+#include	"cdr.h"
+#include	"thread.h"
 
 #if !defined (VXWORKS)
 #include	<memory.h>

@@ -23,15 +23,15 @@
 #include <ace/OS.h>
 #include <ace/SOCK_Stream.h>
 #if defined(__IIOP_BUILD)
-#  include	"orb.hh"
-#  include	"stub.hh"
+#  include	"orb.h"
+#  include	"stub.h"
 #else
-#  include	<corba/orb.hh>
-#  include	<corba/stub.hh>
+#  include	<corba/orb.h>
+#  include	<corba/stub.h>
 #endif
 
-#include	"connmgr.hh"
-#include	"iiopobj.hh"		// XXX -- not generic!
+#include	"connmgr.h"
+#include	"iiopobj.h"		// XXX -- not generic!
 
 
 // XXX this same typedef is used in other places, e.g. iiopobj.hh
