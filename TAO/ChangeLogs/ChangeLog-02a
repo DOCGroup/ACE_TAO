@@ -23,6 +23,8 @@ Thu Feb 10 22:04:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  of enums was causing the IDL comiler to run out of heap
 	  memory. These changes and the changes to utl_string.cpp
 	  in the ChangeLog entry below have fixed that problem.
+	  Thanks to Ted Nolan SRI Augusta GA <ted@ags.ga.erg.sri.com>
+	  for sending in the IDL file.
 
 	* TAO_IDL/util/utl_string.cpp:
 	  Cosmetic changes.
