@@ -1,19 +1,19 @@
 Tue Sep  2 17:25:24 UTC 2003 Trevor Fields <fields_t@ociweb.com>
 
-	* examples/Web_Crawler/Command_Processor.h
-	* examples/Web_Crawler/HTTP_URL.h
-	* examples/Web_Crawler/Iterators.h
-	* examples/Web_Crawler/Mem_Map_Stream.h
-	* examples/Web_Crawler/Options.h
-	* examples/Web_Crawler/URL.h
-	* examples/Web_Crawler/URL_Addr.h
-	* examples/Web_Crawler/URL_Status.h
-	* examples/Web_Crawler/URL_Visitor.h
-	* examples/Web_Crawler/URL_Visitor_Factory.h
-	* examples/Web_Crawler/Web_Crawler.h
+        * examples/Web_Crawler/Command_Processor.h
+        * examples/Web_Crawler/HTTP_URL.h
+        * examples/Web_Crawler/Iterators.h
+        * examples/Web_Crawler/Mem_Map_Stream.h
+        * examples/Web_Crawler/Options.h
+        * examples/Web_Crawler/URL.h
+        * examples/Web_Crawler/URL_Addr.h
+        * examples/Web_Crawler/URL_Status.h
+        * examples/Web_Crawler/URL_Visitor.h
+        * examples/Web_Crawler/URL_Visitor_Factory.h
+        * examples/Web_Crawler/Web_Crawler.h
 
-	  Applied Johnny Willemsen's changes.  These are fixes for the
-	  #if !defined (ACE_LACKS_PRAGMA_ONCE) lines
+          Applied Johnny Willemsen's changes.  These are fixes for the
+          #if !defined (ACE_LACKS_PRAGMA_ONCE) lines
 
 Tue Sep  2 07:02:19 2003  Chad Elliott  <elliott_c@ociweb.com>
 
