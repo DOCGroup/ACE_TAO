@@ -13,7 +13,7 @@
 #ifndef TAO_COSEVENTCHANNELFACTORY_IDL
 #define TAO_COSEVENTCHANNELFACTORY_IDL
 
-#include "CosEventChannelAdmin.idl"
+#include "orbsvcs/CosEventChannelAdmin.idl"
 
 module CosEventChannelFactory
 {

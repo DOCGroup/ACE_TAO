@@ -18,6 +18,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CosEvent_Service"=.\CosEvent_Service\CosEvent_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orbsvcs
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Dump_Schedule"=.\Dump_Schedule\Dump_Schedule.dsp - Package Owner=<4>
 
 Package=<5>
