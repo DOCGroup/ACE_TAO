@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTCosScheduling) : orbsvcslib, rtportableserver {
+project(RTCosScheduling) : orbsvcslib, core, rtportableserver {
   requires     += interceptors
   sharedname    = TAO_RTCosScheduling
   idlflags     += -Gd -Wb,export_macro=TAO_RTCosScheduling_Export -Wb,export_include=orbsvcs/RTCosScheduling/RTCosScheduling_export.h

@@ -50,7 +50,7 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
   }
 }
 
-project (FTRT_EventChannel) :  orbsvcslib, ftrtevent, utils {
+project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, utils {
   sharedname   = TAO_FTRT_EventChannel
   dynamicflags = TAO_FTRTEC_BUILD_DLL
   tagchecks    = FTRT_EventChannel
