@@ -1,3 +1,12 @@
+Fri Oct 13 14:32:50 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
+	  (receive_exception, send_exception):
+
+	  The CORBA::Exception::_info() method return an ACE_CString, not
+	  a const char *.  Invoked the ACE_CString::c_str() method to
+	  correct a warning.
+
 Fri Oct 13 13:21:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl.cpp:
