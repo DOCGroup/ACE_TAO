@@ -1,16 +1,15 @@
 Wed Jun  9 22:18:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	
-
 	* tao/Sequence_T.cpp	 
 	* tao/Sequence_T.h
 	* tao/Sequence_T.i: Added an operator= (T_var) in
-	TAO_Object_Manager class. This was achieved by adding an extra
-	parameter to the template. This necessiateted that the classes
-	TAO_Unbounded_Object_Sequence, TAO_Bounded_Object_Sequence,
-	TAO_Pseudo_Unbounded_Object_Sequence,TAO_Bounded_Pseudo_Sequence
-	had to be changed. An extra template parameter was added in these
-	classes also. 
+ 	  TAO_Object_Manager class. This was achieved by adding an extra
+ 	  parameter to the template. This necessiateted that the classes
+ 	  TAO_Unbounded_Object_Sequence, TAO_Bounded_Object_Sequence,
+ 	  TAO_Pseudo_Unbounded_Object_Sequence,TAO_Bounded_Pseudo_Sequence
+ 	  had to be changed. An extra template parameter was added in
+ 	  these classes also.
+
 	* tao/DomainC.cpp 
 	* tao/DomainC.h 
 	* tao/DomainC.i 
@@ -19,10 +18,9 @@ Wed Jun  9 22:18:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/PolicyC.i 
 	* tao/Request.cpp 
 	* tao/Request.h 
-	* tao/corbafwd.h:
-	The changes in these files were done to reflect the changes that
-	were made in the classes above.  They had to be done keep in sync
-	with the new template class declarations.
+	* tao/corbafwd.h: The changes in these files were done to reflect
+ 	  the changes that were made in the classes above.  They had to be
+ 	  done keep in sync with the new template class declarations.
 
 	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp
 	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp
@@ -31,11 +29,10 @@ Wed Jun  9 22:18:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp
 	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp
 	* TAO_IDL/be_include/be_visitor_sequence/sequence_base.h: Changes
-	to the IDL compiler to reflect the above change that was
-	made. Thanks to Jake Hamby <jehamby@anobject.com> for pointing out
-	the need for the assignment operator and also in helping us out
-	with a sample solution.
-
+ 	  to the IDL compiler to reflect the above change that was
+ 	  made. Thanks to Jake Hamby <jehamby@anobject.com> for pointing
+ 	  out the need for the assignment operator and also in helping us
+ 	  out with a sample solution.
 
 Wed Jun  9 21:13:00 1999  Chris Gill <cdgill@cs.wustl.edu>
 
