@@ -24,4 +24,12 @@ private:
   Reactor_Logging_Server<ACCEPTOR> *server_;
 };
 
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "Reactor_Logging_Server_Adapter.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Reactor_Logging_Server_Adapter.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #endif /* _REACTOR_LOGGING_SERVER_ADAPTER_H */

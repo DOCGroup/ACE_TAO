@@ -1,3 +1,36 @@
+Fri May 24 20:18:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Reactor_Logging_Server_T.cpp: Move all the
+          method implementations for Reactor_Logging_Server<> into
+          Reactor_Logging_Server_T.cpp so they're reuseable in a
+          shared library.
+
+        * examples/C++NPv2/Reactor_Logging_Server.h: Add template
+          implementation reference plumbing for compilers.
+
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp: Remove the
+          (duplicate) definitions of Reactor_Logging_Server<>; the
+          compiler now generates this using the code in
+          Reactor_Logging_Server_T.cpp.
+
+        * examples/C++NPv2/svc.conf:
+        * examples/C++NPv2/SLD.cpp:
+        * examples/C++NPv2/SLD_export.h:
+        * examples/C++NPv2/SLD.mak: Code and Makefile for the dynamic
+          logging service in chapter 5.
+
+        * examples/C++NPv2/Makefile: Added SLD.mak.
+
+        * examples/C++NPv2/Logging_Acceptor.h: Added a PEER_ADDR trait.
+          The Reactor_Logging_Server_Adapter's use of Logging_Acceptor
+          needs the trait.
+
+        * examples/C++NPv2/Service_Reporter.h: Make ctor public so
+          the service factory can instantiate this class.
+
 Sat May 25 00:20:50 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* bin/nightlybuilds/builds.lst: Move Debian_WChar to new scoreboard.
