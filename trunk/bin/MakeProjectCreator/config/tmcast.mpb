@@ -1,0 +1,5 @@
+project: acelib {
+  after        += TMCast
+  libs         += TMCast
+  dynamicflags += TMCAST_BUILD_DLL
+}
