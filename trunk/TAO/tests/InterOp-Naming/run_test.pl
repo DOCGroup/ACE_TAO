@@ -41,10 +41,23 @@ if ($client == -1) {
   exit 1;
 }
 
-print STDERR "\n\n==== Multi endpoint tests\n";
+print STDERR "\n\n==== DefaultInitRef test\n";
 
-print STDERR "Grace period, waiting for the system to stabilize....";
-sleep 5;
+$CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
+                       " object_name "
+                       . "-ORBDefaultInitRef"
+                       ." iioploc://localhost:$port");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $SV->Kill (); $SV->TimedWait (1);
+  unlink $file;
+  exit 1;
+}
+
+print STDERR "\n\n==== Multi endpoint test\n";
 
 $port1 = $port + 1;
 $port2 = $port + 2;
@@ -67,17 +80,31 @@ if ($client == -1) {
   exit 1;
 }
 
-print STDERR "\n\n==== DefaultInitRef test\n";
-
-print STDERR "Grace period, waiting for the system to stabilize....";
-sleep 5;
+print STDERR "\n\n==== Multi endpoint default ref test\n";
 
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
-                       . "-ORBDefaultInitRef"
+                       . "-ORBDefaultInitRef "
                        ."iioploc://"
                        ."localhost:$port1,"
                        ."localhost:$port2,"
+                       ."localhost:$port");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $SV->Kill (); $SV->TimedWait (1);
+  unlink $file;
+  exit 1;
+}
+
+print STDERR "\n\n==== Default ref with final '/'\n";
+
+$CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
+                       " object_name "
+                       . "-ORBDefaultInitRef "
+                       ."iioploc://"
                        ."localhost:$port/");
 
 $client = $CL->TimedWait (60);
