@@ -125,6 +125,11 @@ class URLFrame extends Frame
     String url = this.openURLText_.getText ();
     this.hide ();
     this.dispose ();
+
+    // The following is only for debugging
+    if (url.startsWith ("#"))
+      url = "http://merengue.cs:5432/" + url.substring (1);
+
     this.parent_.saveFile (url);
   }
 

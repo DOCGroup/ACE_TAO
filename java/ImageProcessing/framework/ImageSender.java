@@ -42,17 +42,19 @@ public class ImageSender
 
   public int send ()
   {
-    int length = 0;
+    //    StatusIndicator indicator = new StatusIndicator ("");
+    ImageByteCounter byteCounter = new ImageByteCounter ("", this.image_);
+    //    ImageByteCounter byteCounter = new ImageByteCounter ("", this.image_, indicator);
+    int length = byteCounter.count ();
+    //    indicator.dispose ();
+    // First determine how many bytes we will be sending
+    /*
     try
       {
 	GIFOutputStream ostream = new GIFOutputStream ();
 	GifEncoder encoder = new GifEncoder (this.image_, ostream);
 	encoder.encode ();
-	//	this.encoder_.Write (ostream);
 
-	//	this.encoder_ = new GIFEncoder (this.image_);
-	//	this.encoder_.Write (ostream);
-	//	StringBuffer buf = ostream.data ();
 	length = ostream.count ();
 	System.out.println ("send: " + length);
       }
@@ -60,6 +62,7 @@ public class ImageSender
       {
 	ACE.ERROR ("Exception generating gif");
       }
+      */
 
     GIFHandler gifHandler = new GIFHandler (this.filename_, this.image_, length);
     try
