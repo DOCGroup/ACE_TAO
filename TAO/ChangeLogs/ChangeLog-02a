@@ -1,3 +1,31 @@
+Fri Feb 25 15:08:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/releasenotes/index.html:
+          Documented the new version of the COS Event Service
+
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/CosEvent_Service/README:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.dsw:
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.dsp:
+          Provide a program to run the new implementation of the COS Event
+          Service.
+
+        * orbsvcs/CosEvent_Service/svc.conf:
+          Removed, no longer needed.
+
+        * orbsvcs/examples/CosEC/Makefile:
+        * orbsvcs/examples/CosEC/Simple/Makefile:
+        * orbsvcs/examples/CosEC/Simple/README:
+        * orbsvcs/examples/CosEC/Simple/run_test.pl:
+        * orbsvcs/examples/CosEC/Simple/Service.cpp:
+        * orbsvcs/examples/CosEC/Simple/Consumer.h:
+        * orbsvcs/examples/CosEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/Simple/Supplier.h:
+        * orbsvcs/examples/CosEC/Simple/Supplier.cpp:
+          New example, to show how easy it is to use the COS Event
+          Service.
+
 Fri Feb 25 14:03:57 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:

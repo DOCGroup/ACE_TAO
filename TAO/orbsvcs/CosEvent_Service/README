@@ -1,11 +1,19 @@
                         CORBA COS Event Service
                         -----------------------
+
 The CosEvent_Service is a COS compilant Event Service.
 
 The service is registered with the naming service with the name
-"CosEventService" .It exposes the <EventChannel> interface which can be
+"CosEventService" .  It exposes the <EventChannel> interface which can be
 used by suppliers and consumers to send and receive events.
 
+WARNING: In TAO 1.0.14 we introduced a new implementation of the COS
+Event Service, this new implementation supports both the push and pull
+models, and does not use the Real-time Event Service as its backend.
+Both implementations are useful, for example, the native
+implementation is more efficient and fully featured, but cannot
+exploit the features in the RTEC, such as filtering and multicast
+based federations.
 
 To run the Event Channel:
 ------------------------
@@ -46,6 +54,28 @@ Event Channel based on event types and source ids.
 
         -p ["sourceID EventTypeID"]
         specifies a pair of sourceid and event type for the Supplier QOS.
+
+
+Running the native COS Event Channel
+------------------------------------
+
+	The native implementation of the COS Event Channel is run
+using:
+
+$ CosEvent_Service_Native
+
+	on top of the regular -ORB arguments and the service
+configurator parameters described in:
+
+$TAO_ROOT/docs/cec_options.html
+
+	this implementation also understands the following arguments:
+
+	-n name		Use <name> when binding the object
+			reference in the naming service
+	-r		Use rebind() to store the object
+			reference in the naming service
+	-x		do not use the naming service
 
 Author:
 -------
