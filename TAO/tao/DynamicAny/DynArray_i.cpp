@@ -103,7 +103,7 @@ TAO_DynArray_i::init (CORBA_TypeCode_ptr tc,
     ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
-  this->current_index_ = -1;
+  this->current_index_ = 0;
 
   CORBA::ULong numfields = this->get_arg_length (tc,
                                                  ACE_TRY_ENV);
@@ -433,7 +433,7 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
       // intial values defined in CORBA 2.3.1.
       if (!this->da_members_[i].in ())
         {
-          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 
+          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
                             0);
         }
 

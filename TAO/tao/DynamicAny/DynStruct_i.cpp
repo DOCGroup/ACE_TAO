@@ -104,7 +104,7 @@ TAO_DynStruct_i::init (CORBA_TypeCode_ptr tc,
   ACE_CHECK;
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
-  this->current_index_ = -1;
+  this->current_index_ = 0;
 
   CORBA::ULong numfields = tc->member_count (ACE_TRY_ENV);
   ACE_CHECK;

@@ -36,7 +36,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   this->type_ = any.type ();
-  this->current_index_ = -1;
+  this->current_index_ = 0;
 
   ACE_TRY
     {
