@@ -427,15 +427,6 @@ public:
                          CORBA::Short priority
                          ACE_ENV_ARG_DECL);
 
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  /// Accessor for the current thread policy of this POA.
-  /// @todo Johnny, check whether this is really needed here?
-  PortableServer::ThreadPolicyValue thread_policy (void) const;
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
   /// Accessor methods to POA state.
   /**
    * The POA can be in one of HOLDING, ACTIVE, DISCARDING, INACTIVE

@@ -231,16 +231,6 @@ TAO_POA::orb_core (void) const
   return this->orb_core_;
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-ACE_INLINE PortableServer::ThreadPolicyValue
-TAO_POA::thread_policy (void) const
-{
-  return this->cached_policies_.thread ();
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
 ACE_INLINE PortableInterceptor::AdapterState
 TAO_POA::get_adapter_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
