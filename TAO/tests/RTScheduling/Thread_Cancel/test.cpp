@@ -42,7 +42,9 @@ main (int argc, char* argv [])
       ACE_DEBUG ((LM_DEBUG,
 		  "Cancelling Threads.....\n"));
 
-      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
+								       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
       
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
 									  ACE_ENV_ARG_PARAMETER);

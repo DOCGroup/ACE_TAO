@@ -78,7 +78,9 @@ main (int argc, char* argv [])
                             1);
         }
 
-      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
+								       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
                                                                           ACE_ENV_ARG_PARAMETER);
@@ -115,8 +117,6 @@ main (int argc, char* argv [])
                            "Caught exception:");
       server->shutdown ();
 
-      orb->shutdown ();
-      orb->destroy ();
       return 0;
     }
   ACE_ENDTRY;

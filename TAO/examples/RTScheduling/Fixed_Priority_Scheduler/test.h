@@ -1,7 +1,7 @@
 //$Id$
 #ifndef TEST_H
 #define TEST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 
 #include "FP_Scheduler.h"
@@ -65,5 +65,5 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
 
 typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TEST_H*/
