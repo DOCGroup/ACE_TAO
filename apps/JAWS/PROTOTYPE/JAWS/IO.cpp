@@ -221,7 +221,7 @@ JAWS_Synch_IO::send_message (JAWS_IO_Handler *ioh,
 }
 
 // This only works on Win32
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 
 JAWS_Asynch_IO::JAWS_Asynch_IO (void)
 {
