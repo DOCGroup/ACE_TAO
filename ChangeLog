@@ -1,3 +1,8 @@
+Thu Jul 24 16:23:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/generate_performance_chart.sh: Changed the scale to which
+	  the graph is plotted.
+
 Thu Jul 24 14:00:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/DEV_IO.h (recv_n): 
