@@ -15,7 +15,37 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TAO IOR CORBALOC DLL"=.\ior_corbaloc\ior_corbaloc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "TAO IOR DLL DLL"=.\ior_dll\ior_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO IOR FILE DLL"=.\ior_file\ior_file.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

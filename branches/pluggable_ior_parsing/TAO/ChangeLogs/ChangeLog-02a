@@ -1,18 +1,37 @@
+Thu Jun 29 11:47:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Stub.h:
+          Add missing TAO_Export macro to the TAO_Stub_Auto_Ptr class
+
+        * tao/ior_corbaloc/ior_corbaloc.dsp:
+        * tao/ior_file/ior_file.dsp:
+          Add project files for the new IOR parsing modules
+
+        * tao/TAO.dsw:
+          Add the new project files to TAO
+
+        * tao/ior_file/FILE_Parser.i:
+          Add missing file and constructor
+
+        * tao/ior_corbaloc/CORBALOC_Parser.cpp:
+          Add a lot of @@ comments for Priyanka.  Got it to compile on
+          MSVC
+
 Tue Jun 27 10:45:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ior_corbaloc/Makefile: 
-	* tao/ior_corbaloc/ior_corbaloc_export.h: 
-	* tao/ior_corbaloc/CORBALOC_Parser.i : 
-	* tao/ior_corbaloc/CORBALOC_Parser.h: 
-	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
-	  Implemented part of  the corbaloc: style parser. Able to support
-	  <corbaloc:rir:/>. Done with seperating the <obj_addr> from the
-	  <obj_addr_list>
+        * tao/ior_corbaloc/Makefile:
+        * tao/ior_corbaloc/ior_corbaloc_export.h:
+        * tao/ior_corbaloc/CORBALOC_Parser.i :
+        * tao/ior_corbaloc/CORBALOC_Parser.h:
+        * tao/ior_corbaloc/CORBALOC_Parser.cpp :
+          Implemented part of  the corbaloc: style parser. Able to support
+          <corbaloc:rir:/>. Done with seperating the <obj_addr> from the
+          <obj_addr_list>
 
-	* tao/ORB.cpp : 
-	  Removed the file_string_to_object function as it is no longer
-	  needed.
-	
+        * tao/ORB.cpp :
+          Removed the file_string_to_object function as it is no longer
+          needed.
+
 Mon Jun 26 14:56:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.cpp:
