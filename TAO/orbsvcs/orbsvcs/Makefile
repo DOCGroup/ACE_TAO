@@ -56,8 +56,8 @@ IDL_FILES += \
 	CosTradingS \
 	SequencesC
 
-CPPFLAGS += -DTAO_HAS_DYNAMIC_PROPERTY_BUG
-TAO_IDLFLAGS += -DTAO_HAS_DYNAMIC_PROPERTY_BUG
+CPPFLAGS += -DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
+TAO_IDLFLAGS += -DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
 # In Trading Service dynamic properties, TAO has difficulties
 # marshalling a struct that has an object reference field.
 
