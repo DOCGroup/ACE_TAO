@@ -325,8 +325,10 @@ void TAO::PG_FactoryRegistry::register_factory (
       ACE_NEW_THROW_EX (role_info,
                         RoleInfo(5),
                         CORBA::NO_MEMORY());
+      ACE_CHECK;
 
       safe_entry.reset (role_info);
+      ACE_AUTO_PTR_RESET (safe_entry, role_info, RoleInfo);
       role_info->type_id_ = type_id;
     }
   else
@@ -641,6 +643,8 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   ACE_NEW_THROW_EX (result, ::PortableGroup::FactoryInfos(),
     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
+  ACE_CHECK_RETURN (0);
+
   RoleInfo * role_info = 0;
   if (this->registry_.find(role, role_info) == 0)
   {
@@ -669,6 +673,8 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   ::PortableGroup::FactoryInfos_var result;
   ACE_NEW_THROW_EX (result, ::PortableGroup::FactoryInfos(this->registry_.current_size()),
     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+
+   ACE_CHECK_RETURN (0);
 
   size_t result_length = 0;
 
