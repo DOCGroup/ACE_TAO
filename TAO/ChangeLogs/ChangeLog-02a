@@ -1,3 +1,7 @@
+Thu Jul  5 23:49:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP: Added IIOP_SSL_Transport to it.  
+
 Thu Jul  5 23:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/GIOP_Message_NonReactive_Base.h:
