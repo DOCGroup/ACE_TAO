@@ -593,7 +593,7 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 	}
 
       // Marina, please check for failed memory allocation.
-      ACE_NEW (bl, CosNaming::BindingList (bindings));
+      ACE_NEW_RETURN (bl, CosNaming::BindingList (bindings), 0);
       return 1;
     }
 }
