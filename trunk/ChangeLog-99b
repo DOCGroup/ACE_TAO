@@ -1,4 +1,9 @@
-Mon Jan 11 14:50:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jan 11 15:30:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.i (get_process_attributes,get_thread_attributes):
+	  Removed the constness from the return value to avoid Intel C++
+	  warnings.  Thanks to Karel Zuiderveld
+	  <kzuiderveld@vitalimages.com> for reporting this.
 
 	* bin/ADDIDL.DSM: A VB script to add new IDL files into DevStudio
 	  projects.   Thanks to Peter <weatp@syntron.com> for contributing
