@@ -1,4 +1,11 @@
-Sat Aug 29 15:45:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sat Aug 29 17:31:06 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server,server-fancy}.cpp:
+ 	  Updated these tests to be more robust and better designed.
+
+	* examples/IPC_SAP/SOCK_SAP/Makefile: Added the
+ 	  CPP-inserver-fancy.cpp file.  I'm not sure why I'd omitted it
+ 	  for so long...
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp: Cleaned up
  	  the code a bit to avoid warnings.  Thanks to David Levine for

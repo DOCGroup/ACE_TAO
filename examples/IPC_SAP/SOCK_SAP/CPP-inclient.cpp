@@ -112,7 +112,7 @@ private:
 Options::Options (void)
   : host_ (ACE_DEFAULT_SERVER_HOST),
     port_ (ACE_DEFAULT_SERVER_PORT),
-    sleep_time_ (0, 100000), // Sleep for 100 msecs between calls.
+    sleep_time_ (0, 0), // By default, don't sleep between calls.
     threads_ (10),
     quit_string_ ("q"),
     message_len_ (0),
@@ -181,17 +181,16 @@ Options::read (void *buf, size_t len, size_t &iteration)
   ACE_UNUSED_ARG (len);
 
   if (this->io_source_ == ACE_STDIN)
-    return ACE_OS::read (ACE_STDIN, buf, sizeof buf);
+    return ACE_OS::read (ACE_STDIN, buf, len);
   else if (iteration >= this->iterations_)
     return 0;
   else
     {
-      size_t size = this->message_len ();
       ACE_OS::memcpy (buf,
                       this->message_buf (),
-                      size);
+                      len);
       iteration++;
-      return size;
+      return len;
     }
 }
 
@@ -313,8 +312,8 @@ Options::oneway_client_test (void *)
   ACE_SOCK_Stream cli_stream;
 
   // Add 1 to the port to trigger the oneway test!
-  void *buf = options->shared_client_test (options->port () + 1,
-                                           cli_stream);
+  void *request = options->shared_client_test (options->port () + 1,
+                                               cli_stream);
   // This variable is allocated off the stack to obviate the need for
   // locking.
   size_t iteration = 0;
@@ -330,14 +329,14 @@ Options::oneway_client_test (void *)
   // "incomplete writes").
 
   for (ssize_t r_bytes;
-       (r_bytes = options->read (buf, len, iteration)) > 0;
+       (r_bytes = options->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (options->sleep_time ()))
-    if (ACE_OS::memcmp (buf,
+    if (ACE_OS::memcmp (request,
                         options->quit_string (),
                         ACE_OS::strlen (options->quit_string ())) == 0)
       break;
-    else if (cli_stream.send_n (buf, r_bytes) == -1)
+    else if (cli_stream.send_n (request, r_bytes) == -1)
       {
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",
@@ -349,7 +348,7 @@ Options::oneway_client_test (void *)
   // Close the connection.
   cli_stream.close ();
 
-  delete [] buf;
+  delete [] request;
   return (void *) result;
 }
 
@@ -427,7 +426,7 @@ Options::twoway_client_test (void *)
 
   timer.elapsed_time_incr (tv);
   double real_time = tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
-  double messages_per_sec = double (iteration * ACE_ONE_SECOND_IN_USECS) / real_time;
+  double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
 	      ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
