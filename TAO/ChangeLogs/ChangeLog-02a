@@ -1,9 +1,20 @@
+Wed Jul  4 14:05:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Makefile.bor
+          Updated to include AVStreams
+
+        * orbsvcs/tests/AVStreams/Component_Switching/*.bor
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/*.bor
+        * orbsvcs/tests/AVStreams/Simgle_Two_Stage/*.bor
+          Updated these BCB makefiles so that these tests are now
+          build without errors
+
 Tue Jul  3 20:09:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Strategies/TAO_Strategies.dsp:
 
 	  Added DIOP source files to project.
-	
+
 Tue Jul  3 20:09:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/Basic/Makefile:
