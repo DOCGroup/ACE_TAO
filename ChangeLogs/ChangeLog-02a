@@ -1,5 +1,8 @@
 Sun Jan 16 10:49:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* etc/Svc_Conf_l.cpp.diff: Added a #define for ACE_YY_NO_UNPUT
+	  to supress an unnecessary warning.
+
 	* tests/ARGV_Test.cpp (main): Fixed several warnings.
 
 	* ace/Process.i: Rearranged the order of the process_name() methods
