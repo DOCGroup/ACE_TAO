@@ -81,7 +81,7 @@ void
 BE_produce()
 {
   be_root *root;   // root of the AST made up of BE nodes
-  be_visitor *root_visitor; // visitor for root
+  be_visitor *visitor; // visitor for root
   be_visitor_context ctx; // context information for the visitor root
 
   // XXXASG - Here is where we will have a choice of what to initialize i.e.,
@@ -91,10 +91,10 @@ BE_produce()
   // right now we just force it to be the interpretive one.
   tao_cg->visitor_factory (new TAO_Interpretive_Visitor_Factory);
 
-  AST_Decl *d = idl_global->root (); // get the root
-
-  root = be_root::narrow_from_decl (d); // narrow it to the "be_root"
-  if (!root) // no root
+  // get the root node and narro wit down to be the back-end root node
+  AST_Decl *d = idl_global->root ();
+  root = be_root::narrow_from_decl (d);
+  if (!root)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
@@ -109,84 +109,99 @@ BE_produce()
   // instantiate a visitor context
   ctx.state (TAO_CodeGen::TAO_ROOT_CH); // set the codegen state
   // get a root visitor
-  root_visitor = tao_cg->make_visitor (&ctx);
-  if (root->accept (root_visitor) == -1)
+  visitor = tao_cg->make_visitor (&ctx);
+  // generate code for the client header
+  if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client header for Root failed\n"));
       BE_abort();
     }
-  (void) tao_cg->end_client_header (); // generate the last #endif
-  delete root_visitor; // it is our responsibility to free up the visitor
+  // it is our responsibility to free up the visitor
+  delete visitor;
 
   // (2) generate client inline
   // set the context information
+  ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_CI);
   // create a visitor
-  root_visitor = tao_cg->make_visitor (&ctx);
-  if (root->accept (root_visitor) == -1)
+  visitor = tao_cg->make_visitor (&ctx);
+  // generate code for the client inline file
+  if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client inline for Root failed\n"));
       BE_abort();
     }
-  delete root_visitor; // it is our responsibility to free up the visitor
+  // it is our responsibility to free up the visitor
+  delete visitor;
 
 
   // (3) generate client stubs
+  ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_CS);
   // create a visitor
-  root_visitor = tao_cg->make_visitor (&ctx);
-  if (root->accept (root_visitor) == -1)
+  visitor = tao_cg->make_visitor (&ctx);
+  // generate code for the client stubs
+  if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client stubs for Root failed\n"));
       BE_abort();
     }
-  delete root_visitor; // it is our responsibility to free up the visitor
+  // it is our responsibility to free up the visitor
+  delete visitor;
 
   // (4) generate server header
+  ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);
   // create a visitor
-  root_visitor = tao_cg->make_visitor (&ctx);
-  if (root->accept (root_visitor) == -1)
+  visitor = tao_cg->make_visitor (&ctx);
+  // generate code for the server header file
+  if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server header for Root failed\n"));
       BE_abort();
     }
-  (void) tao_cg->end_server_header (); // generate the last #endif
-  delete root_visitor; // it is our responsibility to free up the visitor
+  // it is our responsibility to free up the visitor
+  delete visitor;
 
   // (5) generate server inline
+  ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SI);
   // create a visitor
-  root_visitor = tao_cg->make_visitor (&ctx);
-  if (root->accept (root_visitor) == -1)
+  visitor = tao_cg->make_visitor (&ctx);
+  // generate code for the server inline file
+  if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server inline for Root failed\n"));
       BE_abort();
     }
-  delete root_visitor; // it is our responsibility to free up the visitor
+  // it is our responsibility to free up the visitor
+  delete visitor;
 
   // (6) generate server skeletons
+  ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SS);
   // create a visitor
-  root_visitor = tao_cg->make_visitor (&ctx);
-  if (root->accept (root_visitor) == -1)
+  visitor = tao_cg->make_visitor (&ctx);
+  // generate code for the server skeletons
+  if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server skeletons for Root failed\n"));
       BE_abort();
     }
-  delete root_visitor; // it is our responsibility to free up the visitor
+  // it is our responsibility to free up the visitor
+  delete visitor;
 }
 
 /*

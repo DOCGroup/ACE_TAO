@@ -43,6 +43,9 @@ public:
 
   // =helpers
 
+  void reset (void);
+  // reset the context
+
   void stream (TAO_OutStream *os);
   // set the output stream
 

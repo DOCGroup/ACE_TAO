@@ -202,27 +202,13 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   *os << node->local_name () << " (const " << node->local_name ()
       << " &); // copy ctor" << be_nl;
   *os << "~" << node->local_name () << " (void); // dtor\n";
+
   os->decr_indent ();
   *os << "};" << be_nl;
 
   // define a _ptr type. This is just an extension for convenience
   *os << "typedef " << node->local_name () << " *"
       << node->local_name () << "_ptr;\n";
-
-  // generate the Any <<= and >>= operators
-  os->indent ();
-  if (node->is_nested ())
-    *os << "friend ";
-  *os << "void operator<<= (CORBA::Any &, const " << node->local_name ()
-      << " &); // copying version" << be_nl;
-  if (node->is_nested ())
-    *os << "friend ";
-  *os << "void operator<<= (CORBA::Any &, " << node->local_name ()
-      << "*); // noncopying version" << be_nl;
-  if (node->is_nested ())
-    *os << "friend ";
-  *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
-      << node->local_name () << " *&);\n";
 
   // Generate the typecode decl
   if (node->is_nested ())
@@ -1140,59 +1126,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << " (void) // dtor" << be_nl
       << "{}\n\n";
 
-  // Any <<= and >>= operators
-  os->indent ();
-  *os << "void operator<<= (CORBA::Any &_tao_any, const "
-      << node->name () << " &_tao_elem) // copying" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", &"
-      << "_tao_elem, 1, _tao_env);" << be_uidt_nl
-      << "}" << be_nl;
-
-  *os << "void operator<<= (CORBA::Any &_tao_any, "
-      << node->name () << " *_tao_elem) // non copying" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem, 0, _tao_env);" << be_uidt_nl
-      << "}" << be_nl;
-
-  *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
-      << node->name () << " *&_tao_elem)" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
-      << "if (!_tao_any.type ()->equal (" << node->tc_name ()
-      << ", _tao_env)) return 0; // not equal" << be_nl
-      << "if (_tao_any.any_owns_data ())" << be_nl
-      << "{" << be_idt_nl
-      << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
-      << be_nl
-      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
-      << be_nl
-      << "if (stream.decode (" << node->tc_name ()
-      << ", _tao_elem, 0, _tao_env)" << be_nl
-      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
-      << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
-      << "_tao_elem, 1, _tao_env);"
-      << be_nl
-      << "  return 1;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl  // decode failed
-      << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl  // else any does not own the data
-      << "{" << be_idt_nl
-      << "_tao_elem = (" << node->name () << " *)_tao_any.value ();"
-      << be_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "}\n\n";
-
   // generate the typecode information here
   os->indent (); // start from current indentation level
   *os << "static const CORBA::Long _oc_" << node->flatname () << "_seq[] ="
@@ -1622,5 +1555,121 @@ be_visitor_sequence_elemtype::visit_typedef (be_typedef *node)
                         -1);
     }
   this->ctx_->alias (0);
+  return 0;
+}
+
+// ***************************************************************************
+// Sequence visitor for generating Any operator declarations in the client header
+// ***************************************************************************
+
+be_visitor_sequence_any_op_ch::be_visitor_sequence_any_op_ch
+(be_visitor_context *ctx)
+  : be_visitor_decl (ctx)
+{
+}
+
+be_visitor_sequence_any_op_ch::~be_visitor_sequence_any_op_ch (void)
+{
+}
+
+int
+be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
+{
+  if (node->cli_hdr_any_op_gen () || node->imported ())
+    return 0;
+
+  TAO_OutStream *os = tao_cg->client_header ();
+
+  // generate the Any <<= and >>= operators
+  os->indent ();
+  *os << "void operator<<= (CORBA::Any &, const " << node->name ()
+      << " &); // copying version" << be_nl;
+  *os << "void operator<<= (CORBA::Any &, " << node->name ()
+      << "*); // noncopying version" << be_nl;
+  *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
+      << node->name () << " *&);\n";
+
+  node->cli_hdr_any_op_gen (1);
+  return 0;
+}
+
+// ***************************************************************************
+// Sequence visitor for generating Any operator declarations in the client
+// stubs file
+// ***************************************************************************
+
+be_visitor_sequence_any_op_cs::be_visitor_sequence_any_op_cs
+(be_visitor_context *ctx)
+  : be_visitor_decl (ctx)
+{
+}
+
+be_visitor_sequence_any_op_cs::~be_visitor_sequence_any_op_cs (void)
+{
+}
+
+int
+be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
+{
+  if (node->cli_stub_any_op_gen () || node->imported ())
+    return 0;
+
+  TAO_OutStream *os = tao_cg->client_stubs ();
+
+  // Any <<= and >>= operators
+  os->indent ();
+  *os << "void operator<<= (CORBA::Any &_tao_any, const "
+      << node->name () << " &_tao_elem) // copying" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "_tao_any.replace (" << node->tc_name () << ", &"
+      << "_tao_elem, 1, _tao_env);" << be_uidt_nl
+      << "}" << be_nl;
+
+  *os << "void operator<<= (CORBA::Any &_tao_any, "
+      << node->name () << " *_tao_elem) // non copying" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "_tao_any.replace (" << node->tc_name () << ", "
+      << "_tao_elem, 0, _tao_env);" << be_uidt_nl
+      << "}" << be_nl;
+
+  *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
+      << node->name () << " *&_tao_elem)" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "if (!_tao_any.type ()->equal (" << node->tc_name ()
+      << ", _tao_env)) return 0; // not equal" << be_nl
+      << "if (_tao_any.any_owns_data ())" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
+      << be_nl
+      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
+      << be_nl
+      << "if (stream.decode (" << node->tc_name ()
+      << ", _tao_elem, 0, _tao_env)" << be_nl
+      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
+      << "{" << be_idt_nl
+      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
+      << "_tao_elem, 1, _tao_env);"
+      << be_nl
+      << "  return 1;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl  // decode failed
+      << "{" << be_idt_nl
+      << "delete _tao_elem;" << be_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl  // else any does not own the data
+      << "{" << be_idt_nl
+      << "_tao_elem = (" << node->name () << " *)_tao_any.value ();"
+      << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}\n\n";
+
+
+  node->cli_stub_any_op_gen (1);
   return 0;
 }

@@ -57,24 +57,6 @@ public:
   ~be_decl (void);
   // destructor
 
-  virtual int gen_client_header (void) = 0;
-  // Generates the client-side header information for the decl
-
-  virtual int gen_client_stubs (void) = 0;
-  // Generates the client-side stubs for the decl
-
-  virtual int gen_server_header (void) = 0;
-  // Generates the server-side header information for the decl
-
-  virtual int gen_server_skeletons (void) = 0;
-  // Generates the server-side skeletons for the decl
-
-  virtual int gen_client_inline (void) = 0;
-  // Generates the client-side inline for the decl
-
-  virtual int gen_server_inline (void) = 0;
-  // Generates the server-side inlines for the decl
-
   virtual void size_type (SIZE_TYPE);
   // set the size type
 
@@ -112,6 +94,8 @@ public:
   idl_bool srv_hdr_gen (void);
   idl_bool srv_skel_gen (void);
   idl_bool srv_inline_gen (void);
+  idl_bool cli_hdr_any_op_gen (void);
+  idl_bool cli_stub_any_op_gen (void);
 
   // set the flag indicating that code generation is done
   void cli_hdr_gen (idl_bool);
@@ -120,6 +104,8 @@ public:
   void srv_hdr_gen (idl_bool);
   void srv_skel_gen (idl_bool);
   void srv_inline_gen (idl_bool);
+  void cli_hdr_any_op_gen (idl_bool);
+  void cli_stub_any_op_gen (idl_bool);
 
   idl_bool is_child (be_decl *node);
   // am I a direct child of node?
@@ -160,6 +146,8 @@ protected:
   idl_bool srv_hdr_gen_;
   idl_bool srv_skel_gen_;
   idl_bool srv_inline_gen_;
+  idl_bool cli_hdr_any_op_gen_;
+  idl_bool cli_stub_any_op_gen_;
 
   char *fullname_;
   // our full scoped name

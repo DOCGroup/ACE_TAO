@@ -38,42 +38,6 @@ be_native::be_native (UTL_ScopedName *n,
 }
 
 int
-be_native::gen_client_header (void)
-{
-  return 0;
-}
-
-int
-be_native::gen_client_stubs (void)
-{
-  return 0;
-}
-
-int
-be_native::gen_server_header (void)
-{
-  return 0;
-}
-
-int
-be_native::gen_server_skeletons (void)
-{
-  return 0;
-}
-
-int
-be_native::gen_client_inline (void)
-{
-  return 0;
-}
-
-int
-be_native::gen_server_inline (void)
-{
-  return 0;
-}
-
-int
 be_native::gen_typecode (void)
 {
   return 0;

@@ -41,24 +41,6 @@ public:
 
   virtual ~be_type (void);
 
-  virtual int gen_client_header (void) = 0;
-  // Generates the client-side header information for the type
-
-  virtual int gen_client_stubs (void) = 0;
-  // Generates the client-side stubs for the type
-
-  virtual int gen_server_header (void) = 0;
-  // Generates the server-side header information for the type
-
-  virtual int gen_server_skeletons (void) = 0;
-  // Generates the server-side skeletons for the type
-
-  virtual int gen_client_inline (void)  = 0;
-  // Generates the client-side inline for the type
-
-  virtual int gen_server_inline (void) = 0;
-  // Generates the server-side inlines for the type
-
   virtual int gen_var_defn (void);
   // generate the _var class definition
 

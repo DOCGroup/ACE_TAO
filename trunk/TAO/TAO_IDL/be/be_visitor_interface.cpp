@@ -77,6 +77,8 @@ be_visitor_interface::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SS);
       break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CI:
     case TAO_CodeGen::TAO_INTERFACE_SI:
       return 0; // nothing to be done
@@ -135,6 +137,8 @@ be_visitor_interface::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_CONSTANT_CS);
       break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_CI:
@@ -196,6 +200,12 @@ be_visitor_interface::visit_enum (be_enum *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_ENUM_CS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CI:
     case TAO_CodeGen::TAO_INTERFACE_SH:
@@ -261,6 +271,12 @@ be_visitor_interface::visit_exception (be_exception *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
     case TAO_CodeGen::TAO_INTERFACE_SI:
@@ -339,6 +355,8 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SS);
       break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CI:
     case TAO_CodeGen::TAO_INTERFACE_SI:
       return 0; // nothing to be done
@@ -400,6 +418,12 @@ be_visitor_interface::visit_structure (be_structure *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
     case TAO_CodeGen::TAO_INTERFACE_SI:
@@ -465,6 +489,12 @@ be_visitor_interface::visit_union (be_union *node)
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_CS);
       break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CS);
+      break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
@@ -528,6 +558,12 @@ be_visitor_interface::visit_typedef (be_typedef *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
     case TAO_CodeGen::TAO_INTERFACE_SI:
@@ -730,25 +766,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << node->local_name () << " (const " << node->local_name () << " &);"
           << be_nl
           << "void operator= (const " << node->local_name () << " &);\n";
+
       os->decr_indent ();
       *os << "};\n\n";
       os->gen_endif ();
 
-
-      // generate the Any <<= and >>= operators
-      os->indent ();
-      if (node->is_nested ())
-        *os << "friend ";
-      *os << "void operator<<= (CORBA::Any &, " << node->local_name ()
-          << "_ptr); // copying version" << be_nl;
-      if (node->is_nested ())
-        *os << "friend ";
-      *os << "void operator<<= (CORBA::Any &, " << node->local_name ()
-          << "_ptr *); // noncopying version" << be_nl;
-      if (node->is_nested ())
-        *os << "friend ";
-      *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
-          << node->local_name () << "_ptr &);\n";
 
       // generate the typecode decl. If we are in the outermost scope, our typecode
       // decl is extern
@@ -981,57 +1003,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << be_nl
       << "{" << be_idt_nl
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
-      << "}\n\n";
-
-  // Any <<= and >>= operators
-  os->indent ();
-  *os << "void operator<<= (CORBA::Any &_tao_any, "
-      << node->name () << "_ptr _tao_elem) // copying" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
-      << "CORBA::Object_ptr *_tao_obj_ptr;" << be_nl
-      << "ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);" << be_nl
-      << "*_tao_obj_ptr = " << node->name ()
-      << "::_duplicate (_tao_elem);" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_obj_ptr, 1, _tao_env);" << be_uidt_nl
-      << "}" << be_nl;
-
-  *os << "void operator<<= (CORBA::Any &_tao_any, "
-      << node->name () << "_ptr *_tao_elem) // non copying" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem, 0, _tao_env);" << be_uidt_nl
-      << "}" << be_nl;
-
-  *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
-      << node->name () << "_ptr &_tao_elem)" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_elem = " << node->name () << "::_nil ();" << be_nl
-      << "if (!_tao_any.type ()->equal (" << node->tc_name ()
-      << ", _tao_env)) return 0; // not equal" << be_nl
-      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
-      << be_nl
-      << "CORBA::Object_ptr *_tao_obj_ptr;" << be_nl
-      << "ACE_NEW_RETURN (_tao_obj_ptr, CORBA::Object_ptr, 0);" << be_nl
-      << "if (stream.decode (" << node->tc_name ()
-      << ", _tao_obj_ptr, 0, _tao_env)" << be_nl
-      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
-      << "{" << be_idt_nl
-      << "_tao_elem = " << node->name ()
-      << "::_narrow (*_tao_obj_ptr, _tao_env);" << be_nl
-      << "if (_tao_env.exception ()) return 0; // narrow failed" << be_nl
-      << "CORBA::release (*_tao_obj_ptr);" << be_nl
-      << "*_tao_obj_ptr = _tao_elem;" << be_nl
-      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
-      << "_tao_obj_ptr, 1, _tao_env);"
-      << be_nl
-      << "if (_tao_env.exception ()) return 0; // narrow failed" << be_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_nl
-      << "return 0; // failure" << be_uidt_nl
       << "}\n\n";
 
   os->indent ();
@@ -1856,155 +1827,137 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-#if 0
-  // XXXASG - DO NOT DELETE until the visit_scope has been tested
-  if (node->nmembers () > 0)
-    {
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
-      while (!si->is_done ())
-        {
-          AST_Decl *d = si->item ();
-          si->next ();
-          be_decl *bd = be_decl::narrow_from_decl (d);
-          // Only printout the operations, nested interfaces and
-          // structures only go in the main declaration.
-          if (d->imported () || bd == 0)
-            {
-              continue;
-            }
-          if (bd->accept (this) == -1)
-            {
-              delete si;
-              return -1;
-            }
-        }
-      delete si;
-    }
-#endif
-
   return 0;
 }
 
-#if 0
-int be_visitor_interface_collocated_ss::visit_operation (be_operation *node)
+// ***************************************************************************
+// Interface visitor for generating Any operator declarations in the client header
+// ***************************************************************************
+
+be_visitor_interface_any_op_ch::be_visitor_interface_any_op_ch
+(be_visitor_context *ctx)
+  : be_visitor_interface (ctx)
 {
-  TAO_OutStream *os = tao_cg->server_skeletons ();
-  be_interface *intf = this->ctx_->be_scope_as_interface ();
+}
 
-  // retrieve the return type again because we have used bt to also retrieve
-  // the argument types
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+be_visitor_interface_any_op_ch::~be_visitor_interface_any_op_ch (void)
+{
+}
 
-  if (bt->write_as_return (os, bt) == -1)
-    {
-      return -1;
-    }
+int
+be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
+{
+  if (node->cli_hdr_any_op_gen () || node->imported ())
+    return 0;
 
-  *os << " " << intf->full_coll_name () << "::"
-      << node->local_name () << " ";
+  TAO_OutStream *os = tao_cg->client_header ();
 
-  be_visitor_args_decl visitor (os);
-  if (node->accept (&visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) args decl failed\n"), -1);
-    }
-  *os << "\n";
+  // generate the Any <<= and >>= operator declarations
   os->indent ();
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "// Any operators for interface " << node->name () << be_nl;
+  *os << "void operator<<= (CORBA::Any &, const " << node->name ()
+      << " &); // copying version" << be_nl;
+  *os << "void operator<<= (CORBA::Any &, " << node->name ()
+      << "*); // noncopying version" << be_nl;
+  *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
+      << node->name () << " *&);\n";
 
-  if (bt->node_type () != AST_Decl::NT_pre_defined
-      || be_predefined_type::narrow_from_decl (bt)->pt () != AST_PredefinedType::PT_void)
-    {
-      *os << "return ";
-    }
-
-  *os << "this->servant_->" << node->local_name () << " (\n";
-  os->incr_indent (0);
-  os->incr_indent (0);
-
+  // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_collocated_ss::"
-                         "visit_operation - "
-                         "codegen for scope failed\n"),
-                        -1);
+                         "(%N:%l) be_visitor_interface::visit_interface - "
+                         "codegen for scope failed\n"), -1);
     }
 
-  os->indent ();
-  *os << " _tao_environment\n";
-  os->decr_indent ();
-  *os << ");\n";
-  os->decr_indent (0);
-  os->decr_indent (0);
-  *os << "}\n\n";
-
+  node->cli_hdr_any_op_gen (1);
   return 0;
 }
 
-int be_visitor_interface_collocated_ss::visit_attribute (be_attribute *node)
+// ***************************************************************************
+// Interface visitor for generating Any operator declarations in the client
+// stubs file
+// ***************************************************************************
+
+be_visitor_interface_any_op_cs::be_visitor_interface_any_op_cs
+(be_visitor_context *ctx)
+  : be_visitor_interface (ctx)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_interface *intf = this->ctx_->be_scope_as_interface ();
+}
 
-  os->indent (); // start with the current indentation level
+be_visitor_interface_any_op_cs::~be_visitor_interface_any_op_cs (void)
+{
+}
 
-  be_type* bt = be_type::narrow_from_decl (node->field_type ());
+int
+be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
+{
+  if (node->cli_stub_any_op_gen () || node->imported ())
+    return 0;
 
-  if (bt->write_as_return (os, bt) == -1)
-    {
-      return -1;
-    }
+  TAO_OutStream *os = tao_cg->client_stubs ();
 
-  *os << be_nl << intf->full_coll_name ()
-      << "::" << node->local_name () << " (" << be_idt << be_idt_nl
-      << "CORBA::Environment &_tao_environment" << be_uidt_nl
-      << ")" << be_uidt_nl
+  // generate the Any <<= and >>= operator declarations
+  // Any <<= and >>= operators
+  os->indent ();
+  *os << "void operator<<= (CORBA::Any &_tao_any, "
+      << node->name () << "_ptr _tao_elem) // copying" << be_nl
       << "{" << be_idt_nl
-      << "return this->servant_->"
-      << node->local_name () << "(_tao_environment);" << be_uidt_nl
-      << "}\n";
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "CORBA::Object_ptr *_tao_obj_ptr;" << be_nl
+      << "ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);" << be_nl
+      << "*_tao_obj_ptr = " << node->name ()
+      << "::_duplicate (_tao_elem);" << be_nl
+      << "_tao_any.replace (" << node->tc_name () << ", "
+      << "_tao_obj_ptr, 1, _tao_env);" << be_uidt_nl
+      << "}" << be_nl;
 
-  if (!node->readonly ())
+  *os << "void operator<<= (CORBA::Any &_tao_any, "
+      << node->name () << "_ptr *_tao_elem) // non copying" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "_tao_any.replace (" << node->tc_name () << ", "
+      << "_tao_elem, 0, _tao_env);" << be_uidt_nl
+      << "}" << be_nl;
+
+  *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
+      << node->name () << "_ptr &_tao_elem)" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::Environment _tao_env;" << be_nl
+      << "_tao_elem = " << node->name () << "::_nil ();" << be_nl
+      << "if (!_tao_any.type ()->equal (" << node->tc_name ()
+      << ", _tao_env)) return 0; // not equal" << be_nl
+      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
+      << be_nl
+      << "CORBA::Object_ptr *_tao_obj_ptr;" << be_nl
+      << "ACE_NEW_RETURN (_tao_obj_ptr, CORBA::Object_ptr, 0);" << be_nl
+      << "if (stream.decode (" << node->tc_name ()
+      << ", _tao_obj_ptr, 0, _tao_env)" << be_nl
+      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
+      << "{" << be_idt_nl
+      << "_tao_elem = " << node->name ()
+      << "::_narrow (*_tao_obj_ptr, _tao_env);" << be_nl
+      << "if (_tao_env.exception ()) return 0; // narrow failed" << be_nl
+      << "CORBA::release (*_tao_obj_ptr);" << be_nl
+      << "*_tao_obj_ptr = _tao_elem;" << be_nl
+      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
+      << "_tao_obj_ptr, 1, _tao_env);"
+      << be_nl
+      << "if (_tao_env.exception ()) return 0; // narrow failed" << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_nl
+      << "return 0; // failure" << be_uidt_nl
+      << "}\n\n";
+
+
+  // all we have to do is to visit the scope and generate code
+  if (this->visit_scope (node) == -1)
     {
-      *os << be_nl
-          << "void "
-          << intf->full_coll_name ()
-          << "::" << node->local_name ()
-          << " (" << be_idt << be_idt_nl;
-      // XXXASG - TODO
-      be_visitor_args_decl vdecl (os);
-      vdecl.current_type_name (bt->name ());
-      vdecl.argument_direction (AST_Argument::dir_IN);
-      if (bt->accept (&vdecl) == -1)
-        return -1;
-
-      *os << " _tao_value," << be_nl
-          << "CORBA::Environment &_tao_environment" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "this->servant_->" << node->local_name ()
-          << " (" << be_idt << be_idt_nl
-          << "_tao_value," << be_nl
-          << "_tao_environment" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
-          << "}\n\n";
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::visit_interface - "
+                         "codegen for scope failed\n"), -1);
     }
+
+  node->cli_stub_any_op_gen (1);
   return 0;
 }
-
-int be_visitor_interface_collocated_ss::visit_argument (be_argument *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-  *os << node->local_name () << ",\n";
-  return 0;
-}
-#endif

@@ -69,57 +69,6 @@ be_string::compute_tc_name (void)
                                                              I_FALSE), NULL));
 }
 
-// Code generation
-
-int
-be_string::gen_client_header (void)
-{
-  TAO_OutStream *ch; // output stream
-
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
-  ch = cg->client_header ();
-  ch->indent ();
-  *ch << "char *";
-
-  return 0;
-}
-
-int
-be_string::gen_client_stubs (void)
-{
-  return 0;
-}
-
-int
-be_string::gen_server_header (void)
-{
-  return 0;
-}
-
-int
-be_string::gen_server_skeletons (void)
-{
-  return 0;
-}
-
-// Generates the client-side inline information
-int
-be_string::gen_client_inline (void)
-{
-  // nothing to be done
-  return 0;
-}
-
-// Generates the server-side inline
-int
-be_string::gen_server_inline (void)
-{
-  // nothing to be done
-  return 0;
-}
-
 int
 be_string::gen_typecode (void)
 {

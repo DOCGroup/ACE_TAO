@@ -50,12 +50,79 @@ int be_visitor_root::visit_root (be_root *node)
                          "failed to initialize context\n"), -1);
     }
 
-  // all we have to do is to visit the scope
+  // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root::visit_root - "
                          "codegen for scope failed\n"), -1);
+    }
+
+  // The last thing we need to do is make one more pass thru the entire tree
+  // and generate code for all the <<= and >>= operators for all the
+  // user-defined types.
+  //
+  // XXXASG - this part of the code may be conditionally generated because at
+  // times it is not necessary to have these operators at all. TO-DO.
+  be_visitor_context ctx (*this->ctx_);
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_CS:
+      ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+      (void) tao_cg->end_server_header ();
+      return 0;
+      break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_root::"
+                           "visit_constant - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+      break;
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_root - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // generate the <<= and >>= operators for all the user-defined data types in
+  // the outermost scope
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::"
+                         "visit_root - "
+                         "failed to generate Any operators\n"
+                         ),  -1);
+    }
+  delete visitor;
+
+  // generate any final code such as #endifs
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+      (void) tao_cg->end_client_header ();
+      break;
+    default:
+      break;
     }
   return 0;
 }
@@ -83,6 +150,8 @@ be_visitor_root::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_CONSTANT_CS);
       break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
@@ -142,6 +211,12 @@ be_visitor_root::visit_enum (be_enum *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_ENUM_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SH:
@@ -205,6 +280,12 @@ be_visitor_root::visit_exception (be_exception *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
@@ -277,6 +358,12 @@ be_visitor_root::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_ROOT_SS:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SS);
       break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS);
+      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -332,6 +419,8 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_ROOT_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CI);
       break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
@@ -404,6 +493,12 @@ be_visitor_root::visit_module (be_module *node)
     case TAO_CodeGen::TAO_ROOT_SS:
       ctx.state (TAO_CodeGen::TAO_MODULE_SS);
       break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_MODULE_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_MODULE_ANY_OP_CS);
+      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -461,6 +556,12 @@ be_visitor_root::visit_structure (be_structure *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
@@ -524,6 +625,12 @@ be_visitor_root::visit_union (be_union *node)
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_CS);
       break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CS);
+      break;
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
@@ -586,6 +693,12 @@ be_visitor_root::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CS);
       break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS);
+      break;
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
@@ -641,7 +754,8 @@ int
 be_visitor_root_ch::init (void)
 {
   // first open the client-side header file for writing
-  if (tao_cg->client_header (idl_global->be_get_client_hdr_fname ()) == -1)
+  if (tao_cg->start_client_header (idl_global->be_get_client_hdr_fname ())
+      == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_root_ch::init - "
@@ -649,6 +763,7 @@ be_visitor_root_ch::init (void)
       return -1;
     }
 
+  // init the stream
   this->ctx_->stream (tao_cg->client_header ());
   return 0;
 }
@@ -670,7 +785,8 @@ int
 be_visitor_root_ci::init (void)
 {
   // first open the client-side inline file for writing
-  if (tao_cg->client_inline (idl_global->be_get_client_inline_fname ()) == -1)
+  if (tao_cg->start_client_inline (idl_global->be_get_client_inline_fname ())
+      == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_root_ci - "
@@ -699,14 +815,16 @@ int
 be_visitor_root_cs::init (void)
 {
   // first open the file
-  if (tao_cg->client_stubs (idl_global->be_get_client_stub_fname ()) == -1)
+  if (tao_cg->start_client_stubs (idl_global->be_get_client_stub_fname ())
+      == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_cs - "
                          "Error opening client stub file\n"), -1);
     }
 
-  this->ctx_->stream (tao_cg->client_stubs ()); // init stream
+  // init stream
+  this->ctx_->stream (tao_cg->client_stubs ());
   return 0;
 }
 
@@ -727,7 +845,8 @@ int
 be_visitor_root_sh::init (void)
 {
   // open the file
-  if (tao_cg->server_header (idl_global->be_get_server_hdr_fname ()) == -1)
+  if (tao_cg->start_server_header (idl_global->be_get_server_hdr_fname ())
+      == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_sh::init - "
@@ -756,14 +875,16 @@ int
 be_visitor_root_si::init (void)
 {
   // first open the file for writing
-  if (tao_cg->server_inline (idl_global->be_get_server_inline_fname ()) == -1)
+  if (tao_cg->start_server_inline (idl_global->be_get_server_inline_fname ())
+      == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_si::init - "
                          "server inline open failed\n"), -1);
     }
 
-  this->ctx_->stream (tao_cg->server_inline ()); // init stream
+  // init stream
+  this->ctx_->stream (tao_cg->server_inline ());
   return 0;
 }
 
@@ -784,13 +905,43 @@ int
 be_visitor_root_ss::init (void)
 {
   // first open the file for writing
-  if (tao_cg->server_skeletons (idl_global->be_get_server_skeleton_fname ()) == -1)
+  if (tao_cg->start_server_skeletons (idl_global
+                                      ->be_get_server_skeleton_fname ())
+      == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_ss::init - "
                          "Error opening server skeletons file\n"), -1);
     }
 
-  this->ctx_->stream (tao_cg->server_skeletons ()); // set stream
+  // set stream
+  this->ctx_->stream (tao_cg->server_skeletons ());
+  return 0;
+}
+
+// ***************************************************************************
+// Root visitor for generating Any operator declarations in the client header
+// and stub
+// ***************************************************************************
+
+be_visitor_root_any_op::be_visitor_root_any_op (be_visitor_context *ctx)
+  : be_visitor_root (ctx)
+{
+}
+
+be_visitor_root_any_op::~be_visitor_root_any_op (void)
+{
+}
+
+int
+be_visitor_root_any_op::visit_root (be_root *node)
+{
+  // all we have to do is to visit the scope and generate code
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root::visit_root - "
+                         "codegen for scope failed\n"), -1);
+    }
   return 0;
 }

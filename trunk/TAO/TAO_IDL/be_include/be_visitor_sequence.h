@@ -211,4 +211,48 @@ protected:
 
 };
 
+class be_visitor_sequence_any_op_ch : public be_visitor_decl
+{
+  //
+  // = TITLE
+  //   be_visitor_sequence_any_op_ch
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for sequence that generates the Any operator
+  //   declarations
+  //
+
+public:
+  be_visitor_sequence_any_op_ch (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_sequence_any_op_ch (void);
+  // destructor
+
+  virtual int visit_sequence (be_sequence *node);
+  // visit sequence
+};
+
+class be_visitor_sequence_any_op_cs : public be_visitor_decl
+{
+  //
+  // = TITLE
+  //   be_visitor_sequence_any_op_cs
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for sequence that generates the Any operator
+  //   implementations
+  //
+
+public:
+  be_visitor_sequence_any_op_cs (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_sequence_any_op_cs (void);
+  // destructor
+
+  virtual int visit_sequence (be_sequence *node);
+  // visit sequence
+};
+
 #endif /* TAO_BE_VISITOR_SEQUENCE_H */

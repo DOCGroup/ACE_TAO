@@ -41,24 +41,6 @@ public:
                 UTL_StrList *p);
   // constructor
 
-  virtual int gen_client_header (void);
-  // generate client header
-
-  virtual int gen_client_stubs (void);
-  // generate client side stubs
-
-  virtual int gen_server_header (void);
-  // generate server header
-
-  virtual int gen_server_skeletons (void);
-  // generate server skeletons
-
-  virtual int gen_client_inline (void);
-  // Generates the client-side inline for the operation
-
-  virtual int gen_server_inline (void);
-  // Generates the server-side inlines for the operation
-
   virtual int argument_count (void);
   // return the count of members
 

@@ -31,6 +31,8 @@ be_decl::be_decl (void)
     srv_hdr_gen_ (I_FALSE),
     srv_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
+    cli_hdr_any_op_gen_ (I_FALSE),
+    cli_stub_any_op_gen_ (I_FALSE),
     fullname_ (0),
     flatname_ (0),
     repoID_ (0),
@@ -49,6 +51,8 @@ be_decl::be_decl (AST_Decl::NodeType type, UTL_ScopedName *n, UTL_StrList
     srv_hdr_gen_ (I_FALSE),
     srv_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
+    cli_hdr_any_op_gen_ (I_FALSE),
+    cli_stub_any_op_gen_ (I_FALSE),
     fullname_ (0),
     size_type_ (be_decl::SIZE_UNKNOWN),
     encap_len_ (-1)
@@ -98,32 +102,6 @@ be_decl::size_type (be_decl::SIZE_TYPE st)
     // get overwritten to VARIABLE, it is fine. Such a situation occurs only
     // when setting the sizes of structures and unions
     this->size_type_ = st;
-
-
-#if 0
-  // if we are just a typedef, nothing else to do
-  if (this->node_type () == AST_Decl::NT_typedef)
-    return;
-
-  // update our parent if it is of a specific type
-  if (this->is_nested ())
-    {
-      // get the scope we are defined in
-      be_decl *d = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in
-                                                           ()));
-      switch (d->node_type ())
-        {
-          // only these define valid scopes whose size needs to be set the same
-          // as ours.
-        case AST_Decl::NT_struct:
-        case AST_Decl::NT_union:
-          d->size_type (st); // call recursively to set the size type of our
-                             // ancestors
-        default:
-          return; // we are done
-        }
-    } // end else
-#endif
 }
 
 // compute stringified fully scoped name
@@ -481,6 +459,18 @@ be_decl::cli_stub_gen (void)
 }
 
 idl_bool
+be_decl::cli_hdr_any_op_gen (void)
+{
+  return this->cli_hdr_any_op_gen_;
+}
+
+idl_bool
+be_decl::cli_stub_any_op_gen (void)
+{
+  return this->cli_stub_any_op_gen_;
+}
+
+idl_bool
 be_decl::cli_inline_gen (void)
 {
   return this->cli_inline_gen_;
@@ -515,6 +505,18 @@ void
 be_decl::cli_stub_gen (idl_bool val)
 {
   this->cli_stub_gen_ = val;
+}
+
+void
+be_decl::cli_hdr_any_op_gen (idl_bool val)
+{
+  this->cli_hdr_any_op_gen_ = val;
+}
+
+void
+be_decl::cli_stub_any_op_gen (idl_bool val)
+{
+  this->cli_stub_any_op_gen_ = val;
 }
 
 void

@@ -117,5 +117,55 @@ public:
 
 };
 
+class be_visitor_structure_any_op_ch : public be_visitor_structure
+{
+  //
+  // = TITLE
+  //   be_visitor_structure_any_op_ch
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for structure that generates the Any operator
+  //   declarations
+  //
+
+public:
+  be_visitor_structure_any_op_ch (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_structure_any_op_ch (void);
+  // destructor
+
+  virtual int visit_structure (be_structure *node);
+  // visit structure
+
+  virtual int visit_field (be_field *node);
+  // visit field
+};
+
+class be_visitor_structure_any_op_cs : public be_visitor_structure
+{
+  //
+  // = TITLE
+  //   be_visitor_structure_any_op_cs
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for structure that generates the Any operator
+  //   implementations
+  //
+
+public:
+  be_visitor_structure_any_op_cs (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_structure_any_op_cs (void);
+  // destructor
+
+  virtual int visit_structure (be_structure *node);
+  // visit structure
+
+  virtual int visit_field (be_field *node);
+  // visit field
+};
+
 
 #endif // TAO_BE_VISITOR_STRUCTURE_H

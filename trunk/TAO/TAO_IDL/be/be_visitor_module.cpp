@@ -74,6 +74,8 @@ be_visitor_module::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_MODULE_CS:
       ctx.state (TAO_CodeGen::TAO_CONSTANT_CS);
       break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
     case TAO_CodeGen::TAO_MODULE_CI:
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
@@ -133,6 +135,12 @@ be_visitor_module::visit_enum (be_enum *node)
       break;
     case TAO_CodeGen::TAO_MODULE_CS:
       ctx.state (TAO_CodeGen::TAO_ENUM_CS);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_MODULE_CI:
     case TAO_CodeGen::TAO_MODULE_SH:
@@ -196,6 +204,12 @@ be_visitor_module::visit_exception (be_exception *node)
       break;
     case TAO_CodeGen::TAO_MODULE_CS:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CS);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
@@ -268,6 +282,12 @@ be_visitor_module::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_MODULE_SS:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SS);
       break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS);
+      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -323,6 +343,8 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_MODULE_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CI);
       break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
     case TAO_CodeGen::TAO_MODULE_CS:
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
@@ -386,6 +408,12 @@ be_visitor_module::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_MODULE_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
       break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CS);
+      break;
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
@@ -448,6 +476,12 @@ be_visitor_module::visit_union (be_union *node)
     case TAO_CodeGen::TAO_MODULE_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_CS);
       break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CS);
+      break;
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
@@ -509,6 +543,12 @@ be_visitor_module::visit_typedef (be_typedef *node)
       break;
     case TAO_CodeGen::TAO_MODULE_CS:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CS);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS);
       break;
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
@@ -654,4 +694,31 @@ be_visitor_module_sh::visit_module (be_module *node)
     }
   return 0;
 
+}
+
+// ***************************************************************************
+// Module visitor for generating Any operator declarations in the client header
+// and stub
+// ***************************************************************************
+
+be_visitor_module_any_op::be_visitor_module_any_op (be_visitor_context *ctx)
+  : be_visitor_module (ctx)
+{
+}
+
+be_visitor_module_any_op::~be_visitor_module_any_op (void)
+{
+}
+
+int
+be_visitor_module_any_op::visit_module (be_module *node)
+{
+  // all we have to do is to visit the scope and generate code
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::visit_module - "
+                         "codegen for scope failed\n"), -1);
+    }
+  return 0;
 }

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_argument.h
 //
@@ -14,9 +14,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_ARGUMENT_H)
@@ -37,24 +37,6 @@ public:
   be_argument (AST_Argument::Direction d, AST_Type *ft, UTL_ScopedName *n,
                UTL_StrList *p);
   // constructor
-
-  virtual int gen_client_header (void);
-  // generate client header for the argument
-
-  virtual int gen_client_stubs (void);
-  // generate client side stubs for the argument
-
-  virtual int gen_server_header (void);
-  // generate server header for the argument
-
-  virtual int gen_server_skeletons (void);
-  // generate server skeletons for the argument
-
-  virtual int gen_client_inline (void);
-  // Generates the client-side inline for the argument
-
-  virtual int gen_server_inline (void);
-  // Generates the server-side inlines for the argument
 
   // Visiting
   virtual int accept (be_visitor *visitor);
