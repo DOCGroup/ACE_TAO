@@ -75,10 +75,25 @@ public:
 
   virtual void service_context_list (TAO_Stub *&stub,
                                      IOP::ServiceContextList &service_list,
+                                     CORBA::Boolean restart,
                                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Add relevant stuff to the service context list
+
+  virtual int raise_comm_failure (
+      TAO_GIOP_Invocation *invoke,
+      TAO_Profile *profile,
+      CORBA::Environment &ACE_TRY_ENV);
+  // Check whether we need to raise an exception or go for a
+  // reinvocaton.
+
+  virtual int raise_transient_failure (
+      TAO_GIOP_Invocation *invoke,
+      TAO_Profile *profile,
+      CORBA::Environment &ACE_TRY_ENV);
+  // Check whether we need to raise an exception or go for a
+  // reinvocaton.
 
 private:
 
@@ -96,6 +111,11 @@ private:
 
   void get_object_group_version (TAO_Profile *profile);
   // Get the ObjectGroupRef version from the profile in use.
+
+  CORBA::Boolean restart_policy_check (IOP::ServiceContextList &service_list,
+                                       const TAO_Profile *profile);
+  // Check whether the right flags are available so that we can issue a
+  // restart.
 
   CORBA::Boolean primary_failed_;
   // A flag that indicates that the primary has already failed. So any
