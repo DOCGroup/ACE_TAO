@@ -5147,8 +5147,8 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntoa");
 
-  char *addrstr = new char[17];
-  unsigned long ipaddr = ntohl(addr.s_addr);
+  static char addrstr[INET_ADDRSTRLEN + 1] = { 0 };
+  ACE_UINT32 ipaddr = ntohl (addr.s_addr);
   //printf("Socket address %X, IP address %X.\n",addr.s_addr,ipaddr);
   sprintf(addrstr, "%d.%d.%d.%d",
           ((ipaddr & 0xff000000) >> 24) & 0x000000ff,
@@ -5162,9 +5162,10 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
 int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
+#if defined (ACE_LACKS_INET_ATON)
   ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
 
-  if (ip_addr == (ACE_UINT32) htonl ((ACE_UINT32) ~0)
+  if (ip_addr == INADDR_NONE
       // Broadcast addresses are weird...
       && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
     return 0;
@@ -5172,15 +5173,14 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     return 0;
   else
     {
-#if !defined(_UNICOS)
-      ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
-#else /* ! _UNICOS */
-      // on UNICOS, perform assignment to bitfield, since doing the above
-      // actually puts the address outside of the 32-bit bitfield
-      addr->s_addr = ip_addr;
-#endif /* ! _UNICOS */
+      addr->s_addr = ip_addr;  // Network byte ordered
       return 1;
     }
+#else
+  // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
+  // address (255.255.255.255).
+  ACE_OSCALL_RETURN (::inet_aton (host_name, addr), int, 0);
+#endif  /* ACE_LACKS_INET_ATON */
 }
 
 struct tm *

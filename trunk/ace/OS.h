@@ -3907,8 +3907,13 @@ typedef fd_set ACE_FD_SET_TYPE;
 // Define INET loopback address constant if it hasn't been defined
 // Dotted Decimal 127.0.0.1 == Hexidecimal 0x7f000001
 # if !defined (INADDR_LOOPBACK)
-#   define INADDR_LOOPBACK 0x7f000001
+#   define INADDR_LOOPBACK ((ACE_UINT32) 0x7f000001)
 # endif /* INADDR_LOOPBACK */
+
+// The INADDR_NONE address is generally 255.255.255.255.
+# if !defined (INADDR_NONE)
+#   define INADDR_NONE ((ACE_UINT32) 0xffffffff)
+# endif /* INADDR_NONE */
 
 // Define INET string length constants if they haven't been defined
 //
@@ -5792,7 +5797,7 @@ public:
                          int optname,
                          char *optval,
                          int *optlen);
-  static long inet_addr (const char *name);
+  static unsigned long inet_addr (const char *name);
   static char *inet_ntoa (const struct in_addr addr);
   static int inet_aton (const char *strptr,
                         struct in_addr *addr);

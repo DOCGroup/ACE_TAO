@@ -6567,7 +6567,7 @@ ACE_OS::getservbyname_r (const char *svc,
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
-ACE_INLINE long
+ACE_INLINE unsigned long
 ACE_OS::inet_addr (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::inet_addr");
@@ -6603,7 +6603,7 @@ ACE_OS::inet_addr (const char *name)
             }
         }
     }
-  return valid ? (long) htonl (ret) : -1L;
+  return valid ? htonl (ret) : INADDR_NONE;
 #elif defined (ACE_HAS_NONCONST_GETBY)
   return ::inet_addr ((char *) name);
 #else
