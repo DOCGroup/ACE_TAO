@@ -89,7 +89,7 @@ Ping_Pong::handle_input (ACE_HANDLE)
 
   ssize_t n = ACE::recv (this->handle_, this->buf_, this->buflen_);
 
-  if (n != this->buflen_)
+  if (n != (ssize_t) this->buflen_)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) reading [%d] %p\n", handle_, "read"), -1);
 
   ACE_DEBUG ((LM_DEBUG, 
