@@ -26,12 +26,14 @@ CORBA::ORB_var orb;
 int showIOR = 0;
 int showNSonly = 0;
 
+const char* USAGE = "Usage: %s [ --name <name> ] [--destroy]\n";
 int
 main (int argc, char *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
   int i;
+  int destroy_after_unbind = 0;
   ACE_TRY
     {
       CORBA::ORB_var orb =
@@ -55,10 +57,13 @@ main (int argc, char *argv[])
               argv++;
               name = *argv;
             }
+          else if (ACE_OS::strcmp (*argv, "--destroy") == 0)
+            {
+              destroy_after_unbind = 1;
+            }
           else if (ACE_OS::strncmp(*argv, "--", 2) == 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Usage: %s [ --name <name> ]\n", pname));
+              ACE_DEBUG ((LM_DEBUG, USAGE, pname));
               return 1;
             }
           argc--;
@@ -67,8 +72,7 @@ main (int argc, char *argv[])
 
       if (name == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Usage: %s [ --name <name> ]\n", pname));
+          ACE_DEBUG ((LM_DEBUG, USAGE, pname));
           return 1;
         }
         // make a copy
@@ -135,7 +139,19 @@ main (int argc, char *argv[])
       the_name[ntoks - 1].id = CORBA::string_dup (lastname);
       if (kind != 0)
         the_name[ntoks - 1].kind = CORBA::string_dup (kind);
+
+      // This needs to be bounded by a try/catch
+      CORBA::Object_var the_context = root_nc->resolve (the_name ACE_ENV_ARG_PARAMETER);
       root_nc->unbind (the_name ACE_ENV_ARG_PARAMETER );
+
+      if (destroy_after_unbind)
+        {
+          CosNaming::NamingContext_var nc =
+            CosNaming::NamingContext::_narrow (the_context.in () ACE_ENV_ARG_PARAMETER);
+          if (! CORBA::is_nil(nc.in()))
+            nc->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
+
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -17,7 +17,8 @@
 #define TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/PortableServer.h"
+#include <tao/PortableServer/PortableServer.h>
+#include <tao/LocalObject.h>
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -32,7 +33,7 @@ class TAO_Naming_Service_Persistence_Factory;
  * context file off disk only when a request to the context is made.
  */
 class TAO_Naming_Export TAO_Storable_Naming_Context_Activator :
-  public PortableServer::ServantActivator
+  public virtual PortableServer::ServantActivator
 {
 public:
 
