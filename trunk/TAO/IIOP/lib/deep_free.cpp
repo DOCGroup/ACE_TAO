@@ -661,14 +661,16 @@ TAO_Marshal_Sequence::deep_free(
 	  else // exception computing size
 	    {
 	      //	      CORBA_release(tc2);
+	      env.exception (new CORBA_BAD_TYPECODE(COMPLETED_MAYBE));
 	      dmsg ("marshaling TAO_Marshal_Sequence::deep_free detected error");
-	      retval = CORBA_TypeCode::TRAVERSE_STOP;
+	      return CORBA_TypeCode::TRAVERSE_STOP;
 	    }
 	} 
       else // exception computing content type
 	{
+	  env.exception (new CORBA_BAD_TYPECODE(COMPLETED_MAYBE));
 	  dmsg ("marshaling TAO_Marshal_Sequence::deep_free detected error");
-	  retval = CORBA_TypeCode::TRAVERSE_STOP;
+	  return CORBA_TypeCode::TRAVERSE_STOP;
 	}
     }
   else // no typecode
@@ -677,7 +679,6 @@ TAO_Marshal_Sequence::deep_free(
       dmsg ("TAO_Marshal_Struct::deep_free detected error");
       return CORBA_TypeCode::TRAVERSE_STOP;
     }
-  return retval;
 }
 
 // deep_free for Array
@@ -975,12 +976,15 @@ TAO_Marshal_Except::deep_free (
 			       CORBA_Environment	&env
 			       )
 {
+#if 0
+  // temporarily commented out to make compiler happy
   CORBA_Long i, 
     member_count;      // number of fields in the struct
   CORBA_TypeCode::traverse_status retval = CORBA_TypeCode::TRAVERSE_CONTINUE;
   CORBA_TypeCode_ptr param;
   CORBA_Long size, alignment;
   CDR stream;
+#endif
 
   if (tc)
     {

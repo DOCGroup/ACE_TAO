@@ -1,4 +1,9 @@
-Tue Jul  1 11:36:24 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+Tue Jul  1 16:17:24 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* A number of files were updated with ACE_Svc_Export so that
+	variables and classes do not remain unresolved for Win32
+	platform. Similarly, Irfan had sent me a list of warnings that the
+	Win NT compiler was giving. These are fixed.
 
 	* marshal.*: Changed the way make_marshal_object works. Instead of
 	having a switch statement, we index into a private table of

@@ -25,8 +25,8 @@
 
 #  include "sequence.h"
 
-void CORBA_release (CORBA_Request_ptr req);
-CORBA_Boolean CORBA_is_nil (CORBA_Request_ptr req);
+void ACE_Svc_Export CORBA_release (CORBA_Request_ptr req);
+CORBA_Boolean ACE_Svc_Export CORBA_is_nil (CORBA_Request_ptr req);
 
 typedef CORBA_SEQUENCE <CORBA_TypeCode_ptr> CORBA_ExceptionList;
 typedef CORBA_ExceptionList *CORBA_ExceptionList_ptr;

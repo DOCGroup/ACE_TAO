@@ -947,7 +947,6 @@ TAO_Marshal_String::decode (
   CDR *stream = (CDR *) context;  // context is the CDR stream
   CORBA_TypeCode::traverse_status retval = CORBA_TypeCode::TRAVERSE_CONTINUE;
   CORBA_ULong len = 0;
-  CORBA_ULong bounds;
   CORBA_String str;
 
   // On decode, omit the check against specified string bounds,
@@ -998,7 +997,6 @@ TAO_Marshal_Sequence::decode (
   CORBA_TypeCode_ptr	tc2;  // typecode of the element
   size_t  size; // size of element
   CORBA_ULong  bounds;
-  CORBA_ULong  len;
   char *value;
 
   // First unmarshal the sequence length ... we trust it to be
@@ -1584,7 +1582,6 @@ TAO_Marshal_WString::decode (
   CORBA_TypeCode::traverse_status retval = CORBA_TypeCode::TRAVERSE_CONTINUE;
   CORBA_WChar *str = *(CORBA_WChar **) data;
   CORBA_ULong len;
-  CORBA_ULong bounds;
 
   // On decode, omit the check against specified wstring bounds,
   // and cope with illegal "zero length" strings (all lengths on
