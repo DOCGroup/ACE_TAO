@@ -3964,8 +3964,8 @@ ACE_OS::unique_name (const void *object,
   // <object>.
   TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
-                   ACE_TEXT ("%x%d"),
-                   ACE_reinterpret_cast (ptr_arith_t, object),
+                   ACE_TEXT ("%lx%d"),
+                   ACE_reinterpret_cast (long, object),
                    ACE_OS::getpid ());
   ACE_OS::strncpy (name,
                    temp_name,
