@@ -1,3 +1,8 @@
+Mon Jan 14 14:43:53 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Makefile:
+	  Re-generate dependencies.
+
 Mon Dec 24 12:47:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* src/Options.cpp:
