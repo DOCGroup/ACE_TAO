@@ -594,6 +594,10 @@ public:
     // to re-order header files in corba.h to eliminate the "used
     // before declared inline" warnings/errors on certain compilers.
 
+    ~App_Allocated (void);
+    // Destructor is also necessary because we now allocate some of
+    // the objects held here.
+
     // = Resources
 
     // Note:  These should change to _var types when they are available.
