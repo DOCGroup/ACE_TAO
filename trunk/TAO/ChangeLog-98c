@@ -1,3 +1,9 @@
+Thu Jan 29 15:55:25 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/clnt.h: 
+	* orbsvcs/tests/Logger/clnt.cpp: 
+	  We need to keep a reference to the ORB is some place.
+
 Thu Jan 29 14:59:01 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tests/POA/On_Demand_Activation/server.cpp: 

@@ -61,6 +61,9 @@ private:
   int test_nesting_;
   // Test nested naming context or not.
 
+  CORBA::ORB_var orb_;
+  // Keep a pointer to the orb, to avoid accidental deletes.
+
   Logger_var logger_1_;
   // Logger obj ref
 

@@ -107,12 +107,12 @@ Logger_Client::init (int argc, char **argv)
   TAO_TRY
     {
       // Initialize ORB.
-      CORBA::ORB_var orb = 
+      this->orb_ = 
 	CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::Object_var naming_obj =
-	orb->resolve_initial_references ("NameService");
+	this->orb_->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the POA.\n"),
@@ -149,6 +149,12 @@ Logger_Client::init (int argc, char **argv)
 	ACE_ERROR_RETURN ((LM_ERROR, "narrow returned nil"), -1);
 
       ACE_DEBUG ((LM_DEBUG, "Logger_Factory narrowed\n"));
+
+      CORBA::String_var str =
+	this->orb_->object_to_string (factory.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      ACE_DEBUG ((LM_DEBUG, "The factory IOR is <%s>\n", str.in ()));
 
       // Now retrieve the Logger obj ref corresponding to key1 and key2
       this->logger_1_ = factory->make_logger ("key1", TAO_TRY_ENV);
