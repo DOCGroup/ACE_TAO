@@ -2522,11 +2522,9 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Get the object key octets.
   const CORBA::Octet *key_data = key.get_buffer ();
 
-#if (TAO_NO_IOR_TABLE == 0)
   // Skip the object key prefix since we have already checked for
   // this.
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
-#endif /* TAO_NO_IOR_TABLE */
 
   // Check the root indicator.
   char root_key_type = key_data[starting_at];
@@ -2651,9 +2649,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
   // Calculate the prefix size.
   CORBA::ULong prefix_size = 0;
-#if (TAO_NO_IOR_TABLE == 0)
   prefix_size += TAO_OBJECTKEY_PREFIX_SIZE;
-#endif /* TAO_NO_IOR_TABLE */
 
   // If we are dealing with a persistent POA and user ids are being
   // used, then we need to add the POA name length field to the object
@@ -2706,14 +2702,12 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   // Keeps track of where the next infomation goes; start at 0 byte.
   CORBA::ULong starting_at = 0;
 
-#if (TAO_NO_IOR_TABLE == 0)
   // Add the object key prefix.
   ACE_OS::memcpy (&buffer[starting_at],
                   &objectkey_prefix[0],
                   TAO_OBJECTKEY_PREFIX_SIZE);
 
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
-#endif /* TAO_NO_IOR_TABLE */
 
   // Copy the root byte.
   buffer[starting_at] = (CORBA::Octet) this->root_key_type ();

@@ -137,9 +137,11 @@ TAO_Adapter_Registry::dispatch (TAO_ObjectKey &key,
   // If ObjectID not in table or reference is nil raise
   // OBJECT_NOT_EXIST.
 
-  if (status == -1 || CORBA::is_nil (forward_to))
+  if (status == -1)
     ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
 #endif /* TAO_NO_IOR_TABLE */
+  if (CORBA::is_nil (forward_to))
+    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
 }
 
 CORBA::Object_ptr
