@@ -1,3 +1,11 @@
+Mon Mar 11 17:43:00 2002  Si Mong Park  <spark@ociweb.com>
+
+	* ace/Svc_Conf_l.cpp:
+	  Minor comment change to make diff file.
+
+	* etc/Svc_Conf_l.cpp.diff:
+	  Updated diff file for Svc_Conf_l.cpp.
+
 Mon Mar 11 16:59:42 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/TP_Reactor_Test.h (new file):
