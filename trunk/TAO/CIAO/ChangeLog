@@ -1,3 +1,14 @@
+Wed Jul  7 12:22:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/Repository_Manager.cpp:
+        * DAnCE/RepositoryManager/Update_Plan.cpp:
+        * DAnCE/RepositoryManager/Repository_Manager_conf.h:
+
+          Addressed Ossama Othman's code review comments.
+          Thanks Ossama.
+
 Wed Jul  7 11:42:15 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* docs/TODO.html:
