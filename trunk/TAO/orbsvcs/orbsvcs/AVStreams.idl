@@ -5,7 +5,7 @@
 // IDL for Control and Management of Audio/Video Streams
 // Revised Submission
 
-#include "PropertyService.idl"
+#include "CosPropertyService.idl"
 
 module AVStreams{
 

@@ -18,6 +18,10 @@ IDL_FILES = \
 	RtecSchedulerS \
 	RtecEventChannelAdminC \
 	RtecEventChannelAdminS \
+	CosPropertyServiceS \
+	CosPropertyServiceC \
+	AVStreamsS \
+	AVStreamsC \
 
 FILES= $(IDL_FILES) \
 	Event_Utilities \
@@ -68,6 +72,14 @@ RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h: RtecEve
 
 .PRECIOUS: RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h
 RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h: RtecEventChannelAdmin.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $^
+
+.PRECIOUS: CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceC.h CosPropertyServiceS.h
+CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceC.h CosPropertyServiceS.h: CosPropertyService.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $^
+
+.PRECIOUS: AVStreamsC.cpp AVStreamsS.cpp AVStreamsC.h AVStreamsS.h
+AVStreamsC.cpp AVStreamsS.cpp AVStreamsC.h AVStreamsS.h: AVStreams.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl $^
 
 clean:
