@@ -5,7 +5,7 @@ Mon Jun 30 12:00:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Sat Jun 28 08:27:27 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: added definitions of ACE_SHLIB_HANDLE and
-	  ACE_DEFAULT_SHLIB_MODE on platforms other that
+	  ACE_DEFAULT_SHLIB_MODE on platforms other than
 	  ACE_HAS_SVR4_DYNAMIC_LINKING and hpux.
 
 	* ace/OS.i: split definitions of ACE_OS::cond_* member
@@ -25,7 +25,7 @@ Sat Jun 28 08:27:27 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Profile_Timer.h (elapsed_time): commented out unused arg "et".
 
-	* ace/Read_Buffer.cpp (rec_read): initialized local variable c to
+	* ace/Read_Buffer.cpp (rec_read): initialized local variable "c" to
 	  make sure that it is always defined before use.
 
 	* ace/SPIPE_Acceptor.cpp (remove): don't declare local variable
