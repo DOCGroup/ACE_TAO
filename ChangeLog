@@ -1,3 +1,8 @@
+Mon Mar  14 10:07:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+	  Fixed cleanup target for VxWorks builds.
+
 Sat Mar  12 13:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
