@@ -212,7 +212,6 @@ TAO_Notify_ConsumerAdmin_i::obtain_notification_push_supplier (
     default:
       ACE_THROW_RETURN (CORBA::BAD_PARAM (),
                         CosNotifyChannelAdmin::ProxySupplier::_nil ());
-      break;
     }
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier_ret;
