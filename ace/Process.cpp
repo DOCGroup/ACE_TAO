@@ -129,6 +129,9 @@ ACE_Process::start (char *argv[], char *envp[])
   if (buf == 0)
     return -1;
 
+  // If there is no current working directory, we *MUST* pass 0, not "".
+  char *cwd = strlen (cwd_) == 0 ? 0 : cwd_;
+
   BOOL fork_result = 
     ::CreateProcess (NULL,
 		     buf,
@@ -137,7 +140,7 @@ ACE_Process::start (char *argv[], char *envp[])
 		     TRUE, // Allow handle inheritance.
 		     NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
 		     envp, // Environment.
-		     this->cwd_, // Current directory to start in.
+		     cwd, // Current directory to start in.
 		     &this->startup_info_,
 		     &this->process_info_);
 
@@ -145,7 +148,7 @@ ACE_Process::start (char *argv[], char *envp[])
     {
       ::CloseHandle (this->startup_info_.hStdInput);
       ::CloseHandle (this->startup_info_.hStdOutput);
-      ::CloseHandle (this->startup_info_.hStdOutput);
+      ::CloseHandle (this->startup_info_.hStdError);
       this->set_handles_called_ = 0;
     }
 
