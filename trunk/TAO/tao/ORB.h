@@ -772,6 +772,11 @@ private:
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
+  CORBA::Object_ptr dll_string_to_object (const char* service_name,
+                                          CORBA::Environment &ACE_TRY_ENV);
+  // Uses the service configurator to dynamically load an
+  // implementation of an object, and create that object.
+
   CORBA::Object_ptr ior_string_to_object (const char* ior,
                                           CORBA::Environment &ACE_TRY_ENV);
   // Convert an OMG IOR into an object reference.
