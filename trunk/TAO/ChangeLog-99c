@@ -1,3 +1,33 @@
+1999-05-04  Seth Widoff  <swidoff@cs.cmu.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/CosTrading.idl:	
+	* orbsvcs/orbsvcs/CosTradingRepos.idl:		
+	* orbsvcs/orbsvcs/CosTradingDynamic.idl:			
+	  Broke the CosTrading.idl file up so that each idl file
+	  gets one module.
+
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader.h:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+	  For the stem_id used in federated query, obliterated the calls
+	  to rand_r, since they apparently return -1 on NT. Since random
+	  numbers were kind of a cludge anyway, the trader now establishes 
+	  a unique sequence number space by generating a prefix consisting 
+	  of IP address and process id. If the trader is running on a
+	  machine without an IP address, then it defaults to a random
+	  prefix (using plain old rand, this time). Thanks to 
+          Ulf Jährig <ujaehrig@desys.com> for pointing this problem out. 
+
+	  I also adapted all servants in the trader to use POA reference
+	  counting. 
+ 	
+	* orbsvcs/tests/Offer_Exporter.cpp:
+	* orbsvcs/tests/TT_Info.cpp: 
+	  Fixed the includes to respect the new idl file schema. 
+
 Tue May  4 17:45:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tao/orb.idl:
