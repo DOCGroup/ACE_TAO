@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : protableserver {
+  after += Deployment_stub
+  libs  += Deployment_stub
+  includes += $(CIAO_ROOT)/DnC
+}

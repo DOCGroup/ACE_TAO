@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : protableserver {
+  after += Deployment_svnt
+  libs  += Deployment_svnt
+  includes += $(CIAO_ROOT)/DnC
+}
