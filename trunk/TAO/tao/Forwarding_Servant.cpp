@@ -28,7 +28,7 @@ TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
   CORBA::Exception *exception
     = new PortableServer::ForwardRequest (this->forward_to_.in ());
 
-  CORBA::Any any (exception->_type (), exception);
+  CORBA::Any any (exception->_type (), exception, 1);
 
   request->set_exception (any, env);
 
