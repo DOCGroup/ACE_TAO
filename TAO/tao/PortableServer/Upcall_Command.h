@@ -37,10 +37,10 @@ namespace TAO
    * The actual upcall into a servant is executed through a concrete
    * @c Upcall_Command object.  This is necessary to simplify upcall
    * interactions in the presence of interceptors, such as when the
-   * send_exception() interception point must be invoked when the
+   * @c send_exception() interception point must be invoked when the
    * servant operation throws an exception.
    */
-  class Upcall_Command
+  class TAO_PortableServer_Export Upcall_Command
   {
   public:
 

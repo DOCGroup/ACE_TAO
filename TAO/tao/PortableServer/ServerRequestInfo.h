@@ -19,13 +19,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/orbconf.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -67,7 +65,7 @@ namespace TAO
    * @note This class is currently not meant to be reference counted
    *       since it is instantiated on the stack.
    */
-  class TAO_PortableServer_Export ServerRequestInfo
+  class ServerRequestInfo
     : public virtual PortableInterceptor::ServerRequestInfo,
       public virtual CORBA::LocalObject
   {

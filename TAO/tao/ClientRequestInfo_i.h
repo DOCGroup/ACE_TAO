@@ -49,7 +49,7 @@ namespace CORBA
  * @brief Implementation of the PortableInterceptor::ClientRequestInfo
  *        interface.
  */
-class TAO_Export TAO_ClientRequestInfo_i
+class TAO_ClientRequestInfo_i
 {
 public:
 
