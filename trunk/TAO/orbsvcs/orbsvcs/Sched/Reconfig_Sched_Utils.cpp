@@ -60,7 +60,7 @@ TAO_Reconfig_Scheduler_Entry (RtecScheduler::RT_Info &rt_info)
     effective_exec_multiplier_ (0),
     effective_period_ (0)
 {
-  // Store the RT_Info fields.  
+  // Store the RT_Info fields.
   this->orig_rt_info_data (*actual_rt_info_);
 }
 
@@ -388,6 +388,46 @@ TAO_RSE_Reset_Visitor::visit (TAO_Reconfig_Scheduler_Entry &rse)
 ///////////////////////////////////////////
 // class TAO_MUF_Reconfig_Sched_Strategy //
 ///////////////////////////////////////////
+
+// Ordering function to compare the DFS finish times of
+// two task entries, so qsort orders these in topological
+// order, with the higher times *first*
+int
+TAO_MUF_Reconfig_Sched_Strategy::comp_entry_finish_times (const void *first, const void *second)
+{
+  const TAO_Reconfig_Scheduler_Entry *first_entry =
+    * ACE_reinterpret_cast (const TAO_Reconfig_Scheduler_Entry *const *,
+                            first);
+
+  const TAO_Reconfig_Scheduler_Entry *second_entry =
+    * ACE_reinterpret_cast (const TAO_Reconfig_Scheduler_Entry *const *,
+                            second);
+
+  // sort blank entries to the end
+  if (! first_entry)
+  {
+    return (second_entry) ? 1 : 0;
+  }
+  else if (! second_entry)
+  {
+    return -1;
+  }
+
+  // Sort entries with higher forward DFS finishing times before those
+  // with lower forward DFS finishing times.
+  if (first_entry->fwd_finished () >
+      second_entry->fwd_finished ())
+  {
+    return -1;
+  }
+  else if (first_entry->fwd_finished () <
+           second_entry->fwd_finished ())
+  {
+    return 1;
+  }
+
+  return 0;
+}
 
 // Ordering function used to qsort an array of TAO_Reconfig_Scheduler_Entry
 // pointers into a total <priority, subpriority> ordering.  Returns -1 if the

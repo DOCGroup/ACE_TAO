@@ -238,6 +238,11 @@ class TAO_ORBSVCS_Export TAO_MUF_Reconfig_Sched_Strategy
 {
 public:
 
+  static int comp_entry_finish_times (const void *first, const void *second);
+  // Ordering function to compare the DFS finish times of
+  // two task entries, so qsort orders these in topological
+  // order, with the higher times *first*.
+
   static int total_priority_comp (const void *, const void *);
   // Ordering function used to qsort an array of
   // TAO_Reconfig_Scheduler_Entry pointers into a total <priority,
