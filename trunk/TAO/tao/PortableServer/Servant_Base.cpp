@@ -207,8 +207,8 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
 
   // Fetch the skeleton for this operation
   if (this->_find (opname,
-		   skel,
-		   static_cast <unsigned int> (req.operation_length())) == -1)
+                   skel,
+                   static_cast <unsigned int> (req.operation_length())) == -1)
     {
       ACE_THROW (CORBA::BAD_OPERATION ());
     }
@@ -219,10 +219,10 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
     && !req.deferred_reply ();
 
   ACE_DEBUG ((LM_DEBUG,
-	      "@@@@@@@@@@@@@@  %d | %d | %d\n",
-	      req.sync_with_server (),
-	      req.response_expected (),
-	      req.deferred_reply ()));
+              "@@@@@@@@@@@@@@  %d | %d | %d\n",
+              req.sync_with_server (),
+              req.response_expected (),
+              req.deferred_reply ()));
 
   ACE_TRY
     {
@@ -253,13 +253,13 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
       // the appropriate reply to the client
       if (send_reply)
         {
-	  if (req.collocated ())
-	    {
-	      // Report the exception to the collocated client.
-	      ACE_RE_THROW;
-	    }
-	  else
-	    req.tao_send_reply_exception (ex);
+          if (req.collocated ())
+            {
+              // Report the exception to the collocated client.
+              ACE_RE_THROW;
+            }
+          else
+            req.tao_send_reply_exception (ex);
         }
     }
   ACE_ENDTRY;
