@@ -16,61 +16,7 @@
 # include "tao/POA.i"
 #endif /* ! __ACE_INLINE__ */
 
-// Timeprobes class
-#include "tao/Timeprobe.h"
-
 ACE_RCSID(tao, POA, "$Id$")
-
-#if defined (ACE_ENABLE_TIMEPROBES)
-
-static const char *TAO_POA_Timeprobe_Description[] =
-  {
-    "POA::locate_poa_i - start",
-    "POA::locate_poa_i - end",
-
-    "POA::locate_poa_and_servant_i - start",
-    "POA::locate_poa_and_servant_i - end",
-
-    "POA::find_servant - start",
-    "POA::find_servant - end",
-
-    "POA::dispatch_servant - start",
-    "POA::dispatch_servant - end",
-
-    "POA::parse_key - start",
-    "POA::parse_key - end",
-
-    "Servant::_dispatch - start",
-    "Servant::_dispatch - end",
-  };
-
-enum
-  {
-    // Timeprobe description table start key
-    TAO_POA_LOCATE_POA_I_START = 200,
-    TAO_POA_LOCATE_POA_I_END,
-
-    TAO_POA_LOCATE_POA_AND_SERVANT_I_START,
-    TAO_POA_LOCATE_POA_AND_SERVANT_I_END,
-
-    TAO_POA_FIND_SERVANT_START,
-    TAO_POA_FIND_SERVANT_END,
-
-    TAO_POA_DISPATCH_SERVANT_START,
-    TAO_POA_DISPATCH_SERVANT_END,
-
-    TAO_POA_PARSE_KEY_START,
-    TAO_POA_PARSE_KEY_END,
-
-    TAO_SERVANT_DISPATCH_START,
-    TAO_SERVANT_DISPATCH_END
-  };
-
-// Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description,
-                                  TAO_POA_LOCATE_POA_I_START);
-
-#endif /* ACE_ENABLE_TIMEPROBES */
 
 #if !defined (TAO_NO_IOR_TABLE)
 
@@ -2059,8 +2005,6 @@ TAO_POA::locate_servant_i (const char *operation,
                            TAO_POA_Current *poa_current,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  // ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_POA_AND_SERVANT_I_START);
-
   // If the POA has the RETAIN policy, the POA looks in the Active
   // Object Map to find if there is a servant associated with the
   // Object Id value from the request. If such a servant exists, the
@@ -2069,15 +2013,11 @@ TAO_POA::locate_servant_i (const char *operation,
     {
       PortableServer::Servant servant = 0;
 
-      {
-        ACE_FUNCTION_TIMEPROBE (TAO_POA_FIND_SERVANT_START);
-
-        if (this->active_object_map ().find_servant_and_user_id_using_system_id (system_id,
-                                                                                 servant,
-                                                                                 poa_current->object_id_) != -1)
-          // Success
-          return servant;
-      }
+      if (this->active_object_map ().find_servant_and_user_id_using_system_id (system_id,
+                                                                               servant,
+                                                                               poa_current->object_id_) != -1)
+        // Success
+        return servant;
     }
 
   // If the POA has the NON_RETAIN policy or has the RETAIN policy but
@@ -2242,8 +2182,6 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
                     CORBA::Boolean &is_system_id,
                     TAO_Temporary_Creation_Time &poa_creation_time)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
-
   // Start at zero.
   CORBA::ULong starting_at = 0;
 
@@ -2714,7 +2652,7 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
   TAO_Lifespan_Policy *lifespan_policy = 0;
   ACE_NEW_THROW_EX (lifespan_policy,
                     TAO_Lifespan_Policy (value,
-                                       rootPOA.in ()),
+                                         rootPOA.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
 
@@ -2740,7 +2678,7 @@ TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
   TAO_Id_Uniqueness_Policy *id_uniqueness_policy = 0;
   ACE_NEW_THROW_EX (id_uniqueness_policy,
                     TAO_Id_Uniqueness_Policy (value,
-                                       rootPOA.in ()),
+                                              rootPOA.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
 
@@ -2766,7 +2704,7 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
   TAO_Id_Assignment_Policy *id_assignment_policy = 0;
   ACE_NEW_THROW_EX (id_assignment_policy,
                     TAO_Id_Assignment_Policy (value,
-                                       rootPOA.in ()),
+                                              rootPOA.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
 
@@ -2794,7 +2732,7 @@ TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
   TAO_Implicit_Activation_Policy *implicit_activation_policy = 0;
   ACE_NEW_THROW_EX (implicit_activation_policy,
                     TAO_Implicit_Activation_Policy (value,
-                                       rootPOA.in ()),
+                                                    rootPOA.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
 
@@ -2820,7 +2758,7 @@ TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
   TAO_Servant_Retention_Policy *servant_retention_policy = 0;
   ACE_NEW_THROW_EX (servant_retention_policy,
                     TAO_Servant_Retention_Policy (value,
-                                       rootPOA.in ()),
+                                                  rootPOA.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
 
@@ -2846,7 +2784,7 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
   TAO_Request_Processing_Policy *request_processing_policy = 0;
   ACE_NEW_THROW_EX (request_processing_policy,
                     TAO_Request_Processing_Policy (value,
-                                       rootPOA.in ()),
+                                                   rootPOA.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
 

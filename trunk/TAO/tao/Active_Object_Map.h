@@ -243,7 +243,7 @@ public:
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
-  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  void set_active_object_map (TAO_Active_Object_Map *active_object_map);
   // Set the active map.
 
 protected:
@@ -342,7 +342,7 @@ public:
                                                         PortableServer::ObjectId &user_id) = 0;
   // Can be used with any policy.
 
-  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  void set_active_object_map (TAO_Active_Object_Map *active_object_map);
   // Set the active map.
 
 protected:
@@ -405,7 +405,7 @@ public:
                                     TAO_Active_Object_Map::Map_Entry *&entry) = 0;
   // Must be used with SYSTEM_ID policy.
 
-  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  void set_active_object_map (TAO_Active_Object_Map *active_object_map);
   // Set the active map.
 
 protected:
