@@ -1,3 +1,9 @@
+Mon Apr 26 15:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/examples/trap/purify4.1.txt:
+          Removed this file, it contains purify results and shouldn't
+          belong in the repo.
+
 Thu Apr 22 20:45:27 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ASNMP/tests/Octet_Test.cpp:
