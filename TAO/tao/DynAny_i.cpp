@@ -424,7 +424,18 @@ TAO_DynAny_i::insert_reference (CORBA::Object_ptr value,
 
   if (kind == CORBA::tk_objref)
     {
-      this->value_ <<= value;
+      CORBA::Object_ptr *_tao_object_ptr;
+
+      ACE_NEW (_tao_object_ptr,
+               CORBA::Object_ptr);
+
+      *_tao_object_ptr = CORBA::Object::_duplicate (value);
+
+      this->value_.replace (this->value_.type (),
+                            (void*)_tao_object_ptr,
+                            1,
+                            ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {
