@@ -1,28 +1,34 @@
+Thu Apr 16 20:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-pthread.h: added ACE_HAS_THREADS.
+          ace/config-irix6.x-g++.h: added ACE_HAS_THREADS and ACE_MT_SAFE.
+          Thanks to Dave Tallman <tallman@acsys.com> for reporting these.
+
 Wed Apr 15 23:01:08 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (exit): Don't delete the ACE_Thread_Exit
- 	  object of the thread here.  ACE_Thread_Manager::exit will be
- 	  called back again when performing TSS cleanup.  Thanks to Dave
- 	  Tallman <tallman@acsys.com> for the bug report.
+        * ace/Thread_Manager.cpp (exit): Don't delete the ACE_Thread_Exit
+          object of the thread here.  ACE_Thread_Manager::exit will be
+          called back again when performing TSS cleanup.  Thanks to Dave
+          Tallman <tallman@acsys.com> for the bug report.
 
 Wed Apr 15 17:12:14 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-11.x-hpc++.h: Explicitly set ACE_SIZEOF_LONG based
-	  on compiler switch for processor/memory model.
+        * ace/config-hpux-11.x-hpc++.h: Explicitly set ACE_SIZEOF_LONG based
+          on compiler switch for processor/memory model.
 
 Wed Apr 15 16:25:38 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (handle_signal): Changed break to return 0.
+        * ace/WFMO_Reactor.cpp (handle_signal): Changed break to return 0.
 
-	* ace/OS.cpp (uname): We have to make sure that the size of
- 	  (processor + subtype) is not greater than the size of
- 	  name->machine.  So we give half the space to the processor and
- 	  half the space to subtype.  The -1 is necessary for because of
- 	  the space between processor and subtype in the machine name.
+        * ace/OS.cpp (uname): We have to make sure that the size of
+          (processor + subtype) is not greater than the size of
+          name->machine.  So we give half the space to the processor and
+          half the space to subtype.  The -1 is necessary for because of
+          the space between processor and subtype in the machine name.
 
-	  Thanks to Andrew Marchewka
- 	  (Andrew_Marchewka@SRT.CCMAIL.compuserve.com) for suggesting
- 	  these changes.
+          Thanks to Andrew Marchewka
+          (Andrew_Marchewka@SRT.CCMAIL.compuserve.com) for suggesting
+          these changes.
 
 Wed Apr 15 08:52:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
