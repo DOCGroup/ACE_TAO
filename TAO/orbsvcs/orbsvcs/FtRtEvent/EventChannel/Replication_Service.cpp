@@ -136,7 +136,7 @@ namespace FTRTEC
     return r;
   }
 
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Replication_Service);
+  ACE_FACTORY_DEFINE (TAO_FTRTEC, Replication_Service)
 
   ACE_STATIC_SVC_DEFINE (Replication_Service,
     ACE_TEXT ("FTRTEC_Replication"),
@@ -144,5 +144,5 @@ namespace FTRTEC
     &ACE_SVC_NAME (Replication_Service),
     ACE_Service_Type::DELETE_THIS
     | ACE_Service_Type::DELETE_OBJ,
-    0);
+    0)
 }

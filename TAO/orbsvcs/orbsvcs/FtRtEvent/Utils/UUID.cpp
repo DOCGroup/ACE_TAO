@@ -150,7 +150,7 @@ UUID::create (unsigned char *buffer)
   // multiplex timestamp with thread id to ensure the uniqueness between thread
   buffer[6] = (unsigned char) ((timestamp >> 48) & 0xff);
   // Version number is 1
-  buffer[7] = (unsigned char) (((timestamp >> 56) & 0x0f) + 0x10)
+  buffer[7] = (unsigned char) (((timestamp >> 56) & 0x0f) + 0x10);
 
   ACE_UINT16  clockSequence = static_cast<
     ACE_UINT16>(ACE_OS::rand_r(seed) & 0x2ff);

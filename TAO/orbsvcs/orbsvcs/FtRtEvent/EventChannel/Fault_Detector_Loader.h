@@ -47,7 +47,7 @@ namespace FTRTEC {
 
 
   ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Fault_Detector_Loader)
-    ACE_STATIC_SVC_REQUIRE(Fault_Detector_Loader);
+  ACE_STATIC_SVC_REQUIRE(Fault_Detector_Loader)
   ACE_FACTORY_DECLARE (TAO_FTRTEC, Fault_Detector_Loader)
 }
 

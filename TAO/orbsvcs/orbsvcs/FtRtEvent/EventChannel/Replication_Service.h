@@ -55,7 +55,7 @@ namespace FTRTEC
 
 
   ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Replication_Service)
-    ACE_STATIC_SVC_REQUIRE(Replication_Service);
+  ACE_STATIC_SVC_REQUIRE(Replication_Service)
   ACE_FACTORY_DECLARE (TAO_FTRTEC, Replication_Service)
 }
 
