@@ -6,16 +6,16 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## ./bin/mwc.pl -include /home/jtc/ACE/ACE-scons/MPC/config -include /home/jtc/ACE/ACE-scons/MPC/templates -type automake ACE.mwc
 
 includedir = @includedir@/ace
 
-ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
-        QoS \
+	QoS \
         RMCast \
         SSL \
         TMCast
@@ -428,6 +428,7 @@ nobase_include_HEADERS = \
   Codeset_IBM1047.h \
   Codeset_Registry.h \
   Condition_Recursive_Thread_Mutex.h \
+  Condition_T.h \
   Condition_Thread_Mutex.h \
   Configuration.h \
   Configuration_Import_Export.h \
@@ -495,6 +496,7 @@ nobase_include_HEADERS = \
   IOStream_T.h \
   IO_SAP.h \
   IPC_SAP.h \
+  If_Then_Else.h \
   Init_ACE.h \
   Intrusive_List.h \
   Intrusive_List_Node.h \
@@ -510,6 +512,7 @@ nobase_include_HEADERS = \
   Local_Name_Space_T.h \
   Local_Tokens.h \
   Lock.h \
+  Lock_Adapter_T.h \
   Log_Msg.h \
   Log_Msg_Backend.h \
   Log_Msg_Callback.h \
@@ -558,8 +561,11 @@ nobase_include_HEADERS = \
   Null_Condition.h \
   Null_Mutex.h \
   Null_Semaphore.h \
+  OS.h \
+  OS_Dirent.h \
   OS_Errno.h \
   OS_Log_Msg_Attributes.h \
+  OS_Memory.h \
   OS_NS_Thread.h \
   OS_NS_arpa_inet.h \
   OS_NS_ctype.h \
@@ -594,6 +600,7 @@ nobase_include_HEADERS = \
   OS_NS_unistd.h \
   OS_NS_wchar.h \
   OS_QoS.h \
+  OS_String.h \
   OS_TLI.h \
   OS_Thread_Adapter.h \
   OS_main.h \
@@ -606,6 +613,7 @@ nobase_include_HEADERS = \
   POSIX_Asynch_IO.h \
   POSIX_CB_Proactor.h \
   POSIX_Proactor.h \
+  Pair.h \
   Pair_T.h \
   Parse_Node.h \
   Ping_Socket.h \
@@ -636,6 +644,7 @@ nobase_include_HEADERS = \
   Registry_Name_Space.h \
   Remote_Name_Space.h \
   Remote_Tokens.h \
+  Reverse_Lock_T.h \
   SOCK.h \
   SOCK_Acceptor.h \
   SOCK_CODgram.h \
@@ -692,6 +701,8 @@ nobase_include_HEADERS = \
   Svc_Conf_Lexer_Guard.h \
   Svc_Conf_Tokens.h \
   Svc_Handler.h \
+  Swap.h \
+  Synch.h \
   Synch_Options.h \
   Synch_T.h \
   Synch_Traits.h \
@@ -702,6 +713,7 @@ nobase_include_HEADERS = \
   TLI_Stream.h \
   TP_Reactor.h \
   TSS_Adapter.h \
+  TSS_T.h \
   TTY_IO.h \
   Task.h \
   Task_Ex_T.h \
@@ -748,6 +760,7 @@ nobase_include_HEADERS = \
   UUID.h \
   Unbounded_Queue.h \
   Unbounded_Set.h \
+  Unbounded_Set_Ex.h \
   Vector_T.h \
   Version.h \
   WFMO_Reactor.h \
@@ -896,6 +909,7 @@ nobase_include_HEADERS = \
   Capabilities.inl \
   Cleanup.inl \
   Codeset_Registry.inl \
+  Condition_T.inl \
   Condition_Thread_Mutex.inl \
   Containers.inl \
   Containers_T.inl \
@@ -951,6 +965,7 @@ nobase_include_HEADERS = \
   LSOCK_Stream.inl \
   Local_Tokens.inl \
   Lock.inl \
+  Lock_Adapter_T.inl \
   Log_Record.inl \
   MEM_Acceptor.inl \
   MEM_Addr.inl \
@@ -977,8 +992,10 @@ nobase_include_HEADERS = \
   Mutex.inl \
   NT_Service.inl \
   Notification_Strategy.inl \
+  OS.inl \
   OS_Errno.inl \
   OS_Log_Msg_Attributes.inl \
+  OS_Memory.inl \
   OS_NS_Thread.inl \
   OS_NS_arpa_inet.inl \
   OS_NS_ctype.inl \
@@ -1011,6 +1028,7 @@ nobase_include_HEADERS = \
   OS_NS_time.inl \
   OS_NS_unistd.inl \
   OS_NS_wchar.inl \
+  OS_String.inl \
   OS_TLI.inl \
   Obchunk.inl \
   Object_Manager.inl \
@@ -1040,6 +1058,7 @@ nobase_include_HEADERS = \
   Refcountable.inl \
   Refcounted_Auto_Ptr.inl \
   Remote_Tokens.inl \
+  Reverse_Lock_T.inl \
   SOCK.inl \
   SOCK_Acceptor.inl \
   SOCK_CODgram.inl \
@@ -1082,12 +1101,14 @@ nobase_include_HEADERS = \
   Strategies_T.inl \
   Stream.inl \
   String_Base.inl \
+  Swap.inl \
   Synch_Options.inl \
   TLI.inl \
   TLI_Connector.inl \
   TLI_Stream.inl \
   TP_Reactor.inl \
   TSS_Adapter.inl \
+  TSS_T.inl \
   Task.inl \
   Task_Ex_T.inl \
   Task_T.inl \
@@ -1114,6 +1135,7 @@ nobase_include_HEADERS = \
   UUID.inl \
   Unbounded_Queue.inl \
   Unbounded_Set.inl \
+  Unbounded_Set_Ex.inl \
   Vector_T.inl \
   WFMO_Reactor.inl \
   XTI_ATM_Mcast.inl \
@@ -1133,6 +1155,7 @@ nobase_include_HEADERS = \
   Caching_Strategies_T.cpp \
   Caching_Utility_T.cpp \
   Cleanup_Strategies_T.cpp \
+  Condition_T.cpp \
   Connector.cpp \
   Containers_T.cpp \
   Dump_T.cpp \
@@ -1152,6 +1175,7 @@ nobase_include_HEADERS = \
   Intrusive_List_Node.cpp \
   LOCK_SOCK_Acceptor.cpp \
   Local_Name_Space_T.cpp \
+  Lock_Adapter_T.cpp \
   Malloc_T.cpp \
   Managed_Object.cpp \
   Map_Manager.cpp \
@@ -1163,6 +1187,7 @@ nobase_include_HEADERS = \
   Obstack_T.cpp \
   Pair_T.cpp \
   RB_Tree.cpp \
+  Reverse_Lock_T.cpp \
   Select_Reactor_T.cpp \
   Singleton.cpp \
   Strategies_T.cpp \
@@ -1171,6 +1196,7 @@ nobase_include_HEADERS = \
   String_Base.cpp \
   Svc_Handler.cpp \
   Synch_T.cpp \
+  TSS_T.cpp \
   Task_Ex_T.cpp \
   Task_T.cpp \
   Template_Instantiations.cpp \
@@ -1186,6 +1212,7 @@ nobase_include_HEADERS = \
   Typed_SV_Message_Queue.cpp \
   Unbounded_Queue.cpp \
   Unbounded_Set.cpp \
+  Unbounded_Set_Ex.cpp \
   Vector_T.cpp
 
 EXTRA_DIST = \
