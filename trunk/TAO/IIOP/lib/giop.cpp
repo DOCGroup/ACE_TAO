@@ -401,7 +401,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
       if (len == 0) 
 	{			// EOF
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Header EOF ... peer probably aborted connection %d", 
-                      connection));
+                      connection.get_handle()));
 	  return EndOfFile;
 	  // XXX should probably find some way to report this without
 	  // an exception, since for most servers it's not an error.
@@ -476,7 +476,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
   if (len != (int) message_size) 
     {
       if (len == 0) 
-	ACE_DEBUG ((LM_DEBUG, "(%P|%t) read message body, EOF on handle %d", connection));
+	ACE_DEBUG ((LM_DEBUG, "(%P|%t) read message body, EOF on handle %d", connection.get_handle()));
       else if (len < 0) 
 	ACE_DEBUG ((LM_ERROR, "(%P|%t) GIOP::read_message () body %p"));
       else 
