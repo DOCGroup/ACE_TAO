@@ -73,7 +73,7 @@ AccountManager_i::open (const char *name,
       if (hash_map_.bind (name, result) == -1)
         {
           delete result;
-          TAO_THROW_RETURN (CORBA::UNKNOWN (),
+          ACE_THROW_RETURN (CORBA::UNKNOWN (),
                             Bank::Account::_nil ());
         }
     }
@@ -115,7 +115,8 @@ AccountManager_i::close (Bank::Account_ptr account,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Unable to close Account\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "Unable to close Account\n");
     }
   ACE_ENDTRY;
   ACE_CHECK;
