@@ -1,3 +1,14 @@
+Fri Apr 27 14:34:59 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.cpp (_tao_get_omg_exception_description):
+
+	  Always return a valid string.  Previously zero was returned in
+	  the event of an error.  Return "*unknown description*" instead.
+
+	  Do not compile the minor code description tables if ACE_NDEBUG
+	  is defined.  This helps reduce the footprint for
+	  release/non-debug builds.
+
 Fri Apr 27 14:11:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Invocation.i (location_forward_i):

@@ -568,10 +568,10 @@ CORBA_SystemException::_info (void) const
       const char *minor_description = 0;
 
       if (minor_code > 0)
-        minor_description =
-          CORBA::SystemException::_tao_get_omg_exception_description (
-           *this,
-            minor_code);
+          minor_description =
+            CORBA::SystemException::_tao_get_omg_exception_description (
+              *this,
+              minor_code);
       else
         minor_description = "*unknown description*";
 
@@ -613,6 +613,8 @@ CORBA_SystemException::_tao_get_omg_exception_description (
   const CORBA::SystemException &exc,
   CORBA::ULong minor_code)
 {
+#ifndef ACE_NDEBUG
+
   static const char *UNKNOWN_TABLE[] =
     {
         "Unlisted user exception received by client.",    // 1
@@ -735,7 +737,7 @@ CORBA_SystemException::_tao_get_omg_exception_description (
     };
 
   if (minor_code == 0)
-    return 0;
+    return "*unknown description*";
 
   minor_code--;  // Adjust to match table offset.
 
@@ -795,7 +797,12 @@ CORBA_SystemException::_tao_get_omg_exception_description (
       && minor_code < sizeof INV_POLICY_TABLE / sizeof (char *))
     return INV_POLICY_TABLE[minor_code];
 
-  return 0;
+#else
+  ACE_UNUSED_ARG (exc);
+  ACE_UNUSED_ARG (minor_code);
+#endif  /* !ACE_NDEBUG */
+
+  return "*unknown description";
 }
 
 // Note that "buffer" holds the (unscoped) name originally, and is
