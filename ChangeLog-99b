@@ -1,3 +1,22 @@
+Thu Jul 22 20:03:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Acceptor.cpp: For sanity's sake, initialize all the data
+	  members to 0 in the ACE_Strategy_Acceptor constructor.  Thanks
+ 	  to Jody Hagins <jody@atdesk.com> for reporting this.
+	
+	* ace/Acceptor.cpp: The service_port_ data member in the
+	  ACE_Strategy_Acceptor wasn't being initialized to 0.  Thanks to
+ 	  Jody Hagins <jody@atdesk.com> for reporting this.
+
+	* ace/Acceptor.cpp: Modified the dump() and info() methods so that
+	  don't do bad things if service_name_ and service_description_
+ 	  are NULL.  Thanks to Jody Hagins <jody@atdesk.com> for this
+ 	  suggestion.
+
+	* ace/Message_Queue_T.h: Clarified what the errnos get set to when
+ 	  timeouts occur or queues are deactivated.  Thanks to
+	  John Forest <forestj@res.raytheon.com> for suggesting this.
+
 Thu Jul 22 16:55:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Stats.cpp:
