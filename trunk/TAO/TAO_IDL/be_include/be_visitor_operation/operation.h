@@ -1,6 +1,6 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 // ============================================================================
 //
@@ -47,7 +47,7 @@ public:
   virtual int void_return_type (be_type *);
   // is my return type void?
 
-  virtual int has_param_type (be_operation *, 
+  virtual int has_param_type (be_operation *,
                               AST_Argument::Direction);
   // does any of the argument node have the specified direction
 
@@ -100,7 +100,6 @@ public:
   // helper that generates code for raising an exception within
   // interceptor's try block
 
-protected:
   void gen_stub_body_arglist (be_operation *node,
                               TAO_OutStream *os,
                               idl_bool ami = I_FALSE);

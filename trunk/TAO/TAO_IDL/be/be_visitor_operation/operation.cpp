@@ -702,13 +702,13 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
     {
       AST_String *s = AST_String::narrow_from_decl (bt->unaliased_type  ());
       unsigned long bound = s->max_size ()->ev ()->u.ulval;
-      
+
       // If the (w)string is unbounded, code is generated below by the
       // last line of this method, whether bt is a typedef or not.
       if (bound > 0)
         {
           *os << "::TAO::";
-      
+
           if (alias != 0)
             {
               *os << alias->local_name () << "_" << bound;
@@ -726,13 +726,13 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
               // flat name.
               *os << scope->flat_name ();
             }
-          
+
           return;
         }
     }
-    
+
   // We need the unaliased type name to make the code block below
-  // work correctly.  
+  // work correctly.
   AST_Type *ut = bt->unaliased_type ();
   nt = ut->node_type ();
 

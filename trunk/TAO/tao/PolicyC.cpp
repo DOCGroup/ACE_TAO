@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:302
+// be/be_codegen.cpp:302
 
 
 #include "PolicyC.h"
@@ -48,7 +48,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be/be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -57,7 +57,7 @@ namespace TAO
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_Export Arg_Traits<CORBA::Policy>
     : public
         Object_Arg_Traits_T<
@@ -74,7 +74,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PolicyError::PolicyError (void)
   : CORBA::UserException (
@@ -177,7 +177,7 @@ void CORBA::PolicyError::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/exception_ctor.cpp:66
+// be/be_visitor_exception/exception_ctor.cpp:66
 
 CORBA::PolicyError::PolicyError (
     CORBA::PolicyErrorCode _tao_reason
@@ -197,7 +197,7 @@ CORBA::TypeCode_ptr CORBA::PolicyError::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyError[] =
 {
@@ -254,12 +254,12 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyError (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyError =
+  ::CORBA::TypeCode_ptr const _tc_PolicyError =
     &_tc_TAO_tc_CORBA_PolicyError;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 CORBA::InvalidPolicies::InvalidPolicies (void)
   : CORBA::UserException (
@@ -362,7 +362,7 @@ void CORBA::InvalidPolicies::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/exception_ctor.cpp:66
+// be/be_visitor_exception/exception_ctor.cpp:66
 
 CORBA::InvalidPolicies::InvalidPolicies (
     const CORBA::UShortSeq & _tao_indices
@@ -382,7 +382,7 @@ CORBA::TypeCode_ptr CORBA::InvalidPolicies::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_InvalidPolicies[] =
 {
@@ -443,16 +443,15 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_InvalidPolicies (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_InvalidPolicies =
+  ::CORBA::TypeCode_ptr const _tc_InvalidPolicies =
     &_tc_TAO_tc_CORBA_InvalidPolicies;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::Policy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Policy_ptr
 TAO::Objref_Traits<CORBA::Policy>::duplicate (
     CORBA::Policy_ptr p
@@ -461,7 +460,6 @@ TAO::Objref_Traits<CORBA::Policy>::duplicate (
   return CORBA::Policy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::Policy>::release (
     CORBA::Policy_ptr p
@@ -470,14 +468,12 @@ TAO::Objref_Traits<CORBA::Policy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Policy_ptr
 TAO::Objref_Traits<CORBA::Policy>::nil (void)
 {
   return CORBA::Policy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::Policy>::marshal (
     CORBA::Policy_ptr p,
@@ -494,7 +490,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/operation_cs.cpp:78
+// be/be_visitor_operation/operation_cs.cpp:78
 
 CORBA::PolicyType CORBA::Policy::policy_type (
     ACE_ENV_SINGLE_ARG_DECL
@@ -536,7 +532,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/operation_cs.cpp:78
+// be/be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::Policy_ptr CORBA::Policy::copy (
     ACE_ENV_SINGLE_ARG_DECL
@@ -578,7 +574,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_operation/operation_cs.cpp:78
+// be/be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::Policy::destroy (
     ACE_ENV_SINGLE_ARG_DECL
@@ -685,6 +681,12 @@ CORBA::Policy::_duplicate (Policy_ptr obj)
   return obj;
 }
 
+void
+CORBA::Policy::_tao_release (Policy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::Policy::_is_a (
     const char *value
@@ -725,11 +727,10 @@ CORBA::Policy::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::PolicyManager.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PolicyManager_ptr
 TAO::Objref_Traits<CORBA::PolicyManager>::duplicate (
     CORBA::PolicyManager_ptr p
@@ -738,7 +739,6 @@ TAO::Objref_Traits<CORBA::PolicyManager>::duplicate (
   return CORBA::PolicyManager::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::PolicyManager>::release (
     CORBA::PolicyManager_ptr p
@@ -747,14 +747,12 @@ TAO::Objref_Traits<CORBA::PolicyManager>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PolicyManager_ptr
 TAO::Objref_Traits<CORBA::PolicyManager>::nil (void)
 {
   return CORBA::PolicyManager::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PolicyManager>::marshal (
     CORBA::PolicyManager_ptr p,
@@ -823,6 +821,12 @@ CORBA::PolicyManager::_duplicate (PolicyManager_ptr obj)
   return obj;
 }
 
+void
+CORBA::PolicyManager::_tao_release (PolicyManager_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::PolicyManager::_is_a (
     const char *value
@@ -864,11 +868,10 @@ CORBA::PolicyManager::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::PolicyCurrent.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PolicyCurrent_ptr
 TAO::Objref_Traits<CORBA::PolicyCurrent>::duplicate (
     CORBA::PolicyCurrent_ptr p
@@ -877,7 +880,6 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::duplicate (
   return CORBA::PolicyCurrent::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::PolicyCurrent>::release (
     CORBA::PolicyCurrent_ptr p
@@ -886,14 +888,12 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PolicyCurrent_ptr
 TAO::Objref_Traits<CORBA::PolicyCurrent>::nil (void)
 {
   return CORBA::PolicyCurrent::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PolicyCurrent>::marshal (
     CORBA::PolicyCurrent_ptr p,
@@ -962,6 +962,12 @@ CORBA::PolicyCurrent::_duplicate (PolicyCurrent_ptr obj)
   return obj;
 }
 
+void
+CORBA::PolicyCurrent::_tao_release (PolicyCurrent_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::PolicyCurrent::_is_a (
     const char *value
@@ -1011,7 +1017,7 @@ CORBA::PolicyCurrent::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/cdr_op_cs.cpp:60
+// be/be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -1044,7 +1050,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/cdr_op_cs.cpp:60
+// be/be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -1105,7 +1111,7 @@ CORBA::Policy::_tao_scope (void) const
 // ****************************************************************
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/cdr_op_cs.cpp:63
+// be/be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -1141,7 +1147,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be/be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

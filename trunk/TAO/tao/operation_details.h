@@ -149,7 +149,7 @@ public:
   //@}
 
   /// Accessors for the argumet list
-  TAO::Argument **args (void);
+  TAO::Argument ** args (void) const;
   CORBA::ULong args_num (void) const ;
 
 private:

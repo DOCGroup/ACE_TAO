@@ -404,7 +404,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                             -1);
         }
 
-      *os << "::CORBA::TypeCode_ptr _tc_"
+      *os << "::CORBA::TypeCode_ptr const _tc_"
           << node->local_name ()
           << " =" << be_idt_nl
           << "&_tc_TAO_tc_"
@@ -422,7 +422,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   else
     {
       // outermost scope.
-      *os << "::CORBA::TypeCode_ptr ";
+      *os << "::CORBA::TypeCode_ptr const ";
 
       // Tc name generation.
       *os << node->tc_name ();

@@ -65,13 +65,13 @@ CORBA::ServerRequest::_tao_lazy_evaluation (bool lazy_evaluation)
 ACE_INLINE int
 CORBA::ServerRequest::_tao_incoming_byte_order (void) const
 {
-  return this->orb_server_request_.incoming ().byte_order ();
+  return this->orb_server_request_.incoming ()->byte_order ();
 }
 
 ACE_INLINE void
 CORBA::ServerRequest::_tao_reply_byte_order (int byte_order)
 {
-  this->orb_server_request_.outgoing ().reset_byte_order (byte_order);
+  this->orb_server_request_.outgoing ()->reset_byte_order (byte_order);
 }
 
 

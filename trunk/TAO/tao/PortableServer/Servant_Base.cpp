@@ -26,7 +26,7 @@ ACE_RCSID (PortableServer,
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-  static const char *TAO_Servant_Base_Timeprobe_Description[] =
+static const char *TAO_Servant_Base_Timeprobe_Description[] =
 {
   "Servant_Base::_find - start",
   "Servant_Base::_find - end"
@@ -46,13 +46,13 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 
 TAO_ServantBase::TAO_ServantBase (void)
   : TAO_Abstract_ServantBase ()
-    , optable_ (0)
+  , optable_ (0)
 {
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
   : TAO_Abstract_ServantBase ()
-    , optable_ (rhs.optable_)
+  , optable_ (rhs.optable_)
 {
 }
 
@@ -82,7 +82,7 @@ CORBA::Boolean
 TAO_ServantBase::_is_a (const char *logical_type_id
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  const char *id = "IDL:omg.org/CORBA/Object:1.0";
+  static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
   return ACE_OS::strcmp (logical_type_id, id) == 0;
 }
 
@@ -125,7 +125,7 @@ TAO_ServantBase::_find (const char *opname,
                         const unsigned int length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return optable_->find (opname, skelfunc, length);
+  return this->optable_->find (opname, skelfunc, length);
 }
 
 int
@@ -135,7 +135,7 @@ TAO_ServantBase::_find (const char *opname,
                         const unsigned int length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return optable_->find (opname, skelfunc, st, length);
+  return this->optable_->find (opname, skelfunc, st, length);
 }
 
 TAO_Stub *
@@ -187,9 +187,9 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
   return stub;
 }
 
-void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                                   void *servant_upcall,
-                                                   void *derived_this
+void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
+                                                   void * servant_upcall,
+                                                   void * derived_this
                                                    ACE_ENV_ARG_DECL)
 {
   TAO_Skeleton skel;
@@ -218,12 +218,13 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
 
   ACE_TRY
     {
-      // Invoke the skeleton, it will demarshal the arguments,
-      // invoke the right operation on the skeleton class
-      // (<derived_this>), and marshal any results.
+      // Invoke the skeleton, it will demarshal the arguments, invoke
+      // the right operation on the skeleton class, and marshal any
+      // results.  De/marshaling will only occur in the uncollocated
+      // case.
       skel (req,
-            derived_this,
-            servant_upcall
+            servant_upcall,
+            derived_this
             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -253,9 +254,9 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
   return;
 }
 
-void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                                    void *servant_upcall,
-                                                    void *derived_this
+void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
+                                                    void * servant_upcall,
+                                                    void * derived_this
                                                     ACE_ENV_ARG_DECL)
 {
   TAO_Skeleton skel;
@@ -272,17 +273,25 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
     }
 
   // Fetch the skeleton for this operation
-  if (this->_find (opname, skel,
-         static_cast <unsigned int> (req.operation_length())) == -1)
+  if (this->_find (opname,
+                   skel,
+                   static_cast <unsigned int> (req.operation_length())) == -1)
     {
       ACE_THROW (CORBA::BAD_OPERATION ());
     }
 
   ACE_TRY
     {
-      // Invoke the skeleton, it will demarshal the arguments,
-      // invoke the right operation on the skeleton class
-      // (<derived_this>), and marshal any results.
+      // Invoke the skeleton, it will demarshal the arguments, invoke
+      // the right operation on the skeleton class, and marshal any
+      // results.  De/marshaling will only occur in the uncollocated
+      // case.
+
+      // @@ Why does AMH have to swap the servant_upcall and
+      //   derived_this arguments relative to synchronous upcall
+      //   argument order?  Inconsistencies for no good reason!
+      //   *sigh*
+      //         -Ossama
       skel (req,
             derived_this,
             servant_upcall

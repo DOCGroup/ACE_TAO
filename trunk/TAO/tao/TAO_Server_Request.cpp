@@ -6,6 +6,8 @@
 #include "debug.h"
 #include "Pluggable_Messaging.h"
 #include "GIOP_Utils.h"
+#include "Stub.h"
+#include "operation_details.h"
 #include "Transport.h"
 #include "CDR.h"
 #include "SystemException.h"
@@ -20,7 +22,7 @@ ACE_RCSID (tao,
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-  static const char *TAO_Server_Request_Timeprobe_Description[] =
+static const char * TAO_Server_Request_Timeprobe_Description[] =
 {
   "TAO_ServerRequest::TAO_ServerRequest - start",
   "TAO_ServerRequest::TAO_ServerRequest - end",
@@ -51,17 +53,18 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     // transport already duplicated in
     // TAO_Transport::process_parsed_messages ()
     transport_(transport),
-    response_expected_ (0),
-    deferred_reply_ (0),
-    sync_with_server_ (0),
+    response_expected_ (false),
+    deferred_reply_ (false),
+    sync_with_server_ (false),
+    is_dsi_ (false),
     // @@ We shouldn't be using GIOP specific types here. Need to be revisited.
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (0),
     profile_ (orb_core),
     requesting_principal_ (0),
-    is_dsi_ (0),
     dsi_nvlist_align_ (0),
+    operation_details_ (0),
     argument_flag_ (1)
 #if TAO_HAS_INTERCEPTORS == 1
     , interceptor_count_ (0)
@@ -94,15 +97,16 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     transport_ (transport),
     response_expected_ (response_expected),
     deferred_reply_ (deferred_reply),
-    sync_with_server_ (0),
+    sync_with_server_ (false),
+    is_dsi_ (false),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (request_id),
     profile_ (orb_core),
     requesting_principal_ (0),
-    is_dsi_ (0),
     dsi_nvlist_align_ (0),
-    argument_flag_ (1)
+    operation_details_ (0),
+    argument_flag_ (true)
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ ()
@@ -111,6 +115,39 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 {
   this->profile_.object_key (object_key);
   parse_error = 0;
+}
+
+// Constructor used in Thru-POA collocation code.
+TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
+                                      TAO_Operation_Details const & details,
+                                      CORBA::Object_ptr target)
+  : mesg_base_ (0),
+    operation_ (details.opname ()),
+    incoming_ (0),
+    outgoing_ (0),
+    transport_ (0),
+    response_expected_ (details.response_flags () == TAO_TWOWAY_RESPONSE_FLAG
+                        || details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_SERVER)
+                        || details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_TARGET)),
+    deferred_reply_ (false),
+    sync_with_server_ (details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_SERVER)),
+    is_dsi_ (false),
+    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    orb_core_ (orb_core),
+    request_id_ (0),
+    profile_ (orb_core),
+    requesting_principal_ (0),
+    dsi_nvlist_align_ (0),
+    operation_details_ (&details),
+    argument_flag_ (false)
+#if TAO_HAS_INTERCEPTORS == 1
+  , interceptor_count_ (0)
+  , rs_pi_current_ ()
+  , result_seq_ (0)
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+{
+  // Have to use a const_cast<>.  *sigh*
+  this->profile_.object_key (const_cast<TAO::ObjectKey &> (target->_stubobj ()->object_key ()));
 }
 
 TAO_ServerRequest::~TAO_ServerRequest (void)
@@ -126,6 +163,9 @@ TAO_ServerRequest::orb (void)
 void
 TAO_ServerRequest::init_reply (void)
 {
+  if (!this->outgoing_)
+    return;  // Collocated
+
   // Construct our reply generator.
   TAO_Pluggable_Reply_Params_Base reply_params;
 
@@ -134,9 +174,9 @@ TAO_ServerRequest::init_reply (void)
   // pluggable_messaging_interface. One point to be noted however is
   // that, it was the pluggable_messaging classes who created us and
   // delegated us to do work on its behalf. But we would be calling
-  // back. As we dont have a LOCK or any such things we can call
+  // back. As we don't have a LOCK or any such things we can call
   // pluggable_messaging guys again. We would be on the same thread of
-  // invocation. So *theoratically* there should not be a problem.
+  // invocation. So *theoretically* there should not be a problem.
   reply_params.request_id_ = this->request_id_;
   reply_params.is_dsi_ = this->is_dsi_;
   reply_params.dsi_nvlist_align_ = this->dsi_nvlist_align_;
@@ -180,7 +220,7 @@ TAO_ServerRequest::init_reply (void)
                       ACE_TEXT ("marshal encoding forwarded objref failed\n")));
         }
     }
-  this->transport_->assign_translators (0,this->outgoing_);
+  this->transport_->assign_translators (0, this->outgoing_);
 }
 
 void

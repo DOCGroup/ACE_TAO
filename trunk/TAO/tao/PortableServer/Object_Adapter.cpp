@@ -726,11 +726,14 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
   int result = 0;
 
 #if TAO_HAS_INTERCEPTORS == 1
-  TAO_ServerRequestInterceptor_Adapter sri_adapter (
-    this->orb_core_.server_request_interceptors (),
-    request.interceptor_count ());
+  TAO::ServerRequestInterceptor_Adapter sri_adapter (request);
 
-  TAO_ServerRequestInfo ri (request, 0);
+  TAO::ServerRequestInfo ri (request,
+                             0,  // args
+                             0,  // nargs
+                             0,  // servant_upcall
+                             0,  // exceptions
+                             0); // nexceptions
 
   ACE_TRY
     {
@@ -838,10 +841,10 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
   // zero.
   CORBA::Object_ptr x;
   ACE_NEW_RETURN (x,
-      CORBA::Object (stub,
-          1,
-          sb),
-      CORBA::Object::_nil ());
+                  CORBA::Object (stub,
+                                 1,
+                                 sb),
+                  CORBA::Object::_nil ());
 
   // Here we set the strategized Proxy Broker.
   x->_proxy_broker (the_tao_collocated_object_proxy_broker ());

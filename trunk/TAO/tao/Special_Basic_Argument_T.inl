@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 template<typename S, typename to_S, typename from_S>
@@ -11,7 +13,7 @@ TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::In_Special_Basic_Argument_T (
 template<typename S, typename to_S, typename from_S>
 ACE_INLINE
 S const &
-TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::arg (void)
+TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::arg (void) const
 {
   return this->x_;
 }

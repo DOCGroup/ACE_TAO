@@ -100,12 +100,9 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << ">::ret_val *) args[0])->arg () =" << be_idt_nl;
     }
 
-  *os << "reinterpret_cast<" << be_idt << be_idt_nl
+  *os << "dynamic_cast<" << be_idt << be_idt_nl
       << intf->full_skel_name () << "_ptr> (" << be_nl
-      << "servant->_downcast (" << be_idt << be_idt_nl
-      << "\"" << intf->repoID ()  << "\"" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ")" << be_uidt;
+      << "servant)" << be_uidt << be_uidt_nl;
 
   be_visitor_context ctx;
 
@@ -126,7 +123,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << "ACE_CHECK;";
     }
   *os << be_uidt_nl
-      << "}";
+      << "}" << be_nl;
 
   return 0;
 }

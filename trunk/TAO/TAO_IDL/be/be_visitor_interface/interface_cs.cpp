@@ -65,7 +65,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "// Traits specializations for " << node->name () << ".";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
           << be_idt << be_idt_nl
@@ -76,7 +76,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << "void" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
@@ -87,7 +87,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::nil (void)"
           << be_nl
@@ -96,7 +96,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
+//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
           << be_idt << be_idt_nl
@@ -326,13 +326,23 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  // The _tao_release method
+  *os << "void" << be_nl
+      << node->full_name () << "::_tao_release ("
+      << bt->local_name ()
+      << "_ptr obj)" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (obj);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+
   // Empty implementations so the application can override or not.
   if (node->session_component_child () == 1)
     {
-      *os << "// These two are inherited from SessionComponent." 
+      *os << "// These two are inherited from SessionComponent."
           << be_nl << be_nl
           << "void" << be_nl
-          << node->full_name () << "::ciao_preactivate (" 
+          << node->full_name () << "::ciao_preactivate ("
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -341,7 +351,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_nl
           << "}" << be_nl << be_nl
           << "void" << be_nl
-          << node->full_name () << "::ciao_postactivate (" 
+          << node->full_name () << "::ciao_postactivate ("
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl

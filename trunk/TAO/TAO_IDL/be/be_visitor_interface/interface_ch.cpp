@@ -139,6 +139,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // _nil operations.
   *os << "// The static operations." << be_nl
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
+      << node->local_name () << "_ptr obj);" << be_nl << be_nl
+      << "static void _tao_release ("
       << node->local_name () << "_ptr obj);" << be_nl << be_nl;
 
   if (this->gen_xxx_narrow ("_narrow",

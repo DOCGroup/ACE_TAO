@@ -406,6 +406,11 @@ TAO_CodeGen::start_server_header (const char *fname)
                             << "\"\n";
     }
 
+  // The server header should include the client header.
+  *this->server_header_ << "\n#include \""
+                        << be_global->be_get_client_hdr_fname (1)
+                        << "\"";
+
   // We must include all the skeleton headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared
@@ -426,11 +431,6 @@ TAO_CodeGen::start_server_header (const char *fname)
       this->server_header_->print ("\n#include \"%s\"",
                                    server_hdr);
     }
-
-  // The server header should include the client header.
-  *this->server_header_ << "\n#include \""
-                        << be_global->be_get_client_hdr_fname (1)
-                        << "\"";
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -1569,7 +1569,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   this->gen_any_file_includes ();
 
   // Includes whatever arg helper template classes that may be needed.
-  this->gen_arg_file_includes (this->client_stubs_);
+  this->gen_stub_arg_file_includes (this->client_stubs_);
 
   // strcmp() is used with interfaces and exceptions.
   if (idl_global->interface_seen_
@@ -1601,11 +1601,16 @@ TAO_CodeGen::gen_skel_src_includes (void)
     }
 
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/Servant_Upcall.h");
-  this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ForwardRequestC.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Operation_Table.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/Upcall_Command.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/Upcall_Wrapper.h");
+
+  this->gen_skel_arg_file_includes (this->server_skeletons_);
+
   this->gen_standard_include (this->server_skeletons_,
                               "tao/TAO_Server_Request.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1624,17 +1629,19 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/DynamicC.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/CDR.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/operation_details.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableInterceptor.h");
 
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
-      this->gen_arg_file_includes (this->server_skeletons_);
+      // Collocation skeleton code doesn't use "SArg" variants.
+      this->gen_stub_arg_file_includes (this->server_skeletons_);
     }
 
   // The following header must always be included.
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableInterceptor.h");
-
   if (be_global->gen_amh_classes ())
     {
       this->gen_standard_include (this->server_skeletons_,
@@ -1644,18 +1651,6 @@ TAO_CodeGen::gen_skel_src_includes (void)
       this->gen_standard_include (this->server_skeletons_,
                                   "ace/Auto_Functor.h");
     }
-
-  // Include Portable Interceptor related headers.
-  *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1";
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/PICurrent_Guard.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/ServerRequestInfo.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/ServerInterceptorAdapter.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/RequestInfo_Util.h");
-  *this->server_skeletons_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
 
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Dynamic_Service.h");
@@ -1773,7 +1768,7 @@ TAO_CodeGen::gen_var_file_includes (void)
 }
 
 void
-TAO_CodeGen::gen_arg_file_includes (TAO_OutStream *stream)
+TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 {
   this->gen_cond_file_include (
       idl_global->basic_arg_seen_,
@@ -1834,6 +1829,104 @@ TAO_CodeGen::gen_arg_file_includes (TAO_OutStream *stream)
       "tao/Any_Arg_Traits.h",
       stream
     );
+}
+
+
+void
+TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
+{
+  this->gen_cond_file_include (
+      idl_global->basic_arg_seen_,
+      "tao/PortableServer/Basic_SArguments.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->bd_string_arg_seen_,
+      "tao/PortableServer/BD_String_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->fixed_array_arg_seen_,
+      "tao/PortableServer/Fixed_Array_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->fixed_size_arg_seen_,
+      "tao/PortableServer/Fixed_Size_SArgument_T.h",
+      stream
+    );
+
+  // Always needed for CORBA::Object handling in _component() skeleton
+  // code when an unconstrained (non-local) IDL interface is defined.
+  this->gen_cond_file_include (
+      idl_global->non_local_iface_seen_
+      || idl_global->object_arg_seen_,
+      "tao/PortableServer/Object_SArgument_T.h",
+      stream
+    );
+
+  // Always needed for CORBA::Boolean handling in _is_a() skeleton
+  // code when an unconstrained (non-local) IDL interface is defined.
+  this->gen_cond_file_include (
+      idl_global->non_local_iface_seen_
+      || idl_global->special_basic_arg_seen_,
+      "tao/PortableServer/Special_Basic_SArguments.h",
+      stream
+    );
+
+  // Always needed for string argument handling in _is_a() skeleton
+  // code when an unconstrained (non-local) IDL interface is defined.
+  this->gen_cond_file_include (
+      idl_global->non_local_iface_seen_
+      || idl_global->ub_string_arg_seen_,
+      "tao/PortableServer/UB_String_SArguments.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->var_array_arg_seen_,
+      "tao/PortableServer/Var_Array_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->var_size_arg_seen_,
+      "tao/PortableServer/Var_Size_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->any_arg_seen_,
+      "tao/PortableServer/Any_SArg_Traits.h",
+      stream
+    );
+
+  this->gen_standard_include (stream,
+                              "tao/PortableServer/TypeCode_SArg_Traits.h");
+  this->gen_standard_include (stream,
+                              "tao/PortableServer/Object_SArg_Traits.h");
+
+  if (be_global->gen_thru_poa_collocation ())
+    {
+      // We need the stub side argument templates when thru-POA
+      // collocation is enabled for type resolution.
+      // this->gen_stub_arg_file_includes (stream);
+
+      // Always needed for CORBA::Boolean handling in _is_a() skeleton
+      // code when an unconstrained (non-local) IDL interface is defined.
+      this->gen_cond_file_include (idl_global->non_local_iface_seen_,
+                                   "tao/Special_Basic_Arguments.h",
+                                   stream);
+
+      // Always needed for string argument handling in _is_a() skeleton
+      // code when an unconstrained (non-local) IDL interface is defined.
+      this->gen_cond_file_include (idl_global->non_local_iface_seen_,
+                                   "tao/UB_String_Arguments.h",
+                                   stream);
+    }
 }
 
 void

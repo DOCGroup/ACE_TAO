@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,6 +14,7 @@
 #define TAO_VAR_ARRAY_ARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
+
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,7 +39,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S_slice * arg (void) const;
+    S_slice const * arg (void) const;
 
   private:
     S_forany x_;

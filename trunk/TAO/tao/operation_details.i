@@ -168,7 +168,7 @@ TAO_Operation_Details::addressing_mode (CORBA::Short mode)
 }
 
 ACE_INLINE TAO::Argument **
-TAO_Operation_Details::args (void)
+TAO_Operation_Details::args (void) const
 {
   return this->args_;
 }

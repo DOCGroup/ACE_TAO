@@ -94,41 +94,23 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::Exception))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Portable_Server::Servant_Upcall servant_upcall ("
-      << be_idt << be_idt_nl
-      << "obj->_stubobj ()"
-      << "->servant_orb_var ()->orb_core ()"
-      << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl
+//       << "TAO::Portable_Server::Servant_Upcall servant_upcall ("
+//       << be_idt << be_idt_nl
+//       << "obj->_stubobj ()"
+//       << "->servant_orb_var ()->orb_core ()"
+//       << be_uidt_nl
+//       << ");" << be_uidt_nl << be_nl
+      << "TAO_Abstract_ServantBase * const servant ="
+      << " obj->_servant ();" << be_nl
+      << be_nl
       << "TAO_Collocated_Skeleton collocated_skel;" << be_nl
-      << "TAO_Abstract_ServantBase *servant = 0;" << be_nl << be_nl
-      << "if (strategy == TAO::TAO_CS_THRU_POA_STRATEGY)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
-      << "obj->_stubobj ()->object_key ()," << be_nl
-      << "op," << be_nl
-      << "forward_obj" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_CHECK;" << be_nl << be_nl
-      << "servant_upcall.pre_invoke_collocated_request ("
-      << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_CHECK;" << be_nl << be_nl
-      << "servant = servant_upcall.servant ();" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "servant = obj->_servant ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "int status = servant->_find (op," << be_nl
-      << "                             collocated_skel," << be_nl
-      << "                             strategy," << be_nl
-      << "                             op_len);" << be_nl << be_nl
+      << "int const status = servant->_find (op," << be_nl
+      << "                                   collocated_skel," << be_nl
+      << "                                   strategy," << be_nl
+      << "                                   op_len);" << be_nl << be_nl
       << "if (status == -1)" << be_idt_nl
       << "{" << be_idt_nl
-      << "ACE_THROW (CORBA::BAD_OPERATION (TAO::VMCID | 2, "
+      << "ACE_THROW (CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, "
       << "CORBA::COMPLETED_NO));" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "ACE_TRY" << be_idt_nl

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,6 +15,7 @@
 #define TAO_BD_STRING_ARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
+
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,13 +39,17 @@ namespace TAO
     In_BD_String_Argument_T (const S * x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S * arg (void) const;
+
+    S const * arg (void) const;
 
   private:
-    const S * x_;
+
+    S const * x_;
+
   };
 
   /**
@@ -67,7 +72,7 @@ namespace TAO
     S *& arg (void);
 
   private:
-    mutable S *& x_;
+    S *& x_;
   };
 
   /**
@@ -93,7 +98,7 @@ namespace TAO
     S *& arg (void);
 
   private:
-    mutable S *& x_;
+    S *& x_;
   };
 
   /**
@@ -122,7 +127,9 @@ namespace TAO
     S * retn (void);
 
   private:
+
     S_var x_;
+
   };
 
   /**
@@ -134,7 +141,7 @@ namespace TAO
   struct TAO_Export BD_String_Tag {};
 
   /**
-   * @struct Basic_Arg_Traits_T
+   * @struct BD_String_Arg_Traits_T
    *
    * @brief Template class for stub argument traits of bounded (w)strings.
    *
@@ -148,7 +155,7 @@ namespace TAO
   struct BD_String_Arg_Traits_T
   {
     typedef T *                                   ret_type;
-    typedef const T *                             in_type;
+    typedef T const *                             in_type;
     typedef T *&                                  inout_type;
     typedef T_out                                 out_type;
 
