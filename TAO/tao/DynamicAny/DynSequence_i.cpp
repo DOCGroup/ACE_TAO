@@ -757,6 +757,11 @@ TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs
       return 0;
     }
 
+  if (rhs->component_count () != this->component_count_)
+    {
+      return 0;
+    }
+
   DynamicAny::DynAny_var tmp;
   CORBA::Boolean member_equal;
 
