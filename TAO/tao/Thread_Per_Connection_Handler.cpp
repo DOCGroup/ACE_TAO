@@ -35,7 +35,8 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                                              ACE_hthread_t thread_handles[],
                                              void *stack[],
                                              size_t stack_size[],
-                                             ACE_thread_t  thread_names[])
+                                             ACE_thread_t  thread_names[],
+                                             bool inherit_priority)
 {
   if (TAO_debug_level)
     {
@@ -55,35 +56,8 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                                  thread_handles,
                                  stack,
                                  stack_size,
-                                 thread_names);
-}
-
-int
-TAO_Thread_Per_Connection_Handler::activate_threads (long flags,
-                                                     int n_threads)
-{
-  int priority = ACE_DEFAULT_THREAD_PRIORITY;
-  int sched_policy = ACE_SCHED_OTHER;
-
-  // Get the system policy and priority
-  if (ACE_Thread::getprio (ACE_Thread::self (),
-                           priority,
-                           sched_policy) == -1)
-    {
-      priority = ACE_DEFAULT_THREAD_PRIORITY;
-    }
-
-  if (sched_policy ==  ACE_SCHED_FIFO)
-    ACE_SET_BITS (flags, THR_SCHED_FIFO);
-  else if (sched_policy == ACE_SCHED_RR)
-    ACE_SET_BITS (flags, THR_SCHED_FIFO);
-  else
-    ACE_SET_BITS (flags, THR_SCHED_DEFAULT);
-
-  return this->activate (flags,
-                         n_threads,
-                         0,
-                         priority);
+                                 thread_names,
+                                 true);
 }
 
 int
