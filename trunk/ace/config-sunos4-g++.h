@@ -10,6 +10,11 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/config-g++-common.h"
+// This config file has not been tested with ACE_HAS_TEMPLATE_SPECIALIZATION.
+// Maybe it will work?
+#undef ACE_HAS_TEMPLATE_SPECIALIZATION
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -20,10 +25,6 @@
 #define ACE_HAS_CHARPTR_SPRINTF
 #define ACE_HAS_UNION_WAIT
 
-// Must specialize templates due to G++'s lame parameterized type
-// support...
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
 
@@ -32,9 +33,6 @@
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
-
-// Compiler's template mechanism must see source code (i.e., .C files).
-#define ACE_TEMPLATES_REQUIRE_SOURCE
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
@@ -48,9 +46,6 @@
 
 // Header files lack t_errno for ACE_TLI.
 // #define ACE_LACKS_T_ERRNO
-
-// Compiler doesn't support static data member templates.
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Compiler/platform uses old malloc()/free() prototypes (ugh).
 #define ACE_HAS_OLD_MALLOC
