@@ -2,9 +2,11 @@
 // $Id$
 
 #include "tao/IIOP_Transport.h"
-#include "tao/GIOP.h"
 #include "tao/Connect.h"
 #include "tao/Timeprobe.h"
+#include "tao/CDR.h"
+#include "tao/IIOP_RMS.h"
+#include "tao/IIOP_Reply_Dispatcher.h"
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -43,18 +45,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base* handler,
                                         TAO_IIOP_Request_Multiplexing_Strategy *rms,
                                         TAO_IIOP_Wait_Strategy *ws)
-  : handler_(handler),
-    tag_(TAO_IOP_TAG_INTERNET_IOP),
-    rms_ (rs),
-    ws_ (ws)
+  : TAO_Transport (rms, ws),
+    handler_(handler),
+    tag_(TAO_IOP_TAG_INTERNET_IOP)
 {
-  // @@ I am creating the RMS strategy here. (alex)
-  ACE_NEW (rms_,
-           TAO_IIOP_Exclusive_RMS);
-
-  // @@ Creating the WS here. (alex)
-  ACE_NEW (ws_,
-           TAO_Wait_On_Read);
 }
 
 TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
@@ -68,8 +62,12 @@ TAO_IIOP_Server_Transport::TAO_IIOP_Server_Transport (TAO_Server_Connection_Hand
   server_handler_ = handler;
 }
 
-TAO_IIOP_Client_Transport::TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler)
-  :  TAO_IIOP_Transport(handler),
+TAO_IIOP_Client_Transport::TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler,
+                                                      TAO_IIOP_Request_Multiplexing_Strategy *rms,
+                                                      TAO_IIOP_Wait_Strategy *ws)
+  :  TAO_IIOP_Transport (handler,
+                         rms,
+                         ws),
      client_handler_ (0)
 {
   client_handler_ = handler;
@@ -160,8 +158,9 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 //   return 1;
 // }
 
+// Return 0, when the reply is not read fully, 1 if it is read fully. 
 int
-TAO_IIOP_Client_Transport::handle_client_input (int read_header)
+TAO_IIOP_Client_Transport::handle_client_input (int block)
 {
   // When we multiplex several invocations over a connection we need
   // to allocate the CDR stream *here*, but when there is a single
@@ -187,21 +186,22 @@ TAO_IIOP_Client_Transport::handle_client_input (int read_header)
   //      do it!]
   //
 
-  TAO_InputCDR* cdr =
-    this->request_reply_strategy->get_cdr_stream ();
+  //  if (!this->message_size_)
+  // {
+  // Reading the header.
+  
+  // @@ Where do I keep this CDR? (alex)
+  // }
 
-  TAO_GIOP_Version version;
+  // Get the CDR stream for reading the input.
+  TAO_InputCDR* cdr = this->input_cdr_stream ();
 
-  // @@ Alex: yes, you may need a flag to know if you have read the
-  //    header already. Maybe you can use the total message size to do 
-  //    that, initially set to 0.
-
-  int message_type =
-    GIOP::recv_message (this,
-                        cdr,
-                        this->orb_core_,
-                        version);
-
+  TAO_GIOP::Message_Type message_type =
+    TAO_GIOP::recv_message (this,
+                            *cdr,
+                            this->orb_core_,
+                            this->version_,
+                            block);
   switch (message_type)
     {
     case TAO_GIOP::ShortRead:
@@ -209,70 +209,85 @@ TAO_IIOP_Client_Transport::handle_client_input (int read_header)
       // handle the input.
       return 0;
       // NOT REACHED.
-
+      
     case TAO_GIOP::EndOfFile:
-    case TAO_GIOP::CommunicatioError:
+    case TAO_GIOP::CommunicationError:
     case TAO_GIOP::MessageError:
-      // Handle errors like those...
-      this->reply_handler_->error ();
+      // Handle errors like these.
+      // @@ this->reply_handler_->error ();
       return 1;
-
+      
     case TAO_GIOP::Request:
       // In GIOP 1.0 and GIOP 1.1 this is an error, but it is
       // *possible* to receive requests in GIOP 1.2.  Don't handle this
       // on the firt iteration, leave it for the nearby future...
       // ERROR too.
-      this->reply_handler_->error ();
+      // @@ this->reply_handler_->error ();
       return 1;
-
+      
+    case TAO_GIOP::CancelRequest:
+    case TAO_GIOP::LocateRequest:
+    case TAO_GIOP::CloseConnection:
+      // @@ Errors for the time being.
+      // @@ this->reply_handler_->error ();
+      return 1;
+      
     case TAO_GIOP::LocateReply:
     case TAO_GIOP::Reply:
       // Handle after the switch.
       break;
     }
-
+  
   // For GIOP 1.0 and 1.1 the reply_ctx comes first:
-  TAO_GIOP_ServiceContextList reply_ctx;
-  this->inp_stream_ >> reply_ctx;
-
-  // We should pass that reply_ctx to the invocation, interceptors
+  // @@ Put this reply ctx into the reply dispatcher. so that
+  // invocation can read it.
+  // We should pass that reply_ctx to the invocation, interceptors 
   // will want to read it!
-
+ 
+  TAO_GIOP_ServiceContextList reply_ctx;
+  *cdr >> reply_ctx;
+  
   // Read the request id and the reply status type.
   // status can be NO_EXCEPTION, SYSTEM_EXCEPTION, USER_EXCEPTION,
   // LOCATION_FORWARD or (on GIOP 1.2) LOCATION_FORWARD_PERM
-
+  
   CORBA::ULong request_id;
   CORBA::ULong reply_status;
-
-  if (!this->inp_stream_.read_ulong (request_id))
+  
+  if (!cdr->read_ulong (request_id))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
                        "Failed to read request_id.\n"),
                       -1);
-
-  if (!this->inp_stream_.read_ulong (reply_status))
+      
+  if (!cdr->read_ulong (reply_status))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
                        "Failed to read request_status type.\n"),
                       -1);
-
+      
   // Find the TAO_Reply_Handler for that request ID!
-  TAO_Reply_Handler* reply_handler =
-    this->request_reply_strategy->find_handler (request_id);
-  if (reply_handler == 0)
+  TAO_IIOP_Reply_Dispatcher* reply_dispatcher =
+    this->rms_->find_dispatcher (request_id);
+  if (reply_dispatcher == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
                        "Failed to find Reply Handler.\n"),
                       -1);
+  
+  // Init the Reply dispatcher with all the reply info.
+  reply_dispatcher->reply_status (reply_status);
+  // @@ reply_dispatcher->version (this->version ());
+  // @@ reply->dispatcher->reply_context (reply_ctx);
+  reply_dispatcher->cdr (cdr);
 
   // Handle the reply.
-  if (reply_handler->handle_reply (reply_status, cdr) == -1)
+  if (reply_dispatcher->dispatch_reply () == -1)
     return -1;
-
-  // This is a NOOP for the Exclusive request case, but it actually
+  
+  // This is a NOOP for the Exclusive request case, but it actually 
   // destroys the stream in the muxed case.
-  this->request_multiplexing_stratetgy_->destroy_cdr_stream (cdr);
+  this->rms_->destroy_cdr_stream ();
 
   // Return something to indicate the reply is received.
   return 1;
@@ -400,228 +415,11 @@ TAO_IIOP_Transport::recv (iovec *iov,
   return handler_->peer ().recvv_n (iov, iovcnt);
 }
 
-TAO_GIOP_ReplyStatusType
-TAO_IIOP_Transport::wait_for_reply (CORBA::ULong request_id)
-{
-  return this->ws_->wait (request_id,
-                          this->rms_);
-}
-
-// *********************************************************************
-
-TAO_IIOP_Request_Multiplexing_Strategy::TAO_IIOP_Request_Multiplexing_Strategy (void)
-{
-}
-
-TAO_IIOP_Request_Multiplexing_Strategy::~TAO_IIOP_Request_Multiplexing_Strategy (void)
-{
-}
-
-// *********************************************************************
-
-TAO_IIOP_Muxed_RMS::TAO_IIOP_Muxed_RMS (void)
-{
-}
-
-TAO_IIOP_Muxed_RMS::~TAO_IIOP_Muxed_RMS (void)
-{
-}
-
-TAO_InputCDR *
-TAO_IIOP_Muxed_RMS::get_cdr_stream (void)
-{
-  // @@
-}
-
-void
-TAO_IIOP_Muxed_RMS::destroy_cdr_stream (TAO_InputCDR *cdr)
-{
-  delete cdr;
-  cdr = 0;
-}
-
-// *********************************************************************
-
-TAO_IIOP_Exclusive_RMS::TAO_IIOP_Exclusive_RMS (void)
-  : request_id_ (0),
-    rh_ (0)
-{
-}
-
-TAO_IIOP_Exclusive_RMS::~TAO_IIOP_Exclusive_RMS (void)
-{
-}
-
-// Bind the handler with the request id.
+// Default action to be taken for send request.
 int
-TAO_IIOP_Exclusive_RMS::bind_handler (CORBA::ULong request_id,
-                                      TAO_Reply_Handlern *rh)
+TAO_IIOP_Transport::send_request (TAO_ORB_Core *  /* orb_core */,
+                                  TAO_OutputCDR & /* stream   */,
+                                  int             /* twoway   */)
 {
-  if (rh_ != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:TAO_IIOP_Exclusive_RMS::bind_handler: "
-                       "Failed to bind the handler\n"),
-                      -1);
-  this->request_id_ = request_id;
-  this->rh_ = rh;
-  return 0;
-}
-
-// Find the Reply Handler.
-TAO_Reply_Handler*
-TAO_IIOP_Exclusive_RMS::find_handler (CORBA::ULong request_id)
-{
-  if (this->request_id_ != request_id)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:TAO_IIOP_Exclusive_RMS::find_handler: ",
-                       "Failed to find the handler\n"),
-                      0);
-
-  return this->rh_;
-}
-
-// Return the preallocated CDR stream.
-TAO_InputCDR *
-TAO_IIOP_Exclusive_RMS::get_cdr_stream (void)
-{
-  return this->cdr_;
-}
-
-// NOOP function.
-void
-TAO_IIOP_Exclusive_RMS::destroy_cdr_stream (TAO_InputCDR *)
-{
-}
-
-// *********************************************************************
-
-// Constructor.
-TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (void)
-{
-}
-
-// Destructor.
-TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
-{
-}
-
-TAO_GIOP_ReplyStatusType
-TAO_Wait_On_Reactor::wait (CORBA::ULong request_id,
-                           TAO_IIOP_Request_Multiplexing_Strategy *rms)
-{
-  int end_loop_flag = 0;
-
-  TAO_Reactor_Reply_Handler rh (end_loop_flag);
-
-  if (rrs->bind (request_id, &rh) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):TAO_Wait_On_Reactor::wait: "
-                       "Failed to bind reply handler.\n"),
-                      -1);
-  int result = 0;
-  while ((result != -1) && (end_loop_flag == 0))
-    result = this->orb_core_->reactor ()->handle_events (/* timeout */);
-
-  return 0;
-}
-
-// *********************************************************************
-
-// Constructor.
-TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (void)
-{
-}
-
-// Destructor.
-TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
-{
-}
-
-
-TAO_GIOP_ReplyStatusType
-TAO_Wait_On_Leader_Follower::wait (CORBA::ULong request_id,
-                                   TAO_IIOP_Request_Multiplexing_Strategy *rms)
-{
-  // Grab leader follower lock.
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                            ace_mon,
-                            this->orb_core_->leader_follower_lock (),
-                            -1));
-
-  // Bind the reply handler.
-
-  TAO_Leader_Follower_Reply_Handler rh (..);
-
-  rrs->bind (this->request_id, &rh);
-
-  // Check if we need to become the leader.
-  if (!this->orb_core_->leader_available ())
-    {
-      // This might increase the refcount of the leader.
-      this->orb_core_->set_leader_thread ();
-
-      // Do the reactor event loop.
-      this->orb_core_->reactor ()->owner (ACE_Thread::self ());
-
-      int result = 0;
-      while (result != -1)
-        result = this->orb_core_->reactor ()->handle_events ();
-
-      if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%N:%l:(%P | %t):TAO_Wait_On_Leader_Follower::wait: "
-                           "Reactor::handle_events failed.\n"),
-                          -1);
-    }
-  else
-    {
-      // Block on condition variable.
-      ACE_SYNCH_CONDITION* cond =
-        this->cond_response_available (orb_core);
-      if (this->orb_core_->add_follower (cond) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%N:%l:(%P|%t) TAO_Wait_On_Leader_Follower::wait: "
-                    "Failed to add a follower thread\n"));
-      cond->wait ();
-    }
-  return 0;
-}
-
-// *********************************************************************
-
-// Constructor.
-TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_IIOP_Transport *transport)
-  // @@ It should receive a generic TAO_Transport object!
-  : transport_ (transport)
-{
-}
-
-// Destructor.
-TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
-{
-}
-
-// Wait on the read operation.
-int
-TAO_Wait_On_Read::wait (CORBA::ULong request_id,
-                        TAO_IIOP_Request_Multiplexing_Strategy *rms)
-{
-  TAO_Wait_On_Read_RH rh;
-
-  // Bind the <request_id, handler> pair with the strategy.
-  if (rms->bind (request_id, &rh) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:TAO_Wait_On_Read::wait: "
-                       "Failed to bind the Reply Handler"),
-                      -1);
-
-  int received_reply = 0;
-  while (!received_reply)
-    {
-      // @@ In this case sockets *must* be blocking.
-      //    We need to control how they are set!
-      received_reply = this->transport_->handle_client_input ();
-    }
-
-  return 0;
-}
+  return -1;
+};

@@ -5,6 +5,150 @@
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
+#include "tao/IIOP_Wait_Strategy.h"
+#include "tao/IIOP_RMS.h"
+#include "tao/IIOP_Reply_Dispatcher.h"
+
+// Constructor.
+TAO_Transport::TAO_Transport (TAO_IIOP_Request_Multiplexing_Strategy *rms,
+                              TAO_IIOP_Wait_Strategy *ws)
+  : message_size_ (0),
+    message_offset_ (0),
+    rms_ (0),
+    ws_ (0)
+{
+  // @@ I am hard coding RMS strategy here. (alex)
+  ACE_NEW (rms_,
+           TAO_IIOP_Exclusive_RMS);
+  
+  // @@ Hardcoding the WS here. (alex)
+  ACE_NEW (ws_,
+           TAO_Wait_On_Read (this));
+}
+   
+TAO_Transport::~TAO_Transport (void)
+{
+}
+
+
+// Set the CDR stream for reading the input message.
+void
+TAO_Transport::input_cdr_stream (TAO_InputCDR *cdr)
+{
+  this->rms_->set_cdr_stream (cdr);
+}
+
+// Get the CDR stream for reading the input message.
+TAO_InputCDR *
+TAO_Transport::input_cdr_stream (void) const
+{
+  return this->rms_->get_cdr_stream ();
+}
+
+// Set the total size of the incoming message. (This does not
+// include the header size).
+void
+TAO_Transport::message_size (CORBA::ULong message_size)
+{
+  this->message_size_ = message_size;
+  
+  // Reset the offset.
+  this->message_offset_ = 0;
+}
+
+// Get the total size of the incoming message.
+CORBA::ULong
+TAO_Transport::message_size (void) const
+{
+  return this->message_size_;
+}
+
+// Get the current offset of the incoming message.
+CORBA::ULong
+TAO_Transport::message_offset (void) const
+{
+  return this->message_offset_;
+}
+
+// Update the offset of the incoming message.
+int
+TAO_Transport::incr_message_offset (CORBA::Long bytes_transferred)
+{
+  if ((this->message_offset_ + bytes_transferred) > this->message_size_)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO: %N:%l: (%P | %t): TAO_Transport::incr_message_offset: "
+                       "Failed to update the offset of incoming message\n"),
+                      -1);
+ 
+  this->message_offset_ +=  bytes_transferred;
+
+  return 0;
+}
+
+// Get and set methods for the ORB Core.
+
+// Set it.
+void
+TAO_Transport::orb_core (TAO_ORB_Core *orb_core)
+{
+  this->orb_core_ = orb_core;
+}  
+
+// Get it.
+TAO_ORB_Core *
+TAO_Transport::orb_core (void) const
+{
+  return this->orb_core_;
+}
+
+
+// Set the RMS object.
+void
+TAO_Transport::rms (TAO_IIOP_Request_Multiplexing_Strategy *rms)
+{
+  this->rms_ = rms;
+}
+
+TAO_IIOP_Request_Multiplexing_Strategy *
+TAO_Transport::rms (void) const
+{
+  return rms_;
+}
+
+// Get request id for the current invocation from the RMS object.
+CORBA::ULong
+TAO_Transport::request_id (void)
+{
+  return this->rms ()->request_id ();
+}
+
+// Bind the reply dispatcher with the RMS object.
+int
+TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
+                                      TAO_IIOP_Reply_Dispatcher *rd)
+{
+  return this->rms_->bind_dispatcher (request_id,
+                                      rd);
+}
+
+// Read and handle the reply. Returns 0 when there is Short Read on
+// the connection. Returns 1 when the full reply is read and
+// handled. Returns -1 on errors.
+// If <block> is 1, then reply is read in a blocking manner. 
+
+int
+TAO_Transport::handle_client_input (int /* block */)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
+TAO_Transport::wait_for_reply (void)
+{
+  return this->ws_->wait ();
+}
+
+// *********************************************************************
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : iiop_connector_ (0)
@@ -151,10 +295,6 @@ TAO_IOP_Version::operator= (const TAO_IOP_Version &src)
 }
 
 TAO_Profile::~TAO_Profile (void)
-{
-}
-
-TAO_Transport::~TAO_Transport (void)
 {
 }
 
