@@ -7503,7 +7503,7 @@ ACE_OS::num_processors_online (void)
   return sys_info.dwNumberOfProcessors;
 #elif defined (linux) || defined (sun)
   return ::sysconf (_SC_NPROCESSORS_ONLN);
-#elif defined (hpux)
+#elif defined (__hpux)
   struct pst_dynamic psd;
   if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
     return psd.psd_proc_cnt;
