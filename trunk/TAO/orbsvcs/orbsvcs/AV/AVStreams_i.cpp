@@ -2137,11 +2137,17 @@ TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
 					handler_entry) == 0)
 	{
 	  AVStreams::QoS flow_qos;
-	  if (qos.get_flow_qos (entry.flowname (), flow_qos) == 0)
-	    handler_entry->int_id_->change_qos (flow_qos);
-	  else ACE_DEBUG ((LM_DEBUG,
-			   "New QoS for the flow %s is not specified\n",
-			   entry.flowname ()));
+	  if (qos.get_flow_qos (entry.flowname (), flow_qos) != 0)
+	    ACE_DEBUG ((LM_DEBUG,
+			"New QoS for the flow %s is not specified\n",
+			entry.flowname ()));
+	  int result;
+	  result = handler_entry->int_id_->change_qos (flow_qos);
+	  if (result != 0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Modifying QoS Failed\n"),
+			      -1);
+
 	}
     }
   return 0;

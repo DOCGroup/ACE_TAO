@@ -127,13 +127,13 @@ TAO_AV_UDP_QoS_Session_Helper::open_qos_session (TAO_AV_UDP_QoS_Flow_Handler *ha
   // A QoS session is defined by the 3-tuple [DestAddr, DestPort,
   // Protocol]. Initialize the QoS session.
   if (qos_session->open (dest_addr,
-			 IPPROTO_UDP) == -1)
+    			 IPPROTO_UDP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Error in opening the QoS session\n"),
-		      0);
+  		       "Error in opening the QoS session\n"),
+  		      0);
   else
     ACE_DEBUG ((LM_DEBUG,
-		"QoS session opened successfully\n"));
+  		"QoS session opened successfully\n"));
   
   if (handler->flowspec_entry ()->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
     {
@@ -362,12 +362,16 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 		  }
 
 		  AVStreams::streamQoS new_qos;
-		  ACE_Flow_Spec ace_flow_spec =
+		  ACE_Flow_Spec *ace_flow_spec =
 		    this->qos_session_->qos ().sending_flowspec ();
-		  new_qos.length (1);
-		  this->translate (&ace_flow_spec,
-				   new_qos [0].QoSParams);
-				   
+
+		  if (ace_flow_spec != 0)
+		    {
+		      new_qos.length (1);
+		      this->translate (ace_flow_spec,
+				       new_qos [0].QoSParams);
+		    }
+		  
 		  AVStreams::Negotiator_var remote_negotiator;
 		  this->negotiator_->negotiate (remote_negotiator.in (),
 						new_qos,
@@ -402,59 +406,67 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
    	         "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::change_qos\n"));
   }
 
+  ACE_QoS* ace_qos = 0;
+
+  ACE_NEW_RETURN (ace_qos,
+		  ACE_QoS,
+		  -1);
+  
+  if (new_qos.QoSParams.length () != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "New QoS Params are not Empty\n"));
+
+      ACE_Flow_Spec *ace_flow_spec;
+  
+      ACE_NEW_RETURN (ace_flow_spec,
+		      ACE_Flow_Spec,
+		      -1);
+      
+      this->translate (new_qos.QoSParams,
+		       ace_flow_spec);
+      
+            
+      Fill_ACE_QoS fill_ace_qos;
+
+      if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_SENDER)
+	{
+	  if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
+						    ace_flow_spec) !=0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Unable to fill simplex sender qos\n"),
+			      -1);
+	  else
+	    {
+	      if( TAO_debug_level > 0 ) 
+		ACE_DEBUG ((LM_DEBUG,
+			    "(%N,%l) Filled up the Sender QoS parameters\n"));
+	    }
+	}
+      else if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_RECEIVER)
+	{
+	  if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
+						      ace_flow_spec) !=0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Unable to fill simplex receiver qos\n"),
+			      -1);
+	  else
+	    {
+	      if( TAO_debug_level > 0 )
+		ACE_DEBUG ((LM_DEBUG,
+			    "(%N,%l) Filled up the Receiver QoS parameters\n"));
+	    }
+      
+	}
+  
+      ACE_QoS_Params qos_params;
+      FillQoSParams (qos_params, 
+		     0, 
+		     ace_qos);
+    }
+
   ACE_QoS_Manager qos_manager =
     this->get_socket ()->qos_manager ();
-  
-  ACE_Flow_Spec *ace_flow_spec;
-  ACE_NEW_RETURN (ace_flow_spec,
-                  ACE_Flow_Spec,
-                  -1);
-  
-  this->translate (new_qos.QoSParams,
-		   ace_flow_spec);
-
-  ACE_QoS* ace_qos;
-  
-  ACE_NEW_RETURN (ace_qos,
-                  ACE_QoS,
-                  -1);
-  
-  Fill_ACE_QoS fill_ace_qos;
-
-  if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_SENDER)
-    {
-      if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
-                                                ace_flow_spec) !=0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to fill simplex sender qos\n"),
-                          -1);
-      else
-      {
-        if( TAO_debug_level > 0 ) 
-           ACE_DEBUG ((LM_DEBUG,
-                       "(%N,%l) Filled up the Sender QoS parameters\n"));
-      }
-    }
-  else if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_RECEIVER)
-    {
-      if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
-                                                  ace_flow_spec) !=0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to fill simplex receiver qos\n"),
-                          -1);
-      else
-      {
-        if( TAO_debug_level > 0 )
-           ACE_DEBUG ((LM_DEBUG,
-                       "(%N,%l) Filled up the Receiver QoS parameters\n"));
-      }
-      
-    }
-  
-  ACE_QoS_Params qos_params;
-  FillQoSParams (qos_params, 
-		 0, 
-		 ace_qos);
   
   int result = this->qos_session_->qos (this->get_socket (),
 					&qos_manager,
@@ -499,6 +511,11 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "QoS Session Open Failed (%N|%l)\n"),
 			  -1);
+
+      ACE_INET_Addr local_addr;
+      this->get_socket ()->get_local_addr (local_addr);
+
+      this->qos_session_->source_port (local_addr.get_port_number ());
       
       if (helper.activate_qos_handler (this->qos_session_,
 				       this) == -1)
@@ -1222,6 +1239,11 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
     ACE_DEBUG ((LM_DEBUG,
                 "QoS session opened successfully\n"));
   
+  if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
+    {
+      this->qos_session_->source_port (local_addr->get_port_number ());
+    }
+
   handler->qos_session (this->qos_session_);
   
   this->qos_manager_ = 
