@@ -258,9 +258,6 @@ CORBA_ORB::POA_init (int &argc,
   TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
   CORBA::POA_ptr rp;
   CORBA::String_var id = poa_identifier;
-  CORBA::String_var demux = CORBA::string_dup ("dynamic_hash"); // default, at least for now
-  CORBA::ULong tablesize = 0; // default table size for lookup tables
-  CORBA::Boolean use_threads = CORBA::B_FALSE;
   CORBA::Environment env;
 
   for (int i = 0; i < argc; )
@@ -275,27 +272,6 @@ CORBA_ORB::POA_init (int &argc,
 	  if (i < argc)
             id = CORBA::string_dup (argv[i++]);
         }
-      else if (ACE_OS::strcmp (argv[i], "-OAobjdemux") == 0)
-	{
-          // Specify the demultiplexing strategy to be used for object
-          // demultiplexing
-          i++;
-	  if (i < argc)
-	    demux = CORBA::string_dup (argv[i++]);
-	}
-      else if (ACE_OS::strcmp (argv[i], "-OAtablesize") == 0)
-	{
-          // Specify the size of the table used for object demultiplexing
-          i++;
-	  if (i < argc)
-	    tablesize = ACE_OS::atoi (argv[i++]);
-	}
-      else if (ACE_OS::strcmp (argv[i], "-OAthread") == 0)
-	{
-          // Specify whether or not threads should be used.
-	  use_threads = CORBA::B_TRUE;
-          i++;
-	}
       else
 	i++;
     }
