@@ -186,6 +186,16 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
   ACE_Reactor::instance ();
+
+  // There's no point in dealing with this on NT since it doesn't really
+  // support signals very well...
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+  // This really ought to be a Singleton I suspect...
+
+  if (ACE_Reactor::instance ()->register_handler (ACE_Service_Config::signum_,
+                                                  ACE_Service_Config::signal_handler_) == -1)
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("can't register signal handler\n")));
+#endif /* ACE_LACKS_UNIX_SIGNALS */
 }
 
 // Handle the command-line options intended for the
@@ -220,8 +230,8 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         break;
       case 's':
         {
-          // There's no point in dealing with this on NT since it
-          // doesn't really support signals very well...
+          // There's no point in dealing with this on NT since it doesn't really
+          // support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
           ACE_Service_Config::signum_ = ACE_OS::atoi (getopt.optarg);
 
@@ -456,7 +466,7 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
 
   // Clear the LM_DEBUG bit from log messages if appropriate
   if (!ACE_Service_Config::debug_)
-    ACE_Log_Msg::disable_debug_messages ();
+    ACE_Log_Msg::disable_debug_messages();  
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
     ACE_Service_Config::start_daemon ();
@@ -500,22 +510,10 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
           int result = ACE_Service_Config::process_commandline_directives ();
           retval = ACE_Service_Config::process_directives () + result;
         }
-
-      // There's no point in dealing with this on NT since it doesn't really
-      // support signals very well...
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
-      // This really ought to be a Singleton I suspect...
-
-      if (ACE_Reactor::instance ()->register_handler 
-          (ACE_Service_Config::signum_,
-           ACE_Service_Config::signal_handler_) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("can't register signal handler\n")));
-#endif /* ACE_LACKS_UNIX_SIGNALS */
     }
   
   if (!ACE_Service_Config::debug_)
-    ACE_Log_Msg::enable_debug_messages ();
+    ACE_Log_Msg::enable_debug_messages();  
 
   return retval;
 }
