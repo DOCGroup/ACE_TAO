@@ -19,7 +19,7 @@
 <b>Note:</b>
 <li><a href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> tools are not used in this tutorial.</li>
 <li>This is only a <em>GENERAL</em> way of building up a CIAO application. The user could always change the process in his own way. For example: the IDL file content, the project structure etc.</li>
-<li>To download the code please refer to the CVS repository @ $CIAO_ROOT/examples/Hello</li>
+<li>To download the code please refer to the CVS repository at <code>$CIAO_ROOT/examples/Hello</code>.</li>
 <li>If you just want to try the example you could jump to the <em>Make</em> then the <em>Run</em> section.</li>
 <hr>
 
@@ -33,18 +33,18 @@ This Hello example is contructed in the following ways:
 <h2>Step-By-Step</h2>
 <hr>
 <ul><h3>Hello_Base</h3>
-<li>1. Write an IDL file (Hello_Base.idl) which contains all the interfaces and events common to all the components. The reason we do this is becuse the generated lib of this idl file will be linked in by all the components in the system. To reduce the size of the component lib we have to include only the necesary part. In this example, we have an eventtype <strong>timeout</strong> and an interface <strong>message</strong>, which are used by both the Sender and the Receiver, so we put both of them in Hello.idl.</li>
+<li>1. Write an IDL file (<code>Hello_Base.idl</code>) which contains all the interfaces and events common to all the components. The reason we do this is becuse the generated lib of this idl file will be linked in by all the components in the system. To reduce the size of the component lib we have to include only the necesary part. In this example, we have an eventtype <code>timeout</code> and an interface <code>message</code>, which are used by both the Sender and the Receiver, so we put both of them in Hello.idl.</li>
 
-<li>2. Use <strong>$CIAO_ROOT/bin/generate_component_mpc.pl -n Hello_Base</strong> to generate the <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> file for ITS_Base. Note: There are only 2 projects in the mpc file, Hello_stub and Hello_svnt.</li>
+<li>2. Use <code>$CIAO_ROOT/bin/generate_component_mpc.pl -n Hello_Base</code> to generate the <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> file for ITS_Base. Note: There are only 2 projects in the mpc file, Hello_stub and Hello_svnt.</li>
 
 <li>3. Open the mpc file and follow the instructions below</li>
-<ul>For the project <strong>Hello_Base_svnt</strong>:
-     <li>Change the parent prject from <strong>ciao_svnt</strong> to <strong>ciao_server.</strong></li>
-     <li>Delete the <strong>IDL_Files</strong> and <strong>CIDL_Files</strong> part.</li>
-     <li>Delete all the files in the <strong>Source_File</strong> part except <strong>Hello_BaseS.cpp.</strong></li>
+<ul>For the project <code>Hello_Base_svnt</code>:
+     <li>Change the parent prject from <code>ciao_svnt</strong> to <code>ciao_server.</strong></li>
+     <li>Delete the <code>IDL_Files</code> and <code>CIDL_Files</code> part.</li>
+     <li>Delete all the files in the <code>Source_File</code> part except <code>Hello_BaseS.cpp.</code></li>
 </ul>
 
-<li>4. Follow the instruction from the output of the last step, use the perl script (generate_export_file.pl) to generate the Export files.</li>
+<li>4. Follow the instruction from the output of the last step, use the perl script (<code>generate_export_file.pl</code>) to generate the Export files.</li>
 </ul>
 
 <hr>
@@ -53,46 +53,46 @@ This Hello example is contructed in the following ways:
 
 <li>1. Use: <br>
 <ul>
-<strong>$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Sender <br>
+<code>$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Sender <br>
       $$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Receiver
-</strong><br></ul>
+</code><br></ul>
 Note:
 <ul>
-<li>I have different directories for Hello_Base/Sender/Receiver respectively.</li>
-<li>For the <strong>_exec</strong> part of the mpc file(I user Sender here as an exmaple):</li>
+<li>I have different directories for <code>Hello_Base/Sender/Receiver</code> respectively.</li>
+<li>For the <code>_exec</code> part of the mpc file(I user Sender here as an exmaple):</li>
 <ul>
-   Add <strong>SenderEI.idl</strong> to the <strong>IDL_Files</strong> <br>
-   Add <strong>SenderEIC.cpp</strong> to the <strong>Source_Files</strong>
+   Add <code>SenderEI.idl</code> to the <code>IDL_Files</code> <br>
+   Add <code>SenderEIC.cpp</code> to the <code>Source_Files</code>
 </ul>
 
-<li>For every <strong>_stub</strong> project, add:<br>
-  <strong>"libs  += Hello_Base_stub"</strong><br>
+<li>For every <code>_stub</code> project, add:<br>
+  <code>"libs  += Hello_Base_stub"</code><br>
 
 </ul>
 
 <li>2. Use the export script to generate the export files(3 files per compoennt).</li>
 
-<li>3. Write an idl file for every compoent. Here you can put the component specific IDL definitions in this file. In this example we have a interface <strong>trigger</strong> specific to the Sender.</li>
+<li>3. Write an idl file for every compoent. Here you can put the component specific IDL definitions in this file. In this example we have a interface <code>trigger</code> specific to the Sender.</li>
 
 <li>4. Write the EI.idl file for every component. This file defines the local interfaces for the component.
-    <br>Note: This file could be ignored if one wants to.(For example: $CIAO_ROOT/docs/tutorial/Hello.) In some cases this file must NOT be used. Please see the discussion about this issue at <a href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1672">bugzilla</a>.</li>
+    <br>Note: This file could be ignored if one wants to.(For example: $CIAO_ROOT/docs/tutorial/Hello.) In some cases this file <strong>MUST be used with caution</strong>. Please see the discussion about this issue at <a href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1672">bugzilla</a>.</li>
 
 <li>5. Write the CIDL file for every component.</li>
 
-<li>6. Write <strong>_exec.h</strong> and <strong>_exec.cpp</strong> files which actually implement the compnent.</li>
+<li>6. Write <code>_exec.h</code> and <code>_exec.cpp</code> files which actually implement the compnent.</li>
 <br>
 Writing all those files could be troublesome to a new CCM user. The best way of learning this is to read the example source code. If you are familliar with CORBA programming, it should not take too much time before you can delcare yourself as a CIAO programmer.
 
 <hr>
 
 <h3>The Entry Point</h3>
-After both components are implemented we still need a small program to initialize the process. In Sender.idl there is a Sender specific interface with a single method in it created for this purpose. Hence I created a TAO application called starter. The starter will call on a sepcial trigger interface on the Sender to get the whole process started. The starter program should collocate with Sender because it reads in the ior of the Sender. Please see the the last part of <strong>Hello/Sender/Sender.mpc</strong> file for detial.
+After both components are implemented we still need a small program to initialize the process. In Sender.idl there is a Sender specific interface with a single method in it created for this purpose. Hence I created a TAO application called starter. The starter will call on a sepcial trigger interface on the Sender to get the whole process started. The starter program should collocate with Sender because it reads in the ior of the Sender. Please see the the last part of <code>Hello/Sender/Sender.mpc</code> file for detial.
 
 <hr>
 
 <h3>Make</h3>
 <li>Go to the top directory of your workspace and do:<br>
-    <strong>$ACE_ROOT/bin/mwc.pl</strong>(use -type option if you are on Windows)</li>
+    <code>$ACE_ROOT/bin/mwc.pl</code>(use -type option if you are on Windows)</li>
 <li>Look at the generated Makefile(*inx) , Solution/workspace file(Windows) and you got it.</li>
 
 <hr>
@@ -103,7 +103,7 @@ Now we can step forward to build the assembly. Here we are going to build the si
 <br>
 
 <li>1. Make a new directory with name <em>descriptors</em> in your workspace</li>
-<li>2. Construct the <em>CIAO_Installation_Data.ini</em> file. You can use <strong>uuidgen</strong> to generate the UUIDs</li>
+<li>2. Construct the <em>CIAO_Installation_Data.ini</em> file. You can use <code>uuidgen</code> to generate the UUIDs</li>
 
 <li>3. For every component generate the <em>.csd</em> and <em>.ssd</em> files. Follow the example carefully and make sure that you use the right UUIDs</li>
 
@@ -118,22 +118,22 @@ Finally you are ready to test the application you have made.
 <br><br>
 1. Run the example with a single CIAO_Daemon
 <ul>
-In <strong>./descriptors</strong> directory: <strong>./run_test_default.pl</strong> dose the following for you.
-<li>1. <strong>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:20000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </strong></li>
-<li>2. <strong>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat</strong></li>
-<li>3. <strong>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a default.cad</strong></li>
-<li>4. <strong>../Sender/starter</strong>  Note: you can repeat this step.</li>
+In <code>./descriptors</code> directory: <code>./run_test_default.pl</code> dose the following for you.
+<li>1. <code>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:20000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </code></li>
+<li>2. <code>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat</code></li>
+<li>3. <code>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a default.cad</code></li>
+<li>4. <code>../Sender/starter</code>  Note: you can repeat this step.</li>
 </ul>
 <br>
 
 2. Run the example with 2 CIAO_Daemons but on the same machine.
 <ul>
- In <strong>./descriptors</strong> directory: <strong>./run_test_remote.pl</strong> dose the following for you.
- <li>1. <strong>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:20000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </strong></li>
- <li>2. <strong>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:12000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </strong></li>
- <li>3. <strong>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat</strong></li>
- <li>4. <strong>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a remote.cad</strong></li>
- <li>5. <strong>../Sender/starter</strong>  Note: you can repeat this step.</li>
+ In <code>./descriptors</code> directory: <code>./run_test_remote.pl</code> dose the following for you.
+ <li>1. <code>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:20000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </code></li>
+ <li>2. <code>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:12000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </code></li>
+ <li>3. <code>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat</code></li>
+ <li>4. <code>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a remote.cad</code></li>
+ <li>5. <code>../Sender/starter</code>  Note: you can repeat this step.</li>
 </ul>
 
 
@@ -141,16 +141,16 @@ In <strong>./descriptors</strong> directory: <strong>./run_test_default.pl</stro
 
 3. Run the example with 2 CIAO_Daemons on two different hosts.
 <ul>
- In <strong>./descriptors</strong> directory:<br>
+ In <code>./descriptors</code> directory:<br>
  Here you have to open the <em>remote.dat</em> and fill in the right URL for your hosts. You can change the port number as well, of course you will have to use the corresponding right address in your -ORBEndpoint option in the following step1 and 2.
 
- <li>1. On host "Default" <strong>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://URL:20000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </strong></li>
- <li>2. On host "Remote" <strong>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://URL:12000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </strong></li>
+ <li>1. On host "Default" <code>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://URL:20000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </code></li>
+ <li>2. On host "Remote" <code>${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://URL:12000 -n ${CIAO_ROOT}/tools/ComponentServer/ComponentServer </code></li>
  For step 3 and step4 it doesn't matter where they are executed.
- <li>3. <strong>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat</strong></li>
- <li>4. <strong>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a remote.cad</strong></li>
- Step5 must be executed on the same host where the Sender is deployed. If you are using my <em>remote.cad</em> file then the host is the <strong>Default</strong> one.
- <li>5. <strong>../Sender/starter</strong>  Note: you can repeat this step.</li>
+ <li>3. <code>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat</code></li>
+ <li>4. <code>${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a remote.cad</code></li>
+ Step5 must be executed on the same host where the Sender is deployed. If you are using my <em>remote.cad</em> file then the host is the <code>Default</code> one.
+ <li>5. <code>../Sender/starter</code>  Note: you can repeat this step.</li>
 </ul>
 
 <br>
