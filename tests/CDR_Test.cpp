@@ -74,7 +74,8 @@ short_stream (void)
 
   // Basic types for output
   ACE_CDR::Char ch = 'A';
-  ACE_CDR::WChar wch = '\xF3';
+  ACE_CDR::Char wchtmp[] = {"\xF3"};
+  ACE_CDR::WChar wch = *wchtmp;
   ACE_CString str ("Test String");
   ACE_CDR::Short s = -123;
   ACE_CDR::UShort us =  123;
