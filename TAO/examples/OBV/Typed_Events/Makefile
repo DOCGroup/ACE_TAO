@@ -91,11 +91,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -106,7 +102,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS.i \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -140,6 +135,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -370,11 +370,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -385,7 +381,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS.i \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -419,6 +414,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -653,11 +653,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -667,7 +663,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
@@ -698,6 +693,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -937,11 +937,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -951,7 +947,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
@@ -982,6 +977,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1218,11 +1218,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -1233,7 +1229,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS.i \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1267,6 +1262,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1501,11 +1501,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -1515,7 +1511,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
@@ -1546,6 +1541,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1775,17 +1775,14 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  Event_TypesC.i Event_Types_impl.h
 .obj/Event_Types_impl.o .obj/Event_Types_impl.so .shobj/Event_Types_impl.o .shobj/Event_Types_impl.so: Event_Types_impl.cpp Event_Types_impl.h \
- Event_TypesC.h $(TAO_ROOT)/tao/corba.h \
+ Event_TypesC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -1796,7 +1793,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS.i \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1830,6 +1826,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -2063,11 +2064,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -2077,7 +2074,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
@@ -2108,6 +2104,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
