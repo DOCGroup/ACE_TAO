@@ -255,14 +255,21 @@ HTTP_Response::cgi_response (void)
         }
       *q = '\0';
 
-      cgi_options.setenv (buf, "%s", this->request_.header_values (i));
+      const char *hv = this->request_.header_values (i);
+      if (hv && *hv)
+        cgi_options.setenv (buf, "%s", hv);
       q = p;
     }
 
+  cgi_options.set_handles (this->io_.handle (),
+                           this->io_.handle (),
+                           this->io_.handle ());
 
   // Exec the cgi program
   ACE_Process cgi_process;
   cgi_process.spawn (cgi_options);
+  cgi_process.wait ();
+  io_.send_confirmation_message ("", 0);
 }
 
 void
