@@ -105,86 +105,98 @@ is_global_name(Identifier *i)
   return comp_result;
 }
 
-/*
- * Helper function for lookup_by_name. Iterates doing local lookups of
- * subsequent components of a scoped name
- */
+// Helper function for lookup_by_name. Iterates doing local lookups of
+// subsequent components of a scoped name.
 static AST_Decl *
-iter_lookup_by_name_local(AST_Decl *d, 
-                          UTL_ScopedName *e,
-                          idl_bool treat_as_ref)
+iter_lookup_by_name_local (AST_Decl *d, 
+                           UTL_ScopedName *e,
+                           idl_bool treat_as_ref,
+                           long scope_offset)
 {
-  Identifier                    *s;
-  AST_Typedef                   *td;
-  UTL_IdListActiveIterator      *i;
-  UTL_Scope                     *sc;
-  UTL_Scope                     *t = NULL;
+  Identifier *s;
+  AST_Typedef *td;
+  UTL_IdListActiveIterator *i;
+  UTL_Scope *sc;
+  UTL_Scope *t = NULL;
 
-  i = new UTL_IdListActiveIterator(e);
-  for (i->next(); !(i->is_done()); ) {
-    s = i->item();
-    /*
-     * Update iterator before loop. This is needed for the check for
-     * typedef, since we only want to look at the base type if there
-     * actually are more components of the name to resolve.
-     */
-    i->next();
-    /*
-     * Next component in name was not found
-     */
-    if (d == NULL) {
-      delete i;
-      return NULL;
-    }
-    /*
-     * If this is a typedef and we're not done, we should get the
-     * base type to get the scope it defines (if any)
-     */
-    if (!(i->is_done())) {
-      while (d != NULL && d->node_type() == AST_Decl::NT_typedef) {
-        td = AST_Typedef::narrow_from_decl(d);
-        if (td == NULL) {
+  i = new UTL_IdListActiveIterator (e);
+
+  for (i->next(); !(i->is_done ()); ) 
+    {
+      s = i->item ();
+
+      // Update iterator before loop. This is needed for the check for
+      // typedef, since we only want to look at the base type if there
+      //actually are more components of the name to resolve.
+      i->next ();
+      scope_offset--;
+
+      // Next component in name was not found
+      if (d == NULL) 
+        {
           delete i;
           return NULL;
         }
-        d = td->base_type();
-      }
-      if (d == NULL) {
-        delete i;
-        return NULL;
-      }
-    }
-    /*
-     * Try to convert the AST_Decl to a UTL_Scope
-     */
-    sc = DeclAsScope(d);
-    if (sc == NULL) {
-      delete i;
-      return NULL;
-    }
-    /*
-     * Look up the next element
-     */
-    t = d->defined_in ();
-    d = sc->lookup_by_name_local(s, treat_as_ref);
 
-    // If there is a reopened module in a scope somewhat
-    // removed from where we are, we may need to backtrack
-    // to find the subsequent declaration(s) of that 
-    // module's scope.
-    while (d == NULL && t != NULL)
-      {
-        d = t->lookup_by_name ((UTL_ScopedName *) e->tail (), 
-                               treat_as_ref, 
-                               0, 
-                               1);
-        AST_Decl *tmp = ScopeAsDecl (t);
-        t = tmp->defined_in ();
-      }
-  }
-  /*
-   * OK, done with the loop
-   */
+      // If this is a typedef and we're not done, we should get the
+      // base type to get the scope it defines (if any)
+      if (!i->is_done ()) 
+        {
+          while (d != NULL && d->node_type () == AST_Decl::NT_typedef) 
+            {
+              td = AST_Typedef::narrow_from_decl (d);
+
+              if (td == NULL) 
+                {
+                  delete i;
+                  return NULL;
+                }
+
+              d = td->base_type ();
+            }
+
+          if (d == NULL) 
+            {
+              delete i;
+              return NULL;
+            }
+        }
+
+      // Try to convert the AST_Decl to a UTL_Scope
+      sc = DeclAsScope (d);
+      if (sc == NULL) 
+        {
+          delete i;
+          return NULL;
+        }
+
+      // Look up the next element
+      t = d->defined_in ();
+
+      d = sc->lookup_by_name_local (s, 
+                                    treat_as_ref, 
+                                    0, 
+                                    scope_offset);
+
+      // If there is a reopened module in a scope somewhat
+      // removed from where we are, we may need to backtrack
+      // to find the subsequent declaration(s) of that 
+      // module's scope.
+      while (d == NULL && t != NULL)
+        {
+          d = t->lookup_by_name ((UTL_ScopedName *) e->tail (), 
+                                 treat_as_ref, 
+                                 1, 
+                                 1,
+                                 ++scope_offset);
+
+          AST_Decl *tmp = ScopeAsDecl (t);
+
+          t = tmp->defined_in ();
+        }
+    }
+
+  // OK, done with the loop
   delete i;
   return d;
 }
@@ -779,99 +791,125 @@ UTL_Scope::lookup_primitive_type(AST_Expression::ExprType et)
   return NULL;
 }
 
-/*
- * Look through inherited interfaces
- */
+// Look through inherited interfaces
 AST_Decl *
-UTL_Scope::look_in_inherited(UTL_ScopedName *e, idl_bool treat_as_ref)
+UTL_Scope::look_in_inherited (UTL_ScopedName *e, 
+                              idl_bool treat_as_ref)
 {
-  AST_Decl              *d = NULL;
-  AST_Decl		*d_before = NULL;
-  AST_Interface         *i = AST_Interface::narrow_from_scope(this);
-  AST_Interface         **is;
-  long                  nis;
+  AST_Decl *d = NULL;
+  AST_Decl *d_before = NULL;
+  AST_Interface *i = AST_Interface::narrow_from_scope (this);
+  AST_Interface **is;
+  long nis;
 
-  /*
-   * This scope is not an interface..
-   */
+  // This scope is not an interface..
   if (i == NULL)
-    return NULL;
-  /*
-   * Can't look in an interface which was not yet defined
-   */
-  if (!i->is_defined()) {
-    idl_global->err()->fwd_decl_lookup(i, e);
-    return NULL;
-  }
+    {
+      return NULL;
+    }
 
-  /*
-   * OK, loop through inherited interfaces.
-   */
+  // Can't look in an interface which was not yet defined
+  if (!i->is_defined ()) 
+    {
+      idl_global->err ()->fwd_decl_lookup (i, 
+                                           e);
+      return NULL;
+    }
+
+  //OK, loop through inherited interfaces.
+
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (nis = i->n_inherits(), is = i->inherits(); nis > 0; nis--, is++) {
-    d = (*is)->lookup_by_name(e, treat_as_ref, 0 /* not in_parent */);
-     if (d != NULL) {
-	if (d_before == NULL) {   // first result found
-	    d_before = d;
-	}
-	else {			  // conflict against further results ?
-	    if (d != d_before)  {
-                //    idl_global->err()->ambiguous (this,
-		cerr << "warning in " << idl_global->filename()->get_string()
-		     << " line " << idl_global->lineno() << ": " ;
-		e->dump(cerr);
-		cerr <<  " is ambiguous in scope.\nFound ";
-		d->name()->dump(cerr);
-		cerr << " and ";
-		d_before->name()->dump(cerr);
-		cerr << ".\n";
-	    }
-	}
-     }
-  }
+  for (nis = i->n_inherits (), is = i->inherits (); nis > 0; nis--, is++) 
+    {
+      d = (*is)->lookup_by_name (e, 
+                                 treat_as_ref, 
+                                 0 /* not in_parent */);
+      if (d != NULL) 
+        {
+	        if (d_before == NULL) 
+            {   // first result found
+	            d_before = d;
+	          }
+        	else 
+            {			  // conflict against further results ?
+	            if (d != d_before)  
+                {
+		              cerr << "warning in " << idl_global->filename ()->get_string ()
+		                   << " line " << idl_global->lineno () << ": " ;
+		              e->dump (cerr);
+		              cerr << " is ambiguous in scope.\nFound ";
+	              	d->name ()->dump (cerr);
+		              cerr << " and ";
+		              d_before->name ()->dump (cerr);
+		              cerr << ".\n";
+	              }
+	          }
+        }
+    }
 
   return d_before;
 }
 
-/*
- * Look up a String * in local scope only
- */
+// Look up a String * in local scope only
 AST_Decl *
 UTL_Scope::lookup_by_name_local (Identifier *e, 
-                                idl_bool,
-                                long index)
+                                 idl_bool,
+                                 long index,
+                                 long scope_offset)
 {
   UTL_ScopeActiveIterator *i = 
     new UTL_ScopeActiveIterator (this,
                                  UTL_Scope::IK_both);
-  AST_Decl                *d;
-  AST_InterfaceFwd        *fwd;
+  AST_Decl *d;
+  AST_InterfaceFwd *fwd;
 
-  /*
-   * Iterate over this scope
-   */
+  // Iterate over this scope
   while (!(i->is_done ())) 
     {
       d = i->item ();
-      if (d->local_name () != NULL && d->local_name ()->case_compare (e)) 
+
+      Identifier *item_name = d->local_name ();
+
+      if (item_name == NULL)
+        {
+          i->next ();
+          continue;
+        }
+
+      long equal;
+
+      if (scope_offset == 0)
+        {
+          equal = item_name->case_compare (e);
+        }
+      else
+        {
+          equal = item_name->compare (e);
+        }
+
+      if (equal) 
         {
           if (index == 0) 
             {
               delete i;
-              /*
-              * Special case for forward declared interfaces. 
-              * Look through the forward declaration and retrieve 
-              * the full definition.
-              */
+
+              // Special case for forward declared interfaces. 
+              // Look through the forward declaration and retrieve 
+              // the full definition.
               if (d->node_type () == AST_Decl::NT_interface_fwd) 
                 {
                   fwd = AST_InterfaceFwd::narrow_from_decl (d);
+
                   if (fwd == NULL)
-                    d = NULL;
+                    {
+                      d = NULL;
+                    }
                   else
-                    d = fwd->full_definition ();
+                    {
+                      d = fwd->full_definition ();
+                    }
                 }
 
               return d;
@@ -884,9 +922,8 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       i->next ();
     }
   delete i;
-  /*
-   * OK, not found, return NULL
-   */
+
+  // OK, not found, return NULL
   return NULL;
 }
 
@@ -897,114 +934,180 @@ AST_Decl *
 UTL_Scope::lookup_by_name(UTL_ScopedName *e, 
                           idl_bool treat_as_ref,
                           idl_bool in_parent,
-                          long start_index)
+                          long start_index,
+                          long scope_offset)
 {
-  AST_Decl                   *d;
-  UTL_Scope                  *t = NULL;
+  AST_Decl *d;
+  UTL_Scope *t = NULL;
 
-  /*
-   * Empty name? error
-   */
-  if (e == NULL) {
-    return NULL;
-  }
-  /*
-   * If name starts with "::" or "" start look up in global scope
-   */
-  if (is_global_name(e->head())) {
-    /*
-     * Get parent scope
-     */
-    d = ScopeAsDecl(this);
-    if (d == NULL)
+  // Empty name? error
+  if (e == NULL) 
+    {
       return NULL;
-    t = d->defined_in();
-    /*
-     * If this is the global scope..
-     */
-    if (t == NULL) {
-      /*
-       * Look up tail of name starting here
-       */
-      d = lookup_by_name((UTL_ScopedName *) e->tail(), treat_as_ref);
-      /*
-       * Now return whatever we have
-       */
-      return d;
     }
-    /*
-     * OK, not global scope yet, so simply iterate with parent scope
-     */
-    d = t->lookup_by_name(e, treat_as_ref);
-    /*
-     * If treat_as_ref is true and d is not NULL, add d to
-     * set of nodes referenced here
-     */
-    if (treat_as_ref && d != NULL)
-      add_to_referenced(d, I_FALSE);
-    /*
-     * Now return what we have
-     */
-    return d;
-  }
-  /*
-   * The name does not start with "::"
-   *
-   * Is name defined here?
-   */
-  long index = start_index;
-  while (1) {
-    d = lookup_by_name_local(e->head(), treat_as_ref, index);
-    if (d == NULL) {
-      /*
-       * Special case for scope which is an interface. We have to look
-       * in the inherited interfaces as well..
-	     * Look before parent scopes !
-       */
-      if (pd_scope_node_type == AST_Decl::NT_interface)
-         d = look_in_inherited(e, treat_as_ref);
 
-      if ((d == NULL) && in_parent) {
-       /*
-        * OK, not found. Go down parent scope chain.
-        */
-        d = ScopeAsDecl(this);
-        if (d != NULL) {
-          t = d->defined_in();
-          if (t == NULL)
-            d = NULL;
-          else
-            d = t->lookup_by_name(e, treat_as_ref);
+  // If name starts with "::" or "" start look up in global scope
+  if (is_global_name (e->head ())) 
+    {
+     // Get parent scope
+      d = ScopeAsDecl (this);
+
+      if (d == NULL)
+        {
+          return NULL;
         }
-      }
-      /*
-       * If treat_as_ref is true and d is not NULL, add d to
-       * set of nodes referenced here
-       */
+
+      t = d->defined_in();
+
+      // If this is the global scope..
+      if (t == NULL) 
+        {
+          // Look up tail of name starting here
+          d = lookup_by_name ((UTL_ScopedName *) e->tail (), 
+                              treat_as_ref);
+
+          // Now return whatever we have
+          return d;
+        }
+
+      // OK, not global scope yet, so simply iterate with parent scope
+      d = t->lookup_by_name (e, 
+                             treat_as_ref);
+
+      // If treat_as_ref is true and d is not NULL, add d to
+      // set of nodes referenced here
       if (treat_as_ref && d != NULL)
-        add_to_referenced(d, I_FALSE);
-      /*
-       *  OK, now return whatever we found
-       */
+        {
+          add_to_referenced (d, 
+                             I_FALSE);
+        }
+
+      // Now return what we have
       return d;
     }
-    /*
-     * OK, start of name is defined. Now loop doing local lookups
-     * of subsequent elements of the name
-     */
-    d = iter_lookup_by_name_local(d, e, treat_as_ref);
-    /*
-     * If treat_as_ref is true and d is not NULL, add d to
-     * set of nodes referenced here
-     */
-    if (treat_as_ref && d != NULL)
-      add_to_referenced(d, I_FALSE);
-    /*
-     * All OK, name fully resolved
-     */
-    if ( d != NULL ) return d;
-    else index++ ;
-  }
+
+  // The name does not start with "::"
+  // Is name defined here?
+  long index = start_index;
+
+  while (1) 
+    {
+      d = lookup_by_name_local(e->head(), treat_as_ref, index, scope_offset);
+
+      // If we have popped up to a parent scope, we
+      // must check the other children, if we haven't 
+      // had any luck so far.
+      if (d == NULL && scope_offset > 0)
+        {
+          UTL_ScopeActiveIterator *iter = 
+            new UTL_ScopeActiveIterator (this,
+                                         UTL_Scope::IK_both);
+
+          while (!iter->is_done ()) 
+            {
+              d = iter->item ();
+              UTL_Scope *t = DeclAsScope (d);
+              if (t != NULL)
+                {
+                  AST_Interface *i = 
+                    AST_Interface::narrow_from_scope (t);
+                  if (i == NULL || i->is_defined ())
+                    {
+                      d = t->lookup_by_name (e,
+                                             treat_as_ref,
+                                             0,
+                                             0,
+                                             --scope_offset);
+                    }
+                  else
+                    {
+                      d = NULL;
+                    }
+
+                  if (d != NULL)
+                    {
+                      break;
+                    }
+                }
+
+              iter->next ();
+            }
+
+          delete iter;
+        }
+
+      if (d == NULL) 
+        {
+
+          // Special case for scope which is an interface. We have to look
+          // in the inherited interfaces as well..
+	        // Look before parent scopes !
+          if (pd_scope_node_type == AST_Decl::NT_interface)
+            {
+              d = look_in_inherited (e, 
+                                     treat_as_ref);
+            }
+
+          if ((d == NULL) && in_parent) 
+            {
+
+              // OK, not found. Go down parent scope chain.
+              d = ScopeAsDecl (this);
+
+              if (d != NULL) 
+                {
+                  t = d->defined_in();
+
+                  if (t == NULL)
+                    {
+                      d = NULL;
+                    }
+                  else
+                    {
+                      d = t->lookup_by_name (e, 
+                                             treat_as_ref, 
+                                             in_parent, 
+                                             0, 
+                                             ++scope_offset);
+                    }
+                }
+            }
+
+          // If treat_as_ref is true and d is not NULL, add d to
+          // set of nodes referenced here
+          if (treat_as_ref && d != NULL)
+            {
+              add_to_referenced (d, 
+                                 I_FALSE);
+            }
+
+          // OK, now return whatever we found
+          return d;
+        }
+
+      // OK, start of name is defined. Now loop doing local lookups
+      // of subsequent elements of the name
+      d = iter_lookup_by_name_local (d, 
+                                     e, 
+                                     treat_as_ref, 
+                                     scope_offset);
+
+      // If treat_as_ref is true and d is not NULL, add d to
+      // set of nodes referenced here
+      if (treat_as_ref && d != NULL)
+        {
+          add_to_referenced (d, 
+                             I_FALSE);
+        }
+
+      // All OK, name fully resolved
+      if ( d != NULL ) 
+        {
+          return d;
+        }
+
+      else index++ ;
+    }
 }
 
 // Add a node to set of nodes referenced in this scope
