@@ -161,7 +161,7 @@ server (void *arg)
 				  0, 0, 0) == -1)
 		ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "select"), 0);
 	      
-	      while ((r_bytes = new_stream.recv_n (buf, 1)) > 0)
+	      while ((r_bytes = new_stream.recv (buf, 1)) > 0)
 		{
 		  ACE_ASSERT (t == buf[0]);
 		  t++;

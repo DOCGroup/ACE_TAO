@@ -19,7 +19,7 @@ Pipe_Test
 Priority_Buffer_Test
 Process_Mutex_Test
 Reactor_Timer_Test
-Reactors_Test
+Reactor_Notify_Test
 Reader_Writer_Test
 Recursive_Mutex_Test
 Service_Config_Test
@@ -37,5 +37,7 @@ Time_Value_Test
 Timer_Queue_Test
 Tokens_Test
 UPIPE_SAP_Test
+
+Reactors_Test
 
 @echo Tests complete...
