@@ -476,6 +476,13 @@ namespace CORBA
     /// Constructor.
     TypeCode (void);
 
+    /// Destructor.
+    /**
+     * Protected destructor to enforce proper memory management
+     * through the reference counting mechanism.
+     */
+    virtual ~TypeCode (void);
+
     /**
      * @name @c TypeCode Template Methods
      *

@@ -4,11 +4,16 @@
 #define TAO_STRUCT_TYPECODE_CPP
 
 #include "tao/Struct_TypeCode.h"
-#include "tao/TypeCode_Field.h"
+#include "tao/TypeCode_Struct_Field.h"
+#include "tao/ORB_Core.h"
+#include "tao/TypeCodeFactory_Adapter.h"
+
 
 #ifndef __ACE_INLINE__
 # include "tao/Struct_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
+
+#include "ace/Dynamic_Service.h"
 
 
 template <typename StringType,
@@ -36,12 +41,12 @@ TAO::TypeCode::Struct<StringType,
   if (!success)
     return false;
 
-  Field<StringType> const * const begin = this->fields ();
-  Field<StringType> const * const end   = begin + this->nfields_;
+  Struct_Field<StringType> const * const begin = this->fields ();
+  Struct_Field<StringType> const * const end   = begin + this->nfields_;
 
-  for (Field<StringType> const * i = begin; i != end; ++i)
+  for (Struct_Field<StringType> const * i = begin; i != end; ++i)
     {
-      Field<StringType> const & field = *i;
+      Struct_Field<StringType> const & field = *i;
 
       if (!(cdr << field.get_name ())
           || !(cdr << *(field.type)))
@@ -61,7 +66,7 @@ TAO::TypeCode::Struct<StringType,
                       Kind,
                       RefCountPolicy>::tao_duplicate (void)
 {
-  this->RefCountPolicy::add_ref (void);
+  this->RefCountPolicy::add_ref ();
 }
 
 template <typename StringType,
@@ -74,7 +79,7 @@ TAO::TypeCode::Struct<StringType,
                       Kind,
                       RefCountPolicy>::tao_release (void)
 {
-  this->RefCountPolicy::remove_ref (void);
+  this->RefCountPolicy::remove_ref ();
 }
 
 template <typename StringType,
@@ -102,7 +107,7 @@ TAO::TypeCode::Struct<StringType,
 
   for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
-      Field<StringType> const & lhs_field = this->fields_[i];
+      Struct_Field<StringType> const & lhs_field = this->fields_[i];
 
       char const * const lhs_name = lhs_field.get_name ();
       char const * const rhs_name = tc->member_name (i
@@ -223,9 +228,9 @@ TAO::TypeCode::Struct<StringType,
                       RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
-  Field<StringType> * tc_fields = 0;
+  Struct_Field<StringType> * tc_fields = 0;
 
-  ACE_Auto_Array_Ptr<Field<StringType> > safe_fields;
+  ACE_Auto_Array_Ptr<Struct_Field<StringType> > safe_fields;
 
   if (this->nfields_ > 0)
     {
@@ -233,7 +238,7 @@ TAO::TypeCode::Struct<StringType,
       // member names.
 
       ACE_NEW_THROW_EX (tc_fields,
-                        Field<StringType> [this->nfields_],
+                        Struct_Field<StringType> [this->nfields_],
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
@@ -249,7 +254,7 @@ TAO::TypeCode::Struct<StringType,
           tc_fields[i].name = empty_name;
           tc_fields[i].type =
             &(*(this->fields_[i].type)->get_compact_typecode (
-                  ACE_ENV_ARG_PARAMETER));
+                  ACE_ENV_SINGLE_ARG_PARAMETER));
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
         }
     }
@@ -264,17 +269,18 @@ TAO::TypeCode::Struct<StringType,
                         CORBA::TypeCode::_nil ());
     }
 
-  tc = adapter->_tao_create_struct_except_tc (Kind,
-                                              this->base_attributes_.id (),
-                                              ""  /* empty name */,
-                                              tc_fields,
-                                              this->nfields_
-                                              ACE_ENV_ARG_PARAMETER);
+  CORBA::TypeCode_var tc =
+    adapter->_tao_create_struct_except_tc (Kind,
+                                           this->base_attributes_.id (),
+                                           ""  /* empty name */,
+                                           tc_fields,
+                                           this->nfields_
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   (void) safe_fields.release ();
 
-  return tc;
+  return tc._retn ();
 }
 
 template <typename StringType,

@@ -53,7 +53,7 @@ TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::tao_duplicate (void)
 {
-  this->RefCountPolicy::add_ref (void);
+  this->RefCountPolicy::add_ref ();
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
@@ -62,7 +62,7 @@ TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::tao_release (void)
 {
-  this->RefCountPolicy::remove_ref (void);
+  this->RefCountPolicy::remove_ref ();
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>

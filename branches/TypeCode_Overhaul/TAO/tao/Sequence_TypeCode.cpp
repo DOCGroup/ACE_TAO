@@ -37,14 +37,14 @@ template <class RefCountPolicy>
 void
 TAO::TypeCode::Sequence<RefCountPolicy>::tao_duplicate (void)
 {
-  this->RefCountPolicy::add_ref (void);
+  this->RefCountPolicy::add_ref ();
 }
 
 template <class RefCountPolicy>
 void
 TAO::TypeCode::Sequence<RefCountPolicy>::tao_release (void)
 {
-  this->RefCountPolicy::remove_ref (void);
+  this->RefCountPolicy::remove_ref ();
 }
 
 template <class RefCountPolicy>
