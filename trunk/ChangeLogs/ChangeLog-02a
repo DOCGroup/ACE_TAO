@@ -1,5 +1,17 @@
 Tue Apr 18 15:18:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.h,
+	* ace/OS.i,  
+  	* ace/Synch.h,
+    	* ace/Synch.cpp: Updated the ACE_OS::*mutex_init() methods (and the 
+	  corresponding ACE_Thread_Mutex, ACE_Mutex, and
+ 	  ACE_Recursive_Thread_Mutex classes) so that they now take an
+ 	  optional ACE_mutexattr_t * rather than just a void *.  This is
+ 	  nice because it makes it possible to pass in special attributes,
+ 	  such as the mutex prioceiling attribute, to the underlying
+ 	  pthreads mutex (assuming we're running on pthreads, of course).
+  	  Thanks to lafortg@res.raytheon.com for motivating this.
+	
 	* ace/Containers_T.cpp (copy_nodes): Added a call to the 
 	  allocator->malloc() rather than new.  Thanks to Umar Syyid
  	  <usyyid@hns.com> for reporting this.

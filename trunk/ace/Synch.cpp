@@ -374,7 +374,7 @@ ACE_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
+ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, ACE_mutexattr_t *arg)
   :
 #if defined (CHORUS)
     process_lock_ (0),
@@ -608,7 +608,7 @@ ACE_Thread_Mutex_Guard::dump (void) const
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
 ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
-                                                        void *arg)
+                                                        ACE_mutexattr_t *arg)
   : removed_ (0)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
@@ -872,7 +872,7 @@ ACE_Barrier::dump (void) const
 ACE_Barrier::ACE_Barrier (u_int count,
                           LPCTSTR name,
                           void *arg)
-  : lock_ (name, arg),
+  : lock_ (name, (ACE_mutexattr_t *) arg),
     current_generation_ (0),
     count_ (count),
     sub_barrier_1_ (count, lock_, name, arg),
@@ -982,15 +982,18 @@ ACE_Thread_Mutex::~ACE_Thread_Mutex (void)
   this->remove ();
 }
 
-ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
+ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, ACE_mutexattr_t *arg)
   : removed_ (0)
 {
 //  ACE_TRACE ("ACE_Thread_Mutex::ACE_Thread_Mutex");
 
-  if (ACE_OS::thread_mutex_init (&this->lock_, USYNC_THREAD, name, arg) != 0)
+  if (ACE_OS::thread_mutex_init (&this->lock_,
+                                 USYNC_THREAD,
+                                 name,
+                                 arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT("%p\n"),
-                ASYS_TEXT("ACE_Thread_Mutex::ACE_Thread_Mutex")));
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Thread_Mutex::ACE_Thread_Mutex")));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)

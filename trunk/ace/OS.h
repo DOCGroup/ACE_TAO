@@ -2158,6 +2158,7 @@ typedef pthread_t ACE_thread_t;
 typedef pthread_mutex_t ACE_mutex_t;
 typedef pthread_cond_t ACE_cond_t;
 typedef pthread_condattr_t ACE_condattr_t;
+typedef pthread_mutexattr_t ACE_mutexattr_t;
 #     endif /* ! ACE_LACKS_COND_T */
 typedef pthread_mutex_t ACE_thread_mutex_t;
 
@@ -2319,6 +2320,10 @@ struct ACE_Export ACE_condattr_t
 {
   int type;
 };
+struct ACE_Export ACE_mutexattr_t
+{
+  int type;
+};
 typedef ACE_thread_t ACE_hthread_t;
 typedef ACE_mutex_t ACE_thread_mutex_t;
 
@@ -2347,7 +2352,11 @@ struct ACE_Export ACE_condattr_t
 {
   int type;
 };
-#endif
+struct ACE_Export ACE_mutexattr_t
+{
+  int type;
+};
+#endif /* ACE_PSOS_HAS_COND_T */
 
 
 // TCB registers 0-7 are for application use
@@ -2594,6 +2603,10 @@ struct ACE_Export ACE_condattr_t
 {
   int type;
 };
+struct ACE_Export ACE_mutexattr_t
+{
+  int type;
+};
 #   endif /* ACE_LACKS_COND_T */
 
 #   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
@@ -2756,6 +2769,10 @@ public:
 // These are dummies needed for class OS.h
 typedef int ACE_cond_t;
 struct ACE_Export ACE_condattr_t
+{
+  int type;
+};
+struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -5562,7 +5579,7 @@ public:
 
   // = A set of wrappers for condition variables.
   static int condattr_init (ACE_condattr_t &attributes,
-                             int type = ACE_DEFAULT_SYNCH_TYPE);
+                            int type = ACE_DEFAULT_SYNCH_TYPE);
   static int condattr_destroy (ACE_condattr_t &attributes);
   static int cond_broadcast (ACE_cond_t *cv);
   static int cond_destroy (ACE_cond_t *cv);
@@ -5946,42 +5963,34 @@ public:
   // = A set of wrappers for recursive mutex locks.
   static int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
                                    LPCTSTR name = 0,
-                                   void *arg = 0,
+                                   ACE_mutexattr_t *arg = 0,
                                    LPSECURITY_ATTRIBUTES sa = 0);
   static int recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m);
-
   static int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
-
   static int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
-
   static int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
 
   // = A set of wrappers for mutex locks.
   static int mutex_init (ACE_mutex_t *m,
                          int type = ACE_DEFAULT_SYNCH_TYPE,
                          LPCTSTR name = 0,
-                         void *arg = 0,
+                         ACE_mutexattr_t *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
   static int mutex_destroy (ACE_mutex_t *m);
-
   static int mutex_lock (ACE_mutex_t *m);
   // Win32 note: Abandoned mutexes are not treated differently. 0 is
   // returned since the calling thread does get the ownership.
-
   static int mutex_lock (ACE_mutex_t *m,
                          int &abandoned);
   // This method is only implemented for Win32.  For abandoned
   // mutexes, <abandoned> is set to 1 and 0 is returned.
-
   static int mutex_trylock (ACE_mutex_t *m);
   // Win32 note: Abandoned mutexes are not treated differently. 0 is
   // returned since the calling thread does get the ownership.
-
   static int mutex_trylock (ACE_mutex_t *m,
                             int &abandoned);
   // This method is only implemented for Win32.  For abandoned
   // mutexes, <abandoned> is set to 1 and 0 is returned.
-
   static int mutex_unlock (ACE_mutex_t *m);
 
   // = A set of wrappers for mutex locks that only work within a
@@ -5989,7 +5998,7 @@ public:
   static int thread_mutex_init (ACE_thread_mutex_t *m,
                                 int type = ACE_DEFAULT_SYNCH_TYPE,
                                 LPCTSTR name = 0,
-                                void *arg = 0);
+                                ACE_mutexattr_t *arg = 0);
   static int thread_mutex_destroy (ACE_thread_mutex_t *m);
   static int thread_mutex_lock (ACE_thread_mutex_t *m);
   static int thread_mutex_trylock (ACE_thread_mutex_t *m);

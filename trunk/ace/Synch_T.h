@@ -10,7 +10,7 @@
 //    Synch_T.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@uci.edu>
 //
 // ============================================================================
 
