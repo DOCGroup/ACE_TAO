@@ -105,18 +105,10 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
       // Send the object reference for the naming service
 
-      // Wait to give client a chance to start receiving,
-      // Send two times to provide better protection against packet
-      // loss.
-      // @@Vishal, a better (not hardcoded) 'policy' solution for this should be provided.
-      for (int i = 0; i < 5; ++i)
-        {
-          ACE_OS::sleep (ACE_Time_Value (0, 10000));
-          result = response_.send (this->ior_,
-                                   ACE_OS::strlen (this->ior_),
-                                   remote_addr,
-                                   0);
-        }
+      result = response_.send (this->ior_,
+                               ACE_OS::strlen (this->ior_),
+                               remote_addr,
+                               0);
 
       if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG,
@@ -128,8 +120,19 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 		    remote_addr.get_host_name (),
 		    result));
 
+      // Deregister the handler from the reactor only if something
+      // really bad happens, like EBADF.  We should possibly
+      // discriminate certain other errors or even reverse it: i.e.,
+      // keep the handler only after certain errors.  @@Vishal, please
+      // take a look at this.
+
       if (result == -1)
-        return -1;
+        {
+          if (errno == EBADF)
+            return -1;
+        }
+      else
+        return 0;
     }
   else
     ACE_DEBUG ((LM_DEBUG,
