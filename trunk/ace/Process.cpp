@@ -125,9 +125,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
           {
             // If the execv fails, this child needs to exit.
             
-            // Print the message if debug_ is enabled in the service
-            // configurator.  
-            if (ACE_Service_Config::debug_)
+            // Print the message if debug_ is greater than 1 in the
+            // service configurator.
+            if (ACE_Service_Config::debug_ > 1)
               ACE_DEBUG ((LM_MAX,
                           "(%P): ACE_Process::spawn (); exec failed: exiting!!!!\n"));
             
