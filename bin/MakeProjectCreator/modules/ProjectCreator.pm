@@ -1102,7 +1102,8 @@ sub add_source_corresponding_component_files {
             ## we must check to see if the file *would be* generated
             ## from idl.  If so, we will add the file with the default
             ## (i.e. first) file extension.
-            foreach my $idl (@idl) {
+            foreach my $idlfile (@idl) {
+              my($idl) = $self->escape_regex_special($idlfile);
               if ($c =~ /^$idl/) {
                 foreach my $ending (@{$self->{'skeleton_endings'}}) {
                   if ($c =~ /^$idl$ending$/) {
