@@ -43,17 +43,7 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
     {
       if (errno == EWOULDBLOCK)
         return 0;
-     else if (errno == ECONNRESET)
-       {
-         // @@ Is this OK??
 
-         // We got a connection reset (TCP RSET) from the other side,
-         // i.e., they didn't initiate a proper shutdown.
-         //
-         // Make it look like things are OK to the upper layer.
-         errno = 0;
-         return 0;
-       }
       return -1;
     }
   // @@ What are the other error handling here??
