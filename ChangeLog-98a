@@ -8,7 +8,7 @@ Tue Dec 16 16:55:19 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 	* ace/OS.h:
 	* ace/Trace.cpp:
 	* ace/streams.h:
-	* ace/iosfwd.h:  Replace
+	* ace/iosfwd.h:  Replace "config.h" with "inc_user_config.h".
 
 Tue Dec 16 08:30:41 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
