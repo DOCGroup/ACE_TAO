@@ -1,4 +1,5 @@
 # Makefile
+# $Id$
  
 .SUFFIXES: .java .class
 
@@ -55,6 +56,7 @@ os:	$(addsuffix .java,$(pkg_os))
 	$(COMPILE.java)
 	
 pkg_concurrency = \
+	Condition \
 	Mutex \
 	RWMutex \
 	Semaphore \
