@@ -50,7 +50,7 @@ public:
   ~TAO_DynUnion_i (void);
   // Destructor.
 
-  void init (const CORBA_Any& any ACE_ENV_ARG_DECL);
+  void init (const CORBA::Any& any ACE_ENV_ARG_DECL);
   // Constructor taking an Any argument.
 
   void init (CORBA_TypeCode_ptr tc ACE_ENV_ARG_DECL);
@@ -180,7 +180,7 @@ public:
 private:
   // Code common to the constructor from an Any arg and the member
   // function from_any().
-  void set_from_any (const CORBA_Any &any,
+  void set_from_any (const CORBA::Any &any,
                      CORBA::Boolean from_factory
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -193,8 +193,8 @@ private:
   void init_common (void);
 
   // Iterative check for label value match.
-  CORBA::Boolean label_match (const CORBA_Any &my_any,
-                              const CORBA_Any &other_any
+  CORBA::Boolean label_match (const CORBA::Any &my_any,
+                              const CORBA::Any &other_any
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
         CORBA::SystemException

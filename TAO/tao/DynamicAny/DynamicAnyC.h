@@ -19,6 +19,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
 #ifndef _TAO_IDL_ORIG_DYNAMICANYC_H_
 #define _TAO_IDL_ORIG_DYNAMICANYC_H_
 
@@ -58,20 +61,28 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+
 TAO_NAMESPACE  DynamicAny
 {
   
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNANY___PTR_CH_)
 #define _DYNAMICANY_DYNANY___PTR_CH_
   
   class DynAny;
   typedef DynAny *DynAny_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNANY___VAR_CH_)
 #define _DYNAMICANY_DYNANY___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynAny_var : public TAO_Base_var
   {
@@ -112,12 +123,13 @@ TAO_NAMESPACE  DynamicAny
     DynAny_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNANY___OUT_CH_)
 #define _DYNAMICANY_DYNANY___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynAny_out
   {
@@ -135,23 +147,21 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynAny_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNANY_CH_)
 #define _DYNAMICANY_DYNANY_CH_
   
   class TAO_DynamicAny_Export DynAny
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynAny_ptr _ptr_type;
     typedef DynAny_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -173,6 +183,10 @@ TAO_NAMESPACE  DynamicAny
       }
     
     
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
+
 #if !defined (_DYNAMICANY_DYNANY_INVALIDVALUE_CH_)
 #define _DYNAMICANY_DYNANY_INVALIDVALUE_CH_
     
@@ -185,7 +199,7 @@ TAO_NAMESPACE  DynamicAny
       ~InvalidValue (void);
 
       InvalidValue &operator= (const InvalidValue &);
-
+      
       static InvalidValue *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -203,13 +217,15 @@ TAO_NAMESPACE  DynamicAny
           ACE_ENV_ARG_DECL_NOT_USED
         );
       
-      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
     };
-
 
 #endif /* end #if !defined */
     
-    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
+
 #if !defined (_DYNAMICANY_DYNANY_TYPEMISMATCH_CH_)
 #define _DYNAMICANY_DYNANY_TYPEMISMATCH_CH_
     
@@ -222,7 +238,7 @@ TAO_NAMESPACE  DynamicAny
       ~TypeMismatch (void);
 
       TypeMismatch &operator= (const TypeMismatch &);
-
+      
       static TypeMismatch *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -240,19 +256,24 @@ TAO_NAMESPACE  DynamicAny
           ACE_ENV_ARG_DECL_NOT_USED
         );
       
-      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
     };
-
 
 #endif /* end #if !defined */
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::TypeCode_ptr type (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void assign (
         DynamicAny::DynAny_ptr dyn_any
@@ -262,6 +283,9 @@ TAO_NAMESPACE  DynamicAny
         CORBA::SystemException
         , DynamicAny::DynAny::TypeMismatch
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void from_any (
         const CORBA::Any & value
@@ -273,13 +297,18 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::Any * to_any (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Boolean equal (
         DynamicAny::DynAny_ptr dyn_any
@@ -289,21 +318,28 @@ TAO_NAMESPACE  DynamicAny
         CORBA::SystemException
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void destroy (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::DynAny_ptr copy (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_boolean (
         CORBA::Boolean value
@@ -315,6 +351,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_octet (
         CORBA::Octet value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -324,6 +363,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_char (
         CORBA::Char value
@@ -335,6 +377,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_short (
         CORBA::Short value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -344,6 +389,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_ushort (
         CORBA::UShort value
@@ -355,6 +403,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_long (
         CORBA::Long value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -364,6 +415,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_ulong (
         CORBA::ULong value
@@ -375,6 +429,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_float (
         CORBA::Float value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -384,6 +441,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_double (
         CORBA::Double value
@@ -395,6 +455,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_string (
         const char * value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -404,6 +467,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_reference (
         CORBA::Object_ptr value
@@ -415,6 +481,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_typecode (
         CORBA::TypeCode_ptr value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -424,6 +493,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_longlong (
         CORBA::LongLong value
@@ -435,6 +507,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_ulonglong (
         CORBA::ULongLong value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -444,6 +519,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_longdouble (
         CORBA::LongDouble value
@@ -455,6 +533,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_wchar (
         CORBA::WChar value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -464,6 +545,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_wstring (
         const CORBA::WChar * value
@@ -475,6 +559,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_any (
         const CORBA::Any & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -484,6 +571,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_dyn_any (
         DynamicAny::DynAny_ptr value
@@ -495,6 +585,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void insert_val (
         CORBA::ValueBase_ptr value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -505,8 +598,10 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::Boolean get_boolean (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -514,9 +609,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Octet get_octet (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -524,9 +621,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Char get_char (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -534,9 +633,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Short get_short (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -544,9 +645,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::UShort get_ushort (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -554,9 +657,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Long get_long (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -564,9 +669,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::ULong get_ulong (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -574,9 +681,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Float get_float (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -584,9 +693,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Double get_double (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -594,9 +705,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual char * get_string (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -604,9 +717,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Object_ptr get_reference (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -614,9 +729,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::TypeCode_ptr get_typecode (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -624,9 +741,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::LongLong get_longlong (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -634,9 +753,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::ULongLong get_ulonglong (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -644,9 +765,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::LongDouble get_longdouble (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -654,9 +777,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::WChar get_wchar (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -664,9 +789,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::WChar * get_wstring (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -674,9 +801,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Any * get_any (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -684,9 +813,11 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DynamicAny::DynAny_ptr get_dyn_any (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -695,8 +826,10 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::ValueBase_ptr get_val (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -704,6 +837,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Boolean seek (
         CORBA::Long index
@@ -713,32 +849,40 @@ TAO_NAMESPACE  DynamicAny
         CORBA::SystemException
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void rewind (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Boolean next (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::ULong component_count (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::DynAny_ptr current_component (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -746,35 +890,45 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynAny (void);
-    
     virtual ~DynAny (void);
+    
+    friend class _TAO_DynAny_Remote_Proxy_Impl;
+    friend class _TAO_DynAny_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynAny_Direct_Proxy_Impl;
   
   private:
     DynAny (const DynAny &);
     void operator= (const DynAny &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNFIXED___PTR_CH_)
 #define _DYNAMICANY_DYNFIXED___PTR_CH_
   
   class DynFixed;
   typedef DynFixed *DynFixed_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNFIXED___VAR_CH_)
 #define _DYNAMICANY_DYNFIXED___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynFixed_var : public TAO_Base_var
   {
@@ -815,12 +969,13 @@ TAO_NAMESPACE  DynamicAny
     DynFixed_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNFIXED___OUT_CH_)
 #define _DYNAMICANY_DYNFIXED___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynFixed_out
   {
@@ -838,11 +993,12 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynFixed_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNFIXED_CH_)
 #define _DYNAMICANY_DYNFIXED_CH_
   
@@ -850,11 +1006,8 @@ TAO_NAMESPACE  DynamicAny
     : public virtual DynamicAny::DynAny
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynFixed_ptr _ptr_type;
     typedef DynFixed_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -875,13 +1028,20 @@ TAO_NAMESPACE  DynamicAny
         return (DynFixed_ptr)0;
       }
     
+    
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual char * get_value (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Boolean set_value (
         const char * val
@@ -893,35 +1053,45 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynFixed (void);
-    
     virtual ~DynFixed (void);
+    
+    friend class _TAO_DynFixed_Remote_Proxy_Impl;
+    friend class _TAO_DynFixed_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynFixed_Direct_Proxy_Impl;
   
   private:
     DynFixed (const DynFixed &);
     void operator= (const DynFixed &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNENUM___PTR_CH_)
 #define _DYNAMICANY_DYNENUM___PTR_CH_
   
   class DynEnum;
   typedef DynEnum *DynEnum_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNENUM___VAR_CH_)
 #define _DYNAMICANY_DYNENUM___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynEnum_var : public TAO_Base_var
   {
@@ -962,12 +1132,13 @@ TAO_NAMESPACE  DynamicAny
     DynEnum_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNENUM___OUT_CH_)
 #define _DYNAMICANY_DYNENUM___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynEnum_out
   {
@@ -985,11 +1156,12 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynEnum_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNENUM_CH_)
 #define _DYNAMICANY_DYNENUM_CH_
   
@@ -997,11 +1169,8 @@ TAO_NAMESPACE  DynamicAny
     : public virtual DynamicAny::DynAny
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynEnum_ptr _ptr_type;
     typedef DynEnum_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -1022,13 +1191,20 @@ TAO_NAMESPACE  DynamicAny
         return (DynEnum_ptr)0;
       }
     
+    
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual char * get_as_string (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_as_string (
         const char * value
@@ -1039,13 +1215,18 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::ULong get_as_ulong (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_as_ulong (
         CORBA::ULong value
@@ -1056,44 +1237,52 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynEnum (void);
-    
     virtual ~DynEnum (void);
+    
+    friend class _TAO_DynEnum_Remote_Proxy_Impl;
+    friend class _TAO_DynEnum_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynEnum_Direct_Proxy_Impl;
   
   private:
     DynEnum (const DynEnum &);
     void operator= (const DynEnum &);
   };
-  
-  
+
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:368
   
   typedef char * FieldName;
   typedef CORBA::String_var FieldName_var;
   typedef CORBA::String_out FieldName_out;
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_FieldName;
   
-  struct NameValuePair;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  
   class NameValuePair_var;
   
   struct TAO_DynamicAny_Export NameValuePair
   {
-    
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef NameValuePair_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    static void _tao_any_destructor (void*);
+    
     
     TAO_String_Manager id;
     CORBA::Any value;
-    
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
   
   class TAO_DynamicAny_Export NameValuePair_var
   {
@@ -1111,6 +1300,7 @@ TAO_NAMESPACE  DynamicAny
     operator const NameValuePair &() const;
     operator NameValuePair &();
     operator NameValuePair &() const;
+    
     // Variable-size types only.
     operator NameValuePair *&();
     
@@ -1124,6 +1314,9 @@ TAO_NAMESPACE  DynamicAny
   private:
     NameValuePair *ptr_;
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
   
   class TAO_DynamicAny_Export NameValuePair_out
   {
@@ -1143,19 +1336,18 @@ TAO_NAMESPACE  DynamicAny
     void operator= (const NameValuePair_var &);
   };
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NameValuePair;
-  
-  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEVALUEPAIRSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEVALUEPAIRSEQ_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
+  class TAO_DynamicAny_Export _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (void);
     _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (
@@ -1192,54 +1384,58 @@ TAO_NAMESPACE  DynamicAny
         CORBA::Boolean release
       );
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ_CH_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class NameValuePairSeq;
   class NameValuePairSeq_var;
   
   // *************************************************************
-  // NameValuePairSeq
+  // DynamicAny::NameValuePairSeq
   // *************************************************************
   
   class TAO_DynamicAny_Export NameValuePairSeq : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<NameValuePair>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    NameValuePairSeq (void); // default ctor
-    NameValuePairSeq (CORBA::ULong max); // uses max size
+    NameValuePairSeq (void);
+    NameValuePairSeq (CORBA::ULong max);
     NameValuePairSeq (
         CORBA::ULong max, 
         CORBA::ULong length, 
         NameValuePair *buffer, 
         CORBA::Boolean release = 0
       );
-    NameValuePairSeq (const NameValuePairSeq &); // copy ctor
+    NameValuePairSeq (const NameValuePairSeq &);
     ~NameValuePairSeq (void);
-    static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef NameValuePairSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ___VAR_CH_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class DynamicAny::NameValuePairSeq_var
@@ -1261,7 +1457,9 @@ TAO_NAMESPACE  DynamicAny
     operator const NameValuePairSeq &() const;
     operator NameValuePairSeq &();
     operator NameValuePairSeq &() const;
-    operator NameValuePairSeq *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator NameValuePairSeq *&();
     
     NameValuePair & operator[] (CORBA::ULong index);
     const NameValuePair & operator[] (CORBA::ULong index) const;
@@ -1276,13 +1474,14 @@ TAO_NAMESPACE  DynamicAny
   private:
     NameValuePairSeq *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ___OUT_CH_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_DynamicAny_Export NameValuePairSeq_out
   {
@@ -1302,26 +1501,25 @@ TAO_NAMESPACE  DynamicAny
     // Assignment from T_var not allowed.
     void operator= (const NameValuePairSeq_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NameValuePairSeq;
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
   
-  struct NameDynAnyPair;
   class NameDynAnyPair_var;
   
   struct TAO_DynamicAny_Export NameDynAnyPair
   {
-    
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef NameDynAnyPair_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    TAO_String_Manager id;
-    ACE_NESTED_CLASS (DynamicAny, DynAny_var) value;
     
+    
+    TAO_String_Manager id;
+    DynamicAny::DynAny_var value;
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
   
   class TAO_DynamicAny_Export NameDynAnyPair_var
   {
@@ -1339,6 +1537,7 @@ TAO_NAMESPACE  DynamicAny
     operator const NameDynAnyPair &() const;
     operator NameDynAnyPair &();
     operator NameDynAnyPair &() const;
+    
     // Variable-size types only.
     operator NameDynAnyPair *&();
     
@@ -1352,6 +1551,9 @@ TAO_NAMESPACE  DynamicAny
   private:
     NameDynAnyPair *ptr_;
   };
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
   
   class TAO_DynamicAny_Export NameDynAnyPair_out
   {
@@ -1371,17 +1573,18 @@ TAO_NAMESPACE  DynamicAny
     void operator= (const NameDynAnyPair_var &);
   };
   
-  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEDYNANYPAIRSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEDYNANYPAIRSEQ_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
+  class TAO_DynamicAny_Export _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (void);
     _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (
@@ -1418,54 +1621,58 @@ TAO_NAMESPACE  DynamicAny
         CORBA::Boolean release
       );
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ_CH_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class NameDynAnyPairSeq;
   class NameDynAnyPairSeq_var;
   
   // *************************************************************
-  // NameDynAnyPairSeq
+  // DynamicAny::NameDynAnyPairSeq
   // *************************************************************
   
   class TAO_DynamicAny_Export NameDynAnyPairSeq : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<NameDynAnyPair>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    NameDynAnyPairSeq (void); // default ctor
-    NameDynAnyPairSeq (CORBA::ULong max); // uses max size
+    NameDynAnyPairSeq (void);
+    NameDynAnyPairSeq (CORBA::ULong max);
     NameDynAnyPairSeq (
         CORBA::ULong max, 
         CORBA::ULong length, 
         NameDynAnyPair *buffer, 
         CORBA::Boolean release = 0
       );
-    NameDynAnyPairSeq (const NameDynAnyPairSeq &); // copy ctor
+    NameDynAnyPairSeq (const NameDynAnyPairSeq &);
     ~NameDynAnyPairSeq (void);
-    static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef NameDynAnyPairSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ___VAR_CH_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class DynamicAny::NameDynAnyPairSeq_var
@@ -1487,7 +1694,9 @@ TAO_NAMESPACE  DynamicAny
     operator const NameDynAnyPairSeq &() const;
     operator NameDynAnyPairSeq &();
     operator NameDynAnyPairSeq &() const;
-    operator NameDynAnyPairSeq *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator NameDynAnyPairSeq *&();
     
     NameDynAnyPair & operator[] (CORBA::ULong index);
     const NameDynAnyPair & operator[] (CORBA::ULong index) const;
@@ -1502,13 +1711,14 @@ TAO_NAMESPACE  DynamicAny
   private:
     NameDynAnyPairSeq *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ___OUT_CH_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_DynamicAny_Export NameDynAnyPairSeq_out
   {
@@ -1528,22 +1738,25 @@ TAO_NAMESPACE  DynamicAny
     // Assignment from T_var not allowed.
     void operator= (const NameDynAnyPairSeq_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNSTRUCT___PTR_CH_)
 #define _DYNAMICANY_DYNSTRUCT___PTR_CH_
   
   class DynStruct;
   typedef DynStruct *DynStruct_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNSTRUCT___VAR_CH_)
 #define _DYNAMICANY_DYNSTRUCT___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynStruct_var : public TAO_Base_var
   {
@@ -1584,12 +1797,13 @@ TAO_NAMESPACE  DynamicAny
     DynStruct_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNSTRUCT___OUT_CH_)
 #define _DYNAMICANY_DYNSTRUCT___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynStruct_out
   {
@@ -1607,11 +1821,12 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynStruct_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNSTRUCT_CH_)
 #define _DYNAMICANY_DYNSTRUCT_CH_
   
@@ -1619,11 +1834,8 @@ TAO_NAMESPACE  DynamicAny
     : public virtual DynamicAny::DynAny
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynStruct_ptr _ptr_type;
     typedef DynStruct_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -1644,8 +1856,12 @@ TAO_NAMESPACE  DynamicAny
         return (DynStruct_ptr)0;
       }
     
+    
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual char * current_member_name (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1654,8 +1870,10 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
-    virtual CORBA::TCKind current_member_kind (
-        
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::CORBA::TCKind current_member_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1663,14 +1881,19 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DynamicAny::NameValuePairSeq * get_members (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_members (
         const DynamicAny::NameValuePairSeq & value
@@ -1682,13 +1905,18 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_members_as_dyn_any (
         const DynamicAny::NameDynAnyPairSeq & value
@@ -1700,35 +1928,45 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynStruct (void);
-    
     virtual ~DynStruct (void);
+    
+    friend class _TAO_DynStruct_Remote_Proxy_Impl;
+    friend class _TAO_DynStruct_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynStruct_Direct_Proxy_Impl;
   
   private:
     DynStruct (const DynStruct &);
     void operator= (const DynStruct &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNUNION___PTR_CH_)
 #define _DYNAMICANY_DYNUNION___PTR_CH_
   
   class DynUnion;
   typedef DynUnion *DynUnion_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNUNION___VAR_CH_)
 #define _DYNAMICANY_DYNUNION___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynUnion_var : public TAO_Base_var
   {
@@ -1769,12 +2007,13 @@ TAO_NAMESPACE  DynamicAny
     DynUnion_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNUNION___OUT_CH_)
 #define _DYNAMICANY_DYNUNION___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynUnion_out
   {
@@ -1792,11 +2031,12 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynUnion_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNUNION_CH_)
 #define _DYNAMICANY_DYNUNION_CH_
   
@@ -1804,11 +2044,8 @@ TAO_NAMESPACE  DynamicAny
     : public virtual DynamicAny::DynAny
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynUnion_ptr _ptr_type;
     typedef DynUnion_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -1829,13 +2066,20 @@ TAO_NAMESPACE  DynamicAny
         return (DynUnion_ptr)0;
       }
     
+    
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::DynAny_ptr get_discriminator (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_discriminator (
         DynamicAny::DynAny_ptr d
@@ -1846,17 +2090,21 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void set_to_default_member (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , DynamicAny::DynAny::TypeMismatch
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_to_no_active_member (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1864,33 +2112,41 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::Boolean has_no_active_member (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
     
-    virtual CORBA::TCKind discriminator_kind (
-        
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::CORBA::TCKind discriminator_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DynamicAny::DynAny_ptr member (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual char * member_name (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1898,43 +2154,52 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
-    virtual CORBA::TCKind member_kind (
-        
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::CORBA::TCKind member_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynUnion (void);
-    
     virtual ~DynUnion (void);
+    
+    friend class _TAO_DynUnion_Remote_Proxy_Impl;
+    friend class _TAO_DynUnion_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynUnion_Direct_Proxy_Impl;
   
   private:
     DynUnion (const DynUnion &);
     void operator= (const DynUnion &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_ANYSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_ANYSEQ_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_DynamicAny_AnySeq
+  class TAO_DynamicAny_Export _TAO_Unbounded_Sequence_DynamicAny_AnySeq
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_DynamicAny_AnySeq (void);
     _TAO_Unbounded_Sequence_DynamicAny_AnySeq (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_DynamicAny_AnySeq (
@@ -1971,54 +2236,58 @@ TAO_NAMESPACE  DynamicAny
         CORBA::Boolean release
       );
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_DYNAMICANY_ANYSEQ_CH_)
 #define _DYNAMICANY_ANYSEQ_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class AnySeq;
   class AnySeq_var;
   
   // *************************************************************
-  // AnySeq
+  // DynamicAny::AnySeq
   // *************************************************************
   
   class TAO_DynamicAny_Export AnySeq : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_DynamicAny_AnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Any>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    AnySeq (void); // default ctor
-    AnySeq (CORBA::ULong max); // uses max size
+    AnySeq (void);
+    AnySeq (CORBA::ULong max);
     AnySeq (
         CORBA::ULong max, 
         CORBA::ULong length, 
         CORBA::Any *buffer, 
         CORBA::Boolean release = 0
       );
-    AnySeq (const AnySeq &); // copy ctor
+    AnySeq (const AnySeq &);
     ~AnySeq (void);
-    static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef AnySeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_ANYSEQ___VAR_CH_)
 #define _DYNAMICANY_ANYSEQ___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class DynamicAny::AnySeq_var
@@ -2040,7 +2309,9 @@ TAO_NAMESPACE  DynamicAny
     operator const AnySeq &() const;
     operator AnySeq &();
     operator AnySeq &() const;
-    operator AnySeq *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator AnySeq *&();
     
     CORBA::Any & operator[] (CORBA::ULong index);
     const CORBA::Any & operator[] (CORBA::ULong index) const;
@@ -2055,13 +2326,14 @@ TAO_NAMESPACE  DynamicAny
   private:
     AnySeq *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_ANYSEQ___OUT_CH_)
 #define _DYNAMICANY_ANYSEQ___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_DynamicAny_Export AnySeq_out
   {
@@ -2081,23 +2353,21 @@ TAO_NAMESPACE  DynamicAny
     // Assignment from T_var not allowed.
     void operator= (const AnySeq_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AnySeq;
-  
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:62
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CH_
   
-  class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
+  class TAO_DynamicAny_Export _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
     : public TAO_Unbounded_Base_Sequence
   {
   public:
-    // = Initialization and termination methods.
     _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (void);
     _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (
@@ -2138,54 +2408,58 @@ TAO_NAMESPACE  DynamicAny
       );
     virtual CORBA_Object* _upcast (void *src) const;
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+
 #if !defined (_DYNAMICANY_DYNANYSEQ_CH_)
 #define _DYNAMICANY_DYNANYSEQ_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
   
   class DynAnySeq;
   class DynAnySeq_var;
   
   // *************************************************************
-  // DynAnySeq
+  // DynamicAny::DynAnySeq
   // *************************************************************
   
   class TAO_DynamicAny_Export DynAnySeq : public 
+  
+  // TAO_IDL - Generated from 
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<DynAny,DynAny_var>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    DynAnySeq (void); // default ctor
-    DynAnySeq (CORBA::ULong max); // uses max size
+    DynAnySeq (void);
+    DynAnySeq (CORBA::ULong max);
     DynAnySeq (
         CORBA::ULong max, 
         CORBA::ULong length, 
         DynAny_ptr *buffer, 
         CORBA::Boolean release = 0
       );
-    DynAnySeq (const DynAnySeq &); // copy ctor
+    DynAnySeq (const DynAnySeq &);
     ~DynAnySeq (void);
-    static void _tao_any_destructor (void*);
     
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynAnySeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-    
-    
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNANYSEQ___VAR_CH_)
 #define _DYNAMICANY_DYNANYSEQ___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
   
   // *************************************************************
   // class DynamicAny::DynAnySeq_var
@@ -2207,7 +2481,9 @@ TAO_NAMESPACE  DynamicAny
     operator const DynAnySeq &() const;
     operator DynAnySeq &();
     operator DynAnySeq &() const;
-    operator DynAnySeq *&(); // variable-size base types only
+    
+    // Variable-size base types only.
+    operator DynAnySeq *&();
     
     TAO_Object_Manager<DynAny, DynAny_var> operator[] (CORBA::ULong index);
     
@@ -2221,13 +2497,14 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynAnySeq *ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNANYSEQ___OUT_CH_)
 #define _DYNAMICANY_DYNANYSEQ___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
   
   class TAO_DynamicAny_Export DynAnySeq_out
   {
@@ -2247,22 +2524,25 @@ TAO_NAMESPACE  DynamicAny
     // Assignment from T_var not allowed.
     void operator= (const DynAnySeq_var &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNSEQUENCE___PTR_CH_)
 #define _DYNAMICANY_DYNSEQUENCE___PTR_CH_
   
   class DynSequence;
   typedef DynSequence *DynSequence_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNSEQUENCE___VAR_CH_)
 #define _DYNAMICANY_DYNSEQUENCE___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynSequence_var : public TAO_Base_var
   {
@@ -2303,12 +2583,13 @@ TAO_NAMESPACE  DynamicAny
     DynSequence_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNSEQUENCE___OUT_CH_)
 #define _DYNAMICANY_DYNSEQUENCE___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynSequence_out
   {
@@ -2326,11 +2607,12 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynSequence_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNSEQUENCE_CH_)
 #define _DYNAMICANY_DYNSEQUENCE_CH_
   
@@ -2338,11 +2620,8 @@ TAO_NAMESPACE  DynamicAny
     : public virtual DynamicAny::DynAny
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynSequence_ptr _ptr_type;
     typedef DynSequence_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -2363,13 +2642,20 @@ TAO_NAMESPACE  DynamicAny
         return (DynSequence_ptr)0;
       }
     
+    
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::ULong get_length (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_length (
         CORBA::ULong len
@@ -2380,13 +2666,18 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::AnySeq * get_elements (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_elements (
         const DynamicAny::AnySeq & value
@@ -2398,13 +2689,18 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_elements_as_dyn_any (
         const DynamicAny::DynAnySeq & value
@@ -2416,35 +2712,45 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynSequence (void);
-    
     virtual ~DynSequence (void);
+    
+    friend class _TAO_DynSequence_Remote_Proxy_Impl;
+    friend class _TAO_DynSequence_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynSequence_Direct_Proxy_Impl;
   
   private:
     DynSequence (const DynSequence &);
     void operator= (const DynSequence &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNARRAY___PTR_CH_)
 #define _DYNAMICANY_DYNARRAY___PTR_CH_
   
   class DynArray;
   typedef DynArray *DynArray_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNARRAY___VAR_CH_)
 #define _DYNAMICANY_DYNARRAY___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynArray_var : public TAO_Base_var
   {
@@ -2485,12 +2791,13 @@ TAO_NAMESPACE  DynamicAny
     DynArray_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNARRAY___OUT_CH_)
 #define _DYNAMICANY_DYNARRAY___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynArray_out
   {
@@ -2508,11 +2815,12 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynArray_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNARRAY_CH_)
 #define _DYNAMICANY_DYNARRAY_CH_
   
@@ -2520,11 +2828,8 @@ TAO_NAMESPACE  DynamicAny
     : public virtual DynamicAny::DynAny
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynArray_ptr _ptr_type;
     typedef DynArray_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -2545,13 +2850,20 @@ TAO_NAMESPACE  DynamicAny
         return (DynArray_ptr)0;
       }
     
+    
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::AnySeq * get_elements (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_elements (
         const DynamicAny::AnySeq & value
@@ -2563,13 +2875,18 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_elements_as_dyn_any (
         const DynamicAny::DynAnySeq & value
@@ -2581,35 +2898,45 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynArray (void);
-    
     virtual ~DynArray (void);
+    
+    friend class _TAO_DynArray_Remote_Proxy_Impl;
+    friend class _TAO_DynArray_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynArray_Direct_Proxy_Impl;
   
   private:
     DynArray (const DynArray &);
     void operator= (const DynArray &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNVALUE___PTR_CH_)
 #define _DYNAMICANY_DYNVALUE___PTR_CH_
   
   class DynValue;
   typedef DynValue *DynValue_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNVALUE___VAR_CH_)
 #define _DYNAMICANY_DYNVALUE___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynValue_var : public TAO_Base_var
   {
@@ -2650,12 +2977,13 @@ TAO_NAMESPACE  DynamicAny
     DynValue_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNVALUE___OUT_CH_)
 #define _DYNAMICANY_DYNVALUE___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynValue_out
   {
@@ -2673,11 +3001,12 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynValue_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNVALUE_CH_)
 #define _DYNAMICANY_DYNVALUE_CH_
   
@@ -2685,11 +3014,8 @@ TAO_NAMESPACE  DynamicAny
     : public virtual DynamicAny::DynAny
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynValue_ptr _ptr_type;
     typedef DynValue_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -2710,8 +3036,12 @@ TAO_NAMESPACE  DynamicAny
         return (DynValue_ptr)0;
       }
     
+    
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual char * current_member_name (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -2720,8 +3050,10 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
-    virtual CORBA::TCKind current_member_kind (
-        
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::CORBA::TCKind current_member_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -2729,14 +3061,19 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::TypeMismatch
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DynamicAny::NameValuePairSeq * get_members (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_members (
         const DynamicAny::NameValuePairSeq & value
@@ -2748,13 +3085,18 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-        
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_members_as_dyn_any (
         const DynamicAny::NameDynAnyPairSeq & value
@@ -2766,35 +3108,45 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAny::InvalidValue
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynValue (void);
-    
     virtual ~DynValue (void);
+    
+    friend class _TAO_DynValue_Remote_Proxy_Impl;
+    friend class _TAO_DynValue_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynValue_Direct_Proxy_Impl;
   
   private:
     DynValue (const DynValue &);
     void operator= (const DynValue &);
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+
 #if !defined (_DYNAMICANY_DYNANYFACTORY___PTR_CH_)
 #define _DYNAMICANY_DYNANYFACTORY___PTR_CH_
   
   class DynAnyFactory;
   typedef DynAnyFactory *DynAnyFactory_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNANYFACTORY___VAR_CH_)
 #define _DYNAMICANY_DYNANYFACTORY___VAR_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
   
   class TAO_DynamicAny_Export DynAnyFactory_var : public TAO_Base_var
   {
@@ -2835,12 +3187,13 @@ TAO_NAMESPACE  DynamicAny
     DynAnyFactory_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-  
-  
+
 #if !defined (_DYNAMICANY_DYNANYFACTORY___OUT_CH_)
 #define _DYNAMICANY_DYNANYFACTORY___OUT_CH_
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
   
   class TAO_DynamicAny_Export DynAnyFactory_out
   {
@@ -2858,23 +3211,21 @@ TAO_NAMESPACE  DynamicAny
   private:
     DynAnyFactory_ptr &ptr_;
   };
-  
-  
+
 #endif /* end #if !defined */
   
-  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+
 #if !defined (_DYNAMICANY_DYNANYFACTORY_CH_)
 #define _DYNAMICANY_DYNANYFACTORY_CH_
   
   class TAO_DynamicAny_Export DynAnyFactory
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef DynAnyFactory_ptr _ptr_type;
     typedef DynAnyFactory_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
     
     // The static operations.
@@ -2896,6 +3247,10 @@ TAO_NAMESPACE  DynamicAny
       }
     
     
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
+
 #if !defined (_DYNAMICANY_DYNANYFACTORY_INCONSISTENTTYPECODE_CH_)
 #define _DYNAMICANY_DYNANYFACTORY_INCONSISTENTTYPECODE_CH_
     
@@ -2908,7 +3263,7 @@ TAO_NAMESPACE  DynamicAny
       ~InconsistentTypeCode (void);
 
       InconsistentTypeCode &operator= (const InconsistentTypeCode &);
-
+      
       static InconsistentTypeCode *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -2926,11 +3281,14 @@ TAO_NAMESPACE  DynamicAny
           ACE_ENV_ARG_DECL_NOT_USED
         );
       
-      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
     };
 
-
 #endif /* end #if !defined */
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DynamicAny::DynAny_ptr create_dyn_any (
         const CORBA::Any & value
@@ -2941,6 +3299,9 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAnyFactory::InconsistentTypeCode
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual ::DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
         CORBA::TypeCode_ptr type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2950,44 +3311,48 @@ TAO_NAMESPACE  DynamicAny
         , DynamicAny::DynAnyFactory::InconsistentTypeCode
       )) = 0;
     
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     DynAnyFactory (void);
-    
     virtual ~DynAnyFactory (void);
+    
+    friend class _TAO_DynAnyFactory_Remote_Proxy_Impl;
+    friend class _TAO_DynAnyFactory_ThruPOA_Proxy_Impl;
+    friend class _TAO_DynAnyFactory_Direct_Proxy_Impl;
   
   private:
     DynAnyFactory (const DynAnyFactory &);
     void operator= (const DynAnyFactory &);
   };
-  
-  
+
 #endif /* end #if !defined */
-  
-  
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+
 }
 TAO_NAMESPACE_CLOSE // module DynamicAny
 
-TAO_DynamicAny_Export void operator<<= (CORBA::Any &, const DynamicAny::NameValuePair &); // copying version
-TAO_DynamicAny_Export void operator<<= (CORBA::Any &, DynamicAny::NameValuePair*); // noncopying version
-TAO_DynamicAny_Export CORBA::Boolean operator>>= (const CORBA::Any &, DynamicAny::NameValuePair *&); // deprecated
-TAO_DynamicAny_Export CORBA::Boolean operator>>= (const CORBA::Any &, const DynamicAny::NameValuePair *&);
-TAO_DynamicAny_Export void operator<<= (CORBA::Any &, const DynamicAny::NameValuePairSeq &); // copying version
-TAO_DynamicAny_Export void operator<<= (CORBA::Any &, DynamicAny::NameValuePairSeq*); // noncopying version
-TAO_DynamicAny_Export CORBA::Boolean operator>>= (const CORBA::Any &, DynamicAny::NameValuePairSeq *&); // deprecated
-TAO_DynamicAny_Export CORBA::Boolean operator>>= (const CORBA::Any &, const DynamicAny::NameValuePairSeq *&);
-TAO_DynamicAny_Export void operator<<= (CORBA::Any &, const DynamicAny::AnySeq &); // copying version
-TAO_DynamicAny_Export void operator<<= (CORBA::Any &, DynamicAny::AnySeq*); // noncopying version
-TAO_DynamicAny_Export CORBA::Boolean operator>>= (const CORBA::Any &, DynamicAny::AnySeq *&); // deprecated
-TAO_DynamicAny_Export CORBA::Boolean operator>>= (const CORBA::Any &, const DynamicAny::AnySeq *&);
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+
 TAO_DynamicAny_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const DynamicAny::NameValuePair &);
 TAO_DynamicAny_Export CORBA::Boolean operator>> (TAO_InputCDR &, DynamicAny::NameValuePair &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_DynamicAny_NameValuePairSeq_H_
 #define _TAO_CDR_OP_DynamicAny_NameValuePairSeq_H_
@@ -3003,6 +3368,8 @@ TAO_DynamicAny_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_DynamicAny_NameValuePairSeq_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_DynamicAny_AnySeq_H_
 #define _TAO_CDR_OP_DynamicAny_AnySeq_H_
@@ -3018,9 +3385,13 @@ TAO_DynamicAny_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "DynamicAnyC.i"
@@ -3036,3 +3407,4 @@ TAO_DynamicAny_Export CORBA::Boolean operator>> (
 
 #include "ace/post.h"
 #endif /* ifndef */
+

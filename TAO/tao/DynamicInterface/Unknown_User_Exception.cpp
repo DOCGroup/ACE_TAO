@@ -12,12 +12,12 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (void)
 {
 }
 
-CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
+CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA::Any &ex)
   : CORBA_UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
                          "UnknownUserException")
 {
   ACE_NEW (this->exception_,
-           CORBA_Any (ex));
+           CORBA::Any (ex));
 }
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (
@@ -27,7 +27,7 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (
                          e._name ())
 {
   ACE_NEW (this->exception_,
-           CORBA_Any (*e.exception_));
+           CORBA::Any (*e.exception_));
 }
 
 CORBA_UnknownUserException::~CORBA_UnknownUserException (void)
@@ -35,7 +35,7 @@ CORBA_UnknownUserException::~CORBA_UnknownUserException (void)
   delete this->exception_;
 }
 
-CORBA_Any &
+CORBA::Any &
 CORBA_UnknownUserException::exception (void)
 {
   return *this->exception_;

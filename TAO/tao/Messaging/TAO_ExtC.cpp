@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "TAO_ExtC.h"
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
 
+
+#include "TAO_ExtC.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
@@ -31,6 +34,8 @@
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+
+
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -39,13 +44,8 @@
 #include "TAO_ExtC.i"
 #endif /* !defined INLINE */
 
-TAO_NAMESPACE_TYPE (const CORBA::ULong)
-TAO_NAMESPACE_BEGIN (TAO)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, CONNECTION_TIMEOUT_POLICY_TYPE, 1413545992U)
-TAO_NAMESPACE_END
-
-// TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:67
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int TAO::ConnectionTimeoutPolicy::_tao_class_id = 0;
 
@@ -92,13 +92,23 @@ tao_TAO_ConnectionTimeoutPolicy_upcast (
   return *tmp;
 }
 
+CORBA::Boolean
+tao_TAO_ConnectionTimeoutPolicy_marshal (
+    TAO::ConnectionTimeoutPolicy_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+
 // *************************************************************
 // TAO::ConnectionTimeoutPolicy_var
-// TAO_IDL - Generated from
-// be/be_interface.cpp:654
 // *************************************************************
 
-TAO::ConnectionTimeoutPolicy_var::ConnectionTimeoutPolicy_var (void) // default constructor
+TAO::ConnectionTimeoutPolicy_var::ConnectionTimeoutPolicy_var (void)
   : ptr_ (ConnectionTimeoutPolicy::_nil ())
 {}
 
@@ -108,12 +118,12 @@ TAO::ConnectionTimeoutPolicy_var::ptr (void) const
   return this->ptr_;
 }
 
-TAO::ConnectionTimeoutPolicy_var::ConnectionTimeoutPolicy_var (const ::TAO::ConnectionTimeoutPolicy_var &p) // copy constructor
+TAO::ConnectionTimeoutPolicy_var::ConnectionTimeoutPolicy_var (const ::TAO::ConnectionTimeoutPolicy_var &p)
   : TAO_Base_var (),
     ptr_ (ConnectionTimeoutPolicy::_duplicate (p.ptr ()))
 {}
 
-TAO::ConnectionTimeoutPolicy_var::~ConnectionTimeoutPolicy_var (void) // destructor
+TAO::ConnectionTimeoutPolicy_var::~ConnectionTimeoutPolicy_var (void)
 {
   CORBA::release (this->ptr_);
 }
@@ -217,10 +227,11 @@ TAO::ConnectionTimeoutPolicy_var::tao_upcast (void *src)
   return *tmp;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+
 // *************************************************************
 // TAO::ConnectionTimeoutPolicy_out
-// TAO_IDL - Generated from
-// be/be_interface.cpp:932
 // *************************************************************
 
 TAO::ConnectionTimeoutPolicy_out::ConnectionTimeoutPolicy_out (ConnectionTimeoutPolicy_ptr &p)
@@ -229,14 +240,14 @@ TAO::ConnectionTimeoutPolicy_out::ConnectionTimeoutPolicy_out (ConnectionTimeout
   this->ptr_ = ::TAO::ConnectionTimeoutPolicy::_nil ();
 }
 
-TAO::ConnectionTimeoutPolicy_out::ConnectionTimeoutPolicy_out (ConnectionTimeoutPolicy_var &p) // constructor from _var
+TAO::ConnectionTimeoutPolicy_out::ConnectionTimeoutPolicy_out (ConnectionTimeoutPolicy_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = ::TAO::ConnectionTimeoutPolicy::_nil ();
 }
 
-TAO::ConnectionTimeoutPolicy_out::ConnectionTimeoutPolicy_out (const ::TAO::ConnectionTimeoutPolicy_out &p) // copy constructor
+TAO::ConnectionTimeoutPolicy_out::ConnectionTimeoutPolicy_out (const ::TAO::ConnectionTimeoutPolicy_out &p)
   : ptr_ (ACE_const_cast (ConnectionTimeoutPolicy_out &, p).ptr_)
 {}
 
@@ -267,7 +278,7 @@ TAO::ConnectionTimeoutPolicy_out::operator ::TAO::ConnectionTimeoutPolicy_ptr &(
 }
 
 ::TAO::ConnectionTimeoutPolicy_ptr &
-TAO::ConnectionTimeoutPolicy_out::ptr (void) // ptr
+TAO::ConnectionTimeoutPolicy_out::ptr (void)
 {
   return this->ptr_;
 }
@@ -278,9 +289,8 @@ TAO::ConnectionTimeoutPolicy_out::operator-> (void)
   return this->ptr_;
 }
 
-
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:198
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
 
 TAO::ConnectionTimeoutPolicy::ConnectionTimeoutPolicy (void)
 {}
@@ -288,13 +298,15 @@ TAO::ConnectionTimeoutPolicy::ConnectionTimeoutPolicy (void)
 TAO::ConnectionTimeoutPolicy::~ConnectionTimeoutPolicy (void)
 {}
 
-void TAO::ConnectionTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
+void 
+TAO::ConnectionTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ConnectionTimeoutPolicy *tmp = ACE_static_cast (ConnectionTimeoutPolicy*, _tao_void_pointer);
+  ConnectionTimeoutPolicy *tmp = ACE_static_cast (ConnectionTimeoutPolicy *, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
-TAO::ConnectionTimeoutPolicy_ptr TAO::ConnectionTimeoutPolicy::_narrow (
+TAO::ConnectionTimeoutPolicy_ptr
+TAO::ConnectionTimeoutPolicy::_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL
   )
@@ -309,55 +321,75 @@ TAO::ConnectionTimeoutPolicy::_unchecked_narrow (
   )
 {
   if (CORBA::is_nil (obj))
-    return ConnectionTimeoutPolicy::_nil ();
+    {
+      return ConnectionTimeoutPolicy::_nil ();
+    }
+  
   return
-      ACE_reinterpret_cast
-        (
+      ACE_reinterpret_cast (
           ConnectionTimeoutPolicy_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptr_arith_t,
-                    &ConnectionTimeoutPolicy::_tao_class_id
-                  )
-              )
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptr_arith_t,
+                  &ConnectionTimeoutPolicy::_tao_class_id
+                )
+            )
         );
 }
 
 TAO::ConnectionTimeoutPolicy_ptr
 TAO::ConnectionTimeoutPolicy::_duplicate (ConnectionTimeoutPolicy_ptr obj)
 {
-  if (!CORBA::is_nil (obj))
-    obj->_add_ref ();
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+  
   return obj;
 }
 
 void *TAO::ConnectionTimeoutPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS (::TAO, ConnectionTimeoutPolicy)::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &::CORBA::Policy::_tao_class_id))
-    retv = ACE_reinterpret_cast
-      (
-        void *,
-        ACE_static_cast
-          (
-            CORBA::Policy_ptr,
-            this
-          )
-      );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-    
-  if (retv)
-    this->_add_ref ();
+  
+  if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &ACE_NESTED_CLASS (::TAO, ConnectionTimeoutPolicy)::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &::CORBA::Policy::_tao_class_id)
+            )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (
+                CORBA::Policy_ptr,
+                this
+              )
+          );
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+  
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+  
   return retv;
 }
 
@@ -366,9 +398,12 @@ const char* TAO::ConnectionTimeoutPolicy::_interface_repository_id (void) const
   return "IDL:tao/TAO/ConnectionTimeoutPolicy:1.0";
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+
 static const CORBA::Long _oc_TAO_ConnectionTimeoutPolicy[] =
 {
-  TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
   40,
   ACE_NTOHL (0x49444c3a), 
   ACE_NTOHL (0x74616f2f), 
@@ -380,14 +415,14 @@ static const CORBA::Long _oc_TAO_ConnectionTimeoutPolicy[] =
   ACE_NTOHL (0x74506f6c), 
   ACE_NTOHL (0x6963793a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/ConnectionTimeoutPolicy:1.0
-  24,
+    24,
   ACE_NTOHL (0x436f6e6e), 
   ACE_NTOHL (0x65637469), 
   ACE_NTOHL (0x6f6e5469), 
   ACE_NTOHL (0x6d656f75), 
   ACE_NTOHL (0x74506f6c), 
   ACE_NTOHL (0x69637900),  // name = ConnectionTimeoutPolicy
-};
+  };
 
 static CORBA::TypeCode _tc_TAO_tc_TAO_ConnectionTimeoutPolicy (
     CORBA::tk_objref,
@@ -399,86 +434,79 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_ConnectionTimeoutPolicy (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (TAO)
-TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ConnectionTimeoutPolicy, &_tc_TAO_tc_TAO_ConnectionTimeoutPolicy)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_ConnectionTimeoutPolicy,
+    &_tc_TAO_tc_TAO_ConnectionTimeoutPolicy
+  )
 TAO_NAMESPACE_END
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
 
-// TAO_IDL - Generated from 
-// be/be_visitor_interface/any_op_cs.cpp:60
-
-void operator<<= (
+// Copying insertion.
+void
+operator<<= (
     CORBA::Any &_tao_any,
     TAO::ConnectionTimeoutPolicy_ptr _tao_elem
   )
 {
-  _tao_any._tao_replace (
-      TAO::_tc_ConnectionTimeoutPolicy, 
-      1,
-      TAO::ConnectionTimeoutPolicy::_duplicate (_tao_elem),
-      TAO::ConnectionTimeoutPolicy::_tao_any_destructor
-    );
-  
-  _tao_any.contains_local (1);
+  TAO::ConnectionTimeoutPolicy_ptr _tao_objptr =
+    TAO::ConnectionTimeoutPolicy::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
 }
 
-void operator<<= (
+// Non-copying insertion.
+void
+operator<<= (
     CORBA::Any &_tao_any,
     TAO::ConnectionTimeoutPolicy_ptr *_tao_elem
   )
 {
-  _tao_any._tao_replace (
-      TAO::_tc_ConnectionTimeoutPolicy, 
-      1,
-      *_tao_elem,
-      TAO::ConnectionTimeoutPolicy::_tao_any_destructor
+  TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::insert (
+      _tao_any,
+      TAO::ConnectionTimeoutPolicy::_tao_any_destructor,
+      TAO::_tc_ConnectionTimeoutPolicy,
+      *_tao_elem
     );
-  
-  _tao_any.contains_local (1);
 }
 
-CORBA::Boolean operator>>= (
+CORBA::Boolean
+operator>>= (
     const CORBA::Any &_tao_any,
     TAO::ConnectionTimeoutPolicy_ptr &_tao_elem
   )
 {
-  ACE_TRY_NEW_ENV
-  {
-    _tao_elem = TAO::ConnectionTimeoutPolicy::_nil ();
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result =
-      type->equivalent (
-          TAO::_tc_ConnectionTimeoutPolicy
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (!result)
-      {
-        return 0; // not equivalent
-      }
-    
-    _tao_elem =
-      ACE_reinterpret_cast (
-          TAO::ConnectionTimeoutPolicy_ptr,
-          ACE_const_cast (void *, _tao_any.value ())
-        );
-    
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  _tao_elem = TAO::ConnectionTimeoutPolicy::_nil ();
-  return 0;
+  return
+    TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::extract (
+        _tao_any,
+        TAO::ConnectionTimeoutPolicy::_tao_any_destructor,
+        TAO::_tc_ConnectionTimeoutPolicy,
+        _tao_elem
+      );
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<TAO::ConnectionTimeoutPolicy,TAO::ConnectionTimeoutPolicy_var>;
+  template class TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Manager<TAO::ConnectionTimeoutPolicy,TAO::ConnectionTimeoutPolicy_var>
+# pragma instantiate TAO_Object_Manager<TAO::ConnectionTimeoutPolicy, TAO::ConnectionTimeoutPolicy_var>
+# pragma instantiate TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
+
+CORBA::Boolean
+TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 

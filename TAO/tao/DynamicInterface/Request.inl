@@ -62,42 +62,42 @@ CORBA_Request::contexts (void)
 
 // The argument manipulation helper functions
 
-ACE_INLINE CORBA_Any &
+ACE_INLINE CORBA::Any &
 CORBA_Request::add_in_arg (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   return this->args_->add_element (CORBA::ARG_IN ACE_ENV_ARG_PARAMETER)->any_;
 }
 
-ACE_INLINE CORBA_Any &
+ACE_INLINE CORBA::Any &
 CORBA_Request::add_in_arg (const CORBA::Char *name)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   return this->args_->add_item (name, CORBA::ARG_IN ACE_ENV_ARG_PARAMETER)->any_;
 }
 
-ACE_INLINE CORBA_Any &
+ACE_INLINE CORBA::Any &
 CORBA_Request::add_inout_arg (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   return this->args_->add_element (CORBA::ARG_INOUT ACE_ENV_ARG_PARAMETER)->any_;
 }
 
-ACE_INLINE CORBA_Any &
+ACE_INLINE CORBA::Any &
 CORBA_Request::add_inout_arg (const CORBA::Char *name)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   return this->args_->add_item (name, CORBA::ARG_INOUT ACE_ENV_ARG_PARAMETER)->any_;
 }
 
-ACE_INLINE CORBA_Any &
+ACE_INLINE CORBA::Any &
 CORBA_Request::add_out_arg (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   return this->args_->add_element (CORBA::ARG_OUT ACE_ENV_ARG_PARAMETER)->any_;
 }
 
-ACE_INLINE CORBA_Any &
+ACE_INLINE CORBA::Any &
 CORBA_Request::add_out_arg (const CORBA::Char *name)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -107,11 +107,12 @@ CORBA_Request::add_out_arg (const CORBA::Char *name)
 ACE_INLINE void
 CORBA_Request::set_return_type (CORBA::TypeCode_ptr tc)
 {
-  CORBA::Any newtype (tc);
+  CORBA::Any newtype (tc,
+                      0);
   this->result_->any_ = newtype;
 }
 
-ACE_INLINE CORBA_Any &
+ACE_INLINE CORBA::Any &
 CORBA_Request::return_value (void )
 {
   return this->result_->any_;

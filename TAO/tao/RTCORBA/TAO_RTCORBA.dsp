@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RTCORBA_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -160,11 +160,7 @@ SOURCE=.\Continuous_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Network_Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Network_Priority_Mapping_Manager.cpp
+SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
@@ -172,11 +168,15 @@ SOURCE=.\Linear_Network_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.cpp
+SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Linear_Priority_Mapping.cpp
+SOURCE=.\Network_Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping_Manager.cpp
 # End Source File
 # Begin Source File
 
@@ -268,11 +268,7 @@ SOURCE=.\Continuous_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Network_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Network_Priority_Mapping_Manager.h
+SOURCE=.\Direct_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -280,11 +276,15 @@ SOURCE=.\Linear_Network_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.h
+SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Linear_Priority_Mapping.h
+SOURCE=.\Network_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping_Manager.h
 # End Source File
 # Begin Source File
 
@@ -380,11 +380,7 @@ SOURCE=.\Continuous_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Network_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Network_Priority_Mapping_Manager.i
+SOURCE=.\Direct_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
@@ -392,11 +388,15 @@ SOURCE=.\Linear_Network_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.i
+SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Linear_Priority_Mapping.i
+SOURCE=.\Network_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Network_Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 

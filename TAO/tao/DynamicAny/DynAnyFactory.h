@@ -54,7 +54,7 @@ public:
   // must release the return value.
 
   static DynamicAny::DynAny_ptr
-     make_dyn_any (const CORBA_Any &any
+     make_dyn_any (const CORBA::Any &any
                    ACE_ENV_ARG_DECL);
   // Create the correct type of DynAny object for <any>.
 

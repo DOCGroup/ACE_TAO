@@ -15,7 +15,7 @@
  *   this is:
  *
  *   tao_idl
- *       -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *       -o orig -Gp -Gd -Ge 1
  *       -Wb,export_macro=TAO_Messaging_Export
  *       -Wb,pre_include="ace/pre.h"
  *       -Wb,post_include="ace/post.h"
@@ -56,7 +56,5 @@ module TAO
     };
 
 };
-
-#pragma prefix ""
 
 #endif /* TAO_TAO_EXT_IDL */
