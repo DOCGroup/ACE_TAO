@@ -1,3 +1,12 @@
+Thu Dec 14 12:52:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/Event/Performance/Latency.cpp:
+	* orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+	  Fixed typos in debug message
+
+	* */Makefile*:
+	  Update all dependencies again.
+
 Thu Dec 14 13:53:14 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* docs/rtcorba/architecture.html:
