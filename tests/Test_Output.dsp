@@ -57,11 +57,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
 # ADD LINK32 ace.lib /nologo /dll /machine:I386 /out:"..\bin\Test_Output.dll" /libpath:"..\ace"
-# Begin Special Build Tool
-SOURCE="$(InputPath)"
-PostBuild_Desc=delete old dlls from tests dir
-PostBuild_Cmds=del Test_Output*.dll
-# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "Test_Output DLL - Win32 Debug"
 
@@ -118,11 +113,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib /nologo /dll /debug /machine:I386 /out:"DLL_Testd.dll" /pdbtype:sept /libpath:"../ace"
 # ADD LINK32 acesd.lib advapi32.lib /nologo /dll /debug /machine:I386 /out:"..\bin\Test_Outputsd.dll" /pdbtype:sept /libpath:"..\ace"
-# Begin Special Build Tool
-SOURCE="$(InputPath)"
-PostBuild_Desc=delete old dlls from tests dir
-PostBuild_Cmds=del Test_Output*.dll
-# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "Test_Output DLL - Win32 Static Release"
 
@@ -151,11 +141,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib /nologo /dll /machine:I386 /out:"DLL_Test.dll" /libpath:"../ace"
 # ADD LINK32 aces.lib advapi32.lib /nologo /dll /machine:I386 /out:"..\bin\Test_Outputs.dll" /libpath:"..\ace"
-# Begin Special Build Tool
-SOURCE="$(InputPath)"
-PostBuild_Desc=delete old dlls from tests dir
-PostBuild_Cmds=del Test_Output*.dll
-# End Special Build Tool
 
 !ENDIF 
 
