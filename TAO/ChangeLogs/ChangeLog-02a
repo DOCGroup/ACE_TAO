@@ -1,14 +1,21 @@
+Fri Jun  1 13:58:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
+	  dependecies. 
+
+	* Changelog : Reformatted this file, specfically the previous
+	  entry.     
 Fri Jun  1 12:37:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tests/RTCORBA/Banded_Connections/run_test.pl:
 
-	Changed the priority bands to the correct values. This exposes a
-        bug in the increasing/lowering of priority on Tru64.
+	  Changed the priority bands to the correct values. This exposes a
+	  bug in the increasing/lowering of priority on Tru64.
 
 	* tests/RTCORBA/Banded_Connections/client.cpp (main):
 
-        The previous band used for an invalid band falls into valid
-        priority band under Tru64.
+          The previous band used for an invalid band falls into valid
+	  priority band under Tru64. 
 
 	Thanks to Irfan for pointing these.
 
