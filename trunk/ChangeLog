@@ -1,3 +1,8 @@
+Wed Oct 15 13:22:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          Also set versioned_so to 0 in this file.
+
 Wed Oct 15 13:16:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_mingw32.GNU:
