@@ -1,3 +1,9 @@
+Tue Apr 22 06:14:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32-common.h:
+          Removed ACE_LACKS_TEMPNAM, cygwin supports tempnam. Thanks to
+          Kobi Cohen-Arazi <kobi@mivzak.com> for reporting this.
+
 Mon Apr 21 15:45:25 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/SOCK_SEQPACK_Acceptor.h:
