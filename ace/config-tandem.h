@@ -326,7 +326,7 @@
 //ACE_HAS_STRICT                Use the STRICT compilation mode on Win32.
 //? ACE_HAS_STRUCT_NETDB_DATA           Compiler/platform has strange
 // hostent API for socket *_r() calls
-//ACE_HAS_VOIDPTR_GETTIMEOFDAY           
+//ACE_HAS_VOIDPTR_GETTIMEOFDAY
 //ACE_HAS_TEMPLATE_TYPEDEFS             Compiler implements templates that
 // support typedefs inside of classes used as formal arguments to a template
 // class.
@@ -402,7 +402,6 @@
 //ACE_LACKS_SYSV_MSQ_PROTOS             Platform doesn't have prototypes for
 //Sys V msg()* queues.
 //ACE_LACKS_T_ERRNO                     Header files lack t_errno for TLI
-//ACE_LACKS_TCP_H                       Platform doesn't have netinet/tcp.h
 //ACE_LACKS_UCONTEXT_H                  Platform lacks the ucontext.h file
 //ACE_LACKS_UNIX_DOMAIN_SOCKETS         ACE platform has no UNIX domain sockets
 //ACE_LACKS_UTSNAME_T                   Platform lacks struct utsname
