@@ -1,3 +1,15 @@
+Sat Dec 14 11:39:15 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/{Module,Stream,Svc_Handler,Synch_T,Task_T}.cpp and Synch_T.i:
+	  removed ACE_INLINE qualifier from functions in .cpp files; in
+	  the case of Synch_T, moved ACE_INLINE functions from .cpp to .i file
+
+	* ace/CORBA_Handler.h and ace/Token_Collection.{h,cpp}:
+	  changed __INLINE__ to __ACE_INLINE__
+
+	* ace/Svc_Conf_y.cpp:  commented out unused arguments to
+	  suppress compiler complaints
+
 Fri Dec 13 22:07:11 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++*.GNU: replaced

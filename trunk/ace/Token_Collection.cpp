@@ -5,9 +5,9 @@
 #define ACE_BUILD_DLL
 #include "ace/Token_Collection.h"
 
-#if !defined (__INLINE__)
+#if !defined (__ACE_INLINE__)
 #include "ace/Token_Collection.i"
-#endif /* __INLINE__ */
+#endif /* __ACE_INLINE__ */
 
 ACE_Token_Collection::ACE_Token_Collection (int debug,
 					    const char *name)

@@ -230,9 +230,9 @@ protected:
 };
 #endif /* ACE_HAS_MT_ORBIX */
 
-#if defined (__INLINE__)
+#if defined (__ACE_INLINE__)
 #include "ace/CORBA_Handler.i"
-#endif /* __INLINE__ */
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ORBIX */
 #endif /* ACE_CORBA_HANDLER_H */

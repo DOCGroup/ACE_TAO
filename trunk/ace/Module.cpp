@@ -138,7 +138,7 @@ ACE_Module<ACE_SYNCH_2>::sibling (ACE_Task<ACE_SYNCH_2> *orig)
     return 0;
 }
 
-template <ACE_SYNCH_1> ACE_INLINE
+template <ACE_SYNCH_1>
 ACE_Module<ACE_SYNCH_2>::ACE_Module (void)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::ACE_Module");
@@ -148,7 +148,7 @@ ACE_Module<ACE_SYNCH_2>::ACE_Module (void)
   this->q_pair_[1] = 0;
 }
 
-template <ACE_SYNCH_1> ACE_INLINE
+template <ACE_SYNCH_1>
 ACE_Module<ACE_SYNCH_2>::~ACE_Module (void)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::~ACE_Module");
@@ -158,7 +158,7 @@ ACE_Module<ACE_SYNCH_2>::~ACE_Module (void)
     this->close ();
 }
 
-template <ACE_SYNCH_1> ACE_INLINE
+template <ACE_SYNCH_1>
 ACE_Module<ACE_SYNCH_2>::ACE_Module (const char *mod_name,
 				     ACE_Task<ACE_SYNCH_2> *writer_q, 
 				     ACE_Task<ACE_SYNCH_2> *reader_q, 
