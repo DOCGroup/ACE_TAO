@@ -127,7 +127,7 @@ public:
                  const ACE_Time_Value &delay,
                  const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
-  /// Cancel the <timer_id> add return the <act> parameter if an
+  /// Cancel the <timer_id> and return the <act> parameter if an
   /// address is passed in. Also wakes up the dispatching thread.
   int cancel (long timer_id, const void **act = 0);
 
