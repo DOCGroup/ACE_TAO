@@ -28,7 +28,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                    ThruPOA  Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
@@ -38,10 +38,8 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
 
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
-      << " " << node->thru_poa_proxy_impl_name ();
-  *os << " : " << be_idt_nl << "public virtual " 
-      << "::" << node->full_base_proxy_impl_name ()
-      << "," << be_nl << "public virtual " << "TAO_ThruPOA_Object_Proxy_Impl";
+      << " " << node->thru_poa_proxy_impl_name () << be_idt_nl
+      << ": public virtual TAO_ThruPOA_Object_Proxy_Impl" << be_idt;
 
   if (node->n_inherits () > 0)
     {
@@ -82,8 +80,10 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
         }
     }
 
-  *os << be_uidt_nl;
-  *os << "{" << be_nl << "public:" << be_idt_nl;
+  *os << be_uidt << be_uidt_nl;
+
+  *os << "{" << be_nl 
+      << "public:" << be_idt_nl;
 
   // Ctor
   *os << node->thru_poa_proxy_impl_name () << " (void);" << be_nl << be_nl;
@@ -101,7 +101,9 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
                         -1);
     }
 
-  *os << be_uidt_nl << "};" << be_nl;
+  *os << be_uidt_nl 
+      << "};" << be_nl;
+
   *os << be_nl
       << "//" << be_nl
       << "//                ThruPOA  Proxy Impl. Declaration" << be_nl
