@@ -518,11 +518,14 @@ also receives other options that are specific to it. <P>
   <tr><a name="t">
     <td><tt>-t</tt></td>
 
-    <td>Temporary directory to be used by the IDL compiler. Default :
-        Resolve ACE_DEFAULT_TEMP_DIR_ENV. If it is not defined, choose
-        /tmp/.
+    <td>Temporary directory to be used by the IDL compiler. 
     </td>
-    <td>&nbsp;</td>
+    <td>Unix: use environment variable TEMPDIR if defined, else use /tmp/.
+        Windows 95/98/Me: use environment variable TMP or TEMP if defined 
+        and directory exists, else use current directory.  Windows NT/2000/XP:
+        use environment variable TMP or TEMP if defined, else use the 
+        Windows directory.
+    </td>
   </tr>
 
   <tr><a name="Cw">

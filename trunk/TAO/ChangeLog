@@ -1,3 +1,8 @@
+Mon Oct 21 11:03:06 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* docs/compiler.html: Updated tao_idl compiler option documentation
+	  for the "-t", temporary directory, options.
+
 Sun Oct 20 08:18:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/Makefile: Fixed a typo that broke the minimum builds.
