@@ -136,11 +136,17 @@ public:
   CORBA::ULong index (void);
   // Return the index value
 
+  CORBA::ULong index (void) const;
+  // Return the index value
+
   void index (CORBA::ULong index);
   // Set the index value. This calls should not be used by any users
   // but for the TAO_Connection_Cache_Manager class.
 
   // = Accessors
+
+  TAO_Base_Connection_Property *property (void) const;
+  // Return the underlying property pointer
 
 private:
   // = Data members.

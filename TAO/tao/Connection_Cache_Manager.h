@@ -191,16 +191,10 @@ private:
   // last highest index and binds the entry with an index = (last
   // highest index + 1).
 
-  int get_idle_handler (const TAO_Cache_ExtId &ext_id,
-                        HASH_MAP_ENTRY *&entry);
-  // This is called by the find (). Get an idle handler if one is
-  // available in Cache. If an idle one does not exist, we look at the
-  // next entry to see whether we  have an entry of the same ext_id
-  // type. If so, we check whether they are are idle for use. If we
-  // find one we mark it busy, and set the Hash_Map_Entry in the
-  // Connection_Handler object.
-
-
+  int is_entry_idle (HASH_MAP_ENTRY *&entry);
+  // Tries to find if the <int_id_> in entry is idle for use. If it is
+  // idle it is immediately markes as busy and returns a value of
+  // 1, else it returns a value of 0
 
 private:
 

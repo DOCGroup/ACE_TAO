@@ -52,8 +52,9 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                       ACE_TEXT (" So trying with a new index \n")));
         }
 
+
       // There was an entry like this before, so let us do some
-      // minor adjustments
+      // minor adjustments and rebind
       retval = this->get_last_index_bind (ext_id,
                                           int_id,
                                           entry);
@@ -82,27 +83,46 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
   HASH_MAP_ENTRY *entry = 0;
 
   // Get the entry from the Hash Map
-  int retval = this->cache_map_.find (key,
-                                      entry);
-  if (retval == 0)
-    {
-      retval = this->get_idle_handler (key,
-                                       entry);
+  int retval = 0;
 
-      // We have a succesful entry
+  // Get the index of the <key>
+  int index = key.index ();
+
+  while (retval == 0)
+    {
+      // Make a temporary object. It does not do a copy.
+      TAO_Cache_ExtId tmp_key (key.property ());
+
+      // Look for an entry in the map
+      retval = this->cache_map_.find (key,
+                                      entry);
+
+      // We have an entry in the map, check whether it is idle. If it
+      // is idle it would be marked as busy.
       if (entry)
         {
-          value = entry->int_id_;
+          CORBA::Boolean idle =
+            this->is_entry_idle (entry);
+
+          if (idle)
+            {
+              // We have a succesful entry
+              value = entry->int_id_;
+              return 0;
+            }
         }
 
-      if (TAO_debug_level > 0 && retval != 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::find_i")
-                      ACE_TEXT (" unable to locate a free connection \n")));
-        }
+      // Bump the index up
+      tmp_key.index (++index);
     }
 
+  // If we are here then it is an error
+  if (TAO_debug_level > 0 && retval != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::find_i")
+                  ACE_TEXT (" unable to locate a free connection \n")));
+    }
 
   return retval;
 }
@@ -233,20 +253,19 @@ TAO_Connection_Cache_Manager::
 {
   CORBA::ULong ctr = entry->ext_id_.index ();
 
-  // Start looking at the succesive elements
-  while (entry->next_ != 0 &&
-         entry->next_->ext_id_.index () != 0)
-    {
-      ctr++;
+  int retval = 0;
 
-      // Change the entry
-      entry = entry->next_;
+  while (retval == 0)
+    {
+      // Set the index
+      key.index (++ctr);
+
+      // Check to see if an element exists in the Map. If it exists we
+      // loop, else we drop out of the loop
+      retval =
+        this->cache_map_.find (key);
     }
 
-  // Set the index
-  key.index (ctr + 1);
-
-  cout << "The counter is " << ctr + 1 <<endl;
   // Now do a bind again with the new index
   return  this->cache_map_.bind (key,
                                  val,
@@ -256,39 +275,20 @@ TAO_Connection_Cache_Manager::
 
 int
 TAO_Connection_Cache_Manager::
-    get_idle_handler (const TAO_Cache_ExtId & /*ext_id*/,
-                      HASH_MAP_ENTRY *&entry)
+    is_entry_idle (HASH_MAP_ENTRY *&entry)
 {
-  // We are sure that we have an entry
-  do
+  if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+      entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
     {
-      // Found the entry, so check whether it is busy
-      if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
-          entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
-        {
-          // Save that in the handler
-          entry->int_id_.handler ()->cache_map_entry (entry);
+      // Save that in the handler
+      entry->int_id_.handler ()->cache_map_entry (entry);
 
-          cout << "Are we 2 "<<endl;
-          // Mark the connection as busy
-          entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
-          return 0;
-        }
-      else
-        {
-          cout << "Are we 1 "<<endl;
-          entry = entry->next_;
-        }
+      // Mark the connection as busy
+      entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
+
+      return 0;
     }
-  // This would prevent us from moving to the next ext_id..
-  while (entry->next_->ext_id_.index () != 0);
 
-  // @@ There is a subtle assumption that I have made, ie. the
-  // elements with higher indexes of ext_id will be placed
-  // continously. That could be *bad*
-
-  // We havent got a connection, so set the pointer to null.
-  entry = 0;
   return -1;
 }
 

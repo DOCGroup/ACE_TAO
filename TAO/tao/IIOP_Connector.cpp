@@ -185,7 +185,7 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
   if (this->orb_core ()->connection_cache ().find_handler (prop,
                                                            conn_handler) == 0)
     {
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
                     ACE_TEXT ("got an existing connection \n")));
@@ -197,7 +197,7 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
     }
   else
     {
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level > 4)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
                     ACE_TEXT ("making a new connection \n")));
@@ -226,7 +226,7 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                                                   remote_address);
         }
 
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level > 4)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
                     ACE_TEXT ("The result is <%d> \n"), result));
@@ -257,7 +257,7 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                      ACE_TEXT ("added the new  connection to Cache \n")));
+                      ACE_TEXT ("couldn't add the new  connection to Cache \n")));
         }
     }
 
