@@ -9,11 +9,6 @@ ACE_RCSID (SSLIOP,
            SSLIOP_Profile,
            "$Id$")
 
-
-#if !defined (__ACE_INLINE__)
-# include "SSLIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
                                const TAO::ObjectKey & object_key,
                                const TAO_GIOP_Message_Version & version,
@@ -344,11 +339,11 @@ TAO_SSLIOP_Profile::parse_string (const char * ior
    ACE_CHECK;
 
    this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
-   
-   if( ssl_only_) 
+
+   if( ssl_only_)
    {
       this->ssl_endpoint_.ssl_component_.port = this->endpoint_.port_;
-      
+
       // Note that the Security::NoProtection bit is cleared since we
       // are sure the server supports SSL (we're told so)
       ACE_CLR_BITS (this->ssl_endpoint_.ssl_component_.target_supports,

@@ -155,7 +155,7 @@
        * rest of the SSL endpoint list is transmitted.
        */
       TAO_SSLIOP_Endpoint ssl_endpoint_;
-      
+
       /**
        * Allways treat this endpoint as secure, even if the constructor
        * did not explicitely specify a tagged component for SSL.
@@ -164,16 +164,12 @@
        * attributes - port number, for instance.
        */
       int ssl_only_;
-      
+
     };
 
 //   }  // End SSLIOP namespace.
 // }  // End TAO namespace.
 
-
-#if defined (__ACE_INLINE__)
-# include "SSLIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
