@@ -1,32 +1,25 @@
-# $Id$
+Welcome to the latest release of The ACE ORB (TAO).  TAO is a freely
+available, open-source implementation of a CORBA 2.x-compliant ORB
+that supports real-time extensions.  Please see
+www.cs.wustl.edu/~schmidt/TAO.html for more information on TAO
+features, services, and the status of current work.  In addition,
+document for TAO is available in the $TAO_ROOT/docs/ subdirectory in
+HTML format.
 
-	Shows how to use the scheduling service in conjunction with
-the real-time event channel.  The test has a single consumer that
-subscribes for two event types, using different RT_Infos for each. A
-supplier pushes those events also using different RT_Infos.
-	The event-channel cooperates with the scheduling service to
-compute a schedule and assign priorities to each event. The event
-channel will use different queues for those events, each queue
-serviced by threads at different priorities.
+We welcome suggestions for improvement, bug fixes, portability
+enhancements, etc. and will strive to integrate correct bug fixes
+quickly!  The current release has been tested extensively, but if you
+find any bugs, please report them to the ACE mailing list
+ace-users@cs.wustl.edu using the $TAO_ROOT/PROBLEM-REPORT-FORM.
+Please use the same form to submit questions, comments, etc.
+To ensure that you see responses, please do one of the following:
 
-Build Notes
------------
-Use the following in config.h
+    1) Subscribe to the ace-users mail list, by sending email with
+       contents "subscribe ace-users" to majordomo@cs.wustl.edu.
 
-#define ACE_HAS_TIMED_MESSAGE_BLOCKS 1
+    2) Or, monitor the comp.soft-sys.ace newsgroup for responses.
 
-Make sure that the following modules are built.
+Thanks,
 
-IDL compiler
-$ACE_ROOT/apps/gperf
-$ACE_ROOT/Kokyu
-$TAO_ROOT/orbsvcs/orbsvcs/Svc_Utils
-$TAO_ROOT/orbsvcs/orbsvcs/RTEvent
-$TAO_ROOT/orbsvcs/orbsvcs/Makefile.CosNaming
-$TAO_ROOT/orbsvcs/orbsvcs/Makefile.RTSched
-$TAO_ROOT/orbsvcs/orbsvcs/Makefile.RTSchedEvent
-$TAO_ROOT/orbsvcs/orbsvcs/Makefile.RTKokyuEvent
-
-The example can be run using:
-
-$ ./Service
+        Douglas C. Schmidt
+        schmidt@cs.wustl.edu
