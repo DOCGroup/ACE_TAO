@@ -10,10 +10,17 @@ Tue Jun 15 15:22:53 1999  Steve Huston  <shuston@riverace.com>
           constructors. Not always necessary, but safe, and keeps egcs quiet.
 
         * apps/Gateway/Gateway/Makefile:
-        * apps/Gateway/Peer/Makefile: Added LIBS += $(ACELIB) to include
-          libACE when linking the shared libs.  Removed VLDLIBS lines because
-          they're set in wrapper_macros.GNU, and it knows to do it correctly
-          for AIX.
+        * apps/Gateway/Peer/Makefile:
+        * examples/ASX/CCM_App/Makefile:
+	* examples/Service_Configurator/IPC-tests/Makefile:
+        * examples/Service_Configurator/Misc/Makefile:
+        * examples/Timer_Queue/Makefile:
+          Added LIBS += $(ACELIB) to include libACE when linking the
+          shared libs.  Removed VLDLIBS lines because they're set in
+          wrapper_macros.GNU, and it knows to do it correctly for AIX.
+
+        * examples/Connection/misc/Connection_Handler.cpp (handle_input):
+          corrected signed/unsigned mismatch.
 
 Tue Jun 15 13:41:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
