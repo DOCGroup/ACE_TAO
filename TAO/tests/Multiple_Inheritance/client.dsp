@@ -133,7 +133,7 @@ InputPath=.\Multiple_Inheritance.idl
 InputName=Multiple_Inheritance
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -171,7 +171,7 @@ InputPath=.\Multiple_Inheritance.idl
 InputName=Multiple_Inheritance
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
