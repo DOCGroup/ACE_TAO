@@ -26,11 +26,13 @@
 //  Additonal notes: Defining _WIN32_WINNT as 0x0400 implies ACE_HAS_WINSOCK2
 //  unless you set ACE_HAS_WINSOCK2 to 0 in the config.h file.
 #if !defined (ACE_HAS_WINNT4)
-	#define ACE_HAS_WINNT4	1	// assuming Win NT 4.0 or greater
+  #define ACE_HAS_WINNT4 1      // assuming Win NT 4.0 or greater
+#endif
 
-	#if !defined (_WIN32_WINNT)
-		#define _WIN32_WINNT 0x0400
-	#endif
+#if (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0)
+  #if !defined (_WIN32_WINNT)
+    #define _WIN32_WINNT 0x0400
+  #endif
 #endif
 
 // Define ACE_HAS_MFC to 1, if you want ACE to use CWinThread. This should

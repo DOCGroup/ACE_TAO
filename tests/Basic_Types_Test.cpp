@@ -101,9 +101,9 @@ main (int, ASYS_TCHAR *[])
 
 
 #if defined (ACE_LITTLE_ENDIAN)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nlittle endian\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("little endian\n")));
 #elif defined (ACE_BIG_ENDIAN)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nbig endian\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("big endian\n")));
 #else
   ACE_ERROR ((LM_ERROR,
               ASYS_TEXT ("assertion failed: no ACE_*_ENDIAN definition!\n")));
