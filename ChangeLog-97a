@@ -1,3 +1,27 @@
+Sun Feb 02 21:24:02 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: rearranged hrtime_t typedefs.
+
+	* ace/OS.i (gethrtime): added Pentium support, with ACE_HAS_PENTIUM.
+	  Thanks to Tim Harrison and Wayne Vucenic <wvucenic@netgate.net>
+	  for the assembly-language routine to read the clock; see
+	  http://www.sandpile.org/80x86/rdtsc.shtml for a description of
+	  the RDTSC instruction.
+
+	* ace/{config-win*.h,README}: added #define ACE_HAS_PENTIUM to
+	  enable gethrtime () support.
+
+	* ace/High_Res_Time.{h,i,cpp}: removed platform-specific #ifdef's,
+	  instead return -1 to indicate unsupported functions (for functions
+	  that call ACE_OS::gethrtime ()); changed signature of elapsed_time
+	  to take time reference as argument instead of return value;
+	  added elapsed_time (ACE_Time_Value &) and elapsed_time_incr
+	  ACE_Time_Value &).
+
+	* ace/config-aix-4.1.x.h: fixed typo: #defind ACE_HAS_LONGLONG_T.
+
+	* ace/config-aix-4.2.x.h: added #define ACE_HAS_LONGLONG_T.
+
 Sun Feb 02 10:30:29 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Local_Name_Space.cpp: removed ACE_Map_Manager, ACE_Map_Iterator,
