@@ -1,0 +1,2996 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!-- $Id$ -->
+
+<HTML>
+<HEAD>
+<TITLE>Implementing Pluggable Protocols for TAO</TITLE>
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="pluggable_protocols.css">
+
+</HEAD>
+
+<BODY TEXT = "#000000" LINK="#000fff" VLINK="#ff0f0f" BGCOLOR="#ffffff">
+
+<P>
+
+<H1 ALIGN="CENTER">Implementing Pluggable Protocols for TAO</H1>
+<P ALIGN="CENTER">
+<STRONG>
+<A HREF="http://www.cs.wustl.edu/~fredk/">Fred Kuhns</A>,
+<A HREF="http://www.ece.uci.edu/~schmidt/">Douglas C. Schmidt</A>,
+<A HREF="http://doc.ece.uci.edu/~coryan">Carlos O'Ryan</A>,
+<A HREF="http://www.ece.uci.edu/~ossama/">Ossama Othman</A>,
+and <A HREF="mailto:BTRASK@contactsystems.com">Bruce Trask</A>
+</STRONG>
+</P>
+
+<P ALIGN="CENTER">
+Center for Distributed Object Computing<BR>
+Washington University at St.Louis
+</P>
+
+<HR>
+
+<P>
+<H3>Overview</H3><P>
+
+To be an effective platform for performance-sensitive real-time and
+embedded applications, off-the-shelf CORBA middleware must preserve
+the communication-layer quality of service (QoS) properties of
+applications end-to-end.  However, the standard CORBA GIOP/IIOP
+interoperability protocols are not well suited for applications that
+cannot tolerate the message footprint size, latency, and jitter
+associated with general-purpose messaging and transport protocols.
+Fortunately, the CORBA specification defines the notion of
+"Environmentally-Specific Inter-ORB Protocols" (ESIOPs) that can be
+used to integrate non-GIOP/IIOP protocols beneath an ORB. <P>
+
+To allow end-users and developers to take advantage of ESIOP
+capabilities, it is useful for an ORB to support a <EM>pluggable
+protocols framework</em> that allows custom messaging and transport
+protocols to be configured flexibly and used transparently by
+applications.  This document explains how to develop pluggable
+protocols using TAO's pluggable protocols framework.  Here are some
+links that describe TAO's pluggable protocols framework, though not
+how to implement one: <BLOCKQUOTE> <A
+HREF="../releasenotes/index.html#pp">../releasenotes/index.html#pp</A><BR>
+
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf">http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf</A><BR>
+<A
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf">http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf</A>
+</BLOCKQUOTE>
+
+<P>
+<HR>
+<H3>Table of Contents</H3><P>
+<UL>
+<LI><A NAME="TOC_SECTION100" HREF="#SECTION100">Overview of Implementation of Pluggable Protocols for TAO</A>
+<UL>
+<LI><A NAME="TOC_SECTION110" HREF="#SECTION110">The Hard Way</A>
+<LI><A NAME="TOC_SECTION120" HREF="#SECTION120">The Path of Least Resistance</A>
+<UL>
+<LI><A NAME="TOC_SECTION121" HREF="#SECTION121">Basic Requirements</A>
+<LI><A NAME="TOC_SECTION122" HREF="#SECTION122">Basics of Implementing a Pluggable Protocol for TAO</A>
+</UL>
+</UL>
+<LI><A NAME="TOC_SECTION200" HREF="#SECTION200">Pluggable Protocol Framework Components</A>
+<UL>
+<LI><A NAME="TOC_SECTION210" HREF="#SECTION210">The <TT>Acceptor</TT></A>
+<UL>
+<LI><A NAME="TOC_SECTION211" HREF="#SECTION211">Context</A>
+<LI><A NAME="TOC_SECTION212" HREF="#SECTION212">Problem</A>
+<LI><A NAME="TOC_SECTION213" HREF="#SECTION213">Solution</A>
+<LI><A NAME="TOC_SECTION214" HREF="#SECTION214">Applying the solution to TAO</A>
+<LI><A NAME="TOC_SECTION215" HREF="#SECTION215"><TT>Acceptor</TT> Implementation</A>
+</UL>
+<LI><A NAME="TOC_SECTION220" HREF="#SECTION220">The <TT>Connector</TT></A>
+<UL>
+<LI><A NAME="TOC_SECTION221" HREF="#SECTION221">Context</A>
+<LI><A NAME="TOC_SECTION222" HREF="#SECTION222">Problem</A>
+<LI><A NAME="TOC_SECTION223" HREF="#SECTION223">Solution</A>
+<LI><A NAME="TOC_SECTION224" HREF="#SECTION224">Applying the solution in TAO</A>
+<LI><A NAME="TOC_SECTION225" HREF="#SECTION225"><TT>Connector</TT> Implementation</A>
+</UL>
+<LI><A NAME="TOC_SECTION230" HREF="#SECTION230">The <TT>Profile</TT> Object</A>
+<LI><A NAME="TOC_SECTION240" HREF="#SECTION240">The <TT>Protocol_Factory</TT> Object</A>
+<LI><A NAME="TOC_SECTION250" HREF="#SECTION250">The <TT>Transport</TT> Object</A>
+<UL>
+<LI><A NAME="TOC_SECTION251" HREF="#SECTION251">Context</A>
+<LI><A NAME="TOC_SECTION252" HREF="#SECTION252">Problem</A>
+<LI><A NAME="TOC_SECTION253" HREF="#SECTION253">Solution</A>
+<LI><A NAME="TOC_SECTION254" HREF="#SECTION254">Applying the solution in TAO</A>
+<LI><A NAME="TOC_SECTION255" HREF="#SECTION255"><TT>Transport</TT> Implementation</A>
+</UL>
+<LI><A NAME="TOC_SECTION260" HREF="#SECTION260">The <TT>Connection_Handler</TT></A></LI>
+<UL>
+<LI><A NAME="TOC_SECTION261" HREF="#SECTION261"><TT>Connection_Handler</TT> Implementation</A></LI>
+</UL>
+</UL>
+<LI><A NAME="TOC_SECTION300" HREF="#SECTION300">Notes From a ``Real World'' Pluggable Protocol Implementation</A>
+<LI><A NAME="TOC_SECTION400" HREF="#SECTION400">Additional Implementation Information</A>
+<UL>
+<LI><A NAME="TOC_SECTION410" HREF="#SECTION410">Tags</A></LI>
+</UL>
+<LI><A NAME="TOC_SECTION500" HREF="#SECTION500">Using a Pluggable Protocol</A>
+<LI><A NAME="TOC_SECTION600" HREF="#SECTION600">Bibliography</A>
+</UL>
+<!-- End of Table of Contents -->
+<BR><HR>
+
+
+<P>
+
+<H3><A NAME="SECTION100" HREF="#TOC_SECTION100">
+Overview of Implementation of Pluggable Protocols for TAO</A>
+</H3>
+
+<P>
+There are several basic implementation details that should be followed when
+implementing pluggable protocols for
+<A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>. This
+section describes them.
+
+<P>
+
+<H3><A NAME="SECTION110" HREF="#TOC_SECTION110">
+The Hard Way</A>
+</H3>
+
+<P>
+It is possible to implement a pluggable protocol for TAO without using
+any <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
+components, or using existing pluggable protocols as a reference, but that is
+certainly more difficult than taking advantage of the code reuse offered by
+using existing ACE and TAO models and implementations.
+
+<P>
+
+<H3><A NAME="SECTION120" HREF="#TOC_SECTION120">
+The Path of Least Resistance</A>
+</H3>
+
+<P>
+TAO takes advantage of the many useful encapsulations provided by ACE. These
+include ACE's <TT>IPC_SAP</TT> classes, <TT>Event Handlers</TT> and the operation
+dispatching features provided by the <TT>Reactor</TT>. However, in order to
+use these encapsulations some requirements must be satisfied.
+
+<P>
+
+<H3><A NAME="SECTION121" HREF="#TOC_SECTION121">
+Basic Requirements</A>
+</H3>
+
+<P>
+To be able to successfully use the ACE components listed above, the underlying
+protocol used in the pluggable protocol for TAO should support the following
+features and characteristics:
+
+<P>
+
+<UL>
+<LI>Access to a session/connection via some type of handle (e.g. a UNIX file descriptor
+or a Win32 <TT>HANDLE</TT>).</LI>
+<LI>The ability to multiplex I/O using the <TT>select</TT> system call, or on Win32
+platforms, the <TT>WaitForMultipleObjects</TT> call on the handles that refer
+to the open sessions/connections. This ability is required in order to use the
+<TT>ACE_Select_Reactor</TT> or the <TT>ACE_WFMO_Reactor</TT> concrete <TT>Reactor</TT>
+implementations.
+
+<P>
+Some underlying transports do not provide any such ability. However, it may
+sometimes be possible to separate data delivery from notification. For example,
+TAO's shared memory transport transports data through shared memory, but since
+it is not possible to use <TT>select</TT> on shared memory another mechanism
+must be used for notification. One way to do this is to use a local IPC connection
+strictly for notification purposes. Whenever, data is sent through shared memory,
+a byte of data could be written to the local IPC connection. That local IPC
+connection would be used to notify the receiving process that data is available
+for reading in shared memory. Since local IPC can be multiplexed using the <TT>select</TT>
+system call, the <TT>ACE_Select_Reactor</TT> can be used to handle operation
+dispatching for the shared memory pluggable protocol.
+
+<P>
+ </LI>
+<LI>A pluggable protocol should sit on top of lower-level implementation. The underlying
+protocol implementation should not rely on any resources/features that are at
+a similar or higher layer of abstraction than the pluggable protocol. For example,
+if the underlying protocol needs to use Win32 resources/features such as <TT>HANDLE</TT>s
+to hidden windows or the use of a window message pump then the underlying pluggable
+protocol may be difficult or pointless to implement as a pluggable protocol.</LI>
+</UL>
+
+<P>
+
+<H3><A NAME="SECTION122" HREF="#TOC_SECTION122">
+Basics of Implementing a Pluggable Protocol for TAO</A>
+</H3>
+
+<P>
+One of the easiest ways to implement a pluggable protocol for TAO is to do the
+following:
+
+<P>
+
+<OL>
+<LI>Implement ACE <TT>IPC_SAP</TT> wrappers around the underlying protocol implementation.
+For example, ACE wraps the <I>socket</I> API to create an <TT>ACE_INET_Addr</TT>,
+<TT>ACE_SOCK_Acceptor</TT>, <TT>ACE_SOCK_Connector</TT> and <TT>ACE_SOCK_Stream</TT>.
+<TT>IPC_SAP</TT> wrappers for other implementations, such as OSI transport
+protocol layer 4, aka <I>TP4</I>, should be implemented similarly. A TP4 implementation
+could have an <TT>ACE_TP4_Addr</TT>, <TT>ACE_TP4_Acceptor</TT>, <TT>ACE_TP4_Connector</TT>
+and an <TT>ACE_TP4_Stream</TT>. Any new implementation should retain the interface
+provided by the base <TT>IPC_SAP</TT> classes in ACE.</LI> <P>
+
+<LI>Once the above ACE <TT>IPC_SAP</TT> components have been implemented, creating
+the necessary TAO pluggable protocol components should be fairly easy. In fact,
+much of the code can be ``cut and pasted'' from existing TAO pluggable protocol
+implementations. For example, TAO's UIOP pluggable protocol was, for the most
+part, based entirely on the IIOP pluggable protocol code found in TAO's ``tao/IIOP_*''
+source files. The only things that had to be changed for UIOP were the protocol
+prefix, address format and URL style IOR format. Each of these pluggable protocol
+characteristics is documented later in this documentation.</LI>
+</OL>
+
+<P>
+
+The next section goes into detail about TAO's pluggable protocol
+framework components and their public interfaces.  It is our goal that
+no changes to ACE or TAO should be necessary to implement a pluggable
+protocol.  Naturally, as with all frameworks, it's only possible to
+achieve this goal if (1) all possible use-cases are understood in
+advance or (2) the framework is generalized when confronted with new
+use-cases that weren't handled before.  Therefore, we describe the
+conditions that must currently hold in order to develop and integrate
+a pluggable protocol for TAO.
+<P>
+<HR>
+<P>
+<H3><A NAME="SECTION200" HREF="#TOC_SECTION200">
+Pluggable Protocol Framework Components</A>
+</H3>
+
+<P>
+In order for a pluggable protocol to be usable by TAO <STRONG><EM>without</EM></STRONG> making any modifications
+to TAO itself, it must be implemented to provide the functionality dictated
+by TAO's pluggable protocols framework interface. This functionality is implemented
+within several components, namely the <TT>Acceptor</TT>, <TT>Connector</TT>,
+<TT>Connection Handler</TT>, <TT>Protocol Factory</TT>, <TT>Profile</TT> and
+<TT>Transport</TT>. This section describes each of them.
+
+<P>
+
+<H3><A NAME="SECTION210" HREF="#TOC_SECTION210">
+The <TT>Acceptor</TT></A>
+</H3>
+
+<P>
+
+<A NAME="design:accept"></A>
+<P>
+
+<H3><A NAME="SECTION211" HREF="#TOC_SECTION211">
+Context</A>
+</H3>
+
+<P>
+A server can accept connections at one or more endpoints, potentially using
+the same protocol for all endpoints. The set of protocols that an ORB uses to
+play the client role need not match the set of protocols used for the server
+role. Moreover, the ORB can even be a ``pure client,'' <I>i.e.</I>, a client
+that only makes requests, in which case it can use several protocols to make
+requests, but receive no requests from other clients.
+
+<P>
+
+<H3><A NAME="SECTION212" HREF="#TOC_SECTION212">
+Problem</A>
+</H3>
+
+<P>
+The server must generate an IOR that includes all possible inter-ORB and transport-protocol-specific
+profiles for which the object can be accessed. As with the client, it should
+be possible to add new protocols without changing the ORB.
+
+<P>
+
+<H3><A NAME="SECTION213" HREF="#TOC_SECTION213">
+Solution</A>
+</H3>
+
+<P>
+We use the Acceptor pattern&nbsp;[<A
+ HREF="#Schmidt:97c">1</A>] to accept the connections. As
+with the Connector pattern, an Acceptor decouples the connection establishment
+from the processing performed on that connection. However, in the Acceptor pattern,
+the connection is accepted <I>passively</I>, rather than being initiated <I>actively</I>.
+
+<P>
+
+<H3><A NAME="SECTION214" HREF="#TOC_SECTION214">
+Applying the solution to TAO</A>
+</H3>
+
+<P>
+Figure&nbsp;<A HREF="#server">1</A> illustrates how TAO's pluggable protocols framework leverages
+the design presented in Section&nbsp;<A HREF="#design:transparent"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="cross_ref_motif.png"></A>. The concrete ACE
+<TT>Service Handler</TT> created by the ACE <TT>Acceptor</TT> is responsible
+for implementing the External Polymorphism pattern&nbsp;[<A HREF="#Schmidt:97e">2</A>] and encapsulating itself
+behind the <TT>Transport</TT> interface defined in our pluggable protocols framework.
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="server"></A><A NAME="683"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 1:</STRONG>
+Server Pluggable Protocol Class Diagram</CAPTION>
+<TR><TD><P>
+
+<P>
+
+<DIV ALIGN="CENTER">
+<!-- MATH
+ $\resizebox* {5in}{!}{\includegraphics{graphics/server.eps}}$
+ -->
+<IMG
+ WIDTH="561" HEIGHT="634" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="Server"> </DIV>
+<P>
+<DIV ALIGN="CENTER"></DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+As discussed in Section&nbsp;<A HREF="#design:adapt"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="cross_ref_motif.png"></A>, we use the Adapter pattern to leverage
+the ACE implementation of the Acceptors. This pattern also permits a seamless
+integration with the lower levels of the ORB. In the Acceptor pattern, the <TT>Acceptor</TT>
+object is a factory that creates <TT>Service Handler</TT>s. <TT>Service
+Handler</TT>s are responsible for performing I/O with their connected peers. In
+TAO's pluggable protocol framework, the <TT>Transport</TT> objects are <TT>Service
+Handlers</TT> implemented as abstract classes. This design shields the ORB from
+variations in the <TT>Acceptor</TT>s, <TT>Connector</TT>s, and <TT>Service
+Handler</TT>s for each particular protocol.
+
+<P>
+When a connection is established, the concrete <TT>Acceptor</TT> creates the
+appropriate <TT>Connection Handler</TT> and IOP objects. The <TT>Connection
+Handler</TT> also creates a <TT>Transport</TT> object that functions as a bridge.
+As with the <TT>Connector</TT>, the <TT>Acceptor</TT> also acts as a bridge
+object, hiding the transport- and strategy-specific details of the acceptor.
+
+<P>
+
+<H3><A NAME="SECTION215" HREF="#TOC_SECTION215">
+<TT>Acceptor</TT> Implementation</A>
+</H3>
+
+<P>
+TAO's <TT>Acceptor</TT> interface, shown below, is declared in the  file
+<TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+All <TT>Acceptor</TT> implementations must inherit from the <TT>TAO_Acceptor</TT>
+abstract base class.
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>class&nbsp;TAO_Export&nbsp;TAO_Acceptor<BR>
+{<BR>
+&nbsp;&nbsp;//&nbsp;=&nbsp;TITLE<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;Abstract&nbsp;Acceptor&nbsp;class&nbsp;used&nbsp;for&nbsp;pluggable&nbsp;protocols.<BR>
+&nbsp;&nbsp;//<BR>
+&nbsp;&nbsp;//&nbsp;=&nbsp;DESCRIPTION<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;Base&nbsp;class&nbsp;for&nbsp;the&nbsp;Acceptor&nbsp;bridge&nbsp;calls.<BR>
+public:<BR>
+&nbsp;&nbsp;TAO_Acceptor&nbsp;(CORBA::ULong&nbsp;tag);<BR>
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;virtual&nbsp;~TAO_Acceptor&nbsp;(void);
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;Destructor
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;CORBA::ULong&nbsp;tag&nbsp;(void)&nbsp;const;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;The&nbsp;tag,&nbsp;each&nbsp;concrete&nbsp;class&nbsp;will&nbsp;have&nbsp;a&nbsp;specific&nbsp;tag&nbsp;value.
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;CORBA::Short&nbsp;priority&nbsp;(void)&nbsp;const;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;The&nbsp;priority&nbsp;for&nbsp;this&nbsp;endpoint.
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;open&nbsp;(TAO_ORB_Core&nbsp;*orb_core,
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;version_major,
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;version_minor,
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*address,
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*options&nbsp;=&nbsp;0)&nbsp;=&nbsp;0;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;Method&nbsp;to&nbsp;initialize&nbsp;acceptor&nbsp;for&nbsp;address.
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;open_default&nbsp;(TAO_ORB_Core&nbsp;*orb_core,
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*options&nbsp;=&nbsp;0)&nbsp;=&nbsp;0;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;Open&nbsp;an&nbsp;acceptor&nbsp;on&nbsp;the&nbsp;default&nbsp;endpoint&nbsp;for&nbsp;this&nbsp;protocol
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;close&nbsp;(void)&nbsp;=&nbsp;0;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;Closes&nbsp;the&nbsp;acceptor
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;create_mprofile&nbsp;(const&nbsp;TAO_ObjectKey&nbsp;&amp;object_key,
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_MProfile&nbsp;&amp;mprofile)&nbsp;=&nbsp;0;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;Create&nbsp;the&nbsp;corresponding&nbsp;profile&nbsp;for&nbsp;this&nbsp;endpoint.
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;is_collocated&nbsp;(const&nbsp;TAO_Profile*&nbsp;profile)&nbsp;=&nbsp;0;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;Return&nbsp;1&nbsp;if&nbsp;the&nbsp;&lt;profile&gt;&nbsp;has&nbsp;the&nbsp;same&nbsp;endpoint&nbsp;as&nbsp;the&nbsp;acceptor.
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+&nbsp;&nbsp;virtual&nbsp;CORBA::ULong&nbsp;endpoint_count&nbsp;(void)&nbsp;=&nbsp;0;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;Returns&nbsp;the&nbsp;number&nbsp;of&nbsp;endpoints&nbsp;this&nbsp;acceptor&nbsp;is&nbsp;listening&nbsp;on.&nbsp;&nbsp;This
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;is&nbsp;used&nbsp;for&nbsp;determining&nbsp;how&nbsp;many&nbsp;profiles&nbsp;will&nbsp;be&nbsp;generated
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;for&nbsp;this&nbsp;acceptor.
+
+<BR>
+
+&nbsp;
+
+<BR>
+protected:
+
+<BR>
+
+&nbsp;&nbsp;CORBA::Short&nbsp;priority_;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;The&nbsp;priority&nbsp;for&nbsp;this&nbsp;endpoint
+
+<BR>
+
+&nbsp;
+
+<BR>
+private:
+
+<BR>
+
+&nbsp;&nbsp;CORBA::ULong&nbsp;tag_;
+
+<BR>
+
+&nbsp;&nbsp;//&nbsp;IOP&nbsp;protocol&nbsp;tag.
+
+<BR>
+
+&nbsp;
+
+<BR>
+
+};
+
+&nbsp;</DD>
+</DL>
+A description of each of the methods that must be implemented follows:
+
+<P>
+
+<DL>
+<DT><STRONG>The&nbsp;Constructor.</STRONG></DT>
+<DD>Other than initializing members of a pluggable protocol <TT>Acceptor</TT>
+implementation, nothing else is really done in the constructor. For example,
+the <TT>TAO_IIOP_Acceptor</TT> constructor implementation is:
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>TAO_IIOP_Acceptor::TAO_IIOP_Acceptor&nbsp;(void)<BR>
+<DD>&nbsp;&nbsp;:&nbsp;TAO_Acceptor&nbsp;(TAO_TAG_IIOP_PROFILE),
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;version_&nbsp;(TAO_DEF_GIOP_MAJOR,&nbsp;TAO_DEF_GIOP_MINOR),
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;orb_core_&nbsp;(0),
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;base_acceptor_&nbsp;(),
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;creation_strategy_&nbsp;(0),
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;concurrency_strategy_&nbsp;(0),
+
+<BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;accept_strategy_&nbsp;(0)
+
+<BR>
+
+{
+
+<BR>
+
+}</DD>
+</DL>
+<P>
+Note that initializing the <TT>TAO_Acceptor</TT> base class with a
+<I>tag</I> value is required. Additional information about tags is
+available in the
+<A HREF="#SECTION410">tags section</A>
+of this document.  In this case,
+<TT>TAO_TAG_IIOP_PROFILE</TT> is defined to be the OMG assigned tag
+for the CORBA IIOP protocol. Until a tag that uniquely
+identifies the protocol is assigned, a tag value that isn't
+used by any other protocol can be used in the meantime.
+</DL>
+
+<P>
+<DL>
+<DT><STRONG><TT><A NAME="TAO_Acceptor::open">open</A></TT>.</STRONG></DT>
+<DD>The <TT>open</TT> method initializes the acceptor, i.e. sets
+the protocol version to use (if supported), parses any protocol-specific options
+(if any) and creates the endpoint passed to it.
+<P>
+The address specified by using the <TT><A HREF="../Options.html#-ORBEndpoint">-ORBEndpoint</A></TT> ORB option is passed
+directly to this method. If more than one address is specified within a given
+<TT>-ORBEndpoint</TT> option then each address is passed one by one to this
+method by the pluggable protocols framework. For example, the following <TT>-ORBEndpoint</TT>
+command line option:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>-ORBEndpoint&nbsp;iiop://1.1@foo.xyz.com,1.0@bar.abc.com</DD>
+</DL>
+<P>
+will cause the following <TT>open</TT> method invocations to occur:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>open&nbsp;(orb_core,&nbsp;1,&nbsp;1,&nbsp;&#34;foo.xyz.com&#34;,&nbsp;0)<BR>
+open&nbsp;(orb_core,&nbsp;1,&nbsp;0,&nbsp;&#34;bar.abc.com&#34;,&nbsp;0)</DD>
+</DL>
+<P>
+Extracting individual addresses from an <TT>-ORBEndpoint</TT> option is handled
+by TAO's pluggable protocols framework. It is up to the pluggable protocol to
+handle the address passed to this method.
+
+<P>
+ </DD>
+<DT><STRONG><TT><A NAME="TAO_Acceptor::open_default">open_default</A></TT>.</STRONG></DT>
+<DD>Each pluggable protocol should have the ability to
+open a default endpoint. For example, it should be possible to make the pluggable
+protocol open an endpoint without specifying an address, in which case an address
+is chosen by the pluggable protocol. This method is invoked when <TT>-ORBEndpoint</TT>
+options such as the following are used:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>-ORBEndpoint&nbsp;iiop://</DD>
+</DL>
+<P>In this case, an IIOP endpoint will be created on the local host. The port will
+be chosen by the IIOP pluggable protocol. <TT>open_default</TT> will invoked
+in the following manner:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD><TT>open_default&nbsp;(orbcore,&nbsp;0)</TT></DD>
+</DL></DD>
+<P>
+<DT><STRONG><TT>close</TT>.</STRONG></DT>
+<DD>The <TT>close</TT> method is self-explanatory. It simply shuts
+down any open endpoints, and recovers resources as necessary. This method is
+automatically invoked by the pluggable protocols framework when the ORB associated
+with that endpoint is shut down.</DD>
+<P>
+<DT><STRONG><TT>create_mprofile</TT>.</STRONG></DT>
+<DD>The <TT>create_mprofile</TT> method creates a protocol-specific
+<TT>Profile</TT> object and gives ownership of that profile to the <TT>TAO_MProfile</TT>
+object, basically a container that holds multiple profiles, passed to it. The
+code for this method is typically ``boilerplate,'' i.e. it can be based almost
+entirely on TAO's existing pluggable protocol implementations of <TT>create_profile</TT>.
+Here is how it is implemented in TAO's IIOP acceptor:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>int<BR>
+TAO_IIOP_Acceptor::create_mprofile&nbsp;(const&nbsp;TAO_ObjectKey&nbsp;&amp;object_key,&nbsp;<BR>
+TAO_MProfile&nbsp;&amp;mprofile)&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;@@&nbsp;we&nbsp;only&nbsp;make&nbsp;one&nbsp;for&nbsp;now&nbsp;
+<BR>
+&nbsp;&nbsp;int&nbsp;count&nbsp;=&nbsp;mprofile.profile_count&nbsp;();&nbsp;
+<BR>
+&nbsp;&nbsp;if&nbsp;((mprofile.size&nbsp;()&nbsp;-&nbsp;count)&nbsp;&lt;&nbsp;1&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;mprofile.grow&nbsp;(count&nbsp;+&nbsp;1)&nbsp;==&nbsp;-1)&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;-1;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;TAO_IIOP_Profile&nbsp;*pfile&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;ACE_NEW_RETURN&nbsp;(pfile,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_IIOP_Profile&nbsp;(this-&gt;host_.c_str&nbsp;(),&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;address_.get_port_number&nbsp;(),&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object_key,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;address_,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;version_,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;orb_core_),&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;if&nbsp;(mprofile.give_profile&nbsp;(pfile)&nbsp;==&nbsp;-1)&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pfile-&gt;_decr_refcnt&nbsp;();&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pfile&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;-1;&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;if&nbsp;(this-&gt;orb_core_-&gt;orb_params&nbsp;()-&gt;std_profile_components&nbsp;()&nbsp;==&nbsp;0)&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;pfile-&gt;tagged_components&nbsp;().set_orb_type&nbsp;(TAO_ORB_TYPE);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;CONV_FRAME::CodeSetComponentInfo&nbsp;code_set_info;&nbsp;
+<BR>
+&nbsp;&nbsp;code_set_info.ForCharData.native_code_set&nbsp;&nbsp;=&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;TAO_DEFAULT_CHAR_CODESET_ID;&nbsp;
+<BR>
+&nbsp;&nbsp;code_set_info.ForWcharData.native_code_set&nbsp;=&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;TAO_DEFAULT_WCHAR_CODESET_ID;&nbsp;
+<BR>
+&nbsp;&nbsp;pfile-&gt;tagged_components&nbsp;().set_code_sets&nbsp;(code_set_info);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;pfile-&gt;tagged_components&nbsp;().set_tao_priority&nbsp;(this-&gt;priority&nbsp;());&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;0;
+
+<P>
+
+}</DD>
+</DL>
+<P>
+Most of the code that is common to all pluggable protocols will be factored
+out of this method in the near future.
+
+<P>
+ </DD>
+<DT><STRONG><TT>is_collocated</TT>.</STRONG></DT>
+<DD>The <TT>is_collocated</TT> method checks if the <TT>Profile</TT>
+has the same endpoint as the <TT>Acceptor</TT>. Assuming ACE is used as the
+underlying layer between the operating system calls and a pluggable protocol,
+this code is also ``boilerplate.'' TAO's IIOP implementation does the following:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>int&nbsp;
+<BR>
+TAO_IIOP_Acceptor::is_collocated&nbsp;(const&nbsp;TAO_Profile&nbsp;*pfile)&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;const&nbsp;TAO_IIOP_Profile&nbsp;*profile&nbsp;=&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ACE_dynamic_cast(const&nbsp;TAO_IIOP_Profile&nbsp;*,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pfile);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;compare&nbsp;the&nbsp;port&nbsp;and&nbsp;sin_addr&nbsp;(numeric&nbsp;host&nbsp;address)&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;profile-&gt;object_addr&nbsp;()&nbsp;==&nbsp;this-&gt;address_;&nbsp;
+<BR>
+}</DD>
+</DL></DD>
+<P>
+<DT><STRONG><TT>endpoint_count</TT>.</STRONG></DT>
+<DD><TT>endpoint_count</TT> returns the number of endpoints
+the <TT>Acceptor</TT> is listening on. This is used for determining how many
+<TT>Profiles</TT> will be generated for this <TT>Acceptor</TT>. Currently, all
+of TAO's pluggable protocols simply return <TT>1</TT>.</DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION220" HREF="#TOC_SECTION220">
+The <TT>Connector</TT></A>
+</H3>
+
+<P>
+
+<A NAME="design:connect"></A>
+<P>
+
+<H3><A NAME="SECTION221" HREF="#TOC_SECTION221">
+Context</A>
+</H3>
+
+<P>
+When a client references an object, the ORB must obtain the corresponding profile
+list, which is derived from the IOR and a profile ordering policy, and transparently
+establish a connection to the server.
+
+<P>
+
+<H3><A NAME="SECTION222" HREF="#TOC_SECTION222">
+Problem</A>
+</H3>
+
+<P>
+There can be one or more combinations of inter-ORB and transport protocols available
+in an ORB. For a given profile, the ORB must verify the presence of the associated
+IOP and transport protocol, if available. It must then locate the applicable
+<TT>Connector</TT> and delegate it to establish the connection.
+
+<P>
+
+<H3><A NAME="SECTION223" HREF="#TOC_SECTION223">
+Solution</A>
+</H3>
+
+<P>
+We use the Connector pattern&nbsp;[<A
+ HREF="#Schmidt:97c">1</A>] to actively establish a connection
+to a remote object. This pattern decouples the connection establishment from
+the processing performed after the connection is successful. As before, the
+<TT>Connector Registry</TT> shown in Figure&nbsp;<A HREF="#e2e">2</A> is used
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="e2e"></A><A NAME="184"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 2:</STRONG>
+Connection Establishment Using Multiple Pluggable Protocols</CAPTION>
+<TR><TD><P>
+
+<P>
+
+<P>
+
+<DIV ALIGN="CENTER">
+<!-- MATH
+ $\resizebox* {9cm}{!}{\includegraphics{graphics/pp_e2e.eps}}$
+ -->
+<IMG
+ WIDTH="405" HEIGHT="460" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.png"
+ ALT="pp_e2e"> </DIV>
+<P>
+<DIV ALIGN="CENTER"></DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+to locate the right <TT>Connector</TT> for the current profile. The actual
+profile selected for use will depend on the set of Policies active at the time
+of connection establishment. However, once a profile is selected, the connector
+registry matches the profile type, represented by a well known tag, with an
+instance of a concrete <TT>Connector</TT>.
+
+<P>
+
+<H3><A NAME="SECTION224" HREF="#TOC_SECTION224">
+Applying the solution in TAO</A>
+</H3>
+
+<P>
+As described in Section&nbsp;<A HREF="#design:adapt"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="cross_ref_motif.png"></A>, <TT>Connector</TT>s are adapters
+for the ACE implementation of the Connector pattern. Thus, they are typically
+lightweight objects that simply delegate to a corresponding ACE component.
+
+<P>
+Figure&nbsp;<A HREF="#client">3</A> shows the base classes and their relations for IIOP.
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="client"></A><A NAME="688"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 3:</STRONG>
+Client Pluggable Protocol Class Diagram</CAPTION>
+<TR><TD><P>
+
+<P>
+
+<DIV ALIGN="CENTER">
+<!-- MATH
+ $\resizebox* {5in}{!}{\includegraphics{graphics/client.eps}}$
+ -->
+<IMG
+ WIDTH="563" HEIGHT="416" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="Client"> </DIV>
+<P>
+<DIV ALIGN="CENTER"></DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+This figure shows an explicit co-variance between the <TT>Profile</TT> and
+the <TT>Connector</TT>s for each protocol. In general, a <TT>Connector</TT>
+must downcast the <TT>Profile</TT> to its specific type. This downcast is safe
+because profile creation is limited to the <TT>Connector</TT> and <TT>Acceptor</TT>
+registries. In both cases, the profile is created with a matching tag. The tag
+is used by the Connector Registry to choose the <TT>Connector</TT> that can
+handle each profile.
+
+<P>
+As shown in the same figure, the Connector Registry manipulates only the base
+classes. Therefore, new protocols can be added without requiring any modification
+to the existing pluggable protocols framework. When a connection is successfully
+established, the <TT>Profile</TT> is passed a pointer to the particular IOP
+object and to the <TT>Transport</TT> objects that were created.
+
+<P>
+
+<H3><A NAME="SECTION225" HREF="#TOC_SECTION225">
+<TT>Connector</TT> Implementation</A>
+</H3>
+
+<P>
+TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+All <TT>Connector</TT> implementations must inherit from the <TT>TAO_Connector</TT>
+abstract base class.
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>class&nbsp;TAO_Export&nbsp;TAO_Connector&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;=&nbsp;TITLE&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;Generic&nbsp;Connector&nbsp;interface&nbsp;definitions.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;=&nbsp;DESCRIPTION&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;Base&nbsp;class&nbsp;for&nbsp;connector&nbsp;bridge&nbsp;object.&nbsp;
+<BR>
+public:&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;TAO_Connector&nbsp;(CORBA::ULong&nbsp;tag);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;default&nbsp;constructor.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;~TAO_Connector&nbsp;(void);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;the&nbsp;destructor.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;CORBA::ULong&nbsp;tag&nbsp;(void)&nbsp;const;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;The&nbsp;tag&nbsp;identifying&nbsp;the&nbsp;specific&nbsp;ORB&nbsp;transport&nbsp;layer&nbsp;protocol.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;For&nbsp;example&nbsp;TAO_TAG_IIOP_PROFILE&nbsp;=&nbsp;0.&nbsp;&nbsp;The&nbsp;tag&nbsp;is&nbsp;used&nbsp;in&nbsp;the&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;IOR&nbsp;to&nbsp;identify&nbsp;the&nbsp;type&nbsp;of&nbsp;profile&nbsp;included.&nbsp;IOR&nbsp;-&gt;&nbsp;{{tag0,&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;profile0}&nbsp;{tag1,&nbsp;profole1}&nbsp;...}&nbsp;&nbsp;GIOP.h&nbsp;defines&nbsp;typedef&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;CORBA::ULong&nbsp;TAO_IOP_Profile_ID;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;int&nbsp;make_mprofile&nbsp;(const&nbsp;char&nbsp;*ior,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_MProfile&nbsp;&amp;mprofile,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CORBA::Environment&nbsp;&amp;ACE_TRY_ENV);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Parse&nbsp;a&nbsp;string&nbsp;containing&nbsp;a&nbsp;URL&nbsp;style&nbsp;IOR&nbsp;and&nbsp;return&nbsp;an&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;MProfile.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;open&nbsp;(TAO_ORB_Core&nbsp;*orb_core)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;Initialize&nbsp;object&nbsp;and&nbsp;register&nbsp;with&nbsp;reactor.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;close&nbsp;(void)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Shutdown&nbsp;Connector&nbsp;bridge&nbsp;and&nbsp;concreate&nbsp;Connector.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;connect&nbsp;(TAO_Profile&nbsp;*profile,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_Transport&nbsp;*&amp;,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACE_Time_Value&nbsp;*max_wait_time)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;To&nbsp;support&nbsp;pluggable&nbsp;we&nbsp;need&nbsp;to&nbsp;abstract&nbsp;away&nbsp;the&nbsp;connect()&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;method&nbsp;so&nbsp;it&nbsp;can&nbsp;be&nbsp;called&nbsp;from&nbsp;the&nbsp;GIOP&nbsp;code&nbsp;independant&nbsp;of&nbsp;the&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;actual&nbsp;transport&nbsp;protocol&nbsp;in&nbsp;use.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;preconnect&nbsp;(const&nbsp;char&nbsp;*preconnections)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Initial&nbsp;set&nbsp;of&nbsp;connections&nbsp;to&nbsp;be&nbsp;established.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;TAO_Profile&nbsp;*create_profile&nbsp;(TAO_InputCDR&amp;&nbsp;cdr)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;profile&nbsp;for&nbsp;this&nbsp;protocol&nbsp;and&nbsp;initialize&nbsp;it&nbsp;based&nbsp;on&nbsp;the&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;encapsulation&nbsp;in&nbsp;&lt;cdr&gt;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;check_prefix&nbsp;(const&nbsp;char&nbsp;*endpoint)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Check&nbsp;that&nbsp;the&nbsp;prefix&nbsp;of&nbsp;the&nbsp;provided&nbsp;endpoint&nbsp;is&nbsp;valid&nbsp;for&nbsp;use&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;with&nbsp;a&nbsp;given&nbsp;pluggable&nbsp;protocol.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;char&nbsp;object_key_delimiter&nbsp;(void)&nbsp;const&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Return&nbsp;the&nbsp;object&nbsp;key&nbsp;delimiter&nbsp;to&nbsp;use&nbsp;or&nbsp;expect.&nbsp;
+<BR>
+&nbsp;
+<BR>
+#if&nbsp;defined&nbsp;(TAO_USES_ROBUST_CONNECTION_MGMT)&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;purge_connections&nbsp;(void)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Purge&nbsp;&#34;old&#34;&nbsp;connections.&nbsp;
+<BR>
+#endif&nbsp;/*&nbsp;TAO_USES_ROBUST_CONNECTION_MGMT&nbsp;*/&nbsp;
+<BR>
+&nbsp;
+<BR>
+protected:&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;void&nbsp;make_profile&nbsp;(const&nbsp;char&nbsp;*endpoint,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_Profile&nbsp;*&amp;,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CORBA::Environment&nbsp;&amp;ACE_TRY_ENV)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;profile&nbsp;with&nbsp;a&nbsp;given&nbsp;endpoint.&nbsp;
+<BR>
+&nbsp;
+<BR>
+private:&nbsp;
+<BR>
+&nbsp;&nbsp;CORBA::ULong&nbsp;tag_;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;IOP&nbsp;protocol&nbsp;tag.&nbsp;
+<BR>
+};</DD>
+</DL>A description of each of the methods that must be implemented follows:
+
+<P>
+
+<DL>
+<DT><STRONG>The&nbsp;Constructor.</STRONG></DT>
+<DD>As with the <TT>Acceptor</TT> constructor, the <TT>TAO_Connector</TT>
+base class should be initialized with the tag associated with the pluggable
+protocol in question. Here is TAO's IIOP pluggable protocol <TT>Connector</TT>
+constructor:
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>TAO_IIOP_Connector::TAO_IIOP_Connector&nbsp;(void)&nbsp;
+<BR>
+&nbsp;&nbsp;:&nbsp;TAO_Connector&nbsp;(TAO_TAG_IIOP_PROFILE),&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;orb_core_&nbsp;(0),&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;base_connector_&nbsp;()&nbsp;
+<BR>
+{&nbsp;
+<BR>
+}</DD>
+</DL></DD>
+<P>
+<DT><STRONG><TT>open</TT>.</STRONG></DT>
+<DD>The <TT>open</TT> method simply opens the underlying connector.
+This is typically an <TT>ACE_Strategy_Connector</TT> template instance. For
+example, TAO's IIOP pluggable protocol uses an
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>ACE_Strategy_Connector&lt;TAO_IIOP_Client_Connection_Handler,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACE_SOCK_CONNECTOR&gt;</DD>
+</DL>as its underlying connection strategy. No connection establishment occurs here.
+Note that, if ACE is used to implement a <TT>Connector</TT>, this method should
+also register the <TT>Connection Handler</TT> with an <TT>ACE_Reactor</TT>.
+
+<P>
+ </DD>
+<DT><STRONG><TT>close</TT>.</STRONG></DT>
+<DD><TT>close</TT> simply closes the underlying <TT>Connector</TT>
+bridge and the concrete <TT>Connector</TT>.</DD>
+<P>
+<DT><STRONG><TT>connect</TT>.</STRONG></DT>
+<DD>The <TT>connect</TT> method actively establishes a connection
+to the endpoint encoded within the IOR in use. It should first verify that the
+tag contained within <TT>Profile</TT> passed to it matches the tag associated
+with the pluggable protocol. If the tags do not match then an attempt use a
+<TT>Profile</TT> for another pluggable protocol was made.
+
+<P>
+The <TT>Transport</TT> object must also be set in this method. This is generally
+done by using the <TT>transport</TT> method found within the <TT>Connection
+Handler</TT> being used.
+
+<P>
+ </DD>
+<DT><STRONG><TT>preconnect</TT>.</STRONG></DT>
+<DD>The <TT>preconnect</TT> method is invoked when the <TT><A HREF="../Options.html#-ORBPreconnect">-ORBPreconnect</A></TT>
+ORB option is used. It causes a blocking connection to be made to the specified
+address. Multiple connections can be made to the same endpoint. For example,
+the following <TT>-ORBPreconnect</TT> option will cause two IIOP blocking connections
+to be made to the specified host and port:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>-ORBPreconnect&nbsp;iiop://foo.bar.com:1234,foo.bar.com:1234</DD>
+</DL>
+<P>
+Much of the preconnect parsing code in TAO's current <TT>preconnect</TT> implementations
+will be factored out into a common method. Pluggable protocols will still be
+responsible for parsing addresses, just like the <TT>open</TT> method in <TT>Acceptor</TT>s
+(not <TT>Connector</TT>s).
+
+<P>
+ </DD>
+<DT><STRONG><TT>check_prefix</TT>.</STRONG></DT>
+<DD><TT>check_prefix</TT> checks that the protocol prefix
+in a URL style IOR or preconnect endpoint is valid for use with a given pluggable
+protocol. For example, the <TT>check_prefix</TT> implementation in TAO's IIOP
+pluggable protocol looks like the following:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>int&nbsp;
+<BR>
+TAO_IIOP_Connector::check_prefix&nbsp;(const&nbsp;char&nbsp;*endpoint)&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Check&nbsp;for&nbsp;a&nbsp;valid&nbsp;string&nbsp;
+<BR>
+&nbsp;&nbsp;if&nbsp;(!endpoint&nbsp;||&nbsp;!*endpoint)&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;-1;&nbsp;&nbsp;//&nbsp;Failure&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;const&nbsp;char&nbsp;*protocol[]&nbsp;=&nbsp;{&nbsp;&#34;iiop&#34;,&nbsp;&#34;iioploc&#34;&nbsp;};&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;size_t&nbsp;slot&nbsp;=&nbsp;ACE_OS::strchr&nbsp;(endpoint,&nbsp;':')&nbsp;-&nbsp;endpoint;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;size_t&nbsp;len0&nbsp;=&nbsp;ACE_OS::strlen&nbsp;(protocol[0]);&nbsp;
+<BR>
+&nbsp;&nbsp;size_t&nbsp;len1&nbsp;=&nbsp;ACE_OS::strlen&nbsp;(protocol[1]);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Check&nbsp;for&nbsp;the&nbsp;proper&nbsp;prefix&nbsp;in&nbsp;the&nbsp;IOR.&nbsp;&nbsp;If&nbsp;the&nbsp;proper&nbsp;prefix&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;isn't&nbsp;in&nbsp;the&nbsp;IOR&nbsp;then&nbsp;it&nbsp;is&nbsp;not&nbsp;an&nbsp;IOR&nbsp;we&nbsp;can&nbsp;use.&nbsp;
+<BR>
+&nbsp;&nbsp;if&nbsp;(slot&nbsp;==&nbsp;len0&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;ACE_OS::strncasecmp&nbsp;(endpoint,&nbsp;protocol[0],&nbsp;len0)&nbsp;==&nbsp;0)&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;else&nbsp;if&nbsp;(slot&nbsp;==&nbsp;len1&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;ACE_OS::strncasecmp&nbsp;(endpoint,&nbsp;protocol[1],&nbsp;len1)&nbsp;==&nbsp;0)&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;-1;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Failure:&nbsp;not&nbsp;an&nbsp;IIOP&nbsp;IOR&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;DO&nbsp;NOT&nbsp;throw&nbsp;an&nbsp;exception&nbsp;here.&nbsp;
+<BR>
+}</DD>
+</DL>
+<P>
+It checks that the protocol prefix in a URL style IOR (e.g. <TT>corbaloc:iiop:foo.bar.com:1234/...</TT>)
+or preconnect endpoint matches the one(s) supported by the IIOP pluggable protocol,
+in this case ``<TT>iiop</TT>'' and ``<TT>iioploc</TT>.'' If no match occurs
+then return an error condition (<TT>-1</TT>). Note that the protocol prefix
+``<TT>iiop</TT>'' is only there for backward compatibility. It may be removed
+in future TAO releases.
+
+<P>
+This method is important for TAO's implementation of the CORBA Interoperable
+Naming Service.
+
+<P>
+ </DD>
+<DT><STRONG><TT>object_key_delimiter</TT>.</STRONG></DT>
+<DD>The object key delimiter within a URL style
+IOR is the character that separates the address from the object key. For example,
+in the following IIOP URL style IOR:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>corbaloc:iiop:1.1@foo.bar.com:1234/some_object_key</DD>
+</DL>
+<P>
+the object key delimiter is `<TT>/</TT>.' However, this character is not suitable
+for all pluggable protocols, such as TAO's UIOP pluggable protocol, because
+addresses within a URL style IOR may contain that very same character. A typical
+TAO UIOP URL style IOR may look something like:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>uioploc:///tmp/foobar|some_other_object_key</DD>
+</DL>
+<P>
+In this case, the object key delimiter is a vertical bar `<TT>|</TT>' because
+using the same object key delimiter that IIOP uses `<TT>/</TT>' would cause
+the point where the UIOP rendezvous point ``<TT>/tmp/foobar</TT>'' ends and
+where the object key ``<TT>some_other_object_key</TT>'' begins to be ambiguous.
+For instance, if an IIOP object key delimiter was used in a UIOP URL style IOR
+as follows:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>uioploc:///tmp/foobar/some_other_object_key</DD>
+</DL>
+<P>
+it then becomes impossible to tell if the rendezous point is ``<TT>/tmp</TT>''
+or ``<TT>/tmp/foobar</TT>,'' and similarly for the object key, hence the need
+for an object key delimiter other than `<TT>/</TT>.'
+
+<P>
+In general, this method simply returns a static variable in the associated <TT>Profile</TT>
+that contains the object key delimiter appropriate for the given pluggable protocol.
+
+<P>
+ </DD>
+<DT><STRONG><TT>create_profile</TT>.</STRONG></DT>
+<DD>This method creates and initializes a profile using
+the provided CDR stream. Most of this code is also ``boilerblate.'' As such,
+it may be factored out in future TAO releases.</DD>
+<P>
+<DT><STRONG><TT>make_profile</TT>.</STRONG></DT>
+<DD><TT>make_profile</TT> is another method that can essentially
+be ``cut and pasted'' from existing TAO pluggable protocols. It is simply
+a <TT>Profile</TT> factory. The <TT>Profile</TT> it creates is initialized with
+an object reference of the form:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>N.n@address/object_key</DD>
+</DL>
+<P>
+or
+<P>
+<DL COMPACT>
+<DT>
+<DD>address/object_key</DD>
+</DL>
+<P>
+where ``<TT>N.n</TT>'' are the major and minor protocol versions, respectively,
+and the `<TT>/</TT>' is the protocol-specific object key delimiter.
+
+<P></DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION230" HREF="#TOC_SECTION230">
+The <TT>Profile</TT> Object</A>
+</H3>
+
+<P>
+TAO <TT>Profile</TT> objects encapsulate all of the methods and members necessary
+to create and parse a protocol-specific IOR, in addition to representing object
+address and location information. TAO <TT>Profile</TT>s are based on CORBA IOR
+definitions.
+
+<P>
+All protocol-specific <TT>Profile</TT> implementations should inherit from the
+<TT>TAO_Profile</TT> abstract base class. The <TT>TAO_Profile</TT> interface
+is declared in the file
+<TT>&lt;<A HREF="../../tao/Profile.h">tao/Profile.h&gt;</A></TT>.
+Its interface follows. Only the methods that must be implemented are shown:
+
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>class&nbsp;TAO_Export&nbsp;TAO_Profile&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;=&nbsp;TITLE&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;Defines&nbsp;the&nbsp;Profile&nbsp;interface&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;=&nbsp;DESCRIPTION&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;An&nbsp;abstract&nbsp;base&nbsp;class&nbsp;for&nbsp;representing&nbsp;object&nbsp;address&nbsp;or&nbsp;location&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;information.&nbsp;&nbsp;This&nbsp;is&nbsp;based&nbsp;on&nbsp;the&nbsp;CORBA&nbsp;IOR&nbsp;definitions.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;
+<BR>
+public:&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;parse_string&nbsp;(const&nbsp;char&nbsp;*string,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CORBA::Environment&nbsp;&amp;ACE_TRY_ENV)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Initialize&nbsp;this&nbsp;object&nbsp;using&nbsp;the&nbsp;given&nbsp;input&nbsp;string.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Supports&nbsp;URL&nbsp;style&nbsp;of&nbsp;object&nbsp;references&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;char*&nbsp;to_string&nbsp;(CORBA::Environment&nbsp;&amp;ACE_TRY_ENV)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Return&nbsp;a&nbsp;string&nbsp;representation&nbsp;for&nbsp;this&nbsp;profile.&nbsp;&nbsp;client&nbsp;must&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;deallocate&nbsp;memory.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;decode&nbsp;(TAO_InputCDR&amp;&nbsp;cdr)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Initialize&nbsp;this&nbsp;object&nbsp;using&nbsp;the&nbsp;given&nbsp;CDR&nbsp;octet&nbsp;string.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;encode&nbsp;(TAO_OutputCDR&nbsp;&amp;stream)&nbsp;const&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Encode&nbsp;this&nbsp;profile&nbsp;in&nbsp;a&nbsp;stream,&nbsp;i.e.&nbsp;marshal&nbsp;it.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;TAO_ObjectKey&nbsp;*_key&nbsp;(void)&nbsp;const&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Obtain&nbsp;the&nbsp;object&nbsp;key,&nbsp;return&nbsp;0&nbsp;if&nbsp;the&nbsp;profile&nbsp;cannot&nbsp;be&nbsp;parsed.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;The&nbsp;memory&nbsp;is&nbsp;owned&nbsp;by&nbsp;the&nbsp;caller!&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;CORBA::Boolean&nbsp;is_equivalent&nbsp;(const&nbsp;TAO_Profile*&nbsp;other_profile)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Return&nbsp;true&nbsp;if&nbsp;this&nbsp;profile&nbsp;is&nbsp;equivalent&nbsp;to&nbsp;other_profile.&nbsp;&nbsp;Two&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;profiles&nbsp;are&nbsp;equivalent&nbsp;iff&nbsp;their&nbsp;key,&nbsp;port,&nbsp;host,&nbsp;object_key&nbsp;and&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;version&nbsp;are&nbsp;the&nbsp;same.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;CORBA::ULong&nbsp;hash&nbsp;(CORBA::ULong&nbsp;max,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CORBA::Environment&nbsp;&amp;ACE_TRY_ENV)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Return&nbsp;a&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;object.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;addr_to_string&nbsp;(char&nbsp;*buffer,&nbsp;size_t&nbsp;length)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Return&nbsp;a&nbsp;string&nbsp;representation&nbsp;for&nbsp;the&nbsp;address.&nbsp;&nbsp;Returns&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;-1&nbsp;if&nbsp;buffer&nbsp;is&nbsp;too&nbsp;small.&nbsp;&nbsp;The&nbsp;purpose&nbsp;of&nbsp;this&nbsp;method&nbsp;is&nbsp;to&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;provide&nbsp;a&nbsp;general&nbsp;interface&nbsp;to&nbsp;the&nbsp;underlying&nbsp;address&nbsp;object's&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;addr_to_string&nbsp;method.&nbsp;&nbsp;This&nbsp;allowsthe&nbsp;protocol&nbsp;implementor&nbsp;to&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;select&nbsp;the&nbsp;appropriate&nbsp;string&nbsp;format.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;void&nbsp;reset_hint&nbsp;(void)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;This&nbsp;method&nbsp;is&nbsp;used&nbsp;with&nbsp;a&nbsp;connection&nbsp;has&nbsp;been&nbsp;reset&nbsp;requiring&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;the&nbsp;hint&nbsp;to&nbsp;be&nbsp;cleaned&nbsp;up&nbsp;and&nbsp;reset&nbsp;to&nbsp;NULL.&nbsp;
+<BR>
+};</DD>
+</DL>TAO's existing pluggable protocols have a static member containing the object
+key delimiter specific to the given pluggable protocol, in addition to a static
+protocol prefix accessor method that simply returns a pointer to a static string
+containing the protocol prefix specific to the pluggable protocol. Note that
+both of these members will always remain constant so there is no problem in
+making them static.
+
+<P>
+Theses static member are:
+
+<P>
+
+<DL>
+<DT><STRONG><TT>object_key_delimiter</TT>.</STRONG></DT>
+<DD>This <I>variable</I> contains the object key
+delimiter specific to the given pluggable protocol. A typical definition looks
+like:
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>const&nbsp;char&nbsp;TAO_IIOP_Profile::object_key_delimiter&nbsp;=&nbsp;'/';</DD>
+</DL></DD>
+<DT><STRONG><TT>prefix</TT>.</STRONG></DT>
+<DD>This <I>method</I> simply returns a pointer to a static string
+that contains the protocol prefix specific to the pluggable protocol in use.
+The static string for the IIOP pluggable protocol is:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>static&nbsp;const&nbsp;char&nbsp;prefix_[]&nbsp;=&nbsp;&#34;iiop&#34;;</DD>
+</DL>
+<P>
+The IIOP <TT>prefix</TT> method is:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>const&nbsp;char&nbsp;*&nbsp;
+<BR>
+TAO_IIOP_Profile::prefix&nbsp;(void)&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;::prefix_;&nbsp;
+<BR>
+}</DD>
+</DL></DD>
+</DL>
+Note that it not strictly necessary to implement equivalent versions of these
+static members. TAO's implementation just happens to use them. However, pluggable
+protocol implementations that are based on TAO's pluggable protocols may need
+them.
+
+<P>
+Common to all concrete <TT>Profile</TT> implementations are a set of methods
+that must be implemented. A description of each of these methods:
+
+<P>
+
+<DL>
+<DT><STRONG>The&nbsp;Constructors.</STRONG></DT>
+<DD>TAO's existing pluggable protocols each implement several
+constructors in their concrete <TT>Profile</TT> classes. While pluggable protocols
+are not strictly required to implement analogs to all of the constructors in
+existing TAO pluggable protocols, it is generally a good idea to do so. All
+of the constructors should initialize the <TT>TAO_Profile</TT> abstract base
+class with the tag associated with the pluggable protocol. The object key should
+also be set during <TT>Profile</TT> construction.</DD>
+<P>
+<DT><STRONG><TT>parse_string</TT>.</STRONG></DT>
+<DD><TT>parse_string</TT> initialize a <TT>Profile</TT>
+object using the provided string. The string passed to this method has the format:
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>N.n@address/object_key</DD>
+</DL>
+<P>
+or
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>address/object_key</DD>
+</DL>
+<P>where the <TT>address</TT> and the object key delimiter `<TT>/</TT>' are pluggable
+protocol specific. The <TT>parse_string</TT> method must be able to extract
+the protocol version (even if it isn't used), the address and the object key
+from the provided string. It is generally a good idea to use the <TT>parse_string</TT>
+methods in TAO's existing pluggable protocols as a reference when implementing
+this method.
+
+<P>
+ </DD>
+<DT><STRONG><TT>to_string</TT>.</STRONG></DT>
+<DD>This method returns the URL style representation of the
+object reference encapsulated by the <TT>Profile</TT> object. Most of this code
+is also ``boilerplate.'' However, the address part of the URL style IOR, returned
+by this method should be specific to the pluggable protocol. For example, the
+address in the following IIOP URL style IOR:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>corbaloc:iiop:1.1@foo.bar.com:1234/yet_another_object_key</DD>
+</DL>
+<P>is ``<TT>foo.bar.com:1234</TT>.'' Much of the in TAO's existing pluggable
+protocols may also be factored out because that code is common to all pluggable
+protocols.  The URL style IOR created by this method should be usable
+by TAO's <A HREF="../INS.html">Interoperable Naming Service</A> via the
+<TT><A HREF="../Options.html#-ORBInitRef">-ORBInitRef</A></TT> ORB option.
+
+<P>
+ </DD>
+<DT><STRONG><TT>decode</TT>.</STRONG></DT>
+<DD>The input CDR stream reference passed to this method is used
+to initialize the <TT>Profile</TT> object, by extracting (<I>decoding</I> all
+object reference information found within the CDR stream. Care must be taken
+to extract the information in the correct order. Use existing TAO pluggable
+protocol <TT>decode</TT> implementations as a reference.
+
+<P>
+The <TT>decode</TT> method performs the inverse operation of the <TT>encode</TT>
+method.
+
+<P>
+ </DD>
+<DT><STRONG><TT>encode</TT>.</STRONG></DT>
+<DD>This method inserts (<I>encodes</I> all of the information
+encapsulated by the <TT>Profile</TT> object in to the provided output CDR stream.
+Care must be taken to insert the information in the correct order. Use existing
+TAO pluggable protocol <TT>encode</TT> implementations as a reference.
+
+<P>
+The <TT>encode</TT> method performs the inverse operation of the <TT>decode</TT>
+method.
+
+<P>
+ </DD>
+<DT><STRONG><TT>_key</TT>.</STRONG></DT>
+<DD>The <TT>_key</TT> method constructs a <TT>TAO_ObjectKey</TT>
+object that is a <I>copy</I> of the object key found within the <TT>Profile</TT>
+object, and returns a pointer to the newly create <TT>TAO_ObjectKey</TT> object.
+Note that the <I>caller</I> owns the memory allocated by this method. TAO's
+IIOP <TT>_key</TT> implementation is:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>ACE_INLINE&nbsp;TAO_ObjectKey&nbsp;*&nbsp;
+<BR>
+TAO_IIOP_Profile::_key&nbsp;(void)&nbsp;const&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;TAO_ObjectKey&nbsp;*key&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;ACE_NEW_RETURN&nbsp;(key,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_ObjectKey&nbsp;(this-&gt;object_key_),&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;key;&nbsp;
+<BR>
+}</DD>
+</DL></DD>
+<P>
+<DT><STRONG><TT>is_equivalent</TT>.</STRONG></DT>
+<DD>The <TT>is_equivalent</TT> method implements the
+CORBA specified method of the same name. It should return true if this profile
+is equivalent to the profile to which it is being compared. Two profiles are
+equivalent <I>if and only if</I> their tag, version, address and object key
+are the same.</DD>
+<P>
+<DT><STRONG><TT>hash</TT>.</STRONG></DT>
+<DD>The <TT>hash</TT> method implements the CORBA specified method
+of the same name. It is expected to return 32 bit <TT>unsigned integer</TT>
+(<TT>CORBA::ULong</TT>) that uniquely identifies the CORBA object referenced
+by the <TT>Profile</TT> object. This method accepts an argument that specifies
+the largest value the hash can be.
+
+<P>
+Any algorithm deemed suitable to provide the required functionality may be used.
+The <TT>ACE</TT> class in the ACE library provides implementations of several
+hash algorithms.
+
+<P>
+ </DD>
+<DT><STRONG><TT>addr_to_string</TT>.</STRONG></DT>
+<DD><TT>addr_to_string</TT> returns a string representation
+of the address. It should return <TT>-1</TT> if the supplied buffer is too small.
+The stringified address should have the same form that the address in the URL
+style IOR has. This method should be reentrant.</DD>
+<P>
+<DT><STRONG><TT>reset_hint</TT>.</STRONG></DT>
+<DD>The <TT>reset_hint</TT> method resets the pointer to
+a successfully used <TT>Connection Handler</TT>. If no pointer to such a <TT>Connection
+Handler</TT>, i.e. a <I>hint</I> is provided by the pluggable protocol then this
+method may be implemented as a ``no-op.'' A pluggable protcol that does not
+provide a cached <TT>Connection Handler</TT> will not be able to take advantage
+of improved <TT>Connector</TT> table look up times.</DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION240" HREF="#TOC_SECTION240">
+The <TT>Protocol_Factory</TT> Object</A>
+</H3>
+
+<P>
+TAO's uses the ACE's Service Configurator implementation&nbsp;[<A
+ HREF="#Schmidt:94k">3</A>]
+to dynamically load pluggable protocol factories. A <TT>Protocol_Factory</TT>
+is responsible for creating the <TT>Acceptor</TT> and <TT>Connector</TT> for
+the given pluggable protocol. TAO iterates through the list of loaded <TT>Protocol
+Factories</TT> and invokes a factory operation that creates the desired object:
+an <TT>Acceptor</TT> on the server-side, and a <TT>Connector</TT> on the client-side.
+
+<P>
+All <TT>Protocol_Factory</TT> implementations should be derived from the <TT>TAO_Protocol_Factory</TT>
+abstract base class defined in
+<TT>&lt;<A HREF="../../tao/Protocol_Factory.h">tao/Protocol_Factory.h</A>&gt;</TT>.
+The <TT>TAO_Protocol_Factory</TT> interface is shown below:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>class&nbsp;TAO_Export&nbsp;TAO_Protocol_Factory&nbsp;:&nbsp;public&nbsp;ACE_Service_Object&nbsp;
+<BR>
+{&nbsp;
+<BR>
+public:&nbsp;
+<BR>
+&nbsp;&nbsp;TAO_Protocol_Factory&nbsp;(void);&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;~TAO_Protocol_Factory&nbsp;(void);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;init&nbsp;(int&nbsp;argc,&nbsp;char&nbsp;*argv[]);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Initialization&nbsp;hook.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;match_prefix&nbsp;(const&nbsp;ACE_CString&nbsp;&amp;prefix);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Verify&nbsp;prefix&nbsp;is&nbsp;a&nbsp;match&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;const&nbsp;char&nbsp;*prefix&nbsp;(void)&nbsp;const;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Returns&nbsp;the&nbsp;prefix&nbsp;used&nbsp;by&nbsp;the&nbsp;protocol.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;char&nbsp;options_delimiter&nbsp;(void)&nbsp;const;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Return&nbsp;the&nbsp;character&nbsp;used&nbsp;to&nbsp;mark&nbsp;where&nbsp;an&nbsp;endpoint&nbsp;ends&nbsp;and&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;where&nbsp;its&nbsp;options&nbsp;begin.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Factory&nbsp;methods&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;TAO_Acceptor&nbsp;&nbsp;*make_acceptor&nbsp;(void);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Create&nbsp;an&nbsp;acceptor&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;TAO_Connector&nbsp;*make_connector&nbsp;&nbsp;(void);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Create&nbsp;a&nbsp;connector&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;requires_explicit_endpoint&nbsp;(void)&nbsp;const&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Some&nbsp;protocols&nbsp;should&nbsp;not&nbsp;create&nbsp;a&nbsp;default&nbsp;endpoint&nbsp;unless&nbsp;the&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;user&nbsp;specifies&nbsp;a&nbsp;-ORBEndpoint&nbsp;option.&nbsp;For&nbsp;example,&nbsp;local&nbsp;IPC&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;(aka&nbsp;UNIX&nbsp;domain&nbsp;sockets)&nbsp;is&nbsp;unable&nbsp;to&nbsp;remove&nbsp;the&nbsp;rendesvouz&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;point&nbsp;if&nbsp;the&nbsp;server&nbsp;crashes.&nbsp;&nbsp;For&nbsp;those&nbsp;protocols&nbsp;is&nbsp;better&nbsp;to&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;create&nbsp;the&nbsp;endpoint&nbsp;only&nbsp;if&nbsp;the&nbsp;user&nbsp;requests&nbsp;one.&nbsp;
+<BR>
+};</DD>
+</DL>Each of the important methods to be implemented are described below:
+
+<P>
+
+<DL>
+<DT><STRONG><TT>init</TT>.</STRONG></DT>
+<DD>The <TT>init</TT> method is invoked immediately after the pluggable
+protocol factory is loaded. The <TT>Service Configurator</TT> passes <TT>Protocol
+Factory</TT> options specified in a <TT>Service Configurator</TT> configuration
+file (e.g. <TT>svc.conf</TT>) to this method. The passing convention is essentially
+the same as command line <TT>argc</TT>/<TT>argv</TT> argument passing convention.
+The only difference lies in the fact that the option parsing should begin at
+<TT>argv[0]</TT> instead of <TT>argv[1]</TT>. This differs from the
+standard command line passing convention where <TT>argv[0]</TT> is the
+name of the program currently being run. In any case, the <TT>init</TT> method
+allows protocol-specific options to be implemented. Once passed to this method,
+the pluggable protocol can use them to, for example, enable or disable certain
+features or flags within the <TT>Protocol Factory</TT>. Other pluggable protocol
+components can then use these flags or features as necessary.
+<P>
+A typical <TT>Service Configurator</TT> file line that loads a pluggable protocol
+dynamically, and passes arguments to the <TT>init</TT> method would look like:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>dynamic&nbsp;IIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO:_make_TAO_IIOP_Protocol_Factory()&nbsp;&#34;-Foo&nbsp;Bar&#34;</DD>
+</DL>
+<P>
+In the above example, the arguments ``<TT>-Foo</TT>'' and ``<TT>Bar</TT>''
+would be passed as <TT>argv[0]</TT> and <TT>argv[1]</TT>, respectively,
+to the <TT>Protocol_Factory init</TT> method.
+
+<P>
+ </DD>
+<DT><STRONG><TT>match_prefix</TT>.</STRONG></DT>
+<DD>This method verifies that protocol prefix contained
+in the string passed to matches the one used by the pluggable protocol. A typical
+implementation, such as the one used by the IIOP pluggable protocol, looks like:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>static&nbsp;const&nbsp;char&nbsp;prefix_[]&nbsp;=&nbsp;&#34;iiop&#34;;&nbsp;
+<BR>
+&nbsp;
+<BR>
+int&nbsp;
+<BR>
+TAO_IIOP_Protocol_Factory::match_prefix&nbsp;(const&nbsp;ACE_CString&nbsp;&amp;prefix)&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Check&nbsp;for&nbsp;the&nbsp;proper&nbsp;prefix&nbsp;for&nbsp;this&nbsp;protocol.&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;(ACE_OS::strcasecmp&nbsp;(prefix.c_str&nbsp;(),&nbsp;::prefix_)&nbsp;==&nbsp;0);&nbsp;
+<BR>
+}</DD>
+</DL></DD>
+<P>
+<DT><STRONG><TT>prefix</TT>.</STRONG></DT>
+<DD>The <TT>prefix</TT> method simply returns a pointer to the
+static string containing the protocol prefix used by the pluggable protocol.</DD>
+<P>
+<DT><STRONG><TT>options_delimiter</TT>.</STRONG></DT>
+<DD>The <TT>options_delimiter</TT> method is similar
+to the <TT>object_key_delimiter</TT> method found in the <TT>Connector</TT>.
+However, it used to delimit where an endpoint ends and where its options begin.
+For example, the following <TT>-ORBEndpoint</TT> option specifies a endpoint-specific
+priority:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>-ORBEndpoint&nbsp;iiop://1.1@foo.bar.com/priority=25</DD>
+</DL>
+<P>
+To get around ambiguities in endpoints that can have a `<TT>/</TT>' character
+in them, the <TT>options_delimiter</TT> method can be used to determine what
+character to be used. For example, TAO's UIOP pluggable protocol implementation
+defines the following:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>char&nbsp;
+<BR>
+TAO_UIOP_Protocol_Factory::options_delimiter&nbsp;(void)&nbsp;const&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;'|';&nbsp;
+<BR>
+}</DD>
+</DL>
+<P>
+An endpoint option for the UIOP pluggable protocol can look like the following:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>-ORBEndpoint&nbsp;uiop://1.1@/tmp/foo|priority=25</DD>
+</DL>
+<P>
+Notice that the `<TT>|</TT>' character is used to mark where the rendezvous
+point ends and where the endpoint-specific options begin.
+
+<P>
+
+<TT>options_delimiter</TT> is a server-side related method. It is of no use
+to the client-side.
+
+<P>
+ </DD>
+<DT><STRONG><TT>make_acceptor</TT>.</STRONG></DT>
+<DD>The <TT>make_acceptor</TT> method is a factory method
+that returns a pointer to a dynamically allocated <TT>Acceptor</TT> specific
+to the pluggable protocol to which the <TT>Protocol_Factory</TT> object belongs.
+TAO's UIOP pluggable protocol implementation defines this method as follows:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>TAO_Acceptor&nbsp;*&nbsp;
+<BR>
+TAO_UIOP_Protocol_Factory::make_acceptor&nbsp;(void)&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;TAO_Acceptor&nbsp;*acceptor&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;ACE_NEW_RETURN&nbsp;(acceptor,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_UIOP_Acceptor,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;acceptor;&nbsp;
+<BR>
+}</DD>
+</DL></DD>
+<P>
+<DT><STRONG><TT>make_connector</TT>.</STRONG></DT>
+<DD>The <TT>make_connector</TT> method is a factory
+method that returns a pointer to a dynamically allocated <TT>Connector</TT>
+specific to the pluggable protocol to which the <TT>Protocol_Factory</TT> object
+belongs. TAO's UIOP pluggable protocol implementation defines this method as
+follows:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>TAO_Connector&nbsp;*&nbsp;
+<BR>
+TAO_UIOP_Protocol_Factory::make_connector&nbsp;(void)&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;TAO_Connector&nbsp;*connector&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;ACE_NEW_RETURN&nbsp;(connector,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_UIOP_Connector,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0);&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;return&nbsp;connector;&nbsp;
+<BR>
+}</DD>
+</DL></DD>
+<P>
+<DT><STRONG><TT>requires_explicit_endpoint</TT>.</STRONG></DT>
+<DD>Some protocols should not create a default
+endpoint unless the user specifies a <TT>-ORBEndpoint</TT> option. For example, local
+IPC (aka UNIX domain sockets) is unable to remove the rendesvouz point if the
+server crashes. For those protocols, it is better to create the endpoint only
+if the user requests one. This method is queried by TAO before creating a default
+acceptor during ORB initialization. If it returns <TT>1</TT> then no default
+endpoint should be created.</DD>
+</DL>
+<TT>Service Object</TT>s, such as the <TT>Protocol_Factory</TT>, must be declared
+in a certain way. ACE's Service Configurator implementation provides two macros
+to ensure that the required additional declarations are made to make an object
+have to the correct interface. The two macros are <TT>ACE_STATIC_SVC_DECLARE</TT>
+and <TT>ACE_FACTORY_DECLARE</TT>. Typical usage of these declaration macros
+is demonstrated by TAO's UIOP pluggable protocol implementation:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>ACE_STATIC_SVC_DECLARE&nbsp;(TAO_UIOP_Protocol_Factory)&nbsp;
+<BR>
+ACE_FACTORY_DECLARE&nbsp;(TAO,&nbsp;TAO_UIOP_Protocol_Factory)</DD>
+</DL>also required. These are provided by ``<TT>DEFINE</TT>'' counterparts of the
+above two declaration macros. An example of how to use them follows:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>ACE_STATIC_SVC_DEFINE&nbsp;(TAO_UIOP_Protocol_Factory,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ASYS_TEXT&nbsp;(&#34;UIOP_Factory&#34;),&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACE_SVC_OBJ_T,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;ACE_SVC_NAME&nbsp;(TAO_UIOP_Protocol_Factory),&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACE_Service_Type::DELETE_THIS&nbsp;|&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACE_Service_Type::DELETE_OBJ,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0)&nbsp;
+<BR>
+&nbsp;
+<BR>
+ACE_FACTORY_DEFINE&nbsp;(TAO,&nbsp;TAO_UIOP_Protocol_Factory)</DD>
+</DL>Notice that the macro arguments above have corresponding <TT>Service Configurator</TT>
+configuration file entries:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>dynamic&nbsp;UIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO:_make_TAO_UIOP_Protocol_Factory()&nbsp;&#34;&#34;&nbsp;
+<BR>
+static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;UIOP_Factory&#34;</DD>
+</DL>
+<P>
+
+<H3><A NAME="SECTION250" HREF="#TOC_SECTION250">
+The <TT>Transport</TT> Object</A>
+</H3>
+
+<P>
+
+<H3><A NAME="SECTION251" HREF="#TOC_SECTION251">
+Context</A>
+</H3>
+
+<P>
+It is desirable to provide for alternative mappings between different ORB messaging
+protocols and ORB transport adaptors. For example, a single ORB messaging protocol
+such as GIOP can be mapped to any reliable, connection-oriented transport protocol,
+such as TCP or TP4. Alternatively, a single transport protocol can be the basis
+for alternative instantiations of ORB messaging protocols, <I>e.g.</I>, different
+versions of GIOP differing in the number and types of messages, as well as in
+the format of those messages.
+
+<P>
+An ORB messaging protocol imposes requirements on any underlying network transport
+protocols. For instance, the transport requirements assumed by GIOP, see Section&nbsp;<A HREF="#IOP"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="cross_ref_motif.png"></A>,
+require the underlying network transport protocol to support a reliable, connection-oriented
+byte-stream. These requirements are fulfilled by TCP thus leading to the direct
+mapping of GIOP onto this transport protocol. However, alternative network transport
+protocols such as ATM with AAL5 encapsulation may be more appropriate in some
+environments. In this case, the messaging implementation will have to provide
+the missing semantics, such as reliability, in order to use GIOP.
+
+<P>
+
+<H3><A NAME="SECTION252" HREF="#TOC_SECTION252">
+Problem</A>
+</H3>
+
+<P>
+The ORB Messaging protocol implementations must be independent of the adaptation
+layer needed for transports that do not satisfy all their requirements. Otherwise,
+the same messaging protocol may be re-implemented needlessly for each transport,
+which is time-consuming, error-prone, and time/space inefficient. Likewise,
+for those transports that can support multiple ORB Messaging protocols, it must
+be possible to isolate them from the details of the ORB messaging implementation.
+Care must be taken, however, because not all ORB Messaging protocols can be
+used with all transport protocols, <I>i.e.</I>, some mechanism is needed to
+ensure only semantically compatible protocols are configured&nbsp;[<A
+ HREF="#Johnson:95a">4</A>].
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="iop_client"></A><A NAME="700"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 4:</STRONG>
+Client Inter-ORB and Transport Class Diagram</CAPTION>
+<TR><TD><P>
+
+<P>
+
+<DIV ALIGN="CENTER">
+<!-- MATH
+ $\resizebox* {5in}{!}{\includegraphics{graphics/pp_iopc.eps}}$
+ -->
+<IMG
+ WIDTH="568" HEIGHT="537" ALIGN="BOTTOM" BORDER="0"
+ SRC="img4.png"
+ ALT="pp_iopc"> </DIV>
+<P>
+<DIV ALIGN="CENTER"></DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+
+<H3><A NAME="SECTION253" HREF="#TOC_SECTION253">
+Solution</A>
+</H3>
+
+<P>
+Use the Layers architecture pattern&nbsp;[<A
+ HREF="#Buschmann:95b">5</A>], which decomposes
+the system into groups of components, each one at a different level of abstraction.<A NAME="tex2html5"
+ HREF="#foot549"><SUP>1</SUP></A> For the client, the ORB uses a particular ORB messaging protocol to send a
+request. This ORB messaging protocol delegates part of the work to the transport
+adapter component that completes the message and sends it to the server. If
+the low-level transport in use, <I>e.g.</I>, ATM, UDP, TCP/IP, etc., does not
+satisfy the requirements of the ORB messaging protocol, the ORB transport adapter
+component can implement them.
+
+<P>
+In the server, the transport adapter component receives data from the underlying
+communication infrastructure, such as sockets or shared memory, and it passes
+the message up to the ORB messaging layer. As with the client, this layer can
+be very lightweight if the requirements imposed by the ORB messaging layer are
+satisfied by the underlying network transport protocol. Otherwise, it must implement
+those missing requirements by building them into the concrete transport adapter
+component.
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="iop_server"></A><A NAME="702"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5:</STRONG>
+Server Inter-ORB and Transport Class Diagram</CAPTION>
+<TR><TD><P>
+
+<P>
+
+<DIV ALIGN="CENTER">
+<!-- MATH
+ $\resizebox* {5in}{!}{\includegraphics{graphics/pp_iops.eps}}$
+ -->
+<IMG
+ WIDTH="422" HEIGHT="563" ALIGN="BOTTOM" BORDER="0"
+ SRC="img5.png"
+ ALT="pp_iops"> </DIV>
+<P>
+<DIV ALIGN="CENTER"></DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+
+<H3><A NAME="SECTION254" HREF="#TOC_SECTION254">
+Applying the solution in TAO</A>
+</H3>
+
+    <P>
+      As shown in Figure&nbsp;<A HREF="#iop_client">4</A>, TAO
+      implements the messaging protocol and the transport protocol in
+      separate components. The client ORB uses the current profile to
+      find the right transport and ORB messaging implementations. The
+      creation and initialization of these classes is controlled by
+      the <A HREF="#design:connect"><TT>Connector</TT></A>, with each
+      <TT>Connector</TT> instance handling a particular ORB
+      messaging/transport tuple.
+
+
+    <P>
+      Figure&nbsp;<A HREF="#iop_server">5</A> illustrates how the
+      server's implementation uses the same transport classes, but
+      with a different relationship. In particular, the transport
+      class calls back the messaging class when data is received from
+      the IPC mechanism. As with the client, a factory, in this case
+      the <A HREF="#design:accept"><TT>Acceptor</TT></A>, creates and
+      initializes these objects.
+
+<P>
+
+<H3><A NAME="SECTION255" HREF="#TOC_SECTION255">
+<TT>Transport</TT> Implementation</A>
+</H3>
+
+<P>
+A <TT>Transport</TT> implements
+external polymorphism&nbsp;[<A HREF="#Schmidt:97e">2</A>] over the
+<TT>Client_Connection_Handler</TT> and the
+<TT>Service_Connection_Handler</TT> objects described in the
+<A HREF="#SECTION260"><TT>Connection_Handler</TT></A> section of this
+document.  A <TT>Connection_Handler</TT> is simply a template
+instantiation of <TT>ACE_Svc_Handler&lt;&gt;</TT>, but they don't do
+much work.  They just delegate on the <TT>Transport</TT> classes.
+This somewhat strange design is easy to understand once it is realized
+that not all <TT>ACE_Svc_Handler&lt;&gt;</TT> classes are type
+compatible (except in their most basic <TT>ACE_Event_Handler</TT>
+form) so they must be wrapped using the <TT>TAO_Transport</TT>
+class.
+
+<P>
+All TAO pluggable protocol <TT>Transport</TT> classes must inherit from the
+<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+The <TT>TAO_Transport</TT> interface is shown below. Again, only the methods
+that should be implemented for a given pluggable protocol are shown:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>class&nbsp;TAO_Export&nbsp;TAO_Transport&nbsp;
+<BR>
+{&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;=&nbsp;TITLE&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;Generic&nbsp;definitions&nbsp;for&nbsp;the&nbsp;Transport&nbsp;class.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;=&nbsp;DESCRIPTION&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;The&nbsp;transport&nbsp;object&nbsp;is&nbsp;created&nbsp;in&nbsp;the&nbsp;Service&nbsp;handler&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;constructor&nbsp;and&nbsp;deleted&nbsp;in&nbsp;the&nbsp;service&nbsp;handler's&nbsp;destructor!!&nbsp;
+<BR>
+&nbsp;
+<BR>
+public:&nbsp;
+<BR>
+&nbsp;&nbsp;TAO_Transport&nbsp;(CORBA::ULong&nbsp;tag,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_ORB_Core&nbsp;*orb_core);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;default&nbsp;creator,&nbsp;requres&nbsp;the&nbsp;tag&nbsp;value&nbsp;be&nbsp;supplied.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;~TAO_Transport&nbsp;(void);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;destructor&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;void&nbsp;close_connection&nbsp;(void)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Call&nbsp;the&nbsp;corresponding&nbsp;connection&nbsp;handler's&nbsp;&lt;close&gt;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;method.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;idle&nbsp;(void)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Idles&nbsp;the&nbsp;corresponding&nbsp;connection&nbsp;handler.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;ACE_HANDLE&nbsp;handle&nbsp;(void)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;This&nbsp;method&nbsp;provides&nbsp;a&nbsp;way&nbsp;to&nbsp;gain&nbsp;access&nbsp;to&nbsp;the&nbsp;underlying&nbsp;file&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;handle&nbsp;used&nbsp;by&nbsp;the&nbsp;reactor.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;ACE_Event_Handler&nbsp;*event_handler&nbsp;(void)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;This&nbsp;method&nbsp;provides&nbsp;a&nbsp;way&nbsp;to&nbsp;gain&nbsp;access&nbsp;to&nbsp;the&nbsp;underlying&nbsp;event&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;handler&nbsp;used&nbsp;by&nbsp;the&nbsp;reactor.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;ssize_t&nbsp;send&nbsp;(TAO_Stub&nbsp;*stub,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ACE_Message_Block&nbsp;*mblk,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ACE_Time_Value&nbsp;*s&nbsp;=&nbsp;0)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;ssize_t&nbsp;send&nbsp;(const&nbsp;ACE_Message_Block&nbsp;*mblk,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ACE_Time_Value&nbsp;*s&nbsp;=&nbsp;0)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Write&nbsp;the&nbsp;complete&nbsp;Message_Block&nbsp;chain&nbsp;to&nbsp;the&nbsp;connection.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;@@&nbsp;The&nbsp;ACE_Time_Value&nbsp;*s&nbsp;is&nbsp;just&nbsp;a&nbsp;place&nbsp;holder&nbsp;for&nbsp;now.&nbsp;&nbsp;It&nbsp;is&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;not&nbsp;clear&nbsp;this&nbsp;this&nbsp;is&nbsp;the&nbsp;best&nbsp;place&nbsp;to&nbsp;specify&nbsp;this.&nbsp;&nbsp;The&nbsp;actual&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;timeout&nbsp;values&nbsp;will&nbsp;be&nbsp;kept&nbsp;in&nbsp;the&nbsp;Policies.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;ssize_t&nbsp;send&nbsp;(const&nbsp;u_char&nbsp;*buf,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;len,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ACE_Time_Value&nbsp;*s&nbsp;=&nbsp;0)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Write&nbsp;the&nbsp;contents&nbsp;of&nbsp;the&nbsp;buffer&nbsp;of&nbsp;length&nbsp;len&nbsp;to&nbsp;the&nbsp;connection.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;ssize_t&nbsp;recv&nbsp;(char&nbsp;*buf,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;len,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ACE_Time_Value&nbsp;*s&nbsp;=&nbsp;0)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Read&nbsp;len&nbsp;bytes&nbsp;from&nbsp;into&nbsp;buf.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;@@&nbsp;The&nbsp;ACE_Time_Value&nbsp;*s&nbsp;is&nbsp;just&nbsp;a&nbsp;place&nbsp;holder&nbsp;for&nbsp;now.&nbsp;&nbsp;It&nbsp;is&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;not&nbsp;clear&nbsp;this&nbsp;this&nbsp;is&nbsp;the&nbsp;best&nbsp;place&nbsp;to&nbsp;specify&nbsp;this.&nbsp;&nbsp;The&nbsp;actual&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;timeout&nbsp;values&nbsp;will&nbsp;be&nbsp;kept&nbsp;in&nbsp;the&nbsp;Policies.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;void&nbsp;start_request&nbsp;(TAO_ORB_Core&nbsp;*orb_core,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;TAO_Profile&nbsp;*profile,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_OutputCDR&nbsp;&amp;output,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CORBA::Environment&nbsp;&amp;ACE_TRY_ENV&nbsp;=&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_default_environment&nbsp;())&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ACE_THROW_SPEC&nbsp;((CORBA::SystemException));&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Fill&nbsp;into&nbsp;&lt;output&gt;&nbsp;the&nbsp;right&nbsp;headers&nbsp;to&nbsp;make&nbsp;a&nbsp;request.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;void&nbsp;start_locate&nbsp;(TAO_ORB_Core&nbsp;*orb_core,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;TAO_Profile&nbsp;*profile,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CORBA::ULong&nbsp;request_id,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_OutputCDR&nbsp;&amp;output,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CORBA::Environment&nbsp;&amp;ACE_TRY_ENV&nbsp;=&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_default_environment&nbsp;())&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ACE_THROW_SPEC&nbsp;((CORBA::SystemException));&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Fill&nbsp;into&nbsp;&lt;output&gt;&nbsp;the&nbsp;right&nbsp;headers&nbsp;to&nbsp;make&nbsp;a&nbsp;locate&nbsp;request.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;send_request&nbsp;(TAO_Stub&nbsp;*stub,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_ORB_Core&nbsp;*orb_core,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_OutputCDR&nbsp;&amp;stream,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;twoway,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACE_Time_Value&nbsp;*max_time_wait)&nbsp;=&nbsp;0;&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Depending&nbsp;on&nbsp;the&nbsp;concurrency&nbsp;strategy&nbsp;used&nbsp;by&nbsp;the&nbsp;transport&nbsp;it&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;may&nbsp;be&nbsp;required&nbsp;to&nbsp;setup&nbsp;state&nbsp;to&nbsp;receive&nbsp;a&nbsp;reply&nbsp;before&nbsp;the&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;request&nbsp;is&nbsp;sent.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Using&nbsp;this&nbsp;method,&nbsp;instead&nbsp;of&nbsp;send(),&nbsp;allows&nbsp;the&nbsp;transport&nbsp;(and&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;wait&nbsp;strategy)&nbsp;to&nbsp;take&nbsp;appropiate&nbsp;action.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;handle_client_input&nbsp;(int&nbsp;block&nbsp;=&nbsp;0,&nbsp;
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACE_Time_Value&nbsp;*max_wait_time&nbsp;=&nbsp;0);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Read&nbsp;and&nbsp;handle&nbsp;the&nbsp;reply.&nbsp;Returns&nbsp;0&nbsp;when&nbsp;there&nbsp;is&nbsp;Short&nbsp;Read&nbsp;on&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;the&nbsp;connection.&nbsp;Returns&nbsp;1&nbsp;when&nbsp;the&nbsp;full&nbsp;reply&nbsp;is&nbsp;read&nbsp;and&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;handled.&nbsp;Returns&nbsp;-1&nbsp;on&nbsp;errors.&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;If&nbsp;&lt;block&gt;&nbsp;is&nbsp;1,&nbsp;then&nbsp;reply&nbsp;is&nbsp;read&nbsp;in&nbsp;a&nbsp;blocking&nbsp;manner.&nbsp;
+<BR>
+&nbsp;
+<BR>
+&nbsp;&nbsp;virtual&nbsp;int&nbsp;register_handler&nbsp;(void);&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Register&nbsp;the&nbsp;handler&nbsp;with&nbsp;the&nbsp;reactor.&nbsp;Will&nbsp;be&nbsp;called&nbsp;by&nbsp;the&nbsp;Wait&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;Strategy&nbsp;if&nbsp;Reactor&nbsp;is&nbsp;used&nbsp;&nbsp;for&nbsp;that&nbsp;strategy.&nbsp;Default&nbsp;
+<BR>
+&nbsp;&nbsp;//&nbsp;implementation&nbsp;out&nbsp;here&nbsp;returns&nbsp;-1&nbsp;setting&nbsp;&lt;errno&gt;&nbsp;to&nbsp;ENOTSUP.&nbsp;
+<BR>
+&nbsp;
+<BR>
+};</DD>
+</DL>Each method is described below:
+
+<P>
+
+<DL>
+<DT><STRONG>The&nbsp;Constructor.</STRONG></DT>
+<DD>As with all of the TAO pluggable protocol framework components
+described so far, the constructor for the concrete <TT>Transport</TT> object
+should also initialize the <TT>TAO_Transport</TT> base class with the tag corresponding
+to the pluggable protocol.</DD>
+<P>
+<DT><STRONG><TT>close_connection</TT>.</STRONG></DT>
+<DD>The underlying <TT>Connection Handler</TT>'s <TT>close</TT>
+method is invoked my this method.</DD>
+<P>
+<DT><STRONG><TT>idle</TT>.</STRONG></DT>
+<DD>This method idles the underlying <TT>Connection Handler</TT>.</DD>
+<P>
+<DT><STRONG><TT>handle</TT>.</STRONG></DT>
+<DD>This method returns the underlying file handle used by the
+<TT>Reactor</TT>.</DD>
+<P>
+<DT><STRONG><TT>event_handler</TT>.</STRONG></DT>
+<DD>This method returns the underlying <TT>Event Handler</TT>
+used by the <TT>Reactor</TT>.</DD>
+<P>
+<DT><STRONG><TT>send</TT>.</STRONG></DT>
+<DD>The <TT>send</TT> writes data to the connection established
+in the underlying transport, such as a TCP connection in the IIOP pluggable
+protocol. Three versions of this method must be implemented. Two of them write
+data contained within an <TT>ACE_Message_Block</TT> and the remaining simply
+sends the data within a buffer of a given length.
+<P>
+When implementing this method, it is important to be aware of the correct underlying
+<TT>send</TT> or <TT>write</TT> operation to use. Some of TAO's existing pluggable
+protocols use the <TT>send</TT> calls provided by the operating system because
+no further processing of the data being sent is necessary. However, other protocols
+may process perform additional operations on the data being sent, in which case
+the <TT>send</TT> operation provided by the underlying protocol implementation
+should be used instead of the raw operating system <TT>send</TT> call.
+</DD>
+<P>
+<DT><STRONG><TT>recv</TT>.</STRONG></DT>
+<DD>The <TT>recv</TT> operation reads a given number of bytes into
+a supplied buffer. Unlike the <TT>send</TT> method, there is only one version
+of the <TT>recv</TT> operation. The same caveat of ensuring that the appropriate
+<TT>recv</TT> or <TT>read</TT> operation is used also applies to this method.</DD>
+<P>
+<DT><STRONG><TT>start_request</TT>.</STRONG></DT>
+<DD>This method creates the appropriate header to make
+a request and write it into the provided output CDR stream. This method is closely
+tied to TAO's GIOP implementation. <TT>start_request</TT> implementations should
+essentially be the same in all pluggable protocol implementations. The only
+thing that should differ is the type of <TT>Profile</TT> being used. Note that
+this method is only useful for clients.</DD>
+<P>
+<DT><STRONG><TT>start_locate</TT>.</STRONG></DT>
+<DD>This method creates the appropriate header to make
+a <I>locate</I> request and write it into the provided output CDR stream. This
+method is closely tied to TAO's GIOP implementation. <TT>start_locate</TT>
+implementations should essentially be the same in all pluggable protocol implementations.
+The only thing that should differ is the type of <TT>Profile</TT> being used.
+Note that this method is only useful for clients. Note that this method is only
+useful for clients.</DD>
+<P>
+<DT><STRONG><TT>send_request</TT>.</STRONG></DT>
+<DD>Depending on the concurrency strategy used by the transport
+it may be required to setup state to receive a reply before the request is sent.
+Using this method, instead of <TT>send</TT>, allows the transport (and wait
+strategy) to take appropiate action. This method is closely tied to TAO's GIOP
+implementation. <TT>send_request</TT> implementations should essentially be
+the same in all pluggable protocol implementations. The only thing that should
+differ is the type of <TT>Profile</TT> being used. Note that this method is
+only useful for clients.</DD>
+<P>
+<DT><STRONG><TT>handle_client_input</TT>.</STRONG></DT>
+<DD><TT>handle_client_input</TT> reads and handles
+the reply from the server. It returns zero when there is <TT>Short Read</TT>
+on the connection, returns <TT>1</TT> when the full reply is read and handled,
+and returns <TT>-1</TT> on errors. Note that this method is only useful for
+clients.</DD>
+<P>
+<DT><STRONG><TT>register_handler</TT>.</STRONG></DT>
+<DD>This method registers the <TT>Connection Handler</TT>
+with the <TT>Reactor</TT>. It will be called by the <TT>Wait Strategy</TT> if
+the <TT>Reactor</TT> is used for that strategy. This code should essentially
+be ``boilerplate'' code. It shouldn't differ much between pluggable protocol
+implementations if the same ACE event handling and dispatching components are
+used. Note that this method may be deprecated in the future.</DD>
+</DL>
+There other methods in the <TT>TAO_Transport</TT> that can be overridden. However,
+the default implementations should be more than satisfactory for most pluggable
+protocols.
+
+<P>
+TAO's existing pluggable protocols implement client-side and server-side specific
+<TT>Transport</TT>s. For the most part, they can be used as references for other
+pluggable protocols.
+
+<H3><A NAME="SECTION260" HREF="#TOC_SECTION260">
+The <TT>Connection_Handler</TT></A>
+</H3>
+A <TT>Connection_Handler</TT> is simply a template instantiation of
+<TT>ACE_Svc_Handler&lt;&gt;</TT>&nbsp;[<A HREF="#Schmidt:97c">1</A>],
+a service handler.  <TT>ACE_Svc_Handler</TT>s provide a well-defined
+interface that <TT>Acceptor</TT> and <TT>Connector</TT> pattern
+factories use as their target.  Service handlers perform
+application-specific processing and communicate via the connection
+established by the <TT>Connector</TT> and <TT>Acceptor</TT>
+components.  Typically, TAO <TT>Connection_Handler</TT>s will subclass
+<TT>ACE_Svc_Handler</TT> and do all the interesting work in the
+subclass.
+
+<P>
+
+<H3><A NAME="SECTION261" HREF="#TOC_SECTION261">
+<TT>Connection_Handler</TT> Implementation</A>
+</H3>
+
+TAO pluggable transport protocol <TT>Connection_Handler</TT>s should
+be derived from the <TT>ACE_Svc_Handler</TT> class declared in
+&lt;<A
+      HREF="../../../ace/Svc_Handler.h"><TT>ace/Svc_Handler.h</TT></A>&gt;.  TAO's existing pluggable transport protocol
+implementations define three classes, a base class derived from an
+<TT>ACE_Svc_Handler</TT> specific to that protocol, and a client-side
+and a server-side class derived from that base class.  Generally, it
+is a good idea to base new <TT>Connection_Handler</TT> implementations
+on TAO's existing ones.  The interfaces for the existing
+<TT>Connection_Handler</TT>s are defined in
+&lt;<A HREF="../../tao/IIOP_Connect.h"><TT>tao/IIOP_Connect.h</TT></A>&gt;
+and
+&lt;<A HREF="../../tao/UIOP_Connect.h"><TT>tao/UIOP_Connect.h</TT></A>&gt;.
+
+<P>
+<HR>
+<P>
+
+<H3><A NAME="SECTION300" HREF="#TOC_SECTION300">
+Notes From a ``Real World'' Pluggable Protocol Implementation</A>
+</H3>
+
+By Bruce Trask &lt;<A
+HREF="mailto:btrask@contactsystems.com">btrask@contactsystems.com</A>&gt;
+
+<P>This section is based on notes I took when adding a different
+transport layer to the TAO ORB.  I was given some initial guidelines
+on adding an additional protocol and these proved very helpful.
+Beyond that there was not much more documentation and so I hope the
+information in this paper will serve to further assist anybody whose
+is adding a pluggable protocol to the TAO ORB.
+
+<P>I found that in order to successfully add the new protocol capabilities, one had to
+have a very good understanding of some of the patterns upon which the ACE framework
+is built.  These are the REACTOR, ACCEPTOR, CONNECTOR, FACTORY, STRATEGY,
+and SERVICE CONFIGURATOR PATTERN.  The papers that I found helpful on these
+were:
+<BR>
+<BLOCKQUOTE>
+Reactor (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Reactor.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor.pdf">PDF</A>
+)<BR>
+
+Reactor1-93 (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Reactor1-93.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor1-93.pdf">PDF</A>
+)<BR>
+
+Reactor2-93 (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Reactor2-93.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor2-93.pdf">PDF</A>
+)<BR>
+
+reactor-rules (
+<A HREF="http://www.cs.wustl.edu/~schmidt/reactor-rules.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-rules.pdf">PDF</A>
+)<BR>
+
+reactor-siemens (
+<A HREF="http://www.cs.wustl.edu/~schmidt/reactor-siemens.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-siemens.pdf">PDF</A>
+)<BR>
+
+Svc-Conf (
+<A
+HREF="http://www.cs.wustl.edu/~schmidt/Svc-Conf.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">PDF</A>
+)<BR>
+
+Acc-Con (
+<A HREF="http://www.cs.wustl.edu/~schmidt/Acc-Con.ps.gz">PostScript</A>
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Acc-Con.pdf">PDF</A>
+)
+</BLOCKQUOTE>
+<P>These are all readily available from the TAO and ACE website.
+<P>My starting point for understanding how to add a pluggable protocol
+to the TAO ORB came from mailing list entry from <A
+HREF="mailto:coryan@uci.edu">Carlos O'Ryan</A>.  One can find it
+in the archives of the comp.soft-sys.ace newsgroup.  It is dated
+1999/06/02 RE: [ace-users] TAO: ATM pluggable protocol.  I will repeat
+the section of that email that was particularly useful to me. (In the
+email, he is responding to someone who had inquired about adding the
+ATM protocol).  <p>
+
+<BLOCKQUOTE>
+Basically, you need to look at the following files:<BR>
+
+<BLOCKQUOTE>
+IIOP_Profile.{h,i,cpp}<BR>
+IIOP_Connector.{h,i,cpp}<BR>
+IIOP_Acceptor.{h,i,cpp}<BR>
+IIOP_Factory.{h,i,cpp}<BR>
+IIOP_Transport.{h,i,cpp}<BR>
+Connect.{h,i,cpp} [probably will be renamed IIOP_Connect VSN]
+</BLOCKQUOTE>
+
+<P>
+The profile class handles the addressing format for your transport.
+It would basically be a wrapper around the ACE_ATM_Addr() class.  The
+Connector and Acceptor classes are simply wrappers around
+ACE_Acceptor&lt;ACE_ATM_ACCEPTOR&gt; and
+ACE_Connector&lt;ACE_ATM_ACCEPTOR&gt;, again no big deal (I think).
+The factory is even simpler.
+
+<P>
+Things get really interesting in the Transport and Connect classes.
+Transport just implements external polymorphism over the
+Client_Connection_Handler and the Service_Connection_Handler objects
+defined in the Connect.{h,i,cpp}, those are simply
+ACE_Svc_Handler&lt;ACE_ATM_Stream&gt;, but they don't do much work,
+they just delegate on the Transport classes.  This somewhat strange
+design is easy to understand once you realize that all the
+ACE_Svc_Handler&lt;&gt; classes are not type compatible (except in
+their most basic ACE_Event_Handler form).  So they must be wrapped
+using the TAO_Transport class.
+</BLOCKQUOTE>
+
+
+<P>Make sure to review
+``<A HREF="../releasenotes/index.html#pp">Pluggable Protocols</A>''
+in
+``<A HREF="../releasenotes/index.html">Release Information for the ACE
+ORB (TAO)</A>''
+in the
+<A HREF="../releasenotes">TAO/docs/releasenotes</A> directory.
+<BR><P>
+Just for completeness sake, I'll include some other mailing list entries which were helpful
+in getting me started.  The following is from <A HREF="mailto:ossama@uci.edu">Ossama Othman</A>.
+
+<BLOCKQUOTE>The stock TAO distribution has support for two transport protocols,
+TCP/IP and local namespace sockets (aka Unix Domain sockets).  However,
+TAO's pluggable protocols framework allows users to add support for
+additional transport protocols.  All you'd really have to do is
+implement a SCRAMNet pluggable transport protocol with the interface
+TAO's pluggable protocol framework provides and you'd be able to use
+SCRAMNet with TAO just as easily as the IIOP (GIOP over TCP/IP) and
+UIOP (GIOP over Unix domains sockets) protocols.
+<P>
+The idea is to implement GIOP messaging over a SCRAMNet transport.  If
+you model your implementation on TAO's IIOP and UIOP implementations
+then it should be fairly straightforward to create a SCRAMNet
+pluggable protocol for TAO.  The hard part is implementing the
+equivalent ACE classes for SCRAMNet.
+<P>
+. . .
+<P>
+It's actually not that bad.  The easiest way to add a pluggable protocol
+to TAO, IMO, is to base your pluggable protocol on existing ones.  As
+long as you have the same interface for your protocol as the existing
+ones then it is fairly easy to create your TAO pluggable protocol.
+However, in order to do that you have to create ACE_SCRAMNet_{Acceptor,
+Connector, Stream, Addr} implementations, for example, since TAO's
+existing pluggable protocols use those interfaces.
+
+<P>
+As long as you use the same interface for your protocol as the
+interface for ace/ACE_SOCK* and tao/IIOP* then you shouldn't have much
+of a problem.
+</BLOCKQUOTE>
+
+<P>
+This also assumes that you're implementation can satisfy the
+conditions stated earlier in this document.
+
+<P>Note also that the TAO files pluggable.*
+are important to review and understand as they contain the abstract
+classes that form the common inteface for TAO's pluggable protocol
+framework.  <BR> <P>Getting a full understanding on how IIOP was
+implemented (GIOP over TCP/IP) and also seeing how provisions were
+made to add UIOP, was very helpful to adding my own protocol.  In
+understanding IIOP, I needed to review the section of the OMG CORBA
+spec on GIOP, IIOP and Object references and see how this would apply
+to my protocol.  <BR>
+
+<P>In my case, I added a transport layer that uses SCRAMNet (from
+Systran Corp) replicated shared memory hardware.  This is actual
+physical memory cards located on two different machines.  When a
+change is made to one memory then that change appears very quickly
+(very low latency here) in the other memory.  I decided that I would
+implement GIOP over SCRAMNet as this seemed to be the simplest.  With
+SCRAMNet, one could implement this transport layer for the TAO ORB in
+a few different ways, GIOP over SCRAMNet, Environment-specific
+inter-ORB protocol (ESIOP) or using collocation (since it is shared
+replicated memory).  I have not done the latter two, only GIOP over
+SCRAMNet just to get a proof of concept working.
+
+<BR><P> For a graphical representation of the extensions for the new
+SCRAMNet classes I have may a skeletal Rose diagram showing (at this
+point) the inheritance relationships of the new and existing classes.
+See (TBD) ftp site for this Rose diagram.
+
+<BR><P>
+The new classes created were.
+<BR>
+<BLOCKQUOTE>
+TAO_SCRAMNet_Profile  (Derived from TAO_Profile in <A HREF="../../tao/Profile.h">Profile.h</A>)<BR>
+TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>) <BR>
+TAO_SCRAMNet_Connector  (Derived from TAO_Connector in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)<BR>
+TAO_SCRAMNet_Transport  (Derived from TAO_Transport in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)
+        <BLOCKQUOTE>TAO_SCRAMNet_Server_Transport<BR>
+        TAO_SCRAMNet_Client_Transport</BLOCKQUOTE>
+TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in <A HREF="../../tao/Protocol_Factory.h">Protocol_Factory.h</A>)<BR>
+TAO_SCRAMNet_Handler_Base (as in <A HREF="../../tao/IIOP_Connect.h">IIOP_Connect.h</A>)
+        <BLOCKQUOTE>TAO_SCRAMNet_Client_Connection_Handler<BR>
+        TAO_SCRAMNet_Server_Connection_Handler</BLOCKQUOTE></BLOCKQUOTE>
+<BLOCKQUOTE>ACE_SCRAMNet_Addr<BR>
+ACE_SCRAMNet_Acceptor<BR>
+ACE_SCRAMNet_Connector<BR>
+ACE_SCRAMNet_Stream</BLOCKQUOTE>
+<P>I closely followed the way that IIOP and UIOP were defined and implemented in the definition and
+implementation of the SCRAMNet classes.  Following the existing protocol implementation was
+the largest source of help for me.  Being able to step through the operation of the ORB for
+the IIOP protocol and then transposing that over to my protocol made the process relatively painless
+and quite the learning experience.
+<BR><P>
+
+I am using TAO under Phar Lap's Embedded Tool Suite Real-Time
+Operating System which is an RTOS which supports a subset of the Win32
+API and Winsock 1.1.  Because of the new SCRAMNet transport hardware I
+needed to change the ORBs core reactor to a WFMO_Reactor.  Any
+instance of the TAO ORB can only have one reactor type or it won't
+work.  In my case I am using an ORB in one thread that uses the
+WFMO_Reactor and the SCRAMNet transport, and an ORB in another thread
+that uses a Select Reactor and the IIOP protocol.  I won't go into
+much of the SCRAMNet specific stuff as I assume most people are
+interested in adding a pluggable protocol in general.  <BR><P>
+
+<P>
+
+RE: IORs<BR>
+I found that I needed to have a full understanding of what the exact contents of
+a TAO-created IOR were as I needed to be able to understand how to decode the
+location information that was now written in the IOR with the SCRAMNet
+specific information.  Decoding of the preconnect and endpoint info is important.
+The endpoint info both in the command line arguments and in the IOR are different
+for the each protocol and so your implemention of the new classes has to parse this
+information correctly.
+<BR><P>
+In order to create the ORB with the Win32 Reactor at the core as well as the
+SCRAMNet protocol factory loaded and initialize I needed to use the
+svc.conf file with the the following options
+<A HREF="../Options.html#-ORBReactorType">-ORBReactorType</A> wfmo
+<A HREF="../Options.html#-ORBProtocolFactory">-ORBProtocolFactory</A> SCRAMNet_Factory
+<BR><P>
+
+</OL>
+
+Beyond the above, I just traced through the operation of the IIOP
+protocol in action to see exactly where I needed to just graft on the
+new ACE_SCRAMNet classes, the TAO_SCRAMNet classes and their
+associated implementations for send and recv so that the SCRAMNet
+hardware was used as the transport and not the ethernet hardware.
+Questions, comments, changes are welcome. I can be reached at <A
+HREF="mailto:btrask@contactsystems.com">btrask@contactsystems.com</A>
+
+<P>
+<HR>
+<P>
+
+<H3>
+<A NAME="SECTION400" HREF="#TOC_SECTION400">
+Additional Implementation Information
+</A>
+</H3>
+
+<P>
+This section covers additional information not necessarily related to
+TAO's pluggable protocol framework but may still be of interest to
+pluggable protocol and ORB developers, nevertheless.
+
+<H3>
+<A NAME="SECTION410" HREF="#TOC_SECTION410">
+Tags
+</A>
+</H3>
+
+Tags are used to uniquely identify certain parts of an ORB, including
+the following:
+<P>
+<UL>
+<LI>vendor</LI>
+<LI>profile</LI>
+<LI>service</LI>
+<LI>component</LI>
+<LI>ORB type</LI>
+</UL>
+<P>
+A list of current <A HREF="http://www.omg.org/">OMG</A> assigned tags
+is available at:
+<BLOCKQUOTE>
+<A HREF="ftp://ftp.omg.org/pub/docs/ptc/99-05-02.txt">ftp://ftp.omg.org/pub/docs/ptc/99-05-02.txt</A>
+</BLOCKQUOTE>
+<P>
+For information about tags and tag allocation see:
+<BLOCKQUOTE>
+<A HREF="http://www.omg.org/cgi-bin/doc?ptc/99-02-01">http://www.omg.org/cgi-bin/doc?ptc/99-02-01</A>
+</BLOCKQUOTE>
+
+<P>
+Information about tags used in TAO is available
+<A HREF="../Tags.html">here</A>.
+
+<P>
+<HR>
+<P>
+
+<H3><A NAME="SECTION500" HREF="#TOC_SECTION500">
+Using a Pluggable Protocol</A>
+</H3>
+
+<P>
+Once a TAO pluggable protocol is implemented, the ORB is told to load it by
+adding entries to a <TT>Service Configurator</TT> configuration file (e.g. <TT>svc.conf</TT>
+for that protocol. A typical <TT>svc.conf</TT> file could contain entries such
+as the following:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>
+dynamic&nbsp;FOOIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO_FOO:_make_TAO_FOOIOP_Protocol_Factory()&nbsp;&#34;&#34;
+<BR>
+static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;FOOIOP_Factory&#34;
+<P>
+</DD>
+</DL>These entries would cause a pluggable protocol called ``FOOIOP'' to be loaded
+into the ORB. By default the IIOP and UIOP (if supported) pluggable protocols
+are loaded into TAO if no such entries are provided. Explicitly specifying which
+protocols to load in this way prevents any pluggable protocols from being loaded
+by default.  The
+<TT><A HREF="../Options.html#-ORBProtocolFactory">-ORBProtocolFactory</A></TT>
+ORB option causes the specified protocol factory to be loaded into the
+ORB.
+
+Multiple pluggable protocols can be loaded simply by adding more
+<TT>Service Configurator</TT> configuration file entries. For example, the following
+entries would cause the TAO's IIOP and the fictional FOOIOP pluggable protocols
+to be loaded:
+
+<P>
+
+<DL COMPACT>
+<DT>
+<DD>dynamic&nbsp;FOOIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO_FOO:_make_TAO_FOOIOP_Protocol_Factory()&nbsp;&#34;&#34;
+<BR>
+static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;FOOIOP_Factory&#34;
+<BR>
+dynamic&nbsp;IIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO:_make_TAO_IIOP_Protocol_Factory()&nbsp;&#34;&#34;&nbsp;&nbsp;
+<BR>
+static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;IIOP_Factory&#34;
+<P>
+</DD>
+</DL>In this case, TAO's UIOP pluggable protocol would <I>not</I> be
+loaded.  <TT>Service Configurator</TT> configuration file names are
+not limited to the name ``<TT>svc.conf</TT>.''  The ORB can be told
+to use a configuration file other than ``<TT>svc.conf</TT>'' by using the
+<TT><A HREF="../Options.html#-ORBSvcConf">-ORBSvcConf</A></TT>
+ORB option.
+
+
+<P>
+Note that the FOOIOP protocol resides in a library other than the TAO
+library, called ``<TT>libTAO_FOO.so</TT>'' on UNIX platforms, and
+``<TT>TAO_FOO.dll</TT>'' on Win32 platforms. This ability to
+dynamically load pluggable protocols in libraries that are completely
+separate libraries from the TAO library truly makes TAO's pluggable
+protocol framework ``pluggable.''  Make sure the directory your
+pluggable protocol library is located in is also in your library
+search path, typically <TT>LD_LIBRARY_PATH</TT> on UNIX systems and/or
+the ``<TT>/etc/ld.so.conf</TT>'' file on some UNIX systems.  Remember
+to run <TT>ldconfig</TT> if you modify ``<TT>/etc/ld.so.conf</TT>.''
+
+<P>
+Creating an endpoint specific to a given pluggable protocol is simply a matter
+of using TAO's <TT><A HREF="../Options.html#-ORBEndpoint">-ORBEndpoint</A></TT> ORB option. This is detailed in the documentation
+for the
+<TT><A HREF="#TAO_Acceptor::open">open</A></TT>
+and
+<TT><A HREF="#TAO_Acceptor::open_default">open_default</A></TT>
+methods in the
+<TT><A HREF="#SECTION210">Acceptor</A></TT>
+section of this document. Once an endpoint is created, the client uses
+the IOR that points to the object on that endpoint to make requests on
+that object.
+
+<P>
+All ORB options are described <A HREF="../Options.html">here</A>.
+
+<P>
+<HR>
+<P>
+
+<H3><A NAME="SECTION600" HREF="#TOC_SECTION600">
+Bibliography</A>
+</H3><DL COMPACT><DD><P></P><DT><A NAME="Schmidt:97c">1</A>
+<DD>
+D. C. Schmidt,
+``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/Acc-Con.pdf>
+  Acceptor and Connector: Design Patterns for Initializing
+  Communication Services</A>,''
+  in <EM> Pattern Languages of Program Design</EM>
+  (R. Martin, F. Buschmann, and D. Riehle, eds.), Reading, MA: Addison-Wesley,
+  1997.
+
+<P></P><DT><A NAME="Schmidt:97e">2</A>
+<DD>
+C. Cleeland, D. C. Schmidt and T. Harrison,
+``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/External-Polymorphism.pdf>
+  External Polymorphism -- An Object Structural Pattern for
+  Transparently Extending Concrete Data Types</A>,''
+  in <EM> Pattern Languages of Program Design</EM>
+  (R. Martin, F. Buschmann, and D. Riehle, eds.), Reading, MA: Addison-Wesley,
+  1997.
+
+<P></P><DT><A NAME="Schmidt:94k">3</A>
+<DD>
+D. C. Schmidt and T. Suda,
+  ``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/DSEJ-94.pdf>
+  An Object-Oriented Framework for Dynamically
+  Configuring Extensible Distributed Communication Systems</A>,'' <EM> IEE/BCS
+  Distributed Systems Engineering Journal (Special Issue on Configurable
+  Distributed Systems)</EM>, vol. 2, pp. 280-293, December 1994.
+
+<P></P><DT><A NAME="Johnson:95a">4</A>
+<DD>
+H. Hueni, R. Johnson, and R. Engel, ``A Framework for Network Protocol
+  Software,'' in <EM> Proceedings of OOPSLA '95</EM>, (Austin, Texas), ACM,
+  October 1995.
+
+<P></P><DT><A NAME="Buschmann:95b">5</A>
+<DD>
+F. Buschmann, R. Meunier, H. Rohnert, P. Sommerlad, and M. Stal, <A
+HREF="http://www.cs.wustl.edu/~schmidt/POSA/>Pattern-Oriented Software
+Architecture - A System of Patterns</EM>.  <BR>Wiley and Sons, 1996.
+
+<P></P><DT><A NAME="Schmidt:99x">6</A>
+<DD>
+Carlos O'Ryan, Fred Kuhns, Douglas C. Schmidt, Ossama Othman, and Jeff
+Parsons, <A
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf"> The
+Design and Performance of a Pluggable Protocols Framework for
+Real-time Distributed Object Computing Middleware</A>, Proceedings of
+the IFIP/ACM <A
+HREF="http://www.research.ibm.com/Middleware2000/">Middleware 2000</A>
+Conference, Pallisades, New York, April 3-7, 2000. <P>
+
+<P></P><DT><A NAME="Schmidt:99c">7</A> <DD> Fred Kuhns, Carlos O'Ryan,
+Douglas C. Schmidt, Ossama Othman, and Jeff Parsons, <A
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf">The Design and
+Performance of a Pluggable Protocols Framework for Object Request
+Broker Middleware,</A> Proceedings of the <A
+HREF="http://www.isi.edu/pfhsn99/call.html">IFIP Sixth International
+Workshop on Protocols For High-Speed Networks (PfHSN '99)</A>, Salem,
+MA, August 25--27, 1999. <P>
+
+</DL>
+
+<P>
+
+<HR><H4>Footnotes</H4>
+<DL>
+<DT><A NAME="foot549">... abstraction.</A><A NAME="foot549"
+ HREF="#tex2html5"><SUP>1</SUP></A>
+<DD>Protocol stacks based on the Internet or ISO OSI reference models are common
+examples of the Layers architecture.
+
+
+</DL><HR>
+    <ADDRESS><a href="mailto:ossama@uci.edu">Ossama Othman</a></ADDRESS>
+<!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
+<!-- hhmts start -->
+Last modified: Sat Dec  8 10:43:59 PST 2001
+<!-- hhmts end -->
+</BODY>
+</HTML>
