@@ -67,16 +67,16 @@ void *ACE_Object_Manager::preallocated_array[
     }
 # define ACE_PREALLOCATE_ARRAY(TYPE, ID, COUNT)\
     {\
-      ACE_Cleanup_Adapter<TYPE> *array_p;\
-      ACE_NEW (array_p, ACE_Cleanup_Adapter<TYPE>[COUNT]);\
+      ACE_Cleanup_Adapter<TYPE[COUNT]> *array_p;\
+      ACE_NEW (array_p, ACE_Cleanup_Adapter<TYPE[COUNT]>);\
       preallocated_array[ID] = array_p;\
     }
 # define ACE_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     ace_cleanup_destroyer (\
       (ACE_Cleanup_Adapter<TYPE> *) preallocated_object[ID], 0);\
     preallocated_object[ID] = 0;
-# define ACE_DELETE_PREALLOCATED_ARRAY(TYPE, ID)\
-    delete [] (ACE_Cleanup_Adapter<TYPE> *) preallocated_array[ID];\
+# define ACE_DELETE_PREALLOCATED_ARRAY(TYPE, ID, COUNT)\
+    delete (ACE_Cleanup_Adapter<TYPE[COUNT]> *) preallocated_array[ID];\
     preallocated_array[ID] = 0;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
@@ -126,9 +126,8 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
 {
-  // No mutex here.  The application is responsible for making
-  // sure that all threads are killed before the main thread
-  // terminates.
+  // No mutex here.  Only the main thread should destroy the
+  // singleton ACE_Object_Manager instance.
 
   ACE_Cleanup_Info info;
 
@@ -185,8 +184,10 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
 
   // Cleanup the dynamically preallocated arrays.
-  ACE_DELETE_PREALLOCATED_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_FILE_LOCK)
-  ACE_DELETE_PREALLOCATED_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_HASH_LOCK)
+  ACE_DELETE_PREALLOCATED_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_FILE_LOCK,
+    ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
+  ACE_DELETE_PREALLOCATED_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_HASH_LOCK,
+    ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
 
   // Cleanup the dynamically preallocated objects.
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
@@ -296,6 +297,8 @@ static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
     template class ACE_Managed_Object<ACE_Thread_Mutex>;
 # endif /* ACE_MT_SAFE */
 template class ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Cleanup_Adapter<
+  ACE_SYNCH_RW_MUTEX[ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE]>;
 template class ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Unbounded_Queue<ACE_Cleanup_Info>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>;
@@ -308,6 +311,8 @@ template class ACE_Node<ACE_Cleanup_Info>;
 #   pragma instantiate ACE_Managed_Object<ACE_Thread_Mutex>
 # endif /* ACE_MT_SAFE */
 #pragma instantiate ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Cleanup_Adapter<
+  ACE_SYNCH_RW_MUTEX[ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE]>
 #pragma instantiate ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Cleanup_Info>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>
