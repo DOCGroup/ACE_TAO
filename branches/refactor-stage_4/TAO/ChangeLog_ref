@@ -1,3 +1,11 @@
+Mon Jul 28 15:16:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Removed names of unused arguments in source code methods parameter
+          lists.
+
 Wed Jul 23 13:28:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Argument.cpp:
