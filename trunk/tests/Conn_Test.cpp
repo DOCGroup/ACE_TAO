@@ -458,7 +458,7 @@ server (void *arg)
 
       if (result == -1)
         {
-          svc_handler->close ();
+          // svc_handler->close (); The ACE_Onsehot_Acceptor closed it.
 
           if (errno == ETIMEDOUT)
             {
