@@ -11,9 +11,9 @@ ACE_RCSID (LoadBalancing,
 TAO_LB_ObjectGroupManager::TAO_LB_ObjectGroupManager (
   TAO_LB_PropertyManager &property_manager,
   TAO_LB_ObjectGroup_Map &map)
-  : poa_ (),
-    property_manager_ (property_manager),
-    object_group_map_ (map)
+  : property_manager_ (property_manager),
+    object_group_map_ (map),
+    location_map_ ()
 {
 }
 
@@ -48,7 +48,7 @@ TAO_LB_ObjectGroupManager::add_member (
                    LoadBalancing::ObjectNotAdded))
 {
   TAO_LB_ObjectGroup_Map_Entry group_entry =
-    this->get_group_entry (object_group, ACE_TRY_ENV);
+    this->object_group_map_.get_group_entry (object_group, ACE_TRY_ENV);
   ACE_CHECK_RETURN (LoadBalancing::ObjectGroup::_nil ());
 
   ACE_NEW_THROW_EX (replica_info,
@@ -101,6 +101,7 @@ TAO_LB_ObjectGroupManager::locations_of_members (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
 {
+#if 0
   TAO_LB_ObjectGroup_Map_Entry group_entry =
     this->get_group_entry (object_group, ACE_TRY_ENV);
   ACE_CHECK_RETURN (LoadBalancing::ObjectGroup::_nil ());
@@ -135,6 +136,9 @@ TAO_LB_ObjectGroupManager::locations_of_members (
   }
 
   return locations._retn ();
+#else
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+#endif  /* 0 */
 }
 
 LoadBalancing::ObjectGroupId
@@ -169,32 +173,4 @@ TAO_LB_ObjectGroupManager::get_member_ref (
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     CORBA::Object::_nil ());
-}
-
-void
-TAO_LB_ObjectGroupManager::poa (PortableServer::POA_ptr poa)
-{
-  this->poa_ = PortableServer::POA::_duplicate (poa);
-}
-
-TAO_LB_ObjectGroup_Map_Entry *
-TAO_LB_ObjectGroupManager::get_group_entry (
-    LoadBalancing::ObjectGroup_ptr object_group,
-    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound))
-{
-  if (CORBA::is_nil (this->poa_.in ()))
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
-
-  PortableServer::ObjectId_var oid =
-    this->poa_->reference_to_id (object_group, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  TAO_LB_ObjectGroup_Map_Entry *group_entry = 0;
-  if (this->object_group_map_.find (oid.in (), group_entry) != 0)
-    ACE_THROW_RETURN (LoadBalancing::ObjectGroupNotFound (),
-                      0);
-
-  return group_entry;
 }

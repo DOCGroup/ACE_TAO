@@ -6,16 +6,60 @@ ACE_RCSID (LoadBalancing,
            LB_ObjectGroup_Map,
            "$Id$")
 
-
-TAO_LB_ObjectGroup_Map_Entry::TAO_LB_ObjectGroup_Map_Entry (void)
-  : type_id (),
-    object_group (),
-    replica_infos (),
-    creation_properties (),
-    dynamic_properties (0),
-    lock ()
+TAO_LB_ObjectGroup_Map::TAO_LB_ObjectGroup_Map (void)
+  : poa_ (),
+    table_ ()
 {
 }
+
+int
+TAO_LB_ObjectGroup_Map::bind (const PortableServer::ObjectId &oid,
+                              TAO_LB_ObjectGroup_Map_Entry *entry)
+{
+  return this->table_.bind (oid, entry);
+}
+
+int
+TAO_LB_ObjectGroup_Map::find (const PortableServer::ObjectId &oid,
+                              TAO_LB_ObjectGroup_Map_Entry *&entry)
+{
+  return this->table_.find (oid, entry);
+}
+
+int
+TAO_LB_ObjectGroup_Map::unbind (const PortableServer::ObjectId &oid)
+{
+  return this->table_.unbind (oid);
+}
+
+void
+TAO_LB_ObjectGroupManager::poa (PortableServer::POA_ptr poa)
+{
+  this->poa_ = PortableServer::POA::_duplicate (poa);
+}
+
+TAO_LB_ObjectGroup_Map_Entry *
+TAO_LB_ObjectGroup_Map::get_group_entry (
+    CORBA::Object_ptr object_group,
+    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   LoadBalancing::ObjectGroupNotFound))
+{
+  if (CORBA::is_nil (this->poa_.in ()))
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  PortableServer::ObjectId_var oid =
+    this->poa_->reference_to_id (object_group, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  TAO_LB_ObjectGroup_Map_Entry *group_entry = 0;
+  if (this->object_group_map_.find (oid.in (), group_entry) != 0)
+    ACE_THROW_RETURN (LoadBalancing::ObjectGroupNotFound (),
+                      0);
+
+  return group_entry;
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

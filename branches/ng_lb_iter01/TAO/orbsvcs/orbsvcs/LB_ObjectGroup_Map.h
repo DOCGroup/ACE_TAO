@@ -34,13 +34,8 @@
  *
  * @brief Value field of the ObjectGroup map.
  */
-class TAO_LB_ObjectGroup_Map_Entry
+struct TAO_LB_ObjectGroup_Map_Entry
 {
-public:
-
-  /// Constructor
-  TAO_LB_ObjectGroup_Map_Entry (void);
-
 public:
 
   /// The RepositoryId corresponding to all Replicas in the
@@ -54,25 +49,71 @@ public:
   /// information for each replica.
   TAO_LB_ReplicaInfo_Set replica_infos;
 
-  /// Properties used when creating this object group.
-  LoadBalancing::Properties creation_properties;
-
-  /// Properties set for this object group after this object group was
-  /// created.
-  LoadBalancing::Properties *dynamic_properties;
+  /// Properties used when creating this object group, in addition
+  /// those set dynamically after the creation.
+  LoadBalancing::Properties properties;
 
   /// Lock used to synchronize access to the ReplicaInfo set.
   TAO_SYNCH_MUTEX lock;
 };
 
-/// ObjectId hash map.
-typedef ACE_Hash_Map_Manager_Ex<
-  PortableServer::ObjectId,
-  TAO_LB_ObjectGroup_Map_Entry *,
-  TAO_ObjectId_Hash,
-  ACE_Equal_To<PortableServer::ObjectId>,
-  TAO_SYNCH_MUTEX> TAO_LB_ObjectGroup_Map;
+class TAO_LB_ObjectGroup_Map
+{
+public:
 
+  /// ObjectId hash map typedef.
+  typedef ACE_Hash_Map_Manager_Ex<
+    PortableServer::ObjectId,
+    TAO_LB_ObjectGroup_Map_Entry *,
+    TAO_ObjectId_Hash,
+    ACE_Equal_To<PortableServer::ObjectId>,
+    TAO_SYNCH_MUTEX> Table;
+
+  /// Constructor
+  TAO_LB_ObjectGroup_Map (void);
+
+  /**
+   * @name The Canonical Map Methods
+   */
+  //@{
+
+  /// Bind the given ObjectId to the given object group map entry.
+  int bind (const PortableServer::ObjectId &oid,
+            TAO_LB_ObjectGroup_Map_Entry *entry);
+
+  /// Return the object group entry corresponding to the given
+  /// ObjectId.
+  int find (const PortableServer::ObjectId &oid,
+            TAO_LB_ObjectGroup_Map_Entry *&entry);
+
+  /// Unbind the given ObjectId from the map.
+  int unbind (const PortableServer::ObjectId &oid);
+
+  //@}
+
+  /// Set the reference to the POA that created the object group
+  /// references passed to the ObjectGroupManager methods.
+  void poa (PortableServer::POA_ptr poa);
+
+private:
+
+  /// Obtain the ObjectGroup hash map entry corresponding to the given
+  /// ObjectGroup reference.
+  TAO_LB_ObjectGroup_Map_Entry *get_group_entry (
+      LoadBalancing::ObjectGroup_ptr object_group,
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((LoadBalancing::ObjectGroupNotFound));
+
+private:
+
+  /// Reference to the POA that created the object group reference.
+  PortableServer::POA_var poa_;
+
+  /// Underlying table that maps ObjectId to object group related
+  /// information.
+  Table table_;
+
+};
 #include "ace/post.h"
 
 #endif  /* TAO_LB_OBJECTGROUP_MAP_H */

@@ -6,11 +6,12 @@ ACE_RCSID (LoadBalancing,
            LB_PropertyManager,
            "$Id$")
 
-TAO_LB_PropertyManager::TAO_LB_PropertyManager (void)
-  : default_properties_ (),
+TAO_LB_PropertyManager::TAO_LB_PropertyManager (
+  TAO_LB_ObjectGroup_Map &object_group_map)
+  : object_group_map_ (object_group_map),
+    default_properties_ (),
     type_properties_ (),
-    creation_properties_ (),
-    dynamic_properties_ ()
+    lock_ ()
 {
 }
 
@@ -25,7 +26,11 @@ TAO_LB_PropertyManager::set_default_properties (
   this->validate_properties (props, ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->default_properties_ = props;
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
+
+    this->default_properties_ = props;
+  }
 }
 
 LoadBalancing::Properties *
@@ -33,6 +38,8 @@ TAO_LB_PropertyManager::get_default_properties (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+
   LoadBalancing::Properties *props = 0;
   ACE_NEW_THROW_EX (props,
                     LoadBalancing::Properties (this->default_properties_),
@@ -112,7 +119,7 @@ TAO_LB_PropertyManager::set_properties_dynamically (
   this->validate_properties (overrides, ACE_TRY_ENV);
   ACE_CHECK;
 
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  
 }
 
 LoadBalancing::Properties *
@@ -122,7 +129,23 @@ TAO_LB_PropertyManager::get_properties (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  TAO_LB_ObjectGroup_Map *entry =
+    this->object_group_map_.get_group_entry (object_group, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  //  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, group_map_guard, entry->lock, 0);
+
+  //  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, property_map_guard, this->lock_, 0);
+
+  // Merge the type-properties into the list.
+  LoadBalancing::Properties &type_properties;
+  if (this->type_properties_.find (entry.in (), type_properties == 0))
+    {
+    }
+
+  // Merge the default properties into the property list.
+
+  return properties._retn ();
 }
 
 void
@@ -150,6 +173,43 @@ TAO_LB_PropertyManager::validate_properties (
         ACE_THROW (LoadBalancing::UnsupportedProperty (props[i].nam));
     }
 }
+
+LoadBalancing::InitialNumberReplicas
+TAO_LB_PropertyManager::get_initial_number_replicas (
+  const char * /* type_id */,
+  const LoadBalancing::Criteria &the_criteria,
+  CORBA::Environment &ACE_TRY_ENV)
+{
+  // @@ Hack to get things going.
+
+  // First, check if the given criteria has a desired number of
+  // initial replicas.
+  CORBA::ULong len = the_criteria.length ();
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      if (ACE_OS::strcmp (the_criteria[i].nam.id[0],
+                          "InitialNumberReplicas") == 0)
+        {
+          LoadBalancing::InitialNumberReplicas initial_number_replicas = 0;
+
+          if (the_criteria[i].val >>= initial_number_replicas)
+            return initial_number_replicas;
+          else
+            ACE_THROW_RETURN (LoadBalancing::Property (
+                                the_criteria[i].nam,
+                                the_criteria[i].val),
+                              0);
+        }
+    }
+
+  // Second, check if a type-specific number of initial replicas was
+  // set.
+
+  // Third, check if a default number of initial replicas was set.
+
+  return 0;  // @@ FIXME
+}
+
 
 // -----------------------------------------------------------
 
@@ -179,36 +239,18 @@ operator== (const LoadBalancing::Property &lhs,
 
 // Type-specific property hash map template instantiations
 template class ACE_Hash_Map_Entry<const char *, LoadBalancing::Properties>;
-template class ACE_Hash_Map_Manager_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX>;
-
-// ObjectGroup-specific property hash map template instantiations
-template class ACE_Hash_Map_Entry<PortableServer::ObjectId, LoadBalancing::Properties>;
-template class ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<PortableServer::ObjectId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<PortableServer::ObjectId, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<PortableServer::ObjectId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<PortableServer::ObjectId, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<PortableServer::ObjectId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<PortableServer::ObjectId, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<PortableServer::ObjectId>, TAO_SYNCH_MUTEX>;
-
-template class ACE_Equal_To<PortableServer::ObjectId>;
+template class ACE_Hash_Map_Manager_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 // Type-specific property hash map template instantiations
 #pragma instantiate ACE_Hash_Map_Entry<const char *, LoadBalancing::Properties>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX>
-
-// ObjectGroup-specific property hash map template instantiations
-#pragma instantiate ACE_Hash_Map_Entry<PortableServer::ObjectId, LoadBalancing::Properties>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<PortableServer::ObjectId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<PortableServer::ObjectId, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<PortableServer::ObjectId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<PortableServer::ObjectId, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<PortableServer::ObjectId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<PortableServer::ObjectId, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<PortableServer::ObjectId>, TAO_SYNCH_MUTEX>
-
-#pragma instantiate  ACE_Equal_To<PortableServer::ObjectId>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, LoadBalancing::Properties, TAO_ObjectId_Hash, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
