@@ -93,7 +93,7 @@ e.g. ./Naming_Service -o naming_ior
   
 b). Start one or more instances of ./activity depending on the test configuration that you have designed.
 
-e.g. ./activity -ORBInitRef NamingService=file://naming_ior -ORBSvcConf=svc.conf.whatever -ORBDebugLevel 1
+e.g. ./activity -ORBInitRef NamingService=file://naming_ior -ORBSvcConf svc.conf.whatever -ORBDebugLevel 1
 
 c) once all the instances exit, the test will generate data files: <job_name>.dat 
 
