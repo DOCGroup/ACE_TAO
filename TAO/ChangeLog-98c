@@ -1,3 +1,8 @@
+Fri Sep 25 07:37:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/echo/Client_i.cpp (Client_i): reordered
+          initializers to match declaration order.
+
 Thu Sep 24 21:45:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp (gperf_input_stream): don't
