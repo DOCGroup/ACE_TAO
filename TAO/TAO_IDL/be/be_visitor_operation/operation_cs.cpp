@@ -619,17 +619,15 @@ int
 be_compiled_visitor_operation_cs::gen_pre_stub_info (be_operation *node,
                                                      be_type *)
 {
-  be_visitor *visitor;
-  be_visitor_context ctx;
 
   // Check if this operation raises any exceptions. In that case, we must
   // generate a list of exception typecodes. This is not valid for
   // attributes
   if (!this->ctx_->attribute ())
     {
-      ctx = *this->ctx_;
+      be_visitor_context ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -640,6 +638,8 @@ be_compiled_visitor_operation_cs::gen_pre_stub_info (be_operation *node,
                             -1);
         }
     }
+
+  TAO_OutStream *os = this->ctx_->stream ();
 
   return 0;
 }
@@ -812,6 +812,19 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                              "(%N:%l) be_compiled_visitor_operation_cs::"
                              "gen_marshal_and_invoke - "
                              "codegen for args in post do_static_call\n"),
+                            -1);
+        }
+
+
+      // Generate any temporary variables to demarshal the arguments
+      be_visitor_context ctx = *this->ctx_;
+      be_visitor_compiled_args_decl visitor (&ctx);
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_compiled_visitor_operation_cs::"
+                             "gen_pre_stub_info - "
+                             "codegen for pre args failed\n"),
                             -1);
         }
       // check if there was a user exception, else demarshal the
