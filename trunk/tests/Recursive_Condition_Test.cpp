@@ -187,7 +187,7 @@ test_4()
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("signal")));
     }
 
-  for(int i = 0; i < 3; ++i){
+  for(int k = 0; k < 3; ++k){
      mutex_.release ();
   }
 

@@ -511,19 +511,19 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
   for (int i=2; i >= 0 ; --i)
     {
       INT_ID item;
- 
+
       item = (*part_rev_iter_).item ();
       ACE_ASSERT (item == item_array_ [i]);
       part_rev_iter_++;
     }
 
   part_fwd_iter_ = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (key_array_ [5], stable_tree_);
-  for (int i = 5; i < entry_count_; ++i)
+  for (int k = 5; k < entry_count_; ++k)
     {
       INT_ID item;
 
       item = (*part_fwd_iter_).item ();
-      ACE_ASSERT (item == item_array_ [i]);
+      ACE_ASSERT (item == item_array_ [k]);
       part_fwd_iter_++;
     }
 }
@@ -568,7 +568,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
 
       item = (*stable_fwd_iter_).item ();
       ACE_ASSERT (item == item_array_ [i]);
-      
+
 
       item = (*stable_rev_iter_).item ();
       ACE_ASSERT (item == item_array_ [entry_count_ - i]);
