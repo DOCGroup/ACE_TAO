@@ -83,9 +83,7 @@ build.local: $(VBUILD)
 STATIC_LINK_FLAG ?=
 static_link ?= 0
 ifeq ($(static_link),1)
-  ifeq ($(static_libs_only),1)
-    LDFLAGS += $(STATIC_LINK_FLAG)
-  endif # static_libs_only = 1
+  LDFLAGS += $(STATIC_LINK_FLAG)
 endif # static_link = 1
 
 OS ?=
