@@ -57,6 +57,8 @@ public:
 };
 
 class TAO_Noop_Constraint : public TAO_Constraint
+// = TITLE
+//   A node that represents an operation with no operands. 
 {
 public:
 
@@ -118,6 +120,9 @@ public:
   static int visit_in (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);  
   
 private:
+
+  TAO_Binary_Constraint (const TAO_Binary_Constraint&);
+  TAO_Binary_Constraint& operator= (const TAO_Binary_Constraint&);
   
   TAO_Expression_Type op_;
   // The operator type
@@ -149,6 +154,9 @@ public:
   
 private:
 
+  TAO_Unary_Constraint (const TAO_Unary_Constraint&);
+  TAO_Unary_Constraint& operator= (const TAO_Unary_Constraint&);
+  
   TAO_Expression_Type op_;
   // The operator type
   
@@ -178,6 +186,9 @@ public:
   
 private:
 
+  TAO_Property_Constraint (const TAO_Property_Constraint&);
+  TAO_Property_Constraint& operator= (const TAO_Property_Constraint&);
+  
   char* name_;
   // The name of the property.
 };
@@ -195,28 +206,27 @@ class TAO_Literal_Constraint : public TAO_Constraint
 
   // = Constructors for each of the various types of literals.
   
-  TAO_Literal_Constraint (CORBA::Any* any);
-  
+  TAO_Literal_Constraint (CORBA::Any* any);  
   TAO_Literal_Constraint (CORBA::ULong uinteger);
-
   TAO_Literal_Constraint (CORBA::Long integer);
-
   TAO_Literal_Constraint (CORBA::Boolean boolean);
-
-  TAO_Literal_Constraint (CORBA::Double doub);
-  
+  TAO_Literal_Constraint (CORBA::Double doub);  
   TAO_Literal_Constraint (const char* str);
-
+  
   TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
+  // Copy constructor
   
   ~TAO_Literal_Constraint(void);
+  // Destructor.
   
   virtual int accept (TAO_Constraint_Visitor* visitor);
+  // Visitor accept methods.
   
   virtual TAO_Expression_Type expr_type (void) const
     { return type_; }
 
   void operator= (const TAO_Literal_Constraint& co);
+  // Assignment operator.
   
   // Conversion routines.
   operator CORBA::Boolean (void) const;
@@ -295,6 +305,7 @@ class TAO_Literal_Constraint : public TAO_Constraint
  private:
 
   void copy (const TAO_Literal_Constraint& co);
+  // Private copy method.
   
   union
   {

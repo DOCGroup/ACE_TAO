@@ -582,32 +582,23 @@ operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 }
 
 int
-operator== (const CosTrading::Admin::OctetSeq_var& l,
-	   const CosTrading::Admin::OctetSeq_var& r)
+operator== (const CosTrading::Admin::OctetSeq& left,
+            const CosTrading::Admin::OctetSeq& right)
 {
   int return_value = 0;
-  CosTrading::Admin::OctetSeq& left = l;
-  CosTrading::Admin::OctetSeq& right = r;
   CORBA::ULong left_length = left.length (),
     right_length = right.length ();
-
-  /*
-  if (left_length != right_length)
-    return_value = 0;
-  else
-  */
   
   if (left_length == right_length) 
     {
+      return_value = 1;
       for (CORBA::ULong i = 0; i < left_length; i++)
 	{
-	  if (left[i] == right[i])
+	  if (left[i] != right[i])
 	    {
-	      return_value = 1;
+	      return_value = 0;
 	      break;
 	    }
-	  else /* if (left[i] > right[i]) */
-	    break;
 	}
     }
 
@@ -618,36 +609,243 @@ operator== (const CosTrading::Admin::OctetSeq_var& l,
   // TAO_Trader_Factory
   // *************************************************************
 
+#include "ace/Arg_Shifter.h"
 #include "Trader_T.h"
 
 TAO_Trader_Factory::TAO_TRADER*
-TAO_Trader_Factory::create_linked_trader (void)
+TAO_Trader_Factory::create_trader (int& argc, char** argv)
 {
-  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>  NULL_TRADER;
-  
-  NULL_TRADER::Trader_Components linked_trader =
-    (NULL_TRADER::Trader_Components)
-    (NULL_TRADER::LOOKUP |
-     NULL_TRADER::REGISTER |
-     NULL_TRADER::ADMIN |
-     NULL_TRADER::LINK);
-  return new NULL_TRADER (linked_trader);
+  TAO_Trader_Factory trader_factory (argc, argv);
+  return trader_factory.manufacture_trader ();
 }
 
-#ifdef ACE_HAS_THREADS
-/*
-TAO_Trader_Factory::TAO_TRADER*
-TAO_Trader_Factory::create_MT_linked_trader (void)
+TAO_Trader_Factory::TAO_Trader_Factory (int& argc, char** argv)
+  : conformance_ (LINKED),
+    threadsafe_ (CORBA::B_FALSE),
+    supports_dynamic_properties_ (CORBA::B_TRUE),
+    supports_modifiable_properties_ (CORBA::B_TRUE),
+    def_search_card_ (20),
+    max_search_card_ (50),
+    def_match_card_ (20),
+    max_match_card_ (50),
+    def_return_card_ (20),
+    max_return_card_ (50),
+    def_follow_policy_ (CosTrading::if_no_local),
+    max_follow_policy_ (CosTrading::always)
 {
-  typedef TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>  MT_TRADER;
-  MT_TRADER::Trader_Components linked_trader =
-    (MT_TRADER::Trader_Components)
-    (MT_TRADER::LOOKUP |
-     MT_TRADER::REGISTER |
-     MT_TRADER::ADMIN |
-     MT_TRADER::LINK);
-  return new MT_TRADER (linked_trader);
+  this->parse_args (argc, argv);
 }
-*/
+
+TAO_TRADER*
+TAO_Trader_Factory::manufacture_trader (void)
+{
+  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex> TRADER;
+
+#if defined ACE_HAS_THREADS
+  typedef TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>  MT_TRADER;
+#else
+  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>  MT_TRADER;
 #endif /* ACE_HAS_THREADS */
+  
+  TAO_TRADER* return_value = 0;
+  int components = ACE_static_cast (int, TAO_TRADER::LOOKUP);
+
+  if (this->conformance_ >= SIMPLE)
+    components |= ACE_static_cast (int, TAO_TRADER::REGISTER);
+  
+  if (this->conformance_ >= STANDALONE)
+    components |= ACE_static_cast (int, TAO_TRADER::ADMIN);
+
+  if (this->conformance_ >= LINKED)
+    components |= ACE_static_cast (int, TAO_TRADER::LINK);
+
+  if (this->threadsafe_)
+    {
+      ACE_NEW_RETURN (return_value,
+                      MT_TRADER (ACE_static_cast (TAO_TRADER::Trader_Components,
+                                                  components)),
+                      0);
+    }
+  else
+    {
+      ACE_NEW_RETURN (return_value,
+                      TRADER (ACE_static_cast (TAO_TRADER::Trader_Components,
+                                               components)),
+                      0);
+    }
+
+  TAO_Import_Attributes_Impl import_attributes =
+    return_value->import_attributes ();
+  TAO_Support_Attributes_Impl support_attributes =
+    return_value->support_attributes ();
+
+  import_attributes.def_search_card (this->def_search_card_);
+  import_attributes.max_search_card (this->max_search_card_);
+  import_attributes.def_match_card (this->def_match_card_);
+  import_attributes.max_match_card (this->max_match_card_);
+  import_attributes.def_return_card (this->def_return_card_);
+  import_attributes.max_return_card (this->max_return_card_);
+  import_attributes.def_hop_count (this->def_hop_count_);
+  import_attributes.max_hop_count (this->max_hop_count_);
+  import_attributes.def_follow_policy (this->def_follow_policy_);
+  import_attributes.max_follow_policy (this->max_follow_policy_);
+  support_attributes.supports_modifiable_properties (this->supports_modifiable_properties_);
+  support_attributes.supports_dynamic_properties (this->supports_dynamic_properties_);
+
+  return return_value;
+}
+
+void
+TAO_Trader_Factory::parse_args (int& argc, char** argv)
+{  
+  ACE_Arg_Shifter arg_shifter (argc, argv);
+
+  while (arg_shifter.is_anything_left ())
+    {
+      char *current_arg = arg_shifter.get_current ();
+      
+      if (ACE_OS::strcmp (current_arg, "-TSthreadsafe") == 0)
+        {
+          arg_shifter.consume_arg ();
+          this->threadsafe_ = CORBA::B_TRUE;
+        }
+      else if (ACE_OS::strcmp (current_arg, "-TSconformance") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* conformance_str = arg_shifter.get_current ();
+
+              if (ACE_OS::strcasecmp (conformance_str, "Linked") == 0)
+                this->conformance_ = LINKED;
+              else if (ACE_OS::strcasecmp (conformance_str, "Query") == 0)
+                this->conformance_ = QUERY;
+              else if (ACE_OS::strcasecmp (conformance_str, "Simple") == 0)
+                this->conformance_ = SIMPLE;
+              else if (ACE_OS::strcasecmp (conformance_str, "Standalone") == 0)
+                this->conformance_ = STANDALONE;
+
+              arg_shifter.consume_arg ();
+            }
+        }
+      else if (ACE_OS::strcmp (current_arg, "-TSsupports_dynamic_properties") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* arg_str = arg_shifter.get_current ();
+
+              if (ACE_OS::strcasecmp (arg_str, "true") == 0)
+                this->supports_dynamic_properties_ = CORBA::B_TRUE;
+              else if (ACE_OS::strcasecmp (arg_str, "false") == 0)
+                this->supports_dynamic_properties_ = CORBA::B_FALSE;
+
+              arg_shifter.consume_arg ();
+            }
+          
+        }
+      else if (ACE_OS::strcmp (current_arg, "-TSsupports_modifiable_properties") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* arg_str = arg_shifter.get_current ();
+
+              if (ACE_OS::strcasecmp (arg_str, "true") == 0)
+                this->supports_modifiable_properties_ = CORBA::B_TRUE;
+              else if (ACE_OS::strcasecmp (arg_str, "false") == 0)
+                this->supports_modifiable_properties_ = CORBA::B_FALSE;
+
+              arg_shifter.consume_arg ();
+            }
+        }
+      else if (ACE_OS::strcmp (current_arg, "-TSdef_search_card") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSmax_search_card") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSdef_match_card") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSmax_match_card") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSdef_return_card") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSmax_return_card") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSdef_hop_count") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSmax_hop_count") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              CORBA::ULong value =
+                ACE_static_cast (CORBA::ULong,
+                                 ACE_OS::atoi (arg_shifter.get_current ()));
+              arg_shifter.consume_arg ();
+
+              if (ACE_OS::strstr (current_arg, "card"))
+                {
+                  if (ACE_OS::strstr (current_arg, "max"))
+                    {
+                      if (ACE_OS::strstr (current_arg, "search"))
+                        this->max_search_card_ = value;
+                      else if (ACE_OS::strstr (current_arg, "match"))
+                        this->max_match_card_ = value;
+                      else
+                        this->max_return_card_ = value;
+                    }
+                  else
+                    {
+                      if (ACE_OS::strstr (current_arg, "search"))
+                        this->def_search_card_ = value;
+                      else if (ACE_OS::strstr (current_arg, "match"))
+                        this->def_match_card_ = value;
+                      else 
+                        this->def_return_card_ = value;
+                    }
+                }
+              else
+                {
+                  if (ACE_OS::strstr (current_arg, "max"))
+                    this->max_hop_count_ = value;
+                  else
+                    this->def_hop_count_ = value;
+                }
+            }
+        }
+      else if (ACE_OS::strcmp (current_arg, "-TSdef_follow_policy") == 0 ||
+               ACE_OS::strcmp (current_arg, "-TSmax_follow_policy") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* arg_str = arg_shifter.get_current ();
+              CosTrading::FollowOption follow_option;
+
+              if (ACE_OS::strcasecmp (arg_str, "always") == 0)
+                follow_option = CosTrading::always;
+              else if (ACE_OS::strcasecmp (arg_str, "if_no_local") == 0)
+                follow_option = CosTrading::if_no_local;
+              else if (ACE_OS::strcasecmp (arg_str, "local_only") == 0)
+                follow_option = CosTrading::local_only;
+              else if (ACE_OS::strstr (current_arg, "def"))
+                follow_option = this->def_follow_policy_;
+              else
+                follow_option = this->max_follow_policy_;
+
+              if (ACE_OS::strstr (current_arg, "def"))
+                this->def_follow_policy_ = follow_option;
+              else
+                this->max_follow_policy_ = follow_option;
+              
+              arg_shifter.consume_arg ();              
+            }
+        }
+      else
+        arg_shifter.ignore_arg ();
+    }
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+ACE_MT (template class TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>);
+template class TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#pragma instantiate TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>;
+#endif /* ACE_MT_SAFE */ 
+#pragma instantiate TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

@@ -224,6 +224,9 @@ private:
 
   TAO_Literal_Constraint& left_operand(void);
   TAO_Literal_Constraint& right_operand(void);
+
+  TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&);
+  TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&);
   
   Property_Map props_;
   // The map of property names to their values for a property.
@@ -234,6 +237,7 @@ private:
 
   Operand_Queue queue_;
   // The result of a non_boolean operation.
+
 };
 
 CORBA::Boolean TAO_find_string (TAO_Sequences::StringSeq& sequence, const char* element);
@@ -251,13 +255,17 @@ class TAO_Constraint_Validator : public TAO_Constraint_Visitor
   //
   // = DESCRIPTION
   //    TAO_Constraint_Validator uses the visitor pattern to
-  //    traverse all the nodes in an expression tree, checking each
-  //    for operands of the proper type. The algorithm for type
+  //    traverse all the nodes in an expression tree, checking that
+  //    for each operator node the operands are of the proper data
+  //    type it they're literals, or that they exist in the service
+  //    type definition _and_ have the proper type, if they're
+  //    property names. The algorithm for type
   //    checking is as follows: ensure that operand expression(s)
-  //    return the correct types using exprReturns* methods, and their
-  //    types. If they (or it) return the correct types, call accept
-  //    on the operands until all return true, or one returns false,
-  //    at which point we can back out of the traversal.
+  //    return the correct types using expr_returns* methods. If they
+  //    (or it) return the correct types, call accept 
+  //    on each operand until all return true or one returns false,
+  //    at which point we can back out of the traversal and indicate
+  //    failure. 
 {
 public:
   
@@ -351,7 +359,10 @@ private:
   
   int expr_returns_string(TAO_Expression_Type expr_type);
   // expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
-  // return a string. 
+  // return a string.
+
+  TAO_Constraint_Validator (const TAO_Constraint_Validator&);
+  TAO_Constraint_Validator& operator= (const TAO_Constraint_Validator&);
 };
 
 #endif /* CONSTRAINT_VISITORS_H */

@@ -48,14 +48,6 @@ class TAO_Trader : public TAO_Trader_Base
 {    
 public:
 
-  enum Trader_Components
-  { 
-    LOOKUP = 0x001,  
-    REGISTER = 0x002,
-    LINK = 0x004,
-    PROXY = 0x008,
-    ADMIN = 0x010
-  };
   // The desired combination of interfaces to be passed to the 
   // TAO_Trader constructor.
 

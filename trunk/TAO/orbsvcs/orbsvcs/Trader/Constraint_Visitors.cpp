@@ -282,7 +282,7 @@ visit_unary_minus(TAO_Unary_Constraint* unary_minus)
 
   if (operand->accept(this) == 0)
     {
-      TAO_Literal_Constraint& result = - this->queue_.get_operand();
+      TAO_Literal_Constraint result = - this->queue_.get_operand();
       this->queue_.dequeue_operand ();
       this->queue_.enqueue_head (result);
 
@@ -301,7 +301,7 @@ TAO_Constraint_Evaluator::do_the_op (int operation)
   // Perform the listed bindary operation on the first two elements on 
   // the stack.
   
-  TAO_Literal_Constraint& result =
+  TAO_Literal_Constraint result =
     (operation <= TAO_NE)
     ?
     TAO_Literal_Constraint
@@ -1083,3 +1083,13 @@ TAO_Constraint_Validator::expr_returns_string(TAO_Expression_Type expr_type)
 
   return return_value;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>;
+template class ACE_Unbounded_Queue<TAO_Literal_Constraint>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>;
+#pragma instantiate ACE_Unbounded_Queue<TAO_Literal_Constraint>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

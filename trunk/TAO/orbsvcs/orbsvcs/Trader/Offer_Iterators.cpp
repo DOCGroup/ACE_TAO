@@ -117,34 +117,32 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   // *************************************************************
 
 TAO_Offer_Iterator_Collection::TAO_Offer_Iterator_Collection (void)
-  : total_left_ (0)
 {
+}
+
+TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
+{
+  while (! this->iters_.is_empty ())
+    {
+      CosTrading::OfferIterator* offer_iter;
+      this->iters_.dequeue_head (offer_iter);
+
+      TAO_TRY
+        {
+          offer_iter->destroy (TAO_TRY_ENV);
+          CORBA::release (offer_iter);
+        }
+      TAO_CATCHANY {}
+      TAO_ENDTRY;
+    }
 }
 
 void
 TAO_Offer_Iterator_Collection::
-add_offer_iterator (CosTrading::OfferIterator* offer_iter)
+add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter)
 {
-  Iter_Info iter_info;
-
   if (offer_iter != CosTrading::OfferIterator::_nil ())
-    {  
-      TAO_TRY
-	{
-	  iter_info.iter_ = offer_iter;
-	  iter_info.num_left_ = offer_iter->max_left (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	}
-      TAO_CATCHANY
-	{
-	  // I don't know what to do here if the offer_iterator throws
-	  // an UnknownMaxLeft exception.
-	}
-      TAO_ENDTRY;
-
-      this->total_left_ += iter_info.num_left_;
-      this->iters_.enqueue_tail (iter_info);
-    }
+    this->iters_.enqueue_tail (offer_iter);
 }
 
 CORBA::Boolean
@@ -160,38 +158,47 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
   ACE_NEW_RETURN (offers, CosTrading::OfferSeq, return_value);
   while (offers_left > 0 && ! this->iters_.is_empty ())
     {
-      Iter_Info iter_info;
-      this->iters_.dequeue_head (iter_info);
+      CORBA::ULong offset = 0;
+      CORBA::Boolean any_left = CORBA::B_FALSE;
+      CosTrading::OfferIterator* iter =  0;
+      this->iters_.dequeue_head (iter);
 
       // Determine how many offers we should retrieve from this
       // iterator. 
-      CORBA::ULong offers_to_retrieve =
-	(offers_left > iter_info.num_left_)
-	? iter_info.num_left_
-	: offers_left;
 
-      // Retrieve the set of offers.
-      iter_info.iter_->next_n
-	(offers_to_retrieve,
-	 CosTrading::OfferSeq_out (out_offers.out ()),
-	 env);
+      TAO_TRY
+        {
+          // Retrieve the set of offers.
+          any_left =
+            iter->next_n (offers_left,
+                          CosTrading::OfferSeq_out (out_offers.out ()),
+                          TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-      // Merge it with the passed set.
-      CORBA::ULong offset = offers->length ();
-      offers->length (out_offers->length () + offset);
-      for (int j = out_offers->length () - 1; j >= 0; j--)
-	offers[j + offset] = out_offers[j];
+          // If we've exhausted this iterator, destroy it.
+          if (any_left == CORBA::B_FALSE)
+            {
+              iter->destroy (env);
+              CORBA::release (iter);
+            }
+          else
+            this->iters_.enqueue_head (iter);
 
-      // Adjust the offer counters.
-      offers_left -= offers_to_retrieve;
-      iter_info.num_left_ -= offers_to_retrieve;
-      this->total_left_ -= offers_to_retrieve;
+          // Merge it with the passed set.
+          offset = offers->length ();
+          offers->length (out_offers->length () + offset);
+          for (int j = out_offers->length () - 1; j >= 0; j--)
+            offers[j + offset] = out_offers[j];
+          
+          offers_left -= out_offers->length ();          
+        }
+      TAO_CATCHANY
+        {
+          goto TAO_Offer_Iterator_Collection_loop_end;
+        }
+      TAO_ENDTRY;
 
-      // If we've exhausted this iterator, destroy it.
-      if (iter_info.num_left_ == 0)
-	iter_info.iter_->destroy (env);
-      else
-	this->iters_.enqueue_head (iter_info);
+    TAO_Offer_Iterator_Collection_loop_end: ;
     }
 
   // Determine if we have anything left to offer.
@@ -210,13 +217,11 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& _env)
        ! iters_iter.done ();
        iters_iter.advance ())
     {
-      Iter_Info* iter_info = 0;
+      CosTrading::OfferIterator** iter = 0;
 
-      iters_iter.next (iter_info);
-      iter_info->iter_->destroy (_env);
+      iters_iter.next (iter);
+      (*iter)->destroy (_env);
     }
-
-  this->total_left_ = 0;
 
   // Remove self from POA
   //
@@ -243,11 +248,11 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& _env)
 }
 
 CORBA::ULong
-TAO_Offer_Iterator_Collection::max_left (CORBA::Environment &env)
+TAO_Offer_Iterator_Collection::max_left (CORBA::Environment &_env)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosTrading::UnknownMaxLeft))
 {
-  return this->total_left_;
+  TAO_THROW_RETURN (CosTrading::UnknownMaxLeft, 0);
 }
 
   // *************************************************************
@@ -261,8 +266,7 @@ TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator (void)
 
 TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
 {
-  int items_left = this->ids_.size (),
-    return_value = 0;
+  int return_value = 0;
 
   do
     {
@@ -366,3 +370,13 @@ TAO_Offer_Id_Iterator::insert_id (CosTrading::OfferId new_id)
 {
   this->ids_.enqueue_tail (new_id);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Queue <CosTrading::Offer*>;
+template class ACE_Unbounded_Queue <CosTrading::OfferIterator*>;
+template class ACE_Unbounded_Queue <CosTrading::OfferId>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Queue <CosTrading::Offer*>;
+#pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferIterator*>;
+#pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferId>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

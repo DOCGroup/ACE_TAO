@@ -49,7 +49,7 @@ construct_dynamic_prop (const char* name,
     {
       CosTradingDynamic::DynamicPropEval* dp_eval = this->_this (TAO_TRY_ENV);
 
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+#if defined TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
       dp_struct->eval_if = orb->object_to_string (dp_eval, TAO_TRY_ENV);
 #else

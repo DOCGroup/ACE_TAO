@@ -44,20 +44,62 @@ class TAO_Trader_Base;
   // TAO_Trader_Factory
   // *************************************************************
 
-// Cludge to avoid template instantiation in the executable.
 class TAO_ORBSVCS_Export TAO_Trader_Factory
+// = TITLE
+//   Uses command line arguments to construct a trader instance with
+//   the correct interface support, locking, and policy settings.
 {
 public:
 
   typedef TAO_Trader_Base TAO_TRADER;
 
-  static TAO_TRADER* create_linked_trader (void);
+  static TAO_TRADER* create_trader (int& argc, char** argv);
+  // Creates an instance of the trader according to parameters whose
+  // default values can be overrided with the following command line
+  // arguments:
+  //
+  // -TSthreadsafe, default is not thread-safe
+  // -TSconformance {query, simple, stand-alone, linked}, default is linked
+  // -TSsupports_dynamic_properties {true, false}, default is true
+  // -TSsupports_modifiable_propertise {true, false}, default is true
+  // -TSdef_search_card {integer}, default is 20
+  // -TSmax_search_card {integer}, default is 50
+  // -TSdef_match_card {integer}, default is 20
+  // -TSmax_match_card {integer}, default is 50
+  // -TSdef_return_card {integer}, default is 20
+  // -TSmax_return_card {integer}, default is 50
+  // -TSdef_hop_count {integer}, default is 5,
+  // -TSmax_hop_count {integer}, default is 10
+  // -TSdef_follow_policy {always,if_no_local,local_only}, default is if_no_local,
+  // -TSmax_follow_policy {always,if_no_local,local_only}, default is always
+
+private:
+
+  TAO_Trader_Factory (int& argc, char** argv);
   
-#ifdef ACE_HAS_THREADS
+  enum Conformance { QUERY, SIMPLE, STANDALONE, LINKED };
+
+  TAO_TRADER* manufacture_trader (void);
   
-  //  static TAO_TRADER* create_MT_linked_trader (void);
-  
-#endif /* ACE_HAS_THREADS */
+  void parse_args (int& argc, char** argv);
+
+  TAO_Trader_Factory& operator= (const TAO_Trader_Factory&);
+  TAO_Trader_Factory (const TAO_Trader_Factory&);
+
+  Conformance conformance_;
+  CORBA::Boolean threadsafe_;
+  CORBA::Boolean supports_dynamic_properties_;
+  CORBA::Boolean supports_modifiable_properties_;
+  CORBA::ULong def_search_card_;
+  CORBA::ULong max_search_card_;
+  CORBA::ULong def_match_card_;
+  CORBA::ULong max_match_card_;
+  CORBA::ULong def_return_card_;
+  CORBA::ULong max_return_card_;
+  CORBA::ULong def_hop_count_;
+  CORBA::ULong max_hop_count_;
+  CosTrading::FollowOption def_follow_policy_;
+  CosTrading::FollowOption max_follow_policy_; 
 };
 
   // *************************************************************
@@ -329,9 +371,15 @@ class TAO_ORBSVCS_Export TAO_Trader_Base : public TAO_Lockable
   //     this problem.
 {    
 public:
-  typedef int HUGE_NUMBER;
 
-  TAO_Trader_Base (void);
+  enum Trader_Components
+  { 
+    LOOKUP = 0x001,  
+    REGISTER = 0x002,
+    LINK = 0x004,
+    PROXY = 0x008,
+    ADMIN = 0x010
+  }; 
 
   // = Accessors for objects that manage trader's configuration.
 
@@ -373,9 +421,16 @@ protected:
   TAO_Link_Attributes_Impl link_attributes_;
   // Stores and allows access/modification of trader's link attributes.
 
- private:
+ protected:
+  
+  TAO_Trader_Base (void);
+  // Implemented.
 
+ private:
+  
+  TAO_Trader_Base (const TAO_Trader_Base& TAO_Trader_Base);
   TAO_Trader_Base& operator= (const TAO_Trader_Base&);
+  // Unimplemented.
 };
 
 
@@ -423,7 +478,7 @@ int
 operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 	   const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
 
-int operator== (const CosTrading::Admin::OctetSeq_var& left,
-		const CosTrading::Admin::OctetSeq_var& right);
+int operator== (const CosTrading::Admin::OctetSeq& left,
+		const CosTrading::Admin::OctetSeq& right);
 
 #endif /* TAO_TRADER_BASE_H */

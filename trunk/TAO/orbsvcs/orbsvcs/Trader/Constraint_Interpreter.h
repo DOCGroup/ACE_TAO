@@ -151,6 +151,9 @@ public:
 
 private:
 
+  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
+  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
+  
   struct Preference_Info
   {
     CORBA::Boolean evaluated_;
