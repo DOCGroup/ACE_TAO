@@ -27,7 +27,26 @@ static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
 
-static void print_time (ACE_Profile_Timer &timer,
+static void
+randomize (int array[], int size)
+{
+  for (int i = 0; i < size; i++)
+    array [i] = i;
+  
+  ACE_OS::srand (ACE_OS::time (0L));
+ 
+  for (i = 0; i < size; i++, size) 
+    {
+      int index = ACE_OS::rand() % size--;
+      int temp = array [index];
+      array [index] = array [size];
+      array [size] = temp;
+    }
+}
+
+
+static void 
+print_time (ACE_Profile_Timer &timer,
 			const char *test)
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
@@ -45,31 +64,52 @@ static void print_time (ACE_Profile_Timer &timer,
 static void
 test_bind (ACE_Naming_Context &ns_context)
 {
+  int array [ACE_NS_MAX_ENTRIES];
+  randomize (array, sizeof array / sizeof (int));
+
   // do the binds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
+  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", i);
+      sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
       
-      sprintf (value, "%s%d", "value", i);
+      sprintf (value, "%s%d", "value", array[i]);
       ACE_WString w_value (value);
       
-      sprintf (type, "%s%d", "type", i);
+      sprintf (type, "%s%d", "type", array [i]);
       ACE_ASSERT (ns_context.bind (w_name, w_value, type) != -1);
+    }
+}
+
+static void
+test_find_failure (ACE_Naming_Context &ns_context)
+{
+  sprintf (name, "%s", "foo-bar");
+  ACE_WString w_name (name);
+  ACE_WString w_value;
+  char *type = 0;
+      
+  // do the finds
+  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
+    {
+      ACE_ASSERT (ns_context.resolve (w_name, w_value, type) == -1);
     }
 }
 
 static void
 test_rebind (ACE_Naming_Context &ns_context)
 {
+  int array [ACE_NS_MAX_ENTRIES];
+  randomize (array, sizeof array / sizeof (int));
+
   // do the rebinds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
+  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", i);
+      sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
-      sprintf (value, "%s%d", "value", -i);
+      sprintf (value, "%s%d", "value", -array[i]);
       ACE_WString w_value (value);
-      sprintf (type, "%s%d", "type", -i);
+      sprintf (type, "%s%d", "type", -array[i]);
       ACE_ASSERT (ns_context.rebind (w_name, w_value, type) != -1);
     }
 }
@@ -77,10 +117,13 @@ test_rebind (ACE_Naming_Context &ns_context)
 static void
 test_unbind (ACE_Naming_Context &ns_context)
 {
+  int array [ACE_NS_MAX_ENTRIES];
+  randomize (array, sizeof array / sizeof (int));
+
   // do the unbinds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
+  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", i);
+      sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
       ACE_ASSERT (ns_context.unbind (w_name) != -1);
     }
@@ -92,26 +135,28 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   char temp_val[BUFSIZ];
   char temp_type[BUFSIZ];
 
-  // do the finds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
-    {
-      sprintf (name, "%s%d", "name", i);
-      ACE_WString w_name (name);
-      
-      ACE_WString w_value;
-      char *type_out = 0;
+  int array [ACE_NS_MAX_ENTRIES];
+  randomize (array, sizeof array / sizeof (int));
 
+  // do the finds
+  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
+    {
       if (sign == 1)
 	{
-	  sprintf (temp_val, "%s%d", "value", i);
-	  sprintf (temp_type, "%s%d", "type", i);
+	  sprintf (temp_val, "%s%d", "value", array[i]);
+	  sprintf (temp_type, "%s%d", "type", array[i]);
 	}	  
       else
 	{
-	  sprintf (temp_val, "%s%d", "value", -i);
-	  sprintf (temp_type, "%s%d", "type", -i);
+	  sprintf (temp_val, "%s%d", "value", -array[i]);
+	  sprintf (temp_type, "%s%d", "type", -array[i]);
 	}
 
+      sprintf (name, "%s%d", "name", array[i]);
+
+      ACE_WString w_name (name);      
+      ACE_WString w_value;
+      char *type_out = 0;
       ACE_WString val (temp_val);
       
       ACE_ASSERT (ns_context.resolve (w_name, w_value, type_out) == result);
@@ -131,7 +176,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 	    }
 	  if (type_out)
 	    {
-	      ACE_ASSERT (::strcmp (type_out, temp_type) == 0);
+	      ACE_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
 	      delete[] type_out;
 	    }
 	}
@@ -194,14 +239,19 @@ main (int argc, char *argv[])
   print_time (timer, "Rebinds");
 
   timer.start ();
-  // Remove all bindings from database
-  test_unbind (*ns_context); 
-  print_time (timer, "Unbinds");
+  // Should find the entries
+  test_find (*ns_context,  -1, 0);
+  print_time (timer, "Successful Finds");
 
   timer.start ();
   // Should not find the entries
-  test_find (*ns_context,  1, -1);
+  test_find_failure (*ns_context);
   print_time (timer, "UnSuccessful Finds");
+
+  timer.start ();
+  // Remove all bindings from database
+  test_unbind (*ns_context); 
+  print_time (timer, "Unbinds");
 
   ACE_OS::sprintf (temp_file, __TEXT ("%s%s%s"),
 		   name_options->namespace_dir (),
