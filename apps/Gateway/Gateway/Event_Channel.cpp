@@ -127,7 +127,7 @@ Event_Channel::put (ACE_Message_Block *event,
 	  // At this point, we should assign a thread-safe locking
 	  // strategy to the Message_Block is we're running in a
 	  // multi-threaded configuration.
-          data->locking_strategy (MB_Locking_Strategy::instance ());
+          data->locking_strategy (Options::instance ()->locking_strategy ());
 
 	  for (Connection_Handler **connection_handler = 0;
 	       dsi.next (connection_handler) != 0;
@@ -141,7 +141,7 @@ Event_Channel::put (ACE_Message_Block *event,
 		  ACE_Message_Block *dup_msg = data->duplicate ();
 
 		  ACE_DEBUG ((LM_DEBUG, "(%t) forwarding to Consumer %d\n",
-			      (*connection_handler)->id ()));
+			      (*connection_handler)->connection_id ()));
 
 		  if ((*connection_handler)->put (dup_msg) == -1)
 		    {
@@ -149,8 +149,10 @@ Event_Channel::put (ACE_Message_Block *event,
 			ACE_ERROR ((LM_ERROR, "(%t) %p\n",
 				   "gateway is flow controlled, so we're dropping events"));
 		      else
-			ACE_ERROR ((LM_ERROR, "(%t) %p transmission error to peer %d\n",
-				   "put", (*connection_handler)->id ()));
+			ACE_ERROR ((LM_ERROR,
+                                    "(%t) %p transmission error to peer %d\n",
+				   "put",
+                                    (*connection_handler)->connection_id ()));
 
 		      // We are responsible for releasing an
 		      // ACE_Message_Block if failures occur.
@@ -207,7 +209,7 @@ Event_Channel::complete_connection_connection (Connection_Handler *connection_ha
   // Restart the timeout to 1.
   connection_handler->timeout (1);
 
-  ACE_INT32 id = htonl (connection_handler->id ());
+  ACE_INT32 id = htonl (connection_handler->connection_id ());
 
   // Send the connection id to the peerd.
 
@@ -235,7 +237,7 @@ Event_Channel::reinitiate_connection_connection (Connection_Handler *connection_
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "(%t) scheduling reinitiation of Connection_Handler %d\n",
-		  connection_handler->id ()));
+		  connection_handler->connection_id ()));
 
       // Reschedule ourselves to try and connect again.
       if (ACE_Reactor::instance ()->schedule_timer
@@ -324,8 +326,9 @@ Event_Channel::close (u_long)
       {
 	Connection_Handler *connection_handler = me->int_id_;
 
-	ACE_DEBUG ((LM_DEBUG, "(%t) closing down connection %d\n",
-		    connection_handler->id ()));
+	ACE_DEBUG ((LM_DEBUG,
+                    "(%t) closing down connection %d\n",
+		    connection_handler->connection_id ()));
 
 	// Mark Connection_Handler as DISCONNECTING so we don't try to
 	// reconnect...
@@ -371,7 +374,7 @@ Event_Channel::find_proxy (ACE_INT32 connection_id,
 int
 Event_Channel::bind_proxy (Connection_Handler *connection_handler)
 {
-  int result = this->connection_map_.bind (connection_handler->id (),
+  int result = this->connection_map_.bind (connection_handler->connection_id (),
                                            connection_handler);
 
   switch (result)
@@ -379,13 +382,13 @@ Event_Channel::bind_proxy (Connection_Handler *connection_handler)
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%t) bind failed for connection %d\n",
-			 connection_handler->id ()),
+			 connection_handler->connection_id ()),
                         -1);
       /* NOTREACHED */
     case 1: // Oops, found a duplicate!
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%t) duplicate connection %d, already bound\n",
-			 connection_handler->id ()),
+			 connection_handler->connection_id ()),
                         -1);
       /* NOTREACHED */
     case 0:
