@@ -5,7 +5,7 @@ Wed Dec  2 14:26:58 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
 	  The upcast and downcast methods are now generated even for
 	  sequences of CORBA::Objects and CORBA::TypeCodes. Thanks to Ron Barack
-	  (rab@terminal.cz) for reporting the problem.
+	  <rab@terminal.cz> for reporting the problem.
 
 Wed Dec 02 11:03:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
