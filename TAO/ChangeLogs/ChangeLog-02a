@@ -1,3 +1,9 @@
+Thu May 24 16:57:16 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/LocalObject.h (hash):
+
+	  Updated documentation for this method.
+
 Thu May 24 16:34:37 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/corbafwd.h:

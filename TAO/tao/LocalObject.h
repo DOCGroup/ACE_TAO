@@ -149,11 +149,9 @@ public:
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   /**
-   * Return a (potentially non-unique) hash value for this object.
-   * This method relies on the representation of the object
-   * reference's private state.  Since that changes easily (when
-   * different ORB protocols are in use) there is no default
-   * implementation.
+   * Return a hash value for this object.  The hash is based on the
+   * address of the object.  On non-32 bit platforms, the hash may be
+   * non-unique.
    */
   virtual CORBA::ULong _hash (CORBA::ULong maximum,
                               CORBA_Environment &ACE_TRY_ENV =
