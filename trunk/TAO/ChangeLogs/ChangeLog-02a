@@ -1,210 +1,228 @@
+Mon Jan 17 22:13:05 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+          Added a new command, ior to the tao_imr program.  This
+          command creates a simplified IOR by attaching a given
+          name with the IMR's endpoint.  This will only work with
+          servers that register the simplified IORs with the
+          IOR lookup table (Interoperable Naming Service stuff).
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Change the nestea_ir test to use this scheme.
+
+        * docs/implrepo/index.html:
+        * docs/implrepo/tao_imr.html
+        * docs/implrepo/usersguide.html
+          Updated the documentation.
+
 Mon Jan 17 22:53:53 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  Updated the NT project files.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Updated the NT project files.
 
 Tue Jan 18 20:44:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Object.cpp:
-	  The _non_existent() method must catch the
-	  CORBA::OBJECT_NOT_EXIST exception and return the appropriate
-	  value.
+        * tao/Object.cpp:
+          The _non_existent() method must catch the
+          CORBA::OBJECT_NOT_EXIST exception and return the appropriate
+          value.
 
 Tue Jan 18 20:39:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierControl.i:
-	* orbsvcs/orbsvcs/Event/EC_SupplierControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.i:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.i:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.i:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
-	  New components to the event channel that deal with stale
-	  consumer and/or supplier proxies.
-	  The first implementations simply poll the consumers and
-	  suppliers periodically, using the _non_existent() method to
-	  check if the object is there, to avoid dead-locks they use the
-	  timeout policies in the ORB to bound the time the spend
-	  polling.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.i:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.i:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.i:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          New components to the event channel that deal with stale
+          consumer and/or supplier proxies.
+          The first implementations simply poll the consumers and
+          suppliers periodically, using the _non_existent() method to
+          check if the object is there, to avoid dead-locks they use the
+          timeout policies in the ORB to bound the time the spend
+          polling.
 
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	  The factory must create the new components now.
-	  Use CORBA::ORB_init() instead of TAO_ORB_Core_instance() to get
-	  to the ORB.  This is standard and it can be easily configured
-	  using the ORBid.
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          The factory must create the new components now.
+          Use CORBA::ORB_init() instead of TAO_ORB_Core_instance() to get
+          to the ORB.  This is standard and it can be easily configured
+          using the ORBid.
 
-	* docs/ec_options.html:
-	  Documented the new options in the TAO_EC_Default_Factory.
+        * docs/ec_options.html:
+          Documented the new options in the TAO_EC_Default_Factory.
 
-	* orbsvcs/orbsvcs/Event/EC_Defaults.h:
-	  New defaults for the consumer and supplier control policies.
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+          New defaults for the consumer and supplier control policies.
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	  The event channel creates the consumer and supplier control
-	  policies (using the factory), and then activates them.
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          The event channel creates the consumer and supplier control
+          policies (using the factory), and then activates them.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Addded methods to invoke _non_existent() while holding the state
-	  lock, to avoid race conditions (as in one thread disconnecting
-	  a consumer while another thread tries to check if the consumer
-	  still exists).
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Addded methods to invoke _non_existent() while holding the state
+          lock, to avoid race conditions (as in one thread disconnecting
+          a consumer while another thread tries to check if the consumer
+          still exists).
 
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
-	  New accessor to use the collection lock.
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
+          New accessor to use the collection lock.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
-	  Fixed nasty bug in the definition of the Disconnect command
-	  object, the typedef was wrong.
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+          Fixed nasty bug in the definition of the Disconnect command
+          object, the typedef was wrong.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
-	  Removed old debug message.
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+          Removed old debug message.
 
-	* orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
-	  Removed references to TAO_ORB_Core_instance().
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
+          Removed references to TAO_ORB_Core_instance().
 
 Mon Jan 17 19:54:34 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/GIOP.cpp (write_request_header_lite): Made
-	  write_request_header_lite similar to write_request_header_std -
-	  both for checking the <response_flags> correctly and for dealing
-	  with the SYNC_WITH_SERVER option.  Thanks to Bala for pointing
-	  this out.
+        * tao/GIOP.cpp (write_request_header_lite): Made
+          write_request_header_lite similar to write_request_header_std -
+          both for checking the <response_flags> correctly and for dealing
+          with the SYNC_WITH_SERVER option.  Thanks to Bala for pointing
+          this out.
 
 Mon Jan 17 15:49:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	  Fix to scoping of field name generation in header
-	  file when structs and/or unions are nested. Thanks to
-	  Hugh Arnold <harnold@itginc.com> for reporting this
-	  bug and sending in the example file.
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          Fix to scoping of field name generation in header
+          file when structs and/or unions are nested. Thanks to
+          Hugh Arnold <harnold@itginc.com> for reporting this
+          bug and sending in the example file.
 
-	* TAO_IDL/be/be_visitor_scope.cpp:
-	  Cosmetic changes.
+        * TAO_IDL/be/be_visitor_scope.cpp:
+          Cosmetic changes.
 
-	* tests/IDL_Test/union.idl:
-	  Added example IDL file mentioned above to test suite.
+        * tests/IDL_Test/union.idl:
+          Added example IDL file mentioned above to test suite.
 
-	* tests/IDL_Test/idl_test.dsp:
-	  Updated project settings to make custom build settings
-	  identical for all the IDL files in the test suite.
+        * tests/IDL_Test/idl_test.dsp:
+          Updated project settings to make custom build settings
+          identical for all the IDL files in the test suite.
 
 Tue Jan 18 10:54:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* docs/Options.html:
-	  Documented the -ORBReactorRegistry option in the resource
-	  factory.
+        * docs/Options.html:
+          Documented the -ORBReactorRegistry option in the resource
+          factory.
 
 Sun Jan 16 15:54:39 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/default_resource.cpp:
+        * tao/default_resource.cpp:
 
-	  Moved template instantiations related to ACE_LOCAL_MEMORY_POOL
-	  to ace/ACE.cpp.  The idea is to place this set of template
-	  instantiations in a "common" area, since ace/Configuration.cpp
-	  also needs these templates instantations.
+          Moved template instantiations related to ACE_LOCAL_MEMORY_POOL
+          to ace/ACE.cpp.  The idea is to place this set of template
+          instantiations in a "common" area, since ace/Configuration.cpp
+          also needs these templates instantations.
 
 Fri Jan 14 08:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/README,
-	  docs/releasenotes/index.html,
-	  examples/AMI/FL_Callback/README:
-	  Realized that IDL_HAS_VALUETYPE is defined by default in the TAO
-	  IDL compiler. Updated the documentation about AMI accordingly.
+        * tests/AMI/README,
+          docs/releasenotes/index.html,
+          examples/AMI/FL_Callback/README:
+          Realized that IDL_HAS_VALUETYPE is defined by default in the TAO
+          IDL compiler. Updated the documentation about AMI accordingly.
 
 Fri Jan 14 06:01:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_interface.cpp,
-	  TAO_IDL/be_include/be_interface.h:
-	  Added a method named 'replacement' giving access to an
-	  interface node, which can serve as an replacement for the original.
+        * TAO_IDL/be/be_interface.cpp,
+          TAO_IDL/be_include/be_interface.h:
+          Added a method named 'replacement' giving access to an
+          interface node, which can serve as an replacement for the original.
 
-	* TAO_IDL/be/be_interface_strategy.cpp,
-	  TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
-	  TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp,
-	  TAO_IDL/be_include/be_interface_strategy.h:
-	  Enhanced the AMI preprocessor and the associated interface
-	  strategies to handle replacement nodes.
-	  This was necessary to pass information around for AMI code generation.
-	  The bug triggering this was a multiply defined typedef. Thanks
-	  to Bala for figuring this out.
+        * TAO_IDL/be/be_interface_strategy.cpp,
+          TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+          TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp,
+          TAO_IDL/be_include/be_interface_strategy.h:
+          Enhanced the AMI preprocessor and the associated interface
+          strategies to handle replacement nodes.
+          This was necessary to pass information around for AMI code generation.
+          The bug triggering this was a multiply defined typedef. Thanks
+          to Bala for figuring this out.
 
 Thu Jan 13 20:11:55 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (run): Generalized to work with <perform_work>.
-	  In <perform_work>, we only run the loop once.
+        * tao/ORB_Core.cpp (run): Generalized to work with <perform_work>.
+          In <perform_work>, we only run the loop once.
 
-	* tao/ORB.cpp (perform_work): The method now calls
-	  orb_core->run(), specifying that it is <perform_work> which
-	  prevents looping of the event loop.
+        * tao/ORB.cpp (perform_work): The method now calls
+          orb_core->run(), specifying that it is <perform_work> which
+          prevents looping of the event loop.
 
-	* tao/ORB.h (CORBA_ORB): There are now three versions of
-	  perform_work() and are similar to the run() methods.
+        * tao/ORB.h (CORBA_ORB): There are now three versions of
+          perform_work() and are similar to the run() methods.
 
 Tue Jan 11 21:27:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Messaging.pidl (Messaging): Added two TAO specific SYNC
-	  options that control how buffering takes place in the ORB.
+        * tao/Messaging.pidl (Messaging): Added two TAO specific SYNC
+          options that control how buffering takes place in the ORB.
 
-	  (a) SYNC_EAGER_BUFFERING is the same as SYNC_NONE.  These
-	  options will first queue the message in the buffering queue and
-	  then check the buffering constraints.  If the constraints have
-	  been reached, the buffered messages will be delivered to the
-	  server.  If the delivery of the messages to the server times
-	  out, the queued messages will remain queued until the buffering
-	  constraints are reached again.
+          (a) SYNC_EAGER_BUFFERING is the same as SYNC_NONE.  These
+          options will first queue the message in the buffering queue and
+          then check the buffering constraints.  If the constraints have
+          been reached, the buffered messages will be delivered to the
+          server.  If the delivery of the messages to the server times
+          out, the queued messages will remain queued until the buffering
+          constraints are reached again.
 
-	  (b) SYNC_DELAYED_BUFFERING will first check the buffering queue.
-	  If the queue already has buffered messages, then this option
-	  will behave the same as the above option, i.e., buffer the
-	  message for later delivery.  However, if the queue is empty, it
-	  will try to deliver the message immediately. If the message
-	  delivery to the server times out, the message will be queued for
-	  later delivery when the buffering constraints are reached.
+          (b) SYNC_DELAYED_BUFFERING will first check the buffering queue.
+          If the queue already has buffered messages, then this option
+          will behave the same as the above option, i.e., buffer the
+          message for later delivery.  However, if the queue is empty, it
+          will try to deliver the message immediately. If the message
+          delivery to the server times out, the message will be queued for
+          later delivery when the buffering constraints are reached.
 
-	* tao: Added code to handle the new options and strategies related
-	  to the above change.  The following files were effected:
+        * tao: Added code to handle the new options and strategies related
+          to the above change.  The following files were effected:
 
-	  - Invocation.cpp
-	  - GIOP.cpp
-	  - MessagingC.cpp
-	  - MessagingC.h
-	  - ORB_Core.cpp
-	  - ORB_Core.h
-	  - ORB_Core.i
-	  - Stub.cpp
-	  - Sync_Strategies.cpp
-	  - Sync_Strategies.h
-	  - TAOC.cpp
-	  - TAOC.h
+          - Invocation.cpp
+          - GIOP.cpp
+          - MessagingC.cpp
+          - MessagingC.h
+          - ORB_Core.cpp
+          - ORB_Core.h
+          - ORB_Core.i
+          - Stub.cpp
+          - Sync_Strategies.cpp
+          - Sync_Strategies.h
+          - TAOC.cpp
+          - TAOC.h
 
-	* tao/GIOP.cpp (write_request_header_std): Comparison with majic
-	  numbers is evil ;-) Changed it to compare against the constants.
+        * tao/GIOP.cpp (write_request_header_std): Comparison with majic
+          numbers is evil ;-) Changed it to compare against the constants.
 
-	* tao/Pluggable.h (TAO_Transport): Added friendship between the
-	  transport class and the sync classes.
+        * tao/Pluggable.h (TAO_Transport): Added friendship between the
+          transport class and the sync classes.
 
-	* tests/Timed_Buffered_Oneways/client.cpp
-	  (setup_buffering_constraints): Added the ability to either
-	  choose eager or delayed buffering.
+        * tests/Timed_Buffered_Oneways/client.cpp
+          (setup_buffering_constraints): Added the ability to either
+          choose eager or delayed buffering.
 
 Tue Jan 11 17:25:16 2000  bala  <bala@cs.wustl.edu>
 

@@ -128,6 +128,7 @@ TAO_IMR_i::print_usage (void)
                         "    activate  Activates a server through the IR\n"
                         "    add       Add an entry to the IR\n"
                         "    autostart Activates all AUTO_START servers\n"
+                        "    ior       Creates a simplified IOR\n"
                         "    list      List the entries in the IR\n"
                         "    remove    Remove an entry from the IR\n"
                         "    shutdown  Shuts down a server through the IR\n"
@@ -147,6 +148,8 @@ TAO_IMR_Op::make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Admini
     return new TAO_IMR_Op_Add (ir);
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("autostart")) == 0)
     return new TAO_IMR_Op_Autostart(ir);
+  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("ior")) == 0)
+    return new TAO_IMR_Op_IOR(ir);
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("list")) == 0)
     return new TAO_IMR_Op_List (ir);
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("remove")) == 0)
@@ -184,6 +187,12 @@ TAO_IMR_Op_Add::TAO_IMR_Op_Add (ImplementationRepository::Administration_ptr imp
 }
 
 TAO_IMR_Op_Autostart::TAO_IMR_Op_Autostart (ImplementationRepository::Administration_ptr implrepo)
+: TAO_IMR_Op (implrepo)
+{
+  // Nothing
+}
+
+TAO_IMR_Op_IOR::TAO_IMR_Op_IOR (ImplementationRepository::Administration_ptr implrepo)
 : TAO_IMR_Op (implrepo)
 {
   // Nothing
@@ -238,6 +247,11 @@ TAO_IMR_Op_Add::~TAO_IMR_Op_Add (void)
 }
 
 TAO_IMR_Op_Autostart::~TAO_IMR_Op_Autostart (void)
+{
+  // Nothing
+}
+
+TAO_IMR_Op_IOR::~TAO_IMR_Op_IOR (void)
 {
   // Nothing
 }
@@ -357,6 +371,38 @@ TAO_IMR_Op_Autostart::parse (int argc, ASYS_TCHAR **argv)
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'h':  // display help
+      default:
+        this->print_usage ();
+        return -1;
+      }
+
+  // Success
+  return 0;
+}
+
+int
+TAO_IMR_Op_IOR::parse (int argc, ASYS_TCHAR **argv)
+{
+  // Check for enough arguments (we need at least one for the server name)
+  if (argc < 1)
+  {
+    this->print_usage ();
+    return -1;
+  }
+
+  // Skip both the program name and the "ior" command
+  ACE_Get_Opt get_opts (argc, argv, "hf:");
+
+  this->server_name_ = argv[0];
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'f':  // File name
+        this->filename_ = get_opts.optarg;
+        break;
       case 'h':  // display help
       default:
         this->print_usage ();
@@ -632,6 +678,57 @@ TAO_IMR_Op_Autostart::run (void)
 }
 
 int
+TAO_IMR_Op_IOR::run (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      if (CORBA::is_nil (this->implrepo_)
+          || !this->implrepo_->_stubobj ()
+          || !this->implrepo_->_stubobj ()->profile_in_use ())
+        ACE_ERROR_RETURN ((LM_ERROR, "Invalid Implementation Repository IOR\n"), -1);
+
+      CORBA::String_var imr_str = 
+        this->implrepo_->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      char *pos = ACE_OS::strstr (imr_str.inout (), "://");
+
+      pos = ACE_OS::strchr (pos + 3, 
+                            this->implrepo_->_stubobj ()->profile_in_use ()->object_key_delimiter ());
+
+      if (pos)
+        *(pos + 1) = 0;  // Crop the string
+      else
+        ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR\n"), -1);
+
+      ACE_TString ior (imr_str.in ());
+
+      // Add the key
+      ior += this->server_name_;
+
+      ACE_DEBUG ((LM_DEBUG, "%s\n", ior.c_str ()));
+
+      if (this->filename_.length () > 0)
+        {
+          FILE *file = ACE_OS::fopen (this->filename_.c_str (), "w");
+          if (file == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Error: Unable to open %s for writing: %p\n",
+                               this->filename_.c_str ()), -1);
+          ACE_OS::fprintf (file, "%s", ior.c_str ());
+          ACE_OS::fclose (file);
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "autostart");
+      return -1;
+    }
+  ACE_ENDTRY;
+  return 0;
+}
+
+int
 TAO_IMR_Op_List::run (void)
 {
   ImplementationRepository::ServerInformationList_var server_list;
@@ -830,6 +927,21 @@ TAO_IMR_Op_Autostart::print_usage (void)
   ACE_ERROR ((LM_ERROR, "Usage: tao_ir [options] autostart [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where [command-arguments] can be\n"
+                        "    -h            Displays this\n"));
+}
+
+void
+TAO_IMR_Op_IOR::print_usage (void)
+{
+  ACE_ERROR ((LM_ERROR, "Creates an IOR for a server that is registered with the IMR and uses\n"
+                        "the InterOperable Naming Service.  Please see the documentation for\n"
+                        "more information on which server configurations work with this command.\n"
+                        "\n"
+                        "Usage: tao_ir [options] ior <name> [command-arguments]\n"
+                        "  where [options] are ORB options\n"
+                        "  where <name> is the POA name of the server\n"
+                        "  where [command-arguments] can be\n"
+                        "    -f filename   filename to output the IOR to\n"
                         "    -h            Displays this\n"));
 }
 
