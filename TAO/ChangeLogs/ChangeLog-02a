@@ -1,3 +1,91 @@
+Mon May 27 08:52:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTCORBA/Activity/Makefile.bor:
+          Created BCB makefile for this example
+
+        * examples/RTCORBA/Makefile.bor:
+          Created BCB makefile for this directory
+
+        * examples/Makefile.bor:
+          Added RTCORBA directory.
+
+        * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.h:
+        * orbsvcs/orbsvcs/Naming/Entries.h:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.h:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h:
+          Converted old style documentation to doxygen style documentation
+
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/Exclusive_TMS.h:
+        * tao/GIOP_Utils.h:
+        * tao/Interceptor_List.h:
+        * tao/Invocation_Endpoint_Selectors.h:
+        * tao/PolicyFactory_Registry.h:
+        * tao/Sequence.h:
+        * tao/Stub.h:
+          Converted old style documentation to doxygen style documentation
+
+        * tao/DynamicAny/DynAny_i.h:
+          Converted old style documentation to doxygen style documentation
+
+        * tao/IORTable/IOR_Table_Impl.h:
+          Converted old style documentation to doxygen style documentation
+
+        * tao/Messaging/Asynch_Timeout_Handler.h:
+          Converted old style documentation to doxygen style documentation
+
+        * tao/RTCORBA/Direct_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Priority_Mapping.h:
+        * tao/RTCORBA/Private_Transport_Descriptor.h:
+          Converted old style documentation to doxygen style documentation
+
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+          Converted old style documentation to doxygen style documentation
+
+        * tao/SmartProxies/Smart_Proxies.h:
+          Converted old style documentation to doxygen style documentation
+
+        * tao/Strategies/DIOP_Acceptor.h:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connector.h:
+        * tao/Strategies/DIOP_Endpoint.h:
+        * tao/Strategies/DIOP_Factory.h:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/LF_Strategy_Null.h:
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connector.h:
+        * tao/Strategies/SHMIOP_Endpoint.h:
+        * tao/Strategies/SHMIOP_Factory.h:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/UIOP_Acceptor.h:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connector.h:
+        * tao/Strategies/UIOP_Endpoint.h:
+        * tao/Strategies/UIOP_Factory.h:
+        * tao/Strategies/UIOP_Lite_Factory.h:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/advanced_resource.h:
+          Converted old style documentation to doxygen style documentation. For the
+          UIOP files the include ordering is changed to the structure of the other
+          files so that the documentation is correctly generated.
+
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.h:
+          Converted old style documentation to doxygen style documentation
+
 Sun May 26 21:04:36 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/Makefile.EXE:
