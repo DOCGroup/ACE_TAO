@@ -1,5 +1,7 @@
-Sat Dec  4 16:53:18 2004  Marek Brudka  <mbrudka@aster.pl>
+Sat Dec  4 17:03:38 2004  Marek Brudka  <mbrudka@aster.pl>
 
+	* tests/RMCast/.cvsignore (Module):
+	* ace/.cvsignore (Module):
 	* tests/.cvsignore (Module):
 	Added linux executables to prevent cvs warnings
 

@@ -38,6 +38,7 @@ report process</a>.<p>
   </li><li><a href="#aceinstall">Building and Installing ACE</a>
   </li><li><a href="#svcsinstall">Building and Installing ACE Network Services</a>
   </li><li><a href="#sslinstall">Building and Installing The ACE_SSL Library</a>
+  </li><li><a href="#qtreactor_install">Building, Installing and Using The ACE_QtReactor Library</a>
   </li><li><a href="#minimum_build">What Do I Need to Build for TAO?</a>
   </li><li><a href="#resource_requirements">System Resource Requirements</a>
   </li><li><a href="#MPC">General MPC Information</a>
@@ -2413,6 +2414,34 @@ below.</p>
 </ol>
 </p>
 
+<h3><a name="qtreactor_install">Building, Installing and Using The ACE_QtReactor Library</a></h3>
+<p>The first step for all platforms is to build and install the
+<a href="http://www.trolltech.com/">Qt</a> library.  The
+<code>ACE_QtReactor</code> library must then be built according to the instructions
+below.</p>
+
+<ol>
+  <li>Make sure that the <code>QTDIR</code> environment variable points to Qt distribution
+  folder. Usually this variable is set by Qt distribution, hence one has nothing to do.</li>
+  <li> Add <code>qt=1</code> to your <code>$MPC_ROOT/config/default.features</code> and
+  generate build files using MPC. Alternatively, re-run MPC with <code>-features qt=1</code>
+  switch to obtain build files with Qt support.</li>
+  <li>Build ACE using MPC generated files. After compilation <code>ACE_QtReactor</code> library should be
+  placed in libout directory.</li>
+</ol>
+
+To use <code>ACE_QtReactor</code> library in user applciation one has to ensure the library was built as
+described above. Then there are at least two options:
+<ol>
+  <li>For MPC based application one has to derive a project from <code>ace_qtreactor</code>
+      and generate build files using <code>-features qt=1</code> switch or by setting
+      <code>qt=1</code> in <code>default.features</code> file. The <code>ace_qtreactor</code> base project
+      ensures all path variables are set correctly and add links necessary libraries to the
+      project.</li>
+  <li>For application with custom build system one has to define path to Qt includes and
+      libraries and also link the application with <code>qt-mt</code> and
+      <code>ACE_QtReactor</code> library.</li>
+</ol>
 
 <hr><p>
 </p><h3><a name="minimum_build">What Do I Need to Build for TAO?</a></h3>
@@ -2813,7 +2842,6 @@ threads          Build with thread support.
 xt_reactor       Build the XtReactor.
 fl_reactor       Build the FlReactor.
 tk_reactor       Build the TkReactor.
-qt_reactor       Build the QtReactor.
 gtk_reactor      Build the GtkReactor.
 ssl              Build with OpenSSL support.
 rapi             Build with RAPI
@@ -2888,7 +2916,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Wed Aug 25 11:18:59 PDT 2004
+Last modified: Sat Dec  4 15:51:56 CET 2004
 <!-- hhmts end -->
 
 
