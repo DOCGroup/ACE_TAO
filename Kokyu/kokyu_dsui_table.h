@@ -30,10 +30,9 @@
 
 
 
-
 extern int dsui_family_table;
 extern int kokyu_table_offset;
-extern family_t *kokyu_family_table[NUM_FAMILIES];
+extern family_t *kokyu_family_table[kokyu_NUM_FAMILIES];
 #define DSUI_INIT(identifier, enabled) dsui_init((identifier), (enabled))
 
 #endif
