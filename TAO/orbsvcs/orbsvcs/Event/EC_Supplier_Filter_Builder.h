@@ -31,7 +31,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_SupplierFiltering;
+class TAO_EC_Supplier_Filter;
 class TAO_EC_ProxyPushConsumer;
 
 class TAO_ORBSVCS_Export TAO_EC_Supplier_Filter_Builder
@@ -48,14 +48,14 @@ public:
   virtual ~TAO_EC_Supplier_Filter_Builder (void);
   // destructor...
 
-  virtual TAO_EC_SupplierFiltering*
+  virtual TAO_EC_Supplier_Filter*
       create (RtecEventChannelAdmin::SupplierQOS& qos) = 0;
   // Create the filter. The <consumer> is bound to the returned
   // Supplier_Filter, it must be <unbound> upon destruction and/or
   // disconnection.
 
   virtual void
-      destroy (TAO_EC_SupplierFiltering *filter) = 0;
+      destroy (TAO_EC_Supplier_Filter *filter) = 0;
   // The user is returning the filter for destruction/recycling.
 };
 

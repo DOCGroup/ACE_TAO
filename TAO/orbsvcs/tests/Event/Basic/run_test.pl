@@ -90,4 +90,12 @@ if ($T->TimedWait (60) == -1) {
   $T->Kill (); $T->TimedWait (1);
 }
 
+print STDERR "\n\nMT Disconnects test\n";
+$T = Process::Create ($prefix . "MT_Disconnect".$EXE_EXT);
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
+
 exit $status;

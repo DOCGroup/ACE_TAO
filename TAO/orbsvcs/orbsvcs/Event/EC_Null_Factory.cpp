@@ -8,7 +8,6 @@
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
-#include "EC_SupplierFiltering.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_Null_Scheduling.h"
 #include "EC_ProxyPushSupplier_Set_T.h"

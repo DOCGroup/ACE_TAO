@@ -31,8 +31,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_SupplierFiltering;
-
 class TAO_ORBSVCS_Export TAO_EC_Null_Factory : public TAO_EC_Factory
 {
   // = TITLE

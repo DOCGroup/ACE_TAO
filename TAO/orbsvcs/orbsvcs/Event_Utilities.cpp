@@ -8,8 +8,10 @@
 
 ACE_RCSID(orbsvcs, Event_Utilities, "$Id$")
 
-ACE_ConsumerQOS_Factory::ACE_ConsumerQOS_Factory (void)
-  : designator_set_ (0)
+ACE_ConsumerQOS_Factory::
+    ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer)
+  : designator_set_ (0),
+    event_initializer_ (initializer)
 {
   qos_.is_gateway = 0;
 }
@@ -23,6 +25,8 @@ ACE_ConsumerQOS_Factory::start_conjunction_group (void)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
+  if (this->event_initializer_ != 0)
+    (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_CONJUNCTION_DESIGNATOR;
   qos_.dependencies[l].rt_info = 0;
   this->designator_set_ = 1;
@@ -34,6 +38,8 @@ ACE_ConsumerQOS_Factory::start_disjunction_group (void)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
+  if (this->event_initializer_ != 0)
+    (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   qos_.dependencies[l].rt_info = 0;
   this->designator_set_ = 1;
@@ -45,6 +51,8 @@ ACE_ConsumerQOS_Factory::start_negation (void)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
+  if (this->event_initializer_ != 0)
+    (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_NEGATION_DESIGNATOR;
   qos_.dependencies[l].rt_info = 0;
   this->designator_set_ = 1;
@@ -60,6 +68,8 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
     {
       int l = qos_.dependencies.length ();
       qos_.dependencies.length (l + 1);
+      if (this->event_initializer_ != 0)
+        (*this->event_initializer_) (qos_.dependencies[l].event);
       qos_.dependencies[l].rt_info = 0;
       qos_.dependencies[l].event.header.type = ACE_ES_GLOBAL_DESIGNATOR;
 
@@ -102,7 +112,9 @@ ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
 
 // ************************************************************
 
-ACE_SupplierQOS_Factory::ACE_SupplierQOS_Factory (void)
+ACE_SupplierQOS_Factory::
+    ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer)
+  : event_initializer_ (initializer)
 {
   qos_.is_gateway = 0;
 }
@@ -114,6 +126,8 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  u_int ncalls)
 {
   int l = qos_.publications.length ();
+  if (this->event_initializer_ != 0)
+    (*this->event_initializer_) (qos_.publications[l].event);
   qos_.publications.length (l + 1);
   qos_.publications[l].event.header.source = sid;
   qos_.publications[l].event.header.type = type;

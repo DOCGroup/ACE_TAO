@@ -34,7 +34,7 @@
 
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
-class TAO_EC_SupplierFiltering;
+class TAO_EC_Supplier_Filter;
 
 class TAO_ORBSVCS_Export TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 {
@@ -51,7 +51,7 @@ class TAO_ORBSVCS_Export TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelA
   //   It makes a copy of the SupplierQOS and the supplier object
   //   reference.
   //   It uses bind/unbind to control the lifetime of the
-  //   SupplierFiltering object.
+  //   Supplier_Filter object.
   //   The object commits suicide when disconnect_push_consumer() is
   //   called.
   //
@@ -161,7 +161,7 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
-  TAO_EC_SupplierFiltering* filter_;
+  TAO_EC_Supplier_Filter* filter_;
   // The strategy to do filtering close to the supplier
 };
 
