@@ -1,3 +1,11 @@
+
+Mon May 17 19:19:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+        * tests/SOCK_Dgram_Bcast_Test.cpp (run_auto_test):
+	Removed warning on declared, but not used function.
+	Added OS_NS_unistd.h include to make sure ACE_OD::sleep is
+	declared.
+
 Mon May 17 13:22:18 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_stdio.h (tempnam): Had to remove the default 'dir' value
