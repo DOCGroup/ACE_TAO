@@ -1,7 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-//
-// $Id$
-
 #include "SSLIOP_Transport.h"
 #include "tao/debug.h"
 
@@ -19,7 +15,11 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Acceptor_Registry.h"
 
-ACE_RCSID (SSLIOP, SSLIOP_Transport, "$Id$")
+
+ACE_RCSID (SSLIOP,
+           SSLIOP_Transport,
+           "$Id$")
+
 
 TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
   TAO_SSLIOP_Connection_Handler *handler,
@@ -67,6 +67,7 @@ TAO_SSLIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // Set up the SSLIOP::Current object.
   TAO_SSL_State_Guard ssl_state_guard (this->connection_handler_,
                                        result);
+
   if (result == -1)
     return -1;
 
@@ -81,7 +82,7 @@ TAO_SSLIOP_Transport::send (iovec *iov,
                             size_t &bytes_transferred,
                             const ACE_Time_Value *max_wait_time)
 {
-  ssize_t retval =
+  const ssize_t retval =
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
 
   if (retval > 0)
@@ -95,15 +96,15 @@ TAO_SSLIOP_Transport::recv (char *buf,
                             size_t len,
                             const ACE_Time_Value *max_wait_time)
 {
-  ssize_t n = this->connection_handler_->peer ().recv (buf,
-                                                       len,
-                                                       max_wait_time);
+  const ssize_t n = this->connection_handler_->peer ().recv (buf,
+                                                             len,
+                                                             max_wait_time);
 
   // Most of the errors handling is common for
   // Now the message has been read
-  if (n == -1 &&
-      TAO_debug_level > 4 &&
-      errno != ETIME)
+  if (n == -1
+      && TAO_debug_level > 4
+      && errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - %p \n"),
@@ -164,10 +165,10 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_shared (stub,
-                                         message_semantics,
-                                         stream.begin (),
-                                         max_wait_time);
+  const ssize_t n = this->send_message_shared (stub,
+                                               message_semantics,
+                                               stream.begin (),
+                                               max_wait_time);
 
   if (n == -1)
     {
@@ -193,9 +194,9 @@ TAO_SSLIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
   // messaging objects are ready to handle bidirectional connections
   // and also make sure that we have not recd. or sent any information
   // regarding this before...
-  if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object_->is_ready_for_bidirectional (msg) &&
-      this->bidirectional_flag () < 0)
+  if (this->orb_core ()->bidir_giop_policy ()
+      && this->messaging_object_->is_ready_for_bidirectional (msg)
+      && this->bidirectional_flag () < 0)
     {
       this->set_bidir_context_info (opdetails);
 
@@ -249,7 +250,6 @@ TAO_SSLIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 void
 TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 {
-
   // Get a handle on to the acceptor registry
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
@@ -313,7 +313,7 @@ TAO_SSLIOP_Transport::get_listen_point (
     ssliop_acceptor->endpoints ();
 
   // Get the count
-  size_t count =
+  const size_t count =
     ssliop_acceptor->endpoint_count ();
 
   // The SSL port is stored in the SSLIOP::SSL component associated
@@ -356,14 +356,14 @@ TAO_SSLIOP_Transport::get_listen_point (
           == endpoint_addr[index].get_ip_address())
         {
           // Get the count of the number of elements
-          CORBA::ULong len = listen_point_list.length ();
+          const CORBA::ULong len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);
 
           // We have the connection and the acceptor endpoint on the
           // same interface
-          IIOP::ListenPoint &point = listen_point_list[len];
+          IIOP::ListenPoint & point = listen_point_list[len];
           point.host = CORBA::string_dup (local_interface.in ());
 
           // All endpoints, if more than one, serviced by the
