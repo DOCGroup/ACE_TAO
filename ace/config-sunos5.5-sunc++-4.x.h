@@ -158,6 +158,9 @@
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
 
+// Platform supports XPG4 wide characters
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
+
 /* Comment out the following eight defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
