@@ -105,6 +105,11 @@ Thu May 15 15:39:13 1997  Carlos O'Ryan  <coryan@charlie>
 	  Ditto for "Local_Name_Space.h"
 
 Thu May 15 17:40:06 1997    <irfan@TWOSTEP>
+
+	* ace/ReactorEx.i (owner): Since changes to the owner field are
+ 	  very well synchronized, we do not need to synchronize this
+ 	  accessor.
+
 	* ace/IOStream.h: Added /**/ after #include directives.
 	
 	* ace: Update Win32 makefiles to include UNICODE make option.
