@@ -93,8 +93,8 @@ IDL_COMPILER_FILES = \
   Union \
   Operation_Table
 
-INTERFACE_REPO_FILES = \
-  InterfaceC 
+INTERFACE_REPO_FILES = 
+
   
 
 ORB_CORE_FILES = \
@@ -200,6 +200,9 @@ DYNAMIC_ANY_FILES += \
   DynStruct_i \
   DynUnion_i \
   InconsistentTypeCodeC
+
+INTERFACE_REPO_FILES += \
+  InterfaceC 
 
 endif # minimum_corba
 
