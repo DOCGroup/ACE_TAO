@@ -43,6 +43,8 @@ TAO_Stub::profile_lock (void) const
 ACE_INLINE CORBA::Boolean
 TAO_Stub::service_profile_selection (void)
 {
+  // @@todo: This method is depreacted. Needs to be removed after
+  // 1.2.1 goes out.
   TAO_Profile *profile = 0;
 
   this->orb_core_->service_profile_selection (this->base_profiles_,
@@ -217,6 +219,9 @@ TAO_Stub::next_profile_retry (void)
     {
       return 1;
     }
+
+  return 0;
+#if 0
   else
     {
       // Check whether the loaded services have something to say about
@@ -233,6 +238,7 @@ TAO_Stub::next_profile_retry (void)
       this->reset_profiles_i ();
       return 0;
     }
+#endif /*If 0 */
 }
 
 ACE_INLINE const TAO_MProfile&

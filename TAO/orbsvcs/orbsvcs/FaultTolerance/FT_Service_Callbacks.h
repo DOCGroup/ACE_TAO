@@ -47,17 +47,23 @@ public:
   virtual ~TAO_FT_Service_Callbacks (void);
   // Dtor
 
+  /// @@todo: The following method has been deprecated. Will go after TAO
+  /// 1.2.1.
   virtual CORBA::Boolean  select_profile (TAO_MProfile *mprofile,
                                           TAO_Profile *&pfile);
   // This method would search the list of <mprofile> to identify a
   // TAG_FT_PRIMARY and set that profile as <pfile>.
 
+  /// @@todo: The following method has been deprecated. Will go after TAO
+  /// 1.2.1.
   virtual CORBA::Boolean  reselect_profile (TAO_Stub* stub,
                                             TAO_Profile *&pfile);
 
   // This method would search the IOR list for the first non-primary
   // in case of primary failure.
 
+  /// @@todo: The following method has been deprecated. Will go after TAO
+  /// 1.2.1.
   virtual void reset_profile_flags (void);
   // Reset any of the local flags that we may have
 

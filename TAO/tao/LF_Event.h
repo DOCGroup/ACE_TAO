@@ -107,6 +107,9 @@ public:
   /// Check if we should keep waiting.
   int keep_waiting (void);
 
+  /// Reset the state, irrespective of the previous states
+  void reset_state (int new_state);
+
 protected:
   /// Validate the state change
   void state_changed_i (int new_state);
