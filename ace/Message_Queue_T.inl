@@ -40,7 +40,7 @@ template <ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Message_Queue<ACE_SYNCH_USE>::is_full_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::is_full_i");
-  return this->cur_bytes_ > this->high_water_mark_;
+  return this->cur_bytes_ >= this->high_water_mark_;
 }
 
 // Check if queue is empty (holds locks).

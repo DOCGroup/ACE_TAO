@@ -218,6 +218,9 @@ Watermark_Test::producer (void)
       this->put_message ();
       this->print_producer_debug_message ();
       i--;
+      if (this->msg_queue ()->is_full ())
+        break;
+
     }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Producer: High water mark hit ---- \n")));
