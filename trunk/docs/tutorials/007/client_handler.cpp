@@ -104,10 +104,11 @@ int Client_Handler::close(u_long flags)
 	this->handle_close(ACE_INVALID_HANDLE,0);
 
 	/*
-	   After we've taken care of ourselves, call the baseclass method
-	   to do any other necessary cleanup.
+	   Don't forward the close() to the baseclass!  handle_close() above has
+	   already taken care of delete'ing.  Forwarding close() would cause that
+	   to happen again and things would get really ugly at that point!
 	 */
-	return inherited::close();
+	return 0;
 }
 
 /*
