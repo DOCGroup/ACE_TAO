@@ -415,24 +415,25 @@ namespace XMLSchema
     void
     register_id ()
     {
-      if (container () != this && !empty ())
+      if (NCName<C>::container () != this && !empty ())
       {
         //std::wcerr << "registering " << container ()
         //           << " as '" << *this
         //           << "' on " << container () << std::endl;
-        container ()->register_id (id_provider_, container ());
+        NCName<C>::container ()->register_id (id_provider_, 
+                                              NCName<C>::container ());
       }
     }
 
     void
     unregister_id ()
     {
-      if (container () != this && !empty ())
+      if (NCName<C>::container () != this && !empty ())
       {
         //std::wcerr << "un-registering " << container ()
         //           << " as '" << *this
         //           << "' on " << container () << std::endl;
-        container ()->unregister_id (id_provider_);
+        NCName<C>::container ()->unregister_id (id_provider_);
       }
     }
 
