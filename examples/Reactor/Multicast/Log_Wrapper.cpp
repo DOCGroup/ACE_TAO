@@ -22,7 +22,7 @@ int
 Log_Wrapper::open (const int port, const char *mcast_addr) 
 {
   struct hostent *host_info;
-  struct utsname host_data;
+  ACE_utsname host_data;
 
   if (ACE_OS::uname (&host_data) < 0) 
     return -1;

@@ -503,6 +503,7 @@ typedef unsigned long long ACE_UINT64;
 
 #define ACE_SIZEOF_WCHAR 2
 #define ACE_HAS_MUTEX_TIMEOUTS
+#define ACE_LACKS_STRUCT_DIR
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

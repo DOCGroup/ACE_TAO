@@ -80,7 +80,7 @@ find_another_host (ACE_TCHAR other_host[])
 #if !defined (ACE_LACKS_GETHOSTENT)
       // These gethost-type things don't work everywhere.
       struct hostent *h;
-      struct utsname un;
+      ACE_utsname un;
 
       ACE_OS::uname (&un);
 

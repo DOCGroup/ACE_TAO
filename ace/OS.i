@@ -8782,7 +8782,7 @@ ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
 // string literals, and some compilers, e.g., g++, don't handle those
 // efficiently in unused inline functions.
 ACE_INLINE int
-ACE_OS::uname (struct utsname *name)
+ACE_OS::uname (ACE_utsname *name)
 {
   ACE_OS_TRACE ("ACE_OS::uname");
 #if defined (ACE_HAS_PACE)
@@ -8830,7 +8830,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
       return 0;
     }
 #else /* ACE_HAS_PHARLAP */
-  struct utsname host_info;
+  ACE_utsname host_info;
 
   if (ACE_OS::uname (&host_info) == -1)
     return -1;

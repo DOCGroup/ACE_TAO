@@ -1,3 +1,15 @@
+Fri May 11 10:25:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Synch.cpp (get_nesting_level): Added better protection for the
+	  case where ACE_HAS_RECURSIVE_MUTEXES -- only return
+ 	  RecursionCount if ACE_WIN32 is defined.  Thanks to Corey Trager
+ 	  <corey.trager@tradingtechnologies.com> for reporting this.
+
+	* ace/OS.cpp: Reformatted all the ACE_reinterpret_cast() macros so their
+	  arguments are on the same line to avoid tickling a bug with
+ 	  SunC++'s preprocessor.  Thanks to Corey Trager
+ 	  <corey.trager@tradingtechnologies.com> for reporting this.
+
 Fri May 11 07:14:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/CDR_Test.cpp: Reverted this change "Wed May  9 23:19:30
@@ -6,6 +18,38 @@ Fri May 11 07:14:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri May 11 06:47:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/ARGV_Test.cpp: One of those extra ")".
+
+Fri May 11 06:14:58 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Dirent.h (ACE_Dirent),
+	* ace/OS.cpp (uname),
+	* ace/OS.h (ACE_OS),
+	* ace/OS.i (hostname),
+	* ace/OS_Dirent.cpp (readdir_emulation),
+	* ace/OS_Dirent.h (ACE_OS_Dirent),
+	* ace/OS_Dirent.inl (ACE_OS_Dirent),
+	* ace/config-win32-common.h (ACE_LACKS_STRUCT_DIR),
+	* apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp (Notification_Receiver_Handler),
+	* apps/Orbix-Examples/Logger/Logger.cpp (Logger),
+	* bin/envinfo.cpp (main),
+	* examples/Reactor/Multicast/Log_Wrapper.cpp (open),
+	* performance-tests/Misc/basic_perf.cpp (main),
+	* tests/Dirent_Test.cpp (main),
+	* tests/Enum_Interfaces_Test.cpp (main),
+	* tests/SOCK_Connector_Test.cpp (find_another_host):
+	  Updated all of ACE and its tests to use ACE_DIR rather than DIR
+ 	  to avoid conflicts with other programs (like Perl) that also
+ 	  define an enumation with DIR.  Thanks to Gonzo Diethelm
+ 	  <Gonzalo.Diethelm@sonda.com> for contributing these fixes.
+
+        The following fixes are all thanks to Ingo Dahm <ingo.dahm@sun.com>
+  
+	* ace/config-sunos5.6.h: Added support for SunC++ 5.2.
+	* ace/IOStream.h: Added support for SunC++ 5.2.
+	* ace/config-sunos5.8.h: Added Solaris 8 support for native
+	  POSIX RW locks.  
+	* include/makeinclude/platform_sunos5_sunc++.GNU: Added support
+	  for Sun C++ 5.2.
 
 Thu May 10 19:33:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
