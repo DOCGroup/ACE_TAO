@@ -312,8 +312,8 @@ typedef ACE_UINT16 ACE_USHORT16;
 #ifndef ACE_SIZEOF_LONG_DOUBLE
 #  if LDBL_MAX_EXP == 128
 #    define ACE_SIZEOF_LONG_DOUBLE 4
-#  elif defined (i386) || defined (__i386__) || defined (_M_IX386) || \
-        defined (ACE_NETBSD) || defined (__FreeBSD__)
+#  elif (defined (i386) || defined (__i386__) || defined (_M_IX386) || \
+         defined (ACE_NETBSD) || defined (__FreeBSD__)) && ! defined (ghs)
 #    define ACE_SIZEOF_LONG_DOUBLE 12
 #  elif LDBL_MAX_EXP == 1024
 #    define ACE_SIZEOF_LONG_DOUBLE 8
