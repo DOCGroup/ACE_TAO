@@ -1,3 +1,10 @@
+Fri Aug 18 10:06:05 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp: 
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp: 
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: 
+	  Removed the ";" following the ACE_SVC_FACTORY_DEFINE macro.
+	
 Thu Aug 17 14:55:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp (init):
