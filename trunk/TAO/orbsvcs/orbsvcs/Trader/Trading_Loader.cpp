@@ -37,7 +37,7 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
       if (localhost.get_host_name (host_name,
                                    sizeof (host_name) != 0))
         {
-          const char *tmp = addr.get_host_addr ();
+          const char *tmp = localhost.get_host_addr ();
           if (tmp == 0)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
