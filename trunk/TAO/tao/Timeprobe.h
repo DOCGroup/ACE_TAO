@@ -35,7 +35,7 @@ private:
 
   u_int current_slot_;
 
-  struct timeprobe_t;
+  struct timeprobe_t
   {
     const char *id_;
     ACE_hrtime_t time_;
