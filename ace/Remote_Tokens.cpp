@@ -271,7 +271,7 @@ ACE_Remote_Token_Proxy::tryacquire (void (*sleep_hook)(void *))
 
   ACE_Token_Request request (token_->type (),
 			     this->type (),
-			     ACE_Token_Request::RELEASE,
+			     ACE_Token_Request::TRY_ACQUIRE,
 			     ASYS_ONLY_MULTIBYTE_STRING (this->name ()),
 			     ASYS_ONLY_MULTIBYTE_STRING (this->client_id ()),
 			     ACE_Synch_Options::synch);
