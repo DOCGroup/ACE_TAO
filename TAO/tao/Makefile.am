@@ -817,7 +817,6 @@ nobase_include_HEADERS += \
   Special_Basic_SArgument_T.inl \
   StringSeqC.inl \
   Stub.i \
-  Sync_Strategies.i \
   Synch_Invocation.inl \
   Synch_Refcountable.inl \
   SystemException.inl \

@@ -145,7 +145,7 @@ private:
 /**
  * If the queue is empty the transport will try to send immediately.
  */
-class TAO_Export TAO_Delayed_Buffering_Sync_Strategy 
+class TAO_Export TAO_Delayed_Buffering_Sync_Strategy
   : public TAO_Eager_Buffering_Sync_Strategy
 {
 public:
@@ -153,10 +153,6 @@ public:
 };
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-#if defined (__ACE_INLINE__)
-# include "tao/Sync_Strategies.i"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
