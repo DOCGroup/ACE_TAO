@@ -3161,4 +3161,5 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
       delete ei;
       *os << be_uidt_nl << "};\n\n";
     } // end of if
+  return 0;
 }
