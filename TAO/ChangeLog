@@ -1,3 +1,8 @@
+Mon Oct 28 17:19:58 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\POA\MT_Servant_Locator\MT_Servant_Locator.cpp: Fixed
+	  ACE_ENV warnings.
+
 Mon Oct 28 16:55:11 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\POA\MT_Servant_Locator\Makefile: Fixed and updated
