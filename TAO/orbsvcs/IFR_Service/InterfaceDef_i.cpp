@@ -552,7 +552,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id,
     return 1;
 
   // Is it one of our ancestors' types?
-  IR::InterfaceDefSeq_var bases = this->base_interfaces (ACE_TRY_ENV);
+  IR::InterfaceDefSeq_var bases = this->base_interfaces_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong length = bases->length ();

@@ -70,7 +70,7 @@ TAO_ArrayDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
     this->element_type_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  CORBA::ULong length = this->length (ACE_TRY_ENV);
+  CORBA::ULong length = this->length_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_array_tc (
