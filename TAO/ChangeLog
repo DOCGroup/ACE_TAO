@@ -1,3 +1,10 @@
+Tue Dec 31 21:03:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* performance-tests/Makefile: Added the new directory to the list
+	  of DIRS
+	* performance-tests/Memory/Makefile: Added a new Makefile to
+	  compile the sub-directories.
+
 Tue Dec 31 20:55:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* performance-tests/Memory/Single_Threaded: A simple test for
