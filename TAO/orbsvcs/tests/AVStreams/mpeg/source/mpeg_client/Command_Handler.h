@@ -62,7 +62,6 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   // Returns the handle used by the event_handler.
   
-private:
   CORBA::Boolean init_video (void);
   
   int init_video_channel (char *phostname,char *videofile);
@@ -99,6 +98,8 @@ private:
 
   int stop_playing (void);
 
+private:
+
   ACE_HANDLE command_handle_;
   // The fd for the UNIX command socket
 
@@ -119,7 +120,8 @@ class Client_Sig_Handler
   //     %%
 {
 public:
-  Client_Sig_Handler (void);
+  Client_Sig_Handler (Command_Handler *command_handler);
+  // We need the command handler to call close ()
 
   virtual ACE_HANDLE get_handle (void) const;
 
@@ -142,6 +144,10 @@ public:
 private:
   ACE_HANDLE handle_;
   // dummy handle for the sig handler.
+  
+  Command_Handler *command_handler_;
+  // We need the command handler to call close ()
+
 };
 
 
