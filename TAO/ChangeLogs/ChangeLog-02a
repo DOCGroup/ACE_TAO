@@ -1,3 +1,13 @@
+Thu Mar 21 15:45:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Any.cpp:
+
+          In copy constructor and assignment operator, added check for
+          existence of source Any's message block before creating our
+          own with ACE_NEW. This makes for more consistent behavior in
+          the value() method. Thanks to Alex Hornby <alex@anvil.co.uk> 
+          for sending in the patch.
+
 Thu Mar 21 12:20:25 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Invocation.cpp:
