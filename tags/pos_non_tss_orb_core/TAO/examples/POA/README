@@ -1,0 +1,111 @@
+// $Id$
+
+The following TAO applications illustate various Portable Object
+Adapter (POA) interfaces and their usage scenarios.
+
+        Individual README files in the respective directories explain
+these applications further.
+
+        . RootPOA
+
+                This example explains how to obtain the name of the
+                RootPOA.
+
+        . NewPOA
+
+                This example explains the operations involved in
+                creation of new POAs.
+
+        . FindPOA
+
+                This example explains registering an adapter activator
+                for a POA and also the find_POA operation.
+
+        . Generic_Servant
+
+                A simple interface (Foo) is defined here and its
+                implementations, server and client programs are
+                available, which can be used for testing POA
+                applications.  Several servers for that interface are
+                implemented using different POA policies; a common
+                client for all the servers is also provided.
+
+        . On_Demand_Activation
+
+                Contains programs that test the POA's 2 types of
+                activation of objects on demand, namely , Servant
+                Activator approach and Servant Locator , which depend
+                on the RETAIN/NON-RETAIN policy of a POA.
+
+        . Default_Servant
+
+		Contains a File IDL module and its implementation and
+		a server,client to test the File Module interfaces.
+		The System interface uses the USE_DEFAULT_MANAGER policy
+		to create a POA and registers a single File Descriptor
+		object as the default servant. The default servant serves
+		requests for many Descriptor objects.
+
+        . Explicit_Activation
+
+                This application explains various operations involved
+                in the explicit activation of objects; including the
+                creation of objects without servants (the servant is
+                created on demand).
+
+        . DSI
+
+                The client/server couple tests the DSI features of the
+                POA.
+
+        . Forwarding
+
+                The example is used to test the support for forwarding
+                in TAO.  Three ways are shown: (a) Forwarding using
+                Servant Activators, (b) Forwarding using Servant
+                Locators, and (c) Forwarding using POA (this feature
+                is TAO specific).
+
+        . TIE
+
+                Shows off the standard TIE features of the new CORBA
+                2.2 specification.
+
+        . Identity
+
+                The example shows the identity between servants, ids,
+                and references.
+
+        . On_Demand_Loading
+
+                This example illustrates how to dynamically link and
+                load servants into a POA in a platform-independent
+                manner using the ACE_DLL feature and standard CORBA
+                Servant Manager features.  In the example, the POA is
+                configured with the USE_SERVANT_MANAGER policy value,
+                which relies on an application supplied Servant
+                Manager object to supply object/server associations.
+
+                This example illustrates both Servant Activator and
+                Servant_Locator interfaces.  The servant object is
+                created by a factory function that resides in a DLL
+                that is linked and loaded into the server's address
+                space on-demand when client requests arrive.  The
+                ObjectID in each client request indicates which DLL
+                name and which factory function to use to create the
+                servant.
+
+         . Loader
+
+                This example is similar to the above except the id is
+                not hijacked to store the DLL and factory function
+                name.  This information is provided to the Servant
+                Managers on creation.
+
+        . Explicit_Activation
+
+                This example is very similar to the
+                Explicit_Activation example except that the POAs are
+                deleted once the object references have been
+                created. After this, an adapter activator is install
+                in the RootPOA to reactivate the POAs on demand.

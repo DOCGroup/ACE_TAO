@@ -1,0 +1,8 @@
+# $Id$
+#
+# Please see $TAO_ROOT/docs/Options.html for details on these options.
+#
+
+dynamic Resource_Factory Service_Object * TAO:_make_TAO_Default_Resource_Factory() "-ORBresources global -ORBreactorlock null -ORBinputcdrallocator tss"
+dynamic Client_Strategy_Factory Service_Object * TAO:_make_TAO_Default_Client_Strategy_Factory() "-ORBiiopprofilelock null -ORBclientconnectionhandler ST"
+dynamic Server_Strategy_Factory Service_Object * TAO:_make_TAO_Default_Server_Strategy_Factory() "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null -ORBallowreactivationofsystemids 0"
