@@ -79,6 +79,8 @@ public:
   AST_Root (UTL_ScopedName *n);
 
   virtual ~AST_Root (void);
+  
+  virtual unsigned long nmembers (void);
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Root, AST_Module);

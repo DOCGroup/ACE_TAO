@@ -244,7 +244,7 @@ public:
   virtual AST_Decl *look_in_previous (Identifier *);
 
   // How many entries are used?
-  unsigned long nmembers (void);
+  virtual unsigned long nmembers (void);
 
   // Add to decls. Node represents a local declaration
   // The new decl e is inserted after ex if ex is not 0.
