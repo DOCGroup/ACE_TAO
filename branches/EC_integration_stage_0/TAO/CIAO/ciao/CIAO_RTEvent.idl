@@ -9,7 +9,7 @@
  */
 
 #include "CIAO_Events.idl"
-#include "orbsvcs/RtecEventChannelAdmin.idl"
+#include <orbsvcs/orbsvcs/RtecEventChannelAdmin.idl>
 
 module CIAO
 {

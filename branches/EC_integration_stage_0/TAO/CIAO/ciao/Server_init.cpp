@@ -4,6 +4,7 @@
 #include "CIAO_common.h"
 #include "CCM_ComponentC.h"
 #include "Cookies.h"
+#include "ace/OS_NS_stdio.h"
 
 int
 CIAO::Server_init (CORBA::ORB_ptr o)

@@ -9,12 +9,13 @@
 
 #include "Assembly_Impl.h"
 #include "Assembly_Service_Impl.h"
-#include "CIAO_ServersC.h"
-#include "Server_init.h"
+#include "ciao/CIAO_ServersC.h"
+#include "ciao/Server_init.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 char *config_filename_ = 0;
 char *output_ior_filename_ = 0;

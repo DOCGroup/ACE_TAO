@@ -20,8 +20,8 @@
 
 #include "CIAO_EventService_Factory.h"
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
 
 namespace CIAO

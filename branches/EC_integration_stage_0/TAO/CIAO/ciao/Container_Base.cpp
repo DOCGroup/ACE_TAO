@@ -2,6 +2,7 @@
 
 #include "Container_Base.h"
 #include "ace/DLL.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)

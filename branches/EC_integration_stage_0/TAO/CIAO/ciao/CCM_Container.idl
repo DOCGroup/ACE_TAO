@@ -17,7 +17,7 @@
 #define CCM_CONTAINER_IDL
 
 #include "CCM_Component.idl"
-#include "SecurityLevel2.idl"
+#include "orbsvcs/orbsvcs/SecurityLevel2.idl"
 #include "CCM_Transaction.idl"
 
 // *************** Basic Container interfaces ***************

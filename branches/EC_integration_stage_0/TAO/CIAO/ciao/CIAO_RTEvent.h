@@ -21,7 +21,8 @@
 #include "CIAO_EventServiceBase.h"
 #include "CIAO_RTEventS.h"
 
-#include "orbsvcs/Event_Utilities.h"
+#include "ace/Hash_Map_Manager.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
 
 namespace CIAO
 {
