@@ -776,7 +776,7 @@ private:
   // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
   // Interceptor registries.
