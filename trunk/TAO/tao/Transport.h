@@ -656,6 +656,9 @@ protected:
   /// ORB.
   int process_parsed_messages (TAO_Queued_Data *qd);
 
+  /// Make a queued data from the <incoming> message block
+  TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
+
 public:
   /// Method for the connection handler to signify that it
   /// is being closed and destroyed.
