@@ -301,7 +301,7 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
 ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
 							    int use_fixed_addr,
 							    int write_each_page,
-							    int minimum_bytes,
+							    off_t minimum_bytes,
 							    u_int flags,
 							    int guess_on_fault)
   : base_addr_ (base_addr),
@@ -429,7 +429,7 @@ ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (char *base_addr,
 								off_t minimum_bytes)
   : base_addr_ (base_addr),
     max_segments_ (max_segments),
-    minimum_bytes_ (minimum_bytes)
+    minimum_bytes_ (minimum_bytes),
     file_perms_ (file_perms)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options");
@@ -642,9 +642,9 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
   size_t counter;
   off_t shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
-  rounded_bytes = this->round_up (nbytes > this->minimum_bytes_ 
+  rounded_bytes = this->round_up (nbytes > (size_t) this->minimum_bytes_ 
 				  ? nbytes 
-				  : this->minimum_bytes_);
+				  : (size_t) this->minimum_bytes_);
 
   // Acquire the semaphore to serialize initialization and prevent
   // race conditions.
