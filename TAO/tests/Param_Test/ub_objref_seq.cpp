@@ -108,7 +108,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_NOTREACHED (return -1);
 }
 
 int
@@ -144,7 +144,7 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_NOTREACHED (return -1);
 }
 
 int
@@ -205,7 +205,7 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr param_list,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_NOTREACHED (return -1);
 }
 
 CORBA::Boolean
@@ -240,7 +240,7 @@ Test_ObjRef_Sequence::check_validity (void)
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_NOTREACHED (return 0);
 }
 
 CORBA::Boolean
@@ -328,7 +328,7 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_NOTREACHED (return 0);
 }
 
 void

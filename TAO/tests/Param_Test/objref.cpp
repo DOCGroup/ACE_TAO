@@ -100,7 +100,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_NOTREACHED (return -1);
 
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
@@ -143,7 +143,7 @@ Test_ObjRef::reset_parameters (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_NOTREACHED (return -1);
 
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
@@ -182,7 +182,7 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -244,7 +244,7 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_NOTREACHED (return -1);
 }
 
 CORBA::Boolean
@@ -328,7 +328,7 @@ Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_NOTREACHED (return 0);
 
   return this->check_validity ();
 }
