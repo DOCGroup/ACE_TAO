@@ -142,9 +142,7 @@ int
 TAO_Persistent_Bindings_Map::open_helper (size_t hash_table_size,
                                           void *buffer)
 {
-  ACE_NEW_RETURN (this->map_,
-                  (buffer) HASH_MAP (hash_table_size, this->allocator_),
-                  -1);
+  this->map_ = new (buffer) HASH_MAP (hash_table_size, this->allocator_);
   return 0;
 }
 

@@ -1,3 +1,10 @@
+Thu Apr 18 10:51:52 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (open_helper): Replaced
+  	  the ACE_NEW_RETURN macro with a direct call to operator
+ 	  placement new.  Thanks to Jean Quinsat <jean.quinsat@airbus.com>
+ 	  for reporting this.
+
 Thu Apr 18 10:57:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h: Removed the 
