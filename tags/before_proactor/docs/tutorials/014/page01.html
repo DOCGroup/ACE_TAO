@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Bob McWhirter">
+   <TITLE>ACE Tutorial 014</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 014</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>ACE_Stream Tutorial, Of Sorts</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+
+<p><b>ACE_Stream</b> is handy when you have several <b>ACE_Task</b> objects
+that you would like to link together.
+
+<p>An intermediate class you we will deal with is the <b>ACE_Module</b>.
+
+<p>The basic plan is to wrap your <b>Task</b> into a <b>Module</b>, push 
+the <b>Module</b> onto the <b>Stream</b>.  Do this for each <b>Task</b>,
+ and then inject <b>Message_Block</b>s into the <b>Stream</b>.
+
+<p>Each <b>Task</b> then processes the <b>Message_Block</b>, and forwards
+it on to the next <b>Task</b> in the <b>Stream</b>.
+
+<p>If you are not already familiar with <b>Message_Block</b>s and <b>Message_Queue</b>s,
+I highly suggest that you check out <A HREF="../#MQ">Tutorials 10-13</A>.
+
+<p>Streams can be used for both downstream and upstream movement of messages.  Used 
+this way mirrors closely the way System V STREAMS work.  But you don't have to use them
+bidirectionally.  In this tutorial, we only use one direction of the Stream.  Down.
+
+<p>This tutorial is contributed by Bob McWhirter (bob@netwrench.com)
+
+<P>
+Kirthika's abstract:
+<ul>
+In this tutorial, an ACE_Stream has been implemented which has modules
+flowing through it.(literally ;).
+The chain of modules in the Stream include the Head and Tail Modules. A
+Module is simply a reader-writer pair of ACE_Tasks with the writing side
+acting as downstream and the reading side as upstream. Here we are only
+concerned with going downstream so we install a Task into the write-side
+of the module.
+<P>
+The task implementation makes use of flags to decide on whether to close
+the main task or the service thread. The svc () method follows the
+golden rule of copying message blocks before putting them on the queue
+until it comes across a hang-up message. It then puts the message back
+on the queue for its peers to obtain it and exits.
+<P>
+Any message put onto the Tail module is an error. So a customised
+derivative of the Task class is created, which collects all the garbage
+messages put onto the Tail. This End_Task is put into the Stream at the
+start itself such that no modules whould ever follow it!
+<P>
+Then the other modules are pushed from the Tail-end into the Stream.
+This is because we are interested in writing and not reading.
+(Picture this to be a FIFO (queue) with head and tail nodes such
+that the nodes are removed from the front and put into the queue from
+the back) 
+<P>
+Each module then opens up the task which spawns threads and begins to
+shove messgaes down the stream. Once we have got all the messages into
+the stream, our job is completed and we shut down the Stream. 
+<P>
+A simple way to wade down the stream...;)
+</ul>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>
