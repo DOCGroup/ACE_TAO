@@ -1930,6 +1930,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 	      switch (buffer->mask_)
 		{
 		case ACE_Event_Handler::READ_MASK:
+		case ACE_Event_Handler::ACCEPT_MASK:
 		  result = buffer->eh_->handle_input (ACE_INVALID_HANDLE);
 		  break;
 		case ACE_Event_Handler::WRITE_MASK:
@@ -1937,6 +1938,12 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 		  break;
 		case ACE_Event_Handler::EXCEPT_MASK:
 		  result = buffer->eh_->handle_exception (ACE_INVALID_HANDLE);
+		  break;
+		case ACE_Event_Handler::QOS_MASK:
+		  result = buffer->eh_->handle_qos (ACE_INVALID_HANDLE);
+		  break;
+		case ACE_Event_Handler::GROUP_QOS_MASK:
+		  result = buffer->eh_->handle_group_qos (ACE_INVALID_HANDLE);
 		  break;
 		default:
 		  ACE_ERROR ((LM_ERROR,

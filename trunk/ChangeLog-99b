@@ -1,6 +1,12 @@
+Fri Mar 12 20:17:47 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp (handle_input):
+	* ace/WFMO_Reactor.cpp (handle_signal): Added support for
+	  dispatching QOS_MASK and GROUP_QOS_MASK.
+
 Fri Mar 12 19:13:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i: 
+	* ace/OS.i:
 	  Implemented ACE_OS::timezone() for LynxOS.
 
 Fri Mar 12 16:31:19 1999  Ossama Othman  <othman@cs.wustl.edu>
@@ -13,7 +19,7 @@ Fri Mar 12 13:44:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp (main): Fixed the errors on VxWorks and
 	  LynxOS by shifting the START_TEST before the #ifdefs began.
-	
+
 Fri Mar 12 12:53:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: with CC 5.0, replaced ACE_LACKS_ACE_IOSTREAMS
