@@ -1,5 +1,9 @@
 Mon Aug 17 12:10:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/ace_{dll,lib}.dsp: Removed Message_Queue_T.cpp from and included
+	  Message_Queue.cpp into source files that get build.  Hmm, I
+	  thought I made this change long ago.
+
 	* ace/ace_ce_dll.dsp:  Changed the DLL output directories for some
 	  configurations. 
 
