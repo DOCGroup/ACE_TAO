@@ -97,11 +97,4 @@ protected:
 typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> 
 	TAO_ACCEPTOR;
 
-// Declare that the following method should be specialized.
-
-#if defined (ACE_WIN32)
-extern template size_t
-ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const;
-#endif /* ACE_WIN32 */
-
 #endif /* TAO_CONNECT_H */
