@@ -178,5 +178,3 @@ releaseall: release
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
-
-INSTALL: ACE-INSTALL
