@@ -56,7 +56,6 @@ consumer (void *)
   ACE_UPIPE_Stream c_stream;
   ACE_UPIPE_Addr c_addr ("/tmp/conupipe");
 
-  int iter = options.iterations ();
   int verb = options.verbose ();
   int msiz = options.message_size ();
   int secs, par1, par2;
