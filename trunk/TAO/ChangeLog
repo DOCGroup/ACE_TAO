@@ -1,3 +1,22 @@
+Thu Oct 24 10:39:10 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
+        * orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+        * orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+        * orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+        * orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/Flows_T.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Property/server.cpp:
+
+          More replacement of char* with typedef name.
+
 Thu Oct 24 09:29:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:

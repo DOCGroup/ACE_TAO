@@ -150,7 +150,10 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", QUERY_1));
   DsLogAdmin::Iterator_var iter_out;
   DsLogAdmin::RecordList_var rec_list =
-    basic_log->query (QUERY_LANG, QUERY_1, iter_out);
+    basic_log->query (QUERY_LANG, 
+                      ACE_const_cast (const DsLogAdmin::Constraint,
+                                      QUERY_10, 
+                      iter_out);
 
   CORBA::ULong j = 0;
   for (; j < rec_list->length();++j)  //dhanvey added info
@@ -168,7 +171,10 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               "Deleting records... \n"));
 
-  retval = basic_log->delete_records (QUERY_LANG, QUERY_2 ACE_ENV_ARG_PARAMETER);
+  retval = basic_log->delete_records (QUERY_LANG, 
+                                      ACE_const_cast (const DsLogAdmin::Constraint,
+                                                      QUERY_2)
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,

@@ -146,7 +146,8 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
 
       ACE_TRY_CHECK;
 
-     this->vdev_->define_property ("Related_MediaCtrl",
+     this->vdev_->define_property (ACE_const_cast (CosPropertyService::PropertyName,
+                                                   "Related_MediaCtrl",
                                    anyval
                                    ACE_ENV_ARG_PARAMETER);
 

@@ -28,7 +28,8 @@ ACE_RCSID(LifeCycle_Service, Factory_Trader, "$Id$")
 // the added types will be subclasses of this.
 const CosTrading::ServiceTypeName 
 Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID = 
-  "IDL:omg.org/CosLifeCycle/GenericFactory:1.0";
+  ACE_const_cast (const CosTrading::ServiceTypeName,
+                  "IDL:omg.org/CosLifeCycle/GenericFactory:1.0");
 
 
 Factory_Trader::Factory_Trader (int debug_level)
@@ -185,9 +186,11 @@ Factory_Trader::query (const CosTrading::Constraint constraint)
       // this pointer is deleted when the trader_ptr is deleted
 
       // Invoke the query method on the Lookup Interface.
-      lookup_ptr->query ("GenericFactory",  // Type name
+      lookup_ptr->query (ACE_const_cast (const CosTrading::ServiceTypeName,
+                                         "GenericFactory"),  // Type name
                          constraint,        // Constraint, very important
-                         "",                // Preferences
+                         ACE_const_cast (const CosTrading::Lookup::Preference,
+                                         ""),                // Preferences
                          policySeq,         // Policy
                          specifiedProps,    // Specified Properties
                          1,                 // Number of wanted results
