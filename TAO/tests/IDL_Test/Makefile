@@ -79,15 +79,15 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 .PRECIOUS: $(foreach file, $(IDL_SRC), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
-namespace_check.cpp: reopened_modulesC.cpp reopen_include1C.cpp reopen_include2C.cpp
+namespace_check.cpp: reopened_modulesC.h reopen_include1C.h reopen_include2C.h
 
-reopened_modulesC.cpp: reopened_modules.idl $(TAO_ROOT)/TAO_IDL/tao_idl
+reopened_modulesC.h: reopened_modules.idl $(TAO_ROOT)/TAO_IDL/tao_idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopened_modules.idl
 
-reopen_include1C.cpp: reopen_include1.idl $(TAO_ROOT)/TAO_IDL/tao_idl
+reopen_include1C.h: reopen_include1.idl $(TAO_ROOT)/TAO_IDL/tao_idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopen_include1.idl
 
-reopen_include2C.cpp: reopen_include2.idl $(TAO_ROOT)/TAO_IDL/tao_idl
+reopen_include2C.h: reopen_include2.idl $(TAO_ROOT)/TAO_IDL/tao_idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopen_include2.idl
 
 main:	$(addprefix $(VDIR),$(TEST_OBJS))
