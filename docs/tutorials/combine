@@ -1,0 +1,133 @@
+#!/usr/bin/perl
+#
+# This perl script will combine a set of files into one or more HTML pages.
+#
+# The file fooNN.html will be created by combining the files:
+#    fooNN.hdr
+#    fooNN.pre
+#    fooNN.bdy
+#    fooNN.pst
+#
+# Where NN is a 2-digit number.  If fooNN.hdr does not exist, the file 'hdr'
+# will be used.  If any of the other file-parts don't exist, they will be
+# ignored.
+#
+# Usage:
+#    combine *.html
+#    combine *.pre
+#
+# Input files:
+#
+#     links
+#      A list of links to be created before combining.  The format of this
+#      file is:
+#        source-file   destination-file    format-code
+#      A hard-link will be created from source to dest.  The format-code 'P'
+#      will tell the combiner to wrap the destination in <PRE></PRE> if it
+#      is later used as a bdy file.
+#
+#     hdr
+#      If no *.hdr exists for the current page, this is used.  You will typically
+#      use this to add <TITLE> and such to each page created.
+#
+#     *.hdr
+#      You can override the generic hdr you create by creating one for
+#      a specific page.
+#
+#    *.pre
+#      Prefix files.  Their content is included after the hdr.
+#
+#    *.bdy
+#      Body files follow prefix.  You generally use the links file to create
+#      links between source-code and a bdy filename.  The bdy files are
+#      examined and "fontified" (think emacs).
+#
+#    *.pst
+#      Post files.  This content follows the bdy content.
+#
+#    *.html    
+#      These are the output.  If they exist before you run combine, they
+#      will be overwritten.
+#
+use File::Copy;
+
+%format = ();
+
+open(LINKS,"<links") || die;
+while( (($src,$dst,$fmt) = split(/\s+/,<LINKS>)) ) {
+
+  next if( $src =~ /^#/ || $src eq '' );
+
+  unlink($dst);
+  link($src,$dst) || die "Failed to link ($src) to ($dst): $!\n";
+  $format{"$dst"} = "$fmt";
+}
+close(LINKS);
+
+foreach $file (@ARGV) {
+  ($base = $file) =~ s/.html$//;
+   $base =~ s/.pre$//;
+
+  open(FILE,">$base.html") || die;
+  select(FILE);
+  $| = 1;
+
+  # .hdr has the HTML header, title, etc...
+  if( -f "$base.hdr" ) {
+	copy("$base.hdr",\*FILE);
+  }
+  elsif( -f "hdr" ) {
+	copy("hdr",\*FILE);
+  }
+  # .pre has the discussion of what you'll see on this page
+  if( -f "$base.pre" ) {
+	copy("$base.pre",\*FILE);
+  }
+  # .bdy is the body of the page
+  if( -f "$base.bdy" ) {
+	if( $format{"$base\.bdy"} eq 'P' ) {
+	  print FILE "<PRE>\n" ;
+          open(INPUT,"<$base.bdy") || die "Cannot open $base.bdy for read\n";
+          # Do some substitutes on each line to try and get the output to
+          # look like it does in fontified emacs.
+          while( <INPUT> )
+            {
+              s/</\&lt;/g;
+              s,\#(e?l?if !?defined|pragma|ifn?def|define)(\W*)([\w\.]+),<font color=blue>\#$1</font>$2<font color=purple>$3</font>,;
+              s,\#(include|endif),<font color=blue>$&</font>,;
+              s,"([^"]+)","<font color=green>$1</font>",g;
+              s,//.*$,<font color=red>$&</font>,;
+              s,/\*,<font color=red>$&,;
+              s,\*/,$&</font>,;
+              s,\w+::\~?\w+,<font color=\#008888>$&</font>,;
+              print FILE $_;
+            }
+	  print FILE "</PRE>\n";
+	}
+	else {
+	  copy("$base.bdy",\*FILE);
+	}
+  }
+  # .pst summarizes what was seen
+  if( -f "$base.pst" ) {
+	copy("$base.pst",\*FILE);
+  }
+  # .ftr follows the footer to show "continue to next page" stuff
+  if( -f "$base.ftr" ) {
+	copy("$base.ftr",\*FILE);
+  }
+  else {
+	($num = $base) =~ s/[A-z]//g;
+	$base =~ s/[0-9]//g;
+	++$num;
+	$next = sprintf("$base%02.2d",$num);
+	print FILE "<P><HR WIDTH=\"100%\">\n";
+	print FILE "<CENTER>[<A HREF=\"..\">Tutorial Index</A>] ";
+	if( $file ne $ARGV[$#ARGV] ) {
+	  print FILE "[<A HREF=\"$next.html\">Continue This Tutorial</A>]";
+	}
+	print FILE "</CENTER>\n";
+  }
+  close(FILE);
+}
+
