@@ -16,7 +16,7 @@ IDL_FILES = corbaloc
 
 LDLIBS = -lTAO_CosNaming -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO 
 #CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
-BIN = server client corbaname_client
+BIN2 = server client corbaname_client
 
 SRC = $(addsuffix .cpp, $(BIN) status_i ior_corbaloc_client_i) $(IDL_SRC)
 
