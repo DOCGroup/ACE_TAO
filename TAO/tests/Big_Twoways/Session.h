@@ -60,6 +60,10 @@ private:
   /// Return 1 if all the work in this session has been completed
   int more_work (void) const;
 
+  /// Validate all the connections
+  void validate_connections (ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC (());
+
 private:
   /// Synchronize the internal state
   ACE_SYNCH_MUTEX mutex_;
