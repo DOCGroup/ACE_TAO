@@ -63,8 +63,7 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
 
 
 .obj/ECT_Supplier_Driver.o .obj/ECT_Supplier_Driver.so .shobj/ECT_Supplier_Driver.o .shobj/ECT_Supplier_Driver.so: ECT_Supplier_Driver.cpp ECT_Supplier_Driver.h \
- $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -91,8 +90,7 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -405,8 +403,7 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
