@@ -1,15 +1,19 @@
 // $Id$
 //
-// @(#)iioporb.cpp	1.8 95/09/19
+// @(#)iioporb.cpp      1.8 95/09/19
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// IIOP:		ORB pseudo-object
+// IIOP:                ORB pseudo-object
 //
 // This includes objref stringification/destringification for IIOP
 // object references.
 
 #include "tao/corba.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/IIOP_ORB.i"
+#endif /* ! __ACE_INLINE__ */
 
 static const char ior_prefix [] = "IOR:";
 static const char iiop_prefix [] = "iiop:";
@@ -45,8 +49,8 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.put_char (TAO_ENCAP_BYTE_ORDER);
       if (cdr.encode (CORBA::_tc_Object,
-			&obj, 0,
-			env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        &obj, 0,
+                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 0;
 
       // Now hexify the encapsulated CDR data into a string, and
@@ -89,7 +93,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // Similarly with the port, because there's no single IIOP port
       // to which we could default.
 
-      static const char	digits [] = "0123456789";
+      static const char digits [] = "0123456789";
 
       // This only works for IIOP objrefs.  If we're handed an objref
       // that's not an IIOP objref, fail -- application must use an
@@ -98,13 +102,13 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       IIOP_Object *obj2;
 
       if (obj->QueryInterface (IID_IIOP_Object,
-			       (void **) &obj2) != TAO_NOERROR)
+                               (void **) &obj2) != TAO_NOERROR)
         {
           env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
           return 0;
-	}
+        }
 
-      if (!obj2)			// null?
+      if (!obj2)                        // null?
         return CORBA::string_copy ((CORBA::String) iiop_prefix);
 
       CORBA::String_var key;
@@ -182,8 +186,8 @@ ior_string_to_object (CORBA::String str,
 
   stream.setup_encapsulation (buffer, len);
   if (stream.decode (CORBA::_tc_Object,
-		    &objref, 0,
-		    env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                    &objref, 0,
+                    env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     objref = 0;
 
   delete [] buffer;
