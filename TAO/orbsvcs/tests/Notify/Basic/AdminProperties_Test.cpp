@@ -11,7 +11,7 @@ AdminProperties_Test::AdminProperties_Test (void)
     max_consumers_ (5),
     max_suppliers_ (5),
     reject_new_events_ (0),
-    consumers_ (3)
+    consumers_ (3),
     suppliers_ (3),
     event_count_ (30)
 {
