@@ -1,3 +1,7 @@
+Tue Jun 15 09:28:34 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Added ACE_HAS_SSIZE_T for egcs.
+
 Mon Jun 14 22:52:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Map_Manager_Test.cpp: Removed template instantiation
