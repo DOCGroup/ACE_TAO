@@ -71,7 +71,7 @@ public abstract class Task implements Runnable, EventHandler
    * Transfer a message into the queue to handle immediate
    * processing.
    *@param mb Message Block to handle immediately
-   *@param tv amount of time to wait for
+   *@param tv Latest time to wait until (absolute time)
    */
   public abstract int put (MessageBlock mb, TimeValue tv);
 
@@ -232,7 +232,7 @@ public abstract class Task implements Runnable, EventHandler
   /**
    * Insert message into the message queue.
    *@param mb Message Block to insert into the Message Queue
-   *@param tv amount of time to wait for
+   *@param tv time to wait until (absolute time)
    *@exception java.lang.InterruptedException Interrupted while accessing queue
    */
   protected int putq (MessageBlock mb, TimeValue tv) throws InterruptedException
@@ -243,7 +243,7 @@ public abstract class Task implements Runnable, EventHandler
   /**
    * Extract the first message from the queue. Note that the call is blocking.
    *@return the first Message Block from the Message Queue.
-   *@param tv amount of time to wait for
+   *@param tv Latest time to wait until (absolute time)
    *@exception java.lang.InterruptedException Interrupted while accessing queue
    */
   protected MessageBlock getq (TimeValue tv) throws InterruptedException
@@ -254,7 +254,7 @@ public abstract class Task implements Runnable, EventHandler
   /**
    * Return a message back to the queue.
    *@param mb Message Block to return back to the Message Queue
-   *@param tv amount of time to wait for
+   *@param tv Latest time to wait until (absolute time)
    *@exception java.lang.InterruptedException Interrupted while accessing queue
    */
   protected int ungetq (MessageBlock mb, TimeValue tv) throws InterruptedException
@@ -265,7 +265,7 @@ public abstract class Task implements Runnable, EventHandler
   /**
    * Transfer message to the adjacent ACETask in an ACEStream.
    *@param mb Message Block to transfer to the adjacent Task
-   *@param tv amount of time to wait for
+   *@param tv Latest time to wait until (absolute time)
    *@return -1 if there is no adjacent Task, else the return value of
    * trying to put the Message Block on that Task's Message Queue.
    */
@@ -278,7 +278,7 @@ public abstract class Task implements Runnable, EventHandler
    * Turn the message back around. Puts the message in the sibling's
    * Message Queue.
    *@param mb Message Block to put into sibling's Message Queue
-   *@param tv amount of time to wait for
+   *@param tv Latest time to wait until (absolute time)
    *@return -1 if there is no adjacent Task to the sibling, else the
    * return value of trying to put the Message Block on sibling's
    * Message Queue. 

@@ -70,7 +70,10 @@ public abstract class TimedWait
    * this method is final to ensure that no one overrides it. 
    * IMPORTANT: This method assumes it is called with the object_'s
    * monitor lock already held.
-   *@param tv Amount of time to do wait for.
+   * If the specified wait time is zero, this checks the condition,
+   * then returns on success or throws a TimeoutException on failure.
+   *@param tv Absolute time to wait until before throwing an exception
+   * if the condition isn't satisfied
    *@exception java.lang.InterruptedException Interrupted during wait
    *@exception JACE.ASX.TimeoutException Reached timeout specified
    */
@@ -78,13 +81,23 @@ public abstract class TimedWait
     throws InterruptedException,
            TimeoutException 
   {
+    if (tv == null) {
+	this.timedWait();
+	return;
+    }
+
     // Acquire the monitor lock.
     if (!condition ()) 
       {
-	// Only attempt to perform the timed wait if the condition isn't
-	// true initially.
-	long start = System.currentTimeMillis ();
-	long waitTime = tv.getMilliTime ();
+	long start = System.currentTimeMillis();
+	long waitTime = tv.getMilliTime() - start;
+
+	// Safety check since there is a possibility that it is
+	// exactly the same time as the tv.  That would cause
+	// waitTime to be 0, and since Java's wait(timeout) blocks
+	// when timeout is 0, it would mean trouble.
+	if (waitTime < 1)
+	    throw new TimeoutException();
 
 	for (;;) {
 	  // Wait until we are notified.
@@ -92,16 +105,17 @@ public abstract class TimedWait
 
 	  // Recheck the condition.
 	  if (!condition ()) {
-	    long now = System.currentTimeMillis ();
-	    long timeSoFar = now - start;
 
+	    long now = System.currentTimeMillis();
+	    long timeSoFar = now - start;
+	    
 	    // Timed out!
-	    if (timeSoFar >= tv.getMilliTime ()) 
+	    if (now >= tv.getMilliTime ()) 
 	      throw new TimeoutException ();
 	    else 
 	      // We still have some time left to wait, so adjust the
 	      // wait_time.
-	      waitTime = tv.getMilliTime () - timeSoFar; 
+	      waitTime -= timeSoFar; 
 	  }
 	  else
 	    break;  // Condition became true.

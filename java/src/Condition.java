@@ -62,12 +62,15 @@ public class Condition
   }
   
   /**
-   * TimedWait for condition to become signaled. 
+   * TimedWait for condition to become signaled.  Note that the
+   * given TimeValue is an absolute time, not a relative time.
+   *
+   *@param tv Absolute time to wait until before timing out
    *@exception TimeoutException wait timed out exception
    *@exception InterruptedException exception during wait
    */
   public void Wait (TimeValue tv) 
-    throws TimeoutException, InterruptedException
+      throws TimeoutException, InterruptedException
   {
     waiters_++;
 
@@ -75,12 +78,7 @@ public class Condition
       {
 	mutex_.release();
 
-	TimeValue start = TimeValue.getTimeOfDay ();
-
 	semaphore_.acquire (tv);
-
-	TimeValue now = TimeValue.getTimeOfDay ();
-	tv.minusEquals (TimeValue.minus (now, start));
 
 	mutex_.acquire (tv);
       }

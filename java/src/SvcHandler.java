@@ -72,7 +72,7 @@ public abstract class SvcHandler extends Task
 
   /**
    * Provide a default implementation to simplify ancestors.
-   *@param tv Time Value for which timer was set
+   *@param tv Time Value when the event occured
    *@param obj An arbitrary object that was passed to the Timer Queue
    * (Asynchronous Completion Token)
    */
