@@ -1,3 +1,11 @@
+Tue Sep 25 09:12:28 2001  Andrew Finnell  <Andrew.Finnell@esecurityinc.com>
+
+	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
+
+	  OpenSSL does not store the last error in errno so explicitly do
+	  so.  This corrects problems where a server is unaware that a
+	  client has forcefully disconnected.
+
 Tue Sep 25 00:01:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Service_Repository.cpp (instance): There are three stages of
