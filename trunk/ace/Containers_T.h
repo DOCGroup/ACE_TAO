@@ -1376,7 +1376,7 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Array (size_t size);
+  ACE_Array (size_t size = 0);
   // Dynamically create an uninitialized array.
 
   ACE_Array (size_t size, const T &default_value);
@@ -1420,6 +1420,11 @@ public:
 
   size_t size (void) const;
   // Returns the <cur_size_> of the array.
+
+  int size (size_t new_size);
+  // Changes the size of the array to match <new_size>.
+  // It copies the old contents into the new array.
+  // Return -1 on failure.
 
   int operator== (const ACE_Array<T> &s) const;
   // Compare this array with <s> for equality.  Two arrays are equal
