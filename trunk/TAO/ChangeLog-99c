@@ -1,3 +1,9 @@
+Sun Jun 27 11:54:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
+	  Fixed misuse of ACE_TRY_ENV, thanks to Doug and David for
+	  pointing it out.
+
 Sun Jun 27 09:17:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/DynAny_i.cpp: added explicit template instantiations.
