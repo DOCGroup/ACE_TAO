@@ -134,6 +134,20 @@ namespace CIAO
                                             int length,
                                             Deployment::Resource& res);
 
+      /// Process the attributes for the property
+      void process_attributes_for_property (DOMNamedNodeMap* named_node_map,
+                                            DOMDocument* doc,
+                                            DOMNodeIterator* iter,
+                                            int length,
+                                            Deployment::Property& pro);
+
+      /// Process the attributes for the property
+      void process_attributes_for_satisfier_property (DOMNamedNodeMap* named_node_map,
+                                                      DOMDocument* doc,
+                                                      DOMNodeIterator* iter,
+                                                      int length,
+                                                      Deployment::SatisfierProperty& pro);
+
       /// process the node attribute
       void process_node (DOMDocument* doc,
                          DOMNodeIterator* iter,
@@ -208,14 +222,6 @@ namespace CIAO
 
       /// create a document
       DOMDocument* create_document (const char *url);
-
-      /// parse the property in a HREF format
-      void parse_property_href_doc (DOMDocument* doc, unsigned long filter,
-                                    Deployment::Property& property);
-
-      /// parse the satisfier property in a HREF format
-      void parse_satisfier_property_href_doc (DOMDocument* doc, unsigned long filter,
-                                              Deployment::SatisfierProperty& satisfier_property);
 
       /// update node refs
       void update_node_refs (Deployment::Domain& domain);
