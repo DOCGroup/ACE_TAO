@@ -109,8 +109,7 @@ deinstall.local:
 	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
 
 
-#### To disable installs, just remove write permission from $ACE_ROOT/ace.
-#### Or, add "INSTALL=" to your "make" invocation.
+#### To disable installs, just add "INSTALL=" to your "make" invocation.
 
 $(INSBIN)/%$(VAR) \
 $(INSINC)/ace% \
@@ -133,8 +132,7 @@ $(INSMAN)/mann/% :
 				echo "Installing $(@F) -> $(@D)" ; \
 				ln -s $(shell pwd)/$(@F) $@ ; \
 			fi ; \
-		fi \
-	fi
+		fi
 ifdef MVSLIB
 #special for MVS in order to use the .x files
 	@if test -w $(@D) ; then \
@@ -143,7 +141,7 @@ ifdef MVSLIB
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
 			ln -s $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
-			fi \
+		fi \
 	fi
 endif
 
