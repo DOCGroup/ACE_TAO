@@ -39,7 +39,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "TAO_Export.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/Typecode.h"
@@ -219,7 +219,7 @@ namespace Dynamic
 } // module Dynamic
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:50
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -288,4 +288,3 @@ TAO_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-

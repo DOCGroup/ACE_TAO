@@ -47,7 +47,7 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
-#include "PolicyC.h"
+#include "tao/PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -90,7 +90,7 @@ namespace CORBA
 {
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:612
+  // be/be_interface.cpp:611
 
 #if !defined (_CORBA_DOMAINMANAGER__VAR_OUT_CH_)
 #define _CORBA_DOMAINMANAGER__VAR_OUT_CH_
@@ -134,12 +134,17 @@ namespace CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    static DomainManager_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     static DomainManager_ptr _nil (void)
     {
       return (DomainManager_ptr)0;
     }
 
-
+    static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
@@ -153,7 +158,7 @@ namespace CORBA
       ));
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -199,12 +204,17 @@ namespace CORBA
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_DomainManager;
+
+  // TAO_IDL - Generated from
   // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType SecConstruction = 11U;
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:612
+  // be/be_interface.cpp:611
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY__VAR_OUT_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY__VAR_OUT_CH_
@@ -248,12 +258,17 @@ namespace CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    static ConstructionPolicy_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     static ConstructionPolicy_ptr _nil (void)
     {
       return (ConstructionPolicy_ptr)0;
     }
 
-
+    static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
@@ -268,7 +283,7 @@ namespace CORBA
       ));
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -312,6 +327,11 @@ namespace CORBA
   };
 
 #endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ConstructionPolicy;
 
   // TAO_IDL - Generated from
   // be/be_visitor_sequence/sequence_ch.cpp:101
@@ -361,10 +381,17 @@ namespace CORBA
     DomainManagerList (const DomainManagerList &);
     ~DomainManagerList (void);
 
+    static void _tao_any_destructor (void *);
+
     typedef DomainManagerList_var _var_type;
   };
 
 #endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_DomainManagerList;
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:66
@@ -389,7 +416,7 @@ TAO::Collocation_Proxy_Broker *
   );
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:50
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -495,4 +522,3 @@ TAO_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
