@@ -2212,8 +2212,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
 }
 
 CORBA::Object_ptr
-TAO_POA::servant_to_reference (PortableServer::Servant servant
-                               ACE_ENV_ARG_DECL)
+TAO_POA::servant_to_reference_i (PortableServer::Servant servant
+                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -2226,10 +2226,11 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant
   // consistent Object Id value when asked politely).
   CORBA::Short priority =
     this->cached_policies_.server_priority ();
+
   PortableServer::ObjectId_var system_id =
-    this->servant_to_system_id (servant,
-                                priority
-                                ACE_ENV_ARG_PARAMETER);
+    this->servant_to_system_id_i (servant,
+                                  priority
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ObjectId user_id;
@@ -2256,9 +2257,14 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant
                           user_id);
 
   // Ask the ORT to create the object.
-  return this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
-                                              user_oid
-                                              ACE_ENV_ARG_PARAMETER);
+  // @@NOTE:There is a possible deadlock lurking here. We held the
+  // lock, and we are possibly trying to make a call into the
+  // application code. Think what would happen if the app calls us
+  // back. We need to get to this at some point.
+  return this->obj_ref_factory_->make_object (
+    servant->_interface_repository_id (),
+    user_oid
+    ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
