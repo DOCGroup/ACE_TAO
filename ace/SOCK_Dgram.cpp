@@ -27,7 +27,7 @@ ACE_SOCK_Dgram::dump (void) const
 // returns the number of bytes read.
 
 ssize_t
-ACE_SOCK_Dgram::recv (iovec io_vec[],
+ACE_SOCK_Dgram::recv (iovec *io_vec,
                       ACE_Addr &addr,
                       int flags,
                       const ACE_Time_Value *timeout) const
