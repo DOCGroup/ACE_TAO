@@ -83,7 +83,7 @@ LIB32=link.exe -lib
 # Name "TAO LIB - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.cpp
@@ -103,6 +103,10 @@ SOURCE=.\append.cpp
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Buffering_Constraint_Policy.cpp
 # End Source File
 # Begin Source File
 
@@ -171,6 +175,10 @@ SOURCE=.\default_resource.cpp
 # Begin Source File
 
 SOURCE=.\default_server.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
@@ -315,6 +323,10 @@ SOURCE=.\Key_Adapters.cpp
 # Begin Source File
 
 SOURCE=.\Leader_Follower.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
@@ -498,6 +510,10 @@ SOURCE=.\Stub.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sync_Strategies.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tagged_Components.cpp
 # End Source File
 # Begin Source File
@@ -587,7 +603,7 @@ SOURCE=.\WrongTransactionC.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.h
@@ -607,6 +623,10 @@ SOURCE=.\arg_shifter.h
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Buffering_Constraint_Policy.h
 # End Source File
 # Begin Source File
 
@@ -667,6 +687,10 @@ SOURCE=.\default_resource.h
 # Begin Source File
 
 SOURCE=.\default_server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Direct_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -799,6 +823,10 @@ SOURCE=.\IORS.h
 # Begin Source File
 
 SOURCE=.\Leader_Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -1083,7 +1111,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "*.i"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.i
@@ -1095,6 +1123,14 @@ SOURCE=.\Active_Object_Map.i
 # Begin Source File
 
 SOURCE=.\any.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Invocation.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Buffering_Constraint_Policy.i
 # End Source File
 # Begin Source File
 
@@ -1131,6 +1167,10 @@ SOURCE=.\default_resource.i
 # Begin Source File
 
 SOURCE=.\default_server.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Direct_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
@@ -1182,6 +1222,10 @@ SOURCE=.\InterfaceC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOPC.i
 # End Source File
 # Begin Source File
@@ -1191,6 +1235,10 @@ SOURCE=.\IOPS.i
 # Begin Source File
 
 SOURCE=.\Leader_Follower.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
@@ -1283,6 +1331,10 @@ SOURCE=.\Reactor_Per_Priority.i
 # Begin Source File
 
 SOURCE=.\Reactor_Registry.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 

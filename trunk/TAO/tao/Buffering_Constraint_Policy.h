@@ -50,8 +50,10 @@ public:
                                    PortableServer::POA_ptr poa);
   // Constructor.
 
+#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
   // Copy constructor.
+#endif /* ACE_WIN32 */
 
   static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
                                    const CORBA::Any& val,

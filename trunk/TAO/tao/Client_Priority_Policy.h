@@ -50,8 +50,10 @@ public:
                               const TAO::PrioritySpecification &priority_spec);
   // Constructor.
 
+#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
   TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs);
   // Copy constructor.
+#endif /* ACE_WIN32 */
 
   static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,
