@@ -57,14 +57,16 @@ namespace TAO_PG
      * constructor
      * @param property_set the properties to be decoded
      */
-    Properties_Decoder (const PortableGroup::Properties & property_set);
+    Properties_Decoder (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
      * constructor with defaults
      * @param property_set the properties to be decoded
      * @param defaults a propert set decoder that supplies default values.
      */
-    Properties_Decoder (const PortableGroup::Properties & property_set, Properties_Decoder * defaults);
+    Properties_Decoder (const PortableGroup::Properties & property_set, Properties_Decoder * defaults ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
      * constructor with defaults, but no properties (yet)
