@@ -42,7 +42,7 @@ Sun Oct 12 19:03:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* Kokyu/Dispatcher_Task.cpp: Changed the Null lock in the
 	  allocator to Mutex lock.
 
-Sun Oct 12 17:20:40 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
+Sun Oct 12 17:20:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Select_Reactor_Base.cpp: Fix for [BUG 1268]. Please refer to
 	  bugzilla database at
