@@ -1,3 +1,32 @@
+Mon Dec 20 21:12:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+	  There were several minor bugs in the Notification Service that
+ 	  were causing filters that dealt with sequences or arrays to
+ 	  fail.  Here's a summary of the fixes:
+
+	  In TAO_Notify_Constraint_Visitor::visit_special()
+	
+	  1. Aliases are now stripped from the TypeCode in visit_special()
+	
+	  2. The TAO_ETCL_LENGTH is now processed so that it unpacks
+    	     sequences and checks for the real length.  The previous
+	     method was just using the TypeCode::length(), which returns 0 for
+	     unconstrained variable length structures.
+
+	  TAO_Notify_Constraint_Visitor::sequence_does_contain() now
+ 	  unpacks the sequence being checked and determines the type of
+ 	  the contained value.  Previously, the type being checked was the
+ 	  type of the sequence itself (which is always
+ 	  CORBA::tk_sequence).
+	
+	  TAO_Notify_Constraint_Visitor::simple_type_match() now actually
+ 	  returns a value of true if the types match.  Previously, it was
+ 	  just returning false if the types didn't match and then falling
+ 	  through to the next case.
+	
+	  Thanks to William Nagel <bill@stagelogic.com> for these fixes!
+
 Mon Dec 20 14:05:39 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
