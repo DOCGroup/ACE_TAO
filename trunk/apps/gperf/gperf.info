@@ -1,5 +1,5 @@
-This is Info file gperf.info, produced by Makeinfo-1.55 from the input
-file ./gperf.texi.
+This is Info file gperf.info, produced by Makeinfo version 1.68 from
+the input file gperf.texi.
 
 START-INFO-DIR-ENTRY
 * Gperf: (gperf).                Perfect Hash Function Generator.
@@ -30,6 +30,9 @@ English.
 
 
 File: gperf.info,  Node: Top,  Next: Copying,  Prev: (dir),  Up: (dir)
+
+GNU GPERF Utility
+*****************
 
 Introduction
 ************
@@ -1107,21 +1110,21 @@ Foundation, 1989.
 
 
 Tag Table:
-Node: Top1218
-Node: Copying2456
-Node: Contributors15759
-Node: Motivation16859
-Node: Search Structures18126
-Node: Description21679
-Node: Input Format23499
-Node: Declarations24294
-Node: Keywords26601
-Node: Functions28192
-Node: Output Format28686
-Node: Options31156
-Node: Bugs44526
-Node: Projects47213
-Node: Implementation48790
-Node: Bibliography49509
+Node: Top1224
+Node: Copying2499
+Node: Contributors15802
+Node: Motivation16902
+Node: Search Structures18169
+Node: Description21722
+Node: Input Format23542
+Node: Declarations24337
+Node: Keywords26644
+Node: Functions28235
+Node: Output Format28729
+Node: Options31199
+Node: Bugs44569
+Node: Projects47256
+Node: Implementation48833
+Node: Bibliography49552
 
 End Tag Table

@@ -1,7 +1,13 @@
 \input texinfo  @c -*-texinfo-*-
 
+@c $Id$
+
+@include version.texi
+
+@c %**start of header
 @settitle User's Guide to @code{gperf}
 @setfilename gperf.info
+@c %**end of header
 
 @ifinfo
 @format
@@ -45,17 +51,14 @@ Free Software Foundation instead of in the original English.
 @setchapternewpage odd
 
 @titlepage
-@center @titlefont{User's Guide}
-@sp 2
-@center @titlefont{for the}
-@sp 2
-@center @titlefont{GNU GPERF Utility}
-@sp 4
-@center Douglas C. Schmidt
-@sp 3
-@center last updated 1 November 1989
-@sp 1
-@center for version 2.0
+@title GNU GPERF Utility
+@subtitle User's Guide
+@subtitle Last updated @value{UPDATED}
+@subtitle For GPERF version @value{VERSION}
+@author Douglas C. Schmidt
+
+@c  The following two commands 
+@c  start the copyright page.
 @page
 @vskip 0pt plus 1filll
 Copyright @copyright{} 1989 Free Software Foundation, Inc.
@@ -82,7 +85,8 @@ English.
 
 @ifinfo
 @node Top, Copying, (dir), (dir)
-@ichapter Introduction
+@top GNU GPERF Utility
+@chapter Introduction
 
 This manual documents the GNU @code{gperf} perfect hash function generator
 utility, focusing on its features and how to use them, and how to report
