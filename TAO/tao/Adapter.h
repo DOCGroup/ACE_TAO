@@ -89,7 +89,7 @@ public:
   virtual const char *name (void) const = 0;
 
   /**
-   * Rerturn the root of the Object Adapter.
+   * Return the root of the Object Adapter.
    * Each adapter defines its own IDL interface accessed through the
    * method above.
    */
