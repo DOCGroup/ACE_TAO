@@ -319,101 +319,17 @@ Point of contact: <a href="mailto:irfan@cs.wustl.edu">Irfan Pyarali</a>
 <p>Current Status:
 <ul>
 <li>
-
-TAO fully supports the POA spec. This section will carry updates as
-available.
-
-</li>
+TAO fully supports the POA spec. This section will carry updates as available.</li>
 </ul>
 Known issues:
 <ul>
-
 <li>
-
-The synchronization in the POA is broken.  For example, the locks are
-held across the invocation on the servant. The locks are also held
-across the invocation on the AdapterActivator.  This forces the use of
-recursive locks inside the POA.  However, the problem with recursive
-locks is that multiple threads cannot dispatch requests on the same
-POA simultaneous.  
-
-</li>
+None.</li>
+</ul>
+Critical work:
+<ul>
 <li>
-
-Add the new RefCountServantBase class to TAO. This reference counted
-base class was added to the CORBA specification to avoid race
-conditions for servant deletion in threaded servers.
-ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf contains the relevant
-text.
-
-</li>
-<li>
-
-Currently, the complete POA name is used as the POA identity.  This
-scheme is inefficient in many ways including: (a) the complete POA
-name can be significantly large in size, and therefore, ineffient to
-pass with every method call from the client to the server; (b) it is
-varible in size, and therefore, does not lend itself to smart and
-effective parsing; (c) the searching based on the complete POA name is
-very ineffient. <br>
-
-The correct solution here is to use an active demux table, and flatten
-the POA hierarchy.  This will help in the searching since active
-demuxing is fast and predictable.  This will also help in the parsing
-since the demux key will be fixed size.  <br>
-
-Note that for persistent ids, we have to pass the complete POA name in
-addition to the demux key in order to handle POA creation on demand.
-
-</li>
-<li>
-
-Timestamps in persistent IORs are note required.  They should be removed.
-
-</li>
-<li>
-
-POA exceptions should be removed from the list of system exceptions.
-
-</li>
-<li>
-
-We need to separate out the POA functionality required to support the
-full CORBA spec from the POA functionality required to support the
-Minimal CORBA spec.
-
-</li>
-<li>
-
-We need to investigate whether it feasible for us to provide active
-demuxing for the USER_ID policy.  Currently, the best we do with the
-USER_ID policy is a hash table based demuxing.
-
-Note that we have to pass the user id in addition to the demux key in
-order to handle servant creation on demand.
-
-</li>
-<li>
-
-We can potentially add active demuxing for method name lookup.  The
-benefit of this optimization is questionable since the current perfect
-hashing scheme provide very good and predictable behavior.  <br>
-
-Also, note that this optimization will require many changes.  We would
-have to use the help of the IDL compiler to modify the object key that
-is passed for every method call differently.  Note that this scheme
-doesn't work in the case of multiple inheritance or when the client
-stubs are not TAO.
-
-</li>
-<li>
-
-There are some POA objects in a typical server that are not freed up
-properly, resulting in a memory leak.  This is not very significant
-since the leak does not grow.  However, it still needs a fix.
-
-</li>
-
+None.</li>
 </ul>
 Future work:
 <ul>
