@@ -27,11 +27,6 @@
 
 class TAO_Export CORBA_ValueFactoryBase
 {
-  /*  friend CORBA::Boolean _tao_unmarshal_pre (TAO_InputCDR &,
-                                            CORBA_ValueFactory_ptr &,
-                                            CORBA_ValueBase *&,
-                                            const char * const);
-  %! how can I make the friendship work ? (g++) */
 public:
   CORBA_ValueFactoryBase ();
   virtual ~CORBA_ValueFactoryBase ();
@@ -107,8 +102,8 @@ private:
 // orb->lookup_value_factory (char * repo_id) .)
 
 #define TAO_OBV_REGISTER_FACTORY(FACTORY,VALUETYPE) \
-  { CORBA_ValueFactory_ptr factory = new FACTORY; \
-    CORBA_ValueFactory_ptr prev_factory = \
+  { CORBA_ValueFactory *factory = new FACTORY; \
+    CORBA_ValueFactory *prev_factory = \
     TAO_ORB_Core_instance ()->orb ()->register_value_factory (\
                                    VALUETYPE::_tao_obv_static_repository_id (),\
                                    factory); \
