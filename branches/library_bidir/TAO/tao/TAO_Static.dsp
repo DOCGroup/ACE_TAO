@@ -131,6 +131,10 @@ SOURCE=.\Base_Transport_Property.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_Adapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
@@ -1500,6 +1504,10 @@ SOURCE=.\Asynch_Timeout_Handler.cpp
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_Adapter.cpp
 # End Source File
 # Begin Source File
 
