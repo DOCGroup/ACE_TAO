@@ -7,6 +7,10 @@ Wed Jan 07 20:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/test_config.h (set_output): "if (! test_dir)" instead of
           "if (test_dir)" so the output filename ends up non-null.
 
+        * ace/Shared_Memory.{h,cpp},Makefile (~ACE_Shared_Memory): made
+          virtual and non-line.  Added file Shared_Memory.cpp to contain
+          the definition.
+
 Wed Jan 07 17:59:57 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Free_List.i (add): Only delete freeed item when we hit the
