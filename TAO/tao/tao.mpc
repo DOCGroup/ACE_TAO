@@ -202,6 +202,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       Wait_On_Read.cpp
       Wait_On_Reactor.cpp
       Wait_On_Leader_Follower.cpp
+      Wait_On_LF_No_Upcall.cpp
       Transport_Mux_Strategy.cpp
       Exclusive_TMS.cpp
       Muxed_TMS.cpp

@@ -1,3 +1,57 @@
+Thu Aug 19 16:49:24 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * tao/Wait_On_LF_No_Upcall.h:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/tao.mpc:
+
+          Created new wait strategy that combines features of Wait_On_Read
+          and Wait_On_Leader_Follower.  This strategy re-enters the
+          leader-follower, but does not permit nested upcalls on the
+          requesting thread while waiting for a reply.  Other threads are
+          permitted to operate normally.  The strategy was motivated by
+          the need to recognize connections opened in the client role and
+          closed by the far side.  Using Wait_On_Read, the closure would
+          only be recognized the next time an invocation gets made that
+          goes through that connection.  Notably in the notification
+          service, there is a _narrow() that causes an invocation on an
+          object, and that connection never gets reused.  Thus, it sits in
+          CLOSE_WAIT consuming a file descriptor for the rest of the
+          process.
+
+          Implementing this required modifications to other files to
+          allocate and honor a flag set by this wait strategy.
+
+        * docs/Options.html:
+
+          Added documentation on the new wait strategy.
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/Transport.inl:
+        * tao/Transport_Connector.cpp:
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Acceptor_Impl.cpp:
+        * tao/default_client.cpp:
+        * tao/default_client.h:
+        * tao/Thread_Per_Connection_Handler.cpp:
+
+          Updated to cooperate with the new wait strategy.  Note that some
+          refactoring in the Connection_Handler requires changes in any
+          pluggable transport's derived Connection_Handler in order to
+          participate in this wait strategy.
+
 Thu Aug 19 01:54:51 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl:

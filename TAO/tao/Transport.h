@@ -43,6 +43,13 @@ class TAO_Resume_Handle;
 class TAO_Stub;
 struct iovec;
 
+enum TAO_Connection_Role
+{
+  TAO_UNSPECIFIED_ROLE = 0,
+  TAO_SERVER_ROLE = 1,
+  TAO_CLIENT_ROLE = 2,
+};
+
 /**
  * @class TAO_Transport
  *
@@ -276,6 +283,23 @@ public:
    */
   size_t id (void) const;
   void id (size_t id);
+
+  /**
+   * Methods dealing with the role of the connection, e.g., CLIENT or SERVER.
+   * See CORBA 2.6 Specification, Section 15.5.1 for origin of definitions.
+   */
+  TAO_Connection_Role opened_as (void) const;
+  void opened_as (TAO_Connection_Role);
+
+  /**
+   * Predicate that returns true if it is valid for this transport to act in a server
+   * role.  This would, for example, be true if opened_as() == TAO_SERVER_ROLE
+   * or bidirectional_flag() == 1.
+   *
+   * \return 0 cannot act in server role
+   * \return 1 can acts in server role
+   */
+  int acts_as_server (void) const;
 
   /// Get and Set the purging order. The purging strategy uses the set
   /// version to set the purging order.
@@ -869,6 +893,8 @@ protected:
    * if the server receives the info.
    */
   int bidirectional_flag_;
+
+  TAO_Connection_Role opening_connection_role_;
 
   /// Implement the outgoing data queue
   TAO_Queued_Message *head_;
