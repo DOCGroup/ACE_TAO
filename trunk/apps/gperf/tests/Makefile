@@ -22,12 +22,13 @@
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
+SRC= test.cpp
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 srcdir = .
@@ -89,9 +90,29 @@ all:
 	./aout -v < $(srcdir)/c.gperf > test-7.out
 	-diff -b $(srcdir)/test-7.exp test-7.out
 
+realclean:
+	$(RM) -rf *.out cinset.cpp c++inset.cpp iinset.cpp tinset.cpp \
+		  pinset.cpp m3inset.cpp adainset.cpp preinset.cpp
+	$(RM) -rf c.out aout preout m3out pout cout c++out iout tout
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-
+.obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
