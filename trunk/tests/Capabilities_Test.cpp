@@ -30,7 +30,7 @@ load_config (void)
   ACE_Capabilities caps;
   if (caps.getent (config, ACE_TEXT ("Config")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Can't read %s"),
+                       ACE_TEXT ("Can't read %s\n"),
                        config),
                       1);
 
@@ -75,10 +75,15 @@ main (int, ACE_TCHAR *[])
     "   integer#2,\n"
     "   string=000030,\n\n";
 
-  ACE_HANDLE fd = ACE_OS::open (config, O_RDWR | O_CREAT | O_TRUNC);
+  ACE_HANDLE fd = ACE_OS::open (config,
+                                O_RDWR | O_CREAT | O_TRUNC,
+                                ACE_DEFAULT_FILE_PERMS);
 
   if (fd == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_OS::open")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ACE_OS::open")),
+                      -1);
 
 
   if (ACE_OS::write (fd, file_contents, sizeof(file_contents)) !=
@@ -86,13 +91,19 @@ main (int, ACE_TCHAR *[])
     {
       ACE_OS::unlink (config);
       ACE_OS::close (fd);
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_OS::write")), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_OS::write")),
+                        -1);
     }
 
   if (ACE_OS::close (fd) != 0)
     {
       ACE_OS::unlink (config);
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_OS::close")), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_OS::close")),
+                        -1);
     }
   // --------------------------------------------------------
 
