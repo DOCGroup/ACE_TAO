@@ -31,7 +31,7 @@ CUBIT_SVR_OBJS = \
 	cubit_i.o \
 	Task_Client.o \
 	Util_Thread.o \
-	tmplinst.o
+	tmplinst.o 
 
 CUBIT_CLIENT_OBJS = \
 	cubitC.o \
@@ -63,7 +63,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #CXX := purify $(CXX)
 
-LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
+LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/tao/compat
 
 # pccTimer will eventually get integrated into ACE.  It is specific for ClassiX on VME

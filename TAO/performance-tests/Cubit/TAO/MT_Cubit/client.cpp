@@ -104,7 +104,7 @@ output_taskinfo (void)
 #endif /* VXWORKS */
 
 void
-output_latency (Task_State &ts)
+output_latency (Task_State *ts)
 {
   FILE *latency_file_handle = 0;
   char latency_file[BUFSIZ];
@@ -112,7 +112,7 @@ output_latency (Task_State &ts)
 
   ACE_OS::sprintf (latency_file,
                    "cb__%d.txt",
-                   ts.thread_count_);
+                   ts->thread_count_);
 
   ACE_OS::fprintf(stderr,
                   "--->Output file for latency data is \"%s\"\n",
@@ -121,14 +121,14 @@ output_latency (Task_State &ts)
   latency_file_handle = ACE_OS::fopen (latency_file, "w");
 
   // This loop visits each client.  thread_count_ is the number of clients.
-  for (u_int j = 0; j < ts.thread_count_; j ++)
+  for (u_int j = 0; j < ts->thread_count_; j ++)
     {
       ACE_OS::sprintf(buffer,
                       "%s #%d",
                       j==0? "High Priority": "Low Priority",
                       j);
       // this loop visits each request latency from a client
-      for (u_int i = 0; i < (j==0? ts.high_priority_loop_count_:ts.loop_count_)/ts.granularity_; i ++)
+      for (u_int i = 0; i < (j==0? ts->high_priority_loop_count_:ts->loop_count_)/ts->granularity_; i ++)
         {
           ACE_OS::sprintf(buffer+strlen(buffer),
 #if defined (CHORUS)
@@ -136,7 +136,7 @@ output_latency (Task_State &ts)
 #else
                           "\t%f\n",
 #endif /* !CHORUS */
-                          ts.global_jitter_array_[j][i]);
+                          ts->global_jitter_array_[j][i]);
           fputs (buffer, latency_file_handle);
           buffer[0]=0;
         }
@@ -212,13 +212,14 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   ACE_Time_Value delta_t;
   timer_.start ();
   // execute one computation.
-  util_thread.computation ();
+  for (int k=0; k < 1000; k++)
+    util_thread.computation ();
   timer_.stop ();
   timer_.elapsed_time (delta_t);
   // Store the time in milli-seconds.
   util_task_duration = (delta_t.sec () * 
 			ACE_ONE_SECOND_IN_MSECS + 
-			(double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS);
+			(double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS) / 1000;
 #endif /* !CHORUS */
 
   // The thread priority 
