@@ -1,3 +1,9 @@
+Mon May 31 19:21:59 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/UIOP_Acceptor.cpp:
+
+	  Enabled and fixed default UIOP endpoint creation code.
+
 Mon May 31 18:09:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/InterOp-Naming/InterOp-Naming.dsw:
