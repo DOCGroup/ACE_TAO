@@ -20,7 +20,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "fault_tol_export.h"
+#include "FT_ServerORB_export.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/ORB.h"
@@ -45,7 +45,7 @@ namespace TAO
    *
    *
    */
-  class TAO_FT_Export FT_ServerRequest_Interceptor
+  class TAO_FT_ServerORB_Export FT_ServerRequest_Interceptor
     : public virtual PortableInterceptor::ServerRequestInterceptor,
       public virtual TAO_Local_RefCounted_Object
   {
@@ -107,7 +107,7 @@ namespace TAO
     void check_iogr_version (const IOP::ServiceContext &svc
                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       PortableInterceptor::ForwardRequest));
+           PortableInterceptor::ForwardRequest));
 
     bool is_primary (void);
 

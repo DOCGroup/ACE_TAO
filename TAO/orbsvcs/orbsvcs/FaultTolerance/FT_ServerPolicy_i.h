@@ -23,7 +23,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "FT_ServerORB_export.h"
 #include "tao/LocalObject.h"
+
 
 /**
  * @class TAO_FT_Heart_Beat_Enabled_Policy
@@ -34,7 +36,7 @@
  * the TAG_FT_HEARTBEAT_ENABLED component in the IOP profile of
  * the IOR that it exposes
  */
-class TAO_FT_Export TAO_FT_Heart_Beat_Enabled_Policy
+class TAO_FT_ServerORB_Export TAO_FT_Heart_Beat_Enabled_Policy
   : public FT::HeartbeatEnabledPolicy,
     public TAO_Local_RefCounted_Object
 {

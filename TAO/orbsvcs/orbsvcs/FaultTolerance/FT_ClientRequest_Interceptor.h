@@ -12,7 +12,7 @@
 #define TAO_FT_CLIENT_REQUEST_INTERCEPTOR_H
 #include /**/ "ace/pre.h"
 
-#include "fault_tol_export.h"
+#include "FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -64,7 +64,7 @@ namespace TAO
    *
    *  @@TODO
    */
-  class TAO_FT_Export FT_ClientRequest_Interceptor
+  class TAO_FT_ClientORB_Export FT_ClientRequest_Interceptor
     : public virtual PortableInterceptor::ClientRequestInterceptor,
       public virtual TAO_Local_RefCounted_Object
   {

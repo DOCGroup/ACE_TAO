@@ -1,7 +1,7 @@
 project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
   sharedname   = TAO_FTORB_Utils
-  idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
-  dynamicflags = TAO_FT_BUILD_DLL
+  idlflags    += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  dynamicflags = TAO_FT_ORB_UTILS_BUILD_DLL
   tagchecks   += FTORB_Utils
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
@@ -20,10 +20,12 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
   }
 }
 
-project(FT_ClientORB) : orbsvcslib, ftorbutils {
+project(FT_ClientORB) : orbsvcslib, core, iormanip, portableserver {
   sharedname   = TAO_FT_ClientORB
-  dynamicflags = TAO_FT_BUILD_DLL
+  idlflags    += -Wb,export_macro=TAO_FT_ClientORB_Export -Wb,export_include=FaultTolerance/FT_ClientORB_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  dynamicflags = TAO_FT_CLIENTORB_BUILD_DLL
   tagchecks   += FT_ClientORB
+  libs        += TAO_FTORB_Utils
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
   avoids      += minimum_corba
@@ -45,10 +47,12 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils {
   }
 }
 
-project(FT_ServerORB) : orbsvcslib, ftorbutils {
+project(FT_ServerORB) : orbsvcslib, core, iormanip, portableserver {
   sharedname   = TAO_FT_ServerORB
-  dynamicflags = TAO_FT_BUILD_DLL
+  idlflags    += -Wb,export_macro=TAO_FT_ServerORB_Export -Wb,export_include=FaultTolerance/FT_ServerORB_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  dynamicflags = TAO_FT_SERVERORB_BUILD_DLL
   tagchecks   += FT_ServerORB
+  libs        += TAO_FTORB_Utils
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
   avoids      += minimum_corba

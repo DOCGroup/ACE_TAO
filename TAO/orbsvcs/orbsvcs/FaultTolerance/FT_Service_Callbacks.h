@@ -14,7 +14,7 @@
 #define TAO_FT_CALLBACKS_H
 #include /**/ "ace/pre.h"
 
-#include "fault_tol_export.h"
+#include "FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ class TAO_ORB_Core;
  * An implementation of the service callbacks that allows the
  * loading of the FT ORB level library in to the ORB
  */
-class TAO_FT_Export TAO_FT_Service_Callbacks : public TAO_Service_Callbacks
+class TAO_FT_ClientORB_Export TAO_FT_Service_Callbacks : public TAO_Service_Callbacks
 {
 public:
   /// Constructor

@@ -24,6 +24,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
 #include "tao/ORB_Constants.h"
+#include "tao/orbconf.h"
 
 template <class PROXY, class ACE_LOCK> class TAO_Notify_Event_Map_T;
 template <class PROXY> class TAO_ESF_Proxy_Collection;
