@@ -771,6 +771,10 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Dynamic_Service.h");
 
+  if (be_global->lookup_strategy () == BE_GlobalData::TAO_DYNAMIC_HASH)
+    this->gen_standard_include (this->server_skeletons_,
+                                "ace/Malloc_Allocator.h");
+
 
 
   *this->server_skeletons_ << "\n\n#if defined (__BORLANDC__)\n"
