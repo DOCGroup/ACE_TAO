@@ -72,7 +72,8 @@ all their bindings.  When "-f" option is specified:
 
     2. If the specified file exists, it is scanned and:
                         a) If any inconsistency is detected in the
-                        stored state, the server exits.  A
+                        stored state or the file is not recognized by
+                        the Naming Service, the server exits.  A
                         noncorrupted version of the file must be used.
 
                         b) If no Naming Contexts exist, an initial
