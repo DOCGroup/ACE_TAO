@@ -150,17 +150,9 @@ namespace CIAO
     // Reference to the Root POA
     PortableServer::POA_var root_poa_;
 
-    /// Map of event types
-    ACE_Hash_Map_Manager<const char *, RtecEventComm::EventType, ACE_Null_Mutex>
-      ciao_event_types_map_;
-
-    /// Map of suppliers
-    ACE_Hash_Map_Manager<const char *, RtecEventComm::EventSourceID, ACE_Null_Mutex>
-      ciao_publishers_map_;
-
-    /// Reference to the RT event channel (only created if needed; nil otherwise)
-    RtecEventChannelAdmin::EventChannel_var ciao_rt_event_channel_;
-
+    // Map of CIAO event services
+    ACE_Hash_Map_Manager<long, CIAO_EventServiceBase *>
+      event_services_map;
   };
 
   class CIAO_SERVER_Export Session_Container : public Container
