@@ -1,3 +1,369 @@
+Sun Jun  9 18:57:07 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/Reactor/Ntalker/ntalker.cpp:
+	* examples/Reactor/Multicast/Log_Wrapper.cpp: Added template
+	  instantiations for the new ACE_SOCK_Dgram_Mcast_Ex<> template.
+
+Sun Jun  9 18:47:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Config_Test.cpp (run_tests): Added code to exercise the
+	  new subkey path feature contributed by Eugene Alterman.
+    
+	* ace/Configuration.{h,cpp}: Added support for the path separator
+	  ('\\') in key names.  Thanks to Eugene Alterman
+ 	  <eugalt@myrealbox.com> for contributing this patch.
+
+	* ace/Date_Time.{h,i}: Added support for weekday.  Thanks to
+	  Eyal Lubetzky <eyall@BANDWIZ.COM> for reporting this.
+
+Sun Jun  9 18:11:02 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp: Removed the explicit inclusion of
+	  "ace/SOCK_Dgram_Mcast_T.cpp" since this is #included appropriately
+	  by SOCK_Dgram_Mcast.h.
+
+  	* ace/SOCK_Dgram_Mcast.cpp: Removed the ';' from the end of the
+	  #pragma instantiates.
+  
+	* ace/Makefile: Added SOCK_Dgram_Mcast_T.  
+
+        * ace/SOCK_Dgram_Mcast_T.cpp  
+          ace/SOCK_Dgram_Mcast_T.i    
+          ace/SOCK_Dgram_Mcast_T.h:
+	  Minor changes to conform to ACE coding conventions.
+  
+Sun Jun  9 17:50:37 2002  Bill Fulton  <bill_a_fulton@raytheon.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp
+          ace/SOCK_Dgram_Mcast.h
+          ace/SOCK_Dgram_Mcast_T.cpp  <new>
+          ace/SOCK_Dgram_Mcast_T.i    <new>
+          ace/SOCK_Dgram_Mcast_T.h    <new>
+
+          Somewhat massive changes to the (already very useful)
+          ACE_SOCK_Dgram_Mcast class; some fixes to existing functionality,
+          some new functionality, and a different way of controlling optional
+          (per-instance) functionality. The intent was to preserve existing
+          interface and functionality (when correct), including environment-
+          specific functionality.
+
+          Fixes to Existing Functionality:
+
+          - For ::unsubscribe(void); unsubscribes from all active subscriptions.
+            Previous version unsubscribed only from the most recently
+            subscribed group/net_if.
+            * This could change execution behavior of existing code.
+
+          - Enhanced support for a passed port# of '0'.
+            The ephemeral port# assigned by the system when the socket is
+            bound is used for all local ::send methods.
+
+          - Validation of non-zero port# and, optionally, the address passed
+            to the ::subscribe method, if the socket has been bound.
+            On second and subsequent ::subscribe invocations, the previous
+            version allowed passed parameters that were inconsistent with the
+            bound socket parameters.  This could result in a confusing
+            condition; you would not receive messages sent to the port and/or
+            address passed to ::subscribe.
+            * This could change execution behavior of existing code.
+
+          Added Functionality:
+
+          - Support specification of the (multicast) address and interface to
+            be used by all local ::send methods, independent of the receive
+            address and interface.  The same port# is used for all base class
+            ::recv methods and all local class ::send methods.  The send
+            interface applies to all local and all base class ::send methods.
+
+          - Enhanced ::dump method, to show the dynamic list of subscriptions,
+            the bound address/port#, the send address/interface, and the state
+            of optional functionality.  Also did some output reformatting.
+
+          Optional Functionality via Template Parameters and Ctor Args:
+
+            In the previous implementation, some aspects of class functionality
+            were transparently configured based on the OS it was compiled
+            under. This has been changed so that all optional functionality is
+            explicitly specified, using (a baroque set of) optional
+            constructor arguments.  In addition, new optional functionality
+            was added and is specified with template parameters and optional
+            constructor arguments.  For backward compatibility, there is an
+            explicit specialization called ACE_SOCK_Dgram_Mcast - this should
+            have the same functionality, including OS-specific functionality,
+            as the previous class implementation, and can still be used for
+            most normal (if there is such a thing with multicast) apps.
+            Overview of new template parameter:
+              ACE_SDM_LOCK_*
+                  - Strategized locking (very limited MT-safety - see below).
+            Overview of new, optional ctor arguments (enumerations):
+              opt_bindaddr_*
+                  - Whether to bind the address as well as the port#.
+              opt_nulliface_*
+                  - Defines semantics of passing net_if parameter of NULL;
+                    i.e. use all or only one iface.  
+              opt_dtorunsub_*
+                  - Whether destructor explicitly unsubscribes from all
+                  groups.
+            See SOCK_Dgram_Mcast_T.h for a full description.  Environment-
+            specific default values are explicitly declared, for use by app
+            code.
+
+          Changes to Previous Class (public) Interface & Functionality:
+
+          - Added a public (overloaded) ::open method.
+            This allows explicit specification of the port# and the multicast
+            address (if opt_bindaddr_yes is used) that is bound to this
+            socket.  This also allows specification of the address and the
+            network interface to be used by local ::send methods (and the
+            network interface used by super-class and sub-class ::send
+            methods).  There is only one address parameter; the same parameter
+            is used for both the send address/port# and the bound
+            address/port#.  The port# in the address may be 0 (to use a
+            system-assigned ephemeral port# for sending and receiving).
+
+            NOTE:  Use of this method is optional and, if used, must be
+            invoked _before_ any ::subscribe method is invoked - otherwise it
+            is _ignored_, and the (first) ::subscribe parameters will be used
+            to bind the socket and set the send parameters (as in the previous
+            code).  Note that ::subscribe need not be invoked at all, now; if
+            only ::open is used, you can send but not receive multicast
+            messages, and you can specify the interface used for sending.
+
+          - Validation of ::subscribe parameters is now strict.
+            Once the port# is bound (by ::open or the first ::subscribe), the
+            port# passed to every ::subscribe call must either be '0' or match
+            the bound port#.  Additionally; if opt_bindaddr_yes is used, the
+            address passed must match the bound address.  If these conditions
+            are not met, an error is returned (with errno=ENXIO).  Note that
+            such subscriptions would have no (useful) effect, since messages
+            could never be received for the given port#/address, due to IP
+            stack filtering.  This condition was ignored in the previous
+            version; it is now an error condition.  This may break some
+            existing code - but note that it flushes out a (silent) logical
+            error condition.
+            The port# in ::unsubscribe(addr,...) is _not_ checked, though;
+            this is not logically consistent, but ...  a mistaken port# here
+            seems less potentially dangerous and/or confusing.
+
+          - The previous ::subscribe and ::unsubscribe methods had a special
+            return code (1) to indicate that (previously Win32-specific)
+            multiple-interface subscription/unsubscription had been done. This
+            seemed to be useful only internally, but was visible to the
+            caller.  The new methods will always return '0' for success (even
+            if opt_nulliface_all is used).
+
+          - The dynamic subscription list housekeeping adds slight processing
+            overhead, and even more overhead is added if locking is enabled.
+            This should not be noticeable, except in MT thrashing conditions
+            and/or if doing very frequent subscribes/unsubscribes.
+
+          Known Restrictions:
+
+          - Interaction/Integration with other ACE multicast-oriented classes
+            and library code is _undefined_, i.e.:
+            + ACE_SOCK_Dgram_Mcast_QoS: Presumably works ok, but inherits
+              legacy class; can't specify optional functionality.
+            + ACE_RMCast: Presumably works ok, but uses legacy class;
+              can't specify optional functionality.
+            + ACE_XTI_ATM_Mcast: I presume there's no integration desirable.
+            I've re-built vers. 5.2 ACE under Solaris and Windows with the
+            modified files, and it builds ok.  Since the original functionality
+            is (basically) unchanged, it is _assumed_ that any other ACE lib
+            code that references the ACE_SOCK_Dgram_Mcast class signature
+            still functions ok.  But ...  things like adding templated code
+            could introduce problems!  Also note that these classes use (now)
+            deprecated interface methods; e.g.  RMCast passes protocol options
+            to ::subscribe that are now ignored.
+
+          - Environment-specific notes/restrictions on use of options:
+            + The opt_nulliface_all option should be used only in environments
+              for which  the ACE_Sock_Connect::get_ip_interfaces call is
+              correctly implemented (currently only Windows). In other
+              environments, using this option will _always_ return an error
+              from ::subscribe/::unsubscribe.
+            + The opt_dtorunsub_yes option allows finer control of multicast
+              group "leave" effects for environments that do not automatically
+              unsubscribe when the socket is closed, or in situations where
+              the underlying handle has been duplicated (e.g.  via fork()),
+              but will not be used. All in all, this option is useful only
+              under special, controlled circumstances.
+            + The effect of using opt_bindaddr_yes is very environment-
+              specific; it may not do what you expect (or may do what you
+              don't expect :-)
+            The default option values are defined with these notes in mind.
+
+          - Options enumeration weaknesses.
+            + The options enumeration list was put in the global namespace.
+              It seems like a pain for user code to have to prefix the option
+              values with the templated class name.
+            + All option values use the same enumeration; this could allow
+              option values to be used for the "wrong" option in the ctor
+              options list.  This was a trade-off; I didn't want to add too
+              many things to the global namespace.  (Note that more options
+              might be added to the list, in the future.) All new code
+              compares against explicit enum values (instead of 0), for safety.
+
+          - The ::open parameter list may be too "dense" - it tries to do too
+            many different things with the passed parameters.  This is an
+            artifact of its heritage.  (Note that ::subscribe can also invoke
+            ::open behavior).  In particular, it would be nice to separate
+            bound addr/iface from send addr/iface.
+
+          - Does not explicitly check for duplicate active subscriptions (i.e.
+            subscription to the same address and interface while a previous
+            subscription is still active).  (Subscription to the same address
+            but different interface is not a duplicate and is fully
+            supported.)  Note that, for most IP stacks, a subscription attempt
+            for a duplicate addr/iface will fail (and a duplicate entry will
+            not be created).  If it is allowed by the IP stack and you create
+            duplicate internal subscription list entries, you must call
+            ::unsubscribe(addr) for _each_ duplicate subscription (or
+            ::unsubscribe(void)) - until this is done, you will continue to
+            recv messages for this subscription.
+
+          - This implementation carries forward (for backward compatibility)
+            certain environment-specific hacks, i.e.:
+            + A Win32 hack such that the default opt_nulliface_defopt value
+              for Win32 is different from all other environments.
+            + A Linux hack such that the full address is unconditionally bound.
+            These would seem likely to lead to unexpected behavior for the
+            "casual user", but changing the default would break existing code.
+
+          - The SDM_OPT_LOCK parameter only controls locking of the dynamic
+            subscription list; and the need/use for this is debatable.  It was
+            added as a fail-safe, in case one class instance is shared by
+            multiple threads.  Note that a given instance can _not_ (reliably)
+            be shared by multiple threads; there are logical race conditions
+            (e.g. calling ::open) - but the logical race conditions should
+            cause only unpredictable operation, not corruption.  However; the
+            subscription list could be corrupted if one instance is shared by
+            multiple threads, which could lead to undefined behavior/crashes.
+
+          - The class interface is probably too "busy"; there are a _lot_ of 
+            side-effects that may not be evident.
+
+          - Currently only built and tested under Solaris w/ Forte-C++ and
+            Windows NT and 2000 w/ MSVC 6.
+
+          Implementation Changes:
+
+          - Now implemented as a templated class (ACE_SOCK_Dgram_Ex), via the
+            new SOCK_Dgram_Mcast_Ex.* files. The (remaining) SOCK_Dgram_Mcast.* 
+            files are vestigial; they remain due to the build rules and
+            documentation conventions, and because existing user code 
+            references the ace/SOCK_Dgram_Mcast.h file.  Note that this
+            differs from most other *_Ex.* template source files in ACE, where
+            there is still at least some function implemented in the
+            non-templated source files; here there is none.
+            An explicit specialization is declared that matches the old class
+            signature.
+
+          - The constructor now has optional arguments (to specify per-instance
+            optional functionality.  A default ctor can still be used; the
+            legacy default environment-specific functionality will be declared.
+
+          - I've tried to generalize code that was previously overly
+            environment-dependent and/or macro-driven. The intent was to make
+            future enhancements easier (there's still much desirable work to
+            be done ... speaking of which ...)
+
+          Suggested Future Work:
+
+          - Expose the SOCK_Dgram::send methods; i.e. allow specification of an
+            arbitrary dest address/port# with the ::send call.  (Must check for
+            port# of '0' in the send address and set port# to the bound port#).
+            This would allow the specification of the network interface for
+            arbitrary multicast transmissions from one instance, and should
+            work as expected if the address specified is unicast.  This seems
+            useful; currently, if you want to send multicast messages with
+            interface control, you would either have to create one instance of
+            this class for each send address, or force access to the inherited
+            ACE_SOCK_Dgram instance (which works ... "but it would be wrong").
+            I'm not sure why access to these was disabled in the original
+            design. (Is there a good reason not to do this?)
+
+          - Mark the current ::subscribe and ::unsubscribe interfaces as
+            deprecated and add new interfaces that remove all unnecessary
+            parameters.
+            + Remove the (optional) protocol* parameters from the ::subscribe
+              and ::unsubscribe methods - they don't do anything.  I (really)
+              wanted to do this now, but it could break existing app code (but
+              you can't really specify anything other than the default values,
+              anyway!)
+            + Remove the (optional) reuse_addr parameter from the ::subscribe
+              method - it is only useful if ::open has not been previously
+              invoked.  Problem: This will require that the ::open method be
+              explicitly invoked before invoking ::subscribe, which makes the
+              interface more clumsy.
+            Problem: Hard to get a unique signature for the new methods,
+            especially for ::unsubscribe.
+
+          - It seems that an ACE_SOCK_Dgram_Mcast_Manager class could be a 
+            useful "layered" addition, e.g.:
+            - Trap ::subscribe invocations using different port numbers, and 
+              create separate instances/sockets for each unique port#.
+            - Implement software loopback filtering for environments that do
+              not implement loopback disabling in the IP stack (e.g. older 
+              Windows). Also implement per-interface filters for environments
+              (like Win/NT) that don't do this right.
+            - Implement multicast group "sets" to support easy and atomic
+              joins/leaves of a user-defined list of group/interface
+              combinations.  Include enhanced failure condition handling, such
+              as subscription "roll-back"; all-or-none of the set's members
+              are joined.
+            Actually; all of these could be done in the current class - but
+            there are too many options in this class already, and the function
+            seems (to me) more appropriate to a higher-level "manager".
+
+          - Allow the send interface (and default send addr) to be changed,
+            after initial setting.  (OS-specific support needed - most stacks
+            allow the interface to be changed once set, but I presume that not
+            all do.)  
+            In general; might be worth splitting out the send from the
+            ::open/::subscribe methods - e.g. ::send_parameters.  Might add
+            optional TTL and loopback parameters to this, too.
+
+          - Add explicit methods to set common multicast socket options, e.g.
+            TTL, loopback.  (So you don't have to remember the macro names and
+            to make these macros/actions more portable!).
+
+          - Tighten up the parameter semantics and/or validation, e.g.:
+            + Verify that all addresses passed are multicast addresses.
+              For example, ::open does not check the send address.  (It should
+              still work as expected - sending unicast on the route-derived
+              interface - but that's not the intended use.)
+            + The reuse_addr parameter in ::open is used for both REUSEADDR
+              and REUSEPORT (if implemented) option setting; should these be
+              distinct parameters?  (They do different things!)
+
+          - Enhanced integration with other ACE multicast classes, as needed
+            or desirable (see Restrictions section).
+
+          - (?) For ::subscribe and ::unsubscribe - if successful, return the
+            (positive) number of subscribes/unsubscribes done (instead of '0').
+            Possibly useful, as a way for the app to sense multi-interface
+            subs/unsubs (e.g. code that is passed an instance and does not
+            know what options were used when the instance was created).
+
+          - (?) Add method ::unsubscribe(int n) to unsubscribe from most
+            recent n subscription(s) (including opt_nulliface_all option
+            support.) The implementation of group sets might obviate the
+            usefulness of this.
+
+          - (?) Enhanced MT-safety and exception handling.
+            Don't know if any particular problems; but haven't tested
+            extensively. Also; might be able to make it more efficient.
+            In particular; if one instance is intended to be shared by multiple
+            threads, there is _much_ work to be done.
+
+          - (??) Track subscription list state; i.e. recognize the state when
+            any ::unsubscribe emptys the subscription list.  This state might
+            be used to re-define some parameters (especially the network
+            interface for sends) set with ::open and for other changes ... but
+            utility vs. added complexity ratio seems low.  (Note that closing
+            the socket and reopening another can cause nasty side-effects, so
+            probably can't change the bound parameters, anyway.)
+  
 Sun Jun  9 16:26:00 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/ATM_Acceptor.cpp: 
@@ -33,15 +399,6 @@ Sun Jun  9 15:33:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * ace/Date_Time.i:
 
           Fixed some typos that caused build errors.
-
-Sun Jun  9 08:51:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-	* ace/Configuration.{h,cpp}: Added support for the path separator
-	  ('\\') in key names.  Thanks to Eugene <eugenea@bremer-inc.com>
- 	  for contributing this patch.
-
-	* ace/Date_Time.{h,i}: Added support for weekday.  Thanks to
-	  Eyal Lubetzky <eyall@BANDWIZ.COM> for reporting this.
 
 Sat Jun  8 14:46:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 

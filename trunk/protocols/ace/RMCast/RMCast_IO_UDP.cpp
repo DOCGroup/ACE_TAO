@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #include "RMCast_IO_UDP.h"
 #include "RMCast_UDP_Proxy.h"
@@ -14,7 +12,7 @@
 # include "RMCast_IO_UDP.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_IO_UDP, "$Id$")
+ACE_RCSID(ace, RMCast_IO_UDP, "RMCast_IO_UDP.cpp,v 1.12 2000/12/20 22:00:33 oci Exp")
 
 ACE_RMCast_IO_UDP::~ACE_RMCast_IO_UDP (void)
 {
@@ -454,8 +452,8 @@ template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Hash<ACE_INET_Addr>,ACE_Equal_To<ACE_INET_Addr>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Hash<ACE_INET_Addr>,ACE_Equal_To<ACE_INET_Addr>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*>;
-
 template class ACE_Equal_To<ACE_INET_Addr>;
 template class ACE_Hash<ACE_INET_Addr>;
+template class ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_DEFOPT_LOCK>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -94,6 +94,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

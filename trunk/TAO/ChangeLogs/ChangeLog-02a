@@ -1,3 +1,12 @@
+Sun Jun  9 19:16:57 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/MCast.cpp: 
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	  Added template instantiations for the new
+ 	  ACE_SOCK_Dgram_Mcast_Ex<ACE_Null_Mutex>.
+
 Fri Jun  7 16:32:17 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method): 
@@ -9385,7 +9394,6 @@ Tue Jan 29 08:57:31 2002  Carlos O'Ryan  <coryan@uci.edu>
 Tue Jan 29 10:56:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
-
           Added throw spec to push_structured_event() to match the
           declaration.
 

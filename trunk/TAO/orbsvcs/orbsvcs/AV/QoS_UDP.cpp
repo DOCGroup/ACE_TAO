@@ -1497,5 +1497,3 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_QoS_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
-
-

@@ -39,5 +39,4 @@ template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_
 #pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-
 #endif /* ACE_TIMER_HEAP_C */
