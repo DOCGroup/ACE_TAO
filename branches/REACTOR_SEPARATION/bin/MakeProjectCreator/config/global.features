@@ -35,7 +35,6 @@ zzip          = 0
 mfc           = 0
 rpc           = 0
 sctp 	      = 0
-xt_reactor    = 0
 dummy_label   = 0
 cidl          = 0
 boost         = 0
