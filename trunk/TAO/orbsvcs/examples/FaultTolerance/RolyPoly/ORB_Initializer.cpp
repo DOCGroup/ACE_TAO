@@ -36,7 +36,7 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
   {
     PortableInterceptor::ServerRequestInterceptor *tmp_interceptor = 0;
 
-    ACE_NEW_THROW_EX (interceptor,
+    ACE_NEW_THROW_EX (tmp_interceptor,
                       ReplicaController (orb.in ()),
                       CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
