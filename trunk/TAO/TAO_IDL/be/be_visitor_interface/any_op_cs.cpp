@@ -112,7 +112,6 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "if (!type->equivalent (" << node->tc_name ()
       << ", ACE_TRY_ENV)) // not equal" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_elem = 0;" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
