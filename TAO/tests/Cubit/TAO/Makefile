@@ -8,9 +8,13 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Cubit \
-	Thruput_test \
-	Demux_Test
+DIRS  = IDL_Cubit \
+	DII_Cubit \
+	MT_Cubit
+
+# These are disabled by default...
+# Orbix \
+# VisiBroker
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
