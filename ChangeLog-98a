@@ -3,13 +3,17 @@ Fri Jan 09 07:04:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_sunos5_g++.GNU: removed
           -pipe from CC and CXX.  It was already in CCFLAGS.
 
-        * tests/run_tests.vxworks: added Env_Value_Test.
-
         * include/makeinclude/platform_vxworks5.x_g++.GNU: added
           target-dependent support for symbol table extractor, and
           disabled symbol table extraction (POSTLINK) by default.
           Thanks to Keith Nicewarner <knicewar@sanders.com> for
           reporting problems with this on PPC604 targets.
+
+        * ace/config-linux-common.h: added ACE_HAS_STDCPP_STL_INCLUDES
+          and removed ACE_LACKS_ACE_IOSTREAM.  Thanks to James CE Johnson
+          <jcej@lads.com> for reporting these.
+
+        * tests/run_tests.vxworks: added Env_Value_Test.
 
 Fri Jan 09 00:14:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
