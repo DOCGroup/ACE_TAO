@@ -39,12 +39,17 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be\be_visitor_typecode/typecode_defn.cpp:808
+
+namespace PortableServer
+{
+  extern ::CORBA::TypeCode_ptr const _tc_POA;
+}
 
 namespace TAO
 {
@@ -78,9 +83,9 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_AdapterAlreadyExists = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_AdapterAlreadyExists = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -95,9 +100,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_AdapterAlreadyExists;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_AdapterNonExistent = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_AdapterNonExistent = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -112,9 +117,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_AdapterNonExistent;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_PortableServer_POA_InvalidPolicy[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_PortableServer_POA_InvalidPolicy[] =
   {
     { "index", &CORBA::_tc_ushort }
 
@@ -133,9 +138,11 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_InvalidPolicy;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_NoServant = 0;
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_NoServant = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -149,10 +156,12 @@ static TAO::TypeCode::Struct<char const *,
 ::CORBA::TypeCode_ptr const PortableServer::POA::_tc_NoServant =
   &_tao_tc_PortableServer_POA_NoServant;
 
-// TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_ObjectAlreadyActive = 0;
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:34
+
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_ObjectAlreadyActive = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -167,9 +176,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_ObjectAlreadyActive;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_ObjectNotActive = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_ObjectNotActive = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -184,9 +193,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_ObjectNotActive;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_ServantAlreadyActive = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_ServantAlreadyActive = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -201,9 +210,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_ServantAlreadyActive;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_ServantNotActive = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_ServantNotActive = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -218,9 +227,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_ServantNotActive;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_WrongAdapter = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_WrongAdapter = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -235,9 +244,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_WrongAdapter;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_POA_WrongPolicy = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POA_WrongPolicy = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -252,7 +261,7 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POA_WrongPolicy;
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:73
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -270,7 +279,7 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 
 
@@ -342,7 +351,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -411,7 +420,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -483,7 +492,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -555,7 +564,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -627,7 +636,9 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 template<>
 CORBA::Boolean
@@ -698,8 +709,10 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -771,7 +784,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -843,7 +856,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -915,7 +928,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -987,7 +1000,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -1058,8 +1071,8 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_cs.cpp:50
+// TAO_IDL - Generated from 
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -1147,10 +1160,14 @@ CORBA::Boolean operator>>= (
         PortableServer::POA::InvalidPolicy
       >;
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   template class
     TAO::Any_Dual_Impl_T<
         PortableServer::POA::NoServant
       >;
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   template class
     TAO::Any_Dual_Impl_T<
@@ -1209,10 +1226,14 @@ CORBA::Boolean operator>>= (
         PortableServer::POA::InvalidPolicy \
       >
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
         PortableServer::POA::NoServant \
       >
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
@@ -1254,4 +1275,4 @@ CORBA::Boolean operator>>= (
         PortableServer::POAList \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
