@@ -1,3 +1,9 @@
+Fri Jan 31 14:25:07 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Fixed a
+	  unused warning in the daily builds. Thanks to Heather Drury for
+	  letting me know.
+
 Fri Jan 31 07:47:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
