@@ -101,7 +101,7 @@ main (int argc, char *argv[])
 			   i),
 			  2);
 
-      if (TAO_debug_level >= 1)
+      if (TAO_debug_level >= 0)
 	{
 	  // Why are we getting the BOA_ptr from here when we've
 	  // already got it above?
@@ -112,11 +112,13 @@ main (int argc, char *argv[])
      
 	  CORBA::Object_ptr obj = 0;
 
+#if 0
 	  if (oa_ptr->find (obj_key, obj) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       " (%P|%t) Unable to locate object with key '%s', %p\n", 
 			       key),
 			      3);
+#endif
      
  	  // Stringify the objref we'll be implementing, and print it
 	  // to stdout.  Someone will take that string and give it to
@@ -124,7 +126,7 @@ main (int argc, char *argv[])
 
 	  CORBA::String str;
          
-	  str = orb_ptr->object_to_string (obj, env);
+	  str = orb_ptr->object_to_string (my_cubit[i], env);
 
 	  if (env.exception () != 0) 
 	    {
