@@ -35,11 +35,9 @@ IDL_FILES = \
 	RtecSchedulerC \
 	RtecSchedulerS \
 	RtecEventChannelAdminC \
-	RtecEventChannelAdminS
-
-# @@ have these been removed?
-# LifeCycleServiceC 
-# LifeCycleServiceS 
+	RtecEventChannelAdminS \
+	LifeCycleServiceC \
+	LifeCycleServiceS 
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
