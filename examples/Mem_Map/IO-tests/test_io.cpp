@@ -24,7 +24,7 @@ static int remove_output = 1;
 static int iteration_count = 100;
 
 // Profiler used to keep track of file I/O time.
-static ACE_Profile_Timer tm;
+static ACE_Profile_Timer profile_timer;
 
 // Explain usage and exit.
 
@@ -80,44 +80,53 @@ parse_args (int argc, char *argv[])
 
 static IO_Test *test_vector[100];
 
-static void
+static int
 run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 {
   // If HP/UX didn't suck so badly we could initialize in the global
   // scope...
   int i = 0;
 
-  ACE_NEW (test_vector[i++], Stdio_Test ("Stdio_Test", tm));
-  ACE_NEW (test_vector[i++], Block_Fread_Fwrite_Test ("Block_Fread_Fwrite_Test", tm));
-  ACE_NEW (test_vector[i++], Block_Read_Write_Test ("Block_Read_Write_Test", tm));
-  ACE_NEW (test_vector[i++], Mmap1_Test ("Mmap1_Test", tm));
-  ACE_NEW (test_vector[i++], Mmap2_Test ("Mmap2_Test", tm));
-  ACE_NEW (test_vector[i++], Slow_Read_Write_Test ("Slow_Read_Write_Test", tm));
+  ACE_NEW_RETURN (test_vector[i], Stdio_Test ("Stdio_Test", profile_timer), -1);
+  i++;
+  ACE_NEW_RETURN (test_vector[i], Block_Fread_Fwrite_Test ("Block_Fread_Fwrite_Test", profile_timer), -1);
+  i++;
+  ACE_NEW_RETURN (test_vector[i], Block_Read_Write_Test ("Block_Read_Write_Test", profile_timer), -1);
+  i++;
+  ACE_NEW_RETURN (test_vector[i], Mmap1_Test ("Mmap1_Test", profile_timer), -1);
+  i++;
+  ACE_NEW_RETURN (test_vector[i], Mmap2_Test ("Mmap2_Test", profile_timer), -1);
+  i++;
+  ACE_NEW_RETURN (test_vector[i], Slow_Read_Write_Test ("Slow_Read_Write_Test", profile_timer), -1);
+  i++;
 
   test_vector[i] = (IO_Test *) 0;
 
   for (i = 0; test_vector[i] != 0; i++)
     {
       if (ACE_OS::ftruncate (fileno (output_fp), 0) == -1)
-	ACE_ERROR ((LM_ERROR, "%s\n", "ftruncate"));
+	ACE_ERROR_RETURN ((LM_ERROR, "%s\n", "ftruncate"), -1);
 
-      cerr << "--------------------\n" 
-	   << "starting " << test_vector[i]->name () << " for " << iterations
-	   << " iteration(s):\n";
+      ACE_DEBUG ((LM_DEBUG, "--------------------\n"
+		  "starting %s for %d iterations(s):\n",
+		  test_vector[i]->name (),
+		  iterations));
 
       test_vector[i]->run_test (iterations, input_fp, output_fp);
 
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-      tm.elapsed_time (et);
+      profile_timer.elapsed_time (et);
 
-      cerr << "wallclock time = " << et.real_time
-           << ", user time = " << et.user_time
-	   << ", system time = " << et.system_time << endl;
+      ACE_DEBUG ((LM_DEBUG, "wallclock time = %f, user time = %f, system time = %f\n",
+		  et.real_time,
+		  et.user_time,
+		  et.system_time));
 
       delete test_vector[i];
     }
 
-  cerr << "--------------------\n";
+  ACE_DEBUG ((LM_DEBUG, "--------------------\n"));
+  return 0;
 }
 
 int
@@ -145,7 +154,8 @@ main (int argc, char *argv[])
 
   ACE_OS::unlink (output_filename);
 
-  run_tests (iteration_count, input_fp, output_fp);
+  if (run_tests (iteration_count, input_fp, output_fp) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run_tests"), -1);
 
   if (ACE_OS::fclose (input_fp) == -1 
       || ACE_OS::fclose (output_fp) == -1)
