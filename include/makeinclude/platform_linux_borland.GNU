@@ -32,7 +32,7 @@ else
   LIBS += libpthread.so
   ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
     CPPFLAGS += -DACE_HAS_AIO_CALLS
-    LIBS += liblrt.so
+    LIBS += librt.so
   endif
 endif # threads
 
