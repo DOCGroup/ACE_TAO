@@ -1,3 +1,11 @@
+Sun Jan 27 12:48:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst
+	* bin/performance_stats.sh:
+
+	  Updated in accordance with the new TAO "Latency" performance
+	  test organization.
+
 Sun Jan 27 12:08:45 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/common/Transcode.h (ACEXML_Transcoder): Improved the
