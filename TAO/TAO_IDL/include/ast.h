@@ -80,9 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
@@ -129,7 +127,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "ast_generator.h"       // class AST_Generator
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
