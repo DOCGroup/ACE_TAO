@@ -74,10 +74,10 @@ $(IDL_SRC): CCS.idl
 	-cs C.cpp  \
 	-ss S.cpp -sT S_T.cpp  
 server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-/bin/$(RM) -rf CCSC.* CCSS.* CCSS_T.* CCS.h
