@@ -21,7 +21,8 @@ Mon Jun 07 23:39:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  handle exceptions in different ways: process_server_request()
 	  propogates to the client in a GIOP::Reply while
 	  process_server_locate() propogates to the client in a
-	  GIOP::LocateReply.
+	  GIOP::LocateReply.  BTW, the credit/blame for this goes to
+	  Carlos.
 
 	* examples/POA/Forwarding/client.cpp (main): Fixed exception
 	  handling.
