@@ -922,16 +922,16 @@ TAO_ORB_Core::get_collocated_poa (ACE_INET_Addr &addr)
 
 int 
 TAO_ORB_Core::leader_available (void) 
-// returns the value of the flag indicating if a leader
-// is available in the leader-follower model
+  // returns the value of the flag indicating if a leader
+  // is available in the leader-follower model
 { 
   return this->leaders_; 
 }
 
 int
 TAO_ORB_Core::I_am_the_leader_thread (void)
-// returns 1 if we are the leader thread,
-// else 0
+  // returns 1 if we are the leader thread,
+  // else 0
 { 
   if (this->leaders_)
     return (this->leader_thread_ID_ == ACE_Thread::self ()); 
@@ -941,39 +941,39 @@ TAO_ORB_Core::I_am_the_leader_thread (void)
 
 void 
 TAO_ORB_Core::set_leader_thread (void) 
-// sets the thread ID of the leader thread in the leader-follower
-// model
+  // sets the thread ID of the leader thread in the leader-follower
+  // model
 { 
   ACE_ASSERT ((this->leaders_ >= 1 && this->leader_thread_ID_ == ACE_Thread::self ())
-             || this->leaders_ == 0);
+	      || this->leaders_ == 0);
   this->leaders_++; 
   this->leader_thread_ID_ = ACE_Thread::self (); 
 }
 
 int 
 TAO_ORB_Core::unset_leader_wake_up_follower (void)
-// sets the leader_available flag to false and tries to wake up a follower
+  // sets the leader_available flag to false and tries to wake up a follower
 {
   ACE_Guard <ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
 
   this->unset_leader_thread ();
-
+  
   if (TAO_ORB_Core_instance ()->follower_available () 
-    && !this->leader_available ())
-  // do it only if a follower is available and no leader is available
-  {
-    ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
-    if (this->remove_follower (condition_ptr) == -1)
-      return -1;
-    condition_ptr->signal ();
-  }
+      && !this->leader_available ())
+    // do it only if a follower is available and no leader is available
+    {
+      ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
+      if (this->remove_follower (condition_ptr) == -1)
+	return -1;
+      condition_ptr->signal ();
+    }
   return 0;
 }
 
 
 void 
 TAO_ORB_Core::unset_leader_thread (void) 
-// sets the flag in the leader-follower model to false
+  // sets the flag in the leader-follower model to false
 { 
   ACE_ASSERT ((this->leaders_ > 1 && this->leader_thread_ID_ == ACE_Thread::self ())
               || this->leaders_ == 1);
@@ -983,16 +983,16 @@ TAO_ORB_Core::unset_leader_thread (void)
 
 ACE_SYNCH_MUTEX &
 TAO_ORB_Core::leader_follower_lock (void)
-// returns the leader-follower lock
+  // returns the leader-follower lock
 { 
   return this->leader_follower_lock_; 
 }
 
 int
 TAO_ORB_Core::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
-// adds the a follower to the set of followers in the leader-
-// follower model
-// returns 0 on success, -1 on failure
+  // adds the a follower to the set of followers in the leader-
+  // follower model
+  // returns 0 on success, -1 on failure
 {
   if (this->follower_set_.insert (follower_ptr) != 0)
     return -1;
@@ -1002,23 +1002,23 @@ TAO_ORB_Core::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
 int
 TAO_ORB_Core::follower_available (void)
 // checks for the availablity of a follower
-// returns 1 on available, 0 else
+  // returns 1 on available, 0 else
 {
   return !this->follower_set_.is_empty ();
 }
 
 int 
 TAO_ORB_Core::remove_follower (ACE_SYNCH_CONDITION *follower_ptr)
-// removes a follower from the leader-follower set
-// returns 0 on success, -1 on failure
+  // removes a follower from the leader-follower set
+  // returns 0 on success, -1 on failure
 {
   return this->follower_set_.remove (follower_ptr);
 }
 
 ACE_SYNCH_CONDITION* 
 TAO_ORB_Core::get_next_follower (void)
-// returns randomly a follower from the leader-follower set
-// returns follower on success, else 0
+  // returns randomly a follower from the leader-follower set
+  // returns follower on success, else 0
 {
   ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION *> iterator (this->follower_set_);
   if (iterator.first () == 0) 

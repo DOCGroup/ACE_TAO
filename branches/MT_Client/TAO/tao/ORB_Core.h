@@ -161,7 +161,7 @@ public:
   int I_am_the_leader_thread (void);
   // returns 1 if we are the leader thread,
   // else 0
-
+  
   void set_leader_thread (void) ;
   // sets the thread_available flag and the thread ID of the leader 
   // thread in the leader-follower model
