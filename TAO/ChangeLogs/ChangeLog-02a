@@ -1,3 +1,10 @@
+Mon Jun  5 13:39:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.{cpp, h} : added
+	  POA manager activate call.  Thanks to Youngkwan Cho
+	  (ykcho@ece.arizona.edu) for reporting the problem.
+ 	
 Mon Jun  5 09:54:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.yy:
