@@ -1,3 +1,10 @@
+Thu Nov  4 06:28:34 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+
+          Added another cast that I missed on my Wed Nov  3 07:13:19 2004
+          check-in.
+
 Wed Nov  3 10:02:25 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
