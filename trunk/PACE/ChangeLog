@@ -14,7 +14,8 @@ Thu Jul 13 16:37:33 2000  John Heitmann  <jwh1@cs.wustl.edu>
 	* pace/netinet/
 	* pace/common/
 
-	  Removed.
+	  Removed. <Update: this didn't work, will have
+	  to wait unil a later date>
 
 Thu Jul 13 14:57:53 2000  David L. Levine <levine@cs.wustl.edu>
 
