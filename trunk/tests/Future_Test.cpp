@@ -30,7 +30,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, u_long> ATOMIC_INT;
+typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
 
 // a counter for the tasks..
 static ATOMIC_INT task_count (0);
@@ -297,7 +297,7 @@ static int n_iterations = 50000;
 static int n_loops = 100;
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #endif /* ACE_HAS_THREADS */

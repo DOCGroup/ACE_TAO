@@ -16,7 +16,7 @@
 #include "ace/Thread_Manager.h"
 
 #if defined (ACE_HAS_THREADS)
-static ACE_Atomic_Op <ACE_Thread_Mutex, u_long> amount_of_work = (u_long) 0;
+static ACE_Atomic_Op <ACE_Thread_Mutex, int> amount_of_work = (u_long) 0;
 
 class Pseudo_Barrier
   // = TITLE
@@ -35,7 +35,7 @@ public:
   int wait (void);
 
 private: 
-  ACE_Atomic_Op <ACE_Thread_Mutex, u_long> counter_; 
+  ACE_Atomic_Op <ACE_Thread_Mutex, int> counter_; 
   ACE_Manual_Event event_;
 };
 
