@@ -6,6 +6,9 @@ Sat Aug 22 07:59:28 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/UPIPE_SAP_Test.cpp (connector): removed leading newline
           in printout at end of thread execution.
 
+        * ACE-INSTALL.html: added egcs section.  Thanks to
+          Ganesh Pai <gpai@voicetek.com> for a portion of it.
+
 Sat Aug 22 00:27:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Read_Buffer.i (alloc): Added new method to get to
@@ -259,7 +262,7 @@ Wed Aug 19 10:06:25 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/SOCK_Connector_Test.cpp (find_another_host): check to see
           if the other host is up, by attempting a blocking connection with
           it.  Only return another host if the connection succeeds.
-          Also, cached the other host so that multiple calls will not
+          Also, cache the other host so that multiple calls will not
           have to repeat the connection attempt.
 
 Wed Aug 19 08:25:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
