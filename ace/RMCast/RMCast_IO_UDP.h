@@ -110,8 +110,10 @@ public:
 
 private:
 
+  // This is necessary to satisfy the stupid xgcc for Lynx on Solaris
+  // The compiler barfs up lisp code errors
   ACE_RMCast_UDP_Proxy *allocate_and_bind_proxy (ACE_RMCast_Module *module,
-						 const ACE_INET_Addr &);
+                                                 const ACE_INET_Addr &);
 
   //! The factory used to create the modules attached to each proxy
   ACE_RMCast_Module_Factory *factory_;
