@@ -21,6 +21,12 @@
 #include "CC_Lock.h"
 #include "tao/corba.h"
 
+CC_Lock::CC_Lock (void)
+  : mode_ (CosConcurrencyControl::intention_read),
+    lock_held_ (0)
+{
+}
+
 CC_Lock::CC_Lock (CosConcurrencyControl::lock_mode mode)
   : mode_ (mode),
     lock_held_ (0)
@@ -38,8 +44,8 @@ CC_Lock::lock (CORBA::Environment &_env)
               "CC_Lock::lock\n"));
   lock_held_++;
 
-  if (semaphore_.acquire () == -1)
-    TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+  //  if (semaphore_.acquire () == -1)
+  //    TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
 }
 
 CORBA::Boolean
@@ -54,7 +60,7 @@ CC_Lock::try_lock (CORBA::Environment &_env)
               "lock_held_: %i, ",
               lock_held_));
 
-  int success = semaphore_.tryacquire ();
+  int success = 0;//semaphore_.tryacquire ();
 
   ACE_DEBUG ((LM_DEBUG,
               "success: %i\n", success));
@@ -85,7 +91,7 @@ CC_Lock::unlock (CORBA::Environment &_env)
   if (lock_held_ == 0)
     TAO_THROW (CosConcurrencyControl::LockNotHeld);
 
-  int success = semaphore_.release ();
+  int success = 0; //semaphore_.release ();
 
   if (success == -1)
     TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
@@ -114,19 +120,46 @@ CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode,
   this->mode_ = new_mode;
 }
 
-CORBA::Boolean CC_Lock::Compatible (const CC_Lock &other)
+void
+CC_Lock::set_mode (CosConcurrencyControl::lock_mode mode)
+{
+  this->mode_ = mode;
+}
+
+CORBA::Boolean
+CC_Lock::Compatible (const CC_Lock &other)
 {
   return this->Compatible (other.mode_);
 }
 
-CORBA::Boolean CC_Lock::Compatible (CosConcurrencyControl::lock_mode mode)
+CORBA::Boolean
+CC_Lock::Compatible (CosConcurrencyControl::lock_mode mode)
 {
   return compatible_[this->mode_][mode];
 }
 
-CosConcurrencyControl::lock_mode CC_Lock::GetMode (void)
+CosConcurrencyControl::lock_mode
+CC_Lock::GetMode (void)
 {
   return mode_;
+}
+
+int
+CC_Lock::GetLocksHeld(void)
+{
+  return this->lock_held_;
+}
+
+void
+CC_Lock::DecLocksHeld(void)
+{
+  this->lock_held_--;
+}
+
+void
+CC_Lock::dump(void)
+{
+  printf("mode_ %i, lock_held_: %i\n", mode_, lock_held_);
 }
 
 // The check of compatibility is a hard coded table statically
@@ -150,3 +183,58 @@ CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] 
   {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_FALSE},
   {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE},
   {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE}};
+
+// CC_LockModeterator
+
+CC_LockModeIterator::CC_LockModeIterator(void)
+  : current_ (CosConcurrencyControl::intention_read)
+{
+}
+
+CC_LockModeIterator::~CC_LockModeIterator(void)
+{
+  // Do nothing
+}
+void CC_LockModeIterator::First(void)
+{
+  current_ = CosConcurrencyControl::intention_read;
+}
+
+void CC_LockModeIterator::Next(CORBA::Environment &_env)
+{
+  switch(current_)
+    {
+    case CosConcurrencyControl::intention_read:
+      current_ = CosConcurrencyControl::read;
+      break;
+    case CosConcurrencyControl::read:
+      current_ = CosConcurrencyControl::upgrade;
+      break;
+    case CosConcurrencyControl::upgrade:
+      current_ = CosConcurrencyControl::intention_write;
+      break;
+    case CosConcurrencyControl::intention_write:
+      current_ = CosConcurrencyControl::write;
+      break;
+    case CosConcurrencyControl::write:
+      TAO_THROW(CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      break;
+    default:
+      TAO_THROW(CORBA::INTERNAL (CORBA::COMPLETED_NO));
+    }
+}
+
+CORBA::Boolean
+CC_LockModeIterator::IsDone(void)
+{
+  if(current_==CosConcurrencyControl::write)
+    return CORBA::B_TRUE;
+  else
+    return CORBA::B_FALSE;
+}
+
+CosConcurrencyControl::lock_mode
+CC_LockModeIterator::GetLockMode(void)
+{
+  return current_;
+}
