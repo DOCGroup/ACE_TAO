@@ -2107,10 +2107,6 @@ SOURCE=.\ORB_Table.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\ORBInitializer_Registry.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\params.i
 # End Source File
 # Begin Source File

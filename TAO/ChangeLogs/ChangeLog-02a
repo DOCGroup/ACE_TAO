@@ -1,3 +1,38 @@
+Thu Apr 18 15:03:56 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Table.h:
+	* tao/ORBInitializer_Registry.h:
+
+	  Removed friend declaration for the internally used
+	  TAO_Singleton, meaning that the singleton will only be
+	  instantiated within the ".cpp" file.  This completely avoids any
+	  Windows DLL multiple singleton instance issues since the
+	  singleton is now truly internal to the TAO library.
+
+	  Made the constructor public since the classes in question no
+	  longer have any friends.  It's tough being alone.  :-)
+
+	* tao/ORBInitializer_Registry.inl:
+
+	  Removed this file.  It is no longer used.
+
+	* tao/ORB_Table.inl (instance):
+	* tao/ORB_Table.cpp (instance):
+	* tao/ORBInitializer_Registry.cpp (instance):
+
+	  Un-inlined this method.  This allows the TAO_Singleton used by
+	  these classes to be completely internalized.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Removed references to ORBInitializer_Registry.inl.  That file no
+	  longer exists.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Thu Apr 18 14:07:44 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Table.h: 	

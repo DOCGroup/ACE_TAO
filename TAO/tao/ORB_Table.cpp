@@ -1,9 +1,6 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "ORB_Table.h"
 #include "ORB_Core.h"
+#include "TAO_Singleton.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB_Table.inl"
@@ -127,6 +124,12 @@ TAO_ORB_Table::unbind (const char *orb_id)
     }
 
   return result;
+}
+
+TAO_ORB_Table *
+TAO_ORB_Table::instance (void)
+{
+  return TAO_Singleton<TAO_ORB_Table, TAO_SYNCH_MUTEX>::instance ();
 }
 
 
