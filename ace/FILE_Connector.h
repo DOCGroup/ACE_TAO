@@ -37,7 +37,7 @@ public:
                       ACE_Time_Value *timeout = 0,
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
-                      int flags = O_RDWR,
+                      int flags = O_RDWR | O_CREAT,
                       int perms = 0);
   // Actively ``connect'' and produce a <new_io> <ACE_FILE_IO> object
   // if things go well.  The <remote_sap> is the file that we are
@@ -59,7 +59,7 @@ public:
                ACE_Time_Value *timeout = 0,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
-               int flags = O_RDWR,
+               int flags = O_RDWR | O_CREAT,
                int perms = 0);
   // Actively ``connect'' and produce a <new_io> <ACE_FILE_IO> object
   // if things go well.  The <remote_sap> is the file that we are

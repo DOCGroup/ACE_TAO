@@ -1,3 +1,10 @@
+Sat Jan 16 13:40:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/FILE_Connector.h (ACE_FILE_Connector): Added the O_CREAT
+ 	  flag to the list of flags passed to connect().  This ensures
+ 	  that the file is created if it doesn't already exist.  Thanks to
+ 	  Pradeep Gore <pradeep@cs.wustl.edu> for reporting this.
+
 Fri Jan 15 21:28:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Log_Msg (ACE_Log_Msg_Callback): Added an interface class
