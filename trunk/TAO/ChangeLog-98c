@@ -1,3 +1,11 @@
+Sun Jan  3 19:22:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+	* orbsvcs/CosEvent_Service/README:
+	* orbsvcs/CosEvent_Service/Makefile:
+	  added the above files for the COS Event Service.
+
 Sun Jan  3 18:56:51 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/DynSequence_i.{h,cpp}:
@@ -21,7 +29,7 @@ Sun Jan  3 18:54:29  1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 Sun Jan  3 19:27:01 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/Managed_Types.{h,i,cpp}:
-	 
+
 	  Three new files added. These define and implement the various
 	  manager classes such as TAO_String_Manager,
 	  TAO_SeqElem_String_Manager that are required by the IDL to C++
