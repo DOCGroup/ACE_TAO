@@ -1,3 +1,10 @@
+Tue Mar 31 10:46:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Msg_WFMO_Reactor.cpp: Changed to use
+ 	  MsgWaitForMultipleObjects if we are not under NT.  Also in
+	  MsgWaitForMultipleObjectsEx, we should use NT defined flags
+	  instead of the boolean "alertable" directly.
+
 Tue Mar 31 07:22:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (cond_timedwait): restored ACE_HAS_DCE_DRAFT4_THREADS
