@@ -55,7 +55,6 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
                               int pipe_mode)
 {
   ACE_TRACE ("ACE_SPIPE_Connector::connect");
-
   // Make darn sure that the O_CREAT flag is not set!
 #if ! defined (ACE_PSOS_DIAB_MIPS)
   ACE_CLR_BITS (flags, O_CREAT);
@@ -63,6 +62,7 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
 
   ACE_HANDLE handle;
 
+  ACE_UNUSED_ARG (pipe_mode);
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
   // We need to allow for more than one attempt to connect,
   // calculate the absolute time at which we give up.
