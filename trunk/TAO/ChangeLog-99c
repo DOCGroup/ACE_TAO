@@ -1,3 +1,10 @@
+Sun Jun 06 21:42:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  A couple of .idl file where not re-compiled when the DIL
+	  compiler changed, fixed the dependencies.
+
 Sun Jun  6 20:25:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_decl.cpp:
