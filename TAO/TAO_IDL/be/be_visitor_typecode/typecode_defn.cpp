@@ -103,7 +103,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 
   char *flat_name = 0;
   node->compute_flat_name ("AMI_", 
-                           "_Handler", 
+                           "Handler", 
                            flat_name);
 
   // reset the queue
@@ -220,7 +220,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   
   // Name generation.
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    *os << ", 0, sizeof (" << node->compute_name ("AMI_", "_Handler") << "));" << be_nl; 
+    *os << ", 0, sizeof (" << node->compute_name ("AMI_", "Handler") << "));" << be_nl; 
   else
     *os << ", 0, sizeof (" << node->name () << "));" << be_nl;
   
@@ -243,7 +243,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       
       // Local name generation.
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << "AMI_" << node->local_name () << "_Handler";
+        *os << "AMI_" << node->local_name () << "Handler";
       else
         *os << node->local_name ();
       
@@ -272,7 +272,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 
       // Tc name generation.
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << node->tc_name ("AMI_", "_Handler");
+        *os << node->tc_name ("AMI_", "Handler");
       else
         *os << node->tc_name ();
       
@@ -2857,7 +2857,7 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
 
   char *repoID = 0;
   node->compute_repoID ("AMI_", 
-                        "_Handler", 
+                        "Handler", 
                         repoID);
 
   // check if we want to generate optimized typecodes. In such a case, there is
@@ -2965,8 +2965,8 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
 
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
         {
-          *os << (ACE_OS::strlen (node->compute_local_name ("AMI_", "_Handler")->get_string ()) + 1) << ", ";
-          (void) this->tc_name2long (node->compute_local_name ("AMI_", "_Handler")->get_string (), arr, arrlen);
+          *os << (ACE_OS::strlen (node->compute_local_name ("AMI_", "Handler")->get_string ()) + 1) << ", ";
+          (void) this->tc_name2long (node->compute_local_name ("AMI_", "Handler")->get_string (), arr, arrlen);
         }
       else
         {
@@ -2980,7 +2980,7 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
         }
       
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << " // name = " << node->compute_local_name ("AMI_", "_Handler");
+        *os << " // name = " << node->compute_local_name ("AMI_", "Handler");
       else
         *os << " // name = " << node->local_name ();
 

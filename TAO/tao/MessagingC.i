@@ -3019,7 +3019,26 @@ Messaging::PolicyValueSeq_out::operator[] (CORBA::ULong slot)
   return this->ptr_->operator[] (slot);
 }
 
-#if defined(TAO_HAS_AMI_POLLER)
+
+#if defined (TAO_HAS_AMI_CALLBACK)
+/*
+ACE_INLINE
+Messaging::ExceptionHolder::ExceptionHolder (void) // default constructor
+{}
+
+ACE_INLINE
+Messaging::ExceptionHolder::~ExceptionHolder (void) // destructor
+{}
+*/
+ACE_INLINE const char* 
+Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
+{
+  return "IDL:Messaging/ExceptionHolder:1.0";
+}
+
+#if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CI_)
+#define _MESSAGING_EXCEPTIONHOLDER___VAR_CI_
+
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder_var
 // *************************************************************
@@ -3030,30 +3049,38 @@ Messaging::ExceptionHolder_var::ExceptionHolder_var (void) // default constructo
 {}
 
 ACE_INLINE
-Messaging::ExceptionHolder_var::ExceptionHolder_var (Messaging::ExceptionHolder *p)
+Messaging::ExceptionHolder_var::ExceptionHolder_var (Messaging::ExceptionHolder* p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
+Messaging::ExceptionHolder_var::ExceptionHolder_var (const Messaging::ExceptionHolder* p)
+  : ptr_ (ACE_const_cast(Messaging::ExceptionHolder*, p))
+{}
+
+ACE_INLINE Messaging::ExceptionHolder* 
+Messaging::ExceptionHolder_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
 Messaging::ExceptionHolder_var::ExceptionHolder_var (const Messaging::ExceptionHolder_var &p) // copy constructor
 {
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             Messaging::ExceptionHolder (*p.ptr_));
-  else
-    this->ptr_ = 0;
+  CORBA::add_ref (p.ptr ());
+  this->ptr_ = p.ptr ();
 }
 
 ACE_INLINE
 Messaging::ExceptionHolder_var::~ExceptionHolder_var (void) // destructor
 {
-  delete this->ptr_;
+  CORBA::remove_ref (this->ptr_);
 }
 
 ACE_INLINE Messaging::ExceptionHolder_var &
-Messaging::ExceptionHolder_var::operator= (Messaging::ExceptionHolder *p)
+Messaging::ExceptionHolder_var::operator= (Messaging::ExceptionHolder* p)
 {
-  delete this->ptr_;
+  CORBA::remove_ref (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
@@ -3063,85 +3090,74 @@ Messaging::ExceptionHolder_var::operator= (const Messaging::ExceptionHolder_var 
 {
   if (this != &p)
   {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    Messaging::ExceptionHolder (*p.ptr_),
-		    *this);
+    CORBA::remove_ref (this->ptr_);
+    ExceptionHolder* tmp = p.ptr ();
+    CORBA::add_ref (tmp);
+    this->ptr_ = tmp;
   }
   return *this;
 }
 
-ACE_INLINE const Messaging::ExceptionHolder *
+ACE_INLINE 
+Messaging::ExceptionHolder_var::operator const Messaging::ExceptionHolder* () const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder* () // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder* 
 Messaging::ExceptionHolder_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder *
-Messaging::ExceptionHolder_var::operator-> (void)
+ACE_INLINE Messaging::ExceptionHolder*
+Messaging::ExceptionHolder_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE
-Messaging::ExceptionHolder_var::operator const Messaging::ExceptionHolder &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder &() // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder &() const// cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const Messaging::ExceptionHolder &
-Messaging::ExceptionHolder_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE Messaging::ExceptionHolder &
+ACE_INLINE Messaging::ExceptionHolder* &
 Messaging::ExceptionHolder_var::inout (void)
 {
-  return *this->ptr_;
+  return this->ptr_;
 }
 
-// mapping for variable size
-ACE_INLINE Messaging::ExceptionHolder *&
+ACE_INLINE Messaging::ExceptionHolder* &
 Messaging::ExceptionHolder_var::out (void)
 {
-  delete this->ptr_;
+  CORBA::remove_ref (this->ptr_);
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder *
+ACE_INLINE Messaging::ExceptionHolder* 
 Messaging::ExceptionHolder_var::_retn (void)
 {
-  Messaging::ExceptionHolder *tmp = this->ptr_;
+  // yield ownership of managed obj reference
+  ExceptionHolder* tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE Messaging::ExceptionHolder *
-Messaging::ExceptionHolder_var::ptr (void) const
-{
-  return this->ptr_;
-}
+
+#endif /* end #if !defined */
+
+
+#if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CI_)
+#define _MESSAGING_EXCEPTIONHOLDER___OUT_CI_
 
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder_out
 // *************************************************************
 
 ACE_INLINE
-Messaging::ExceptionHolder_out::ExceptionHolder_out (Messaging::ExceptionHolder *&p)
+Messaging::ExceptionHolder_out::ExceptionHolder_out (Messaging::ExceptionHolder* &p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
@@ -3151,7 +3167,7 @@ ACE_INLINE
 Messaging::ExceptionHolder_out::ExceptionHolder_out (Messaging::ExceptionHolder_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
-  delete this->ptr_;
+  CORBA::remove_ref (this->ptr_);
   this->ptr_ = 0;
 }
 
@@ -3168,35 +3184,44 @@ Messaging::ExceptionHolder_out::operator= (const Messaging::ExceptionHolder_out 
 }
 
 ACE_INLINE Messaging::ExceptionHolder_out &
-Messaging::ExceptionHolder_out::operator= (Messaging::ExceptionHolder *p)
+Messaging::ExceptionHolder_out::operator= (const Messaging::ExceptionHolder_var &p)
+{
+  ExceptionHolder* tmp = p.ptr ();
+  CORBA::add_ref (tmp);
+  this->ptr_ = tmp;
+  return *this;
+}
+
+ACE_INLINE Messaging::ExceptionHolder_out &
+Messaging::ExceptionHolder_out::operator= (Messaging::ExceptionHolder* p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE
-Messaging::ExceptionHolder_out::operator Messaging::ExceptionHolder *&() // cast
+ACE_INLINE 
+Messaging::ExceptionHolder_out::operator Messaging::ExceptionHolder* &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder *&
+ACE_INLINE Messaging::ExceptionHolder* &
 Messaging::ExceptionHolder_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder *
+ACE_INLINE Messaging::ExceptionHolder* 
 Messaging::ExceptionHolder_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_AMI_POLLER */
+
+#endif /* end #if !defined */
 
 // ****************************************************************
 
-#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 
 ACE_INLINE
 Messaging::ReplyHandler::ReplyHandler (void) // default constructor
@@ -3385,7 +3410,7 @@ Messaging::ReplyHandler_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_CALLBACK */
 
 #if defined(TAO_HAS_AMI_POLLER)
 
@@ -3747,7 +3772,56 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PolicyValue
   return 0; // error
 }
 
+#endif /* TAO_HAS_AMI_POLLER */
+
+
 // ****************************************************************
+
+#if defined(TAO_HAS_AMI_CALLBACK) || defined(TAO_HAS_AMI_POLLER)
+
+ACE_INLINE CORBA::Boolean
+operator<< (TAO_OutputCDR &strm, const Messaging::ExceptionHolder *_tao_valuetype)
+{
+  return CORBA_ValueBase::_tao_marshal (strm,
+    ACE_const_cast (Messaging::ExceptionHolder*, _tao_valuetype),
+    (ptr_arith_t) &Messaging::ExceptionHolder::_downcast);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (TAO_InputCDR &strm, Messaging::ExceptionHolder *&_tao_valuetype)
+{
+  return Messaging::ExceptionHolder::_tao_unmarshal (strm, _tao_valuetype);
+}
+
+ACE_INLINE CORBA::Boolean
+OBV_Messaging::ExceptionHolder::_tao_marshal_state (TAO_OutputCDR &strm)
+{
+  if (
+    (strm << CORBA::Any::from_boolean (_pd_is_system_exception)) &&
+    (strm << CORBA::Any::from_boolean (_pd_byte_order)) &&
+    (strm << *_pd_marshaled_exception)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean
+OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
+{
+  if (
+    (strm >> CORBA::Any::to_boolean (_pd_is_system_exception)) &&
+    (strm >> CORBA::Any::to_boolean (_pd_byte_order)) &&
+    (strm >> *_pd_marshaled_exception)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+
 
 ACE_INLINE CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -3761,7 +3835,7 @@ ACE_INLINE CORBA::Boolean operator<< (
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
     {
       TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-        ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::ExceptionHolder::_tao_seq_Octet *)&_tao_sequence);
+        ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::PolicyValue::_tao_seq_Octet *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
@@ -3806,35 +3880,8 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::ExceptionHo
   return 0; // error
 }
 
-// ****************************************************************
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::ExceptionHolder &_tao_aggregate)
-{
-  if (
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_system_exception)) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.byte_order)) &&
-    (strm << _tao_aggregate.marshaled_exception)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::ExceptionHolder &_tao_aggregate)
-{
-  if (
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_system_exception)) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.byte_order)) &&
-    (strm >> _tao_aggregate.marshaled_exception)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
 
 #if defined (TAO_HAS_AMI_CALLBACK)
 

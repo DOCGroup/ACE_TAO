@@ -141,18 +141,19 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
               << "void *_tao_obj, " << be_nl
               << "void *_tao_context, " << be_nl
               << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-              << "TAO_default_environment ()"
+              << "TAO_default_environment ());"
               << be_uidt << be_uidt_nl
-              << ");" << be_uidt << "\n\n"; 
+              << be_uidt << "\n\n"; 
           break;
        
         case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH:
-          *os << "TAO_InputCDR &_tao_reply_cdr, " << be_nl
-              << "Messaging::ReplyHandler_ptr _tao_reply_handler, " << be_nl
+          *os << "TAO_InputCDR &_tao_reply_cdr," << be_nl
+              << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
+              << "CORBA::ULong reply_status," << be_nl
               << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-              << "TAO_default_environment ()"
+              << "TAO_default_environment ());"
               << be_uidt << be_uidt_nl
-              << ");" << be_uidt << "\n\n";
+              << be_uidt << "\n\n";
           break;
 
         default:

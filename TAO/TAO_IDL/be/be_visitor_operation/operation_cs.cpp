@@ -752,7 +752,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   // fish out the interceptor from the ORB
   *os << "\n#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
       << "TAO_ClientRequestInterceptor_Adapter" << be_idt_nl
-      << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));" << be_uidt_nl;
+      << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));\n" << be_uidt;;
   if (this->gen_check_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -762,6 +762,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                         -1);
 
     }
+  os->indent ();
   *os << "PortableInterceptor::Cookies _tao_cookies;" << be_nl
       << "CORBA::NVList_var _tao_interceptor_args;" << be_nl
       << "istub->orb_core ()->orb ()->create_list "

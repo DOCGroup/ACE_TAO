@@ -49,6 +49,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
                                                    // not imported
     {
+      // Grab the stream.
+      os = this->ctx_->stream ();
+
       // Generate the AMI Reply Handler's forward declaration code, if
       // the option is enabled, for this interface.
 
@@ -57,40 +60,51 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           be_interface_type_strategy *old_strategy =
             node->set_strategy (new be_interface_ami_handler_strategy (node));
 
-          // Set the context.
-          be_visitor_context ctx (*this->ctx_);
+          // generate the ifdefined macro for  the _ptr type
+          os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
-          // Set the state.
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_FWD_CH);
 
-          // Create the visitor.
-          be_visitor *visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor)
+          // the following two are required to be under the ifdef macro to avoid
+          // multiple declarations
+
+          os->indent (); // start with whatever indentation level we are at
+          // forward declaration
+          *os << "class " << node->local_name () << ";" << be_nl;
+          // generate the _ptr declaration
+          *os << "typedef " << node->local_name () << " *" << node->local_name ()
+              << "_ptr;" << be_nl;
+
+          os->gen_endif ();
+
+          // generate the ifdefined macro for the var type
+          os->gen_ifdef_macro (node->flat_name (), "_var");
+
+          // generate the _var declaration
+          if (node->gen_var_defn () == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_interface_ch::"
                                  "visit_interface - "
-                                 "Bad visitor\n"),
-                                -1);
+                                 "codegen for _var failed\n"), -1);
             }
+          os->gen_endif ();
 
-          // call the visitor on this interface.
-          if (node->accept (visitor) == -1)
+          // generate the ifdef macro for the _out class
+          os->gen_ifdef_macro (node->flat_name (), "_out");
+
+          // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
+          if (node->gen_out_defn () == -1)
             {
-              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_interface_ch::"
                                  "visit_interface - "
-                                 "code gen for ami handler fwd failed\n"),
-                                -1);
+                                 "codegen for _out failed\n"), -1);
             }
-          delete visitor;
+          // generate the endif macro
+          os->gen_endif ();
 
           delete node->set_strategy (old_strategy);
         }
-
-      // Grab the stream.
-      os = this->ctx_->stream ();
 
       // == STEP 1:  generate the class name and class names we inherit ==
 
@@ -286,17 +300,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       if (idl_global->ami_call_back () == I_TRUE)
         {
-          // = Generate the default stub code for Handler.
-
-          be_interface_type_strategy *old_strategy =
-            node->set_strategy (new be_interface_ami_handler_strategy (node));
-
+          // Generate the exception holder
 
           // Set the context.
           be_visitor_context ctx (*this->ctx_);
-
           // Set the state.
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CH);
+          ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CH);
 
           // Create the visitor.
           be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -322,9 +331,41 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           delete visitor;
           visitor = 0;
 
+          // = Generate the default stub code for Handler.
 
+          // Remove the exception holder strategy, delete it,
+          // and set the ami handler strategy
+          be_interface_type_strategy *old_strategy =
+            node->set_strategy (new be_interface_ami_handler_strategy (node));
 
-          delete node->set_strategy (old_strategy);
+          ctx = *this->ctx_;
+          // Set the state.
+          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CH);
+
+          // Create the visitor.
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "Bad visitor\n"),
+                                -1);
+            }
+
+          // Call the visitor on this interface.
+          if (node->accept (visitor) == -1)
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "code gen for ami handler default stub failed\n"),
+                                -1);
+            }
+          delete visitor;
+          visitor = 0;
+          delete node->set_strategy (old_strategy);     
         }
 
       node->cli_hdr_gen (I_TRUE);

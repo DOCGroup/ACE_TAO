@@ -67,7 +67,7 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
     char *full_name = 0;
     
     interface->compute_full_name ("AMI_", 
-                                  "_Handler",
+                                  "Handler",
                                   full_name);
     // Genereate scope name.
     // AMI Handler argument.

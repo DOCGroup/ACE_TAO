@@ -142,6 +142,17 @@ AST_Operation::fe_add_context(UTL_StrList *t)
   return t;
 }
 
+UTL_ExceptList *
+AST_Operation::add_exceptions(UTL_ExceptList *t)
+{
+  if (pd_exceptions)
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES, this);
+  else
+    pd_exceptions = t;
+
+  return pd_exceptions;
+}
+
 /*
  * Add these exceptions (identified by name) to this scope.
  * This looks up each name to resolve it to the name of a known

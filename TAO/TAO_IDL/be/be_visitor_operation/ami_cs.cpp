@@ -692,7 +692,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
     char *full_name = 0;
 
     interface->compute_full_name ("AMI_",
-                                  "_Handler",
+                                  "Handler",
                                   full_name);
 
     *os << "&" << full_name << "::";

@@ -51,11 +51,11 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
 
   os->indent ();
   *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
-      << " operator<< (TAO_OutputCDR &, const " << node->name ()
+      << " operator<< (TAO_OutputCDR &, const " << node->full_name ()
       << " *); // " << be_nl;
   *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator>> (TAO_InputCDR &, "
-      << node->name () << " *&);\n";
+      << node->full_name () << " *&);\n";
 
   // set the substate as generating code for the types defined in our scope
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);

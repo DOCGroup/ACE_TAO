@@ -88,8 +88,15 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
         {
           ++n_inherits_downcastable;
           *os << "if (rval == 0)" << be_idt_nl
-              <<   "rval = " << inherited->name()
-              <<                "::_tao_obv_narrow (type_id);" << be_uidt_nl;
+              << "// @@ Michael: This is necessary because of broken" << be_nl
+              << "// nested class access in MSVC++" << be_nl
+              <<   "// rval = " << inherited->name()
+              <<                "::_tao_obv_narrow (type_id);" << be_nl;
+          *os << "{" << be_idt_nl
+              << "void *(" << inherited->name () << "::* fd) (ptr_arith_t)"
+              << " = " << inherited->name () << "::_tao_obv_narrow;" << be_nl
+              <<   "rval = (this->*fd) (type_id);" << be_uidt_nl
+              << "}" << be_uidt_nl;
         }
     }
 
@@ -191,15 +198,19 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     }
   os->gen_endif ();
 
-  // generate code for the elements of the valuetype
-  if (this->visit_scope (node) == -1)
+  // @@ Michael:
+  // This is here just temporarily, we remove that after refactoring
+  if (idl_global->ami_call_back () == I_FALSE)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_cs::"
-                         "visit_valuetype - "
-                         "codegen for scope failed\n"), -1);
+      // generate code for the elements of the valuetype
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_valuetype_cs::"
+                             "visit_valuetype - "
+                             "codegen for scope failed\n"), -1);
+        }
     }
-
 
   // by using a visitor to declare and define the TypeCode, we have the
   // added advantage to conditionally not generate any code. This will be
