@@ -69,7 +69,7 @@ passer_i::pass_ops (base_out outarg
 
 void 
 passer_i::pass_state (base_out outarg
-                      ACE_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
