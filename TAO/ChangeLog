@@ -1,3 +1,9 @@
+Thu Mar 18 12:21:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/FloatSeqS.h:
+        
+          Forgot to add this needed empty file to the repository.
+
 Thu Mar 18 10:45:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Basic_Impl.cpp (create_empty):
