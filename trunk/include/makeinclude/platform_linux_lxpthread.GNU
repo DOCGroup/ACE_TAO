@@ -13,7 +13,7 @@ optimize = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += -Wall -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
+CFLAGS          += -Wall -fno-strict-prototypes -pipe -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g
 DLD             = $(CXX)
