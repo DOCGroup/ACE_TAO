@@ -50,7 +50,7 @@
 // @@ @@ @@ This conditional compilation is meant to be catch abnormal
 //          exceptions so the debugger can catch the exception for us.
 #if !defined (ACE_NDEBUG)
-#define TAO_CATCHANY TAO_CATCH (CORBA_Exception, ex)
+#define TAO_CATCHANY TAO_CATCH (TAO_DONT_CATCH, ex)
 #else
 #define TAO_CATCHANY } catch (...) {
 #endif /* ACE_NDEBUG */
