@@ -1,3 +1,11 @@
+Tue Nov 11 01:16:07 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/orbobj.cpp (resolve_name_service): Reformatted the
+	  multicast Name Service locator just a bit.
+
+	* tao/orbconf.h: Started putting a more sane way of automatically
+ 	  determining the size of various datatypes into TAO.
+
 Tue Nov 11 00:36:39 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* tao/orbobj.cpp (resolve_name_service): changed macro for default
@@ -7,13 +15,7 @@ Tue Nov 11 00:36:39 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* tao/orbconf.h: Added some definitions for TAO's default
  	multicast and reply port, and the default timeout value.
-
 	
-Tue Nov 11 00:06:57 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-
-	* tao/orbconf.h: Started putting a more sane way of automatically
- 	  determining the size of various datatypes into TAO.
-
 Tue Nov 11 00:00:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/IDL_Cubit/Makefile: removed MUNCHED because
