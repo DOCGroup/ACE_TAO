@@ -1392,7 +1392,7 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
     case CORBA::tk_array:
     case CORBA::tk_alias:
     case CORBA::tk_except:
-      retval = stream->decode (tc2, data, 0, ACE_TRY_ENV);
+      retval = stream->decode (tc2.in (), data, 0, ACE_TRY_ENV);
       // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
       break;
