@@ -680,8 +680,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error (void)
   if (errno == EINTR)
     return this->restart_;
 #if defined (__MVS__) || defined (ACE_WIN32)
-  // On MVS Open Edition and Win32, there can be a number of failure codes
-  // on a bad socket, so check_handles on anything other than EINTR.
+  // On MVS Open Edition and Win32, there can be a number of failure
+  // codes on a bad socket, so check_handles on anything other than
+  // EINTR.
   else
     return this->check_handles ();
 #else
@@ -1054,6 +1055,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 
       // Perform the Template Method for dispatching all the handlers.
 
+      int signal_occurred = 0;
+
       // First check for interrupts.
       if (active_handle_count == -1)
         {
@@ -1066,6 +1069,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
               // result of signals they should be dispatched since
               // they may be time critical...
               active_handle_count = this->any_ready (dispatch_set);
+
+              // Record the fact that the Reactor has dispatched a
+              // handle_signal() method.  We need this to return the
+              // appropriate count below.
+              signal_occurred = 1;
             }
           else
             return -1;
@@ -1074,7 +1082,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
       // Handle timers early since they may have higher latency
       // constraints than I/O handlers.  Ideally, the order of
       // dispatching should be a strategy...
-
       else if (this->dispatch_timer_handlers (other_handlers_dispatched) == -1)
         // State has changed or timer queue has failed, exit loop.
         break;
@@ -1082,7 +1089,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
       // Check to see if there are no more I/O handles left to
       // dispatch AFTER we've handled the timers...
       else if (active_handle_count == 0)
-        return io_handlers_dispatched + other_handlers_dispatched;
+        return io_handlers_dispatched 
+          + other_handlers_dispatched 
+          + signal_occurred;
 
       // Next dispatch the notification handlers (if there are any to
       // dispatch).  These are required to handle multi-threads that
