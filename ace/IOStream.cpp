@@ -417,9 +417,9 @@ ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, int io_mode)
   // Linebuffered is similar to unbuffered.  Again, I don't have any
   // need for this and I don't see the advantage.  I believe this
   // would have to be supported by underflow/overflow to be effective.
-#if !defined (ACE_LACKS_LINEBUFFERED_IOSTREAMS)
+#if !defined (ACE_LACKS_LINEBUFFERED_STREAMBUF)
   this->linebuffered (0);
-#endif /* ! ACE_LACKS_LINEBUFFERED_IOSTREAMS */
+#endif /* ! ACE_LACKS_LINEBUFFERED_STREAMBUF */
 
   // The get area is where the iostrem will get data from.  This is
   // our read buffer.  There are three pointers which describe the
