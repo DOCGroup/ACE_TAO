@@ -3,16 +3,21 @@
 #ifndef HANDLER_TEST_H
 #define HANDLER_TEST_H
 
-#include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
+
+#ifndef ACE_HAS_BROKEN_NESTED_TEMPLATES
+
+#include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
 #include "tao/Exception.h"
 #include "Config_Handlers/XercesString.h"
-#include <xercesc/util/XMLUniDefs.hpp>
 #include "Config_Handlers/Config_Handler_export.h"
 #include "Config_Handlers/DnC_Dump.h"
 #include "Config_Handlers/Config_Error_Handler.h"
+
+#include <xercesc/util/XMLUniDefs.hpp>
+#include <xercesc/dom/DOM.hpp>
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;
@@ -39,4 +44,7 @@ int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&));
 
 #include "Handler_Test.i"
 
+#endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
+
 #endif // HANDLER_TEST_H
+
