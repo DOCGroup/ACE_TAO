@@ -154,7 +154,7 @@ private:
   typedef ACE_TSS_Singleton<ACE_Dynamic, ACE_SYNCH_NULL_MUTEX> DYNAMIC;
   // Point of access to the ACE_Dynamic singleton.
 
-  char dynamic_;
+  int dynamic_;
   // Have we been dynamically created?
 
   char closing_;
