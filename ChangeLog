@@ -1,3 +1,16 @@
+Sat Aug  5 21:49:12 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.cpp:
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+        * ace/config-win32-borland.h:
+
+          Chris Kohlhoff pointed out to me that Borland does have itoa,
+          but the signature is slightly different (itoa, not _itoa).  
+          Added it back in for Borland and added some preprocessor 
+          commands that will keep the emulation code from being included
+          unless it is needed.
+
 Sat Aug  5 11:19:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32-common.h:

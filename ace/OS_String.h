@@ -171,7 +171,6 @@ private:
   static int strcasecmp_emulation (const char *s, const char *t);
   static int strncasecmp_emulation (const char *s, const char *t, size_t len);
   static char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
-  static char *itoa_emulation (int value, char *string, int radix);
 
 #if defined (ACE_HAS_WCHAR)
   static wchar_t *strrchr_emulation (wchar_t *s, wint_t c);
@@ -182,6 +181,15 @@ private:
                                     size_t len);
   static wchar_t *itoa_emulation (int value, wchar_t *string, int radix);
 #endif /* ACE_HAS_WCHAR */
+
+
+#if !defined (ACE_HAS_ITOA)
+  static char *itoa_emulation (int value, char *string, int radix);
+# if defined (ACE_HAS_WCHAR)
+  static wchar_t *itoa_emulation (int value, wchar_t *string, int radix);
+# endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_ITOA */
+
 };  
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

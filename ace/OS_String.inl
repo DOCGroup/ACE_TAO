@@ -655,7 +655,11 @@ ACE_INLINE char *
 ACE_OS_String::itoa (int value, char *string, int radix)
 {
 #if defined (ACE_HAS_ITOA)
+#if defined (_MSC_VER)
   return ::_itoa (value, string, radix);
+#else
+  return ::itoa (value, string, radix);
+#endif /* _MSC_VER */
 #else 
   return ACE_OS_String::itoa_emulation (value, string, radix);
 #endif /* ACE_HAS_ITOA */
