@@ -3,8 +3,9 @@ Tue Apr 10 09:14:37 2001  Ossama Othman  <ossama@uci.edu>
 	* configure.in:
 
 	  Temporarily removed this file.  It was a source of confusion for
-	  those attempting to use TAO's configure script support.
-	  Autoconf support in TAO has not been fully integrated.
+ 	  those attempting to use TAO's configure script support.
+  	  Autoconf support in TAO has not been fully integrated.  Thanks
+ 	  to Stephen Torri <s.torri@lancaster.ac.uk> for motivating this.
 
 Tue Apr 10 09:06:15 2001  Ossama Othman  <ossama@uci.edu>
 

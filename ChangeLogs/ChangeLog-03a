@@ -1,3 +1,9 @@
+Tue Apr 10 11:48:51 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* include/makeinclude/platform_vxworks5.x_g++.GNU: Added support
+	  for the M68k line of CPUs.  Thanks to Albert Pariante
+ 	  <albert@sw.bev.etn.com> for reporting this.
+
 Tue Apr 10 02:14:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/PerlACE/Run_Test.pm (check_n_cleanup_files): Added a new
