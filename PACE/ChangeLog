@@ -1,3 +1,13 @@
+Thu Jun 29 02:38:52 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/posix/stdio.h:
+ 	* pace/posix/stdio.c:
+	  Changed *printf from macros to functions.
+
+	* pace/posix/unistd.c:
+ 	* pace/posix/unistd.h:
+	  Changed the macros execl, execle, execlp to functions.
+
 Wed Jun 28 11:18:17 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/Makefile:
