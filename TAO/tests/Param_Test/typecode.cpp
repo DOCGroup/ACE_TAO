@@ -46,10 +46,9 @@ void
 Test_TypeCode::dii_req_invoke (CORBA::Request *req
                                ACE_ENV_ARG_DECL)
 {
-  // There is no copying insertion for TypeCodes.
-  req->add_in_arg ("s1") <<= CORBA::TypeCode::_duplicate (this->in_.in ());
-  req->add_inout_arg ("s2") <<= CORBA::TypeCode::_duplicate (this->inout_.in ());
-  req->add_out_arg ("s3") <<= CORBA::TypeCode::_duplicate (this->out_.in ());
+  req->add_in_arg ("s1") <<= this->in_.in ();
+  req->add_inout_arg ("s2") <<= this->inout_.in ();
+  req->add_out_arg ("s3") <<= this->out_.in ();
 
   req->set_return_type (CORBA::_tc_TypeCode);
 

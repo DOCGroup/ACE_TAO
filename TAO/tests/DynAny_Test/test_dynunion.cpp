@@ -290,7 +290,7 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
 
       DynamicAny::DynAny_var da_union =
-        dynany_factory->create_dyn_any(any_union);
+        dynany_factory->create_dyn_any (any_union);
       ACE_TRY_CHECK;
 
       // if we get here the create_dyn_any worked.

@@ -1,3 +1,36 @@
+Sun Apr  6 15:04:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_T.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tests/DynAny_Test/test_dynarray.cpp:
+        * tests/DynAny_Test/test_dynstruct.cpp:
+        * tests/DynAny_Test/test_dynunion.cpp:
+
+	  Changes necessary to get the DynAny tests to build and run
+	  successfully.
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tests/Param_Test/typecode.cpp:
+
+	  Modified CORBA::TypeCode Any insertion operator to have copying
+	  and non-copying versions, as do CORBA::Any and CORBA::Object.
+	  Also modified Param Test file to use the copying version.
+
+        * tests/DynAny_Test/Makefile:
+	* tests/basic_test.dsp:
+
+	  Removed generated skeleton files from project and makefile.
+	  Although it is necessary to link to PortableServer in
+	  order to generate object references for testing, these
+	  are of type CORBA::Object and the skeleton files are
+	  not needed.
+
 Sun Apr  6 09:26:18 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/.depend.Makefile.RT_Notification

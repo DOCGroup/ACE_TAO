@@ -217,6 +217,15 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
 
+      if (mb == 0)
+        {
+          ACE_NEW (mb,
+                   ACE_Message_Block);
+          TAO_OutputCDR out;
+          any.impl ()->marshal_value (out);
+          ACE_CDR::consolidate (mb, out.begin ());
+        }
+
       TAO_InputCDR cdr (mb,
                         any._tao_byte_order ());
 

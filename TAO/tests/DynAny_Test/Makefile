@@ -16,10 +16,9 @@ LDLIBS  += -lTAO_DynamicAny -lTAO
 LDFLAGS += -L$(ACE_ROOT)/bin
 
 IDL_FILES = da_tests
-IDL_SRC = da_testsC.cpp da_testsS.cpp
+IDL_SRC = da_testsC.cpp
 
 BASIC_TEST_FILES = 	da_testsC		\
-			da_testsS		\
 			data			\
 			driver			\
 			test_dynany		\
@@ -51,14 +50,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS += -I$(TAO_ROOT)
 
-.PRECIOUS: da_testsC.h da_testsC.cpp da_testsS.h da_testsS.cpp \
-	da_testsC.i da_testsS.i
+.PRECIOUS: da_testsC.h da_testsC.cpp \
+	da_testsC.i
 
 basic_test:	$(addprefix $(VDIR),$(BASIC_TEST_OBJS))
 		$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_DynamicAny $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean:	clean
-		-$(RM) da_testsC.* da_testsS.* da_testsS_T.*
+		-$(RM) da_testsC.*
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
