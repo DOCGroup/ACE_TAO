@@ -1,5 +1,8 @@
 Sun May  4 12:34:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.cpp: If ACE_HAS_THREADS isn't defined then we'll just
+	  use mktime() without the locking.
+
 	* ace/Set: Removed the get() methods from the ACE_Fixed_Set and
  	  ACE_Bounded_Set since they don't make much sense on these
  	  abstractions.
