@@ -1,3 +1,9 @@
+Wed Sep 19 14:15:08 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Enabled generation of debug info even for
+	  release configurations.
+
 Wed Sep 19 10:23:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * html/index.html:
