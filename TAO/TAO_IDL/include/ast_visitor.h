@@ -30,7 +30,7 @@ class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
 
-#ifdef IDL_HAS_VALUETYPE
+#if defined (IDL_HAS_VALUETYPE)
 // These classes don't exist now, but they may someday.
 //  class AST_Valuetype;
 //  class AST_ValuetypeFwd;
@@ -98,13 +98,11 @@ public:
   virtual int visit_interface_fwd (AST_InterfaceFwd *node) = 0;
   // Visit interface_fwd
 
-#ifdef IDL_HAS_VALUETYPE
   virtual int visit_valuetype (AST_Interface *node) = 0;
   // Visit valuetype.
 
   virtual int visit_valuetype_fwd (AST_InterfaceFwd *node) = 0;
   // Visit valuetype_fwd
-#endif /* IDL_HAS_VALUETYPE */
 
   virtual int visit_structure (AST_Structure *node) = 0;
   // Visit a structure.

@@ -207,7 +207,7 @@ int be_visitor_args_request_info_sh::visit_predefined_type (be_predefined_type *
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << this->type_name (node) <<" &";
+          *os << "const " << this->type_name (node) <<" &";
           break;
         case AST_Argument::dir_INOUT:
           *os << this->type_name (node) << " &";
