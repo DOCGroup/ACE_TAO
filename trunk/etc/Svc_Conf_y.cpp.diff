@@ -1,0 +1,43 @@
+--- Svc_Conf_y.cpp	Thu Nov 15 20:54:12 2001
++++ /tmp/new/Svc_Conf_y.cpp	Thu Nov 15 20:01:01 2001
+@@ -20,7 +20,7 @@
+ #define	ACE_STRING	270
+ 
+ 
+-// $Id: Svc_Conf.y,v 4.41 2001/10/17 06:14:08 othman Exp $
++// $Id: Svc_Conf_y.cpp,v 4.62 2001/11/15 04:27:01 crodrigu Exp $
+ 
+ #include "ace/ARGV.h"
+ #include "ace/Svc_Conf.h"
+@@ -29,7 +29,7 @@
+ 
+ ACE_RCSID (ace,
+            Svc_Conf_y,
+-           "$Id: Svc_Conf.y,v 4.41 2001/10/17 06:14:08 othman Exp $")
++           "$Id: Svc_Conf_y.cpp,v 4.62 2001/11/15 04:27:01 crodrigu Exp $")
+ 
+ // Prototypes.
+ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
+@@ -568,7 +568,7 @@
+       /* Extend the stack our own way.  */
+       if (ace_yystacksize >= ACE_YYMAXDEPTH)
+ 	{
+-	  ace_yyerror("parser stack overflow");
++	  ace_yyerror(ACE_LIB_TEXT("parser stack overflow"));
+ 	  if (ace_yyfree_stacks)
+ 	    {
+ 	      free (ace_yyss);
+@@ -1098,11 +1098,11 @@
+ 	      free(msg);
+ 	    }
+ 	  else
+-	    ace_yyerror ("parse error; also virtual memory exceeded");
++	    ace_yyerror (ACE_LIB_TEXT("parse error; also virtual memory exceeded"));
+ 	}
+       else
+ #endif /* ACE_YYERROR_VERBOSE */
+-	ace_yyerror("parse error");
++	ace_yyerror(ACE_LIB_TEXT("parse error"));
+     }
+ 
+   goto ace_yyerrlab1;
