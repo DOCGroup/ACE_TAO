@@ -1,3 +1,18 @@
+Tue Jul  6 23:07:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Makefile: Reran make depend.
+
+	* ace/Makefile: Added the Based_Pointer_Repository.{h,cpp} and
+	  Based_Pointer_Repository_T.{h,cpp} files to the Makefile.
+  
+        * ace: Added the Based_Pointer_Repository.{h,cpp} and
+	  Based_Pointer_Repository_T.{h,cpp} files to the release.  These
+ 	  classes make it possible to transparently use "pointers" in
+ 	  shared memory without having to ensure that the base addresses
+ 	  of all the pointers are mapped into separate processes at the
+ 	  same absolute memory base address.  Thanks to Dietrich Quehl
+ 	  <Dietrich.Quehl@med.siemens.de> for contributing this software.
+
 Tue Jul 06 22:47:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: filter out Purify warning about
@@ -12,40 +27,40 @@ Tue Jul 06 22:21:12 1999  David L. Levine  <levine@cs.wustl.edu>
 Tue Jul 06 21:57:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (thr_kill, thr_setprio, sema_destroy, sema_wait, chdir,
-          unlink, sema_post, thr_continue, thr_getprio, thr_suspend, ioctl):
-          on VxWorks only, removed ACE_ADAPT_RETVAL wrapper from system
-          call, because it returns OK/ERROR (except for ioctl, which
-          returns driver number/ERROR).  Thanks to
-          Elias Sreih <sealstd1@nortelnetworks.com> for reporting this.
+          unlink, sema_post, thr_continue, thr_getprio, thr_suspend,
+ 	  ioctl): on VxWorks only, removed ACE_ADAPT_RETVAL wrapper from
+ 	  system call, because it returns OK/ERROR (except for ioctl,
+ 	  which returns driver number/ERROR).  Thanks to Elias Sreih
+ 	  <sealstd1@nortelnetworks.com> for reporting this.
 
 Tue Jul 06 21:32:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/SOCK_Send_Recv_Test.cpp (server): added 5 second
-          sleep so that the code agrees with the comments :-)
-          It now passes on LynxOS.  Thanks to Steve for the fix.
-          Also, changed an exit () call to ACE_OS::exit (), and
-          changed a few C-style casts to ANSI-style casts.
+          sleep so that the code agrees with the comments :-) It now
+ 	  passes on LynxOS.  Thanks to Steve Huston for the fix.  Also,
+ 	  changed an exit () call to ACE_OS::exit (), and changed a few
+ 	  C-style casts to ANSI-style casts.
 
 Tue Jul  6 19:20:16 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Cache_Map_Manager_T.h: Removed extra "ace/" from #pragma
           implementation directive.
 
-        * tests/Cache_Map_Manager_Test.cpp: Changed typedefs for KEY and VALUE
-          from size_t to ACE_UINT32 to they always pick up the specializations
-          for ACE_Hash, etc. On HP-UX and AIX, size_t is not the same as
-          ACE_UINT32, and this caused build errors.
+        * tests/Cache_Map_Manager_Test.cpp: Changed typedefs for KEY and
+	  VALUE from size_t to ACE_UINT32 to they always pick up the
+ 	  specializations for ACE_Hash, etc. On HP-UX and AIX, size_t is
+ 	  not the same as ACE_UINT32, and this caused build errors.
 
-        * tests/Conn_Test.cpp: Restrict range of the test on PharLap ETS, else
-          it runs out of resources with default configuration.
+        * tests/Conn_Test.cpp: Restrict range of the test on PharLap ETS,
+	  else it runs out of resources with default configuration.
 
 Tue Jul  6 18:21:37 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
-        * ace/Token_Request_Reply.{h,i,cpp}:
-          Added ACE_TOKEN_REQUEST_HEADER_SIZE for the fixed-length portion
-          of ACE_Token_Request's Transfer struct, changing length
-          calculations accordingly.  Added two bytes to the buffer to
-          accomodate '\0' values after the token name and client ID.
+        * ace/Token_Request_Reply.{h,i,cpp}: Added
+	  ACE_TOKEN_REQUEST_HEADER_SIZE for the fixed-length portion of
+ 	  ACE_Token_Request's Transfer struct, changing length
+ 	  calculations accordingly.  Added two bytes to the buffer to
+ 	  accomodate '\0' values after the token name and client ID.
 
         * ace/Remote_Tokens.cpp: Changed the check for failure when
           receiving a reply in request_reply.
