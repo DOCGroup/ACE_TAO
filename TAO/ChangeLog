@@ -1,3 +1,18 @@
+Sat Nov 29 20:27:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+	  Since the local variable that was supposed to be removed in
+
+          Sat Nov 29 11:13:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          has be put back in
+
+          Sat Nov 29 19:40:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+          went the other way, and referenced the local variable later in 
+          the method, instead of calling the accessor again.
+
 Sat Nov 29 19:40:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
@@ -14,7 +29,7 @@ Sat Nov 29 12:45:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/FTORB_Utils.dsp:
 
-          Added dependeny on IDL compiler executable so code will get
+          Added dependency on IDL compiler executable so code will get
           regnerated whenever the IDL compiler itself is updated.
 
 Sat Nov 29 11:42:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
