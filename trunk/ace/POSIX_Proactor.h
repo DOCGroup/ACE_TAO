@@ -272,7 +272,7 @@ protected:
   // Call these methods from derived class when virtual table is
   // built.
  
-  virtual int handle_events (unsigned long milli_seconds);
+  virtual int handle_events (u_long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
   // before any events occur, return 0. Return 1 if a completion
   // dispatched. Return -1 on errors.
