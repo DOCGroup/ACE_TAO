@@ -527,6 +527,7 @@ ACE_HAS_STRBUF_T                        Compiler/platform supports
 ACE_HAS_STRDUP_EMULATION                Platform/compiler lacks
                                         strdup() (e.g., VxWorks,
                                         Chorus, WinCE)
+ACE_HAS_STRNLEN                         Platform supports strnlen(3).
 ACE_HAS_STREAMS                         Platform supports STREAMS
 ACE_HAS_STREAM_PIPES                    Platform supports STREAM pipes
 ACE_HAS_STRERROR                        Compiler/platform supports strerror ()
@@ -636,6 +637,7 @@ ACE_HAS_VOIDPTR_MMAP                    Platform requires void * for
 ACE_HAS_VOIDPTR_SOCKOPT                 OS/compiler uses void * arg 4
                                         setsockopt() rather than const
                                         char *
+ACE_HAS_WCSNLEN                         Platform supports wcsnlen(3).
 ACE_HAS_WIN32_TRYLOCK                   The Win32 platform support
                                         TryEnterCriticalSection()
                                         (WinNT 4.0 and beyond)
