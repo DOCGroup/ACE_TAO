@@ -1,3 +1,9 @@
+Tue May  6 13:02:07 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Object.h:
+
+	  Fixed "fuzz" error in Doxygen documentation for this file.
+
 Tue May  6 12:56:27 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/PSS/PSDL_Interface_Visitor.cpp:
@@ -48,7 +54,7 @@ Tue May 06 11:46:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Tue May 06 11:31:55 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-        * orbsvcs\tests\Notify\lib\TAO_NotifyTests_Static.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
 
           Reset OutDir to '.'.
 
@@ -1379,7 +1385,7 @@ Thu May 01 21:55:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
 Thu May 01 16:15:29 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\POA:
+	* tao/PortableServer/POA:
 
 	  Object_Reactivation test pointed out the following bug: When
 	  waiting for the <servant_deactivation_condition>, the waiting
@@ -1410,7 +1416,7 @@ Thu May 01 16:15:29 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  the new assert statements in Object_Adapter.cpp that pointed
 	  them out.
 
-	* tao\PortableServer\Object_Adapter.cpp:
+	* tao/PortableServer/Object_Adapter.cpp:
 
 	  Renamed the existing prepare_for_upcall() to
 	  prepare_for_upcall_i().  The new prepare_for_upcall() calls
@@ -1421,35 +1427,35 @@ Thu May 01 16:15:29 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  of the upcall object.  Therefore, invoke the upcall destructor
 	  before continuing.
 
-	* tao\RTPortableServer\RT_POA.i:
+	* tao/RTPortableServer/RT_POA.i:
 
 	  Changes similar to the POA class were required for
 	  RT_POA::activate_object_with_priority() and
 	  RT_POA::activate_object_with_id_and_priority().
 
-	* tao\RTPortableServer\RT_Collocation_Resolver.cpp:
+	* tao/RTPortableServer/RT_Collocation_Resolver.cpp:
 
 	  is_collocated() calls POA::locate_servant_i().  However, it can
 	  ignore the <wait_occurred_restart_call> flag since there is no
 	  implicit activation, there is no chance of waiting on a
 	  condition variable.
 
-	* tests\POA\Single_Threaded_POA\Single_Threaded_POA.cpp:
-	* tests\POA\Object_Reactivation\Object_Reactivation.cpp:
+	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+	* tests/POA/Object_Reactivation/Object_Reactivation.cpp:
 
 	  Removed unnecessary parameters to Task::activate() call.
 
-	* tests\POA\Object_Reactivation\Object_Reactivation.cpp:
+	* tests/POA/Object_Reactivation/Object_Reactivation.cpp:
 
 	  Made debugging statements optional.
 
-	* examples\POA\DSI\server.dsp:
-	* examples\POA\DSI\client.dsp:
-	* examples\POA\DSI\Makefile:
+	* examples/POA/DSI/server.dsp:
+	* examples/POA/DSI/client.dsp:
+	* examples/POA/DSI/Makefile:
 
 	  No need to link with the messaging library.
 
-	* examples\TAO_Examples.dsw:
+	* examples/TAO_Examples.dsw:
 
 	  Added POA BiDir test.
 
@@ -2245,13 +2251,13 @@ Fri Apr 25 17:04:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Fri Apr 25 15:21:58 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-        * tao\RTCORBA\Thread_Pool.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
 
           In create_threadpool_helper(), finalize thread pool resource in
           case of thread creation errors.  This will fix a memory leak.
 
-        * tests\RTCORBA\Banded_Connections\client.cpp:
-        * tests\RTCORBA\Banded_Connections\server.cpp:
+        * tests/RTCORBA/Banded_Connections/client.cpp:
+        * tests/RTCORBA/Banded_Connections/server.cpp:
 
           Report meaningful message in case of thread creation errors.
 
@@ -2515,7 +2521,7 @@ Wed Apr 23 17:05:10 2003  Irfan Pyarali  <irfan@oomworks.com>
           now that config-win32-msvc-6.h file has been updated and the -GR
           flag has been added to the project files.
 
-        * tests\RTCORBA\RTCORBA-test-configurations.xls:
+        * tests/RTCORBA/RTCORBA-test-configurations.xls:
 
           Updated test configuration details.
 
@@ -2755,7 +2761,7 @@ Tue Apr 22 19:33:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Tue Apr 22 20:15:52 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-        * performance-tests\RTCorba\Thread_Pool\server.cpp:
+        * performance-tests/RTCorba/Thread_Pool/server.cpp:
 
           - Run the orb in a RT thread rather than in the main thread.
           Otherwise, the value returned from the_priority() can be
