@@ -9,7 +9,8 @@ Tue Jul 14 12:02:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  conversions (like from sockaddr* to sockaddr_in*).
 	  Some compilers (HP/aCC) give a warning if the old C-style cast
 	  operators are used; using the proper cast operator removes the
-	  warning.
+	  warning. Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
+	  pointing out this problem.
 
 Tue Jul 14 11:26:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
