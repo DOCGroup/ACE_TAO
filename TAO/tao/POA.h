@@ -525,14 +525,17 @@ public:
 
   const TAO_Object_Adapter::poa_name &system_name (void) const;
 
+  static void check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completion,
+                                                    CORBA::Environment &ACE_TRY_ENV);
+
 protected:
 
   const ACE_CString &name (void) const;
 
-  TAO_POA *create_POA (const String &adapter_name,
-                       TAO_POA_Manager &poa_manager,
-                       const TAO_POA_Policies &policies,
-                       CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr create_POA_i (const char *adapter_name,
+                                        PortableServer::POAManager_ptr poa_manager,
+                                        const CORBA::PolicyList &policies,
+                                        CORBA_Environment &ACE_TRY_ENV);
 
   TAO_POA *create_POA_i (const String &adapter_name,
                          TAO_POA_Manager &poa_manager,
@@ -570,6 +573,15 @@ protected:
 
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
                                  CORBA::Environment &ACE_TRY_ENV);
+
+  void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
+                                 CORBA::Boolean wait_for_completion,
+                                 CORBA::Environment &ACE_TRY_ENV);
+
+  void wait_for_completions (CORBA::Boolean wait_for_completion,
+                             CORBA::Environment &ACE_TRY_ENV);
+
+  void check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV);
 
   void deactivate_object_i (const PortableServer::ObjectId &oid,
                             CORBA_Environment &ACE_TRY_ENV);
@@ -743,7 +755,7 @@ protected:
 
   ACE_SYNCH_CONDITION outstanding_requests_condition_;
 
-  CORBA::Boolean destroy_pending_;
+  CORBA::Boolean wait_for_completion_pending_;
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

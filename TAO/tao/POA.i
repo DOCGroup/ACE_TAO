@@ -208,10 +208,10 @@ TAO_POA::lock (void)
   return this->lock_;
 }
 
-ACE_INLINE TAO_POA *
-TAO_POA::create_POA (const TAO_POA::String &adapter_name,
-                     TAO_POA_Manager &poa_manager,
-                     const TAO_POA_Policies &policies,
+ACE_INLINE PortableServer::POA_ptr
+TAO_POA::create_POA (const char *adapter_name,
+                     PortableServer::POAManager_ptr poa_manager,
+                     const CORBA::PolicyList &policies,
                      CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
