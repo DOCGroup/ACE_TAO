@@ -34,6 +34,7 @@
 #include "be_helper.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
+#include "idl_defines.h"
 
 ACE_RCSID (be,
            be_visitor_traits,
@@ -310,7 +311,9 @@ be_visitor_traits::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os->gen_ifdef_macro (node->flat_name (), "traits");
+  // This will include the bound if there is one, and should also
+  // prevent duplication, even if there have been further typdefs.
+  os->gen_ifdef_macro (node->gen_name (), "traits");
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
