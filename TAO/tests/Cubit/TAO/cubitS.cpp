@@ -21,8 +21,8 @@ _skel_Cubit::_skel_Cubit (const char *obj_name)
   char *type_id = "IDL:Cubit:1.0";
   IIOP_Object *data;
 
-  CORBA::BOA_ptr oa = TAO_ORB_CORE::instance ()->root_poa ();
-  CORBA::ORB_ptr orb = TAO_ORB_CORE::instance ()->orb ();
+  CORBA::BOA_ptr oa = TAO_ORB_CORE_instance ()->root_poa ();
+  CORBA::ORB_ptr orb = TAO_ORB_CORE_instance ()->orb ();
 
   if (oa == 0)
     {
