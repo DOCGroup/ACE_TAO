@@ -22,8 +22,8 @@ TAO_Remote_Object_Proxy_Broker::~TAO_Remote_Object_Proxy_Broker (void)
 }
 
 TAO_Object_Proxy_Impl 
-&TAO_Remote_Object_Proxy_Broker::select_proxy (CORBA::Object_ptr object,
-               CORBA::Environment &ACE_TRY_ENV)
+&TAO_Remote_Object_Proxy_Broker::select_proxy (CORBA::Object_ptr,
+               CORBA::Environment &)
 {
   return this->remote_proxy_impl_;
 }
