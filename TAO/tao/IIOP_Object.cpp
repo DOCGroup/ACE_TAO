@@ -347,6 +347,7 @@ IIOP_Object::IIOP_Object (char *repository_id,
   : STUB_Object (repository_id),
     profile (addr, objkey),
     fwd_profile_ (0),
+    fwd_profile_success_ (0),
     refcount_ (1),
     handler_ (0)
 {
@@ -430,18 +431,18 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
   // Do a locate_request if necessary/wanted.
   if (this->use_locate_request_ && this->first_locate_request_)
-  {
-    TAO_GIOP_Locate_Request_Invocation call (this, orb_core);
+    {
+      TAO_GIOP_Locate_Request_Invocation call (this, orb_core);
 
-    call.start (env);
+      call.start (env);
          
-    TAO_GIOP_ReplyStatusType  status = call.invoke (env);
+      TAO_GIOP_ReplyStatusType status = call.invoke (env);
 
-    this->first_locate_request_ = 0;
+      this->first_locate_request_ = 0;
 
-    if (status == TAO_GIOP_SYSTEM_EXCEPTION)
-      return;
-  }
+      if (status == TAO_GIOP_SYSTEM_EXCEPTION)
+        return;
+    }
 
   if (info->is_roundtrip)
     {
@@ -467,20 +468,75 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
           call.start (env);
 
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
-          if (env.exception () != 0) return;
+          if (env.exception () != 0) 
+            {
+              ACE_MT (ACE_GUARD (ACE_Lock, 
+                                guard, 
+                                *this->fwd_profile_lock_ptr_));
+
+              // If this is the fwd_profile, then check to see if we
+              // need to go back to the original profile and try that.
+              if (this->fwd_profile_ == 0)
+                return;
+              else
+                {
+                  delete this->fwd_profile_;
+                  this->fwd_profile_ = 0;
+
+                  // See if we need to try again.
+                  if (this->fwd_profile_success_ == 1)
+                    {
+                      this->fwd_profile_success_ = 0;
+                      env.clear ();
+                      continue;
+                    }
+                  else
+                    return;
+                }
+            }
 
           this->put_params (env, info, call, args);
           if (env.exception () != 0) return;
 
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
           TAO_GIOP_ReplyStatusType status =
-            call.invoke (info->excepts, info->except_count,env);
+            call.invoke (info->excepts, info->except_count, env);
 
-          if (status == TAO_GIOP_SYSTEM_EXCEPTION
-              || status == TAO_GIOP_USER_EXCEPTION)
+          if (status == TAO_GIOP_SYSTEM_EXCEPTION)
+            {
+              ACE_MT (ACE_GUARD (ACE_Lock, 
+                                guard, 
+                                *this->fwd_profile_lock_ptr_));
+ 
+              // If this is the fwd_profile, then check to see if we
+              // need to go back to the original profile and try that.
+              if (this->fwd_profile_ == 0)
+                return;
+              else
+                {
+                  delete this->fwd_profile_;
+                  this->fwd_profile_ = 0;
+
+                  // See if we need to try again.
+                  if (this->fwd_profile_success_ == 1)
+                    {
+                      this->fwd_profile_success_ = 0;
+                      env.clear ();
+                      continue;
+                    }
+                  else
+                    return;
+                }
+            }
+
+          if (status == TAO_GIOP_USER_EXCEPTION)
             return;
           else if (status == TAO_GIOP_NO_EXCEPTION)
             {
+              // @@ DB: and lock this
+              if (this->fwd_profile_ != 0)
+                this->fwd_profile_success_ = 1;
+              
               // Now, get all the "return", "out", and "inout"
               // parameters from the response message body.
 
@@ -560,24 +616,56 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
     }
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, info->opname, orb_core);
-      ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
+      for (;;)
+        {
+          TAO_GIOP_Oneway_Invocation call (this, info->opname, orb_core);
+          ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
-      // Start the call by constructing the request message header.
-      call.start (env);
-      ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
-      if (env.exception () != 0) return;
+          // Start the call by constructing the request message header.
+          call.start (env);
+          ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
+            {
+              ACE_MT (ACE_GUARD (ACE_Lock, 
+                                guard, 
+                                *this->fwd_profile_lock_ptr_));
 
-      this->put_params (env, info, call, args);
-      if (env.exception () != 0) return;
+              // If this is the fwd_profile, then check to see if we
+              // need to go back to the original profile and try that.
+              if (this->fwd_profile_ == 0)
+                return;
+              else
+                {
+                  // @@ DB: Memory leak?
+                  this->fwd_profile_ = 0;
 
-      ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
-      /* TAO_GIOP_ReplyStatusType status = */ call.invoke (env);
+                  // See if we need to try again.
+                  if (this->fwd_profile_success_ == 1)
+                    {
+                      this->fwd_profile_success_ = 0;
+                      env.clear ();
+                      continue;
+                    }
+                  else
+                    return;
+                }
+            }
 
-      // @@ TODO We do not get any LOCATION_FORWARD in this case,
-      // IMHO this is a good case for use of a LocateRequest,
-      // under some strategy control, of course. In that case we need
-      // a loop, as above.
+          this->put_params (env, info, call, args);
+          if (env.exception () != 0) return;
+
+          ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
+          /* TAO_GIOP_ReplyStatusType status = */ call.invoke (env);
+
+          // @@ and lock this
+          if (this->fwd_profile_ != 0)
+            this->fwd_profile_success_ = 1;
+
+          // @@ TODO We do not get any LOCATION_FORWARD in this case,
+          // IMHO this is a good case for use of a LocateRequest,
+          // under some strategy control, of course. In that case we need
+          // a loop, as above.
+          return;
+        }
     }
 }
 
