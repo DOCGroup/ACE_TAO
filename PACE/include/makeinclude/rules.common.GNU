@@ -68,7 +68,7 @@ endif
 
 ifeq ($(PACE_SYSNAME),OSF1)
   VPATH :=.:posix:$(VPATH)
-  CFLAGS += -DPACE_OSF1=$(PACE_SYSVER)
+  CFLAGS += -DPACE_OSF1=$(PACE_SYSVER) -D_DEC_XPG
 endif
 
 ifeq ($(PACE_SYSNAME),VxWorks)
