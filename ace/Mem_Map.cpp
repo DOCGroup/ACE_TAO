@@ -9,6 +9,8 @@
 #include "ace/Mem_Map.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Mem_Map, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Mem_Map)
 
 void

@@ -12,6 +12,8 @@
 #include "ace/Containers.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Containers, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Stack)
 
 template <class T> void

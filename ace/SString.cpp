@@ -13,6 +13,8 @@
 #include "ace/SString.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, SString, "$Id$")
+
 ACE_Tokenizer::ACE_Tokenizer (LPTSTR buffer)
   : buffer_ (buffer),
     index_ (0),

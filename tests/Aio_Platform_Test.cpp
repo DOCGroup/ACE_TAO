@@ -16,6 +16,8 @@
 #include "test_config.h"
 #include "ace/OS.h"
 
+ACE_RCSID(tests, Aio_Platform_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -7,6 +7,8 @@
 
 #include "ace/IOStream_T.h"
 
+ACE_RCSID(ace, IOStream_T, "$Id$")
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION) && defined (__GNUG__)

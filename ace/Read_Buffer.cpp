@@ -8,6 +8,8 @@
 #include "ace/Read_Buffer.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Read_Buffer, "$Id$")
+
 void
 ACE_Read_Buffer::dump (void) const
 {

@@ -10,6 +10,8 @@
 #include "ace/Typed_SV_Message.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Typed_SV_Message, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Typed_SV_Message)
 
 template <class T> void

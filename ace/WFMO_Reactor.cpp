@@ -12,6 +12,8 @@
 #include "ace/WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, WFMO_Reactor, "$Id$")
+
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
 #include "ace/Auto_Ptr.h"

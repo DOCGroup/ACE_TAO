@@ -27,6 +27,8 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Auto_Ptr.h"
 
+ACE_RCSID(tests, Future_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

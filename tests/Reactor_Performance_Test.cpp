@@ -32,6 +32,8 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
+ACE_RCSID(tests, Reactor_Performance_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -9,6 +9,8 @@
 #include "ace/Signal.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Signal, "$Id$")
+
 // Static definitions.
 
 #if defined (ACE_HAS_SIG_C_FUNC)

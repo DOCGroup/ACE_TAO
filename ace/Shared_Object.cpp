@@ -6,10 +6,11 @@
 /* Provide the abstract base class used to access dynamic linking
    facilities */
 
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Shared_Object.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID(ace, Shared_Object, "$Id$")
 
 // Initializes object when dynamic linking occurs.
 

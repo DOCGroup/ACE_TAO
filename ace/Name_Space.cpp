@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Name_Space.h"
 
+ACE_RCSID(ace, Name_Space, "$Id$")
+
 ACE_Name_Binding::ACE_Name_Binding (void)
   : type_ (ACE_OS::strdup (""))
 {

@@ -19,6 +19,8 @@
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
 
+ACE_RCSID(tests, Env_Value_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -13,6 +13,8 @@
 #include "ace/Stream.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Stream, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream)
 
 // Give some idea of what the heck is going on in a stream!

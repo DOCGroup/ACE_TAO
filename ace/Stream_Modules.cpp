@@ -11,6 +11,8 @@
 #include "ace/Stream_Modules.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Stream_Modules, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Head)
 
 template <ACE_SYNCH_DECL> 

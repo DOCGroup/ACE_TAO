@@ -7,6 +7,8 @@
 # include "ace/Basic_Types.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(ace, Basic_Types, "$Id$")
+
 #if defined (ACE_LACKS_LONGLONG_T)
 
 void

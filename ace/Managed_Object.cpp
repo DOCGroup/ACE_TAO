@@ -11,6 +11,8 @@
 #include "ace/Managed_Object.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Managed_Object, "$Id$")
+
 template <class TYPE>
 ACE_Cleanup_Adapter<TYPE>::~ACE_Cleanup_Adapter (void)
 {

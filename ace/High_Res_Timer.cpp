@@ -9,6 +9,8 @@
 
 #include "ace/Stats.h"
 
+ACE_RCSID(ace, High_Res_Timer, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 
 // For Intel platforms, a scale factor is required for

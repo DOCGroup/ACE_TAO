@@ -13,6 +13,8 @@
 #include "ace/Service_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Service_Manager, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Manager)
 
 void

@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/UPIPE_Connector.h"
 
+ACE_RCSID(ace, UPIPE_Connector, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -23,6 +23,8 @@
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
+ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

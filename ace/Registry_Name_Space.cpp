@@ -4,6 +4,8 @@
 
 #include "ace/Registry_Name_Space.h"
 
+ACE_RCSID(ace, Registry_Name_Space, "$Id$")
+
 #if (defined (ACE_WIN32) && defined (UNICODE))
 // This only works on Win32 platforms when UNICODE is turned on
 

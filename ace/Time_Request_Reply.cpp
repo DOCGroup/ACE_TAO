@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Time_Request_Reply.h"
 
+ACE_RCSID(ace, Time_Request_Reply, "$Id$")
+
 // Default "do nothing" constructor.
 
 ACE_Time_Request::ACE_Time_Request (void)

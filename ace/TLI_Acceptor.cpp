@@ -3,6 +3,8 @@
 #define ACE_BUILD_DLL
 #include "ace/TLI_Acceptor.h"
 
+ACE_RCSID(ace, TLI_Acceptor, "$Id$")
+
 #if defined (ACE_HAS_TLI)
 
 // Put the actual definitions of the ACE_TLI_Request and

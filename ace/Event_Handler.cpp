@@ -9,6 +9,8 @@
 #include "ace/Event_Handler.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Event_Handler, "$Id$")
+
 // Implement conceptually abstract virtual functions in the base class
 // so derived classes don't have to implement unused ones.
 

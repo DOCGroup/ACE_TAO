@@ -8,6 +8,8 @@
 #include "ace/ACE.h"
 #include "ace/Local_Name_Space.h"
 
+ACE_RCSID(ace, Local_Name_Space, "$Id$")
+
 ACE_USHORT16 *
 ACE_NS_String::fast_rep (void) const
 {

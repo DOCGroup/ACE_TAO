@@ -3,6 +3,8 @@
 #define ACE_BUILD_DLL
 #include "ace/TTY_IO.h"
 
+ACE_RCSID(ace, TTY_IO, "$Id$")
+
 // Interface for reading/writing serial device parameters
 
 int

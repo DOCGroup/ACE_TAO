@@ -8,6 +8,8 @@
 #include "ace/Containers.h"
 #include "ace/Timer_Queue.h"
 
+ACE_RCSID(ace, Timer_Queue, "$Id$")
+
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_Queue_T.cpp"

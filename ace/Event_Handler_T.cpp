@@ -7,6 +7,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Event_Handler_T.h"
 
+ACE_RCSID(ace, Event_Handler_T, "$Id$")
+
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
 #if !defined (__ACE_INLINE__)

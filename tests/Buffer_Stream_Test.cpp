@@ -27,6 +27,8 @@
 #include "ace/Module.h"
 #include "ace/Task.h"
 
+ACE_RCSID(tests, Buffer_Stream_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

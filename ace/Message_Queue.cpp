@@ -10,6 +10,8 @@
 #include "ace/Message_Queue.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Message_Queue, "$Id$")
+
 #if defined (VXWORKS)
 
 ////////////////////////////////

@@ -10,6 +10,8 @@
 #include "ace/FIFO_Send.i"
 #endif
 
+ACE_RCSID(ace, FIFO_Send, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Send)
 
 void

@@ -22,6 +22,8 @@
 #include "tests/test_config.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

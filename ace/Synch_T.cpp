@@ -8,6 +8,8 @@
 #include "ace/Synch_T.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(ace, Synch_T, "$Id$")
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch_T.i"
 // On non-Win32 platforms, this code will be treated as normal code.

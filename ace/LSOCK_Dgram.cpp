@@ -3,6 +3,8 @@
 #define ACE_BUILD_DLL
 #include "ace/LSOCK_Dgram.h"
 
+ACE_RCSID(ace, LSOCK_Dgram, "$Id$")
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

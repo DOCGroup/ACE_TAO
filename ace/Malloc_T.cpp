@@ -11,6 +11,8 @@
 #include "ace/Malloc_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Malloc_T, "$Id$")
+
 template <class T, class ACE_LOCK>
 ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   : pool_ (0),

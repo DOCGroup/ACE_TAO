@@ -4,6 +4,8 @@
 
 #include "ace/Registry.h"
       
+ACE_RCSID(ace, Registry, "$Id$")
+
 #if defined (ACE_WIN32)
 
 // Funky macro to deal with strange error passing semantics

@@ -13,6 +13,8 @@
 
 #include "ace/Synch_T.h"
 
+ACE_RCSID(ace, Malloc, "$Id$")
+
 // Process-wide ACE_Allocator.
 ACE_Allocator *ACE_Allocator::allocator_ = 0;
 

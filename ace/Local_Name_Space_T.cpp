@@ -8,6 +8,8 @@
 #include "ace/ACE.h"
 #include "ace/Local_Name_Space.h"
 
+ACE_RCSID(ace, Local_Name_Space_T, "$Id$")
+
 template <class ALLOCATOR>
 ACE_Name_Space_Map<ALLOCATOR>::ACE_Name_Space_Map (ALLOCATOR *alloc)
   : MAP_MANAGER (alloc)
