@@ -1,32 +1,32 @@
 Sun Feb  4 5:45:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI_Timeouts:
-	  Created this directory to hold a new test for AMI in combination
-	  with roundtrip timeouts.
+  * tests/AMI_Timeouts:
+    Created this directory to hold a new test for AMI in combination
+    with roundtrip timeouts.
 
-	* tests/AMI_Timeouts/AMI_Timeouts.dsw:
-	* tests/AMI_Timeouts/server.dsp:
-	* tests/AMI_Timeouts/server.bor:
-	* tests/AMI_Timeouts/server.cpp:
-	* tests/AMI_Timeouts/timeout.idl:
-	* tests/AMI_Timeouts/timeout_i.h:
-	* tests/AMI_Timeouts/timeout_i.cpp:
-	* tests/AMI_Timeouts/timeout_client.h:
-	* tests/AMI_Timeouts/timeout_client.cpp:
-	* tests/AMI_Timeouts/Makefile:
-	* tests/AMI_Timeouts/Makefile.bor:
-	* tests/AMI_Timeouts/run_test.pl:
-	* tests/AMI_Timeouts/README:
-	  Added these files as part of the new test. Please note that
-	  the Makefiles, run_test.pl and the Borland Compiler project
-	  might not be up to date.
+  * tests/AMI_Timeouts/AMI_Timeouts.dsw:
+  * tests/AMI_Timeouts/server.dsp:
+  * tests/AMI_Timeouts/server.bor:
+  * tests/AMI_Timeouts/server.cpp:
+  * tests/AMI_Timeouts/timeout.idl:
+  * tests/AMI_Timeouts/timeout_i.h:
+  * tests/AMI_Timeouts/timeout_i.cpp:
+  * tests/AMI_Timeouts/timeout_client.h:
+  * tests/AMI_Timeouts/timeout_client.cpp:
+  * tests/AMI_Timeouts/Makefile:
+  * tests/AMI_Timeouts/Makefile.bor:
+  * tests/AMI_Timeouts/run_test.pl:
+  * tests/AMI_Timeouts/README:
+    Added these files as part of the new test. Please note that
+    the Makefiles, run_test.pl and the Borland Compiler project
+    might not be up to date.
 
 Sat Feb  3 15:56:43 2001  Darrell Brunsch <brunsch@uci.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+  * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 
-	  Renamed some variables to remove multiply defined variables
-      on MSVC, which resulted from different for loop scoping rules.
+    Renamed some variables to remove multiply defined variables
+    on MSVC, which resulted from different for loop scoping rules.
 
 Fri Feb  2 14:45:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
