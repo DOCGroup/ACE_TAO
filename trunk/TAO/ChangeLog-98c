@@ -1,3 +1,13 @@
+Thu Aug  6 18:27:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/TAO_Tests.dsw: Added the Multiple Inheritance client
+	  and server projects.
+
+	* tests/Multiple_Inheritance/client.dsp:
+	* tests/Multiple_Inheritance/server.dsp:
+	  Updated the Release versions to be in synch with the rest
+	  of the tests.
+
 Thu Aug  6 18:11:20 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Added instructions on how to create a
