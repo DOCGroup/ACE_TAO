@@ -1,4 +1,14 @@
-// -*- C++ -*- $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    Parser.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef _ACEXML_BASIC_PARSER_H_
 #define _ACEXML_BASIC_PARSER_H_
@@ -36,6 +46,12 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
                                          ACE_Equal_To<ACEXML_String>,
                                          ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER_REVERSE_ITER;
 
+/**
+ * @class ACEXML_Parser Parser.h "parser/parser/Parser.h"
+ *
+ * @brief A SAX based parser.
+ *
+ */
 class ACEXML_PARSER_Export ACEXML_Parser : public ACEXML_XMLReader
 {
 public:
@@ -142,120 +158,191 @@ public:
 
   // *** Helper functions for parsing XML
 
-  /// Skip any whitespace encounter and return the first
-  /// none-white space characters (which will be consumed from
-  /// the CharStream.)  If no whitespace is found,
-  /// it will return 0.  @a whitespace return a pointer to
-  /// the string of skipped whitespace after proper conversion.
-  /// @a whitespace will be null if there's no whitespace found.
+  /**
+   * Skip any whitespaces encounter.
+   *
+   * @param whitespace Return a pointer to the string of skipped
+   * whitespace after proper conversion.  Null if there's no
+   * whitespace found.
+   *
+   * @retval The first none-white space characters (which will be
+   * consumed from the CharStream.)  If no whitespace is found, it
+   * will return 0.
+   */
   ACEXML_Char skip_whitespace (ACEXML_Char **whitespace);
 
-  /// Return 1 if @a c is a valid white space character.  Otherwise,
-  /// return 0.
+  /**
+   * Check if a character @a c is a whitespace.
+   *
+   * @retval 1 if @a c is a valid white space character. 0 otherwise.
+   */
   int is_whitespace (ACEXML_Char c);
+
+  /**
+   * Check if a character @a c is a whitespace or '='.
+   *
+   * @retval 1 if true, 0 otherwise.
+   */
   int is_whitespace_or_equal (ACEXML_Char c);
+
+  /**
+   * Check if a character @a c is a valid character for nonterminal NAME.
+   *
+   * @retval 1 if true, 0 otherwise.
+   */
   int is_nonname (ACEXML_Char c);
 
-  /// Skip an equal sign.  Return 0 when succeeds, -1 if no equal sign
-  /// is found.
+  /**
+   * Skip an equal sign.
+   *
+   * @retval 0 when succeeds, -1 if no equal sign is found.
+   */
   int skip_equal (void);
 
-  /// Get a quoted string.  Return 0 on success, -1 otherwise.
-  /// @a str return the un-quoted string.  Quoted strings are
-  /// used to specify attribute values and this routine will
-  /// replace character and entity references on-the-fly.  Parameter
-  /// entitys is not allowed (or replaced) in this function.
+  /**
+   * Get a quoted string.  Quoted strings are used to specify
+   * attribute values and this routine will replace character and
+   * entity references on-the-fly.  Parameter entitys is not allowed
+   * (or replaced) in this function.
+   *
+   * @param str returns the un-quoted string.
+   *
+   * @retval 0 on success, -1 otherwise.
+   */
   int get_quoted_string (ACEXML_Char *&str);
 
-  /// Parse a PI statement.  The first character encountered
-  /// should always be '?' in the PI prefix "<?".
-  /// Return 0 on success, -1 otherwise.
+  /**
+   * Parse a PI statement.  The first character encountered
+   * should always be '?' in the PI prefix "@<?".
+   *
+   * @retval 0 on success, -1 otherwise.
+   */
   int parse_processing_instruction (ACEXML_Env &xmlenv);
 
-  /// Filter out a comment. The first character encountered
-  /// should always be the first '-' in the comment prefix
-  /// "<!--"
+  /**
+   * Skip over a comment. The first character encountered
+   * should always be the first '-' in the comment prefix
+   * "@<@!--".
+   */
   int grok_comment ();
 
-  /// Read a name from the input CharStream (until white space).
-  /// If @a ch != 0, then we have already consumed the first name
-  /// character from the input CharStream, otherwise, read_name
-  /// will use this->get() to acquire the initial character.
-  /// Return a pointer to the string in the obstack, 0 if it's not
-  /// a valid name.
+  /**
+   * Read a name from the input CharStream (until white space).
+   * If @a ch @!= 0, then we have already consumed the first name
+   * character from the input CharStream, otherwise, read_name
+   * will use this->get() to acquire the initial character.
+   *
+   * @retval A pointer to the string in the obstack, 0 if it's not
+   * a valid name.
+   */
   ACEXML_Char *read_name (ACEXML_Char ch = 0);
 
-  /// Parse the DOCTYPE declaration.  The first character encountered
-  /// should always be  'D' in doctype prefix: "<!DOCTYPE".
+  /**
+   * Parse the DOCTYPE declaration.  The first character encountered
+   * should always be  'D' in doctype prefix: "@<@!DOCTYPE".
+   */
   int parse_doctypedecl (ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
-  /// Parse an XML element.  The first character encountered should
-  /// be the first character of the element "Name".
+  /**
+   * Parse an XML element.  The first character encountered should
+   * be the first character of the element "Name".
+   */
   void parse_element (ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 
-  /// Parse XML Prolog.
+  /**
+   * Parse XML Prolog.
+   */
   void parse_xml_prolog (ACEXML_Env &xmlenv);
 
-  /// Parse a character reference, i.e., "&#x20;" or "&#30;".  Return 0 on
-  /// success and -1 otherwise.  @a buf points to a character buffer for
-  /// the result and @a len specifies the capacities of the buffer.  The first
-  /// character encountered should be the '#' char.
+  /**
+   * Parse a character reference, i.e., "&#x20;" or "&#30;".   The first
+   * character encountered should be the '#' char.
+   *
+   * @param buf points to a character buffer for
+   * the result.
+   * @param len specifies the capacities of the buffer.
+   *
+   * @retval 0 on success and -1 otherwise.
+   */
   int parse_char_reference (ACEXML_Char *buf, size_t len);
 
-  /// Parse an entity reference, i.e., "&amp;".  Return a pointer to
-  /// the resolved const ACEXML_String if success (previously
-  /// defined), 0 otherwise.  The first character encountered should be
-  /// the character following '&'.
+  /**
+   * Parse an entity reference, i.e., "&amp;".  The first character
+   * encountered should be the character following '&'.
+   *
+   * @retval A pointer to the resolved const ACEXML_String if success
+   * (previously defined), 0 otherwise.
+   */
   const ACEXML_String *parse_reference (void);
 
-  /// Parse a CDATA section.  The first character should always be the first
-  /// '[' in CDATA definition.  Return 0 on success, -1 otherwise.
+  /**
+   * Parse a CDATA section.  The first character should always be the first
+   * '[' in CDATA definition.
+   *
+   * @retval 0 on success, -1 otherwise.
+   */
   int parse_cdata (ACEXML_Env &xmlenv);
 
-  /// Parse a "markupdecl" section, this includes both "markupdecl" and
-  /// "DeclSep" sections in XML specification
+  /**
+   * Parse a "markupdecl" section, this includes both "markupdecl" and
+   * "DeclSep" sections in XML specification
+   */
   int parse_internal_dtd (ACEXML_Env &xmlenv);
 
-  /// Parse an "ELEMENT" decl.  The first character this method
-  /// expects is always the 'L' (the second char) in the word
-  /// "ELEMENT".
+  /**
+   * Parse an "ELEMENT" decl.  The first character this method
+   * expects is always the 'L' (the second char) in the word
+   * "ELEMENT".
+   */
   int parse_element_decl (ACEXML_Env &xmlenv);
 
-  /// Parse an "ENTITY" decl.  The first character this method expects
-  /// is always the 'N' (the second char) in the word "ENTITY".
+  /**
+   * Parse an "ENTITY" decl.  The first character this method expects
+   * is always the 'N' (the second char) in the word "ENTITY".
+   */
   int parse_entity_decl (ACEXML_Env &xmlenv);
 
-  /// Parse an "ATTLIST" decl.  Thse first character this method
-  /// expects is always the 'A' (the first char) in the word
-  /// "ATTLIST".
+  /**
+   * Parse an "ATTLIST" decl.  Thse first character this method
+   * expects is always the 'A' (the first char) in the word
+   * "ATTLIST".
+   */
   int parse_attlist_decl (ACEXML_Env &xmlenv);
 
-  /// Parse a "NOTATION" decl.  The first character this method
-  /// expects is always the 'N' (the first char) in the word
-  /// "NOTATION".
+  /**
+   *Parse a "NOTATION" decl.  The first character this method
+   * expects is always the 'N' (the first char) in the word
+   * "NOTATION".
+   */
   int parse_notation_decl (ACEXML_Env &xmlenv);
 
+protected:
   /// Get a character.
   ACEXML_Char get (void);
 
   /// Peek a character.
   ACEXML_Char peek (void);
 
-  /// Check if more data can be added to a character buffer in obstack.
-  /// If not, the existing data in the buffer will be cleared out by
-  /// freezing the segment and pass it out thru a content_handler_->characters ()
-  /// call.  @a counter records the length of the existing data in
-  /// obstack.
+  /**
+   * Check if more data can be added to a character buffer in obstack.
+   * If not, the existing data in the buffer will be cleared out by
+   * freezing the segment and pass it out thru a content_handler_->characters ()
+   * call.  @a counter records the length of the existing data in
+   * obstack.
+   */
   int try_grow_cdata (size_t size, size_t &len, ACEXML_Env &xmlenv);
 
 private:
-  /// Check and dispatch errors/warnings to ErrorHandler.
-  /// Return 0 if the error/warning is handled successfully,
-  /// -1, if the handler doesn't know how to handle the error/exceptions.
+  /**
+   * Check and dispatch errors/warnings to ErrorHandler.
+   *
+   * @retval 0 if the error/warning is handled successfully, -1, if
+   * the handler doesn't know how to handle the error/exceptions.
+   */
   int check_exception (ACEXML_Env &xmlenv);
 
   /// Keeping track of the handlers.  We do not manage

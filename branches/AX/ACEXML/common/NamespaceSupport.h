@@ -1,4 +1,14 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    NamespaceSupport.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef ACEXML_NAMESPACESUPPORT_H
 #define ACEXML_NAMESPACESUPPORT_H
@@ -31,24 +41,84 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
 
 typedef ACE_Unbounded_Queue<const ACEXML_Char *> ACEXML_STR_LIST;
 
+/**
+ * @class ACEXML_Namespace_Context_Stack NamespaceSupport.h "common/NamespaceSupport.h"
+ *
+ * @brief ACEXML_Namespace_Context_Stack implements a simple stack
+ * that ACEXML_NamespaceSupport uses to keep track of namespace scopes.
+ *
+ * @sa ACEXML_NamespaceSupport
+ */
 class ACEXML_Export ACEXML_Namespace_Context_Stack
 {
 public:
+  /// Default constructor.
   ACEXML_Namespace_Context_Stack (void);
+
+  /// Destructor.
   ~ACEXML_Namespace_Context_Stack (void);
 
+  /// Push the old namespace before entering into a new namespace scope.
   int push (ACEXML_NS_CONTEXT * old);
+
+  /// Pop the old namespace when exiting a namespace scope.
   ACEXML_NS_CONTEXT *pop (void);
 
 private:
+  /// Internal stack structure to hold namespace context.
   struct NS_Node_T {
     ACEXML_NS_CONTEXT *item_;
     struct NS_Node_T *next_;
   };
 
+  /// Anchor point for head of stack.
   NS_Node_T *head_;
 };
 
+/**
+ * @class ACEXML_NamespaceSupport NamespaceSupport.h "common/NamespaceSupport.h"
+ *
+ * @brief ACEXML_NamespaceSupport provides namespace management
+ * operation for an XML parser.
+ *
+ * This class encapsulates the logic of Namespace processing: it
+ * tracks the declarations currently in force for each context and
+ * automatically processes qualified XML 1.0 names into their
+ * Namespace parts; it can also be used in reverse for generating XML
+ * 1.0 from Namespaces.
+ *
+ * Namespace support objects are reusable, but the reset method must
+ * be invoked between each session.
+ *
+ * Here is a simple session (in Java :-p):
+ * @code
+ *  String parts[] = new String[3];
+ *  NamespaceSupport support = new NamespaceSupport();
+ *
+ *  support.pushContext();
+ *  support.declarePrefix("", "http://www.w3.org/1999/xhtml");
+ *  support.declarePrefix("dc", "http://www.purl.org/dc#");
+ *
+ *  String parts[] = support.processName("p", parts, false);
+ *  System.out.println("Namespace URI: " + parts[0]);
+ *  System.out.println("Local name: " + parts[1]);
+ *  System.out.println("Raw name: " + parts[2]);
+ *
+ *  String parts[] = support.processName("dc:title", parts, false);
+ *  System.out.println("Namespace URI: " + parts[0]);
+ *  System.out.println("Local name: " + parts[1]);
+ *  System.out.println("Raw name: " + parts[2]);
+ *
+ *  support.popContext();
+ * @endcode
+ *
+ * Note that this class is optimized for the use case where most
+ * elements do not contain Namespace declarations: if the same
+ * prefix/URI mapping is repeated for each context (for example), this
+ * class will be somewhat less efficient.
+ *
+ * @sa ACEXML_Exception
+ */
 class ACEXML_Export ACEXML_NamespaceSupport
 {
 public:

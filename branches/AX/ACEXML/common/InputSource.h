@@ -1,10 +1,48 @@
-// -*- C++ -*- $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    InputSource.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef _ACEXML_INPUTSOURCE_H_
 #define _ACEXML_INPUTSOURCE_H_
 
 #include "common/CharStream.h"
 
+/**
+ * @class ACEXML_InputSource InputSource.h "common/InputSource.h"
+ *
+ * @brief ACEXML_InputSource encapsulates the actual input stream with some
+ * added information.
+ *
+ * This class allows a SAX application to encapsulate information
+ * about an input source in a single object, which may include a
+ * public identifier, a system identifier, a byte stream (possibly
+ * with a specified encoding), and/or a character stream.
+ *
+ * There are two places that the application will deliver this input
+ * source to the parser: as the argument to the Parser.parse method,
+ * or as the return value of the EntityResolver.resolveEntity method.
+ *
+ * The SAX parser will use the InputSource object to determine how to
+ * read XML input. If there is a character stream available, the
+ * parser will read that stream directly; if not, the parser will use
+ * a byte stream, if available; if neither a character stream nor a
+ * byte stream is available, the parser will attempt to open a URI
+ * connection to the resource identified by the system identifier.
+ *
+ * An InputSource object belongs to the application: the SAX parser
+ * shall never modify it in any way (it may modify a copy if
+ * necessary).
+ *
+ * @sa ACEXML_CharStream
+ */
 class ACEXML_Export ACEXML_InputSource
 {
 public:

@@ -1,11 +1,30 @@
-// -*- C++ -*- $Id$
-// This file declares functions to convert char string among different
-// unicode encoding (utf8, utf16, utf32)
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    Transcode.h
+ *
+ * This file declares functions to convert char string among different
+ * unicode encoding (utf8, utf16, utf32)
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef _ACEXML_TRANSCODE_H_
 #define _ACEXML_TRANSCODE_H_
 #include "common/XML_Types.h"
 
+/**
+ * @class ACEXML_Transcoder Transcode.h "common/Transcode.h"
+ *
+ * @brief ACEXML_Transcoder
+ *
+ * Wrapper class for performing transcoding among different UNICODE
+ * encoding.
+ */
 class ACEXML_Export ACEXML_Transcoder
 {
 public:

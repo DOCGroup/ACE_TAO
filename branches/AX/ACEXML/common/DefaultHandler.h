@@ -1,5 +1,14 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
+//=============================================================================
+/**
+ *  @file    DefaultHandler.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 #ifndef ACEXML_DEFAULTHANDLER_H
 #define ACEXML_DEFAULTHANDLER_H
 
@@ -8,6 +17,25 @@
 #include "common/EntityResolver.h"
 #include "common/ErrorHandler.h"
 
+/**
+ * @class ACEXML_DefaultHandler DefaultHandler.h "common/DefaultHandler.h"
+ *
+ * @brief ACEXML_DefaultHandler
+ *
+ * This class is available as a convenience base class for SAX2
+ * applications: it provides default implementations for all of the
+ * callbacks in the four core SAX2 handler classes:
+ *
+ * - EntityResolver
+ * - DTDHandler
+ * - ContentHandler
+ * - ErrorHandler
+ *
+ * Application writers can extend this class when they need to
+ * implement only part of an interface; parser writers can instantiate
+ * this class to provide default handlers when the application has not
+ * supplied its own.
+ */
 class ACEXML_Export ACEXML_DefaultHandler
   : public ACEXML_ContentHandler,
     public ACEXML_DTDHandler,
@@ -15,13 +43,13 @@ class ACEXML_Export ACEXML_DefaultHandler
     public ACEXML_ErrorHandler
 {
 public:
-  /*
+  /**
    * Default constructor.
    */
   ACEXML_DefaultHandler (void);
 
-  /*
-   * Default destructor.
+  /**
+   * destructor.
    */
   virtual ~ACEXML_DefaultHandler (void);
 

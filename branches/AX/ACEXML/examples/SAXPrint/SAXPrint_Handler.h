@@ -1,10 +1,28 @@
 // $Id$
 
+//=============================================================================
+/**
+ *  @file    SAXPrint_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 #ifndef ACEXML_SAXPRINT_HANDLER_H
 #define ACEXML_SAXPRINT_HANDLER_H
 
 #include "common/DefaultHandler.h"
 
+/**
+ * @class ACEXML_SAXPrint_Handler
+ *
+ * @brief ACEXML_SAXPrint_Handler is an example SAX event handler.
+ *
+ * This SAX event handler try to regenerate the XML document it
+ * reads with correct indentation.
+ */
 class ACEXML_SAXPrint_Handler : public ACEXML_DefaultHandler
 {
 public:

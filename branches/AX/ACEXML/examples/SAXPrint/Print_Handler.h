@@ -1,10 +1,28 @@
 // $Id$
 
+//=============================================================================
+/**
+ *  @file    Print_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 #ifndef ACEXML_PRINT_HANDLER_H
 #define ACEXML_PRINT_HANDLER_H
 
 #include "common/DefaultHandler.h"
 
+/**
+ * @class ACEXML_Print_Handler
+ *
+ * @brief ACEXML_Print_Handler is an example SAX event handler.
+ *
+ * This SAX event handler prints out a detailed event report
+ * on every event it received.
+ */
 class ACEXML_Print_Handler : public ACEXML_DefaultHandler
 {
 public:

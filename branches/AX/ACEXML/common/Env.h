@@ -1,20 +1,41 @@
-// -*- C++ -*- $Id$
-//
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    Env.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef _ACEXML_ENV_H_
 #define _ACEXML_ENV_H_
 #include "common/Exception.h"
 
+/**
+ * @class ACEXML_Env Env.h "common/Env.h"
+ *
+ * @brief ACEXML_Env
+ *
+ * ACEXML_Env is modeled after CORBA_Environment class.  It provides
+ * a place holder for callees to propagate exceptions back to
+ * callers.  ACEXML does not support native exceptions at this
+ * moement.
+ *
+ * @sa ACEXML_Exception
+ */
 class ACEXML_Export ACEXML_Env
 {
-  /**
-   *
-   *
-   */
 public:
+  /// Default constructor.
   ACEXML_Env ();
+
+  /// Copy constructor.
   ACEXML_Env (const ACEXML_Env &ev);
 
+  /// Destructor.
   ~ACEXML_Env (void);
 
   /// Check if exception has occured.

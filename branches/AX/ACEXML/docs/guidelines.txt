@@ -1,0 +1,12 @@
+/**
+@page acexml_guides ACEXML Programming Guidelines
+
+<ul>
+
+  <li>Currently, there's only an example showing how to use the parser
+      under ACE_Wrappers/XML/examples/SAXPrint/.
+
+</ul>
+
+
+*/

@@ -1,5 +1,14 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
+//=============================================================================
+/**
+ *  @file    XMLFilterImpl.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 #ifndef ACEXML_XMLFILTERIMPL_H
 #define ACEXML_XMLFILTERIMPL_H
 
@@ -11,6 +20,17 @@
 #include "common/EntityResolver.h"
 #include "common/ErrorHandler.h"
 
+/**
+ * @class ACEXML_XMLFilterImpl XMLFilterImpl.h "common/XMLFilterImpl.h"
+ *
+ * @brief ACEXML_XMLFilterImpl
+ *
+ * This class is designed to sit between an XMLReader and the client
+ * application's event handlers. By default, it does nothing but pass
+ * requests up to the reader and events on to the handlers unmodified,
+ * but subclasses can override specific methods to modify the event
+ * stream or the configuration requests as they pass through.
+ */
 class ACEXML_Export ACEXML_XMLFilterImpl
   : public ACEXML_XMLFilter,
     public ACEXML_ContentHandler,
@@ -19,17 +39,17 @@ class ACEXML_Export ACEXML_XMLFilterImpl
     public ACEXML_ErrorHandler
 {
 public:
-  /*
+  /**
    * Default constructor.  Create with no parent.
    */
   ACEXML_XMLFilterImpl (void);
 
-  /*
+  /**
    * Construct an XML filter with the specified parent.
    */
   ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent);
 
-  /*
+  /**
    * Destructor.
    */
   virtual ~ACEXML_XMLFilterImpl (void);

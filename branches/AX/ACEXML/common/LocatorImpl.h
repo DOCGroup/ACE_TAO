@@ -1,10 +1,55 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    LocatorImpl.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef ACEXML_LOCALTORIMPL_H
 #define ACEXML_LOCALTORIMPL_H
 
 #include "common/Locator.h"
 
+/**
+ * @class ACEXML_LocatorImpl LocatorImpl.h "common/LocatorImpl.h"
+ *
+ * @brief ACEXML_LocatorImpl is an implementation of ACEXML_Locator.
+ *
+ * This class is available mainly for application writers, who can
+ * use it to make a persistent snapshot of a locator at any point
+ * during a document parse:
+ *
+ * @code
+ *   ACEXML_Locator locator;
+ *   ACEXML_Locator startloc;
+ *
+ *   public void setLocator (ACEXML_Locator locator)
+ *   {
+ *      // note the locator
+ *      this.locator = locator;
+ *   }
+ *
+ *   public void startDocument ()
+ *   {
+ *      // save the location of the start of the document
+ *      // for future use.
+ *      ACEXML_Locator startloc = new ACEXML_LocatorImpl(locator);
+ *   }
+ * @endcode
+ *
+ * Normally, parser writers will not use this class, since it is more
+ * efficient to provide location information only when requested,
+ * rather than constantly updating a Locator object.
+ *
+ * @todo ACEXML parser doesn't support the use of Locator yet.
+ *
+ * @sa ACEXML_Locator
+ */
 class ACEXML_Export ACEXML_LocatorImpl : public ACEXML_Locator
 {
 public:
