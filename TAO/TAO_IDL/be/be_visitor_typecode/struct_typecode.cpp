@@ -34,6 +34,13 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
 
+  if (this->gen_member_typecodes (node) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO::be_visitor_struct_typecode::visit_structure - "
+                       "Unable to generate structure/exception field "
+                       "TypeCodes.\n"),
+                      -1);
+
   std::string const fields_name (std::string ("_tao_fields_")
                                  + node->flat_name ());
 
@@ -75,6 +82,26 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
 
   return
     this->gen_typecode_ptr (be_type::narrow_from_decl (node));
+}
+
+int
+TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
+{
+  AST_Field ** member_ptr = 0;
+
+  size_t const count = node->nfields ();
+
+  for (size_t i = 0; i < count; ++i)
+    {
+      node->field (member_ptr, i);
+
+      be_type * const member_type =
+        be_type::narrow_from_decl ((*member_ptr)->field_type ());
+
+      member_type->accept (this);
+    }
+
+  return 0;
 }
 
 int

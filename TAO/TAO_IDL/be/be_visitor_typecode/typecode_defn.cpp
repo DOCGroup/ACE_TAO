@@ -269,9 +269,9 @@ be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
 // The visit methods will be called for the top-level node whose typecode is
 // being generated.
 
-int
-be_visitor_typecode_defn::visit_type (be_type *node)
-{
+// int
+// be_visitor_typecode_defn::visit_type (be_type *node)
+// {
 //   AST_Decl::NodeType nt = node->base_node_type ();
 
 //   // Exceptions depend on their typcodes, so if we
@@ -284,122 +284,122 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 //       this->ctx_->stream (tao_cg->anyop_source ());
 //     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+//   TAO_OutStream *os = this->ctx_->stream ();
 
-  // reset the queue
-  this->queue_reset (this->tc_queue_);
-  this->tc_offset_ = 0;
+//   // reset the queue
+//   this->queue_reset (this->tc_queue_);
+//   this->tc_offset_ = 0;
 
-  // Insert node into tc_queue_ in case the node is involved in
-  // some form of recursion.
-  if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_typecode_defn::"
-                         "visit_type - "
-                         "queue insert failed\n"),
-                        -1);
-    }
+//   // Insert node into tc_queue_ in case the node is involved in
+//   // some form of recursion.
+//   if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          "(%N:%l) be_visitor_typecode_defn::"
+//                          "visit_type - "
+//                          "queue insert failed\n"),
+//                         -1);
+//     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+//   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+//       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  // Generate the typecode information here
-  *os << "static const CORBA::Long _oc_";
+//   // Generate the typecode information here
+//   *os << "static const CORBA::Long _oc_";
 
-  // Flat name generation.
-  *os << node->flat_name ();
+//   // Flat name generation.
+//   *os << node->flat_name ();
 
-  *os << "[] =" << be_nl;
-  *os << "{" << be_idt_nl;
+//   *os << "[] =" << be_nl;
+//   *os << "{" << be_idt_nl;
 
-  // Add the sizeof the enum tk_* and the encap length that we do not put into
-  // this array but which will exist in the CDR buffer.
+//   // Add the sizeof the enum tk_* and the encap length that we do not put into
+//   // this array but which will exist in the CDR buffer.
 
-  this->tc_offset_ = 4 + 4;
+//   this->tc_offset_ = 4 + 4;
 
-  // Note that we just need the parameters here and hence we generate the
-  // encapsulation for the parameters.
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
+//   // Note that we just need the parameters here and hence we generate the
+//   // encapsulation for the parameters.
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
 
-  if (node->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_typecode_defn::"
-                         "visit_type - "
-                         "codegen for typecode encapsulation failed\n"),
-                        -1);
-    }
+//   if (node->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          "(%N:%l) be_visitor_typecode_defn::"
+//                          "visit_type - "
+//                          "codegen for typecode encapsulation failed\n"),
+//                         -1);
+//     }
 
-  *os << be_uidt << "};" << be_nl << be_nl;
+//   *os << be_uidt << "};" << be_nl << be_nl;
 
-  // Type code definition.
-  *os << "static CORBA::TypeCode _tc_TAO_tc_";
+//   // Type code definition.
+//   *os << "static CORBA::TypeCode _tc_TAO_tc_";
 
-  // Flat name generation.
-  *os << node->flat_name ();
+//   // Flat name generation.
+//   *os << node->flat_name ();
 
-  *os << " (" << be_idt << be_idt_nl;
+//   *os << " (" << be_idt << be_idt_nl;
 
-  switch (node->node_type ())
-    {
-    case AST_Decl::NT_array:
-      *os << "CORBA::tk_array";
-      break;
-//     case AST_Decl::NT_enum:
-//       *os << "CORBA::tk_enum";
-//       break;
-//     case AST_Decl::NT_except:
-//       *os << "CORBA::tk_except";
-//       break;
-//     case AST_Decl::NT_interface:
-//       *os << "CORBA::tk_objref";
-//       break;
-//     case AST_Decl::NT_valuetype:
-//       *os << "CORBA::tk_value";
-//       break;
-//     case AST_Decl::NT_eventtype:
-//       *os << "CORBA::tk_event";
-//       break;
-//     case AST_Decl::NT_component:
-//       *os << "CORBA::tk_component";
-//       break;
-//     case AST_Decl::NT_sequence:
-//       *os << "CORBA::tk_sequence";
-//       break;
-//     case AST_Decl::NT_struct:
-//       *os << "CORBA::tk_struct";
-//       break;
-//     case AST_Decl::NT_typedef:
-//       *os << "CORBA::tk_alias";
-//       break;
-//     case AST_Decl::NT_union:
-//       *os << "CORBA::tk_union";
-//       break;
-    default:
-      return -1; // error
-    }
+//   switch (node->node_type ())
+//     {
+// //     case AST_Decl::NT_array:
+// //       *os << "CORBA::tk_array";
+// //       break;
+// //     case AST_Decl::NT_enum:
+// //       *os << "CORBA::tk_enum";
+// //       break;
+// //     case AST_Decl::NT_except:
+// //       *os << "CORBA::tk_except";
+// //       break;
+// //     case AST_Decl::NT_interface:
+// //       *os << "CORBA::tk_objref";
+// //       break;
+// //     case AST_Decl::NT_valuetype:
+// //       *os << "CORBA::tk_value";
+// //       break;
+// //     case AST_Decl::NT_eventtype:
+// //       *os << "CORBA::tk_event";
+// //       break;
+// //     case AST_Decl::NT_component:
+// //       *os << "CORBA::tk_component";
+// //       break;
+// //     case AST_Decl::NT_sequence:
+// //       *os << "CORBA::tk_sequence";
+// //       break;
+// //     case AST_Decl::NT_struct:
+// //       *os << "CORBA::tk_struct";
+// //       break;
+// //     case AST_Decl::NT_typedef:
+// //       *os << "CORBA::tk_alias";
+// //       break;
+// //     case AST_Decl::NT_union:
+// //       *os << "CORBA::tk_union";
+// //       break;
+//     default:
+//       return -1; // error
+//     }
 
-  *os << "," << be_nl
-      << "sizeof (_oc_";
+//   *os << "," << be_nl
+//       << "sizeof (_oc_";
 
-  // Flat name generation.
-  *os <<  node->flat_name ();
+//   // Flat name generation.
+//   *os <<  node->flat_name ();
 
-  *os << ")," << be_nl
-      << "(char *) &_oc_";
+//   *os << ")," << be_nl
+//       << "(char *) &_oc_";
 
-  // Flat name generation.
-  *os <<  node->flat_name ();
+//   // Flat name generation.
+//   *os <<  node->flat_name ();
 
-  // Name generation.
-  *os << "," << be_nl
-      << "0," << be_nl
-      << "0" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+//   // Name generation.
+//   *os << "," << be_nl
+//       << "0," << be_nl
+//       << "0" << be_uidt_nl
+//       << ");" << be_uidt_nl << be_nl;
 
-  return this->gen_typecode_ptr (node);
-}
+//   return this->gen_typecode_ptr (node);
+// }
 
 int
 be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
@@ -522,32 +522,138 @@ be_visitor_typecode_defn::gen_base_typecode_name (be_type * base)
 int
 be_visitor_typecode_defn::visit_array (be_array *node)
 {
-  switch (this->ctx_->sub_state ())
+  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+
+  TAO_OutStream & os = *this->ctx_->stream ();
+
+  os << be_nl << be_nl
+     << "// TAO_IDL - Generated from" << be_nl
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  // generate typecode for the base type
+  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+
+  // Generate typecode for the base type, being careful to avoid doing
+  // so a for a typedef since that could recursively cause multiple
+  // base type TypeCode definitions to be generated.
+  if (!base || (base->node_type () != AST_Decl::NT_typedef
+                && base->accept (this) == -1))
     {
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-      return this->visit_type (node);
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-      return this->gen_typecode (node);
-
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-      return this->gen_encapsulation (node);
-
-    case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-      this->computed_tc_size_ = this->compute_tc_size (node);
-      return ((this->computed_tc_size_ > 0) ? 0 : -1);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-      this->computed_encap_len_ = this->compute_encap_length (node);
-      return ((this->computed_encap_len_ > 0) ? 0 : -1);
-    default:
-      // error
-      break;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::visit_array) - ")
+                         ACE_TEXT ("failed to generate base typecode\n")),
+                        -1);
     }
 
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ACE_TEXT ("visit - bad sub state ")
-                     ACE_TEXT ("in visitor context\n")),
-                    -1);
+  // namespace begin
+  os << "namespace TAO" << be_nl
+     << "{" << be_idt_nl
+     << "namespace TypeCode" << be_nl
+     << "{" << be_idt_nl;
+
+  unsigned long const ndims = node->n_dims ();
+  for (unsigned long i = 0; i < ndims; ++i)
+    {
+      os << "TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>"
+         << be_idt_nl
+         << node->flat_name ();
+
+      unsigned long const inner_ndims = ndims - i - 1;
+
+      for (unsigned long j = inner_ndims; j < ndims; ++j)
+        {
+          os << "_" << node->dims ()[j]->ev ()->u.ulval;
+//     << node->tc_name ()
+        }
+
+      os << " (" << be_idt_nl
+         << "CORBA::tk_array," << be_nl
+         << "&";
+
+      if (i == 0)
+        {
+          if (this->gen_base_typecode_name (base) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                             ACE_TEXT ("visit_array - problem generating ")
+                             ACE_TEXT ("base TypeCode name.\n")),
+                            -1);
+        }
+      else
+        {
+          os << "tc_" << node->flat_name ();
+
+          for (unsigned long j = inner_ndims + 1; j < ndims; ++j)
+            {
+              os << "_" <<  node->dims ()[j]->ev ()->u.ulval;
+              //     << node->tc_name ()
+            }
+
+        }
+
+      os << "," << be_nl
+         << node->dims ()[inner_ndims] << ");" << be_uidt_nl
+         << be_uidt_nl;
+
+      os << "::CORBA::TypeCode_ptr const tc_"
+         << node->flat_name ();
+
+      if (inner_ndims != 0)
+        {
+          // Only generate the array dimension sizes for the inner
+          // dimensions, not the outermost (leftmost) one.
+          for (unsigned long j = inner_ndims; j < ndims; ++j)
+            {
+              os << "_" << node->dims ()[j]->ev ()->u.ulval;
+            }
+        }
+
+      os << " ="
+         << be_idt_nl
+         << "&" << node->flat_name ();
+
+      for (unsigned long j = inner_ndims; j < ndims; ++j)
+        {
+          os << "_" << node->dims ()[j]->ev ()->u.ulval;
+        }
+
+      os << ";" << be_uidt_nl << be_nl;
+    }
+
+  // namespace end
+  os << be_uidt_nl
+     << "}" << be_uidt_nl
+     << "}" << be_nl << be_nl;
+
+  return 0; // this->gen_typecode_ptr (node);
+
+//   switch (this->ctx_->sub_state ())
+//     {
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
+//       return this->visit_type (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
+//       return this->gen_typecode (node);
+
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
+//       return this->gen_encapsulation (node);
+
+//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
+//       this->computed_tc_size_ = this->compute_tc_size (node);
+//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
+//       this->computed_encap_len_ = this->compute_encap_length (node);
+//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
+//     default:
+//       // error
+//       break;
+//     }
+
+//   ACE_ERROR_RETURN ((LM_ERROR,
+//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+//                      ACE_TEXT ("visit - bad sub state ")
+//                      ACE_TEXT ("in visitor context\n")),
+//                     -1);
 }
 
 // int
@@ -686,7 +792,7 @@ be_visitor_typecode_defn::visit_interface (be_interface * node)
       if (!module || (this->gen_nested_namespace_begin (module) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_interface_fwd - "
+                             "be_visitor_typecode_defn::visit_interface - "
                              "Error parsing nested name\n"),
                             -1);
         }
@@ -697,7 +803,7 @@ be_visitor_typecode_defn::visit_interface (be_interface * node)
       if (this->gen_nested_namespace_end (module) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_interface_fwd - "
+                             "be_visitor_typecode_defn::visit_interface - "
                              "Error parsing nested name\n"),
                             -1);
         }
@@ -706,7 +812,7 @@ be_visitor_typecode_defn::visit_interface (be_interface * node)
     {
       // outermost scope.
       os << "extern ::CORBA::TypeCode_ptr const "
-         << node->tc_name () << ";" << be_uidt;
+         << node->tc_name () << ";" << be_uidt_nl;
     }
 
   return 0;
@@ -1010,43 +1116,63 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 //                     -1);
 // }
 
-// int
-// be_visitor_typecode_defn::visit_valuetype (be_valuetype *node)
-// {
-//   switch (this->ctx_->sub_state ())
-//     {
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-//       return this->visit_type (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-//       return this->gen_typecode (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-//       return this->gen_encapsulation (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-//       this->computed_tc_size_ = this->compute_tc_size (node);
-//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-//       this->computed_encap_len_ = this->compute_encap_length (node);
-//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
-//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
-//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-//       return this->visit_members (node);
-//     default:
-//       // error
-//       break;
-//     }
+int
+be_visitor_typecode_defn::visit_valuetype (be_valuetype * node)
+{
+  // Only handle forward declared valuetypes here.  Defined valuetypes
+  // have their own TypeCode visitor.
+  if (node->is_defined ())
+    return 0;
 
-//   ACE_ERROR_RETURN ((LM_ERROR,
-//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-//                      ACE_TEXT ("visit - bad sub state ")
-//                      ACE_TEXT ("in visitor context\n")),
-//                     -1);
-// }
+  TAO_OutStream & os = *this->ctx_->stream ();
 
-// int
-// be_visitor_typecode_defn::visit_eventtype (be_eventtype *node)
-// {
-//   return this->visit_valuetype (node);
-// }
+  // Generate an extern TypeCode declaration to make sure TypeCodes
+  // that refer to the corresponding TypeCode for the forward declared
+  // interface have a valid reference to it.
+
+  // Is our enclosing scope a module? We need this check because for
+  // platforms that support namespaces, the typecode must be declared
+  // extern.
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      be_module * const module =
+        be_module::narrow_from_scope (node->defined_in ());
+
+      if (!module || (this->gen_nested_namespace_begin (module) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::visit_valuetype - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+
+      os << "extern ::CORBA::TypeCode_ptr const _tc_"
+         << node->local_name () << ";";
+
+      if (this->gen_nested_namespace_end (module) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::visit_valuetype - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+    }
+  else
+    {
+      // outermost scope.
+      os << "extern ::CORBA::TypeCode_ptr const "
+         << node->tc_name () << ";" << be_uidt_nl;
+    }
+
+  return 0;
+}
+
+int
+be_visitor_typecode_defn::visit_eventtype (be_eventtype * node)
+{
+  return this->visit_valuetype (node);
+}
 
 // int
 // be_visitor_typecode_defn::visit_union_branch (be_union_branch *node)
@@ -1073,142 +1199,142 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 //  methods that actually produce the typecode and the encapsulations
 
 
-int
-be_visitor_typecode_defn::gen_typecode (be_array *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
+// int
+// be_visitor_typecode_defn::gen_typecode (be_array *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
-  os->indent (); // start from whatever indentation level we were at
+//   os->indent (); // start from whatever indentation level we were at
 
-  // we do not do typecode optimization for anonymous arrays
+//   // we do not do typecode optimization for anonymous arrays
 
-  *os << "CORBA::tk_array, // typecode kind" << be_nl;
-  // size of the enum
-  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//   *os << "CORBA::tk_array, // typecode kind" << be_nl;
+//   // size of the enum
+//   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-  {
-    Scoped_Compute_Queue_Guard guard (this);
+//   {
+//     Scoped_Compute_Queue_Guard guard (this);
 
-    // emit the encapsulation length
-    this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
+//     // emit the encapsulation length
+//     this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
 
-    if (node->accept (this) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                           ACE_TEXT ("gen_typecode (array) - ")
-                           ACE_TEXT ("Failed to get encap length\n")),
-                          -1);
-      }
-  }
+//     if (node->accept (this) == -1)
+//       {
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+//                            ACE_TEXT ("gen_typecode (array) - ")
+//                            ACE_TEXT ("Failed to get encap length\n")),
+//                           -1);
+//       }
+//   }
 
-  *os << this->computed_encap_len_ << ", // encapsulation length"
-      << be_idt << "\n";
-  // size of the encap length
-  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//   *os << this->computed_encap_len_ << ", // encapsulation length"
+//       << be_idt << "\n";
+//   // size of the encap length
+//   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-  // now emit the encapsulation
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
-  if (node->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                         ACE_TEXT ("gen_typecode - ")
-                         ACE_TEXT ("gen_encapsulation failed for array\n")),
-                        -1);
-    }
+//   // now emit the encapsulation
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
+//   if (node->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+//                          ACE_TEXT ("gen_typecode - ")
+//                          ACE_TEXT ("gen_encapsulation failed for array\n")),
+//                         -1);
+//     }
 
-  *os << be_uidt << "\n";
+//   *os << be_uidt << "\n";
 
-  return 0;
-}
+//   return 0;
+// }
 
-int
-be_visitor_typecode_defn::gen_encapsulation (be_array *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_type *bt; // base type
-  unsigned long i;
+// int
+// be_visitor_typecode_defn::gen_encapsulation (be_array *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream (); // output stream
+//   be_type *bt; // base type
+//   unsigned long i;
 
-  os->indent (); // start from the current indentation level
+//   os->indent (); // start from the current indentation level
 
-  // retrieve the base type
-  bt = be_type::narrow_from_decl (node->base_type ());
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_typecode_defn::gen_encapsulation - "
-                         "bad base type\n"),
-                        -1);
-    }
+//   // retrieve the base type
+//   bt = be_type::narrow_from_decl (node->base_type ());
+//   if (!bt)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          "(%N:%l) be_visitor_typecode_defn::gen_encapsulation - "
+//                          "bad base type\n"),
+//                         -1);
+//     }
 
-  {
-    Scoped_Compute_Queue_Guard guard (this);
+//   {
+//     Scoped_Compute_Queue_Guard guard (this);
 
-    // compute the typecode size
-    this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
+//     // compute the typecode size
+//     this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
 
-    if (bt->accept (this) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                           ACE_TEXT ("gen_encapsulation (array) - ")
-                           ACE_TEXT ("Failed to get typecode size\n")),
-                          -1);
-      }
-  }
+//     if (bt->accept (this) == -1)
+//       {
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+//                            ACE_TEXT ("gen_encapsulation (array) - ")
+//                            ACE_TEXT ("Failed to get typecode size\n")),
+//                           -1);
+//       }
+//   }
 
-  for (i = 0; i < (node->n_dims () - 1); i++)
-    {
-      unsigned long rem_encap_len;
+//   for (i = 0; i < (node->n_dims () - 1); i++)
+//     {
+//       unsigned long rem_encap_len;
 
-      *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << be_nl;
-      // size of the encapsulation byte order flag. Although it is 1 byte, the
-      // aligned size is 4 bytes
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-      *os << "CORBA::tk_array, // typecode kind" << be_nl;
-      // size of the enum
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-      rem_encap_len
-        = (node->n_dims () - (i + 1)) * (4 + 4)
-        + (node->n_dims () - (i + 2)) * (4 + 4)
-        + this->computed_tc_size_;
-      *os << rem_encap_len << ", // encapsulation length" << be_idt_nl;
-      // size of the encap length
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-    }
+//       *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << be_nl;
+//       // size of the encapsulation byte order flag. Although it is 1 byte, the
+//       // aligned size is 4 bytes
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//       *os << "CORBA::tk_array, // typecode kind" << be_nl;
+//       // size of the enum
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//       rem_encap_len
+//         = (node->n_dims () - (i + 1)) * (4 + 4)
+//         + (node->n_dims () - (i + 2)) * (4 + 4)
+//         + this->computed_tc_size_;
+//       *os << rem_encap_len << ", // encapsulation length" << be_idt_nl;
+//       // size of the encap length
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//     }
 
-  // now generate the typecode of the base type
-  *os << "TAO_ENCAP_BYTE_ORDER, // byte order\n";
-  // size of the encapsulation byte order flag. Although it is 1 byte, the
-  // aligned size is 4 bytes
-  this->tc_offset_ += sizeof (ACE_CDR::ULong);
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+//   // now generate the typecode of the base type
+//   *os << "TAO_ENCAP_BYTE_ORDER, // byte order\n";
+//   // size of the encapsulation byte order flag. Although it is 1 byte, the
+//   // aligned size is 4 bytes
+//   this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
-  if (bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_array::gen_encapsulation - "
-                         "base type typecode gen failed\n"),
-                        -1);
-    }
+//   if (bt->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          "(%N:%l) be_array::gen_encapsulation - "
+//                          "base type typecode gen failed\n"),
+//                         -1);
+//     }
 
-  os->indent ();
+//   os->indent ();
 
-  // Now reduce the indentation appropriately.
-  for (i = (node->n_dims () - 1); i > 0; i--)
-    {
-      *os << node->dims ()[i] << "," << be_uidt_nl;
+//   // Now reduce the indentation appropriately.
+//   for (i = (node->n_dims () - 1); i > 0; i--)
+//     {
+//       *os << node->dims ()[i] << "," << be_uidt_nl;
 
-      // Size of the dimension which is a 4 byte quantity.
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-    }
+//       // Size of the dimension which is a 4 byte quantity.
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//     }
 
-  *os << node->dims ()[0] << ",\n";
-  // size of the dimension which is a 4 byte quantity
-  this->tc_offset_ += sizeof (ACE_CDR::ULong);
-  return 0;
-}
+//   *os << node->dims ()[0] << ",\n";
+//   // size of the dimension which is a 4 byte quantity
+//   this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//   return 0;
+// }
 
 // int
 // be_visitor_typecode_defn::gen_typecode (be_enum *node)
@@ -2623,62 +2749,62 @@ be_visitor_typecode_defn::gen_encapsulation (be_array *node)
 
 // = methods for computing typecode and encapsulation sizes
 
-ACE_CDR::Long
-be_visitor_typecode_defn::compute_tc_size (be_array *node)
-{
-  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
-  // actual encapsulation
+// ACE_CDR::Long
+// be_visitor_typecode_defn::compute_tc_size (be_array *node)
+// {
+//   // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+//   // actual encapsulation
 
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
 
-  if (node->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::compute_tc_size (array) - ")
-                         ACE_TEXT ("cannot compute encap len\n")),
-                        -1);
-    }
+//   if (node->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::compute_tc_size (array) - ")
+//                          ACE_TEXT ("cannot compute encap len\n")),
+//                         -1);
+//     }
 
-  this->computed_tc_size_ =  4 + 4 + this->computed_encap_len_;
-  return this->computed_tc_size_;
-}
+//   this->computed_tc_size_ =  4 + 4 + this->computed_encap_len_;
+//   return this->computed_tc_size_;
+// }
 
 
-ACE_CDR::Long
-be_visitor_typecode_defn::compute_encap_length (be_array *node)
-{
-  // Suppose "N" is the number of dimensions, then for a N dimensional array,
-  // we will have N encapsulations. The innermost encapsulation will hold the
-  // typecode of the real base type.
-  // Thus, we will have N byte order flags and dimensions, and N-1 tk_array
-  // enumerations, encapsulation lengths, and dimensions.
+// ACE_CDR::Long
+// be_visitor_typecode_defn::compute_encap_length (be_array *node)
+// {
+//   // Suppose "N" is the number of dimensions, then for a N dimensional array,
+//   // we will have N encapsulations. The innermost encapsulation will hold the
+//   // typecode of the real base type.
+//   // Thus, we will have N byte order flags and dimensions, and N-1 tk_array
+//   // enumerations, encapsulation lengths, and dimensions.
 
-  be_type *bt; // base type
+//   be_type *bt; // base type
 
-  bt = be_type::narrow_from_decl (node->base_type ());
+//   bt = be_type::narrow_from_decl (node->base_type ());
 
-  ACE_CDR::Long encap_len =
-    // N byte order flags and dimensions
-    node->n_dims () * (4 + 4)
-    +
-    // N-1 of tk_array and that many encapsulation lengths
-    (node->n_dims () - 1) * (4 + 4);
+//   ACE_CDR::Long encap_len =
+//     // N byte order flags and dimensions
+//     node->n_dims () * (4 + 4)
+//     +
+//     // N-1 of tk_array and that many encapsulation lengths
+//     (node->n_dims () - 1) * (4 + 4);
 
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
 
-  if (!bt || bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::compute_encap_len (array) - ")
-                         ACE_TEXT ("cannot compute tc size for base\n")),
-                        -1);
-    }
+//   if (!bt || bt->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::compute_encap_len (array) - ")
+//                          ACE_TEXT ("cannot compute tc size for base\n")),
+//                         -1);
+//     }
 
-  this->computed_encap_len_ = encap_len + this->computed_tc_size_;
-  return this->computed_encap_len_;
-}
+//   this->computed_encap_len_ = encap_len + this->computed_tc_size_;
+//   return this->computed_encap_len_;
+// }
 
 // ACE_CDR::Long
 // be_visitor_typecode_defn::compute_tc_size (be_enum *node)
@@ -3643,136 +3769,136 @@ be_visitor_typecode_defn::compute_encap_length (be_array *node)
 // helpers that accomplish a common task - that of generating the repository
 // IDs and names in a TypeCode description
 
-void
-be_visitor_typecode_defn::gen_repoID (be_decl *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  int flag = 0;
+// void
+// be_visitor_typecode_defn::gen_repoID (be_decl *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream ();
+//   int flag = 0;
 
-  // check if we want to generate optimized typecodes. In such a case, there is
-  // no need to generate the repoID (unless we are an object reference or an
-  // exception in which case it is mandatory to have the repository ID)
-  // generate repoID
+//   // check if we want to generate optimized typecodes. In such a case, there is
+//   // no need to generate the repoID (unless we are an object reference or an
+//   // exception in which case it is mandatory to have the repository ID)
+//   // generate repoID
 
-  if (be_global->opt_tc ())
-    {
-      switch (node->node_type ())
-        {
-        case AST_Decl::NT_interface:
-        case AST_Decl::NT_interface_fwd:
-        case AST_Decl::NT_except:
-          flag = 0;
-          break;
-        case AST_Decl::NT_pre_defined:
-          if (!ACE_OS::strcmp (node->local_name ()->get_string (),
-                               "Object"))
-            flag = 0;
-          else
-            flag = 1;
-          break;
-        default:
-          flag = 1;
-        }
-    }
+//   if (be_global->opt_tc ())
+//     {
+//       switch (node->node_type ())
+//         {
+//         case AST_Decl::NT_interface:
+//         case AST_Decl::NT_interface_fwd:
+//         case AST_Decl::NT_except:
+//           flag = 0;
+//           break;
+//         case AST_Decl::NT_pre_defined:
+//           if (!ACE_OS::strcmp (node->local_name ()->get_string (),
+//                                "Object"))
+//             flag = 0;
+//           else
+//             flag = 1;
+//           break;
+//         default:
+//           flag = 1;
+//         }
+//     }
 
-  // @@@JP CORBA 2.3.1 states that the Repository ID must be present
-  // for interfaces, valuetypes and exceptions, as Andy has implemented
-  // above. It also states that it must be present in structs, unions,
-  // enumerations and aliases for typecodes from an interface repository
-  // or created by the ORB. We've also had requests to leave the repo
-  // ID in even in optimized typecodes, so I'll disable the
-  // optimization of this field for now.
-  flag = 0;
+//   // @@@JP CORBA 2.3.1 states that the Repository ID must be present
+//   // for interfaces, valuetypes and exceptions, as Andy has implemented
+//   // above. It also states that it must be present in structs, unions,
+//   // enumerations and aliases for typecodes from an interface repository
+//   // or created by the ORB. We've also had requests to leave the repo
+//   // ID in even in optimized typecodes, so I'll disable the
+//   // optimization of this field for now.
+//   flag = 0;
 
-  if (flag)
-    {
-      // optimized case
-      *os << "1, 0x0,";
-      *os << " // repository ID = ";
+//   if (flag)
+//     {
+//       // optimized case
+//       *os << "1, 0x0,";
+//       *os << " // repository ID = ";
 
-      // repoID generation.
-      *os << node->repoID ();
+//       // repoID generation.
+//       *os << node->repoID ();
 
-      // size of the repoID filed
-      this->tc_offset_ += (2 * sizeof (ACE_CDR::ULong));
-    }
-  else
-    {
-      // Unoptimized case.
+//       // size of the repoID filed
+//       this->tc_offset_ += (2 * sizeof (ACE_CDR::ULong));
+//     }
+//   else
+//     {
+//       // Unoptimized case.
 
-      *os << (ACE_OS::strlen (node->repoID ()) + 1)
-          << "," << be_nl;
+//       *os << (ACE_OS::strlen (node->repoID ()) + 1)
+//           << "," << be_nl;
 
-      ACE_CDR::ULong *arr, i, arrlen;
+//       ACE_CDR::ULong *arr, i, arrlen;
 
-      (void) this->tc_name2long (node->repoID (), arr, arrlen);
+//       (void) this->tc_name2long (node->repoID (), arr, arrlen);
 
-      for (i = 0; i < arrlen; i++)
-        {
-          os->print ("ACE_NTOHL (0x%x), ", arr[i]);
+//       for (i = 0; i < arrlen; i++)
+//         {
+//           os->print ("ACE_NTOHL (0x%x), ", arr[i]);
 
-          if (i < arrlen - 1)
-            {
-              *os << be_nl;
-            }
-        }
+//           if (i < arrlen - 1)
+//             {
+//               *os << be_nl;
+//             }
+//         }
 
-      // Comment.
-      *os << " // repository ID = " << node->repoID ();
+//       // Comment.
+//       *os << " // repository ID = " << node->repoID ();
 
-      // size of the repoID field
-      this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
-    }
-  *os << be_nl;
+//       // size of the repoID field
+//       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
+//     }
+//   *os << be_nl;
 
-  return;
-}
+//   return;
+// }
 
-void
-be_visitor_typecode_defn::gen_name (be_decl *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
+// void
+// be_visitor_typecode_defn::gen_name (be_decl *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream ();
 
-  // @@ AMI code generation should be done for this optimized
-  //    case. (Alex).
+//   // @@ AMI code generation should be done for this optimized
+//   //    case. (Alex).
 
-  // Generate name.
-  if (be_global->opt_tc ())
-    {
-      *os << "1, 0x0,";
-      *os << " // name = " << node->original_local_name ();
-      // size of the name field
-      this->tc_offset_ += (2 * sizeof (ACE_CDR::ULong));
-    }
-  else
-    {
-      ACE_CDR::ULong *arr, i, arrlen;
+//   // Generate name.
+//   if (be_global->opt_tc ())
+//     {
+//       *os << "1, 0x0,";
+//       *os << " // name = " << node->original_local_name ();
+//       // size of the name field
+//       this->tc_offset_ += (2 * sizeof (ACE_CDR::ULong));
+//     }
+//   else
+//     {
+//       ACE_CDR::ULong *arr, i, arrlen;
 
-      *os << (ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1)
-          << "," << be_nl;
+//       *os << (ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1)
+//           << "," << be_nl;
 
-      (void) this->tc_name2long (node->original_local_name ()->get_string (),
-                                 arr,
-                                 arrlen);
+//       (void) this->tc_name2long (node->original_local_name ()->get_string (),
+//                                  arr,
+//                                  arrlen);
 
-      for (i = 0; i < arrlen; i++)
-        {
-          os->print ("ACE_NTOHL (0x%x), ", arr[i]);
+//       for (i = 0; i < arrlen; i++)
+//         {
+//           os->print ("ACE_NTOHL (0x%x), ", arr[i]);
 
-          if (i < arrlen - 1)
-            {
-              *os << be_nl;
-            }
-        }
+//           if (i < arrlen - 1)
+//             {
+//               *os << be_nl;
+//             }
+//         }
 
-      *os << " // name = " << node->original_local_name ();
+//       *os << " // name = " << node->original_local_name ();
 
-      // size of the name field.
-      this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
-    }
-  *os << be_nl;
-  return;
-}
+//       // size of the name field.
+//       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
+//     }
+//   *os << be_nl;
+//   return;
+// }
 
 // return the length in bytes to hold the repoID inside a typecode. This
 // comprises 4 bytes indicating the length of the string followed by the actual
@@ -3856,32 +3982,32 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
 // }
 
 // converts a string name into an array of 4 byte longs
-int
-be_visitor_typecode_defn::tc_name2long (const char *name,
-                                        ACE_CDR::ULong *&larr,
-                                        ACE_CDR::ULong &arrlen)
-{
-  const int bytes_per_word = sizeof (ACE_CDR::ULong);
-  static ACE_CDR::ULong buf [NAMEBUFSIZE];
-  size_t slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
+// int
+// be_visitor_typecode_defn::tc_name2long (const char *name,
+//                                         ACE_CDR::ULong *&larr,
+//                                         ACE_CDR::ULong &arrlen)
+// {
+//   const int bytes_per_word = sizeof (ACE_CDR::ULong);
+//   static ACE_CDR::ULong buf [NAMEBUFSIZE];
+//   size_t slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
 
-  // compute the number of bytes necessary to hold the name rounded to
-  // the next multiple of 4 (i.e., size of long)
-  arrlen =
-    static_cast<ACE_CDR::ULong> (slen / bytes_per_word
-                                 + (slen % bytes_per_word ? 1 : 0));
+//   // compute the number of bytes necessary to hold the name rounded to
+//   // the next multiple of 4 (i.e., size of long)
+//   arrlen =
+//     static_cast<ACE_CDR::ULong> (slen / bytes_per_word
+//                                  + (slen % bytes_per_word ? 1 : 0));
 
-  ACE_OS::memset (buf, 0, sizeof (buf));
-  larr = buf;
-  ACE_OS::memcpy (buf, name, slen);
+//   ACE_OS::memset (buf, 0, sizeof (buf));
+//   larr = buf;
+//   ACE_OS::memcpy (buf, name, slen);
 
-  for (size_t i = 0; i < arrlen; i++)
-    {
-      larr [i] = ACE_HTONL (larr [i]);
-    }
+//   for (size_t i = 0; i < arrlen; i++)
+//     {
+//       larr [i] = ACE_HTONL (larr [i]);
+//     }
 
-  return 0;
-}
+//   return 0;
+// }
 
 // post processing
 int

@@ -45,7 +45,10 @@ namespace TAO
 
   private:
 
-    /// Generate structure field related TypeCode code.
+    /// Generate valuetype field TypeCode declarations, if necessary.
+    int gen_member_typecodes (be_valuetype * node);
+
+    /// Generate valuetype field related TypeCode code.
     int visit_members (be_valuetype * node);
 
   };
