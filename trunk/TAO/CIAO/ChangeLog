@@ -1,7 +1,15 @@
+Thu Nov  4 09:31:29 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/Update_Plan.cpp:
+
+          Made changes to fix some build warnings.
+          Thanks to Chad Elliot <elliott_c@ociweb.com> for reporting
+          this warning.
+
 Wed Nov  3 16:32:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecutorMappingGenerator.cpp:
-        
+
           Added generation of newline before each operation
           parameter so each one will be on a separate line.
           It was discovered that the VC 7.1 lexer truncates lines
@@ -9,7 +17,7 @@ Wed Nov  3 16:32:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov  3 22:32:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+	* CIDLC/ServantSourceGenerator.cpp (namespace):
 
 	  VC6 error fixes. Grr...!
 

@@ -306,6 +306,7 @@ namespace CIAO
                                       InstanceDeploymentDescription
                                       &instance)
   {
+    int plan_arti_len;
     int arti_len;
     CORBA::ULong new_art_length;
     CORBA::ULong deps_len = pack_iad.dependsOn.length ();
@@ -313,7 +314,6 @@ namespace CIAO
       {
         ACE_TString dep_name =
           (const char*)pack_iad.dependsOn[g].name;
-        int arti_len;
 
         if (ref_map.find (dep_name, arti_len) == 0)
           {
@@ -331,7 +331,7 @@ namespace CIAO
             ImplementationArtifactDescription
               depends_iad = pack_iad.dependsOn[g].
               referencedArtifact;
-            if (plan_ref_map.find (dep_name, arti_len) != 0)
+            if (plan_ref_map.find (dep_name, plan_arti_len) != 0)
               {
                 new_art_length = plan.artifact.length ();
                 plan.artifact.length (new_art_length + 1);
@@ -352,7 +352,7 @@ namespace CIAO
               }
             else
               {
-                new_art_length = arti_len;
+                new_art_length = plan_arti_len;
                 ref_map.bind (
                               (const char*)plan.artifact[new_art_length].name,
                               new_art_length);
