@@ -1,3 +1,14 @@
+Mon Oct  8 11:15:21 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
+
+	* ace/RB_Tree.h (class ACE_RB_Tree_Node): 
+	* ace/RB_Tree.i: 
+
+	  Changed access privilege on the operator new/delete to be
+	  public, and added assertion in those method implementation to
+	  make sure that wrong use of these method are promptly notified.
+	  This changes should fix the problem that some compiling were
+	  still having with RB_Trees. 
+		
 Sat Oct 06 23:06:41 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
