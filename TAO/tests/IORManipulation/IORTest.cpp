@@ -21,10 +21,10 @@
 
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
-#include "tao/IORManipulation.h"
+#include "tao/IORManipulation/IORC.h"
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
-#include "tao/IORManipulation.h"
+
 
 ACE_RCSID(IORManipluation, IORTest, "$Id$")
 
@@ -263,13 +263,13 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
     }
-  ACE_CATCH (TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList, userex)
+  ACE_CATCH (TAO_IOP::EmptyProfileList, userex)
     {
       ACE_PRINT_EXCEPTION (userex,
                            "Unexpected EmptyProfileList Exception!\n");
       return -1;
     }
-  ACE_CATCH (TAO_IOP::TAO_IOR_Manipulation::NotFound, userex)
+  ACE_CATCH (TAO_IOP::NotFound, userex)
     {
       if (Status == 1)
         {
@@ -292,13 +292,13 @@ main (int argc, char *argv[])
           return -1;
         }
     }
-  ACE_CATCH (TAO_IOP::TAO_IOR_Manipulation::Duplicate, userex)
+  ACE_CATCH (TAO_IOP::Duplicate, userex)
     {
       ACE_PRINT_EXCEPTION (userex,
                            "Unexpected Duplicate Exception!\n");
       return -1;
     }
-  ACE_CATCH (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR, userex)
+  ACE_CATCH (TAO_IOP::Invalid_IOR, userex)
     {
       ACE_PRINT_EXCEPTION (userex,
                            "Unexpected Invalid_IOR Exception!\n");
