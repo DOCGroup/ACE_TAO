@@ -1,3 +1,17 @@
+Fri Feb 18 13:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/server.cpp:
+          Initialise pointer with 0
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/PMB_With_Fragments.mpc:
+          Use taoserver as base project
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/Payload_Receiver.h:
+          Removed not neede _MSC_VER check
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/Payload_Receiver.cpp:
+          Corrected rcsid
+
 Fri Feb 18 12:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Connections.mpc:
