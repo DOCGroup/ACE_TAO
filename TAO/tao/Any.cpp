@@ -174,6 +174,7 @@ CORBA::Any::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+// Deprecated by the OMG.
 const void *
 CORBA::Any::value (void) const
 {
