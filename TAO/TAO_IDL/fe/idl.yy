@@ -991,11 +991,11 @@ shift_expr
 	: add_expr
 	| shift_expr IDL_LEFT_SHIFT add_expr
 	{
-	  $$ = idl_global->gen()->create_expr(AST_Expression::EC_right,$1,$3);
+	  $$ = idl_global->gen()->create_expr(AST_Expression::EC_left,$1,$3);
 	}
 	| shift_expr IDL_RIGHT_SHIFT add_expr
 	{
-	  $$ = idl_global->gen()->create_expr(AST_Expression::EC_left,$1,$3);
+	  $$ = idl_global->gen()->create_expr(AST_Expression::EC_right,$1,$3);
 	}
 	;
 
