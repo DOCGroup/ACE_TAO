@@ -43,10 +43,6 @@ ifeq ($(runtime),1)
 EVENT_LATENCY_CONFIG_OBJS=Event_Latency_Scheduler_Runtime.o
 endif # runtime
 
-ifeq ($(probe),1)
-    CCFLAGS += -DACE_ENABLE_TIMEPROBES
-endif # probe
-
 Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
