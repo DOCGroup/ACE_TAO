@@ -1,3 +1,24 @@
+Wed Jun 19 14:25:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp (handle_socket_events): Couple of small
+	  fixes. The fixes are for 
+
+	  1. Bug http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1231
+	  and it is self-explanatory
+
+	  2. The find () operation after dispatch was not holding the lock
+	  and chances of race are high. This is documented as #2 in 
+  	  bug http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1233
+
+	  Added some comments in the code explaining what is going
+	  on. Thanks to Carlos for identifying the problem.
+
+	* ace/Event_Handler.h: Added a enum to indicate the two states
+	  returnable by the call resume_handler (). 
+	  
+	* ace/Event_Handler.cpp (resume_handler): Instead of returning 0,
+	  returned ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER. 
+
 Wed Jun 19 13:42:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/tests.dsw (Project): Added TP_Reactor_Test.dsp to the

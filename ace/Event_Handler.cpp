@@ -140,7 +140,7 @@ ACE_Event_Handler::resume_handler (void)
 
   // Return a default value and allow the reactor to take care of
   // resuming the handler
-  return 0;
+  return ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER;
 }
 
 
@@ -201,9 +201,9 @@ ACE_Event_Handler::read_adapter (void *args)
 
 int
 ACE_Event_Handler::register_stdin_handler (ACE_Event_Handler *eh,
-					   ACE_Reactor *reactor,
-					   ACE_Thread_Manager *thr_mgr,
-					   int flags)
+                                           ACE_Reactor *reactor,
+                                           ACE_Thread_Manager *thr_mgr,
+                                           int flags)
 {
 #if defined (ACE_WIN32) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (reactor);
@@ -222,7 +222,7 @@ ACE_Event_Handler::register_stdin_handler (ACE_Event_Handler *eh,
 
 int
 ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
-					 ACE_Thread_Manager *thr_mgr)
+                                         ACE_Thread_Manager *thr_mgr)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (reactor);
@@ -246,7 +246,7 @@ ACE_Notification_Buffer::ACE_Notification_Buffer (void)
 }
 
 ACE_Notification_Buffer::ACE_Notification_Buffer (ACE_Event_Handler *eh,
-						  ACE_Reactor_Mask mask)
+                                                  ACE_Reactor_Mask mask)
   : eh_ (eh),
     mask_ (mask)
 {
