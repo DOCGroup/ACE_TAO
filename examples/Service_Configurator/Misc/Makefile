@@ -20,7 +20,7 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 LDLIBS 	= -lTimer
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
+LIBS   += $(ACELIB)
 
 BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
 
