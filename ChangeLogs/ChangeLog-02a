@@ -1,3 +1,9 @@
+Sun Dec  9 08:54:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Message_Queue_T.i (dequeue): Call dequeue_head() rather than
+	  queue_.dequeue() to get the proper type enforcement.  Thanks to
+	  Bill Fulton <Bill_A_Fulton@raytheon.com> for contributing this fix.
+
 Sat Dec  8 17:07:01 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/fuzz.pl (check_for_missing_rir_env):
