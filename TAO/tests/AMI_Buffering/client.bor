@@ -36,4 +36,4 @@ IDLDIR = .
 #
 
 $(IDLDIR)\TestS.cpp $(IDLDIR)\TestC.cpp: $(IDLDIR)\Test.idl
-	$(TAO_IDL) $**
+	$(TAO_IDL) -GC $**
