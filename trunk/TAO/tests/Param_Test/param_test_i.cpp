@@ -96,6 +96,24 @@ Param_Test_i::test_unbounded_string (const char *s1,
   return retstr;
 }
 
+// test bounded strings. For return and out types, we return duplicates of
+// the in string. For the inout, we append the same string to itself and send
+// it back
+char *
+Param_Test_i::test_bounded_string (const char *s1,
+				   char *&s2,
+				   CORBA::String_out s3,
+				   CORBA::Environment &)
+{
+  char *retstr = CORBA::string_dup (s1);
+  s3 = CORBA::string_dup (s1);
+  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
+  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
+  CORBA::string_free (s2);
+  s2 = tmp;
+  return retstr;
+}
+
 // test for fixed structures. Just copy the in parameter into all the others
 Param_Test::Fixed_Struct
 Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,

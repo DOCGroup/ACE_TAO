@@ -42,7 +42,13 @@ Generator::gen_long (void)
 char *
 Generator::gen_string (void)
 {
-  CORBA::ULong len = (CORBA::ULong) (::ACE_OS::rand () % TEST_BUFSIZE);
+  return gen_string (TEST_BUFSIZE);
+}
+
+char *
+Generator::gen_string (int max_length)
+{
+  CORBA::ULong len = (CORBA::ULong) (::ACE_OS::rand () % max_length);
   char *buf = CORBA::string_alloc (len);
   CORBA::ULong i = 0;
 

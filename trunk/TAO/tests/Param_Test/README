@@ -52,6 +52,7 @@ To run the client, type
 
        short                for shorts
        ubstring             for unbounded string
+       bdstring             for bounded string
        fixed_struct         for fixed sized structs
        strseq         	    for sequences of strings
        bounded_strseq       for bounded sequences of strings

@@ -233,11 +233,7 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
       ACE_Message_Block mb (input.length ());
       mb.wr_ptr (input.length ());
-      TAO_Unbounded_Sequence<CORBA::Octet>* tmp =
-        new TAO_Unbounded_Sequence<CORBA::Octet> (&mb);
-      // @@ TODO this is a temporary hack until the IDL compiler
-      // generates the constructor taking a Message_Block.
-      output = (Cubit::octet_seq*)tmp;
+      output = new Cubit::octet_seq (input.length (),  &mb);
 #else
       output = new Cubit::octet_seq (input.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */

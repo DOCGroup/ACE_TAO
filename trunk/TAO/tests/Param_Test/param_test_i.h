@@ -70,6 +70,12 @@ public:
                                        CORBA::Environment &env);
   // test for unbounded strings
 
+  virtual char *test_bounded_string (const char *s1,
+				     char *&s2,
+				     CORBA::String_out s3,
+				     CORBA::Environment &env);
+  // test for bounded strings
+
   virtual Param_Test::Fixed_Struct
   test_fixed_struct (const Param_Test::Fixed_Struct &s1,
                      Param_Test::Fixed_Struct &s2,

@@ -1,3 +1,32 @@
+Fri Jun 26 16:57:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/encode.cpp: 
+	  Check the length of a string before encoding.
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	* tao/CDR.cpp: 
+	  Added operations to write strings with known lengths
+
+	* tests/Param_Test/Makefile: 
+	* tests/Param_Test/README: 
+	* tests/Param_Test/tests.h: 
+	* tests/Param_Test/bd_string.h: 
+	* tests/Param_Test/bd_string.cpp: 
+	* tests/Param_Test/driver.cpp: 
+	* tests/Param_Test/helper.h: 
+	* tests/Param_Test/helper.cpp: 
+	* tests/Param_Test/options.h: 
+	* tests/Param_Test/options.cpp: 
+	* tests/Param_Test/param_test.idl: 
+	* tests/Param_Test/param_test_i.h: 
+	* tests/Param_Test/param_test_i.cpp: 
+	  Added a test for bounded strings.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	  Use the TAO extensions to create an octet sequence using a
+	  message block.
+
 Fri Jun 26 16:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/README: Added information about the 

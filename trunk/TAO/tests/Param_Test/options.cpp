@@ -97,6 +97,8 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_SHORT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "ubstring"))
           this->test_type_ = Options::TEST_UNBOUNDED_STRING;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "bdstring"))
+          this->test_type_ = Options::TEST_BOUNDED_STRING;
         else if (!ACE_OS::strcmp (get_opts.optarg, "fixed_struct"))
           this->test_type_ = Options::TEST_FIXED_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "strseq"))

@@ -438,14 +438,14 @@ TAO_OutputCDR::write_array (const void* x,
 }
 
 CORBA_Boolean
-TAO_OutputCDR::write_string (const CORBA::Char *x)
+TAO_OutputCDR::write_string (CORBA::ULong len,
+			     const CORBA::Char *x)
 {
-  if (x != 0)
+  if (len != 0)
     {
-      CORBA::ULong len = ACE_OS::strlen (x) + 1;
-      if (this->write_ulong (len))
+      if (this->write_ulong (len + 1))
         {
-          return this->write_char_array (x, len);
+          return this->write_char_array (x, len + 1);
         }
     }
   else
@@ -463,14 +463,14 @@ TAO_OutputCDR::write_string (const CORBA::Char *x)
 }
 
 CORBA_Boolean
-TAO_OutputCDR::write_wstring (const CORBA::WChar *x)
+TAO_OutputCDR::write_wstring (CORBA::ULong len,
+			      const CORBA::WChar *x)
 {
   if (x != 0)
     {
-      CORBA::ULong len = ACE_OS::wslen (x) + 1;
-      if (this->write_ulong (len))
+      if (this->write_ulong (len + 1))
         {
-          return this->write_wchar_array (x, len);
+          return this->write_wchar_array (x, len + 1);
         }
     }
   else
