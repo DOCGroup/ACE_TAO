@@ -6,28 +6,28 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    longlong.h
+//    ulonglong.h
 //
 // = DESCRIPTION
-//     Tests 64bit longs
+//     Tests 64bit unsigned longs.
 //
 // = AUTHORS
 //      Aniruddha Gokhale
 //
 // ============================================================================
 
-#if !defined (PARAM_TEST_LONGLONG_H)
-#define PARAM_TEST_LONGLONG_H
+#if !defined (PARAM_TEST_ULONGLONG_H)
+#define PARAM_TEST_ULONGLONG_H
 
 #include "param_testC.h"
 
-class Test_LongLong
+class Test_ULongLong
 {
 public:
-  Test_LongLong (void);
+  Test_ULongLong (void);
   // ctor
 
-  ~Test_LongLong (void);
+  ~Test_ULongLong (void);
   // dtor
 
   int run_sii_test (Param_Test_ptr objref,
@@ -61,17 +61,17 @@ private:
   char *opname_;
   // operation name
 
-  CORBA::LongLong in_;
+  CORBA::ULongLong in_;
   // in parameter
 
-  CORBA::LongLong inout_;
+  CORBA::ULongLong inout_;
   // inout parameter
 
-  CORBA::LongLong out_;
+  CORBA::ULongLong out_;
   // out parameter
 
-  CORBA::LongLong ret_;
+  CORBA::ULongLong ret_;
   // return value
 };
 
-#endif /* PARAM_TEST_LONGLONG_H */
+#endif /* PARAM_TEST_ULONGLONG_H */

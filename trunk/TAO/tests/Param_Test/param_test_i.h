@@ -14,7 +14,7 @@
 // ============================================================================
 
 #if !defined (PARAM_TEST_I_H)
-#define	PARAM_TEST_I_H
+#define PARAM_TEST_I_H
 
 #include "param_testS.h"
 
@@ -64,11 +64,11 @@ public:
                                    CORBA::Environment &env);
   // test for shorts
 
-  virtual CORBA::LongLong test_longlong (CORBA::LongLong s1,
-					 CORBA::LongLong &s2,
-					 CORBA::LongLong_out s3,
-					 CORBA::Environment &env);
-  // test for long long
+  virtual CORBA::ULongLong test_ulonglong (CORBA::ULongLong s1,
+                                           CORBA::ULongLong &s2,
+                                           CORBA::ULongLong_out s3,
+                                           CORBA::Environment &env);
+  // test for unsigned long long
 
   virtual char *test_unbounded_string (const char *s1,
                                        char *&s2,
@@ -77,9 +77,9 @@ public:
   // test for unbounded strings
 
   virtual char *test_bounded_string (const char *s1,
-				     char *&s2,
-				     CORBA::String_out s3,
-				     CORBA::Environment &env);
+                                     char *&s2,
+                                     CORBA::String_out s3,
+                                     CORBA::Environment &env);
   // test for bounded strings
 
   virtual Param_Test::Fixed_Struct
@@ -103,13 +103,13 @@ public:
       CORBA::Environment &env
      );
   virtual Param_Test::Short_Seq * test_short_sequence (
-	  const Param_Test::Short_Seq & s1,
+          const Param_Test::Short_Seq & s1,
       Param_Test::Short_Seq & s2,
       Param_Test::Short_Seq_out s3,
       CORBA::Environment &env
      );
   virtual Param_Test::Bounded_Short_Seq * test_bounded_short_sequence (
-	  const Param_Test::Bounded_Short_Seq & s1,
+          const Param_Test::Bounded_Short_Seq & s1,
       Param_Test::Bounded_Short_Seq & s2,
       Param_Test::Bounded_Short_Seq_out s3,
       CORBA::Environment &env
@@ -151,11 +151,11 @@ public:
       CORBA::Environment &env
      );
   virtual Param_Test::AnySeq * test_anyseq (
-	  const Param_Test::AnySeq & s1,
-	  Param_Test::AnySeq & s2,
-	  Param_Test::AnySeq_out s3,
-	  CORBA::Environment &env
-	  );
+          const Param_Test::AnySeq & s1,
+          Param_Test::AnySeq & s2,
+          Param_Test::AnySeq_out s3,
+          CORBA::Environment &env
+          );
   // = End of sequences tests....
 
   virtual Param_Test::Var_Struct *
