@@ -21,8 +21,8 @@ do
   shift
 done
 
-// we echo out "(%x)", the return value from g++, so the script processes the output
-// will only use times for successful compilations, i.e., "(0)". 
+# echo out "(%x)", the return value from g++, so the script processes the output
+#  will only use times for successful compilations, i.e., "(0)". 
 /usr/bin/time -f "//compile time(%x): ${PWD#$ACE_ROOT/}/${target} %U %S" g++ $commandline
 
 retval=$?
