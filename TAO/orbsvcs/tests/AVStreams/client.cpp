@@ -259,12 +259,10 @@ Client::property_tester (CORBA::Environment &env)
       this->test_get_all_property_names (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-#if 0
       // Testing delete property.
       this->test_delete_property ("string_property",TAO_TRY_ENV);
       TAO_CHECK_ENV;
-#endif /* 0 */ 
-
+      
       // Testing get_properties.
       this->test_get_properties (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -400,7 +398,6 @@ Client::test_define_property (CORBA::Environment &env)
       env.clear ();
     }
   
-#if 0
   // Prepare a String and "define" that in the PropertySet.
    ACE_DEBUG ((LM_DEBUG,
                "Main: Any holding String\n"));
@@ -417,7 +414,6 @@ Client::test_define_property (CORBA::Environment &env)
                                      anyval,
                                      env);
   TAO_CHECK_ENV_RETURN (env, 1);
-#endif /* 0 */
   
   return 0;
 }
@@ -548,15 +544,20 @@ Client::test_delete_property (CORBA::String property_name,
                               CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG, "\nDeleting %s\n",property_name));
-
-  TAO_TRY
+  
+  TAO_TRY 
     {
       this->remote_mmdevice_->delete_property (property_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
-  TAO_CATCHANY
+  TAO_CATCH (CORBA::UserException, ex)
     {
       TAO_TRY_ENV.print_exception ("User exception");
+      return -1;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Not an user exception");
       return -1;
     }
   TAO_ENDTRY;
