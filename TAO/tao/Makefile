@@ -288,6 +288,15 @@ ifeq ($(LYNXTARGET),ppc)
 	$(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
 endif # LYNXTARGET == ppc
 
+ifeq (1,$(debug))
+  ifeq (i386-nto-g++,$(findstring i386-nto-g++,$(CXX)))
+  #### CDR_Interpreter.cpp must be compiled without -g for QNX Neutrino/i386.
+  .obj/CDR_Interpreter.o .obj/CDR_Interpreter.so .shobj/CDR_Interpreter.o .shobj/CDR_Interpreter.so: CDR_Interpreter.cpp
+	@echo NOTE: compiling CDR_Interpreter.cpp without -g, see Makefile.
+	$(subst $(DCFLAGS) ,,$(COMPILE.cc)) -o $@ $<
+  endif # i386-nto-g++
+endif # debug
+
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 LDFLAGS += $(RLDFLAGS)
 
