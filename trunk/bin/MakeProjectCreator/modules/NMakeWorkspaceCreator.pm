@@ -67,13 +67,7 @@ sub write_project_targets {
     ## to figure out how to get back to our starting point
     if ($dir ne '.') {
       $chdir = 1;
-      my($count)  = 0;
-      my($length) = length($dir);
-      for(my $i = 0; $i < $length; $i++) {
-        if (substr($dir, $i, 1) eq '/') {
-          $count++;
-        }
-      }
+      my($count) = ($dir =~ tr/\///);
       if ($dir =~ /^\.\.\//) {
         $back = ('../' x $count) . basename($self->getcwd());
       }

@@ -76,7 +76,7 @@ sub cd {
        }
     }
     else {
-      if ($dir =~ /^\// || $dir =~ /^[A-Za-z]:/) {
+      if ($dir =~ /^(\/|[a-z]:)/i) {
         $cwd = $dir;
       }
       else {
@@ -108,10 +108,10 @@ sub strip_line {
 
 
 sub preprocess_line {
-  my($self) = shift;
-  my($fh)   = shift;
-  my($line) = shift;
-  return $self->strip_line($line);
+  #my($self) = shift;
+  #my($fh)   = shift;
+  #my($line) = shift;
+  return $_[0]->strip_line($_[2]);
 }
 
 
@@ -120,7 +120,7 @@ sub read_file {
   my($input)       = shift;
   my($ih)          = new FileHandle();
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
 
   $self->{'line_number'} = 0;
   if (open($ih, $input)) {
