@@ -1,3 +1,10 @@
+Wed Mar 17 10:46:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Message_Block.i (space): Moved ACE_Message_Block::space()
+	after inline declarations of ACE_Message_Block::end() and
+	ACE_Message_Block::wr_ptr() to prevent "used before it was declared
+	inline"	warnings on end() and wr_ptr().
+
 Wed Mar 17 10:24:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (argv_to_string): initialized temp to 0 to avoid warnings
