@@ -24,10 +24,10 @@
 
 #include "PG_ObjectGroup_Map.h"
 #include "PG_Location_Map.h"
-#include "PG_Object_Group_Manipulator.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"
+
 
 /// Forward declarations
 class TAO_PG_GenericFactory;
@@ -50,7 +50,7 @@ public:
   TAO_PG_ObjectGroupManager (void);
 
   /// Destructor.
-  virtual ~TAO_PG_ObjectGroupManager (void);
+  ~TAO_PG_ObjectGroupManager (void);
 
   /**
    * @name PortableGroup::ObjectGroupManager methods
@@ -139,19 +139,6 @@ public:
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
 
-  /**
-   * TAO-specific extension.
-   * Return the ObjectGroup reference for the given ObjectGroupId.
-   */
-   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-        PortableGroup::ObjectGroupId group_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::ObjectGroupNotFound
-      ));
-
   //@}
 
   /// TAO-specific member addition method.
@@ -172,36 +159,30 @@ public:
                      PortableGroup::MemberAlreadyPresent,
                      PortableGroup::NoFactory));
 
-  /// Create object an empty object.
+  /// Create object group hash map entry that represents an actual
+  /// ObjectGroup.
   /**
    * @note This method is used mainly by the
    *       GenericFactory::create_object() method.
    */
   PortableGroup::ObjectGroup_ptr create_object_group (
+    CORBA::ULong group_id,
+    const PortableServer::ObjectId &oid,
     const char * type_id,
-    const char * domain_id,
-    const PortableGroup::Criteria & the_criteria,
-    PortableGroup::ObjectGroupId & group_id
+    const PortableGroup::Criteria & the_criteria
     ACE_ENV_ARG_DECL);
 
-  /// Destroy the object group corresponding to the given ObjectGroupId.
+  /// Destroy the object group corresponding to the given ObjectId.
   /**
    * @note This method is used mainly by the
    *       GenericFactory::delete_object() method.
    */
-  void destroy_object_group (const PortableGroup::ObjectGroupId group_id
+  void destroy_object_group (const PortableServer::ObjectId & oid
                              ACE_ENV_ARG_DECL);
 
   /// Return the properties set when the object group was created, and
   /// the dynamic properties that may have overridden them.
   PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
-
-  /// Return the dynamic properties for the given group.
-  PortableGroup::Properties * get_dynamic_properties (
       PortableGroup::ObjectGroup_ptr object_group
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -217,7 +198,7 @@ public:
    *         group corresponding to the given ObjectId exists.
    */
   PortableGroup::ObjectGroup_ptr object_group (
-      const PortableGroup::ObjectGroupId ogid);
+    const PortableServer::ObjectId & oid);
 
   /// Return the number of members in the given object group.
   CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group
@@ -225,8 +206,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
-  /// Initializes the group manager.
-  int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr p);
+  /// Set the POA to use when converting object group references to
+  /// ObjectIds.
+  void poa (PortableServer::POA_ptr p);
 
   /// Set the pointer to the GenericFactory associated with this
   /// ObjectGroupManager.
@@ -283,26 +265,10 @@ protected:
     CORBA::Object_ptr member
     ACE_ENV_ARG_DECL);
 
-  /**
-   * Allocate an ogid for a new object group
-   */
-  void allocate_ogid (PortableGroup::ObjectGroupId & ogid);
-
-  /**
-   * convert numeric OGID to Sequence<Octet> oid
-   */
-  PortableServer::ObjectId * convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid);
-
 private:
-
-  /// The orb
-  CORBA::ORB_var orb_;
 
   /// Reference to the POA that created the object group references.
   PortableServer::POA_var poa_;
-
-  /// The ObjectGroup Manipulation object
-  TAO::PG_Object_Group_Manipulator manipulator_;
 
   /// The underlying table that contains all object group
   /// information.
@@ -320,6 +286,7 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
 };
+
 
 #include /**/ "ace/post.h"
 

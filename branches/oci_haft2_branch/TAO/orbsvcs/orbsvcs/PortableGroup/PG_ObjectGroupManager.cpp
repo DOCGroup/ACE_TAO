@@ -2,7 +2,6 @@
 #include "PG_GenericFactory.h"
 #include "PG_conf.h"
 #include "PG_Operators.h"
-#include "PG_Utils.h"
 
 #include "tao/debug.h"
 
@@ -20,8 +19,6 @@ TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
     location_map_ (TAO_PG_MAX_LOCATIONS),
     generic_factory_ (0),
     lock_ ()
-//   , lock_ogid_ (),
-//    next_ogid_ (1)   // don't use ogid 0
 {
 }
 
@@ -471,54 +468,22 @@ TAO_PG_ObjectGroupManager::get_member_ref (
                     CORBA::Object::_nil ());
 }
 
-PortableGroup::ObjectGroup_ptr
-TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
-        PortableGroup::ObjectGroupId group_id
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::ObjectGroupNotFound
-      ))
-{
-  //@@ If we change the PG's concept of ObjectGroupId from
-  // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can
-  // just call TAO_PG_ObjectGroupManager::object_group() here.
-
-  TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      guard,
-                      this->lock_,
-                      PortableGroup::ObjectGroup::_nil ());
-
-    if (this->object_group_map_.find (group_id, group_entry) != 0)
-      ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
-                        PortableGroup::ObjectGroup::_nil ());
-  }
-
-  if (group_entry == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      PortableGroup::ObjectGroup::_nil ());
-
-  return
-    PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
-}
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
+  CORBA::ULong group_id,
+  const PortableServer::ObjectId &oid,
   const char * type_id,
-  const char * domain_id,
-  const PortableGroup::Criteria & the_criteria,
-    PortableGroup::ObjectGroupId & group_id
+  const PortableGroup::Criteria & the_criteria
   ACE_ENV_ARG_DECL)
 {
-  CORBA::Object_var object_group = manipulator_.create_object_group (
-    type_id,
-    domain_id,
-    group_id
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
+  // Create a reference for the ObjectGroup corresponding to the
+  // RepositoryId of the object being created.
+  CORBA::Object_var object_group =
+    this->poa_->create_reference_with_id (oid,
+                                          type_id
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   ACE_NEW_THROW_EX (group_entry,
@@ -542,18 +507,19 @@ TAO_PG_ObjectGroupManager::create_object_group (
 
   CORBA::ULong len = the_criteria.length ();
   group_entry->properties.length (len);
-
   for (CORBA::ULong i = 0; i < len; ++i)
     group_entry->properties[i] = the_criteria[i];
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    guard,
-                    this->lock_,
-                    0);
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->lock_,
+                      0);
 
-  if (this->object_group_map_.bind (group_id, group_entry) != 0)
-    ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
-                      PortableGroup::ObjectGroup::_nil ());
+    if (this->object_group_map_.bind (oid, group_entry) != 0)
+      ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
+                        PortableGroup::ObjectGroup::_nil ());
+  }
 
   (void) safe_group_entry.release ();
 
@@ -562,13 +528,13 @@ TAO_PG_ObjectGroupManager::create_object_group (
 
 void
 TAO_PG_ObjectGroupManager::destroy_object_group (
-  const PortableGroup::ObjectGroupId group_id
+  const PortableServer::ObjectId & oid
   ACE_ENV_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
-  if (this->object_group_map_.unbind (group_id, group_entry) != 0)
+  if (this->object_group_map_.unbind (oid, group_entry) != 0)
     ACE_THROW (PortableGroup::ObjectNotFound ());
 
   delete group_entry;
@@ -593,7 +559,7 @@ TAO_PG_ObjectGroupManager::type_id (
 }
 
 PortableGroup::ObjectGroup_ptr
-TAO_PG_ObjectGroupManager::object_group (const PortableGroup::ObjectGroupId ogid)
+TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -601,7 +567,7 @@ TAO_PG_ObjectGroupManager::object_group (const PortableGroup::ObjectGroupId ogid
                     PortableGroup::ObjectGroup::_nil ());
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
-  if (this->object_group_map_.find (ogid, group_entry) == 0)
+  if (this->object_group_map_.find (oid, group_entry) == 0)
     return
       PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
   else
@@ -628,21 +594,13 @@ TAO_PG_ObjectGroupManager::member_count (
   return ACE_static_cast (CORBA::ULong, group_entry->member_infos.size ());
 }
 
-int
-TAO_PG_ObjectGroupManager::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+void
+TAO_PG_ObjectGroupManager::poa (PortableServer::POA_ptr p)
 {
-  ACE_ASSERT (CORBA::is_nil (this->orb_.in ()));
-  ACE_ASSERT (CORBA::is_nil (this->poa_.in ()));
-  this->orb_ = CORBA::ORB::_duplicate (orb);
-  this->poa_ = PortableServer::POA::_duplicate (poa);
+  ACE_ASSERT (CORBA::is_nil (this->poa_.in ())
+              && !CORBA::is_nil (p));
 
-  ACE_ASSERT (! CORBA::is_nil (this->orb_.in ()));
-  ACE_ASSERT (! CORBA::is_nil (this->poa_.in ()));
-
-  manipulator_.init (orb, poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
+  this->poa_ = PortableServer::POA::_duplicate (p);
 }
 
 
@@ -682,27 +640,6 @@ TAO_PG_ObjectGroupManager::get_properties (
   return safe_properties._retn ();
 }
 
-
-PortableGroup::Properties *
-TAO_PG_ObjectGroupManager::get_dynamic_properties (
-    PortableGroup::ObjectGroup_ptr object_group
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
-{
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    guard,
-                    this->lock_,
-                    0);
-
-  TAO_PG_ObjectGroup_Map_Entry * group_entry =
-    this->get_group_entry (object_group
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  return & group_entry->properties;
-}
-
 TAO_PG_ObjectGroup_Map_Entry *
 TAO_PG_ObjectGroupManager::get_group_entry (
     CORBA::Object_ptr object_group
@@ -713,16 +650,32 @@ TAO_PG_ObjectGroupManager::get_group_entry (
   if (CORBA::is_nil (this->poa_.in ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  //   { int _TODO_replace_this_with_commemted_out_version_; }
-  // extract the group_id from the object group reference
-  PortableGroup::TagGroupTaggedComponent tc;
-  TAO::PG_Utils::get_tagged_component (object_group,
-                                       tc);
+  PortableServer::ObjectId_var oid;
+  ACE_TRY
+    {
+      oid = this->poa_->reference_to_id (object_group
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ex, "TAO_PG (%P|%t) Unexpected exception\n");
 
-  PortableGroup::ObjectGroupId group_id = tc.object_group_id;
+      ACE_TRY_THROW (CORBA::INTERNAL ());
+    }
+  ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ex, "TAO_PG (%P|%t) Unexpected exception\n");
+
+      ACE_TRY_THROW (CORBA::INTERNAL ());
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
-  if (this->object_group_map_.find (group_id, group_entry) != 0)
+  if (this->object_group_map_.find (oid.in (), group_entry) != 0)
     ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
                       0);
 
