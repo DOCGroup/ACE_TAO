@@ -150,6 +150,7 @@
 #define ACE_HAS_TIMOD_H
 #define ACE_HAS_TIUSER_H
 #define ACE_HAS_TLI
+#define ACE_HAS_BROKEN_T_ERROR
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_TLI_TCP_DEVICE  "/dev/xti/tcp"
 
