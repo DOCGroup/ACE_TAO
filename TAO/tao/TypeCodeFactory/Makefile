@@ -194,8 +194,7 @@ realclean: clean
   TypeCodeFactoryC.h $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
-  $(TAO_ROOT)/tao/Object.i \
-  TypeCodeFactoryC.inl \
+  $(TAO_ROOT)/tao/Object.i TypeCodeFactoryC.inl \
   $(TAO_ROOT)/tao/Sequence_T.h \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
@@ -343,8 +342,7 @@ realclean: clean
   TypeCodeFactoryC.h $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
-  $(TAO_ROOT)/tao/Object.i \
-  TypeCodeFactoryC.inl \
+  $(TAO_ROOT)/tao/Object.i TypeCodeFactoryC.inl \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
@@ -645,8 +643,7 @@ realclean: clean
   TypeCodeFactoryC.h $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
-  $(TAO_ROOT)/tao/Object.i \
-  TypeCodeFactoryC.inl \
+  $(TAO_ROOT)/tao/Object.i TypeCodeFactoryC.inl \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
@@ -902,8 +899,8 @@ realclean: clean
   TypeCodeFactoryC.h $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
-  $(TAO_ROOT)/tao/Object.i \
-  TypeCodeFactoryC.inl TypeCodeFactory_i.h \
+  $(TAO_ROOT)/tao/Object.i TypeCodeFactoryC.inl \
+  TypeCodeFactory_i.h \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i
 
