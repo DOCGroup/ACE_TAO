@@ -18,8 +18,6 @@
 //
 // ============================================================================
 
-//#include	"idl.h"
-//#include	"idl_extern.h"
 #include	"be.h"
 
 #include "be_visitor_sequence.h"
@@ -60,6 +58,8 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
         }
     }
 
+// May not need variable 'pt at all
+#if 0
   // generate the class name
   be_type  *pt; // base types
 
@@ -71,7 +71,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   }
   else
     pt = bt;
-
+#endif /* 0 */
 
   const char * class_name = node->instance_name ();
 
