@@ -30,7 +30,7 @@ main (int argc, char *argv[])
       CORBA::Object_var obj
         = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
+/*
       Benchmark::RoundTripClientHome_var home
         = Benchmark::RoundTripClientHome::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
@@ -42,7 +42,9 @@ main (int argc, char *argv[])
       Benchmark::RoundTripClient_var test
         = home->create (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
+*/
+      Benchmark::RoundTripClient_var test = 
+	      Benchmark::RoundTripClient::_narrow(obj.in());
       //Get the RoundTrip reference
       Benchmark::Controller_var trigger = test->provide_controller ();
 

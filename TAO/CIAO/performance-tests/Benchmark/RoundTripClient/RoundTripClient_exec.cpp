@@ -6,7 +6,6 @@
 
 #include "RoundTripClient_exec.h"
 
-
 const int niterations = 100000; //Default no of iterations
 //=================================================================
 
