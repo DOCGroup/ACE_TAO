@@ -104,7 +104,7 @@ main (int, char *[])
   siglistset(x, sigset) ;
 
   // Now testing out of bound signal
-  if (ACE_OS::sigismember (&x, NSIG) > 0) {
+  if (ACE_OS::sigismember (&x, NSIG) >= 0) {
     ACE_ERROR((LM_ERROR, "Platform doesn't check for valid signal number.\n"));
     status = 1;
   }
