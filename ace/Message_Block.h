@@ -123,8 +123,13 @@ public:
   /// Create an empty message.
   ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
 
-  /// Create an <ACE_Message_Block> that owns the <ACE_Data_Block> *.
+  /// Create an <ACE_Message_Block> that owns the <ACE_Data_Block> *
+  /// without copying it. If the <flags> is set to DONT_DELETE we
+  /// own't delete the ACE_Data_Block. It is left to the client's
+  /// responsibility to take care of the memory allocated for the
+  /// data_block
   ACE_Message_Block (ACE_Data_Block *,
+                     Message_Flags flags = 0,
                      ACE_Allocator *message_block_allocator = 0);
 
   /**
@@ -242,6 +247,23 @@ public:
   /// Get the current message flags.
   Message_Flags flags (void) const;
 
+  // = Data Block flag accessors and mutators.
+  /// Bitwise-or the <more_flags> into the existing message flags and
+  /// return the new value.
+  /* @todo: I think the following set of methods could not be used at
+   *  all. May be they are useless. Let us have it so that we dont
+   *  mess up memory management of the Message_Block. Somebody correct
+   *  me if I am totally totally wrong..
+   */
+  Message_Flags set_self_flags (ACE_Message_Block::Message_Flags more_flags);
+
+  /// Clear the message flag bits specified in <less_flags> and return
+  /// the new value.
+  Message_Flags clr_self_flags (ACE_Message_Block::Message_Flags less_flags);
+
+  /// Get the current message flags.
+  Message_Flags self_flags (void) const;
+
   /// Get priority of the message.
   u_long msg_priority (void) const;
 
@@ -311,6 +333,7 @@ public:
    */
   static ACE_Message_Block *release (ACE_Message_Block *mb);
 
+
   // = Operations on Message data
 
   /**
@@ -334,7 +357,7 @@ public:
   /// Normalizes data in the top-level <Message_Block> to align with the base,
   /// i.e., it "shifts" the data pointed to by <rd_ptr> down to the <base> and
   /// then readjusts <rt_ptr> to point to <base> and <wr_ptr> to point
-  /// to <base> + the length of the moved data.  
+  /// to <base> + the length of the moved data.
   void crunch (void);
 
   /// Resets the Message Block data to contain nothing, i.e., sets the
@@ -542,6 +565,9 @@ protected:
   /// Pointer to previous message in the list.
   ACE_Message_Block *prev_;
 
+  /// Misc flags (e.g., DONT_DELETE and USER_FLAGS).
+  ACE_Message_Block::Message_Flags flags_;
+
   /// Pointer to the reference counted data structure that contains the
   /// actual memory buffer.
   ACE_Data_Block *data_block_;
@@ -709,7 +735,7 @@ protected:
   /// Misc flags (e.g., DONT_DELETE and USER_FLAGS).
   ACE_Message_Block::Message_Flags flags_;
 
-  /// Pointer to beginning of message payload.
+  /// Pointer To beginning of message payload.
   char *base_;
 
   // = Strategies.

@@ -481,8 +481,11 @@ public:
                 ACE_CDR::Octet minor_version =
                   ACE_CDR_GIOP_MINOR_VERSION);
 
-  /// Create an input stream from an ACE_Data_Block
+  /// Create an input stream from an ACE_Data_Block. The <flag>
+  /// indicates  whether the <data> can be deleted by the CDR stream
+  /// or not
   ACE_InputCDR (ACE_Data_Block *data,
+                ACE_Message_Block::Message_Flags flag = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version =
                   ACE_CDR_GIOP_MAJOR_VERSION,
@@ -494,8 +497,9 @@ public:
   /// helpful if the applications desires to create a new CDR stream
   /// from a semi-processed datablock.
   ACE_InputCDR (ACE_Data_Block *data,
-                size_t read_pointer_position,
-                size_t write_pointer_position,
+                ACE_Message_Block::Message_Flags flag = 0,
+                size_t read_pointer_position = 0,
+                size_t write_pointer_position = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version =
                   ACE_CDR_GIOP_MAJOR_VERSION,
