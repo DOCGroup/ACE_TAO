@@ -1,3 +1,12 @@
+Fri Oct  8 18:16:18 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp (run):
+	  Removed code to destroy poa to avoid double deletion,
+	  since TAO_ORB_Manager does it for us in its destructor.  Thanks
+	  to Martin Krumpolec <krumpo@pobox.sk> for reporting the problem,
+	  and to Irfan for helping me realize that I fixed this problem
+	  long time ago but never committed the fix.
+
 Fri Oct 08 12:05:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Messaging_Policy_i.h (SyncScopePolicy): Added
