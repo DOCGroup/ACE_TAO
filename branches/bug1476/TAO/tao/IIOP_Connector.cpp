@@ -208,6 +208,10 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
             this->active_connect_strategy_->wait (svc_handler,
                                                   &zero);
 
+// testing, now it always returns a not connected transport, comment out the
+// wait above
+//          result = 1;
+
           if (TAO_debug_level > 2)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -246,53 +250,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       // failed because of some other error.  It is easy to deal with
       // (a) and (b).  (c) is tricky since the connection is still
       // pending and may get completed by some other thread.  The
-      // following code deals with (c).
-// move this to a separate method??, something like check_connection_closure()
-// can this then not be in the base, generic for all different connector types?
-// that can also be called then from tranport_connector::connect()
-// we need the connection handler and the connector
+      // following method deals with (c).
       this->check_connection_closure (svc_handler, result);
-/*      // Check if the handler has been closed.
-      int closed =
-        svc_handler->is_closed ();
-
-      // In case of failures and close() has not be called.
-      if (result == -1 && !closed)
-        {
-          // First, cancel from connector.
-          this->base_connector_.cancel (svc_handler);
-
-          // Double check to make sure the handler has not been closed
-          // yet.  This double check is required to ensure that the
-          // connection handler was not closed yet by some other
-          // thread since it was still registered with the connector.
-          // Once connector.cancel() has been processed, we are
-          // assured that the connector will no longer open/close this
-          // handler.
-          closed = svc_handler->is_closed ();
-
-          // If closed, there is nothing to do here.  If not closed,
-          // it was either opened or is still pending.
-          if (!closed)
-            {
-              // Check if the handler has been opened.
-              const int open = svc_handler->is_open ();
-
-              // Some other thread was able to open the handler even
-              // though wait failed for this thread.
-              if (open)
-                // Overwrite <result>.
-                result = 0;
-              else
-                {
-                  // Assert that it is still connecting.
-                  ACE_ASSERT (svc_handler->is_connecting ());
-
-                  // Force close the handler now.
-                  svc_handler->close ();
-                }
-            }
-        }*/
     }
 
   // Irrespective of success or failure, remove the extra #REFCOUNT#.
@@ -353,29 +312,28 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // If the wait strategy wants us to be registered with the reactor
   // then we do so. If registeration is required and it succeeds,
   // #REFCOUNT# becomes two.
-// this also gives problems when we do it on a not connected trasnport
-// maybe move this to the connection_handler::open()??? the assumption that we
-// are always connected here is not correct.
   if (transport->is_connected())
-    retval = transport->wait_strategy ()->register_handler ();
-
-  // Registration failures.
-  if (retval != 0)
     {
-      // Purge from the connection cache.
-      transport->purge_entry ();
+      retval = transport->wait_strategy ()->register_handler ();
 
-      // Close the handler.
-      svc_handler->close ();
-
-      if (TAO_debug_level > 0)
+      // Registration failures.
+      if (retval != 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                      "could not register the new connection in the reactor\n"));
-        }
+          // Purge from the connection cache.
+          transport->purge_entry ();
 
-      return 0;
+          // Close the handler.
+          svc_handler->close ();
+
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                          "could not register the new connection in the reactor\n"));
+            }
+
+          return 0;
+        }
     }
 
   return transport;

@@ -1,3 +1,10 @@
+Wed Jul 20 14:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp (make_connection):
+          Removed commented out code and only check for registration errors
+          when we are calling the register_handler().
+
+Wed Jul 20 11:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.cpp:
           Changed some remarks, some are not valid, some need some more
