@@ -504,6 +504,10 @@ Clerk_i::init (int argc,
       this->argc_ = argc;
       this->argv_ = argv;
 
+	  // Set the size of the Server IOR Array.
+      this->server_.max_size (10);
+      this->server_.size (0);
+
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
       this->orb_manager_.init (argc,
@@ -538,10 +542,6 @@ Clerk_i::init (int argc,
           // Initialize the Naming Service.
           if (this->init_naming_service (TAO_TRY_ENV) !=0 )
             return -1;
-
-          // Set the size of the Server IOR Array.
-          this->server_.max_size (10);
-          this->server_.size (0);
 
           // Get a reference to the Server Naming context and the
           // first IOR.
