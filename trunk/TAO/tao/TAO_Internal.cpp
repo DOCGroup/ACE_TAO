@@ -99,6 +99,28 @@ TAO_Internal::open_services (int &argc, char **argv)
                 arg_shifter.get_the_parameter ("-ORBSvcConf")))
         {
           // Specify the name of the svc.conf file to be used.
+
+          // Proceeds only if the configuration file exists.
+          FILE* conf_file;
+          if ((conf_file = ACE_OS::fopen (current_arg, "r")) == 0)
+            {
+              // Assigning EINVAL to errno to make an exception thrown.
+              // calling code does not throw an exception if the errno
+              // is set to ENOENT for some reason.
+              errno = EINVAL;
+
+              ACE_ERROR_RETURN ((LM_ERROR, 
+                                 ACE_TEXT ("TAO (%P|%t) Service Configurator ")
+                                 ACE_TEXT ("unable to open file %s\n"), 
+                                           current_arg),
+                                -1);
+                          
+            }
+          else
+            {
+              ACE_OS::fclose (conf_file);
+            }
+
           svc_config_argv.add ("-f");
 
           svc_config_argv.add (current_arg);
