@@ -396,10 +396,129 @@ to Graham for providing the OSE tools!<p>
 
 <h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
   Design Rules</h3>
-<ul>
-  <li>If you are parameterizing a searchable container template class
-      with readers/writer locks, do not use sentinels.<p>
-</ul><p>
+<dl>
+  <dt><strong>Initialization on first use is preferred over using static
+      initializations, especially when creating OO class
+      libraries.</strong>  <i>I.e.</i>, use Double Check Locking.
+  <dd>This is a well known problem among OO C++ class designers.  See
+      <em>Designing and Coding Reusable C++</em> by Caroll and Ellis,
+      for example.
+
+  <dt>If you are parameterizing a searchable container template class
+      with readers/writer locks, do not use sentinels or any state
+      that requires updating during a a search.
+  <dd>...
+
+  <dt>In multi-threaded objects, all methods should be re-entrant.
+
+  <dt>Framework users should always use wrappers instead of directly
+      making system calls.
+  <dd>...
+
+  <dt>Always guard against multiple inclusion of header files.
+
+  <dt>Templates may require source.  Hence, source files may need to
+      be guarded against multiple inclusion too.
+  <dt>Template classes should not be mixed with non-template classes.
+
+  <dt>Guard against quirky compiler implementations through #define
+      abstractions (whereever possible).
+
+  <dt>Use consistent error-handling.
+
+  <dt>Abstract away different representations of handles / file
+      descriptors.
+
+  <dt>Avoid the use of global functions.
+
+  <dt>If functions are required, place them within a namespace or
+      nested in a class.
+
+  <dt>Avoid polluting the namespace.
+
+  <dt>Don't use the inline keyword directly.
+
+  <dt>Separate inline code into their own implementation files.
+      <i>I.e.</i> do not write code in header files.
+
+  <dt>(Internationalization) Do not use the char type directly.
+      Abstract it for wide characters.  Thus, do not assume your
+      character abstraction is a single byte.
+
+  <dt>Don't use conditional compilation based on compiler/OS/hardware
+      platform, but upon available features.
+
+  <dt>Centralize portability #ifdefs in a single place to ease
+      portability maintainence.
+
+  <dt>Either check or return all return values (from framework
+      calls).
+
+  <dt>Apply strategy pattern to factor out common sources of variation
+      in a component.
+
+  <dt>Use traits to merge multiple template arguments.
+
+  <dt>Allow customization of memory allocation.
+
+  <dt>Instrument framework methods to allow for run-time tracing.
+
+  <dt>Avoid long chains of dereference operators.
+
+  <dt>Use open() methods rather than constructors.
+
+  <dt>Instrument a dump() method in every object.
+
+  <dt>Qualify references to base class methods and data.  <i>I.e.</i>,
+      anything outside the scope of the class.
+
+  <dt>Guard against multiple open() and close() calls, for
+      idempotency.
+
+  <dt>The state of an object does not need to be guarded in
+      destructors.
+
+  <dt>Base classes should not store information about derived
+      classes.
+
+  <dt>Don't make static objects whose correctness depends on
+      constructors being called.  (That is, if 0 initialization is not
+      sufficient.)
+
+  <dt>Guarantee singleton destruction.  <i>E.g.</i>, provide
+      hooks that allow singletons to be deleted before the process
+      exits.
+
+  <dt>All uses of the placement new operator must be accompanied by a
+      corresponding explicit destructor call.
+
+  <dt>In classes that require locking, have public methods acquire the
+      locks and call protected/private methods that do not acquire the
+      locks.
+
+  <dt>Try to minimize the number of template parameters passed to a
+      base class.  Try to have a base class that is not a template,
+      from which specialized classes can be derived that may have
+      template parameters.
+
+  <dt>Define wrappers around clusters of functionality that are
+      semantically the same but may have accidental
+      incompatibilities.  <i>E.g.</i>, semaphores, readers/writer
+      locks, mutex + condition variables, which can be used by
+      threads, processes, that may or may not reside on the same
+      machine.
+
+  <dt>Define generic components that can be parameterized by the
+      wrappers defined above (in the previous point).
+
+  <dt>Separate creation from use.  <i>E.g.</i>, acceptor/connector and
+      service handler.
+
+  <dt>In searchable containers, separate traversal logic from item
+      operations.
+
+  <dt>...
+</dl><p>
 
 <h3><a href="http://www.cs.wustl.edu/~levine/CVS.html">CVS</a>
   Usage Guidelines</h3>
@@ -410,7 +529,7 @@ to Graham for providing the OSE tools!<p>
 
 <hr>
 <!-- hhmts start -->
-Last modified: Tue Dec  2 09:54:01 CST 1997
+Last modified: Fri Dec  5 17:25:30 CST 1997
 <!-- hhmts end -->
 
 </body>
