@@ -10,7 +10,7 @@ Wed Apr 28 13:00:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           - Improved the dump() method.
           - Release all resources in the remove()
           - Changed the constructor not to allocate unnecessary resource
-            (thread mutex) in case process shared mutext is requested
+            (thread mutex) in case process shared mutex is requested
             *and* supported
           Change from Martin Corino <mcorino@remedy.nl>
 
