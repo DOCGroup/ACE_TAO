@@ -80,7 +80,7 @@ template class ACE_Framework_Component_T<ACE_DLL_Singleton_T<FWCT_DLL_Singleton_
                                          ACE_SYNCH_MUTEX >
 #pragma instantiate ACE_Framework_Component_T<ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T<Simple_Service>,
                                                ACE_SYNCH_MUTEX> >;
-#elif defined (__GNUC__) && defined (_AIX)
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
 
 template ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
                              ACE_SYNCH_MUTEX> *
