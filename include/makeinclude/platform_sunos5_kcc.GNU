@@ -6,35 +6,66 @@
 debug = 1
 distrib = 0
 threads = 1
+exceptions = 1
 
 ifeq ($(threads),1)
   CFLAGS += --thread_safe
   LDFLAGS += --thread_safe
+  ARFLAGS = --thread_safe
+else
+  ARFLAGS =
+  CCFLAGS += -DACE_HAS_THREADS=0
 endif # threads
 
 CC              = KCC
 CXX             = KCC
 
-DCFLAGS         += -g
+DCFLAGS         += +K0 -g
 DLD             = $(CXX)
-
-ifneq ($exceptions,0)
-  CCFLAGS += --exceptions
-endif # ! exceptions
-
 LD              = $(CXX)
 
-LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
+ifdef exceptions
+  ifneq ($exceptions,0)
+    CCFLAGS += --exceptions
+  endif # ! exceptions
+else
+  CCFLAGS   += --no_exceptions
+  LDFLAGS   += --no_exceptions
+endif
 
-MATHLIB	        = -lm
 
-CPPFLAGS	+= $(CFLAGS)
-OCFLAGS         += +K3
-PIC             = -KPIC
-AR              = ar
-ARFLAGS         = -xar -o
-RANLIB          = echo
-SOFLAGS         = -G $(CPPFLAGS)
+
+LIBS        += -Bdynamic -lsocket -lnsl -lgen -ldl -lposix4
+MATHLIB	     = -lm
+CPPFLAGS    += $(CFLAGS)
+OCFLAGS     += +K3 -o
+PIC          = -KPIC
+AR           = KCC
+ARFLAGS     += -Bstatic -o
+RANLIB       = echo
+SOFLAGS      = -G $(CPPFLAGS)
+
+
+ifdef static_libs_only
+  ifneq ($(static_libs_only),0)
+    static_libs=1
+  endif
+endif
+# Kind of a hack since LDFLAGS is used for both non-static
+# library generation and binary generation.  LD is only used for
+# binary generation.
+ifneq ($(static_libs),0)
+  CCFLAGS   += --one_instantiation_per_object
+  LD        += -Bstatic
+  #
+  # If we want static libs, we must put -Bstatic it at the end of
+  # the library list.  This insures that the KCC libraries
+  # are linked in statically.
+  #
+  LIBS      += -Bstatic
+endif
+
+
 
 #### Create template repository to avoid compiler warning.
 TEMPLATE_REPOSITORY = Templates.DB
