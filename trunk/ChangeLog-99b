@@ -1,3 +1,11 @@
+Fri Jan 15 10:47:26 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Service_Repository.cpp: If a service being removed from the
+ 	  Service_Repository used the Service_Repository while being
+ 	  removed it could access objects that had already been deleted.
+  	  Fix this by decrementing the current_size_ member in
+ 	  "real-time".  Thanks to Eric Newton for reporting this.
+
 Fri Jan 15 08:08:31 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.15 released.
