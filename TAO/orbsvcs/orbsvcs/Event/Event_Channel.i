@@ -6,7 +6,7 @@ const unsigned int ACE_INT2BIT[32] =
   1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192,
   16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152,
   4194304, 8388608, 16777216, 33554432, 67108864, 134217728,
-  268435456, 536870912, 1073741824, 2147483648,
+  268435456, 536870912, 1073741824, 2147483648u,
 };
 
 // **************************************************
@@ -119,7 +119,7 @@ ACE_ES_Supplier_Module::get_ref (void)
 
 // **************************************************
 
-ACE_INLINE RtecEventChannelAdmin::EventChannel_ptr 
+ACE_INLINE RtecEventChannelAdmin::EventChannel_ptr
 ACE_EventChannel::get_ref (void)
 {
   CORBA::Environment env;
@@ -127,7 +127,7 @@ ACE_EventChannel::get_ref (void)
 }
 
 ACE_INLINE RtecEventChannelAdmin::SupplierAdmin_ptr
-ACE_EventChannel::for_suppliers (CORBA::Environment &) 
+ACE_EventChannel::for_suppliers (CORBA::Environment &)
 {
   return supplier_module_->get_ref ();
 }
@@ -354,7 +354,7 @@ ACE_ES_Consumer_Rep::suspend (void)
   suspended_ = 1;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_ES_Consumer_Rep::resume (void)
 {
   suspended_ = 0;
@@ -397,7 +397,7 @@ ACE_ES_Consumer_Rep::disconnect (void)
 ACE_INLINE int
 ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
 					 ACE_ES_Event_Container *event)
-{  
+{
   ACE_TIMEPROBE ("  enter ACE_ES_Subscription_Module::push");
   // If there are now source-based subscribers for this supplier,
   // return.
@@ -569,7 +569,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
 	   iter.advance ())
 	{
 	  if (set->remove (*consumer) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p remove failed.\n", 
+	    ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
 			"ACE_ES_Subscription_Module::push_source.\n"));
 	  else
 	    (*consumer)->_release ();
@@ -588,7 +588,7 @@ ACE_EventChannel::rtu_manager (void)
   return rtu_manager_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 ACE_RTU_Manager::ACE_RTU_Manager (int active)
   : active_ (active),
     should_preempt_ (0),
@@ -688,7 +688,7 @@ ACE_ES_Consumer_Rep_Timeout::timer_id (int id)
   timer_id_ = id;
 }
 
-ACE_INLINE RtecScheduler::OS_Priority 
+ACE_INLINE RtecScheduler::OS_Priority
 ACE_ES_Consumer_Rep_Timeout::preemption_priority (void)
 {
   return preemption_priority_;
@@ -707,17 +707,17 @@ ACE_ES_Consumer_Correlation::suspend (void)
 {
   for (int x=0; x < n_timer_reps_; x++)
     timer_reps_[x].suspend ();
-  
+
   for (int y=0; y < n_consumer_reps_; y++)
     consumer_reps_[y]->suspend ();
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_ES_Consumer_Correlation::resume (void)
 {
   for (int x=0; x < n_timer_reps_; x++)
     timer_reps_[x].resume ();
-  
+
   for (int y=0; y < n_consumer_reps_; y++)
     consumer_reps_[y]->resume ();
 }
@@ -759,7 +759,7 @@ ACE_ES_Dependency_Iterator::parse (void)
     {
       if (rt_info_ == 0)
 	rt_info_ = rep_[x].rt_info;
-	
+
       switch (rep_[x].event_.type_)
 	{
 	case ACE_ES_CONJUNCTION_DESIGNATOR:
