@@ -4550,6 +4550,18 @@ private:
   // Inherit the logging features if the parent thread has an
   // <ACE_Log_Msg>.
 
+  static ACE_INIT_LOG_MSG_HOOK init_log_msg_hook_;
+  static ACE_INHERIT_LOG_MSG_HOOK inherit_log_msg_hook_;
+  // The hooks to inherit and cleanup the Log_Msg attributes
+
+  static void set_log_msg_hooks (ACE_INIT_LOG_MSG_HOOK init_hook,
+                                 ACE_INHERIT_LOG_MSG_HOOK inherit_hook);
+  // Set the Log_Msg hooks
+
+  friend class ACE_Log_Msg;
+  // Allow the ACE_Log_Msg class to set its hooks.
+
+private:
   ACE_THR_FUNC user_func_;
   // Thread startup function passed in by the user (C++ linkage).
 
@@ -4569,28 +4581,8 @@ private:
   // until <Thread_Manager> fills in all information in thread
   // descriptor.
 
-# if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
-  ACE_OSTREAM_TYPE *ostream_;
-  // Ostream where the new TSS Log_Msg will use.
-
-  u_long priority_mask_;
-  // Priority_mask to be used in new TSS Log_Msg.
-
-  int tracing_enabled_;
-  // Are we allowing tracing in this thread?
-
-  int restart_;
-  // Indicates whether we should restart system calls that are
-  // interrupted.
-
-  int trace_depth_;
-  // Depth of the nesting for printing traces.
-
-#   if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
-  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
-#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-# endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
+  void *log_msg_attributes_;
+  // The ACE_Log_Msg attributes.
 
   friend class ACE_Thread_Adapter_Has_Private_Destructor;
   // Friend declaration to avoid compiler warning:  only defines a private

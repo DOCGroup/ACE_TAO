@@ -10789,6 +10789,15 @@ ACE_OS_Thread_Descriptor::ACE_OS_Thread_Descriptor (long flags)
 {
 }
 
+// ****************************************************************
+
+ACE_INLINE void
+ACE_Thread_Adapter::set_log_msg_hooks (ACE_INIT_LOG_MSG_HOOK init_hook,
+                                       ACE_INHERIT_LOG_MSG_HOOK inherit_hook)
+{
+  ACE_Thread_Adapter::init_log_msg_hook_ = init_hook;
+  ACE_Thread_Adapter::inherit_log_msg_hook_ = inherit_hook;
+}
 
 ACE_INLINE ACE_Thread_Manager *
 ACE_Thread_Adapter::thr_mgr (void)

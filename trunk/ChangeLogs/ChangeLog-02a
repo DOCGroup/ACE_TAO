@@ -1,3 +1,25 @@
+Mon Jun 19 11:43:43 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Decouple the Log_Msg inheritance from the ACE_OS layer: the
+          Log_Msg class registers hooks with the ACE_OS layer that are
+          invoked when a new thread is created.
+          The callback is used to first copy the state from the current
+          thread to a temporary object and then copy (in the created
+          thread) the temporary object state to the TSS Log_Msg object.
+	  The temporary holder for the Log_Msg state is allocated in the
+	  heap, and destroyed as soon as we don't need it anymore.
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+          New ACE_Log_Msg_Attributes class used as the temporary holder of
+          the Log_Msg state during thread creation.
+
+        * ace/config-all.h:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS.cpp:
+          Define the new hooks used to inherit the Log_Msg state.
+
 Mon Jun 19 12:45:45 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: removed the ACE_LACKS_PTHREAD_SIGMASK,
