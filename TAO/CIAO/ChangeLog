@@ -1,3 +1,14 @@
+Thu Apr 22 15:36:14 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handler/Config_Handlers.mpc
+        * DnC/Config_Handler/Property_Handler.cpp:
+        * DnC/Config_Handler/Property_Handler.h:
+        * DnC/Config_Handler/Requirement_Handler.h:
+        * DnC/Config_Handler/Requirement_Handler.cpp:
+        * DnC/Config_Handler/SPK_Handler.h:
+        * DnC/Config_Handler/SPK_Handler.cpp:
+          XML handlers for common elements present in schema definitions.
+
 Thu Apr 22 11:35:42 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handler/CEPE_Handler.h:
