@@ -1,3 +1,19 @@
+Tue May 21 15:03:45 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Thread_Lane_Resources.cpp (connector_registry): There was a
+	  subtle bug in this method: <connector_registry_> was being
+	  assigned to a new registry without it being opened first,
+	  resulting in other threads potentially seeing a partially
+	  initialized connector registry.  In addition, the open() on the
+	  registry was not being performed at the exact correct place.
+	  This bug led to the File_IO test failing since it uses two
+	  client threads invoking on the same server.
+
+	* tests/File_IO/client.cpp: Added the ability to set the number of
+	  iterations and the number of threads. Also validated the
+	  connection to make sure we don't get an errand transient
+	  exceptions.
+
 Sat May 18 08:46:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/ORT/ORT.dsw:
