@@ -9,10 +9,11 @@ namespace CIAO
     // 
 
     NamedImplementationArtifact::
-    NamedImplementationArtifact ()
+    NamedImplementationArtifact (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    referencedArtifact_ (new ::CIAO::Config_Handlers::ImplementationArtifactDescription ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    referencedArtifact_ (new ::CIAO::Config_Handlers::ImplementationArtifactDescription (referencedArtifact__)),
     regulator__ ()
     {
       name_->container (this);
@@ -489,14 +490,8 @@ namespace CIAO
 
     NamedImplementationArtifact::
     NamedImplementationArtifact (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    referencedArtifact_ (new ::CIAO::Config_Handlers::ImplementationArtifactDescription ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      referencedArtifact_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -507,14 +502,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "referencedArtifact")
         {
-          ::CIAO::Config_Handlers::ImplementationArtifactDescription t (e);
-          referencedArtifact (t);
+          referencedArtifact_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ImplementationArtifactDescription > (new ::CIAO::Config_Handlers::ImplementationArtifactDescription (e));
+          referencedArtifact_->container (this);
         }
 
         else 
@@ -528,9 +523,7 @@ namespace CIAO
 
     ImplementationArtifactDescription::
     ImplementationArtifactDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);

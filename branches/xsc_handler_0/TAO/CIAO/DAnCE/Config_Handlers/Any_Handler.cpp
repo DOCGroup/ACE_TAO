@@ -18,48 +18,53 @@ namespace CIAO
 
 
     void
-    Any_Handler::get_Any (CORBA::Any& toconfig,
-                          Any& desc)
-    {
+    Any_Handler::extract_into_any (const Any& desc,
+                                   CORBA::Any& toconfig)
 
+    {
       // Get the value that should be assigned to the Any.
       DataValue value =
         desc.value ();
 
       if (value.short_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::Short> (value.short_ ());
+          CORBA::Short val = value.short_ ();
+
+          toconfig <<= val;
         }
       else if (value.ushort_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::UShort> (value.ushort ());
+          CORBA::UShort val = value.ushort ();
+
+          toconfig <<= val;
         }
       else if (value.long_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::UShort> (value.long_ ());
+          CORBA::Long val = value.long_ ();
+
+          toconfig <<= val;
         }
       else if (value.ulong_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::UShort> (value.ulong ());
+          CORBA::ULong val = value.ulong ();
+
+          toconfig <<= val;
         }
       else if (value.boolean_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::Boolean> (value.boolean ());
+          CORBA::Boolean val = value.boolean ();
+
+          toconfig <<= val;
         }
       else if (value.double_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::Double> (value.double_ ());
+          CORBA::Boolean val = value.double_ ();
+          toconfig <<= val;
         }
       else if (value.float_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::Float> (value.float_ ());
+          CORBA::Float val = value.float_ ();
+          toconfig <<= val;
         }
       else if (value.string_p ())
         {
@@ -68,20 +73,22 @@ namespace CIAO
         }
       else if (value.octet_p ())
         {
+          CORBA::Octet val = value.octet ();
+
           toconfig <<=
-            CORBA::Any::from_octet (static_cast<CORBA::Octet> (value.octet ()));
+            CORBA::Any::from_octet (val);
         }
       else if (value.longlong_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::LongLong> (value.longlong ());
+          CORBA::LongLong val = value.longlong ();
+
+          toconfig <<= val;
         }
       else if (value.ulonglong_p ())
         {
-          toconfig <<=
-            static_cast <CORBA::ULongLong> (value.ulonglong ());
+          CORBA::ULongLong val = value.ulonglong ();
+          toconfig <<=val;
         }
-        
     }
   }
 }

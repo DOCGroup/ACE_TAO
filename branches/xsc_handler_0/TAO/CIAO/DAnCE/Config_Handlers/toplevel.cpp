@@ -105,9 +105,7 @@ namespace CIAO
 
     TopLevelPackageDescription::
     TopLevelPackageDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);

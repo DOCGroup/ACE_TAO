@@ -109,6 +109,7 @@ namespace CIAO
 
       public:
       PackageConfiguration ();
+
       PackageConfiguration (::XSCRT::XML::Element< char > const&);
       PackageConfiguration (PackageConfiguration const& s);
 

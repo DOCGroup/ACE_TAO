@@ -9,10 +9,11 @@ namespace CIAO
     // 
 
     SubcomponentInstantiationDescription::
-    SubcomponentInstantiationDescription ()
+    SubcomponentInstantiationDescription (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::ComponentPackageDescription const& package__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    package_ (new ::CIAO::Config_Handlers::ComponentPackageDescription ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    package_ (new ::CIAO::Config_Handlers::ComponentPackageDescription (package__)),
     regulator__ ()
     {
       name_->container (this);
@@ -246,10 +247,11 @@ namespace CIAO
     // 
 
     SubcomponentPropertyReference::
-    SubcomponentPropertyReference ()
+    SubcomponentPropertyReference (::XMLSchema::string< char > const& propertyName__,
+    ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance__)
     :
-    propertyName_ (new ::XMLSchema::string< char > ()),
-    instance_ (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription ()),
+    propertyName_ (new ::XMLSchema::string< char > (propertyName__)),
+    instance_ (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (instance__)),
     regulator__ ()
     {
       propertyName_->container (this);
@@ -323,11 +325,13 @@ namespace CIAO
     // 
 
     AssemblyPropertyMapping::
-    AssemblyPropertyMapping ()
+    AssemblyPropertyMapping (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& externalName__,
+    ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    externalName_ (new ::XMLSchema::string< char > ()),
-    delegatesTo_ (new ::CIAO::Config_Handlers::SubcomponentPropertyReference ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    externalName_ (new ::XMLSchema::string< char > (externalName__)),
+    delegatesTo_ (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (delegatesTo__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1225,14 +1229,8 @@ namespace CIAO
 
     SubcomponentInstantiationDescription::
     SubcomponentInstantiationDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    package_ (new ::CIAO::Config_Handlers::ComponentPackageDescription ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      package_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -1243,14 +1241,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "package")
         {
-          ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
-          package (t);
+          package_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > (new ::CIAO::Config_Handlers::ComponentPackageDescription (e));
+          package_->container (this);
         }
 
         else if (n == "configProperty")
@@ -1297,14 +1295,8 @@ namespace CIAO
 
     SubcomponentPropertyReference::
     SubcomponentPropertyReference (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    propertyName_ (new ::XMLSchema::string< char > ()),
-    instance_ (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      propertyName_->container (this);
-      instance_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -1315,14 +1307,14 @@ namespace CIAO
 
         if (n == "propertyName")
         {
-          ::XMLSchema::string< char > t (e);
-          propertyName (t);
+          propertyName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          propertyName_->container (this);
         }
 
         else if (n == "instance")
         {
-          ::CIAO::Config_Handlers::SubcomponentInstantiationDescription t (e);
-          instance (t);
+          instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (e));
+          instance_->container (this);
         }
 
         else 
@@ -1336,16 +1328,8 @@ namespace CIAO
 
     AssemblyPropertyMapping::
     AssemblyPropertyMapping (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    externalName_ (new ::XMLSchema::string< char > ()),
-    delegatesTo_ (new ::CIAO::Config_Handlers::SubcomponentPropertyReference ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      externalName_->container (this);
-      delegatesTo_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -1356,20 +1340,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "externalName")
         {
-          ::XMLSchema::string< char > t (e);
-          externalName (t);
+          externalName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          externalName_->container (this);
         }
 
         else if (n == "delegatesTo")
         {
-          ::CIAO::Config_Handlers::SubcomponentPropertyReference t (e);
-          delegatesTo (t);
+          delegatesTo_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SubcomponentPropertyReference > (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (e));
+          delegatesTo_->container (this);
         }
 
         else 
@@ -1383,9 +1367,7 @@ namespace CIAO
 
     ComponentAssemblyDescription::
     ComponentAssemblyDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -1424,9 +1406,7 @@ namespace CIAO
 
     MonolithicImplementationDescription::
     MonolithicImplementationDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -1465,9 +1445,7 @@ namespace CIAO
 
     ComponentImplementationDescription::
     ComponentImplementationDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);

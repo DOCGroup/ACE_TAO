@@ -320,9 +320,7 @@ namespace CIAO
 
     PackageConfiguration::
     PackageConfiguration (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);

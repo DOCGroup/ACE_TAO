@@ -54,7 +54,6 @@ namespace CIAO
     class TCKind : public ::XSCRT::Type
     {
       public:
-      TCKind ();
       TCKind (::XSCRT::XML::Element< char > const&);
       TCKind (::XSCRT::XML::Attribute< char > const&);
 
@@ -171,6 +170,7 @@ namespace CIAO
 
       public:
       DataType ();
+
       DataType (::XSCRT::XML::Element< char > const&);
       DataType (DataType const& s);
 
@@ -364,6 +364,7 @@ namespace CIAO
 
       public:
       DataValue ();
+
       DataValue (::XSCRT::XML::Element< char > const&);
       DataValue (DataValue const& s);
 
@@ -400,7 +401,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::DataValue > value_;
 
       public:
-      Any ();
+      Any (::CIAO::Config_Handlers::DataType const& type__,
+      ::CIAO::Config_Handlers::DataValue const& value__);
+
       Any (::XSCRT::XML::Element< char > const&);
       Any (Any const& s);
 
@@ -437,7 +440,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Any > value_;
 
       public:
-      Property ();
+      Property (::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::Any const& value__);
+
       Property (::XSCRT::XML::Element< char > const&);
       Property (Property const& s);
 
@@ -474,7 +479,9 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       public:
-      Node ();
+      Node (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& label__);
+
       Node (::XSCRT::XML::Element< char > const&);
       Node (Node const& s);
 
@@ -488,7 +495,6 @@ namespace CIAO
     class SatisfierPropertyKind : public ::XSCRT::Type
     {
       public:
-      SatisfierPropertyKind ();
       SatisfierPropertyKind (::XSCRT::XML::Element< char > const&);
       SatisfierPropertyKind (::XSCRT::XML::Attribute< char > const&);
 
@@ -561,7 +567,10 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Any > value_;
 
       public:
-      SatisfierProperty ();
+      SatisfierProperty (::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind__,
+      ::CIAO::Config_Handlers::Any const& value__);
+
       SatisfierProperty (::XSCRT::XML::Element< char > const&);
       SatisfierProperty (SatisfierProperty const& s);
 
@@ -608,7 +617,10 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > property_;
 
       public:
-      Resource ();
+      Resource (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& resourceType__,
+      ::CIAO::Config_Handlers::SatisfierProperty const& property__);
+
       Resource (::XSCRT::XML::Element< char > const&);
       Resource (Resource const& s);
 
@@ -665,7 +677,11 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > property_;
 
       public:
-      SharedResource ();
+      SharedResource (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& resourceType__,
+      ::CIAO::Config_Handlers::Node const& node__,
+      ::CIAO::Config_Handlers::SatisfierProperty const& property__);
+
       SharedResource (::XSCRT::XML::Element< char > const&);
       SharedResource (SharedResource const& s);
 
@@ -712,7 +728,10 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > property_;
 
       public:
-      Requirement ();
+      Requirement (::XMLSchema::string< char > const& resourceType__,
+      ::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::Property const& property__);
+
       Requirement (::XSCRT::XML::Element< char > const&);
       Requirement (Requirement const& s);
 
@@ -759,7 +778,10 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Any > resourceValue_;
 
       public:
-      ResourceDeploymentDescription ();
+      ResourceDeploymentDescription (::XMLSchema::string< char > const& requirementName__,
+      ::XMLSchema::string< char > const& resourceName__,
+      ::CIAO::Config_Handlers::Any const& resourceValue__);
+
       ResourceDeploymentDescription (::XSCRT::XML::Element< char > const&);
       ResourceDeploymentDescription (ResourceDeploymentDescription const& s);
 
@@ -865,7 +887,9 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::ID< char > > id_;
 
       public:
-      ArtifactDeploymentDescription ();
+      ArtifactDeploymentDescription (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& source__);
+
       ArtifactDeploymentDescription (::XSCRT::XML::Element< char > const&);
       ArtifactDeploymentDescription (ArtifactDeploymentDescription const& s);
 
@@ -949,7 +973,9 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::ID< char > > id_;
 
       public:
-      MonolithicDeploymentDescription ();
+      MonolithicDeploymentDescription (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& source__);
+
       MonolithicDeploymentDescription (::XSCRT::XML::Element< char > const&);
       MonolithicDeploymentDescription (MonolithicDeploymentDescription const& s);
 
@@ -963,7 +989,6 @@ namespace CIAO
     class ResourceUsageKind : public ::XSCRT::Type
     {
       public:
-      ResourceUsageKind ();
       ResourceUsageKind (::XSCRT::XML::Element< char > const&);
       ResourceUsageKind (::XSCRT::XML::Attribute< char > const&);
 
@@ -1044,7 +1069,11 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Any > resourceValue_;
 
       public:
-      InstanceResourceDeploymentDescription ();
+      InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
+      ::XMLSchema::string< char > const& requirementName__,
+      ::XMLSchema::string< char > const& resourceName__,
+      ::CIAO::Config_Handlers::Any const& resourceValue__);
+
       InstanceResourceDeploymentDescription (::XSCRT::XML::Element< char > const&);
       InstanceResourceDeploymentDescription (InstanceResourceDeploymentDescription const& s);
 
@@ -1145,7 +1174,11 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::ID< char > > id_;
 
       public:
-      InstanceDeploymentDescription ();
+      InstanceDeploymentDescription (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& node__,
+      ::XMLSchema::string< char > const& source__,
+      ::XMLSchema::IDREF< char > const& implementation__);
+
       InstanceDeploymentDescription (::XSCRT::XML::Element< char > const&);
       InstanceDeploymentDescription (InstanceDeploymentDescription const& s);
 
@@ -1159,7 +1192,6 @@ namespace CIAO
     class CCMComponentPortKind : public ::XSCRT::Type
     {
       public:
-      CCMComponentPortKind ();
       CCMComponentPortKind (::XSCRT::XML::Element< char > const&);
       CCMComponentPortKind (::XSCRT::XML::Attribute< char > const&);
 
@@ -1282,7 +1314,15 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > kind_;
 
       public:
-      ComponentPortDescription ();
+      ComponentPortDescription (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& specificType__,
+      ::XMLSchema::string< char > const& supportedType__,
+      ::XMLSchema::string< char > const& provider__,
+      ::XMLSchema::string< char > const& exclusiveProvider__,
+      ::XMLSchema::string< char > const& exclusiveUser__,
+      ::XMLSchema::string< char > const& optional__,
+      ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__);
+
       ComponentPortDescription (::XSCRT::XML::Element< char > const&);
       ComponentPortDescription (ComponentPortDescription const& s);
 
@@ -1319,7 +1359,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > type_;
 
       public:
-      ComponentPropertyDescription ();
+      ComponentPropertyDescription (::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::DataType const& type__);
+
       ComponentPropertyDescription (::XSCRT::XML::Element< char > const&);
       ComponentPropertyDescription (ComponentPropertyDescription const& s);
 
@@ -1346,7 +1388,8 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > portName_;
 
       public:
-      ComponentExternalPortEndpoint ();
+      ComponentExternalPortEndpoint (::XMLSchema::string< char > const& portName__);
+
       ComponentExternalPortEndpoint (::XSCRT::XML::Element< char > const&);
       ComponentExternalPortEndpoint (ComponentExternalPortEndpoint const& s);
 
@@ -1404,7 +1447,10 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::IDREF< char > > instance_;
 
       public:
-      PlanSubcomponentPortEndpoint ();
+      PlanSubcomponentPortEndpoint (::XMLSchema::string< char > const& portName__,
+      ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
+      ::XMLSchema::IDREF< char > const& instance__);
+
       PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< char > const&);
       PlanSubcomponentPortEndpoint (PlanSubcomponentPortEndpoint const& s);
 
@@ -1431,7 +1477,8 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > location_;
 
       public:
-      ExternalReferenceEndpoint ();
+      ExternalReferenceEndpoint (::XMLSchema::string< char > const& location__);
+
       ExternalReferenceEndpoint (::XSCRT::XML::Element< char > const&);
       ExternalReferenceEndpoint (ExternalReferenceEndpoint const& s);
 
@@ -1488,7 +1535,11 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Any > resourceValue_;
 
       public:
-      ConnectionResourceDeploymentDescription ();
+      ConnectionResourceDeploymentDescription (::XMLSchema::string< char > const& targetName__,
+      ::XMLSchema::string< char > const& requirementName__,
+      ::XMLSchema::string< char > const& resourceName__,
+      ::CIAO::Config_Handlers::Any const& resourceValue__);
+
       ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< char > const&);
       ConnectionResourceDeploymentDescription (ConnectionResourceDeploymentDescription const& s);
 
@@ -1590,7 +1641,8 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > deployedResource_;
 
       public:
-      PlanConnectionDescription ();
+      PlanConnectionDescription (::XMLSchema::string< char > const& name__);
+
       PlanConnectionDescription (::XSCRT::XML::Element< char > const&);
       PlanConnectionDescription (PlanConnectionDescription const& s);
 
@@ -1617,7 +1669,8 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > requiredType_;
 
       public:
-      ImplementationDependency ();
+      ImplementationDependency (::XMLSchema::string< char > const& requiredType__);
+
       ImplementationDependency (::XSCRT::XML::Element< char > const&);
       ImplementationDependency (ImplementationDependency const& s);
 
@@ -1664,7 +1717,10 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > property_;
 
       public:
-      Capability ();
+      Capability (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& resourceType__,
+      ::CIAO::Config_Handlers::SatisfierProperty const& property__);
+
       Capability (::XSCRT::XML::Element< char > const&);
       Capability (Capability const& s);
 
@@ -1741,7 +1797,13 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > property_;
 
       public:
-      ImplementationRequirement ();
+      ImplementationRequirement (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
+      ::XMLSchema::string< char > const& resourcePort__,
+      ::XMLSchema::string< char > const& componentPort__,
+      ::XMLSchema::string< char > const& resourceType__,
+      ::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::Property const& property__);
+
       ImplementationRequirement (::XSCRT::XML::Element< char > const&);
       ImplementationRequirement (ImplementationRequirement const& s);
 
@@ -1788,7 +1850,10 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > requiredType_;
 
       public:
-      ComponentPackageReference ();
+      ComponentPackageReference (::XMLSchema::string< char > const& requiredUUID__,
+      ::XMLSchema::string< char > const& requiredName__,
+      ::XMLSchema::string< char > const& requiredType__);
+
       ComponentPackageReference (::XSCRT::XML::Element< char > const&);
       ComponentPackageReference (ComponentPackageReference const& s);
 
@@ -1825,7 +1890,9 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::IDREF< char > > instance_;
 
       public:
-      SubcomponentPortEndpoint ();
+      SubcomponentPortEndpoint (::XMLSchema::string< char > const& portName__,
+      ::XMLSchema::IDREF< char > const& instance__);
+
       SubcomponentPortEndpoint (::XSCRT::XML::Element< char > const&);
       SubcomponentPortEndpoint (SubcomponentPortEndpoint const& s);
 
@@ -1905,7 +1972,8 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
 
       public:
-      AssemblyConnectionDescription ();
+      AssemblyConnectionDescription (::XMLSchema::string< char > const& name__);
+
       AssemblyConnectionDescription (::XSCRT::XML::Element< char > const&);
       AssemblyConnectionDescription (AssemblyConnectionDescription const& s);
 

@@ -44,6 +44,7 @@ namespace CIAO
 
       public:
       TopLevelPackageDescription ();
+
       TopLevelPackageDescription (::XSCRT::XML::Element< char > const&);
       TopLevelPackageDescription (TopLevelPackageDescription const& s);
 
