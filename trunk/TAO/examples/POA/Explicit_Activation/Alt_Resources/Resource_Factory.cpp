@@ -6,6 +6,7 @@
 ACE_Reactor_Impl *
 My_Resource_Factory::allocate_reactor_impl (void) const
 {
+  errno = 0;
   ACE_DEBUG ((LM_DEBUG,
               "Using alternate reactor\n"));
 
