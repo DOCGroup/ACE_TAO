@@ -141,24 +141,133 @@ DRV_parse_args(long ac, char **av)
 
   DRV_cpp_init();
   idl_global->set_prog_name(av[0]);
-  for (i = 1; i < ac; i++) {
+  for (i = 1; i < ac; i++)
+    {
     if (av[i][0] == '-') {
       switch (av[i][1]) {
       case 0:
 	DRV_push_file("standard input");
 	break;
       case 'A':
-	if (av[i][2] == '\0') {
-	  if (i < ac - 1) {
-	    i++;
-	    s = av[i];
-	  } else
+	if (av[i][2] == '\0')
+          {
+            if (i < ac - 1) {
+              i++;
+              s = av[i];
+            } else
 	    exit(99);
 	} else
 	  s = av[i] + 2;
 	strcat(idl_global->local_escapes(), s);
 	strcat(idl_global->local_escapes(), " ");
 	break;
+       
+        // = File name endings for all the IDL generated header files,
+        //   stub files, skeleton files and inline files. 
+
+        // = Various 'h'eader_file_name_endings.
+      case 'h':
+        
+        // <-hc Client's header file name ending> 
+        //      Default is "C.h".
+        // <-hs Server's header file name ending>
+        //       Default is "S.h".
+        // <-hT Server's template hdr file name ending>
+        //       Default is "S_T.h".
+
+        if (av[i][2] == 'c')
+          {
+            // Client stub's header file ending.
+            // @@ No error handling done here.
+            idl_global->client_hdr_ending (av[i+1]);
+            i++;
+          }
+        else if (av[i][2] == 's')
+          {
+            // Server skeleton's header file.
+            idl_global->server_hdr_ending (av[i+1]);
+            i++;
+          }
+        else if (av[i][2] == 'T')
+          {
+            // Server Template header ending.
+            idl_global->server_template_hdr_ending (av[i+1]);
+            i++;
+          }
+        else
+          {
+            // I expect 'c' or 's' or 'T' after this.
+            cerr << GTDEVEL("Incomplete Flag : ")
+                 << av[i];
+            exit(99);
+          }
+        break;
+        
+        // = Various 'c'lient side stub file_name_endings.
+      case 'c':
+        // <-cs Client stub's file name ending>
+        //      Default is "C.cpp".
+        // <-ci Client inline file name ending>
+        //      Default is "C.i".
+
+        if (av[i][2] == 's')
+          {
+            idl_global->client_stub_ending (av[i+1]);
+            i++;
+          }
+        else if (av[i][2] == 'i')
+          {
+            idl_global->client_inline_ending (av[i+1]);
+            i++;
+          }
+        else
+          {
+            // I expect 's' or 'i' after 'c'.
+            cerr << GTDEVEL("Incomplete Flag : ")
+                 << av[i];
+            exit(99);
+          }
+        break;
+     
+        // = Various 's'erver side skeleton file name endings. 
+      case 's':
+        // <-ss Server's skeleton file name ending>
+        //      Default is "S.cpp".
+        // <-sT Server's template skeleton file name ending>
+        //      Default is "S_T.cpp".
+        // <-si Server's inline file name ending>
+        //      Default is "S.i".
+        // <-st Server's template inline file name ending>
+        //      Default is "S_T.i".
+    
+        if (av[i][2] == 's')
+          {
+            idl_global->server_skeleton_ending (av[i+1]);
+            i++;
+          }
+        else if (av[i][2] == 'T')
+          {
+            idl_global->server_template_skeleton_ending (av[i+1]);
+            i++;
+          }
+        else if (av[i][2] == 'i')
+          {
+            idl_global->server_inline_ending (av[i+1]);
+            i++;
+          }
+        else if (av[i][2] == 't')
+          {
+            idl_global->server_template_inline_ending (av[i+1]);
+            i++;
+          }
+        else 
+          {
+            // I expect 's' or 'T' or 'i' or 't' after 's'. 
+            cerr << GTDEVEL("Incomplete Flag : ")
+                 << av[i];
+            exit(99);
+          }
+        break;
         
         // Perfect hashing-Operation lookup strategy.
       case 'P':
@@ -168,19 +277,24 @@ DRV_parse_args(long ac, char **av)
       case 'D':
       case 'U':
       case 'I':
-	if (av[i][2] == '\0') {
-	  if (i < ac - 1) {
-	    buffer = new char[strlen(av[i]) + strlen(av[i + 1]) + 2];
-	    sprintf(buffer, "%s%s", av[i], av[i+1]);
-	    DRV_cpp_putarg(buffer);
-	    i++;
-	  } else {
-	    cerr << GTDEVEL("IDL: missing argument after '")
-		 << av[i]
-		 << GTDEVEL("' flag\n");
-	    exit(99);
-	  }
-	} else
+	if (av[i][2] == '\0')
+        {
+	  if (i < ac - 1)
+            {
+              buffer = new char[strlen(av[i]) + strlen(av[i + 1]) + 2];
+              sprintf(buffer, "%s%s", av[i], av[i+1]);
+              DRV_cpp_putarg(buffer);
+              i++;
+            }
+          else
+            {
+              cerr << GTDEVEL("IDL: missing argument after '")
+                   << av[i]
+                   << GTDEVEL("' flag\n");
+              exit(99);
+            }
+	} 
+        else
 	  DRV_cpp_putarg(av[i]);
 	break;
       case 'E':
@@ -290,4 +404,3 @@ DRV_parse_args(long ac, char **av)
     cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
 #endif /* ACE_HAS_GPERF */
 }
-

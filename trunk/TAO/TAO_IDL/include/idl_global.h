@@ -283,19 +283,17 @@ public:
 
   // Convert from a predefined type to an expression type
   virtual AST_Expression::ExprType
-				PredefinedTypeToExprType(
-				  AST_PredefinedType::PredefinedType
-				);
+  PredefinedTypeToExprType (AST_PredefinedType::PredefinedType);
 
   /**************** Added to serve the back end *************/
   virtual String                *idl_src_file();
-  // returns the IDL source file being copiled
+  // Returns the IDL source file being compiled.
 
   virtual void                  idl_src_file(String *);
-  // set the source IDL file that is being parsed
+  // Set the source IDL file that is being parsed.
 
   // helper functions that generate the file names for the C++ mapping
-  // generated code
+  // generated code.
   static const char  *be_get_client_hdr_fname ();
   static const char  *be_get_client_stub_fname ();
   static const char  *be_get_client_inline_fname ();
@@ -331,6 +329,63 @@ public:
   virtual void export_include (const char* s);
   // set the name of the include file that contains the export
   // macro definition.
+
+  // = Set and get methods for different file name endings.
+  
+  virtual void client_hdr_ending (const char* s);
+  // Set the client_hdr_ending. 
+  
+  virtual const char* client_hdr_ending (void) const;
+  // Get the client_hdr_ending.
+  
+  virtual void client_inline_ending (const char* s);
+  // Set the client_inline_ending.
+  
+  virtual const char* client_inline_ending (void) const;
+  // Get the client_inline_ending. 
+  
+  virtual void  client_stub_ending (const char* s);
+  // Set the client_stub_ending.
+  
+  virtual const char* client_stub_ending (void) const;
+  // Get the client_stub_ending.
+  
+  virtual void server_hdr_ending (const char* s);
+  // Set the server_hdr_ending.
+  
+  virtual const char* server_hdr_ending (void) const;
+  // Get the server_hdr_ending.
+  
+  virtual void server_template_hdr_ending (const char* s);
+  // Set the server_template_hdr_ending.
+  
+  virtual const char* server_template_hdr_ending (void) const; 
+  // Get the server_template_hdr_ending.
+  
+  virtual void server_skeleton_ending (const char* s);
+  // Set the server_skeleton_ending.
+  
+  virtual const char* server_skeleton_ending (void) const;
+  // Get the server_skeleton_ending.
+  
+  virtual void server_template_skeleton_ending (const char* s);
+  // Set the server_template_skeleton_ending.
+  
+  virtual const char* server_template_skeleton_ending (void) const;
+  // Get the server_template_skeleton_ending.
+  
+  virtual void server_inline_ending (const char* s);
+  // Set the server_inline_ending.
+
+  virtual const char* server_inline_ending (void) const;
+  // Get the server_inline_ending.
+  
+  virtual void server_template_inline_ending (const char* s);
+  //  Set the server_template_inline_ending.
+  
+  virtual const char* server_template_inline_ending (void) const;
+  // Get the server_template_inline_ending.
+  
 private:
   // Data
   UTL_ScopeStack		*pd_scopes;		// Store scopes stack
@@ -364,10 +419,52 @@ private:
   long				seen_include_file_before(String *);
 							// Seen this include
 							// before?
+
   String                        *pd_idl_src_file;       // IDL source file
 
   char* export_macro_;
   char* export_include_;
+  
+  // Client's header file name ending. Default is "C.h".
+  char*  client_hdr_ending_; 
+  
+  // Client's stub's file name ending. Default is "C.cpp".
+  char* client_stub_ending_;
+  
+  // Client's inline file name ending. Default is "C.i".
+  char* client_inline_ending_; 
+  
+  // Server's hdr file name ending. Default is "S.h".
+  char* server_hdr_ending_;
+  
+  // Server's template hdr file name ending. Default is "S_T.h".
+  char* server_template_hdr_ending_;
+  
+  // Server's skeleton file name ending. Default is "S.cpp".
+  char* server_skeleton_ending_;
+  
+  // Server's template skeleton file name ending. Default is
+  // "S_T.cpp". 
+  char* server_template_skeleton_ending_;
+  
+  // Server's inline file name ending. Default is "S.i".
+  char* server_inline_ending_;
+  
+  // Server's template inline file name ending. Default is "S_T.i".
+  char* server_template_inline_ending_;
 };
 
 #endif	//_IDL_IDL_GLOBAL_HH
+
+
+
+
+
+
+
+
+
+
+
+
+
