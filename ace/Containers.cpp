@@ -42,7 +42,7 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s)
     this->stack_[i] = s.stack_[i];
 }
 
-template<class T> const ACE_Bounded_Stack<T> &
+template<class T> void
 ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::operator=");
@@ -96,7 +96,7 @@ ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, SIZE> &s)
     this->stack_[i] = s.stack_[i];
 }
 
-template<class T, size_t SIZE> const ACE_Fixed_Stack<T, SIZE> &
+template<class T, size_t SIZE> void
 ACE_Fixed_Stack<T, SIZE>::operator= (const ACE_Fixed_Stack<T, SIZE> &s)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::operator=");
@@ -184,7 +184,7 @@ ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
   this->copy_all_nodes (s);
 }
 
-template<class T> const ACE_Unbounded_Stack<T> &
+template<class T> void
 ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
 {
   ACE_TRACE ("ACE_Unbounded_Stack<T>::operator=");
@@ -317,9 +317,9 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
 }
 
 template <class T> void
-ACE_Unbounded_Queue<T>::operator = (const ACE_Unbounded_Queue<T> &us)
+ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
 {
-  ACE_TRACE ("ACE_Unbounded_Queue<T>::operator =");
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
 
   if (this != &us)
     {
@@ -631,10 +631,10 @@ ACE_Fixed_Set<T, SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &fs)
     this->search_structure_[i] = fs.search_structure_[i];
 }
 
-template <class T, size_t SIZE> const ACE_Fixed_Set<T, SIZE> &
-ACE_Fixed_Set<T, SIZE>::operator = (const ACE_Fixed_Set<T, SIZE> &fs)
+template <class T, size_t SIZE> void
+ACE_Fixed_Set<T, SIZE>::operator= (const ACE_Fixed_Set<T, SIZE> &fs)
 {
-  ACE_TRACE ("ACE_Fixed_Set<T>::operator =");
+  ACE_TRACE ("ACE_Fixed_Set<T>::operator=");
 
   if (this != &fs)
     {
@@ -833,10 +833,10 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (const ACE_Bounded_Set<T> &bs)
     this->search_structure_[i] = bs.search_structure_[i];
 }
 
-template <class T> const ACE_Bounded_Set<T> &
-ACE_Bounded_Set<T>::operator = (const ACE_Bounded_Set<T> &bs)
+template <class T> void
+ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
 {
-  ACE_TRACE ("ACE_Bounded_Set<T>::operator =");
+  ACE_TRACE ("ACE_Bounded_Set<T>::operator=");
 
   if (this != &bs)
     {
@@ -1137,10 +1137,10 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
   this->copy_nodes (us);
 }
 
-template <class T> const ACE_Unbounded_Set<T> &
-ACE_Unbounded_Set<T>::operator = (const ACE_Unbounded_Set<T> &us)
+template <class T> void
+ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
 {
-  ACE_TRACE ("ACE_Unbounded_Set<T>::operator =");
+  ACE_TRACE ("ACE_Unbounded_Set<T>::operator=");
 
   if (this != &us)
     {  
