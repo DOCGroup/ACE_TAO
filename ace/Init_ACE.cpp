@@ -1,23 +1,23 @@
 // $Id$
 
-#include "ace/ACE_Init.h"
+#include "ace/Init_ACE.h"
 
 #include "ace/Object_Manager.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Init.i"
+#include "ace/Init_ACE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID(ace, ACE, "$Id$")
+ACE_RCSID(ace, Init_ACE, "$Id$");
 
   // Static data members.
-  u_int ACE_Init::init_fini_count_ = 0;
+  u_int ACE_Init_ACE::init_fini_count_ = 0;
 int
-ACE_Init::init (void)
+ACE_Init_ACE::init (void)
 {
   // Don't use ACE_TRACE, because Object_Manager might not have been
   // instantiated yet.
-  // ACE_TRACE ("ACE_Init::init");
+  // ACE_TRACE ("ACE_Init_ACE::init");
 
   ++init_fini_count_;
 
@@ -25,9 +25,9 @@ ACE_Init::init (void)
 }
 
 int
-ACE_Init::fini (void)
+ACE_Init_ACE::fini (void)
 {
-  ACE_TRACE ("ACE_Init::fini");
+  ACE_TRACE ("ACE_Init_ACE::fini");
 
   if (init_fini_count_ > 0)
     {
@@ -38,7 +38,7 @@ ACE_Init::fini (void)
         return 1;
     }
   else
-    // More ACE_Init::fini () calls than ACE_Init::init () calls.  Bad
+    // More ACE_Init_ACE::fini () calls than ACE_Init_ACE::init () calls.  Bad
     // application!
     return -1;
 }

@@ -1,16 +1,16 @@
 // $Id$
 
-#include "ace/ACE_Sock_Connect.h"
+#include "ace/Sock_Connect.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Sock_Connect.i"
+#include "ace/Sock_Connect.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID(ace, ACE, "$Id$")
+ACE_RCSID(ace, Sock_Connect, "$Id$")
 
 
 // Bind socket to an unused port.

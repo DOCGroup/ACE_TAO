@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_ACE_SOCK_CONNECT_H
-#define ACE_ACE_SOCK_CONNECT_H
+#ifndef ACE_SOCK_CONNECT_H
+#define ACE_SOCK_CONNECT_H
 #include "ace/pre.h"
 
 #include "OS.h"
@@ -16,7 +16,7 @@ class ACE_INET_Addr;
 class ACE_Export ACE_Sock_Connect
 {
  public:
-  
+
   // = Socket connection establishment calls.
 
   static int bind_port (ACE_HANDLE handle,
@@ -53,9 +53,8 @@ class ACE_Export ACE_Sock_Connect
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Sock_Connect.i"
+#include "ace/Sock_Connect.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
-#endif  /* ACE_ACE_SOCK_CONNECT_H */
-
+#endif  /* ACE_SOCK_CONNECT_H */
