@@ -671,8 +671,8 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
       ctx.node (node); // set the node to be the node being visited. The scope
                        // is still the same
 
-      // first generate the sequence declaration
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
+      // first generate the union declaration
+      ctx.state (TAO_CodeGen::TAO_UNION_CH);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {

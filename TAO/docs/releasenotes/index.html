@@ -97,11 +97,24 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:gokhale@research.bell-labs.com">Aniruddha
 Gokhale</a>
-<p>Current status: (As of May 15, 1999.)
+<p>Current status: (As of June 12, 1999.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
 C++ mapping for CORBA 2.3 (Document ptc/98-09-03).</li>
+
+<li>
+IDL compiler is now able to generate code that support native C++
+exceptions on the stubs and skeletons. With this strict mapping, the
+CORBA::Environment parameter is no longer generated. Use the -Ge flag
+to get this functionality.
+</li>
+
+<li>
+We are now able to handle shared case labels and default label in
+unions. In addition, whenever appropriate, we are also able to
+generate the "default ()" operation.
+</li>
 
 <li>
 We are now able to handle recursive types. We are also able to
@@ -265,12 +278,6 @@ Generation of Managed types must somehow be moved to the ORB Core</li>
 
 <li>
 We need support for ``TIEs'' (i.e., the object form of the Adapter pattern).</li>
-
-<li>
-TypeCode generation for recursive types not implemented yet.</li>
-
-<li>
-Unions with default cases yet to be handled</li>
 
 <li>
 IDL is case-insensitive. However, it looks like our front-end is case-sensitive.

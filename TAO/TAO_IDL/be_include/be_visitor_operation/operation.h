@@ -50,6 +50,11 @@ public:
   virtual int has_param_type (be_operation *, AST_Argument::Direction);
   // does any of the argument node have the specified direction
 
+  virtual int gen_throw_spec (be_operation *node);
+  // generate the throw specification
+
+  virtual const char *gen_environment_var (void);
+  // generate the environment variable declaration
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_H_ */
