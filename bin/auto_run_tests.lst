@@ -34,12 +34,12 @@ TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
 TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
 TAO/tests/MT_Server/run_test.pl: !ST
-TAO/tests/Client_Leaks/run_test.pl
+TAO/tests/Client_Leaks/run_test.pl: !ST
 TAO/tests/Server_Leaks/run_test.pl
 TAO/tests/Faults/run_test.pl: !MINIMUM
 TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM
 TAO/tests/NestedUpcall/Simple/run_test.pl: !ST
-TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl
+TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl: !ST
 TAO/tests/NestedUpcall/Triangle_Test/run_test.pl
 TAO/tests/Nested_Event_Loop/run_test.pl
 TAO/tests/POA/Identity/run_test.pl
@@ -98,7 +98,7 @@ TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Simple/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
 
-TAO/orbsvcs/tests/Simple_Naming/run_test.pl
+TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST
 TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST
