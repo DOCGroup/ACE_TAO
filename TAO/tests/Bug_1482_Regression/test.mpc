@@ -1,14 +1,13 @@
-project(Bug_1482_Server): taoserver, iortable, portableserver {
+project(Bug_1482_Server): taoserver, amh, ami, iortable, portableserver {
   exename = server
   Source_Files {
-    Test_i.cpp
     Hello.cpp
     Server_Task.cpp
     server.cpp
   }
 }
 
-project(Bug_1482_Client): taoserver {
+project(Bug_1482_Client): taoserver, amh, ami {
   exename = client
   Source_Files {
     Client_Task.cpp
