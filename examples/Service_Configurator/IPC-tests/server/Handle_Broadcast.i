@@ -27,7 +27,7 @@ Handle_Broadcast::open (const ACE_INET_Addr &r, int async)
     return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_Broadcast::info (char **strp, size_t length) const
 {
   char      buf[BUFSIZ];
@@ -35,7 +35,7 @@ Handle_Broadcast::info (char **strp, size_t length) const
 
   if (this->get_local_addr (sa) == -1)
     return -1;
-  
+
   ACE_OS::sprintf (buf, "%d/%s %s", sa.get_port_number (), "udp", "# tests broadcasting\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
@@ -54,35 +54,35 @@ Handle_Broadcast::init (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
-       case 'p': 
-	 sba.set (ACE_OS::atoi (get_opt.opt_arg ()));
-	 break;
+       case 'p':
+         sba.set (ACE_OS::atoi (get_opt.opt_arg ()));
+         break;
        default:
-	 break;
+         break;
        }
-  
+
   if (this->open (sba) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  else if (ACE_Reactor::instance ()->register_handler 
-	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
+  else if (ACE_Reactor::instance ()->register_handler
+           (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
   return 0;
 }
 
-ACE_INLINE int 
-Handle_Broadcast::fini (void) 
+ACE_INLINE int
+Handle_Broadcast::fini (void)
 {
-  return ACE_Reactor::instance ()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 ACE_INLINE ACE_HANDLE
 Handle_Broadcast::get_handle (void) const
 {
-  return this->ACE_SOCK_Dgram::get_handle (); 
+  return this->ACE_SOCK_Dgram::get_handle ();
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_Broadcast::handle_input (ACE_HANDLE)
 {
   ACE_INET_Addr sa;
