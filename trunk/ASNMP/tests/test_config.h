@@ -14,6 +14,7 @@
 #ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H
 
+#include "ace/ACE.h"
 #include <iostream.h>
 #include <fstream.h>
 

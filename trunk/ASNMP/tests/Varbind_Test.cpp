@@ -1,5 +1,5 @@
 // $Id$
- 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -9,9 +9,9 @@
 //    Varbind_Test.cpp
 //
 // = DESCRIPTION
-//  Test all the member functions of the Varbind class. 
+//  Test all the member functions of the Varbind class.
 //   A varbind is a list of { oids and associated values }
-// 
+//
 // = AUTHOR
 //    Michael R. MacFaden <mrm@cisco.com>
 //
@@ -19,7 +19,7 @@
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
- 
+
 Permission to use, copy, modify, and distribute this software for any
 purpose and without fee is hereby granted, provided that this
 copyright and permission notice appear on all copies of the software and
@@ -28,7 +28,7 @@ in advertising or publicity pertaining to distribution of the
 program without specific prior permission, and notice be given
 in supporting documentation that modification, copying and distribution is by
 permission of Cisco Systems, Inc.
- 
+
 Cisco Systems, Inc. makes no representations about the suitability of this
 software for any purpose.  THIS SOFTWARE IS PROVIDED ``AS IS''
 AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
@@ -47,10 +47,6 @@ DAMAGES.
 
 ACE_RCSID(tests, Varbind_Test, "$Id$")
 
-// hack: do this so when linking SUNC 4.x compiler will instantiate template
-#include "ace/Containers.h"
-ACE_Unbounded_Set<ACE_Log_Msg*> x;
- 
 /*
   Vb( void);
   Vb( const Oid &oid);
@@ -86,7 +82,7 @@ ACE_Unbounded_Set<ACE_Log_Msg*> x;
    char *to_string();
    char *to_string_value();
    char *to_string_oid();
- */ 
+ */
 
 static void VbTest()
 {
@@ -97,7 +93,7 @@ static void VbTest()
 
   // purpose of this routine??
   set_exception_status( &v1, 10);
- 
+
   Vb v2(v1);
   ACE_ASSERT(v2.valid() == 0);
   Oid o1("1.2.3"), o2;
@@ -118,54 +114,54 @@ static void VbTest()
   v3.set_value(t);
   ACE_ASSERT(v3.valid() == 1);
   v3.get_value(t1);
-  ACE_ASSERT(t == t1);   
+  ACE_ASSERT(t == t1);
 
   Vb v4;
   v4.set_oid(o1);
   v4.set_value(o1);
   ACE_ASSERT(v4.valid() == 1);
   v4.get_value(o2);
-  ACE_ASSERT(o1 == o2);   
+  ACE_ASSERT(o1 == o2);
 
   Vb v5;
-  Counter32 c1(12), c2;  
+  Counter32 c1(12), c2;
   v5.set_oid(o1);
   v5.set_value(c1);
   ACE_ASSERT(v5.valid() == 1);
   v5.get_value(c2);
-  ACE_ASSERT(c1 == c2);   
+  ACE_ASSERT(c1 == c2);
 
   Vb v6;
-  Counter64 c3(12345678901234), c4;  
+  Counter64 c3(12345678901234), c4;
   v6.set_oid(o1);
   v6.set_value(c3);
   ACE_ASSERT(v6.valid() == 1);
   v6.get_value(c4);
-  ACE_ASSERT(c3 == c4);   
+  ACE_ASSERT(c3 == c4);
 
   Vb v7;
-  Gauge32 g1(0123456), g2;  
+  Gauge32 g1(0123456), g2;
   v7.set_oid(o1);
   v7.set_value(g1);
   ACE_ASSERT(v7.valid() == 1);
   v7.get_value(g2);
-  ACE_ASSERT(g1 == g2);   
+  ACE_ASSERT(g1 == g2);
 
   Vb v8;
-  SnmpInt32 i1(0123456), i2;  
+  SnmpInt32 i1(0123456), i2;
   v8.set_oid(o1);
   v8.set_value(i1);
   ACE_ASSERT(v8.valid() == 1);
   v8.get_value(i2);
-  ACE_ASSERT(i1 == i2);   
+  ACE_ASSERT(i1 == i2);
 
   Vb v9;
-  SnmpUInt32 u1(0123456), u2;  
+  SnmpUInt32 u1(0123456), u2;
   v9.set_oid(o1);
   v9.set_value(u1);
   ACE_ASSERT(v9.valid() == 1);
   v9.get_value(u2);
-  ACE_ASSERT(u1 == u2);   
+  ACE_ASSERT(u1 == u2);
 
   Vb v10;
   OctetStr s1(" abcdefghighlmnopqrstuvwxyz!@#$%^&*()"), s2;
@@ -173,7 +169,7 @@ static void VbTest()
   v10.set_value(s1);
   ACE_ASSERT(v10.valid() == 1);
   v10.get_value(s2);
-  ACE_ASSERT(s1 == s2);   
+  ACE_ASSERT(s1 == s2);
   ACE_ASSERT(s1.length() == s2.length());
 
   // test assignment over all datatypes
@@ -186,7 +182,7 @@ static void VbTest()
   v11.get_oid(o2);
   ACE_ASSERT(o1 == o2);
   v11.get_value(s2);
-  ACE_ASSERT(s1 == s2);   
+  ACE_ASSERT(s1 == s2);
 }
 
 int
@@ -197,7 +193,3 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<ACE_Log_Msg*>;
-#endif
