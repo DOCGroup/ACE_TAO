@@ -38,6 +38,9 @@ static int shutdown_server = 0;
 // AMI call or regular call.
 static int invoke_ami_style = 1;
 
+// Setup buffering or not.
+static int setup_buffering = 1;
+
 // Flag indicates that all replies have been received
 static int received_all_replies = 0;
 
@@ -69,7 +72,7 @@ public:
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:k:m:i:t:x");
+  ACE_Get_Opt get_opts (argc, argv, "a:b:k:m:i:t:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -85,6 +88,10 @@ parse_args (int argc, char **argv)
 
       case 'a':
         invoke_ami_style = ::atoi (get_opts.optarg);
+        break;
+
+      case 'b':
+        setup_buffering = ::atoi (get_opts.optarg);
         break;
 
       case 'i':
@@ -106,6 +113,7 @@ parse_args (int argc, char **argv)
                            "-k IOR "
                            "-m message count "
                            "-a invoke AMI style [0/1] "
+                           "-b setup buffering [0/1] "
                            "-i iterations "
                            "-t interval between calls "
                            "-x shutdown server "
@@ -266,8 +274,7 @@ main (int argc, char **argv)
       AMI_testHandler_var reply_handler_object = reply_handler_servant._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // If valid <message_count>, setup buffering constraints.
-      if (message_count != -1)
+      if (setup_buffering)
         {
           setup_buffering_constraints (orb.in (),
                                        ACE_TRY_ENV);

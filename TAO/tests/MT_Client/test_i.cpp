@@ -25,7 +25,7 @@ Simple_Server_i::get_number (CORBA::Environment&)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "%N:%l:(%P:%t):Simple_Server_i::get_number called\n"));
-  return (CORBA::ULong) 931232;
+  return 931232;
 }
 
 void

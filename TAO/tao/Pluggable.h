@@ -167,6 +167,10 @@ public:
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
 
+  virtual int idle_after_reply (void);
+  // Request is sent and the reply is received. Idle the transport
+  // now.
+
   virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
   // Return the TSS leader follower condition variable used in the
   // Wait Strategy. Muxed Leader Follower implementation returns a

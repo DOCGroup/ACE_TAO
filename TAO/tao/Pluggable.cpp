@@ -196,11 +196,11 @@ TAO_Transport::idle_after_send (void)
   return this->tms ()->idle_after_send ();
 }
 
-// int
-// TAO_Transport::idle_after_reply (void)
-// {
-//   return this->tms ()->idle_after_reply ();
-// }
+int
+TAO_Transport::idle_after_reply (void)
+{
+  return this->tms ()->idle_after_reply ();
+}
 
 // int
 // TAO_Transport::reply_received (const CORBA::ULong request_id)
