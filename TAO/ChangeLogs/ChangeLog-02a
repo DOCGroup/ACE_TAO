@@ -1,133 +1,168 @@
+Fri Feb 25 10:43:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+          Assume that the client invokes obtain_push_consumer() (or any
+          other obtain_xxx_yyy() call), but never invokes the
+          corresponding connect_push_consumer() call.
+          Before this change the only way that object will get destroyed
+          is by an eventual shutdown, as only the POA is holding a
+          reference to it.
+          With the new implementation the EC keeps a reference to it in
+          the ConsumerAdmin collection, once there the ConsumerControl
+          strategy can remove the object if it is deemed to have been
+          there for too long.  Notice that the default control strategies
+          don't do this, but it is relatively easy to add that feature.
+          This change also simplified the shutdown() and disconnect()
+          calls for the proxies, and made the code "more exception safe".
+          This fixes [BUGID:437], and it reduces the probability of
+          hitting [BUGID:438], even though that last one is very unlikely
+          to happen in the first place.
+          Notice how many files where affected, this is a strong argument
+          for the Event Service Framework, that i'm cooking on the back
+          burner.
+
 Fri Feb 25 10:49:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosConcurrencyControl.idl,
-	  orbsvcs/orbsvcs/RtecDefaultEventData.idl,
- 	  orbsvcs/orbsvcs/RtecEventComm.idl: Fixed all three of these
- 	  files so that they use the more portable #ifndef FOO rather than
- 	  #if !defined (FOO) syntax.  Thanks to W. Craig Trader
- 	  <ct7@vitelinc.com> for reporting this.
+        * orbsvcs/orbsvcs/CosConcurrencyControl.idl,
+          orbsvcs/orbsvcs/RtecDefaultEventData.idl,
+          orbsvcs/orbsvcs/RtecEventComm.idl: Fixed all three of these
+          files so that they use the more portable #ifndef FOO rather than
+          #if !defined (FOO) syntax.  Thanks to W. Craig Trader
+          <ct7@vitelinc.com> for reporting this.
 
 Fri Feb 25 08:59:59 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.cpp (create_mprofile, open_default):
+        * tao/IIOP_Acceptor.cpp (create_mprofile, open_default):
 
-	  Fixed support for hosts with multiple network interfaces.  A
-	  profile will be created for each endpoint created on each
-	  network interface.  The loopback interface will be excluded,
-	  unless it is the only interface.
+          Fixed support for hosts with multiple network interfaces.  A
+          profile will be created for each endpoint created on each
+          network interface.  The loopback interface will be excluded,
+          unless it is the only interface.
 
-	  (endpoint_count, open, open_i):
+          (endpoint_count, open, open_i):
 
-	  Additional minor changes to accomodate the new multi-homed host
-	  support.
+          Additional minor changes to accomodate the new multi-homed host
+          support.
 
-	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
+        * tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
 
-	  Changes in member variables necessary to support multi-homed
-	  hosts (e.g. change from variable to an array, etc).
+          Changes in member variables necessary to support multi-homed
+          hosts (e.g. change from variable to an array, etc).
 
-	* tao/IIOP_Acceptor.i (address):
+        * tao/IIOP_Acceptor.i (address):
 
-	  Return the first addr in the array of ACE_INET_Addrs.  This is
-	  a temporary hack.  Only the Implementation Repository uses this
-	  method.  The Implementation Repository will have to start
-	  supporting IORs with multiple profiles.  For now, we just return
-	  the first addr.
+          Return the first addr in the array of ACE_INET_Addrs.  This is
+          a temporary hack.  Only the Implementation Repository uses this
+          method.  The Implementation Repository will have to start
+          supporting IORs with multiple profiles.  For now, we just return
+          the first addr.
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Fri Feb 25 10:45:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/util/utl_global.h:
-	* TAO_IDL/driver.drv_args.cpp:
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
-	  Added command line option -So to suppress the
-	  generation of ostream operators for exceptions.
-	  Suggested by Greg Holtmeyer <Greg.Holtmeyer@MW.Boeing.com>.
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.h:
+        * TAO_IDL/driver.drv_args.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+          Added command line option -So to suppress the
+          generation of ostream operators for exceptions.
+          Suggested by Greg Holtmeyer <Greg.Holtmeyer@MW.Boeing.com>.
 
 Fri Feb 25 09:44:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/Latency/dii_client.cpp:
-	  Guarded all pertinent code with
-	  #if !defined (TAO_HAS_MINIMUM_CORBA). If minimum
-	  CORBA is defined, the client code should now just
-	  get and narrow a reference to the server. skip
-	  instantiating the client, and shutdown the server
-	  if that option is selected.
+        * performance-tests/Latency/dii_client.cpp:
+          Guarded all pertinent code with
+          #if !defined (TAO_HAS_MINIMUM_CORBA). If minimum
+          CORBA is defined, the client code should now just
+          get and narrow a reference to the server. skip
+          instantiating the client, and shutdown the server
+          if that option is selected.
 
 Fri Feb 25 09:34:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
-	  For struct foo, removed typedef of foo_ptr and
-	  foo::_ptr_type. These are not part of the spec.
-	  Thanks to Chris Cleeland <cleeland@cs.wustl.edu>
-	  for pointing this out.
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+          For struct foo, removed typedef of foo_ptr and
+          foo::_ptr_type. These are not part of the spec.
+          Thanks to Chris Cleeland <cleeland@cs.wustl.edu>
+          for pointing this out.
 
 Thu Feb 24 18:33:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/Param_Test/param_test.idl:
-	* tests/Param_Test/client.dsp:
-	* tests/Param_Test/run_test.pl:
-	* tests/Param_Test/tests.h:
-	* tests/Param_Test/driver.cpp:
-	* tests/Param_Test/param_test_i.h:
-	* tests/Param_Test/param_test_i.cpp:
-	* tests/Param_Test/multdim_array.h:
-	* tests/Param_Test/multdim_array.cpp:
-	  Activated the multidimensional array test, which
-	  had been commented out for some time.
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/run_test.pl:
+        * tests/Param_Test/tests.h:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/multdim_array.h:
+        * tests/Param_Test/multdim_array.cpp:
+          Activated the multidimensional array test, which
+          had been commented out for some time.
 
 Thu Feb 24 18:21:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
-	  If a multidimensional array 'foo' is an IN parameter to an
-	  operation, some compilers have trouble with the 
-	  implicit cast to const. We now help them out by casting
-	  (multidimensional arrays only) the IN argument to
-	  const foo_slice * before making the upcall.
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+          If a multidimensional array 'foo' is an IN parameter to an
+          operation, some compilers have trouble with the
+          implicit cast to const. We now help them out by casting
+          (multidimensional arrays only) the IN argument to
+          const foo_slice * before making the upcall.
 
 Thu Feb 24 16:25:04 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp: 
-	  Fixed compile errors on RedHat Linux platform. Thanks to Sandeep
-	  Adwankar <adwankar@rsch.comm.mot.com> for pointing this out.
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp:
+          Fixed compile errors on RedHat Linux platform. Thanks to Sandeep
+          Adwankar <adwankar@rsch.comm.mot.com> for pointing this out.
 
 Thu Feb 24 10:49:32 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Fixed the reason why the seg fault when printing a warning about
-	  an unknown "-ORB" option was occuring in the first place.
-	  "current_arg" was not being set to the current argument.
+          Fixed the reason why the seg fault when printing a warning about
+          an unknown "-ORB" option was occuring in the first place.
+          "current_arg" was not being set to the current argument.
 
 Thu Feb 24 09:29:19 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Fixed seg fault that was occurring due to attempt to print a
-	  NULL string (zero pointer).  Print "<NULL>" if the pointer to
-	  the current argument is zero.  The seg fault occurred when
-	  providing a command such as the following:
+          Fixed seg fault that was occurring due to attempt to print a
+          NULL string (zero pointer).  Print "<NULL>" if the pointer to
+          the current argument is zero.  The seg fault occurred when
+          providing a command such as the following:
 
-	     ./server -ORBDebugLevel 6 -ORBDottedDecimalAddress
+             ./server -ORBDebugLevel 6 -ORBDottedDecimalAddress
 
-	  The "-ORBDottedDecimalAddress" option is missing its argument.
+          The "-ORBDottedDecimalAddress" option is missing its argument.
 
-	* tao/POA.cpp (imr_notify_startup):
+        * tao/POA.cpp (imr_notify_startup):
 
-	  Corrected spelling of "Notifing."
+          Corrected spelling of "Notifing."
 
 Thu Feb 24 01:32:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Object.cpp (_non_existent): The collocated servant also
-	  throws exception.  Moved it into the try block.  Thanks to Brian
-	  Wright <bwright@paladyne.com> for reporting this.
+        * tao/Object.cpp (_non_existent): The collocated servant also
+          throws exception.  Moved it into the try block.  Thanks to Brian
+          Wright <bwright@paladyne.com> for reporting this.
 
 Wed Feb 23 18:35:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 

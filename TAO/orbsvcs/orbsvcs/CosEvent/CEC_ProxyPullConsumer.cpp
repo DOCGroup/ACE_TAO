@@ -325,8 +325,6 @@ TAO_CEC_ProxyPullConsumer::disconnect_pull_consumer (
         }
       ACE_ENDTRY;
     }
-
-  this->_decr_refcnt ();
 }
 
 PortableServer::POA_ptr
