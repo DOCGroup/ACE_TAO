@@ -67,7 +67,8 @@ public class LoggingClient implements Runnable
 	// provide a mechanism for changing the type of the filter stream
 	// used (which might be better in the long run...give it the class
 	// id).
-	DataOutputStream dos = new DataOutputStream((OutputStream) logger.outputStream());
+	BufferedOutputStream bos = new BufferedOutputStream((OutputStream) logger.outputStream(), LogRecord.MAXLOGMSGLEN);
+	DataOutputStream dos = new DataOutputStream(bos);
 
 	for (int i = 0; i < maxIter_; i++)
 	  {
@@ -79,6 +80,7 @@ public class LoggingClient implements Runnable
 	      {
 		dos.writeInt(rec.length());
 		rec.streamOutTo(dos);
+		bos.flush();
 		rec.print("localhost", true, System.err);
 	      }
 	    catch (IOException ex) { }
