@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_UTSNAME_H
-#define PACE_SYS_UTSNAME_H
+#ifndef PACE_SYS_UTSNAME_H_WIN32
+#define PACE_SYS_UTSNAME_H_WIN32
 
 #include <sys/utsname.h>
 
@@ -27,14 +27,8 @@ extern "C" {
 typedef struct utsname pace_utsname;
 #endif /* PACE_UTSNAME */
 
-  PACE_INLINE int pace_uname (struct utsname * name);
-
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#if defined (PACE_HAS_INLINE)
-# include "pace/win32/utsname.inl"
-#endif /* PACE_HAS_INLINE */
-
-#endif /* PACE_SYS_UTSNAME_H */
+#endif /* PACE_SYS_UTSNAME_H_WIN32 */
