@@ -9,53 +9,8 @@ ACE_INET_Addr::~ACE_INET_Addr (void)
 {
 }
 
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-
-// Process-wide Protocol Family
-#include "ace/Synch.h"
-#include "ace/Object_Manager.h"
-int ACE_INET_Addr::protocol_family_ = -1;
-
-int
-ACE_INET_Addr::protocol_family (void)
-{
-  ACE_TRACE ("ACE_INET_Addr::protocol_family");
-
-  if (ACE_INET_Addr::protocol_family_ == -1)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-
-      if (ACE_INET_Addr::protocol_family_ == -1)
-        {
-          // Determine if the kernel has IPv6 support by attempting to
-          // create a PF_INET6 socket and see if it fails.
-          int s = socket(PF_INET6,SOCK_DGRAM,0);
-          if(s == -1) {
-            ACE_INET_Addr::protocol_family_ = PF_INET;
-          } else {
-            ACE_INET_Addr::protocol_family_ = PF_INET6;
-            close(s);
-          }
-        }
-    }
-
-  return ACE_INET_Addr::protocol_family_;
-}
-
-int
-ACE_INET_Addr::address_family (void)
-{
-  if(ACE_INET_Addr::protocol_family() == PF_INET6)
-    return AF_INET6;
-  else
-    return AF_INET;
-}
-
-#endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-
-void *ACE_INET_Addr::ip_addr_pointer(void) const
+ACE_INLINE void *
+ACE_INET_Addr::ip_addr_pointer(void) const
 {
 #if defined (ACE_HAS_IPV6)
 #if defined (ACE_USES_IPV4_IPV6_MIGRATION)
@@ -69,7 +24,8 @@ void *ACE_INET_Addr::ip_addr_pointer(void) const
 #endif
 }
 
-size_t ACE_INET_Addr::ip_addr_size(void) const
+ACE_INLINE size_t
+ACE_INET_Addr::ip_addr_size(void) const
 {
 #if defined (ACE_HAS_IPV6)
 
