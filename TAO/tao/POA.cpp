@@ -2361,7 +2361,7 @@ TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
                            CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_POA_DISPATCH_SERVANT_START);
-  
+
   // Lock access to the POA for the duration of this transaction
   TAO_POA_READ_GUARD (ACE_Lock, monitor, this->lock (), env);
 
@@ -2498,7 +2498,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Skip the TAO Object Key Prefix.
   starting_at = TAO_OBJECTKEY_PREFIX_SIZE;
 #endif
-  
+
   // Check the system id indicator
   char system_id_key_type = key[starting_at];
   if (system_id_key_type == this->system_id_key_char ())
@@ -2508,10 +2508,10 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   else
     // Incorrect key
     return -1;
-  
+
   // Skip past the system id indicator
   starting_at += TAO_POA::system_id_key_type_length ();
-  
+
   // Try to find the last separator
   int last_token_position = 0;
   if (system_id)
@@ -2520,7 +2520,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
     last_token_position = key.length () - this->active_object_map ().system_id_size () - 1;
   else
     last_token_position = this->rfind (key, TAO_POA::name_separator ());
-  
+
   // If not found, the name is not correct
   if (last_token_position == TAO_POA::String::npos)
     return -1;
@@ -2575,9 +2575,11 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
 TAO_ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
+#if !defined (POA_NO_TIMESTAMP)
   int creation_time_length = 0;
   if (!this->persistent ())
     creation_time_length = TAO_Creation_Time::creation_time_length ();
+#endif /* POA_NO_TIMESTAMP */
 
   // Calculate the space required for the key
   int buffer_size =
@@ -2592,26 +2594,26 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
     this->complete_name_.length () +
     TAO_POA::name_separator_length () +
     id.length ();
-  
+
   // Keeps track of where the next infomation goes; start at 0 byte
   int starting_at = 0;
-  
+
   // Create the buffer for the key
   CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
-  
+
 #if !defined (TAO_NO_IOR_TABLE)
-  
+
   ACE_OS::memcpy (&buffer[starting_at],
-		  &objectkey_prefix[0],
-		  TAO_OBJECTKEY_PREFIX_SIZE);
-  
+                  &objectkey_prefix[0],
+                  TAO_OBJECTKEY_PREFIX_SIZE);
+
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
 #endif
-  
+
   // Copy the system id bit
   buffer[starting_at] = (CORBA::Octet) this->system_id_key_type ();
   starting_at += this->system_id_key_type_length ();
-  
+
 #if !defined (POA_NO_TIMESTAMP)
   // Copy the persistence bit
   buffer[starting_at] = (CORBA::Octet) this->persistent_key_type ();
@@ -2622,10 +2624,9 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
       // Then copy the timestamp
       ACE_OS::memcpy (&buffer[starting_at],
                       this->creation_time_.creation_time (),
-                      TAO_Creation_Time::creation_time_length ());
-      starting_at += TAO_Creation_Time::creation_time_length ();
+                      creation_time_length);
+      starting_at += creation_time_length;
     }
-
 #endif /* POA_NO_TIMESTAMP */
 
   // Put the POA name into the buffer
@@ -2633,11 +2634,11 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
                   this->complete_name_.c_str (),
                   this->complete_name_.length ());
   starting_at += this->complete_name_.length ();
-  
+
   // Add the name separator
   buffer[starting_at] = (CORBA::Octet) TAO_POA::name_separator ();
   starting_at += TAO_POA::name_separator_length ();
-  
+
   // Then copy the ID into the key
   ACE_OS::memcpy (&buffer[starting_at],
                   id.get_buffer (),
@@ -2680,7 +2681,7 @@ TAO_POA::is_poa_generated_key (const TAO_ObjectKey &key)
 {
   // Grab the buffer
   const char *key_buffer = (const char *) key.get_buffer ();
-  
+
   // Check to see if the complete POA name is the first part of the
   // key
   return
@@ -2696,7 +2697,7 @@ TAO_POA::leaf_poa_name (const TAO_POA::String &adapter_name,
 {
   // This method does not throw any exceptions
   ACE_UNUSED_ARG (env);
-  
+
   // Try to find the name separator
   if (adapter_name.find (TAO_POA::name_separator ()) == TAO_POA::String::npos)
     // If not found, the name was a leaf
