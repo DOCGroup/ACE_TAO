@@ -35,7 +35,7 @@
 ACE_RCSID(DII_Cubit, client, "$Id$")
 
   // Some constants used below.
-  const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
+const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
 const char *DEFAULT_FACTORY_IOR = "ior00";
 const int SMALL_OCTET_SEQ_LENGTH = 16;
 const int LARGE_OCTET_SEQ_LENGTH = 4096;
@@ -399,7 +399,7 @@ DII_Cubit_Client::init_naming_service (void)
 int
 DII_Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt opts (argc_, argv_, "dn:i:f:xs");
+  ACE_Get_Opt opts (argc_, argv_, "dn:i:f:x");
   int c;
   int result;
    
@@ -428,9 +428,6 @@ DII_Cubit_Client::parse_args (void)
       case 'x':   // Shut down server after test run. 
         this->shutdown_ = 1;
         break;
-      case 's':   // Don't use the TAO naming service.
-        this->use_naming_service_ = 0;
-        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -440,7 +437,6 @@ DII_Cubit_Client::parse_args (void)
                            " [-i cubit-factory-IOR]"
                            " [-f filename]"
                            " [-x]"
-                           " [-s]"
                            "\n",
                            this->argv_ [0]),
                           -1);
