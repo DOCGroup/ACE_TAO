@@ -1,6 +1,11 @@
+Tue Nov 04 09:48:51 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * except.h (line 118): removed backslash at end of comment line.
+          Some compilers complain about that.
+
 Tue Nov 04 06:26:14 1997  Carlos O'Ryan  <coryan@MILONGA>
 
-	* TAO_IDL/be/be_state.cpp: 
+	* TAO_IDL/be/be_state.cpp:
 	  It still generated fully qualified names for some sequences,
 	  that will not work on NT.
 
@@ -10,13 +15,13 @@ Tue Nov 04 05:32:44 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Nov  4 04:42:17 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* tests/Thruput_test/server.cpp: 
-	* tests/Thruput_test/client.cpp: 
-	* tests/Thruput_test/ttcpS.cpp: 
-	Fixed "print_exception" errors and errors due to some changes in 
- 	the orb compiler. 
+	* tests/Thruput_test/server.cpp:
+	* tests/Thruput_test/client.cpp:
+	* tests/Thruput_test/ttcpS.cpp:
+	Fixed "print_exception" errors and errors due to some changes in
+ 	the orb compiler.
 
-	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (svc): Use unsigned 
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (svc): Use unsigned
 	int for variable that is used for positive comparisons only.
 
 Tue Nov 04 01:00:51 1997    <nw1@COYOTE>
@@ -33,7 +38,7 @@ Tue Nov 04 01:00:51 1997    <nw1@COYOTE>
 
 	* tests/Cubit/TAO/DII_Cubit/{client,server}.dsp: Renamed
 	  executables for debug version to client.exe and server.exe on
-	  NT. 
+	  NT.
 
 	* tests/Cubit/TAO/IDL_Cubit/Cubit.mak: Added cubit.idl into
 	  makefile and its custom build settings.
@@ -58,7 +63,7 @@ Mon Nov 03 23:16:06 1997    <nw1@COYOTE>
 	  CORBA_Environment::print_exception.
 
 	* tao/except.h (CORBA_Environment):  Added ACE_Svc_Export to this
-	  class. 
+	  class.
 
 	* tests/Cubit/TAO/MT_Cubit/MTCubit.dsw:
 	* tests/Cubit/TAO/MT_Cubit/client/client.dsp:
@@ -92,9 +97,9 @@ Mon Nov  3 23:25:30 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (main): compare with 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (main): compare with
 	"!= 0" rather than "== -1" for errors.
-	
+
 	* tests/Cubit/TAO/IDL_Cubit/cubit.idl (enum discrim): Deleted
 	enumerations not used.
 
