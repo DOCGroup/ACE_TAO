@@ -1,3 +1,7 @@
+Thu Oct  5 11:37:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Added FT library to the makefile.
+
 Thu Oct  5 09:31:06 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/TAO.dsp:
