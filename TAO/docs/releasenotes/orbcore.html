@@ -27,6 +27,22 @@
       Recently Completed Work:
 
       <BLOCKQUOTE>
+	<li>Created a brief section in <a
+	href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
+	that <em>briefly</em> documents installation on Unix platforms.  There is
+	also a brief section which documents issues that apply across ALL
+	platforms, such as the fact that TAO and its application will
+	likely not work well if your ACE is linked through Orbix,
+	VisiBroker, or another ORB.
+	<a href="../../ChangeLog">ChangeLog</a> discovery attribution for
+	this should go to <em>Steve Wohlever
+	&lt;wohlever@mitre.org&gt;</em>.</li>
+
+	<LI>Implemented <code>CORBA_ORB::shutdown()</code> as a manner
+	in which a thread of control can request that
+	<code>CORBA_ORB::run()</code> should return and no longer
+	service requests.</li>
+
 	<li>Debate details of <code>Svc_Handler</code> modifications
 	with Irfan.</li>
 
@@ -96,21 +112,20 @@
       Critical Work:
 
       <BLOCKQUOTE>
-	<li>Create a section in <a
+	<li>Make the section in <a
 	href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
-	that documents installation on Unix platforms.  There should
-	also be a section documents issues that apply across ALL
-	platforms, such as the fact that TAO and its application will
-	likely not work well if your ACE is linked through Orbix,
-	VisiBroker, or another ORB.
-	<a href="../../ChangeLog">ChangeLog</a> discovery attribution for
-	this should go to <em>Steve Wohlever
-	&lt;wohlever@mitre.org&gt;</em>.</li>
+	that documents installation on Unix platforms more complete.
+	</li>
 
-	<LI>Implement <code>CORBA_ORB::shutdown()</code> as a manner
+	<LI>Test <code>CORBA_ORB::shutdown()</code> as a manner
 	in which a thread of control can request that
 	<code>CORBA_ORB::run()</code> should return and no longer
 	service requests.</li>
+
+	<li>Determine if <code>CORBA_ORB::shutdown()</code> honors the
+	<em>wait_for_completion</em> option already (I think it does).
+	No matter which it implements, determine how to implement the
+	other.</li>
 
 	<LI>Add pre-cached connection on client side.  Clients will
 	pass in a comma-separated list of <em>host:port</em>
