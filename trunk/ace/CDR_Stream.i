@@ -432,6 +432,12 @@ ACE_OutputCDR::do_byte_swap (void) const
   return this->do_byte_swap_;
 }
 
+ACE_INLINE void
+ACE_OutputCDR::reset_byte_order (int byte_order)
+{
+  this->do_byte_swap_ = (byte_order != ACE_CDR_BYTE_ORDER);
+}
+
 ACE_INLINE size_t
 ACE_OutputCDR::current_alignment (void) const
 {
