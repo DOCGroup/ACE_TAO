@@ -996,8 +996,12 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Default_Acceptor_Filter.cpp \
   PortableServer/Default_Policy_Validator.cpp \
   PortableServer/Default_Servant_Dispatcher.cpp \
+  PortableServer/ImplRepoA.cpp \
   PortableServer/ImplRepoC.cpp \
   PortableServer/ImplRepoS.cpp \
+  PortableServer/ServerObjectA.cpp \
+  PortableServer/ServerObjectC.cpp \
+  PortableServer/ServerObjectS.cpp \
   PortableServer/ImplRepo_i.cpp \
   PortableServer/Key_Adapters.cpp \
   PortableServer/ORB_Manager.cpp \
@@ -1038,6 +1042,8 @@ nobase_include_HEADERS += \
   PortableServer/Default_Servant_Dispatcher.h \
   PortableServer/ImplRepoC.h \
   PortableServer/ImplRepoS.h \
+  PortableServer/ServerObjectC.h \
+  PortableServer/ServerObjectS.h \
   PortableServer/ImplRepo_i.h \
   PortableServer/Key_Adapters.h \
   PortableServer/ORB_Manager.h \
@@ -1069,8 +1075,10 @@ nobase_include_HEADERS += \
   PortableServer/poa_macros.h \
   PortableServer/portableserver_export.h \
   PortableServer/Active_Object_Map.i \
-  PortableServer/ImplRepoC.i \
-  PortableServer/ImplRepoS.i \
+  PortableServer/ImplRepoC.inl \
+  PortableServer/ImplRepoS.inl \
+  PortableServer/ServerObjectC.inl \
+  PortableServer/ServerObjectS.inl \
   PortableServer/Object_Adapter.i \
   PortableServer/POA.i \
   PortableServer/POAManager.i \
@@ -1084,6 +1092,7 @@ nobase_include_HEADERS += \
   PortableServer/ServerRequestInfo.inl \
   PortableServer/PolicyS_T.cpp \
   PortableServer/ImplRepo.pidl \
+  PortableServer/ServerObject.pidl \
   PortableServer/PortableServer.pidl \
   PortableServer/PortableServer_include.pidl
 
