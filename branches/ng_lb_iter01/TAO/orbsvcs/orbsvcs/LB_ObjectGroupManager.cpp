@@ -100,7 +100,7 @@ TAO_LB_ObjectGroupManager::get_object_group_id (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 LoadBalancing::ObjectGroup_ptr
