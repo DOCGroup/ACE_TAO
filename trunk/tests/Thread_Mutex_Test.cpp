@@ -24,6 +24,10 @@
 ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+
+static int reported_notsup = 0;
+
+
 static void *
 test (void *args)
 {
@@ -57,9 +61,19 @@ test (void *args)
             }
           else if (errno == ENOTSUP)
             {
+#if !defined (ACE_HAS_MUTEX_TIMEOUTS)
+              if (!reported_notsup)
+                {
+                  ACE_DEBUG ((LM_INFO,
+                              ACE_TEXT ("(%P|%t) %p, but ACE_HAS_MUTEX_TIMEOUTS is not defined - Ok\n"),
+                              ACE_TEXT ("mutex timeouts")));
+                  reported_notsup = 1;
+                }
+#else
               ACE_DEBUG ((LM_INFO,
-                          ACE_TEXT ("(%P|%t) %p\n"),
+                          ACE_TEXT ("(%P|%t) %p - maybe ACE_HAS_MUTEX_TIMEOUTS should not be defined?\n"),
                           ACE_TEXT ("mutex timeouts")));
+#endif  /* ACE_HAS_MUTEX_TIMEOUTS */
             }
           else
             {
