@@ -25,8 +25,8 @@ return 0;
 }
 
 int
-TAO_IOR_LookupTable::add_ior (ACE_CString object_name,
-                              ACE_CString ior)
+TAO_IOR_LookupTable::add_ior (ACE_CString &object_name,
+                              ACE_CString &ior)
 {
   // Make an entry in the table.
   switch (this->hash_map_.bind (object_name, ior))
@@ -42,15 +42,15 @@ TAO_IOR_LookupTable::add_ior (ACE_CString object_name,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n%s:%s Added to the table\n",
+	      "\n%s:%s Added to the IOR table\n",
 	      object_name.c_str (),
 	      ior.c_str ()));
-
+  
   return 0;
 }
 
 int
-TAO_IOR_LookupTable::find_ior (ACE_CString object_name,
+TAO_IOR_LookupTable::find_ior (ACE_CString &object_name,
                                ACE_CString &ior)
 {
   // Find the IOR corresponding to the object name.
