@@ -6,7 +6,7 @@ Mon May 10 08:24:20 1999  David L. Levine  <levine@cs.wustl.edu>
 Mon May 10 08:39:19 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * tao/Request.cpp: Explicit template instantiations for the newly
-        added sequence of CORBA::Request were missing.
+ 	  added sequence of CORBA::Request were missing.
 
 Mon May 10 00:36:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
