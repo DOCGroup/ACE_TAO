@@ -32,11 +32,8 @@ module AVStreams
     //                    <"video_depth", 9>}
     string QoSType;
     // Name of the Qos type, e.g. "video_qos"
-    string QoSParams;
 
-    // @@ Naga, can you please check to see if this can be uncommented
-    // now?
-    //    CosPropertyService::Properties QoSParams;
+    CosPropertyService::Properties QoSParams;
     // Sequence of name value pairs, see e.g. above.
   };
   
@@ -97,10 +94,7 @@ module AVStreams
     QoS theQoS;
   };
 
-  // @@ Naga, can you please check to see if this is working now?
-  // typedef CosPropertyService::Property streamEvent;
-
-  typedef string streamEvent;
+  typedef CosPropertyService::Property streamEvent;
   // Used to convey events, in Basic_StreamCtrl::push_event.
   
   exception notSupported 
@@ -144,10 +138,8 @@ module AVStreams
       string reason;
     };
 
-  // @@ Naga, can you please see if this is working now?
-  //  interface Basic_StreamCtrl : CosPropertyService::PropertySet {
-  interface Basic_StreamCtrl 
-    {
+
+  interface Basic_StreamCtrl : CosPropertyService::PropertySet {
       // = DESCRIPTION
       //    Base class for StreamCtrl, implements basic stream start
       //    and stop functionality.
@@ -257,10 +249,8 @@ module AVStreams
       // ()
     };
   
-  // @@ Naga, can you please see if this works now?
-  //  interface MCastConfigIf : CosPropertyService::PropertySet{
-  interface MCastConfigIf 
-    {
+  interface MCastConfigIf : CosPropertyService::PropertySet{
+
       // = DESCRIPTION
       //   Multicasting operations are not supported yet.
 
@@ -291,10 +281,7 @@ module AVStreams
       // Multicasting operations are not supported yet.
     };
 
-  // @@ Naga, can you please check if this works?
-  //  interface StreamEndPoint : CosPropertyService::PropertySet{
-  interface StreamEndPoint 
-    {
+  interface StreamEndPoint : CosPropertyService::PropertySet{
       // = DESCRIPTION
       //    The Stream EndPoint. Used to implement one endpoint of a
       //    stream that implements the transport layer.
