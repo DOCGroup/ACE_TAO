@@ -1,0 +1,11 @@
+#
+# $Id$
+#
+
+NAME = main
+OBJFILES = \
+        $(OBJDIR)\main.obj \
+        $(OBJDIR)\Client_Test.obj
+
+!include <$(ACE_ROOT)\netsvcs\build.bor>
+

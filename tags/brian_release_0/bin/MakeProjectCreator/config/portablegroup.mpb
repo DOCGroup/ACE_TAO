@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : naming, minimum_corba {
+  libs      += TAO_PortableGroup
+  after     += PortableGroup
+  comps     += PortableGroup
+  tagchecks += PortableGroup
+}

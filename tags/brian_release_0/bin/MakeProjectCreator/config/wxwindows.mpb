@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  requires += wxwindows
+  macros   += __WXMSW__
+}

@@ -1,0 +1,20 @@
+#
+# $Id$
+#
+# Makefile for building the Time-date example
+#
+
+NAME = server
+
+OBJFILES = \
+	$(OBJDIR)\server.obj
+
+IDLFILES = \
+	$(BINDIR)\TimeDate$(LIB_DECORATOR).lib
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+

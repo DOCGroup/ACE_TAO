@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : dseventlogadmin {
+  after      += RTEventLogAdmin
+  libs       += TAO_RTEventLogAdmin
+}

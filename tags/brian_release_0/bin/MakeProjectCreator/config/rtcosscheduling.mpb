@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : rtportableserver {
+  after     += RTCosScheduling
+  libs      += TAO_RTCosScheduling
+  comps     += RTCosScheduling
+  tagchecks += RTCosScheduling
+}

@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : naming {
+  libs      += TAO_CosLifeCycle
+  after     += CosLifeCycle
+  comps     += LifeCycle
+  tagchecks += LifeCycle
+}

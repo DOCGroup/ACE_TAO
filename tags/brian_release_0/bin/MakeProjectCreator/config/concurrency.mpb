@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : portableserver {
+  after     += CosConcurrency
+  libs      += TAO_CosConcurrency
+  comps     += Concurrency
+  tagchecks += Concurrency
+}

@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project: security, portableserver, ssl {
+    after     += SSLIOP
+    libs      += TAO_SSLIOP
+    comps     += SSLIOP
+    tagchecks += SSLIOP
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+file      : Documentation/Build.html
+author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+cvs-id    : $Id$
+-->
+
+<html>
+
+<head>
+
+  <title>Building CCF Libraries</title>
+
+  <meta name="author" content="Boris Kolpackov"/>
+  <meta name="keywords" content="build,compile,make,CCF,CORBA,compiler,framework,library"/>
+  <meta name="description" content="Building CCF Libraries"/>
+  <meta http-equiv="Content-Language" content="en"/>
+
+  <style type="text/css">
+  body {
+    font-family      : sans-serif;
+
+    color            : black;
+    background       : white;
+
+    max-width        : 40em;
+    padding          : 2em 2em 2em 3em;
+    margin           : 0 0 0 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family      : sans-serif;
+    font-weight      : 500;
+  }
+
+  h1 { font-size     : 170%; }
+  h2 { font-size     : 125%; }
+  </style>
+
+</head>
+
+<body>
+
+<ul>
+<li><a href="#linux">GNU/Linux</a>
+<ul>
+<li><a href="#linux_make">Make</a></li>
+<li><a href="#linux_cxx">C++</a></li>
+<li><a href="#linux_boost">Boost Libraries</a></li>
+<li><a href="#linux_utility">Utility Library</a></li>
+<li><a href="#linux_build">Building CCF</a></li>
+</ul></li>
+<li><a href="#windows">Windows</a>
+<ul>
+<li><a href="#windows_cxx">C++</a></li>
+<li><a href="#windows_boost">Boost Libraries</a></li>
+<li><a href="#windows_utility">Utility Library</a></li>
+<li><a href="#windows_build">Building CCF</a></li>
+</ul></li>
+</ul>
+
+<h1><a name="linux">GNU/Linux</a></h1>
+
+<h2><a name="linux_make">Make</a></h2>
+<p>Currently in order to build CCF Libraries you will need
+<a href="http://savannah.gnu.org/projects/make/">GNU make</a> 3.80 with the
+following bug fixes:
+
+<ol>
+<li>
+<a href="http://savannah.gnu.org/bugs/index.php?func=detailitem&item_id=1516">
+eval inside condition</a></li>
+
+<li>
+<a href="http://savannah.gnu.org/bugs/index.php?func=detailitem&item_id=1517">
+eval memory exhaustion</a></li>
+</ol>
+
+Your system distributor (for example <a href="http://www.debian.org">Debian</a>)
+should have the recent version of make with those fixes applied.
+</p>
+
+<p>If you are unsure whether you have those bugfixes or not then you can
+just try building CCF and if you see some strange make-related errors then
+you will need to upgrade.</p>
+
+<h2><a name="linux_cxx">C++</a></h2>
+<p>You can use any standard-conformant C++ compiler.
+<a href="http://gcc.gnu.org">GNU G++</a> 3.3 is known to work.</p>
+
+<h2><a name="linux_boost">Boost Libraries</a></h2>
+<p>In order to build CCF you will need the following libraries from
+<a href="http://www.boost.org">Boost distribution</a>:</p>
+
+<ol>
+<li>regex</li>
+<li>filesystem</li>
+<li>spirit parser framework</li>
+</ol>
+
+<p>There are two commonly used ways to obtain those libraries: you can get
+precompiled binaries from your system distributor (for example
+<a href="http://www.debian.org">Debian</a>) or download source code and
+compile it yourself. The first approach is recommended where available
+and if you got precompiled binaries then you can skip the rest of this
+section.</p>
+
+</p>If you choose to compile Boost Libraries yourself please refer to the
+<a href="http://boost.org/tools/build/index.html">Boost Building
+Instructions</a>.<p>
+
+<p>After you have successfully compiled necessary libraries in the boost
+distribution you need to do one more thing. Inside the boost distribution
+directory (e.g. <code>boost-1.30.2</code>) create a directory with name
+<code>lib</code> and copy (or soft link) <code>libboost_filesystem.a</code>
+and <code>libboost_regex.a</code> into it.</p>
+
+
+<h2><a name="linux_utility">Utility Library</a></h2>
+
+<p>Another prerequisite for CCF is
+<a href="ftp://ftp.kolpackov.net/pub/Utility/Utility-1.2.2.tar.bz2">Utility
+Library</a>. You don't need to build anything in this library. Just unpack
+it to some convenient place.</p>
+
+<h2><a name="linux_build">Building CCF</a></h2>
+
+<p>Before you can start building CCF you need to specify the location
+of Boost Libraries and Utility Library. There are two ways you can do
+this. The first way is to specify environment variables
+<code>BOOST_ROOT</code> and <code>UTILITY_ROOT</code> for example like
+this:</p>
+
+<pre>$ export BOOST_ROOT=~/build/boost-1.30.2
+$ export UTILITY_ROOT=~/build/Utility-1.2.1
+</pre>
+
+<p>Alternatively, you can specify these values in
+<code>CCF/Config.rules</code></p>
+
+<p>Finally, you can start the build process:</p>
+
+<pre>$ cd CCF
+$ make -f Makefile.alt</pre>
+
+<h1><a name="windows">Windows</a></h1>
+
+<h2><a name="windows_cxx">C++</a></h2>
+<p>VC++ 7.1 is required to build CCF on Windows. Note that neither
+VC++ 6 nor VC++ 7.0 are supported. </p>
+
+<h2><a name="windows_boost">Boost Libraries</a></h2>
+<p>In order to build CCF you will need the following libraries from
+<a href="http://www.boost.org">Boost distribution</a>:
+
+<ol>
+<li>regex</li>
+<li>filesystem</li>
+<li>spirit parser framework</li>
+</ol>
+
+<p>Please refer to the
+<a href="http://boost.org/tools/build/index.html">Boost Building
+Instructions</a> for details.<p>
+
+
+<h2><a name="windows_utility">Utility Library</a></h2>
+
+<p>Another prerequisite for CCF is
+<a href="ftp://ftp.kolpackov.net/pub/Utility/Utility-1.2.1.tar.bz2">Utility
+Library</a>. You don't need to build anything in this library. Just unpack
+it to some convenient place.</p>
+
+<h2><a name="windows_build">Building CCF</a></h2>
+
+<p>
+In order to build CCF with VC7.1 you will need to add Boost/Utility
+include and library paths to your search path. After having that done
+you can open VC7.1 solution file in <code>CCF/CCF/</code> and proceed
+as usual.</p>
+</body>
+</html>

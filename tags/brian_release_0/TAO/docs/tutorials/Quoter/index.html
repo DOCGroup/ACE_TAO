@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+  <head>
+    <title>Building a Stock Quoter with TAO - A Tutorial</title>
+    <!-- $Id$ -->
+  </head>
+
+  <BODY text = "#000000"
+    link="#000fff"
+    vlink="#ff0f0f"
+    bgcolor="#ffffff">
+
+    <h3>Building a Stock Quoter with TAO - A Tutorial</h3>
+
+    <P>The tutorial is organized around a single application, which
+      allows client applications to obtain stock quotes from a quote
+      service.  This application is based on a series of
+      <A HREF="http://www.cs.wustl.edu/~schmidt/report-doc.html">Object Interconnections</A>
+      columns written by
+      <A HREF="http://www.cs.wustl.edu/~schmidt/">Doug Schmidt</A>
+      and <A HREF="http://www.iona.com/hyplan/vinoski/">Steve Vinoski</A>
+      for the
+      <A HREF="http://www.cs.wustl.edu/~schmidt/report.html">C++ Report</A>
+      magazine.
+    </P>
+
+    <P>In this tutorial, we build up from simple client and server
+      applications to explore advanced TAO features, such as
+      <A HREF="http://www.cs.wustl.edu/~schmidt/report-doc.html#ami">
+        asynchronous method invocation</A>,
+      <A HREF="http://www.cs.wustl.edu/~schmidt/C++-report-col19.ps.gz">
+        reliable oneways</A>,
+      the <A HREF="http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz">
+        real-time Events Service</A>,
+      the <A HREF="../../INS.html">
+        Interoperable Naming Service</A>
+      support and much more.
+    </P>
+
+    As you go through the tutorial, feel free to check out the source
+    files for which links are provided.  If you choose to build and
+    run the example, however, use the files which are part of
+    the TAO source you <A
+    HREF="http://deuce.doc.wustl.edu/Download.html">download</a>. You can
+    find those source files in <CODE>$TAO_ROOT/docs/tutorials/Quoter</CODE>,
+    where there's also a Makefile to build them with. Downloading the files
+    individually from these links may result in source that does not build
+    since the online tutorials may use a different version of
+    ACE+TAO. <P>
+
+    <HR>
+
+    <OL>
+      <LI><A HREF="Simple/Client/index.html">
+          Introduction - A very simple client</A>
+      </LI>
+      <LI><A HREF="Simple/Server/index.html">
+          Introduction - A very simple server</A>
+      </LI>
+      <LI><A HREF="Simple/ImprovedServer/index.html">
+          Introduction - Improving the server via POA policies for
+          explicit activation and user-defined object ids</A>
+      </LI>
+      <LI><A HREF="Simple/Persistent/index.html">
+          Introduction - Improving the server via POA policies for
+          persistent object references</A>
+      </LI>
+      <LI><A HREF="Simple/Impl-Repo/index.html">
+	  Implementation Repository</A>
+      </LI>
+      <LI><A HREF="Naming_Service/index.html">
+          TAO's Naming Service</A>
+      </LI>
+      <LI><A HREF="AMI/index.html">
+          Asynchronous Method Invocation - CORBA for impatient clients</A>
+      </LI>
+      <LI><A HREF="On_Demand_Activation/index.html">
+	  On_Demand_Activation</A>
+      </LI>
+      <LI><A HREF="Event_Service/index.html">
+          TAO's COS Event Service</A>
+      </LI>
+      <LI><A HREF="RT_Event_Service/index.html">
+          TAO's RT Event Service</A>
+      </LI>
+    </OL>
+
+    <hr>
+    <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
+<!-- Created: Sat Nov 27 15:25:06 CST 1999 -->
+<!-- hhmts start -->
+Last modified: Fri Feb  8 14:12:11 CST 2002
+<!-- hhmts end -->
+  </body>
+</html>

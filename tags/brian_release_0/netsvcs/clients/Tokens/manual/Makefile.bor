@@ -1,0 +1,8 @@
+#
+# $Id$
+#
+
+NAME = manual
+OBJFILES = $(OBJDIR)\$(NAME).obj
+!include <$(ACE_ROOT)\netsvcs\build.bor>
+

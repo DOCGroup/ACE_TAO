@@ -1,0 +1,3 @@
+workspace {
+  shared_memory.mpc
+}

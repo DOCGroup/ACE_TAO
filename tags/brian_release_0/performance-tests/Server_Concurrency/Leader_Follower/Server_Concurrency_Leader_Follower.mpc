@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project : aceexe {
+  source_files {
+    leader_follower.cpp
+  }
+}
+
+project(*RT_CORBA) : aceexe {
+  source_files {
+    RT_CORBA_Leader_Follower.cpp
+  }
+}

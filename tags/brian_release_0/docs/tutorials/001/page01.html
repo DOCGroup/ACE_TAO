@@ -1,0 +1,104 @@
+<!-- $Id$ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>ACE Tutorial 001</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+
+<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 001<BR>
+A Beginners Guide to Using the ACE&nbsp;Toolkit</FONT></B></P></CENTER>
+
+<hr>
+<P>The purpose of this tutorial is to show you how to create a very simple
+server capable of handling multiple client connections. Unlike a &quot;traditional&quot;
+server application, this one handles all requests in one process. Issues
+of multi-processing and multi-threading will be handled in later tutorials.</P>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>What do you need to create a server?</P>
+
+<OL>
+<LI>Something which accepts connections from clients</LI>
+
+<LI>Something which handles established connections</LI>
+
+<LI>A main program loop that handles it all</LI>
+</OL>
+
+<P>The ACE&nbsp;Acceptor provides a solution for our first requirement.
+This class is given a TCP/IP&nbsp;port number on which it will listen for
+incoming connections. When a connection is attempted, the acceptor will
+create a new object (the handler) to deal with the client connection while
+the acceptor goes back to listening for other connections.</P>
+
+<P>The ACE&nbsp;EventHandler solves our second requirement. This doesn't
+seem obvious now but as we progress through this tutorial it will become
+more clear.</P>
+
+<P>Finally, a simple <I>main()</I> function will provide our program loop.
+After any program initialization, it will enter an infinite loop which
+waits for connection attempts to the Acceptor or data &quot;events&quot;
+on the EventHandler.</P>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>Before we continue, I need to introduce one more ACE concept: the Reactor.
+</P>
+
+<P>I don't want to go into great detail at this time on what the Reactor
+is, what it does and how it does it but it is necessary for you to understand
+the basic function of a reactor because it is going to be in the first
+piece of code you see.  The figure below depicts the interrelationships
+between the Reactor, the Acceptor and the application handler.</P>
+<P> <center> <img src="simple.gif" align=center> </center>
+
+<P>Briefly:<BR>
+The reactor is an object which reacts when things happen to other objects.
+These things are called <I>events</I>. The <I>other objects</I> are communications
+objects which you have <I>registered</I> with the reactor. At the time
+of registration, you also specify which events you are interested in. The
+reactor is notified by the operating system when the events of interest
+occur within the registered objects. The reactor then uses member functions
+of the registered object to process the event. Notice that the reactor
+doesn't care what happens because of the event. It is the object's responsibility
+to process the event correctly. The reactor simply notifies the object
+of the event.</P>
+
+<P>Why use the reactor?</P>
+
+<P>That will become clear as the tutorial progresses. For now, however,
+a brief answer would be this: it allows multiple simultaneous client connections
+to be processed efficiently by a single-threaded server. </P>
+
+<P>Servers have traditionally created a separate thread or process for
+each client served. For large-volume services (such as telnet and ftp)
+this is appropriate. However, for small-volume services the overhead of
+process creation far outweighs the actual work being done. So... folks
+begin using threads instead of processes to handle the clients. This is
+good also but still, in some cases, the overhead is too much to bear. Instead,
+why not have a single thread handle several clients and use a more intelligent
+load-balancing methodology than one-thread-or-process-per-client?
+<i>Caveat:  Handling all requests in one thread of one process is really
+only good when the requests can be handled almost instantaneously.</i>
+</P>
+
+<P>This is where the reactor's power and flexibility come into play. The
+developer can create a simple, single-threaded application that is later
+modified to thread-per-client, process-per-client or thread-pool solution.
+<P>
+If all of this is gibberish and makes you think that ACE is way to hard to
+learn, don't worry.  We'll go into all the details and explain as we go.
+I only went into all of this so that it can kick around in the back of your
+mind until you need it later.
+<P>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>
+

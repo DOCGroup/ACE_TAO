@@ -1,0 +1,11 @@
+# $Id$
+#
+# Makefile for building utils
+#
+
+DIRS = \
+	catior \
+	IOR-parser \
+	nslist
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,52 @@
+#
+# Makefile for building the TAO PSDL library
+#
+# $Id$
+#
+
+NAME = TAO_PSDL
+
+OBJFILES = \
+        $(OBJDIR)\PSDL_Enum_Type_Visitor.obj \
+        $(OBJDIR)\PSDL_Exception_Scope.obj \
+        $(OBJDIR)\PSDL_Exception_Visitor.obj \
+        $(OBJDIR)\PSDL_Extern.obj \
+        $(OBJDIR)\PSDL_Interface_Scope.obj \
+        $(OBJDIR)\PSDL_Interface_Visitor.obj \
+        $(OBJDIR)\PSDL_Interpreter.obj \
+        $(OBJDIR)\PSDL_l.obj \
+        $(OBJDIR)\PSDL_Module_Scope.obj \
+        $(OBJDIR)\PSDL_Module_Visitor.obj \
+        $(OBJDIR)\PSDL_Node.obj \
+        $(OBJDIR)\PSDL_Node_Visitor.obj \
+        $(OBJDIR)\PSDL_Op_Dcl_Scope.obj \
+        $(OBJDIR)\PSDL_Root_Scope.obj \
+        $(OBJDIR)\PSDL_Scope.obj \
+        $(OBJDIR)\PSDL_Scope_Visitor.obj \
+        $(OBJDIR)\PSDL_Simple_Scope.obj \
+        $(OBJDIR)\PSDL_Stream.obj \
+        $(OBJDIR)\PSDL_Struct_Scope.obj \
+        $(OBJDIR)\PSDL_Struct_Visitor.obj \
+        $(OBJDIR)\PSDL_Type_Dcl_Visitor.obj \
+        $(OBJDIR)\PSDL_Typecode_Defn.obj \
+        $(OBJDIR)\PSDL_Visitor_Factory.obj \
+        $(OBJDIR)\PSDL_y.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_SVC_UTILS_CFLAGS) \
+        $(TAO_PSDL_CFLAGS) \
+        -DTAO_PSDL_BUILD_DLL
+
+CPPDIR = .
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+        $(TAO_SVC_UTILS_LIB) \
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+

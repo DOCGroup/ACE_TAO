@@ -1,0 +1,34 @@
+# file      : CCF/CIDL/Makefile.archive
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $Id$
+
+root = ../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Archive.pre.rules)
+
+cxx_translation_units := LexicalAnalyzer.cpp Parser.cpp
+
+translated_units := SemanticGraph/Composition.o  \
+                    SemanticGraph/Elements.o     \
+                    SemanticGraph/Executor.o
+
+translated_units += Traversal/Elements.o   \
+                    Traversal/Executor.o
+
+translated_units += SemanticAction/Composition.o
+
+translated_units += SemanticAction/Impl/Composition.o  \
+                    SemanticAction/Impl/Factory.o      \
+                    SemanticAction/Impl/HomeExecutor.o
+
+module_base           := CIDL
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Archive.post.rules)

@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver, messaging {
+  Source_Files {
+    Blocking_Sync_None.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoexe, messaging {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

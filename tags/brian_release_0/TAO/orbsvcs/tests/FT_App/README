@@ -1,0 +1,88 @@
+$Id$
+
+This is a simple application intended to test Fault Tolerant Corba.
+
+The server implements GenericFactory as a factory that creates TestReplicas.
+TestReplicas are defined in the IDL in FT_TestReplica.idl.
+
+FT_TEST::TestReplica inherits from PullMonitorable and Checkpointable
+to provide access needed by FT Corba's FaultDetector and Orb.
+
+An FT_TEST::TestReplica contains a long counter.  Methods are defined
+to set, increment, and get the value of the counter.  The counter
+is also exposed as an attribute named counter.  (i.e. set(x) is
+exactly equivalent to counter(x), and get() is exactly equivalent
+to counter())
+
+In addition there is a method named die that lets the client request
+a server "failure" at a variety of interesting times.  See the "die"
+command to find out when death can be scheduled.
+
+The client provides a command interface to operate on the server.
+Tests may be run manually by typing commands, or may be automated by
+reading the commands from a file.
+
+Commands consist of a single character followed by an optional number
+(with no space between).  For example: =10 sets the value of the counter
+to 10.  +5 increments the counter by 5 (thereby setting the value to 15).
+
+The '?' commmand lists the possible commands and their options.
+
+Additional programs:
+ ft_notifier is a stub implementation of a fault notifier for testing fault detectors.
+ ft_analyzer is a stub implementation of a fault analyzer for testing the fault notifier
+ ft_registry is an implementation of FactoryRegistry for testing GenericFactories.
+
+To run:
+Start one or more FT_Replicas.  Use a -o <filename> to tell the replica
+where to write its ior..
+
+Start the FT_Client with -f file1<,filen>...  (i.e. a comma separated list
+of replica IOR files.  To read commands from a file, use -c <command file>
+
+The counter is persistent and will survive server failures.  It's
+stored in a file named persistent.dat.
+
+Replicas of the server may be run in separate directories to simulate
+replicated stateful objects (each replica has its own distinct state), or
+multiple replicas can be run in the same directory to simulate a server
+with a shared state or one that executes real-world unsafe-to-repeat
+action  (i.e. "fire the retro rockets" or "expose the patient to
+theraputic radiation.")
+
+Unit Tests based on this application:
+
+ run_test_basic.pl
+    tests ft_client and ft_replica, thereby answering the question,
+    "who will test the tester?".
+
+ run_test_detector.pl
+    uses ft_client, ft_replica, and ft_notifier (a "stub" fault notifier)
+    to test the Fault_Detector (from orbsvcs)
+
+ run_test_notifier.pl
+     uses ft_client, ft_replica, Fault_Detector and ft_analyzer (a "stub" fault analyzer)
+     to test the Fault_Notifier (from orbsvcs)
+
+ run_test_fault_consumer.pl
+     uses ft_client, ft_replica, Fault_Detector, Fault_Notifier to test
+     ft_fault_consumer (the implementation of a fault consumer)
+
+ run_test_registry.pl
+    uses ft_client, ft_replica, and ft_creator to test ft_registry
+    (i.e. to test the implementation of PortableServer::FactoryRegistry)
+
+ run_test_rmregistry.pl
+    uses ft_client, ft_replica, and ft_creator to test the FactoryRegistery
+    implementation in the ReplicationManager.
+
+
+  run_test_rmnotifier.pl
+    uses ft_client, ft_replica, Fault_Detector to test the connection between
+    the Fault_Notifier and the ReplicationManager
+
+  demo.pl
+     tests the entire FT system.
+
+
+See the internal documentation of the .pl files for more details.

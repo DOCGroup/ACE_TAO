@@ -1,0 +1,6 @@
+// $Id$
+project : taolib, core {
+  sharedname   = TAO_Strategies
+  dynamicflags = TAO_STRATEGIES_BUILD_DLL
+  include_dir  = tao/Strategies
+}

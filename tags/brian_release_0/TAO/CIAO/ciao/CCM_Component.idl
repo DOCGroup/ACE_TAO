@@ -1,0 +1,117 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Component.idl
+ */
+
+#if !defined (CCM_COMPONENT_IDL)
+#define CCM_COMPONENT_IDL
+
+#include "CCM_Event.idl"
+#include "tao/IFR_Client/IFR_Base.pidl"
+
+module Components
+{
+  abstract valuetype PrimaryKeyBase {};
+
+  interface CCMObject; //forward reference
+
+  interface CCMHome
+  {
+    CORBA::IRObject get_component_def ();
+    CORBA::IRObject get_home_def ();
+    void remove_component ( in CCMObject comp)
+      raises (RemoveFailure);
+  };
+  typedef sequence<CCMHome> CCMHomes;
+
+  interface KeylessCCMHome
+  {
+    CCMObject create_component()
+      raises (CreateFailure);
+  };
+
+  interface HomeFinder
+  {
+    CCMHome find_home_by_component_type (in CORBA::RepositoryId comp_repid)
+      raises (HomeNotFound);
+
+    CCMHome find_home_by_home_type (in CORBA::RepositoryId home_repid)
+      raises (HomeNotFound);
+
+    CCMHome find_home_by_name (in string home_name)
+      raises (HomeNotFound);
+  };
+
+  interface Configurator
+  {
+    void configure (in CCMObject comp)
+      raises (WrongComponentType);
+  };
+
+  valuetype ConfigValue
+  {
+    public FeatureName name;
+    public any value;
+  };
+
+  typedef sequence<ConfigValue> ConfigValues;
+
+  interface StandardConfigurator : Configurator
+  {
+    void set_configuration (in ConfigValues descr);
+  };
+
+  interface HomeConfiguration : CCMHome
+  {
+    void set_configurator (in Configurator cfg);
+    void set_configuration_values (in ConfigValues config);
+    void complete_component_configuration (in boolean b);
+    void disable_home_configuration();
+  };
+
+  valuetype ComponentPortDescription
+  {
+    public FacetDescriptions facets;
+    public ReceptacleDescriptions receptacles;
+    public ConsumerDescriptions consumers;
+    public EmitterDescriptions emitters;
+    public PublisherDescriptions publishers;
+  };
+
+  interface CCMObject : Navigation, Receptacles, Events
+  {
+    CORBA::IRObject get_component_def ( );
+    CCMHome get_ccm_home( );
+    PrimaryKeyBase get_primary_key( )
+      raises (NoKeyAvailable);
+    void configuration_complete( )
+      raises (InvalidConfiguration);
+    void remove()
+      raises (RemoveFailure);
+    ComponentPortDescription get_all_ports ();
+  };
+
+  // @@ Enumeration and DefaultEnumeration are only for EJB to CCM
+  // mapping?  At any rate, we should be able to skip them for now.
+  abstract valuetype Enumeration
+  {
+    boolean has_more_elements();
+    CCMObject next_element();
+  };
+
+  typedef sequence<CCMObject> CCMObjectSeq;
+
+  valuetype DefaultEnumeration : Enumeration
+  {
+    private CCMObjectSeq objects;
+  };
+};
+#endif /* CCM_COMPONENT_IDL */

@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+feature(qt) {
+  MOC_Files {
+    QtReactor.h
+  }
+
+  Source_Files(ACE_COMPONENTS) {
+    Demux {
+      QtReactor_moc.cpp
+    }
+  }
+}

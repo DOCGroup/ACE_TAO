@@ -1,0 +1,18 @@
+//
+// $Id$
+//
+
+module Test
+{
+  interface HelloWorld
+  {
+    string get_string ();
+  };
+
+  interface Hello
+  {
+    HelloWorld  get_helloworld ();
+
+    oneway void shutdown ();
+  };
+};

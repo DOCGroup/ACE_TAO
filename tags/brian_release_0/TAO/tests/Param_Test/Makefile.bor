@@ -1,0 +1,11 @@
+# $Id$
+#
+# Makefile for building the Param_Test executables
+#
+
+MAKEFILES = \
+        server.bor \
+        client.bor \
+        anyop.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

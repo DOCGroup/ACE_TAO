@@ -1,0 +1,18 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Consumer) : orbsvcsexe, rtevent, naming, rteventlogadmin {
+  requires += minimum_corba
+  exename = consumer
+  source_files {
+    RTEvent_Consumer.cpp
+  }
+}
+
+project(*Supplier) : orbsvcsexe, rtevent, naming, rteventlogadmin {
+  requires += minimum_corba
+  exename = supplier
+  source_files {
+    RTEvent_Supplier.cpp
+  }
+}
