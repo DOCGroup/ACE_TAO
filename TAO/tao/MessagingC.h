@@ -1783,8 +1783,8 @@ TAO_NAMESPACE  Messaging
 
 
   protected:
-    ExceptionHolder (void) { };           // default constructor
-    virtual ~ExceptionHolder (void) { };
+    ExceptionHolder (void);           // default constructor
+    virtual ~ExceptionHolder (void);
 
     // TAO internals
     virtual void *_tao_obv_narrow (ptr_arith_t);
@@ -2045,7 +2045,7 @@ TAO_NAMESPACE  OBV_Messaging
 
 
   private:
-        CORBA::Boolean _pd_is_system_exception;
+    CORBA::Boolean _pd_is_system_exception;
     CORBA::Boolean _pd_byte_order;
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _marshaled_exception_seq;
@@ -2069,7 +2069,6 @@ class TAO_InputCDR;
 
 #if defined (TAO_HAS_AMI_CALLBACK)
 
-// @@ Michael: Addition
 
 enum TAO_AMI_Reply_Status
 {

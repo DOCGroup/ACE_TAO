@@ -3021,7 +3021,190 @@ Messaging::PolicyValueSeq_out::operator[] (CORBA::ULong slot)
 
 
 #if defined (TAO_HAS_AMI_CALLBACK)
-/*
+
+// *************************************************************
+// Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_var
+// *************************************************************
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (Messaging::ExceptionHolder::_tao_seq_Octet *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (const Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::~_tao_seq_Octet_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (Messaging::ExceptionHolder::_tao_seq_Octet *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (const Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator const Messaging::ExceptionHolder::_tao_seq_Octet &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator Messaging::ExceptionHolder::_tao_seq_Octet &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator Messaging::ExceptionHolder::_tao_seq_Octet &() const// cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const Messaging::ExceptionHolder::_tao_seq_Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *&
+Messaging::ExceptionHolder::_tao_seq_Octet_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_retn (void)
+{
+  Messaging::ExceptionHolder::_tao_seq_Octet *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_out
+// *************************************************************
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (Messaging::ExceptionHolder::_tao_seq_Octet *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (const Messaging::ExceptionHolder::_tao_seq_Octet_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Messaging::ExceptionHolder::_tao_seq_Octet_out&,p).ptr_)
+{}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_out &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (const Messaging::ExceptionHolder::_tao_seq_Octet_out &p)
+{
+  this->ptr_ = ACE_const_cast (Messaging::ExceptionHolder::_tao_seq_Octet_out&,p).ptr_;
+  return *this;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_out &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (Messaging::ExceptionHolder::_tao_seq_Octet *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator Messaging::ExceptionHolder::_tao_seq_Octet *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *&
+Messaging::ExceptionHolder::_tao_seq_Octet_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+
 ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder (void) // default constructor
 {}
@@ -3029,15 +3212,12 @@ Messaging::ExceptionHolder::ExceptionHolder (void) // default constructor
 ACE_INLINE
 Messaging::ExceptionHolder::~ExceptionHolder (void) // destructor
 {}
-*/
+
 ACE_INLINE const char* 
 Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 {
   return "IDL:Messaging/ExceptionHolder:1.0";
 }
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CI_)
-#define _MESSAGING_EXCEPTIONHOLDER___VAR_CI_
 
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder_var
@@ -3146,12 +3326,6 @@ Messaging::ExceptionHolder_var::_retn (void)
 }
 
 
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CI_)
-#define _MESSAGING_EXCEPTIONHOLDER___OUT_CI_
-
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder_out
 // *************************************************************
@@ -3218,7 +3392,6 @@ Messaging::ExceptionHolder_out::operator-> (void)
 }
 
 
-#endif /* end #if !defined */
 
 // ****************************************************************
 
