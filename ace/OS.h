@@ -744,8 +744,8 @@ friend class ace_dewarn_gplusplus
   void *operator new (size_t bytes); \
   void operator delete (void *ptr);
 
-  // Note that these are just place holders for now.  They'll
-  // be replaced by the ACE_Malloc stuff shortly...
+  // Note that these are just place holders for now.  Some day they
+  // may be be replaced by <ACE_Malloc>.
 #   define ACE_ALLOC_HOOK_DEFINE(CLASS) \
   void *CLASS::operator new (size_t bytes) { return ::new char[bytes]; } \
   void CLASS::operator delete (void *ptr) { delete [] ((char *) ptr); }

@@ -1,3 +1,9 @@
+Tue Feb 29 13:48:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Updated a comment about using ACE_Malloc for class-specific
+	  allocations.  Thanks to Boris Sukholitko <boris@webglide.com>
+	  for reporting this.
+
 Tue Feb 29 08:48:28 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Time_Service_Test.cpp:  Enabled the test on Win32 and removed
