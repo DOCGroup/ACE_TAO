@@ -1006,12 +1006,11 @@ ACE_OS_String::strsncpy (char *dst, const char *src, size_t maxlen)
   return dst;
 }
 
-#if defined (ACE_HAS_WCHAR)
-wchar_t *
-ACE_OS_String::strsncpy (wchar_t *dst, const wchar_t *src, size_t maxlen)
+ACE_WCHAR_T *
+ACE_OS_String::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
 {
-  register wchar_t *rdst = dst;
-  register const wchar_t *rsrc = src;
+  register ACE_WCHAR_T *rdst = dst;
+  register const ACE_WCHAR_T *rsrc = src;
   register size_t rmaxlen = maxlen;
 
   if (rmaxlen > 0)
@@ -1022,4 +1021,3 @@ ACE_OS_String::strsncpy (wchar_t *dst, const wchar_t *src, size_t maxlen)
     }
   return dst;
 }
-#endif /* ACE_HAS_WCHAR */

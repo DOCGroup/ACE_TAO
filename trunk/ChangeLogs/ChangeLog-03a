@@ -1,3 +1,10 @@
+Tue Dec 04 22:12:04 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS_String.h:
+	* ace/OS_String.cpp (strsncpy): Made the wchar_t version of this
+	  function available on all platforms and changed it to use type
+	  ACE_WCHAR_T.
+
 Tue Dec 04 20:08:49 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  Merged in the new String_Base template class.
