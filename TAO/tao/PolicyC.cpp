@@ -550,7 +550,6 @@ CORBA::tao_Policy_cast::tao_upcast (
         CORBA::Policy,
         CORBA::tao_Policy_life
       >;
-template class TAO_Unbounded_Sequence<CORBA::UShort>;
 
 template class
 TAO_Objref_Out_T<
@@ -564,7 +563,7 @@ TAO_Objref_Out_T<
         CORBA::Policy, \
         CORBA::tao_Policy_life \
       >
-# pragma instantiate TAO_Unbounded_Sequence<CORBA::UShort>
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Policy, \

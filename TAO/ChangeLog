@@ -1,3 +1,11 @@
+Thu May 29 19:19:30 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/CONV_FRAMEC.cpp: 
+	* tao/DynamicC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/Tagged_Components.cpp: Fixed duplicate symbols errors in
+	  SunCC builds.
+
 Thu May 29 18:47:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ObjectKey_Table.cpp: Another cosmetic change. 
