@@ -1,3 +1,10 @@
+Mon Mar 19 06:23:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Commented out the
+	  guard for RECONFIG_SCHED type. Theoretically the guard may not
+	  be needed. This should solve one of the compile problems on Lynx
+	  I386 builds. 
+
 Mon Mar 19 03:02:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp (get_attributes):
