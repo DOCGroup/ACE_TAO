@@ -2,120 +2,141 @@
 
 #include "common/NamespaceSupport.h"
 
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   ACEXML_NamespaceSupport xmlns;
 
   xmlns.pushContext();
-  xmlns.declarePrefix("", "http://www.w3.org/1999/xhtml");
-  xmlns.declarePrefix("dc", "http://www.purl.org/dc#");
-  xmlns.declarePrefix("xc", "http://www.purl.org/dc#");
+  xmlns.declarePrefix(ACE_TEXT (""),
+                      ACE_TEXT ("http://www.w3.org/1999/xhtml"));
+  xmlns.declarePrefix(ACE_TEXT ("dc"),
+                      ACE_TEXT ("http://www.purl.org/dc#"));
+  xmlns.declarePrefix(ACE_TEXT ("xc"),
+                      ACE_TEXT ("http://www.purl.org/dc#"));
 
   const ACEXML_Char *lName, *uri;
-  const ACEXML_Char *n1 = "p";
+  const ACEXML_Char *n1 = ACE_TEXT ("p");
 
-  cout << "*** Checking processName:" << endl;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("*** Checking processName:\n")));
   if (xmlns.processName (n1, uri, lName, 0) != 0)
-    cerr << "Fail to resolve namespace name " << n1 << endl;
+    ACE_DEBUG ((LM_ERROR,
+                ACE_TEXT ("Fail to resolve namespace name %s\n"),
+                n1));
   else
-    cout << "Namespace URI: " << uri << endl
-         << "Local name: " << lName << endl
-         << "Raw name: " << n1 << endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
+                uri, lName, n1));
 
-  ACEXML_Char *n2 = "dc:title";
+  ACEXML_Char *n2 = ACE_TEXT ("dc:title");
   if (xmlns.processName(n2, uri, lName, 0) != 0)
-    cerr << "Fail to resolve namespace name " << n2 << endl;
+    ACE_DEBUG ((LM_ERROR,
+                ACE_TEXT ("Fail to resolve namespace name %S\n"),
+                n2));
   else
-    cout << "Namespace URI: " << uri << endl
-         << "Local name: " << lName << endl
-         << "Raw name: " << n2 << endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
+                uri, lName, n2));
 
-  ACEXML_Char *n3 = "xml:title";
+  ACEXML_Char *n3 = ACE_TEXT ("xml:title");
   if (xmlns.processName(n3, uri, lName, 0) != 0)
-    cerr << "Fail to resolve namespace name " << n3 << endl;
+    ACE_DEBUG ((LM_ERROR,
+                ACE_TEXT ("Fail to resolve namespace name %S\n"),
+                n3));
   else
-    cout << "Namespace URI: " << uri << endl
-         << "Local name: " << lName << endl
-         << "Raw name: " << n3 << endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
+                uri, lName, n3));
 
-  cout << endl << "*** Checking getDeclaredPrefixes" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("\n*** Checking getDeclaredPrefixes\n")));
+
   ACEXML_STR_LIST prefixes;
   if (xmlns.getDeclaredPrefixes (prefixes) != 0)
-    cerr << "Fail to get a list of declared prefixes" << endl;
+    ACE_DEBUG ((LM_ERROR,
+                ACE_TEXT ("Fail to get a list of declared prefixes\n")));
   else
     {
       ACEXML_STR_LIST::ITERATOR iter = prefixes.begin ();
       const ACEXML_Char **prefix = 0;
 
       for (; iter.next (prefix);iter.advance ())
-        cout << "prefix: \"" << *prefix << "\"" << endl;
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
     }
 
-  cout << endl << "*** Checking getPrefix" << endl;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getPrefix\n")));
   const ACEXML_Char *prefix = 0;
 
-  if ((prefix = xmlns.getPrefix ("http://www.purl.org/dc#")) == 0)
-    cerr << "Fail to get prefix of http://www.purl.org/dc#" << endl;
+  if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.purl.org/dc#"))) == 0)
+    ACE_DEBUG ((LM_ERROR,
+                ACE_TEXT ("Fail to get prefix of http://www.purl.org/dc#\n")));
   else
-    cout << "Prefix of http://www.purl.org/dc# is " << prefix << endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Prefix of http://www.purl.org/dc# is %s\n"),
+                prefix));
 
-  if ((prefix = xmlns.getPrefix ("http://www.w3.org/1999/xhtml")) == 0)
-    cout << "Fail to get prefix of http://www.w3.org/1999/xhtml which is okay" << endl;
+  if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/1999/xhtml"))) == 0)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Fail to get prefix of http://www.w3.org/1999/xhtml which is okay\n")));
   else
-    cerr << "ERROR: Prefix of http://www.w3.org/1999/xhtml is " << prefix << endl;
+    ACE_DEBUG ((LM_ERROR,
+                ACE_TEXT ("ERROR: Prefix of http://www.w3.org/1999/xhtml is %s\n"),
+                prefix));
 
-  if ((prefix = xmlns.getPrefix ("http://www.w3.org/XML/1998/namespace")) == 0)
-    cerr << "Fail to get prefix of http://www.w3.org/XML/1998/namespace" << endl;
+  if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/XML/1998/namespace"))) == 0)
+    ACE_DEBUG ((LM_ERROR,
+                ACE_TEXT ("Fail to get prefix of http://www.w3.org/XML/1998/namespace\n")));
   else
-    cout << "Prefix of http://www.w3.org/XML/1998/namespace is " << prefix << endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Prefix of http://www.w3.org/XML/1998/namespace is %s\n"),
+                prefix));
 
-  cout << endl << "*** Checking getPrefixes with known URI" << endl;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getPrefixes with known URI\n")));
   prefixes.reset ();
 
-  if (xmlns.getPrefixes ("http://www.purl.org/dc#", prefixes) != 0)
-    cerr << "Fail to getPrefixes based on known URI" << endl;
+  if (xmlns.getPrefixes (ACE_TEXT ("http://www.purl.org/dc#"), prefixes) != 0)
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to getPrefixes based on known URI\n")));
   else
     {
       ACEXML_STR_LIST::ITERATOR iter = prefixes.begin ();
       const ACEXML_Char **prefix = 0;
 
       for (; iter.next (prefix);iter.advance ())
-        cout << "prefix: \"" << *prefix << "\"" << endl;
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
     }
 
-  cout << endl << "*** Checking getPrefixes" << endl;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getPrefixes\n")));
   prefixes.reset ();
 
   if (xmlns.getPrefixes (prefixes) != 0)
-    cerr << "Fail to getPrefixes" << endl;
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to getPrefixes\n")));
   else
     {
       ACEXML_STR_LIST::ITERATOR iter = prefixes.begin ();
       const ACEXML_Char **prefix = 0;
 
       for (; iter.next (prefix);iter.advance ())
-        cout << "prefix: \"" << *prefix << "\"" << endl;
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
     }
 
-  cout << endl << "*** Checking getURI" << endl;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getURI\n")));
   const ACEXML_Char *URI = 0;
 
-  if ((URI = xmlns.getURI ("dc")) == 0)
-    cerr << "Fail to get URI for \"dc\"" << endl;
+  if ((URI = xmlns.getURI (ACE_TEXT ("dc"))) == 0)
+    ACE_DEBUG((LM_ERROR, ACE_TEXT ("Fail to get URI for \"dc\"\n")));
   else
-    cout << "URI for \"dc\" is " << URI << endl;
-  if ((URI = xmlns.getURI ("xc")) == 0)
-    cerr << "Fail to get URI for \"xc\"" << endl;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"dc\" is %s\n"), URI));
+  if ((URI = xmlns.getURI (ACE_TEXT ("xc"))) == 0)
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xc\"\n")));
   else
-    cout << "URI for \"xc\" is " << URI << endl;
-  if ((URI = xmlns.getURI ("xml")) == 0)
-    cerr << "Fail to get URI for \"xml\"" << endl;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"xc\" is %s\n"), URI));
+  if ((URI = xmlns.getURI (ACE_TEXT ("xml"))) == 0)
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xml\"\n")));
   else
-    cout << "URI for \"xml\" is " << URI << endl;
-  if ((URI = xmlns.getURI ("")) == 0)
-    cerr << "Fail to get default namespace URI" << endl;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"xml\" is %s\n"), URI));
+  if ((URI = xmlns.getURI (ACE_TEXT (""))) == 0)
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get default namespace URI\n")));
   else
-    cout << "URI for default namespace is " << URI << endl;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for default namespace is %s\n"), URI));
 
   xmlns.popContext();
 

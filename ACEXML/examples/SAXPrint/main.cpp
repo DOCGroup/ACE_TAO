@@ -7,15 +7,15 @@
 
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACEXML_DefaultHandler *handler = 0;
   {
     if (argc < 2)
-      {
-        cerr << "Usage: SAXPrint <XML filename> [-n]" << endl;
-        return 1;
-      }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_LIB_TEXT ("Usage: %s <XML filename> [-n]\n"),
+                           argv [0]),
+                          -1);
 
     ACEXML_FileCharStream *fstm = 0;
     ACE_NEW_RETURN (fstm,
@@ -23,10 +23,10 @@ main (int argc, char *argv[])
                     1);
 
     if (fstm->open (argv [1]) != 0)
-      {
-        cerr << "Fail to open XML file: " << argv[1] << endl;
-        return 1;
-      }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("Fail to open XML file: %s\n"),
+                         argv [1]),
+                        -1);
 
     if (argc == 2)              //
       ACE_NEW_RETURN (handler,
@@ -50,8 +50,6 @@ main (int argc, char *argv[])
     parser.parse (&input, xmlenv);
     if (xmlenv.exception ())
       xmlenv.exception ()->print ();
-
-    cout << "\r\r\r";
   }
   delete handler;
   return 0;

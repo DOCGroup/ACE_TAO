@@ -69,7 +69,7 @@ public:
 private:
   ACEXML_Char *filename_;
 
-  ifstream istream_;
+  FILE *infile_;
 
 };
 
