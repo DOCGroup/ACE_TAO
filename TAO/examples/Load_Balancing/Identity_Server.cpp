@@ -101,23 +101,41 @@ Identity_Server::init (int argc,
                            "problems using the factory ior\n"),
                           -1);
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "Identity_Server: Requesting new Random Object "
+                  "Group with id <Identity, Random>\n"));
+
       Load_Balancer::Object_Group_var random_group =
-        factory->make_random ("Random group",
+        factory->make_random ("Identity, Random",
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "Identity_Server: Requesting new Round Robin "
+                  "Object Group with id <Identity, Round Robin>\n"));
+
       Load_Balancer::Object_Group_var rr_group =
-        factory->make_round_robin ("Round Robin group",
+        factory->make_round_robin ("Identity, Round Robin",
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Create the requested number of <Identity> objects, and
       // register them with the random and round robin
       // <Object_Group>s.
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Identity_Server: Registering %d object(s) "
+                  "with <Identity, Random> Object Group\n",
+                    random_objects_));
       create_objects (random_objects_,
                       random_group.in (),
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Identity_Server: Registering %d object(s) "
+                  "with <Identity, Round Robin> Object Group\n",
+                    random_objects_));
       create_objects (rr_objects_,
                       rr_group.in (),
                       ACE_TRY_ENV);
@@ -165,15 +183,18 @@ Identity_Server::create_objects (size_t number_of_objects,
       member.obj = identity_servant->_this (ACE_TRY_ENV);
       ACE_CHECK;
 
-      // Bind the servant in the random <Object_Group>.
+      // Bind the servant in the <Object_Group>.
       group->bind (member, ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
 
 int
- Identity_Server::run (CORBA::Environment &ACE_TRY_ENV)
+Identity_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Identity_Server: Initialized \n"));
+
   int result;
 
   result = this->orb_manager_.run (ACE_TRY_ENV);

@@ -100,6 +100,17 @@ public:
   // a sequence of <Group_ID>s of all existing random
   // <Object_Group>s created by this factory.
 
+  // = Implementation detail methods.
+
+  void remove_group (const ACE_CString &id, int random);
+  // This method is invoked by an <Object_Group> with group id <id> when it
+  // is being destroyed.  The method removes entry corresponding to
+  // group <id> from <random_groups_> if <random> is 1 or from
+  // <rr_groups_> if <random> is 0.  This recycles <id>, allowing it
+  // to be used for new <Object_Group>, and prevents the destroyed
+  // group from being included in lists returned from <random_groups>
+  // and <round_robin_groups> methods.
+
 private:
   // = Helper methods.
 
@@ -150,7 +161,8 @@ public:
 
   // = Initialization and termination methods.
 
-  Object_Group_i (const char * id);
+  Object_Group_i (const char * id,
+                  Object_Group_Factory_i * my_factory);
   // Constructor.
 
   ~Object_Group_i (void);
@@ -229,6 +241,13 @@ protected:
 
   ACE_CString id_;
   // This group's id.
+
+  Object_Group_Factory_i *my_factory_;
+  // Pointer to the <Object_Group_Factory> servant, which created this
+  // <Object_Group> servant.  We need this pointer to be able to
+  // notify the factory when this <Object_Group> is destroyed.  Upon
+  // notification, the factory can update its records and release
+  // resources as necessary.
 };
 
 
@@ -239,8 +258,12 @@ class Random_Object_Group : public Object_Group_i
   //    random policy for <resolve>.
   //
 public:
-  Random_Object_Group (const char *id);
+  Random_Object_Group (const char *id,
+                       Object_Group_Factory_i *my_factory);
   // Constructor.
+
+  ~Random_Object_Group (void);
+  // Destructor.
 
   CORBA::Object_ptr resolve (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -248,6 +271,12 @@ public:
   // Returns a member object from this <Object_Group> in accordance with
   // the "random" load balancing policy.
 
+  void destroy (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Cleanup the resources associated with this <Object_Group>.
+  // Subsequent calls to this <Object_Group> should fail, and its
+  // <id> should become available.  <Object_Group_Factory>
+  // should no longer list this <Object_Group>.
 };
 
 class RR_Object_Group: public Object_Group_i
@@ -258,8 +287,12 @@ class RR_Object_Group: public Object_Group_i
   //
 public:
 
-  RR_Object_Group (const char *id);
+  RR_Object_Group (const char *id,
+                   Object_Group_Factory_i *my_factory);
   // Constructor.
+
+  ~RR_Object_Group (void);
+  // Destructor.
 
   void unbind (const char * id,
                CORBA::Environment &ACE_TRY_ENV)
@@ -274,6 +307,13 @@ public:
                      Load_Balancer::no_such_member));
   // Returns a member object from this <Object_Group> in accordance with
   // the "round robin" load balancing policy.
+
+  void destroy (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Cleanup the resources associated with this <Object_Group>.
+  // Subsequent calls to this <Object_Group> should fail, and its
+  // <id> should become available.  <Object_Group_Factory>
+  // should no longer list this <Object_Group>.
 
 private:
 
