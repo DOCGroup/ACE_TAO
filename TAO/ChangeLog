@@ -1,3 +1,16 @@
+Sun Jan  2 21:26:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
+        
+          Moved the location of the check for the preprocessor
+          definition of TAO_IDL_INCLUDE_DIR to come after the
+          checks for TAO_ROOT and ACE_ROOT. This move changes
+          the logic so the environment variable is used if it is
+          set and TAO_IDL_INCLUDE_DIR is used otherwise, enabling
+          the path to orb.idl to be found both during and after
+          installation. Thanks to Ken Sedgwick <ken@bonsai.com>
+          for supplying the patch.
+
 Sun Jan  2 14:21:21 2005  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/unbounded_object_reference_sequence.hpp:
