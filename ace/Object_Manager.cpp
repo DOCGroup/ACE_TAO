@@ -6,7 +6,6 @@
 #include "ace/Containers.h"
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
-#include "ace/Filecache.h"
 #include "ace/Token_Manager.h"
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
@@ -109,11 +108,6 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 
-  ACE_PREALLOCATE_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_FILE_LOCK,
-                         ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
-  ACE_PREALLOCATE_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_HASH_LOCK,
-                         ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
-
   // Hooks for preallocated objects and arrays provided by application.
   ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
   ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS
@@ -193,10 +187,7 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
 
   // Cleanup the dynamically preallocated arrays.
-  ACE_DELETE_PREALLOCATED_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_FILE_LOCK,
-    ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
-  ACE_DELETE_PREALLOCATED_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_HASH_LOCK,
-    ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
+  // (none)
 
   // Cleanup the dynamically preallocated objects.
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
@@ -306,8 +297,6 @@ static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
     template class ACE_Managed_Object<ACE_Thread_Mutex>;
 # endif /* ACE_MT_SAFE */
 template class ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>;
-template class ACE_Cleanup_Adapter<
-  ACE_SYNCH_RW_MUTEX[ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE]>;
 template class ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Unbounded_Queue<ACE_Cleanup_Info>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>;
@@ -320,8 +309,6 @@ template class ACE_Node<ACE_Cleanup_Info>;
 #   pragma instantiate ACE_Managed_Object<ACE_Thread_Mutex>
 # endif /* ACE_MT_SAFE */
 #pragma instantiate ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Cleanup_Adapter<
-  ACE_SYNCH_RW_MUTEX[ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE]>
 #pragma instantiate ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Cleanup_Info>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>
