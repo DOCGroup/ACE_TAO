@@ -8,7 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS =	Component_Switching \
+DIRS =	Bidirectional_Flows \
+	Component_Switching \
 	Simple_Two_Stage \
 	Simple_Three_Stage \
 	Asynch_Three_Stage \
