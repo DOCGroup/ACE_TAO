@@ -31,19 +31,20 @@ public:
   /// Use resolve_initial_references to find an object and then
   /// narrow it.
   static _ptr_type narrow (CORBA::ORB_ptr orb,
-                           char const * id,
-                           CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment ());
+                           char const * id
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                           ACE_ENV_ARG_
+
 
   /// Use resolve_initial_references to find an object and then
   /// narrow it.
   static _ptr_type narrow (PortableInterceptor::ORBInitInfo_ptr orb,
-                           char const * id);
+                           char const * id
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 private:
-  static _ptr_type narrow_object (CORBA::Object_ptr object,
-                                  CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
+  static _ptr_type narrow_object (CORBA::Object_ptr object
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
 } // namespace Utils

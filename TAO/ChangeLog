@@ -1,3 +1,8 @@
+Sat Jul 13 15:26:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Utils/RIR_Narrow.cpp (narrow): 
+	* tao/Utils/RIR_Narrow.h: Fixed some more fuzz errors.
+
 Sat Jul 13 15:19:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/common_args.cpp (get_protocols): Fixed a compile
