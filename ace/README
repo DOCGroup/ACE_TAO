@@ -813,6 +813,7 @@ ACE_LACKS_MSG_WFMO                      Platform lacks
                                         ACE_WIN32 is also defined).
 ACE_LACKS_MSGBUF_T                      Platform lacks struct msgbuf
                                         (e.g., NT and MSV).
+ACE_LACKS_MSQID_DS_T                    Platform lack struct msqid_ds
 ACE_LACKS_MSYNC                         Platform lacks msync() (e.g.,
                                         Linux)
 ACE_LACKS_MUTEXATTR_PSHARED             Platform lacks
