@@ -1,3 +1,10 @@
+Fri Feb 28 12:33:01 UTC 2003  Ossama Othman  <ossama@uci.edu>
+
+        * ace/SString.cpp:
+          Also do the explicit template instantiations
+          ACE_String_Base<char>::NULL_String_ and
+          ACE_String_Base<ACE_WSTRING_TYPE>::NULL_String_ when using VxWorks.
+
 Thu Feb 27 10:56:01 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Proactor_Scatter_Gather_Test.cpp (initiate_read_file):
