@@ -1,3 +1,10 @@
+Fri May 12 17:48:17 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/generate_export_file.pl:
+          
+          Found a new way to write this script using map and a __DATA__
+          block.
+
 Fri May 12 17:52:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (ACE_Thread_Adapter::invoke): Reverted James'
