@@ -38,20 +38,7 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
    ace_cv_feature_may_need_thread_flag,
    [
     ifelse(AC_LANG, [CPLUSPLUS],
-      [ace_save_CXXFLAGS="$CXXFLAGS"
-       case "$target" in
-         *solaris2*)
-           dnl Sun C++ 4.2/5.0 weirdness
-           dnl Sun C++ 4.2/5.0 links a thread function stub library in
-           dnl the single threaded case, which causes the link test in
-           dnl ACE_CHECK_THREAD_FLAGS to pass.
-           if (CC -V 2>&1 | egrep 'Compilers 4\.2' > /dev/null) \
-              || (CC -V 2>&1 | egrep 'Compilers 5\.0' > /dev/null); then
-             CXXFLAGS="-xnolib"
-           fi
-           ;;
-       esac
-      ],
+      [ace_save_CXXFLAGS="$CXXFLAGS"],
       [ace_save_CFLAGS="$CFLAGS"])
 
     ACE_CHECK_THREAD_FLAGS(
@@ -215,58 +202,102 @@ dnl useful in terms of thread libraries and/or functions.
 dnl Usage: ACE_CHECK_THREAD_FLAGS(ACTION-IF-USABLE [, ACTION-IF-NOT-USABLE]])
 AC_DEFUN(ACE_CHECK_THREAD_FLAGS, dnl
 [
-ACE_CONVERT_WARNINGS_TO_ERRORS([
-AC_TRY_LINK(
-[
-/*
- * Don't use definition of specific preprocessor macros as criterion
- * for determining if thread support is found.
- *
- * #if !defined (_REENTRANT) && !defined (_THREAD_SAFE)
- * #error Neither _REENTRANT nor _THREAD_SAFE were defined.
- * THROW ME AN ERROR!
- * #endif
- *
- */
-]
+ AC_REQUIRE([AC_PROG_AWK])
+
+ ACE_CONVERT_WARNINGS_TO_ERRORS([
+
+dnl Check for UI thread support first.
+
+ dnl Because some platforms are brain damaged enough to provide
+ dnl useless thread function stubs, link tests may succeed despite the
+ dnl fact the stubs are no-ops.  This forces us to use a run-time test
+ dnl to get around this nuisance by checking the return value of
+ dnl thr_create().  The cross-compiled case will use a link-time
+ dnl test, instead.
+
+ AC_TRY_RUN(
+   [
+#include <thread.h>
+   ]
 ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
 extern "C"
 #endif
 ])
-[
-char thr_create();
-], [
-thr_create();
-], [$1],
-[
-  AC_REQUIRE([AC_PROG_AWK])
+   [
+void * ace_start_func(void *arg)
+{
+ return arg;
+};
 
-  AC_TRY_CPP(
-    [
+int main (int argc, char **argv)
+{
+ thread_t tid = 0;
+
+ return thr_create (0, 0, ace_start_func, 0, 0, &tid);
+}
+   ],
+   [$1],
+   [
+ dnl Now check for POSIX thread support.
+
+ dnl Because some platforms are brain damaged enough to provide
+ dnl useless thread function stubs, link tests may succeed despite the
+ dnl fact the stubs are no-ops.  This forces us to use a run-time test
+ dnl to get around this nuisance by checking the return value of
+ dnl pthread_create().  The cross-compiled case will use a link-time
+ dnl test, instead.
+    AC_TRY_RUN(
+      [
 #include <pthread.h>
-    ],
-    [
-     cat > conftest.$ac_ext <<EOF
+      ]
+ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
+extern "C"
+#endif
+])
+      [
+void * ace_start_func(void *arg)
+{
+ return arg;
+};
+
+int main (int argc, char **argv)
+{
+ pthread_t tid = 0;
+
+ return pthread_create (&tid, 0, ace_start_func, 0);
+}
+      ],
+      [$1],
+      [$2],
+      [
+       dnl POSIX threads cross-compiled case
+
+       AC_TRY_CPP(
+         [
+#include <pthread.h>
+         ],
+         [
+          cat > conftest.$ac_ext <<EOF
 
 #include <pthread.h>
   ACE_REAL_FUNCTION pthread_create
 
 EOF
 
-     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-        egrep "ACE_REAL_FUNCTION" | 
-        (eval "$AWK '{print \[$]2}' > conftest.awk 2>&1"); then
-          rm -f conftest.$ac_ext
-          ace_real_function=`cat conftest.awk`
-          rm -f conftest.awk
-     fi
-    ],
-    [
-     ace_real_function="pthread_create"
-    ])
+          if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+             egrep "ACE_REAL_FUNCTION" | 
+             (eval "$AWK '{print \[$]2}' > conftest.awk 2>&1"); then
+               rm -f conftest.$ac_ext
+               ace_real_function=`cat conftest.awk`
+               rm -f conftest.awk
+          fi
+         ],
+         [
+          ace_real_function="pthread_create"
+         ])
 
-AC_TRY_LINK(
-[
+       AC_TRY_LINK(
+         [
 /*
  * Don't use definition of specific preprocessor macros as criterion
  * for determining if thread support is found.
@@ -277,18 +308,49 @@ AC_TRY_LINK(
  * #endif
  *
  */
-]
+          ]
 ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
 extern "C"
 #endif
 ])dnl
-[
+         [
 char $ace_real_function();
-], [
+         ],
+         [
 $ace_real_function();
-], [$1],[$2])
-
-  ])
+         ],
+         [$1],
+         [$2])
+      ])
+   ],
+   [
+    dnl UI threads cross-compiled case
+    AC_TRY_LINK(
+      [
+/*
+ * Don't use definition of specific preprocessor macros as criterion
+ * for determining if thread support is found.
+ *
+ * #if !defined (_REENTRANT) && !defined (_THREAD_SAFE)
+ * #error Neither _REENTRANT nor _THREAD_SAFE were defined.
+ * THROW ME AN ERROR!
+ * #endif
+ *
+ */
+      ]
+ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
+extern "C"
+#endif
+])
+      [
+char thr_create();
+      ],
+      [
+thr_create();
+      ],
+      [$1],
+      [$2])
+    ])
  ])
 ])
 
