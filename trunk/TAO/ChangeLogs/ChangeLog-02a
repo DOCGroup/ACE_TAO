@@ -1,3 +1,55 @@
+Thu Sep 07 14:06:40 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Once the ORB Core pointer has been added to the ORB table,
+	  release it from the Auto_Ptr since the ORB table owns it at that
+	  point.
+	
+	* tao/ORB_Core.cpp (bind):
+
+	  Make sure that the supplied ORB core pointer is valid,
+	  i.e. non-zero.
+
+	  Do not increase the reference count on the ORB Core.  Once the
+	  ORB core has been added to the ORB table, the ORB table owns
+	  it, and is therefore responsible for destroying it.
+
+	  Only set the "first_orb_" member if the given ORB Core was
+	  successfully added to the ORB table. 
+
+	  (~TAO_ORB_Table):
+
+	  Fixed memory access violation that was caused by the fact the
+	  loop that decremented the reference count on each ORB Core in
+	  the table was an infinite loop.  The table iterator was not
+	  incremented after each loop iteration, so the loop ran
+	  endlessly, which in turn caused _decr_refcnt() to be called on
+	  an ORB Core that was destroyed in a previous loop iteration.
+
+	* tao/Adapter.cpp (~TAO_Adapter_Registry):
+
+	  Attempt to deallocate the underlying adapter array in case the
+	  adapter registry was not closed properly.  This fixes a leak
+	  that occured when ORB Core initialization was prematurely
+	  terminated due to errors.
+
+	* TAOACE.dsw:
+
+	  Added Security Service related projects to this MSVC++ workspace
+	  file.
+
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+	* orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+
+	  Added missing TAO_PortableServer{d}.lib and corresponding
+	  library path to the link input information for this project
+	  file.
+
+	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+
+	  Fixed `test.idl' custom build step.
+
 Thu Sep  7 15:02:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
@@ -29,7 +81,7 @@ Thu Sep  7 10:29:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Fixed some project settings in the FE and BE static library
 	  projects.
 
-Thu Sep Thu Sep  7 00:46:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+Thu Sep  7 00:46:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h: 

@@ -93,6 +93,39 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\test_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\testC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\testS.cpp
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\test_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\testC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\testS.h
+# End Source File
+# End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# End Group
+# Begin Source File
+
 SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "Send_File_Server - Win32 Release"
@@ -138,38 +171,5 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
-# Begin Source File
-
-SOURCE=.\test_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\testC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.cpp
-# End Source File
-# End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\test_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\testC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.h
-# End Source File
-# End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-# End Group
 # End Target
 # End Project

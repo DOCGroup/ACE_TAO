@@ -1402,7 +1402,6 @@ CORBA::ORB_init (int &argc,
         }
 
       return CORBA::ORB::_duplicate (oc->orb ());
-
     }
 
   // An ORB corresponding to the desired ORBid doesn't exist so create
@@ -1419,7 +1418,7 @@ CORBA::ORB_init (int &argc,
   TAO_ORB_Core_Auto_Ptr safe_oc (oc);
 
   // Initialize the ORB Core instance.
-  int result = safe_oc.get ()->init (argc, argv, ACE_TRY_ENV);
+  int result = safe_oc->init (argc, argv, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Check for errors and return 0 if error.
@@ -1432,10 +1431,14 @@ CORBA::ORB_init (int &argc,
                 orbid));
 
   // Before returning remember to store the ORB into the table...
-  if (TAO_ORB_Table::instance ()->bind (orbid, oc) != 0)
+  if (TAO_ORB_Table::instance ()->bind (orbid, safe_oc.get ()) != 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO),
                       CORBA::ORB::_nil ());
+
+  // Release the ORB Core pointer from its Auto_Ptr since the ORB
+  // table now owns it.
+  oc = safe_oc.release ();
 
   // Return a duplicate since the ORB_Core should release the last
   // reference to the ORB.
