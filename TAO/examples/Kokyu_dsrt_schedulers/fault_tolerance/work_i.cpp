@@ -23,7 +23,7 @@
 ACE_RCSID(MT_Server, work_i, "work_i.cpp,v 1.2 2003/10/08 13:26:32 venkita Exp")
 
 void
-Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
+Complex_Server_i::test_method2 (CORBA::Long exec_duration, CORBA::Long need_ft ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Policy_ptr sched_policy =
@@ -75,25 +75,26 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG, 
               "Request in thread %t, prio = %d,"
               "exec duration = %u\n", prio, exec_duration));
+  if (need_ft == 2 ) {
+    int wflags = O_RDWR;
+    int wfd;
+    unsigned char *ptr;
+    const char *wshfile = "shfile.txt";
 
-  int wflags = O_RDWR;
-  int wfd;
-  unsigned char *ptr;
-  const char *wshfile = "shfile.txt";
+    wfd = shm_open(wshfile, wflags, S_IRWXU);
+    ptr = (unsigned char *)mmap(NULL, 1, PROT_READ|PROT_WRITE, MAP_SHARED, wfd, 0);
+    close(wfd);
 
-  wfd = shm_open(wshfile, wflags, S_IRWXU);
-  ptr = (unsigned char *)mmap(NULL, 1, PROT_READ|PROT_WRITE, MAP_SHARED, wfd, 0);
-  close(wfd);
+    *ptr = *ptr - 1;
 
-  *ptr = *ptr - 1;
+  #ifdef KOKYU_DSRT_LOGGING
+    ACE_DEBUG((LM_DEBUG,"NOW count is equal to %d\n", *ptr));
+  #endif
 
-#ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG((LM_DEBUG,"NOW count is equal to %d\n", *ptr));
-#endif
+    if((*ptr)!=0) return;
 
-  if((*ptr)!=0) return;
-
-  else *ptr = 2;
+    else *ptr = 2;
+  }
   static CORBA::ULong prime_number = 9619899;
 
   ACE_Time_Value compute_count_down_time (exec_duration, 0);

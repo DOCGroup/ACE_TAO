@@ -2,7 +2,7 @@
 
 interface Complex_Server
 {
-  oneway void test_method2 (in long x);
+  oneway void test_method2 (in long x, in long y);
 
   void shutdown ();
 };
