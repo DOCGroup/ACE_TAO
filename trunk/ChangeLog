@@ -1,9 +1,16 @@
+Fri Jan 30 10:30:26 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+
+          Force the custom build targets to be processed before compiling
+          any of the cpp files.
+
 Fri Jan 30 09:02:30 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Proactor.cpp (proactor_run_event_loop): Make sure to 
-	  return if the handle_events() call return 0, which indicates
-	  a timeout.  Thanks to Daniel Buchs <acelib@dbux.ch> for
-	  this fix.
+        * ace/Proactor.cpp (proactor_run_event_loop): Make sure to
+          return if the handle_events() call return 0, which indicates
+          a timeout.  Thanks to Daniel Buchs <acelib@dbux.ch> for
+          this fix.
 
 Fri Jan 30 07:41:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
