@@ -434,7 +434,7 @@ enum MCAST_SERVICEID
 // #define TAO_HAS_AMI_POLLER 0
 
 // Default AMI_POLLER settings
-#if !(TAO_HAS_AMI_POLLER == 1)
+#if !defined (TAO_HAS_AMI_POLLER)
 #  if (TAO_HAS_AMI == 1)
 #    define TAO_HAS_AMI_POLLER 1
 #  else
@@ -451,7 +451,7 @@ enum MCAST_SERVICEID
 // #define TAO_HAS_AMI_CALLBACK 0
 
 // Default AMI_CALLBACK settings
-#if !(TAO_HAS_AMI_CALLBACK == 1)
+#if !defined (TAO_HAS_AMI_CALLBACK)
 #  if (TAO_HAS_AMI == 1)
 #    define TAO_HAS_AMI_CALLBACK 1
 #  else
