@@ -14,72 +14,11 @@
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 #include "orbsvcs/FtRtEvent/Utils/RT_Task.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
-
-#ifndef WIN32
-#include <sys/time.h>
-#endif
+#include "Crash_Injector.h"
 
 ACE_RCSID (Event_Service,
            FT_EventService,
            "$Id$")
-
-static int time_to_crash;
-
-extern "C" void crash_handler(int)
-{
-    ACE_DEBUG((LM_DEBUG, "FTRT_Event_Service crashed\n"));
-    exit(1);
-}
-
-class Fault_Event_Service  : public TAO_FTEC_Event_Channel
-{
-public:
-  Fault_Event_Service(CORBA::ORB_var orb,
-    PortableServer::POA_var poa,
-    RtecScheduler::Scheduler_var scheduler,
-    int fault_no);
-
-private:
-  virtual void push (
-    const FtRtecEventChannelAdmin::ObjectId & oid,
-    const RtecEventComm::EventSet & data
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID));
-  int msg_count_;
-  int fault_no_;
-};
-
-Fault_Event_Service::Fault_Event_Service(CORBA::ORB_var orb, 
-                                         PortableServer::POA_var poa,
-                                         RtecScheduler::Scheduler_var scheduler,
-                                         int fault_no)
-: TAO_FTEC_Event_Channel(orb, poa,scheduler), msg_count_(0), fault_no_(fault_no)
-{
-}
-
-void Fault_Event_Service::push (const FtRtecEventChannelAdmin::ObjectId & oid,
-                                const RtecEventComm::EventSet & data
-                                ACE_ENV_ARG_DECL)
-                                ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID))
-{
-  if (fault_no_ == msg_count_++) {
-#ifndef WIN32
-    if (time_to_crash > 0) {
-      signal(SIGALRM, &crash_handler);
-      struct itimerval in, out;
-      in.it_value.tv_sec = time_to_crash/1000;
-      in.it_value.tv_usec = (time_to_crash%1000)*1000;
-      setitimer(ITIMER_REAL, &in, &out);
-    }
-    else
-#endif 
-    {  
-      ACE_DEBUG((LM_DEBUG, "FTRT_Event_Service crashing on %d-th message\n", msg_count_-1));
-      exit(1);
-    }
-  }
-  TAO_FTEC_Event_Channel::push(oid, data ACE_ENV_ARG_PARAMETER);
-}
 
 
 
@@ -95,7 +34,6 @@ FT_EventService::FT_EventService()
 , sched_impl_(0)
 , membership_(TAO_FTEC_Event_Channel::NONE)
 , task_(orb_)
-, fault_no_(-1)
 {
 }
 
@@ -153,8 +91,10 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    RtecScheduler::Scheduler_var scheduler = 
-      setup_scheduler(naming_context.in() 
+    RtecScheduler::Scheduler_var scheduler =
+
+      setup_scheduler(naming_context.in()
+
                       ACE_ENV_ARG_PARAMETER);
 
     ACE_CHECK_RETURN(-1);
@@ -165,7 +105,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
 
     // Activate the Event channel implementation
 
-    Fault_Event_Service ec(orb_, root_poa, scheduler, fault_no_);
+    TAO_FTEC_Event_Channel ec(orb_, root_poa, scheduler);
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
       ec.activate(membership_
@@ -175,7 +115,16 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     if (report_factory(orb_.in(), ec_ior.in() )==-1)
       return -1;
 
-    orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    Crash_Injector* injector = Crash_Injector::instance();
+
+    while (injector ==0 || !injector->work_done() ) {
+      if (orb_->work_pending(ACE_ENV_SINGLE_ARG_PARAMETER))
+
+            orb_->perform_work(ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
+    orb_->shutdown(0 ACE_ENV_ARG_PARAMETER);
+
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -186,7 +135,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
   ACE_ENDTRY;
 
 
-  ACE_Thread_Manager::instance()->wait();
+//  ACE_Thread_Manager::instance()->wait();
   return 0;
 }
 
@@ -207,7 +156,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:jprs:t:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jprs:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -216,9 +165,6 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     {
     case 'd':
       TAO_FTRTEC::Log::level(ACE_OS::atoi(get_opt.opt_arg ()));
-      break;
-    case 'f':
-      this->fault_no_ = ACE_OS::atoi(get_opt.opt_arg ());
       break;
     case 'j':
       this->membership_ = TAO_FTEC_Event_Channel::BACKUP;
@@ -250,9 +196,6 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
           get_opt.opt_arg ()));
         this->global_scheduler_ = 0;
       }
-      break;
-    case 't':
-      time_to_crash = atoi(get_opt.opt_arg ());
       break;
     case '?':
     default:
