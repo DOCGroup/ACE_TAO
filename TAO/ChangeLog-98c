@@ -1,3 +1,9 @@
+Sun Nov 29 18:09:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_initial_references): Allows this function
+	  to pass back InvalidName exception.
+	  (InvalidName): New CORBA::ORB exception type.
+
 Sat Nov 28 10:57:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/corba.h: Added TAO_Export to global variable <TC_opaque>.
