@@ -199,7 +199,7 @@ vanilla_poa (CORBA::ORB_ptr orb,
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
-                            poa),
+                            poa.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
@@ -293,7 +293,7 @@ rt_poa (CORBA::ORB_ptr orb,
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
-                            poa),
+                            poa.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
