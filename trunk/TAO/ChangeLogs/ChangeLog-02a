@@ -9,6 +9,7 @@ Wed Mar 28 13:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	* tao/DynamicAny/DynAny_i.cpp:
 	* tao/DynamicAny/DynamicAnyC.cpp:
 	* tao/DynamicInterface/Request.cpp:
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
 
           Added missing ACE_CHECK/ACE_TRY_CHECK
 
