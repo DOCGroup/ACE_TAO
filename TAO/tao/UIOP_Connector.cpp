@@ -294,7 +294,7 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
 {
   // The endpoint should be of the form:
   //
-  //    N.n//rendezvous_point|object_key
+  //    //N.n@rendezvous_point|object_key
   //
   // or:
   //
