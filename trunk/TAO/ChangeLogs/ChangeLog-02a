@@ -1,3 +1,9 @@
+Thu Apr 25 14:59:31 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/configurations.html: Added "Single ORB" to clarify that
+	  usecase.  Thanks to Daniel Garrido <dgarrido@lcc.uma.es> for
+ 	  motivating this clarification.
+
 Thu Apr 25 15:13:01 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: Updated
@@ -17,11 +23,11 @@ Thu Apr 25 14:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/RTCORBA/Client_Protocol/server.cpp: 
 
 	  Work around to fix the nasty bug 1197 problem. The client makes
-	  yet another two way invocation before shutting down the ORB and
-	  deleting the underlying shared memory segment. This seems to
-	  work atleast on the platform that I tested, namely
-	  guajira.cs. Finding this race was not simple enough and it
-	  doesnt seem to be much fun either!
+ 	  yet another two way invocation before shutting down the ORB and
+ 	  deleting the underlying shared memory segment. This seems to
+ 	  work atleast on the platform that I tested, namely
+ 	  guajira.cs. Finding this race was not simple enough and it
+ 	  doesnt seem to be much fun either!
 
 Thu Apr 25 05:36:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
