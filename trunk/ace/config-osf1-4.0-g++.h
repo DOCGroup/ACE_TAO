@@ -130,9 +130,6 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_UCONTEXT_T
 
-// DJT added 6/7/96
-#define ACE_HAS_SIGWAIT 
-
 // Compiler/platform has ssize_t.
 #define ACE_HAS_SSIZE_T
 
