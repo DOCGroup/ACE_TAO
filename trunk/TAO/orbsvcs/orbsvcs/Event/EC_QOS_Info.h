@@ -45,6 +45,10 @@ public:
   TAO_EC_QOS_Info (void);
   // constructor
 
+  TAO_EC_QOS_Info (const TAO_EC_QOS_Info &rhs);
+  // copy constructor, it does the obvious thing, but if it is not
+  // here the HP/aCC compiler breaks. 
+
   RtecScheduler::handle_t rt_info;
   RtecScheduler::Preemption_Priority_t preemption_priority;
 
