@@ -50,6 +50,8 @@ public:
   int handle_input (ACE_HANDLE);
   int handle_exception (ACE_HANDLE);
 
+  typedef ACE_CString TID;
+
 private:
 
   void display_menu (void);
@@ -60,8 +62,6 @@ private:
 
   ACE_Token_Proxy *create_proxy (const char *token, char type);
   // Create a proxy to <token> with a <tid> client id.
-
-  typedef ACE_CString TID;
 
   // = Mapping from tid to Token_Collection.
   typedef ACE_Map_Manager<TID, ACE_Token_Collection *, ACE_Null_Mutex>
