@@ -334,7 +334,7 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Address Strings %s %s\n",
 		      sender_addr_str.c_str (),
-		      receiver_addr_str));
+		      receiver_addr_str.c_str ()));
 	  
 	}
       else ACE_DEBUG ((LM_DEBUG,
