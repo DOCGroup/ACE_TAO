@@ -18,9 +18,12 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_ACCEPTOR_H
-#  define TAO_IIOP_ACCEPTOR_H
+#define TAO_IIOP_ACCEPTOR_H
 
-#include <tao/corba.h>
+#include "ace/Acceptor.h"
+#include "ace/SOCK_Acceptor.h"
+#include "tao/Pluggable.h"
+#include "tao/Connect.h"
 
 typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
                               TAO_SOCK_ACCEPTOR>

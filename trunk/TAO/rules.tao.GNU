@@ -35,7 +35,8 @@ ifndef TAO_ORBSVCS
                 Sched \
                 Event \
                 CosEvent \
-                AV
+                AV \
+		#Event2
 endif # TAO_ORBSVCS
 
 
@@ -46,6 +47,7 @@ ifeq ($(findstring g++,$(CXX)),g++)
   CCFLAGS += -Wno-unused
 
   ifneq ($(findstring egcs-2.91,$(shell $(CXX) --version)),)
+
     #### egcs 2.91.57 seems to go overboard:
     ####   DynAny_i.cpp:565: warning: `class TAO_DynAny_i * this' might be
     ####   used uninitialized in this function

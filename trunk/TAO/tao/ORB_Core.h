@@ -15,10 +15,34 @@
 // ============================================================================
 
 #ifndef TAO_ORB_CORE_H
-#  define TAO_ORB_CORE_H
+#define TAO_ORB_CORE_H
 
-#  include "tao/corba.h"
+#include "ace/Strategies_T.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Singleton.h"
+#include "tao/corbafwd.h"
+#include "tao/Environment.h"
+#include "tao/IIOP_Connector.h"
+#include "tao/IIOP_Acceptor.h"
+#include "tao/POAC.h"
+#include "tao/POA.h"
 
+#include "tao/params.h"
+
+class TAO_Client_Connection_Handler;
+class TAO_POA;
+class TAO_POA_Current;
+class TAO_POA_Manager;
+class TAO_POA_Policies;
+class TAO_Acceptor;
+class TAO_Connector;
+class TAO_Connector_Registry;
+
+class TAO_Resource_Factory;
+class TAO_Client_Strategy_Factory;
+class TAO_Server_Strategy_Factory;
+
+// @@ TODO Move the Resource Factory to its own file.
 
 class TAO_Collocation_Table_Lock : public ACE_Adaptive_Lock
 {
@@ -127,7 +151,7 @@ public:
 
   // = Set/get pointer to the ORB.
   CORBA::ORB_ptr orb (CORBA::ORB_ptr);
-  CORBA_ORB_ptr orb (void);
+  CORBA::ORB_ptr orb (void);
 
   // = Set/get the <ACE_Reactor>.
   ACE_Reactor *reactor (ACE_Reactor *r);
@@ -142,7 +166,7 @@ public:
   TAO_POA *root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
-  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &TAO_IN_ENV = CORBA_Environment::default_environment (),
+  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &TAO_IN_ENV = CORBA::default_environment (),
                                               const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                               TAO_POA_Manager *poa_manager = 0,
                                               const TAO_POA_Policies *policies = 0);
@@ -571,10 +595,10 @@ public:
     ACE_Thread_Manager tm_;
     // The Thread Manager
 
-	  TAO_Connector_Registry cr_;
+    TAO_Connector_Registry cr_;
     // The Connector Registry!
 
-	  TAO_IIOP_Connector c_;
+    TAO_IIOP_Connector c_;
     // The Connector, HACK to create the first connector which happens to be
     // IIOP.  
 
@@ -673,6 +697,8 @@ protected:
   typedef ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
           GLOBAL_Collocation_Table;
 };
+
+extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"

@@ -31,8 +31,11 @@
 // THREADING NOTE: "CDR" is a data structure which must be protected
 // by external critical sections.
 
-#include "tao/corba.h"
 #include "ace/Timeprobe.h"
+#include "tao/CDR.h"
+#include "tao/ORB_Core.h"
+#include "tao/singletons.h"
+#include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CDR.i"
@@ -131,7 +134,24 @@ TAO_OutputCDR::~TAO_OutputCDR (void)
 {
 }
 
-CORBA_Boolean
+CORBA::TypeCode::traverse_status
+TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
+                       const void *data,
+                       const void *data2,
+                       CORBA::Environment &TAO_IN_ENV)
+{
+  TAO_Marshal_Object *mobj =
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
+                                                           TAO_IN_ENV);
+  TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  if (!mobj)
+    return CORBA::TypeCode::TRAVERSE_STOP;
+
+  return mobj->encode (tc, data, data2, this, TAO_IN_ENV);
+}
+
+CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
 {
   // @@ This function should *not* use the interpreter, there must be
@@ -158,7 +178,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
   return 0;
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
 {
   TAO_TRY
@@ -185,7 +205,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
   return 0;
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
 {
   TAO_TRY
@@ -298,7 +318,39 @@ TAO_InputCDR::~TAO_InputCDR (void)
 {
 }
 
-CORBA_Boolean
+CORBA::TypeCode::traverse_status
+TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
+                      const void *data,
+                      const void *data2,
+                      CORBA::Environment &TAO_IN_ENV)
+{
+  TAO_Marshal_Object *mobj =
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
+                                                           TAO_IN_ENV);
+  TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  if (!mobj)
+    return CORBA::TypeCode::TRAVERSE_STOP;
+
+  return mobj->decode (tc, data, data2, this, TAO_IN_ENV);
+}
+
+CORBA::TypeCode::traverse_status
+TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
+                    CORBA::Environment &TAO_IN_ENV)
+{
+  TAO_Marshal_Object *mobj =
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc, 
+                                                           TAO_IN_ENV);
+  TAO_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  if (mobj == 0)
+    return CORBA::TypeCode::TRAVERSE_STOP;
+
+  return mobj->skip (tc, this, TAO_IN_ENV);
+}
+
+CORBA::Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
 {
   TAO_TRY
@@ -323,7 +375,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
   return 1;
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Object *&x)
 {
   TAO_TRY
@@ -348,7 +400,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object *&x)
   return 1;
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
 {
   TAO_TRY

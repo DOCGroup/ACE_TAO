@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/Server_Strategy_Factory.h"
 
 ACE_RCSID(tao, Server_Strategy_Factory, "$Id$")
 

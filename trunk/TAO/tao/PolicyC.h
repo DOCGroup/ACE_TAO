@@ -11,6 +11,10 @@
 #ifndef TAO_IDL_POLICYC_H
 #define TAO_IDL_POLICYC_H
 
+#include "tao/Object.h"
+#include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
+
 #if !defined (_CORBA_POLICY___PTR_CH_)
 #define _CORBA_POLICY___PTR_CH_
 
@@ -84,20 +88,20 @@ class TAO_Export  CORBA_Policy : public virtual ACE_CORBA_1 (Object)
 public:
   // the static operations
   static CORBA_Policy_ptr _duplicate (CORBA_Policy_ptr obj);
-  static CORBA_Policy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  static CORBA_Policy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA_Policy_ptr _nil (void);
 
   virtual CORBA::PolicyType policy_type (
-                                         CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()
+                                         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                          );
   virtual CORBA_Policy_ptr copy (
-                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()
+                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                  );
   virtual void destroy (
-                        CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()
+                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                         );
   virtual CORBA::Boolean _is_a (const CORBA::Char *type_id,
-                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                 );
   virtual const char* _interface_repository_id (void) const;
 protected:

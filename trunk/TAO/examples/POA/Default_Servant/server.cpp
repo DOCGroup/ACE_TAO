@@ -17,6 +17,7 @@
 
 
 #include "ace/streams.h"
+#include "ace/Get_Opt.h"
 #include "File_i.h"
 
 ACE_RCSID(Default_Servant, server, "$Id$")

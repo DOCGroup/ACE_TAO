@@ -1,8 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include <tao/corba.h>
+#include "tao/MProfile.h"
+#include "tao/Pluggable.h"
 
+ACE_RCSID(tao, MProfile, "$Id$")
 
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  fwded_mprofile_(0),

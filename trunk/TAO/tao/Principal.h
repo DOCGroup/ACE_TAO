@@ -18,7 +18,10 @@
 // ============================================================================
 
 #ifndef TAO_PRINCIPAL_H
-#  define TAO_PRINCIPAL_H
+#define TAO_PRINCIPAL_H
+
+#include "tao/corbafwd.h"
+#include "tao/Sequence.h"
 
 class TAO_Export CORBA_Principal
 {
@@ -67,10 +70,10 @@ private:
 #endif /* __GNUG__ */
 };
 
-extern TAO_Export CORBA_Boolean
+extern TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, CORBA_Principal*);
 
-extern TAO_Export CORBA_Boolean
+extern TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA_Principal*&);
 
 #if defined (__ACE_INLINE__)

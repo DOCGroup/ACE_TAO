@@ -2,9 +2,14 @@
 
 // Implementation of the Dynamic Server Skeleton Interface
 
-#include "tao/corba.h"
+#include "tao/Server_Request.h"
 
-// Timeprobes class
+#include "tao/CDR.h"
+#include "tao/POAC.h"
+#include "tao/Environment.h"
+#include "tao/NVList.h"
+#include "tao/Principal.h"
+#include "tao/ORB_Core.h"
 #include "tao/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
@@ -165,7 +170,7 @@ IIOP_ServerRequest::parse_header (CORBA::Environment &env)
 
 IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
                                         CORBA::Boolean &response_expected,
-                                        TAO_opaque &object_key,
+                                        TAO_ObjectKey &object_key,
                                         char* operation,
                                         TAO_OutputCDR &output,
                                         TAO_ORB_Core *orb_core,
@@ -192,6 +197,18 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
     CORBA::release (this->params_);
   delete this->retval_;
   delete this->exception_;
+}
+
+CORBA::ORB_ptr
+IIOP_ServerRequest::orb (void)
+{
+  return this->orb_core_->orb ();
+}
+
+TAO_POA *
+IIOP_ServerRequest::oa (void)
+{
+  return this->orb_core_->root_poa ();
 }
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
@@ -356,7 +373,7 @@ IIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
 
       if (orb_env.exception ())
         {
-          dexc (orb_env, "ServerRequest::demarshal - parameter decode failed");
+          orb_env.print_exception ("ServerRequest::demarshal - parameter decode failed");
           return;
         }
     }
@@ -441,7 +458,7 @@ IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
 
       if (orb_env.exception ())
         {
-          dexc (orb_env, "ServerRequest::marshal - parameter encode failed");
+          orb_env.print_exception ("ServerRequest::marshal - parameter encode failed");
           return;
         }
     }
@@ -481,7 +498,7 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
       // If encoding went fine
       if (env.exception () != 0)
         {
-          dexc (env, "ServerRequest::marshal - forwarding parameter encode failed");
+          env.print_exception  ("ServerRequest::marshal - forwarding parameter encode failed");
           return;
         }
     }

@@ -1,12 +1,16 @@
 // $Id$
 
-#include "tao/corba.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Arg_Shifter.h"
+#include "tao/ORB_Core.h"
 #include "tao/TAO_Internal.h"
+#include "tao/IIOP_ORB.h"
+#include "tao/default_client.h"
+#include "tao/default_server.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"

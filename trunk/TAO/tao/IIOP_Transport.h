@@ -18,9 +18,14 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_TRANSPORT_H
-#  define TAO_IIOP_TRANSPORT_H
+#define TAO_IIOP_TRANSPORT_H
 
-class TAO_Transport;
+#include "tao/Pluggable.h"
+
+class TAO_IIOP_Handler_Base;
+class TAO_Client_Connection_Handler;
+class TAO_Server_Connection_Handler;
+class TAO_ORB_Core;
 
 class TAO_IIOP_Transport : public TAO_Transport
 {

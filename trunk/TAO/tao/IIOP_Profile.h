@@ -18,7 +18,14 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_PROFILE_H
-#  define TAO_IIOP_PROFILE_H
+#define TAO_IIOP_PROFILE_H
+
+#include "ace/Synch.h"
+#include "ace/INET_Addr.h"
+#include "tao/Pluggable.h"
+#include "tao/Object_KeyC.h"
+
+class TAO_Client_Connection_Handler;
 
 // TAO IIOP_Profile concrete Profile definitions
 class TAO_Export TAO_IIOP_Profile : public TAO_Profile

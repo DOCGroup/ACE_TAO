@@ -12,7 +12,12 @@
 // only mutual exclusion relates to reference counting and
 // construction.
 
-#include "tao/corba.h"
+#include "tao/Typecode.h"
+#include "tao/Environment.h"
+#include "tao/Any.h"
+#include "tao/Exception.h"
+#include "tao/IIOP_Interpreter.h"
+#include "tao/Principal.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
@@ -1703,7 +1708,9 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
   if (!stream.read_ulong (member_count)      // default used
       || !stream.read_ulong (member_count))  // member count
     {
-      dmsg ("TypeCode::private_member_label -- error reading from stream");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TypeCode::private_member_label -- "
+                  "error reading from stream"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
     }
 
@@ -1755,7 +1762,9 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
           || !stream.skip_string ()         // member name
           || !skip_typecode (stream)) // member type
         {           // member TC
-          dmsg1 ("TypeCode::private_member_label -- error getting typecode for member %d",i);
+          ACE_DEBUG ((LM_DEBUG,
+                      "TypeCode::private_member_label -- "
+                      "error getting typecode for member %d",i));
           delete [] buf;
           TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
         }

@@ -17,7 +17,9 @@
 #ifndef TAO_DEFAULT_SERVER_FACTORY_H
 #  define TAO_DEFAULT_SERVER_FACTORY_H
 
-#include "tao/corba.h"
+#include "tao/corbafwd.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "tao/params.h"
 #include "tao/ORB_Strategies_T.h"
 
 class TAO_Default_Server_Creation_Strategy : public TAO_Server_Strategy_Factory::CREATION_STRATEGY

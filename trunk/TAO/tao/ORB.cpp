@@ -5,11 +5,23 @@
 // component and have a loose table-driven coupling to ORB/protocol
 // library components.
 
-#include "tao/corba.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/Thread_Manager.h"
+#include "tao/ORB.h"
+#include "tao/Object.h"
+#include "tao/Typecode.h"
+#include "tao/InconsistentTypeCodeC.h"
+#include "tao/NVList.h"
+#include "tao/Stub.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/DynAny_i.h"
+#include "tao/ORB_Core.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "tao/IIOP_Interpreter.h"
+#include "tao/debug.h"
 #include "tao/TAO_Internal.h"
 
 #if !defined (__ACE_INLINE__)
@@ -88,7 +100,7 @@ CORBA::ORB_ptr CORBA::instance_ = 0;
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode =
   &_tc_TAO_tc_CORBA_ORB_InconsistentTypeCode;
 
-CORBA::String_var::String_var (char *p)
+CORBA_String_var::CORBA_String_var (char *p)
   : ptr_ (p)
 {
   // NOTE: According to the CORBA spec this string must *not* be
@@ -96,12 +108,12 @@ CORBA::String_var::String_var (char *p)
   // calling code.  argument is consumed. p should never be NULL
 }
 
-CORBA::String_var::String_var (const CORBA::String_var& r)
+CORBA_String_var::CORBA_String_var (const CORBA_String_var& r)
 {
   this->ptr_ = CORBA::string_dup (r.ptr_);
 }
 
-CORBA::String_var::~String_var (void)
+CORBA_String_var::~CORBA_String_var (void)
 {
   if (this->ptr_ != 0)
     {
@@ -931,8 +943,8 @@ CORBA::string_copy (const CORBA::Char *str)
   return ACE_OS::strcpy (retval, str);
 }
 
-CORBA::String_var &
-CORBA::String_var::operator= (char *p)
+CORBA_String_var &
+CORBA_String_var::operator= (char *p)
 {
   if (this->ptr_ != p)
     {
@@ -943,8 +955,8 @@ CORBA::String_var::operator= (char *p)
   return *this;
 }
 
-CORBA::String_var &
-CORBA::String_var::operator= (const char *p)
+CORBA_String_var &
+CORBA_String_var::operator= (const char *p)
 {
   if (this->ptr_ != 0)
     CORBA::string_free (this->ptr_);
@@ -953,8 +965,8 @@ CORBA::String_var::operator= (const char *p)
   return *this;
 }
 
-CORBA::String_var &
-CORBA::String_var::operator= (const CORBA::String_var& r)
+CORBA_String_var &
+CORBA_String_var::operator= (const CORBA_String_var& r)
 {
   if (this != &r)
     {
@@ -1121,7 +1133,7 @@ CORBA::instance (CORBA::ORB_ptr orb)
 // Inline operators for TAO_opaque encoding and decoding
 // *************************************************************
 
-CORBA_Boolean
+CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
 {
   CORBA::ULong length = x.length ();
@@ -1137,7 +1149,7 @@ operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
   return cdr.good_bit ();
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 {
   CORBA::ULong length;

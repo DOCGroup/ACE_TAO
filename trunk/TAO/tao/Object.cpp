@@ -5,7 +5,10 @@
 //
 // ORB:         CORBA_Object operations
 
-#include "tao/corba.h"
+#include "tao/Object.h"
+#include "tao/Stub.h"
+#include "tao/Servant_Base.h"
+#include "tao/Request.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"
@@ -20,7 +23,7 @@ CORBA_Object::~CORBA_Object (void)
 
 CORBA_Object::CORBA_Object (STUB_Object *protocol_proxy,
                             TAO_ServantBase *servant,
-                            CORBA_Boolean collocated)
+                            CORBA::Boolean collocated)
   : servant_ (servant),
     is_collocated_ (collocated),
     protocol_proxy_ (protocol_proxy),
@@ -29,15 +32,6 @@ CORBA_Object::CORBA_Object (STUB_Object *protocol_proxy,
   // Notice that the refcount_ above is initialized to 1 because
   // the semantics of CORBA Objects are such that obtaining one
   // implicitly takes a reference.
-}
-
-// CORBA dup/release.
-
-void
-CORBA::release (CORBA_Object_ptr obj)
-{
-  if (obj)
-    obj->_decr_refcnt ();
 }
 
 CORBA::InterfaceDef_ptr
@@ -258,6 +252,27 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 
   return;
 }
+
+void
+CORBA_Object::_create_request (const CORBA::Char *operation,
+                               CORBA::NVList_ptr arg_list,
+                               CORBA::NamedValue_ptr result,
+                               CORBA::Request_ptr &request,
+                               CORBA::Flags req_flags,
+                               CORBA::Environment &TAO_IN_ENV)
+{
+  TAO_IN_ENV.clear ();
+  request = new CORBA::Request (this, operation, arg_list, result, req_flags);
+}
+
+CORBA::Request_ptr
+CORBA_Object::_request (const CORBA::Char *operation,
+                        CORBA::Environment &TAO_IN_ENV)
+{
+  TAO_IN_ENV.clear ();
+  return new CORBA::Request (this, operation);
+}
+
 
 // ****************************************************************
 

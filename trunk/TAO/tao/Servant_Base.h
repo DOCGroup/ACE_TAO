@@ -17,6 +17,11 @@
 #ifndef TAO_SERVANT_BASE_H
 #define TAO_SERVANT_BASE_H
 
+#include "tao/corbafwd.h"
+#include "tao/POAC.h"
+
+class TAO_Operation_Table;
+
 class TAO_Export TAO_ServantBase
 {
   // = TITLE
@@ -35,13 +40,13 @@ public:
   TAO_ServantBase &operator= (const TAO_ServantBase &);
   // assignment operator.
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Returns the default POA for this servant.
 
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
 
-  virtual STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  virtual STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This is an auxiliar method for _this() and _narrow().
 
 protected:
@@ -52,12 +57,12 @@ protected:
   // Copy constructor, protected so no instances can be created.
 
   virtual CORBA::Boolean _is_a (const char* logical_type_id,
-                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Local implementation of the CORBA::Object::_is_a method.
 
   virtual void _dispatch (CORBA::ServerRequest &request,
                           void *context,
-                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // Dispatches a request to the object: find the operation, cast the
   // type to the most derived type, demarshall all the parameters from
   // the request and finally invokes the operation, storing the
@@ -92,7 +97,7 @@ class TAO_Export TAO_Local_ServantBase : public TAO_ServantBase
   // = TITLE
   //   Base class for local skeletons and servants.
 protected:
-  STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This is an auxiliar method for _this().  Make sure *not* to
   // register with the default POA
 };
@@ -109,19 +114,19 @@ class TAO_Export TAO_DynamicImplementation : public virtual TAO_ServantBase
   //   circumstances may lead to unpredictable results.
 public:
   virtual void invoke (CORBA::ServerRequest_ptr request,
-                       CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // The invoke() method receives requests issued to any CORBA object
   // incarnated by the DSI servant and performs the processing
   // necessary to execute the request.
 
   virtual CORBA::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
                                                   PortableServer::POA_ptr poa,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // The _primary_interface() method receives an ObjectId value and a
   // POA_ptr as input parameters and returns a valid RepositoryId
   // representing the most-derived interface for that oid.
 
-  CORBA::Object_ptr _this (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  CORBA::Object_ptr _this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Returns a CORBA::Object_ptr for the target object.
 
 protected:
@@ -132,12 +137,12 @@ protected:
   virtual void *_downcast (const char *repository_id);
   // Simply returns "this"
 
-  virtual STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  virtual STUB_Object *_create_stub (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This is an auxiliar method for _this() and _narrow().
 
   virtual void _dispatch (CORBA::ServerRequest &request,
                           void *context,
-                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Turns around and calls invoke.
 };
 

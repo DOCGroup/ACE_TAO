@@ -2,7 +2,10 @@
 
 // Implementation of Named Value List and NamedValue classes
 
-#include "tao/corba.h"
+#include "tao/NVList.h"
+#include "tao/Exception.h"
+#include "tao/Environment.h"
+#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/NVList.i"
@@ -196,7 +199,6 @@ CORBA_NVList::remove (CORBA::ULong /*n*/, CORBA::Environment &/*env*/)
 CORBA::NamedValue_ptr
 CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
 {
-  env.clear ();
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
     {
@@ -225,7 +227,6 @@ CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
 CORBA::NamedValue_ptr
 CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &env)
 {
-  env.clear ();
   if (n >= this->max_) // 0 based indexing
     {
       env.exception (new CORBA::TypeCode::Bounds ());

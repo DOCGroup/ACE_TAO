@@ -4,7 +4,15 @@
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 
-#include "tao/corba.h"
+#include "tao/IIOP_Interpreter.h"
+#include "tao/Any.h"
+#include "tao/varout.h"
+#include "tao/CDR.h"
+#include "tao/Typecode.h"
+#include "tao/Environment.h"
+#include "tao/Union.h"
+#include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
 
 ACE_RCSID(tao, IIOP_Interpreter, "$Id$")
 

@@ -25,7 +25,12 @@
 #ifndef TAO_IDL_CORBA_DYNANYC_H_
 #define TAO_IDL_CORBA_DYNANYC_H_
 
-#include "tao/corba.h"
+#include "tao/corbafwd.h"
+#include "tao/Any.h"
+#include "tao/ORB.h"
+#include "tao/Object.h"
+#include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

@@ -15,6 +15,7 @@
 
 #include "tao/DynAny_i.h"
 #include "tao/DynSequence_i.h"
+#include "tao/InconsistentTypeCodeC.h"
 
 //////////////////////////////////////////////////////////////////////
 // Constructors and destructor

@@ -28,7 +28,7 @@
 #  include "ace/Synch.h"
 #  include "ace/Svc_Handler.h"
 
-#  include "tao/corba.h"
+#  include "tao/corbafwd.h"
 
 // Forward Decls
 class TAO_OA_Parameters;
@@ -36,6 +36,7 @@ class TAO_Transport;
 class TAO_IIOP_Transport;
 class TAO_IIOP_Client_Transport;
 class TAO_IIOP_Server_Transport;
+class TAO_ORB_Core;
 
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
@@ -198,7 +199,7 @@ public:
                               TAO_OutputCDR &response,
                               CORBA::Boolean &response_required,
                               CORBA::ULong &request_id,
-                              CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Handle processing of the request residing in <msg>, setting
   // <response_required> to zero if the request is for a oneway or
   // non-zero if for a two-way and <response> to any necessary
@@ -215,7 +216,7 @@ protected:
                              TAO_OutputCDR &response,
                              CORBA::Boolean &response_required,
                              CORBA::ULong &request_id,
-                             CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                             CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Handle processing of the location request residing in <msg>,
   // setting <response_required> to one if no errors are encountered.
   // The LocateRequestReply is placed into <response>.  In case of

@@ -22,7 +22,10 @@
 //
 // ======================================================================
 
-#include "tao/corba.h"
+#include "tao/DynAnyC.h"
+#include "tao/POA_CORBA.h"
+#include "tao/Servant_Base.h"
+#include "tao/POAC.h"
 
 // constructor
 POA_CORBA::DynAny::DynAny (void)

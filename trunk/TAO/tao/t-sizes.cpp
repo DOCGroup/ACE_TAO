@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/corbafwd.h"
 
 ACE_RCSID(tao, t_sizes, "$Id$")
 

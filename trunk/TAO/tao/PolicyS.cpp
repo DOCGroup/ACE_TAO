@@ -9,7 +9,10 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/corba.h"
+#include "tao/PolicyC.h"
+#include "tao/Operation_Table.h"
+#include "tao/Server_Request.h"
+#include "tao/POA_CORBA.h"
 
 ACE_RCSID(tao, PolicyS, "$Id$")
 

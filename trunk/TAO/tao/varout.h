@@ -20,7 +20,7 @@
 #ifndef TAO_VAROUT_H
 #define TAO_VAROUT_H
 
-class CORBA_Object;
+#include "tao/Object.h"
 
 template <class T>
 class TAO_Object_Field_T : public TAO_Object_Field
@@ -85,7 +85,7 @@ public:
   // TAO extension for access to the underlying pointer.
 
   virtual void _downcast (CORBA_Object* base_ptr,
-                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA_Object* _upcast (void);
   virtual void _release (void);
   // Implement the TAO_Object_Field methods.

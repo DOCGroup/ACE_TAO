@@ -1,9 +1,12 @@
 // @(#) $Id$
 
-#include "tao/corba.h"
-
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
+
+#include "tao/POA.h"
+#include "tao/ORB_Core.h"
+#include "tao/Server_Request.h"
+#include "tao/Server_Strategy_Factory.h"
 
 // Forwarding Servant class
 #include "tao/Forwarding_Servant.h"
@@ -67,13 +70,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description,
                                   TAO_POA_LOCATE_POA_I_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
-
-u_long 
-TAO_ObjectId_Hash::operator () (const PortableServer::ObjectId &id) const
-{
-  return ACE::hash_pjw ((const char *) id.get_buffer (),
-                        id.length ());
-}
 
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
                                       PortableServer::POA_ptr poa)

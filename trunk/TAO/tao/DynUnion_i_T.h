@@ -16,7 +16,7 @@
 #ifndef TAO_DYNUNION_I_T_H
 #define TAO_DYNUNION_I_T_H
 
-#include "tao/corba.h"
+#include "tao/corbafwd.h"
 
 class DU_Extractor_base
 {

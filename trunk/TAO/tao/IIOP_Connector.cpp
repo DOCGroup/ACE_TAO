@@ -13,7 +13,12 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/IIOP_Connector.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/GIOP.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "tao/Environment.h"
 
 CORBA::ULong
 TAO_IIOP_Connector::tag (void)

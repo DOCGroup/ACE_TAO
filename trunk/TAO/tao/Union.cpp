@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Union.h"
 
 ACE_RCSID(tao, Union, "$Id$")
 

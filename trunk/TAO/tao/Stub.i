@@ -57,24 +57,6 @@ STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
 }
 
 ACE_INLINE
-STUB_Object::STUB_Object (char *repository_id)
-  : type_id (repository_id),
-    base_profiles_ ((CORBA::ULong) 0),
-    fwd_profiles_ (0),
-    profile_in_use_ (0),
-    fwd_profile_ (0),
-    profile_lock_ptr_ (0),
-    fwd_profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
-    refcount_ (1),
-    use_locate_request_ (0),
-    first_locate_request_ (0)
-{
-  this->profile_lock_ptr_ = 
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
-}
-
-ACE_INLINE
 TAO_Profile * 
 STUB_Object::set_profiles (TAO_MProfile *mprofiles)
 {
@@ -87,80 +69,6 @@ STUB_Object::set_profiles (TAO_MProfile *mprofiles)
   base_profiles_.set (mprofiles);
 
   return this->set_profile_in_use_i (this->base_profiles_.get_next ());  
-
-}
-
-ACE_INLINE
-STUB_Object::STUB_Object (char *repository_id,
-                          TAO_MProfile &profiles)
-  : type_id (repository_id),
-    base_profiles_ ((CORBA::ULong) 0),
-    fwd_profiles_ (0),
-    profile_in_use_ (0),
-    fwd_profile_ (0),
-    profile_lock_ptr_ (0),
-    fwd_profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
-    refcount_ (1),
-    use_locate_request_ (0),
-    first_locate_request_ (0)
-{
-
-  this->profile_lock_ptr_ =  
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
-
-  set_profiles (&profiles);
-}
-
-ACE_INLINE
-STUB_Object::STUB_Object (char *repository_id,
-                          TAO_Profile *profile)
-  : type_id (repository_id),
-    base_profiles_ ((CORBA::ULong) 0),
-    fwd_profiles_ (0),
-    profile_in_use_ (0),
-    fwd_profile_ (0),
-    profile_lock_ptr_ (0),
-    fwd_profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
-    refcount_ (1),
-    use_locate_request_ (0),
-    first_locate_request_ (0)
-{
-  // @@ XXX need to verify type and deal with wrong types
-
-  this->profile_lock_ptr_ =  
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
-
-  base_profiles_.set (1);
-  base_profiles_.add_profile (profile);
-  this->set_profile_in_use_i (this->base_profiles_.get_next ());  
-}
-
-ACE_INLINE
-STUB_Object::STUB_Object (char *repository_id,
-                          TAO_MProfile *profiles)
-  : type_id (repository_id),
-    base_profiles_ ((CORBA::ULong) 0),
-    fwd_profiles_ (0),
-    profile_in_use_ (0),
-    fwd_profile_ (0),
-    profile_lock_ptr_ (0),
-    fwd_profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
-    refcount_ (1),
-    use_locate_request_ (0),
-    first_locate_request_ (0)
-{
-  ACE_UNUSED_ARG (repository_id);
-
-  // @@ XXX need to verify type and deal with wrong types
-
-  // @@ does this need to be freed?
-  this->profile_lock_ptr_ =  
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
-
-  set_profiles (profiles);
 
 }
 

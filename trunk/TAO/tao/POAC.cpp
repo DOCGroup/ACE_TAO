@@ -11,10 +11,16 @@
 // a ifdef is needed right now. This is going to be changed in
 // the future.
 
-#include "tao/corba.h"
+#include "tao/POAC.h"
+#include "tao/POAS.h"
+#include "tao/POA.h"
+#include "tao/Typecode.h"
+#include "tao/Any.h"
+#include "tao/Environment.h"
+#include "tao/Stub.h"
 
 #if !defined (__ACE_INLINE__)
-#include "POAC.i"
+#include "tao/POAC.i"
 #endif // !defined INLINE
 
 ACE_RCSID(tao, POAC, "$Id$")

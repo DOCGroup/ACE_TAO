@@ -60,18 +60,6 @@ IIOP_ServerRequest::ctx (void)
 }
 #endif
 
-ACE_INLINE CORBA::ORB_ptr
-IIOP_ServerRequest::orb (void)
-{
-  return this->orb_core_->orb ();
-}
-
-ACE_INLINE TAO_POA *
-IIOP_ServerRequest::oa (void)
-{
-  return this->orb_core_->root_poa ();
-}
-
 ACE_INLINE CORBA::Boolean
 IIOP_ServerRequest::response_expected (void) const
 {
@@ -84,7 +72,7 @@ IIOP_ServerRequest::principal (void) const
   return this->requesting_principal_;
 }
 
-ACE_INLINE const TAO_opaque &
+ACE_INLINE const TAO_ObjectKey &
 IIOP_ServerRequest::object_key (void) const
 {
   return this->object_key_;

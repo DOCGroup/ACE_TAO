@@ -18,10 +18,12 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_CONNECTOR_H
-#  define TAO_IIOP_CONNECTOR_H
-#include <tao/GIOP.h>
-class TAO_Connector;
-class TAO_Client_Connection_Handler;
+#define TAO_IIOP_CONNECTOR_H
+
+#include "ace/Connector.h"
+#include "ace/SOCK_Connector.h"
+#include "tao/Pluggable.h"
+#include "tao/Connect.h"
 
 typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
         TAO_IIOP_BASE_CONNECTOR;

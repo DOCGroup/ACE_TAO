@@ -21,6 +21,7 @@
 // ================================================================
 
 #include "ace/streams.h"
+#include "ace/Get_Opt.h"
 #include "tao/Timeprobe.h"
 #include "MyFooServant.h"
 

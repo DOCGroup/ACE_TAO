@@ -1,6 +1,10 @@
 // $Id$
 
 #include "tao/Forwarding_Servant.h"
+#include "tao/Object.h"
+#include "tao/POAC.h"
+#include "tao/Any.h"
+#include "tao/Server_Request.h"
 
 ACE_RCSID(tao, Forwarding_Servant, "$Id$")
 

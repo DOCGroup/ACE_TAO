@@ -21,7 +21,10 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Marshal.h"
+#include "tao/singletons.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Marshal.i"
@@ -74,6 +77,18 @@ TAO_Marshal_Factory::TAO_Marshal_Factory (void)
 TAO_Marshal_Factory::~TAO_Marshal_Factory (void)
 {
 }
+
+// Factory method that returns the appropriate marshal object based on
+// the kind of the typecode.
+TAO_Marshal_Object *
+TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
+                                          CORBA::Environment &TAO_IN_ENV)
+{
+  if (tc && tc->kind_ >= 0 && tc->kind_ < CORBA::TC_KIND_COUNT)
+    return this->mobj_table_[tc->kind_].obj_;
+  TAO_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), 0);
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_RECURSIVE_MUTEX>;

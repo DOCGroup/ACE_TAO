@@ -1,10 +1,22 @@
 // $Id$
 
-ACE_INLINE void
-CORBA::release (CORBA::Principal_ptr principal)
+ACE_INLINE CORBA::ULong
+CORBA_Principal::_incr_refcnt (void)
 {
-  if (principal)
-    principal->_decr_refcnt ();
+  return this->refcount_++;
+}
+
+ACE_INLINE CORBA::ULong
+CORBA_Principal::_decr_refcnt (void)
+{
+  {
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  delete this;
+  return 0;
 }
 
 ACE_INLINE CORBA::Boolean

@@ -49,15 +49,6 @@ TAO_String_Manager::operator= (const TAO_String_Manager &rhs)
   return *this;
 }
 
-// assignment from CORBA::String_var makes a copy
-ACE_INLINE TAO_String_Manager&
-TAO_String_Manager::operator= (const CORBA::String_var &var)
-{
-  CORBA::string_free (this->ptr_);
-  this->ptr_ = CORBA::string_dup (var.in ());
-  return *this;
-}
-
 // assignment from const char* makes a copy
 ACE_INLINE TAO_String_Manager &
 TAO_String_Manager::operator= (const char * p)
@@ -144,16 +135,6 @@ TAO_SeqElem_String_Manager::operator= (const TAO_SeqElem_String_Manager &rhs)
   if (this->release_)
     CORBA::string_free (*this->ptr_);
   *this->ptr_ = CORBA::string_dup (*rhs.ptr_);
-  return *this;
-}
-
-// assignment from String_var
-ACE_INLINE TAO_SeqElem_String_Manager&
-TAO_SeqElem_String_Manager::operator= (const CORBA::String_var &var)
-{
-  if (this->release_)
-    CORBA::string_free (*this->ptr_);
-  *this->ptr_ = CORBA::string_dup (var.in ());
   return *this;
 }
 

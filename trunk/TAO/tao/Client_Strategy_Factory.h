@@ -15,7 +15,14 @@
 // ============================================================================
 
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
-#  define TAO_CLIENT_STRATEGY_FACTORY_H
+#define TAO_CLIENT_STRATEGY_FACTORY_H
+
+#include "ace/Service_Object.h"
+#include "ace/Strategies_T.h"
+#include "tao/corbafwd.h"
+
+class ACE_Lock;
+class TAO_Client_Connection_Handler;
 
 class TAO_Client_Strategy_Factory : public ACE_Service_Object
   // = TITLE

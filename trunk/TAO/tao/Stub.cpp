@@ -10,7 +10,15 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include "tao/corba.h"
+#include "tao/Stub.h"
+#include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
+#include "tao/Object.h"
+#include "tao/GIOP.h"
+#include "tao/NVList.h"
+#include "tao/Invocation.h"
+#include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.i"
@@ -50,6 +58,95 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_STUB_Object_Timeprobe_Description,
                                   TAO_STUB_OBJECT_DO_STATIC_CALL_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
+
+STUB_Object::STUB_Object (char *repository_id,
+                          TAO_MProfile &profiles)
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
+    fwd_profiles_ (0),
+    profile_in_use_ (0),
+    fwd_profile_ (0),
+    profile_lock_ptr_ (0),
+    fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+
+  this->profile_lock_ptr_ =  
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+
+  set_profiles (&profiles);
+}
+
+STUB_Object::STUB_Object (char *repository_id,
+                          TAO_Profile *profile)
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
+    fwd_profiles_ (0),
+    profile_in_use_ (0),
+    fwd_profile_ (0),
+    profile_lock_ptr_ (0),
+    fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+  // @@ XXX need to verify type and deal with wrong types
+
+  this->profile_lock_ptr_ =  
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+
+  base_profiles_.set (1);
+  
+  base_profiles_.add_profile (profile);
+  
+  this->set_profile_in_use_i (this->base_profiles_.get_next ());  
+
+}
+
+STUB_Object::STUB_Object (char *repository_id,
+                          TAO_MProfile *profiles)
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
+    fwd_profiles_ (0),
+    profile_in_use_ (0),
+    fwd_profile_ (0),
+    profile_lock_ptr_ (0),
+    fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+  // @@ XXX need to verify type and deal with wrong types
+
+  // @@ does this need to be freed?
+  this->profile_lock_ptr_ =  
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+
+  set_profiles (profiles);
+
+}
+
+STUB_Object::STUB_Object (char *repository_id)
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
+    fwd_profiles_ (0),
+    profile_in_use_ (0),
+    fwd_profile_ (0),
+    profile_lock_ptr_ (0),
+    fwd_profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+  this->profile_lock_ptr_ = 
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+}
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
@@ -399,7 +496,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
 
                       if (TAO_IN_ENV.exception ())
                         {
-                          dexc (TAO_IN_ENV, "do_static_call, get reply parameter");
+                          TAO_IN_ENV.print_exception ("do_static_call, get reply parameter");
                           return;
                         }
                     }
@@ -486,7 +583,7 @@ STUB_Object::put_params (CORBA::Environment &env,
 {
   if (env.exception ())
     {
-      dexc (env, "do_static_call, start request message");
+      env.print_exception ("do_static_call, start request message");
       return;
     }
 
@@ -517,7 +614,7 @@ STUB_Object::put_params (CORBA::Environment &env,
         }
       if (env.exception ())
         {
-          dexc (env, "do_static_call, put request parameter");
+          env.print_exception ("do_static_call, put request parameter");
           return;
         }
     }
@@ -556,7 +653,7 @@ STUB_Object::do_dynamic_call (const char *opname,
             call.invoke (exceptions, env);
           if (env.exception ())
             {
-              dexc (env, "do_dynamic_call, invoke");
+              env.print_exception ("do_dynamic_call, invoke");
               return;
             }
           if (status == TAO_GIOP_SYSTEM_EXCEPTION
@@ -702,7 +799,7 @@ STUB_Object::do_dynamic_call (const char *opname,
                         }
                       if (env.exception ())
                         {
-                          dexc (env, "do_dynamic_call, get response parameter");
+                          env.print_exception ("do_dynamic_call, get response parameter");
                           return;
                         }
                     }
@@ -759,7 +856,7 @@ STUB_Object::put_params (TAO_GIOP_Invocation &call,
             }
           if (env.exception ())
             {
-              dexc (env, "do_dynamic_call, put request parameter");
+              env.print_exception ("do_dynamic_call, put request parameter");
               return;
             }
         }

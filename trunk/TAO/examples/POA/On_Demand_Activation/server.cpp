@@ -14,6 +14,7 @@
 //=============================================================================
 
 #include "ace/streams.h"
+#include "ace/Get_Opt.h"
 #include "Servant_Activator.h"
 #include "Servant_Locator.h"
 

@@ -1,6 +1,8 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/Request.h"
+#include "tao/Object.h"
+#include "tao/Stub.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Request.i"

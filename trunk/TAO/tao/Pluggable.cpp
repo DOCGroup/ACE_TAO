@@ -13,7 +13,10 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Pluggable.h"
+#include "tao/Stub.h"
+#include "tao/Environment.h"
+#include "tao/GIOP.h"
 
 TAO_Connector_Registry::TAO_Connector_Registry()
   : iiop_connector_(0)

@@ -19,6 +19,7 @@
 #include "tao/DynEnum_i.h"
 #include "tao/DynArray_i.h"
 #include "tao/DynUnion_i.h"
+#include "tao/InconsistentTypeCodeC.h"
 
 // Constructor from typecode
 TAO_DynAny_i::TAO_DynAny_i (CORBA_TypeCode_ptr tc)

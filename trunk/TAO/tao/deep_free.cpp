@@ -28,7 +28,11 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Marshal.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
+#include "tao/Any.h"
+#include "tao/Sequence.h"
 
 ACE_RCSID(tao, deep_free, "$Id$")
 
@@ -117,7 +121,8 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (!tc)
     {
-      dmsg ("TAO_Marshal_Primitive::deep_free detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Primitive::deep_free detected error"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -148,7 +153,8 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
     case CORBA::tk_boolean:
       break;
     default:
-      dmsg ("TAO_Marshal_Primitive::deep_free detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Primitive::deep_free detected error"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -163,7 +169,8 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 {
   if (!tc)
     {
-      dmsg ("TAO_Marshal_Struct::deep_free detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Struct::deep_free detected error"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -270,7 +277,8 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      dmsg ("TAO_Marshal_Struct::deep_free detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Struct::deep_free detected error"));
       TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -446,7 +454,8 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (!tc)
     {
-      dmsg ("TAO_Marshal_Struct::deep_free detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Struct::deep_free detected error"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -590,7 +599,8 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      dmsg ("marshaling TAO_Marshal_Sequence::deep_free detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "marshaling TAO_Marshal_Sequence::deep_free detected error"));
       // error exit
       TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -610,7 +620,8 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (!tc)
     {
-      dmsg ("TAO_Marshal_Struct::deep_free detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Struct::deep_free detected error"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -689,7 +700,8 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
   else
     {
       // We should never reach here.
-      dmsg ("TAO_Marshal_Alias::decode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Alias::decode detected error"));
       TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   ACE_NOTREACHED (return CORBA::TypeCode::TRAVERSE_STOP);
@@ -713,7 +725,8 @@ TAO_Marshal_Except::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (!tc)
     {
-      dmsg ("TAO_Marshal_Struct::deep_free detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Struct::deep_free detected error"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
     // XXX: Exceptions are currently leaked because of bugs lurking

@@ -26,7 +26,14 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Typecode.h"
+#include "tao/ORB.h"
+#include "tao/GIOP.h"
+#include "tao/Object.h"
+#include "tao/Object_KeyC.h"
+#include "tao/PolicyC.h"
+#include "tao/PolicyC.h"
+#include "tao/CurrentC.h"
 
 ACE_RCSID(tao, Typecode_Constants, "$Id$")
 

@@ -22,57 +22,57 @@ CORBA::string_free (CORBA::Char *str)
 // ----------------------------------------------------------------------
 
 ACE_INLINE
-CORBA::String_var::String_var (void)
+CORBA_String_var::CORBA_String_var (void)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA::String_var::String_var (const char *p)
+CORBA_String_var::CORBA_String_var (const char *p)
   : ptr_ (CORBA::string_dup ((char *) p))
 {
 }
 
 ACE_INLINE CORBA::Char &
-CORBA::String_var::operator[] (CORBA::ULong index)
+CORBA_String_var::operator[] (CORBA::ULong index)
 {
   // We need to verify bounds else raise some exception.
   return this->ptr_[index];
 }
 
 ACE_INLINE CORBA::Char
-CORBA::String_var::operator[] (CORBA::ULong index) const
+CORBA_String_var::operator[] (CORBA::ULong index) const
 {
   // We need to verify bounds else raise some exception.
   return this->ptr_[index];
 }
 
 ACE_INLINE
-CORBA::String_var::operator char *()
+CORBA_String_var::operator char *()
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA::String_var::operator const char *() const
+CORBA_String_var::operator const char *() const
 {
   return this->ptr_;
 }
 
 ACE_INLINE const char *
-CORBA::String_var::in (void) const
+CORBA_String_var::in (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE char *&
-CORBA::String_var::inout (void)
+CORBA_String_var::inout (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE char *&
-CORBA::String_var::out (void)
+CORBA_String_var::out (void)
 {
   CORBA::string_free (this->ptr_);
   this->ptr_ = 0;
@@ -80,7 +80,7 @@ CORBA::String_var::out (void)
 }
 
 ACE_INLINE char *
-CORBA::String_var::_retn (void)
+CORBA_String_var::_retn (void)
 {
   char *temp = this->ptr_;
   this->ptr_ = 0;
@@ -92,46 +92,46 @@ CORBA::String_var::_retn (void)
 // ----------------------------------------------------
 
 ACE_INLINE
-CORBA::String_out::String_out (char *&s)
+CORBA_String_out::CORBA_String_out (char *&s)
   : ptr_ (s)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA::String_out::String_out (CORBA::String_var &s)
+CORBA_String_out::CORBA_String_out (CORBA_String_var &s)
   : ptr_ (s.out ())
 {
 }
 
 ACE_INLINE
-CORBA::String_out::String_out (const CORBA::String_out &s)
+CORBA_String_out::CORBA_String_out (const CORBA_String_out &s)
   : ptr_ (s.ptr_)
 {
 }
 
-ACE_INLINE CORBA::String_out &
-CORBA::String_out::operator= (const CORBA::String_out &s)
+ACE_INLINE CORBA_String_out &
+CORBA_String_out::operator= (const CORBA_String_out &s)
 {
   this->ptr_ = s.ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA::String_out &
-CORBA::String_out::operator= (char *s)
+ACE_INLINE CORBA_String_out &
+CORBA_String_out::operator= (char *s)
 {
   this->ptr_ = s;
   return *this;
 }
 
 ACE_INLINE
-CORBA::String_out::operator char *&()
+CORBA_String_out::operator char *&()
 {
   return this->ptr_;
 }
 
 ACE_INLINE char *&
-CORBA::String_out::ptr (void)
+CORBA_String_out::ptr (void)
 {
   return this->ptr_;
 }
@@ -145,8 +145,6 @@ CORBA::wstring_dup (const WChar *const str)
 {
   return CORBA::wstring_copy (str);
 }
-
-// CORBA dup/release build on top of COM's (why not).
 
 // ---------------------------------------------------------------------------
 //  ORB specific

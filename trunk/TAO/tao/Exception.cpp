@@ -8,7 +8,12 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
-#include "tao/corba.h"
+#include "tao/Exception.h"
+#include "tao/Typecode.h"
+#include "tao/Environment.h"
+#include "tao/Any.h"
+#include "tao/CDR.h"
+#include "tao/POAC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"

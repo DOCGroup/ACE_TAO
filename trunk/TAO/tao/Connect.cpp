@@ -1,7 +1,12 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/Connect.h"
 #include "tao/Timeprobe.h"
+#include "tao/IIOP_Transport.h"
+#include "tao/debug.h"
+#include "tao/GIOP.h"
+#include "tao/Server_Request.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Connect.i"
@@ -300,9 +305,13 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   TAO_OutputCDR dummy_output (repbuf, sizeof(repbuf));
   // This output CDR is not used!
 
+  TAO_ObjectKey tmp_key (locateRequestHeader.object_key.length (),
+                         locateRequestHeader.object_key.length (),
+                         locateRequestHeader.object_key.get_buffer (),
+                         0);
   IIOP_ServerRequest serverRequest (locateRequestHeader.request_id,
                                     response_required,
-                                    locateRequestHeader.object_key,
+                                    tmp_key,
                                     "_non_existent",
                                     dummy_output,
                                     this->orb_core_,
@@ -397,9 +406,8 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
       // If encoding went fine
       if (env.exception () != 0)
         {
-          dexc (env,
-                "TAO_Server_Connection_Handler::handle_locate:"
-                "forwarding parameter encode failed");
+          env.print_exception ("TAO_Server_Connection_Handler::handle_locate:"
+                               " forwarding parameter encode failed");
           response_required = 0;
           return -1;
         }
