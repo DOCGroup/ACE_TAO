@@ -57,7 +57,7 @@ all:
 	$(CXX) $(CCFLAGS) -o pout pinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
-	$(GPERF) -m -M -J -c -C -D -E -T -a -o -p -L C++ < $(srcdir)/idl.gperf > iinset.cpp
+	$(GPERF) -m -M -c -C -D -E -T -a -o -p < $(srcdir)/idl.gperf > iinset.cpp
 	$(CXX) $(CCFLAGS) -o iout iinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./iout -v < $(srcdir)/idl.gperf > idl.out
 	-diff -b $(srcdir)/idl.exp idl.out

@@ -3,7 +3,7 @@
 -C	Make the contents of generated lookup tables constant, i.e., readonly.
 -d	Enables the debugging option (produces verbose output to the standard error).
 -D	Handle keywords that hash to duplicate values.  This is useful
-	for certain highly redundant keyword sets.  It enables the -S option.
+	for certain highly redundant keyword sets.
 -e	Allow user to provide a string containing delimiters used to separate
 	keywords from their attributes.  Default is ",\n"
 -E	Define constant values using an enum local to the lookup function
@@ -38,8 +38,8 @@
 -L	Generates code in the language specified by the option's argument.  Languages
 	handled are currently C++ and C.  The default is C.
 -m	Avoids the warning about identical hash values. This is valid
-	onlyif the -D option is enabled.
--MSkips class definition in the output. This is valid only in C++ mode.
+	only if the -D option is enabled.
+-M	Skips class definition in the output. This is valid only in C++ mode.
 -n	Do not include the length of the keyword when computing the hash function
 -N	Allow user to specify name of generated lookup function.  Default
 	name is `in_word_set.'
