@@ -57,7 +57,6 @@ public:
 
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   virtual int svc (void);
 
   ACE_Future<double> work (double param, int count);
@@ -193,13 +192,6 @@ Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s close\n", this->name_));
   task_count--;
-  return 0;
-}
-
-// put... ??
-int 
-Scheduler::put (ACE_Message_Block *, ACE_Time_Value *)
-{
   return 0;
 }
 

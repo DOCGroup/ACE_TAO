@@ -34,9 +34,6 @@ public:
 
 private:
   virtual int close (u_long);
-
-  // = Not needed for this test.
-  virtual int open (void *) { return 0; }
 };
 
 int 

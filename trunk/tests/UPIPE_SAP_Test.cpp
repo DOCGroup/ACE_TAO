@@ -100,17 +100,6 @@ acceptor (void *args)
 
   ACE_UPIPE_Acceptor *acceptor = (ACE_UPIPE_Acceptor *) args;
   ACE_UPIPE_Stream s_stream;
-  ACE_hthread_t thr_handle;
-
-  // Spawn a connector thread.
-  if (ACE_Thread::spawn (ACE_THR_FUNC (connector), 
-			 (void *) 0,
-			 THR_NEW_LWP | THR_DETACHED,
-			 0,
-			 &thr_handle) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 0);
-
-  ACE_DEBUG ((LM_DEBUG, "(%t) acceptor starting accept\n"));
 
   if (acceptor->accept (s_stream) == -1)
     ACE_DEBUG ((LM_DEBUG, 
@@ -163,7 +152,7 @@ main (int, char *[])
   // Spawn a acceptor thread.
   if (ACE_Thread::spawn (ACE_THR_FUNC (acceptor), 
 			 (void *) &acc,
-			 THR_NEW_LWP | THR_DETACHED,
+			 THR_NEW_LWP,
 			 0,
 			 &thr_handle_acceptor) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
@@ -171,15 +160,22 @@ main (int, char *[])
   // Spawn a connector thread.
   if (ACE_Thread::spawn (ACE_THR_FUNC (connector), 
 			 (void *) 0,
-			 THR_NEW_LWP | THR_DETACHED,
+			 THR_NEW_LWP,
 			 0,
 			 &thr_handle_connector) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
 
   // Wait for both the acceptor and connector threads to exit.
-  ACE_Thread::join (thr_handle_connector);
-  ACE_Thread::join (thr_handle_acceptor);
+  if (ACE_Thread::join (thr_handle_connector) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
+  else
+    ACE_DEBUG ((LM_DEBUG, "(%t) joined with connector thread\n"));
+  if (ACE_Thread::join (thr_handle_acceptor) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
+  else
+    ACE_DEBUG ((LM_DEBUG, "(%t) joined with acceptor thread\n"));
+
 #else
   ACE_ERROR ((LM_ERROR, "threads and/or UPIPE not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */

@@ -12,11 +12,11 @@ INFO	= README \
 	  VERSION
 
 DIRS	= ace \
+	  netsvcs \
+	  tests \
           apps \
 	  examples \
-	  netsvcs \
-	  performance-tests \
-	  tests
+	  performance-tests
 
 CLONE	= Makefile \
 	  ace \

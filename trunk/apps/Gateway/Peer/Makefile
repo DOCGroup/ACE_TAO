@@ -14,9 +14,9 @@ FILES  	= Gateway_Handler
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
-VSHOBJS	= $(LSRC:%.cpp=$(VSHDIR)%.so)
+SHOBJ	= $(addsuffix .so,$(FILES))
 
-LDLIBS	= $(VSHOBJS) 
+LDLIBS	=  $(addprefix .shobj/,$(SHOBJ)) 
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -111,6 +111,6 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Acceptor.i \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/Map_Manager.h \
- Peer_Message.h
+ Event.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

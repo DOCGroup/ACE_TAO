@@ -1852,6 +1852,33 @@ typedef int ucontext_t;
 #undef t_errno
 #endif /* ACE_HAS_BROKEN_T_ERRNO */
 
+class ACE_Export ACE_Thread_ID
+  // = TITLE
+  //     Defines a platform-independent thread ID.
+{
+public:
+  ACE_Thread_ID (ACE_thread_t, ACE_hthread_t);
+
+  // = Set/Get the Thread ID.
+  ACE_thread_t id (void);
+  void id (ACE_thread_t);
+
+  // = Set/Get the Thread handle.
+  ACE_hthread_t handle (void);
+  void handle (ACE_hthread_t);
+
+  // != Comparison operator.
+  int operator == (const ACE_Thread_ID &);
+  int operator != (const ACE_Thread_ID &);
+
+private:
+  ACE_thread_t thread_id_;
+  // Identify the thread.
+
+  ACE_hthread_t thread_handle_;
+  // Handle to the thread (typically used to "wait" on Win32).
+};
+
 // Type of the extended signal handler.
 typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
 
@@ -2320,7 +2347,26 @@ public:
   static int t_sync (ACE_HANDLE fildes);
   static int t_unbind (ACE_HANDLE fildes);
 
-  // = A set of wrappers for threads.
+#if 0
+  // = A set of wrappers for threads (these are portable since they use the ACE_Thread_ID).
+  static int thr_continue (const ACE_Thread_ID &thread);
+  static int thr_create (ACE_THR_FUNC,
+                         void *args, 
+                         long flags, 
+                         ACE_Thread_ID *,
+                         u_int priority = 0,
+                         void *stack = 0,
+                         size_t stacksize = 0);
+  static int thr_getprio (ACE_Thread_ID thr_id, int &prio, int *policy = 0);
+  static int thr_join (ACE_Thread_ID waiter_id, void **status); 
+  static int thr_kill (ACE_Thread_ID thr_id, int signum);
+  static ACE_Thread_ID thr_self (void);
+  static int thr_setprio (ACE_Thread_ID thr_id, int prio);
+  static int thr_suspend (ACE_Thread_ID target_thread);
+  static int thr_cancel (ACE_Thread_ID t_id);
+#endif /* 0 */
+
+  // = A set of wrappers for threads (these are non-portable since they use ACE_thread_t and ACE_hthread_t and will go away in a future release).
   static int thr_continue (ACE_hthread_t target_thread);
   static int thr_create (ACE_THR_FUNC,
                          void *args, 
@@ -2330,30 +2376,31 @@ public:
                          u_int priority = 0,
                          void *stack = 0,
                          size_t stacksize = 0);
+  static int thr_getprio (ACE_hthread_t thr_id, int &prio);
+  static int thr_join (ACE_hthread_t waiter_id, void **status); 
+  static int thr_join (ACE_thread_t waiter_id, ACE_thread_t *thr_id, void **status); 
+  static int thr_kill (ACE_thread_t thr_id, int signum);
+  static ACE_thread_t thr_self (void);
+  static void thr_self (ACE_hthread_t &);
+  static int thr_setprio (ACE_hthread_t thr_id, int prio);
+  static int thr_suspend (ACE_hthread_t target_thread);
+  static int thr_cancel (ACE_thread_t t_id);
+
   static int thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2);
   static int thr_equal (ACE_thread_t t1, ACE_thread_t t2);
   static void thr_exit (void *status = 0);
   static int thr_getconcurrency (void);
-  static int thr_getprio (ACE_hthread_t thr_id, int *prio);
   static int thr_getspecific (ACE_thread_key_t key, void **data);
-  static int thr_join (ACE_hthread_t waiter_id, void **status); 
-  static int thr_join (ACE_thread_t waiter_id, ACE_thread_t *thr_id, void **status); 
   static int thr_keyfree (ACE_thread_key_t key);
   static int thr_key_detach (void *inst);
   static int thr_keycreate (ACE_thread_key_t *key, ACE_THR_DEST, void *inst = 0);
   static int thr_key_used (ACE_thread_key_t key);
-  static int thr_kill (ACE_thread_t thr_id, int signum);
   static size_t thr_min_stack (void);
-  static ACE_thread_t thr_self (void);
-  static void thr_self (ACE_hthread_t &);
   static int thr_setconcurrency (int hint);
-  static int thr_setprio (ACE_hthread_t thr_id, int prio);
   static int thr_setspecific (ACE_thread_key_t key, void *data);
   static int thr_sigsetmask (int how, const sigset_t *nsm, sigset_t *osm);
-  static int thr_suspend (ACE_hthread_t target_thread);
   static int thr_setcancelstate (int new_state, int *old_state);
   static int thr_setcanceltype (int new_type, int *old_type);
-  static int thr_cancel (ACE_thread_t t_id);
   static int sigwait (sigset_t *set, int *sig = 0);
   static void thr_testcancel (void);
   static void thr_yield (void);

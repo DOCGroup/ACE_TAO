@@ -212,11 +212,6 @@ public:
   // Run the "event-loop" periodically putting messages to our
   // internal <Message_Queue> that we inherit from <ACE_Task>.
 
-  // = Not used...
-  virtual int open (void *) { return 0; }
-  virtual int close (u_long) { return 0; }
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
-
 private:
   ACE_Reactor_Notification_Strategy notification_strategy_;
   // This strategy will notify the <ACE_Reactor> Singleton when a new
