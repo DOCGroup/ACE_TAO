@@ -305,7 +305,9 @@ int
 Watermark_Test::svc (void)
 {
   int role = this->role_.value ();
-  this->role_++;
+  // Be sure to use the prefix operator++!!!!  We've witnessed
+  // race conditions with the postfix operator++.
+  ++this->role_;
 
   switch (role)
     {
