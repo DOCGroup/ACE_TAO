@@ -3,6 +3,8 @@ Tue Jun 15 12:41:22 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.h,config-qnx-neutrino.h: moved some #includes from
           config-qnx-neutrino.h to OS.h.
 
+        * ACE-INSTALL.html: added QNX Neutrino info.
+
 Tue Jun 15 12:26:06 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/Map_Manager_Test.cpp: Added template instantiations for
