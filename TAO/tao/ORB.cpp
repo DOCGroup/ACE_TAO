@@ -1309,6 +1309,11 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
   // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
   // course requires the TypeCode constants and system exceptions to
   // have been initialized.
+  /**
+   * @note The new TypeCode implementation obviates the above
+   *       comment.  Standard CORBA exception TypeCodes are now
+   *       available before CORBA::ORB_init() is ever called.
+   */
   TAO_Singleton_Manager::instance ()->_set_unexpected (
     ::TAO_unexpected_exception_handler);
 #endif /* ACE_HAS_EXCEPTIONS */
