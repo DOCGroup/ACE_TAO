@@ -15,7 +15,7 @@
 #include "PG_conf.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "PG_Object_Group.h"
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Utils.h>
+#include <orbsvcs/PortableGroup/PG_Utils.h>
 
 ACE_RCSID (PortableGroup,
            PG_Group_Factory,

@@ -11,7 +11,7 @@
 //=============================================================================
 
 #include "Object1_i.h"
-#include <orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h>
+#include <orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h>
 
 #include "tao/Version.h"
 
