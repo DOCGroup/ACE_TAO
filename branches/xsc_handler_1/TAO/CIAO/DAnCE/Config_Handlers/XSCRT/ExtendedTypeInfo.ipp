@@ -10,7 +10,9 @@
  *  This causes a warning about converting the return value from
  *  int to bool.
  */
-#pragma warning( disable: 4800 )
+#ifdef _MSC_VER
+# pragma warning( disable: 4800 )
+#endif
 
 namespace XSCRT
 {
