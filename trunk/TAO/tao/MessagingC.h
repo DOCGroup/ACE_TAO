@@ -2933,6 +2933,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_H_ */
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder &);
 
@@ -2952,6 +2954,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ReplyHandler_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_ptr &);
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #endif /* __ACE_INLINE__ */
 
