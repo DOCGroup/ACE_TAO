@@ -1,3 +1,17 @@
+Wed Sep 30 03:47:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* performance-tests/Thruput/TAO/server.cpp:
+	  Added code to write ior to a file with the option -o.
+	
+	* performance-tests/Thruput/TAO/client.cpp: 
+	  Added code to read ior from a file with option -f.
+	
+	* performance-tests/Thruput/TAO/run_server:
+	* performance-tests/Thruput/TAO/run_test:
+	* performance-tests/Thruput/TAO/run_client:
+	  Used the -o and -f options on server and client to avoid cut and
+	  paste of iors.
+	
 Wed Sep 30 02:44:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Removed some cases of explicit template instantiation of
