@@ -310,6 +310,10 @@ subproject Reader_Writer_Test icc "Reader_Writer_Test.icc", ics "Reader_Writer_T
 {
 }
 
+subproject Recursive_Condition_Test icc "Recursive_Condition_Test.icc", ics "Recursive_Condition_Test.ics"
+{
+}
+
 subproject Recursive_Mutex_Test icc "Recursive_Mutex_Test.icc", ics "Recursive_Mutex_Test.ics"
 {
 }
