@@ -6,10 +6,10 @@
  * @brief Pre-compiled IDL source for the CORBA::Policy related
  * classes.
  *
- * This file is used to generate the code in PolicyC.{h,i,cpp}.
+ * This file is used to generate the code in PolicyC.{h,inl,cpp}.
  * Also, skeleton code for the only non local Policy interface is
  * generated from this pidl file and then the declaration code is
- * moved to tao/PortableServer/PolicyS.{h,i,cpp}
+ * moved to tao/PortableServer/PolicyS.{h,inl,cpp}
  *
  *   The steps to regenerate the code are as follows:
  *
