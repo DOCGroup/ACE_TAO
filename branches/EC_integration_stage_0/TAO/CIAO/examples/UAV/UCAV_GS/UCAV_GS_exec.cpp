@@ -29,7 +29,7 @@ MyImpl::UCAV_GS_exec_i::push_prepare_move (BBN_UAV::PrepareMove *ev
               "UCAV_GS, received a PrepareMove from Engagement \n"));
 
   this->context_->push_start_move (event
-                                      ACE_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 
 }
 

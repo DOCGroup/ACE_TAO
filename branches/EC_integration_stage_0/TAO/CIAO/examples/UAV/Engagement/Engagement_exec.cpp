@@ -23,17 +23,16 @@ MyImpl::Engagement_exec_i::push_prepare_engage (BBN_UAV::PrepareEngage *ev
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Notify others
-  BBN_UAV::PrepareMove_var event1 = new OBV_BBN_UAV::PrepareMove;
-
-  BBN_UAV::StartEngage_var event2 = new OBV_BBN_UAV::StartEngage;
+  BBN_UAV::StartEngage_var event1 = new OBV_BBN_UAV::StartEngage;
+  BBN_UAV::PrepareMove_var event2 = new OBV_BBN_UAV::PrepareMove;
 
   ACE_DEBUG ((LM_DEBUG,
               "Engagement, received a PrepareEngage from CAOC \n"));
-
-  this->context_->push_prepare_move (event1
+  
+  this->context_->push_start_engage (event1
                                      ACE_ENV_ARG_PARAMETER);
 
-  this->context_->push_start_engage (event2
+  this->context_->push_prepare_move (event2
                                      ACE_ENV_ARG_PARAMETER);
 }
 
