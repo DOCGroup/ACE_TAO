@@ -1,3 +1,14 @@
+Wed Apr 25 11:20:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp:
+
+          Removed a check for code generation already done. This
+          visitor generates code in a special pass specific to
+          AMI, and can never happen more than once. If an 
+          interface is forward declared, the 'completed' flag
+          can be set in its full definition node, which was
+          conflicting with the check in this visitor.
+
 Wed Apr 25 07:56:51 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/ORB.h:
