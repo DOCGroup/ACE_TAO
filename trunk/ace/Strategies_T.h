@@ -93,8 +93,8 @@ public:
   ACE_Creation_Strategy (ACE_Thread_Manager * = 0,
                          ACE_Reactor * = ACE_Reactor::instance ());
 
-  /// A <Thread_Manager> is useful when creating active objects and
-  /// the <ACE_Reactor> is used to initialize the service handler's reactor.
+  /// An ACE_Thread_Manager is useful when creating active objects and
+  /// the ACE_Reactor is used to initialize the service handler's reactor.
   int open (ACE_Thread_Manager * = 0,
             ACE_Reactor * = ACE_Reactor::instance ());
 
@@ -669,7 +669,7 @@ class ACE_Schedule_All_Reactive_Strategy
 public:
 
   // Useful STL-style traits.
-  typedef ACE_Scheduling_Strategy<SVC_HANDLER> base_type;  
+  typedef ACE_Scheduling_Strategy<SVC_HANDLER> base_type;
 
   // = Initialization and termination methods.
   /// Constructor
@@ -688,7 +688,7 @@ public:
 
 protected:
 
-  /// Thread Manager
+  /// Reactor
   ACE_Reactor *reactor_;
 };
 
@@ -831,7 +831,7 @@ public:
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
           creation_strategy_type;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
           connect_strategy_type;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER>
           concurrency_strategy_type;
