@@ -110,7 +110,6 @@ TAO_GIOP_Message_Base::generate_request_header (
     }
 
   return 0;
-
 }
 
 int
@@ -461,7 +460,7 @@ TAO_GIOP_Message_Base::write_protocol_header (
   // fragmentation and when we want to use the other 6 bits in this
   // octet we can have a virtual function do this for us as the
   // version info , Bala
-  msg.write_octet (TAO_ENCAP_BYTE_ORDER);
+  msg.write_octet (TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
 
   msg.write_octet ((CORBA::Octet) t);
 

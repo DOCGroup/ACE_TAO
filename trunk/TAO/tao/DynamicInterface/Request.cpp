@@ -76,7 +76,8 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     ctx_ (CORBA::Context::_nil ()),
     refcount_ (1),
     lazy_evaluation_ (0),
-    response_received_ (0)
+    response_received_ (0),
+    byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
   this->target_ = CORBA::Object::_duplicate (obj);
   this->opname_ = CORBA::string_dup (op);
@@ -102,7 +103,8 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     ctx_ (CORBA::Context::_nil ()),
     refcount_ (1),
     lazy_evaluation_ (0),
-    response_received_ (0)
+    response_received_ (0),
+    byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
   this->target_ = CORBA::Object::_duplicate (obj);
   this->opname_ = CORBA::string_dup (op);
@@ -147,7 +149,8 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
                                 this->opname_,
                                 ACE_OS::strlen (this->opname_),
                                 argument_flag,
-                                this->orb_->orb_core ());
+                                this->orb_->orb_core (),
+                                this->byte_order_);
 
   // Loop as needed for forwarding.
   for (;;)
@@ -198,6 +201,12 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
       break;
     }
 
+  // If this request was created by a gateway, then result_
+  // and/or args_ are shared by a CORBA::ServerRequest, whose
+  // reply must be in the same byte order as the reply we are
+  // handling here. So we set the member to be accessed later.
+  this->byte_order_ = call.inp_stream ().byte_order ();
+
   // Now, get all the "return", "out", and "inout" parameters
   // from the response message body ... return parameter is
   // first, the rest are in the order defined in the IDL spec
@@ -226,7 +235,8 @@ CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
                                    this->opname_,
                                    ACE_OS::strlen (this->opname_),
                                    argument_flag,
-                                   this->orb_->orb_core ());
+                                   this->orb_->orb_core (),
+                                   this->byte_order_);
 
   // Loop as needed for forwarding.
   for (;;)
@@ -292,7 +302,8 @@ CORBA_Request::send_deferred (CORBA::Environment &ACE_TRY_ENV)
   TAO_GIOP_DII_Deferred_Invocation call (this->target_->_stubobj (),
                                          this->orb_->orb_core (),
                                          argument_flag,
-                                         this);
+                                         this,
+                                         this->byte_order_);
 
   // Loop as needed for forwarding.
   for (;;)
@@ -367,6 +378,12 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
                                 CORBA::ULong reply_status,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
+  // If this request was created by a gateway, then result_
+  // and/or args_ are shared by a CORBA::ServerRequest, whose
+  // reply must be in the same byte order as the reply we are
+  // handling here. So we set the member to be accessed later.
+  this->byte_order_ = incoming.byte_order ();
+
   switch (reply_status)
   {
     case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:

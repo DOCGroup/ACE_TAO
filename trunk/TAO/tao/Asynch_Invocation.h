@@ -52,7 +52,8 @@ public:
                               const char *operation,
                               CORBA::ULong opname_len,
                               CORBA::Boolean argument_flag,
-                              TAO_ORB_Core *orb_core);
+                              TAO_ORB_Core *orb_core,
+                              int byte_order = TAO_ENCAP_BYTE_ORDER);
 
   /// Send request, without blocking until any reply comes back.
   virtual int invoke (CORBA_Environment &TAO_IN_ENV =
