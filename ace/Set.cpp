@@ -360,7 +360,7 @@ ACE_Set_Node<T>::ACE_Set_Node (const T &i, ACE_Set_Node<T> *n)
 }
 
 template <class T>
-ACE_Set_Node<T>::ACE_Set_Node (ACE_Set_Node<T> *n, int MS_SUCKS)
+ACE_Set_Node<T>::ACE_Set_Node (ACE_Set_Node<T> *n, int /* MS_SUCKS */)
   : next_ (n)
 {
 // ACE_TRACE ("ACE_Set_Node<T>::ACE_Set_Node");
