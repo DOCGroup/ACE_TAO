@@ -91,21 +91,42 @@ main (int argc, char *argv[])
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "\n"
-                             "ORB <%s> was not successfully destroyed.\n"
-                             "\n",
-                             orbid),
-                            1);
+          ACE_ERROR ((LM_ERROR,
+                      "\n"
+                      "ORB <%s> was not successfully destroyed.\n"
+                      "\n",
+                      orbid));
+
+          ACE_TRY_THROW (CORBA::INTERNAL ());
         }
 
       // -------------------------------------------------------------
-      // Now throw a bogus exception to test whether or not exceptions 
-      // break when the last ORB is released.
+      // Now try to perform an operation using the destroyed ORB
+      // pseudo object.  A CORBA::OBJECT_NOT_EXIST() exception should
+      // be thrown.  This also tests whether or not exceptions or the
+      // ORB itself break when the last ORB is released.
       // -------------------------------------------------------------
-      ACE_TRY_THROW (CORBA::UNKNOWN ());
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var obj =
+        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // If we get here, then something went wrong.  A
+      // CORBA::OBJECT_NOT_EXIST() exception should have been thrown!.
+      ACE_ERROR ((LM_ERROR,
+                  "\n"
+                  "CORBA::OBJECT_NOT_EXIST() exception was not thrown\n"
+                  "during attempt to perform an ORB operation using\n"
+                  "destroyed ORB <%s>\n"
+                  "The CORBA::OBJECT_NOT_EXIST should have been thrown!\n"
+                  "\n",
+                  orbid));
+
+      ACE_TRY_THROW (CORBA::INTERNAL ());
     }
-  ACE_CATCH (CORBA::UNKNOWN, exc)
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, exc)
     {
       // Do something with the exception to make sure it actually
       // exists.  If it doesn't exist then there is something wrong
@@ -122,6 +143,12 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught unexpected exception:");
+
+
+      ACE_DEBUG ((LM_ERROR,
+                  "\n"
+                  "ORB_init test failed.\n"));
+
       return 1;
     }
   ACE_ENDTRY;
