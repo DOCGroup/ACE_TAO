@@ -38,7 +38,7 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
 
   if (this->ifs_ == 0)
     {
-      ACE_Sock_Connect::get_ip_interfaces (this->if_count_, this->ifs_);
+      ACE::get_ip_interfaces (this->if_count_, this->ifs_);
     }
 
   for (ACE_INET_Addr* i = this->ifs_;
