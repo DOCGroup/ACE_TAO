@@ -10,6 +10,8 @@ ACE_RCSID(ace, RW_Process_Mutex, "$Id$")
 #include "ace/RW_Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Malloc_T.h"
+
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
 
 const ACE_TCHAR *
