@@ -33,7 +33,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Command_Base
+class ACE_Export ACE_Command_Base
 {
   // = TITLE
   //    Defines an abstract class that allows us to invoke commands
