@@ -1,10 +1,19 @@
+Wed Nov  3 08:49:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Removed TAO/orbsvcs/tests/Notify/Lanes/run_test.pl and
+          TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl.  These tests
+          require more scheduling priorities than most of the nightly build
+          systems have access to as a regular user.
+
 Wed Nov  3 06:24:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/ftrteventchannel.mpb:
-	* bin/MakeProjectCreator/config/messaging.mpb:
+        * bin/MakeProjectCreator/config/ftrteventchannel.mpb:
+        * bin/MakeProjectCreator/config/messaging.mpb:
 
-	  Changed to inherit from corba_messaging instead of appending
-	  corba_messaging to requires.
+          Changed to inherit from corba_messaging instead of appending
+          corba_messaging to requires.
 
 Wed Nov  3 07:24:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
