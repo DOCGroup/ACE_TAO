@@ -200,14 +200,14 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
 int
 ACE_Configuration::export_config (const ACE_TCHAR* filename)
 {
-  ACE_Ini_ImpExp exporter (*this);
+  ACE_Registry_ImpExp exporter (*this);
   return exporter.export_config (filename);
 }
 
 int
 ACE_Configuration::import_config (const ACE_TCHAR* filename)
 {
-  ACE_Ini_ImpExp importer (*this);
+  ACE_Registry_ImpExp importer (*this);
   return importer.import_config (filename);
 }
 

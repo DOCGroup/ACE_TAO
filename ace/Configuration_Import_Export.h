@@ -116,6 +116,9 @@ private:
                       const ACE_TString& path,
                       FILE* out);
 
+  int process_previous_line_format (ACE_TCHAR* buffer,
+                                    ACE_Configuration_Section_Key& section);
+
   ACE_Registry_ImpExp ( const ACE_Registry_ImpExp&);
   ACE_Registry_ImpExp& operator= ( const ACE_Registry_ImpExp&);
 };

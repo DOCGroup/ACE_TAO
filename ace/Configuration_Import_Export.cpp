@@ -56,7 +56,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               return -3;
             }
           continue;
-        }
+        }              // end if firs char is a [
 
       if (buffer[0] == ACE_LIB_TEXT ('"'))
         {
@@ -125,8 +125,21 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               // invalid type, ignore
               continue;
             }
-        }
-    }
+        }// end if first char is a "
+      else
+        {
+          // if the first character is not a ", [, ;, or # we may be
+          // processing a file in the old format.
+          // Try and process the line as such and if it fails,
+          // return an error
+          int rc; 
+          if ((rc = process_previous_line_format (buffer, section)) != 0)
+            {
+              ACE_OS::fclose (in);
+              return rc;
+            }
+        }             // end if maybe old format
+    }                 // end while fgets
 
   if (ferror (in))
     {
@@ -271,6 +284,44 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
   return 0;
 }
 
+//
+// This method read the line format origionally used in ACE 5.1
+//
+int 
+ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
+                                                   ACE_Configuration_Section_Key& section)
+{
+  // Chop any cr/lf at the end of the line.
+  ACE_TCHAR *endp = ACE_OS_String::strpbrk (buffer, ACE_TEXT ("\r\n"));
+  if (endp != 0)
+    *endp = '\0';
+
+  // assume this is a value, read in the value name
+  ACE_TCHAR* end = ACE_OS::strchr (buffer, '=');
+  if (end)  // no =, not a value so just skip it
+    {
+      // null terminate the name
+      *end = 0;
+      end++;
+      // determine the type
+      if (*end == '\"')
+        {
+          // string type
+          if(config_.set_string_value (section, buffer, end + 1))
+            return -4;
+        }
+      else if (*end == '#')
+        {
+          // number type
+          u_int value = atoi((end + 1));
+          if (config_.set_integer_value (section, buffer, value))
+            return -4;
+        }
+    }
+  return 0;
+}                // end read_previous_line_format
+
+
 ACE_Ini_ImpExp::ACE_Ini_ImpExp (ACE_Configuration& config)
     : ACE_Config_ImpExp_Base (config)
 {
@@ -356,8 +407,8 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
               ACE_OS::fclose (in);
               return -4;
             }
-        }
-    }
+        }         // end if (name)
+    }             // end while fgets
 
   if (ferror (in))
     {
