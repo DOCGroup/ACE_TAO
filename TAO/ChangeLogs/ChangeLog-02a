@@ -6,6 +6,11 @@ Fri Oct 13 18:17:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  info class private member declaration for simple
 	  predefined types.
 
+	* TAO_IDL/include/ast_visitor.h:
+
+	  Removed unnecessary #if defined (IDL_HAS_VALUETYPE) guard
+	  around two pure virtual functions.
+
 Fri Oct 13 14:32:50 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
