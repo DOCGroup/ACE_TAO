@@ -1487,7 +1487,6 @@ TAO_Resource_Factory::create_input_cdr_data_block (size_t size)
             0);
         return nb;
       }
-      break;
 
     case TAO_TSS:
       {
@@ -1512,7 +1511,6 @@ TAO_Resource_Factory::create_input_cdr_data_block (size_t size)
             0);
         return nb;
       }
-      break;
     }
   return 0;
 }
@@ -1587,7 +1585,7 @@ TAO_ORB_Core_instance (void)
 
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >;
-template class ACE_Locked_Data_Block<ACE_Allocator_Adapter<ACE_SYNCH_MUTEX> >;
+template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
 
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
@@ -1641,7 +1639,7 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 
 #pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >
-#pragma instantiate ACE_Locked_Data_Block<ACE_Allocator_Adapter<ACE_SYNCH_MUTEX> >
+#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>

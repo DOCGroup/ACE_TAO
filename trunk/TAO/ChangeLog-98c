@@ -1,3 +1,8 @@
+Wed Oct 14 10:47:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: 
+	  Fixed template instantiations.
+
 Wed Oct 14 00:42:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.24 released.
