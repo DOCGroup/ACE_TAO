@@ -1,3 +1,12 @@
+Mon Dec 29 08:35:17 1997  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Removed the PRELIB
+	  and PRELIB_USES_OBJ_ONLY stuff; merged in macros for building
+	  on HP-UX 11.00.
+	* include/makeinclude/platform_hpux11_aCC.GNU - Removed this file.
+	  The 10.x and 11.x builds are now both controlled by
+	  platform_hpux_aCC.GNU.
+
 Sun Dec 28 10:50:54 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.11, released Sun Dec 28 10:50:54 1997.
