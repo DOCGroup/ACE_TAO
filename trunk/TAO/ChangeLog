@@ -1,14 +1,22 @@
+Fri Sep  3 14:18:35 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * interop-tests/wchar/interop_wchar_i.cpp:
+          gcc on True64 is still complaining about using a
+          wchar_t * where a CORBA::WChar * is expected.
+          ( I wonder if this is a 32 vs 64 bit problem?)
+          Try again to make it happy.
+
 Fri Sep  3 11:54:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* utils/catior/Makefile.am:
-	* utils/nslist/Makefile.am:
+        * utils/catior/Makefile.am:
+        * utils/nslist/Makefile.am:
 
-	  Updated.
+          Updated.
 
-	* utils/catior/caitor.mpc:
-	* utils/nslist/nslist.mpc:
+        * utils/catior/caitor.mpc:
+        * utils/nslist/nslist.mpc:
 
-	  Changed to inherit from core.mpb so utilities will be installed.
+          Changed to inherit from core.mpb so utilities will be installed.
 
 Fri Sep  3 21:46:10 2004  Olli Savia  <ops@iki.fi>
 
