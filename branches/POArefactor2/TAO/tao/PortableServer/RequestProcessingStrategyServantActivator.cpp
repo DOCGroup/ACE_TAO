@@ -148,8 +148,6 @@ namespace TAO
         this->incarnate_servant (poa_current_impl.object_id () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      int error = 0;
-
       // If the incarnate operation returns a servant that is
       // already active for a different Object Id and if the POA
       // also has the UNIQUE_ID policy, the incarnate has violated
@@ -161,7 +159,11 @@ namespace TAO
 
       if (!may_activate)
         {
-          error = 1;
+          // If we are not allowed to activate the servant, throw an exception
+          // etherealize is not called because the servant is never added to
+          // the active object map
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
         }
 
       // The POA enters the returned Servant value into the Active
@@ -169,7 +171,7 @@ namespace TAO
       // ObjectId value will be delivered directly to that servant
       // without invoking the servant manager.  Only run if there
       // are no errors or if a restart is not required.
-      if (!error && !wait_occurred_restart_call)
+      if (!wait_occurred_restart_call)
         {
           int result =
             this->poa_->
@@ -178,12 +180,17 @@ namespace TAO
                                                   system_id,
                                                   servant_upcall);
           if (result != 0)
-            error = 1;
-        }
+            {
+              // Throw an exception, etherealize is not called because servant
+              // is not added to the active object map
+              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                                0);
+            }
 
-      // If error occurred or a restart is required, etherealize
-      // the incarnated servant.
-      if (error || wait_occurred_restart_call)
+          // Increment the reference count on the servant upcall.
+          servant_upcall.increment_servant_refcount ();
+        }
+      else
         {
           CORBA::Boolean cleanup_in_progress = 0;
           this->etherealize_servant (poa_current_impl.object_id (),
@@ -192,24 +199,10 @@ namespace TAO
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          // If error, throw exception.
-          if (error)
-            {
-              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                                0);
-            }
-          else
-            {
-              // We ended up waiting on a condition variable, the
-              // POA state may have changed while we are waiting.
-              // Therefore, we need to restart this call.
-              return 0;
-            }
-        }
-      else
-        {
-          // Increment the reference count on the servant upcall.
-          servant_upcall.increment_servant_refcount ();
+          // We ended up waiting on a condition variable, the
+          // POA state may have changed while we are waiting.
+          // Therefore, we need to restart this call.
+          return 0;
         }
 
       // Success
