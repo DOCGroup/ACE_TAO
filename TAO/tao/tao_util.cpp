@@ -47,29 +47,29 @@ TAO_ORB_Manager::init (int argc,
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
-      
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           -1);
-      
+
       // Get the POA object.
       this->root_poa_ =
         PortableServer::POA::_narrow (poa_object.in (), env);
-      
+
       TAO_CHECK_ENV_RETURN (env, -1);
     }
 
   if (CORBA::is_nil (this->poa_manager_.in ()))
     {
-      
+
       // Get the POA_Manager.
       this->poa_manager_ =
         this->root_poa_->the_POAManager (env);
-      
+
       TAO_CHECK_ENV_RETURN (env, -1);
     }
-      
+
   return 0;
 }
 
@@ -87,7 +87,7 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant,
     this->root_poa_->id_to_reference (id.in (),
                                       env);
   TAO_CHECK_ENV_RETURN (env, 0);
-  
+
   CORBA::String str =
     this->orb_->object_to_string (obj.in (),
                                   env);
@@ -121,7 +121,7 @@ TAO_ORB_Manager::run (CORBA_Environment &env,
 CORBA::ORB_ptr
 TAO_ORB_Manager::orb (void)
 {
-  return CORBA_ORB::_duplicate (this->orb_);
+  return CORBA_ORB::_duplicate (this->orb_.in ());
 }
 
 // Destructor.
