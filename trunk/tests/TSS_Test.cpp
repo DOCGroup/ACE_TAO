@@ -53,7 +53,7 @@ cleanup (void *ptr)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) in cleanup, ptr = %x\n", ptr));
 
-  delete ptr;
+  operator delete (ptr);
 }
 
 // This worker function is the entry point for each thread.
@@ -168,7 +168,6 @@ main (int, char *[])
   ACE_START_TEST ("TSS_Test");
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
