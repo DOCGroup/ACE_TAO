@@ -531,17 +531,19 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   ssize_t n_bytes =
     multicast.send (&mcast_info, sizeof (mcast_info));
 
-  ACE_DEBUG ((LM_DEBUG, "sent multicast request."));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "sent multicast request."));
 
   // check for errors
   if (n_bytes == -1)
     return return_value;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "%s; Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n",
-              __FILE__,
-              response_addr.get_port_number (),
-              n_bytes));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"%s; Sent multicast.  Reply port is %u."
+		"# of bytes sent is %d.\n", 
+		__FILE__,
+		response_addr.get_port_number (),
+		n_bytes));
 
 
   // Wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT.
@@ -561,10 +563,11 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   // null terminate message
   buf[n_bytes] = 0;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "%s; Service resolved to ior: '%s'\n",
-              __FILE__,
-              buf));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"%s; Service resolved to ior: '%s'\n",
+		__FILE__,
+		buf));
 
   // convert ior to an object reference
   CORBA_Object_ptr objectified_ior =

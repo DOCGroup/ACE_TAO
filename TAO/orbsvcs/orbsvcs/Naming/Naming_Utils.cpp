@@ -116,6 +116,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 				   TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
+	  if (TAO_debug_level > 0)
 	  ACE_DEBUG ((LM_DEBUG,
 		      "NameService IOR is <%s>\n",
 		      this->naming_service_ior_.in ()));
@@ -155,11 +156,17 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 	  // Register event handler for the ior multicast.
 	  if (reactor->register_handler (this->ior_multicast_,
 					 ACE_Event_Handler::READ_MASK) == -1)
-	    ACE_DEBUG ((LM_DEBUG,
-			"cannot register Event handler\n"));
+	    {
+	      if (TAO_debug_level > 0)
+		ACE_DEBUG ((LM_DEBUG,
+			    "cannot register Event handler\n"));
+	    }
 	  else
-	    ACE_DEBUG ((LM_DEBUG,
+	    {
+	      if (TAO_debug_level > 0)
+		ACE_DEBUG ((LM_DEBUG,
 			"The multicast server setup is done.\n"));
+	    }
 #endif /* ACE_HAS_IP_MULTICAST */
 	}
       else
@@ -210,6 +217,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 				   TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
+	  if (TAO_debug_level > 0)
 	  ACE_DEBUG ((LM_DEBUG,
 		      "NameService IOR is <%s>\n",
 		      this->naming_service_ior_.in ()));
