@@ -37,7 +37,7 @@ class ACE_Export ACE_NS_String
   //
   // = DESCRIPTION
   //     In order to work correctly, this class must be able to
-  //     convert back and forth with ACE_WStrings.  Note that this
+  //     convert back and forth with <ACE_WStrings>.  Note that this
   //     class must not have a destructor since otherwise we'll have
   //     problems...
 public:

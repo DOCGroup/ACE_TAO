@@ -199,7 +199,8 @@ public:
   // Dump the state of the object
 
   // = I just know this is going to cause problems on some platform...
-  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, ACE_LOCK> > ALLOCATOR;
+  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, ACE_LOCK> > 
+          ALLOCATOR;
 
 private:
 #if defined (ACE_WIN32)
@@ -207,11 +208,13 @@ private:
   // Remap the backing store
 #endif /* ACE_WIN32 */
 
-  int shared_bind (const ACE_WString &name, const ACE_WString &value,
+  int shared_bind (const ACE_WString &name,
+                   const ACE_WString &value,
                    const char *type, int rebind);
-  int shared_bind_i (const ACE_WString &name, const ACE_WString &value,
+  int shared_bind_i (const ACE_WString &name,
+                     const ACE_WString &value,
                      const char *type, int rebind);
-  // Factor out code from bind() and rebind().
+  // Factor out code from <bind> and <rebind>.
 
   int create_manager (void);
   int create_manager_i (void);
@@ -225,7 +228,8 @@ private:
   // Pointer to the allocated map manager.
 
   ACE_Naming_Context::Context_Scope_Type ns_scope_;
-  // Scope of this naming context (e.g., PROC_LOCAL, NODE_LOCAL, or NET_LOCAL).
+  // Scope of this naming context (e.g., PROC_LOCAL, NODE_LOCAL, or
+  // NET_LOCAL).
 
   ACE_Name_Options *name_options_;
   // Keep track of the options such as database name etc
