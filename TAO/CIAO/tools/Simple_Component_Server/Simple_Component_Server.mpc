@@ -1,4 +1,6 @@
-project : ciao_server {
+project (Simple_Component_Server) : ciao_server {
+  exename = Simple_Component_Server
+
   Source_Files {
     Simple_Component_Server.cpp
   }
