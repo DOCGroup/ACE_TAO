@@ -23,8 +23,6 @@
 #include "tao/PortableServer/StrategyFactory.h"
 #include "tao/PortableServer/ThreadPolicyC.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -44,8 +42,6 @@ namespace TAO
     };
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_THREADPOLICYSTRATEGYFACTORY_H */

@@ -75,9 +75,11 @@ ACE_RCSID (PortableServer,
 int
 TAO_POA_Initializer::init (void)
 {
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactoryImpl
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactoryImpl
@@ -91,6 +93,7 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactoryImpl
     );
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactoryImpl
     );
@@ -102,22 +105,21 @@ TAO_POA_Initializer::init (void)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactoryImpl
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueDefaultServant
     );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueServantManager
     );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueAOMOnly
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 //  ACE_Service_Config::process_directive (
@@ -147,11 +149,11 @@ TAO_POA_Initializer::init (void)
 
   // Policy Values
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ThreadPolicyValueORBControl
     );
 
-#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ThreadPolicyValueSingle
     );
