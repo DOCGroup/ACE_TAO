@@ -204,6 +204,71 @@ ACE_Process_Options::avoid_zombies (int avoid_zombies)
 {
   avoid_zombies_ = avoid_zombies;
 }
+
+ACE_INLINE int
+ACE_Process_Options::setreugid (const char* user)
+{
+  struct passwd *ent = ACE_OS::getpwnam (user);
+
+  if (ent != 0) 
+    {
+      this->euid_ = ent->pw_uid;
+      this->ruid_ = ent->pw_uid;
+      this->egid_ = ent->pw_gid;
+      this->rgid_ = ent->pw_gid;
+      return 0;
+    }
+  else
+    return -1;
+}
+
+ACE_INLINE void
+ACE_Process_Options::setruid (uid_t id)
+{
+  this->ruid_ = id;
+}
+
+ACE_INLINE void
+ACE_Process_Options::seteuid (uid_t id)
+{
+  this->euid_ = id;
+}
+
+ACE_INLINE void
+ACE_Process_Options::setrgid (uid_t id)
+{
+  this->rgid_ = id;
+}
+
+ACE_INLINE void
+ACE_Process_Options::setegid (uid_t id)
+{
+  this->egid_ = id;
+}
+
+ACE_INLINE uid_t
+ACE_Process_Options::getruid (void)
+{
+  return this->ruid_;
+}
+
+ACE_INLINE uid_t
+ACE_Process_Options::geteuid (void)
+{
+  return this->euid_;
+}
+
+ACE_INLINE uid_t
+ACE_Process_Options::getrgid (void)
+{
+  return this->rgid_;
+}
+
+ACE_INLINE uid_t
+ACE_Process_Options::getegid (void)
+{
+  return this->egid_;
+}
 #endif /* ACE_WIN32 */
 
 ACE_INLINE LPTSTR

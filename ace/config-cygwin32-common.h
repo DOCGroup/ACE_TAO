@@ -60,6 +60,8 @@
 # define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
 #define ACE_LACKS_SETPGID
+#define ACE_LACKS_SETREGID
+#define ACE_LACKS_SETREUID
 # define ACE_LACKS_GETPGID
   // The strtok_r declaration is protected in string.h.
   extern "C" char *strtok_r __P ((char *__s, __const char *__delim,

@@ -112,20 +112,44 @@ ACE_Process::spawn (ACE_Process_Options &options)
   this->child_id_ = ACE::fork (options.command_line_argv ()[0],
                                options.avoid_zombies ());
 
-  // If we're the child and the options specified a non-default
-  // process group, try to set our pgid to it. (This will allow
-  // Process_Manager to wait for Processes by process-group.)
-  if (options.getgroup () != ACE_INVALID_PID 
-      && this->child_id_ == 0
-      && ACE_OS::setpgid (0, options.getgroup ()) < 0)
-      ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p.\n"),
-                  ASYS_TEXT ("ACE_Process::spawn: setpgid failed.")));
-
   if (this->child_id_ == 0) 
-    child (ACE_OS::getppid ());
+    {
+      // If we're the child and the options specified a non-default
+      // process group, try to set our pgid to it.  This allows the
+      // <ACE_Process_Manager> to wait for processes by their
+      // process-group.
+      if (options.getgroup () != ACE_INVALID_PID
+          && ACE_OS::setpgid (0,
+                              options.getgroup ()) < 0)
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("%p.\n"),
+                    ASYS_TEXT ("ACE_Process::spawn: setpgid failed.")));
+  
+#if !defined (ACE_LACKS_SETREUID)
+      // Set user and group id's.
+      if (options.getruid () != (uid_t) -1 
+          || options.geteuid () != (uid_t) -1)
+        if (ACE_OS::setreuid (options.getruid (), 
+                              options.geteuid ()) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("%p.\n"),
+                      ASYS_TEXT ("ACE_Process::spawn: setreuid failed.")));
+#endif /* ACE_LACKS_SETREUID */
+
+#if !defined (ACE_LACKS_SETREGID)
+      if (options.getrgid () != (uid_t) -1 
+          || options.getegid () != (uid_t) -1)
+        if (ACE_OS::setregid (options.getrgid (),
+                              options.getegid ()) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("%p.\n"),
+                      ASYS_TEXT ("ACE_Process::spawn: setregid failed.")));
+#endif /* ACE_LACKS_SETREGID */
+
+      this->child (ACE_OS::getppid ());
+    }
   else if (this->child_id_ != -1) 
-    parent (this->child_id_);
+    this->parent (this->child_id_);
   
   // If we're not supposed to exec, return the process id.
   if (ACE_BIT_ENABLED (options.creation_flags (),
@@ -329,6 +353,10 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     stdout_ (ACE_INVALID_HANDLE),
     stderr_ (ACE_INVALID_HANDLE),
     avoid_zombies_ (0),
+    ruid_ ((uid_t) -1),
+    euid_ ((uid_t) -1),
+    rgid_ ((uid_t) -1),
+    egid_ ((uid_t) -1),
 #endif /* ACE_WIN32 */
     set_handles_called_ (0),
     environment_buf_index_ (0),

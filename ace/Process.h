@@ -195,8 +195,18 @@ public:
   // Set value for avoid_zombies.
   int avoid_zombies (void);
   // Get current value for avoid_zombies.
-#endif /* ACE_WIN32 */
 
+  // = Set/get real & effective user & group id associated with user.
+  int setreugid (const char* user);
+  void setruid (uid_t id);
+  void seteuid (uid_t id);
+  void setrgid (uid_t id);
+  void setegid (uid_t id);
+  uid_t getruid (void);
+  uid_t geteuid (void);
+  uid_t getrgid (void);
+  uid_t getegid (void);
+#endif /* ACE_WIN32 */
 protected:
 
 #if !defined (ACE_HAS_WINCE)
@@ -241,8 +251,15 @@ protected:
   ACE_HANDLE stdin_;
   ACE_HANDLE stdout_;
   ACE_HANDLE stderr_;
-  // Avoid zombies for spawned processes.
   int avoid_zombies_;
+  // Avoid zombies for spawned processes.
+
+  // = Real & effective user & group id's.
+  //   These should be set to -1 to leave unchanged (default).
+  uid_t ruid_;
+  uid_t euid_;
+  uid_t rgid_;
+  uid_t egid_;
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_HAS_WINCE)
