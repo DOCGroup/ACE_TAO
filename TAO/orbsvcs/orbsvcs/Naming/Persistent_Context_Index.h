@@ -20,10 +20,6 @@
 
 #define TAO_NAME_CONTEXTS_INDEX "Naming_Service_Index"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "Persistent_Entries.h"
 
 class TAO_Index
