@@ -1,3 +1,8 @@
+Wed Nov 20 18:01:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp (close_connection_eh): Did cosmetic
+	  changes to the assertive checks.
+
 Wed Nov 20 15:23:40 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
