@@ -41,7 +41,7 @@ class TAO_LoadBalancing_Export TAO_LB_ReplicaProxy :
   public virtual POA_LoadBalancing::ReplicaProxy,
   public virtual PortableServer::RefCountServantBase
 {
-  friend TAO_LB_LoadBalancer;
+  friend class TAO_LB_LoadBalancer;
 public:
 
   TAO_LB_ReplicaProxy (void);
