@@ -1,3 +1,10 @@
+Mon Aug 27 18:33:59 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * bin/nightlybuilds/builds.lst (WEB):
+
+          Removed the stray yoda part of LIST which is causing the wrong
+          results to show up.
+
 Mon Aug 27 18:14:38 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * bin/nightlybuilds/builds.lst (WEB):
@@ -7,10 +14,10 @@ Mon Aug 27 18:14:38 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Mon Aug 27 09:39:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Timer_Queue_T.i (get_dispatch_info):
-	* ace/Timer_Queue_T.h: Fixed the compile problem in VXWORKS
-	  builds. How could I forget that there are a few compilers which
-	  cannot grok traits?
+        * ace/Timer_Queue_T.i (get_dispatch_info):
+        * ace/Timer_Queue_T.h: Fixed the compile problem in VXWORKS
+          builds. How could I forget that there are a few compilers which
+          cannot grok traits?
 
 Mon Aug 27 09:39:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -20,123 +27,123 @@ Mon Aug 27 09:39:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Sun Aug 26 22:08:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.i: Reordered methods to fix warnings in TRU 64
-	  builds.
+        * ace/TP_Reactor.i: Reordered methods to fix warnings in TRU 64
+          builds.
 
 Sun Aug 26 20:50:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.i: Fixed a warning (hopefully) in
-	  Borland builds. The warning was because a temporary variable was
-	  created.
+        * ace/SSL/SSL_SOCK_Stream.i: Fixed a warning (hopefully) in
+          Borland builds. The warning was because a temporary variable was
+          created.
 
 Sun Aug 26 20:45:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MEM_Stream_Test.cpp: Fixed a unused variable warning in
-	  Borland.
+        * tests/MEM_Stream_Test.cpp: Fixed a unused variable warning in
+          Borland.
 
 Sun Aug 26 08:13:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/test_config.h: Added a new ACE_CLOSE_TEST_LOG macro.  Thanks to
-	  Edan for this.
+        * tests/test_config.h: Added a new ACE_CLOSE_TEST_LOG macro.  Thanks to
+          Edan for this.
 
 Sun Aug 26 09:07:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp: Fixed a compile error with SunCC4.2
+        * ace/TP_Reactor.cpp: Fixed a compile error with SunCC4.2
 
 Sun Aug 26 08:28:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Timer_Queue_T.cpp: Fixed a warning from an unused variable
-	  reported by KCC compilers.
+        * ace/Timer_Queue_T.cpp: Fixed a warning from an unused variable
+          reported by KCC compilers.
 
 Sun Aug 26 08:13:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp: Applied the following fixes from
-	  Edan:
+        * tests/Logging_Strategy_Test.cpp: Applied the following fixes from
+          Edan:
 
           - Included ace/Logging_Strategy.h
-	  - Addition of -w switch to enable initial wipeout of logfile
-	  - Removal of the redundant ACE_LOG_MSG->open()
-	  - Explicitly close the previous log before applying the changes to the
-	    ACE_LOG_MSG
-	  - Moved remove_files() call higher, just before logfile close
+          - Addition of -w switch to enable initial wipeout of logfile
+          - Removal of the redundant ACE_LOG_MSG->open()
+          - Explicitly close the previous log before applying the changes to the
+            ACE_LOG_MSG
+          - Moved remove_files() call higher, just before logfile close
 
-	* ace/Logging_Strategy.{h,cpp}: Added the following fixes from
-	  Edan Ayal:
+        * ace/Logging_Strategy.{h,cpp}: Added the following fixes from
+          Edan Ayal:
 
           - Logging_Strategy now supports any ACE_Log_Msg, not just the
-	    ACE_LOG_MSG singleton.
+            ACE_LOG_MSG singleton.
           - Added a check for success (ios::goodbit) of new ofstream
-	    creation.
+            creation.
           - Changed default values for max_size and interval. Now the
-	    default interval is 10 minutes (instead of 0) and the default
-	    log file size is 0 (was 16K). The timer is now activated only
-	    if both are non-zero.
-	  - Added a mutator to set the ACE_Log_Msg to work with, and a
-	    member variable
+            default interval is 10 minutes (instead of 0) and the default
+            log file size is 0 (was 16K). The timer is now activated only
+            if both are non-zero.
+          - Added a mutator to set the ACE_Log_Msg to work with, and a
+            member variable
           - Added definition for ACE_DEFAULT_LOGFILE_POLL_INTERVAL
-	  - Removed definition of ACE_DEFAULT_MAX_LOGFILE_SIZE
+          - Removed definition of ACE_DEFAULT_MAX_LOGFILE_SIZE
 
-	* ace/Log_Record.{h,cpp}: Enhanced this implementation to (1)
-	  be consistent with recent changes to Log_Msg.h and (2) to
-	  replace problematic use of strncpy().  Thanks to Alain
-	  Decamps for these fixes.
+        * ace/Log_Record.{h,cpp}: Enhanced this implementation to (1)
+          be consistent with recent changes to Log_Msg.h and (2) to
+          replace problematic use of strncpy().  Thanks to Alain
+          Decamps for these fixes.
 
 Sat Aug 25 20:58:22 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/FILE_IO.i (send_n): Changed to use ACE::write_n to send the
-	  chain of Message_Blocks.  The originally used ACE::send_n was
-	  causing problem on NT because send_n was restricted for sockets
-	  I/O on NT.  Thanks to Doug for pointing this out.
+        * ace/FILE_IO.i (send_n): Changed to use ACE::write_n to send the
+          chain of Message_Blocks.  The originally used ACE::send_n was
+          causing problem on NT because send_n was restricted for sockets
+          I/O on NT.  Thanks to Doug for pointing this out.
 
 Sat Aug 25 10:16:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Svc_Handler_Test.cpp (main): The destructor of svc_handler
-	  will close file_io, so we don't need to do it explicitly!
+        * tests/Svc_Handler_Test.cpp (main): The destructor of svc_handler
+          will close file_io, so we don't need to do it explicitly!
 
-	* ace/Log_Msg.cpp (log): Changed range check from
+        * ace/Log_Msg.cpp (log): Changed range check from
 
-	  this->msg_ + ACE_Log_Record::MAXLOGMSGLEN
+          this->msg_ + ACE_Log_Record::MAXLOGMSGLEN
 
-	  to
+          to
 
-	  this->msg_ + sizeof this->msg_
+          this->msg_ + sizeof this->msg_
 
-	  to correspond to the change below.
+          to correspond to the change below.
 
-	* ace/Log_Msg.h (ACE_Log_Msg): Increased the size of the buffer
-	  used to store log records to account for the NUL-terminator.
+        * ace/Log_Msg.h (ACE_Log_Msg): Increased the size of the buffer
+          used to store log records to account for the NUL-terminator.
 
-	* tests/Svc_Handler_Test.cpp (main): Changed the buffer size
-	  and NUL-terminated the buffer so that things print correctly.
-  	  Thanks to Nanbor for finding this.
+        * tests/Svc_Handler_Test.cpp (main): Changed the buffer size
+          and NUL-terminated the buffer so that things print correctly.
+          Thanks to Nanbor for finding this.
 
 Sat Aug 25 09:00:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp:
-	* ace/TP_Reactor.h (ACE_TP_Reactor): Fixed  a warning in KCC
-	  builds.
+        * ace/TP_Reactor.cpp:
+        * ace/TP_Reactor.h (ACE_TP_Reactor): Fixed  a warning in KCC
+          builds.
 
 Sat Aug 25 08:42:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Configuration_Import_Export.cpp: Fixed warnings with g++. I
-	  am not sure how this fix will be accepted on different
-	  compilers.  Things are always dicy when you want to delete a
-	  void *.
+        * ace/Configuration_Import_Export.cpp: Fixed warnings with g++. I
+          am not sure how this fix will be accepted on different
+          compilers.  Things are always dicy when you want to delete a
+          void *.
 
 Fri Aug 24 23:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added File_IO test to our daily builds.
+        * bin/auto_run_tests.lst: Added File_IO test to our daily builds.
 
 Fri Aug 24 23:12:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.h:
-	* ace/WFMO_Reactor.cpp (dispatch_notify): Fixed a compile error on
-	  MSVC.
+        * ace/WFMO_Reactor.h:
+        * ace/WFMO_Reactor.cpp (dispatch_notify): Fixed a compile error on
+          MSVC.
 
 Fri Aug 24 23:07:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Configuration_Import_Export.cpp: Fixed a compile error with
-	  g++.
+        * ace/Configuration_Import_Export.cpp: Fixed a compile error with
+          g++.
 
 Fri Aug 24 21:55:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -156,168 +163,168 @@ Fri Aug 24 20:32:39 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Aug 24 16:54:02 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.h (recv_i):
+        * ace/SSL/SSL_SOCK_Stream.h (recv_i):
 
-	  Added a timeout parameter.  See below for details.
+          Added a timeout parameter.  See below for details.
 
-	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
+        * ace/SSL/SSL_SOCK_Stream.i (recv_i):
 
-	  Perform an SSL_read() before attempting to block on select()
-	  with a timeout.  OpenSSL may buffer more data than requested
-	  since it is a record-oriented protocol.  Fixes a problem where
-	  subsequent calls to ACE_SSL_SOCK_Stream::recv() could timeout
-	  when needlessly blocking on select() because the expected data
-	  has already been buffered by OpenSSL.  Thanks to Martin
-	  Krumpolec <krumpo@pobox.sk> for reporting and diagnosing the
-	  problem.  [Bug 1006]
+          Perform an SSL_read() before attempting to block on select()
+          with a timeout.  OpenSSL may buffer more data than requested
+          since it is a record-oriented protocol.  Fixes a problem where
+          subsequent calls to ACE_SSL_SOCK_Stream::recv() could timeout
+          when needlessly blocking on select() because the expected data
+          has already been buffered by OpenSSL.  Thanks to Martin
+          Krumpolec <krumpo@pobox.sk> for reporting and diagnosing the
+          problem.  [Bug 1006]
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (recv):
+        * ace/SSL/SSL_SOCK_Stream.cpp (recv):
 
-	  Moved the timed recv() code to the lower level recv_i() method
-	  since timeout support must now be more tightly integrated with
-	  do/while(SSL_pending()) SSL_read() loop.
+          Moved the timed recv() code to the lower level recv_i() method
+          since timeout support must now be more tightly integrated with
+          do/while(SSL_pending()) SSL_read() loop.
 
 Fri Aug 24 18:33:09 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Parse_Node.cpp (ACE_Function_Node): Make sure to dynamically
-	  allocate the pathname_ so we can delete it!   Thanks to
-	  Don Hinton for reporting this.
+        * ace/Parse_Node.cpp (ACE_Function_Node): Make sure to dynamically
+          allocate the pathname_ so we can delete it!   Thanks to
+          Don Hinton for reporting this.
 
-	* ace/Configuration_Import_Export.cpp: Changed a couple of
-	  delete (char *) buf to delete (char *) [] buf.  Thanks to
-	  Don Hinton for reporting this.
+        * ace/Configuration_Import_Export.cpp: Changed a couple of
+          delete (char *) buf to delete (char *) [] buf.  Thanks to
+          Don Hinton for reporting this.
 
 Fri Aug 24 16:10:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	Merged in changes from the reactor_deadlock branch. This set of
-	changes actually fixes a long standing problem with the
-	TP_Reactor. The TP_Reactor was holding the token too long  and
-	this created all sorts of problems for TAO. The changes have been
-	merged from the branch <reactor_deadlock> and here are the relevant
+        Merged in changes from the reactor_deadlock branch. This set of
+        changes actually fixes a long standing problem with the
+        TP_Reactor. The TP_Reactor was holding the token too long  and
+        this created all sorts of problems for TAO. The changes have been
+        merged from the branch <reactor_deadlock> and here are the relevant
         ChangeLog entries.
 
-	Fri Aug 24 14:59:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Fri Aug 24 14:59:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * ace/TP_Reactor.cpp (dispatch_socket_events): Cosmetic changes.
 
-	Fri Aug 24 14:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Fri Aug 24 14:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Timer_Queue_T.i:
-	* ace/Timer_Queue_T.h:Removed the default constructor and
-	  destructor for ACE_Timer_Node_Dispatch_Info_T allowing the
-	  compiler to do the job.
+        * ace/Timer_Queue_T.i:
+        * ace/Timer_Queue_T.h:Removed the default constructor and
+          destructor for ACE_Timer_Node_Dispatch_Info_T allowing the
+          compiler to do the job.
 
-	  Fri Aug 24 12:05:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+          Fri Aug 24 12:05:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Timer_Queue_T.cpp: Removed some vague debug statements.
+        * ace/Timer_Queue_T.cpp: Removed some vague debug statements.
 
-	Fri Aug 24 11:34:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Fri Aug 24 11:34:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Timer_Queue_T.h:
-	* ace/Timer_Queue_T.cpp:
-	* ace/Timer_Queue_T.i: Added a new class
-	  ACE_Timer_Node_Dispatch_Info_T that has the dispatch information
-	  needed to make the upcall. Added methods, dispatch_info () and
-	  dispatch_info_i () in ACE_Timer_Queue_T. These methods return
-	  the dispatch information if there is a node in the queue whose
-	  timer value <= current time. Changed the expire () method to use
-	  this method to get dispatch information.
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_Queue_T.i: Added a new class
+          ACE_Timer_Node_Dispatch_Info_T that has the dispatch information
+          needed to make the upcall. Added methods, dispatch_info () and
+          dispatch_info_i () in ACE_Timer_Queue_T. These methods return
+          the dispatch information if there is a node in the queue whose
+          timer value <= current time. Changed the expire () method to use
+          this method to get dispatch information.
 
-	* ace/Timer_Queue.h: Added a template specialisation for
-	  ACE_Timer_Node_Dispatch_Info_T.
+        * ace/Timer_Queue.h: Added a template specialisation for
+          ACE_Timer_Node_Dispatch_Info_T.
 
-	* ace/Timer_Queue.cpp: Added template instantiations for the
-	  specialisation.
+        * ace/Timer_Queue.cpp: Added template instantiations for the
+          specialisation.
 
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp: Added a new method handle_timer_events ()
-	  that would handles timer events.
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp: Added a new method handle_timer_events ()
+          that would handles timer events.
 
-	Thu Aug 23 11:50:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Thu Aug 23 11:50:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Reactor_Impl.h: Added two new methods notify_handle () and
-	  dispatch_notify () to the ACE_Reactor_Impl class.
+        * ace/Reactor_Impl.h: Added two new methods notify_handle () and
+          dispatch_notify () to the ACE_Reactor_Impl class.
 
-	* ace/Select_Reactor_Base.h:
-	* ace/Select_Reactor_Base.cpp: Implemented the above two
-	  methods in the ACE_Select_Reactor_Notify class. The
-	  notify_handle () method returns the handle of the pipe on which
-	  it is listening. The dispatch_notify () call does a dispatch of
-	  just one notify () call in the notify pipe. The handle_input ()
-	  call that used to process all the notify calls now calls the
-	  dispatch_notify () in a loop.  The change essentially allows
-	  some extrenal client of this class to just process one notify at
-	  a time if needed.
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.cpp: Implemented the above two
+          methods in the ACE_Select_Reactor_Notify class. The
+          notify_handle () method returns the handle of the pipe on which
+          it is listening. The dispatch_notify () call does a dispatch of
+          just one notify () call in the notify pipe. The handle_input ()
+          call that used to process all the notify calls now calls the
+          dispatch_notify () in a loop.  The change essentially allows
+          some extrenal client of this class to just process one notify at
+          a time if needed.
 
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.i:
-	* ace/TP_Reactor.cpp (handle_events): Fixed a bug with
-	  handle_events (ACE_Time_Value &). This should be calling the
-	  handle_events () of the TP_Reactor and not the select reactor.
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.i:
+        * ace/TP_Reactor.cpp (handle_events): Fixed a bug with
+          handle_events (ACE_Time_Value &). This should be calling the
+          handle_events () of the TP_Reactor and not the select reactor.
 
-	  Added a whole slew of new methods that basically allows us to do
-	  this
-	    - handle one event at a time
+          Added a whole slew of new methods that basically allows us to do
+          this
+            - handle one event at a time
 
-	    - once the thread knows the event that needs handling it should
-	      release the token before dispatching the events
+            - once the thread knows the event that needs handling it should
+              release the token before dispatching the events
 
-	  The new methods that have been added are
+          The new methods that have been added are
 
-	    - handle_signals (), which handle signals that interrupted the
-	      select (). The implementation of this method is busted. The
-	      implementation has been copied from the existing setup
+            - handle_signals (), which handle signals that interrupted the
+              select (). The implementation of this method is busted. The
+              implementation has been copied from the existing setup
 
-	    - handle_notify_events (), which handles one notify on the
-	      notify_pipe at a time
+            - handle_notify_events (), which handles one notify on the
+              notify_pipe at a time
 
-	    - handle_socket_events (), which handles socket events.
+            - handle_socket_events (), which handles socket events.
 
-	  Quite a few helper methods have also been added. They are
-	  get_notify_handle (), get_socket_event_info (), and
-	  dispatch_socket_events (). Removed the methods dispatch_i (),
-	  dispatch_i_protected () and notify_handle (). This checkin fixes
-	  the problem in 1002. But we still have to add handling timeouts
-	  into the TP_Reactor.
+          Quite a few helper methods have also been added. They are
+          get_notify_handle (), get_socket_event_info (), and
+          dispatch_socket_events (). Removed the methods dispatch_i (),
+          dispatch_i_protected () and notify_handle (). This checkin fixes
+          the problem in 1002. But we still have to add handling timeouts
+          into the TP_Reactor.
 
 
-	Tue Aug 21 17:21:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Tue Aug 21 17:21:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.i:
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp: Made lots of changes which havent been
-	  compiled yet.  Added a new class ACE_TP_Token_Guard that helps
-	  in obtaining and releasing tokens. Moved the grab_token () from
-	  the ACE_TP_Reactor class to the TP_Token_Guard class. Added a
-	  new method for handling signals. They havent been compiled yet
-	  and this checkin is to put files from work to my home box.
+        * ace/TP_Reactor.i:
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp: Made lots of changes which havent been
+          compiled yet.  Added a new class ACE_TP_Token_Guard that helps
+          in obtaining and releasing tokens. Moved the grab_token () from
+          the ACE_TP_Reactor class to the TP_Token_Guard class. Added a
+          new method for handling signals. They havent been compiled yet
+          and this checkin is to put files from work to my home box.
 
-	Tue Aug 21 07:58:42 2001 Balachandran Natarajan  <bala@cs.wustl.edu>
+        Tue Aug 21 07:58:42 2001 Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.i:
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp (handle_events): Started refactoring some of
-	  the code to help with this bug.  This change has not been
-	  compiled. This is just being done to transfer files from home
-	  to work.
+        * ace/TP_Reactor.i:
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp (handle_events): Started refactoring some of
+          the code to help with this bug.  This change has not been
+          compiled. This is just being done to transfer files from home
+          to work.
 
 Fri Aug 24 14:25:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Massimo Pichini <massimo@webbridges.it> to the
-	  hall of fame.
+        * THANKS: Added Massimo Pichini <massimo@webbridges.it> to the
+          hall of fame.
 
 Fri Aug 24 13:40:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Removed HPUX and AIX_VAC for the
-	  timebeing. Looks like OCI is running different versions of the
-	  OS for their internal use.
+        * bin/nightlybuilds/builds.lst: Removed HPUX and AIX_VAC for the
+          timebeing. Looks like OCI is running different versions of the
+          OS for their internal use.
 
 Fri Aug 24 10:17:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (log_hexdump): Added a patch provided by Massimo
-	  Pichini <massimo@webbridges.it>. This prevents overflows with
-	  long strings that are used in printing hexdumps. Previously we
-	  had a buffer of 80 bytes on the stack.
+        * ace/Log_Msg.cpp (log_hexdump): Added a patch provided by Massimo
+          Pichini <massimo@webbridges.it>. This prevents overflows with
+          long strings that are used in printing hexdumps. Previously we
+          had a buffer of 80 bytes on the stack.
 
 Fri Aug 24 10:03:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -330,9 +337,9 @@ Fri Aug 24 10:03:29 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Aug 23 22:01:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp: Reverted this change "Thu Aug
-	  23 05:24:57 2001  Douglas C. Schmidt" as this was giving
-	  warnings with MSVC 6.0
+        * tests/Logging_Strategy_Test.cpp: Reverted this change "Thu Aug
+          23 05:24:57 2001  Douglas C. Schmidt" as this was giving
+          warnings with MSVC 6.0
 
 Thu Aug 23 11:49:15 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
@@ -343,9 +350,9 @@ Thu Aug 23 11:49:15 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
 Thu Aug 23 09:17:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (file): Reduced the number of bytes copied in
-	  ACE_Log_Msg::file () and ACE_Log_Msg::msg () by one. Thanks to
-	  Alain Decamps <Alain.Decamps@PIDPA.be> for pointing this out.
+        * ace/Log_Msg.cpp (file): Reduced the number of bytes copied in
+          ACE_Log_Msg::file () and ACE_Log_Msg::msg () by one. Thanks to
+          Alain Decamps <Alain.Decamps@PIDPA.be> for pointing this out.
 
 Thu Aug 23 08:11:22 2001  Steve Huston  <shuston@riverace.com>
 
@@ -360,19 +367,19 @@ Thu Aug 23 08:03:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Thu Aug 23 05:24:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp: Added new and improved test that
-	  it better documented and fixes some minor bugs.  Thanks to
-	  Edan Ayal for this.
+        * tests/Logging_Strategy_Test.cpp: Added new and improved test that
+          it better documented and fixes some minor bugs.  Thanks to
+          Edan Ayal for this.
 
 Wed Aug 22 19:04:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp: Enable this test to work
-	  on platforms that don't support DLLs.  Thanks to Edan Ayal
- 	  <edana@bandwiz.com> for suggestion this and providing the code.
+        * tests/Logging_Strategy_Test.cpp: Enable this test to work
+          on platforms that don't support DLLs.  Thanks to Edan Ayal
+          <edana@bandwiz.com> for suggestion this and providing the code.
 
-	* tests/Logging_Strategy_Test.cpp (parse_args): Changed 'n' for 'N'
-	  since that controls the max number of log files.  Thanks to Edan
- 	  Ayal <edana@bandwiz.com> for reporting this.
+        * tests/Logging_Strategy_Test.cpp (parse_args): Changed 'n' for 'N'
+          since that controls the max number of log files.  Thanks to Edan
+          Ayal <edana@bandwiz.com> for reporting this.
 
 Thu Aug 23 07:30:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
