@@ -6,7 +6,7 @@
 
 #include "tao/corba.h"
 
-Table_Element TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
+TAO_Table_Element TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 {
   { 0, 1, 0 },                            // CORBA::tk_null
   { 0, 1, 0 },                            // CORBA::tk_void
