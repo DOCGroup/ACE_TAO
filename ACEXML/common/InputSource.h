@@ -64,7 +64,7 @@ public:
    * Notice that ACEXML_InputSource assumes the ownership
    * of <stream>
    */
-  ACE_EXPLICIT ACEXML_InputSource (ACEXML_CharStream *stream);
+  explicit ACEXML_InputSource (ACEXML_CharStream *stream);
 
   /**
    * Create a new input source with a system identifier.

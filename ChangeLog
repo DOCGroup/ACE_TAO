@@ -1,3 +1,8 @@
+Mon Feb 14 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Kokyu/DSRT_Dispatch_Item_T.h:
+          Replaced ACE_EXPLICIT with explicit
+
 Mon Feb 14 01:22:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RMCast/Send_Msg/Receiver.cpp:
