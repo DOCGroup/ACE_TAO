@@ -276,6 +276,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+  /// Insure that @arg hostname is properly null-terminated.
+  int get_host_name_i (char hostname[], size_t hostnamelen) const;
+
   /// Underlying representation.
   sockaddr_in inet_addr_;
 

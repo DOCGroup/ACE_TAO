@@ -497,73 +497,34 @@ ACE_INET_Addr::get_host_name (char hostname[],
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
-  if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
+  int result;
+  if (len > 1)
     {
-      if (ACE_OS::hostname (hostname, len) == -1)
-        return -1;
-      else
-        return 0;
+      result = get_host_name_i(hostname,len);
+      if (result < 0)
+        {
+          if (result == -2)
+            {
+              result = -1;
+              // We know that hostname is nul-terminated
+            }
+          else
+            {
+              //result == -1;
+              // This could be worse than hostname[len -1] = '\0'?
+              hostname[0] = '\0';   
+            }
+        }
     }
   else
     {
-#if defined (VXWORKS)
-      ACE_UNUSED_ARG (len);
-      int error =
-        ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
-                         hostname);
-      if (error == OK)
-        return 0;
-      else
+      if (len == 1)
         {
-          errno = error;
-          return -1;
+          hostname[0] = '\0';
         }
-#else
-#  if !defined(_UNICOS)
-      int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
-#  else /* _UNICOS */
-      int a_len = sizeof this->inet_addr_.sin_addr;
-#  endif /* ! _UNICOS */
-      int error = 0;
-
-#if defined (CHORUS) || (defined (DIGITAL_UNIX) && defined (__GNUC__))
-      hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
-                                           a_len,
-                                           this->addr_type_);
-      if (hp == 0)
-        error = errno;  // So that the errno gets propagated back; it is
-                        // loaded from error below.
-#else
-      hostent hentry;
-      ACE_HOSTENT_DATA buf;
-      hostent *hp =
-        ACE_OS::gethostbyaddr_r ((char *)&this->inet_addr_.sin_addr,
-                                 a_len,
-                                 this->addr_type_,
-                                 &hentry,
-                                 buf,
-                                 &error);
-#endif /* CHORUS */
-
-      if (hp == 0)
-        {
-          errno = error;
-          return -1;
-        }
-
-      if (hp->h_name == 0)
-        return -1;
-
-      if (ACE_OS::strlen (hp->h_name) >= len)
-        {
-          errno = ENOSPC;
-          return -1;
-        }
-
-      ACE_OS::strcpy (hostname, hp->h_name);
-      return 0;
-#endif /* VXWORKS */
+      result = -1;
     }
+  return result;
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -614,4 +575,88 @@ ACE_INET_Addr::set_port_number (u_short port_number,
     port_number = htons (port_number);
 
   this->inet_addr_.sin_port = port_number;
+}
+
+// returns -2 when the hostname is truncated
+int
+ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
+{
+  ACE_TRACE ("ACE_INET_Addr::get_host_name_i");
+
+  if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
+    {
+      if (ACE_OS::hostname (hostname, len) == -1)
+        return -1;
+      else
+        return 0;
+    }
+  else
+    {
+#if defined (VXWORKS)
+      ACE_UNUSED_ARG (len);
+      int error =
+        ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
+                         hostname);
+      if (error == OK)
+        return 0;
+      else
+        {
+          errno = error;
+          return -1;
+        }
+#else
+#  if !defined(_UNICOS)
+      int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
+#  else /* _UNICOS */
+      int a_len = sizeof this->inet_addr_.sin_addr;
+#  endif /* ! _UNICOS */
+      int error = 0;
+
+#if defined (CHORUS) || (defined (DIGITAL_UNIX) && defined (__GNUC__))
+      hostent *hp = ACE_OS::gethostbyaddr ((char *)
+&this->inet_addr_.sin_addr,
+                                           a_len,
+                                           this->addr_type_);
+      if (hp == 0)
+        error = errno;  // So that the errno gets propagated back; it is
+                        // loaded from error below.
+#else
+      hostent hentry;
+      ACE_HOSTENT_DATA buf;
+      hostent *hp =
+        ACE_OS::gethostbyaddr_r ((char *)&this->inet_addr_.sin_addr,
+                                 a_len,
+                                 this->addr_type_,
+                                 &hentry,
+                                 buf,
+                                 &error);
+#endif /* CHORUS */
+
+      if (hp == 0)
+        {
+          errno = error;
+          return -1;
+        }
+
+      if (hp->h_name == 0)
+        return -1;
+
+      if (ACE_OS::strlen (hp->h_name) >= len)
+        {        
+          // We know the length, so use memcpy
+          if (len > 0)
+            {
+              ACE_OS::memcpy(hostname,hp->h_name,len - 1);
+              hostname[len-1]= '\0';
+            }
+          errno = ENOSPC;
+          return -2;  // -2 Means that we have a good string
+          // Using errno looks ok, but ENOSPC could be set on 
+          // other places.
+        }
+
+      ACE_OS::strcpy (hostname, hp->h_name);
+      return 0;
+#endif /* VXWORKS */
+    }
 }
