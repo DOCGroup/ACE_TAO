@@ -125,9 +125,10 @@ AST_UnionLabel *
 AST_UnionBranch::label (unsigned long index)
 {
   unsigned long i = 0;
-  UTL_LabellistActiveIterator iter (this->pd_ll);
 
-  for (; !iter.is_done (); iter.next ())
+  for (UTL_LabellistActiveIterator iter (this->pd_ll); 
+       !iter.is_done (); 
+       iter.next ())
     {
       if (i == index)
         {

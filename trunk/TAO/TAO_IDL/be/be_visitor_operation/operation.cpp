@@ -27,12 +27,12 @@
 ACE_RCSID(be_visitor_operation, operation, "$Id$")
 
 
-  // ************************************************************
-  // Generic Operation visitor
-  // ************************************************************
+// ************************************************************
+// Generic Operation visitor
+// ************************************************************
 
-  be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
-    : be_visitor_scope (ctx)
+be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
+  : be_visitor_scope (ctx)
 {
 }
 
@@ -41,17 +41,22 @@ be_visitor_operation::~be_visitor_operation (void)
 }
 
 
+// Is the operation return type void?
 int
 be_visitor_operation::void_return_type (be_type *bt)
 {
-  // is the operation return type void?
+  if (bt->node_type () == AST_Decl::NT_pre_defined)
+    {
+      AST_PredefinedType::PredefinedType pdt =
+        be_predefined_type::narrow_from_decl (bt)->pt ();
 
-  if (bt->node_type () == AST_Decl::NT_pre_defined
-      && (be_predefined_type::narrow_from_decl (bt)->pt ()
-          == AST_PredefinedType::PT_void))
-    return 1;
-  else
-    return 0;
+      if (pdt == AST_PredefinedType::PT_void)
+        {
+          return 1;
+        }
+    }
+
+  return 0;
 }
 
 int
@@ -72,7 +77,7 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
   //
   size_t count = 0;
 
-  // initialize an iterator to iterate thru our scope
+  // Initialize an iterator to iterate thru our scope.
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
@@ -81,21 +86,22 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
         be_argument::narrow_from_decl (si.item ());
 
       // We do not generate insertion operators for valuetypes
-      // yet.  Do not include them in the count.
+      // yet. Do not include them in the count.
       be_valuetype *vt =
         be_valuetype::narrow_from_decl (bd->field_type ());
 
       if (bd && (bd->direction () != AST_Argument::dir_OUT) && !vt)
-        count++;
-
+        {
+          ++count;
+        }
     }
 
   return count;
 }
 
 
-//Method to generate the throw specs for exceptions that are thrown by the
-//operation
+// Method to generate the throw specs for exceptions that are thrown by the
+// operation.
 int
 be_visitor_operation::gen_throw_spec (be_operation *node)
 {
@@ -112,10 +118,11 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 
   *os << be_idt_nl << throw_spec_open
       << be_idt_nl << "CORBA::SystemException";
+
   if (node->exceptions ())
     {
 
-      // initialize an iterator to iterate thru the exception list
+      // Initialize an iterator to iterate thru the exception list.
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();
            ei.next ())
@@ -128,7 +135,8 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_operation"
                                  "gen_throw_spec - "
-                                 "bad exception node\n"), -1);
+                                 "bad exception node\n"), 
+                                -1);
 
             }
 
@@ -137,7 +145,6 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
     }
 
   *os << be_uidt_nl << throw_spec_close << be_uidt;
-
   return 0;
 }
 
@@ -145,32 +152,38 @@ int
 be_visitor_operation::gen_environment_decl (int argument_emitted,
                                             be_operation *node)
 {
-  // generate the CORBA::Environment parameter for the alternative mapping
+  // Generate the CORBA::Environment parameter for the alternative mapping.
   if (be_global->exception_support ())
-    return 0;
+    {
+      return 0;
+    }
 
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
   // whether the operation node has parameters.
   const char *env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+
   if (argument_emitted || node->argument_count () > 0)
-    env_decl = "ACE_ENV_ARG_DECL";
+    {
+      env_decl = "ACE_ENV_ARG_DECL";
+    }
 
   *os << be_nl;
+
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-      // last argument - is always CORBA::Environment
+      // Last argument is always CORBA::Environment.
       *os << env_decl << "_WITH_DEFAULTS";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
-      // last argument - is always ACE_ENV_ARG_DECL
+      // Last argument is always CORBA::Environment.
       *os << env_decl;
       break;
     default:
@@ -181,14 +194,15 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
   return 0;
 }
 
-// Method that returns the appropriate CORBA::Environment variable
+// Method that returns the appropriate CORBA::Environment variable.
 const char *
 be_visitor_operation::gen_environment_var ()
 {
   static const char *ace_try_env_decl = "ACE_DECLARE_NEW_CORBA_ENV;";
   static const char *null_env_decl = "";
 
-  // check if we are generating stubs/skeletons for true C++ exception support
+  // Check if we are generating stubs/skeletons for 
+  // true C++ exception support.
   if (be_global->exception_support ())
     {
       return ace_try_env_decl;
@@ -215,6 +229,7 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
 
   int is_void =
     return_type == 0 || this->void_return_type (return_type);
+
   if (is_void)
     {
       *os << "ACE_THROW (";
@@ -223,6 +238,7 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
     {
       *os << "ACE_THROW_RETURN (";
     }
+
   *os << exception_name << " (" << exception_arguments << ")";
 
   if (is_void)
@@ -230,13 +246,15 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
       *os << ");\n";
       return 0;
     }
+
   *os << ",";
 
-  // Non-void return type....
+  // Non-void return type.
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
 
   be_visitor_operation_rettype_return_cs visitor (&ctx);
+
   if (return_type->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -245,8 +263,8 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
                          "codegen for return var failed\n"),
                         -1);
     }
-  *os << ");\n";
 
+  *os << ");\n";
   return 0;
 }
 
@@ -268,6 +286,7 @@ be_visitor_operation::gen_check_exception (be_type *return_type)
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
 
   be_visitor_operation_rettype_return_cs visitor (&ctx);
+
   if (return_type->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -276,8 +295,8 @@ be_visitor_operation::gen_check_exception (be_type *return_type)
                          "codegen for return var failed\n"),
                         -1);
     }
-  *os << ");\n";
 
+  *os << ");\n";
   return 0;
 }
 
@@ -293,12 +312,13 @@ be_visitor_operation::gen_check_interceptor_exception (be_type *return_type)
       return 0;
     }
 
-  // Non-void return type....
+  // Non-void return type.
   *os << "TAO_INTERCEPTOR_CHECK_RETURN (";
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
 
   be_visitor_operation_rettype_return_cs visitor (&ctx);
+
   if (return_type->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -307,7 +327,7 @@ be_visitor_operation::gen_check_interceptor_exception (be_type *return_type)
                          "codegen for return var failed\n"),
                         -1);
     }
-  *os << ");\n";
 
+  *os << ");\n";
   return 0;
 }

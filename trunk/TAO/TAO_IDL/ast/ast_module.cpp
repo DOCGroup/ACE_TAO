@@ -847,22 +847,19 @@ AST_Module::add_to_previous (AST_Module *m)
   // reopenings in its previous_ member.
   this->previous_ = m->previous_;
 
-  UTL_ScopeActiveIterator *iter =
-    new UTL_ScopeActiveIterator (DeclAsScope (m),
-                                 UTL_Scope::IK_decls);
-
   AST_Decl *d = 0;
 
-  while (!iter->is_done ())
+  for (UTL_ScopeActiveIterator iter (DeclAsScope (m), IK_decls);
+       !iter.is_done ();
+       iter.next ())
     {
-      d = iter->item ();
+      d = iter.item ();
 
       // Add all the previous opening's decls (except
       // for the predefined types) to the 'previous' list
       // of this one.
       if (d->node_type () == AST_Decl::NT_pre_defined)
         {
-          iter->next ();
           continue;
         }
       else if (d->node_type () == AST_Decl::NT_interface_fwd)
@@ -877,16 +874,12 @@ AST_Module::add_to_previous (AST_Module *m)
           // results of look_in_previous() later, so we skip it.
           if (i->is_defined ())
             {
-              iter->next ();
               continue;
             }
         }
 
       this->previous_.insert (d);
-      iter->next ();
     }
-
-  delete iter;
 }
 
 AST_Decl *

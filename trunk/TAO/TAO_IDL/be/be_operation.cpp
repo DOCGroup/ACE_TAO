@@ -95,6 +95,7 @@ be_operation::compute_size_type (void)
       // Get the next AST decl node
       AST_Decl *d = si.item ();
       be_decl *bd = be_decl::narrow_from_decl (d);
+
       if (bd != 0)
         {
           // Our sizetype depends on the sizetype of our members. Although

@@ -64,14 +64,13 @@ public:
   // Retrieve the underlying get_operation strategy.
 
   be_operation_strategy *get_set_strategy (void);
-  // Retrieve the underlying set operation strategy.
+  // Retrieve the underlying set_operation strategy.
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_attribute, AST_Attribute, be_decl);
   DEF_NARROW_FROM_DECL (be_attribute);
 
 private:
-
   be_operation_strategy *get_strategy_;
 
   be_operation_strategy *set_strategy_;

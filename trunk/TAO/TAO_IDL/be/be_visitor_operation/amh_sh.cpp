@@ -34,7 +34,9 @@ ACE_RCSID(be_visitor_operation, amh_sh, "$Id$")
 // Visitor for generating AMH skeleton for "operation" in skeleton header.
 // ******************************************************
 
-be_visitor_amh_operation_sh::be_visitor_amh_operation_sh (be_visitor_context *ctx)
+be_visitor_amh_operation_sh::be_visitor_amh_operation_sh (
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
@@ -48,7 +50,9 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
 {
   // If there is an argument of type "native", return immediately.
   if (node->has_native ())
-    return 0;
+    {
+      return 0;
+    }
 
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
@@ -69,11 +73,15 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
     {
       be_argument *argument =
         be_argument::narrow_from_decl (i.item ());
+
       if (argument == 0
           || argument->direction () == AST_Argument::dir_OUT)
-        continue;
+        {
+          continue;
+        }
 
       *os << ",";
+
       if (arglist_visitor.visit_argument (argument) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -82,15 +90,21 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
                              "codegen for upcall args failed\n"),
                             -1);
         }
+
       *os << be_nl;
     }
+
   *os << "ACE_ENV_ARG_DECL"
       << be_uidt_nl << ")" << be_uidt;
 
   if (be_global->use_raw_throw ())
-    *os << be_idt_nl << "throw (";
+    {
+      *os << be_idt_nl << "throw (";
+    }
   else
-    *os << be_idt_nl << "ACE_THROW_SPEC ((";
+    {
+      *os << be_idt_nl << "ACE_THROW_SPEC ((";
+    }
 
   *os << be_idt_nl << "CORBA::SystemException";
 
@@ -104,7 +118,6 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
     }
 
   *os << " = 0;\n" << be_nl;
-
   return 0;
 }
 
@@ -118,11 +131,14 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
     {
       *os << "ACE_ENV_SINGLE_ARG_DECL";
     }
+
   *os << be_uidt_nl << ")" << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;\n" << be_nl;
 
   if (node->readonly ())
-    return 0;
+    {
+      return 0;
+    }
 
   this->generate_shared_prologue (node, os, "_set_");
 
@@ -135,7 +151,9 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
   be_visitor_args_arglist visitor (&ctx);
 
   if (visitor.visit_argument (&the_argument) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   *os << the_argument.local_name ();
 
@@ -143,6 +161,7 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
     {
       *os << be_nl << "ACE_ENV_SINGLE_ARG_DECL";
     }
+
   *os << be_uidt_nl << ")" << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;\n" << be_nl;
 
@@ -150,9 +169,11 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 }
 
 void
-be_visitor_amh_operation_sh::generate_shared_prologue (be_decl *node,
-                                                       TAO_OutStream *os,
-                                                       const char *skel_prefix)
+be_visitor_amh_operation_sh::generate_shared_prologue (
+    be_decl *node,
+    TAO_OutStream *os,
+    const char *skel_prefix
+  )
 {
   os->indent ();
   *os << be_nl << "// TAO_IDL - Generated from "
@@ -172,8 +193,13 @@ be_visitor_amh_operation_sh::generate_shared_prologue (be_decl *node,
   // information from the context
   be_interface *intf =
     be_interface::narrow_from_scope (node->defined_in ());
+
   if (this->ctx_->attribute () != 0)
-    intf = be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ());
+    {
+      intf = be_interface::narrow_from_scope (
+                 this->ctx_->attribute()->defined_in ()
+               );
+    }
 
   if (intf == 0)
     {
@@ -202,5 +228,6 @@ be_visitor_amh_operation_sh::generate_shared_prologue (be_decl *node,
   intf->compute_full_name ("AMH_", "ResponseHandler_ptr", buf);
 
   *os << buf << " _tao_rh" << be_nl;
-  delete[] buf;
+  delete [] buf;
+  buf = 0;
 }

@@ -1286,7 +1286,6 @@ type_declarator :
         at_least_one_declarator
         {
           UTL_Scope *s = idl_global->scopes ()->top_non_null ();
-          UTL_DecllistActiveIterator *l;
           FE_Declarator *d = 0;
           AST_Typedef *t = 0;
 
@@ -1296,9 +1295,8 @@ type_declarator :
            * enclosing scope
            */
           if (s != 0 && $1 != 0 && $3 != 0) {
-            l = new UTL_DecllistActiveIterator ($3);
-            for (;!(l->is_done ()); l->next ()) {
-              d = l->item ();
+            for (UTL_DecllistActiveIterator l ($3); !l.is_done (); l.next ()) {
+              d = l.item ();
               if (d == 0)
                 continue;
               AST_Type * tp = d->compose ($1);
@@ -1310,7 +1308,6 @@ type_declarator :
                                                       s->is_abstract ());
               (void) s->fe_add_typedef (t);
             }
-            delete l;
           }
         }
         ;
@@ -1614,7 +1611,6 @@ member_i:
         ';'
         {
           UTL_Scope *s = idl_global->scopes ()->top_non_null ();
-          UTL_DecllistActiveIterator *l = 0;
           FE_Declarator *d = 0;
           AST_Field *f = 0;
 
@@ -1630,9 +1626,8 @@ member_i:
            * Add it to the enclosing scope
            */
           else if (s != 0 && $1 != 0 && $3 != 0) {
-            l = new UTL_DecllistActiveIterator ($3);
-            for (;!(l->is_done ()); l->next ()) {
-              d = l->item ();
+            for (UTL_DecllistActiveIterator l ($3); !(l.is_done ()); l.next ()) {
+              d = l.item ();
               if (d == 0)
                 continue;
               AST_Type *tp = d->compose ($1);
@@ -1644,7 +1639,6 @@ member_i:
                                                     $<vival>0);
               (void) s->fe_add_field (f);
             }
-            delete l;
           }
         }
         | error
@@ -2333,7 +2327,6 @@ attribute:
         at_least_one_simple_declarator
         {
           UTL_Scope *s = idl_global->scopes ()->top_non_null ();
-          UTL_DecllistActiveIterator *l = 0;
           AST_Attribute *a = 0;
           FE_Declarator *d = 0;
 
@@ -2343,9 +2336,8 @@ attribute:
            * enclosing scope
            */
           if (s != 0 && $4 != 0 && $6 != 0) {
-            l = new UTL_DecllistActiveIterator ($6);
-            for (; !(l->is_done ()); l->next ()) {
-              d = l->item ();
+            for (UTL_DecllistActiveIterator l ($6); !l.is_done (); l.next ()) {
+              d = l.item ();
               if (d == 0)
                 continue;
               AST_Type *tp = d->compose ($4);
@@ -2361,7 +2353,6 @@ attribute:
                */
               (void) s->fe_add_attribute (a);
             }
-            delete l;
           }
         }
         ;

@@ -152,43 +152,52 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
                                              be_visitor_context &ctx)
 {
   int n_processed = 0;
-
   TAO_OutStream *os = ctx.stream ();
-
   this->elem_number_ = 0;
-  // initialize an iterator to iterate thru our scope
+
+  // Initialize an iterator to iterate thru our scope.
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())
     {
       AST_Decl *d = si.item ();
+
       if (!d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"), -1);
+                             "bad node in this scope\n"), 
+                            -1);
         }
       be_field *field = be_field::narrow_from_decl (d);
+
       if (field)
         {
           if (n_processed > 0)
-            *os << " &&" << be_nl;
+            {
+              *os << " &&" << be_nl;
+            }
+
           ++n_processed;
-          be_visitor_context* new_ctx =
-            new be_visitor_context (ctx);
-          be_visitor_valuetype_field_cdr_ci visitor (new_ctx);
+          be_visitor_valuetype_field_cdr_ci visitor (&ctx);
           visitor.pre_ = node->field_pd_prefix ();
           visitor.post_ = node->field_pd_postfix ();
+
           if (visitor.visit_field (field) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_valuetype_marshal_cs::"
                                  "visit_valuetype - "
-                                 "codegen for scope failed\n"), -1);
+                                 "codegen for scope failed\n"), 
+                                -1);
             }
         }
     }
+
   if (n_processed == 0)
-    *os << "1";
+    {
+      *os << "1";
+    }
+
   return 0;
 }

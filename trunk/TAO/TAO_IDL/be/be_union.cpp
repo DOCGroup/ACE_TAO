@@ -668,7 +668,6 @@ be_union::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-
   return 0;
 }
 
@@ -683,6 +682,7 @@ be_union::compute_size_type (void)
       // Get the next AST decl node.
       AST_Decl *d = si.item ();
       be_decl *bd = be_decl::narrow_from_decl (d);
+
       if (bd != 0)
         {
           // Our sizetype depends on the sizetype of our members. Although

@@ -18,7 +18,9 @@
 #include "be_visitor_interface.h"
 #include "be_visitor_operation.h"
 
-be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (be_visitor_context *ctx)
+be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface_sh (ctx)
 {
 }
@@ -29,17 +31,21 @@ be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh (void)
 
 /** The node is the original interface node but we 'tweak' with the
     local_name and the the operation signatures to generate the AMH
-    skeleton on the 'fly'
+    skeleton on the 'fly'.
 */
 int
 be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 {
   if (node->srv_hdr_gen () || node->imported () || node->is_local ())
-    return 0;
+    {
+      return 0;
+    }
 
   // Do not generate AMH classes for any sort of implied IDL.
   if (node->original_interface () != 0)
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
@@ -85,10 +91,12 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
             be_interface::narrow_from_decl (node->inherits ()[i]);
           base->compute_full_name ("AMH_", "", buf);
           amh_name += buf;
-          delete[] buf;
+          delete [] buf;
 
           if (i != 0)
-            *os << ", ";
+            {
+              *os << ", ";
+            }
 
           *os << "public virtual "
               << amh_name.c_str ()
@@ -182,7 +190,6 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 
   *os << be_uidt_nl << "};\n\n";
   return 0;
-
 }
 
 int
@@ -201,11 +208,12 @@ be_visitor_amh_interface_sh::visit_attribute (be_attribute *node)
 
 int
 be_visitor_amh_interface_sh::add_original_members (be_interface *node,
-                                                   be_interface *amh_node
-                                                   )
+                                                   be_interface *amh_node)
 {
   if (!node || !amh_node)
-    return -1;
+    {
+      return -1;
+    }
 
   this->elem_number_ = 0;
   // initialize an iterator to iterate thru our scope
@@ -214,12 +222,16 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
        si.next ())
     {
       AST_Decl *d = si.item ();
+
       if (!d)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_amh_pre_proc::visit_interface - "
-                             "bad node in this scope\n"),
-                            0);
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_amh_pre_proc::visit_interface - "
+              "bad node in this scope\n"
+            ),
+            0
+          );
         }
 
       if (d->node_type () == AST_Decl::NT_attr)
@@ -227,17 +239,21 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
           be_attribute *attribute = be_attribute::narrow_from_decl (d);
 
           if (!attribute)
-            return 0;
+            {
+              return 0;
+            }
         }
       else
         {
           be_operation* operation = be_operation::narrow_from_decl (d);
+
           if (operation)
             {
               this->add_amh_operation (operation, amh_node);
             }
         }
     }
+
   return 0;
 }
 
@@ -247,45 +263,77 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
                                             be_interface *amh_node)
 {
   if (!node || !amh_node)
-    return -1;
+    {
+      return -1;
+    }
 
   // We do nothing for oneways!
   if (node->flags () == AST_Operation::OP_oneway)
-    return 0;
+    {
+      return 0;
+    }
+
+  Identifier *id = 0;
+  UTL_ScopedName *sn = 0;
+
+  ACE_NEW_RETURN (id,
+                  Identifier ("void"),
+                  -1);
+
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  -1);
 
   // Create the return type, which is "void"
-  be_predefined_type *rt =
-    new be_predefined_type (AST_PredefinedType::PT_void,
-                            new UTL_ScopedName (new Identifier ("void"),
-                                                0));
+  be_predefined_type *rt = 0;
+  ACE_NEW_RETURN (rt,
+                  be_predefined_type (AST_PredefinedType::PT_void,
+                                      sn),
+                  -1);
 
   ACE_CString original_op_name (
-                                node->name ()->last_component ()->get_string ()
-                                );
+                  node->name ()->last_component ()->get_string ()
+                );
 
   UTL_ScopedName *op_name =
-    ACE_static_cast (UTL_ScopedName *, amh_node->name ()-> copy ());
-  op_name->nconc (new UTL_ScopedName (new Identifier (original_op_name.rep ()),
-                                      0));
+    ACE_static_cast (UTL_ScopedName *, 
+                     amh_node->name ()->copy ());
+
+  ACE_NEW_RETURN (id,
+                  Identifier (original_op_name.rep ()),
+                  -1);
+
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  -1);
+
+  op_name->nconc (sn);
 
   // Create the operation
-  be_operation *operation = new be_operation (rt, //node->return_type (),
-                                              AST_Operation::OP_noflags,
-                                              op_name,
-                                              0,
-                                              0);
+  be_operation *operation = 0;
+  ACE_NEW_RETURN (operation,
+                  be_operation (rt, //node->return_type (),
+                                AST_Operation::OP_noflags,
+                                op_name,
+                                0,
+                                0),
+                  -1);
+
   operation->set_name (op_name);
 
   // Iterate over the arguments and put all the in and inout
   // into the new method.
   if (node->nmembers () > 0)
     {
-      // initialize an iterator to iterate thru our scope
+      // Initialize an iterator to iterate thru our scope.
       for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
            !si.is_done ();
            si.next ())
         {
           AST_Decl *d = si.item ();
+
           if (!d)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -302,10 +350,13 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
           if (original_arg->direction () == AST_Argument::dir_INOUT ||
               original_arg->direction () == AST_Argument::dir_IN)
             {
-              // Create the argument
-              be_argument *arg = new be_argument (original_arg->direction (),
-                                                  original_arg->field_type (),
-                                                  original_arg->name ());
+              // Create the argument.
+              be_argument *arg = 0;
+              ACE_NEW_RETURN (arg,
+                              be_argument (original_arg->direction (),
+                                           original_arg->field_type (),
+                                           original_arg->name ()),
+                              -1);
 
               operation->add_argument_to_scope (arg);
             }
@@ -325,20 +376,29 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 be_interface *
 be_visitor_amh_interface_sh::create_amh_class (ACE_CString name)
 {
-  UTL_ScopedName *amh_class_name =
-    new UTL_ScopedName (new Identifier (name.c_str ()), 0);
+  Identifier *id = 0;
+  ACE_NEW_RETURN (id,
+                  Identifier (name.c_str ()),
+                  0);
 
-  be_interface *amh_class =
-    new be_interface (amh_class_name, // name
-                      0,              // list of inherited
-                      0,              // number of inherited
-                      0,              // list of ancestors
-                      0,              // number of ancestors
-                      0,              // non-local
-                      0);             // non-abstract
+  UTL_ScopedName *amh_class_name = 0;
+  ACE_NEW_RETURN (amh_class_name,
+                  UTL_ScopedName (id, 
+                                  0),
+                  0);
+
+  be_interface *amh_class = 0;
+  ACE_NEW_RETURN (amh_class,
+                  be_interface (amh_class_name, // name
+                                0,              // list of inherited
+                                0,              // number of inherited
+                                0,              // list of ancestors
+                                0,              // number of ancestors
+                                0,              // non-local
+                                0),             // non-abstract
+                  0);
 
   amh_class->set_name (amh_class_name);
-
   return amh_class;
 }
 

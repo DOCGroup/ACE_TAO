@@ -31,57 +31,72 @@ ACE_RCSID(be_visitor_operation, ami_exception_holder_operation_cs, "$Id$")
 // Operation visitor for client stubs
 // ************************************************************
 
-be_visitor_operation_ami_exception_holder_operation_cs::be_visitor_operation_ami_exception_holder_operation_cs (be_visitor_context *ctx)
+be_visitor_operation_ami_exception_holder_operation_cs::
+be_visitor_operation_ami_exception_holder_operation_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_ami_exception_holder_operation_cs::~be_visitor_operation_ami_exception_holder_operation_cs (void)
+be_visitor_operation_ami_exception_holder_operation_cs::
+~be_visitor_operation_ami_exception_holder_operation_cs (void)
 {
 }
 
 int
-be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_operation *node)
+be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
+    be_operation *node
+  )
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;       // type node
-
-  os = this->ctx_->stream ();
-  this->ctx_->node (node); // save the node for future use
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
   // Start with the current indentation level.
   os->indent ();
 
   // Init the return type variable.
-  bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
   if (!bt)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_exception_holder_operation_cs::"
-                         "visit_operation - "
-                         "Bad return type\n"),
-                        -1);
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          "(%N:%l) be_visitor_ami_exception_holder_operation_cs::"
+          "visit_operation - "
+          "Bad return type\n"
+        ),
+        -1
+      );
     }
 
   // Generate the return type. Return type is simply void.
   *os << "void " << be_nl;
 
   // Get the scope name.
-  be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+  be_decl *parent = 
+    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+
   if (parent == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_exception_holder_operation_cs::"
-                         "visit_operation - "
-                         "scopeless operation :-<\n"),
-                        -1);
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          "(%N:%l) be_visitor_operation_ami_exception_holder_operation_cs::"
+          "visit_operation - "
+          "scopeless operation :-<\n"
+        ),
+        -1
+      );
     }
 
   be_interface *parent_interface = be_interface::narrow_from_decl (parent);
-  if (parent_interface->is_nested () &&
-      parent_interface->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    *os << "OBV_";
+  AST_Decl::NodeType nt = 
+    parent_interface->defined_in ()->scope_node_type ();
+
+  if (parent_interface->is_nested () && nt == AST_Decl::NT_module)
+    {
+      *os << "OBV_";
+    }
 
   // Here we do not have our overridden be_interface methods,
   // so the interface type strategy does not work here.
@@ -97,14 +112,20 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
     {
       // now check if we are a "get" or "set" operation
       if (node->nmembers () == 1) // set
-        *os << "set_";
+        {
+          *os << "set_";
+        }
       else
-        *os << "get_";
+        {
+          *os << "get_";
+        }
     }
   *os << node->local_name () << "(";
 
   if (!be_global->exception_support ())
-    *os << "ACE_ENV_SINGLE_ARG_DECL";
+    {
+      *os << "ACE_ENV_SINGLE_ARG_DECL";
+    }
 
   *os << ")" << be_uidt;
 
@@ -132,14 +153,15 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       *os << "static TAO_Exception_Data " << "exceptions_data [] = " << be_nl;
       *os << "{" << be_idt_nl;
 
-      // Initialize an iterator to iterate thru the exception list.
-      UTL_ExceptlistActiveIterator ei (node->exceptions ());
       int excep_count = 0;
 
       AST_Decl *d = 0;
 
+      // Initialize an iterator to iterate thru the exception list.
       // Continue until each element is visited.
-      while (!ei.is_done ())
+      // Iterator must be explicitly advanced inside the loop.
+      for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+           !ei.is_done ();)
         {
           d = ei.item ();
 
@@ -149,7 +171,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           *os << d->name () << "::_alloc" << be_uidt_nl
               << "}";
 
-          excep_count++;
+          ++excep_count;
           ei.next ();
 
           if (!ei.is_done ())

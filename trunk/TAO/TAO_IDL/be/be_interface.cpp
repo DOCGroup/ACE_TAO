@@ -162,15 +162,14 @@ be_interface::compute_full_skel_name (const char *prefix,
   else
     {
       long namelen = ACE_OS::strlen (prefix);
-      UTL_IdListActiveIterator *i = 0;
       long first = I_TRUE;
       long second = I_FALSE;
+      char *item_name = 0;
 
       // In the first loop compute the total length.
-      ACE_NEW (i,
-               UTL_IdListActiveIterator (this->name ()));
-
-      while (!i->is_done ())
+      for (UTL_IdListActiveIterator i (this->name ());
+           !i.is_done ();
+           i.next ())
         {
           if (!first)
             {
@@ -182,12 +181,13 @@ be_interface::compute_full_skel_name (const char *prefix,
             }
 
           // Print the identifier.
-          namelen += ACE_OS::strlen (i->item ()->get_string ());
+          item_name = i.item ()->get_string ();
+          namelen += ACE_OS::strlen (item_name);
 
           // Additional 4 for the POA_ characters.
           if (first)
             {
-              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -197,11 +197,7 @@ be_interface::compute_full_skel_name (const char *prefix,
                   second = I_TRUE;
                 }
             }
-
-          i->next ();
         }
-
-      delete i;
 
       ACE_NEW (skelname,
                char [namelen+1]);
@@ -210,10 +206,9 @@ be_interface::compute_full_skel_name (const char *prefix,
       second = I_FALSE;
       ACE_OS::strcat (skelname, prefix);
 
-      ACE_NEW (i,
-               UTL_IdListActiveIterator (this->name ()));
-
-      while (!i->is_done ())
+      for (UTL_IdListActiveIterator j (this->name ());
+           !j.is_done ();
+           j.next ())
         {
           if (!first)
             {
@@ -225,11 +220,12 @@ be_interface::compute_full_skel_name (const char *prefix,
             }
 
           // Print the identifier.
-          ACE_OS::strcat (skelname, i->item ()->get_string ());
+          item_name = j.item ()->get_string ();
+          ACE_OS::strcat (skelname, item_name);
 
           if (first)
             {
-              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -239,11 +235,7 @@ be_interface::compute_full_skel_name (const char *prefix,
                   second = I_TRUE;
                 }
             }
-
-          i->next ();
         }
-
-      delete i;
     }
 }
 
@@ -1288,6 +1280,7 @@ be_interface::gen_optable_entries (const char *full_skeleton_name,
 {
   int lookup_strategy =
     be_global->lookup_strategy ();
+
   if (lookup_strategy == BE_GlobalData::TAO_DYNAMIC_HASH)
     {
       for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -1546,9 +1539,9 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
           int found = 0;
 
           // Initialize an iterator to search the queue for duplicates.
-          ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (queue);
-
-          while (!q_iter.done ())
+          for (ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (queue);
+               !q_iter.done ();
+               (void) q_iter.advance ())
             {
               // Queue element.
               be_interface **temp;
@@ -1564,14 +1557,14 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
                 {
                   break;
                 }
-
-              (void) q_iter.advance ();
             }
 
           // Initialize an iterator to search the del_queue for duplicates.
-          ACE_Unbounded_Queue_Iterator<be_interface*> del_q_iter (del_queue);
-
-          while (!found && !del_q_iter.done ())
+          for (ACE_Unbounded_Queue_Iterator<be_interface*> del_q_iter (
+                   del_queue
+                 );
+               !found && !del_q_iter.done ();
+               (void) del_q_iter.advance ())
             {
               // Queue element.
               be_interface **temp;
@@ -1589,8 +1582,6 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
                 {
                   break;
                 }
-
-              (void) del_q_iter.advance ();
             }
 
           if (!found)

@@ -68,8 +68,7 @@ be_visitor_root_sth::init (void)
 int
 be_visitor_root_sth::visit_scope (be_scope *node)
 {
-  for (UTL_ScopeActiveIterator si (node,
-                                   UTL_Scope::IK_decls);
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
     {
@@ -85,7 +84,7 @@ be_visitor_root_sth::visit_scope (be_scope *node)
 
       AST_Decl::NodeType nt = d->node_type ();
 
-      // These are the onlh types we're interested in.
+      // These are the only types we're interested in.
       if (nt != AST_Decl::NT_module
           && nt != AST_Decl::NT_interface)
         {

@@ -30,13 +30,9 @@ TAO_SunSoft_OutStream::print (UTL_IdList *idl)
 {
   long first = I_TRUE;
   long second = I_FALSE;
+  Identifier *id = 0;
 
-  UTL_IdListActiveIterator *i = 0;
-  ACE_NEW_RETURN (i,
-                  UTL_IdListActiveIterator (idl),
-                  *this);
-
-  while (!i->is_done ())
+  for (UTL_IdListActiveIterator i (idl); !i.is_done (); i.next ())
     {
       if (!first)
         {
@@ -48,11 +44,12 @@ TAO_SunSoft_OutStream::print (UTL_IdList *idl)
         }
 
       // Print the identifier.
-      *this << i->item ();
+      id = i.item ();
+      *this << id;
 
       if (first)
         {
-          if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+          if (ACE_OS::strcmp (id->get_string (), "") != 0)
             {
               // Does not start with a "".
               first = I_FALSE;
@@ -62,9 +59,7 @@ TAO_SunSoft_OutStream::print (UTL_IdList *idl)
               second = I_TRUE;
             }
         }
-
-      i->next ();
-  }
+    }
 
   return *this;
 }

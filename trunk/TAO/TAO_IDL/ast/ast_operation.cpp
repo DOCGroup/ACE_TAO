@@ -159,7 +159,9 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
         AST_Argument::narrow_from_decl (si.item ());
 
       if ((arg->direction () & direction_mask) != 0)
-        count++;
+        {
+          ++count;
+        }
     }
 
   return count;
@@ -277,20 +279,15 @@ AST_Operation::be_add_exceptions (UTL_ExceptList *t)
 UTL_NameList *
 AST_Operation::fe_add_exceptions (UTL_NameList *t)
 {
-  UTL_NamelistActiveIterator *nl_i = 0;
   UTL_ScopedName *nl_n = 0;
   AST_Exception *fe = 0;
   AST_Decl *d = 0;
 
   this->pd_exceptions = 0;
 
-  ACE_NEW_RETURN (nl_i,
-                  UTL_NamelistActiveIterator(t),
-                  0);
-
-  while (!nl_i->is_done())
+  for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
-      nl_n = nl_i->item ();
+      nl_n = nl_i.item ();
 
       d = lookup_by_name (nl_n,
                           I_TRUE);
@@ -298,7 +295,6 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
       if (d == 0 || d->node_type() != AST_Decl::NT_except)
         {
           idl_global->err ()->lookup_error (nl_n);
-          delete nl_i;
           return 0;
         }
 
@@ -334,11 +330,8 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 
           this->pd_exceptions->nconc (el);
         }
-
-      nl_i->next ();
     }
 
-  delete nl_i;
   return t;
 }
 
@@ -404,9 +397,6 @@ AST_Operation::fe_add_argument (AST_Argument *t)
 void
 AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
-  UTL_ScopeActiveIterator *i = 0;
-  UTL_StrlistActiveIterator *si = 0;
-  UTL_ExceptlistActiveIterator *ei = 0;
   AST_Decl *d = 0;
   AST_Exception *e = 0;
   UTL_String *s = 0;
@@ -420,50 +410,44 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
       o << "idempotent ";
     }
 
-  ACE_NEW (i,
-           UTL_ScopeActiveIterator (this,
-                                    IK_decls));
-
   this->pd_return_type->name ()->dump (o);
   o << " ";
   this->local_name ()->dump (o);
   o << "(";
 
-  while (!i->is_done())
+  // Must advance the iterator explicity inside the loop.
+  for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done ();)
     {
-      d = i->item ();
+      d = i.item ();
       d->dump (o);
-      i->next ();
+      i.next ();
 
-      if (!i->is_done())
+      if (!i.is_done())
         {
           o << ", ";
         }
     }
 
-  delete i;
   o << ")";
 
   if (this->pd_exceptions != 0)
     {
       o << " raises(";
 
-      ACE_NEW (ei,
-               UTL_ExceptlistActiveIterator (pd_exceptions));
-
-      while (!ei->is_done())
+      // Must advance the iterator explicity inside the loop.
+      for (UTL_ExceptlistActiveIterator ei (this->pd_exceptions);
+           !ei.is_done ();)
         {
-          e = ei->item ();
-          ei->next ();
+          e = ei.item ();
+          ei.next ();
           e->local_name ()->dump (o);
 
-          if (!ei->is_done())
+          if (!ei.is_done())
             {
              o << ", ";
             }
         }
 
-      delete ei;
       o << ")";
     }
 
@@ -471,22 +455,19 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
     {
       o << " context(";
 
-      ACE_NEW (si,
-               UTL_StrlistActiveIterator (pd_context));
-
-      while (!si->is_done())
+      // Must advance the iterator explicity inside the loop.
+      for (UTL_StrlistActiveIterator si (this->pd_context); !si.is_done();)
         {
-          s = si->item ();
-          si->next ();
+          s = si.item ();
+          si.next ();
           o << s->get_string ();
 
-          if (!si->is_done())
+          if (!si.is_done())
             {
               o << ", ";
             }
         }
 
-      delete si;
       o << ")";
     }
 }
