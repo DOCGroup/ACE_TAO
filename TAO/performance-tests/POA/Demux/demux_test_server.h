@@ -1,7 +1,3 @@
-
-#ifndef DOORS_DEMUX_TEST_SERVER_H
-#define DOORS_DEMUX_TEST_SERVER_H
-
 // $Id$
 // ============================================================================
 //
@@ -19,7 +15,11 @@
 //
 // ============================================================================
 
-#define ACE_ENABLE_TIMEPROBES
+#ifndef DOORS_DEMUX_TEST_SERVER_H
+#define DOORS_DEMUX_TEST_SERVER_H
+
+// @@ The timeprobes should be enabled with make probe=1 !!
+// #define ACE_ENABLE_TIMEPROBES
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"

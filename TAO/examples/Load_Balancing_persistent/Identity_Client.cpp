@@ -111,13 +111,13 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
     orb->string_to_object (this->group_factory_ior_,
                            ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   if (obj.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("(%N|%l) <ERROR> [Identity_Client::run] \n"),
                        ASYS_TEXT ("factory_resolve \n")),
                       -1);
-  
+
   Load_Balancer::Object_Group_Factory_var factory =
     Load_Balancer::Object_Group_Factory::_narrow (obj.in (),
                                                   ACE_TRY_ENV);
@@ -138,7 +138,7 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
 
   // We have this for the measurement that was done.
 #if defined (DOORS_MEASURE_STATS)
-  
+
   // Performance measurements start here
   ACE_High_Res_Timer::calibrate ();
 
@@ -159,18 +159,19 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
                           ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
-            CORBA::String_var iorstring = orb->object_to_string (object_group);
-      
+      CORBA::String_var iorstring =
+        orb->object_to_string (object_group.in ());
+
       ACE_DEBUG ((LM_DEBUG,
                   "The ior string is %s \n", iorstring.in ()));
 #if defined (DOORS_MEASURE_STATS)
       // Grab timestamp again.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
-      
+
       // Record statistics.
       throughput.sample (now - throughput_base,
                          now - latency_base);
-      
+
     }
 
   ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*= \n");
@@ -211,15 +212,15 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
     {
       objref = object_group->resolve (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
-          
-      obj = orb->string_to_object (objref,
+
+      obj = orb->string_to_object (objref.in (),
                                    ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
-      
+
       identity_object = Identity::_narrow (obj.in (),
                                            ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
-      
+
       if (CORBA::is_nil (identity_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Identity_Client: cannot narrow an object received from"
@@ -227,12 +228,12 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
                           -1);
       identity_object->get_name (identity.out ());
       ACE_CHECK_RETURN (-1);
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "Invocation  %s\n",
                   identity.in ()));
       ACE_CHECK_RETURN (-1);
-      
+
     }
 
   return 0;

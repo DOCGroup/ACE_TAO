@@ -43,27 +43,30 @@ Demux_Test_Client::~Demux_Test_Client (void)
 //
 
 int
-Demux_Test_Client::init (int argc, char *argv [], CORBA::Environment &env)
+Demux_Test_Client::init (int argc, char *argv [],
+                         CORBA::Environment &ACE_TRY_ENV)
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
   // Grab the ORB
-  TAO_TRY_EX (GET_ORB)
+  ACE_TRY_EX (GET_ORB)
     {
       char *orb_name = "internet"; // unused by TAO
 
       // get the underlying ORB
-      this->orb_ = CORBA::ORB_init (argc, argv, orb_name, TAO_TRY_ENV);
-      TAO_CHECK_ENV_EX (GET_ORB);
+      this->orb_ =
+        CORBA::ORB_init (argc, argv, orb_name, ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (GET_ORB);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("ORB_init");
-      env.exception (TAO_TRY_ENV.exception ());
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "ORB_init");
+      ACE_RETHROW;
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   // now parse the rest of the arguments to determine the POA depth, the number
   // of objects with each POA and other info
@@ -88,28 +91,28 @@ Demux_Test_Client::init (int argc, char *argv [], CORBA::Environment &env)
       {
         char str [1024 * 10];
         ACE_OS::memset (str, 0, sizeof (str));
-        
+
         if (fscanf (this->ior_fp_, "%s", str) == EOF)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "IOR database has less entries than required\n"),
                               -1);
           }
-        
+
         // Get the IOR and output it to the file
-        TAO_TRY_EX (IOR)
+        ACE_TRY_EX (IOR)
           {
             CORBA::Object_var objref = this->orb_->string_to_object (str,
-                                                                     TAO_TRY_ENV);
-            TAO_CHECK_ENV_EX (IOR);
-            
+                                                                     ACE_TRY_ENV);
+            ACE_TRY_CHECK_EX (IOR);
+
             // now narrow to Demux_Test object
-            
+
             this->demux_test_[i][j] = Demux_Test::_narrow (objref.in (),
-                                                           TAO_TRY_ENV);
-            
-            TAO_CHECK_ENV_EX (IOR);
-            
+                                                           ACE_TRY_ENV);
+
+            ACE_TRY_CHECK_EX (IOR);
+
             if (CORBA::is_nil (this->demux_test_[i][j].in ()))
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -118,13 +121,14 @@ Demux_Test_Client::init (int argc, char *argv [], CORBA::Environment &env)
                                   -1);
               }
             }
-        TAO_CATCHANY
+        ACE_CATCHANY
           {
-            TAO_TRY_ENV.print_exception ("object_to_string");
-            env.exception (TAO_TRY_ENV.exception ());
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                 "object_to_string");
+            ACE_RETHROW;
             return -1;
           }
-        TAO_ENDTRY;
+        ACE_ENDTRY;
       } // j and i loop
 
   ACE_OS::fclose (this->ior_fp_);
@@ -249,7 +253,7 @@ Demux_Test_Client::parse_args (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Client::run (CORBA::Environment &env)
+Demux_Test_Client::run (CORBA::Environment &ACE_TRY_ENV)
 {
   // open a temporary results file
   if ((this->result_fp_ = ACE_OS::fopen ("results.dat", "w")) == 0)
@@ -259,54 +263,56 @@ Demux_Test_Client::run (CORBA::Environment &env)
                          "Failed to open the results file for writing\n"),
                         -1);
     }
-  TAO_TRY_EX (RUN)
+  ACE_TRY_EX (RUN)
     {
       switch (this->is_)
         {
         case Demux_Test_Client::LINEAR:
-          (void) this->run_linear_test (TAO_TRY_ENV);
+          (void) this->run_linear_test (ACE_TRY_ENV);
           break;
         case Demux_Test_Client::RANDOM:
-          (void) this->run_random_test (TAO_TRY_ENV);
+          (void) this->run_random_test (ACE_TRY_ENV);
           break;
         case Demux_Test_Client::BEST:
-          (void) this->run_best_test (TAO_TRY_ENV);
+          (void) this->run_best_test (ACE_TRY_ENV);
           break;
         case Demux_Test_Client::WORST:
-          (void) this->run_worst_test (TAO_TRY_ENV);
+          (void) this->run_worst_test (ACE_TRY_ENV);
           break;
         }
-      TAO_CHECK_ENV_EX (RUN);
+      ACE_TRY_CHECK_EX (RUN);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("run failed");
-      env.exception (TAO_TRY_ENV.exception ());
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "run failed");
+      ACE_RETHROW;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) Demux_Test_Client::run - "
                          "Error running the Client\n"),
                         -1);
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   ACE_OS::fclose (this->result_fp_);
 
-  TAO_TRY_EX (SHUTDOWN)
+  ACE_TRY_EX (SHUTDOWN)
     {
       // call the shutdown method one the first object
-      this->demux_test_[0][0]->shutdown (TAO_TRY_ENV);
-      TAO_CHECK_ENV_EX (SHUTDOWN);
+      this->demux_test_[0][0]->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (SHUTDOWN);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("shutdown failed");
-      env.exception (TAO_TRY_ENV.exception ());
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "shutdown failed");
+      ACE_RETHROW;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) Demux_Test_Client::run - "
                          "Error running the Client\n"),
                         -1);
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
       // now print the results
   if (this->print_results () == -1)
@@ -332,10 +338,10 @@ Demux_Test_Client::run_linear_test (CORBA::Environment &env)
       for (l = 0; l < this->num_ops_; ++l)
           {
             start = ACE_OS::gethrtime ();
-            
+
             // invoke the method
             this->op_db_[l].op_ (this->demux_test_[j][k].in (), env);
-            
+
             end = ACE_OS::gethrtime ();
 
             m++;
@@ -347,7 +353,7 @@ Demux_Test_Client::run_linear_test (CORBA::Environment &env)
 }
 
 int
-Demux_Test_Client::run_random_test (CORBA::Environment &env)
+Demux_Test_Client::run_random_test (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Random test\n"));
@@ -355,7 +361,7 @@ Demux_Test_Client::run_random_test (CORBA::Environment &env)
 }
 
 int
-Demux_Test_Client::run_best_test (CORBA::Environment &env)
+Demux_Test_Client::run_best_test (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Best Test\n"));
@@ -363,7 +369,7 @@ Demux_Test_Client::run_best_test (CORBA::Environment &env)
 }
 
 int
-Demux_Test_Client::run_worst_test (CORBA::Environment &env)
+Demux_Test_Client::run_worst_test (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Worst test\n"));

@@ -17,7 +17,7 @@ Simple_Server_i::test_method (CORBA::Long x)
 }
 
 CORBA::Long
-Simple_Server_i::test_raise (CORBA::Long x)
+Simple_Server_i::test_raise (CORBA::Long)
   throw (Simple_Server::Failure)
 {
   throw Simple_Server::Failure ();

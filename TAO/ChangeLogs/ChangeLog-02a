@@ -1,219 +1,260 @@
+Wed Apr 19 20:16:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Smart_Proxies/On_Demand/Makefile:
+          This directory shoul not be built unless smart proxies are
+          enabled.
+
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Latency/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/client/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
+          The AV library has been renamed.
+
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Identity_Server.cpp:
+        * examples/Load_Balancing_persistent/Identity_i.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/Policy.h:
+        * orbsvcs/orbsvcs/AV/Policy.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * performance-tests/POA/Demux/client.cpp:
+        * performance-tests/POA/Demux/demux_test_client.cpp:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * performance-tests/POA/Demux/demux_test_server.h:
+        * performance-tests/POA/Demux/server.cpp:
+        * tests/MProfile_Forwarding/Manager.cpp:
+        * tests/MProfile_Forwarding/Servant_Locator.cpp:
+        * tests/Native_Exceptions/client.cpp:
+        * tests/Native_Exceptions/test_i.cpp:
+          Fixed minor warnings and some more severe errors in old code
+          that was out of the regular compilation path.  Now things seem
+          happy.
+
 Wed Apr 19 20:41:40 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/Logging_Service/Makefile:
-	* orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/Logging_Service/Makefile:
+        * orbsvcs/Notify_Service/Makefile:
           added $(TAO_ROOT)/rules.tao.GNU macros. Thanks to Thomas Groth
-	  <groth.th@t-online.de> for providing the fix.
+          <groth.th@t-online.de> for providing the fix.
 
 Wed Apr 19 17:47:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* performance-tests/Cubit/README:
-	* performance-tests/Cubit/COOL/Makefile: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/Makefile: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/README: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/client.cpp: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/client.h: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/cubit.idl: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/cubit_i.cpp: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/cubit_i.h: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/server.cpp: (removed)
-	* performance-tests/Cubit/COOL/IDL_Cubit/tmplinst.cpp: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/Makefile: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/README: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/Task_Client.cpp: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/Task_Client.h: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/Util_Thread.cpp: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/Util_Thread.h: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/client.cpp: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/client.h: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/cubit.idl: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/cubit_i.cpp: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/cubit_i.h: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/pccTimer.cpp: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/pccTimer.h: (removed)
-	* performance-tests/Cubit/COOL/MT_Cubit/server.cpp: (removed)
-	* performance-tests/Cubit/CORBAplus/IDL_Cubit/Makefile: (removed)
-	* performance-tests/Cubit/CORBAplus/IDL_Cubit/README: (removed)
-	* performance-tests/Cubit/CORBAplus/IDL_Cubit/clnt.cpp: (removed)
-	* performance-tests/Cubit/CORBAplus/IDL_Cubit/clnt.h: (removed)
-	* performance-tests/Cubit/CORBAplus/IDL_Cubit/cubit.idl: (removed)
-	* performance-tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.cpp: (removed)
-	* performance-tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.h: (removed)
-	* performance-tests/Cubit/CORBAplus/IDL_Cubit/svr.cpp: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/Makefile: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/README: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/client/Makefile: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/client/Task_Client.cpp: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/client/Task_Client.h: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/client/client.cpp: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/client/cubit.idl: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/server/Makefile: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/server/cubit.idl: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/server/cubit_i.cpp: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/server/cubit_i.h: (removed)
-	* performance-tests/Cubit/CORBAplus/MT_Cubit/server/svr.cpp: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/Imakefile: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/Makefile: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/README: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/client.cpp: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/client_i.cpp: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/client_i.h: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/cubit.idl: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.cc: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.hh: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/initref.cfg: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/server.cpp: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/server_i.cpp: (removed)
-	* performance-tests/Cubit/Hardpack/IDL_Cubit/server_i.h: (removed)
-	* performance-tests/Cubit/Orbix/Makefile: (removed)
-	* performance-tests/Cubit/Orbix/orb.mk: (removed)
-	* performance-tests/Cubit/Orbix/base_server/Makefile: (removed)
-	* performance-tests/Cubit/Orbix/base_server/cubit.idl: (removed)
-	* performance-tests/Cubit/Orbix/base_server/cubit_impl.cpp: (removed)
-	* performance-tests/Cubit/Orbix/base_server/cubit_impl.h: (removed)
-	* performance-tests/Cubit/Orbix/base_server/server.cpp: (removed)
-	* performance-tests/Cubit/Orbix/client/Makefile: (removed)
-	* performance-tests/Cubit/Orbix/client/client.cpp: (removed)
-	* performance-tests/Cubit/Orbix/client/cubit.h: (removed)
-	* performance-tests/Cubit/Orbix/client/cubit.idl: (removed)
-	* performance-tests/Cubit/Orbix/client/cubitC.cpp: (removed)
-	* performance-tests/Cubit/Orbix/factory_client/Makefile: (removed)
-	* performance-tests/Cubit/Orbix/factory_client/client.cpp: (removed)
-	* performance-tests/Cubit/Orbix/factory_client/cubit.h: (removed)
-	* performance-tests/Cubit/Orbix/factory_client/cubit.hh: (removed)
-	* performance-tests/Cubit/Orbix/factory_client/cubit.idl: (removed)
-	* performance-tests/Cubit/Orbix/factory_client/cubitC.cpp: (removed)
-	* performance-tests/Cubit/Orbix/factory_client/cubitS.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpool/Makefile: (removed)
-	* performance-tests/Cubit/Orbix/tpool/cubit.h: (removed)
-	* performance-tests/Cubit/Orbix/tpool/cubit.idl: (removed)
-	* performance-tests/Cubit/Orbix/tpool/cubitC.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpool/cubitS.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpool/cubit_impl.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpool/cubit_impl.h: (removed)
-	* performance-tests/Cubit/Orbix/tpool/server.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpool/tpool.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpool/tpool.h: (removed)
-	* performance-tests/Cubit/Orbix/tpr/Makefile: (removed)
-	* performance-tests/Cubit/Orbix/tpr/cubit.h: (removed)
-	* performance-tests/Cubit/Orbix/tpr/cubit.idl: (removed)
-	* performance-tests/Cubit/Orbix/tpr/cubitC.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpr/cubitC.h: (removed)
-	* performance-tests/Cubit/Orbix/tpr/cubitS.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpr/cubitS.h: (removed)
-	* performance-tests/Cubit/Orbix/tpr/cubit_impl.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpr/cubit_impl.h: (removed)
-	* performance-tests/Cubit/Orbix/tpr/server.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpr/tpr.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tpr/tpr.h: (removed)
-	* performance-tests/Cubit/Orbix/tps/Makefile: (removed)
-	* performance-tests/Cubit/Orbix/tps/cubit.h: (removed)
-	* performance-tests/Cubit/Orbix/tps/cubit.idl: (removed)
-	* performance-tests/Cubit/Orbix/tps/cubitC.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tps/cubitS.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tps/cubit_impl.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tps/cubit_impl.h: (removed)
-	* performance-tests/Cubit/Orbix/tps/tps.cpp: (removed)
-	* performance-tests/Cubit/Orbix/tps/tps.h: (removed)
-	* performance-tests/Cubit/VisiBroker/base_server/Makefile: (removed)
-	* performance-tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp: (removed)
-	* performance-tests/Cubit/VisiBroker/base_server/Profile_Timer.h: (removed)
-	* performance-tests/Cubit/VisiBroker/base_server/cubit.idl: (removed)
-	* performance-tests/Cubit/VisiBroker/base_server/cubit_impl.cpp: (removed)
-	* performance-tests/Cubit/VisiBroker/base_server/cubit_impl.h: (removed)
-	* performance-tests/Cubit/VisiBroker/base_server/server.cpp: (removed)
-	* performance-tests/Cubit/VisiBroker/base_server/stdmk: (removed)
-	* performance-tests/Cubit/VisiBroker/client/Makefile: (removed)
-	* performance-tests/Cubit/VisiBroker/client/Profile_Timer.cpp: (removed)
-	* performance-tests/Cubit/VisiBroker/client/Profile_Timer.h: (removed)
-	* performance-tests/Cubit/VisiBroker/client/client.cpp: (removed)
-	* performance-tests/Cubit/VisiBroker/client/cubit.idl: (removed)
-	* performance-tests/Cubit/VisiBroker/client/stdmk: (removed)
-	* performance-tests/Thruput/COOL/Makefile: (removed)
-	* performance-tests/Thruput/COOL/README: (removed)
-	* performance-tests/Thruput/COOL/client.cpp: (removed)
-	* performance-tests/Thruput/COOL/server.cpp: (removed)
-	* performance-tests/Thruput/COOL/ttcp.idl: (removed)
-	* performance-tests/Thruput/COOL/ttcp_decl.h: (removed)
-	* performance-tests/Thruput/COOL/ttcp_i.cpp: (removed)
-	* performance-tests/Thruput/COOL/ttcp_i.h: (removed)
-	* performance-tests/Thruput/COOL/utils.cpp: (removed)
-	* performance-tests/Thruput/CORBAplus/Makefile: (removed)
-	* performance-tests/Thruput/CORBAplus/README: (removed)
-	* performance-tests/Thruput/CORBAplus/client.cpp: (removed)
-	* performance-tests/Thruput/CORBAplus/extract: (removed)
-	* performance-tests/Thruput/CORBAplus/run: (removed)
-	* performance-tests/Thruput/CORBAplus/run_client: (removed)
-	* performance-tests/Thruput/CORBAplus/run_server: (removed)
-	* performance-tests/Thruput/CORBAplus/run_test: (removed)
-	* performance-tests/Thruput/CORBAplus/run_tests: (removed)
-	* performance-tests/Thruput/CORBAplus/server.cpp: (removed)
-	* performance-tests/Thruput/CORBAplus/ttcp.idl: (removed)
-	* performance-tests/Thruput/CORBAplus/ttcp_decl.h: (removed)
-	* performance-tests/Thruput/CORBAplus/ttcp_i.cpp: (removed)
-	* performance-tests/Thruput/CORBAplus/ttcp_i.h: (removed)
-	* performance-tests/Thruput/CORBAplus/utils.cpp: (removed)
-	* performance-tests/Thruput/Orbix/Client.cpp: (removed)
-	* performance-tests/Thruput/Orbix/Makefile: (removed)
-	* performance-tests/Thruput/Orbix/README: (removed)
-	* performance-tests/Thruput/Orbix/Srv_Main.cpp: (removed)
-	* performance-tests/Thruput/Orbix/extract: (removed)
-	* performance-tests/Thruput/Orbix/loop64: (removed)
-	* performance-tests/Thruput/Orbix/orbixsol2s4.mk: (removed)
-	* performance-tests/Thruput/Orbix/run: (removed)
-	* performance-tests/Thruput/Orbix/run_client: (removed)
-	* performance-tests/Thruput/Orbix/run_server: (removed)
-	* performance-tests/Thruput/Orbix/run_test: (removed)
-	* performance-tests/Thruput/Orbix/run_tests: (removed)
-	* performance-tests/Thruput/Orbix/ttcp.idl: (removed)
-	* performance-tests/Thruput/Orbix/ttcp_decl.h: (removed)
-	* performance-tests/Thruput/Orbix/ttcp_i.cpp: (removed)
-	* performance-tests/Thruput/Orbix/ttcp_i.h: (removed)
-	* performance-tests/Thruput/Orbix/utils.cpp: (removed)
-	  Remove all the old performance tests for other ORBS.
-	  The tests were not being actively maintained, nor where the ORBs
-	  that they tested for.
-	  If funding and time permits we could create tests for
-	  next-generation ORBs.
+        * performance-tests/Cubit/README:
+        * performance-tests/Cubit/COOL/Makefile: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/Makefile: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/README: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/client.cpp: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/client.h: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/cubit.idl: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/cubit_i.cpp: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/cubit_i.h: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/server.cpp: (removed)
+        * performance-tests/Cubit/COOL/IDL_Cubit/tmplinst.cpp: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/Makefile: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/README: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/Task_Client.cpp: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/Task_Client.h: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/Util_Thread.cpp: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/Util_Thread.h: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/client.cpp: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/client.h: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/cubit.idl: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/cubit_i.cpp: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/cubit_i.h: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/pccTimer.cpp: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/pccTimer.h: (removed)
+        * performance-tests/Cubit/COOL/MT_Cubit/server.cpp: (removed)
+        * performance-tests/Cubit/CORBAplus/IDL_Cubit/Makefile: (removed)
+        * performance-tests/Cubit/CORBAplus/IDL_Cubit/README: (removed)
+        * performance-tests/Cubit/CORBAplus/IDL_Cubit/clnt.cpp: (removed)
+        * performance-tests/Cubit/CORBAplus/IDL_Cubit/clnt.h: (removed)
+        * performance-tests/Cubit/CORBAplus/IDL_Cubit/cubit.idl: (removed)
+        * performance-tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.cpp: (removed)
+        * performance-tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.h: (removed)
+        * performance-tests/Cubit/CORBAplus/IDL_Cubit/svr.cpp: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/Makefile: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/README: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/client/Makefile: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/client/Task_Client.cpp: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/client/Task_Client.h: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/client/client.cpp: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/client/cubit.idl: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/server/Makefile: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/server/cubit.idl: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/server/cubit_i.cpp: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/server/cubit_i.h: (removed)
+        * performance-tests/Cubit/CORBAplus/MT_Cubit/server/svr.cpp: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/Imakefile: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/Makefile: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/README: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/client.cpp: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/client_i.cpp: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/client_i.h: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/cubit.idl: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.cc: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.hh: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/initref.cfg: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/server.cpp: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/server_i.cpp: (removed)
+        * performance-tests/Cubit/Hardpack/IDL_Cubit/server_i.h: (removed)
+        * performance-tests/Cubit/Orbix/Makefile: (removed)
+        * performance-tests/Cubit/Orbix/orb.mk: (removed)
+        * performance-tests/Cubit/Orbix/base_server/Makefile: (removed)
+        * performance-tests/Cubit/Orbix/base_server/cubit.idl: (removed)
+        * performance-tests/Cubit/Orbix/base_server/cubit_impl.cpp: (removed)
+        * performance-tests/Cubit/Orbix/base_server/cubit_impl.h: (removed)
+        * performance-tests/Cubit/Orbix/base_server/server.cpp: (removed)
+        * performance-tests/Cubit/Orbix/client/Makefile: (removed)
+        * performance-tests/Cubit/Orbix/client/client.cpp: (removed)
+        * performance-tests/Cubit/Orbix/client/cubit.h: (removed)
+        * performance-tests/Cubit/Orbix/client/cubit.idl: (removed)
+        * performance-tests/Cubit/Orbix/client/cubitC.cpp: (removed)
+        * performance-tests/Cubit/Orbix/factory_client/Makefile: (removed)
+        * performance-tests/Cubit/Orbix/factory_client/client.cpp: (removed)
+        * performance-tests/Cubit/Orbix/factory_client/cubit.h: (removed)
+        * performance-tests/Cubit/Orbix/factory_client/cubit.hh: (removed)
+        * performance-tests/Cubit/Orbix/factory_client/cubit.idl: (removed)
+        * performance-tests/Cubit/Orbix/factory_client/cubitC.cpp: (removed)
+        * performance-tests/Cubit/Orbix/factory_client/cubitS.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpool/Makefile: (removed)
+        * performance-tests/Cubit/Orbix/tpool/cubit.h: (removed)
+        * performance-tests/Cubit/Orbix/tpool/cubit.idl: (removed)
+        * performance-tests/Cubit/Orbix/tpool/cubitC.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpool/cubitS.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpool/cubit_impl.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpool/cubit_impl.h: (removed)
+        * performance-tests/Cubit/Orbix/tpool/server.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpool/tpool.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpool/tpool.h: (removed)
+        * performance-tests/Cubit/Orbix/tpr/Makefile: (removed)
+        * performance-tests/Cubit/Orbix/tpr/cubit.h: (removed)
+        * performance-tests/Cubit/Orbix/tpr/cubit.idl: (removed)
+        * performance-tests/Cubit/Orbix/tpr/cubitC.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpr/cubitC.h: (removed)
+        * performance-tests/Cubit/Orbix/tpr/cubitS.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpr/cubitS.h: (removed)
+        * performance-tests/Cubit/Orbix/tpr/cubit_impl.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpr/cubit_impl.h: (removed)
+        * performance-tests/Cubit/Orbix/tpr/server.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpr/tpr.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tpr/tpr.h: (removed)
+        * performance-tests/Cubit/Orbix/tps/Makefile: (removed)
+        * performance-tests/Cubit/Orbix/tps/cubit.h: (removed)
+        * performance-tests/Cubit/Orbix/tps/cubit.idl: (removed)
+        * performance-tests/Cubit/Orbix/tps/cubitC.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tps/cubitS.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tps/cubit_impl.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tps/cubit_impl.h: (removed)
+        * performance-tests/Cubit/Orbix/tps/tps.cpp: (removed)
+        * performance-tests/Cubit/Orbix/tps/tps.h: (removed)
+        * performance-tests/Cubit/VisiBroker/base_server/Makefile: (removed)
+        * performance-tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp: (removed)
+        * performance-tests/Cubit/VisiBroker/base_server/Profile_Timer.h: (removed)
+        * performance-tests/Cubit/VisiBroker/base_server/cubit.idl: (removed)
+        * performance-tests/Cubit/VisiBroker/base_server/cubit_impl.cpp: (removed)
+        * performance-tests/Cubit/VisiBroker/base_server/cubit_impl.h: (removed)
+        * performance-tests/Cubit/VisiBroker/base_server/server.cpp: (removed)
+        * performance-tests/Cubit/VisiBroker/base_server/stdmk: (removed)
+        * performance-tests/Cubit/VisiBroker/client/Makefile: (removed)
+        * performance-tests/Cubit/VisiBroker/client/Profile_Timer.cpp: (removed)
+        * performance-tests/Cubit/VisiBroker/client/Profile_Timer.h: (removed)
+        * performance-tests/Cubit/VisiBroker/client/client.cpp: (removed)
+        * performance-tests/Cubit/VisiBroker/client/cubit.idl: (removed)
+        * performance-tests/Cubit/VisiBroker/client/stdmk: (removed)
+        * performance-tests/Thruput/COOL/Makefile: (removed)
+        * performance-tests/Thruput/COOL/README: (removed)
+        * performance-tests/Thruput/COOL/client.cpp: (removed)
+        * performance-tests/Thruput/COOL/server.cpp: (removed)
+        * performance-tests/Thruput/COOL/ttcp.idl: (removed)
+        * performance-tests/Thruput/COOL/ttcp_decl.h: (removed)
+        * performance-tests/Thruput/COOL/ttcp_i.cpp: (removed)
+        * performance-tests/Thruput/COOL/ttcp_i.h: (removed)
+        * performance-tests/Thruput/COOL/utils.cpp: (removed)
+        * performance-tests/Thruput/CORBAplus/Makefile: (removed)
+        * performance-tests/Thruput/CORBAplus/README: (removed)
+        * performance-tests/Thruput/CORBAplus/client.cpp: (removed)
+        * performance-tests/Thruput/CORBAplus/extract: (removed)
+        * performance-tests/Thruput/CORBAplus/run: (removed)
+        * performance-tests/Thruput/CORBAplus/run_client: (removed)
+        * performance-tests/Thruput/CORBAplus/run_server: (removed)
+        * performance-tests/Thruput/CORBAplus/run_test: (removed)
+        * performance-tests/Thruput/CORBAplus/run_tests: (removed)
+        * performance-tests/Thruput/CORBAplus/server.cpp: (removed)
+        * performance-tests/Thruput/CORBAplus/ttcp.idl: (removed)
+        * performance-tests/Thruput/CORBAplus/ttcp_decl.h: (removed)
+        * performance-tests/Thruput/CORBAplus/ttcp_i.cpp: (removed)
+        * performance-tests/Thruput/CORBAplus/ttcp_i.h: (removed)
+        * performance-tests/Thruput/CORBAplus/utils.cpp: (removed)
+        * performance-tests/Thruput/Orbix/Client.cpp: (removed)
+        * performance-tests/Thruput/Orbix/Makefile: (removed)
+        * performance-tests/Thruput/Orbix/README: (removed)
+        * performance-tests/Thruput/Orbix/Srv_Main.cpp: (removed)
+        * performance-tests/Thruput/Orbix/extract: (removed)
+        * performance-tests/Thruput/Orbix/loop64: (removed)
+        * performance-tests/Thruput/Orbix/orbixsol2s4.mk: (removed)
+        * performance-tests/Thruput/Orbix/run: (removed)
+        * performance-tests/Thruput/Orbix/run_client: (removed)
+        * performance-tests/Thruput/Orbix/run_server: (removed)
+        * performance-tests/Thruput/Orbix/run_test: (removed)
+        * performance-tests/Thruput/Orbix/run_tests: (removed)
+        * performance-tests/Thruput/Orbix/ttcp.idl: (removed)
+        * performance-tests/Thruput/Orbix/ttcp_decl.h: (removed)
+        * performance-tests/Thruput/Orbix/ttcp_i.cpp: (removed)
+        * performance-tests/Thruput/Orbix/ttcp_i.h: (removed)
+        * performance-tests/Thruput/Orbix/utils.cpp: (removed)
+          Remove all the old performance tests for other ORBS.
+          The tests were not being actively maintained, nor where the ORBs
+          that they tested for.
+          If funding and time permits we could create tests for
+          next-generation ORBs.
 
 Wed Apr 19 15:19:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/LifeCycle_Service/Makefile:
-	* orbsvcs/Logging_Service/Makefile:
-	  Missed in the last round of changes.
+        * orbsvcs/LifeCycle_Service/Makefile:
+        * orbsvcs/Logging_Service/Makefile:
+          Missed in the last round of changes.
 
 Wed Apr 19 15:47:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp:
-	  Reverting yesterday's change to this file. It wasn't
-	  the right thing to do. Thanks to Bala for pointing
-	  out the problem.
+        * tao/TAO_Internal.cpp:
+          Reverting yesterday's change to this file. It wasn't
+          the right thing to do. Thanks to Bala for pointing
+          out the problem.
 
 Wed Apr 19 14:46:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp (messaging_init):
-	* tao/SHMIOP_Transport.cpp:
-	* tao/UIOP_Transport.cpp:
-	* tao/GIOP_Message_Accept_State.cpp:
-	* tao/GIOP_Message_Accept_State.h:
-	* tao/GIOP_Message_Accept_State.i:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Acceptors.i:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Connectors.cpp:
-	* tao/GIOP_Message_Connectors.i:
-	* tao/GIOP_Message_Headers.cpp:
-	* tao/GIOP_Message_Headers.h:
-	* tao/GIOP_Message_Headers.i:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Lite.i:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i:
-	* tao/GIOP_Utils.h: Implemented the GIOP1.2 message formats. The
-	  clients and servers would now be able to recognise the 1.2
-	  message formats. I have not switched the GIOP format for TAO
-	  from 1.1 to 1.2, as some more work is pending.
+        * tao/IIOP_Transport.cpp (messaging_init):
+        * tao/SHMIOP_Transport.cpp:
+        * tao/UIOP_Transport.cpp:
+        * tao/GIOP_Message_Accept_State.cpp:
+        * tao/GIOP_Message_Accept_State.h:
+        * tao/GIOP_Message_Accept_State.i:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Acceptors.i:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/GIOP_Message_Connectors.i:
+        * tao/GIOP_Message_Headers.cpp:
+        * tao/GIOP_Message_Headers.h:
+        * tao/GIOP_Message_Headers.i:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.i:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.i:
+        * tao/GIOP_Utils.h: Implemented the GIOP1.2 message formats. The
+          clients and servers would now be able to recognise the 1.2
+          message formats. I have not switched the GIOP format for TAO
+          from 1.1 to 1.2, as some more work is pending.
 
 Wed Apr 19 12:11:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 

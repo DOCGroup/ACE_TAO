@@ -13,7 +13,7 @@ ACE_RCSID(Latency, ping, "$Id$")
 const char *ior_output_file = "pong.ior";
 const char *protocol = "RTP/UDP";
 int milliseconds = 100;
-int message_size = 64;
+size_t message_size = 64;
 int respond = 1;
 AVStreams::protocolSpec pong_protocols;
 AVStreams::protocolSpec ping_protocols;
@@ -118,7 +118,7 @@ int main (int argc, char *argv[])
 
       CORBA::ORB_var orb = orb_manager->orb ();
       the_orb = orb.in ();
-      // No copying, because the global variable is not used after the 
+      // No copying, because the global variable is not used after the
       // event loop finishes...
 
       CORBA::Object_var poa_object =
@@ -256,8 +256,8 @@ Pong_Recv_Callback::receive_frame (ACE_Message_Block *frame,
 
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   for (const ACE_Message_Block *i = frame;
-       frame != 0;
-       frame = frame->cont ())
+       i != 0;
+       i = frame->cont ())
     {
       ACE_hrtime_t buf[2];
 
@@ -267,7 +267,7 @@ Pong_Recv_Callback::receive_frame (ACE_Message_Block *frame,
           return 0;
         }
 
-      ACE_OS::memcpy (buf, frame->rd_ptr (), sizeof(buf));
+      ACE_OS::memcpy (buf, i->rd_ptr (), sizeof(buf));
 
       if (recv_throughput_base == 0)
         {
@@ -320,7 +320,7 @@ Ping_Send_Callback::get_timeout (ACE_Time_Value *&tv,
 }
 
 int
-Ping_Send_Callback::handle_timeout (void *arg)
+Ping_Send_Callback::handle_timeout (void *)
 {
   // ACE_DEBUG ((LM_DEBUG, "ping timeout\n"));
 

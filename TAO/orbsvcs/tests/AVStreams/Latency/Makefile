@@ -6,7 +6,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS = -lAVsvc -lTAO_CosNaming -lTAO
+LDLIBS = -lTAO_AV -lTAO_CosNaming -lTAO
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO

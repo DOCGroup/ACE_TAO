@@ -29,7 +29,7 @@ ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
 endif # AV
 
 
-LDLIBS +=  -lAVsvc -lmpeg_shared -lmpeg_mib -lmpeg_client -lXm  -lXext -lXt -lSM -lICE  -lX11  -lsocket -lnsl -ldl
+LDLIBS += -lTAO_AV -lmpeg_shared -lmpeg_mib -lmpeg_client -lXm  -lXext -lXt -lSM -lICE  -lX11  -lsocket -lnsl -ldl
 CPPFLAGS += -i -DSH_MEM -DNDEBUG -I/project/doc/pkg/X11/include -L/project/doc/pkg/X11/lib
 
 #----------------------------------------------------------------------------

@@ -43,6 +43,10 @@ TAO_AV_Callback::TAO_AV_Callback (void)
 {
 }
 
+TAO_AV_Callback::~TAO_AV_Callback (void)
+{
+}
+
 int
 TAO_AV_Callback::open (TAO_AV_Protocol_Object *object,
                        TAO_AV_Flow_Handler *handler)

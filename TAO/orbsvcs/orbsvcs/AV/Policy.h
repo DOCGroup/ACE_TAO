@@ -108,6 +108,7 @@ class TAO_AV_Export TAO_AV_Callback
   //     frames from the network and also for timer events.
 public:
   TAO_AV_Callback (void);
+  virtual ~TAO_AV_Callback (void);
 
   int open (TAO_AV_Protocol_Object *object,
             TAO_AV_Flow_Handler *handler);
