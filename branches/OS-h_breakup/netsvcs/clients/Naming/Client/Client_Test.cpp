@@ -362,7 +362,7 @@ Client_Test::list_options (void)
                   this->name_options_->nameserver_port ()));
       break;
     default:
-      assert (!"shouldn't occur!\n");
+      ACE_ASSERT (!"shouldn't occur!\n");
       /* NOTREACHED */
     }
   ACE_DEBUG ((LM_DEBUG,
