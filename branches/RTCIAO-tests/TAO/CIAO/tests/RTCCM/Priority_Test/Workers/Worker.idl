@@ -18,7 +18,7 @@ module Priority_Test
 {
   component Worker
     {
-      provide Common_Ops some_device;
+      provides Common_Ops some_device;
     };
 
   home WorkerHome manages Worker

@@ -14,7 +14,7 @@ MyImpl::CB_Worker_exec::~CB_Worker_exec ()
 
 // Operations from Priority_Test::Worker
 
-HUDisplay::CCM_Common_Ops_ptr
+Priority_Test::CCM_Common_Ops_ptr
 MyImpl::CB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -23,9 +23,9 @@ MyImpl::CB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL)
 
 // Operations from Priority_Test::Common_Ops
 
-CORBA::ULong
-MyImpl::CB_Worker_exec::do_work (CORBA::ULong work,
-                                 CORBA::ULong aux
+CORBA::Long
+MyImpl::CB_Worker_exec::do_work (CORBA::Long work,
+                                 CORBA::Long aux
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -2,10 +2,10 @@
 // This file is generated with "generate_component_mpc.pl -l .. -p Priority_Test -i Controller"
 
 project(Priority_Test_Controller_stub): ciao_client {
-  depends += Priority_Test_stub
+  after += Priority_Test_stub
   sharedname = Controller_stub
   idlflags += -Wb,stub_export_macro=CONTROLLER_STUB_Export -Wb,stub_export_include=Controller_stub_export.h -Wb,skel_export_macro=CONTROLLER_SVNT_Export -Wb,skel_export_include=Controller_svnt_export.h
-  dllflags   = CONTROLLER_STUB_BUILD_DLL
+  dynamicflags   = CONTROLLER_STUB_BUILD_DLL
 
   IDL_Files {
     Controller.idl
@@ -17,12 +17,12 @@ project(Priority_Test_Controller_stub): ciao_client {
 }
 
 project(Priority_Test_Controller_svnt) : ciao_servant {
-  depends += Priority_Test_svnt Controller_stub
+  after += Priority_Test_svnt Priority_Test_Controller_stub
   sharedname  = Controller_svnt
   libs    += Controller_stub Priority_Test_stub Priority_Test_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=CONTROLLER_SVNT_Export -Wb,export_include=Controller_svnt_export.h
-  dllflags = CONTROLLER_SVNT_BUILD_DLL
+  dynamicflags = CONTROLLER_SVNT_BUILD_DLL
 
   CIDL_Files {
     Controller.cidl
@@ -41,12 +41,12 @@ project(Priority_Test_Controller_svnt) : ciao_servant {
 
 
 project(Priority_Test_Controller_exec) : ciao_component {
-  depends   += Controller_svnt
+  after   += Priority_Test_Controller_svnt
   sharedname = Controller_exec
   libs      += Controller_stub Controller_svnt Priority_Test_stub Priority_Test_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=CONTROLLER_EXEC_Export -Wb,export_include=Controller_exec_export.h
-  dllflags   = CONTROLLER_EXEC_BUILD_DLL
+  dynamicflags   = CONTROLLER_EXEC_BUILD_DLL
 
   IDL_Files {
     ControllerEI.idl
@@ -57,6 +57,3 @@ project(Priority_Test_Controller_exec) : ciao_component {
     Controller_exec.cpp
   }
 }
-
-
-

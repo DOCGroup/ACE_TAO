@@ -1,3 +1,25 @@
+Sat Oct 11 00:11:18 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Priority_Test.mpc:
+	* tests/RTCCM/Priority_Test/Workers/Worker.mpc:
+	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:  Manually
+	  changed the generated MPC files as the "depends" keyword is
+	  depricated by "after" in MPC, and the dependencies is broken in
+	  earlier changes in MPC generator scripts.
+
+	* tests/RTCCM/Priority_Test/Priority_Test.idl: Changed the use of
+	  "unsigned long" type to "long".  CIDL compiler doesn't seem to
+	  support unsigned long yet.
+
+	* tests/RTCCM/Priority_Test/Workers/Worker.idl: Fixed a typo.
+
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.h:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.h:  Fixed a
+	  couple of compilation errors and changed some operation
+	  signatures to match the interface change in Priority_Test.idl.
+
 Fri Oct 10 22:05:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/RTCCM/Priority_Test/Priority_Test.idl:
