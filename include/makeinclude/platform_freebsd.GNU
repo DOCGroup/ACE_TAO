@@ -2,7 +2,7 @@
 
 # platform_freebsd.GNU
 
-VERSION := $(shell uname -r | sed -e "s/`uname -r | sed -e = 's/.//'`//")
+VERSION := $(shell uname -r | sed -e "s/`uname -r | sed -e 's/.//'`//")
 ifneq ($(VERSION),3)
 versioned_so = 1
 endif
