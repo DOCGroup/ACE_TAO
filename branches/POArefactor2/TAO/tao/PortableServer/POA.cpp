@@ -215,7 +215,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     adapter_activator_ (),
-    default_servant_ (),
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
@@ -380,8 +379,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_UNUSED_ARG (non_servant_upcall);
 
     this->adapter_activator_ = PortableServer::AdapterActivator::_nil ();
-
-    this->default_servant_ = 0;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -1,3 +1,16 @@
+
+        * tao/PortableServer/POA.{cpp,h}:
+          Removed default_servant, we don't need it anymore in the POA, it is
+          in the Default_Servant_Request_Processing_Strategy.
+
+Fri Oct 29 11:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Retention_Strategy.cpp (servant_to_id):
+          Implemented for the retain case.
+
+        * tao/PortableServer/POA.cpp (servant_to_id_):
+          Call the Servant_Retention_Strategy
+
 Fri Oct 29 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Request_Processing_Strategy.{h,cpp}:

@@ -853,9 +853,6 @@ protected:
 
   PortableServer::AdapterActivator_var adapter_activator_;
 
-  /// @todo Remove this and move the request processing strategy
-  PortableServer::ServantBase_var default_servant_;
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   typedef
