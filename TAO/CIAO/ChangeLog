@@ -1,3 +1,41 @@
+Thu Aug  5 15:49:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
+
+	  Made destructors in reference count enabled classes protected to
+	  enforce proper memory management through the reference counting
+	  mechansism (i.e. prevent directly calling operator delete() on
+	  the reference counted object).
+
+	  (cube_long):
+	* DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp (cube_long):
+	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.h
+	  (makeCall):
+	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp
+	  (makeCall):
+
+	  Added missing emulated exception parameter.  Fixes compile-time
+	  errors in emulated exception builds.
+
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp
+	  (ccm_activate):
+
+	  Corrected emulated excepton parameter.  Fixes a compile-time
+	  error in emulated exception builds.
+
+	* performance-tests/Protocols/Controller/Controller.mpc:
+	* tests/RTCCM/DiffServ/Receiver/Receiver.mpc
+	  (DiffServ_Receiver_exec):
+	* tests/RTCCM/DiffServ/Sender/Sender.mpc (DiffServ_Sender_exec):
+
+	  Added missing "requires += exceptions".  These tests will not
+	  compile in emulated exception configurations.
+
+	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp
+	  (get_latency):
+
+	  Fixed unused parameter warning in emulated exception builds.
+
 Thu Aug  5 11:48:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* performance-tests/Protocols/Controller/Controller.mpc:
