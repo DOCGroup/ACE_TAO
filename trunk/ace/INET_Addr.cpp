@@ -365,7 +365,7 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
   int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
 
   hostent hentry;
-  int error;
+  int error = 0;
   ACE_HOSTENT_DATA buf;
   hostent *hp;
 
