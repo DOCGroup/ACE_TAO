@@ -1,20 +1,32 @@
+Tue Jan  6 15:03:13 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* tao/CONV_FRAME.pidl:
+	* tao/Policy.pidl:
+	* tao/UShortSeq.pidl:
+	* tao/orb.idl:
+	* tao/Messaging/Messaging_No_Impl.pidl:
+	* tao/RTPortableServer/RTPortableServer.pidl:
+
+	  Fixed name redefinition bugs and recoded usage of deprecated
+	  anonymous sequences.
+
 Tue Jan  6 12:04:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Strategies/SCIOP_Factory.cpp:
-	 
+
 	  SCIOP requires explicit endpoint specification. It shouldn't get
-	  loaded automatically as it is getting done now. 
+	  loaded automatically as it is getting done now.
 
 	* tao/Object.pidl:
 
-	  Another legacy file that is getting removed. 
+	  Another legacy file that is getting removed.
 
 Tue Jan  6 11:14:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IFR_Client/Interface.pidl:
 
 	  Removed this file form the repo since it is not used and
-	  woefully out of date. 
+	  woefully out of date.
 
 Tue Jan  6 11:13:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -37,7 +49,7 @@ Mon Jan  5 19:09:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Mon Jan  5 18:37:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FT_App/FT_App.mpc:
-	  
+
 	  Cosmetic fix.
 
 Mon Jan  5 15:33:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -50,7 +62,7 @@ Mon Jan  5 14:14:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
 
-	  Applied patches from Dale Wilson for warnings in  g++ builds. 
+	  Applied patches from Dale Wilson for warnings in  g++ builds.
 
 Mon Jan  5 13:54:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
