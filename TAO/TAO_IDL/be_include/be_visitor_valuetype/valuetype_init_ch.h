@@ -44,7 +44,7 @@ public:
   // destructor
 
   virtual int visit_valuetype (be_valuetype *node);
-  // entry point
+  virtual int visit_eventtype (be_eventtype *node);
 
   virtual int visit_factory (be_factory *node);
   // visit a factory

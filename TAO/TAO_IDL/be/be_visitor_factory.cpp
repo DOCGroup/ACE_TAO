@@ -33,8 +33,6 @@
 #include "be_visitor_valuetype/valuetype_ch.h"
 #include "be_visitor_valuetype/valuetype_obv_ch.h"
 #include "be_visitor_valuetype/valuetype_obv_cs.h"
-#include "be_visitor_eventtype/eventtype_obv_ch.h"
-#include "be_visitor_eventtype/eventtype_obv_cs.h"
 #include "be_visitor_valuetype/ami_exception_holder_ch.h"
 #include "be_visitor_valuetype/ami_exception_holder_cs.h"
 #include "be_visitor_operation/operation.h"
@@ -78,16 +76,6 @@ TAO_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
       ACE_NEW_RETURN (retval,
                       be_visitor_valuetype_obv_cs (ctx),
-                      0);
-      break;
-    case TAO_CodeGen::TAO_EVENTTYPE_OBV_CH:
-      ACE_NEW_RETURN (retval,
-                      be_visitor_eventtype_obv_ch (ctx),
-                      0);
-      break;
-    case TAO_CodeGen::TAO_EVENTTYPE_OBV_CS:
-      ACE_NEW_RETURN (retval,
-                      be_visitor_eventtype_obv_cs (ctx),
                       0);
       break;
     case TAO_CodeGen::TAO_OPERATION_CH:

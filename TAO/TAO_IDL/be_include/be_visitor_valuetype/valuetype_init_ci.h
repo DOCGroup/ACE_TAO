@@ -42,11 +42,6 @@ public:
 
   ~be_visitor_valuetype_init_ci (void);
   // destructor
-
-  virtual int visit_valuetype (be_valuetype *node);
-
-  virtual int visit_factory (be_factory *node);
-  // visit a factory
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_INIT_CI_H_ */

@@ -249,6 +249,12 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 }
 
 int
+be_visitor_valuetype_obv_ch::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
 be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 {
   be_valuetype *vt = be_valuetype::narrow_from_scope (node->defined_in ());

@@ -141,7 +141,7 @@ AST_illegal_recursive_type (AST_Decl *t)
   if (nt == AST_Decl::NT_interface)
     {
       // Check for interface->struct/union->....->interface nesting.
-      return AST_illegal_interface_recursion (t);
+//      return AST_illegal_interface_recursion (t);
     }
   else if (nt != AST_Decl::NT_struct && nt != AST_Decl::NT_union)
     {

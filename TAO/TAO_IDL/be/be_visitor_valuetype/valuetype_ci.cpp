@@ -94,6 +94,11 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
+int
+be_visitor_valuetype_ci::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
 
 int
 be_visitor_valuetype_ci::visit_field (be_field *node)

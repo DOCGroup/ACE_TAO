@@ -114,54 +114,6 @@ be_visitor_valuetype_field_ci::visit_array (be_array *node)
 }
 
 int
-be_visitor_valuetype_field_ci::visit_enum (be_enum *)
-{
-  return 0;
-}
-
-int
-be_visitor_valuetype_field_ci::visit_interface (be_interface *)
-{
-  return 0;
-}
-
-int
-be_visitor_valuetype_field_ci::visit_interface_fwd (be_interface_fwd *)
-{
-  return 0;
-}
-
-int
-be_visitor_valuetype_field_ci::visit_valuetype (be_valuetype *)
-{
- return 0;
-}
-
-int
-be_visitor_valuetype_field_ci::visit_valuetype_fwd (be_valuetype_fwd *)
-{
-  return 0;
-}
-
-int
-be_visitor_valuetype_field_ci::visit_predefined_type (be_predefined_type *)
-{
-  return 0;
-}
-
-int
-be_visitor_valuetype_field_ci::visit_sequence (be_sequence *)
-{
-  return 0;
-}
-
-int
-be_visitor_valuetype_field_ci::visit_string (be_string *)
-{
-  return 0;
-}
-
-int
 be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
 {
   be_decl *ub = this->ctx_->node ();
@@ -204,12 +156,6 @@ be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
         }
     }
 
-  return 0;
-}
-
-int
-be_visitor_valuetype_field_ci::visit_typedef (be_typedef *)
-{
   return 0;
 }
 
