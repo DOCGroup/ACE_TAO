@@ -1,3 +1,7 @@
+Sun Aug 26 09:07:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp: Fixed a compile error with SunCC4.2
+
 Sun Aug 26 08:28:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Timer_Queue_T.cpp: Fixed a warning from an unused variable
