@@ -414,6 +414,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     inherit_environment_ (ie),
 #endif /* ACE_HAS_WINCE */
     creation_flags_ (0),
+    avoid_zombies_ (0),
 #if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
     environment_inherited_ (0),
@@ -421,7 +422,6 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     process_attributes_ (NULL),
     thread_attributes_ (NULL),
 #else /* ACE_WIN32 */
-    avoid_zombies_ (0),
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
     stderr_ (ACE_INVALID_HANDLE),
