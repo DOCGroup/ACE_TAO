@@ -27,7 +27,7 @@ Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
     result = server_addr.set (logger_port, INADDR_ANY);
   else
     result = server_addr.set ("ace_logger", INADDR_ANY);
-  if (result != -1) 
+  if (result != -1)
     result = ACCEPTOR::open (server_addr);
   if (result == -1) reactor->end_reactor_event_loop ();
 }
@@ -46,7 +46,7 @@ public:
     return -1; // Trigger call to handle_close() method.
   }
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask) 
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   { delete this; return 0; }
 
 private:
