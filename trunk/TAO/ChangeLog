@@ -3,22 +3,30 @@ Thurs Aug 8 11:36:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/PortableServer/POA.h:
 	* tao/PortableServer/POA.cpp:
 
-	  Added the server_portocol method to the base POA class to avoid the cast from TAO_POA to TAO_RT_POA.
+	  Added the server_portocol method to the base POA class to avoid
+	  the cast from TAO_POA to TAO_RT_POA.
 
 	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp
 
-	  Removed the cast from TAO_POA to TAO_RT_POA to avoid compile errors.
+	  Removed the cast from TAO_POA to TAO_RT_POA to avoid compile
+	  errors.
 
 	* tao/RTCORBA/Makefile.bor:
 
-	   Added the entries for Linear_Network_Priority_Mapping.obj, Network_Priority_Mapping.obj,Network_Priority_Mapping_Manager.obj to compile with Borland compiler.
+	  Added the entries for Linear_Network_Priority_Mapping.obj,
+	  Network_Priority_Mapping.obj,
+	  Network_Priority_Mapping_Manager.obj to compile with Borland
+	  compiler.
 	
 Wed Aug  7 23:23:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTCORBA/TAO_RTCORBA.dsp:
 	* tao/RTCORBA/TAO_RTCORBA_Static.dsp:
 
-	  Added the entries for Linear_Network_Priority_Mapping.{h,cpp,i}, Network_Priority_Mapping.{h,cpp,i},Network_Priority_Mapping_Manager.{h,cpp,i} to compile on windows.
+	  Added the entries for Linear_Network_Priority_Mapping.{h,cpp,i},
+	  Network_Priority_Mapping.{h,cpp,i},
+	  Network_Priority_Mapping_Manager.{h,cpp,i} to compile on
+	  windows.
 
 Mon Aug  5 15:49:45 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -34,7 +42,8 @@ Wed Aug  7 16:12:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tests/RTCORBA/Diffserv/test.idl: 		
 	* tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.h: 	
 
-	  Added the Diffserv test to demonstrate the setting of Diffserv Codepoints in the GIOP request and replies.
+	  Added the Diffserv test to demonstrate the setting of Diffserv
+	  Codepoints in the GIOP request and replies.
 
 Wed Aug  7 11:59:58 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
