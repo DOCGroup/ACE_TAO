@@ -15,17 +15,23 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_PRIORITYMODELPOLICY___CI_)
 #define _RTCORBA_PRIORITYMODELPOLICY___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -56,10 +62,11 @@ TAO::Any_Impl_T<RTCORBA::PriorityModelPolicy>::demarshal_value (TAO_InputCDR &)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_THREADPOOLPOLICY___CI_)
 #define _RTCORBA_THREADPOOLPOLICY___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -90,7 +97,7 @@ TAO::Any_Impl_T<RTCORBA::ThreadpoolPolicy>::demarshal_value (TAO_InputCDR &)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES___CI_)
 #define _RTCORBA_PROTOCOLPROPERTIES___CI_
@@ -124,41 +131,8 @@ TAO::Any_Impl_T<RTCORBA::ProtocolProperties>::demarshal_value (TAO_InputCDR &)
 
 #endif /* end #if !defined */
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___CI_)
 #define _RTCORBA_SERVERPROTOCOLPOLICY___CI_
@@ -193,7 +167,7 @@ TAO::Any_Impl_T<RTCORBA::ServerProtocolPolicy>::demarshal_value (TAO_InputCDR &)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___CI_)
 #define _RTCORBA_CLIENTPROTOCOLPOLICY___CI_
@@ -228,7 +202,7 @@ TAO::Any_Impl_T<RTCORBA::ClientProtocolPolicy>::demarshal_value (TAO_InputCDR &)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___CI_)
 #define _RTCORBA_PRIVATECONNECTIONPOLICY___CI_
@@ -263,10 +237,11 @@ TAO::Any_Impl_T<RTCORBA::PrivateConnectionPolicy>::demarshal_value (TAO_InputCDR
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___CI_)
 #define _RTCORBA_TCPPROTOCOLPROPERTIES___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -297,7 +272,7 @@ TAO::Any_Impl_T<RTCORBA::TCPProtocolProperties>::demarshal_value (TAO_InputCDR &
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___CI_)
 #define _RTCORBA_GIOPPROTOCOLPROPERTIES___CI_
@@ -332,7 +307,7 @@ TAO::Any_Impl_T<RTCORBA::GIOPProtocolProperties>::demarshal_value (TAO_InputCDR 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___CI_)
 #define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___CI_
@@ -367,10 +342,11 @@ TAO::Any_Impl_T<RTCORBA::UnixDomainProtocolProperties>::demarshal_value (TAO_Inp
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___CI_)
 #define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___CI_
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -381,6 +357,7 @@ TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>::to_object (
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
 }
+
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -400,79 +377,7 @@ TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>::demarshal_value (TAO_I
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_THREADPOOLPOLICY___CI_)
-#define _RTCORBA_THREADPOOLPOLICY___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_PROTOCOLPROPERTIES___CI_)
-#define _RTCORBA_PROTOCOLPROPERTIES___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY___CI_)
-#define _RTCORBA_SERVERPROTOCOLPOLICY___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY___CI_)
-#define _RTCORBA_CLIENTPROTOCOLPOLICY___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___CI_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___CI_)
-#define _RTCORBA_TCPPROTOCOLPROPERTIES___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___CI_)
-#define _RTCORBA_GIOPPROTOCOLPROPERTIES___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___CI_)
-#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___CI_)
-#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___CI_)
 #define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___CI_
@@ -487,9 +392,6 @@ TAO::Any_Impl_T<RTCORBA::PriorityBandedConnectionPolicy>::to_object (
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
 }
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
 template<>
 ACE_INLINE
@@ -510,7 +412,7 @@ TAO::Any_Impl_T<RTCORBA::PriorityBandedConnectionPolicy>::demarshal_value (TAO_I
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_CURRENT___CI_)
 #define _RTCORBA_CURRENT___CI_
@@ -545,7 +447,7 @@ TAO::Any_Impl_T<RTCORBA::Current>::demarshal_value (TAO_InputCDR &)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_MUTEX___CI_)
 #define _RTCORBA_MUTEX___CI_
@@ -579,8 +481,40 @@ TAO::Any_Impl_T<RTCORBA::Mutex>::demarshal_value (TAO_InputCDR &)
 
 #endif /* end #if !defined */
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::RTORB::MutexNotFound>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::RTORB::MutexNotFound>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::RTORB::InvalidThreadpool>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::RTORB::InvalidThreadpool>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_RTCORBA_RTORB___CI_)
 #define _RTCORBA_RTORB___CI_
@@ -615,7 +549,7 @@ TAO::Any_Impl_T<RTCORBA::RTORB>::demarshal_value (TAO_InputCDR &)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -623,18 +557,10 @@ CORBA::Boolean operator<< (
     const RTCORBA::ThreadpoolLane &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.lane_priority) &&
     (strm << _tao_aggregate.static_threads) &&
-    (strm << _tao_aggregate.dynamic_threads)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.dynamic_threads);
 }
 
 ACE_INLINE
@@ -643,22 +569,14 @@ CORBA::Boolean operator>> (
     RTCORBA::ThreadpoolLane &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.lane_priority) &&
     (strm >> _tao_aggregate.static_threads) &&
-    (strm >> _tao_aggregate.dynamic_threads)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.dynamic_threads);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_RTCORBA_ThreadpoolLanes_I_
 #define _TAO_CDR_OP_RTCORBA_ThreadpoolLanes_I_
@@ -676,7 +594,7 @@ CORBA::Boolean TAO_RTCORBA_Export operator>> (
 #endif /* _TAO_CDR_OP_RTCORBA_ThreadpoolLanes_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/cdr_op_ci.cpp:51
+// be/be_visitor_enum/cdr_op_ci.cpp:51
 
 ACE_INLINE
 CORBA::Boolean operator<< (TAO_OutputCDR &strm, const RTCORBA::PriorityModel &_tao_enumval)
@@ -690,17 +608,65 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityModel &_tao_enum
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-
+  
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (RTCORBA::PriorityModel, _tao_temp);
     }
-
+  
   return _tao_result;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// be/be_visitor_structure/cdr_op_ci.cpp:70
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const RTCORBA::Protocol &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.protocol_type) &&
+    CORBA::Object::marshal (
+        _tao_aggregate.orb_protocol_properties.in (),
+        strm
+      ) &&
+    CORBA::Object::marshal (
+        _tao_aggregate.transport_protocol_properties.in (),
+        strm
+      );
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    RTCORBA::Protocol &
+  )
+{
+  return 0;
+}
+
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
+
+#if !defined _TAO_CDR_OP_RTCORBA_ProtocolList_I_
+#define _TAO_CDR_OP_RTCORBA_ProtocolList_I_
+
+CORBA::Boolean TAO_RTCORBA_Export operator<< (
+    TAO_OutputCDR &,
+    const RTCORBA::ProtocolList &
+  );
+
+CORBA::Boolean TAO_RTCORBA_Export operator>> (
+    TAO_InputCDR &,
+    RTCORBA::ProtocolList &
+  );
+
+#endif /* _TAO_CDR_OP_RTCORBA_ProtocolList_I_ */
+
+// TAO_IDL - Generated from
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -708,17 +674,9 @@ CORBA::Boolean operator<< (
     const RTCORBA::PriorityBand &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.low) &&
-    (strm << _tao_aggregate.high)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.high);
 }
 
 ACE_INLINE
@@ -727,21 +685,13 @@ CORBA::Boolean operator>> (
     RTCORBA::PriorityBand &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.low) &&
-    (strm >> _tao_aggregate.high)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.high);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_RTCORBA_PriorityBands_I_
 #define _TAO_CDR_OP_RTCORBA_PriorityBands_I_
@@ -757,3 +707,4 @@ CORBA::Boolean TAO_RTCORBA_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_RTCORBA_PriorityBands_I_ */
+

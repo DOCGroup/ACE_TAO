@@ -198,14 +198,23 @@ void TAO::BufferingConstraint::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_Fixed_Var_T<
-      BufferingConstraint
+      TAO::BufferingConstraint
+    >;
+template class
+  TAO_Var_Base_T<
+      TAO::BufferingConstraint
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Fixed_Var_T< \
-      BufferingConstraint \
+      TAO::BufferingConstraint \
+    >
+
+# pragma instantiate \
+  TAO_Var_Base_T< \
+      TAO::BufferingConstraint \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -563,9 +572,9 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>;
+  template class TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var,TAO::tao_BufferingConstraintPolicy_life>;
   template class TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<TAO::BufferingConstraintPolicy, TAO::BufferingConstraintPolicy_var>
+# pragma instantiate TAO_Object_Manager<TAO::BufferingConstraintPolicy, TAO::BufferingConstraintPolicy_var,TAO::tao_BufferingConstraintPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

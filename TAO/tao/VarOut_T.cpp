@@ -42,14 +42,14 @@ TAO_Fixed_Var_T<T>::operator= (const TAO_Fixed_Var_T<T> & p)
         }
       else
         {
-          foo * deep_copy = 0;
+          T * deep_copy = 0;
           ACE_NEW_RETURN (deep_copy,
                           T (*p.ptr_),
                           *this);
           
           if (deep_copy != 0)
             {
-              foo * tmp = deep_copy;
+              T * tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -91,7 +91,7 @@ TAO_Var_Var_T<T>::operator= (const TAO_Var_Var_T<T> & p)
         }
       else
         {
-          bar *deep_copy = 0;
+          T *deep_copy = 0;
           ACE_NEW_RETURN (deep_copy,
                           T (*p.ptr_),
                           *this);

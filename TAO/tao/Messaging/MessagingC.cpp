@@ -844,10 +844,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Valuetype_Manager<Messaging::ExceptionHolder, Messaging::ExceptionHolder_var>;
+template class TAO_Valuetype_Manager<Messaging::ExceptionHolder, Messaging::ExceptionHolder_var,Messaging::tao_ExceptionHolder_life>;
   template class TAO::Any_Impl_T<Messaging::ExceptionHolder>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Valuetype_Manager<Messaging::ExceptionHolder, Messaging::ExceptionHolder_var>
+#  pragma instantiate TAO_Valuetype_Manager<Messaging::ExceptionHolder, Messaging::ExceptionHolder_var,Messaging::tao_ExceptionHolder_life>
 #  pragma instantiate TAO::Any_Impl_T<Messaging::ExceptionHolder>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -898,10 +898,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
+  template class TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var,Messaging::tao_ReplyHandler_life>;
   template class TAO::Any_Impl_T<Messaging::ReplyHandler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::ReplyHandler, Messaging::ReplyHandler_var>
+# pragma instantiate TAO_Object_Manager<Messaging::ReplyHandler, Messaging::ReplyHandler_var,Messaging::tao_ReplyHandler_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::ReplyHandler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

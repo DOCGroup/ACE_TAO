@@ -131,7 +131,7 @@ template class
     >;
 
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       PortableServer::POAList,
       PortableServer::POAList_var,
       TAO_Object_Manager<
@@ -678,14 +678,14 @@ void PortableServer::IDs::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_VarSeq_Var_T<
-      IDs,
+      PortableServer::IDs,
       PortableServer::ObjectId
     >;
 
 template class
   TAO_Seq_Out_T<
-      IDs,
-      IDs_var,
+      PortableServer::IDs,
+      PortableServer::IDs_var,
       PortableServer::ObjectId
     >;
 
@@ -693,14 +693,14 @@ template class
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
-      IDs, \
+      PortableServer::IDs, \
       PortableServer::ObjectId \
     >
 
 # pragma instantiate \
   TAO_Seq_Out_T< \
-      IDs, \
-      IDs_var, \
+      PortableServer::IDs, \
+      PortableServer::IDs_var, \
       PortableServer::ObjectId \
     >
 
@@ -6526,10 +6526,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::ThreadPolicy,PortableServer::ThreadPolicy_var>;
+  template class TAO_Object_Manager<PortableServer::ThreadPolicy,PortableServer::ThreadPolicy_var,PortableServer::tao_ThreadPolicy_life>;
   template class TAO::Any_Impl_T<PortableServer::ThreadPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::ThreadPolicy, PortableServer::ThreadPolicy_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::ThreadPolicy, PortableServer::ThreadPolicy_var,PortableServer::tao_ThreadPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::ThreadPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -6617,10 +6617,8 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::LifespanPolicy,PortableServer::LifespanPolicy_var>;
   template class TAO::Any_Impl_T<PortableServer::LifespanPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::LifespanPolicy, PortableServer::LifespanPolicy_var>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::LifespanPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -6706,11 +6704,11 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::IdUniquenessPolicy,PortableServer::IdUniquenessPolicy_var>;
+  template class TAO_Object_Manager<PortableServer::IdUniquenessPolicy,PortableServer::IdUniquenessPolicy_var,PortableServer::tao_IdUniquenessPolicy_life>;
   template class TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::IdUniquenessPolicy, PortableServer::IdUniquenessPolicy_var>
-# pragma instantiate TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>
+# pragma instantiate TAO_Object_Manager<PortableServer::IdUniquenessPolicy, PortableServer::IdUniquenessPolicy_var,>
+# pragma instantiate TAO::Any_Impl_T<PortableServer::LifespanPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
@@ -6795,12 +6793,18 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::IdAssignmentPolicy,PortableServer::IdAssignmentPolicy_var>;
-  template class TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>;
+template class TAO_Object_Manager<PortableServer::IdAssignmentPolicy,PortableServer::IdAssignmentPolicy_var,PortableServer::tao_IdAssignmentPolicy_life>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::IdAssignmentPolicy, PortableServer::IdAssignmentPolicy_var>
-# pragma instantiate TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>
+#pragma instantiate TAO_Object_Manager<PortableServer::IdAssignmentPolicy,PortableServer::IdAssignmentPolicy_var,PortableServer::tao_IdAssignmentPolicy_life>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+template class TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Impl_T<PortableServer::LifespanPolicy>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -6886,10 +6890,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::ImplicitActivationPolicy,PortableServer::ImplicitActivationPolicy_var>;
+  template class TAO_Object_Manager<PortableServer::ImplicitActivationPolicy,PortableServer::ImplicitActivationPolicy_var,PortableServer::tao_ImplicitActivationPolicy_life>;
   template class TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::ImplicitActivationPolicy, PortableServer::ImplicitActivationPolicy_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::ImplicitActivationPolicy, PortableServer::ImplicitActivationPolicy_var,PortableServer::tao_ImplicitActivationPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -6975,10 +6979,8 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::ServantRetentionPolicy,PortableServer::ServantRetentionPolicy_var>;
   template class TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::ServantRetentionPolicy, PortableServer::ServantRetentionPolicy_var>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -7064,10 +7066,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::RequestProcessingPolicy,PortableServer::RequestProcessingPolicy_var>;
+  template class TAO_Object_Manager<PortableServer::RequestProcessingPolicy,PortableServer::RequestProcessingPolicy_var,PortableServer::tao_RequestProcessingPolicy_life>;
   template class TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::RequestProcessingPolicy, PortableServer::RequestProcessingPolicy_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::RequestProcessingPolicy, PortableServer::RequestProcessingPolicy_var,PortableServer::tao_RequestProcessingPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -7120,7 +7122,7 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::POAManager,PortableServer::POAManager_var>;
+  template class TAO_Object_Manager<PortableServer::POAManager,PortableServer::POAManager_var,PortableServer::tao_POAManager_life>;
   template class TAO::Any_Impl_T<PortableServer::POAManager>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO_Object_Manager<PortableServer::POAManager, PortableServer::POAManager_var>
@@ -7176,10 +7178,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::AdapterActivator,PortableServer::AdapterActivator_var>;
+  template class TAO_Object_Manager<PortableServer::AdapterActivator,PortableServer::AdapterActivator_var,PortableServer::tao_AdapterActivator_life>;
   template class TAO::Any_Impl_T<PortableServer::AdapterActivator>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::AdapterActivator, PortableServer::AdapterActivator_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::AdapterActivator, PortableServer::AdapterActivator_var,PortableServer::tao_AdapterActivator_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::AdapterActivator>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -7230,10 +7232,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::ServantManager,PortableServer::ServantManager_var>;
+  template class TAO_Object_Manager<PortableServer::ServantManager,PortableServer::ServantManager_var,PortableServer::tao_ServantManager_life>;
   template class TAO::Any_Impl_T<PortableServer::ServantManager>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::ServantManager, PortableServer::ServantManager_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::ServantManager, PortableServer::ServantManager_var,PortableServer::tao_ServantManager_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::ServantManager>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -7284,10 +7286,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::ServantActivator,PortableServer::ServantActivator_var>;
+  template class TAO_Object_Manager<PortableServer::ServantActivator,PortableServer::ServantActivator_var,PortableServer::tao_ServantActivator_life>;
   template class TAO::Any_Impl_T<PortableServer::ServantActivator>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::ServantActivator, PortableServer::ServantActivator_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::ServantActivator, PortableServer::ServantActivator_var, PortableServer::tao_ServantActivator_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::ServantActivator>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -7338,10 +7340,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::ServantLocator,PortableServer::ServantLocator_var>;
+  template class TAO_Object_Manager<PortableServer::ServantLocator,PortableServer::ServantLocator_var,PortableServer::tao_ServantLocator_life>;
   template class TAO::Any_Impl_T<PortableServer::ServantLocator>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::ServantLocator, PortableServer::ServantLocator_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::ServantLocator, PortableServer::ServantLocator_var,PortableServer::tao_ServantLocator_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::ServantLocator>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -7394,10 +7396,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::POA,PortableServer::POA_var>;
-  template class TAO::Any_Impl_T<PortableServer::POA>;
+template class TAO_Object_Manager<PortableServer::POA,PortableServer::POA_var,PortableServer::tao_POA_life>;
+template class TAO::Any_Impl_T<PortableServer::POA>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::POA, PortableServer::POA_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::POA, PortableServer::POA_var,PortableServer::tao_POA_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::POA>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -7448,10 +7450,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableServer::Current,PortableServer::Current_var>;
-  template class TAO::Any_Impl_T<PortableServer::Current>;
+template class TAO_Object_Manager<PortableServer::Current,PortableServer::Current_var, PortableServer::tao_Current_life>;
+template class TAO::Any_Impl_T<PortableServer::Current>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableServer::Current, PortableServer::Current_var>
+# pragma instantiate TAO_Object_Manager<PortableServer::Current, PortableServer::Current_var,PortableServer::tao_Current_life>
 # pragma instantiate TAO::Any_Impl_T<PortableServer::Current>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

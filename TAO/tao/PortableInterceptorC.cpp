@@ -3665,10 +3665,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::Interceptor,PortableInterceptor::Interceptor_var>;
+  template class TAO_Object_Manager<PortableInterceptor::Interceptor,PortableInterceptor::Interceptor_var, PortableInterceptor::tao_Interceptor_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::Interceptor>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::Interceptor, PortableInterceptor::Interceptor_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::Interceptor, PortableInterceptor::Interceptor_var, PortableInterceptor::tao_Interceptor_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::Interceptor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3849,10 +3849,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::Current,PortableInterceptor::Current_var>;
+  template class TAO_Object_Manager<PortableInterceptor::Current,PortableInterceptor::Current_var,PortableInterceptor::tao_Current_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::Current>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::Current, PortableInterceptor::Current_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::Current, PortableInterceptor::Current_var, PortableInterceptor::tao_Current_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::Current>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3903,10 +3903,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::RequestInfo,PortableInterceptor::RequestInfo_var>;
+  template class TAO_Object_Manager<PortableInterceptor::RequestInfo,PortableInterceptor::RequestInfo_var,PortableInterceptor::tao_RequestInfo_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::RequestInfo>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::RequestInfo, PortableInterceptor::RequestInfo_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::RequestInfo, PortableInterceptor::RequestInfo_var,PortableInterceptor::tao_RequestInfo_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::RequestInfo>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3957,10 +3957,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::ClientRequestInfo,PortableInterceptor::ClientRequestInfo_var>;
+  template class TAO_Object_Manager<PortableInterceptor::ClientRequestInfo,PortableInterceptor::ClientRequestInfo_var, PortableInterceptor::tao_ClientRequestInfo_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::ClientRequestInfo, PortableInterceptor::ClientRequestInfo_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::ClientRequestInfo, PortableInterceptor::ClientRequestInfo_var,PortableInterceptor::tao_ClientRequestInfo_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4011,10 +4011,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::ServerRequestInfo,PortableInterceptor::ServerRequestInfo_var>;
+  template class TAO_Object_Manager<PortableInterceptor::ServerRequestInfo,PortableInterceptor::ServerRequestInfo_var,PortableInterceptor::tao_ServerRequestInfo_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::ServerRequestInfo, PortableInterceptor::ServerRequestInfo_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::ServerRequestInfo, PortableInterceptor::ServerRequestInfo_var,PortableInterceptor::tao_ServerRequestInfo_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4065,10 +4065,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor,PortableInterceptor::ClientRequestInterceptor_var>;
+  template class TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor,PortableInterceptor::ClientRequestInterceptor_var,PortableInterceptor::tao_ClientRequestInterceptor_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor, PortableInterceptor::ClientRequestInterceptor_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor, PortableInterceptor::ClientRequestInterceptor_var, PortableInterceptor::tao_ClientRequestInterceptor_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4119,10 +4119,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::ServerRequestInterceptor,PortableInterceptor::ServerRequestInterceptor_var>;
+  template class TAO_Object_Manager<PortableInterceptor::ServerRequestInterceptor,PortableInterceptor::ServerRequestInterceptor_var,PortableInterceptor::tao_ServerRequestInterceptor_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::ServerRequestInterceptor, PortableInterceptor::ServerRequestInterceptor_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::ServerRequestInterceptor, PortableInterceptor::ServerRequestInterceptor_var, PortableInterceptor::tao_ServerRequestInterceptor_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4173,10 +4173,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::IORInfo,PortableInterceptor::IORInfo_var>;
+  template class TAO_Object_Manager<PortableInterceptor::IORInfo,PortableInterceptor::IORInfo_var,PortableInterceptor::tao_IORInfo_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::IORInfo>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::IORInfo, PortableInterceptor::IORInfo_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::IORInfo, PortableInterceptor::IORInfo_var,PortableInterceptor::tao_IORInfo_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::IORInfo>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4227,10 +4227,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::IORInterceptor,PortableInterceptor::IORInterceptor_var>;
+  template class TAO_Object_Manager<PortableInterceptor::IORInterceptor,PortableInterceptor::IORInterceptor_var,PortableInterceptor::tao_IORInterceptor_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::IORInterceptor, PortableInterceptor::IORInterceptor_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::IORInterceptor, PortableInterceptor::IORInterceptor_var,PortableInterceptor::tao_IORInterceptor_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4281,10 +4281,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::PolicyFactory,PortableInterceptor::PolicyFactory_var>;
+  template class TAO_Object_Manager<PortableInterceptor::PolicyFactory,PortableInterceptor::PolicyFactory_var,PortableInterceptor::tao_PolicyFactory_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::PolicyFactory, PortableInterceptor::PolicyFactory_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::PolicyFactory, PortableInterceptor::PolicyFactory_var,PortableInterceptor::tao_PolicyFactory_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4335,10 +4335,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::ORBInitInfo,PortableInterceptor::ORBInitInfo_var>;
+  template class TAO_Object_Manager<PortableInterceptor::ORBInitInfo,PortableInterceptor::ORBInitInfo_var,PortableInterceptor::tao_ORBInitInfo_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitInfo, PortableInterceptor::ORBInitInfo_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitInfo, PortableInterceptor::ORBInitInfo_var,PortableInterceptor::tao_ORBInitInfo_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4389,9 +4389,9 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::ORBInitializer,PortableInterceptor::ORBInitializer_var>;
+  template class TAO_Object_Manager<PortableInterceptor::ORBInitializer,PortableInterceptor::ORBInitializer_var,PortableInterceptor::tao_ORBInitializer_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitializer, PortableInterceptor::ORBInitializer_var>
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitializer, PortableInterceptor::ORBInitializer_var,PortableInterceptor::tao_ORBInitializer_life>
 # pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

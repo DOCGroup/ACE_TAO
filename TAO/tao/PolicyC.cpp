@@ -550,17 +550,32 @@ CORBA::tao_Policy_cast::tao_upcast (
         CORBA::Policy,
         CORBA::tao_Policy_life
       >;
-  template class
-    TAO_Objref_Out_T<
-        CORBA::Policy,
-        CORBA::tao_Policy_life
-      >;
+template class TAO_Unbounded_Sequence<CORBA::UShort>;
+
+template class
+TAO_Objref_Out_T<
+  CORBA::Policy,
+  CORBA::tao_Policy_life
+  >;
+
+template class TAO_Unbounded_Object_Sequence<CORBA::Policy,
+                                             TAO_Objref_Var_T<CORBA::Policy,
+                                                              CORBA::tao_Policy_life>,
+                                             CORBA::tao_Policy_life,
+                                             CORBA::tao_Policy_cast>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate \
     TAO_Objref_Var_T< \
         CORBA::Policy, \
         CORBA::tao_Policy_life \
       >
+# pragma instantiate TAO_Unbounded_Sequence<CORBA::UShort>
+# pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::Policy,
+TAO_Objref_Var_T<CORBA::Policy,
+                 CORBA::tao_Policy_life>,
+                                                   CORBA::tao_Policy_life,
+                                                   CORBA::tao_Policy_cast>
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Policy, \
@@ -2462,10 +2477,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::Policy,CORBA::Policy_var>;
+  template class TAO_Object_Manager<CORBA::Policy,CORBA::Policy_var, CORBA::tao_Policy_life>;
   template class TAO::Any_Impl_T<CORBA::Policy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::Policy, CORBA::Policy_var>
+# pragma instantiate TAO_Object_Manager<CORBA::Policy, CORBA::Policy_var, CORBA::tao_Policy_life>
 # pragma instantiate TAO::Any_Impl_T<CORBA::Policy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -2516,10 +2531,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::PolicyManager,CORBA::PolicyManager_var>;
+  template class TAO_Object_Manager<CORBA::PolicyManager,CORBA::PolicyManager_var, CORBA::tao_PolicyManager_life>;
   template class TAO::Any_Impl_T<CORBA::PolicyManager>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::PolicyManager, CORBA::PolicyManager_var>
+# pragma instantiate TAO_Object_Manager<CORBA::PolicyManager, CORBA::PolicyManager_var, CORBA::tao_PolicyManager_life>
 # pragma instantiate TAO::Any_Impl_T<CORBA::PolicyManager>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -2570,10 +2585,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::PolicyCurrent,CORBA::PolicyCurrent_var>;
+  template class TAO_Object_Manager<CORBA::PolicyCurrent,CORBA::PolicyCurrent_var, CORBA::tao_PolicyCurrent_life>;
   template class TAO::Any_Impl_T<CORBA::PolicyCurrent>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::PolicyCurrent, CORBA::PolicyCurrent_var>
+# pragma instantiate TAO_Object_Manager<CORBA::PolicyCurrent, CORBA::PolicyCurrent_var, CORBA::tao_PolicyCurrent_life>
 # pragma instantiate TAO::Any_Impl_T<CORBA::PolicyCurrent>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -130,26 +130,26 @@ void Dynamic::Parameter::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_Var_Var_T<
-      Parameter
+    Dynamic::Parameter
     >;
 
 template class
   TAO_Out_T<
-      Parameter,
-      Parameter_var
+      Dynamic::Parameter,
+      Dynamic::Parameter_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      Parameter \
+      Dynamic::Parameter \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      Parameter, \
-      Parameter_var \
+      Dynamic::Parameter, \
+      Dynamic::Parameter_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -199,14 +199,14 @@ void Dynamic::ParameterList::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_VarSeq_Var_T<
-      ParameterList,
+      Dynamic::ParameterList,
       Dynamic::Parameter
     >;
 
 template class
   TAO_Seq_Out_T<
-      ParameterList,
-      ParameterList_var,
+      Dynamic::ParameterList,
+      Dynamic::ParameterList_var,
       Dynamic::Parameter
     >;
 
@@ -214,14 +214,14 @@ template class
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
-      ParameterList, \
+      Dynamic::ParameterList, \
       Dynamic::Parameter \
     >
 
 # pragma instantiate \
   TAO_Seq_Out_T< \
-      ParameterList, \
-      ParameterList_var, \
+      Dynamic::ParameterList, \
+      Dynamic::ParameterList_var, \
       Dynamic::Parameter \
     >
 
@@ -484,7 +484,7 @@ void Dynamic::ExceptionList::_tao_any_destructor (void *_tao_void_pointer)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class
-  TAO_VarSeq_Var_T<
+  TAO_MngSeq_Var_T<
       Dynamic::ExceptionList,
       TAO_Pseudo_Object_Manager<
           Dynamic::TypeCode,
@@ -492,8 +492,12 @@ template class
         >
     >;
 
+template class TAO_Seq_Var_Base_T<Dynamic::ExceptionList,
+                                  TAO_Pseudo_Object_Manager<CORBA::TypeCode,
+                                                            TAO_Pseudo_Var_T<CORBA::TypeCode> > >;
+
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       Dynamic::ExceptionList,
       Dynamic::ExceptionList_var,
       TAO_Pseudo_Object_Manager<
@@ -501,6 +505,9 @@ template class
           Dynamic::TypeCode_var
         >
     >;
+
+template class TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,
+                                             TAO_Pseudo_Var_T<CORBA::TypeCode> >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -513,6 +520,11 @@ template class
         > \
     >
 
+#pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,
+                                                  TAO_Pseudo_Var_T<CORBA::TypeCode> >;
+#pragma instantiate TAO_Seq_Var_Base_T<Dynamic::ExceptionList,
+                                       TAO_Pseudo_Object_Manager<CORBA::TypeCode,
+                                                                 TAO_Pseudo_Var_T<CORBA::TypeCode> > >
 # pragma instantiate \
   TAO_Seq_Out_T< \
       Dynamic::ExceptionList, \
@@ -781,8 +793,17 @@ CORBA::Boolean operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<Dynamic::ParameterList>;
+template class TAO_Seq_Var_Base_T<Dynamic::ParameterList,
+                                  Dynamic::Parameter>;
+template class TAO_Var_Base_T<Dynamic::Parameter>;
+
+template class TAO_Unbounded_Sequence<Dynamic::Parameter>;
+template class TAO::Any_Dual_Impl_T<Dynamic::ParameterList>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate TAO_Seq_Var_Base_T<Dynamic::ParameterList,
+                                       Dynamic::Parameter>
+#pragma instantiate TAO_Var_Base_T<Dynamic::Parameter>
+#pragma instantiate TAO_Unbounded_Sequence<Dynamic::Parameter>
 # pragma instantiate TAO::Any_Dual_Impl_T<Dynamic::ParameterList>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -846,7 +867,7 @@ CORBA::Boolean operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>;
+template class TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

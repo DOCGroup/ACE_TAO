@@ -313,9 +313,9 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>;
-  template class TAO::Any_Impl_T<CORBA::TypeCodeFactory>;
+template class TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var,CORBA::tao_TypeCodeFactory_life>;
+template class TAO::Any_Impl_T<CORBA::TypeCodeFactory>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::TypeCodeFactory, CORBA::TypeCodeFactory_var>
+# pragma instantiate TAO_Object_Manager<CORBA::TypeCodeFactory, CORBA::TypeCodeFactory_var,CORBA::tao_TypeCodeFactory_life>
 # pragma instantiate TAO::Any_Impl_T<CORBA::TypeCodeFactory>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
