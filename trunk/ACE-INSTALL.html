@@ -66,7 +66,8 @@ Mistakes page</a>.<P>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
     <td> Windows NT (Borland C++ Builder 4.0 and IBM VisualAge C++),
-         Windows CE, Tandem, SCO, UnixWare, SunOS 4.x, FreeBSD, NetBSD
+         Windows CE, Tandem, SCO, UnixWare, SunOS 4.x, FreeBSD, NetBSD,
+         Linux/PPC.
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -260,14 +261,15 @@ make: *** [libACE.so] Error 8
   <LI><B><a name="Linux">Linux</a></B><P>
 
       ACE has been ported to <A
-      HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on both
-      Intel and Alpha platforms.  If you use a RedHat 5.x
+      HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on
+      Intel, Alpha, and PowerPC platforms.  If you use a RedHat 5.x
       distribution, it's best to use RedHat 5.1 or later.  ACE works
       without any modifications on RedHat 5.1, 5.2, and 6.0, and on
       Debian 2.1 on both Intel and Alpha; use the
       <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
       and <code>ace/config-linux-lxpthreads.h</code> platform/config
-      files.<p>
+      files.  The same files can be used on PowerPC, with LinuxPPC
+      1999 (R5), with glibc 2.1.1.<p>
 
       If you run out of memory, it's easy to add virtual memory on
       Linux.  Please see the <code>mkswap</code> man page.<p>
