@@ -1,3 +1,7 @@
+Tue Apr 14 09:58:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.1.14 released.
+
 Tue Apr 14 07:16:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added CONTROLLED_FILES macro.  Thanks to Doug
