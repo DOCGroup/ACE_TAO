@@ -1,3 +1,8 @@
+Mon Mar 07 07:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.cpp:
+          Added include of OS_NS_sys_time.h to get ACE_OS::gettimeofday
+
 Sun Mar  6 20:27:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
