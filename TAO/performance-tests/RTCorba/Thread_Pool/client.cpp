@@ -26,11 +26,32 @@ static CORBA::ULong work = 10;
 static CORBA::ULong max_throughput_timeout = 5;
 static int set_priority = 1;
 static int individual_continuous_worker_stats = 0;
+static ACE_Time_Value start_of_test;
+static ACE_hrtime_t test_start;
+static int print_missed_invocations = 0;
+
+struct Synchronizers
+{
+  Synchronizers (void)
+    : worker_lock_ (),
+      workers_ (1),
+      main_thread_ (),
+      workers_ready_ (0),
+      number_of_workers_ (0)
+  {
+  }
+
+  ACE_SYNCH_MUTEX worker_lock_;
+  ACE_Event workers_;
+  ACE_Event main_thread_;
+  CORBA::ULong workers_ready_;
+  CORBA::ULong number_of_workers_;
+};
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:p:i:");
+  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:p:i:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -73,6 +94,11 @@ parse_args (int argc, char *argv[])
           ACE_OS::atoi (get_opts.optarg);
         break;
 
+      case 'm':
+        print_missed_invocations =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -86,6 +112,7 @@ parse_args (int argc, char *argv[])
                            "-t <time for test> "
                            "-p <set priorities> "
                            "-i <print stats of individual continuous workers> "
+                           "-m <print missed invocations for paced workers> "
                            "\n",
                            argv [0]),
                           -1);
@@ -176,6 +203,57 @@ get_rates (const char *file_name,
   return 0;
 }
 
+int
+synchronize (test_ptr test,
+             Synchronizers &synchronizers)
+{
+  ACE_TRY_NEW_ENV
+    {
+      test->method (work,
+                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                      mon,
+                      synchronizers.worker_lock_,
+                      -1);
+
+    if (synchronizers.workers_ready_ == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "\n"));
+      }
+
+    ++synchronizers.workers_ready_;
+
+    ACE_DEBUG ((LM_DEBUG,
+                "%d worker ready\n",
+                synchronizers.workers_ready_));
+
+    if (synchronizers.workers_ready_ ==
+        synchronizers.number_of_workers_)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "\n"));
+
+        synchronizers.main_thread_.signal ();
+      }
+  }
+
+  synchronizers.workers_.wait ();
+
+  return 0;
+}
+
 class Paced_Worker :
   public ACE_Task_Base
 {
@@ -187,17 +265,15 @@ public:
                 CORBA::Short priority,
                 RTCORBA::Current_ptr current,
                 RTCORBA::PriorityMapping &priority_mapping,
-                ACE_SYNCH_MUTEX &output_lock);
+                Synchronizers &synchronizers);
 
   int svc (void);
-
   ACE_Time_Value deadline_for_current_call (CORBA::ULong i);
 
   test_var test_;
   int rate_;
-  ACE_SYNCH_MUTEX &output_lock_;
+  Synchronizers &synchronizers_;
   ACE_Time_Value interval_between_calls_;
-  ACE_Time_Value start_of_test_;
   ACE_Sample_History history_;
   CORBA::Short priority_;
   RTCORBA::Current_var current_;
@@ -211,13 +287,12 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
                             CORBA::Short priority,
                             RTCORBA::Current_ptr current,
                             RTCORBA::PriorityMapping &priority_mapping,
-                            ACE_SYNCH_MUTEX &output_lock)
+                            Synchronizers &synchronizers)
   : ACE_Task_Base (&thread_manager),
     test_ (test::_duplicate (test)),
     rate_ (rate),
-    output_lock_ (output_lock),
+    synchronizers_ (synchronizers),
     interval_between_calls_ (),
-    start_of_test_ (),
     history_ (iterations),
     priority_ (priority),
     current_ (RTCORBA::Current::_duplicate (current)),
@@ -234,7 +309,7 @@ Paced_Worker::deadline_for_current_call (CORBA::ULong i)
 
   deadline_for_current_call *= i;
 
-  deadline_for_current_call += this->start_of_test_;
+  deadline_for_current_call += start_of_test;
 
   return deadline_for_current_call;
 }
@@ -273,11 +348,14 @@ Paced_Worker::svc (void)
                            CORBA_priority),
                           -1);
 
-      this->start_of_test_ =
-        ACE_OS::gettimeofday ();
+      typedef ACE_Array_Base<CORBA::ULong> Missed_Invocations;
+      Missed_Invocations missed_invocations (this->history_.max_samples ());
 
-      ACE_hrtime_t test_start =
-        ACE_OS::gethrtime ();
+      int synchronize_result =
+        synchronize (this->test_.in (),
+                     this->synchronizers_);
+      if (synchronize_result != 0)
+        return synchronize_result;
 
       for (CORBA::ULong i = 0;
            i != this->history_.max_samples ();
@@ -291,6 +369,7 @@ Paced_Worker::svc (void)
 
           if (time_before_call > deadline_for_current_call)
             {
+              missed_invocations[deadlines_missed] = i + 1;
               deadlines_missed++;
               continue;
             }
@@ -320,7 +399,7 @@ Paced_Worker::svc (void)
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                         mon,
-                        this->output_lock_,
+                        this->synchronizers_.worker_lock_,
                         -1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -350,6 +429,22 @@ Paced_Worker::svc (void)
       ACE_Throughput_Stats::dump_throughput ("Total", gsf,
                                              test_end - test_start,
                                              stats.samples_count ());
+
+      if (print_missed_invocations)
+        {
+          ACE_DEBUG ((LM_DEBUG, "\nMissed invocations are: "));
+
+          for (CORBA::ULong j = 0;
+               j != deadlines_missed;
+               ++j)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%d ",
+                          missed_invocations[j]));
+            }
+
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
     }
   ACE_CATCHANY
     {
@@ -369,13 +464,13 @@ public:
   Continuous_Worker (test_ptr test,
                      CORBA::ULong iterations,
                      RTCORBA::Current_ptr current,
-                     ACE_SYNCH_MUTEX &output_lock);
+                     Synchronizers &synchronizers);
 
   int svc (void);
 
   test_var test_;
   CORBA::ULong iterations_;
-  ACE_SYNCH_MUTEX &output_lock_;
+  Synchronizers &synchronizers_;
   RTCORBA::Current_var current_;
   ACE_Basic_Stats collective_stats_;
   ACE_hrtime_t time_for_test_;
@@ -384,10 +479,10 @@ public:
 Continuous_Worker::Continuous_Worker (test_ptr test,
                                       CORBA::ULong iterations,
                                       RTCORBA::Current_ptr current,
-                                      ACE_SYNCH_MUTEX &output_lock)
+                                      Synchronizers &synchronizers)
   : test_ (test::_duplicate (test)),
     iterations_ (iterations),
-    output_lock_ (output_lock),
+    synchronizers_ (synchronizers),
     current_ (RTCORBA::Current::_duplicate (current)),
     time_for_test_ (0)
 {
@@ -404,8 +499,11 @@ Continuous_Worker::svc (void)
 
       ACE_Sample_History history (this->iterations_);
 
-      ACE_hrtime_t test_start =
-        ACE_OS::gethrtime ();
+      int synchronize_result =
+        synchronize (this->test_.in (),
+                     this->synchronizers_);
+      if (synchronize_result != 0)
+        return synchronize_result;
 
       for (CORBA::ULong i = 0;
            i != history.max_samples () && !done;
@@ -425,7 +523,7 @@ Continuous_Worker::svc (void)
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                         mon,
-                        this->output_lock_,
+                        this->synchronizers_.worker_lock_,
                         -1);
 
       if (individual_continuous_worker_stats)
@@ -540,8 +638,9 @@ max_throughput (test_ptr test,
 int
 main (int argc, char *argv[])
 {
+  Synchronizers synchronizers;
+
   gsf = ACE_High_Res_Timer::global_scale_factor ();
-  ACE_SYNCH_MUTEX output_lock;
 
   ACE_TRY_NEW_ENV
     {
@@ -595,6 +694,9 @@ main (int argc, char *argv[])
       if (result != 0)
         return result;
 
+      synchronizers.number_of_workers_ =
+        rates.size () + continuous_workers;
+
       CORBA::ULong max_rate = 0;
       result =
         max_throughput (test.in (),
@@ -630,13 +732,13 @@ main (int argc, char *argv[])
                               priority,
                               current.in (),
                               priority_mapping,
-                              output_lock);
+                              synchronizers);
         }
 
       Continuous_Worker continuous_worker (test.in (),
                                            max_rate * time_for_test,
                                            current.in (),
-                                           output_lock);
+                                           synchronizers);
       long flags =
         THR_NEW_LWP |
         THR_JOINABLE;
@@ -663,7 +765,18 @@ main (int argc, char *argv[])
             return result;
         }
 
-      if (lowest_rate != 0)
+      if (synchronizers.number_of_workers_ > 0)
+        synchronizers.main_thread_.wait ();
+
+      start_of_test =
+        ACE_OS::gettimeofday ();
+
+      test_start =
+        ACE_OS::gethrtime ();
+
+      synchronizers.workers_.signal ();
+
+      if (rates.size () != 0)
         {
           paced_workers_manager.wait ();
           done = 1;
