@@ -1,3 +1,9 @@
+Thu Sep 07 17:21:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Add the new files the ACE projects.
+
 Thu Sep  7 16:15:24 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:

@@ -506,6 +506,25 @@ SOURCE=.\ATM_Stream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Thread_Adapter.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Based_Pointer_Repository.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -1951,6 +1970,25 @@ SOURCE=.\OS_Memory.cpp
 # Begin Source File
 
 SOURCE=.\OS_String.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Thread_Adapter.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
@@ -3938,6 +3976,10 @@ SOURCE=.\Base_Pointer_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Thread_Adapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Based_Pointer_Repository.h
 # End Source File
 # Begin Source File
@@ -4375,6 +4417,10 @@ SOURCE=.\OS_Memory.h
 # Begin Source File
 
 SOURCE=.\OS_String.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Thread_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -4954,6 +5000,10 @@ SOURCE=.\Auto_Ptr.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Thread_Adapter.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Based_Pointer_T.i
 # End Source File
 # Begin Source File
@@ -5271,6 +5321,10 @@ SOURCE=.\OS_Memory.inl
 # Begin Source File
 
 SOURCE=.\OS_String.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Thread_Adapter.inl
 # End Source File
 # Begin Source File
 
