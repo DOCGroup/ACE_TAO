@@ -1,3 +1,20 @@
+Fri Mar 28 11:34:31 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Object.h:
+	* tao/Object.cpp: Added a new static call marshal () that takes in
+	  a object reference, and a CDR stream into which the reference
+	  should be marshalled. This call checks for null object
+	  references and then calls the virtual marshal () call on the
+	  Object. 
+	
+	* TAO_IDL/ be/be_visitor_field/cdr_op_ci.cpp: The code for
+	  marshalling in object references is busted. We used to call
+	  CORBA::Object::marshal () (the virtual call) on the object
+	  reference. But if the reference passed in is null we
+	  crash. Please see the daily builds (esp. the Param_Test) for
+	  what I am talking about. The code has now been changed to call
+	  the static method on CORBA::Object ().
+
 Fri Mar 28 10:04:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
