@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_WEBSVCS_BUILD_DLL
 #include "URL_Addr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -316,8 +315,8 @@ ACE_HTTP_Addr::url_size (int flags) const
 
 inline int
 path_copy (const ACE_TCHAR *begin,
-           const ACE_TCHAR */* end */,
-           const ACE_TCHAR *& target,
+           const ACE_TCHAR * /* end */,
+           ACE_TCHAR *& target,
            const ACE_TCHAR *src)
 {
   // Copy one character at a time, if we find a /../ we go back to the
@@ -449,7 +448,7 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
     return -1;
 
-  ACE_TCHAR *string = address;
+  const ACE_TCHAR *string = address;
   string += http_size;
   string += 2; // == strlen ("//");
 
@@ -537,7 +536,7 @@ ACE_HTTP_Addr::accept (ACE_URL_Addr_Visitor *visitor)
 
 ACE_FTP_Addr::ACE_FTP_Addr (void)
   :  user_ (0),
-     passwd_ (0),
+     password_ (0),
      hostname_ (0),
      path_ (0)
 {
@@ -546,19 +545,19 @@ ACE_FTP_Addr::ACE_FTP_Addr (void)
 ACE_FTP_Addr::ACE_FTP_Addr (const ACE_TCHAR *host_name,
                             const ACE_TCHAR *path,
                             const ACE_TCHAR *user,
-                            const ACE_TCHAR *passwd)
+                            const ACE_TCHAR *password)
   :  user_ (0),
-     passwd_ (0),
+     password_ (0),
      hostname_ (0),
      path_ (0)
 {
-  this->set (host_name, path, user, passwd);
+  this->set (host_name, path, user, password);
 }
 
 ACE_FTP_Addr::ACE_FTP_Addr (const ACE_FTP_Addr& addr)
   :  ACE_URL_Addr (),
      user_ (0),
-     passwd_ (0),
+     password_ (0),
      hostname_ (0),
      path_ (0)
 {
@@ -574,7 +573,7 @@ int
 ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
                    const ACE_TCHAR *path,
                    const ACE_TCHAR *user,
-                   const ACE_TCHAR *passwd)
+                   const ACE_TCHAR *password)
 {
   if (host_name == 0 || path == 0)
     return -1;
@@ -585,10 +584,10 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
     ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (user), -1);
   else
     this->user_ = 0;
-  if (this->passwd_ != 0)
-    ACE_ALLOCATOR_RETURN (this->passwd_, ACE_OS::strdup (passwd), -1);
+  if (this->password_ != 0)
+    ACE_ALLOCATOR_RETURN (this->password_, ACE_OS::strdup (password), -1);
   else
-    this->passwd_ = 0;
+    this->password_ = 0;
 
   size_t size = this->url_size (1);
 
@@ -615,10 +614,10 @@ ACE_FTP_Addr::set (const ACE_FTP_Addr& addr)
     ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (addr.user_), -1);
   else
     this->user_ = 0;
-  if (addr.passwd_ != 0)
-    ACE_ALLOCATOR_RETURN (this->passwd_, ACE_OS::strdup (addr.passwd_), -1);
+  if (addr.password_ != 0)
+    ACE_ALLOCATOR_RETURN (this->password_, ACE_OS::strdup (addr.password_), -1);
   else
-    this->passwd_ = 0;
+    this->password_ = 0;
   return 0;
 }
 
@@ -631,8 +630,8 @@ ACE_FTP_Addr::clear (void)
     ACE_OS::free (this->path_);
   if (this->user_ != 0)
     ACE_OS::free (this->user_);
-  if (this->passwd_ != 0)
-    ACE_OS::free (this->passwd_);
+  if (this->password_ != 0)
+    ACE_OS::free (this->password_);
 }
 
 size_t
@@ -646,7 +645,7 @@ ACE_FTP_Addr::url_size (int flags) const
 
   size_t chars =
     + (this->user_?ACE_OS::strlen (this->path_):0)
-    + (this->passwd_?ACE_OS::strlen (this->passwd_):0)
+    + (this->password_?ACE_OS::strlen (this->password_):0)
     + (this->path_?ACE_OS::strlen (this->path_):0);
 
   if (flags == 0)
@@ -677,9 +676,9 @@ ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
     {
       n += ACE_OS::sprintf (buffer + n, "%s", this->user_);
     }
-  if (this->passwd_ != 0)
+  if (this->password_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, ":%s", this->passwd_);
+      n += ACE_OS::sprintf (buffer + n, ":%s", this->password_);
     }
 
   if (this->user_ != 0)
@@ -714,7 +713,7 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
   this->clear ();
   this->hostname_ = 0;
   this->user_ = 0;
-  this->passwd_ = 0;
+  this->password_ = 0;
   this->path_ = 0;
 
   // Save the original URL....
@@ -750,7 +749,7 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
         {
           pass_start[0] = '\0';
           pass_start++;
-          ACE_ALLOCATOR_RETURN (this->passwd_,
+          ACE_ALLOCATOR_RETURN (this->password_,
                                 ACE_OS::strdup (pass_start),
                                 -1);
         }
