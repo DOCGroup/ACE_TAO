@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="DII_Cubit Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=client - Win32 Release
+CFG=DII_Cubit Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=client - Win32 Release
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="client - Win32 Release"
+!MESSAGE NMAKE /f "client.mak" CFG="DII_Cubit Client - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "DII_Cubit Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "DII_Cubit Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -27,7 +27,7 @@ CFG=client - Win32 Release
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "client - Win32 Release"
+!IF  "$(CFG)" == "DII_Cubit Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\client"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\ ..\IDL_Cubit" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\IDL_Cubit" /I "..\..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -51,7 +51,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 TAO.lib ace.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\\" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "DII_Cubit Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -65,7 +65,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\client"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\IDL_Cubit" /I "..\..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_ORBSVCS_HAS_DLL=1 /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\IDL_Cubit" /I "..\..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -73,14 +74,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 TAO.lib aced.lib orbsvcs.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAOd.lib aced.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "client - Win32 Release"
-# Name "client - Win32 Debug"
+# Name "DII_Cubit Client - Win32 Release"
+# Name "DII_Cubit Client - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"

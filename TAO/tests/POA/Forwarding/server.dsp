@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="POA Forwarding Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=server - Win32 Debug
+CFG=POA Forwarding Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,14 @@ CFG=server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="server - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="POA Forwarding Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA Forwarding Server - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "POA Forwarding Server - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -27,7 +29,7 @@ CFG=server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "server - Win32 Release"
+!IF  "$(CFG)" == "POA Forwarding Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 tao.lib ace.lib ..\Generic_Servant\server.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "POA Forwarding Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -66,7 +68,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\..\..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D TAO_HAS_DLL=1 /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\..\..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D TAO_HAS_DLL=1 /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -74,79 +77,18 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 tao.lib aced.lib ..\Generic_Servant\server.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 ..\Generic_Servant\Generic_Servantd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
 # Begin Target
 
-# Name "server - Win32 Release"
-# Name "server - Win32 Debug"
-# Begin Source File
+# Name "POA Forwarding Server - Win32 Release"
+# Name "POA Forwarding Server - Win32 Debug"
+# Begin Group "Source Files"
 
-SOURCE=.\Foo.idl
-
-!IF  "$(CFG)" == "server - Win32 Release"
-
-# Begin Custom Build
-InputPath=.\Foo.idl
-InputName=Foo
-
-BuildCmds= \
-	..\..\..\tao_idl\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
-   -Wb,export_include=generic_servant_export.h $(InputName).idl
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "server - Win32 Debug"
-
-# Begin Custom Build
-InputPath=.\Foo.idl
-InputName=Foo
-
-BuildCmds= \
-	..\..\..\tao_idl\tao_idl -I..\..\..\tao $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\FooC.cpp
@@ -167,5 +109,108 @@ SOURCE=.\Servant_Locator.cpp
 
 SOURCE=.\server.cpp
 # End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\FooC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FooS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FooS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MyFooServant.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Servant_Locator.h
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Foo.idl
+
+!IF  "$(CFG)" == "POA Forwarding Server - Win32 Release"
+
+# Begin Custom Build
+InputPath=.\Foo.idl
+InputName=Foo
+
+BuildCmds= \
+	..\..\..\tao_idl\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
+    -Wb,export_include=generic_servant_export.h $(InputName).idl
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "POA Forwarding Server - Win32 Debug"
+
+USERDEP__FOO_I="..\..\..\tao_idl\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Foo.idl
+InputName=Foo
+
+BuildCmds= \
+	..\..\..\tao_idl\tao_idl -I..\..\..\tao $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# End Group
 # End Target
 # End Project

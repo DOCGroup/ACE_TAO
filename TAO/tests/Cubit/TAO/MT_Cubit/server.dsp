@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="MT_Cubit Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=server - Win32 Debug
+CFG=MT_Cubit Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,22 +13,23 @@ CFG=server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="server - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="MT_Cubit Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "MT_Cubit Server - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "MT_Cubit Server - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "server - Win32 Release"
+!IF  "$(CFG)" == "MT_Cubit Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -42,7 +43,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "PRIORITY_INV_TEST" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "PRIORITY_INV_TEST" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -52,7 +54,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 orbsvcs.lib ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "MT_Cubit Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -66,7 +68,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "PRIORITY_INV_TEST" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "PRIORITY_INV_TEST" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -74,75 +77,17 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 orbsvcs.lib aced.lib TAO.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 orbsvcsd.lib aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "server - Win32 Release"
-# Name "server - Win32 Debug"
-# Begin Source File
+# Name "MT_Cubit Server - Win32 Release"
+# Name "MT_Cubit Server - Win32 Debug"
+# Begin Group "Source Files"
 
-SOURCE=.\cubit.idl
-
-!IF  "$(CFG)" == "server - Win32 Release"
-
-# Begin Custom Build
-InputPath=.\cubit.idl
-
-BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl cubit.idl
-
-"cubitC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "server - Win32 Debug"
-
-# Begin Custom Build
-InputPath=.\cubit.idl
-
-BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl cubit.idl
-
-"cubitC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"cubitS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
+# PROP Default_Filter ".cpp"
 # Begin Source File
 
 SOURCE=.\cubit_i.cpp
@@ -167,5 +112,110 @@ SOURCE=.\Task_Client.cpp
 
 SOURCE=.\Util_Thread.cpp
 # End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter ".h"
+# Begin Source File
+
+SOURCE=.\cubit_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cubitC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cubitS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Task_Client.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Util_Thread.h
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ".idl"
+# Begin Source File
+
+SOURCE=.\cubit.idl
+
+!IF  "$(CFG)" == "MT_Cubit Server - Win32 Release"
+
+# Begin Custom Build
+InputPath=.\cubit.idl
+
+BuildCmds= \
+	..\..\..\..\tao_idl\tao_idl cubit.idl
+
+"cubitC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"cubitC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"cubitC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"cubitS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"cubitS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"cubitS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "MT_Cubit Server - Win32 Debug"
+
+USERDEP__CUBIT="..\..\..\..\tao_idl\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\cubit.idl
+InputName=cubit
+
+BuildCmds= \
+	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# End Group
 # End Target
 # End Project
