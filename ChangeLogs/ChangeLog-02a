@@ -1,3 +1,9 @@
+Mon Jul 17 23:44:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/Makefile (OTHER_FILES): Moved SOCK_Dgram_Mcast_QoS to the 
+	  other files category. It really belongs to a separate category
+	  that I'll create later.
+
 Mon Jul 17 12:41:25 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (LOCAL_EXTERN_PREFIX):

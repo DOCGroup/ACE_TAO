@@ -97,7 +97,6 @@ SOCKETS_FILES = \
   SOCK_Dgram \
   SOCK_Dgram_Bcast \
   SOCK_Dgram_Mcast \
-  SOCK_Dgram_Mcast_QoS \
   SOCK_IO \
   SOCK_Stream
 IPC_FILES = \
@@ -196,6 +195,7 @@ OTHER_FILES = \
   Naming_Context \
   Registry_Name_Space \
   Remote_Name_Space \
+  SOCK_Dgram_Mcast_QoS \
   QoS_Session_Impl \
   QoS_Session_Factory \
   QoS_Manager \
