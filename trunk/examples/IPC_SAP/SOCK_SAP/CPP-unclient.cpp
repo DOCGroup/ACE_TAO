@@ -1,7 +1,6 @@
-/* ACE_LSOCK Client */
 // $Id$
 
-                                                        
+// ACE_LSOCK Client.
 
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"                              
@@ -16,26 +15,27 @@ main (int argc, char *argv[])
 
   ACE_LSOCK_Stream cli_stream;
   ACE_LSOCK_Connector con;
+  ACE_UNIX_Addr remote_addr (rendezvous);
                                                         
-  /* Establish the connection with server */
-  if (con.connect (cli_stream, ACE_UNIX_Addr (rendezvous)) == -1)
+  // Establish the connection with server.
+  if (con.connect (cli_stream, remote_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), 1);
 
-  /* Send data to server (correctly handles "incomplete writes") */
+  // Send data to server (correctly handles "incomplete writes").
   
   for (int r_bytes; (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0; )
     if (cli_stream.send_n (buf, r_bytes) == -1) 
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), 1);
 
-  /* Explicitly close the writer-side of the connection. */
+  // Explicitly close the writer-side of the connection.
   if (cli_stream.close_writer () == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close_writer"), 1);
 
-  /* Wait for handshake with server. */
+  // Wait for handshake with server.
   if (cli_stream.recv_n (buf, 1) != 1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv_n"), 1);    
 
-  /* Close the connection completely. */
+  // Close the connection completely. 
   if (cli_stream.close () == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 1);
 

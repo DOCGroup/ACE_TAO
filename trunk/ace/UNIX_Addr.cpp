@@ -37,7 +37,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (void)
   (void) ACE_OS::memset ((void *) &this->unix_addr_, 0, sizeof this->unix_addr_);
 }
 
-void
+int
 ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
 {
   size_t size = sa.get_size ();
@@ -49,6 +49,7 @@ ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
 
   this->unix_addr_.sun_family = AF_UNIX;
   ACE_OS::strcpy (this->unix_addr_.sun_path, sa.unix_addr_.sun_path);
+  return 0;
 }
 
 // Copy constructor. 
@@ -59,7 +60,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const ACE_UNIX_Addr &sa)
   this->set (sa);
 }
 
-void
+int
 ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
 {
   (void) ACE_OS::memset ((void *) &this->unix_addr_, 0, 
@@ -67,6 +68,7 @@ ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
   this->unix_addr_.sun_family = AF_UNIX;
   ACE_OS::strcpy (this->unix_addr_.sun_path, un->sun_path);
   this->base_set (AF_UNIX, len);
+  return 0;
 }
 
 ACE_UNIX_Addr::ACE_UNIX_Addr (const sockaddr_un *un, int len)
@@ -74,7 +76,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const sockaddr_un *un, int len)
   this->set (un, len);
 }
 
-void
+int
 ACE_UNIX_Addr::set (const char rendezvous_point[])
 {
   (void) ACE_OS::memset ((void *) &this->unix_addr_, 
@@ -92,6 +94,7 @@ ACE_UNIX_Addr::set (const char rendezvous_point[])
 			    sizeof this->unix_addr_ -
 			    sizeof (this->unix_addr_.sun_path) +
 			    ACE_OS::strlen (this->unix_addr_.sun_path) );
+  return 0;
 }
 
 // Create a ACE_Addr from a UNIX pathname.

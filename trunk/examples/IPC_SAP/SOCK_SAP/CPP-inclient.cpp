@@ -21,8 +21,7 @@ int main (int argc, char *argv[])
   ACE_SOCK_Connector con;
                                                         
   // Attempt a non-blocking connect to the server, reusing the local
-  // addr if necessary.
-  // Initiate blocking connection with server.
+  // addr if necessary.  Initiate blocking connection with server.
   ACE_DEBUG ((LM_DEBUG, "starting connect\n"));
 
   if (con.connect (cli_stream, remote_addr) == -1)
