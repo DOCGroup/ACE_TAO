@@ -116,10 +116,10 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
 
             if (ACE_OS::strcasecmp (name,
                                     "null") == 0)
-              reactor_type_ = TAO_REACTOR_SELECT_MT;
+              reactor_type_ = TAO_REACTOR_SELECT_ST;
             else if (ACE_OS::strcasecmp (name,
                                          "token") == 0)
-              reactor_type_= TAO_REACTOR_SELECT_ST;
+              reactor_type_= TAO_REACTOR_SELECT_MT;
           }
       }
 
