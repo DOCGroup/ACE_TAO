@@ -1,5 +1,8 @@
 Sat Sep 13 12:11:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Reactor.cpp: Added Arturo's improvements for suspending and
+	  resuming Event_Handlers.
+
         * tests/Reactors_Test.cpp: As a result of the new changes to
  	  ACE_Thread_Manager, the Reactors_Test now seems to be working
  	  fine.

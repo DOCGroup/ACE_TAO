@@ -189,11 +189,13 @@
           can easily be changed to one of the other spare fields, if
           necessary.
           
-          The current version of ACE, 4.3.3, destroys dynamically
-          allocated singletons in the ACE library. But, it may not
+          Versions of ACE from 4.3.3 and beyond destroy dynamically
+          allocated singletons in the ACE library. But, they may not
           properly destroy some static objects. If you have trouble
           running a program multiple times, it may be necessary to unload
           the module, using unld, and reload it between runs.
+          Alternatively, you could try calling cplusDtors and then
+          cplusCtors between runs.
           
    MVS OpenEdition
           
@@ -326,6 +328,9 @@
        at the root of the ACE source tree. This will build the static and
        shared object libraries and build the tests and the sample
        applications.
+    8. If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
+       get [26]Berkeley YACC. However, you should rarely, if ever, need
+       to do this.
      _________________________________________________________________
    
     Building and Installing ACE on Win32
@@ -420,8 +425,8 @@
     Building and Installing ACE on VxWorks
     
    For the most part, you should be able to follow the instructions above
-   to build ACE and applications that use it. Use the [26]Unix
-   instructions for Unix hosts, or [27]Win32 instructions for Windows NT
+   to build ACE and applications that use it. Use the [27]Unix
+   instructions for Unix hosts, or [28]Win32 instructions for Windows NT
    hosts.
    
    You'll have to let ACE know the target type at compile time. There are
@@ -491,21 +496,21 @@
    
   Building and Installing ACE Network Services
   
-   The following explains how to build the ACE [28]network services on
-   [29]UNIX and [30]Win32.
+   The following explains how to build the ACE [29]network services on
+   [30]UNIX and [31]Win32.
    
     Building and Installing ACE Network Services on UNIX
     
    Building and installing ACE Network Services on UNIX is relatively
-   simple (the [31]process for Win32 is different). Here's what you need
+   simple (the [32]process for Win32 is different). Here's what you need
    to do:
    
-    1. Build and install ACE on UNIX as described [32]earlier. If ACE is
+    1. Build and install ACE on UNIX as described [33]earlier. If ACE is
        built at the root of the ACE source tree (and ACE has been ported
        to your platform, of course) the netsvcs static and shared object
        libraries should be built automatically. In addition, the server
        driver program (main) contained in
-       [33]$ACE_ROOT/netsvcs/servers/main.cpp should also be compiled and
+       [34]$ACE_ROOT/netsvcs/servers/main.cpp should also be compiled and
        ready to run.
     2. Set your LD_LIBRARY_PATH environment variable to where the binary
        version of the ACE netsvcs library. For example, you probably want
@@ -515,13 +520,13 @@
     3. By default, if the shared object library is built, the services
        are linked into the main driver program dynamically. To specify
        which services should be linked in and executed, edit the
-       [34]$ACE_ROOT/netsvcs/servers/svc.conf file. During your editing,
+       [35]$ACE_ROOT/netsvcs/servers/svc.conf file. During your editing,
        you should update information (such as the default service port
        numbers) that affects the initialization of services in this file.
-       Refer to the [35]Service Configurator documentation to learn how
+       Refer to the [36]Service Configurator documentation to learn how
        the configuration file is parsed and how the services are
        dynamically linked and executed. In addition, refer to the
-       [36]Network Services documentation to learn more about how to
+       [37]Network Services documentation to learn more about how to
        configure each network service.
     4. If you only want to link the services statically, simply remove or
        rename the svc.conf file.
@@ -539,11 +544,11 @@
    
   Advanced Topics
   
-     * [37]Cloning the Source Tree
-     * [38]Building CORBA Versions of ACE
-     * [39]Additional Build Tips for MVS
-     * [40]Version Control
-     * [41]ACE Makefile hints
+     * [38]Cloning the Source Tree
+     * [39]Building CORBA Versions of ACE
+     * [40]Additional Build Tips for MVS
+     * [41]Version Control
+     * [42]ACE Makefile hints
        
     Cloning the Source Tree
     
@@ -604,11 +609,11 @@
     Additional Build Tips for MVS
     
    For all intents and purpose, MVS OpenEdition (OE) is another flavor of
-   UNIX, therefore, the instructions under [42]Building and Installing
+   UNIX, therefore, the instructions under [43]Building and Installing
    ACE on Unix can be used along with the following additional tips:
    
    You can get a copy of GNU make that has been ported to MVS OpenEdition
-   from the [43]IBM OpenEdition web site. ACE's make scheme generates
+   from the [44]IBM OpenEdition web site. ACE's make scheme generates
    compile commands that have options and operands interspersed. By
    default, the c89/cc/c++ compiler expects all options to precede all
    operands. To get around this, you must set a special compiler
@@ -637,7 +642,7 @@
    platform_mvs.GNU file.
      _________________________________________________________________
    
-   Back to the [44]ACE home page.
+   Back to the [45]ACE home page.
 
 References
 
@@ -666,22 +671,23 @@ References
   23. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
   24. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
   25. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
-  26. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
-  27. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
-  28. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
-  29. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
-  30. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  26. http://www.cs.wustl.edu/~schmidt/byacc.tar.gz
+  27. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
+  28. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
+  29. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
+  30. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
   31. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
-  32. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
-  33. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/main.cpp
-  34. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/svc.conf
-  35. file://localhost/project/adaptive/ACE_wrappers/ACE-papers.html#config
-  36. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
-  37. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#cloning
-  38. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#corba
-  39. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
-  40. http://www.cs.wustl.edu/~levine/CVS.html
-  41. http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html
-  42. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
-  43. http://www.s390.ibm.com/products/oe/index.html
-  44. http://www.cs.wustl.edu/~schmidt/ACE.html
+  32. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  33. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
+  34. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/main.cpp
+  35. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/svc.conf
+  36. file://localhost/project/adaptive/ACE_wrappers/ACE-papers.html#config
+  37. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
+  38. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#cloning
+  39. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#corba
+  40. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
+  41. http://www.cs.wustl.edu/~levine/CVS.html
+  42. http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html
+  43. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
+  44. http://www.s390.ibm.com/products/oe/index.html
+  45. http://www.cs.wustl.edu/~schmidt/ACE.html
