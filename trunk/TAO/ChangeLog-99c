@@ -1,19 +1,25 @@
+Mon Mar 01 08:28:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp: removed ACE_Guard<ACE_SYNCH_MUTEX>,
+          because it collided with ACE_Guard<ACE_Thread_Mutex>
+          in ace/Synch.cpp.
+
 Sat Feb 27 20:05:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp: 
-	  Removed unused variables.
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+          Removed unused variables.
 
-	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp: 
-	  The temporary used to read the discriminant must be declared
-	  using the fully qualified name of the type, because the
-	  operator>> is in the global scope.
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+          The temporary used to read the discriminant must be declared
+          using the fully qualified name of the type, because the
+          operator>> is in the global scope.
 
 Fri Feb 26 23:41:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Oops, unlinking
-	  of temp file should not be disable on non-Win32 platforms.
-	  Thanks to David for noticing this.
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Oops, unlinking
+          of temp file should not be disable on non-Win32 platforms.
+          Thanks to David for noticing this.
 
 Fri Feb 26 23:30:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
