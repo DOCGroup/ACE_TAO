@@ -5,12 +5,8 @@
 
 #include "Peer_T.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Peer_T.inl"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (Notify, 
-           TAO_Notify_Tests_Peer_T, 
+ACE_RCSID (Notify,
+           TAO_Notify_Tests_Peer_T,
            "$Id$")
 
 #include "ace/Arg_Shifter.h"
