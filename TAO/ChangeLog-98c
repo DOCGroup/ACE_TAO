@@ -1,3 +1,11 @@
+Mon Oct 12 14:55:41 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext): Made
+ 	  a mistaken with my Naming_Context change for the
+ 	  Hash_Map_Manager.  We need to use the argument to set the size
+ 	  of the table, not the data member since it hasn't been assigned
+ 	  yet.  Thanks to Chris Gill and Kirthika for reporting this.
+
 Mon Oct 12 11:30:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Event_Channel.h:
