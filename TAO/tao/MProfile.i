@@ -253,19 +253,13 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
 }
 
 ACE_INLINE void
-TAO_MProfile::create_policy_list (void)
+TAO_MProfile::create_policy_list (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Precondition: Make sure that the policy list
-  // has not already allocated.
-  ACE_ASSERT (this->policy_list_ == 0);
-
-  ACE_NEW (this->policy_list_, CORBA::PolicyList ());
-
-  // Post-Condition: Make sure that the memory get allcated
-  // for real.
-  ACE_ASSERT (this->policy_list_ != 0);
-
-  // @@ Marina & Irfan I would raise an exception in this case.
+  ACE_NEW_THROW_EX (this->policy_list_,
+                    CORBA::PolicyList,
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_NO)
+                    );
 }
 
 

@@ -220,18 +220,18 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_MProfile::init_policy_list (void)
+TAO_MProfile::init_policy_list (CORBA::Environment &ACE_TRY_ENV)
 {
   // The first time this method is called
   // it causes the initialization of the policies
   // for the current profile.
 
-  this->get_current_profile ()->policies ();
+  this->get_current_profile ()->policies (ACE_TRY_ENV);
   this->is_policy_list_initialized_ = 1;
 }
 
 CORBA::PolicyList*
-TAO_MProfile::policy_list (void)
+TAO_MProfile::policy_list (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!this->is_policy_list_initialized_)
     {
@@ -242,10 +242,18 @@ TAO_MProfile::policy_list (void)
 
       if (this->policy_list_ == 0)
         {
-          this->create_policy_list ();
-          this->init_policy_list ();
+          this->create_policy_list (ACE_TRY_ENV);
+	  ACE_CHECK;
+          
+          this->init_policy_list (ACE_TRY_ENV);
+          ACE_CHECK;
         }
     }
-
-  return this->policy_list_;
+  CORBA::PolicyList *ret_val = 0;
+  ACE_NEW_THROW_EX ( ret_val,
+                     CORBA::PolicyList (*this->policy_list_),
+                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                       CORBA::COMPLETED_NO)
+                     );
+  return ret_val;
 }

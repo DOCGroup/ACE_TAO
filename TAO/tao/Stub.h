@@ -142,21 +142,21 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  /// Returns the CORBA::Policy (which will be narrowed to be 
+  /// Returns the CORBA::Policy (which will be narrowed to be
   /// used as RTCORBA::PriorityModelPolicy) exported
   /// in object's IOR.
-  CORBA::Policy *exposed_priority_model (void);
-  
+  CORBA::Policy_ptr exposed_priority_model (CORBA::Environment &ACE_TRY_ENV);
+
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::PriorityBandedConnectionPolicy) exported
   /// in object's IOR.
-  CORBA::Policy *exposed_priority_banded_connection (void);
-  
+  CORBA::Policy_ptr exposed_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV);
+
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::ClientProtocolPolicy) exported
   /// in object's IOR.
-  CORBA::Policy *exposed_client_protocol (void);
-  
+  CORBA::Policy_ptr exposed_client_protocol (CORBA::Environment &ACE_TRY_ENV);
+
 # endif /*TAO_HAS_RT_CORBA == 1*/
 
   // = Methods for obtaining effective overrides.
@@ -367,7 +367,7 @@ private:
 private:
 
   /// Helper method used to parse the policies.
-  void parse_policies (void);
+  void parse_policies (CORBA::Environment &ACE_TRY_ENV);
 
   void exposed_priority_model (CORBA::Policy_ptr policy);
 

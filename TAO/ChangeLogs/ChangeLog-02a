@@ -1,3 +1,38 @@
+Thu Feb 08 18:15:59 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tests/Exposed_Policies/server.conf:
+	* tests/Exposed_Policies/Object.cfg:
+	* tests/Exposed_Policies/POA.cfg:
+	* tests/Exposed_Policies/README:
+	* tests/Exposed_Policies/run_test.pl:
+
+	  Added service configuration file to set up one ORB endpoint
+	  for each bands used in the server orb. Updated test specific
+	  configuration files.
+
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/MProfile.cpp:
+	* tao/MProfile.h:
+	* tao/MProfile.i:
+	* tao/ORB_Core.cpp:
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+
+	  Added ACE_TRY_ENV to a bounch of methods that deal with
+	  policies, fixed some part of code that was leading to memory
+	  leaks.
+
+	* tao/PortableServer/POA.cpp:
+
+	  In the method <key_to_stub_i> there was a bug that has currently
+	  been fixed, but more investigation is needed. The problem was
+	  that when an object was created with a priority that was
+	  overriding the POA priority, if that object also had lanes as
+	  policy then the stub would have not been created.
+
+
 Thu Feb  8 14:53:07 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/AMI_Timeouts/AMI_Timeouts.dsw:
@@ -7,7 +42,7 @@ Thu Feb  8 14:53:07 2001  Darrell Brunsch <brunsch@uci.edu>
         * tests/AMI_Timeouts/client.dsp:
         * tests/AMI_Timeouts/server.dsp:
 
-          Fixed/Added idl custom build commands.  
+          Fixed/Added idl custom build commands.
 
 Thu Feb  8 14:29:13 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -26,7 +61,7 @@ Thu Feb  8 12:21:35 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 	* tao/Policy_Manager.cpp:
 	  Fixed policy object reference counting in several places
 	  to fix bad pointer references when running the RT Corba
-	  Client Protocol Unit Test.  Thanks to Nanbor for most of 
+	  Client Protocol Unit Test.  Thanks to Nanbor for most of
 	  the changes and thanks to Christian Ewald
  	  <christian.ewald@zuehlke.com> for reporting this.
 
@@ -70,9 +105,9 @@ Tue Feb 06 15:49:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Feb  6 16:34:16 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	
-	  Fixed compile warnings on SunCC42.	
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+
+	  Fixed compile warnings on SunCC42.
 
 Tue Feb  6 10:20:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
