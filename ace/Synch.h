@@ -821,10 +821,10 @@ public:
  *
  * @brief A wrapper around the Win32 event locking mechanism.
  *
- * Portable implementation of an Event mechanism, which is
- * native to Win32, but must be emulated on UNIX.  Note that
- * this only provides global naming and system-scope locking support
- * on Win32 platforms.
+ * Portable implementation of an Event mechanism, which is native to
+ * Win32, but must be emulated on UNIX.  All platforms support
+ * process-scope locking support.  However, only Win32 platforms
+ * support global naming and system-scope locking support.
  */
 class ACE_Export ACE_Event
 {
@@ -928,8 +928,9 @@ private:
  * @brief Manual Events.
  *
  * Specialization of Event mechanism which wakes up all waiting
- * threads on <signal>.  Note that this only provides
- * global naming and system-scope locking support on Win32 platforms.
+ * thread on <signal>.  All platforms support process-scope locking
+ * support.  However, only Win32 platforms support global naming and
+ * system-scope locking support. 
  */
 class ACE_Export ACE_Manual_Event : public ACE_Event
 {
@@ -964,8 +965,9 @@ public:
  * @brief Auto Events.
  *
  * Specialization of Event mechanism which wakes up one waiting
- * thread on <signal>.  Note that this only provides
- * global naming and system-scope locking support on Win32 platforms.
+ * thread on <signal>.  All platforms support process-scope locking
+ * support.  However, only Win32 platforms support global naming and
+ * system-scope locking support. 
  */
 class ACE_Export ACE_Auto_Event : public ACE_Event
 {

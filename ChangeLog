@@ -1,3 +1,10 @@
+Wed Feb 27 06:00:37 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Synch.h: Clarified that ACE_Auto_Event, ACE_Manual_Event, and
+	  ACE_Event all support process-scope locking, but only Win32 
+	  supports global naming and system-scope locking.  Thanks to
+	  Kobi Cohen Arazi <kobi@mivzak.com> for motivating this change.
+
 Wed Feb 27 09:24:30 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* include/makeinclude/platform_linux.GNU:
