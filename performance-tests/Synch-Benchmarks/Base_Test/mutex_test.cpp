@@ -4,6 +4,8 @@
 
 #include "ace/Synch.h"
 #include "ace/Token.h"
+#include "ace/Process_Mutex.h"
+#include "ace/RW_Process_Mutex.h"
 #include "Baseline_Test.h"
 
 template<class LOCK>

@@ -1,3 +1,9 @@
+Tue Oct  3 10:52:24 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
+
+          Added explicit includes for Process_Mutex and RW_Process_Mutex.
+
 Tue Oct  3 10:40:04 PDT 2000 James Hu <jxh@entera.com>
 
 	* ace/Thread_Adapter.cpp:
