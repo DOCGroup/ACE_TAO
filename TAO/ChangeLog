@@ -1,3 +1,13 @@
+Fri Apr 23 13:54:45 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AMH_Response_Handler.h:
+        * tao/PortableServer/Default_Acceptor_Filter.h:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/ServerInterceptorAdapter.h:
+        * tao/PortableServer/ServerRequestInfo.h:
+          Doxygen improvement
+
 Fri Apr 23 13:34:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Any_Special_Impl_T.h:
