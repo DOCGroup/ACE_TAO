@@ -861,6 +861,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TAO_Strategies"=.\tao\Strategies\TAO_Strategies.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Trading_Service"=.\orbsvcs\Trading_Service\Trading_Service.dsp - Package Owner=<4>
 
 Package=<5>
