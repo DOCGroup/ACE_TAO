@@ -1,3 +1,9 @@
+Thu Sep  9 18:22:21 CDT 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Future.cpp:
+	  HP/aCC was giving bogus warning about function without a return
+	  statement (the function only has a throw).
+
 Thu Sep 09 14:56:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: we now fully support QNX Neutrino 2.0.
