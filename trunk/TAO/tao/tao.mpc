@@ -261,5 +261,15 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
   
   Header_Files {
     Arg_Traits_T.h
+    CONV_FRAMES.h
+    GIOPS.h
+    IOPS.h
+    OctetSeqS.h
+    PolicyS.h
+    PollableS.h
+    ServicesS.h
+    StringSeqS.h
+    TAOS.h
+    TimeBaseS.h
   }
 }
