@@ -1,9 +1,10 @@
 Mon Jun 15 13:58:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/config-chorus.h: removed comment that said that the
-          config is for CHORUS using MIT threads.  CHORUS doesn't use
-          MIT threads.  Thanks to Leo Modica <lmodica@lucent.com> for
-          questioning this, and Wei Chiang for confirming it.
+        * ace/config-chorus.h: replaced comment that said that the
+          config is for CHORUS using MIT threads with comment that says
+          that it uses the CHORUS POSIX threads interface.  Thanks to
+          Leo Modica <lmodica@lucent.com> for questioning this, and Wei
+          Chiang for confirming it.
 
 Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
