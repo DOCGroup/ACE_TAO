@@ -409,6 +409,14 @@ sub run {
         $relative{'TAO_ROOT'} = "$relative{ACE_ROOT}/TAO";
       }
     }
+    if (!defined $relative{'CIAO_ROOT'}) {
+      if (defined $ENV{CIAO_ROOT}) {
+        $relative{'CIAO_ROOT'} = $ENV{CIAO_ROOT};
+      }
+      else {
+        $relative{'CIAO_ROOT'} = "$relative{ACE_ROOT}/TAO/CIAO";
+      }
+    }
   }
 
   ## Set up un-buffered output for the progress callback
