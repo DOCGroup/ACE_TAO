@@ -128,18 +128,22 @@ public:
   TAO_MProfile *forward_from (void);
   // Returns a pointer to the profile which was forwarded.
 
-  CORBA::Boolean is_equivalent (TAO_MProfile *first,
-                                TAO_MProfile *second,
+  CORBA::Boolean is_equivalent (TAO_MProfile *rhs,
                                 CORBA::Environment &env);
   // Returns true of there is at least one profile in first which
   // is_equivalent with at least one profile in second.  @@ FRED: The
   // lost should be locked for this!
+  // Yes, the Stub object has been the only object that manipulated
+  // these list and thus it took care of locking.  This is changing
+  // though so we may have to add a lock to this list.  Althouch I 
+  // really don't want to.
 
   CORBA::ULong hash (CORBA::ULong max,
                      CORBA::Environment &env);
   // use all registered profiles.  The hash() method is called on each
   // profile and the results are averaged together.
   // @@ FRED: The list should be locked for this!
+  // See above comment.
 
 protected:
   TAO_Profile_ptr *pfiles (void) const;
