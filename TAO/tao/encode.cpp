@@ -112,21 +112,30 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
   CORBA::TypeCode_ptr elem_tc = any->type_;
 
   // Encode the typecode description for the element.
-  if (stream->encode (CORBA::_tc_TypeCode, &elem_tc, 0, env)
-      == CORBA::TypeCode::TRAVERSE_CONTINUE) {
-    // if the any owns the data, then the value is a CDR stream and we simply
-    // append the CDR stream
-    if (any->any_owns_data_)
-      {
-        TAO_InputCDR in_strm (any->cdr_);
-        retval = stream->append (elem_tc, &in_strm, env);
-      }
-    else
-      {
-        // encode the value
-        retval = stream->encode (elem_tc, any->value_, 0, env);
-      }
-  }
+  retval = stream->encode (CORBA::_tc_TypeCode, &elem_tc, 0, env);
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    {
+      // if the any owns the data, then the value is a CDR stream and
+      // we simply append the CDR stream
+      // The only exception is when the TypeCode is a tk_null, them
+      // both cdr_ and value_ are 0.
+      if (any->any_owns_data_)
+        {
+          if (any->cdr_ != 0)
+            {
+              TAO_InputCDR in_strm (any->cdr_);
+              retval = stream->append (elem_tc, &in_strm, env);
+            }
+        }
+      else
+        {
+          if (any->value_ != 0)
+            {
+              // encode the value
+              retval = stream->encode (elem_tc, any->value_, 0, env);
+            }
+        }
+    }
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
