@@ -3,6 +3,9 @@ Wed Nov 12 09:22:47 1997  David L. Levine  <levine@cs.wustl.edu>
         * tao/tao_internals.cpp (open_services): added ACE_UNUSED_ARGs
           for argc and argv if TAO_PLATFORM_SVC_CONF_FILE_NOTSUP.
 
+        * TAO_IDL/Makefile: disabled clean and realclean targets on VxWorks,
+          so that they don't remove tao_idl from the host build tree.
+
 Tue Nov 11 23:50:06 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.29, released Tue Nov 11 23:50:06 1997.
