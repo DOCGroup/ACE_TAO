@@ -265,15 +265,7 @@ start_servants ()
                     
   ACE_Sched_Priority priority;
 
-#if defined (VXWORKS)
-  priority = 
-    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, 
-                                    ACE_SCOPE_THREAD) + 6;
-#else
-  priority = 
-    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, 
-                                    ACE_SCOPE_THREAD);
-#endif  /* VXWORKS */
+  priority = ACE_THR_PRI_FIFO_DEF;
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating servant with high priority\n"));
