@@ -1,3 +1,7 @@
+Tue Mar 07 10:30:06 2000  bala  <bala@cs.wustl.edu>
+
+        * TAO version 1.0.15 released.
+
 Tue Mar  7 09:33:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/deep_free.cpp:
