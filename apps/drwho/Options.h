@@ -56,7 +56,7 @@ public:
   static Protocol_Types protocol_type;
   static int max_server_timeout;
   static char *program_name;
-  const static char *friend_file;
+  static const char *friend_file;
   static char *user_name;
 
   static void print_usage_and_die (int long_msg);

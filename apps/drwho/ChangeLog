@@ -1,13 +1,18 @@
+Thu Nov 16 17:58:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Options.h:
+          Fixed small syntax error.
+
 Sat Nov  4 18:18:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* Rwho_DB_Manager.cpp:
-	  Add missing #include
+        * Rwho_DB_Manager.cpp:
+          Add missing #include
 
 Fri Jul 14 14:44:43 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* CM_Server.cpp (receive): Added a cast to (int *) so that
-	  certain C++ compilers are happy.  Thanks to John Mills
- 	  <jmills@tga.com> for reporting this.
+        * CM_Server.cpp (receive): Added a cast to (int *) so that
+          certain C++ compilers are happy.  Thanks to John Mills
+          <jmills@tga.com> for reporting this.
 
 Tue May 23 20:52:29 2000  David L. Levine  <levine@cs.wustl.edu>
 
