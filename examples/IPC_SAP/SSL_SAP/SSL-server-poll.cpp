@@ -5,16 +5,21 @@
 // single-threaded concurrent server.  This server program can be
 // driven by the oneway test mode of SSL-client.cpp.
 
-#include "ace/INET_Addr.h"
-
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
-#include "ace/SSL/SSL_SOCK_Stream.h"
 
-ACE_RCSID(SSL_SAP, SSL_server_poll, "$Id$")
+ACE_RCSID (SSL_SAP,
+           SSL_server_poll,
+           "$Id$")
 
 #if defined (ACE_HAS_POLL)
 
+#include "ace/SSL/SSL_SOCK_Stream.h"
+
+#include "ace/Log_Msg.h"
+#include "ace/INET_Addr.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_poll.h"
+
 
 // Should we be verbose?
 static int verbose = 0;

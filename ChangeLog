@@ -1,3 +1,20 @@
+Sun Apr 25 23:17:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+
+	  Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
+	  declaration.
+
+	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+
+	  Include "ace/Log_Msg.h" and "ace/OS_NS_stdio.h" to pull
+	  ACE_ERROR related macros and ACE_OS::perror() prototype,
+	  respectively.
+
+	* examples/IPC_SAP/SSL_SAP/Makefile:
+
+	  Added missing ACE SSL preprocessor and linker flags.
+
 Sun Apr 25 09:22:50 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
