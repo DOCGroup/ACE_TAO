@@ -3091,11 +3091,11 @@ ACE_OS::thr_exit (void *status)
 int
 ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
 {
-# if defined (ACE_HAS_STHREADS) || (defined (sun) && (ACE_MT_SAFE != 0))
+# if defined (ACE_HAS_STHREADS) || defined (sun)
   // Get the class TS and RT class IDs.
   ACE_id_t rt_id;
   ACE_id_t ts_id;
-  if (ACE_OS::scheduling_class ("RT", rt_id) == -1  
+  if (ACE_OS::scheduling_class ("RT", rt_id) == -1
       || ACE_OS::scheduling_class ("TS", ts_id) == -1)
     return -1;
 
@@ -3121,7 +3121,7 @@ ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
       sched_params.priority (rtparms.rt_pri);
       sched_params.scope (ACE_SCOPE_THREAD);
       ACE_Time_Value quantum (rtparms.rt_tqsecs,
-                              rtparms.rt_tqnsecs == RT_TQINF  
+                              rtparms.rt_tqnsecs == RT_TQINF
                               ? 0 : rtparms.rt_tqnsecs * 1000);
       sched_params.quantum (quantum);
       return 0;
