@@ -2,6 +2,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Log_Record.h"
+#include "ace/ACE.h"
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */

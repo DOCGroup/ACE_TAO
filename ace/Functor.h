@@ -13,11 +13,11 @@
 //     Non-templatized classes and class template specializations for
 //     implementing function objects that are used in  various places
 //     in ACE.  There are currently two major categories of function
-//     objects in ACE: GOF Command Pattern objects, and STL-style
+//     objects in ACE: GoF Command Pattern objects, and STL-style
 //     functors for comparison of container elements.  The command objects
 //     are invoked via an execute () method, while the STL-style functors are
 //     invoked via an operator() () method.
-//    Non-templatized classes for implementing the GOF Command Pattern,
+//    Non-templatized classes for implementing the GoF Command Pattern,
 //    also known as functors or function objects.
 //
 // = AUTHOR
@@ -38,7 +38,7 @@
 #ifndef ACE_FUNCTOR_H
 #define ACE_FUNCTOR_H
 
-#include "ace/OS.h"
+#include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
