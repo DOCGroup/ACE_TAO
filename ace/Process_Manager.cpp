@@ -394,9 +394,10 @@ ACE_Process_Manager::wait (void)
 
       pid_t pid = ACE_OS::wait (proc_desc.proc_id_, 0);
       
-      if (pid != -1)
+      if (pid == -1)
+        return -1;
+      else
         this->remove_proc (pid);
-      return pid;
     }
 
   return 0;
