@@ -67,18 +67,18 @@ class ACE_Filecache_Object;
  */
 class ACE_Export ACE_Filecache_Handle
 {
-
-  // (1) Get rid of the useless copying of files when reading.  Although
-  // it does make sure the file you send isn't being changed, it doesn't
-  // make sure the file is in a sensible state before sending it.
-
-  // Alternative: if the file get's trashed while it is being shipped, let
-  // the client request the file again.  The cache should have an updated
-  // copy by that point.
-
+  // (1) Get rid of the useless copying of files when reading.
+  // Although it does make sure the file you send isn't being changed,
+  // it doesn't make sure the file is in a sensible state before
+  // sending it.
+  //
+  // Alternative: if the file get's trashed while it is being shipped,
+  // let the client request the file again.  The cache should have an
+  // updated copy by that point.
+  //
   // (2) Use hashing for locating files.  This means I need a hastable
   // implementation with buckets.
-
+  //
   // (3) Only lock when absolutely necessary.  JAWS_Virtual_Filesystem was
   // rather conservative, but for some reason it still ran into problems.
   // Since this design should be simpler, problems should be easier to spot.
