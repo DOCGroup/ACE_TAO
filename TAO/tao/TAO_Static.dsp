@@ -211,6 +211,10 @@ SOURCE=.\DynamicC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Endpoint.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.h
 # End Source File
 # Begin Source File
@@ -276,6 +280,14 @@ SOURCE=.\IIOP_Connect.h
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\iiop_endpoints.h
 # End Source File
 # Begin Source File
 
@@ -551,6 +563,10 @@ SOURCE=.\SHMIOP_Connector.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Endpoint.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SHMIOP_Factory.h
 # End Source File
 # Begin Source File
@@ -644,6 +660,14 @@ SOURCE=.\UIOP_Connect.h
 # Begin Source File
 
 SOURCE=.\UIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UIOP_Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\uiop_endpoints.h
 # End Source File
 # Begin Source File
 
@@ -787,6 +811,10 @@ SOURCE=.\DynamicC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Endpoint.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.i
 # End Source File
 # Begin Source File
@@ -824,6 +852,14 @@ SOURCE=.\GIOPC.i
 # Begin Source File
 
 SOURCE=.\IIOP_Connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\iiop_endpoints.i
 # End Source File
 # Begin Source File
 
@@ -1019,6 +1055,10 @@ SOURCE=.\SHMIOP_Connect.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Endpoint.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\SHMIOP_Profile.i
 # End Source File
 # Begin Source File
@@ -1076,6 +1116,14 @@ SOURCE=.\typecode.i
 # Begin Source File
 
 SOURCE=.\UIOP_Connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\UIOP_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\uiop_endpoints.i
 # End Source File
 # Begin Source File
 
@@ -1231,6 +1279,10 @@ SOURCE=.\Encodable.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Endpoint.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.cpp
 # End Source File
 # Begin Source File
@@ -1296,6 +1348,14 @@ SOURCE=.\IIOP_Connect.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Endpoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\iiop_endpoints.cpp
 # End Source File
 # Begin Source File
 
@@ -1543,6 +1603,10 @@ SOURCE=.\SHMIOP_Connector.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Endpoint.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SHMIOP_Factory.cpp
 # End Source File
 # Begin Source File
@@ -1636,6 +1700,14 @@ SOURCE=.\UIOP_Connect.cpp
 # Begin Source File
 
 SOURCE=.\UIOP_Connector.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\UIOP_Endpoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\uiop_endpoints.cpp
 # End Source File
 # Begin Source File
 
