@@ -14,6 +14,46 @@ ACE_SOCK_Dgram::dump (void) const
   ACE_TRACE ("ACE_SOCK_Dgram::dump");
 }
 
+// Allows a client to read from a socket without having to provide a
+// buffer to read.  This method determines how much data is in the
+// socket, allocates a buffer of this size, reads in the data, and
+// returns the number of bytes read.
+
+ssize_t
+ACE_SOCK_Dgram::recv (iovec *io_vec, ACE_Addr &addr, int flags) const
+{
+  ACE_TRACE ("ACE_SOCK_Dgram::recv");
+  sockaddr *saddr = (sockaddr *) addr.get_addr ();
+  int addr_len = addr.get_size ();
+
+#if defined (FIONREAD)
+  u_long inlen;
+
+  if (ACE_OS::ioctl (this->get_handle (), 
+		     FIONREAD, (u_long *) &inlen) == -1)
+    return -1;
+  else if (inlen > 0)
+    {
+      io_vec->iov_base = new char[inlen];
+      io_vec->iov_len = ACE_OS::recvfrom (this->get_handle (),
+					  io_vec->iov_base, 
+					  inlen, 
+					  flags, 
+					  (sockaddr *) saddr, 
+					  &addr_len);
+      addr.set_size (addr_len);
+      return io_vec->iov_len;
+    }
+  else
+    return 0; 
+#else
+    flags = flags;
+    addr = addr;
+    io_vec = io_vec;
+    ACE_NOTSUP_RETURN (-1);
+#endif /* FIONREAD */
+}
+
 // Here's the shared open function.  Note that if we are using the
 // PF_INET protocol family and the address of LOCAL == the address of
 // the special variable SAP_ANY then we are going to arbitrarily bind
