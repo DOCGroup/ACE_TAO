@@ -1,3 +1,9 @@
+Thu Jul 06 10:59:41 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/test_naming (bind,rebind,unbind,find):
+          changed ACE_ASSERTs to statements that are always executed,
+          even with ACE_NDEBUG set.  Added ACE_ERRORs to report errors.
+
 Thu Jul 06 10:51:19 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Reactor/Misc/test_time_value.cpp (main): added
