@@ -1465,30 +1465,16 @@ You should use cont() for that.  Does that make sense?
 > about x-gzip formatting.  I'm running Netscape 2.0 under MS Windows
 > NT.
 
-	x-gzip is a hook for the GNU "gzip" program, which should be
-freely available for NT at prep.ai.mit.edu in the /pub/gnu directory.
-Here's how our "Global Mailcap" entry for Netscape looks like (see the
-"Helper Applications" menu under "preferences":
+To view PostScript files under Win32 you will need a PostScript 
+viewer such as GSview.  You can find GSview and Ghostscript (which is
+needed to run GSview) at http://www.cs.wisc.edu/~ghost/.  
 
-----------------------------------------
-# For the format of this file, see
-# ftp://wuarchive/doc/internet-drafts/draft-borenstein-mailcap-00.txt.Z
-
-audio/*; audiotool %s; test=test -n "$DISPLAY" && test -w /dev/audio
-image/*; xv %s; test=test -n "$DISPLAY"
-application/postscript; ghostview %s; test=test -n "$DISPLAY"
-video/mpeg; mpeg_play %s; test=test -n "$DISPLAY"
-video/*; xanim +Ae %s; test=test -n "$DISPLAY"
-application/x-dvi; xdvi %s; test=test -n "$DISPLAY"
-application/x-compress; uncompress %s; test=test -n "$DISPLAY"
-application/x-gzip; gunzip %s; test=test -n "$DISPLAY"
-application/x-zip; unzip %s; test=test -n "$DISPLAY"
-----------------------------------------
-
-BTW, if you can't get uncompress to work, please ftp to
-wuarchive.wustl.edu and look in the directory
-/languages/c++/ACE/ACE-documentation/.  All the papers are there, as
-well.
+It seems that both Netscape and Internet Explorer mangles the names 
+of downloaded files to reflect their content type, so *.ps.gz files 
+are saved as *_ps.ps instead.  Fortunately, GSview as of version 2.2
+supports gzip compressed postscript.  When set up as a viewer for
+Postscript files, files with mangled names can be viewed by GSview 
+without any preprocessing.
 
 ----------------------------------------
 
