@@ -997,10 +997,14 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
     if (::pthread_mutexattr_init (&attributes) == 0
 #if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
 	&& ::pthread_mutexattr_setkind_np (&attributes, type) == 0
+      {
 #endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 	&& ::pthread_mutex_init (m, &attributes) == 0)
+      {
+        ACE_UNUSED_ARG (type);
 #endif /* ACE_HAS_SETKIND_NP */
-      result = 0;
+        result = 0;
+      }
 
 #if defined (ACE_HAS_SETKIND_NP)
   ::pthread_mutexattr_delete (&attributes);
