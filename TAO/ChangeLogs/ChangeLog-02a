@@ -1,3 +1,9 @@
+Mon Jan 10 11:40:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  Fix to generated code for >>=. We were getting a
+	  compile error from HPUX.
+
 Sat Jan  8 12:13:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
