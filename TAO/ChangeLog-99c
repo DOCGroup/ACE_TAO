@@ -1,3 +1,11 @@
+Tue Aug 17 13:05:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	  Added wstring_type_spec to the production rule for 
+	  param_type_spec.
+
 Tue Aug 17 12:10:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/Options.html:
