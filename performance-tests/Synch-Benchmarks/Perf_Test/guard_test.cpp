@@ -21,9 +21,9 @@ public:
   virtual int svc (void);
   virtual int init (int, char *[]);
 
-  void test_guard (void);
+  void test_guard (int);
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
-  void test_thread_guard (void);
+  void test_thread_guard (int);
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 private:
   static int guard_type_;
@@ -39,7 +39,7 @@ Guard_Test::init (int argc, char *argv[])
   ACE_Get_Opt getopt (argc, argv, "gt");
   int c;
 
-  while ((c = getopt.()) != -1)
+  while ((c = getopt()) != -1)
     {
       switch (c)
         {
@@ -66,14 +66,14 @@ Guard_Test::svc (void)
   int ni = this->thr_id ();
   synch_count = 2;
 
-  switch (Gurad_Test::guard_type_)
+  switch (Guard_Test::guard_type_)
     {
     case Guard_Test::TEST_ACE_GUARD:
-      this->test_guard ();
+      this->test_guard (ni);
       break;
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
     case Guard_Test::TEST_ACE_THREAD_MUTEX_GUARD:
-      this->test_thread_guard ();
+      this->test_thread_guard (ni);
       break;
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
     default:
@@ -83,7 +83,7 @@ Guard_Test::svc (void)
 }
 
 void
-Guard_Test::test_guard (void)
+Guard_Test::test_guard (int ni)
 {
   while (!this->done ())
     {
@@ -96,11 +96,11 @@ Guard_Test::test_guard (void)
 
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
 void
-Guard_Test::test_thread_guard (void)
+Guard_Test::test_thread_guard (int ni)
 {
   while (!this->done ())
     {
-      ACE_Thread_Mutex_Guard (Guard_Test::mutex_);
+      ACE_Thread_Mutex_Guard _ace_mon (Guard_Test::mutex_);
 
       performance_test_options.thr_work_count[ni]++;
       buffer++;
