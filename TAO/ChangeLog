@@ -1,3 +1,9 @@
+Mon Aug  9 15:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.{h,cpp}:
+          Updated these files because of the interface changes of the base class
+
 Mon Aug  9 11:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Integration of the fixes for bug 1476. In short, when making oneway
