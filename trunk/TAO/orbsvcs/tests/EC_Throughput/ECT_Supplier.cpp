@@ -199,7 +199,7 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
       ECT_Data other;
       other.description = CORBA::string_copy ("some data");
 
-      for (int j = 0; j < n; ++j)
+      for (CORBA::ULong j = 0; j < n; ++j)
 	{
 	  info.trajectory[j].x = j;
 	  info.trajectory[j].y = j*j;
@@ -226,7 +226,7 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
       const ACE_Message_Block* mb = cdr.begin ();
       CORBA::ULong mblen = cdr.length ();
 
-      for (int i = 0; i < n; ++i)
+      for (CORBA::ULong i = 0; i < n; ++i)
 	{
 	  RtecEventComm::EventSet event (1);
 	  event.length (1);
@@ -510,7 +510,7 @@ Test_Supplier::consumer_proxy (void)
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_PushConsumer_Adapter<Test_Supplier>;
+template class ACE_PushSupplier_Adapter<Test_Supplier>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_PushConsumer_Adapter<Test_Supplier>
+#pragma instantiate ACE_PushSupplier_Adapter<Test_Supplier>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
