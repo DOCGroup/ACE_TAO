@@ -218,7 +218,9 @@ TAO_GIOP_Message_Handler::get_payload_size (void)
 
   if ((align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
       {
-        size_t size = align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN;
+        size_t size = ACE_CDR::MAX_ALIGNMENT + 
+	              x + 
+		      TAO_GIOP_MESSAGE_HEADER_LEN;
 
         // @@ This must come off the allocator. For some reason when I
         // use the allocator things go for a toss. Need to revisit
