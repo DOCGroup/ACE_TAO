@@ -1,3 +1,10 @@
+Sun Dec  7 20:38:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Hello/Sender/starter.cpp:
+	* examples/Hello/Hello_Base/Hello_Base.idl:
+
+	  Fixed fuzz errors.
+
 Sun Dec  7 20:32:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Hello/Receiver/Receiver_svnt.h:

@@ -1,6 +1,6 @@
 //$Id$:
 /**
- * @file Starter.cpp
+ * @file starter.cpp
  *
  * @auther Tao Lu <lu@dre.vanderbilt.edu>
  */
