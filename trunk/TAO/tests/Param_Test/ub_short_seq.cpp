@@ -171,9 +171,9 @@ Test_Short_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %d\n",
                   i,
-                  this->in_[i]? (const char *)this->in_[i]:"<nul>"));
+                  this->in_[i]));
     }
   if (!this->in_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
@@ -182,9 +182,9 @@ Test_Short_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %d\n",
                   i,
-                  (this->inout_[i]? (const char *)this->inout_[i]:"<nul>")));
+                  this->inout_[i]));
     }
   if (!this->inout_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
@@ -193,9 +193,9 @@ Test_Short_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %d\n",
                   i,
-                  (this->out_[i]? (const char *)this->out_[i]:"<nul>")));
+                  this->out_[i]));
     }
   if (!this->out_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
@@ -204,9 +204,9 @@ Test_Short_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %d\n",
                   i,
-                  (this->ret_[i]? (const char *)this->ret_[i]:"<nul>")));
+                  this->ret_[i]));
     }
   if (!this->ret_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
