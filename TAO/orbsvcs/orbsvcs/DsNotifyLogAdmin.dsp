@@ -38,12 +38,12 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\Release\DsNotifyLogAdmin"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DSNOTIFYLOGADMIN_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DSNOTIFYLOGADMIN_EXPORTS" /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "__MBCS" /D "_USRDLL" /D "TAO_ORBSVCS_HAS_NAMING" /D "_WINDOWS" /D "TAO_NOTIFYLOG_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_CosNaming.lib TAO.lib ace.lib TAO_PortableServer.lib TAO_DsLogAdmin.lib TAO_DsEventLogAdmin.lib TAO_CosNotification.lib TAO_CosEvent.lib /nologo /dll /machine:I386 /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNaming.lib TAO.lib ace.lib TAO_PortableServer.lib TAO_DsLogAdmin.lib TAO_DsEventLogAdmin.lib TAO_CosNotification.lib TAO_CosEvent.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_DsNotifyLogAdmin.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "DsNotifyLogAdmin - Win32 Debug"
 
@@ -159,6 +159,7 @@ SOURCE=.\DsNotifyLogAdmin.idl
 !IF  "$(CFG)" == "DsNotifyLogAdmin - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__DSNOT="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsNotifyLogAdmin.idl
 InputName=DsNotifyLogAdmin
@@ -198,6 +199,7 @@ BuildCmds= \
 
 # PROP Intermediate_Dir "DLL\Debug\DsNotifyLogAdmin"
 # PROP Ignore_Default_Tool 1
+USERDEP__DSNOT="..\..\..\bin\tao_idl"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsNotifyLogAdmin.idl
 InputName=DsNotifyLogAdmin
