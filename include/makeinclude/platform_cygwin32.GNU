@@ -24,10 +24,6 @@ rwho = 0
 # because fe ace.dll.5.2.3 isn't a valid dll name
 versioned_so=0
 
-PLATFORM_FL_CPPFLAGS=
-PLATFORM_FL_LIBS=-lfltk -lfltk_forms -lfltk_gl -lfltk_images
-PLATFORM_FL_LDFLAGS=
-
 # Disable auto-import warnings. The Cygwin linker has a problem with imports
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
 # for the details why to do this.
