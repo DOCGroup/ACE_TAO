@@ -206,10 +206,6 @@ extern "C" {
   PACE_INLINE void pace_tzset ();
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/time.inl"
@@ -219,5 +215,9 @@ extern "C" {
 #    include "pace/win32/time.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_TIME_H */

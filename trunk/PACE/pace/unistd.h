@@ -387,10 +387,6 @@ extern "C" {
      */
   PACE_INLINE ssize_t pace_write (int fildes, const void * buf, size_t nbyte);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/unistd.inl"
@@ -400,5 +396,9 @@ extern "C" {
 #    include "pace/win32/unistd.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_UNISTD_H */

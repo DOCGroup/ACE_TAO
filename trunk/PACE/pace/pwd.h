@@ -68,10 +68,6 @@ extern "C" {
                                    pace_passwd ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/pwd.inl"
@@ -81,5 +77,9 @@ extern "C" {
 #    include "pace/win32/pwd.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_PWD_H */

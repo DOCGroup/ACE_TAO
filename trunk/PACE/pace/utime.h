@@ -38,10 +38,6 @@ extern "C" {
   PACE_INLINE int pace_utime (const char * path,
                               const pace_utimbuf * times);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/utime.inl"
@@ -51,5 +47,9 @@ extern "C" {
 #    include "pace/win32/utime.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_UTIME_H */
