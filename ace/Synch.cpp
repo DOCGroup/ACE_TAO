@@ -138,7 +138,7 @@ ACE_Process_Mutex::tryacquire_write (void)
 }
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name,
-					    void *arg)
+                                            void *arg)
   : ACE_Process_Mutex (name, arg)
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
@@ -187,14 +187,14 @@ ACE_Semaphore::dump (void) const
 }
 
 ACE_Semaphore::ACE_Semaphore (u_int count,
-			      int type,
-			      LPCTSTR name,
-			      void *arg,
-			      int max)
+                              int type,
+                              LPCTSTR name,
+                              void *arg,
+                              int max)
 {
 // ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
   if (ACE_OS::sema_init (&this->semaphore_, count, type,
-			 name, arg, max) != 0)
+                         name, arg, max) != 0)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Semaphore::ACE_Semaphore"));
 }
 
@@ -223,8 +223,8 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
 }
 
 ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
-			      int flags,
-			      mode_t perms)
+                              int flags,
+                              mode_t perms)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
@@ -234,8 +234,8 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
 
 int
 ACE_File_Lock::open (LPCTSTR name,
-		     int flags,
-		     mode_t perms)
+                     int flags,
+                     mode_t perms)
 {
 // ACE_TRACE ("ACE_File_Lock::open");
 
@@ -258,9 +258,9 @@ ACE_Process_Semaphore::dump (void) const
 }
 
 ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
-					      LPCTSTR name,
-					      void *arg,
-					      int max)
+                                              LPCTSTR name,
+                                              void *arg,
+                                              int max)
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   : lock_ (count, USYNC_PROCESS, name, arg, max)
 #else
@@ -345,17 +345,17 @@ ACE_Mutex::~ACE_Mutex (void)
 }
 
 ACE_Event::ACE_Event (int manual_reset,
-		      int initial_state,
-		      int type,
-		      LPCTSTR name,
-		      void *arg)
+                      int initial_state,
+                      int type,
+                      LPCTSTR name,
+                      void *arg)
 {
   if (ACE_OS::event_init (&this->handle_,
-			  manual_reset,
-			  initial_state,
-			  type,
-			  name,
-			  arg) != 0)
+                          manual_reset,
+                          initial_state,
+                          type,
+                          name,
+                          arg) != 0)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Event::ACE_Event"));
 }
 
@@ -392,7 +392,7 @@ int
 ACE_Event::wait (const ACE_Time_Value *abstime)
 {
   return ACE_OS::event_timedwait (&this->handle_,
-				  (ACE_Time_Value *) abstime);
+                                  (ACE_Time_Value *) abstime);
 }
 
 int
@@ -421,14 +421,14 @@ ACE_Event::dump (void) const
 }
 
 ACE_Manual_Event::ACE_Manual_Event (int initial_state,
-				    int type,
-				    LPCTSTR name,
-				    void *arg)
+                                    int type,
+                                    LPCTSTR name,
+                                    void *arg)
   : ACE_Event (1,
-	       initial_state,
-	       type,
-	       name,
-	       arg)
+               initial_state,
+               type,
+               name,
+               arg)
 {
 }
 
@@ -439,14 +439,14 @@ ACE_Manual_Event::dump (void) const
 }
 
 ACE_Auto_Event::ACE_Auto_Event (int initial_state,
-				int type,
-				LPCTSTR name,
-				void *arg)
+                                int type,
+                                LPCTSTR name,
+                                void *arg)
   : ACE_Event (0,
-	       initial_state,
-	       type,
-	       name,
-	       arg)
+               initial_state,
+               type,
+               name,
+               arg)
 {
 }
 
@@ -470,9 +470,9 @@ ACE_Thread_Semaphore::dump (void) const
 }
 
 ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
-					    LPCTSTR name,
-					    void *arg,
-					    int max)
+                                            LPCTSTR name,
+                                            void *arg,
+                                            int max)
   : ACE_Semaphore (count, USYNC_THREAD, name, arg, max)
 {
 // ACE_TRACE ("ACE_Thread_Semaphore::ACE_Thread_Semaphore");
@@ -510,18 +510,18 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thre
 }
 
 ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
-							void *arg)
+                                                        void *arg)
   : nesting_mutex_ (name, arg),
     lock_available_ (nesting_mutex_, name, arg),
     nesting_level_ (0),
     owner_id_ (ACE_OS::NULL_thread)
 {
 #if defined (ACE_HAS_FSU_PTHREADS)
-//	Initialize FSU pthreads package.
-//	If called more than once, pthread_init does nothing
-//	and so does no harm.
+//      Initialize FSU pthreads package.
+//      If called more than once, pthread_init does nothing
+//      and so does no harm.
    pthread_init ();
-#endif	/*  ACE_HAS_FSU_PTHREADS */
+#endif  /*  ACE_HAS_FSU_PTHREADS */
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
 }
 
@@ -550,7 +550,7 @@ ACE_Recursive_Thread_Mutex::acquire (void)
       // Wait until the nesting level has dropped to zero, at which
       // point we can acquire the lock.
       while (this->nesting_level_ > 0)
-	this->lock_available_.wait ();
+        this->lock_available_.wait ();
 
       // Note that at this point the nesting_mutex_ is held...
       this->set_thread_id (t_id);
@@ -647,15 +647,15 @@ ACE_Condition_Thread_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\n"));
 #if defined (ACE_WIN32)
   ACE_DEBUG ((LM_DEBUG,
-	      "waiters = %d\n",
-	      this->cond_.waiters ()));
+              "waiters = %d\n",
+              this->cond_.waiters ()));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
-							LPCTSTR name,
-							void *arg)
+                                                        LPCTSTR name,
+                                                        void *arg)
   : mutex_ ((ACE_Thread_Mutex &) m)
 {
 #if defined (ACE_HAS_FSU_PTHREADS)
@@ -668,7 +668,7 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_, USYNC_THREAD, name, arg) != 0)
     ACE_ERROR ((LM_ERROR, "%p\n",
-		"ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex"));
+                "ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex"));
 }
 
 ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex (void)
@@ -690,12 +690,12 @@ ACE_Condition_Thread_Mutex::wait (void)
 
 int
 ACE_Condition_Thread_Mutex::wait (ACE_Thread_Mutex &mutex,
-				  const ACE_Time_Value *abstime)
+                                  const ACE_Time_Value *abstime)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
   return ACE_OS::cond_timedwait (&this->cond_,
-				 &mutex.lock_,
-				 (ACE_Time_Value *) abstime);
+                                 &mutex.lock_,
+                                 (ACE_Time_Value *) abstime);
 }
 
 int
@@ -734,9 +734,9 @@ ACE_Sub_Barrier::dump (void) const
 }
 
 ACE_Sub_Barrier::ACE_Sub_Barrier (u_int count,
-				  ACE_Thread_Mutex &lock,
-				  LPCTSTR name,
-				  void *arg)
+                                  ACE_Thread_Mutex &lock,
+                                  LPCTSTR name,
+                                  void *arg)
   : barrier_finished_ (lock, name, arg),
     running_threads_ (count)
 {
@@ -762,8 +762,8 @@ ACE_Barrier::dump (void) const
 }
 
 ACE_Barrier::ACE_Barrier (u_int count,
-			  LPCTSTR name,
-			  void *arg)
+                          LPCTSTR name,
+                          void *arg)
   : lock_ (name, arg),
     current_generation_ (0),
     count_ (count),
@@ -805,7 +805,7 @@ ACE_Barrier::wait (void)
 
       // Block until all the other threads wait().
       while (sbp->running_threads_ != this->count_)
-	sbp->barrier_finished_.wait ();
+        sbp->barrier_finished_.wait ();
     }
 
   return 0;
@@ -848,8 +848,8 @@ ACE_Process_Condition<MUTEX>::dump (void) const
 
 template <class MUTEX>
 ACE_Process_Condition<MUTEX>::ACE_Process_Condition (MUTEX &m,
-						     LPCTSTR name,
-						     void *arg)
+                                                     LPCTSTR name,
+                                                     void *arg)
   : ACE_Condition<MUTEX> (m, USYNC_PROCESS, name, arg)
 {
 // ACE_TRACE ("ACE_Process_Condition<MUTEX>::ACE_Process_Condition");
@@ -885,7 +885,7 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
 
 ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (LPCTSTR name,
-					  void *arg)
+                                          void *arg)
   : ACE_RW_Mutex (USYNC_THREAD, name, arg)
 {
 // ACE_TRACE ("ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex");
@@ -902,7 +902,6 @@ ACE_RW_Thread_Mutex::dump (void) const
 // These are only specialized with ACE_HAS_THREADS.
 template class ACE_Guard<ACE_RW_Thread_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Thread_Mutex>;
-template class ACE_Write_Guard<ACE_RW_Thread_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Thread_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 // These are only specialized with ACE_HAS_THREADS.
