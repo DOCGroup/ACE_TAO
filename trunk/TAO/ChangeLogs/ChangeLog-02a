@@ -1,3 +1,11 @@
+Fri Aug  3 10:37:06 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp (visit_operation):
+
+          Added ACE_UNUSED_ARG generation to satisfy strict compilers,
+          for the recently modified cases where the operation returns
+          a long long or a long double.
+
 Fri Aug  3 07:59:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/DLL_ORB/Test_Client_Module.cpp: Changed the order of
