@@ -928,7 +928,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_array *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_array::gen_encapsulation - "
+                         "(%N:%l) be_visitor_typecode_defn::gen_encapsulation - "
                          "bad base type\n"),
                         -1);
     }
