@@ -342,6 +342,8 @@ CORBA::FixedDef_ptr _TAO_Repository_Remote_Proxy_Impl::create_fixed (
     }
   return _tao_safe_retval._retn ();
 }
+      
+#if TAO_HAS_INTERCEPTORS == 1
 
 CORBA::Any * 
 CORBA::Repository::TAO_ClientRequestInfo_CORBA_Repository_create_fixed::result (CORBA::Environment &ACE_TRY_ENV)
@@ -359,6 +361,8 @@ CORBA::Repository::TAO_ClientRequestInfo_CORBA_Repository_create_fixed::result (
   return safe_result_any._retn ();
 }
 
+#endif /* TAO_HAS_INTERCEPTORS */
+        
 // *******************************************************************
 // Container::create_value* methods from IFR_BaseC.cpp
 
@@ -739,6 +743,8 @@ CORBA::ValueBoxDef_ptr _TAO_Container_Remote_Proxy_Impl::create_value_box (
     }
   return _tao_safe_retval._retn ();
 }
+          
+#if TAO_HAS_INTERCEPTORS == 1
 
 Dynamic::ParameterList *
 CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value::arguments (CORBA::Environment &ACE_TRY_ENV)
@@ -839,6 +845,9 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_value_box::result
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
 // **********************************************************************
 
 ///////////////////////////////////////////////////////////////////////

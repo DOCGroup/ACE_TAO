@@ -195,6 +195,8 @@ CORBA::Repository_ptr _TAO_Contained_Remote_Proxy_Impl::containing_repository (
     }
   return _tao_safe_retval._retn ();
 }
+          
+#if TAO_HAS_INTERCEPTORS == 1
 
 CORBA::Any * 
 CORBA::Contained::TAO_ClientRequestInfo_CORBA_Contained_containing_repository_get::result (CORBA::Environment &ACE_TRY_ENV)
@@ -211,6 +213,8 @@ CORBA::Contained::TAO_ClientRequestInfo_CORBA_Contained_containing_repository_ge
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 CORBA::ModuleDef_ptr _TAO_Container_Remote_Proxy_Impl::create_module (
     CORBA_Object *_collocated_tao_target_,
@@ -2202,6 +2206,8 @@ CORBA::LocalInterfaceDef_ptr _TAO_Container_Remote_Proxy_Impl::create_local_inte
     }
   return _tao_safe_retval._retn ();
 }
+          
+#if TAO_HAS_INTERCEPTORS == 1
 
 CORBA::Any * 
 CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_module::result (CORBA::Environment &ACE_TRY_ENV)
@@ -2483,6 +2489,8 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_local_interface::
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
