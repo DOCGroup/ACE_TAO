@@ -10,14 +10,16 @@ ACE_INLINE int
 ACE_Service_Config::open (const ASYS_TCHAR program_name[],
                           LPCTSTR logger_key,
                           int ignore_static_svcs,
-                          int ignore_default_svc_conf)
+                          int ignore_default_svc_conf,
+                          int ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Config::open");
   ACE_Service_Config::no_static_svcs_ = ignore_static_svcs;
 
   return ACE_Service_Config::open_i (program_name,
                                      logger_key,
-                                     ignore_default_svc_conf);
+                                     ignore_default_svc_conf,
+                                     ignore_debug_flag);
 }
 
 ACE_INLINE int
@@ -25,17 +27,20 @@ ACE_Service_Config::open (int argc,
                           ASYS_TCHAR *argv[],
                           LPCTSTR logger_key,
                           int ignore_static_svcs,
-                          int ignore_default_svc_conf)
+                          int ignore_default_svc_conf,
+                          int ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Config::open");
   ACE_Service_Config::no_static_svcs_ = ignore_static_svcs;
 
-  if (ACE_Service_Config::parse_args (argc, argv) == -1)
+  if (ACE_Service_Config::parse_args (argc,
+                                      argv) == -1)
     return -1;
   else
     return ACE_Service_Config::open_i (argv[0],
                                        logger_key,
-                                       ignore_default_svc_conf);
+                                       ignore_default_svc_conf,
+                                       ignore_debug_flag);
 }
 
 // Compare two service descriptors for equality.

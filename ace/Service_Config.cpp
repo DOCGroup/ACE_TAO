@@ -54,7 +54,8 @@ char ACE_Service_Config::no_static_svcs_ = 1;
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
 
-// Name of file used to store messages.
+// Indicates where to write the logging output.  This is typically
+// either a STREAM pipe or a socket address.
 LPCTSTR ACE_Service_Config::logger_key_ = ACE_DEFAULT_LOGGER_KEY;
 
 // The ACE_Service_Manager static service object is now defined by the
@@ -544,10 +545,11 @@ ACE_Service_Config::load_static_svcs (void)
 int
 ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                             LPCTSTR logger_key,
-                            int ignore_default_svc_conf_file)
+                            int ignore_default_svc_conf_file,
+                            int ignore_debug_flag)
 {
   int result = 0;
-  ACE_TRACE ("ACE_Service_Config::open");
+  ACE_TRACE ("ACE_Service_Config::open_i");
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
 
   // Record the current log setting upon entering this thread.
@@ -573,13 +575,16 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                        "enqueue_tail"),
                       -1);
 
-  // If -d was included as a startup parameter, the user wants debug
-  // information printed during service initialization.
-  if (ACE::debug ())
-    ACE_Log_Msg::enable_debug_messages ();
-  else
-    // The user has requested no debugging info.
-    ACE_Log_Msg::disable_debug_messages ();
+  if (ignore_debug_flag == 0)
+    {
+      // If -d was included as a startup parameter, the user wants debug
+      // information printed during service initialization.
+      if (ACE::debug ())
+        ACE_Log_Msg::enable_debug_messages ();
+      else
+        // The user has requested no debugging info.
+        ACE_Log_Msg::disable_debug_messages ();
+    }
 
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
@@ -647,14 +652,18 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
 
     ace_yy_delete_parse_buffer ();
 
-    // Reset debugging back to the way it was when we came into into
-    // <open_i>.
-    if (debugging_enabled)
-      ACE_Log_Msg::enable_debug_messages ();
-    else
-      // Debugging was off when we entered <open_i>.
-      ACE_Log_Msg::disable_debug_messages ();
+    if (ignore_debug_flag == 0)
+      {
+        // Reset debugging back to the way it was when we came into
+        // into <open_i>.
+        if (debugging_enabled)
+          ACE_Log_Msg::enable_debug_messages ();
+        else
+          // Debugging was off when we entered <open_i>.
+          ACE_Log_Msg::disable_debug_messages ();
+      }
   }
+
   return result;
 }
 

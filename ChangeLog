@@ -1,3 +1,9 @@
+Tue Jan  4 13:23:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config: Updated the documentation for the various
+	  open() methods and the constructors.  Thanks to Christopher
+ 	  Kohlhoff <chris@kohlhoff.com> for reporting this.
+
 Tue Jan  4 12:58:54 2000  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile (CONTROLLED_FILES):
