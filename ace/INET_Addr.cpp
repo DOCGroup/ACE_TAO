@@ -331,7 +331,8 @@ static int get_port_number_from_name (const char port_name[],
   char *endp = 0;
   port_number = ACE_static_cast (int,
                                  ACE_OS::strtol (port_name, &endp, 10));
-  if (port_number > 0 && *endp == '\0')
+
+  if (port_number >= 0 && *endp == '\0')
     {
       // Ok, port_name was really a number, and nothing else.  We
       // store that value as the port number.  NOTE: this number must
