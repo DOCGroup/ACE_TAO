@@ -14,8 +14,11 @@ namespace StringLiterals
   {
     ENV_HDR,
     ENV_SNGL_HDR,
+    ENV_SNGL_HDR_NOTUSED,
     ENV_SRC,
+    ENV_SRC_NOTUSED,
     ENV_SNGL_SRC,
+    ENV_SNGL_SRC_NOTUSED,
     ENV_ARG,
     ENV_SNGL_ARG,
     EXCP_SNGL,

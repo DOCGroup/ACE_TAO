@@ -706,7 +706,7 @@ namespace
 
       os << "virtual ::Components::CCMHome_ptr" << endl
           << "get_CCM_home (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
           << STRS[EXCP_SNGL] << ";" << endl ;
 
       os << "virtual CORBA::Boolean" << endl
@@ -1377,14 +1377,14 @@ namespace
 
       os << "virtual void" << endl
           << "configuration_complete (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
           << STRS[EXCP_START] << endl
           << STRS[EXCP_SYS] << "," << endl
           << STRS[EXCP_ICF] << "));" << endl << endl;
 
       os << "virtual void" << endl
           << "remove (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
           << STRS[EXCP_START] << endl
           << STRS[EXCP_SYS] << "," << endl
           << STRS[EXCP_RF] << "));" << endl << endl;
