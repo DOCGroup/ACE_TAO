@@ -4,11 +4,11 @@
 project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe {
   requires += dnc
   exename = executor
-  after += Config_Handlers
+  after += Config_Handlers ExecutionManager_stub NodeDaemon_stub
   macros   += XML_USE_PTHREADS
   includes += /usr/include $(XERCESCROOT)/include
   libpaths += /usr/lib $(XERCESCROOT)/lib
-  libs     += xerces-c Config_Handlers NodeDaemon_stub ExecutionManager_stub
+  libs     += xerces-c Config_Handlers NodeDaemon_stub ExecutionManager_stub CIAO_Server
   after    += Config_Handlers
 
   IDL_Files {

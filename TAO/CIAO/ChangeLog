@@ -1,3 +1,12 @@
+Wed Jun 16 17:12:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/ExecutionManager/ExecutionManager.mpc
+        * DnC/NodeManager/NodeDaemon.mpc
+        * DnC/RepositoryManager/RepositoryManager.mpc
+
+          Fixed export library problems in Windows. Added necessary build
+          dependency settings.
+
 Wed Jun 16 16:33:13 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:
