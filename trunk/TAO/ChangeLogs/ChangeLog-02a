@@ -1,3 +1,13 @@
+Fri Sep 15 16:47:12 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+
+	  Removed the generated 'const' before enum parameters in
+	  the request info class constructor. The class stores the
+	  private enum member as a reference, so it can't be passed
+	  in as const.
+
 Fri Sep 15 14:33:45 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Profile.cpp (decode_endpoints):
