@@ -12,6 +12,7 @@ Thu Jun 24 10:12:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/Time_Service/Makefile:
 	* orbsvcs/tests/AVStreams/sfp/Makefile:
 	* orbsvcs/tests/ImplRepo/Makefile:
+	* examples/Simple/time-date/Makefile:
 	  Several minor fixes, such as outdated dependencies and
 	  typos. Things are happy now.
 

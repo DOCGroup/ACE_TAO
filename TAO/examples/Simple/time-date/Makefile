@@ -75,7 +75,7 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-.PRECIOUS: $(foreach ext, $(IDL_EXT), TimeDate$(ext))
+.PRECIOUS: $(foreach ext, $(IDL_EXT), Time_Date$(ext))
 
 server: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS)) $(SHLIB)
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -86,7 +86,7 @@ client: $(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 $(BIN):
 
 realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), TimeDate$(ext))
+	-$(RM) $(foreach ext, $(IDL_EXT), Time_Date$(ext))
 
 #----------------------------------------------------------------------------
 #       Dependencies
