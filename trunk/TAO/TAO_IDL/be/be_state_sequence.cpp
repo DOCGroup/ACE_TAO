@@ -292,14 +292,18 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
                 // nothing to be done
                 break;
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH:
-              case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
                 *os << bt->nested_type_name (scope, " &");
+                break;
+              case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
+                *os << bt->nested_type_name (scope, " ");
                 break;
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI:
               case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CS:
+                *os << bt->name () << " &";
+                break;
               case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
               case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
-                *os << bt->name () << " &";
+                *os << bt->name () << " ";
                 break;
               default:
                 {
@@ -326,11 +330,15 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
             // that are enums or structures or unions.
             break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
+            *os << bt->nested_type_name (scope, " ");
+            break;
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH:
             *os << bt->nested_type_name (scope, " &");
             break;
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CS:
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI:
+            *os << bt->name () << " ";
+            break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
             *os << bt->name () << " &";
@@ -386,14 +394,18 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
             }
             break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
+            *os << bt->nested_type_name (scope, " ");
+            break;
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH:
             *os << bt->nested_type_name (scope, " &");
             break;
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CS:
           case TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI:
+            *os << bt->name () << " &";
+            break;
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
-            *os << bt->name () << " &";
+            *os << bt->name () << " ";
             break;
           default:
             {
