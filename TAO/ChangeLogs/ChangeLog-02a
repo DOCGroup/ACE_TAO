@@ -1,3 +1,20 @@
+Mon Jul  2 15:53:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * tao/Typecode.cpp:
+        * tao/append.cpp:
+        * tao/skip.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          Modified CORBA::TypeCode::member_label() to return a duplicate
+          Any pointer (to be comsumed by the caller), making it consistent
+          with other ORB functions that return pseudo-object types. Also
+          modified all uses of member_label() in TAO to prevent memory
+          leaks. Thanks to Philippe Merle <Philippe.Merle@lifl.fr> for
+          pointing out this inconsistency, and to Jonanthan Biggar
+          <jon@floorboard.com> for clarifying the spec with regard to
+          memory management of pseudo-objects.
+
 Mon Jul  2 14:29:49 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
