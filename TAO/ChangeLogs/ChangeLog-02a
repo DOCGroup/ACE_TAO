@@ -1,3 +1,8 @@
+Wed Jul 11 14:38:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+       * tao/Strategies/DIOP_Connection_Handler.cpp:
+         Only display debugging message if TAO_debug_level is set > 5.
+
 Wed Jul 11 13:49:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * utils/catior/catior.cpp:
