@@ -4306,7 +4306,7 @@ ACE_INLINE
 void *&
 ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 {
-  return tss_base ()[key - 1];
+  return tss_base ()[key];
 }
 
 #endif /* ACE_HAS_TSS_EMULATION */
@@ -4317,7 +4317,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
   // ACE_TRACE ("ACE_OS::thr_getspecific");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_TSS_EMULATION)
-    if (key - 1 >= ACE_TSS_Emulation::total_keys ())
+    if (key >= ACE_TSS_Emulation::total_keys ())
       {
         errno = EINVAL;
         data = 0;
