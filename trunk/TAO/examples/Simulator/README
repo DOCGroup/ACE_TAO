@@ -150,12 +150,16 @@ Starting:
 
 
 	DOVE Browser:
-		// vbj DOVEBrowser
-                // (also supported: vbj DOVEBrowser -ORBnameserviceior <IOR> ) 
+		vbj DOVEBrowser
+                (also supported: vbj DOVEBrowser -ORBnameserviceior <IOR> ) 
+
+		or
+
                 gatekeeper
 		cd /visigenic/vbroker/lib
 		jar xf vbjorb.jar
  		jar xf vbjtools.jar
+		"setting the Naming Service IOR in the DOVEBrowser.html file"
 		appletviewer DOVEBrowser.html
                 
 
