@@ -1,3 +1,11 @@
+Wed Jun 16 14:19:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SOCK_{Acceptor,Connector}.h: Updated the documentation to
+ 	  explain the "asymmetry" between the ACE_SOCK_Acceptor (which
+ 	  inherits from ACE_SOCK) and the ACE_SOCK_Connector (which does
+ 	  not).  Thanks to Narayanan Vidya <CVN065@lmpsil02.comm.mot.com>
+ 	  for motivating this.
+
 Wed Jun 16 13:15:22 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Containers_T.i: Fixed compile errors; ACE_Double_Linked_List_
