@@ -1,4 +1,3 @@
-
 //
 // $Id$
 //
@@ -114,9 +113,8 @@ operator= (const TAO_Unbounded_String_Sequence &rhs)
     }
   else
     {
-      if (this->maximum_ < rhs.maximum_)
-        this->buffer_ =
-          TAO_Unbounded_String_Sequence::allocbuf (rhs.maximum_);
+      this->buffer_ =
+	TAO_Unbounded_String_Sequence::allocbuf (rhs.maximum_);
     }
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
