@@ -1,3 +1,8 @@
+1998-12-31  Seth Widoff  <swidoff@cs.cmu.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+	  Fixed another g++ error (assignment to an invalid narrower type).
+
 Thu Dec 31 13:20:17 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosTimeBase.idl: Updated the comments to say
