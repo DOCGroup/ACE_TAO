@@ -1,3 +1,13 @@
+Sun Jan  2 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          When ACE_HAS_PTHREADS is defined, include the VxWorks file
+          types/vxTypesOld.h, the header file sys/stat.h uses types from
+          this file and is not according to the spec. A TSR has been
+          filed to WindRiver to get this corrected, until the time being
+          this is the easiest fix because on more places we got problems
+          and we only now have one fix that is easily to remove
+
 Sun Jan  2 12:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Manager.cpp:
