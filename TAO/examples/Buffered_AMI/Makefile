@@ -298,6 +298,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -395,8 +396,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i \
+ testC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -412,8 +413,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i testC.i \
+ testC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
@@ -424,7 +424,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -461,7 +462,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i test_i.h testS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i test_i.h \
+ testS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -660,6 +662,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -757,8 +760,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i \
+ testC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -774,8 +777,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i testC.i \
+ testC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
@@ -1016,6 +1018,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1113,8 +1116,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i \
+ testC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1130,14 +1133,14 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i testC.i \
+ testC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
  testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h $(TAO_ROOT)/tao/corba.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1320,8 +1323,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1409,6 +1410,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1464,7 +1466,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i \
+ testC.i \
  $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h \
@@ -1702,6 +1705,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1799,8 +1803,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i testC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i \
+ testC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1816,8 +1820,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i testC.i \
+ testC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
@@ -1850,6 +1853,11 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -272,8 +272,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i Event_TypesC.i \
+ Event_TypesC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -359,6 +358,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -575,8 +575,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i Event_TypesC.i \
+ Event_TypesC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -696,6 +695,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RT_Policy_i.h \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -719,6 +719,11 @@ realclean: clean
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Client_i.h ../Simple_util.h \
@@ -870,8 +875,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h Event_TypesC.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ ../Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h \
+ Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -919,8 +926,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i Event_TypesC.i
+ Event_TypesC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -1071,9 +1077,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h Server_i.h Event_TypesS.h \
- Event_TypesC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ ../Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h Server_i.h \
+ Event_TypesS.h Event_TypesC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -1120,8 +1128,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i Event_TypesC.i \
+ Event_TypesC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
@@ -1317,8 +1324,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i Event_TypesC.i \
+ Event_TypesC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1337,7 +1343,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  Event_TypesS_T.h Event_TypesS_T.i Event_TypesS_T.cpp Event_TypesS.i \
- Event_Types_impl.h $(TAO_ROOT)/tao/ORB_Core.h \
+ Event_Types_impl.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
@@ -1409,6 +1416,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RT_Policy_i.h \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1571,8 +1579,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h Event_TypesC.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ ../Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h \
+ Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1620,9 +1630,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i Event_TypesC.i \
- Event_Types_impl.h $(TAO_ROOT)/tao/ORB_Core.h \
+ Event_TypesC.i Event_Types_impl.h \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
@@ -1694,6 +1703,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RT_Policy_i.h \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1708,7 +1718,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Event_Types_impl.o .obj/Event_Types_impl.so .shobj/Event_Types_impl.o .shobj/Event_Types_impl.so: Event_Types_impl.cpp Event_Types_impl.h \
- Event_TypesC.h $(TAO_ROOT)/tao/corba.h \
+ Event_TypesC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1891,8 +1902,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i Event_TypesC.i
+ Event_TypesC.i
 
 .obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -2043,7 +2053,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ ../Simple_util.cpp \
  $(TAO_ROOT)/tao/debug.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
