@@ -26,7 +26,6 @@ ifeq ($(corba_messaging),1)
 
 
 CPP_SRCS += \
-   Scheduler \
    RTScheduler \
    RTSchedulerC \
    RTScheduler_Loader \

@@ -21,8 +21,8 @@ TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
 }
 
 int
-TAO_RTScheduler_Loader::init (int argc,
-                         ACE_TCHAR* argv[])
+TAO_RTScheduler_Loader::init (int /*argc*/,
+                         ACE_TCHAR* /*argv*/[])
 {
   ACE_TRACE ("TAO_RTScheduler_Loader::init");
 
