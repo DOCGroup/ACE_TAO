@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO.lib ace.lib TAO_Messaging.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\Messaging"
 
 !ELSEIF  "$(CFG)" == "Strategies client - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_Messagingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\Messaging"
 
 !ENDIF 
 
@@ -114,9 +114,9 @@ SOURCE=.\simple_test.idl
 !IF  "$(CFG)" == "Strategies client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__SIMPL="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
-InputPath=.\simpl_test.idl
+InputPath=.\simple_test.idl
 InputName=simple_test
 
 BuildCmds= \
@@ -153,7 +153,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Strategies client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
+USERDEP__SIMPL="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
 InputPath=.\simple_test.idl
 InputName=simple_test
