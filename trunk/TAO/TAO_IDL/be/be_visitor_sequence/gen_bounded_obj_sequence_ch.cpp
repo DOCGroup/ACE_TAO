@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           gen_bounded_obj_sequence_ch, 
+ACE_RCSID (be_visitor_sequence,
+           gen_bounded_obj_sequence_ch,
            "$Id$")
 
 int
@@ -105,7 +105,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 
   int is_pseudo_object =
     nt == AST_Decl::NT_pre_defined
-    && prim 
+    && prim
     && prim->pt () == AST_PredefinedType::PT_pseudo;
 
   // operator[]
@@ -117,16 +117,13 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
     {
       *os << "TAO_Valuetype_Manager<";
     }
-  else if (nt == AST_Decl::NT_interface)
+  else if (node->base_type ()->is_abstract ())
     {
-      if (node->base_type ()->is_abstract ())
-        {
-          *os << "TAO_Abstract_Manager<";
-        }
-      else
-        {
-          *os << "TAO_Object_Manager<";
-        }
+      *os << "TAO_Abstract_Manager<";
+    }
+  else
+    {
+      *os << "TAO_Object_Manager<";
     }
 
   *os << bt->name () << ","

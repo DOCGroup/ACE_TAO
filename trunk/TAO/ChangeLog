@@ -1,3 +1,15 @@
+Fri Jul  5 12:07:07 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	  Apparently this change:
+
+	  Wed Jul  3 12:28:23 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+	  missed something, I made the checks match what is done for
+	  unbounded object sequences and things compile now, IMHO there is
+	  too much code duplication here!  Somebody should re-factor that
+	  code into a subroutine or something.
+
 Thu Jul  4 16:50:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/ValueFactory.h:
@@ -291,7 +303,7 @@ Tue Jul  2 15:46:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	This checkin is to prevent a problem that occurs unders certain
         circumstances as described in [Bug 1230]
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1241
+        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1230
 
 	The methodology used to solve the problem is pretty much similar
         to that described in the bug report.
