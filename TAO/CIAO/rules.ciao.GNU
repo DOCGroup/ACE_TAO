@@ -21,9 +21,9 @@ endif
 # minor and beta) to run, but applications with dependencies on libraries
 # with different minor or major or beta versions to fail.
 #
-CIAO_MAJOR_VERSION := $(shell awk '/CIAO_MAJOR_VERSION/ { print $$3}' ${CIAO_ROOT_ROOT}/ciao/Version.h)
-CIAO_MINOR_VERSION := $(shell awk '/CIAO_MINOR_VERSION/ { print $$3}' ${CIAO_ROOT_ROOT}/ciao/Version.h)
-CIAO_BETA_VERSION := $(shell awk '/CIAO_BETA_VERSION/ { print $$3}' ${CIAO_ROOT_ROOT}/ciao/Version.h)
+CIAO_MAJOR_VERSION := $(shell awk '/CIAO_MAJOR_VERSION/ { print $$3}' ${CIAO_ROOT}/ciao/Version.h)
+CIAO_MINOR_VERSION := $(shell awk '/CIAO_MINOR_VERSION/ { print $$3}' ${CIAO_ROOT}/ciao/Version.h)
+CIAO_BETA_VERSION := $(shell awk '/CIAO_BETA_VERSION/ { print $$3}' ${CIAO_ROOT}/ciao/Version.h)
 
 # Version number of the libraries
 #
