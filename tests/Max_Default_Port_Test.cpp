@@ -128,7 +128,7 @@ client (void *arg)
 }
 
 int 
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
 
   ACE_START_TEST (ACE_TEXT ("Max_Default_Port_Test"));
