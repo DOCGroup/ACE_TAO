@@ -2,7 +2,8 @@ Fri Oct 02 16:27:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp: ACEified some code.
 	  (terminate): Do not register a thread as being terminated if it
-	  is being joining by another thread.
+	  is being joined by another thread.  Just remove it from
+	  Thread_Manager's thr_list_.
 
 Fri Oct  2 00:19:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
