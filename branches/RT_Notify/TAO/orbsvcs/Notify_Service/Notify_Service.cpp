@@ -78,11 +78,11 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                       ACE_ENV_ARG_PARAMETER) != 0)
   return -1;
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
+  this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
 
   if (this->notify_service_ == 0)
     {
-      this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
+      this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
     }
 
   if (this->notify_service_ == 0)
