@@ -1,10 +1,20 @@
+Wed Jul 05 13:41:00 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* PACE/win32/types.h:
+
+	  Removed #include <inttypes.h>.
+	  Moved -*- C -*- to same line as $Id$
+	  Removed pace_* types until I need to define them
+	  (as I go through the rest of the files). WIN32 doesn't
+	  use these native types.
+
 Wed Jul  5 13:25:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/*
 
 	  Removed (posix ace) from files.
 
-Wed Jul 05 12:49:20 2000    <luther@cs.wustl.edu>
+Wed Jul 05 12:49:20 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* PACE/config/platform.h
 
