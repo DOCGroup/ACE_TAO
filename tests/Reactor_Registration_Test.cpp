@@ -74,7 +74,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor,
     ACE::send_n (this->pipe_.write_handle (),
                  message,
                  message_size);
-  ACE_ASSERT (result == message_size);
+  ACE_ASSERT (result == static_cast<ssize_t> (message_size));
   ACE_UNUSED_ARG (result);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -98,7 +98,7 @@ Event_Handler::handle_input (ACE_HANDLE handle)
     ACE::recv_n (handle,
                  buf,
                  sizeof buf - 1);
-  ACE_ASSERT (result == message_size);
+  ACE_ASSERT (result == static_cast<ssize_t> (message_size));
   ACE_UNUSED_ARG (result);
 
   buf[message_size] = '\0';
