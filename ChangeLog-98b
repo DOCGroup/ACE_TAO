@@ -4,6 +4,13 @@ Thu Jun 18 21:14:25 1998  David L. Levine  <levine@cs.wustl.edu>
           to default_stack_size, to avoid shadowing by stack_size in
           main ().
 
+        * ace/OS.i (dlopen): added support for ACE_HAS_SGIDLADD.
+          (dlerror): on WIN32, return a formatted message instead of 0.
+          Thanks to Kent Watsen <kent@watsen.net> for the diffs.
+
+        * ace/config-irix6.x-sgic++-nothreads.h: added ACE_HAS_SGIDLADD.
+          Thanks to Kent Watsen <kent@watsen.net> for this addition.
+
 Thu Jun 18 20:46:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * performance_tests/Misc/childbirth_time.cpp: Changed to use the
