@@ -9,7 +9,7 @@ option
     {
 	target type (exe) "Date_Time_Test"
 	{
-	   source type (cpp) "Date_Time_Test.cpp"
+	   source type (cpp) "Date_Time_Test.cpp", "Main.cpp"
 	   if ($__IBMCPP__ >= 500) {
 	     option macros(global) {
 	       source type (hpp) "test_config.h"

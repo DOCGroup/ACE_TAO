@@ -9,7 +9,7 @@ option
     {
 	target type (exe) "SV_Shared_Memory_Test"
 	{
-	   source type (cpp) "SV_Shared_Memory_Test.cpp"
+	   source type (cpp) "SV_Shared_Memory_Test.cpp", "Main.cpp"
 	   if ($__IBMCPP__ >= 500) {
 	     option macros(global) {
 	       source type (hpp) "test_config.h"
