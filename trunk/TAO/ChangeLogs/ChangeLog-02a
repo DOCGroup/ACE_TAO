@@ -1,3 +1,13 @@
+Tue Jul 25 01:00:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+        * orbsvcs/tests/AVVStreams/Asynch_Three_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/input:
+
+         Increase the times that the perl scripts expecting the 
+         the CORBA processes to run for.  Decrease the size
+         of the Asynch_Three_Stage input file by 4000 lines.
+
 Tue Jul 24 18:16:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * tests/Exposed_Policies/Policy_Verifier.cpp (init):

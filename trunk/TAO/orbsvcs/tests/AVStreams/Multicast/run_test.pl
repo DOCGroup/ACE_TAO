@@ -29,7 +29,7 @@ print STDERR "Starting Naming Service\n";
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($nsior, 15) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";
     $NS->Kill (); 
     exit 1;
@@ -49,7 +49,7 @@ sleep $sleeptime;
 
 print STDERR "Starting Client\n";
 
-$client = $CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (160);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
