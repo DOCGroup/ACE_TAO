@@ -1,3 +1,8 @@
+Sat Feb 22 17:00:59 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/OS.i (gethrtime): Added support for intel's RDTSC
+	  instruction for pentium architectures.
+
 Sat Feb 22 10:57:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Stream.cpp (open): Make sure that if we allocate the Tasks
