@@ -3664,7 +3664,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
   // I didn't manage to find pthread_cancel anywhere int the MIT
   // pthread implementation. So I'll just leave this instead, and
   // see what breaks. -- jwr
-  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (t_id);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -3684,33 +3684,33 @@ ACE_INLINE int
 ACE_OS::sigwait (sigset_t *set, int *sig)
 {
   // ACE_TRACE ("ACE_OS::sigwait");
-  sig = sig;
+  int local_sig;
+  if (sig == 0)
+    sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_FSU_PTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigwait (set), 
-				       ace_result_),
-		     int, -1);
+  *sig = ::sigwait (set);
+  return *sig;
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_ONEARG_SIGWAIT)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigwait (set), 
-                                       ace_result_), 
-                     int, -1);
+  *sig = ::sigwait (set);
+  return *sig;
 #else /* ACE_HAS_SETKIND_NP */
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigwait (set, sig), 
-                                       ace_result_), 
-                     int, -1);
+  errno = ::sigwait (set, sig);
+  if (errno == -1)
+    return -1;
+  else
+    return *sig;
 #endif /* ACE_HAS_SETKIND_NP */
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG(set);
-  
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS)
   // second arg is a struct siginfo *, which we don't need (the selected
   // signal number is returned)
   // third arg is timeout:  0 means forever
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigtimedwait (set, 0, 0),
-				       ace_result_),
-		     int, -1);   // yes, the doc says -1, not ERROR
+  *sig = ::sigtimedwait (set, 0, 0);
+  return *sig;
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -3973,6 +3973,9 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPrioritySet (thr_id, prio), 
 				       ace_result_), 
 		     int, -1);
+#else
+  // for example, platforms that support Pthreads but LACK_SETSCHED
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -5765,10 +5768,26 @@ ACE_OS::gethrtime (void)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return tb.tb_high * 1000000000L + tb.tb_low;
+#elif defined (ACE_HAS_PENTIUM) && defined (linux)
+  // see comments for ACE_HAS_PENTIUM below
+
+  // These are declared in OS.cpp.  The easiest way to interface
+  // with the assembly instructions is via these two global variables.
+  // No, it's not thread safe.  If someone knows how to do this with
+  // local variables, that would be _much_ better!
+  extern unsigned long ACE_OS_gethrtime_least;
+  extern unsigned long ACE_OS_gethrtime_most;
+
+  asm ("rdtsc");
+  asm ("movl %eax, ACE_OS_gethrtime_least");
+  asm ("movl %edx, ACE_OS_gethrtime_most");
+
+  return ACE_OS_gethrtime_most << 32  |  ACE_OS_gethrtime_least;
 #elif defined (ACE_HAS_PENTIUM)
+  // for WIN32 only . . .
   // Issue the RDTSC assembler instruction to get the number of clock
   // ticks since system boot.  RDTSC is only available on Pentiums and
-  // higher. Thanks to Wayne Vucenic <wvucenic@netgate.net> for
+  // higher.  Thanks to Wayne Vucenic <wvucenic@netgate.net> for
   // pointing us to intel's RDTSC instruction.  See
   // http://www.sandpile.org/80x86/rdtsc.shtml for a description of
   // the RDTSC instruction.  Or see Frank van Gilluwe's "The
@@ -5779,7 +5798,7 @@ ACE_OS::gethrtime (void)
 
   __asm {
     //      __asm		rdtsc
-    // VC++ doesn't know that rdtsc is for opcode OFh, 31h, so we'll
+    // VC++ doesn't know the opcode for rdtsc (OFh, 31h), so we'll
     // emit the opcode manually.
       __asm		_emit		0xf
       __asm		_emit		0x31
