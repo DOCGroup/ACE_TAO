@@ -1,20 +1,3 @@
-Sun Apr 06 20:01:57 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* include/makeinclude/wrapper_macros.GNU: added "purify" and
-	  "quantify" make command options.  To build Purified versions
-	  of all executables in the current direction, for example:
-
-		% make purify=1
-
-	* ace/Task.{h,cpp}: removed ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-	  from ACE_Task_Exit declaration and ACE_Task_Exit::instance ().
-	  ACE_Task_Exit is no longer a template class, so we don't need that.
-
-	* ace/Task_T.h: added missing "*/" at end of comment after #endif.
-
-	* tests/IOStream.cpp (server): added check for 0 strlen of
-	  "buf" to avoid out-of-bound array reference.
-
 Sun Apr  6 14:16:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.cpp: Deleted a useless return.  Thanks to Gonzalo
@@ -60,7 +43,34 @@ Sun Apr  6 14:16:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  supported by the OS platform we'll just use ACE_OS::sleep(const
  	  ACE_Time_Value &) instead.
 
-Sun Apr 06 13:54:56 1997  David L. Levine  <levine@cs.wustl.edu>
+	* ace/Log_Msg.cpp: Changed the logic of
+ 	  ACE_Log_Msg_Manager::remove() so that it returns the number of
+ 	  remaining registered instances.  When this goes to 0 we'll
+ 	  cleanup.
+
+	* ace/OS.i: Enhanced the ACE_OS::cond_[timed_]wait() methods so
+ 	  that they use SignalObjectAndWait() whenever possible to avoid
+ 	  potential problems with unfairness.  See
+ 	  http://www.cs.wustl.edu/~schmidt/editorial-15.html for more
+ 	  details.  Thanks to David Holmes <ltdholmes@mri.mq.edu.au> for
+ 	  pointing out this subtlety.
+
+Sun Apr 06 20:01:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: added "purify" and
+	  "quantify" make command options.  To build Purified versions
+	  of all executables in the current direction, for example:
+
+		% make purify=1
+
+	* ace/Task.{h,cpp}: removed ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+	  from ACE_Task_Exit declaration and ACE_Task_Exit::instance ().
+	  ACE_Task_Exit is no longer a template class, so we don't need that.
+
+	* ace/Task_T.h: added missing "*/" at end of comment after #endif.
+
+	* tests/IOStream.cpp (server): added check for 0 strlen of
+	  "buf" to avoid out-of-bound array reference.
 
 	* ace/Svc_Conf_l.cpp, Makefile: added #define ACE_BUILD_DLL.
 	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
