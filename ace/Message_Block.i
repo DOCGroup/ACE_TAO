@@ -13,7 +13,7 @@ ACE_Message_Block::data_block (void) const
 ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Message_Block::set_self_flags (ACE_Message_Block::Message_Flags more_flags)
 {
-  ACE_TRACE ("ACE_Message_Block::set_flags");
+  ACE_TRACE ("ACE_Message_Block::set_self_flags");
   // Later we might mask more_glags so that user can't change internal
   // ones: more_flags &= ~(USER_FLAGS -1).
   return ACE_SET_BITS (this->flags_, more_flags);
@@ -22,7 +22,7 @@ ACE_Message_Block::set_self_flags (ACE_Message_Block::Message_Flags more_flags)
 ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Message_Block::clr_self_flags (ACE_Message_Block::Message_Flags less_flags)
 {
-  ACE_TRACE ("ACE_Message_Block::clr_flags");
+  ACE_TRACE ("ACE_Message_Block::clr_self_flags");
   // Later we might mask more_flags so that user can't change internal
   // ones: less_flags &= ~(USER_FLAGS -1).
   return ACE_CLR_BITS (this->flags_, less_flags);
@@ -31,7 +31,7 @@ ACE_Message_Block::clr_self_flags (ACE_Message_Block::Message_Flags less_flags)
 ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Message_Block::self_flags (void) const
 {
-  ACE_TRACE ("ACE_Message_Block::flags");
+  ACE_TRACE ("ACE_Message_Block::self_flags");
   return this->flags_;
 }
 
