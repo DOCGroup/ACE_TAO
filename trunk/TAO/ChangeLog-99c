@@ -3,6 +3,9 @@ Fri Jun 25 10:01:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Any.cpp:
 	  Added an ACE_CHECK to the type() set method.
 
+	* tao/DynAnyS.cpp:
+	  Fixed ACE_CHECK related stuff.
+
 Fri Jun 25 07:31:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/benchmark/Makefile: added
