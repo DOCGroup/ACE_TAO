@@ -74,6 +74,7 @@ call %run_cmd% %dopure% %platform% DLList_Test
 call %run_cmd% %dopure% %platform% Enum_Interfaces_Test
 call %run_cmd% %dopure% %platform% Env_Value_Test
 call %run_cmd% %dopure% %platform% Future_Test
+call %run_cmd% %dopure% %platform% Future_Set_Test
 call %run_cmd% %dopure% %platform% Handle_Set_Test
 call %run_cmd% %dopure% %platform% Hash_Map_Manager_Test
 call %run_cmd% %dopure% %platform% High_Res_Timer_Test

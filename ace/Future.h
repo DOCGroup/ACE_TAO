@@ -21,7 +21,8 @@
 #define ACE_FUTURE_H
 
 #include "ace/Synch.h"
-#include "ace/Containers_T.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,8 +31,29 @@
 #if defined (ACE_HAS_THREADS)
 
 // Forward decl.
-template <class T> class ACE_Future;
+template <class T> class ACE_Future_Holder;
 template <class T> class ACE_Future_Observer;
+template <class T> class ACE_Future_Rep;
+template <class T> class ACE_Future;
+
+template <class T>
+class ACE_Export ACE_Future_Holder
+{
+  // = TITLE
+  //     Implementation of object which has holds ACE_Future.
+
+public:
+  ACE_Future_Holder (const ACE_Future<T> &future);
+  ~ACE_Future_Holder (void);
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+  ACE_Future<T> item_;
+
+protected:
+  ACE_Future_Holder (void);
+};
 
 template <class T>
 class ACE_Future_Observer
@@ -76,13 +98,9 @@ class ACE_Future_Rep
 private:
   friend class ACE_Future<T>;
 
-#if defined (__BORLANDC__) && (__BORLANDC__ == 0x540)
-  static void unimplemented_method_inserted_to_get_around_bcb_4_bug();
-#endif /* (__BORLANDC__) && (__BORLANDC__ == 0x540) */
-
-  // <create>, <attach>, <detach>, and <assign> encapsulates the
-  // reference count handling and the object lifetime of
-  // ACE_Future_Rep<T> instances.
+  // Create, attach, detach and assign encapsulates the reference
+  // count handling and the object lifetime of ACE_Future_Rep<T>
+  // instances.
 
   static ACE_Future_Rep<T> *create (void);
   // Create a ACE_Future_Rep<T> and initialize the reference count.
@@ -91,20 +109,20 @@ private:
   // Increase the reference count and return argument. Uses the
   // attribute "value_ready_mutex_" to synchronize reference count
   // updating.
-  // 
+  //
   // Precondition(rep != 0).
 
   static void detach (ACE_Future_Rep<T> *&rep);
   // Decreases the reference count and and deletes rep if there are no
   // more references to rep.
-  // 
+  //
   // Precondition(rep != 0)
 
   static void assign (ACE_Future_Rep<T> *&rep,
                       ACE_Future_Rep<T> *new_rep);
   // Decreases the rep's reference count and and deletes rep if there
   // are no more references to rep. Then assigns new_rep to rep.
-  // 
+  //
   // Precondition(rep != 0 && new_rep != 0)
 
   int set (const T &r,
@@ -118,12 +136,15 @@ private:
   // Wait up to <tv> time to get the <value>.  Note that <tv> must be
   // specified in absolute time rather than relative time.
 
-  void attach (ACE_Future_Observer<T> *observer,
+  int attach (ACE_Future_Observer<T> *observer,
                ACE_Future<T> &caller);
   // Attaches the specified observer to a subject (i.e. the
   // ACE_Future_Rep).  The update method of the specified subject will
   // be invoked with a copy of the written-to ACE_Future as input when
   // the result gets set.
+  //
+  // Returns 0 if the observer is successfully attached, 1 if the
+  // observer is already attached, and -1 if failures occur.
 
   int detach (ACE_Future_Observer<T> *observer);
   // Detaches the specified observer from a subject (i.e. the
@@ -131,6 +152,9 @@ private:
   // not be invoked when the ACE_Future_Reps result gets set.  Returns
   // 1 if the specified observer was actually attached to the subject
   // prior to this call and 0 if was not.
+  //
+  // Returns 0 if the observer was successfully detached, and -1 if the observer was
+  // not attached in the first place.
 
   operator T ();
   // Type conversion. will block forever until the result is
@@ -160,11 +184,22 @@ private:
   int ref_count_;
   // Reference count.
 
-  typedef ACE_Future_Observer<T> OBSERVER;
-  typedef ACE_DLList_Node OBSERVER_NODE;
-  typedef ACE_Double_Linked_List<OBSERVER_NODE> OBSERVER_LIST;
+  typedef ACE_Future_Observer<T>
+	    OBSERVER;
 
-  OBSERVER_LIST observer_list_;
+  typedef ACE_Hash_Addr<OBSERVER*>
+	    OBSERVER_HASH_ADDR;
+
+  typedef ACE_Hash_Map_Manager<OBSERVER_HASH_ADDR, OBSERVER *, ACE_Null_Mutex>
+        OBSERVER_HASH;
+
+  typedef ACE_Hash_Map_Iterator<OBSERVER_HASH_ADDR, OBSERVER *, ACE_Null_Mutex>
+	    OBSERVER_HASH_ITERATOR;
+
+  typedef ACE_Hash_Map_Entry<OBSERVER_HASH_ADDR, OBSERVER *>
+        OBSERVER_HASH_ENTRY;
+
+  OBSERVER_HASH observer_hash_;
   // Keep a list of ACE_Future_Observers unread by client's reader thread.
 
   // = Condition variable and mutex that protect the <value_>.
@@ -239,13 +274,16 @@ public:
   int ready (void);
   // Check if the result is available.
 
-  void attach (ACE_Future_Observer<T> *observer);
+  int attach (ACE_Future_Observer<T> *observer);
   // Attaches the specified observer to a subject (i.e. the
   // ACE_Future).  The update method of the specified subject will be
   // invoked with a copy of the associated ACE_Future as input when
   // the result gets set.  If the result is already set when this
   // method gets invoked, then the update method of the specified
   // subject will be invoked immediately.
+  //
+  // Returns 0 if the observer is successfully attached, 1 if the
+  // observer is already attached, and -1 if failures occur.
 
   int detach (ACE_Future_Observer<T> *observer);
   // Detaches the specified observer from a subject (i.e. the
@@ -253,9 +291,17 @@ public:
   // not be invoked when the ACE_Future_Reps result gets set.  Returns
   // 1 if the specified observer was actually attached to the subject
   // prior to this call and 0 if was not.
+  //
+  // Returns 0 if the observer was successfully detached, and -1 if the observer was
+  // not attached in the first place.
 
   void dump (void) const;
   // Dump the state of an object.
+
+  ACE_Future_Rep<T> *get_rep();
+  // Get the underlying ACE_Future_Rep<T>*. Note that this method should
+  // rarely, if ever, be used and that modifying the undlerlying ACE_Future_Rep<T>*
+  // should be done with extreme caution.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.

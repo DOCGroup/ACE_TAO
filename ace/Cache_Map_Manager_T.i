@@ -11,13 +11,13 @@ ACE_Cache_Map_Manager<T_2>::purge (void)
 }
 
 template <T_1> ACE_INLINE size_t
-ACE_Cache_Map_Manager<T_2>::current_size (void)
+ACE_Cache_Map_Manager<T_2>::current_size (void) const
 {
   return this->map_.current_size ();
 }
 
 template <T_1> ACE_INLINE size_t
-ACE_Cache_Map_Manager<T_2>::total_size (void)
+ACE_Cache_Map_Manager<T_2>::total_size (void) const
 {
   return this->map_.total_size ();
 }
