@@ -1,3 +1,19 @@
+Wed Jul 14 19:44:21 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Thread_Manager.cpp (spawn_i): Defer acquiring the thread
+          descriptor's lock until just before attempting to start the thread
+          to avoid places where the thread descriptor could be destroyed
+          while holding the lock (doing that is an undefined operation in
+          pthreads, and has particularly bad results on HP-UX 11). If the
+          thread creation does fail, release the lock before returning
+          the error indication (taking care to guard errno). Removed an
+          unreachable block of code which put the thread descriptor on the
+          wrong list anyway.
+          Removed the #if 1, #else, #endif around the auto_ptr for
+          new_thr_desc - if it's still working this close the ACE 5 release,
+          it wins. Besides, the use of the auto_ptr was ingrained in the
+          rest of the function, without the #if checks.
+
 Wed Jul 14 19:03:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/purify.solaris2: added another UMR suppression for
