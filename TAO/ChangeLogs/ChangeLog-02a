@@ -1,3 +1,26 @@
+Mon Jun 26 16:50:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/InterceptorC.h:
+	* tao/InterceptorC.i:
+	* tao/PolicyC.h:
+	* tao/PolicyC.i:
+	* tao/diffs/InterceptorC.h.diff:
+	* tao/diffs/PolicyC.h.diff:
+
+	  Because of the recently added cast operator for
+	  TAO_Object_Manager, there were some inline 
+	  problems with these generated files. To fix it,
+	  some _var constructors were inlined in the .h
+	  file and removed from the .i file. The diff files
+	  were modified accordingly.
+
+	* tao/diffs/InterceptorC.i.diff:
+	* tao/diffs/PolicyC.i.diff:
+	   
+	  New diff files added.
+
 Mon Jun 26 16:45:49 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Makefile: removed
