@@ -8,6 +8,7 @@
 //****************************************************************************
 #define IT_EX_MACROS
 
+#include "ace/streams.h"
 #include "cubit_impl.h"		// server header file
 
 int 
