@@ -1,3 +1,9 @@
+Sun Nov  9 18:09:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+
+	  Updated dependencies.
+
 Sun Nov  9 17:57:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
