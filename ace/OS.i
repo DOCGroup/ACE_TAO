@@ -8443,11 +8443,11 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   return (result == -1 ? -1 : 0);
 #   elif defined (ACE_HAS_PTHREADS_DRAFT6)
   pthread_attr_t  attr;
-  if (pthread_getschedattr(thr_id, &attr) == -1)
+  if (pthread_getschedattr (thr_id, &attr) == -1)
     return -1;
   if (pthread_attr_setprio (attr, prio) == -1)
     return -1;
-  return pthread_setschedattr(thr_id, attr);
+  return pthread_setschedattr (thr_id, attr);
 #   else
   struct sched_param param;
   int policy = 0;
