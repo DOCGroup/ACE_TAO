@@ -131,11 +131,14 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
              && errno == EINTR
              && timeout == 0);
 
-      // Reset the size of the addr, which is only necessary for UNIX
-      // domain sockets.
+      // Reset the size of the addr, so the proper UNIX/IPv4/IPv6 family
+      // is known.
       if (new_stream.get_handle () != ACE_INVALID_HANDLE
           && remote_addr != 0)
-        remote_addr->set_size (len);
+        {
+          remote_addr->set_size (len);
+          remote_addr->set_type (addr->sa_family);
+        }
     }
 
   return this->shared_accept_finish (new_stream,
