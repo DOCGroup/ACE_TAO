@@ -90,13 +90,16 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // We are nested inside an interface or a valuetype.
   else 
     {
-      if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+      if (!be_global->gen_inline_constants ())
         {
-          *os << "extern ";
-        }
-      else
-        {
-          *os << "static ";
+          if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+            {
+              *os << "extern ";
+            }
+          else
+            {
+              *os << "static ";
+            }
         }
 
       *os << "const ";
@@ -122,6 +125,12 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
 
       *os << " " << node->local_name ();
+    }
+
+  if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
+      && be_global->gen_inline_constants ())
+    {
+      *os << " = " << node->constant_value ();
     }
 
   *os << ";";

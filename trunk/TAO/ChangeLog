@@ -1,3 +1,16 @@
+Tue Nov 11 11:43:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+
+          Restored the functionality of the command line option -Gic to
+          generate the value assignment of constants declared in a
+          namespace (IDL module) in the *C.h file. This provides
+          application developers with a way to use such constants by
+          name in application code, as array bounds and such. Thanks to
+          Carlos O'Ryan <coryan@atdesk.com> for pointing out the
+          problem.
+
 Tue Nov 11 11:03:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ci.cpp:

@@ -48,6 +48,13 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
       return 0;
     }
 
+  // Was the constant value already assigned in *C.h?
+  if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
+      && be_global->gen_inline_constants ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   if (node->is_nested ())
