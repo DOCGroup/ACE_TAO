@@ -76,7 +76,7 @@ ICP_online(unsigned long id)
     StateMap::iterator pos = dstate.find(id);
     if (pos != dstate.end())
         return -1;                          // Already exists
-    
+
     // Fill in state.
     DeviceState ds;
     ds.type = (id % 2) ? thermometer : thermostat;
@@ -181,7 +181,7 @@ private:
 // actual_temp() is a helper function to determine the actual
 // temperature returned by a particular thermometer or thermostat.
 // The pos argument indicates the device.
-// 
+//
 // The function locates all thermostats that are in the same room
 // as the device denoted by pos and computes the average of all
 // the thermostats' nominal temperatures. (If no thermostats are
@@ -215,7 +215,7 @@ actual_temp(const StateMap::iterator & pos)
 //---------------------------------------------------------------
 
 
-#if (_MSC_VER >= 1200) && (_MSC_VER < 1300)
+#if (_MSC_VER < 1300)
 namespace std
 {
     size_t min (const size_t len1, const size_t len2)
@@ -313,7 +313,7 @@ ICP_set(unsigned long id, const char * attr, const void * value)
             (const char *)value, MAXSTR - 1
         );
     } else if (strcmp(attr, "nominal_temp") == 0) {
-        if (pos->second.type != thermostat) 
+        if (pos->second.type != thermostat)
             return -1;                      // Must be thermostat
         short temp;
         memcpy(&temp, value, sizeof(temp));

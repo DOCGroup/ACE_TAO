@@ -33,7 +33,7 @@ using namespace std;
 
 enum DeviceType { thermometer, thermostat };
 
-struct DeviceState 
+struct DeviceState
 {                // State for a device
   DeviceType type;
   const char *model;
@@ -74,7 +74,7 @@ ICP_online (unsigned long id)
   StateMap::iterator pos = dstate.find (id);
   if (pos != dstate.end ())
     return -1;                          // Already exists
-    
+
   // Fill in state.
   DeviceState ds;
   ds.type =  (id % 2) ? thermometer : thermostat;
@@ -151,7 +151,7 @@ vary_temp (short temp)
 // Function object. Locates a thermostat that is in the same room as
 // the device at position pos.
 
-class ThermostatInSameRoom 
+class ThermostatInSameRoom
 {
 public:
   ThermostatInSameRoom (const StateMap::iterator &pos):
@@ -168,7 +168,7 @@ private:
 // actual_temp () is a helper function to determine the actual
 // temperature returned by a particular thermometer or thermostat.
 // The pos argument indicates the device.
-// 
+//
 // The function locates all thermostats that are in the same room
 // as the device denoted by pos and computes the average of all
 // the thermostats' nominal temperatures.  (If no thermostats are
@@ -186,7 +186,7 @@ actual_temp (const StateMap::iterator & pos)
   long count = 0;
   StateMap::iterator where = std::find_if (dstate.begin (), dstate.end (),
                                       ThermostatInSameRoom (pos));
-  while  (where != dstate.end ()) 
+  while  (where != dstate.end ())
     {
       count++;
       sum += where->second.nominal_temp;
@@ -200,7 +200,7 @@ actual_temp (const StateMap::iterator & pos)
 //---------------------------------------------------------------
 
 
-#if (_MSC_VER >= 1200) && (_MSC_VER < 1300)
+#if (_MSC_VER < 1300)
 namespace std
 {
     size_t min (const size_t len1, const size_t len2)
@@ -243,35 +243,35 @@ ICP_get (unsigned long id,
 
   // Depending on the attribute, return the
   // corresponding piece of state.
-  if  (strcmp (attr, "model") == 0) 
+  if  (strcmp (attr, "model") == 0)
     {
       strncpy ( (char *)value, pos->second.model, len);
     }
-  else if  (strcmp (attr, "location") == 0) 
+  else if  (strcmp (attr, "location") == 0)
     {
       strncpy ( (char *)value, pos->second.location.c_str (), len);
-    } 
-  else if  (strcmp (attr, "nominal_temp") == 0) 
+    }
+  else if  (strcmp (attr, "nominal_temp") == 0)
     {
       if  (pos->second.type != thermostat)
         return -1;                      // Must be thermostat
       memcpy (value, &pos->second.nominal_temp,
               std::min (len, sizeof (pos->second.nominal_temp)));
-    } 
-  else if  (strcmp (attr, "temperature") == 0) 
+    }
+  else if  (strcmp (attr, "temperature") == 0)
     {
       short temp = actual_temp (pos);
       memcpy (value, &temp, std::min (len, sizeof (temp)));
     }
-  else if  (strcmp (attr, "MIN_TEMP") == 0) 
+  else if  (strcmp (attr, "MIN_TEMP") == 0)
     {
       memcpy (value, &MIN_TEMP, std::min (len, sizeof (MIN_TEMP)));
-    } 
-  else if  (strcmp (attr, "MAX_TEMP") == 0) 
+    }
+  else if  (strcmp (attr, "MAX_TEMP") == 0)
     {
       memcpy (value, &MAX_TEMP, std::min (len, sizeof (MAX_TEMP)));
     }
-  else 
+  else
     {
       return -1;                          // No such attribute
     }
@@ -296,20 +296,20 @@ ICP_set (unsigned long id, const char * attr, const void * value)
     return -1;                          // No such device
 
   // Change either location or nominal temp, depending on attr.
-  if (strcmp (attr, "location") == 0) 
+  if (strcmp (attr, "location") == 0)
     {
       pos->second.location.assign ((const char *)value, MAXSTR - 1);
-    } 
-  else if (strcmp (attr, "nominal_temp") == 0) 
+    }
+  else if (strcmp (attr, "nominal_temp") == 0)
     {
-      if (pos->second.type != thermostat) 
+      if (pos->second.type != thermostat)
         return -1;                      // Must be thermostat
       short temp;
       memcpy (&temp, value, sizeof (temp));
       if (temp < MIN_TEMP || temp > MAX_TEMP)
         return -1;
       pos->second.nominal_temp = temp;
-    } 
+    }
   else
     {
       return -1;                          // No such attribute
@@ -319,7 +319,7 @@ ICP_set (unsigned long id, const char * attr, const void * value)
 
 #include <fstream>
 
-class ICP_Persist 
+class ICP_Persist
 {
 public:
   ICP_Persist (const char *file);
@@ -336,7 +336,7 @@ ICP_Persist (const char *file)
 {
   // Open input file, creating it if necessary.
   std::ifstream db (m_filename.c_str (), std::ios::in|std::ios::out);//, 0666);
-  if  (!db) 
+  if  (!db)
     {
       std::cerr << "Error opening " << m_filename << std::endl;
       exit (1);
@@ -345,7 +345,7 @@ ICP_Persist (const char *file)
   // Read device details, one attribute per line.
   DeviceState ds;
   unsigned long id;
-  while  (db >> id) 
+  while  (db >> id)
     {
       // Read device type and set model string accordingly.
       int dtype;
@@ -378,7 +378,7 @@ ICP_Persist::
   std::cout<<"~ICP_Persist"<<std::endl;///////////////////////
   // Open input file, truncating it.
   ofstream db (m_filename.c_str ());
-  if  (!db) 
+  if  (!db)
     {
       std::cerr << "Error opening " << m_filename << std::endl;
       exit (1);
@@ -386,7 +386,7 @@ ICP_Persist::
 
   // Write the state details for each device.
   StateMap::iterator i;
-  for  (i = dstate.begin (); i != dstate.end (); i++) 
+  for  (i = dstate.begin (); i != dstate.end (); i++)
     {
       db << i->first << std::endl;
       db <<  (unsigned long) (i->second.type) << std::endl;
@@ -394,14 +394,14 @@ ICP_Persist::
       if  (i->second.type == thermostat)
         db << i->second.nominal_temp << std::endl;
     }
-  if  (!db) 
+  if  (!db)
     {
       std::cerr << "Error writing " << m_filename << std::endl;
       exit (1);
     }
 
   db.close ();
-  if  (!db) 
+  if  (!db)
     {
       std::cerr << "Error closing " << m_filename << std::endl;
       exit (1);

@@ -631,11 +631,7 @@ TAO_PSDL_Scope::header_initialization (TAO_PSDL_Stream *ps_sh)
 
   *ps_sh << "#if defined(_MSC_VER)";
   ps_sh->nl ();
-  *ps_sh << "#if (_MSC_VER >= 1200)";
-  ps_sh->nl ();
   *ps_sh << "#pragma warning(push)";
-  ps_sh->nl ();
-  *ps_sh << "#endif /* _MSC_VER >= 1200 */";
   ps_sh->nl ();
   *ps_sh << "#pragma warning(disable:4250)";
   ps_sh->nl ();
