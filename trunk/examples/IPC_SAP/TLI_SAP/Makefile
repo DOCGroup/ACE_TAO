@@ -13,9 +13,7 @@ BIN   = ftp-client \
 	db-client \
 	db-server \
 	CPP-client \
-	CPP-server \
-	CPP-client-XA \
-	CPP-server-XA
+	CPP-server
 
 LSRC   = $(addsuffix .cpp,$(BIN))
 
