@@ -1,8 +1,21 @@
+Sat Jun 10 17:33:55 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Configuration.cpp:
+	  Fixed warnings under Linux/KCC
+
+	* bin/auto_compile:
+	  Add separators between the different sections of the log.
+	  Darrell script would be able to generate nice color coded
+	  summaries based on that.
+
+	* include/makeinclude/platform_linux_kcc.GNU:
+	  Add support for the math library.
+
 Fri Jun 09 11:31:24 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (close_singletons): Applied Tom
-	  Arbuckle's <arbuckle@uran.informatik.uni-bonn.de> patch so the
-	  Process_Manager singleton is closed before Reactor singleton.
+        * ace/Service_Config.cpp (close_singletons): Applied Tom
+          Arbuckle's <arbuckle@uran.informatik.uni-bonn.de> patch so the
+          Process_Manager singleton is closed before Reactor singleton.
 
 Fri Jun  9 09:28:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
