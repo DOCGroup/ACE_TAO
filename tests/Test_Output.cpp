@@ -156,7 +156,7 @@ ACE_Test_Output::instance ()
           ACE_NEW_RETURN (ACE_Test_Output::instance_,
                           ACE_Test_Output,
                           0);
-          //ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Test_Output, ACE_Test_Output::instance_)
+          ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Test_Output, ACE_Test_Output::instance_)
         }
     }
   return ACE_Test_Output::instance_;
@@ -177,7 +177,8 @@ ACE_Test_Output::name (void)
 void
 ACE_Test_Output::close_singleton (void)
 {
-  delete ACE_Test_Output::instance ();
+  delete ACE_Test_Output::instance_;
+  ACE_Test_Output::instance_ = 0;
 }
 
 void
