@@ -1,3 +1,9 @@
+Fri Jul  2 17:54:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/ThreadPools/Task_ThreadPool.cpp: Break out of
+	  Manager::svc() when getq() fails. Thanks to J.T. Conklin
+	  <jtc@acorntoolworks.com> for reporting this.
+
 Fri Jul  2 10:42:00 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Based_Pointer_T.inl (operator->): Replaced the use of

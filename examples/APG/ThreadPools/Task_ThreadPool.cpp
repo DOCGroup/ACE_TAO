@@ -86,6 +86,7 @@ public:
           {
             pool.msg_queue ()->deactivate ();
             pool.wait ();
+            break;
           }
 
         // Ask the worker pool to do the job.
