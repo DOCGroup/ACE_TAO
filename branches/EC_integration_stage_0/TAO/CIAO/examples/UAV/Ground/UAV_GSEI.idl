@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file UAV_GSEI.idl
+ *
+ * Definition of the UAV_GS component implementation.
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+
+#ifndef CIAO_UAV_GSI_IDL
+#define CIAO_UAV_GSI_IDL
+
+#include "UAV_GSE.idl"
+
+module BBN_UAV
+{
+  /**
+   * @interface UAV_GS_Exec
+   *
+   */
+  local interface UAV_GS_Exec :
+    CCM_UAV_GS,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_UAV_GSI_IDL*/

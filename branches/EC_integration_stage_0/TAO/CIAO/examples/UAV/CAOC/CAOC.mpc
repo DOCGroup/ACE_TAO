@@ -20,7 +20,7 @@ project(CAOC_stub): ciao_client {
 project(CAOC_svnt) : ciao_servant {
   after += BBN_UAV_svnt CAOC_stub
   sharedname  = CAOC_svnt
-  libs    += BBN_UAV_svnt CAOC_stub 
+  libs    += BBN_UAV_stub BBN_UAV_svnt CAOC_stub 
   
   idlflags  +=  -Wb,export_macro=CAOC_SVNT_Export -Wb,export_include=CAOC_svnt_export.h
   dynamicflags = CAOC_SVNT_BUILD_DLL
@@ -44,17 +44,19 @@ project(CAOC_svnt) : ciao_servant {
 project(CAOC_exec) : ciao_component {
   after   += BBN_UAV_svnt CAOC_svnt
   sharedname = CAOC_exec
-  libs      += CAOC_stub CAOC_svnt 
+  libs      += BBN_UAV_stub BBN_UAV_svnt CAOC_stub CAOC_svnt 
   
   idlflags  +=  -Wb,export_macro=CAOC_EXEC_Export -Wb,export_include=CAOC_exec_export.h
   dynamicflags   = CAOC_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+    CAOCEI.idl
   }
 
   Source_Files {
-    
+    CAOCES.cpp
+    CAOCEIC.cpp
+    CAOCEIS.cpp
     CAOC_exec.cpp
   }
 }

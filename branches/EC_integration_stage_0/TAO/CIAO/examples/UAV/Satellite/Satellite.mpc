@@ -20,7 +20,7 @@ project(Satellite_stub): ciao_client {
 project(Satellite_svnt) : ciao_servant {
   after +=  BBN_UAV_svnt Satellite_stub
   sharedname  = Satellite_svnt
-  libs    += Satellite_stub 
+  libs    += BBN_UAV_stub BBN_UAV_svnt Satellite_stub 
   
   idlflags  +=  -Wb,export_macro=SATELLITE_SVNT_Export -Wb,export_include=Satellite_svnt_export.h
   dynamicflags = SATELLITE_SVNT_BUILD_DLL
@@ -44,17 +44,19 @@ project(Satellite_svnt) : ciao_servant {
 project(Satellite_exec) : ciao_component {
   after   += BBN_UAV_svnt Satellite_svnt
   sharedname = Satellite_exec
-  libs      += Satellite_stub Satellite_svnt 
+  libs      += BBN_UAV_stub BBN_UAV_svnt Satellite_stub Satellite_svnt 
   
   idlflags  +=  -Wb,export_macro=SATELLITE_EXEC_Export -Wb,export_include=Satellite_exec_export.h
   dynamicflags   = SATELLITE_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+    SatelliteEI.idl
   }
 
   Source_Files {
-    
+    SatelliteES.cpp
+    SatelliteEIC.cpp
+    SatelliteEIS.cpp
     Satellite_exec.cpp
   }
 }

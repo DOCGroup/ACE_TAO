@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file UCAV_GSEI.idl
+ *
+ * Definition of the UCAV_GS component implementation.
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+
+#ifndef CIAO_UCAV_GSI_IDL
+#define CIAO_UCAV_GSI_IDL
+
+#include "UCAV_GSE.idl"
+
+module BBN_UAV
+{
+  /**
+   * @interface UCAV_GS_Exec
+   *
+   */
+  local interface UCAV_GS_Exec :
+    CCM_UCAV_GS,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_UCAV_GSI_IDL*/

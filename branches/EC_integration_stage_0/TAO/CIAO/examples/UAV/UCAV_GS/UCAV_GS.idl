@@ -18,7 +18,8 @@ module BBN_UAV
 {
   component UCAV_GS
     {
-      consumes StartMove start_move;
+      publishes StartMove start_move;
+      consumes PrepareMove prepare_move;
     };
 
   home UCAV_GSHome manages UCAV_GS
