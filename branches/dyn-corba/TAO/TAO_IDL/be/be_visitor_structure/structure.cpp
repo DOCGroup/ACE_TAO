@@ -50,6 +50,9 @@ be_visitor_structure::visit_field (be_field *node)
     {
     case TAO_CodeGen::TAO_ROOT_CH:
     case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_UNION_PUBLIC_CH:
+    case TAO_CodeGen::TAO_UNION_PRIVATE_CH:
+    case TAO_CodeGen::TAO_ARRAY_CH:
       {
         be_visitor_field_ch visitor (&ctx);
         status = node->accept (&visitor);
@@ -62,6 +65,7 @@ be_visitor_structure::visit_field (be_field *node)
         break;
       }
     case TAO_CodeGen::TAO_ROOT_CS:
+    case TAO_CodeGen::TAO_UNION_PUBLIC_CS:
       {
         be_visitor_field_cs visitor (&ctx);
         status = node->accept (&visitor);
