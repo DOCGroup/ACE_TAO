@@ -1,3 +1,12 @@
+Fri Jan 22 18:45:48 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* docs/releasenotes/index.html: 
+	Added the information about the generation of skeletons for
+	implementation by the IDL Compiler
+
+	* docs/compiler.html: 
+	Added the IDL compiler options for generating skeletons for implementation
+
 Fri Jan 22 13:08:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/orbsvcs/Sched/Sched_Entry.{cpp, h}
