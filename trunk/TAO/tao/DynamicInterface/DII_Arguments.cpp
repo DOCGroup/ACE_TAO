@@ -22,7 +22,8 @@ namespace TAO
   CORBA::Boolean
   NamedValue_Argument::demarshal (TAO_InputCDR &cdr)
   {
-    ACE_TRY_NEW_ENV
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
       {
         if (this->x_ !=0 && this->x_->value ()->impl ())
           {
@@ -54,7 +55,8 @@ namespace TAO
   CORBA::Boolean
   NVList_Argument::marshal (TAO_OutputCDR &cdr)
   {
-    ACE_TRY_NEW_ENV
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
       {
         this->x_->_tao_encode (cdr,
                                CORBA::ARG_IN | CORBA::ARG_INOUT
@@ -75,8 +77,8 @@ namespace TAO
   NVList_Argument::demarshal (TAO_InputCDR &cdr)
   {
 
-
-    ACE_TRY_NEW_ENV
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
       {
         // Now, get all the "return", "out", and "inout" parameters
         // from the response message body ... return parameter is
