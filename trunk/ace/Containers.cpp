@@ -631,34 +631,41 @@ ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
 }
 
 //--------------------------------------------------
-#if defined (NANBOR_EXP_CODES)
 ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator)
 
 template <class T>
 ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator
 (ACE_Double_Linked_List<T> &dll)
-  : ACE_Double_Linked_List_Iterator_Base (dll)
+  : dllist_ (dll)
 {
+  this->current_ = dll.head_->next_;  // Initialize head ptr.
 }
 
-template <class T> ACE_DNode<T> *
-ACE_Double_Linked_List_Iterator<T>::next (void)
+template <class T> T *
+ACE_Double_Linked_List_Iterator<T>::not_done (void) const
 {
-  return this->not_done ();
-}
-
-template <class T> int
-ACE_Double_Linked_List_Iterator<T>::next (T *&item)
-{
-  ACE_DNode<T> *ptr = this->not_done ();
-
-  if (ptr != 0)
-    {
-      item = &ptr->item_;
-      return 1;
-    }
+  if (this->current_ != this->dllist_.head_)
+    return this->current_;
   else
     return 0;
+}
+
+template <class T> T *
+ACE_Double_Linked_List_Iterator<T>::do_advance (void)
+{
+  if (this->not_done ())
+    {
+      this->current_ = this->current_->next_;
+      return this->not_done ();
+    }
+  else
+    return 0;  
+}
+
+template <class T> T *
+ACE_Double_Linked_List_Iterator<T>::next (void) const
+{
+  return this->not_done ();
 }
 
 template <class T> int
@@ -683,35 +690,34 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List)
 
 template <class T>
 ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
-  : allocator_ (alloc)
+  : size_ (0), allocator_ (alloc)
 {
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  delete this->head_;
   ACE_NEW_MALLOC (this->head_,
-		  (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
-		  ACE_DNode<T>);
+		  (T *) this->allocator_->malloc (sizeof (T)),
+		  T);
 
   this->init_head ();
 }
 
 template <class T>
-ACE_Double_Linked_List<T>::ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &cx)
+ACE_Double_Linked_List<T>::ACE_Double_Linked_List (ACE_Double_Linked_List<T> &cx)
   : allocator_ (cx.allocator_)
 {
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
   
   ACE_NEW_MALLOC (this->head_,
-		  (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
-		  ACE_DNode<T>);
+		  (T *) this->allocator_->malloc (sizeof (T)),
+		  T);
   this->init_head ();
   this->copy_nodes (cx);
 }
 
 template <class T> void
-ACE_Double_Linked_List<T>::operator= (const ACE_Double_Linked_List<T> &cx)
+ACE_Double_Linked_List<T>::operator= (ACE_Double_Linked_List<T> &cx)
 {
   if (this != &cx)
     {
@@ -724,8 +730,8 @@ template <class T>
 ACE_Double_Linked_List<T>::~ACE_Double_Linked_List (void)
 {
   this->delete_nodes ();
-  ACE_DES_FREE_TEMPLATE (this->head_, this->allocator_->free,
-			 ACE_DNode, <T>);
+  ACE_DES_FREE (this->head_, this->allocator_->free,
+                T);
   this->head_ = 0;
 }
 
@@ -741,64 +747,45 @@ ACE_Double_Linked_List<T>::is_full (void) const
   return 0;                     // We have no bound.
 }
 
-template <class T> ACE_DNode<T> *
-ACE_Double_Linked_List<T>::insert_tail (const T &new_item)
+template <class T> T *
+ACE_Double_Linked_List<T>::insert_tail (T *new_item)
 {
-  ACE_DNode<T> *temp;
-
-  // Create a new dummy node.
-  ACE_NEW_MALLOC_RETURN (temp,
-			 (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
-			 ACE_DNode<T> (new_item), -1);
-
-  this->insert_element (temp, 1); // Insert it before <head_>, i.e., at tail.
-  return 0;
+  // Insert it before <head_>, i.e., at tail.
+  this->insert_element (new_item, 1);
+  return new_item;
 }
 
-template <class T> ACE_DNode<T> *
-ACE_Double_Linked_List<T>::insert_head (const T &new_item)
+template <class T> T *
+ACE_Double_Linked_List<T>::insert_head (T *new_item)
 {
-  ACE_DNode<T> *temp;
-
-  // Create a new dummy node.
-  ACE_NEW_MALLOC_RETURN (temp,
-			 (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
-			 ACE_DNode<T> (new_item), -1);
-
-  this->insert_element (temp); // Insert it after <head_>, i.e., at head.
-  return 0;
+  this->insert_element (new_item); // Insert it after <head_>, i.e., at head.
+  return new_item;
 }
 
-template <class T> int
-ACE_Double_Linked_List<T>::delete_head (T &item)
+template <class T> T *
+ACE_Double_Linked_List<T>::delete_head (void)
 {
-  ACE_DNode<T> *temp;
+  T *temp;
 
   if (this->is_empty ())
-    return -1;
+    return 0;
   
   temp = this->head_->next_;
-  item = temp->item_;
   this->remove_element (temp);  // Detach it from the list.
-  ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
-			 ACE_DNode, <T>);
-  return 0;
+  return temp;
 }
 
-template <class T> int
-ACE_Double_Linked_List<T>::delete_tail (T &item)
+template <class T> T *
+ACE_Double_Linked_List<T>::delete_tail (void)
 {
-  ACE_DNode<T> *temp;
+  T *temp;
 
   if (this->is_empty ())
-    return -1;
+    return 0;
   
   temp = this->head_->prev_;
-  item = temp->item_;
   this->remove_element (temp);  // Detach it from the list.
-  ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
-			 ACE_DNode, <T>);
-  return 0;
+  return temp;
 }
 
 template <class T> void
@@ -808,33 +795,14 @@ ACE_Double_Linked_List<T>::reset (void)
 }
 
 template <class T> int
-ACE_Double_Linked_List<T>::get (T *&item, size_t index = 0) const
+ACE_Double_Linked_List<T>::get (T *&item, size_t index)
 {
   ACE_Double_Linked_List_Iterator<T> iter (*this);
 
   for (size_t i = 0; i < index && !iter.done (); i++, iter.advance ())
     ;
-  if (iter.next (item))
-    return 0;
-  else
-    return -1;
-}
 
-template <class T> int
-ACE_Double_Linked_List<T>::set (const T &item, size_t index)
-{
-  ACE_Double_Linked_List_Iterator<T> iter (*this);
-
-  for (size_t i = 0; i < index && !iter.done (); i++, iter.advance ())
-    ;
-  ACE_DNode<T> *temp = iter.next ();
-  if (temp)
-    {
-      temp->item_ = item;
-      return 0;
-    }
-  else
-    return -1;
+  return ((item = iter.next ()) ? 0 : 1);
 }
 
 template <class T> size_t
@@ -849,15 +817,16 @@ ACE_Double_Linked_List<T>::dump (void) const
   // Dump the state of an object.
 }
 
-template <class T> ACE_DNode<T> *
+#if 0
+template <class T> T *
 ACE_Double_Linked_List<T>::find (const T &item)
 {
   ACE_Double_Linked_List_Iterator<T> iter (*this);
 
   for (;!iter.done (); iter.advance ())
     {
-      ACE_DNode<T> *temp = iter.next ();
-      if (temp->item_ == item)
+      T *temp = iter.next ();
+      if (*temp == item)
         return temp;
     }
   return 0;
@@ -866,15 +835,16 @@ ACE_Double_Linked_List<T>::find (const T &item)
 template <class T> int
 ACE_Double_Linked_List<T>::remove (const T &item)
 {
-  ACE_DNode<T> *temp = this->find (item);
+  T *temp = this->find (item);
   if (temp != 0)
       return this->remove (temp);
   else
     return -1;
 }
+#endif /* 0 */
 
 template <class T> int
-ACE_Double_Linked_List<T>::remove (ACE_DNode<T> *n)
+ACE_Double_Linked_List<T>::remove (T *n)
 {
   return this->remove_element (n);
 }
@@ -883,19 +853,56 @@ template <class T> void
 ACE_Double_Linked_List<T>::delete_nodes (void)
 {
   while (! this->is_empty ())
-    this->remove_element (this->head_->next_);
+    {
+      T * temp = this->head_->next_;
+      this->remove_element (temp);
+      delete temp;
+    }
 }
 
 template <class T> void
-ACE_Double_Linked_List<T>::copy_nodes (const ACE_Double_Linked_List<T> &c)
+ACE_Double_Linked_List<T>::copy_nodes (ACE_Double_Linked_List<T> &c)
 {
   ACE_Double_Linked_List_Iterator<T> iter (c);
 
   for (; !iter.done (); iter.advance ())
-    this->insert_head (iter.next ()->item_);
+    this->insert_head (new T (*iter.next ()));
 }
 
-#endif /* NANBOR_EXP_CODE */
+template <class T> void
+ACE_Double_Linked_List<T>::init_head (void)
+{
+  this->head_->next_ = this->head_->prev_ = this->head_;
+}
+  
+template <class T> int
+ACE_Double_Linked_List<T>::insert_element (T *new_item,
+                                           int before,
+                                           T *old_item)
+{
+  if (old_item == 0)
+    old_item = this->head_;
+  if (before)
+    old_item = old_item->prev_;
+
+  (new_item->next_ = old_item->next_)->prev_ = new_item;
+  (new_item->prev_ = old_item)->next_ = new_item;
+  this->size_++;
+  return 0;                     // Well, what will cause errors here?
+}
+
+template <class T> int
+ACE_Double_Linked_List<T>::remove_element (T *item)
+{
+  // Notice that you have to ensure that item is an element of this
+  // list.  We can't do much checking here.
+  if (item == this->head_ || this->size () == 0)      // Can't remove head
+    return -1;
+  (item->prev_->next_ = item->next_)->prev_ = item->prev_;
+  this->size_--;
+  return 0;
+}
+  
 //--------------------------------------------------
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set)
@@ -1337,24 +1344,30 @@ ACE_Node<T>::ACE_Node (const ACE_Node<T> &s)
 // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
-#if defined (NANBOT_EXP_CODES)
+#if 0
 template <class T>
 ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
-  : ACE_DNode_Base (n, p), item_ (i)
+  : item_ (i), next_ (n), prev_ (p)
 {
 }
 
 template <class T>
 ACE_DNode<T>::ACE_DNode (const ACE_DNode<T> &i)
-  : ACE_DNode_Base (i.next_, i.prev_), item_ (i.item_)
+  : item_ (i.item_), next_ (i.next_), prev_ (i.prev_)
 {
+}
+
+template <class T> T*
+ACE_DNode<T>::item (void)
+{
+  return &this->item_;
 }
 
 template <class T>
 ACE_DNode<T>::~ACE_DNode (void)
 {
 }
-#endif /* NANBOR_EXP_CODES */
+#endif /* 0 */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
 

@@ -21,7 +21,7 @@
 #include "ace/ACE.h"
 #endif /* !ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/Thread.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Synch_T.h"
 #include "ace/Signal.h"
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -374,10 +374,9 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     restart_ (1),  // Restart by default...
     ostream_ (0),
     trace_depth_ (0),
-    thr_handle_ (0),
     trace_active_ (0),
     tracing_enabled_ (1), // On by default?
-    thr_state_ (0),
+    thr_desc_ (0),
     priority_mask_ (LM_SHUTDOWN // By default, all priorities are enabled.
                     | LM_TRACE
                     | LM_DEBUG
@@ -986,8 +985,9 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\trace_active_ = %d\n", this->trace_active_));
   ACE_DEBUG ((LM_DEBUG, "\tracing_enabled_ = %d\n", this->tracing_enabled_));
   ACE_DEBUG ((LM_DEBUG, "\npriority_mask_ = %d\n", this->priority_mask_));
-  if (this->thr_state_ != 0)
-    ACE_DEBUG ((LM_DEBUG, "\thr_state_ = %d\n", *this->thr_state_));
+  if (this->thr_desc ()->state () != 0)
+    ACE_DEBUG ((LM_DEBUG, "\thr_state_ = %d\n",
+                this->thr_desc ()->state ()));
   ACE_DEBUG ((LM_DEBUG, "\nmsg_off_ = %d\n", this->msg_off_));
   ACE_Log_Msg_message_queue->dump ();
 
@@ -1081,28 +1081,16 @@ ACE_Log_Msg::trace_active (int value)
   this->trace_active_ = value;
 }
 
-ACE_Thread_State *
-ACE_Log_Msg::thr_state (void)
+ACE_Thread_Descriptor *
+ACE_Log_Msg::thr_desc (void) const
 {
-  return this->thr_state_;
+  return this->thr_desc_;
 }
 
 void
-ACE_Log_Msg::thr_state (ACE_Thread_State *ts)
+ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
 {
-  this->thr_state_ = ts;
-}
-
-ACE_hthread_t *
-ACE_Log_Msg::thr_handle (void)
-{
-  return this->thr_handle_;
-}
-
-void
-ACE_Log_Msg::thr_handle (ACE_hthread_t *th)
-{
-  this->thr_handle_ = th;
+  this->thr_desc_ = td;
 }
 
 // Enable the tracing facility on a per-thread basis.

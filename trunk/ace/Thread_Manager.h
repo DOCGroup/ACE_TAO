@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-//
+// 
 // = FILENAME
-//    Thread_Manager.h
+//    Thread_Manager.h 
 //
 // = AUTHOR
-//    Doug Schmidt
-//
+//    Doug Schmidt 
+// 
 // ============================================================================
 
 #if !defined (ACE_THREAD_MANAGER_H)
@@ -31,6 +31,8 @@ class ACE_Export ACE_Thread_Descriptor
   //    of the <Thread_Manager>.
 {
 friend class ACE_Thread_Manager;
+friend class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 public:
   // = Initialization method.
   ACE_Thread_Descriptor (void);
@@ -56,8 +58,8 @@ public:
   // Dump the state of an object.
 
   int at_exit (void *object,
-               ACE_CLEANUP_FUNC cleanup_hook,
-               void *param);
+	       ACE_CLEANUP_FUNC cleanup_hook,
+	       void *param);
   // Register an object (or array) for cleanup at thread termination.
   // "cleanup_hook" points to a (global, or static member) function
   // that is called for the object or array when it to be destroyed.
@@ -71,7 +73,7 @@ public:
 private:
   ACE_thread_t thr_id_;
   // Unique thread ID.
-
+    
   ACE_hthread_t thr_handle_;
   // Unique handle to thread (used by Win32 and AIX).
 
@@ -82,7 +84,7 @@ private:
   // Current state of the thread.
 
   ACE_Cleanup_Info cleanup_info_;
-  // Stores the cleanup info for a thread.
+  // Stores the cleanup info for a thread.  
   // @@ Note, this should be generalized to be a stack of
   // <ACE_Cleanup_Info>s.
 
@@ -94,86 +96,11 @@ private:
 
   ACE_Task_Base *task_;
   // Pointer to an <ACE_Task_Base> or NULL if there's no <ACE_Task_Base>;
+
+  ACE_Thread_Descriptor *next_;
+
+  ACE_Thread_Descriptor *prev_;
 };
-
-//////////////////////////////////////////////////
-
-// @@ Thread handle comparison, how?  When we duplicate a handle, (on
-// Win32) the returning handle won't have the same value as the
-// original handle.  Therefore, I don't see a way to distinguish
-// whether two handles point to the same theread or not.
-// Motto: Always use thread ids to manipulate Thread_Manager. ???
-
-#if defined (NANBOR_EXP_CODES)
-CLASS ACE_Export ACE_Thread_Descriptor_Adapter
-  // = TITLE
-  //     Wrap ACE_Thread_Descriptor for putting it into a container.
-  //
-  // = DESCRIPTION
-  //     This class contains a pointer to a ACE_Thread_Descriptor.
-  //     It then gets put into a container.  This is to avoid extra
-  //     data copying and also expose ACE_Thread_Descriptor's methods
-  //     to the external world.
-  //
-  //     *I assume no two threads will have the same thread id.*
-{
-public:
-  ACE_Thread_Descriptor_Adapter ();
-  // Default constructor.  Used by container classes.
-
-  ACE_Thread_Descriptor_Adapter (ACE_Thread_Descriptor *thr_desc);
-  // Construct a adapter containing <thr_desc>.  User should call this method.
-
-  ACE_Thread_Descriptor_Adapter (const ACE_Thread_Descriptor_Adapter &td);
-  // Copy constructor.  Required by container classes.
-
-  ACE_Thread_Descriptor_Adatper& operator= (const ACE_Thread_Descriptor_Adapter &td);
-  // Assignment operation.  Required by container classes.
-
-  int operator== (const ACE_Thread_Descriptor_Adapter &td) const;
-  // Comparison operator.  Required by container classes.
-
-  // = Accessing the underlying methods of ACE_Thread_Descriptor.
-
-  ACE_thread_t self (void);
-  // Unique thread id.
-
-  void self (ACE_hthread_t &);
-  // Unique handle to thread (used by Win32 and AIX).
-
-  int grp_id (void);
-  // Group ID.
-
-  ACE_Thread_State state (void);
-  // Current state of the thread.
-
-  ACE_Task_Base *task (void);
-  // Return the pointer to an <ACE_Task_Base> or NULL if there's no
-  // <ACE_Task_Base> associated with this thread.;
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  int at_exit (void *object,
-               ACE_CLEANUP_FUNC cleanup_hook,
-               void *param);
-  // Register an object (or array) for cleanup at thread termination.
-  // "cleanup_hook" points to a (global, or static member) function
-  // that is called for the object or array when it to be destroyed.
-  // It may perform any necessary cleanup specific for that object or
-  // its class.  "param" is passed as the second parameter to the
-  // "cleanup_hook" function; the first parameter is the object (or
-  // array) to be destroyed.  Returns 0 on success, non-zero on
-  // failure: -1 if virtual memory is exhausted or 1 if the object (or
-  // arrayt) had already been registered.
-
-  ACE_Thread_Descriptor *get_thread_descriptor (void);
-
-private:
-  ACE_Thread_Descriptor *thr_desc_;
-  // Underlying thread descriptor location.
-};
-#endif /* NANBOR_EXP_CODES */
 
 // Forward declaration.
 class ACE_Thread_Control;
@@ -182,7 +109,7 @@ class ACE_Thread_Control;
 // declaration.  But, it caused compilation problems on g++/VxWorks/i960
 // with -g.  Note that ACE_Thread_Manager::THR_FUNC is only used
 // internally in ACE_Thread_Manager, so it's not useful for anyone else.
-typedef int (ACE_Thread_Manager::*THR_FUNC)(int, int);
+typedef int (ACE_Thread_Manager::*THR_FUNC)(ACE_Thread_Descriptor*, int);
 
 class ACE_Export ACE_Thread_Manager
   // = TITLE
@@ -193,13 +120,8 @@ class ACE_Export ACE_Thread_Manager
 {
 friend class ACE_Thread_Control;
 public:
-  enum
-  {
-    DEFAULT_SIZE = 100
-  };
-
   // = Initialization and termination methods.
-  ACE_Thread_Manager (size_t size = ACE_Thread_Manager::DEFAULT_SIZE);
+  ACE_Thread_Manager (void);
   virtual ~ACE_Thread_Manager (void);
 
   static ACE_Thread_Manager *instance (void);
@@ -212,47 +134,44 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
 
-  int open (size_t size = DEFAULT_SIZE);
-  // Initialize the manager with room for SIZE threads.
-
-  int close (void);
+  int close (void);		
   // Release all resources.
 
-  int spawn (ACE_THR_FUNC func,
-             void *args = 0,
-             long flags = THR_NEW_LWP,
-             ACE_thread_t * = 0,
-             ACE_hthread_t *t_handle = 0,
-             long priority = ACE_DEFAULT_THREAD_PRIORITY,
-             int grp_id = -1,
-             void *stack = 0,
-             size_t stack_size = 0);
-  // Create a new thread, which executes <func>.
+  int spawn (ACE_THR_FUNC func, 
+	     void *args = 0,
+	     long flags = THR_NEW_LWP, 
+	     ACE_thread_t * = 0, 
+	     ACE_hthread_t *t_handle = 0,
+	     long priority = ACE_DEFAULT_THREAD_PRIORITY,
+	     int grp_id = -1,
+	     void *stack = 0, 
+	     size_t stack_size = 0);
+  // Create a new thread, which executes <func>.  
   // Returns: on success a unique group id that can be used to control
   // other threads added to the same group.  On failure, returns -1.
 
-  int spawn_n (size_t n,
-               ACE_THR_FUNC func,
-               void *args = 0,
-               long flags = THR_NEW_LWP,
-               long priority = ACE_DEFAULT_THREAD_PRIORITY,
-               int grp_id = -1,
-               ACE_Task_Base *task = 0,
-               ACE_hthread_t thread_handles[] = 0);
-  // Create N new threads, all of which execute <func>.
+  int spawn_n (size_t n, 
+	       ACE_THR_FUNC func, 
+	       void *args = 0,
+	       long flags = THR_NEW_LWP,
+	       long priority = ACE_DEFAULT_THREAD_PRIORITY,
+	       int grp_id = -1,
+	       ACE_Task_Base *task = 0,
+	       ACE_hthread_t thread_handles[] = 0);
+  // Create N new threads, all of which execute <func>.  
   // Returns: on success a unique group id that can be used to control
   // all of the threads in the same group.  On failure, returns -1.
 
-  int spawn_n (ACE_thread_t thread_ids[],
-               size_t n,
-               ACE_THR_FUNC func,
-               void *args,
-               long flags,
-               long priority = ACE_DEFAULT_THREAD_PRIORITY,
-               int grp_id = -1,
-               void *stack[] = 0,
-               size_t stack_size[] = 0,
-               ACE_hthread_t thread_handles[] = 0);
+  int spawn_n (ACE_thread_t thread_ids[], 
+	       size_t n, 
+	       ACE_THR_FUNC func, 
+	       void *args,
+	       long flags, 
+	       long priority = ACE_DEFAULT_THREAD_PRIORITY,
+	       int grp_id = -1,
+	       void *stack[] = 0,
+	       size_t stack_size[] = 0,
+	       ACE_hthread_t thread_handles[] = 0);
   // Spawn N new threads, which execute <func> with argument <arg>.
   // If <thread_ids> != 0 the thread_ids of successfully spawned
   // threads will be placed into the <thread_ids> buffer (which must
@@ -271,7 +190,7 @@ public:
   // non-0 then <ACE_Thread::exit> is called to exit the thread, in
   // which case <status> is passed as the exit value of the thread.
 
-  int wait (const ACE_Time_Value *timeout = 0);
+  int wait (const ACE_Time_Value *timeout = 0);	
   // Block until there are no more threads running in the
   // <Thread_Manager> or <timeout> expires.  Note that <timeout> is
   // treated as "absolute" time.  Returns 0 on success and -1 on
@@ -282,21 +201,30 @@ public:
   // Returns 0 on success and -1 on failure.
 
   // = Accessors for ACE_Thread_Descriptors.
-  int thread_descriptor (ACE_thread_t, ACE_Thread_Descriptor &);
-  // Return the thread descriptor (indexed by ACE_thread_t).  Returns 0 on
-  // success and -1 if not found.
+  ACE_Thread_Descriptor *thread_desc_self (void);
+  // Get a pointer to the calling thread's own thread_descriptor.
+  // This must be called from a spawn thread.  This function will
+  // try to fetch this info from TSS, if it is not cached, then
+  // it will look it up and cache it.
+  // This function must be called with lock held.
 
-  int hthread_descriptor (ACE_hthread_t, ACE_Thread_Descriptor &);
-  // Return the thread descriptor (indexed by ACE_hthread_t).  Returns 0
-  // on success and -1 if not found.
+  ACE_Thread_Descriptor *thread_descriptor (ACE_thread_t);
+  // Return a pointer to the thread's Thread_Descriptor,
+  // 0 if fail.
+
+  ACE_Thread_Descriptor *hthread_descriptor (ACE_hthread_t);
+  // Return a pointer to the thread's Thread_Descriptor,
+  // 0 if fail.
 
   int thr_self (ACE_hthread_t &);
-  // Passes out the "real" handle to the calling thread, caching it if
-  // necessary in TSS to speed up subsequent lookups.  This is
+
+  // Return the "real" handle to the calling thread, caching it if
+  // necessary in TSS to speed up subsequent lookups. This is
   // necessary since on some platforms (e.g., Win32) we can't get this
   // handle via direct method calls.  Notice that you should *not* close
   // the handle passed back from this method.  It is used internally
-  // by Thread Manager.
+  // by Thread Manager.  On the other hand, you *have to* use this internal
+  // thread handle when working on Thread_Manager.  Return -1 if fail.
 
   ACE_thread_t thr_self (void);
   // Return the unique ID of the thread.  This is not strictly
@@ -310,7 +238,7 @@ public:
 
   // = Suspend methods, which isn't supported on POSIX pthreads (will not block).
   int suspend_all (void);
-  // Suspend all threads
+  // Suspend all threads 
   int suspend (ACE_thread_t);
   // Suspend a single thread.
   int suspend_grp (int grp_id);
@@ -320,7 +248,7 @@ public:
 
   // = Resume methods, which isn't supported on POSIX pthreads (will not block).
   int resume_all (void);
-  // Resume all stopped threads
+  // Resume all stopped threads 
   int resume (ACE_thread_t);
   // Resume a single thread.
   int resume_grp (int grp_id);
@@ -330,7 +258,7 @@ public:
 
   // = Kill methods, send signals -- which isn't supported on Win32 (will not block).
   int kill_all (int signum);
-  // Send signum to all stopped threads
+  // Send signum to all stopped threads 
   int kill (ACE_thread_t, int signum);
   // Kill a single thread.
   int kill_grp (int grp_id, int signum);
@@ -354,7 +282,7 @@ public:
   // methods in <ACE_Thread Manager>. For example, the <apply_task>
   // method resembles the <apply_thr> method, and <suspend_task>
   // resembles <suspend_thr>.
-
+  
   // = Operations on ACE_Tasks.
   int wait_task (ACE_Task_Base *task);
   // Block until there are no more threads running in <task>.  Returns
@@ -378,22 +306,22 @@ public:
   int num_threads_in_task (ACE_Task_Base *task);
   // Returns the number of threads in an <ACE_Task_Base>.
 
-  int task_list (int grp_id,
-                 ACE_Task_Base *task_list[],
-                 size_t n);
+  int task_list (int grp_id, 
+		 ACE_Task_Base *task_list[],
+		 size_t n);
   // Returns in <task_list> a list of up to <n> <ACE_Tasks> in a
   // group.  The caller must allocate the memory for <task_list>
 
-  int thread_list (ACE_Task_Base *task,
-                   ACE_thread_t thread_list[],
-                   size_t n);
+  int thread_list (ACE_Task_Base *task, 
+		   ACE_thread_t thread_list[],
+		   size_t n);
   // Returns in <thread_list> a list of up to <h> thread ids in an
   // <ACE_Task_Base>.  The caller must allocate the memory for
   // <thread_list>.
 
-  int hthread_list (ACE_Task_Base *task,
-                    ACE_hthread_t hthread_list[],
-                    size_t n);
+  int hthread_list (ACE_Task_Base *task, 
+		    ACE_hthread_t hthread_list[],
+		    size_t n);
   // Returns in <hthread_list> a list of up to <n> thread handles in
   // an <ACE_Task_Base>.  The caller must allocate memory for
   // <hthread_list>.
@@ -403,8 +331,8 @@ public:
   int get_grp (ACE_Task_Base *task, int &grp_id);
 
   int at_exit (void *object,
-               ACE_CLEANUP_FUNC cleanup_hook,
-               void *param);
+	       ACE_CLEANUP_FUNC cleanup_hook,
+	       void *param);
   // Register an object (or array) for cleanup at thread termination.
   // "cleanup_hook" points to a (global, or static member) function
   // that is called for the object or array when it to be destroyed.
@@ -414,59 +342,61 @@ public:
   // array) to be destroyed.  "cleanup_hook", for example, may delete
   // the object (or array).
 
-  void dump (void) const;
+  void dump (void);
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
 protected:
-  virtual int spawn_i (ACE_THR_FUNC func,
-                       void *args,
-                       long flags,
-                       ACE_thread_t * = 0,
-                       ACE_hthread_t *t_handle = 0,
-                       long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                       int grp_id = -1,
-                       void *stack = 0,
-                       size_t stack_size = 0,
-                       ACE_Task_Base *task = 0);
+  virtual int spawn_i (ACE_THR_FUNC func, 
+		       void *args, 
+		       long flags, 
+		       ACE_thread_t * = 0, 
+		       ACE_hthread_t *t_handle = 0,
+		       long priority = ACE_DEFAULT_THREAD_PRIORITY,
+		       int grp_id = -1,
+		       void *stack = 0, 
+		       size_t stack_size = 0,
+		       ACE_Task_Base *task = 0);
   // Create a new thread (must be called with locks held).
 
   void run_thread_exit_hooks (int i);
   // Run the registered hooks when the thread exits.
 
-  int resize (size_t);
-  // Resize the pool of Thread_Descriptors.
-
-  int find_thread (ACE_thread_t t_id);
+  ACE_Thread_Descriptor *find_thread (ACE_thread_t t_id);
   // Locate the index of the table slot occupied by <t_id>.  Returns
   // -1 if <t_id> is not in the table doesn't contain <t_id>.
 
-  int find_hthread (ACE_hthread_t h_id);
+  ACE_Thread_Descriptor *find_hthread (ACE_hthread_t h_id);
   // Locate the index of the table slot occupied by <h_id>.  Returns
   // -1 if <h_id> is not in the table doesn't contain <h_id>.
 
-  int find_task (ACE_Task_Base *task, int index = -1);
-  // Locate the index of the table slot occupied by <task>.  Returns
-  // -1 if <task> is not in the table doesn't contain <task>.
+  ACE_Thread_Descriptor *find_task (ACE_Task_Base *task, int index = -1);
+  // Locate the thread descriptor address of the list occupied by
+  // <task>.  Returns 0 if <task> is not in the table doesn't contain
+  // <task>.
 
   int insert_thr (ACE_thread_t t_id,
-                  ACE_hthread_t,
-                  int grp_id = -1,
-                  long flags = 0);
+		  ACE_hthread_t,
+		  int grp_id = -1,
+		  long flags = 0);
   // Insert a thread in the table (checks for duplicates).
 
-  int append_thr (ACE_thread_t t_id, ACE_hthread_t,
-                  ACE_Thread_State,
-                  int grp_id,
-                  ACE_Task_Base *task = 0,
-                  long flags = 0);
+  int append_thr (ACE_thread_t t_id, ACE_hthread_t, 
+		  ACE_Thread_State,
+		  int grp_id,
+		  ACE_Task_Base *task = 0,
+		  long flags = 0);
   // Append a thread in the table (adds at the end, growing the table
   // if necessary).
 
-  void remove_thr (int i);
+  void remove_thr (ACE_Thread_Descriptor *tda);	
   // Remove thread from the table.
+
+  void remove_thr_self(void);
+  // Same as above but must be called from the context of the thread
+  // that is to be removed.
 
   // = The following four methods implement a simple scheme for
   // operating on a collection of threads atomically.
@@ -485,35 +415,28 @@ protected:
   int apply_all (THR_FUNC, int  = 0);
   // Apply <func> to all members of the table.
 
-  int join_thr (int i);
-  // Join the thread at index <i>.
+  int join_thr (ACE_Thread_Descriptor *tda);
+  // Join the thread described in <tda>.
 
-  int resume_thr (int i);
-  // Resume the thread at index <i>.
+  int resume_thr (ACE_Thread_Descriptor *tda);
+  // Resume the thread described in <tda>.
 
-  int suspend_thr (int i);
-  // Suspend the thread at index <i>.
+  int suspend_thr (ACE_Thread_Descriptor *tda);
+  // Suspend the thread described in <tda>.
 
-  int kill_thr (int i, int signum);
-  // Send signal <signum> to the thread at index <i>.
+  int kill_thr (ACE_Thread_Descriptor *tda, int signum);
+  // Send signal <signum> to the thread described in <tda>.
 
-  int cancel_thr (int i);
-  // Set the cancellation flag for the thread at index <i>.
+  int cancel_thr (ACE_Thread_Descriptor *tda);
+  // Set the cancellation flag for the thread described in <tda>.
 
-  ACE_Thread_Descriptor *thr_table_;
-  // Vector that describes thread state within the Thread_Manager.
+  ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
+  // Keeping a list of threads within the thread manager.
 
 #if !defined (VXWORKS)
   ACE_Unbounded_Queue<ACE_Thread_Descriptor> terminated_thr_queue_;
   // Collect terminated but not yet joined thread entries.
 #endif /* VXWORKS */
-
-  size_t max_table_size_;
-  // Maximum number of threads we can manage (should be dynamically
-  // allocated).
-
-  size_t current_count_;
-  // Current number of threads we are managing.
 
   int grp_id_;
   // Keeps track of the next group id to assign.
@@ -552,8 +475,8 @@ class ACE_Export ACE_Thread_Control
   //     <ACE_Thread_Manager>.
 {
 public:
-  ACE_Thread_Control (ACE_Thread_Manager *tm = 0,
-                      int insert = 0);
+  ACE_Thread_Control (ACE_Thread_Manager *tm = 0, 
+		      int insert = 0);
   // Initialize the thread control object.  If <insert> != 0, then
   // register the thread with the Thread_Manager.
 
@@ -648,3 +571,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_THREAD_MANAGER_H */
+
