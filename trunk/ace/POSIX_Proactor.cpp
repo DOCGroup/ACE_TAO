@@ -1575,6 +1575,8 @@ ACE_POSIX_AIOCB_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
 
 // *********************************************************************
 
+#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
+
 ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (size_t max_aio_operations)
   :  ACE_POSIX_AIOCB_Proactor (max_aio_operations,
                                ACE_POSIX_Proactor::PROACTOR_SIG)
@@ -1998,6 +2000,8 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
   return ret_aio + ret_que > 0 ? 1 : 0;
 }
 
+#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+
 // *********************************************************************
 
 ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer (ACE_Handler &handler,
@@ -2020,6 +2024,7 @@ ACE_POSIX_Asynch_Timer::complete (size_t       /* bytes_transferred */,
 {
   this->handler_.handle_time_out (this->time_, this->act ());
 }
+
 
 // *********************************************************************
 
