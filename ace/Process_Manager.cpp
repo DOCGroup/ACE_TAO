@@ -125,7 +125,7 @@ ACE_Process_Manager::~ACE_Process_Manager (void)
 // held...
 
 pid_t
-ACE_Process_Manager::start (ACE_Process_Options &options)
+ACE_Process_Manager::spawn (ACE_Process_Options &options)
 {
   ACE_TRACE ("ACE_Process_Manager::start");
 
@@ -149,7 +149,7 @@ ACE_Process_Manager::start (ACE_Process_Options &options)
 // Create N new processs running FUNC.
 
 int 
-ACE_Process_Manager::start_n (size_t n, ACE_Process_Options &options)
+ACE_Process_Manager::spawn_n (size_t n, ACE_Process_Options &options)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn_n");
 

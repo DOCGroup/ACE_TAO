@@ -63,13 +63,13 @@ public:
   int close (void);		
   // Release all resources.
 
-  pid_t start (ACE_Process_Options &options);
+  pid_t spawn (ACE_Process_Options &options);
   // Create a new process using ACE_Process::start (<options>).
 
   // Returns: on success a unique group id that can be used to control
   // other processs added to the same group.  On failure, returns -1.
 
-  int start_n (size_t n, ACE_Process_Options &options);
+  int spawn_n (size_t n, ACE_Process_Options &options);
   // Create N new processs.
   
   // Returns: on success a unique group id that can be used to control
