@@ -1,0 +1,55 @@
+--- orig/ImplicitActivationPolicyC.h	2004-09-08 13:11:19.851485400 +0200
++++ ImplicitActivationPolicyC.h	2004-09-08 13:52:02.734178200 +0200
+@@ -75,6 +75,8 @@
+ // TAO_IDL - Generated from 
+ // be\be_visitor_root/root_ch.cpp:63
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ namespace TAO
+ {
+   class Collocation_Proxy_Broker;
+@@ -247,6 +249,8 @@
+ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ImplicitActivationPolicy_ptr *); // non-copying
+ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ImplicitActivationPolicy_ptr &);
+ 
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
++
+ // TAO_IDL - Generated from
+ // be\be_codegen.cpp:964
+ 
+--- orig/ImplicitActivationPolicyC.cpp	2004-09-08 13:11:19.851485400 +0200
++++ ImplicitActivationPolicyC.cpp	2004-09-08 13:52:23.293741400 +0200
+@@ -45,6 +45,8 @@
+ // TAO_IDL - Generated from
+ // be\be_visitor_arg_traits.cpp:64
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ // Arg traits specializations.
+ namespace TAO
+ {
+@@ -238,3 +240,5 @@
+       >
+ 
+ #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
++
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+--- orig/ImplicitActivationPolicyA.cpp	2004-09-08 13:11:19.861499800 +0200
++++ ImplicitActivationPolicyA.cpp	2004-09-08 13:52:41.299632600 +0200
+@@ -32,6 +32,8 @@
+ // TAO_IDL - Generated from
+ // be\be_visitor_typecode/typecode_defn.cpp:290
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicy[] =
+ {
+     TAO_ENCAP_BYTE_ORDER, // byte order
+@@ -160,3 +162,5 @@
+       >
+ 
+ #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+\ No newline at end of file
++
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
