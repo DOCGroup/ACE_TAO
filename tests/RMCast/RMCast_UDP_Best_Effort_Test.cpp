@@ -19,6 +19,7 @@
 #include "ace/RMCast/RMCast_Reassembly.h"
 
 #include "ace/Task.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, RMCast_UDP_Best_Effort_Test, "$Id$")
 

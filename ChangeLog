@@ -1,3 +1,9 @@
+Sun Aug  3 20:55:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/RMCast/RMCast_Reassembly_Test.cpp:
+	* tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp: #included ACE.h to
+	  get rid of compile errors in the full reactor build. 
+
 Sat Aug  2 17:50:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/WIN32_Asynch_IO.h:
