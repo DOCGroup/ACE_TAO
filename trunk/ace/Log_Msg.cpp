@@ -244,13 +244,25 @@ ACE_Log_Msg::instance (void)
 void
 ACE_Log_Msg::disable_debug_messages()
   // Clears the LM_DEBUG flag from the default priority mask used to
-  // initialise ACE_Log_Msg instances, as well as the current instance.
+  // initialize ACE_Log_Msg instances, as well as the current instance.
 {
   default_priority_mask_ &= ~LM_DEBUG;
   ACE_Log_Msg *currentInstance = ACE_Log_Msg::instance();
-  currentInstance->priority_mask(currentInstance->priority_mask() &
-~LM_DEBUG);
+  currentInstance->priority_mask(currentInstance->priority_mask() 
+                                 & ~LM_DEBUG);
 }
+
+void
+ACE_Log_Msg::enable_debug_messages()
+  // Sets the LM_DEBUG flag in the default priority mask used to
+  // initialize ACE_Log_Msg instances, as well as the current instance.
+{
+  default_priority_mask_ |= LM_DEBUG;
+  ACE_Log_Msg *currentInstance = ACE_Log_Msg::instance();
+  currentInstance->priority_mask(currentInstance->priority_mask() 
+                                 | LM_DEBUG);
+}
+
 
 // Name of the local host.
 const ASYS_TCHAR *ACE_Log_Msg::local_host_ = 0;
