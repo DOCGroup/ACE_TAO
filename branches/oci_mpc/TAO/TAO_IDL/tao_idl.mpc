@@ -1,4 +1,4 @@
-project(TAO_IDL_EXE) : aceexe {
+project(TAO_IDL_EXE) : aceexe, taoversion {
   exename   = tao_idl
   libs     += TAO_IDL_BE TAO_IDL_FE
   includes += include be_include fe
@@ -22,7 +22,7 @@ project(TAO_IDL_EXE) : aceexe {
 }
 
 
-project(TAO_IDL_BE) : acelib {
+project(TAO_IDL_BE) : acelib, taoversion {
   sharedname = TAO_IDL_BE
   libs      += TAO_IDL_FE
   includes  += include be_include fe
@@ -105,7 +105,7 @@ project(TAO_IDL_BE) : acelib {
 }
 
 
-project(TAO_IDL_FE) : acelib {
+project(TAO_IDL_FE) : acelib, taoversion {
   sharedname = TAO_IDL_FE
   includes  += include fe
   dllflags   = TAO_IDL_FE_BUILD_DLL
