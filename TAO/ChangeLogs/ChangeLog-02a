@@ -1,9 +1,32 @@
+Wed Apr 18 19:17:37 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Makefile:
+        * performance-tests/Throughput/Makefile:
+        * performance-tests/Throughput/Makefile.bor:
+        * performance-tests/Throughput/README:
+        * performance-tests/Throughput/Receiver.cpp:
+        * performance-tests/Throughput/Receiver.h:
+        * performance-tests/Throughput/Receiver_Factory.cpp:
+        * performance-tests/Throughput/Receiver_Factory.h:
+        * performance-tests/Throughput/Test.idl:
+        * performance-tests/Throughput/client.bor:
+        * performance-tests/Throughput/client.cpp:
+        * performance-tests/Throughput/run_test.pl:
+        * performance-tests/Throughput/server.bor:
+        * performance-tests/Throughput/server.cpp:
+        * performance-tests/Throughput/svc.conf:
+        * performance-tests/Thruput/*:
+          Remove the old Thruput test and replaced it with a simpler
+          test.  The new test can be put in the nightly regression test
+          and it would be easy to extract performance number for the
+          performance metrics charts.
+
 Wed Apr 18 17:06:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
 
-          Checking in changes of 
+          Checking in changes of
 
           Wed Apr 18 15:24:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -19,7 +42,7 @@ Wed Apr 18 16:28:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-          
+
           Reverted change below until I can find the problem it
           was causing with normal running of the IDL compiler.
 
@@ -31,36 +54,36 @@ Wed Apr 18 15:24:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Fixed typecode generation for structs and exceptions
           that have an enum defined inside. The enum member names
           were inserted into the typecode and added to the member
-          count. Thanks to Tom Lake <Tom.Lake@glossa.co.uk> for 
+          count. Thanks to Tom Lake <Tom.Lake@glossa.co.uk> for
           reporting the problem.
 
 Wed Apr 18 12:10:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp (read_messages): Reverted the
-	  change from this "Wed Apr 18 10:56:30 2001  Balachandran
-	  Natarajan  <bala@cs.wustl.edu>". Going over the fix from
-	  scratch as the fix is wrong. 
+        * tao/GIOP_Message_Handler.cpp (read_messages): Reverted the
+          change from this "Wed Apr 18 10:56:30 2001  Balachandran
+          Natarajan  <bala@cs.wustl.edu>". Going over the fix from
+          scratch as the fix is wrong.
 
 Wed Apr 18 10:56:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional_NestedUpcall/run_test.pl: Fixed the
-	  run_test.pl script. Thanks to Carlos for pointing out that this
-	  script does not work.
+        * tests/BiDirectional_NestedUpcall/run_test.pl: Fixed the
+          run_test.pl script. Thanks to Carlos for pointing out that this
+          script does not work.
 
 Wed Apr 18 10:28:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp: Added an extra check for errno ==
-	  EAGAIN. After a read, if the errno is set to EAGAIN, a value of
-	  0 was returned to the reactor. This was because errno values of
-	  EAGAIN and EWOULDBLOCK are same. This made the reactor call the
-	  handle_input () again and again. Every call would return a 0
-	  with errno set to EAGAIN. Thanks to Jody Hagins
-	  <jody@atdesk.com> for coming up with a test case that
-	  demonstrated the problem. Need to check the test case in with
-	  some modifications. 
-	
-	* tao/GIOP_Message_Base.cpp: Made some cosmetic fixes.
-	
+        * tao/GIOP_Message_Handler.cpp: Added an extra check for errno ==
+          EAGAIN. After a read, if the errno is set to EAGAIN, a value of
+          0 was returned to the reactor. This was because errno values of
+          EAGAIN and EWOULDBLOCK are same. This made the reactor call the
+          handle_input () again and again. Every call would return a 0
+          with errno set to EAGAIN. Thanks to Jody Hagins
+          <jody@atdesk.com> for coming up with a test case that
+          demonstrated the problem. Need to check the test case in with
+          some modifications.
+
+        * tao/GIOP_Message_Base.cpp: Made some cosmetic fixes.
+
 Wed Apr 18 10:28:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_be_visitor_union/union_cs.cpp:
@@ -75,34 +98,34 @@ Wed Apr 18 10:28:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Apr 18 09:44:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Leader_Follower.h: Added TAO_Export macros. Looks to me that
-	  this should take care of link errors on Win32.
+        * tao/Leader_Follower.h: Added TAO_Export macros. Looks to me that
+          this should take care of link errors on Win32.
 
 Wed Apr 18 08:49:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/Thread_Pool/server.cpp (main): 
-	* tests/RTCORBA/Thread_Pool/client.cpp (main): 
+        * tests/RTCORBA/Thread_Pool/server.cpp (main):
+        * tests/RTCORBA/Thread_Pool/client.cpp (main):
 
-	  Couple of minor warning fixes.
+          Couple of minor warning fixes.
 
 Wed Apr 18 03:43:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* examples/PluggableUDP/tests/Basic/client.dsp:
-	* examples/PluggableUDP/tests/Basic/server.dsp:
-	* examples/PluggableUDP/tests/Performance/client.dsp:
-	* examples/PluggableUDP/tests/Performance/server.dsp:
-	* examples/PluggableUDP/tests/SimplePerformance/client.dsp:
-	* examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+        * examples/PluggableUDP/tests/Basic/client.dsp:
+        * examples/PluggableUDP/tests/Basic/server.dsp:
+        * examples/PluggableUDP/tests/Performance/client.dsp:
+        * examples/PluggableUDP/tests/Performance/server.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
 
-	  Fixed settings for Release versions. Thanks to Bala
-	  for pointing that out.
+          Fixed settings for Release versions. Thanks to Bala
+          for pointing that out.
 
 Tue Apr 17 22:33:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/Thread_Pool/server.cpp (main): Changed FALSE to 0.
+        * tests/RTCORBA/Thread_Pool/server.cpp (main): Changed FALSE to 0.
 
-	* tests/RTCORBA/Thread_Pool/Makefile (BIN_UNCHECKED): Targets
-	  should be labeled as BIN_UNCHECKED rather than BIN.
+        * tests/RTCORBA/Thread_Pool/Makefile (BIN_UNCHECKED): Targets
+          should be labeled as BIN_UNCHECKED rather than BIN.
 
 Tue Apr 17 22:09:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -112,57 +135,57 @@ Tue Apr 17 22:09:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Apr 17 21:59:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional/client.dsp:
-	* tests/BiDirectional/server.dsp: Fixed the release builds.
+        * tests/BiDirectional/client.dsp:
+        * tests/BiDirectional/server.dsp: Fixed the release builds.
 
 Tue Apr 17 21:21:06 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Collocation/Coll_Tester.cpp:
-	* tests/Collocation/Coll_Tester.h: Added shutdown method to
-	  destroy the RootPOA and the ORB.  The lack of it was causing the
-	  test to crash.
+        * tests/Collocation/Coll_Tester.cpp:
+        * tests/Collocation/Coll_Tester.h: Added shutdown method to
+          destroy the RootPOA and the ORB.  The lack of it was causing the
+          test to crash.
 
-	* tests/Collocation/Collocation.dsw: Redefined project
-	  dependencies.
+        * tests/Collocation/Collocation.dsw: Redefined project
+          dependencies.
 
-	* tests/Collocation/Makefile.test:
-	* tests/Collocation/Collocation.cpp:
-	* tests/Collocation/main.cpp:
-	* tests/Collocation/Collocation.dsp: Renamed <main.cpp> to
-	  <Collocation.cpp> so that both Win32 and UNIX build the same
-	  executable.
+        * tests/Collocation/Makefile.test:
+        * tests/Collocation/Collocation.cpp:
+        * tests/Collocation/main.cpp:
+        * tests/Collocation/Collocation.dsp: Renamed <main.cpp> to
+          <Collocation.cpp> so that both Win32 and UNIX build the same
+          executable.
 
-	  Thanks to Carlos for pointing them out.
+          Thanks to Carlos for pointing them out.
 
 Tue Apr 17 15:48:20 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp (handle_close):
-	* tao/Strategies/UIOP_Connection_Handler.cpp (handle_close):
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): The
-	  handle_close methods were not closing these Svc_Handler's down
-	  properly.  Removed "this->peer ()->close ()" calls and use
-	  "this->destroy () instead of calling "delete this."
+        * tao/IIOP_Connection_Handler.cpp (handle_close):
+        * tao/Strategies/UIOP_Connection_Handler.cpp (handle_close):
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): The
+          handle_close methods were not closing these Svc_Handler's down
+          properly.  Removed "this->peer ()->close ()" calls and use
+          "this->destroy () instead of calling "delete this."
 
 Tue Apr 17 15:43:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/POA/TIE/client.dsp: Removed FooS.* from project.
+        * examples/POA/TIE/client.dsp: Removed FooS.* from project.
 
 Tue Apr 17 13:03:49 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/Transport.h (TAO_Synch_Refcountable): Reworked this so that
- 	the lock can be specified in the constructor.  This permits an
- 	optimization for single-threaded versions of the ORB so they can
- 	use a null lock implementation if desired and thus achieve better
- 	performance.  [Bug 861]
+        the lock can be specified in the constructor.  This permits an
+        optimization for single-threaded versions of the ORB so they can
+        use a null lock implementation if desired and thus achieve better
+        performance.  [Bug 861]
 
         * tao/Transport.cpp: Updated various methods to take advantage of
-	the optimization outlined above.  Specifically, the TAO_Transport
-	constructor now initializes its TAO_Synch_Refcountable's lock
-	using the resource factory's create_cached_connection_lock(), just
-	like TAO_Transport's handler_lock_ and the connection cache lock.
-	Thanks to Joe Hoffert <joeh@cs.wustl.edu> and Bala
-	<bala@cs.wustl.edu> for pointing out this opportunity and testing
-	it via Quantify. [Bug 861]
+        the optimization outlined above.  Specifically, the TAO_Transport
+        constructor now initializes its TAO_Synch_Refcountable's lock
+        using the resource factory's create_cached_connection_lock(), just
+        like TAO_Transport's handler_lock_ and the connection cache lock.
+        Thanks to Joe Hoffert <joeh@cs.wustl.edu> and Bala
+        <bala@cs.wustl.edu> for pointing out this opportunity and testing
+        it via Quantify. [Bug 861]
 
 Tue Apr 17 12:19:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -176,14 +199,14 @@ Tue Apr 17 12:19:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Apr 17 08:34:27 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* tests/OctetSeq/run_test1.pl:
-	* tests/OctetSeq/run_test2.pl:
-	  Use unique test1.ior and test2.ior for each test.
-	  Common ior file name was failing these tests on some platforms.
+        * tests/OctetSeq/run_test1.pl:
+        * tests/OctetSeq/run_test2.pl:
+          Use unique test1.ior and test2.ior for each test.
+          Common ior file name was failing these tests on some platforms.
 
 Tue Apr 17 07:26:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Thread_Pool.cpp: Fixed a warning in TRU64 builds.
+        * tao/Thread_Pool.cpp: Fixed a warning in TRU64 builds.
 
 Tue Apr 17 07:23:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -192,14 +215,14 @@ Tue Apr 17 07:23:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Apr 16 16:45:19 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/RTCORBA/Client_Protocol/client.cpp:
-	  This test was printing a misleading error message.
-	  The problem has now been fixed.
+        * tests/RTCORBA/Client_Protocol/client.cpp:
+          This test was printing a misleading error message.
+          The problem has now been fixed.
 
 Mon Apr 16 13:34:31 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/README: Generalize this a bit so that
-	  it fits in better with the ACE+TAO context.
+        * examples/PluggableUDP/DIOP/README: Generalize this a bit so that
+          it fits in better with the ACE+TAO context.
 
 Mon Apr 16 13:13:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
