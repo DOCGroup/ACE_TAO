@@ -1,3 +1,7 @@
+Thu Jul 15 11:26:43 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: made NEWS a dependency of release.
+
 Thu Jul 15 10:05:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: removed reference to
