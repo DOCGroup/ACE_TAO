@@ -73,6 +73,11 @@ public:
 				    CORBA::Environment &_env);
   // Cube an octet sequence.
 
+  virtual void cube_many_sequence (const Cubit::many_seq & input,
+                                   Cubit::many_seq_out output,
+                                   CORBA::Environment &_tao_environment);
+  // Cube an Many sequence.
+  
   virtual void cube_rti_data (const Cubit::RtiPacket &input,
 			      Cubit::RtiPacket_out output,
 			      CORBA::Environment &env);

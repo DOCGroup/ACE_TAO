@@ -90,6 +90,9 @@ private:
   void cube_octet_sequence (int i, int l);
   // Cube a sequence of octets, <l> is the length of the sequence.
 
+  void cube_many_sequence (int i, int l);
+  // Cube a sequence of manys, <l> is the length of the sequence.
+
   void cube_rti_data (int i, int numUpdates, int numAttrs);
   // Cube a sequence <l> is the length of the sequence.
 
