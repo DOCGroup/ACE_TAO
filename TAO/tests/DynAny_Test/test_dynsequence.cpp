@@ -60,11 +60,11 @@ Test_DynSequence::run_test (void)
       ts[1] = data.m_string2;
       CORBA_Any in_any1;
       in_any1 <<= ts;
-      CORBA_DynAny_ptr dp1 =
+      CORBA_DynAny_var dp1 =
         this->orb_->create_dyn_any (in_any1,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynSequence_ptr fa1 = CORBA_DynSequence::_narrow (dp1,
+      CORBA_DynSequence_var fa1 = CORBA_DynSequence::_narrow (dp1,
                                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->seek (1,
@@ -78,9 +78,9 @@ Test_DynSequence::run_test (void)
       fa1->seek (1,
                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      char* out_str1 = fa1->get_string (ACE_TRY_ENV);
+      CORBA::String_var out_str1 = fa1->get_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (!ACE_OS::strcmp (out_str1, data.m_string1))
+      if (!ACE_OS::strcmp (out_str1.in (), data.m_string1))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else
@@ -89,7 +89,7 @@ Test_DynSequence::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      CORBA_DynSequence_ptr ftc1 =
+      CORBA_DynSequence_var ftc1 =
         this->orb_->create_dyn_sequence (DynAnyTests::_tc_test_seq,
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -134,9 +134,10 @@ Test_DynSequence::run_test (void)
       ftc1->set_elements (as_in,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
+      CORBA::AnySeq_var as_out = ftc1->get_elements (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_Any out_any2 = (*as_out)[2];
+      CORBA::ULong index = 2;
+      CORBA_Any out_any2 = as_out[index];
       char* out_str2;
       out_any2 >>= CORBA::Any::to_string (out_str2, 0);
       if (ACE_OS::strcmp (out_str2, data.m_string1))
@@ -145,17 +146,10 @@ Test_DynSequence::run_test (void)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
 
-      // Created with NEW
-      delete as_out;
-      delete out_str2;
-
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (fa1);
-      CORBA::release (dp1);
       ftc1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (ftc1);
     }
   ACE_CATCHANY
     {

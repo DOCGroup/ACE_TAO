@@ -57,27 +57,37 @@ Test_DynStruct::run_test (void)
 
       CORBA_Any in_any1;
       in_any1 <<= ts;
-      CORBA_DynAny_ptr dp1 = 
+      CORBA_DynAny_var dp1 = 
         this->orb_->create_dyn_any (in_any1,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynStruct_ptr fa1 = CORBA_DynStruct::_narrow (dp1,
+      CORBA_DynStruct_var fa1 = CORBA_DynStruct::_narrow (dp1,
                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->insert_char (data.m_char1,
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->insert_long (data.m_long1,
-        ACE_TRY_ENV);
+                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      fa1->current_component (ACE_TRY_ENV)->insert_float (data.m_float1,
-                                                          ACE_TRY_ENV);
+
+      CORBA::DynAny_var cc = fa1->current_component (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      fa1->current_component (ACE_TRY_ENV)->insert_short (data.m_short1,
-                                                          ACE_TRY_ENV);
+      cc->insert_float (data.m_float1,
+                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      fa1->current_component (ACE_TRY_ENV)->rewind (ACE_TRY_ENV);
+
+      cc = fa1->current_component (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      cc->insert_short (data.m_short1,
+                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      cc = fa1->current_component (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      cc->rewind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       fa1->rewind (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::Char c = fa1->get_char (ACE_TRY_ENV);
@@ -88,12 +98,18 @@ Test_DynStruct::run_test (void)
       ACE_TRY_CHECK;
       if (l != data.m_long1)
         ++this->error_count_;
-      fa1->current_component(ACE_TRY_ENV)->seek (1,
-                                                ACE_TRY_ENV);
+
+      cc = fa1->current_component (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::Short s = 
-        fa1->current_component (ACE_TRY_ENV)->get_short (ACE_TRY_ENV);
+      cc->seek (1,
+                ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      cc = fa1->current_component (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      CORBA::Short s = cc->get_short (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (s != data.m_short1)
         ++this->error_count_;
       if (this->error_count_ == 0)
@@ -103,7 +119,7 @@ Test_DynStruct::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      CORBA_DynStruct_ptr ftc1 = 
+      CORBA_DynStruct_var ftc1 = 
         this->orb_->create_dyn_struct (DynAnyTests::_tc_test_struct,
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -116,18 +132,15 @@ Test_DynStruct::run_test (void)
       ftc1->from_any (in_any2,
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_Any* out_any1 = ftc1->to_any (ACE_TRY_ENV);
+      CORBA_Any_var out_any1 = ftc1->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       DynAnyTests::test_struct* ts_out;
-      *out_any1 >>= ts_out;
+      out_any1.in () >>= ts_out;
       if (ts_out->es.s == data.m_short1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
         ++this->error_count_;
-
-      // Created with NEW
-      delete out_any1;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: current_member_name/current_member_kind\n"));
@@ -135,9 +148,9 @@ Test_DynStruct::run_test (void)
       ftc1->seek (2,
                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::FieldName fn = ftc1->current_member_name (ACE_TRY_ENV);
+      CORBA::FieldName_var fn = ftc1->current_member_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (ACE_OS::strcmp (fn, "es"))
+      if (ACE_OS::strcmp (fn.in (), "es"))
         ++this->error_count_;
       CORBA::TCKind tk = ftc1->current_member_kind (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -150,33 +163,26 @@ Test_DynStruct::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: get_members/set_members\n"));
 
-      CORBA::NameValuePairSeq* nvps = fa1->get_members (ACE_TRY_ENV);
-      CORBA_DynStruct_ptr sm =
+      CORBA::NameValuePairSeq_var nvps = fa1->get_members (ACE_TRY_ENV);
+      CORBA_DynStruct_var sm =
         this->orb_->create_dyn_struct (DynAnyTests::_tc_test_struct,
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      sm->set_members (*nvps,
+      sm->set_members (nvps.in (),
                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::NameValuePairSeq* gm = sm->get_members (ACE_TRY_ENV);
+      CORBA::NameValuePairSeq_var gm = sm->get_members (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (ACE_OS::strcmp ((*gm)[2].id, "es"))
+      CORBA::ULong index = 2;
+      if (ACE_OS::strcmp (gm[index].id, "es"))
         ++this->error_count_;
-
-      // Created with NEW
-      delete nvps;
-      delete gm;
 
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (fa1);
-      CORBA::release (dp1);
       ftc1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (ftc1);
       sm->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (sm);
     }
   ACE_CATCHANY
     {
