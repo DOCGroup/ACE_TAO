@@ -1,3 +1,8 @@
+Mon Nov  5 11:17:20 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/auto_compile:
+	  Add support for the new status.txt file in the scoreboard.
+
 Mon Nov  5 13:02:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-hpux-11.00.h:
