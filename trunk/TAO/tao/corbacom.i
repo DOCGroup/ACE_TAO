@@ -1,23 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 
-// CORBA_SEQUENCE support.
-
-template <class T> ACE_INLINE
-CORBA_SEQUENCE<T>::CORBA_SEQUENCE (void)
-  : maximum (0),
-    length (0),
-    buffer (0),
-    release (0) 
-{ 
-}
-
-// XXX destructor should free buffer, elements!!
-template <class T> ACE_INLINE
-CORBA_SEQUENCE<T>::~CORBA_SEQUENCE (void) 
-{ 
-}
-
-// String utility support
+// String utility support.  Since these are static methods we need to
+// explicitly export them from the DLL.
 
 ACE_INLINE TAO_Export CORBA::String
 CORBA::string_alloc (CORBA::ULong len)

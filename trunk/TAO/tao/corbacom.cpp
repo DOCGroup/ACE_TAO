@@ -3,8 +3,6 @@
 // @(#)corbacom.cpp     1.1 95/08/31
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
-//
-// ORB:         support for primitive data types
 
 #include "tao/corba.h"
 
