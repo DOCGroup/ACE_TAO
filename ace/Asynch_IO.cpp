@@ -290,7 +290,8 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
       if (aio_read (result->aiocb_ptr ()) == -1)
         // Queueing failed.
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Erro:%p:Asynch_Read_Stream: aio_read queueing failed\n"),
+                           "Error:%p\n",
+                           "Asynch_Read_Stream: aio_read queueing failed"),
                           -1);
     }
   else
@@ -338,7 +339,8 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
         {
           // Queueing failed.
           ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Asynch_Read_Stream: aio_read queueing failed\n"));
+                      "Error:%p\n",
+                      "Asynch_Read_Stream: aio_read queueing failed"));
 
           // Clean up the memory allocated.
           delete aiocb_ptr;
@@ -496,7 +498,8 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
       if (aio_write (result->aiocb_ptr ()) == -1)
         // Queueing failed.
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p:Asynch_Write_Stream: aio_write queueing failed\n"),
+                           "Error:%p\n",
+                           "Asynch_Write_Stream: aio_write queueing failed"),
                           -1);
     }
   else
@@ -544,7 +547,8 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
         {
           // Queueing failed.
           ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Asynch_Write_Stream: aio_write queueing failed\n"));
+                      "Error:%p\n",
+                      "Asynch_Write_Stream: aio_write queueing failed"));
 
           // Clean up the memory allocated.
           delete aiocb_ptr;
@@ -911,7 +915,7 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
   ACE_HANDLE new_handle = ACE_OS::accept (result->listen_handle (), 0, 0);
   if (new_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:(%P | %t):%p:\n",
+                       "Error:(%P | %t):%p\n",
                        "<accept> system call failed"),
                       -1);
 
@@ -937,7 +941,7 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
         pid_t pid = ACE_OS::getpid ();
         if (pid == (pid_t) -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error:(%P | %t):%p:",
+                             "Error:(%P | %t):%p",
                            "<getpid> failed\n"),
                           -1);
 
@@ -948,7 +952,7 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
       // Queue the signal.
       if (sigqueue (pid, ACE_SIG_AIO, value) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error:(%P | %t):%p:",
+                           "Error:(%P | %t):%p",
                            "<sigqueue> failed\n"),
                           -1);
       }
@@ -989,7 +993,7 @@ ACE_Asynch_Accept::ACE_Asynch_Accept (void)
 
 #if defined (ACE_HAS_AIO_CALLS)
 int
-ACE_Asynch_Accept::open(ACE_Handler &handler,
+ACE_Asynch_Accept::open (ACE_Handler &handler,
                          ACE_HANDLE handle,
                          const void *completion_key,
                          ACE_Proactor *proactor)
@@ -1563,7 +1567,8 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   if (file_size == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p:Asynch_Transmit_File:Couldnt know the file size\n"),
+                       "Error:%p\n",
+                       ":Asynch_Transmit_File:Couldnt know the file size"),
                       -1);
 
   if (bytes_to_write == 0)
@@ -1571,7 +1576,8 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   if (offset > (size_t) file_size)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Asynch_Transmit_File:File size is less than offset\n"),
+                       "Error:%p\n",
+                       "Asynch_Transmit_File:File size is less than offset"),
                       -1);
 
   if (offset != 0)
