@@ -8,6 +8,13 @@ Sun Apr 27 07:41:44 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Timer_Wheel_T.cpp (ACE_Timer_Wheel_T ctor): reordered
 	  initializers to match declaration order.
 
+	* ace/Log_Msg.cpp (log): added support for indenting output according
+	  to the current nesting level by adding a new format specifier, I,
+	  which indents the output according to the current trace_depth_.
+	  If a width is also specified it is taken as multiplier (so that
+	  the indentation is n*trace_depth_).  Thanks to Matthias Kerkhoff
+	  <make@cs.tu-berlin.de> for providing the code for this feature!
+
 	* examples/Reactor/Misc/test_timer_queue.cpp: fixed typos in
 	  #includes, and added #include of ace/Timer_Heap.h.
 
