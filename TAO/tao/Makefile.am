@@ -757,7 +757,6 @@ nobase_include_HEADERS += \
   LF_Follower.inl \
   LF_Follower_Auto_Adder.inl \
   LF_Follower_Auto_Ptr.inl \
-  LF_Strategy.inl \
   LF_Strategy_Complete.inl \
   Leader_Follower.i \
   LocalObject.i \
