@@ -37,6 +37,8 @@
 // Inline operations for class Messaging::PriorityRange_var
 // *************************************************************
 
+#if (TAO_HAS_REQUEST_PRIORITY_POLICIES == 1)
+
 ACE_INLINE
 Messaging::PriorityRange_var::PriorityRange_var (void) // default constructor
   : ptr_ (0)
@@ -185,6 +187,8 @@ Messaging::PriorityRange_var::ptr (void) const
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_REQUEST_PRIORITY_POLICIES == 1 */
+
 
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY___CI_)
 #define _MESSAGING_REPLYPRIORITYPOLICY___CI_
@@ -237,6 +241,8 @@ Messaging::PriorityRange_var::ptr (void) const
 // *************************************************************
 // Inline operations for class Messaging::RoutingTypeRange_var
 // *************************************************************
+
+#if (TAO_HAS_ROUTING_POLICY == 1)
 
 ACE_INLINE
 Messaging::RoutingTypeRange_var::RoutingTypeRange_var (void) // default constructor
@@ -386,6 +392,8 @@ Messaging::RoutingTypeRange_var::ptr (void) const
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
+
 
 #if !defined (_MESSAGING_MAXHOPSPOLICY___CI_)
 #define _MESSAGING_MAXHOPSPOLICY___CI_
@@ -437,6 +445,8 @@ Messaging::ReplyHandler::ReplyHandler (
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
+
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::PriorityRange &_tao_aggregate)
 {
   if (
@@ -461,6 +471,10 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PriorityRan
   
 }
 
+#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_ROUTING_POLICY == 1)
+
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::RoutingTypeRange &_tao_aggregate)
 {
   if (
@@ -484,6 +498,8 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::RoutingType
     return 0;
   
 }
+
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
 
 #if defined (__ACE_INLINE__)
 
