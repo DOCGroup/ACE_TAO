@@ -1,3 +1,15 @@
+Wed Jul 14 16:23:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Reply_Dispatcher.cpp:
+	  Use new CDR_Stream methods to efficiently steal the contents
+	  from one CDR stream into another (without any extra memory
+	  allocations).
+
+	* tao/Stub.cpp:
+	  Removed unnecesary lock, updated comments in
+	  relative_rountrip_timeout() with respect to locking because it
+	  is a bit suttle.
+
 Wed Jul 14 15:35:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB.cpp: set_unexpected() is declared in unexpect.h on MVS.
