@@ -31,9 +31,6 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
   for (int i = 0; i < argc; ++i)
     {
-      if ((argc - i) < 6)
-        return -1;  // Not enough arguments.
-
       if (ACE_OS::strcasecmp (argv[i], "-LBGroup") == 0)
         {
           const CORBA::ULong j = len;

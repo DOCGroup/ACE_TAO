@@ -91,13 +91,15 @@ TAO_PG_GenericFactory::create_object (
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  CORBA::ULong factory_infos_count = factory_infos->length ();
+  CORBA::ULong factory_infos_count =
+    (factory_infos == 0 ? 0 : factory_infos->length ());
 
   // If the number of factories is less than the initial number of
   // members, then the desired number of members cannot possibly be
   // created.
-  if (factory_infos_count < ACE_static_cast (CORBA::ULong,
-                                             initial_number_members))
+  if (factory_infos != 0
+      && factory_infos_count < ACE_static_cast (CORBA::ULong,
+                                                initial_number_members))
     ACE_THROW_RETURN (PortableGroup::CannotMeetCriteria (),
                       CORBA::Object::_nil ());
 
@@ -447,7 +449,7 @@ TAO_PG_GenericFactory::process_criteria (
   const char * type_id,
   const PortableGroup::Criteria & criteria,
   PortableGroup::MembershipStyleValue & membership_style,
-  PortableGroup::FactoriesValue * factory_infos,
+  PortableGroup::FactoriesValue *& factory_infos,
   PortableGroup::InitialNumberMembersValue & initial_number_members,
   PortableGroup::MinimumNumberMembersValue & minimum_number_members
   ACE_ENV_ARG_DECL)

@@ -27,7 +27,7 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (void)
     lock_ (),
     monitor_map_ (TAO_PG_MAX_LOCATIONS),
     load_map_ (TAO_PG_MAX_LOCATIONS),
-    load_alert_map_ (TAO_PG_MAX_OBJECT_GROUPS),
+    load_alert_map_ (TAO_PG_MAX_LOCATIONS),
     object_group_manager_ (),
     property_manager_ (object_group_manager_),
     generic_factory_ (object_group_manager_, property_manager_),
@@ -105,237 +105,136 @@ TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location
 }
 
 void
-TAO_LB_LoadManager::enable_alert (PortableGroup::ObjectGroup_ptr object_group,
-                                  const PortableGroup::Location & the_location
+TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location
                                   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((PortableGroup::ObjectGroupNotFound,
-                   CosLoadBalancing::LoadAlertNotFound))
+  ACE_THROW_SPEC ((CosLoadBalancing::LoadAlertNotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  // TAO's PortableGroup library only uses the lower 32 bits of the
-  // ObjectGroupId, so this cast is safe.
-  ACE_UINT32 group_id =
-    ACE_static_cast (ACE_UINT32,
-                     this->get_object_group_id (object_group
-                                                ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
-
   TAO_LB_LoadAlertMap::ENTRY * entry;
-  if (this->load_alert_map_.find (group_id, entry) == 0)
+  if (this->load_alert_map_.find (the_location, entry) == 0)
     {
-      // A LoadAlert list for the given ObjectGroup exists.  Find the
-      // reference to the LoadAlert object residing at the given
-      // location.
-      TAO_LB_LoadAlertInfoSet & alert_set = entry->int_id_;
+      TAO_LB_LoadAlertInfo & info = entry->int_id_;
 
-      TAO_LB_LoadAlertInfoSet::iterator end =
-        alert_set.end ();
+      // @note This could be problematic if the LoadAlert object is
+      //       registered with more than LoadManager.
+      if (info.alerted == 1)
+        return;  // No need to set the alert status.  It has already
+                 // been set.
 
-      for (TAO_LB_LoadAlertInfoSet::iterator i = alert_set.begin ();
-           i != end;
-           ++i)
-        {
-          if ((*i).location == the_location)
-            {
-              // Duplicate before releasing the LoadAlertMap lock to
-              // prevent a race condition from occuring.  The
-              // LoadAlertInfoSet may be altered prior to invoking an
-              // operation on the LoadAlert object.
-              CosLoadBalancing::LoadAlert_var load_alert =
-                CosLoadBalancing::LoadAlert::_duplicate (
-                  (*i).load_alert.in ());
+      // Duplicate before releasing the LoadAlertMap lock to prevent a
+      // race condition from occuring.  The LoadAlertInfo map may be
+      // altered prior to invoking an operation on the LoadAlert
+      // object.
+      CosLoadBalancing::LoadAlert_var load_alert =
+        CosLoadBalancing::LoadAlert::_duplicate (info.load_alert.in ());
 
-              // The alert condition will be enabled.
-              // @note There is a subtle problem here.  If the below
-              //       remote invocation fails, this variable will be
-              //       incorrectly to "true."
-              (*i).alerted = 1;
+      // The alert condition will be enabled.
+      // @note There is a subtle problem here.  If the below
+      //       remote invocation fails, this variable will be
+      //       incorrectly set to "true."
+      info.alerted = 1;
 
-              // Release the lock prior to making the below remote
-              // invocation.
-              ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (
-                this->load_alert_lock_);
-              ACE_GUARD (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
-                         reverse_guard,
-                         reverse_lock);
+      // Release the lock prior to making the below remote invocation.
+      ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (this->load_alert_lock_);
+      ACE_GUARD (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
+                 reverse_guard,
+                 reverse_lock);
 
-              // Use AMI to make the following operation
-              // "non-blocking," allowing the caller to continue
-              // without being forced to wait for a response.
-              load_alert->sendc_enable_alert (this->load_alert_handler_.in (),
-                                              object_group
-                                              ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-
-              return;
-            }
-        }
-
-      ACE_THROW (CosLoadBalancing::LoadAlertNotFound ());
+      // Use AMI to make the following operation
+      // "non-blocking," allowing the caller to continue
+      // without being forced to wait for a response.
+      load_alert->sendc_enable_alert (this->load_alert_handler_.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else
-    {
-      ACE_THROW (PortableGroup::ObjectGroupNotFound ());
-    }
+    ACE_THROW (CosLoadBalancing::LoadAlertNotFound ());
 }
 
 void
-TAO_LB_LoadManager::disable_alert (PortableGroup::ObjectGroup_ptr object_group,
-                                   const PortableGroup::Location & the_location
+TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location
                                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((PortableGroup::ObjectGroupNotFound,
-                   CosLoadBalancing::LoadAlertNotFound))
+  ACE_THROW_SPEC ((CosLoadBalancing::LoadAlertNotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  // TAO's PortableGroup library only uses the lower 32 bits of the
-  // ObjectGroupId, so this cast is safe.
-  ACE_UINT32 group_id =
-    ACE_static_cast (ACE_UINT32,
-                     this->get_object_group_id (object_group
-                                                ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
-
   TAO_LB_LoadAlertMap::ENTRY * entry;
-  if (this->load_alert_map_.find (group_id, entry) == 0)
+  if (this->load_alert_map_.find (the_location, entry) == 0)
     {
-      // A LoadAlert list for the given ObjectGroup exists.  Find the
-      // reference to the LoadAlert object residing at the given
-      // location.
-      TAO_LB_LoadAlertInfoSet & alert_set = entry->int_id_;
+      TAO_LB_LoadAlertInfo & info = entry->int_id_;
 
-      TAO_LB_LoadAlertInfoSet::iterator end =
-        alert_set.end ();
+      // @note This could be problematic if the LoadAlert object is
+      //       registered with more than LoadManager.
+      if (info.alerted == 0)
+        return;  // No need to set the alert status.  It has already
+                 // been set.
 
-      for (TAO_LB_LoadAlertInfoSet::iterator i = alert_set.begin ();
-           i != end;
-           ++i)
-        {
-          // Only perform a remote invocation if the LoadAlert object
-          // was previously alerted.
-          if ((*i).location == the_location && (*i).alerted)
-            {
-              // Duplicate before releasing the LoadAlertMap lock to
-              // prevent a race condition on the iterator from
-              // occuring.  The LoadAlertInfoSet may be altered prior
-              // to invoking an operation on the LoadAlert object.
-              CosLoadBalancing::LoadAlert_var load_alert =
-                CosLoadBalancing::LoadAlert::_duplicate (
-                  (*i).load_alert.in ());
+      // Duplicate before releasing the LoadAlertMap lock to prevent a
+      // race condition from occuring.  The LoadAlertInfo map may be
+      // altered prior to invoking an operation on the LoadAlert
+      // object.
+      CosLoadBalancing::LoadAlert_var load_alert =
+        CosLoadBalancing::LoadAlert::_duplicate (info.load_alert.in ());
 
-              // @note There is a subtle problem here.  If the below
-              //       remote invocation fails, this variable will be
-              //       incorrectly to "false."
-              (*i).alerted = 0; // The alert condition will be disabled.
+      // The alert condition will be disabled.
+      // @note There is a subtle problem here.  If the below
+      //       remote invocation fails, this variable will be
+      //       incorrectly set to "false."
+      info.alerted = 0;
 
-              // Release the lock prior to making the below remote
-              // invocation.
-              ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (
-                this->load_alert_lock_);
-              ACE_GUARD (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
-                         reverse_guard,
-                         reverse_lock);
+      // Release the lock prior to making the below remote invocation.
+      ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock (this->load_alert_lock_);
+      ACE_GUARD (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>,
+                 reverse_guard,
+                 reverse_lock);
 
-              // Use AMI to make the following operation
-              // "non-blocking," allowing the caller to continue
-              // without being forced to wait for a response.
-              load_alert->sendc_disable_alert (this->load_alert_handler_.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-
-              return;
-            }
-        }
-
-      ACE_THROW (CosLoadBalancing::LoadAlertNotFound ());
+      // Use AMI to make the following operation
+      // "non-blocking," allowing the caller to continue
+      // without being forced to wait for a response.
+      load_alert->sendc_disable_alert (this->load_alert_handler_.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else
-    {
-      ACE_THROW (PortableGroup::ObjectGroupNotFound ());
-    }
+    ACE_THROW (CosLoadBalancing::LoadAlertNotFound ());
 }
 
 void
 TAO_LB_LoadManager::register_load_alert (
-    PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
     CosLoadBalancing::LoadAlert_ptr load_alert
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
                    CosLoadBalancing::LoadAlertAlreadyPresent,
                    CosLoadBalancing::LoadAlertNotAdded))
 {
   if (CORBA::is_nil (load_alert))
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  // @todo Verify that a member of the given object group actually
-  //       exists at "the_location."  It doesn't make much sense to
-  //       register a LoadAlert object for a non-existent member.
-
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  // TAO's PortableGroup library only uses the lower 32 bits of the
-  // ObjectGroupId, so this cast is safe.
-  ACE_UINT32 group_id =
-    ACE_static_cast (ACE_UINT32,
-                     this->get_object_group_id (object_group
-                                                ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
+  TAO_LB_LoadAlertInfo info;
+  info.load_alert = CosLoadBalancing::LoadAlert::_duplicate (load_alert);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry;
-  if (this->load_alert_map_.find (group_id, entry) == 0)
+  int result = this->load_alert_map_.bind (the_location, info);
+
+  if (result == 1)
     {
-      // A LoadAlert list for the given ObjectGroup exists.  Verify
-      // that no LoadAlert object for the member residing at the given
-      // location exists.
-
-      TAO_LB_LoadAlertInfoSet & alert_set = entry->int_id_;
-
-      TAO_LB_LoadAlertInfoSet::iterator end =
-        alert_set.end ();
-
-      for (TAO_LB_LoadAlertInfoSet::iterator i = alert_set.begin ();
-           i != end;
-           ++i)
-        {
-          if ((*i).location == the_location)
-            ACE_THROW (CosLoadBalancing::LoadAlertAlreadyPresent ());
-        }
-
-      TAO_LB_LoadAlertInfo load_alert_info;
-      load_alert_info.load_alert =
-        CosLoadBalancing::LoadAlert::_duplicate (load_alert);
-      load_alert_info.location = the_location;
-
-      if (alert_set.insert_tail (load_alert_info) != 0)
-        ACE_THROW (CosLoadBalancing::LoadAlertNotAdded ());
+      ACE_THROW (CosLoadBalancing::LoadAlertAlreadyPresent ());
     }
-  else
+  else if (result == -1)
     {
-      // No LoadAlert list exists for the given ObjectGroup.  Create
-      // one and insert its initial member.
-
-      TAO_LB_LoadAlertInfo load_alert_info;
-      load_alert_info.load_alert =
-        CosLoadBalancing::LoadAlert::_duplicate (load_alert);
-      load_alert_info.location = the_location;
-
-      TAO_LB_LoadAlertInfoSet alert_set;
-      if (alert_set.insert_tail (load_alert_info) != 0
-          || this->load_alert_map_.bind (group_id, alert_set) != 0)
-        ACE_THROW (CosLoadBalancing::LoadAlertNotAdded ());
+      // Problems dude!
+      ACE_THROW (CosLoadBalancing::LoadAlertNotAdded ());
     }
 }
 
 CosLoadBalancing::LoadAlert_ptr
 TAO_LB_LoadManager::get_load_alert (
-    PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
                    CosLoadBalancing::LoadAlertNotFound))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -343,82 +242,43 @@ TAO_LB_LoadManager::get_load_alert (
                     this->load_alert_lock_,
                     CosLoadBalancing::LoadAlert::_nil ());
 
-  // TAO's PortableGroup library only uses the lower 32 bits of the
-  // ObjectGroupId, so this cast is safe.
-  ACE_UINT32 group_id =
-    ACE_static_cast (ACE_UINT32,
-                     this->get_object_group_id (object_group
-                                                ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK_RETURN (CosLoadBalancing::LoadAlert::_nil ());
-
   TAO_LB_LoadAlertMap::ENTRY * entry;
-  if (this->load_alert_map_.find (group_id, entry) == 0)
+  if (this->load_alert_map_.find (the_location, entry) == 0)
     {
-      // A LoadAlert list for the given ObjectGroup exists.  Find the
-      // LoadAlert object for the member residing at the given
-      // location.
+      TAO_LB_LoadAlertInfo & info = entry->int_id_;
 
-      TAO_LB_LoadAlertInfoSet & alert_set = entry->int_id_;
-
-      TAO_LB_LoadAlertInfoSet::iterator end =
-        alert_set.end ();
-
-      for (TAO_LB_LoadAlertInfoSet::iterator i = alert_set.begin ();
-           i != end;
-           ++i)
-        {
-          if ((*i).location == the_location)
-            return
-              CosLoadBalancing::LoadAlert::_duplicate ((*i).load_alert.in ());
-        }
-
+      return
+        CosLoadBalancing::LoadAlert::_duplicate (info.load_alert.in ());
+    }
+  else
+    {
       ACE_THROW_RETURN (CosLoadBalancing::LoadAlertNotFound (),
                         CosLoadBalancing::LoadAlert::_nil ());
     }
-  else
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
-                      CosLoadBalancing::LoadAlert::_nil ());
 }
 
 void
 TAO_LB_LoadManager::remove_load_alert (
-    PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
                    CosLoadBalancing::LoadAlertNotFound))
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
-
-  // TAO's PortableGroup library only uses the lower 32 bits of the
-  // ObjectGroupId, so this cast is safe.
-  ACE_UINT32 group_id =
-    ACE_static_cast (ACE_UINT32,
-                     this->get_object_group_id (object_group
-                                                ACE_ENV_ARG_PARAMETER));
+  // Disable the "alert" status on the LoadAlert object since it will
+  // no longer be associated with the LoadManager.  In particular,
+  // requests should be allowed through once again since there will be
+  // no way to control the load shedding mechanism once the LoadAlert
+  // object is no longer under the control of the LoadManager.
+  this->disable_alert (the_location
+                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  TAO_LB_LoadAlertMap::ENTRY * entry;
-  if (this->load_alert_map_.find (group_id, entry) == 0)
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
+
+  if (this->load_alert_map_.unbind (the_location) != 0)
     {
-      // A LoadAlert list for the given ObjectGroup exists.  Find the
-      // LoadAlert object for the member residing at the given
-      // location.
-
-      TAO_LB_LoadAlertInfoSet & alert_set = entry->int_id_;
-
-      TAO_LB_LoadAlertInfo alert_info;
-      alert_info.location = the_location;
-      // No need to set the LoadAlert member.  It isn't used in
-      // comparisons.
-
-      if (alert_set.remove (alert_info) != 0)
-        ACE_THROW (CosLoadBalancing::LoadAlertNotFound ());
+      ACE_THROW (CosLoadBalancing::LoadAlertNotFound ());
     }
-  else
-    ACE_THROW (PortableGroup::ObjectGroupNotFound ());
-
 }
 
 void

@@ -18,7 +18,7 @@ TAO_LB_Random::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup ("Random");
 }
-    
+
 CosLoadBalancing::Properties *
 TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -35,7 +35,7 @@ TAO_LB_Random::get_properties (ACE_ENV_SINGLE_ARG_DECL)
 
   return props;
 }
-    
+
 void
 TAO_LB_Random::push_loads (
     const PortableGroup::Location & /* the_location */,
@@ -46,7 +46,7 @@ TAO_LB_Random::push_loads (
 {
   ACE_THROW (CosLoadBalancing::StrategyNotAdaptive ());
 }
-    
+
 CORBA::Object_ptr
 TAO_LB_Random::next_member (
     PortableGroup::ObjectGroup_ptr object_group,

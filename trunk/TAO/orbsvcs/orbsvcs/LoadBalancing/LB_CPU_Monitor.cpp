@@ -45,6 +45,10 @@ TAO_LB_CPU_Monitor::TAO_LB_CPU_Monitor (const char * location_id,
     }
 }
 
+TAO_LB_CPU_Monitor::~TAO_LB_CPU_Monitor (void)
+{
+}
+
 CosLoadBalancing::Location *
 TAO_LB_CPU_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

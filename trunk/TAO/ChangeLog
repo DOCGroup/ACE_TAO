@@ -1,3 +1,178 @@
+Wed Aug 14 10:57:52 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl (register_load_alert):
+	  (get_load_alert, remove_load_alert, enable_alert):
+	  (disable_alert):
+
+	  Removed ObjectGroup "in" parameter.  LoadAlert objects are
+	  location-oriented not group-oriented.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h
+	  (TAO_LB_CPU_Monitor):
+
+	  Mixed-in PortableServer::RefCountServantBase to enable reference
+	  counting of this servant.
+
+	  (~TAO_LB_CPU_Monitor):
+
+	  Added a protected destructor to enforce proper memory management
+	  through reference counting.
+	  
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+
+	  Added a no-op destructor.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h (TAO_LB_Component):
+
+	  Corrected class documentation.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.cpp (init):
+
+	  Removed erroneous argument count check that prevented
+	  initialization of the TAO_LB_Component Service Object.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+
+	  Added a new "lock" and LoadAlert object reference members.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+
+	  (components_established):
+
+	  Moved LoadAlert object activation and registration to the
+	  adapter_manager_state_changed() method.  Creation of the
+	  LoadAlert object reference through a partially constructed POA
+	  was not a good idea :-).  Fixes a weird infinite recursion
+	  problem.
+
+	  (adapter_manager_state_changed):
+
+	  Register the LoadAlert object when the AdapterManager is
+	  activated.
+
+	  (register_load_alert):
+
+	  New private method that creates and registers the LoadAlert
+	  object reference.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.h (enable_alert):
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.cpp (enable_alert):
+
+	  The CosLoadBalancing::LoadAlert::{enable,disable}_alert()
+	  methods no longer accept an object group reference parameter.
+	  Updated all parameter lists and method calls.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertInfo.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertInfo.cpp:
+
+	  Since LoadAlert objects are location-oriented, there is no need
+	  cache a copy of any object group references.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertMap.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertMap.cpp:
+
+	  Changed ACE_Hash_Map_Manager_Ex template parameters to reflect
+	  the fact that LoadAlert objects are location-oriented.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h
+	  (register_load_alert, get_load_alert, remove_load_alert):
+	  (enable_alert, disable_alert):
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+	  (register_load_alert, get_load_alert, remove_load_alert):
+	  (enable_alert, disable_alert):
+
+	  Removed ObjectGroup "in" parameter.  LoadAlert objects are
+	  location-oriented not group-oriented.
+
+	  The implementation of these methods has been greatly simplified
+	  due the above change.
+	
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ORBInitializer.h:
+
+	  Removed extraneous "LoadBalancing_export.h" include.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
+
+	  There is no longer any need to cache the LoadAlert object
+	  reference.
+
+	  Changed underlying Hash_Map's external ID to an ACE_CString
+	  instead of a "const char *".  Addresses some memory management
+	  issues.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+
+	  Updated Hash_Map explicit template instantiations in accordance
+	  with the above fix.
+	
+	  (make_object):
+
+	  Removed LoadAlert object registration code.  Registration is now
+	  performed in the LB_IORInterceptor.
+
+	  (find_object_group):
+
+	  When creating an object group, force the membership style to be
+	  "application controlled", i.e. PortableGroup::MEMB_APP_CTRL,
+	  since the TAO's Load Balancer ObjectReferenceFactory is handling
+	  the object group membership, not the Load Balancer itself.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.cpp
+	  (handle_timeout):
+
+	  Correct syntax of some debugging code.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+
+	  Nuked trailing whitespace.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_conf.h:
+
+	  Changed default "pull" monitoring interval from 1 second to 5
+	  seconds.  1 second is overkill, and adds more overhead than
+	  necessary.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+	  (process_criteria):
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+	  (process_criteria):
+
+	  Made "factory_infos" parameter a reference to a pointer instead
+	  of a simple pointer.  The pointer parameter itself is updated by
+	  this method, not the contents of the memory location.
+
+	  (create_object):
+
+	  Fixed a segmentation fault caused by attempting to invoke
+	  methods on a FactoryInfos object through a zero pointer.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
+
+	  Changed underlying Hash_Map's external ID to an ACE_CString
+	  instead of a "const char *".  Addresses some memory management
+	  issues.
+
+	  (set_type_properties, get_type_properties):
+	  (remove_type_properties):
+
+	  Use the Hash_Map's "ENTRY" trait when declaring a corresponding
+	  variable instead of the actual template type.  This makes it
+	  possible to change the Hash_Map template parameters without
+	  mucking with code that accesses the Hash_Map_Entry.
+
+	  (get_type_properties):
+
+	  Fixed problem where a CORBA::BAD_PARAM() was always thrown if
+	  no type-specific properties were set.
+
+	* orbsvcs/LoadBalancer/Makefile.LoadManager:
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+
+	  Updated dependencies.
+
 Tue Aug 13 19:21:07 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.bor (LIBFILES):

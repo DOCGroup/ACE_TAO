@@ -244,16 +244,14 @@ TAO_LB_LeastLoaded::get_location (
           // throughput since the LoadAlert object need not be alerted
           // synchronously.  In particular, the load alert can and
           // should be performed in parallel to the member selection.
-          load_manager->enable_alert (object_group,
-                                      loc
+          load_manager->enable_alert (loc
                                       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
       else if (load.value <= this->critical_threshold_)
         {
           // The location is not overloaded
-          load_manager->disable_alert (object_group,
-                                       loc
+          load_manager->disable_alert (loc
                                        ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }

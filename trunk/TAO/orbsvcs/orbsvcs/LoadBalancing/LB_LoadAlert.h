@@ -42,8 +42,7 @@ public:
 
   /// Forward requests back to the load manager via the object group
   /// reference.
-  virtual void enable_alert (CORBA::Object_ptr object_group
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void enable_alert (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Stop forwarding requests, and begin accepting them again.

@@ -20,8 +20,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
   const CORBA::StringSeq & repository_ids,
   const char * location,
   CORBA::ORB_ptr orb,
-  CosLoadBalancing::LoadManager_ptr lm,
-  CosLoadBalancing::LoadAlert_ptr la)
+  CosLoadBalancing::LoadManager_ptr lm)
   : old_orf_ (old_orf),
     object_groups_ (object_groups),
     repository_ids_ (repository_ids),
@@ -30,7 +29,6 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
     fcids_ (),
     orb_ (CORBA::ORB::_duplicate (orb)),
     lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
-    load_alert_ (CosLoadBalancing::LoadAlert::_duplicate (la)),
     registered_members_ (0)
 {
   // Claim ownership of the old ObjectReferenceFactory.
@@ -117,12 +115,6 @@ TAO_LB_ObjectReferenceFactory::make_object (
         {
           ACE_TRY
             {
-              this->lm_->register_load_alert (object_group.in (),
-                                              this->location_,
-                                              this->load_alert_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
               object_group =
                 this->lm_->add_member (object_group.in (),
                                        this->location_,
@@ -191,7 +183,20 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
           if (ACE_OS::strcasecmp (this->object_groups_[index].in (),
                                   "CREATE") == 0)
             {
-              const PortableGroup::Criteria criteria;
+              PortableGroup::Criteria criteria (1);
+              criteria.length (1);
+
+              PortableGroup::Property & property = criteria[0];
+              property.nam.length (1);
+
+              property.nam[0].id =
+                CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
+
+              // Configure for application-controlled membership.
+              PortableGroup::MembershipStyleValue msv =
+                PortableGroup::MEMB_APP_CTRL;
+              property.val <<= msv;
+
               PortableGroup::GenericFactory::FactoryCreationId_var fcid;
 
               group =
