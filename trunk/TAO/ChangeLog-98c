@@ -1,9 +1,19 @@
+Sun Jul 26 09:17:58 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * EC_Multiple.h: increased MAX_CONSUMERS and MAX_SUPPLIERS to 100.
+
+        * EC_Multiple.cpp: 1) added support for dynamic scheduling test
+          (ECM3).  2) In config runs, dump the schedule before shutting
+          the test down.  An exception is usually thrown when shutting
+          the test down, for all but the first EC.  This change allows
+          the schedule to still be dumped.
+
 Sat Jul 25 15:21:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll: 
-	* TAO_IDL/fe/lex.yy.cpp: 
-	  The condition for imported vs. main file changed after the
-	  addition of the #line directive.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+          The condition for imported vs. main file changed after the
+          addition of the #line directive.
 
 Sat Jul 25 14:15:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
