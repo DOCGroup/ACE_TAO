@@ -2994,19 +2994,19 @@ struct iovec
 
 struct msghdr
 {
-  /// optional address
+  /// Optional address
   sockaddr * msg_name;
 
-  /// size of address
+  /// Size of address
   int msg_namelen;
 
-  /// scatter/gather array
+  /// Scatter/gather array
   iovec *msg_iov;
 
   /// # elements in msg_iov
   int msg_iovlen;
 
-  /// access rights sent/received
+  /// Access rights sent/received
   caddr_t msg_accrights;
 
   int msg_accrightslen;
@@ -3099,7 +3099,11 @@ typedef int ACE_exitcode;
 // The "null" device on UNIX.
 #   define ACE_DEV_NULL "/dev/null"
 
-// Wrapper for NT events on UNIX.
+/**
+ * @class ACE_event_t
+ *
+ * @brief Wrapper for NT events on UNIX.
+ */
 class ACE_OS_Export ACE_event_t
 {
   friend class ACE_OS;
@@ -4213,7 +4217,7 @@ struct flock
   {
     /// IP multicast address of group
     struct in_addr imr_multiaddr;
-    /// local IP address of interface
+    /// Local IP address of interface
     struct in_addr imr_interface;
   };
 # endif /* ! ACE_HAS_IP_MULTICAST  &&  ACE_LACKS_IP_ADD_MEMBERSHIP */
@@ -4221,11 +4225,11 @@ struct flock
 # if !defined (ACE_HAS_STRBUF_T)
 struct strbuf
 {
-  /// no. of bytes in buffer.
+  /// No. of bytes in buffer.
   int maxlen;
-  /// no. of bytes returned.
+  /// No. of bytes returned.
   int len;
-  /// pointer to data.
+  /// Pointer to data.
   void *buf;
 };
 # endif /* ACE_HAS_STRBUF_T */
@@ -7009,8 +7013,7 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #endif /* ! ACE_LITTLE_ENDIAN */
 
 /**
- * @name Default values to control CDR classes memory allocation
- *       strategies
+ * @name Default values to control CDR classes memory allocation strategies
  */
 //@{
 

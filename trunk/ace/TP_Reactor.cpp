@@ -49,7 +49,7 @@ ACE_TP_Token_Guard::grab_token (ACE_Time_Value *max_wait_time)
         return -1;
     }
 
-  // We got the token and so let us mark ourseleves as owner
+  // We got the token and so let us mark ourselves as owner
   this->owner_ = 1;
 
   return result;
@@ -144,7 +144,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   ACE_TRACE ("ACE_TP_Reactor::handle_events");
 
   // Stash the current time -- the destructor of this object will
-  // automatically compute how much time elpased since this method was
+  // automatically compute how much time elapsed since this method was
   // called.
   ACE_Countdown_Time countdown (max_wait_time);
 

@@ -125,11 +125,11 @@ public:
   /// Override the default to do nothing.
   virtual void token_acquired (ACE_TPQ_Entry *);
 
-  /// the client id of the current token holder
+  /// The client id of the current token holder
   virtual const ACE_TCHAR* owner_id (void);
 
   /**
-   * sets the server address for all instances of ACE_Remote_Token_Proxy
+   * Sets the server address for all instances of ACE_Remote_Token_Proxy
    * If this isn't called, the environment variable TOKEN_SERVER is
    * checked for the server address.  If that is not specified, all
    * ACE_Remote_** operations will fail.
@@ -141,7 +141,7 @@ public:
 
 protected:
 
-  /// if shadows report deadlock, go remote anyway
+  /// If shadows report deadlock, go remote anyway
   int ignore_shadow_deadlock_;
 
   /// Perform the request and wait for the reply.
@@ -181,8 +181,8 @@ public:
   virtual ACE_Token_Proxy *clone (void) const;
 
 protected:
-  /// Make the correct type of ACE_Tokens.  This is called by the Token
-  /// Manager.
+  /// Make the correct type of ACE_Tokens.
+  /// This is called by the ACE_Token_Manager.
   virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
 };
 
@@ -279,13 +279,13 @@ public:
   ACE_TSS_Connection (void);
   ~ACE_TSS_Connection (void);
 
-  /// retrieve the thread's connection
+  /// Retrieve the thread's connection
   ACE_SOCK_Stream *get_connection (void);
 
   /// Factory Method that creates a new SOCK Stream.
   virtual ACE_SOCK_Stream *make_TSS_TYPE (void) const;
 
-  /// inheritence and operator overloading don't mix.  Redefine this
+  /// Inheritence and operator overloading don't mix.  Redefine this
   /// from ACE_TSS so that we can use it.
   operator ACE_SOCK_Stream *(void);
 

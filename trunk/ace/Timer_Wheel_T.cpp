@@ -296,7 +296,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::earliest_time (void) const
  *  @param interval        If not ACE_Time_Value::zero, then this is a periodic
  *                         timer and interval is the time period
  *
- *  @return Unique identifier (can be used to cancel the timer.
+ *  @return Unique identifier (can be used to cancel the timer).
  *          -1 on failure.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK> long
@@ -338,7 +338,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (
 
 
 /**
- * Find the timer node by using the id as a pointer.  Then use set_interval ()
+ * Find the timer node by using the id as a pointer.  Then use set_interval()
  * on the node to update the interval.
  *
  * @param timer_id The timer identifier

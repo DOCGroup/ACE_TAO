@@ -214,14 +214,14 @@ public:
    * that is available to each logging message call. Default arguments
    * set up logging to STDERR only.
    *
-   * @param prog_name  The name of the calling program.
-   * @param flags      A bitwise-or of options flags used to set the
-   *                   initial behavior and logging sink(s). (see the
-   *                   enum above for the valid values).
-   * @param logger_key The name of ACE_FIFO rendezvous point where the
-   *                   local client logger daemon is listening for logging
-   *                   messages. Only meaningful if the LOGGER bit is
-   *                   set in the <flags> argument.
+   * @param prog_name      The name of the calling program.
+   * @param options_flags  A bitwise-or of options flags used to set the
+   *                       initial behavior and logging sink(s). (see the
+   *                       enum above for the valid values).
+   * @param logger_key     The name of ACE_FIFO rendezvous point where the
+   *                       local client logger daemon is listening for logging
+   *                       messages. Only meaningful if the LOGGER bit is
+   *                       set in the <flags> argument.
    */
   int open (const ACE_TCHAR *prog_name,
             u_long options_flags = ACE_Log_Msg::STDERR,

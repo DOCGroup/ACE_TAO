@@ -87,11 +87,14 @@ void *ACE_Object_Manager::preallocated_array[
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)
 
+/**
+ * @class ACE_Object_Manager_Preallocations
+ *
+ * @brief Performs preallocations of certain statically allocated services
+ * needed by ACE.
+ */
 class ACE_Object_Manager_Preallocations
 {
-  // = TITLE
-  //   Performs preallocations of certain statically allocated
-  //   services needed by ACE.
 public:
   ACE_Object_Manager_Preallocations (void);
   ~ACE_Object_Manager_Preallocations (void);
@@ -715,23 +718,25 @@ ACE_Object_Manager::fini (void)
 
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+/**
+ * @class ACE_Object_Manager_Manager
+ *
+ * @brief Ensure that the <ACE_Object_Manager> gets initialized at program
+ * startup, and destroyed at program termination.
+ *
+ * Without ACE_HAS_NONSTATIC_OBJECT_MANAGER, a static instance of this
+ * class is created.  Therefore, it gets created before main ()
+ * is called.  And it gets destroyed after main () returns.
+ */
 class ACE_Export ACE_Object_Manager_Manager
-  // = TITLE
-  //    Ensure that the <ACE_Object_Manager> gets initialized at
-  //    program startup, and destroyed at program termination.
-  //
-  // = DESCRIPTION
-  //    Without ACE_HAS_NONSTATIC_OBJECT_MANAGER, a static instance of this
-  //    class is created.  Therefore, it gets created before main ()
-  //    is called.  And it gets destroyed after main () returns.
 {
 public:
   ACE_Object_Manager_Manager (void);
   ~ACE_Object_Manager_Manager (void);
 
 private:
+  /// Save the main thread ID, so that destruction can be suppressed.
   ACE_thread_t saved_main_thread_id_;
-  // Save the main thread ID, so that destruction can be suppressed.
 };
 
 ACE_Object_Manager_Manager::ACE_Object_Manager_Manager (void)

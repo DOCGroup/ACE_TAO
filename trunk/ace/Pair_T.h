@@ -60,8 +60,10 @@ public:
   void second (const T2 &t2);
 
 protected:
-
+  /// First.
   T1 first_;
+
+  /// Second.
   T2 second_;
 };
 
@@ -94,8 +96,10 @@ public:
   T2 &second (void) const;
 
 protected:
-
+  /// First.
   T1 &first_;
+
+  /// Second.
   T2 &second_;
 };
 

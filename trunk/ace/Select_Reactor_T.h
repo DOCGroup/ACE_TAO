@@ -79,8 +79,10 @@ public:
   /// Called just before the ACE_Event_Handler goes to sleep.
   virtual void sleep_hook (void);
 
-  /// Set/Get methods
+  /// Get the select_reactor implementation
   ACE_Select_Reactor_Impl &select_reactor (void);
+
+  /// Set the select_reactor implementation
   void select_reactor (ACE_Select_Reactor_Impl &);
 
   /// Dump the state of an object.
@@ -409,13 +411,13 @@ public:
    * @see cancel_timer()
    * @see reset_timer_interval()
    *
-   * @param event_handler  event handler to schedule on reactor
-   * @param arg   argument passed to the handle_timeout() method of  event_handler
-   * @param delta  time interval after which the timer will expire
-   * @param interval  time interval after which the timer will be automatically rescheduled
+   * @param event_handler  Event handler to schedule on reactor
+   * @param arg   Argument passed to the handle_timeout() method of  event_handler
+   * @param delay  Time interval after which the timer will expire
+   * @param interval  Time interval after which the timer will be automatically rescheduled
    * @return -1 on failure, a timer_id value on success
    */
-  virtual long schedule_timer (ACE_Event_Handler *,
+  virtual long schedule_timer (ACE_Event_Handler * event_handler,
                                const void *arg,
                                const ACE_Time_Value &delay,
                                const ACE_Time_Value &interval = ACE_Time_Value::zero);

@@ -56,23 +56,25 @@ public:
 
   // =  timod bindings
   /// Send an n byte buffer to the connected socket (uses t_snd(3)).
-  /// Recv an n byte buffer from the connected socket (uses t_rcv(3)).
   ssize_t send (const void *buf,
                 size_t n,
                 int flags,
                 const ACE_Time_Value *timeout = 0) const;
+
+  /// Recv an n byte buffer from the connected socket (uses t_rcv(3)).
   ssize_t recv (void *buf,
                 size_t n,
                 int *flags,
                 const ACE_Time_Value *timeout = 0) const;
 
   /// Send exactly n bytes to the connected socket (uses t_snd(3)).
-  /// Recv exactly n bytes from the connected socket (uses t_rcv(3)).
   ssize_t send_n (const void *buf,
                   size_t n,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
+
+  /// Recv exactly n bytes from the connected socket (uses t_rcv(3)).
   ssize_t recv_n (void *buf,
                   size_t n,
                   int *flags,
@@ -116,7 +118,7 @@ private:
   int rwflag_;
 
   /// Get rwflag
-  int  get_rwflag (void);
+  int get_rwflag (void);
 
   /// Set rwflag
   void set_rwflag (int);

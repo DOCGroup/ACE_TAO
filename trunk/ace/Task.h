@@ -238,7 +238,7 @@ public:
 
   /**
    * Count of the number of threads running within the task.  If this
-   * value is great than 0 then we're an active object and the value
+   * value is greater than 0 then we're an active object and the value
    * of <thr_count_> is the number of active threads at this instant.
    * If the value == 0, then we're a passive object.
    */

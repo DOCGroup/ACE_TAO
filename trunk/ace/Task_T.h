@@ -77,8 +77,11 @@ public: // Should be protected:
   /// <{absolute}> time rather than <{relative}> time.
   int putq (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
 
-  /// Extract the first message from the queue (blocking).  Note that
-  /// <timeout> uses <{absolute}> time rather than <{relative}> time.
+  /**
+   * Extract the first message from the queue (blocking).  Note that
+   * <timeout> uses <{absolute}> time rather than <{relative}> time.
+   * Returns number of items in queue if the call succeeds or -1 otherwise.
+   */
   int getq (ACE_Message_Block *&mb, ACE_Time_Value *timeout = 0);
 
   /// Return a message to the queue.  Note that <timeout> uses

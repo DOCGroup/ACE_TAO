@@ -91,7 +91,7 @@ public:
    * requested then something has gone wrong and <errno> will
    * explain...).
    *
-   * See also <spawn>.
+   * @see spawn()
    */
   static int spawn_n (size_t n,
                       ACE_THR_FUNC func,
@@ -118,7 +118,7 @@ public:
    * number requested then something has gone wrong and <errno> will
    * explain...).
    *
-   * See also <spawn>.
+   * @see spawn()
    */
   static int spawn_n (ACE_thread_t thread_ids[],
                       size_t n,

@@ -48,9 +48,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_IPC
 #endif /* ! ACE_WIN32 */
 
-// Instance count for Log_Msg - used to know when dynamically
-// allocated storage (program name and host name) can be safely
-// deleted.
+/// Instance count for Log_Msg - used to know when dynamically
+/// allocated storage (program name and host name) can be safely
+/// deleted.
 int ACE_Log_Msg::instance_count_ = 0;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -69,15 +69,17 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> >;
 # endif /* ! ACE_MT_SAFE */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+/**
+ * @class ACE_Log_Msg_Manager
+ *
+ * @brief Synchronize output operations.
+ *
+ * Provides global point of contact for all ACE_Log_Msg instances
+ * in a process.
+ *
+ * For internal use by ACE, only!
+ */
 class ACE_Log_Msg_Manager
-  // = TITLE
-  //      Synchronize output operations.
-  //
-  // = DESCRIPTION
-  //     Provides global point of contact for all ACE_Log_Msg instances
-  //     in a process.
-  //
-  //     For internal use by ACE, only!
 {
 public:
   static ACE_Log_Msg_Backend *log_backend_;
@@ -393,27 +395,27 @@ ACE_Log_Msg::program_name (void)
   return ACE_Log_Msg::program_name_;
 }
 
-// Name of the local host.
+/// Name of the local host.
 const ACE_TCHAR *ACE_Log_Msg::local_host_ = 0;
 
-// Records the program name.
+/// Records the program name.
 const ACE_TCHAR *ACE_Log_Msg::program_name_ = 0;
 
-// Default is to use stderr.
+/// Default is to use stderr.
 u_long ACE_Log_Msg::flags_ = ACE_Log_Msg::STDERR;
 
-// Process id of the current process.
+/// Process id of the current process.
 pid_t ACE_Log_Msg::pid_ = -1;
 
-// Current offset of msg_[].
+/// Current offset of msg_[].
 int ACE_Log_Msg::msg_off_ = 0;
 
-// Default per-thread priority mask
-// By default, no priorities are enabled.
+/// Default per-thread priority mask
+/// By default, no priorities are enabled.
 u_long ACE_Log_Msg::default_priority_mask_ = 0;
 
-// Default per-process priority mask
-// By default, all priorities are enabled.
+/// Default per-process priority mask
+/// By default, all priorities are enabled.
 u_long ACE_Log_Msg::process_priority_mask_ = LM_SHUTDOWN
                                            | LM_TRACE
                                            | LM_DEBUG
@@ -811,40 +813,41 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
   return status;
 }
 
-// Valid Options (prefixed by '%', as in printf format strings) include:
-//   'A': print an ACE_timer_t value
-//   'a': exit the program at this point (var-argument is the exit status!)
-//   'c': print a character
-//   'C': print a character string
-//   'i', 'd': print a decimal number
-//   'I', indent according to nesting depth
-//   'e', 'E', 'f', 'F', 'g', 'G': print a double
-//   'l', print line number where an error occurred.
-//   'M': print the name of the priority of the message.
-//   'm': Return the message corresponding to errno value, e.g., as done by <strerror>
-//   'N': print file name where the error occurred.
-//   'n': print the name of the program (or "<unknown>" if not set)
-//   'o': print as an octal number
-//   'P': format the current process id
-//   'p': format the appropriate errno message from sys_errlist, e.g., as done by <perror>
-//   'Q': print out the uint64 number
-//   '@': print a void* pointer (in hexadecimal)
-//   'r': call the function pointed to by the corresponding argument
-//   'R': print return status
-//   'S': format the appropriate _sys_siglist entry corresponding to var-argument.
-//   's': format a character string
-//   'T': print timestamp in hour:minute:sec:usec format.
-//   'D': print timestamp in month/day/year hour:minute:sec:usec format.
-//   't': print thread id (1 if single-threaded)
-//   'u': print as unsigned int
-//   'x': print as a hex number
-//   'X': print as a hex number
-//   'w': print a wide character
-//   'W': print out a wide character string.
-//   'z': print an ACE_OS::WChar character
-//   'Z': print an ACE_OS::WChar character string
-//   '%': format a single percent sign, '%'
-
+/**
+ * Valid Options (prefixed by '%', as in printf format strings) include:
+ *   'A': print an ACE_timer_t value
+ *   'a': exit the program at this point (var-argument is the exit status!)
+ *   'c': print a character
+ *   'C': print a character string
+ *   'i', 'd': print a decimal number
+ *   'I', indent according to nesting depth
+ *   'e', 'E', 'f', 'F', 'g', 'G': print a double
+ *   'l', print line number where an error occurred.
+ *   'M': print the name of the priority of the message.
+ *   'm': Return the message corresponding to errno value, e.g., as done by <strerror>
+ *   'N': print file name where the error occurred.
+ *   'n': print the name of the program (or "<unknown>" if not set)
+ *   'o': print as an octal number
+ *   'P': format the current process id
+ *   'p': format the appropriate errno message from sys_errlist, e.g., as done by <perror>
+ *   'Q': print out the uint64 number
+ *   '@': print a void* pointer (in hexadecimal)
+ *   'r': call the function pointed to by the corresponding argument
+ *   'R': print return status
+ *   'S': format the appropriate _sys_siglist entry corresponding to var-argument.
+ *   's': format a character string
+ *   'T': print timestamp in hour:minute:sec:usec format.
+ *   'D': print timestamp in month/day/year hour:minute:sec:usec format.
+ *   't': print thread id (1 if single-threaded)
+ *   'u': print as unsigned int
+ *   'x': print as a hex number
+ *   'X': print as a hex number
+ *   'w': print a wide character
+ *   'W': print out a wide character string.
+ *   'z': print an ACE_OS::WChar character
+ *   'Z': print an ACE_OS::WChar character string
+ *   '%': format a single percent sign, '%'
+ */
 ssize_t
 ACE_Log_Msg::log (ACE_Log_Priority log_priority,
                   const ACE_TCHAR *format_str, ...)
@@ -1627,21 +1630,22 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 }
 
 #if !defined (ACE_WIN32)
+/**
+ * @class ACE_Log_Msg_Sig_Guard
+ *
+ * @brief For use only by ACE_Log_Msg.
+ *
+ * Doesn't require the use of global variables or global
+ * functions in an application).
+ */
 class ACE_Log_Msg_Sig_Guard
 {
-  // = TITLE
-  //     Bare-bones ACE_Sig_Guard.
-  //
-  // = DESCRIPTION
-  //     For use only by ACE_Log_Msg.
-  //     doesn't require the use of global variables or global
-  //     functions in an application).
 private:
   ACE_Log_Msg_Sig_Guard (void);
   ~ACE_Log_Msg_Sig_Guard (void);
 
+  /// Original signal mask.
   sigset_t omask_;
-  // Original signal mask.
 
   friend ssize_t ACE_Log_Msg::log (ACE_Log_Record &log_record,
                                    int suppress_stderr);

@@ -235,8 +235,8 @@ public:
   /**
    * Delete all the resources held in the message.
    *
-   * Note that <release> is designed to release the continuation
-   * chain; the destructor is not. See <release> for details.
+   * Note that <release()> is designed to release the continuation
+   * chain; the destructor is not. See <release()> for details.
    */
   virtual ~ACE_Message_Block (void);
 
@@ -401,23 +401,23 @@ public:
    */
   char *mark (void) const;
 
-  /**
-   * Get the read pointer.
-   * Set the read pointer to <ptr>.
-   * Set the read pointer ahead <n> bytes.
-   */
+  /// Get the read pointer.
   char *rd_ptr (void) const;
+
+  /// Set the read pointer to <ptr>.
   void rd_ptr (char *ptr);
+
+  /// Set the read pointer ahead <n> bytes.
   void rd_ptr (size_t n);
 
-  /**
-   * Get the write pointer.
-   * Set the write pointer to <ptr>.
-   * Set the write pointer ahead <n> bytes.  This is used to compute
-   * the <length> of a message.
-   */
+  /// Get the write pointer.
   char *wr_ptr (void) const;
+
+  /// Set the write pointer to <ptr>.
   void wr_ptr (char *ptr);
+
+  /// Set the write pointer ahead <n> bytes.  This is used to compute
+  /// the <length> of a message.
   void wr_ptr (size_t n);
 
   /** @name Message length and size operations
@@ -830,23 +830,23 @@ public:
 
   enum Priority_Status
   {
-    /// message can still make its deadline
+    /// Message can still make its deadline
     PENDING     = 0x01,
-    /// message cannot make its deadline
+    /// Message cannot make its deadline
     LATE        = 0x02,
-    /// message is so late its priority is undefined
+    /// Message is so late its priority is undefined
     BEYOND_LATE = 0x04,
-    /// mask to match any priority status
+    /// Mask to match any priority status
     ANY_STATUS  = 0x07
   };
 
-  /// ctor
+  /// Constructor.
   ACE_Dynamic_Message_Strategy (u_long static_bit_field_mask,
                                 u_long static_bit_field_shift,
                                 u_long dynamic_priority_max,
                                 u_long dynamic_priority_offset);
 
-  /// virtual dtor
+  /// Virtual destructor.
   virtual ~ACE_Dynamic_Message_Strategy (void);
 
   /// Updates the message's priority and returns its priority status.
@@ -919,7 +919,7 @@ protected:
  * Assigns dynamic message priority according to time to deadline.  The
  * message priority is divided into high and low order bit fields.  The
  * high order bit field is used for dynamic message priority, which is
- * updated whenever the convert_priority (...) method is called.  The
+ * updated whenever the convert_priority() method is called.  The
  * low order bit field is used for static message priority and is left
  * unchanged.  The partitioning of the priority value into high and low
  * order bit fields is done according to the arguments passed to the
@@ -954,7 +954,7 @@ public:
  * deadline minus worst case execution time).  The message priority is
  * divided into high and low order bit fields.  The high order
  * bit field is used for dynamic message priority, which is
- * updated whenever the convert_priority (...) method is called.  The
+ * updated whenever the convert_priority() method is called.  The
  * low order bit field is used for static message priority and is left
  * unchanged.  The partitioning of the priority value into high and low
  * order bit fields is done according to the arguments passed to the
