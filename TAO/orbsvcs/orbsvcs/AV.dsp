@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_CosNaming.lib TAO_CosTrading.lib TAO_CosProperty.lib ace.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AV.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNaming.lib TAO_CosTrading.lib TAO_CosProperty.lib ace.lib ACE_QoS.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AV.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "AV - Win32 Debug"
 
@@ -112,7 +112,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib TAO_CosNamingd.lib TAO_CosTradingd.lib TAO_CosPropertyd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_AVd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_CosNamingmfcd.lib TAO_CosTradingmfcd.lib TAO_CosPropertymfcd.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_AVmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOmfcd.lib acemfcd.lib ACE_QoSmfcd.lib TAO_CosNamingmfcd.lib TAO_CosTradingmfcd.lib TAO_CosPropertymfcd.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_AVmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "AV - Win32 MFC Release"
 
@@ -141,7 +141,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_CosNaming.lib TAO_CosTrading.lib TAO_CosProperty.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AV.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 acemfc.lib TAOmfc.lib TAO_CosNamingmfc.lib TAO_CosTradingmfc.lib TAO_CosPropertymfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AVmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib ACE_QoSmfc.lib TAOmfc.lib TAO_CosNamingmfc.lib TAO_CosTradingmfc.lib TAO_CosPropertymfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_AVmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
