@@ -1,3 +1,36 @@
+Mon Mar 21 07:46:16 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+
+         Turn off optimization for the CosNaming_Serv library when using
+          cxx on Tru64.  It's broken with respect to the binding iterator
+          template class.
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+
+          Corrected HP-UX and Windows related macros and added support for
+          MacOS X.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+
+          Removed an unused data member.
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable.inl:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Added error indication to the flat file extraction operators and
+          error checking to the storable naming context loading code.
+
+          Also, changed the initialization of String_var data member in
+          Storable_Naming_Context.cpp to duplicate the constant string ("").
+
+        * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+
+          Added the method name to the %p parameter.
+
 Mon Mar 21 06:56:10 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/IIOP_Connection_Handler.cpp:

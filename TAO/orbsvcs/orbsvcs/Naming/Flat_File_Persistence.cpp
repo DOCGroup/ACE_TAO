@@ -162,10 +162,26 @@ TAO_NS_FlatFileStream::operator >>(
   int destroyed;
 
   ACE_OS::rewind(this->fl_);
-  fscanf(fl_, "%u\n", &size);
+  switch (fscanf(fl_, "%u\n", &size))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   header.size(size);
 
-  fscanf(fl_, "%d\n", &destroyed);
+  switch (fscanf(fl_, "%d\n", &destroyed))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   header.destroyed(destroyed);
 
   return *this;
@@ -204,39 +220,86 @@ TAO_NS_FlatFileStream::operator >>(
   ACE_TRACE("TAO_NS_FlatFileStream::operator >>");
   TAO_NS_Persistence_Record::Record_Type type;
   int temp_type_in;
-  fscanf(fl_, "%d\n", &temp_type_in);
+  switch (fscanf(fl_, "%d\n", &temp_type_in))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   type = (TAO_NS_Persistence_Record::Record_Type) temp_type_in;
   record.type(type);
 
-  size_t bufSize = 0;
+  int bufSize = 0;
 
   //id
-  fscanf(fl_, ACE_TEXT_ALWAYS_CHAR (ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n")), &bufSize);
+  switch (fscanf(fl_, "%d\n", &bufSize))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   char *id = new char[bufSize+1];
   //char *id;
   //ACE_NEW_RETURN (id, char[bufSize+1], 1);
-  ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(id), bufSize+1, fl_);
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(id), bufSize+1, fl_) == 0 &&
+      bufSize != 0)
+    {
+      this->setstate (badbit);
+      return *this;
+    }
   ACE_CString newId(id);
   record.id(newId);
   delete [] id;
 
   //kind
-  fscanf(fl_, ACE_TEXT_ALWAYS_CHAR (ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n")), &bufSize);
+  switch (fscanf(fl_, "%d\n", &bufSize))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   char *kind = new char[bufSize+1];
   //char *kind;
   //ACE_NEW (kind, char[bufSize+1]);
-  ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(kind), bufSize+1, fl_);
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(kind), bufSize+1, fl_) == 0 &&
+      bufSize != 0)
+    {
+      this->setstate (badbit);
+      return *this;
+    }
   kind[bufSize] = '\0';
   ACE_CString newKind(kind);
   record.kind(newKind);
   delete [] kind;
 
    //ref
-  fscanf(fl_, ACE_TEXT_ALWAYS_CHAR (ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n")), &bufSize);
+  switch (fscanf(fl_, "%d\n", &bufSize))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   char *ref = new char[bufSize+1];
   //char *ref;
   //ACE_NEW(ref, char[bufSize+1]);
-  ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(ref), bufSize+1, fl_);
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(ref), bufSize+1, fl_) == 0 &&
+      bufSize != 0)
+    {
+      this->setstate (badbit);
+      return *this;
+    }
   ACE_CString newRef(ref);
   record.ref(newRef);
   delete [] ref;
@@ -265,7 +328,15 @@ TAO_NS_FlatFileStream::operator >>(
   unsigned int counter = 0;
 
   ACE_OS::rewind(this->fl_);
-  fscanf(fl_, "%u\n", &counter);
+  switch (fscanf(fl_, "%u\n", &counter))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   global.counter(counter);
 
   return *this;

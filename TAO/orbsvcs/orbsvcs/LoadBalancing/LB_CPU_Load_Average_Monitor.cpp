@@ -6,7 +6,7 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/os_include/sys/os_pstat.h"
 #include "ace/os_include/sys/os_loadavg.h"
-#if defined(__NetBSD__)
+#if defined(__NetBSD__) || defined (__APPLE__)
 #include <sys/sysctl.h>
 #endif
 
@@ -89,7 +89,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   //    the number of processors and assume that any processor failure
   //    is a catastrophic one.
 
-#if defined (WINDOWS)
+#if 0
 
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
@@ -162,7 +162,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   else
     ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
 
-#elif defined (__NetBSD__)
+#elif defined (__NetBSD__) || defined (__APPLE__)
 
   double loadavg[1];
 
@@ -189,7 +189,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   else
     ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
 
-#elif defined (hpux)
+#elif defined (__hpux)
 
   struct pst_dynamic psd;
 
@@ -209,7 +209,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif
 
-#if defined (WINDOWS) || defined (linux) || defined (sun) || defined (hpux) || defined(__NetBSD__)
+#if defined (linux) || defined (sun) || defined (__hpux) || defined(__NetBSD__) || defined (__APPLE__)
 
   CosLoadBalancing::LoadList * tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -235,6 +235,6 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   ACE_UNUSED_ARG (load);
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 
-#endif  /* WINDOWS || linux || sun || hpux  || __NetBSD__ */
+#endif  /* linux || sun || __hpux  || __NetBSD__ || __APPLE__ */
 
 }
