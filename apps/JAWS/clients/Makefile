@@ -11,8 +11,8 @@
 INFO  = README
 
 DIRS  =	Blobby \
-	Caching \
-	WebSTONE
+	Caching 
+
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
