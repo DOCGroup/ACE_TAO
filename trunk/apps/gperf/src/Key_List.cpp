@@ -525,7 +525,7 @@ Key_List::output_min_max (void)
 void
 Key_List::output_switch (int use_keyword_table)
 {
-  if (!option[GLOBAL])
+  if (!option[GLOBAL] && use_keyword_table == 0)
     {
       if (option[LENTABLE] && option[DUP])
         output_keylength_table ();
