@@ -16,7 +16,7 @@ The test server adds the argument specified with the -i option and the
 IOR of the INS_i servant to the IOR table. The test client calls 
 resolve_initial_references on argv[1].
 
-TEST 1: Single Profile iioplocs using -ORBInitRef
+TEST 1: Single Profile corbalocs using -ORBInitRef
 
 InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
 					// -i Adds the ins:IOR mapping to
@@ -24,10 +24,10 @@ InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url
 					// -n Use the Naming Service.
 
 InterOp-Naming> INS_test_client arbit_service \
-                -ORBInitRef "arbit_service=iioploc://1.0@<host-name>:<port>/ins"
+                -ORBInitRef "arbit_service=corbaloc:iiop:<host-name>:<port>/ins"
 
 
-TEST 2: Multiple Profile iioplocs using -ORBInitRef
+TEST 2: Multiple Profile corbalocs using -ORBInitRef
 
 InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
 
@@ -36,12 +36,12 @@ InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url
 					// -n Use the Naming Service.
 
 InterOp-Naming> INS_test_client arbit_service \
-		-ORBInitRef "arbit_service=iioploc://1.0@<host-name>:<port>/ins,
+		-ORBInitRef "arbit_service=corbaloc://1.0@<host-name>:<port>/ins,
 					   1.0@<host-name2>:<port2>/key,
 					   ...
 					   1.0@<host-namen>:<portN>/key"
 
-TEST 3: Single Profile iioploc using -ORBDefautlInitRef
+TEST 3: Single Profile corbaloc using -ORBDefautlInitRef
 
 InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
 
@@ -50,9 +50,9 @@ InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url
 					// -n Use the Naming Service.
 
 InterOp-Naming> INS_test_client ins \
-		-ORBDefaultInitRef "iioploc://1.0@<host-name>:<port>"
+		-ORBDefaultInitRef "corbaloc:://1.0@<host-name>:<port>"
 
-TEST 4: Multiple Profile iioploc using -ORBDefaultInitRef
+TEST 4: Multiple Profile corbaloc using -ORBDefaultInitRef
 
 InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
 
@@ -61,7 +61,7 @@ InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url
 					// -n Use the Naming Service.
 
 InterOp-Naming> INS_test_client \
-		-ORBDefaultInitRef "iioploc://1.0@<host-name>:<port>,
+		-ORBDefaultInitRef "corbaloc:://1.0@<host-name>:<port>,
 					    1.0@<host-name2>:<port2>,
 					    ...
 					    1.0@<host-namen>:<portN>"

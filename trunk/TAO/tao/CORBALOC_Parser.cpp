@@ -88,8 +88,8 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
   CORBA::String_var end_point;
   const char protocol_prefix[] = ":";
   const char protocol_suffix_append[] = "://";
-  const char iiop_prefix[] = "iiop:";
-  const char uiop_prefix[] = "uiop:";
+  const char iiop_prefix[] = "iiop";
+  const char uiop_prefix[] = "uiop";
 
   // Copy the cloc_name_ptr to cloc_name_cstring.
   ACE_CString cloc_name_cstring (cloc_name_ptr,
@@ -134,21 +134,31 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
     {
       // The case where the protocol to be used is explicitly
       // specified.
-
+ 
       // Allocate memory for the end_point.
       end_point = CORBA::string_alloc (addr_list_length +
                                        1 + // For the seperator
+                                       2 + // For the protocol_prefix_append
                                        key_string.length ());
 
       ACE_CString prot_name = cloc_name_cstring.substring (0,
                                                            pos_colon);
 
-      // Append the endpoint that is being passed.
+      // Form the End_Point
+
+      // Example: 
+      // prot_name.c_str () = iiop
       ACE_OS::strcpy (end_point,
                       prot_name.c_str ());;
 
+
+      // Example:
+      // The End_point will now be 'iiop'
+
       ACE_OS::strcat (end_point,
                       protocol_suffix_append);
+
+      // The End_point will now be 'iiop://'
 
       ACE_CString host_name_port = cloc_name_cstring.substring (pos_colon+1,
                                                                 -1);
@@ -156,6 +166,9 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
       ACE_OS::strcat (end_point,
                       host_name_port.c_str ());
 
+      // Example:
+      // The End_point will now be 'iiop://doc.ece.uci.edu:12345'
+      
     }
 
   if (ACE_OS::strncmp (cloc_name_ptr,
@@ -177,6 +190,9 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
   // Append the key string.
   ACE_OS::strcat (end_point,
                   key_string.c_str ());
+
+  // Example: The End_point will now be 
+  // 'iiop://doc.ece.uci.edu:12345/object_name'
 
   // Call the mprofile helper which makes an mprofile for this
   // endpoint and adds it to the big mprofile.
