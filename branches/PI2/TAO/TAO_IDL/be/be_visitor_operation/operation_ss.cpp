@@ -251,7 +251,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // make the upcall and assign to the return val
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_INVOKE_CS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (bt->accept (visitor) == -1))
     {
