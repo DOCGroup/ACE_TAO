@@ -1,3 +1,10 @@
+Fri Aug 25 17:11:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Thread_Control.h:
+        * ace/Thread_Control.cpp:
+          Fixed problems with the backwards compatible configuration
+          (i.e. ACE_HAS_ONLY_LATEST_AND_GREATEST not defined).
+
 Fri Aug 25 16:15:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:

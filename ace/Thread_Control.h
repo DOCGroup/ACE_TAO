@@ -23,7 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#if defined (ACE_ONLY_LATEST_AND_GREATEST)
+#  include "ace/OS.h"
+#endif  /* ACE_ONLY_LATEST_AND_GREATEST */
 
 class ACE_Thread_Manager;
 
