@@ -13,7 +13,7 @@ package GNUACEWorkspaceCreator;
 use strict;
 use File::Basename;
 
-use GNUProjectCreator;
+use GNUACEProjectCreator;
 use WorkspaceCreator;
 
 use vars qw(@ISA);
