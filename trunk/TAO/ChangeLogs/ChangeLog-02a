@@ -1,3 +1,12 @@
+Mon Jul  1 22:53:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Fixed a bug in the logic in selecting what to generate
+          for interfaces based on the 'local' and 'abstract'
+          qualifiers.
+
 Mon Jul  1 21:58:25 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_context.cpp:
