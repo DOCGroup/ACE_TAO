@@ -353,13 +353,13 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
   u_short sport = local_addr.get_port_number ();
 
 #if defined (_TEST_USES_THREADS)
-  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_REACTIVE_CONNECTION,
+  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_MT_CONNECTION,
                                             connect_client,
                                             &sport);
 #else
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -m"), prog, sport);
-  if (-1==ACE_Process_Manager::instance ()->spawn_n (NO_OF_REACTIVE_CONNECTION,
+  if (-1==ACE_Process_Manager::instance ()->spawn_n (NO_OF_MT_CONNECTION,
                                                      opts))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")));
 #endif

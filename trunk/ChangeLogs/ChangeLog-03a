@@ -1,3 +1,9 @@
+Wed Aug 29 11:01:22 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/MEM_Stream_Test.cpp: Fixed a cut/paste error and now runs the
+          proper number of threads/processes for the MT case, avoiding a
+          hang.
+
 Wed Aug 29 07:08:23 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/run_tests.lst: 
