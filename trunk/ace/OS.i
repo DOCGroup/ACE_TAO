@@ -5213,7 +5213,7 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),
                                        ace_result_),
                      int, -1);
-#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+#elif defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
 # if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   int result;
