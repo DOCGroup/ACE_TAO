@@ -89,27 +89,18 @@ main (int argc, char *argv[])
 
           {
             CORBA::Object_var obj =
-              orb->string_to_object ("IOR:010000001b00000049444c3a6f6d"
-                                     "672e6f72672f506172616d5f54657374"
-                                     "3a312e30000001000000000000008400"
-                                     "0000010101cd0a000000474c414d4452"
-                                     "494e47008f053000000014010f004e55"
-                                     "50000000130000000001000000006368"
-                                     "696c645f706f61000000000001000000"
-                                     "706172616d5f74657374030000000000"
-                                     "00000800000001cdcdcd004f41540100"
-                                     "00001400000001cdcdcd010001000000"
-                                     "00000901010000000000004f41540400"
-                                     "000001cd0000",
+              orb->string_to_object ("iioploc://localhost:1234/Foo/Bar",
                                      ACE_TRY_ENV);
             ACE_TRY_CHECK;
 
             Param_Test_var param_test =
               Param_Test::_unchecked_narrow (obj.in (),
-                                         ACE_TRY_ENV);
+                                             ACE_TRY_ENV);
             ACE_TRY_CHECK;
+            TAO_Stub *stub = param_test->_stubobj ();
+            stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
 
-            any <<= Param_Test::_duplicate (param_test.in ());
+            any <<= param_test.in ();
 
             Param_Test_ptr o;
             if (!(any >>= o))

@@ -1615,11 +1615,11 @@ operator>> (TAO_InputCDR &cdr,
       // Skip over the next aregument.
       CORBA::TypeCode::traverse_status status =
         cdr.skip (tc.in (), ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ACE_THROW (CORBA::MARSHAL ());
+          return 0;
         }
 
       // This will be the end of the new message block.
