@@ -5,7 +5,7 @@ project : aceexe {
   libs  += Test_Output
 
   Source_Files {
-    $(ACE_ROOT)/tests/Main.cpp
+    Main.cpp
   }
   Header_Files {
   }
