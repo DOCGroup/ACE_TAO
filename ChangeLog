@@ -1,3 +1,9 @@
+Tue Jul  9 09:01:14 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/taolib_with_idl.mpb:
+
+          Change the default tao_idl option from -Gs to -Sc.
+
 Tue Jul  9 08:07:20 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
