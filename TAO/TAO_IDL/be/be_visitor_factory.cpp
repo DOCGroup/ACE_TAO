@@ -700,8 +700,8 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_ami_handler_operation_ch (new_ctx);
 
       // @@ Michael: I think we do not need that any more
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CS:
-      return new be_interpretive_visitor_operation_ami_handler_operation_cs (new_ctx);
+      //case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CS:
+      //return new be_interpretive_visitor_operation_ami_handler_operation_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
@@ -711,9 +711,9 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CS:
       return new be_visitor_args_ami_handler_arglist (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_SKELETON_CS:
-      return new be_interpretive_visitor_operation_ami_handler_skeleton_cs (new_ctx);
-
+      //case TAO_CodeGen::TAO_AMI_HANDLER_SKELETON_CS:
+      //return new be_interpretive_visitor_operation_ami_handler_skeleton_cs (new_ctx);
+      
     default:
       // cannot handle it; delegate it to the common visitor factory
       delete new_ctx;

@@ -1,3 +1,13 @@
+Mon Sep 21 09:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+	
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	  Removed some AMI visitors for interpretive marshaling because
+	  we do not support interpretive marshaling for AMI anyway. 
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
+	  Implemented the code necessary to do exception handling in 
+	  the reply stub.
+
 Mon Sep 20 19:11:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/decode.cpp:

@@ -154,7 +154,11 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
 
   *os << "ACE_CHECK;" << be_nl << be_nl
-      << "// @@ Error handling \n\n";
+      << "// Exception handling" << be_nl
+      << "switch (reply_status)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "case TAO_AMI_REPLY_OK:" << be_idt_nl
+      << "{\n";
 
   // declare a return type variable
   ctx = *this->ctx_;
@@ -197,6 +201,39 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
                          "gen_demarshal_params failed\n"),
                         -1);
     }
+
+  os->indent ();
+  *os << be_uidt_nl
+      << "}" << be_uidt_nl << "return;" << be_uidt_nl
+      << "case TAO_AMI_REPLY_USER_EXCEPTION:" << be_nl
+      << "case TAO_AMI_REPLY_SYSTEM_EXCEPTION:" << be_idt_nl
+      << "{" << be_idt_nl
+      << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl << be_nl;
+
+  *os << parent->compute_name ("AMI_", "ExceptionHolder") << "* exception_holder_var;" << be_nl
+      << "ACE_NEW (exception_holder_var," << be_idt_nl
+      << parent->compute_name ("AMI_", "ExceptionHolder") << " ());" << be_uidt_nl
+      << "exception_holder_var->marshaled_exception.replace" << be_idt_nl 
+      << "(cdr->length (), // max" << be_nl
+      << " cdr->length (), // length" << be_nl
+      << " (unsigned char*) cdr->rd_ptr (),// data" << be_nl
+      << " 0); // release" << be_uidt_nl;
+
+  *os << "if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)" << be_idt_nl
+      << " exception_holder_var->is_system_exception = 1;" << be_uidt_nl << be_nl
+      << "_tao_reply_handler_object->foo_excep (" << be_idt_nl
+      << parent->compute_name ("AMI_", "ExceptionHolder") << "::_duplicate (exception_holder_var)," << be_nl
+      << " ACE_TRY_ENV);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "return;" << be_uidt_nl;
+
+  *os << "case TAO_AMI_REPLY_NOT_OK:" << be_idt_nl
+      << "// @@ Michael: Not even the spec mentions this case." << be_nl
+      << "//             We have to think about this case." << be_nl
+      << "// Handle the forwarding and return so the stub restarts the" << be_nl
+      << "// request!" << be_nl
+      << "break;" << be_uidt_nl
+      << "}" << be_uidt_nl;
 
   *os << be_uidt_nl << "};" << be_nl << be_nl;
 
@@ -316,6 +353,10 @@ be_visitor_operation_ami_handler_skeleton_cs::gen_check_exception (be_type *bt)
   return 0;
 }
 
+// Currently we do not support interpretative exception handling for AMI
+#if 0
+
+
 // ************************************************************
 // Operation visitor for interpretive client skeletons of the AMI reply handler
 // ************************************************************
@@ -354,6 +395,8 @@ gen_marshal_and_invoke (be_operation*node,
   // @@ Michael: To be done.
   return 0;
 }
+
+#endif /* 0 */
 
 // ************************************************************
 // Operation visitor for compiled client skeletons of the AMI reply handler
