@@ -1,3 +1,13 @@
+Fri Apr  5 23:04:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PolicyS.h:
+	* tao/PolicyS.cpp:
+	* tao/PolicyS.i:
+	* tao/PolicyS_T.h:
+	* tao/PolicyS_T.cpp:
+	* tao/PolicyS_T.i: A wrong checkin. By mistake these files got
+	  checked into the $TAO_ROOT/tao.
+
 Fri Apr  5 19:49:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: Fix for part of
@@ -34,7 +44,6 @@ Fri Apr  5 19:49:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/PolicyC.cpp:
 	* tao/PolicyC.h:
 	* tao/PolicyC.i:
-	* tao/PolicyS.h:
 	* tao/Policy_ForwardC.cpp:
 	* tao/Policy_ForwardC.h:
 	* tao/Policy_ForwardC.i:
