@@ -1,3 +1,9 @@
+Tue May 23 20:13:52 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.h: Moved the definition of WSANETWORKEVENTS to
+	  before its use.  Thanks to Craig Perras <cperras@watchguard.com>
+	  for reporting this.
+
 Tue May 23 17:59:06 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ACE_wrappers/pace/pace:
@@ -8,11 +14,11 @@ Tue May 23 17:59:06 2000  Luther J Baker  <luther@cs.wustl.edu>
 Tue May 23 16:37:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ACE_wrappers/pace directories added to ACE_wrappers:
-	
+
 	      ACE_wrappers/pace/docs
 	      ACE_wrappers/pace/examples
 	      ACE_wrappers/pace/pace
-	      ACE_wrappers/pace/pace++	
+	      ACE_wrappers/pace/pace++
 	      ACE_wrappers/pace/tests
 
 Mon May 22 15:26:42 2000  Steve Huston  <shuston@riverace.com>
