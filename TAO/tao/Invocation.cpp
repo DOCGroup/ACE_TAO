@@ -152,7 +152,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
         timeout->relative_expiry (ACE_TRY_ENV);
       ACE_CHECK;
       TimeBase::TimeT seconds = t / 10000000u;
-      TimeBase::TimeT microseconds = t % 10000000u;
+      TimeBase::TimeT microseconds = (t % 10000000u) / 10;
       this->max_wait_time_value_.set (ACE_U64_TO_U32(seconds),
                                       ACE_U64_TO_U32(microseconds));
       this->max_wait_time_ = &this->max_wait_time_value_;
@@ -641,14 +641,14 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     this->transport_->wait_for_reply (this->max_wait_time_);
 
   // Do the wait loop till we receive the reply for this invocation.
-  // while (reply_error != -1 && 
+  // while (reply_error != -1 &&
   //        this->transport_->reply_received (this->request_id_) != 1)
   //   {
   //     // @@ Hack to init the Leader-Follower state, so that we can
   //     //    wait again. (Alex).
   //     // this->transport_->wait_strategy ()->sending_request (this->orb_core_,
   //     //                                                  1);
-  //     
+  //
   //     // Wait for reply.
   //     reply_error = this->transport_->wait_for_reply ();
   //   }
@@ -785,7 +785,7 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
-// Send request, block until any reply comes back. 
+// Send request, block until any reply comes back.
 void
 TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -862,13 +862,13 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   int reply_error =
     this->transport_->wait_for_reply (this->max_wait_time_);
 
-  //   // Do the wait loop, till we receive the reply for this invocation. 
-  //   while (reply_error != -1 && 
+  //   // Do the wait loop, till we receive the reply for this invocation.
+  //   while (reply_error != -1 &&
   //          this->transport_->reply_received (this->request_id_) != 1)
   //     {
   //       reply_error = this->transport_->wait_for_reply ();
   //     }
-  
+
   // Check the reply error.
   if (reply_error == -1)
     {
