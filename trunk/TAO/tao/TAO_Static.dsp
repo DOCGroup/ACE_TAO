@@ -514,6 +514,30 @@ SOURCE=.\Services.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Acceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connect.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connector.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Profile.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Transport.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Single_Reactor.cpp
 # End Source File
 # Begin Source File
@@ -1050,6 +1074,30 @@ SOURCE=.\Services.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Acceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Profile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Transport.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
@@ -1411,6 +1459,18 @@ SOURCE=.\Server_Request.i
 # Begin Source File
 
 SOURCE=.\Services.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Acceptor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Profile.i
 # End Source File
 # Begin Source File
 
