@@ -1,3 +1,43 @@
+Tue Mar 21 20:31:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynAnyC.cpp 
+	* tao/DynAnyC.h:
+	* tao/DynArray_i.cpp:
+	* tao/DynArray_i.h:
+	* tao/DynSequence_i.cpp:
+	* tao/DynSequence_i.h:
+	* tao/GIOPC.h:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/IOPC.h:
+	* tao/IORC.cpp:
+	* tao/IORC.h:
+	* tao/ImplRepoC.cpp:
+	* tao/ImplRepoC.h:
+	* tao/Interceptor.cpp:
+	* tao/Interceptor.h:
+	* tao/Interceptor.i:
+	* tao/Invocation.cpp:
+	* tao/MessagingC.h:
+	* tao/ORB.h:
+	* tao/Object_KeyC.h:
+	* tao/POAC.cpp:
+	* tao/POAC.h:
+	* tao/PolicyC.h: 
+	* tao/Request.h:
+	* tao/Services.h: 
+	* tao/corbafwd.h: 
+	   Removed all typedefs of foo_ptr to foo::_ptr_type and
+	   all typedefs and use of foo * as foo_ptr, for all datatypes
+	   except interfaces, valuetypes, pseudo objects, and a few
+	   types that appear as foo_ptr in spec examples (NamedValue,
+	   NVList, ExceptionList, etc.). Even though I don't think the
+	   spec intends for these types to have the typedef, I left them
+	   in to hopefully reduce confusion.
+
+	* tao/TAO.dsp:
+	   Added BoundsC.* to the project file. It had been removed by 
+	   a recent checkin.
+
 Tue Mar 21 17:13:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
