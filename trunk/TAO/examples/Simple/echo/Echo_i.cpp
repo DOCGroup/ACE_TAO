@@ -31,6 +31,8 @@ Echo_i::echo_list (const char *message,
                    CORBA::Environment &)
  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (message);
+
   Echo::List *list;
   
   ACE_NEW_RETURN (list,
