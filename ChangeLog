@@ -1,3 +1,10 @@
+Sun Oct 20 00:14:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/C++NPv1/Makefile: Reverted the change "Fri Oct 18
+	  21:01:25 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>" since
+	  this opens up some problems. Craig will look into it later and
+	  provide a clean fix. Till then..
+
 Sat Oct 19 20:00:00 2002  Stephen Torri <storri@cse.wustl.edu>
 
 	* tests/Recursive_Condition_Test.cpp:
