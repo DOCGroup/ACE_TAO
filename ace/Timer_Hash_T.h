@@ -99,7 +99,7 @@ public:
   virtual void next (void);
 
   /// Returns true when there are no more nodes in the sequence
-  virtual int isdone (void);
+  virtual int isdone (void) const;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE> *item (void);

@@ -48,7 +48,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::next (void)
 // Returns true when we are at <head_>
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void)
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void) const
 {
   return this->position_ == this->timer_list_.head_;
 }
@@ -195,7 +195,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
   // ascending order of absolute time to expire).
   ACE_Timer_Node_T<TYPE> *after = this->head_->get_next ();
 
-  while (after != this->head_ 
+  while (after != this->head_
          && future_time > after->get_timer_value ())
       after = after->get_next ();
 
