@@ -1,3 +1,9 @@
+Tue Dec  9 09:41:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+
+	  Fixed a debug statement.
+
 Tue Dec  9 09:21:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp (TAO): 
