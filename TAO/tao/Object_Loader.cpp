@@ -3,12 +3,8 @@
 #include "Object_Loader.h"
 #include "ace/Dynamic_Service.h"
 
-#if !defined(__ACE_INLINE__)
-#include "Object_Loader.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao, 
-           Object_Loader, 
+ACE_RCSID (tao,
+           Object_Loader,
            "$Id$")
 
 TAO_Object_Loader::~TAO_Object_Loader (void)
