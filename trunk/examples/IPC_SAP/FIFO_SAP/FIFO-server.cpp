@@ -5,8 +5,8 @@
 
 ACE_RCSID(FIFO_SAP, FIFO_server, "$Id$")
 
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_OS::unlink (ACE_DEFAULT_RENDEZVOUS);
   ACE_FIFO_Recv server (ACE_DEFAULT_RENDEZVOUS);

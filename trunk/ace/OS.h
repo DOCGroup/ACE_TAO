@@ -266,9 +266,9 @@ typedef long      id_t;
 // Used by the FIFO tests and the Client_Logging_Handler netsvc.
 # if !defined (ACE_DEFAULT_RENDEZVOUS)
 #   if defined (ACE_HAS_STREAM_PIPES)
-#     define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
+#     define ACE_DEFAULT_RENDEZVOUS ACE_LIB_TEXT("/tmp/fifo.ace")
 #   else
-#     define ACE_DEFAULT_RENDEZVOUS "localhost:20010"
+#     define ACE_DEFAULT_RENDEZVOUS ACE_LIB_TEXT("localhost:20010")
 #   endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 

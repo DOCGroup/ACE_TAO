@@ -13,15 +13,15 @@ ACE_RCSID(ATM_SAP, CPP_client, "$Id$")
 
 /* ACE_ATM Client */
 
-int main (int argc, char *argv[])                       
+int main (int argc, ACE_TCHAR *argv[])
 {
   if ( argc < 2 )
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "Usage: %s <rate> <PDU> <session> <host> <selector> [ host sel ] ...\n"
                        "\tUse 0 for default values\n",
                        argv[0]),
                       1);
-  
+
   int rate = ACE_OS::atoi( argv[ 1 ]);
   rate = ( rate != 0 ) ? rate : 170000;
   int pdu_size = ACE_OS::atoi( argv[ 2 ]) * 1024;
@@ -29,7 +29,7 @@ int main (int argc, char *argv[])
   int session = ACE_OS::atoi( argv[ 3 ]);
   session = ( session != 0 ) ? session : 100;
 
-  ACE_OS::printf( "ATM_Client: rate: %d c/s, PDU: %dB, session: %d pkts\n", 
+  ACE_OS::printf( "ATM_Client: rate: %d c/s, PDU: %dB, session: %d pkts\n",
     rate, pdu_size, session );
 
   // Record all hosts/selectors
@@ -38,12 +38,12 @@ int main (int argc, char *argv[])
 
   ACE_OS::printf( "ATM_Client: Connecting to ...\n" );
   for ( int i = 0; i < num_leaves; i++ ) {
-    hosts[ i ].set( argv[ i*2 + 4 ], 
-                    ( argv[ i*2 + 5 ] != 0 ) 
+    hosts[ i ].set( argv[ i*2 + 4 ],
+                    ( argv[ i*2 + 5 ] != 0 )
                       ? ACE_OS::atoi( argv[ i*2 + 5 ]) : ACE_ATM_Addr::DEFAULT_SELECTOR );
-    ACE_OS::printf( "ATM_Client: leaf: %s (%s), sel: %d\n", 
+    ACE_OS::printf( "ATM_Client: leaf: %s (%s), sel: %d\n",
                     argv[ i*2 + 4 ],
-                    hosts[ i ].addr_to_string(), 
+                    hosts[ i ].addr_to_string(),
                     hosts[ i ].get_selector());
   }
 
@@ -57,7 +57,7 @@ int main (int argc, char *argv[])
   ACE_OS::hostname( hostname, MAXNAMELEN );
   ACE_ATM_Addr local_addr( hostname, hosts[ 0 ].get_selector());
 
-  ACE_OS::printf( "ATM_Client: local host: %s(%s)\n", 
+  ACE_OS::printf( "ATM_Client: local host: %s(%s)\n",
     hostname, local_addr.addr_to_string());
 
   // In order to construct connections options the file handle is
@@ -78,7 +78,7 @@ int main (int argc, char *argv[])
 
   // Construct QoS options - currently FORE only supports bandwidth
   ACE_OS::printf( "ATM_Client: specify cell rate at %d c/s\n", rate );
-  ACE_ATM_QoS qos; 
+  ACE_ATM_QoS qos;
   qos.set_rate(atm_stream.get_handle (),
                rate,
                ACE_ATM_QoS::OPT_FLAGS_CPID);
@@ -120,7 +120,7 @@ int main (int argc, char *argv[])
                           1);
       else
 		    ACE_DEBUG ((LM_DEBUG,
-                   "ATM_Client: connected to %s\n", 
+                   "ATM_Client: connected to %s\n",
 		               hosts[ 0 ].addr_to_string()));
     }
   } else {
@@ -133,7 +133,7 @@ int main (int argc, char *argv[])
 
     }
   } /* if num_leaves == 1 */
- 
+
   ACE_UINT16 vpi, vci;
   atm_stream.get_vpi_vci(vpi, vci);
   ACE_DEBUG ((LM_DEBUG,
@@ -184,17 +184,17 @@ int main (int argc, char *argv[])
 
   // Explicitly close the connection.
   ACE_OS::printf( "ATM_Client: close connection\n" );
-  if (atm_stream.close () == -1) 
+  if (atm_stream.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "close"),
                        -1);
   return 0;
-}                                                       
+}
 #else
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
 		     "your platform isn't configured to support ATM\n"),
                     1);
 }
