@@ -142,7 +142,7 @@ private:
   char** consumer_names_;
   CORBA::ULong* consumer_ipaddr_;
 
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender) sender_;
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender_;
   // The sender
 
   TAO_EC_Simple_AddrServer addr_server_;
