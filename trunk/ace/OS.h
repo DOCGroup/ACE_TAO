@@ -2751,6 +2751,22 @@ typedef unsigned int size_t;
 #   define isdigit iswdigit
 # endif /* ACE_HAS_WINCE */
 
+#if !defined (ACE_OSTREAM_TYPE)
+# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#   define ACE_OSTREAM_TYPE FILE *
+# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#   define ACE_OSTREAM_TYPE ostream
+# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#endif /* ! ACE_OSTREAM_TYPE */
+
+#if !defined (ACE_DEFAULT_LOG_STREAM)
+# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#   define ACE_DEFAULT_LOG_STREAM 0
+# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#   define ACE_DEFAULT_LOG_STREAM (&cerr)
+# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#endif /* ! ACE_DEFAULT_LOG_STREAM */
+
 // If the user wants minimum IOStream inclusion, we will just include
 // the forward declarations
 # if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
