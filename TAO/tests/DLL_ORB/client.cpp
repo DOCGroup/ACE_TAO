@@ -27,13 +27,19 @@ main (int, char *[])
   //
   // In the process of doing this, the Test method provided by target
   // CORBA object will be invoked.
-  if (ACE_Service_Config::process_directive ("dynamic Client_Module Service_Object * Test_Client_Module:_make_Test_Client_Module() \"-k file://test.ior\"") != 0)
+  //
+  // Note that the Resource_Factory is loaded before the test client
+  // module.  This forces the Resource_Factory to exist long enough
+  // for the ORB to be properly destroyed.  The ORB requires that the
+  // Resource_Factory exist during ORB destruction.
+  if (ACE_Service_Config::process_directive ("dynamic Resource_Factory Service_Object * TAO:_make_TAO_Default_Resource_Factory() \"\"") != 0
+      || ACE_Service_Config::process_directive ("dynamic Client_Module Service_Object * Test_Client_Module:_make_Test_Client_Module() \"-k file://test.ior\"") != 0)
     {
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "ERROR: Client unable to process the "
-                         "Service Configurator directive"),
+                         "Service Configurator directive(s)"),
                         -1);
     }
 
