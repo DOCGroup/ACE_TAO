@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   CEC_Reactive_Pulling_Strategy
+ *  @file   CEC_Reactive_Pulling_Strategy.h
  *
  *  $Id$
  *
