@@ -1,3 +1,12 @@
+Mon Sep 13 12:49:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-aix-4.x.h: Alter the value of ACE_SIZEOF_WCHAR based
+	  on whether or not __64BIT__ is set (4 if yes, 2 if no). See
+	  /usr/include/sys/types.h for verification.
+
+	* apps/Gateway/Gateway/Connection_Handler.cpp: Add missing #include
+	  "ace/OS_NS_string.h".
+
 Mon Sep 13 12:39:11 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/DLL_Manager.cpp: Added explicit template instantiations for
