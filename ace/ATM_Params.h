@@ -14,13 +14,15 @@
 #define ACE_ATM_PARAMS_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_ATM)
+
+#include "ace/ACE.h"
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 #include "ace/TLI.h"

@@ -2,11 +2,11 @@
 // $Id$
 
 #include "ace/LSOCK_CODgram.h"
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, LSOCK_CODgram, "$Id$")
-
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/LSOCK_CODgram.i"

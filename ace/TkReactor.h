@@ -14,12 +14,15 @@
 #define ACE_TKREACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Select_Reactor.h"
+#include "ace/config-all.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_TK)
+
+#include "ace/Select_Reactor.h"
 #include <tk.h>
 
 /**

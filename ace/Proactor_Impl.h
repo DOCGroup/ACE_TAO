@@ -15,11 +15,12 @@
 #define ACE_PROACTOR_IMPL_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 // This only works on Win32 platforms and on Unix platforms supporting
 // aio calls.
+#include "ace/OS.h"
 
 #include "ace/Asynch_IO.h"
 #include "ace/Reactor.h"

@@ -3,9 +3,9 @@
 // $Id$
 
 #include "ace/CE_Screen_Output.h"
-#include "ace/Log_Msg.h"
-
 #if defined (ACE_HAS_WINCE)
+
+#include "ace/Log_Msg.h"
 
 ACE_CE_Screen_Output::ACE_CE_Screen_Output(HWND hEdit)
 : handler_(hEdit)

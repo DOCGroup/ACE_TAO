@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/LSOCK.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, LSOCK, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/LSOCK.i"

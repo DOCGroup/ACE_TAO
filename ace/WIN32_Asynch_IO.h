@@ -25,7 +25,7 @@
 #define ACE_WIN32_ASYNCH_IO_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -33,6 +33,7 @@
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 
+#include "ace/OS.h"
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Addr.h"
 
