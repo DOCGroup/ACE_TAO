@@ -104,6 +104,16 @@ namespace CIAO
         DOMDocument* doc, DOMNodeIterator* iter,
         Deployment::ComponentInterfaceDescription& cid);
 
+      /// process port element
+      void process_port_element (DOMNode* node,
+        DOMDocument* doc, DOMNodeIterator* iter,
+        Deployment::ComponentInterfaceDescription& cid);
+
+      /// process property element
+      void process_property_element (DOMNode* node,
+        DOMDocument* doc, DOMNodeIterator* iter,
+        Deployment::ComponentInterfaceDescription& cid);
+
       /// process attributes for property
       void process_attributes_for_property (DOMNamedNodeMap* named_node_map,
         DOMDocument* doc,
@@ -111,8 +121,60 @@ namespace CIAO
         int value,
         Deployment::Property& ccd_property);
 
+      /// process attributes for port
+      void process_attributes_for_port (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::ComponentPortDescription& port);
+
+      /// process port element
+      void process_port (DOMDocument* doc,
+        DOMNodeIterator* iter,
+        Deployment::ComponentPortDescription& port);
+
+      /// process component property element
+      void process_comp_property (DOMDocument* doc,
+        DOMNodeIterator* iter,
+        Deployment::ComponentPropertyDescription& property);
+
+      /// process attributes for component property
+      void process_attributes_for_comp_property (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::ComponentPropertyDescription& property);
+
       /// create a XML document
       DOMDocument* create_document (const char *url);
+
+      /// process port name
+      void process_port_name (const XMLCh* name,
+        Deployment::ComponentPortDescription& port);
+
+      /// process port type
+      void process_port_type (const XMLCh* name,
+        Deployment::ComponentPortDescription& port);
+
+      /// process port provider
+      void process_port_provider (const XMLCh* name,
+        Deployment::ComponentPortDescription& port);
+
+      /// process port exclusive provider
+      void process_port_exprovider (const XMLCh* name,
+        Deployment::ComponentPortDescription& port);
+
+      /// process port exclusive user
+      void process_port_exuser (const XMLCh* name,
+        Deployment::ComponentPortDescription& port);
+
+      /// process port optional
+      void process_port_optional (const XMLCh* name,
+        Deployment::ComponentPortDescription& port);
+
+      /// process property name
+      void process_pro_name (const XMLCh* name,
+        Deployment::ComponentPropertyDescription& property);
 
     private:
 
