@@ -1,3 +1,13 @@
+Mon Apr 10 23:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* rules.tao.GNU: Removed the verbose declaration of smart proxies
+	  been disabled during a build.
+	* tao/IIOP_Connector.{h,cpp}:
+	* tao/UIOP_Connector.{h,cpp}:
+	* tao/SHMIOP_Connector.{h,cpp}:
+	  Fixed the build warnings and errors due to adding
+	  TAO_HAS_MINIMUM_CONNECTION_CACHING definition.
+	
 Mon Apr 10 17:50:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Makefile:
