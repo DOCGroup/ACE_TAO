@@ -55,6 +55,7 @@ ORBCORE_SRCS = \
 	servant_base \
 	tao_internals \
 	tc_const \
+	tao_util \
 	Timeprobe
 
 FILES	 = $(ORBCORE_SRCS)
