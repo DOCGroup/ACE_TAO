@@ -1,3 +1,8 @@
+Wed Mar  7 06:43:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/lib: Fixed a typo in exception
+	  macros.  
+
 Wed Mar 07 00:07:48 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptorS.h:
