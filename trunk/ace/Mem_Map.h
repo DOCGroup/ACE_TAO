@@ -172,6 +172,11 @@ private:
   ACE_HANDLE file_mapping_;
   // HANDLE for the open mapping.
 
+#if defined (__Lynx__)
+  int write_enabled_;
+  // Flag to indicate that PROT_WRITE has been enabled.
+#endif /* __Lynx__ */
+
   int close_handle_;
   // Keeps track of whether we need to close the handle.  This is set
   // if we opened the file.

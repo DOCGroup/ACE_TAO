@@ -98,6 +98,11 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
         return -1;
     }
 
+#if defined (__Lynx__)
+  // Set flag that indicates whether PROT_WRITE has been enabled.
+  write_enabled_ = prot & PROT_WRITE  ?  1  :  0;
+#endif /* __Lynx__ */
+
   this->base_addr_ = ACE_OS::mmap (this->base_addr_,
                                    this->length_,
                                    prot,
