@@ -1,7 +1,14 @@
+Wed Feb 21 20:17:22 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Multiple/Multiple_Impl.cpp:
+          Don't return a string when an exception is raised.  This is not
+          only non-compliant, it is a bad idea: the receiver is supposed
+          to ignore all return values, because they are invalid.
+
 Wed Feb 21 21:04:03 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: Fixed
-	  incorrect usage of SHMIOP endpoint specifier.
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: Fixed
+          incorrect usage of SHMIOP endpoint specifier.
 
 Wed Feb 21 08:38:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 

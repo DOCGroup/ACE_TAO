@@ -18,6 +18,7 @@ Bottom_Impl::~Bottom_Impl (void)
 {
   // No-Op.
 }
+
 char *
 Bottom_Impl::top_quote (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -82,7 +83,7 @@ Delegated_Bottom_Impl::top_quote (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::String_var msg =
     this->delegate_->top_quote (ACE_TRY_ENV);
-  ACE_CHECK_RETURN ("ERROR");
+  ACE_CHECK_RETURN (0);
   return msg._retn ();
 }
 
@@ -95,7 +96,7 @@ Delegated_Bottom_Impl::left_quote (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::String_var msg =
     this->delegate_->left_quote (ACE_TRY_ENV);
-  ACE_CHECK_RETURN ("ERROR");
+  ACE_CHECK_RETURN (0);
   return msg._retn ();
 }
 
@@ -108,7 +109,7 @@ Delegated_Bottom_Impl::right_quote (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::String_var msg =
     this->delegate_->right_quote (ACE_TRY_ENV);
-  ACE_CHECK_RETURN ("ERROR");
+  ACE_CHECK_RETURN (0);
   return msg._retn ();
 }
 
@@ -121,7 +122,7 @@ Delegated_Bottom_Impl::bottom_quote (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::String_var msg =
     this->delegate_->bottom_quote (ACE_TRY_ENV);
-  ACE_CHECK_RETURN ("ERROR");
+  ACE_CHECK_RETURN (0);
   return msg._retn ();
 }
 
@@ -134,6 +135,4 @@ Delegated_Bottom_Impl::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->delegate_->shutdown (ACE_TRY_ENV);
   //this->orb_->shutdown (0, ACE_TRY_ENV);
   ACE_CHECK;
-
-
 }
