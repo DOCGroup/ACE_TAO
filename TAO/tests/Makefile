@@ -13,6 +13,7 @@
 DIRS  = CDR \
         BiDirectional \
 	BiDirectional_NestedUpcall \
+	Collocation \
         IDL_Test \
         OctetSeq \
         InterOp-Naming \
