@@ -357,14 +357,6 @@ Thread_Pool::test_empty_message_shutdown (void)
                       this->thr_count ()));
           this->dump ();
 
-          ACE_NEW_RETURN (mb,
-                          ACE_Message_Block (0,
-                                             ACE_Message_Block::MB_DATA,
-                                             0,
-                                             0,
-                                             0,
-                                             &this->lock_adapter_),
-                          -1);
           int i = 0;
 
           // Enqueue an empty message to flag each consumer thread to

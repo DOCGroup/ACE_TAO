@@ -1,3 +1,10 @@
+Sat Jan 22 15:27:39 2000  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* tests/Thread_Pool_Test.cpp: In the method test_empty_message_shutdown() 
+	  we don't need to allocate a new message block when sending a
+ 	  "null" message.  This removes another memory leak.  Thanks to
+ 	  David Levine for reporting this.
+
 Sat Jan 21 12:30:33 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/ACE.cpp:
