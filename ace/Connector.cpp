@@ -283,6 +283,7 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
 
   // Remove ACE_HANDLE from the map.
   this->handler_map_.unbind (handle);
+
   return 0;
 }
 
@@ -534,7 +535,6 @@ ACE_Connector<SH, PR_CO_2>::cancel (SH *sh)
       {
         AST *ast = 0;
         this->cleanup_AST (me->ext_id_, ast);
-        ACE_ASSERT (ast == me->int_id_);
         delete ast;
         return 0;
       }
@@ -633,27 +633,33 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       // Timer_Queue).
       this->closing_ = 1;
 
-      MAP_ITERATOR mi (this->handler_map_);
-
-      // Iterate through the map and shut down all the pending handlers.
-
-      for (MAP_ENTRY *me = 0;
-           mi.next (me) != 0;
-           mi.advance ())
+      while (1)
         {
+          // Create an iterator.
+          MAP_ITERATOR iterator = this->handler_map_.begin ();
+
+          // If we reach the end of the map, break the loop.
+          if (iterator == this->handler_map_.end ())
+            break;
+
+          // Get the first handle.
+          ACE_HANDLE handle = (*iterator).ext_id_;
+
+          // Clean it up.
           AST *ast = 0;
-          this->cleanup_AST (me->ext_id_, ast);
+          this->cleanup_AST (handle, ast);
 
-          // Close the svc_handler
-          ACE_ASSERT (ast == me->int_id_);
-          me->int_id_->svc_handler ()->close (0);
+          // Close the svc_handler.
+          ast->svc_handler ()->close (0);
 
+          // Zap the ast.
           delete ast;
         }
     }
 
   return 0;
 }
+
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::fini (void)
 {
