@@ -2,7 +2,7 @@
 // $Id$
 
 /* Defines the member functions for the base class of the ACE_IO_SAP
-   ACE_FILE abstraction. */ 
+   ACE_FILE abstraction. */
 
 #include "ace/FILE.h"
 
@@ -21,7 +21,7 @@ ACE_FILE::dump (void) const
   ACE_IO_SAP::dump ();
 }
 
-// This is the do-nothing constructor. 
+// This is the do-nothing constructor.
 
 ACE_FILE::ACE_FILE (void)
 {
@@ -43,9 +43,9 @@ int
 ACE_FILE::get_info (ACE_FILE_Info *finfo)
 {
   ACE_TRACE ("ACE_FILE::get_info");
-  struct stat filestatus;
+  ACE_stat filestatus;
 
-  int result = ACE_OS::fstat (this->get_handle (), 
+  int result = ACE_OS::fstat (this->get_handle (),
                               &filestatus);
 
   if (result == 0)
@@ -93,18 +93,18 @@ ACE_FILE::tell (void)
 {
   ACE_TRACE ("ACE_FILE::position");
   return ACE_OS::lseek (this->get_handle (), 0, SEEK_CUR);
-} 
+}
 
 off_t
 ACE_FILE::position (void)
 {
   ACE_TRACE ("ACE_FILE::position");
   return this->tell ();
-} 
+}
 
 // Return the local endpoint address.
 
-int 
+int
 ACE_FILE::get_local_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_FILE::get_local_addr");
@@ -125,7 +125,7 @@ ACE_FILE::get_local_addr (ACE_Addr &addr) const
 
 // Return the same result as <get_local_addr>.
 
-int 
+int
 ACE_FILE::get_remote_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_FILE::get_remote_addr");
