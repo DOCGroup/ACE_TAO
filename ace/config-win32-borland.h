@@ -57,7 +57,7 @@
 # define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 # define ACE_CC_BETA_VERSION (0)
 # define ACE_CC_PREPROCESSOR "CPP32.EXE"
-# define ACE_CC_PREPROCESSOR_ARGS "-P- -ocon -w-"
+# define ACE_CC_PREPROCESSOR_ARGS "-q -P- -o%s"
 
 # define ACE_HAS_ITOA 1
 # define ACE_STRCASECMP_EQUIVALENT ::stricmp 
