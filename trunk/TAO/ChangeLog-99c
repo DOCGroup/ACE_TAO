@@ -1,3 +1,10 @@
+Thu Jun 10 15:27:39 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Consumer_Handler.h (class
+	  Consumer_Handler): 
+	  Made the stock_name_ member const char* from char* to take care
+	  of Sun C++ 5.0 compiler warnings.
+
 Thu Jun 10 14:54:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp
