@@ -5,6 +5,9 @@ Tue Jul  6 19:20:16 1999  Steve Huston  <shuston@riverace.com>
           for ACE_Hash, etc. On HP-UX and AIX, size_t is not the same as
           ACE_UINT32, and this caused build errors.
 
+        * tests/Conn_Test.cpp: Restrict range of the test on PharLap ETS, else
+          it runs out of resources with default configuration.
+
 Tue Jul  6 18:21:37 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
         * ace/Token_Request_Reply.{h,i,cpp}: 
@@ -30,12 +33,21 @@ Tue Jul  6 18:15:31 1999  Steve Huston  <shuston@riverace.com>
 
         * ACE_INSTALL.html: Added a further note re PharLap ETS builds.
 
+        * ace/config-pharlap.h: Added ACE_TIMER_SKEW of 10ms.
+
         * tests/Atomic_Op_Test.dsp:
         * tests/Barrier_Test.dsp:
         * tests/Cache_Map_Manager_Test.dsp:
         * tests/Future_Set_Test.dsp:
           Changed PharLap ETS configurations to put intermediate files in
           ETS_LIB\Debug (like all the others), not in ETS_DLL\Debug.
+
+        * tests/test_config.h: Set ACE_MAX_CLIENTS to 4 for PharLap ETS.
+
+        * tests/run_pharlap_tests.bat: Disabled some tests of unsupported
+          facilities.
+
+        * tests/SOCK_Test.cpp: Replaced "localhost" with ACE_LOCALHOST.
 
 Tue Jul  6 17:54:52 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
