@@ -1,11 +1,12 @@
 /* -*- C++ -*- */
+
 //=============================================================================
 /**
  *  @file     Memory_Pool.h
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Dougls C. Schmidt <schmidt@cs.wustl.edu> and Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -382,9 +383,16 @@ protected:
 class ACE_Export ACE_MMAP_Memory_Pool_Options
 {
 public:
+  enum 
+  {
+    FIRSTCALL_FIXED = 0,
+    ALWAYS_FIXED = 1,
+    NEVER_FIXED = 2
+  };
+
   // = Initialization method.
   ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
-                                int use_fixed_addr = 1,
+                                int use_fixed_addr = ALWAYS_FIXED,
                                 int write_each_page = 1,
                                 off_t minimum_bytes = 0,
                                 u_int flags = 0,
@@ -394,7 +402,17 @@ public:
   /// Base address of the memory-mapped backing store.
   const void *base_addr_;
 
-  /// Must we use the <base_addr_> or can we let mmap(2) select it?
+  /** Determines whether we set <base_addr_> or if mmap(2) selects it
+  * FIRSTCALL_FIXED The base address from the first call to mmap
+  *                 will be used for subsequent calls to mmap
+  * ALWAYS_FIXED    The base address specified in base_addr will be
+  *                 used in all calls to mmap.
+  * NEVER_FIXED     The base address will be selected by the OS for
+  *                 each call to mmap. Caution should be used with
+  *                 this mode since a call that requires the backing
+  *                 store to grow may change pointers that are
+  *                 cached by the application.
+  */
   int use_fixed_addr_;
 
   /// Should each page be written eagerly to avoid surprises later
@@ -534,6 +552,9 @@ protected:
    * is what the OS must try to use to mmap the file.
    */
   void *base_addr_;
+
+  /// Must we use the <base_addr_> or can we let mmap(2) select it?
+  int use_fixed_addr_;
 
   /// Flags passed into <ACE_OS::mmap>.
   int flags_;
