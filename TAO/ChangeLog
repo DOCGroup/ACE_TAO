@@ -85,6 +85,9 @@ Sun Nov 28 05:14:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  much of similar code out here. We can do some nice
 	  implementation inheritance to save some footprint.
 
+	  Thanks to LMCO EAGAN, for motivating to address this issue in
+	  TAO.
+
 Sat Nov 27 12:52:57 2004  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/XML_Loader.h:
