@@ -732,6 +732,7 @@ class ACE_Condition
   //     ACE_Condition variable wrapper, which allows threads to block
   //     until shared data changes state.
   //
+  // = DESCRIPTION
   //     A condition variable enables threads to atomically block and
   //     test the condition under the protection of a mutual exclu-
   //     sion lock (mutex) until the condition is satisfied.  That is,
@@ -744,6 +745,8 @@ class ACE_Condition
   //     variable.  The waiting threads, upon awakening, reacquire the
   //     mutex and re-evaluate the condition.
   //
+  //     Note, you can only parameterize <ACE_Condition> with
+  //     <ACE_Thread_Mutex> or <ACE_Null_Mutex>.
 public:
   // = Initialiation and termination methods.
   ACE_Condition (MUTEX &m, int type = USYNC_THREAD,

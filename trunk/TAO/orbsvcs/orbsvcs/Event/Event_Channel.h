@@ -278,22 +278,6 @@ private:
   void cleanup_observers (void);
   // Remove all the observers, this simplifies the shutdown process.
 
-private:
-  ACE_RTU_Manager *rtu_manager_;
-  // The RTU manager dude!
-
-  u_long type_;
-  // Can be any **_CHANNEL. (well, except NO_CHANNEL).
-
-  u_long state_;
-  // Can be INITIAL_STATE, NO_CONSUMERS, NO_SUPPLIERS, or SHUTDOWN.
-
-  ACE_ES_MUTEX lock_;
-  // Used to lock shared state.
-
-  int destroyed_;
-  // Ensures this->destory is executed only once.
-
   struct Observer_Entry
   {
     // = TITLE
@@ -319,6 +303,22 @@ private:
     // The observer
 
   };
+
+private:
+  ACE_RTU_Manager *rtu_manager_;
+  // The RTU manager dude!
+
+  u_long type_;
+  // Can be any **_CHANNEL. (well, except NO_CHANNEL).
+
+  u_long state_;
+  // Can be INITIAL_STATE, NO_CONSUMERS, NO_SUPPLIERS, or SHUTDOWN.
+
+  ACE_ES_MUTEX lock_;
+  // Used to lock shared state.
+
+  int destroyed_;
+  // Ensures this->destory is executed only once.
 
   typedef ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map;
   typedef ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map_Iterator;

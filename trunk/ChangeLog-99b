@@ -1,3 +1,10 @@
+Thu Jan 14 11:46:25 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Synch_T.h: Pointed out that we can only parameterize
+	  ACE_Condition<> with ACE_Thread_Mutex and ACE_Null_Mutex.
+	  Thanks to Knut-Havard Aksnes <knut@orion.no> for reporting
+	  this.
+
 Thu Jan 14 02:33:37 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.13 released.
