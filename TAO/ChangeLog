@@ -1,8 +1,13 @@
+Thu Nov  7 09:17:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* utils/nslist/nsadd.cpp: Fixed a compile error caused undeclared
+	  variables. 
+
 Wed Nov  6 20:09:14 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* utils/nslist/nsadd.cpp: Enhanced the utilty so that it can add arbitrary
-	  paths to Naming Service entries.  Thanks to Paul Caffrey <denginere@hotmail.com>
-	  for this fix.
+	* utils/nslist/nsadd.cpp: Enhanced the utilty so that it can add
+	  arbitrary paths to Naming Service entries.  Thanks to Paul
+	  Caffrey <denginere@hotmail.com> for this fix.
   
 Thu Nov  7 06:44:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -133,7 +133,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       CosNaming::Name the_name (ntoks);
       the_name.length (ntoks);
-      for (i=0; i<ntoks; i++)
+      for (CORBA::Long i=0; i<ntoks; i++)
         the_name[i].id = CORBA::string_dup (toks[i]);
 
       if (rebind)
