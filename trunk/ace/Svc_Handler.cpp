@@ -189,13 +189,14 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::shutdown (void)
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> void
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::cleanup_hint (void)
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::cleanup_hint (void **act_holder)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::cleanup_hint");
+
   // Remove as hint.
   if (this->recycler ())
-    this->recycler ()->cleanup_hint (this->recycling_act_);
-
+    this->recycler ()->cleanup_hint (this->recycling_act_,
+                                     act_holder);
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> void

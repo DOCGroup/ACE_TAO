@@ -111,9 +111,10 @@ public:
 
   virtual int mark_as_closed_i (const void *recycling_act) = 0;
   // Mark as closed.(non-locking version)
-  
-  virtual int cleanup_hint (const void *recycling_act) = 0;
-  // Cleanup as hint.
+
+  virtual int cleanup_hint (const void *recycling_act,
+                            void **act_holder = 0) = 0;
+  // Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
 
 protected:
   ACE_Connection_Recycling_Strategy (void);
