@@ -63,17 +63,17 @@ int parse_args(int argc, char *argv[])
 int
 main (int argc, char *argv [])
 {
+  CORBA_Environment env;
+  CORBA_ORB_ptr orb = CORBA_ORB_init (argc, argv, 0, env);
+
   if (parse_args (argc, argv) != 0)
     return -1;
 
-//  CORBA_Environment env;
-//  CORBA_ORB_ptr orb = CORBA_ORB_init (argc, argv, 0, env);
-//
-//  if (env.exception ()) {
-//    ACE_ERROR ((LM_ERROR, "ORB_init failed..\n"));
-//    return -1;
-//  }
-//
+  if (env.exception ()) {
+    ACE_ERROR ((LM_ERROR, "ORB_init failed..\n"));
+    return -1;
+  }
+
   Client clients (SERVER_HOST, THREAD_COUNT, LOOP_COUNT);
   //  ACE_Thread_Manager::instance ()->wait ();
   ACE_OS::printf ("Test done.\n"
