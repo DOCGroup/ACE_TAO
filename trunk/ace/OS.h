@@ -2424,7 +2424,7 @@ public:
   static int sleep (u_int seconds);
   static int sleep (const ACE_Time_Value &tv);
   static int nanosleep (const struct timespec *requested,
-                        struct timespec *remaining);
+                        struct timespec *remaining = 0);
 
 #if defined (ACE_HAS_BROKEN_R_ROUTINES)
 #undef ctime_r
