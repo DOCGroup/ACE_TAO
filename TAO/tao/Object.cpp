@@ -240,3 +240,18 @@ CORBA::Object::_key (CORBA::Environment &env)
 {
   return this->_stubobj ()->key (env);
 }
+
+
+void 
+CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
+{
+  IIOP_Object *iiopobj =
+    ACE_dynamic_cast (IIOP_Object*, this->_stubobj ());
+  
+  if (iiopobj == 0)
+    {
+      return;
+    }
+
+  iiopobj->use_locate_requests (use_it);
+}

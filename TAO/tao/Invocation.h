@@ -58,13 +58,23 @@ public:
 
 protected:
   void start (CORBA::Boolean is_roundtrip,
-	      CORBA::Environment &env);
+              TAO_GIOP::Message_Type message_type,
+	            CORBA::Environment &env);
   // Locates the right Client_Connection_Handler and initializes the
   // CDR stream.
+  // The message_type tells how to initialize the output CDR stream
 
   TAO_GIOP_ReplyStatusType invoke (CORBA::Boolean is_roundtrip,
 				   CORBA::Environment &env);
   // Sends the request, does not wait for the response.
+
+  TAO_GIOP_ReplyStatusType close_connection (void);
+  // resets the forwarding profile and behaves like
+  // we are fowarded (to the same server)
+
+  TAO_GIOP_ReplyStatusType location_forward (TAO_InputCDR &inp_stream,
+                                             CORBA::Environment &env);
+  // do the location forwarding, which means exchanging the profile
 
 protected:
   IIOP_Object *data_;
@@ -128,10 +138,6 @@ public:
   // return the underlying input stream
 
 private:
-  TAO_GIOP_ReplyStatusType location_forward (CORBA::Environment &env);
-  // do the location forwarding, which means exchanging the profile
-
-private:
   TAO_InputCDR inp_stream_;
   // Stream into which the request is placed.
 };
@@ -152,6 +158,28 @@ public:
   TAO_GIOP_ReplyStatusType invoke (CORBA::Environment &env);
   // Send request, without blocking for any response.
 };
+
+
+class TAO_Export TAO_GIOP_Locate_Request_Invocation : public TAO_GIOP_Invocation
+{
+  // = TITLE
+  //   Sends a locate request.
+  //
+public:
+  // = Initialization and termination methods.
+  TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data);
+
+  void start (CORBA::Environment &env);
+  // Calls TAO_GIOP_Invocation::start.
+
+  TAO_GIOP_ReplyStatusType invoke (CORBA::Environment &env);
+  // Send request, without blocking for any response.
+
+private:
+  TAO_InputCDR inp_stream_;
+  // Stream into which the request is placed.
+};
+
 
 #if defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
