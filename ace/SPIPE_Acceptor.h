@@ -18,6 +18,10 @@
 #define ACE_SPIPE_ACCEPTOR_H
 
 #include "ace/SPIPE_Stream.h"
+#if defined (ACE_WIN32)
+#include "ace/Synch.h"
+#endif /* ACE_WIN32 */
+
 
 class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
 {
@@ -25,15 +29,6 @@ class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
   //     Defines the format and interface for the listener side of the
   //     ACE_SPIPE_Stream. 
 public:
-#if defined (ACE_WIN32)
-  // = Maximum number of attempts to accept a connection
-  enum 
-  {
-    MAX_PIPE_INSTANCES = PIPE_UNLIMITED_INSTANCES,
-    MAX_ACCEPT_ATTEMPTS = 3 
-  };
-#endif /* ACE_WIN32 */
-
   // = Initialization and termination methods.
   ACE_SPIPE_Acceptor (void);
   // Default constructor.
@@ -77,6 +72,13 @@ public:
 private:
   int create_new_instance (int perms = 0);
   // Create a new instance of an SPIPE.
+
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+  ACE_OVERLAPPED	overlapped_;
+  ACE_Manual_Event	event_;
+  char			already_connected_;
+#endif /* ACE_WIN32 */
+
 };
 
 #endif /* ACE_SPIPE_ACCEPTOR_H */
