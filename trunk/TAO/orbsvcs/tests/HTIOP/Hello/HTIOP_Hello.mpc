@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(*Server): taoexe, naming, iortable, portableserver, htiop {
+project(*Server): taoexe, naming, iortable, portableserver {
   Source_Files {
     Test_Output.cpp
     TestS.cpp
@@ -15,7 +15,7 @@ project(*Server): taoexe, naming, iortable, portableserver, htiop {
   }
 }
 
-project(*Client): taoexe, htiop {
+project(*Client): taoexe {
 
   Source_Files {
     Test_Output.cpp
