@@ -197,7 +197,7 @@ public:
   // exception is raised.
   // END SPEC
 
-public:
+private:
 
   class Type_Info
   {
