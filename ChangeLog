@@ -1,3 +1,14 @@
+Tue Nov  6 13:25:40 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/Collection_Test.cpp: Committed an old change that uses an
+ 	actual class as the element in the Unbounded_Set rather than an
+ 	int.  I wrote this to get a better understanding of how the
+	iterator and accessors on the iterator worked.
+
+	* tests/SString_Test.cpp (main): Added a test for the rep() method 
+	that insures that the char array returned is equivalent to the
+	string in the ACE_CString from which it's obtained.
+
 Mon Nov  5 10:12:01 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.cpp,
