@@ -21,16 +21,14 @@ double csw = 0.0;
 int
 initialize (void)
 {
-#if defined (VXWORKS)
-#if defined (VME_DRIVER)
+#if defined (VXWORKS) && defined (VME_DRIVER)
   STATUS status = vmeDrv ();
   if (status != OK)
     printf ("ERROR on call to vmeDrv()\n");
   status = vmeDevCreate ("/vme");
   if (status != OK)
     printf ("ERROR on call to vmeDevCreate()\n");
-#endif /* defined (VME_DRIVER) */
-#endif /* defined (VXWORKS) */
+#endif /* VXWORKS && VME_DRIVER */
 
   // Make sure we've got plenty of socket handles.  This call will
   // use the default maximum.
@@ -40,7 +38,8 @@ initialize (void)
 }
 
 int
-do_priority_inversion_test (Task_State &ts)
+do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
+                            Task_State &ts)
 {
   int i;
   u_int j, k;
@@ -57,7 +56,7 @@ do_priority_inversion_test (Task_State &ts)
   double total_util_task_duration = 0.0;
 
   // Create the clients.
-  Client high_priority_client (&ts, 0);
+  Client high_priority_client (thread_manager, &ts, 0);
 
   // Create an array to hold pointers to the low priority tasks.
   Client **low_priority_client;
@@ -67,9 +66,9 @@ do_priority_inversion_test (Task_State &ts)
                   -1);
 
   // Create the daemon thread in its own <ACE_Thread_Manager>.
-  ACE_Thread_Manager thr_mgr;
+  ACE_Thread_Manager util_thr_mgr;
 
-  Util_Thread util_thread (&ts, &thr_mgr);
+  Util_Thread util_thread (&ts, &util_thr_mgr);
 
   //
   // Time the utilization thread' "computation" to get %IdleCPU at the end of the test.
@@ -113,6 +112,10 @@ do_priority_inversion_test (Task_State &ts)
                             0,
                             priority);
     }
+  else
+    {
+      util_thread.close ();
+    }
 
   // Now activate the high priority client.
   priority = ACE_THR_PRI_FIFO_DEF + 25;
@@ -146,8 +149,14 @@ do_priority_inversion_test (Task_State &ts)
   for (i = ts.thread_count_ - 1; i > 0; i--)
     {
       ACE_NEW_RETURN (low_priority_client [i - 1],
-                      Client (&ts, i),
+                      Client (thread_manager, &ts, i),
                       -1);
+
+#if defined (VXWORKS)
+      // Pace the connection establishment on VxWorks.
+      const ACE_Time_Value delay (0L, 500000L);
+      ACE_OS::sleep (delay);
+#endif /* VXWORKS */
 
       ACE_DEBUG ((LM_DEBUG,
                   "Creating client with low priority %d and thread ID %d\n",
@@ -187,14 +196,14 @@ do_priority_inversion_test (Task_State &ts)
 #endif /* ACE_HAS_GETRUSAGE */
 #endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
-  // Wait for all the threads to exit (except the utilization thread).
-  ACE_Thread_Manager::instance ()->wait ();
+  // Wait for all the client threads to exit (except the utilization thread).
+  thread_manager.wait ();
 
   // signal the utilization thread to finish with its work..
   util_thread.done_ = 1;
 
   // This will wait for the utilization thread to finish.
-  thr_mgr.wait ();
+  util_thr_mgr.wait ();
 
   ACE_DEBUG ((LM_DEBUG, 
 	      "-------------------------- Stats -------------------------------\n"));
@@ -225,12 +234,13 @@ do_priority_inversion_test (Task_State &ts)
 #endif
 
 #if defined (VXWORKS)
-  ACE_DEBUG ((LM_DEBUG, 
-	      "Test done.\n"
-	      "High priority client latency : %d usec\n"
-	      "Low priority client latency : %d usec\n",
-	      high_priority_client.get_high_priority_latency (),
-	      low_priority_client[0]->get_low_priority_latency () ));
+  ACE_DEBUG ((LM_DEBUG, "Test done.\n"
+              "High priority client latency : %f msec, jitter: %f msec\n"
+              "Low priority client latency : %f msec, jitter: %f msec\n",
+              high_priority_client.get_high_priority_latency (),
+              high_priority_client.get_high_priority_jitter (),
+              low_priority_client[0]->get_low_priority_latency (),
+              low_priority_client[0]->get_low_priority_jitter ()));
 #elif defined (CHORUS)
   ACE_DEBUG ((LM_DEBUG, 
 	      "Test done.\n"
@@ -334,14 +344,15 @@ do_priority_inversion_test (Task_State &ts)
 }
 
 int
-do_thread_per_rate_test (Task_State &ts)
+do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
+                         Task_State &ts)
 {
   // First activate the high priority client.
-    Client CB_40Hz_client (&ts, CB_40HZ_CONSUMER);
-    Client CB_20Hz_client (&ts, CB_20HZ_CONSUMER);
-    Client CB_10Hz_client (&ts, CB_10HZ_CONSUMER);
-    Client CB_5Hz_client (&ts, CB_5HZ_CONSUMER);
-    Client CB_1Hz_client (&ts, CB_1HZ_CONSUMER);
+    Client CB_40Hz_client (thread_manager, &ts, CB_40HZ_CONSUMER);
+    Client CB_20Hz_client (thread_manager, &ts, CB_20HZ_CONSUMER);
+    Client CB_10Hz_client (thread_manager, &ts, CB_10HZ_CONSUMER);
+    Client CB_5Hz_client (thread_manager, &ts, CB_5HZ_CONSUMER);
+    Client CB_1Hz_client (thread_manager, &ts, CB_1HZ_CONSUMER);
 
     ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
 
@@ -425,21 +436,21 @@ do_thread_per_rate_test (Task_State &ts)
 extern "C"
 int
 client (int argc, char *argv[])
+{
+  ACE_Object_Manager ace_object_manager;
 #else
 int
 main (int argc, char *argv[])
-#endif
 {
+#endif
+
 #if defined (ACE_HAS_THREADS)
 #if defined (FORCE_ARGS)
-  int argc = 7;
-  char *argv[] = {"main",
-                  "-d",
-                  "3",   // Data Type
-                  "-t",
-                  "10",   // Thread Count
-                  "-h",
-                  "mv2604d"};  // Host name
+  int argc = 4;
+  char *argv[] = {"client",
+                  "-s",
+                  "-f",
+                  "ior.txt"};
 #endif   /* defined (FORCE_ARGS) */
 
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
@@ -478,16 +489,27 @@ main (int argc, char *argv[])
     }
 #endif /* CHORUS */
 
+  // Create a separate manager for the client.  This allows the use
+  // of its wait () method on VxWorks, without interfering with the
+  // server's (global) thread manager.
+  ACE_Thread_Manager client_thread_manager;
+
   if (ts.thread_per_rate_ == 0)
-    do_priority_inversion_test (ts);
+    do_priority_inversion_test (client_thread_manager, ts);
   else
-    do_thread_per_rate_test (ts);
+    do_thread_per_rate_test (client_thread_manager, ts);
 
 #if defined (CHORUS)
   if(pccTimer(PCC2_TIMER1_STOP,&pTime) !=K_OK)
     {
       printf("pccTimer has a pending bench mark\n");
     }
+#elif defined (VXWORKS)
+  // Shoot myself.  Otherwise, there's a General Protection Fault.  This
+  // will leak memory, but that's preferable.  It looks like the problem
+  // might be due to static objects in libTAO or liborbsvcs?
+  int status;
+  ACE_OS::thr_exit (&status);
 #endif /* CHORUS */
 
 #else /* !ACE_HAS_THREADS */
