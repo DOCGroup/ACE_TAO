@@ -1,6 +1,25 @@
+Tue Apr 16 11:57:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/NVList.cpp:
+	* tao/Stub.cpp:
+	* tao/default_resource.cpp:
+	* tao/PortableServer/Active_Object_Map.cpp:
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/POA.cpp:
+
+	  Only instantiate ACE_Auto_Basic_Ptr templates if
+	  ACE_LACKS_AUTO_PTR is defined or if ACE_HAS_STANDARD_CPP_LIBRARY
+	  is not defined.  In the above cases, they are only used as
+	  base classes for ACE's implementation of the standard auto_ptr
+	  template.  When using the auto_ptr implementation provided by
+	  the standard C++ library in use, the ACE_Auto_Basic_Ptr template
+	  instances aren't needed.  Reduces footprint in cases where the
+	  standard C++ library implementation is used, and explicit
+	  template instantation is required.
+
 Tue Apr 16 11:12:55 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Miop/McastHello/Makefile (IDL_SRC): 
+	* orbsvcs/tests/Miop/McastHello/Makefile:
 	  Updated dependencies.
 
 Tue Apr 16 07:26:18 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
