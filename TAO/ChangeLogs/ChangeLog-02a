@@ -14,6 +14,7 @@ Thu Mar  7 21:27:58 2002  Ossama Othman  <ossama@uci.edu>
 	* tao/IFR_Client/IFR_BaseC.cpp:
 	* tao/IFR_Client/IFR_ComponentsC.cpp:
 	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
 	  Include "tao/Stub.h" to pull in TAO_Stub class declaration.
 	  Necessitated by the inter-header dependency reductions.
