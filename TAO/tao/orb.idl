@@ -65,8 +65,6 @@ module CORBA
   typedef short Visibility;
   const Visibility PRIVATE_MEMBER = 0;
   const Visibility PUBLIC_MEMBER = 1;
-
-  typedef sequence <ObjectId> ObjectIdList;
 };
 
 #endif /* TAO_ORB_IDL */
