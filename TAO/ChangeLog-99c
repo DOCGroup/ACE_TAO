@@ -1,3 +1,8 @@
+Sun Aug 01 10:30:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OBV/Typed_Events/Client_i.h: This file needs check-in
+	  too.
+
 Sat Jul 31 20:14:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OBV/Typed_Events/Client_i.cpp (run,random_number):
