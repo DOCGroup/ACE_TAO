@@ -1,3 +1,14 @@
+Fri Nov  7 19:40:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests//Latency/AMI/run_test.pl:
+	* performance-tests//Latency/DSI/run_test.pl:
+	* performance-tests//Latency/Single_Threaded/default_configuration.pl:
+	* performance-tests//Latency/Single_Threaded/run_test.pl:
+	* performance-tests//Latency/Thread_Per_Connection/run_test.pl:
+	* performance-tests//Latency/Thread_Pool/run_test.pl:
+
+	  More fixes for the number of iterations.
+
 Fri Nov  7 19:25:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests//Latency/AMI/run_test.pl:
