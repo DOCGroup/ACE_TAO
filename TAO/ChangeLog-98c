@@ -1,11 +1,18 @@
+Mon Dec 21 08:30:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+          for DEC cxx only, added IDL_Cubit template repository
+          location to CCFLAGS.  That allows the linker to find
+          all necessary template instantiations.
+
 Sun Dec 20 20:28:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Param_Test/param_test_i.cpp (test_any): Added tests for
-	  array, struct, and sequence types.
+        * tests/Param_Test/param_test_i.cpp (test_any): Added tests for
+          array, struct, and sequence types.
 
-	* tests/Param_Test/any.{h,cpp}: Added tests for more data types.
-	  Restructured parameters setting routine so it will always test
-	  all the types included in the test.
+        * tests/Param_Test/any.{h,cpp}: Added tests for more data types.
+          Restructured parameters setting routine so it will always test
+          all the types included in the test.
 
 Sun Dec 20 09:17:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
