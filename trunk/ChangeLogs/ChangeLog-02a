@@ -1,3 +1,11 @@
+Sun Apr  2 05:36:04 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Containers_T.cpp: There were a number of incorrect uses
+	  of ACE_NEW_MALLOC that I replaced with ACE_ALLOCATOR.  Thanks to
+ 	  Francisco Bravo <emefjbm@madrid.es.eu.ericsson.se> and Chris
+ 	  Uzdavinis <chris@atdesk.com> for clarifying the error of my
+ 	  ways!
+
 Thu Mar 30 19:25:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (suspend_handler_i and resume_handler_i):
