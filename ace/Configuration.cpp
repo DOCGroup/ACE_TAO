@@ -176,7 +176,7 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
     {
       // Detmine the begin/ending of the key name
       end = ACE_OS::strchr (begin, ACE_LIB_TEXT ('\\'));
-      size_t length = end ? (size_t)(end-begin) : ACE_OS::strlen (begin);
+      size_t length = end ? (size_t) (end-begin) : ACE_OS::strlen (begin);
 
       // Make sure length is not 0
       if (!length)
@@ -238,208 +238,210 @@ ACE_Configuration::root_section (void)
  * contents of the object on the right hand side.
  * Returns 1 (True) if they are equal and 0 (False) if they are not equal
  */
-int ACE_Configuration::operator==(const ACE_Configuration& rhs) const
+int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 {
-    int         rc           = true;
-    int         sectionIndex = 0;
-    ACE_TString sectionName;
+  int         rc           = true;
+  int         sectionIndex = 0;
+  ACE_TString sectionName;
 
-    const ACE_Configuration_Section_Key& rhsRoot = const_cast<ACE_Configuration&>(rhs).root_section();
-    ACE_Configuration_Section_Key rhsSection;
-    ACE_Configuration_Section_Key thisSection;
+  const ACE_Configuration_Section_Key& rhsRoot = const_cast<ACE_Configuration&> (rhs).root_section ();
+  ACE_Configuration_Section_Key rhsSection;
+  ACE_Configuration_Section_Key thisSection;
 
-    // loop through each section in this object
-    while( (rc) &&
-           (!const_cast<ACE_Configuration*>(this)->enumerate_sections(this->root_, 
-                                                                      sectionIndex, 
-                                                                      sectionName)) )
+  // loop through each section in this object
+  while ((rc) &&
+ (!const_cast<ACE_Configuration*> (this)->enumerate_sections (this->root_, 
+                                                                    sectionIndex, 
+                                                                    sectionName)) )
     {
-        // find that section in the rhs object
-        if(const_cast<ACE_Configuration&>(rhs).open_section(rhsRoot,
-                                                            sectionName.c_str(),
-                                                            0,
-                                                            rhsSection) != 0)
+      // find that section in the rhs object
+      if (const_cast<ACE_Configuration&> (rhs).open_section (rhsRoot,
+                                                           sectionName.c_str (),
+                                                           0,
+                                                           rhsSection) != 0)
         {
-            // If the rhs object does not contain the section then we are not equal.
-            rc = false;
+          // If the rhs object does not contain the section then we are not equal.
+          rc = false;
         }
-        else if(const_cast<ACE_Configuration*>(this)->open_section(this->root_, 
-                                                                   sectionName.c_str(), 
-                                                                   0, 
-                                                                   thisSection) != 0)
+      else if (const_cast<ACE_Configuration*> (this)->open_section (this->root_, 
+                                                                 sectionName.c_str (), 
+                                                                 0, 
+                                                                 thisSection) != 0)
         {
-            // if there is some error opening the section in this object
-            rc = false;
+          // if there is some error opening the section in this object
+          rc = false;
         }
-        else
+      else
         {
-            // Well the sections match
-            int         valueIndex = 0;
-            ACE_TString valueName;
-            VALUETYPE   valueType;
-            VALUETYPE   rhsType;
+          // Well the sections match
+          int         valueIndex = 0;
+          ACE_TString valueName;
+          VALUETYPE   valueType;
+          VALUETYPE   rhsType;
 
-            // Enumerate each value in this section
-            while((rc) &&
-                  (!const_cast<ACE_Configuration*>(this)->enumerate_values(thisSection, 
-                                                                           valueIndex,
-                                                                           valueName,
-                                                                           valueType)))
+          // Enumerate each value in this section
+          while ((rc) &&
+ (!const_cast<ACE_Configuration*> (this)->enumerate_values (thisSection, 
+                                                                         valueIndex,
+                                                                         valueName,
+                                                                         valueType)))
             {
-                // look for the same value in the rhs section
-                if(const_cast<ACE_Configuration&>(rhs).find_value(rhsSection,
-                                                                  valueName.c_str(),
-                                                                  rhsType) != 0)
+              // look for the same value in the rhs section
+              if (const_cast<ACE_Configuration&> (rhs).find_value (rhsSection,
+                                                                valueName.c_str (),
+                                                                rhsType) != 0)
                 {
-                    // We're not equal if the same value cannot 
-                    // be found in the rhs object.
-                    rc = false;
+                  // We're not equal if the same value cannot 
+                  // be found in the rhs object.
+                  rc = false;
                 }
-                else if (valueType != rhsType)
+              else if (valueType != rhsType)
                 {
-                    // we're not equal if the types do not match.
-                    rc = false;
+                  // we're not equal if the types do not match.
+                  rc = false;
                 }
-                else
+              else
                 {
-                    // finally compare values.
-                    if(valueType == STRING)
+                  // finally compare values.
+                  if (valueType == STRING)
                     {
-                        ACE_TString thisString, rhsString;
-                        if(const_cast<ACE_Configuration*>(this)->get_string_value(thisSection,
-                                                                                  valueName.c_str(),
-                                                                                  thisString) != 0)
+                      ACE_TString thisString, rhsString;
+                      if (const_cast<ACE_Configuration*> (this)->get_string_value (thisSection,
+                                                                                valueName.c_str (),
+                                                                                thisString) != 0)
                         {
-                            // we're not equal if we cannot get this string
-                            rc = false;
+                          // we're not equal if we cannot get this string
+                          rc = false;
                         }
-                        else if(const_cast<ACE_Configuration&>(rhs).get_string_value(rhsSection,
-                                                                                     valueName.c_str(),
-                                                                                     rhsString) != 0)
+                      else if (const_cast<ACE_Configuration&> (rhs).get_string_value (rhsSection,
+                                                                                   valueName.c_str (),
+                                                                                   rhsString) != 0)
                         {
-                            // we're not equal if we cannot get rhs string
-                            rc = false;
+                          // we're not equal if we cannot get rhs string
+                          rc = false;
                         }
-                        rc = thisString == rhsString;
+                      rc = thisString == rhsString;
                     }
-                    else if (valueType == INTEGER)
+                  else if (valueType == INTEGER)
                     {
-                        u_int thisInt, rhsInt;
-                        if(const_cast<ACE_Configuration*>(this)->get_integer_value(thisSection,
-                                                                                   valueName.c_str(),
-                                                                                   thisInt) != 0)
+                      u_int thisInt, rhsInt;
+                      if (const_cast<ACE_Configuration*> (this)->get_integer_value (thisSection,
+                                                                                 valueName.c_str (),
+                                                                                 thisInt) != 0)
                         {
-                            // we're not equal if we cannot get this int
-                            rc = false;
+                          // we're not equal if we cannot get this int
+                          rc = false;
                         }
-                        else if(const_cast<ACE_Configuration&>(rhs).get_integer_value(rhsSection,
-                                                                                      valueName.c_str(),
-                                                                                      rhsInt) != 0)
+                      else if (const_cast<ACE_Configuration&> (rhs).get_integer_value (rhsSection,
+                                                                                    valueName.c_str (),
+                                                                                    rhsInt) != 0)
                         {
-                            // we're not equal if we cannot get rhs int
-                            rc = false;
+                          // we're not equal if we cannot get rhs int
+                          rc = false;
                         }
-                        rc = thisInt == rhsInt;
+                      rc = thisInt == rhsInt;
                     }
-                    else if(valueType == BINARY)
+                  else if (valueType == BINARY)
                     {
 
-                        void* thisData;
-                        void* rhsData;
-                        u_int thisLength, rhsLength;
-                        if(const_cast<ACE_Configuration*>(this)->get_binary_value(thisSection,
-                                                                                  valueName.c_str(),
-                                                                                  thisData,
-                                                                                  thisLength) != 0)
+                      void* thisData;
+                      void* rhsData;
+                      u_int thisLength, rhsLength;
+                      if (const_cast<ACE_Configuration*> (this)->get_binary_value (thisSection,
+                                                                                valueName.c_str (),
+                                                                                thisData,
+                                                                                thisLength) != 0)
                         {
-                            // we're not equal if we cannot get this data
-                            rc = false;
+                          // we're not equal if we cannot get this data
+                          rc = false;
                         }
-                        else if(const_cast<ACE_Configuration&>(rhs).get_binary_value(rhsSection,
-                                                                                     valueName.c_str(),
-                                                                                     rhsData,
-                                                                                     rhsLength) != 0)
+                      else if (const_cast<ACE_Configuration&> (rhs).get_binary_value (rhsSection,
+                                                                                   valueName.c_str (),
+                                                                                   rhsData,
+                                                                                   rhsLength) != 0)
                         {
-                            // we're not equal if we cannot get this data
-                            rc = false;
+                          // we're not equal if we cannot get this data
+                          rc = false;
                         }
 
-                        // are the length's the same?
-                        if(rc = (thisLength == rhsLength))
+                      rc = thisLength == rhsLength;
+                      // are the length's the same?
+
+                      if (rc)
                         {
-                            unsigned char* thisCharData = (unsigned char*)thisData;
-                            unsigned char* rhsCharData = (unsigned char*)rhsData;
-                            // yes, then check each element
-                            for(u_int count = 0; (rc) && (count < thisLength); count++)
+                          unsigned char* thisCharData = (unsigned char*)thisData;
+                          unsigned char* rhsCharData = (unsigned char*)rhsData;
+                          // yes, then check each element
+                          for (u_int count = 0; (rc) && (count < thisLength); count++)
                             {
-                                rc = (*(thisCharData + count) == *(rhsCharData + count));
+                              rc = (* (thisCharData + count) == * (rhsCharData + count));
                             }
                         }// end if the length's match 
                     }
-                    // We should never have valueTypes of INVALID, therefore
-                    // we're not comparing them.  How would we since we have 
-                    // no get operation for invalid types. 
-                    // So, if we have them, we guess they are equal.  
+                  // We should never have valueTypes of INVALID, therefore
+                  // we're not comparing them.  How would we since we have 
+                  // no get operation for invalid types. 
+                  // So, if we have them, we guess they are equal.  
 
                 }// end else if values match.
 
-                valueIndex++;
+              valueIndex++;
 
             }// end value while loop
 
-            // look in the rhs for values not in this
-            valueIndex = 0;
-            while((rc) &&
-                  (!const_cast<ACE_Configuration&>(rhs).enumerate_values(rhsSection,
-                                                                         valueIndex,
-                                                                         valueName,
-                                                                         rhsType)))
+          // look in the rhs for values not in this
+          valueIndex = 0;
+          while ((rc) &&
+ (!const_cast<ACE_Configuration&> (rhs).enumerate_values (rhsSection,
+                                                                       valueIndex,
+                                                                       valueName,
+                                                                       rhsType)))
             {
-                // look for the same value in this section
-                if(const_cast<ACE_Configuration*>(this)->find_value(thisSection,
-                                                                    valueName.c_str(),
-                                                                    valueType) != 0)
+              // look for the same value in this section
+              if (const_cast<ACE_Configuration*> (this)->find_value (thisSection,
+                                                                  valueName.c_str (),
+                                                                  valueType) != 0)
                 {
-                    // We're not equal if the same value cannot 
-                    // be found in the rhs object.
-                    rc = false;
+                  // We're not equal if the same value cannot 
+                  // be found in the rhs object.
+                  rc = false;
                 }
-                valueIndex++;
+              valueIndex++;
             }// end while for rhs values not in this.
 
         }// end else if sections match.
 
-        sectionIndex++;
+      sectionIndex++;
 
     }// end section while loop
 
-    // Finally, make sure that there are no sections in rhs that do not exist in this
-    sectionIndex = 0;
-    while( (rc) &&
-           (!const_cast<ACE_Configuration&>(rhs).enumerate_sections(rhsRoot, 
-                                                                    sectionIndex, 
-                                                                    sectionName)) )
+  // Finally, make sure that there are no sections in rhs that do not exist in this
+  sectionIndex = 0;
+  while ((rc) &&
+ (!const_cast<ACE_Configuration&> (rhs).enumerate_sections (rhsRoot, 
+                                                                  sectionIndex, 
+                                                                  sectionName)) )
     {
-        // find the section in this
-        if(const_cast<ACE_Configuration*>(this)->open_section(this->root_, 
-                                                              sectionName.c_str(), 
-                                                              0, 
-                                                              thisSection) != 0)
+      // find the section in this
+      if (const_cast<ACE_Configuration*> (this)->open_section (this->root_, 
+                                                            sectionName.c_str (), 
+                                                            0, 
+                                                            thisSection) != 0)
         {
-            // if there is some error opening the section in this object
-            rc = false;
+          // if there is some error opening the section in this object
+          rc = false;
         }
-        else if(const_cast<ACE_Configuration&>(rhs).open_section(rhsRoot,
-                                                                 sectionName.c_str(),
-                                                                 0,
-                                                                 rhsSection) != 0)
+      else if (const_cast<ACE_Configuration&> (rhs).open_section (rhsRoot,
+                                                               sectionName.c_str (),
+                                                               0,
+                                                               rhsSection) != 0)
         {
-            // If the rhs object does not contain the section then we are not equal.
-            rc = false;
+          // If the rhs object does not contain the section then we are not equal.
+          rc = false;
         }
-        sectionIndex++;
+      sectionIndex++;
     }
-    return rc;
+  return rc;
 }
 
 
@@ -650,7 +652,7 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 REG_SZ,
-                                (BYTE *) value.fast_rep (),
+ (BYTE *) value.fast_rep (),
                                 value.length () + 1) != ERROR_SUCCESS)
     return -2;
 
@@ -673,7 +675,7 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
                                 name,
                                 0,
                                 REG_DWORD,
-                                (BYTE *) &value,
+ (BYTE *) &value,
                                 sizeof (value)) != ERROR_SUCCESS)
     return -2;
 
@@ -697,7 +699,7 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
                                 name,
                                 0,
                                 REG_BINARY,
-                                (BYTE*)data,
+ (BYTE*)data,
                                 length) != ERROR_SUCCESS)
     return -2;
 
@@ -723,7 +725,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                                   name,
                                   NULL,
                                   &type,
-                                  (BYTE*)buffer,
+ (BYTE*)buffer,
                                   &length) != ERROR_SUCCESS)
     return -2;
 
@@ -752,7 +754,7 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*)&value,
+ (BYTE*)&value,
                                 &length) != ERROR_SUCCESS)
     return -2;
 
@@ -782,7 +784,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*)0,
+ (BYTE*)0,
                                 &buffer_length) != ERROR_SUCCESS)
     return -2;
 
@@ -797,7 +799,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*)data,
+ (BYTE*)data,
                                 &buffer_length) != ERROR_SUCCESS)
   {
     delete data;
@@ -808,7 +810,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   return 0;
 }
 
-int ACE_Configuration_Win32Registry::find_value(const ACE_Configuration_Section_Key& key,
+int ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
                          VALUETYPE& type_out)
 {
@@ -826,11 +828,11 @@ int ACE_Configuration_Win32Registry::find_value(const ACE_Configuration_Section_
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*)&buffer,
+ (BYTE*)&buffer,
                                 &buffer_length) != ERROR_SUCCESS)
     return -1;
 
-  switch(type)
+  switch (type)
   {
   case REG_SZ:
     type_out = STRING;
@@ -897,7 +899,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
     {
       // Detmine the begin/ending of the key name
       end = ACE_OS::strchr (begin, ACE_LIB_TEXT ('\\'));
-      size_t length = end ? (size_t)(end-begin) : ACE_OS::strlen (begin);
+      size_t length = end ? (size_t) (end-begin) : ACE_OS::strlen (begin);
 
       // Make sure length is not 0
       if (!length)
@@ -1110,8 +1112,8 @@ ACE_Configuration_Section_IntId::operator= (const ACE_Configuration_Section_IntI
 void
 ACE_Configuration_Section_IntId::free (ACE_Allocator* allocator)
 {
-  allocator->free ((void *)(value_hash_map_));
-  allocator->free ((void *)(section_hash_map_));
+  allocator->free ((void *) (value_hash_map_));
+  allocator->free ((void *) (section_hash_map_));
 }
 
 ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path)
@@ -1245,7 +1247,7 @@ int
 ACE_Configuration_Heap::create_index_helper (void *buffer)
 {
   ACE_NEW_RETURN (this->index_,
-                  (buffer) SECTION_MAP (this->allocator_),
+ (buffer) SECTION_MAP (this->allocator_),
                   -1);
   return 0;
 }
@@ -1316,7 +1318,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
   // Allocate memory for items to be stored in the table.
   size_t section_len = section.length () + 1;
-  ACE_TCHAR *ptr = (ACE_TCHAR*) this->allocator_->malloc (section_len * sizeof(ACE_TCHAR));
+  ACE_TCHAR *ptr = (ACE_TCHAR*) this->allocator_->malloc (section_len * sizeof (ACE_TCHAR));
 
   int return_value = -1;
 
@@ -1361,7 +1363,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
       ACE_Configuration_ExtId name (ptr);
       ACE_Configuration_Section_IntId entry ((VALUE_MAP*)value_hash_map ,
-                                             (SUBSECTION_MAP*)section_hash_map);
+ (SUBSECTION_MAP*)section_hash_map);
 
       // Do a normal bind.  This will fail if there's already an
       // entry with the same name.
@@ -1379,7 +1381,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
         // Free our dynamically allocated memory.
         this->allocator_->free ((void *) ptr);
       else
-        // If bind() succeed, it will automatically sync
+        // If bind () succeed, it will automatically sync
         // up the map manager entry.  However, we must sync up our
         // name/value memory.
         this->allocator_->sync (ptr, section_len);
@@ -1398,7 +1400,7 @@ ACE_Configuration_Heap::value_open_helper (size_t hash_table_size,
                                           void *buffer)
 {
   ACE_NEW_RETURN (buffer,
-                  (buffer) VALUE_MAP (hash_table_size, this->allocator_),
+ (buffer) VALUE_MAP (hash_table_size, this->allocator_),
                   -1);
   return 0;
 }
@@ -1408,7 +1410,7 @@ ACE_Configuration_Heap::section_open_helper (size_t hash_table_size,
                                              void *buffer)
 {
   ACE_NEW_RETURN (buffer,
-                  (buffer) SUBSECTION_MAP (hash_table_size, this->allocator_),
+ (buffer) SUBSECTION_MAP (hash_table_size, this->allocator_),
                   -1);
   return 0;
 }
@@ -1571,7 +1573,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
       // if (pKey->value_iter_)
       delete pKey->value_iter_;
 
-      ACE_NEW_RETURN (pKey->value_iter_, VALUE_HASH::ITERATOR(hash_map->begin()), -3);
+      ACE_NEW_RETURN (pKey->value_iter_, VALUE_HASH::ITERATOR (hash_map->begin ()), -3);
     }
 
   // Get the next entry
@@ -1645,16 +1647,16 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
 
   // Get the entry for this item (if it exists)
   VALUE_ENTRY* entry;
-  ACE_Configuration_ExtId item_name(name);
-  if(section_int.value_hash_map_->VALUE_HASH::find(item_name, entry) == 0)
+  ACE_Configuration_ExtId item_name (name);
+  if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
       // Free the old value
-      entry->int_id_.free(allocator_);
+      entry->int_id_.free (allocator_);
       // Allocate the new value in this heap
       ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_value, value.fast_rep());
-      ACE_Configuration_Value_IntId new_value_int(pers_value);
+      ACE_OS::strcpy (pers_value, value.fast_rep ());
+      ACE_Configuration_Value_IntId new_value_int (pers_value);
       entry->int_id_ = new_value_int;
     }
   else
@@ -1664,8 +1666,8 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
-      ACE_Configuration_ExtId item_name(pers_name);
-      ACE_Configuration_Value_IntId item_value(pers_value);
+      ACE_Configuration_ExtId item_name (pers_name);
+      ACE_Configuration_Value_IntId item_value (pers_value);
       if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
         {
           allocator_->free (pers_value);
@@ -1692,18 +1694,18 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
     return -1;
 
   // Find this section
-  ACE_Configuration_ExtId section_ext(section.fast_rep ());
+  ACE_Configuration_ExtId section_ext (section.fast_rep ());
   ACE_Configuration_Section_IntId section_int;
   if (index_->find (section_ext, section_int, allocator_))
     return -2;  // section does not exist
 
   // Get the entry for this item (if it exists)
   VALUE_ENTRY* entry;
-  ACE_Configuration_ExtId item_name(name);
-  if(section_int.value_hash_map_->VALUE_HASH::find(item_name, entry) == 0)
+  ACE_Configuration_ExtId item_name (name);
+  if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
-      ACE_Configuration_Value_IntId new_value_int(value);
+      ACE_Configuration_Value_IntId new_value_int (value);
       entry->int_id_ = new_value_int;
     }
   else
@@ -1711,8 +1713,8 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
-      ACE_Configuration_ExtId item_name(pers_name);
-      ACE_Configuration_Value_IntId item_value(value);
+      ACE_Configuration_ExtId item_name (pers_name);
+      ACE_Configuration_Value_IntId item_value (value);
       if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
         {
           allocator_->free (pers_name);
@@ -1746,16 +1748,16 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
 
   // Get the entry for this item (if it exists)
   VALUE_ENTRY* entry;
-  ACE_Configuration_ExtId item_name(name);
-  if(section_int.value_hash_map_->VALUE_HASH::find(item_name, entry) == 0)
+  ACE_Configuration_ExtId item_name (name);
+  if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
       // Free the old value
-      entry->int_id_.free(allocator_);
+      entry->int_id_.free (allocator_);
       // Allocate the new value in this heap
-      ACE_TCHAR* pers_value =  (ACE_TCHAR*)allocator_->malloc (length);
+      ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
-      ACE_Configuration_Value_IntId new_value_int(pers_value, length);
+      ACE_Configuration_Value_IntId new_value_int (pers_value, length);
       entry->int_id_ = new_value_int;
     }
   else
@@ -1763,10 +1765,10 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
-      ACE_TCHAR* pers_value =  (ACE_TCHAR*)allocator_->malloc (length);
+      ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
-      ACE_Configuration_ExtId item_name(pers_name);
-      ACE_Configuration_Value_IntId item_value(pers_value, length);
+      ACE_Configuration_ExtId item_name (pers_name);
+      ACE_Configuration_Value_IntId item_value (pers_value, length);
       if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
         {
           allocator_->free (pers_value);
@@ -1789,9 +1791,9 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   if (IntId.value_hash_map_->find (VExtIdFind, VIntIdFind, allocator_))
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name =  (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
-      ACE_TCHAR* pers_value =  (ACE_TCHAR*)allocator_->malloc (length);
+      ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
       ACE_Configuration_ExtId VExtId (pers_name);
       ACE_Configuration_Value_IntId VIntId (pers_value, length);
@@ -1808,7 +1810,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       // it does exist, free the old value memory
       VIntIdFind.free (allocator_);
       // Assign a new value
-      ACE_TCHAR* pers_value =  (ACE_TCHAR*)allocator_->malloc (length);
+      ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
       VIntIdFind = ACE_Configuration_Value_IntId (pers_value, length);
     }
@@ -1881,7 +1883,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
     return -4;
 
   // Everythings ok, return the data
-  value = (u_int)((long)VIntId.data_);
+  value = (u_int) ((long)VIntId.data_);
   return 0;
 }
 
@@ -1923,9 +1925,9 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
 }
 
 int
-ACE_Configuration_Heap::find_value(const ACE_Configuration_Section_Key& key,
-                         const ACE_TCHAR* name,
-                         VALUETYPE& type_out)
+ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
+                                    const ACE_TCHAR* name,
+                                    VALUETYPE& type_out)
 {
   if (validate_name (name))
     return -1;
@@ -1944,13 +1946,12 @@ ACE_Configuration_Heap::find_value(const ACE_Configuration_Section_Key& key,
   // Find it
   ACE_Configuration_ExtId ValueExtId (name);
   VALUE_ENTRY* value_entry;
-  if (((VALUE_HASH*)IntId.value_hash_map_)->find (ValueExtId, value_entry))
+  if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -1;  // value does not exist
 
   type_out = value_entry->int_id_.type_;
   return 0;
 }
-
 
 int
 ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
@@ -1973,7 +1974,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
   // Find it
   ACE_Configuration_ExtId ValueExtId (name);
   VALUE_ENTRY* value_entry;
-  if (((VALUE_HASH*)IntId.value_hash_map_)->find (ValueExtId, value_entry))
+  if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -4;
 
   // free it

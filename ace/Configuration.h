@@ -17,7 +17,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_CONFIGURATION_H
 #define ACE_CONFIGURATION_H
 #include "ace/pre.h"
