@@ -1,3 +1,12 @@
+Wed Jan  3 16:00:22 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.cpp
+
+          Changed the types of day_of_week_name and month_name in
+          ACE::timestamp to ACE_TCHAR (since that was the data
+          being assigned to it and the type that is later expected).
+          This fixed errors in Win32's Unicode build.
+
 Wed Jan  3 15:44:31 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.i:
