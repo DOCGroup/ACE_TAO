@@ -120,8 +120,6 @@ template<class T, size_t ACE_SIZE>
 ACE_Fixed_Stack<T, ACE_SIZE>::~ACE_Fixed_Stack (void)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::~ACE_Fixed_Stack");
-
-  delete [] this->stack_;
 }
 
 //----------------------------------------

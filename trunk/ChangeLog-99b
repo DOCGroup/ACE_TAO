@@ -1,3 +1,9 @@
+Fri Jan 22 15:07:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Containers_T.cpp: Yikes, don't delete the fixed stack since
+ 	  it wasn't allocated dynamically!  Thanks to Mike Goldman
+ 	  <whig@by.net> for this fix!
+
 Fri Jan 22 13:08:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/ACE.{cpp, h}: added static methods ACE::gcd, which computes the
