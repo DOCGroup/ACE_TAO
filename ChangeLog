@@ -1,3 +1,11 @@
+Wed Apr 16 06:55:53 UTC UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/clients/Naming/Dump_Restore/Makefile:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.main:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.Dump_Restore:
+          Split makefile into multiple ones, one for the shared library, one
+          for the main. This fixes linker errors with Kylix3
+
 Tue Apr 15 16:06:24 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Log_Msg_NT_Event_Log.cpp (close): Make sure to check for
