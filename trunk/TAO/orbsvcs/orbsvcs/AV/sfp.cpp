@@ -600,7 +600,7 @@ TAO_SFP::handle_timeout (const ACE_Time_Value &/* tv */,
 int
 TAO_SFP::handle_input (ACE_HANDLE /* fd */)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_SFP::handle_input\n"));
+  //  ACE_DEBUG ((LM_DEBUG,"TAO_SFP::handle_input\n"));
   flowProtocol::MsgType msg_type = flowProtocol::Start_Msg;
   ACE_INET_Addr sender;
   char peek_buffer [MAGIC_NUMBER_LEN+2];// 2 is for flags + message_type.
@@ -630,7 +630,7 @@ TAO_SFP::handle_input (ACE_HANDLE /* fd */)
     }
   else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_MAGIC_NUMBER) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t) frameHeader received\n"));
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t) frameHeader received\n"));
       //      msg_type = flowProtocol::SimpleFrame;
       msg_type = (flowProtocol::MsgType)peek_buffer [MESSAGE_TYPE_OFFSET];
       ACE_DEBUG ((LM_DEBUG,"Message Type = %d\n",msg_type));
@@ -948,7 +948,7 @@ TAO_SFP::read_frame_header (flowProtocol::frameHeader &frame_header)
         ACE_ERROR_RETURN ((LM_ERROR,"Message_Block::copy failed\n"),0);
       // buf[4] is the byte order.
       int byte_order = buf[4] & 0x1;
-      ACE_DEBUG ((LM_DEBUG,"mb len = %d,byte_order=%d\n",mb.length (),byte_order));
+      //      ACE_DEBUG ((LM_DEBUG,"mb len = %d,byte_order=%d\n",mb.length (),byte_order));
       TAO_InputCDR cdr (&mb,byte_order);
       //  cdr >>= frame_header;
       cdr.decode (flowProtocol::_tc_frameHeader,
