@@ -1,3 +1,15 @@
+Fri Nov  7 18:20:46 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/{client,server}/svc.conf: Updated to
+ 	reflect the proper combination of options to achieve the
+ 	thread-per-ORB-per-rate concurrency model.
+
+	* docs/components.html: Updated to refer to seminal documentation
+ 	referred to below.
+	
+	* docs/configurations.html: Started some new documentation.  It's
+ 	got a ways to go right now. :-)
+
 Fri Nov 07 15:42:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/default_server.cpp (parse_args): check for 0 argv[curarg]
