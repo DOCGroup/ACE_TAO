@@ -109,9 +109,9 @@ be_generator::create_root(UTL_ScopedName *n,
  * Create a BE_PredefinedType node
  */
 AST_PredefinedType *
-be_generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
-                                     UTL_ScopedName *n,
-                                     UTL_StrList *p)
+be_generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
+                                      UTL_ScopedName *n,
+                                      UTL_StrList *p)
 {
   return (AST_PredefinedType *) new be_predefined_type(t, n, p);
 }
@@ -120,9 +120,36 @@ be_generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
  * Create a BE_Module node
  */
 AST_Module *
-be_generator::create_module(UTL_ScopedName *n, UTL_StrList *p)
+be_generator::create_module (UTL_Scope *s,
+                             UTL_ScopedName *n, 
+                             UTL_StrList *p)
 {
-  return (AST_Module *) new be_module(n, p);
+  AST_Decl *d = 0;
+  UTL_ScopeActiveIterator *iter = 
+    new UTL_ScopeActiveIterator (s,
+                                 UTL_Scope::IK_decls);
+  
+  // If there is already a module with the same name in this
+  // scope, then the module has been reopened, and we just
+  // return the original node.                                           
+  while (!iter->is_done ())
+    {
+      d = iter->item ();
+
+      if (d->node_type () == AST_Decl::NT_module)
+        {
+          if (d->local_name ()->compare (n->last_component ()))
+            {
+              delete iter;
+              return AST_Module::narrow_from_decl (d);
+            }
+        }
+
+      iter->next ();
+    }
+
+  delete iter;
+  return (AST_Module *) new be_module (n, p);
 }
 
 /*
