@@ -1,3 +1,8 @@
+Thu Sep 18 07:39:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_helper.cpp: Added a new line after the generation
+	  of #endif block in gen_endif ().
+
 Wed Sep 17 18:31:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ci.cpp:
