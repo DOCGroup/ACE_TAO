@@ -702,7 +702,11 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
   // External decls.
 
 #if ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+#if defined (__FreeBSD__)
+   extern const int sys_nerr;
+#else
    extern int sys_nerr;
+#endif /* !__FreeBSD__ */
 #endif /* ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
   typedef void (*PTF)(...);
 
