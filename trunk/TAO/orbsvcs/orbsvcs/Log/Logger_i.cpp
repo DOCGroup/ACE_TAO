@@ -43,10 +43,10 @@ Logger_Factory_i::make_logger (const char *name,
       // This attempts to create a new Logger_i and throws an
       // exception and returns a null value if it fails
       ACE_NEW_THROW_RETURN (result,
-			    Logger_i (name),
-			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			    Logger::_nil ());
-    } 
+                            Logger_i (name),
+                            CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+                            Logger::_nil ());
+    }
 
   // Enter the new logger into the hash map.  Check if the <bind>
   // fails and if so, throw an UNKNOWN exception.  <result> may be
@@ -56,7 +56,7 @@ Logger_Factory_i::make_logger (const char *name,
     {
       delete result;
       TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO),
-			Logger::_nil ());  
+                        Logger::_nil ());
     }
   else
     // Logger of name <name> already bound.  <result> is set
@@ -64,7 +64,7 @@ Logger_Factory_i::make_logger (const char *name,
     if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
                   "\nLogger name already bound"));
-  
+
   // <_this> is an performance hit here, but apparently if the object
   // is already registered with the POA, it will ignore the second
   // registration attempt.
@@ -210,7 +210,6 @@ Logger_i::verbosity (Logger::Verbosity_Level level, CORBA::Environment &env)
 
 template class ACE_Hash_Map_Entry<ACE_CString, Logger_i *>;
 template class ACE_Hash<ACE_CString>;
-template class ACE_Equal_To<ACE_CString>;
 template class ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
@@ -223,7 +222,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Logger_i *, ACE_Has
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Logger_i *>
 #pragma instantiate ACE_Hash<ACE_CString>
-#pragma instantiate ACE_Equal_To<ACE_CString>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Logger_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
