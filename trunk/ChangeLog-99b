@@ -1,3 +1,10 @@
+Fri Apr 30 11:24:26 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/ACE_Init_Test.cpp: Added compile-time change to adapt to
+          build w/ static ACE lib and ACE_HAS_NONSTATIC_OBJECT_MANAGER.
+        * tests/version_tests/ACE_Init_Test.dsp: Changes to build clean on
+          all configurations.
+
 Fri Apr 30 02:06:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Parse_Node.cpp (symbol): According to the new ANSI C++
