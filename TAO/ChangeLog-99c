@@ -1,3 +1,8 @@
+Tue Jun  8 20:24:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Fixed argument parsing, thanks to Nanbor for pointing this out.
+
 Tue Jun  8 20:19:15 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* tao/Principal.i 
