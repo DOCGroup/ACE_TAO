@@ -15,7 +15,9 @@ extern "C" {
 #include <netinet/sctp.h>
 };
 #else
-#define IPPROTO_SCTP -1
+#ifndef IPPROTO_SCTP
+#define IPPROTO_SCTP 132 /* always the same value on every platform */ 
+#endif
 #endif
 
 #include "ace/Get_Opt.h"
