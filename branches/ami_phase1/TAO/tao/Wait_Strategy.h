@@ -21,6 +21,7 @@
 
 class TAO_Request_Mux_Strategy;
 class TAO_Transport;
+class TAO_IIOP_Handler_Base;
 
 class TAO_Export TAO_Wait_Strategy
 {
@@ -41,6 +42,16 @@ public:
   virtual int wait (void) = 0;
   // Base class virtual method.
 
+  virtual int handle_input (void) = 0;
+  // Handle the input.
+
+  virtual int register_handler (TAO_IIOP_Handler_Base *handler) = 0;
+  // Register the handler with the Reactor if it makes sense for the
+  // strategy.
+
+  virtual int resume_handler (ACE_Reactor *reactor) = 0;
+  // Depending on the wait strategy resume the connect handler. 
+  
 protected:
   TAO_Transport *transport_;
   // Transport object.
@@ -65,6 +76,16 @@ public:
   
   virtual int wait (void);
   // Do the event loop of the Reactor.
+
+  virtual int handle_input (void);
+  // Handle the input. Delegate this job to Transport object. Before
+  // that suspend the handler in the Reactor.
+
+  virtual int register_handler (TAO_IIOP_Handler_Base *handler);
+  // Register the handler with the Reactor.
+  
+  virtual int resume_handler (ACE_Reactor *reactor);
+  // Resume the connection handler. 
 };
 
 class TAO_Export TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
@@ -87,6 +108,16 @@ public:
   
   virtual int wait (void);
   // Wait according to the L-F model.
+
+  virtual int handle_input (void);
+  // Handle the input. Delegate this job to Transport object. Before
+  // that, suspend the handler in the Reactor.
+
+  virtual int register_handler (TAO_IIOP_Handler_Base *handler);
+  // Register the handler with the Reactor.
+
+  virtual int resume_handler (ACE_Reactor *reactor);
+  // Resume the connection handler. 
 };
 
 class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
@@ -107,4 +138,13 @@ public:
 
   virtual int wait (void);
   // Wait on the read operation.
+
+  virtual int handle_input (void);
+  // Handle the input. Delegate this job to Transport object.
+
+  virtual int register_handler (TAO_IIOP_Handler_Base *handler);
+  // No-op. Return 0.
+  
+  virtual int resume_handler (ACE_Reactor *reactor);
+  // Resume the connection handler. No-op. Returns 0.
 };

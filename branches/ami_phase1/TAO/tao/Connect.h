@@ -110,6 +110,8 @@ protected:
   // when <expecting_response_> is non-zero.
 };
 
+#if 0 
+// @@ Getting rid of this Connection Handler. one step at a time. 
 class TAO_Export TAO_RW_Client_Connection_Handler : public TAO_Client_Connection_Handler
 {
 public:
@@ -130,7 +132,9 @@ public:
 protected:
 
 };
+#endif /* 0 */
 
+#if 0
 class TAO_Export TAO_ST_Client_Connection_Handler : public TAO_Client_Connection_Handler
 {
 public:
@@ -159,6 +163,7 @@ public:
 protected:
 
 };
+#endif /* 0 */
 
 class TAO_Export TAO_MT_Client_Connection_Handler : public TAO_Client_Connection_Handler
 {

@@ -48,8 +48,7 @@ class TAO_Export TAO_Transport
   //   constructor and deleted in the service handlers destructor!!
 
 public:
-  TAO_Transport (TAO_Request_Mux_Strategy *rms = 0,
-                 TAO_Wait_Strategy *ws = 0);
+  TAO_Transport (TAO_ORB_Core *orb_core);
   // Constrcutor.
 
   virtual ~TAO_Transport (void);
@@ -171,7 +170,7 @@ public:
 
   // = Get and set methods for the ORB Core.
 
-  void orb_core (TAO_ORB_Core *orb_core);
+  // void orb_core (TAO_ORB_Core *orb_core);
   // Set it.
   
   TAO_ORB_Core *orb_core (void) const;
@@ -179,12 +178,15 @@ public:
 
   // = Get and set methods for thr RMS object.
 
-  void rms (TAO_Request_Mux_Strategy *rms);
+  // void rms (TAO_Request_Mux_Strategy *rms);
   // Set the RMS object.
   
   TAO_Request_Mux_Strategy * rms (void) const;
   // Get the RMS used by this Transport object.
   
+  TAO_Wait_Strategy *wait_strategy (void) const;
+  // Return the Wait strategy used by the Transport.
+
   CORBA::ULong request_id (void);
   // Get request id for the current invocation from the RMS object. 
   
@@ -202,6 +204,21 @@ public:
   // the connection. Returns 1 when the full reply is read and
   // handled. Returns -1 on errors.
   // If <block> is 1, then reply is read in a blocking manner. 
+
+  virtual int register_handler (void);
+  // Register the handler with the reactor. Will be called by the Wait
+  // Strategy if Reactor is used  for that strategy. Default
+  // implementation out here returns -1 setting <errno> to ENOTSUP.
+
+  virtual int suspend_handler (void);
+  // Suspend the handler from the reactor. Will be called by the Wait 
+  // Strategy if Reactor is used  for that strategy. Default
+  // implementation out here returns -1 setting <errno> to ENOTSUP.
+
+  virtual int resume_handler (void);
+  // Resume the handler from the reactor. This will be called by the
+  // Wait Strategies, if Reactor is used in the strategy. Default
+  // implementation out here returns -1 setting <errno> to ENOTSUP. 
 
 protected:
   // = States for the input message.

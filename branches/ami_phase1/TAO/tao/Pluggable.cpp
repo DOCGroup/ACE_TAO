@@ -5,6 +5,8 @@
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
+#include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Request_Mux_Strategy.h"
 #include "tao/Reply_Dispatcher.h"
@@ -18,24 +20,28 @@
 //    factory.
 
 // Constructor.
-TAO_Transport::TAO_Transport (TAO_Request_Mux_Strategy *rms,
-                              TAO_Wait_Strategy *ws)
+TAO_Transport::TAO_Transport (TAO_ORB_Core *orb_core)
   : message_size_ (0),
     message_offset_ (0),
     rms_ (0),
-    ws_ (0)
+    ws_ (0),
+    orb_core_ (0)
 {
-  // @@ I am hard coding RMS strategy here. (alex)
-  ACE_NEW (rms_,
-           TAO_Exclusive_RMS);
+  orb_core_ = orb_core;
 
-  // @@ Hardcoding the WS here. (alex)
-  ACE_NEW (ws_,
-           TAO_Wait_On_Read (this));
+  // Create WS now.
+  this->ws_ = orb_core->client_factory ()->create_wait_strategy (this); 
+
+  // Create RMS now.
+  this->rms_ = orb_core->client_factory ()->create_request_mux_strategy ();
 }
 
 TAO_Transport::~TAO_Transport (void)
 {
+  delete ws_;
+  ws_ = 0;
+  delete rms_;
+  rms_ =0;
 }
 
 // @@ Alex: this stream stuff belongs to the RMS, right?
@@ -104,15 +110,6 @@ TAO_Transport::incr_message_offset (CORBA::Long bytes_transferred)
   return 0;
 }
 
-// Get and set methods for the ORB Core.
-
-// Set it.
-void
-TAO_Transport::orb_core (TAO_ORB_Core *orb_core)
-{
-  this->orb_core_ = orb_core;
-}
-
 // Get it.
 TAO_ORB_Core *
 TAO_Transport::orb_core (void) const
@@ -120,18 +117,17 @@ TAO_Transport::orb_core (void) const
   return this->orb_core_;
 }
 
-
-// Set the RMS object.
-void
-TAO_Transport::rms (TAO_Request_Mux_Strategy *rms)
-{
-  this->rms_ = rms;
-}
-
 TAO_Request_Mux_Strategy *
 TAO_Transport::rms (void) const
 {
   return rms_;
+}
+
+// Return the Wait strategy used by the Transport.
+TAO_Wait_Strategy *
+TAO_Transport::wait_strategy (void) const
+{
+  return this->ws_;
 }
 
 // Get request id for the current invocation from the RMS object.
@@ -155,9 +151,28 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
 // handled. Returns -1 on errors.
 // If <block> is 1, then reply is read in a blocking manner.
 
-// @@ Alex: Shouldn't this be an pure virtual method?
+// @@ Should this be an pure virtual method? (Alex)
 int
 TAO_Transport::handle_client_input (int /* block */)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+// @@ Should this be an pure virtual method? (Alex)
+int
+TAO_Transport::register_handler (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
+TAO_Transport::suspend_handler (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
+TAO_Transport::resume_handler (void)
 {
   ACE_NOTSUP_RETURN (-1);
 }

@@ -18,6 +18,7 @@
 #define TAO_DEFAULT_CLIENT_H
 
 #include "tao/Client_Strategy_Factory.h"
+#include "tao/default_client.h"
 
 // ****************************************************************
 
@@ -84,7 +85,13 @@ public:
   // @@ Alex: the RMS and WS factory methods go here too...
 
   ACE_Creation_Strategy<TAO_Client_Connection_Handler> *create_client_creation_strategy (void);
-  // Create the correct client connection creation strategy
+  // Create the correct client connection creation strategy.
+
+  TAO_Request_Mux_Strategy *create_request_mux_strategy (void);
+  // Create the correct client request muxing strategy.
+  
+  TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
+  // Create the correct client wait-for-reply strategy.
 
 private:
   enum Lock_Type
@@ -104,7 +111,26 @@ private:
   };
 
   Client_Connection_Handler_Type client_connection_handler_;
-  // Type of client connection handler to create
+  // Type of client connection handler to create.
+
+  enum Request_Mux_Strategy
+  {
+    TAO_MUXED_RMS,
+    TAO_EXCLUSIVE_RMS
+  };
+
+  Request_Mux_Strategy request_mux_strategy_;
+  // The client Request Mux Strategy.
+  
+  enum Wait_Strategy
+  {
+    TAO_WAIT_ON_LEADER_FOLLOWER,
+    TAO_WAIT_ON_REACTOR,
+    TAO_WAIT_ON_READ
+  };
+  
+  Wait_Strategy wait_strategy_;
+  // The wait-for-reply strategy.
 };
 
 #if defined (__ACE_INLINE__)
