@@ -3,6 +3,7 @@ Tue Mar 16 15:34:29 1999  David L. Levine  <levine@cs.wustl.edu>
         * examples/Simple/bank/AccountManager_i.cpp: removed
           ACE_Hash<ACE_CString> and ACE_Equal_To<ACE_CString> explicit
           template instantiations, because they're in tao/POA.cpp.
+          Thanks to Wei Chiang for reporting this.
 
 1999-03-16  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
 
