@@ -302,7 +302,7 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
 
         // Construct an  IIOP_Endpoint object
       TAO_IIOP_Endpoint tmpoint (addr,
-                                 0);
+        this->orb_core()->orb_params()->use_dotted_decimal_addresses());
 
       // Construct an  IIOP_Endpoint object
       TAO_SSLIOP_Endpoint endpoint (0,
