@@ -725,7 +725,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 		 i < exceptions.count ();
 		 i++)
 	      {
-                CORBA::TypeCode_ptr tcp;
+                CORBA::TypeCode_ptr tcp = 0;
                 int loop_continue = 0;
                 TAO_TRY_SYS
                   {
