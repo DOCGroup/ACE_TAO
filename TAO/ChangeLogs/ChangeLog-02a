@@ -1,3 +1,9 @@
+Thu Nov  9 20:56:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/UIOP_Connect.cpp:
+	* tao/SHMIOP_Connect.cpp: These two files were removed. I checked
+	  them back in by mistake.
+
 Thu Nov  9 20:07:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Cache_Manager.cpp:
