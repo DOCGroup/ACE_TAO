@@ -32,7 +32,7 @@ CLEANFILES = \
   TimeBaseS_T.inl
 
 TimeBaseS_T.cpp TimeBaseC.cpp TimeBaseS.cpp TimeBaseC.h TimeBaseS.h TimeBaseS_T.h TimeBaseC.inl TimeBaseS.inl TimeBaseS_T.inl: TimeBase.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=svc_utils_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=svc_utils_export.h $(srcdir)/TimeBase.idl
 
 BUILT_SOURCES += \
   RtecBaseS_T.cpp \
@@ -57,7 +57,7 @@ CLEANFILES += \
   RtecBaseS_T.inl
 
 RtecBaseS_T.cpp RtecBaseC.cpp RtecBaseS.cpp RtecBaseC.h RtecBaseS.h RtecBaseS_T.h RtecBaseC.inl RtecBaseS.inl RtecBaseS_T.inl: RtecBase.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=svc_utils_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=svc_utils_export.h $(srcdir)/RtecBase.idl
 
 lib_LTLIBRARIES = libTAO_Svc_Utils.la
 
@@ -135,7 +135,7 @@ CLEANFILES += \
   CosNamingS_T.inl
 
 CosNamingS_T.cpp CosNamingC.cpp CosNamingS.cpp CosNamingC.h CosNamingS.h CosNamingS_T.h CosNamingC.inl CosNamingS.inl CosNamingS_T.inl: CosNaming.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Naming_Export -Wb,export_include=Naming/naming_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Naming_Export -Wb,export_include=Naming/naming_export.h $(srcdir)/CosNaming.idl
 
 Naming = \
   CosNamingC.cpp \
@@ -233,7 +233,7 @@ CLEANFILES += \
   CosPropertyServiceS_T.inl
 
 CosPropertyServiceS_T.cpp CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceC.h CosPropertyServiceS.h CosPropertyServiceS_T.h CosPropertyServiceC.inl CosPropertyServiceS.inl CosPropertyServiceS_T.inl: CosPropertyService.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h $(srcdir)/CosPropertyService.idl
 
 Property = \
   CosPropertyServiceC.cpp \
@@ -300,7 +300,7 @@ CLEANFILES += \
   AVStreamsS_T.inl
 
 AVStreamsS_T.cpp AVStreamsC.cpp AVStreamsS.cpp AVStreamsC.h AVStreamsS.h AVStreamsS_T.h AVStreamsC.inl AVStreamsS.inl AVStreamsS_T.inl: AVStreams.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h $(srcdir)/AVStreams.idl
 
 BUILT_SOURCES += \
   Null_MediaCtrlS_T.cpp \
@@ -321,7 +321,7 @@ CLEANFILES += \
   Null_MediaCtrlS_T.inl
 
 Null_MediaCtrlS_T.cpp Null_MediaCtrlC.cpp Null_MediaCtrlS.cpp Null_MediaCtrlS_T.h Null_MediaCtrlC.inl Null_MediaCtrlS.inl Null_MediaCtrlS_T.inl: Null_MediaCtrl.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h $(srcdir)/Null_MediaCtrl.idl
 
 BUILT_SOURCES += \
   sfpS_T.cpp \
@@ -346,7 +346,7 @@ CLEANFILES += \
   sfpS_T.inl
 
 sfpS_T.cpp sfpC.cpp sfpS.cpp sfpC.h sfpS.h sfpS_T.h sfpC.inl sfpS.inl sfpS_T.inl: sfp.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h $(srcdir)/sfp.idl
 
 AV = \
   AVStreamsC.cpp \
@@ -489,7 +489,7 @@ CLEANFILES += \
   CosConcurrencyControlS_T.inl
 
 CosConcurrencyControlS_T.cpp CosConcurrencyControlC.cpp CosConcurrencyControlS.cpp CosConcurrencyControlC.h CosConcurrencyControlS.h CosConcurrencyControlS_T.h CosConcurrencyControlC.inl CosConcurrencyControlS.inl CosConcurrencyControlS_T.inl: CosConcurrencyControl.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Concurrency_Export -Wb,export_include=Concurrency/concurrency_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Concurrency_Export -Wb,export_include=Concurrency/concurrency_export.h $(srcdir)/CosConcurrencyControl.idl
 
 Concurrency = \
   CosConcurrencyControlC.cpp \
@@ -564,7 +564,7 @@ CLEANFILES += \
   CosTypedEventCommS_T.inl
 
 CosTypedEventCommS_T.cpp CosTypedEventCommC.cpp CosTypedEventCommS.cpp CosTypedEventCommC.h CosTypedEventCommS.h CosTypedEventCommS_T.h CosTypedEventCommC.inl CosTypedEventCommS.inl CosTypedEventCommS_T.inl: CosTypedEventComm.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/CosTypedEventComm.idl
 
 BUILT_SOURCES += \
   CosTypedEventChannelAdminS_T.cpp \
@@ -589,7 +589,7 @@ CLEANFILES += \
   CosTypedEventChannelAdminS_T.inl
 
 CosTypedEventChannelAdminS_T.cpp CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminS.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminS.h CosTypedEventChannelAdminS_T.h CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS.inl CosTypedEventChannelAdminS_T.inl: CosTypedEventChannelAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/CosTypedEventChannelAdmin.idl
 
 CosEvent = \
   CosTypedEventCommC.cpp \
@@ -764,7 +764,7 @@ CLEANFILES += \
   CosLifeCycleS_T.inl
 
 CosLifeCycleS_T.cpp CosLifeCycleC.cpp CosLifeCycleS.cpp CosLifeCycleC.h CosLifeCycleS.h CosLifeCycleS_T.h CosLifeCycleC.inl CosLifeCycleS.inl CosLifeCycleS_T.inl: CosLifeCycle.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle/lifecycle_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle/lifecycle_export.h $(srcdir)/CosLifeCycle.idl
 
 BUILT_SOURCES += \
   LifeCycleServiceS_T.cpp \
@@ -789,7 +789,7 @@ CLEANFILES += \
   LifeCycleServiceS_T.inl
 
 LifeCycleServiceS_T.cpp LifeCycleServiceC.cpp LifeCycleServiceS.cpp LifeCycleServiceC.h LifeCycleServiceS.h LifeCycleServiceS_T.h LifeCycleServiceC.inl LifeCycleServiceS.inl LifeCycleServiceS_T.inl: LifeCycleService.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle/lifecycle_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle/lifecycle_export.h $(srcdir)/LifeCycleService.idl
 
 LifeCycle = \
   CosLifeCycleC.cpp \
@@ -859,7 +859,7 @@ CLEANFILES += \
   PortableGroup_Simple_DSS_T.inl
 
 PortableGroup_Simple_DSS_T.cpp PortableGroup_Simple_DSC.cpp PortableGroup_Simple_DSC.h PortableGroup_Simple_DSS.h PortableGroup_Simple_DSS_T.h PortableGroup_Simple_DSC.inl PortableGroup_Simple_DSS.inl PortableGroup_Simple_DSS_T.inl: PortableGroup_Simple_DS.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,skel_export_include=tao/PortableServer/PolicyS.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/PortableGroup_Simple_DS.idl
 
 BUILT_SOURCES += \
   FT_CORBA_ORBS_T.cpp \
@@ -884,7 +884,7 @@ CLEANFILES += \
   FT_CORBA_ORBS_T.inl
 
 FT_CORBA_ORBS_T.cpp FT_CORBA_ORBC.cpp FT_CORBA_ORBS.cpp FT_CORBA_ORBC.h FT_CORBA_ORBS.h FT_CORBA_ORBS_T.h FT_CORBA_ORBC.inl FT_CORBA_ORBS.inl FT_CORBA_ORBS_T.inl: FT_CORBA_ORB.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,skel_export_include=tao/PortableServer/PolicyS.h -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,skel_export_include=tao/PortableServer/PolicyS.h -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h $(srcdir)/FT_CORBA_ORB.idl
 
 FTORB_Utils = \
   PortableGroup_Simple_DSC.cpp \
@@ -959,7 +959,7 @@ CLEANFILES += \
   miopS_T.inl
 
 miopS_T.cpp miopC.cpp miopS.cpp miopC.h miopS.h miopS_T.h miopC.inl miopS.inl miopS_T.inl: miop.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup/portablegroup_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup/portablegroup_export.h $(srcdir)/miop.idl
 
 BUILT_SOURCES += \
   PortableGroupS_T.cpp \
@@ -984,7 +984,7 @@ CLEANFILES += \
   PortableGroupS_T.inl
 
 PortableGroupS_T.cpp PortableGroupC.cpp PortableGroupS.cpp PortableGroupC.h PortableGroupS.h PortableGroupS_T.h PortableGroupC.inl PortableGroupS.inl PortableGroupS_T.inl: PortableGroup.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup/portablegroup_export.h -GC $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup/portablegroup_export.h -GC $(srcdir)/PortableGroup.idl
 
 PortableGroup = \
   miopC.cpp \
@@ -1147,7 +1147,7 @@ CLEANFILES += \
   CosLoadBalancingS_T.inl
 
 CosLoadBalancingS_T.cpp CosLoadBalancingC.cpp CosLoadBalancingS.cpp CosLoadBalancingC.h CosLoadBalancingS.h CosLoadBalancingS_T.h CosLoadBalancingC.inl CosLoadBalancingS.inl CosLoadBalancingS_T.inl: CosLoadBalancing.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h $(srcdir)/CosLoadBalancing.idl
 
 BUILT_SOURCES += \
   LB_ORTS_T.cpp \
@@ -1170,7 +1170,7 @@ CLEANFILES += \
   LB_ORTS_T.inl
 
 LB_ORTS_T.cpp LB_ORTC.cpp LB_ORTC.h LB_ORTS.h LB_ORTS_T.h LB_ORTC.inl LB_ORTS.inl LB_ORTS_T.inl: LB_ORT.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h $(srcdir)/LB_ORT.idl
 
 CosLoadBalancing = \
   CosLoadBalancingC.cpp \
@@ -1339,7 +1339,7 @@ CLEANFILES += \
   CosEventCommS_T.inl
 
 CosEventCommS_T.cpp CosEventCommC.cpp CosEventCommS.cpp CosEventCommC.h CosEventCommS.h CosEventCommS_T.h CosEventCommC.inl CosEventCommS.inl CosEventCommS_T.inl: CosEventComm.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/CosEventComm.idl
 
 BUILT_SOURCES += \
   CosEventChannelAdminS_T.cpp \
@@ -1364,7 +1364,7 @@ CLEANFILES += \
   CosEventChannelAdminS_T.inl
 
 CosEventChannelAdminS_T.cpp CosEventChannelAdminC.cpp CosEventChannelAdminS.cpp CosEventChannelAdminC.h CosEventChannelAdminS.h CosEventChannelAdminS_T.h CosEventChannelAdminC.inl CosEventChannelAdminS.inl CosEventChannelAdminS_T.inl: CosEventChannelAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/CosEventChannelAdmin.idl
 
 BUILT_SOURCES += \
   CosNotificationS_T.cpp \
@@ -1389,7 +1389,7 @@ CLEANFILES += \
   CosNotificationS_T.inl
 
 CosNotificationS_T.cpp CosNotificationC.cpp CosNotificationS.cpp CosNotificationC.h CosNotificationS.h CosNotificationS_T.h CosNotificationC.inl CosNotificationS.inl CosNotificationS_T.inl: CosNotification.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/CosNotification.idl
 
 BUILT_SOURCES += \
   CosNotifyCommS_T.cpp \
@@ -1414,7 +1414,7 @@ CLEANFILES += \
   CosNotifyCommS_T.inl
 
 CosNotifyCommS_T.cpp CosNotifyCommC.cpp CosNotifyCommS.cpp CosNotifyCommC.h CosNotifyCommS.h CosNotifyCommS_T.h CosNotifyCommC.inl CosNotifyCommS.inl CosNotifyCommS_T.inl: CosNotifyComm.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/CosNotifyComm.idl
 
 BUILT_SOURCES += \
   CosNotifyFilterS_T.cpp \
@@ -1439,7 +1439,7 @@ CLEANFILES += \
   CosNotifyFilterS_T.inl
 
 CosNotifyFilterS_T.cpp CosNotifyFilterC.cpp CosNotifyFilterS.cpp CosNotifyFilterC.h CosNotifyFilterS.h CosNotifyFilterS_T.h CosNotifyFilterC.inl CosNotifyFilterS.inl CosNotifyFilterS_T.inl: CosNotifyFilter.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/CosNotifyFilter.idl
 
 BUILT_SOURCES += \
   CosNotifyChannelAdminS_T.cpp \
@@ -1464,7 +1464,7 @@ CLEANFILES += \
   CosNotifyChannelAdminS_T.inl
 
 CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminC.cpp CosNotifyChannelAdminS.cpp CosNotifyChannelAdminC.h CosNotifyChannelAdminS.h CosNotifyChannelAdminS_T.h CosNotifyChannelAdminC.inl CosNotifyChannelAdminS.inl CosNotifyChannelAdminS_T.inl: CosNotifyChannelAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/CosNotifyChannelAdmin.idl
 
 BUILT_SOURCES += \
   NotifyExtS_T.cpp \
@@ -1489,7 +1489,7 @@ CLEANFILES += \
   NotifyExtS_T.inl
 
 NotifyExtS_T.cpp NotifyExtC.cpp NotifyExtS.cpp NotifyExtC.h NotifyExtS.h NotifyExtS_T.h NotifyExtC.inl NotifyExtS.inl NotifyExtS_T.inl: NotifyExt.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/NotifyExt.idl
 
 BUILT_SOURCES += \
   Event_ForwarderS_T.cpp \
@@ -1514,7 +1514,7 @@ CLEANFILES += \
   Event_ForwarderS_T.inl
 
 Event_ForwarderS_T.cpp Event_ForwarderC.cpp Event_ForwarderS.cpp Event_ForwarderC.h Event_ForwarderS.h Event_ForwarderS_T.h Event_ForwarderC.inl Event_ForwarderS.inl Event_ForwarderS_T.inl: Event_Forwarder.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $(srcdir)/Event_Forwarder.idl
 
 Notify = \
   CosEventCommC.cpp \
@@ -1845,7 +1845,7 @@ CLEANFILES += \
   TimeServiceS_T.inl
 
 TimeServiceS_T.cpp TimeServiceC.cpp TimeServiceS.cpp TimeServiceC.h TimeServiceS.h TimeServiceS_T.h TimeServiceC.inl TimeServiceS.inl TimeServiceS_T.inl: TimeService.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Time_Export -Wb,export_include=Time/time_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Time_Export -Wb,export_include=Time/time_export.h $(srcdir)/TimeService.idl
 
 Time = \
   TimeServiceC.cpp \
@@ -1924,7 +1924,7 @@ CLEANFILES += \
   CosTradingS_T.inl
 
 CosTradingS_T.cpp CosTradingC.cpp CosTradingS.cpp CosTradingC.h CosTradingS.h CosTradingS_T.h CosTradingC.inl CosTradingS.inl CosTradingS_T.inl: CosTrading.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(srcdir)/CosTrading.idl
 
 BUILT_SOURCES += \
   CosTradingReposS_T.cpp \
@@ -1949,7 +1949,7 @@ CLEANFILES += \
   CosTradingReposS_T.inl
 
 CosTradingReposS_T.cpp CosTradingReposC.cpp CosTradingReposS.cpp CosTradingReposC.h CosTradingReposS.h CosTradingReposS_T.h CosTradingReposC.inl CosTradingReposS.inl CosTradingReposS_T.inl: CosTradingRepos.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(srcdir)/CosTradingRepos.idl
 
 BUILT_SOURCES += \
   CosTradingDynamicS_T.cpp \
@@ -1974,7 +1974,7 @@ CLEANFILES += \
   CosTradingDynamicS_T.inl
 
 CosTradingDynamicS_T.cpp CosTradingDynamicC.cpp CosTradingDynamicS.cpp CosTradingDynamicC.h CosTradingDynamicS.h CosTradingDynamicS_T.h CosTradingDynamicC.inl CosTradingDynamicS.inl CosTradingDynamicS_T.inl: CosTradingDynamic.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(srcdir)/CosTradingDynamic.idl
 
 Trader = \
   CosTradingC.cpp \
@@ -2083,7 +2083,7 @@ CLEANFILES += \
   DsLogAdminS_T.inl
 
 DsLogAdminS_T.cpp DsLogAdminC.cpp DsLogAdminS.cpp DsLogAdminC.h DsLogAdminS.h DsLogAdminS_T.h DsLogAdminC.inl DsLogAdminS.inl DsLogAdminS_T.inl: DsLogAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h $(srcdir)/DsLogAdmin.idl
 
 BUILT_SOURCES += \
   DsLogNotificationS_T.cpp \
@@ -2108,7 +2108,7 @@ CLEANFILES += \
   DsLogNotificationS_T.inl
 
 DsLogNotificationS_T.cpp DsLogNotificationC.cpp DsLogNotificationS.cpp DsLogNotificationC.h DsLogNotificationS.h DsLogNotificationS_T.h DsLogNotificationC.inl DsLogNotificationS.inl DsLogNotificationS_T.inl: DsLogNotification.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h $(srcdir)/DsLogNotification.idl
 
 DsLogAdmin = \
   DsLogAdminC.cpp \
@@ -2206,7 +2206,7 @@ CLEANFILES += \
   DsEventLogAdminS_T.inl
 
 DsEventLogAdminS_T.cpp DsEventLogAdminC.cpp DsEventLogAdminS.cpp DsEventLogAdminC.h DsEventLogAdminS.h DsEventLogAdminS_T.h DsEventLogAdminC.inl DsEventLogAdminS.inl DsEventLogAdminS_T.inl: DsEventLogAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_EventLog_Export -Wb,export_include=Log/eventlog_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_EventLog_Export -Wb,export_include=Log/eventlog_export.h $(srcdir)/DsEventLogAdmin.idl
 
 DsEventLogAdmin = \
   DsEventLogAdminC.cpp \
@@ -2290,7 +2290,7 @@ CLEANFILES += \
   DsNotifyLogAdminS_T.inl
 
 DsNotifyLogAdminS_T.cpp DsNotifyLogAdminC.cpp DsNotifyLogAdminS.cpp DsNotifyLogAdminC.h DsNotifyLogAdminS.h DsNotifyLogAdminS_T.h DsNotifyLogAdminC.inl DsNotifyLogAdminS.inl DsNotifyLogAdminS_T.inl: DsNotifyLogAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log/notifylog_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log/notifylog_export.h $(srcdir)/DsNotifyLogAdmin.idl
 
 DsNotifyLogAdmin = \
   DsNotifyLogAdminC.cpp \
@@ -2417,7 +2417,7 @@ CLEANFILES += \
   RtecDefaultEventDataS_T.inl
 
 RtecDefaultEventDataS_T.cpp RtecDefaultEventDataC.cpp RtecDefaultEventDataS.cpp RtecDefaultEventDataC.h RtecDefaultEventDataS.h RtecDefaultEventDataS_T.h RtecDefaultEventDataC.inl RtecDefaultEventDataS.inl RtecDefaultEventDataS_T.inl: RtecDefaultEventData.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h $(srcdir)/RtecDefaultEventData.idl
 
 BUILT_SOURCES += \
   RtecEventCommS_T.cpp \
@@ -2442,7 +2442,7 @@ CLEANFILES += \
   RtecEventCommS_T.inl
 
 RtecEventCommS_T.cpp RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h RtecEventCommS_T.h RtecEventCommC.inl RtecEventCommS.inl RtecEventCommS_T.inl: RtecEventComm.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h $(srcdir)/RtecEventComm.idl
 
 BUILT_SOURCES += \
   RtecEventChannelAdminS_T.cpp \
@@ -2467,7 +2467,7 @@ CLEANFILES += \
   RtecEventChannelAdminS_T.inl
 
 RtecEventChannelAdminS_T.cpp RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h RtecEventChannelAdminS_T.h RtecEventChannelAdminC.inl RtecEventChannelAdminS.inl RtecEventChannelAdminS_T.inl: RtecEventChannelAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h $(srcdir)/RtecEventChannelAdmin.idl
 
 BUILT_SOURCES += \
   RtecUDPAdminS_T.cpp \
@@ -2492,7 +2492,7 @@ CLEANFILES += \
   RtecUDPAdminS_T.inl
 
 RtecUDPAdminS_T.cpp RtecUDPAdminC.cpp RtecUDPAdminS.cpp RtecUDPAdminC.h RtecUDPAdminS.h RtecUDPAdminS_T.h RtecUDPAdminC.inl RtecUDPAdminS.inl RtecUDPAdminS_T.inl: RtecUDPAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h $(srcdir)/RtecUDPAdmin.idl
 
 RTEvent = \
   RtecDefaultEventDataC.cpp \
@@ -2788,7 +2788,7 @@ CLEANFILES += \
   FTRTS_T.inl
 
 FTRTS_T.cpp FTRTC.cpp FTRTS.cpp FTRTC.h FTRTS.h FTRTS_T.h FTRTC.inl FTRTS.inl FTRTS_T.inl: FTRT.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h -GC $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FTRT.idl
 
 BUILT_SOURCES += \
   FtRtecEventCommS_T.cpp \
@@ -2813,7 +2813,7 @@ CLEANFILES += \
   FtRtecEventCommS_T.inl
 
 FtRtecEventCommS_T.cpp FtRtecEventCommC.cpp FtRtecEventCommS.cpp FtRtecEventCommC.h FtRtecEventCommS.h FtRtecEventCommS_T.h FtRtecEventCommC.inl FtRtecEventCommS.inl FtRtecEventCommS_T.inl: FtRtecEventComm.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h -GC $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FtRtecEventComm.idl
 
 BUILT_SOURCES += \
   FTRT_GroupManagerS_T.cpp \
@@ -2838,7 +2838,7 @@ CLEANFILES += \
   FTRT_GroupManagerS_T.inl
 
 FTRT_GroupManagerS_T.cpp FTRT_GroupManagerC.cpp FTRT_GroupManagerS.cpp FTRT_GroupManagerC.h FTRT_GroupManagerS.h FTRT_GroupManagerS_T.h FTRT_GroupManagerC.inl FTRT_GroupManagerS.inl FTRT_GroupManagerS_T.inl: FTRT_GroupManager.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h -GC $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FTRT_GroupManager.idl
 
 BUILT_SOURCES += \
   FtRtecEventChannelAdminS_T.cpp \
@@ -2863,7 +2863,7 @@ CLEANFILES += \
   FtRtecEventChannelAdminS_T.inl
 
 FtRtecEventChannelAdminS_T.cpp FtRtecEventChannelAdminC.cpp FtRtecEventChannelAdminS.cpp FtRtecEventChannelAdminC.h FtRtecEventChannelAdminS.h FtRtecEventChannelAdminS_T.h FtRtecEventChannelAdminC.inl FtRtecEventChannelAdminS.inl FtRtecEventChannelAdminS_T.inl: FtRtecEventChannelAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h $(srcdir)/FtRtecEventChannelAdmin.idl
 
 FtRtEvent = \
   FTRTC.cpp \
@@ -3203,7 +3203,7 @@ CLEANFILES += \
   FT_CORBAS_T.inl
 
 FT_CORBAS_T.cpp FT_CORBAC.cpp FT_CORBAS.cpp FT_CORBAC.h FT_CORBAS.h FT_CORBAS_T.h FT_CORBAC.inl FT_CORBAS.inl FT_CORBAS_T.inl: FT_CORBA.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_CORBA.idl
 
 BUILT_SOURCES += \
   FT_ReplicaS_T.cpp \
@@ -3228,7 +3228,7 @@ CLEANFILES += \
   FT_ReplicaS_T.inl
 
 FT_ReplicaS_T.cpp FT_ReplicaC.cpp FT_ReplicaS.cpp FT_ReplicaC.h FT_ReplicaS.h FT_ReplicaS_T.h FT_ReplicaC.inl FT_ReplicaS.inl FT_ReplicaS_T.inl: FT_Replica.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_Replica.idl
 
 BUILT_SOURCES += \
   FT_NotifierS_T.cpp \
@@ -3253,7 +3253,7 @@ CLEANFILES += \
   FT_NotifierS_T.inl
 
 FT_NotifierS_T.cpp FT_NotifierC.cpp FT_NotifierS.cpp FT_NotifierC.h FT_NotifierS.h FT_NotifierS_T.h FT_NotifierC.inl FT_NotifierS.inl FT_NotifierS_T.inl: FT_Notifier.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_Notifier.idl
 
 BUILT_SOURCES += \
   FT_FaultDetectorFactoryS_T.cpp \
@@ -3278,7 +3278,7 @@ CLEANFILES += \
   FT_FaultDetectorFactoryS_T.inl
 
 FT_FaultDetectorFactoryS_T.cpp FT_FaultDetectorFactoryC.cpp FT_FaultDetectorFactoryS.cpp FT_FaultDetectorFactoryC.h FT_FaultDetectorFactoryS.h FT_FaultDetectorFactoryS_T.h FT_FaultDetectorFactoryC.inl FT_FaultDetectorFactoryS.inl FT_FaultDetectorFactoryS_T.inl: FT_FaultDetectorFactory.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_FaultDetectorFactory.idl
 
 BUILT_SOURCES += \
   FT_ReplicationManagerS_T.cpp \
@@ -3303,7 +3303,7 @@ CLEANFILES += \
   FT_ReplicationManagerS_T.inl
 
 FT_ReplicationManagerS_T.cpp FT_ReplicationManagerC.cpp FT_ReplicationManagerS.cpp FT_ReplicationManagerC.h FT_ReplicationManagerS.h FT_ReplicationManagerS_T.h FT_ReplicationManagerC.inl FT_ReplicationManagerS.inl FT_ReplicationManagerS_T.inl: FT_ReplicationManager.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_ReplicationManager.idl
 
 FaultTolerance = \
   FT_CORBAC.cpp \
@@ -3596,7 +3596,7 @@ CLEANFILES += \
   RTCosSchedulingS_T.inl
 
 RTCosSchedulingS_T.cpp RTCosSchedulingC.cpp RTCosSchedulingS.cpp RTCosSchedulingC.h RTCosSchedulingS.h RTCosSchedulingS_T.h RTCosSchedulingC.inl RTCosSchedulingS.inl RTCosSchedulingS_T.inl: RTCosScheduling.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Gd -Wb,export_macro=TAO_RTCosScheduling_Export -Wb,export_include=RTCosScheduling/RTCosScheduling_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Gd -Wb,export_macro=TAO_RTCosScheduling_Export -Wb,export_include=RTCosScheduling/RTCosScheduling_export.h $(srcdir)/RTCosScheduling.idl
 
 RTCosScheduling = \
   RTCosSchedulingC.cpp \
@@ -3671,7 +3671,7 @@ CLEANFILES += \
   RtecSchedulerS_T.inl
 
 RtecSchedulerS_T.cpp RtecSchedulerC.cpp RtecSchedulerS.cpp RtecSchedulerC.h RtecSchedulerS.h RtecSchedulerS_T.h RtecSchedulerC.inl RtecSchedulerS.inl RtecSchedulerS_T.inl: RtecScheduler.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=Sched/sched_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=Sched/sched_export.h $(srcdir)/RtecScheduler.idl
 
 Sched = \
   RtecSchedulerC.cpp \
@@ -3844,7 +3844,7 @@ CLEANFILES += \
   RTEventLogAdminS_T.inl
 
 RTEventLogAdminS_T.cpp RTEventLogAdminC.cpp RTEventLogAdminS.cpp RTEventLogAdminC.h RTEventLogAdminS.h RTEventLogAdminS_T.h RTEventLogAdminC.inl RTEventLogAdminS.inl RTEventLogAdminS_T.inl: RTEventLogAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=Log/rteventlog_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=Log/rteventlog_export.h $(srcdir)/RTEventLogAdmin.idl
 
 RTEventLog = \
   RTEventLogAdminC.cpp \
@@ -4092,7 +4092,7 @@ CLEANFILES += \
   CSIS_T.inl
 
 CSIS_T.cpp CSIC.cpp CSIC.h CSIS.h CSIS_T.h CSIC.inl CSIS.inl CSIS_T.inl: CSI.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $(srcdir)/CSI.idl
 
 BUILT_SOURCES += \
   CSIIOPS_T.cpp \
@@ -4115,7 +4115,7 @@ CLEANFILES += \
   CSIIOPS_T.inl
 
 CSIIOPS_T.cpp CSIIOPC.cpp CSIIOPC.h CSIIOPS.h CSIIOPS_T.h CSIIOPC.inl CSIIOPS.inl CSIIOPS_T.inl: CSIIOP.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $(srcdir)/CSIIOP.idl
 
 BUILT_SOURCES += \
   GSSUPS_T.cpp \
@@ -4138,7 +4138,7 @@ CLEANFILES += \
   GSSUPS_T.inl
 
 GSSUPS_T.cpp GSSUPC.cpp GSSUPC.h GSSUPS.h GSSUPS_T.h GSSUPC.inl GSSUPS.inl GSSUPS_T.inl: GSSUP.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $(srcdir)/GSSUP.idl
 
 BUILT_SOURCES += \
   SecurityS_T.cpp \
@@ -4163,7 +4163,7 @@ CLEANFILES += \
   SecurityS_T.inl
 
 SecurityS_T.cpp SecurityC.cpp SecurityS.cpp SecurityC.h SecurityS.h SecurityS_T.h SecurityC.inl SecurityS.inl SecurityS_T.inl: Security.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $(srcdir)/Security.idl
 
 BUILT_SOURCES += \
   SecurityLevel1S_T.cpp \
@@ -4188,7 +4188,7 @@ CLEANFILES += \
   SecurityLevel1S_T.inl
 
 SecurityLevel1S_T.cpp SecurityLevel1C.cpp SecurityLevel1S.cpp SecurityLevel1C.h SecurityLevel1S.h SecurityLevel1S_T.h SecurityLevel1C.inl SecurityLevel1S.inl SecurityLevel1S_T.inl: SecurityLevel1.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $(srcdir)/SecurityLevel1.idl
 
 BUILT_SOURCES += \
   SecurityLevel2S_T.cpp \
@@ -4213,7 +4213,7 @@ CLEANFILES += \
   SecurityLevel2S_T.inl
 
 SecurityLevel2S_T.cpp SecurityLevel2C.cpp SecurityLevel2S.cpp SecurityLevel2C.h SecurityLevel2S.h SecurityLevel2S_T.h SecurityLevel2C.inl SecurityLevel2S.inl SecurityLevel2S_T.inl: SecurityLevel2.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $(srcdir)/SecurityLevel2.idl
 
 BUILT_SOURCES += \
   SecurityLevel3S_T.cpp \
@@ -4236,7 +4236,7 @@ CLEANFILES += \
   SecurityLevel3S_T.inl
 
 SecurityLevel3S_T.cpp SecurityLevel3C.cpp SecurityLevel3C.h SecurityLevel3S.h SecurityLevel3S_T.h SecurityLevel3C.inl SecurityLevel3S.inl SecurityLevel3S_T.inl: SecurityLevel3.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $<
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h $(srcdir)/SecurityLevel3.idl
 
 Security = \
   CSIC.cpp \
