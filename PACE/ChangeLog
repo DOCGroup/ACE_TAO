@@ -1,3 +1,9 @@
+Mon Jul  3 9:45:00 2000 John Heitmann <jwh1@cs.wustl.edu>
+
+        * pace/config/types.h:
+	  Removed. Functionality replaced by platform
+	  specific pace/sys/types.
+
 Mon Jul  3 00:25:44 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/sys/termios.h:
