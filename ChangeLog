@@ -1,3 +1,12 @@
+Thu Jan 15 19:47:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/avstreams.mpb:
+	  Avstreams uses the feature qos, so when qos=1 is set in the
+	  default.features file we use the ACE_QoS library. Projects
+	  using avstreams should also use this feature, so that they also
+	  link with ACE_QoS when qos=1. This fixes link errors in the
+	  BCB6 Static Build.
+
 Thu Jan 15 18:50:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/ACE_Init_Test.cpp:
