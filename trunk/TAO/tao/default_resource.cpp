@@ -89,6 +89,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
       }
   }
 
+
   for (curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
                             "-ORBResources") == 0)
@@ -194,12 +195,52 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBConnectionCacheLock") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "thread") == 0)
+              this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         "null") == 0)
+              this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBConnectionLock") == 0)
       {
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
+
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) This option has been deprecated \n")
+                        ACE_TEXT ("using -ORBConnectionCacheLock instead ")));
+
+            if (ACE_OS::strcasecmp (name,
+                                    "thread") == 0)
+              this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         "null") == 0)
+              this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBConnectorLock") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) This option has been deprecated \n")
+                        ACE_TEXT ("using -ORBConnectionCacheLock instead \n")));
 
             if (ACE_OS::strcasecmp (name,
                                     "thread") == 0)
@@ -609,7 +650,7 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
   ACE_NEW_RETURN (allocator,
                   LOCKED_ALLOCATOR,
                   0);
-  
+
   return allocator;
 }
 
