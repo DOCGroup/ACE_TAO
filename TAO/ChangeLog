@@ -1,3 +1,13 @@
+Mon Jan 27 17:36:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Added missing switch case that prevented tao_ifr from
+          recognizing the element type of sequence<Object> in
+          an IDL file. Thanks to Andrey Nechypurenko@mchp 
+          <Andrey.Nechypurenko@mchp.siemens.de> for sending in
+          the example IDL file that uncovered the problem.
+
 Mon Jan 27 16:47:31 2003  Frank Hunleth  <frank@hunleth.com>
 
 	* orbsvcs\tests\Miop\McastHello\run_test.pl: Fixed incorrect
