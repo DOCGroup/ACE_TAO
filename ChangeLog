@@ -1,3 +1,9 @@
+Mon Oct 10 9:43:03 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-tru64.h:
+
+        Added XPG4 multibyte support for DIGITAL_UNIX >= 5.
+
 Sat Oct  9 23:08:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/acexml.mpb:
