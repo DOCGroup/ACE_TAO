@@ -1,0 +1,40 @@
+This directory contains code that has a modified version of the TTCP benchmark that uses
+Orbix. Our intent is to test the performance of Orbix over ATM using the CORBA IDL "sequence"
+data type.
+
+We define sequences of "short", "long", "double", "octet", "char", a user-defined
+"struct" and a composite struct.
+
+We run our server program using the following command line: (this is
+an example)
+
+putit SII_ttcp "/project/mambo/gokhale/TTCP-testbed/SII/1way/Orbix/server -f m -b 65536"
+
+The client program is run using the following command line:
+client -S <data size> -f m -l <chunk size> -h <host> -L <filename> -q <data type> -b <socketQ>
+
+<data type> implies what sequence type you want to send:
+s	short
+c	chars
+o	octet
+d	double
+l	long
+S	user defined struct
+C	composite struct
+<filename> will store the result that indicates the thruput observed in Mbps (because
+we chose -f m as the option).
+
+An example is given from the "run" script
+
+client -S 67108864 -f m -l $1 -h encip1-merengue.cs.wustl.edu -L temp -q $2 -b 65536
+
+
+The following files are used:
+
+ttcp.idl	This file is the CORBA IDL declaration for the TTCP benchmark.
+Srv_main.cpp	Server program.
+Client.cpp	Client program.
+ttcp_i.cpp	Implementation of various methods of the ttcp_sequence object.
+ttcp_i.h	Implementation header
+utils.cpp	Lots of functions that came along with the original TTCP benchmark.
+ttcp_decl.h	Prototypes, extern decls, etc...

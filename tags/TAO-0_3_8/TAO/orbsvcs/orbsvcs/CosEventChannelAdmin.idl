@@ -1,0 +1,158 @@
+// $Id$
+
+#ifndef TAO_EVENTCHANNELADMIN_IDL
+#define  TAO_EVENTCHANNELADMIN_IDL
+
+#include "CosEventComm.idl"
+
+#pragma prefix "omg.org"
+
+module CosEventChannelAdmin
+{
+  // = TITLE
+  //   IDL module for the Corba Object Service for Event Communication.
+  //
+  // = DESCRIPTION
+  //   The CosEventChannelAdmin module defines the interfaces for
+  //   making connections between suppliers and consumers.
+
+  exception AlreadyConnected {};
+  exception TypeError {};
+
+  interface ProxyPushConsumer: CosEventComm::PushConsumer
+    {
+      // = TITLE
+      //   Definition of the ProxyPushConsumer.
+      //
+      // = DESCRIPTION
+      //   A ProxyPushConsumer object is used to connect a push-style
+      //   supplier.
+
+      void connect_push_supplier (in CosEventComm::PushSupplier push_supplier)
+        raises (AlreadyConnected);
+      // A nil object reference may be passed to the
+      // connect_push_supplier operation; if so a channel cannot
+      // invoke the disconnect_push_supplier operation on the
+      // supplier; the supplier may be disconnected from the channel
+      // without being informed.  If the ProxyPushConsumer is already
+      // connected to a PushSupplier, then the AlreadyConnected
+      // exception is raised.
+    };
+
+  interface ProxyPullSupplier : CosEventComm::PullSupplier
+    {
+      // = TITLE
+      //   Definition of the proxyPullSupplier.
+      //
+      // = DESCRIPTION
+      //   A ProxyPullSupplier is used to connect a pull-style consumer.
+
+      void connect_pull_consumer (in CosEventComm::PullConsumer pull_consumer)
+        raises (AlreadyConnected);
+      // A nil object reference may be passed to the
+      // connect_pull_consumer operation; if so a channel cannot
+      // invoke a disconnect_pull_consumer operation on the consumer;
+      // the consumer may be disconnected from the channel without
+      // being informed.  If the ProxyPullSupplier is already
+      // connected to a PullConsumer, then the AlreadyConnected
+      // exception is raised.
+    };
+
+  interface ProxyPullConsumer : CosEventComm::PullConsumer
+    {
+      // = TITLE
+      //   Definition of the ProxyPullConsumer.
+      //
+      // = DESCRIPTION
+      //   The ProxyPullConsumer object is used to connect a
+      //   pull-style supplier.
+
+      void connect_pull_supplier (in CosEventComm::PullSupplier pull_supplier)
+        raises (AlreadyConnected, TypeError);
+      // Connects a pull-style supplier to the Event Channel.  It
+      // raises the BAD_PARAM exception if a nil object reference is
+      // passed to the connect_pull_supplier operation.  If the
+      // ProxyPullConsumer is already connected to a PullSupplier,
+      // then the AlreadyConnected exception is raised.
+    };
+
+  interface ProxyPushSupplier : CosEventComm::PushSupplier
+    {
+      // = TITLE
+      //   Definition of the ProxyPushSupplier.
+      //
+      // = DESCRIPTION
+      //   The ProxyPushSupplier object is used to connect a push-style consumer.
+
+      void connect_push_consumer (in CosEventComm::PushConsumer push_consumer)
+        raises (AlreadyConnected, TypeError);
+      // Connects a push-style consumer to the Event Channel.  It
+      // raises the BAD_PARAM exception if a nil object reference is
+      // passed to the connect_push_consumer operation.  If the
+      // ProxyPushSupplier is already connected to a PushConsumer,
+      // then the AlreadyConnected exception is raised.
+    };
+
+  interface ConsumerAdmin
+    {
+      // = TITLE
+      //   Definition of the ConsumerAdmin.
+      //
+      // = DESCRIPTION
+      //   The ConsumerAdmin interface allows consumers to be
+      //   connected to the event channel.
+
+      ProxyPushSupplier obtain_push_supplier ();
+      // The obtain_push_supplier operation returns a
+      // ProxyPushSupplier object.
+
+      ProxyPullSupplier obtain_pull_supplier ();
+      // The obtain_pull_supplier operation returns a
+      // ProxyPullSupplier object.  The ProxyPullSupplier object is
+      // then used to connect a pull-style consumer.
+    };
+
+  interface SupplierAdmin
+    {
+      // = TITLE
+      //   Definition of the SupplierAdmin.
+      //
+      // = DESCRIPTION
+      //   The SupplierAdmin interface allows suppliers to be
+      //   connected to the event channel.
+
+      ProxyPushConsumer obtain_push_consumer ();
+      // The obtain_push_consumer operation returns a
+      // ProxyPushConsumer object.  The ProxyPushConsumer object is
+      // then used to connect a push-style supplier.
+
+      ProxyPullConsumer obtain_pull_consumer ();
+      // The obtain_pull_consumer operation returns a
+      // ProxyPullConsumer object.  The ProxyPullConsumer object is
+      // then used to connect a pull-style supplier.
+    };
+
+  interface EventChannel
+    {
+      // = TITLE
+      //   Definition of the EventChannel.
+      //
+      // = DESCRIPTION
+      //   The EventChannel interface defines three administrative
+      //   operations: adding consumers, adding suppliers, and
+      //   destroying the channel.
+
+      ConsumerAdmin for_consumers ();
+      // The for_consumers operation returns an object reference that
+      // supports the ConsumerAdmin interface.
+
+      SupplierAdmin for_suppliers ();
+      // The for_suppliers operation returns an object reference that
+      // supports the SupplierAdmin interface.
+
+      void destroy ();
+      // The destroy operation destroys the event channel.
+    };
+};
+
+#endif /* TAO_EVENTCHANNELADMIN_IDL */

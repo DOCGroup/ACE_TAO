@@ -1,0 +1,111 @@
+<html>
+  <!-- $Id$ -->
+  <head>
+    <title>Implementation of location forwarding</title>
+  </head>
+  
+  <BODY text = "#000000"
+    link="#0000ff"
+    vlink="#cc0000"
+    bgcolor="#ffffff">
+    
+    <body>
+      <HR>
+	<h1>Location forwarding</h1>
+	<HR>
+	  <h2>Context</h2>
+	  The motivation to support location forwarding for objects is 
+	  to allow objects to move or forward certain requests to other objects.
+	  Moving of objects is very important for the Common Object Services 
+	  LifeCycle Service. An objet complying to the LifeCycleObject interface,
+	  defined by the LifeCycle Service should support the move operation. The move
+	  operation allows the client to keep its object reference to the object,
+	  but the object is going to be relocated on the same or a different server.
+	  Making location forwarding transparent to the client is the most important
+	  issue.
+	  
+	  <h2>Communication between server and client</h2>
+	  GIOP defines a message named "LOCATION_FORWARD", which should be used to
+	  inform the client stub, that the object has been moved. The message body
+	  has to contain an object reference to the new location of the forwarded
+	  object.
+	  
+	  
+	  <h2>Server side implementation</h2>
+	  Two approaches are possible, one is that the POA replaces the object with
+	  a forwarding servant, which knows the new location. This servant will then
+	  raise an exception each it time it is called, as supposed to be the 
+	  actual object. The exception will be a user exception and will be caught
+	  in the marshalling code of the server request "IIOP_ServerRequest". The involved
+	  methods are "set_exception", "marshall" and "init_reply". "set_exception" will
+	  check the user exceptions for the special one, only raised by the forwarding
+	  servant and will extract the new location. "init_reply" will then create 
+	  the proper GIOP Reply message with the message type set to LOCATION_FORWARD.
+	  The message is encoded into a CDR (Common Data Representation) stream.
+	  
+	  The second approach is to use a POA servant locator for the child POA, where
+	  the object resides on. The servant locator will be used each time the object 
+	  will be accessed. Basically two methods, named "preinvoke" and "postinvoke"
+	  are called each time before and after the actual upcall to the object.
+	  Forwarding using the servant locator works in the following way. The object
+	  tells its servant locator that it has moved and supports the servant locator
+	  with the new object reference. The object locator then raises a special system 
+	  exception "forward_request" in "preinvoke" each time the object is called from now on.
+	  The exception is then caught by the lowest possible level, when the 
+	  system exceptions are going to be marshalled. Which is in "TAO_Server_Connection_Handler",
+	  the involved methods are "handle_input" and "send_error". "handle_input"
+	  checks for errors (involving exceptions) and calls "send_error" to create
+	  the proper GIOP Reply containing either the system exception or 
+	  the location forwarding in case the system exception was the 
+	  "forward_request" exception.
+	  
+	  <h2>Client side implementation</h2>
+	  The client has to expect the location forwarding GIOP message and should
+	  respond to it in setting the IIOP_Profile of its IIOP_Object right.
+	  The IIOP_Object is a low level object, to which CORBA::Object has a
+	  pointer to. The reply type is determined by "TAO_GIOP_Invocation::invoke"
+	  which then calls "TAO_GIOP_Invocation::location_forward". "location_forward"
+	  sets the changes the IIOP_Profile of the object. The call is then 
+	  reissued by "TAO_IIOP_Object::do_static_call".
+	  
+	  
+	  <h2>Conclusion</h2>
+	  Changing the IIOP_Profile is transparent to the client. So the 
+	  client gets no idea, that the object now resides somewhere else.
+	  	  
+	  The result of the above mentioned solution is that
+	  if an object moves the client will notice it with the next call to the
+	  object. If the object moves again, the original location is not
+	  bothered at all again. Say if the original location was A, then
+	  it moved to B and finally to C. First location A responeded with
+	  a GIOP Location Forward to the client, then B gets used and finally
+	  after moving the object to C, B will send a GIOP Location
+	  Forward and location C gets used.
+
+	  There is "no" concept of a home location. If the object moves
+	  very often and old servers die it might be a problem, because
+	  clients, which did not call on the object lately will not know
+	  where to search. Though in the situation of a home location, there
+	  is also the risk that this server might die and the object
+	  is not reachable any more.
+
+	  <h2>Optimization</h2>
+	  In the case, when the object moves several times, a chain
+	  of forwarding servers is created. But this chain might be 
+	  easily disturbed by just one server failing. A good idea
+	  is to give the servant locator more intelligence to 
+	  tell all the oter/previous servers where the object is now.
+	  This will of course increase the communication overhead
+	  in the case of a move, but we get a high reliability
+	  against dying hosts.
+ 
+	  <HR>
+	    For more details and questions,
+	    <p>
+	      
+	      <address><a href="mailto:mk1@cs.wustl.edu">Michael Kircher</a></address>
+	      <p>
+		<address><a href="mailto:irfan1@cs.wustl.edu">Irfan Pyarali</a></address>
+    </body>
+</html>
+

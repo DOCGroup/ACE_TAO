@@ -1,0 +1,40 @@
+/* -*- C++ -*- */
+// $Id$
+
+struct PerfStruct{
+  short	s;
+  char	c;
+  long	l;
+  octet o;
+  double d;
+  //padding
+  long pad[2];
+};
+
+struct CompositeStruct{
+	PerfStruct	ps;
+};
+
+// Richly typed data
+interface ttcp_sequence 
+{
+  typedef sequence<short> ShortSeq;
+  typedef sequence<long> LongSeq;
+  typedef sequence<double> DoubleSeq;
+  typedef sequence<char> CharSeq;
+  typedef sequence<octet> OctetSeq;
+  typedef sequence<PerfStruct> StructSeq;
+  typedef sequence<CompositeStruct>	CompositeSeq;
+
+  // Routines to send sequences of various data types
+  oneway void sendShortSeq (in  ShortSeq ttcp_seq);
+  oneway void sendLongSeq (in  LongSeq ttcp_seq);
+  oneway void sendDoubleSeq (in  DoubleSeq ttcp_seq);
+  oneway void sendCharSeq (in  CharSeq ttcp_seq);
+  oneway void sendOctetSeq (in  OctetSeq ttcp_seq);
+  oneway void sendStructSeq (in  StructSeq ttcp_seq);
+  oneway void sendCompositeSeq (in  CompositeSeq ttcp_seq);
+
+  oneway void start_timer ();
+  oneway void stop_timer ();
+};
