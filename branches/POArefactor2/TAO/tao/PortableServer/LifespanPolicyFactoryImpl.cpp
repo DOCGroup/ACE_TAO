@@ -1,23 +1,23 @@
 // $Id$
 
-#include "LifespanPolicyFactory.h"
+#include "LifespanPolicyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "LifespanPolicy.h"
 
 ACE_RCSID (PortableServer,
-           LifespanPolicyFactory,
+           LifespanPolicyFactoryImpl,
            "$Id$")
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    LifespanPolicyFactory::~LifespanPolicyFactory (void)
+    LifespanPolicyFactoryImpl::~LifespanPolicyFactoryImpl (void)
     {
     }
 
     ::PortableServer::LifespanPolicy_ptr
-    LifespanPolicyFactory::create (
+    LifespanPolicyFactoryImpl::create (
       ::PortableServer::LifespanPolicyValue value)
     {
       POA_LifespanPolicy* policy = 0;
@@ -32,7 +32,7 @@ namespace TAO
     }
 
     ::PortableServer::LifespanPolicy_ptr
-    LifespanPolicyFactory::create (
+    LifespanPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::PolicyError))
@@ -50,23 +50,23 @@ namespace TAO
     }
 
     ACE_STATIC_SVC_DEFINE (
-        LifespanPolicyFactory,
-        ACE_TEXT ("LifespanPolicyFactory"),
+        LifespanPolicyFactoryImpl,
+        ACE_TEXT ("LifespanPolicyFactoryImpl"),
         ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (LifespanPolicyFactory),
+        &ACE_SVC_NAME (LifespanPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, LifespanPolicyFactory)
+    ACE_FACTORY_DEFINE (TAO_PortableServer, LifespanPolicyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<LifespanPolicyFactory>;
+    template class ACE_Dynamic_Service<LifespanPolicyFactoryImpl>;
 
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<LifespanPolicyFactory>
+    #pragma instantiate ACE_Dynamic_Service<LifespanPolicyFactoryImpl>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }

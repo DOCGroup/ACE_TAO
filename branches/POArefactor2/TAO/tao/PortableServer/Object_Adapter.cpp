@@ -261,9 +261,9 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::LifespanPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::LifespanPolicyValue>::create (
-              "LifespanPolicyFactory",
+              "LifespanPolicyFactoryImpl",
               ACE_TEXT("dynamic LifespanPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactoryImpl()"),
               PortableServer::TRANSIENT);
   policies.merge_policy (lifespan_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

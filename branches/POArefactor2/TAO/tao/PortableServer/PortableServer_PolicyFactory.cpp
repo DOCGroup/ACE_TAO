@@ -47,9 +47,9 @@ TAO_PortableServer_PolicyFactory::create_policy (
             TAO::Portable_Server::LifespanPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::LifespanPolicyValue>::create (
-              "LifespanPolicyFactory",
+              "LifespanPolicyFactoryImpl",
               ACE_TEXT("dynamic LifespanPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactoryImpl()"),
               value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::ID_UNIQUENESS_POLICY_ID)

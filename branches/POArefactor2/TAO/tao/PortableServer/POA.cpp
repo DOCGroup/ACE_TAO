@@ -94,9 +94,9 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
           TAO::Portable_Server::LifespanPolicyFactory,
           ::PortableServer::LifespanPolicy_ptr,
           PortableServer::LifespanPolicyValue>::create (
-            "LifespanPolicyFactory",
+            "LifespanPolicyFactoryImpl",
             ACE_TEXT("dynamic LifespanPolicyFactory Service_Object *")
-            ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactory()"),
+            ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactoryImpl()"),
             value);
 }
 
