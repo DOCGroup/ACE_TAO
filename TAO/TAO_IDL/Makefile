@@ -237,13 +237,15 @@ y.tab: fe/idl.yy
 		    -e "s/yynewerror://g" \
 		    -e "s/yy/tao_yy/g" \
 		    -e "s/YY/TAO_YY/g" \
-		    -e "s/y\.tab\.c/y.tab.cpp/g" < y.tab.c > /tmp/$(USER).Y
+		    -e "s/y\.tab\.c/y.tab.cpp/g" \
+		    -e "s%\(#pragma ident\)%// \1%" < y.tab.c > /tmp/$(USER).Y
 		sed -e "s/yy/tao_yy/g" \
 		    -e "s/YY/TAO_YY/g" < y.tab.h > /tmp/$(USER).YH
 		cp /tmp/$(USER).Y fe/y.tab.cpp
-		cp /tmp/$(USER).YH fe/y.tab.h
+		echo '// $$I''d$$' > fe/y.tab.h
+		cat /tmp/$(USER).YH >> fe/y.tab.h
 		$(RM) -f /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h
-		(cd fe ; patch <y.tab.cpp.diff)
+		(cd fe ; patch < y.tab.cpp.diff)
 
 tags:
 	rm -f TAGS
