@@ -8,7 +8,7 @@ endif
 
 SRC = Notify_Server.cpp Notify_Service.cpp
 
-LDLIBS = -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_ETCL -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 BIN2 = Notify_Service
 

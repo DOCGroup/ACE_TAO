@@ -67,28 +67,28 @@ ConnectDisconnect::on_entity_destroyed (void)
   ACE_DEBUG ((LM_DEBUG, "result_count = %d\n", this->result_count_.value ()));
 }
 
-void
+int
 ConnectDisconnect::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 {
   // init base class
   Notify_Test_Client::init (argc, argv TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);;
 
   // Create all participents ...
   this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);;
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
@@ -108,6 +108,8 @@ ConnectDisconnect::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
   this->any_supplier_ = new TAO_Notify_PushSupplier*[this->suppliers_];
   this->structured_supplier_ = new TAO_Notify_StructuredPushSupplier*[this->suppliers_];
   this->sequence_supplier_ = new TAO_Notify_SequencePushSupplier*[this->suppliers_];
+
+  return 0;
 }
 
 int

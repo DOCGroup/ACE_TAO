@@ -14,7 +14,7 @@ TAO_Notify_FilterAdmin_i::~TAO_Notify_FilterAdmin_i (void)
 }
 
 CORBA::Boolean
-TAO_Notify_FilterAdmin_i::match (const TAO_Notify_Event &event TAO_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin_i::match (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData
@@ -22,11 +22,11 @@ TAO_Notify_FilterAdmin_i::match (const TAO_Notify_Event &event TAO_ENV_ARG_DECL)
 {
   // If no filter is active, treat it as a '*' i.e, let all events pass.
   // or if its the special type, let it pass.
-  if (filter_list_.current_size () == 0) // || event.is_special_event_type ())
+  if (this->filter_list_.current_size () == 0) // || event.is_special_event_type ())
     return 1;
 
   // We want to return true if atleast one constraint matches.
-  FILTER_LIST::ITERATOR iter (filter_list_);
+  FILTER_LIST::ITERATOR iter (this->filter_list_);
   FILTER_LIST::ENTRY *entry;
   CORBA::Boolean ret_val = 0;
 
@@ -54,17 +54,17 @@ TAO_Notify_FilterAdmin_i::add_filter (
   if (CORBA::is_nil (new_filter))
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
-  CosNotifyFilter::FilterID new_id = filter_ids_.get ();
+  CosNotifyFilter::FilterID new_id = this->filter_ids_.get ();
 
   CosNotifyFilter::Filter_var new_filter_var =
     CosNotifyFilter::Filter::_duplicate (new_filter);
 
-  if (filter_list_.bind (new_id, new_filter_var) == -1)
+  if (this->filter_list_.bind (new_id, new_filter_var) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       0);
   else
     {
-      filter_ids_.next ();
+      this->filter_ids_.next ();
       return new_id;
     }
 }
@@ -75,10 +75,10 @@ void TAO_Notify_FilterAdmin_i::remove_filter (CosNotifyFilter::FilterID filter_i
                    CosNotifyFilter::FilterNotFound
                    ))
 {
-  if (filter_list_.unbind (filter_id) == -1)
+  if (this->filter_list_.unbind (filter_id) == -1)
     ACE_THROW (CosNotifyFilter::FilterNotFound ());
 
-  filter_ids_.put (filter_id);
+  this->filter_ids_.put (filter_id);
 }
 
 CosNotifyFilter::Filter_ptr
@@ -93,8 +93,8 @@ TAO_Notify_FilterAdmin_i::get_filter (
 {
   CosNotifyFilter::Filter_var filter_var;
 
-  if (filter_list_.find (filter,
-                         filter_var) == -1)
+  if (this->filter_list_.find (filter,
+                               filter_var) == -1)
     ACE_THROW_RETURN (CosNotifyFilter::FilterNotFound (),
                       0);
 

@@ -68,6 +68,7 @@ CPP_SRCS += \
 
 CPP_SRCS += \
         Notify/Notify_Event \
+        Notify/Notify_StructuredEvents \
         Notify/Notify_Collection \
         Notify/Notify_Event_Map \
         Notify/Notify_Event_Manager \
@@ -86,7 +87,8 @@ CPP_SRCS += \
 	Notify/Notify_AdminProperties \
 	Notify/Notify_Buffering_Strategy \
 	Notify/Notify_MT_Worker_Task \
-	Notify/Notify_Command
+	Notify/Notify_Command \
+        Notify/Notify_Extensions
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \

@@ -28,11 +28,11 @@
 
 class TAO_Notify_SupplierAdmin_i;
 
-#if defined(_MSC_VER)
+#if defined (_MSC_VER)
 #if (_MSC_VER >= 1200)
-#pragma warning(push)
+#pragma warning (push)
 #endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
+#pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
 template <class SERVANT_TYPE>
@@ -75,7 +75,7 @@ public:
     CORBA::SystemException
   ));
 
-virtual void offer_change (
+  virtual void offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
     TAO_ENV_ARG_DECL
@@ -83,6 +83,17 @@ virtual void offer_change (
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     CosNotifyComm::InvalidEventType
+  ));
+
+  // override the set_qos that comes from TAO_Notify_Proxy
+  // so we can update the qos on our tasks.
+  virtual void set_qos (
+    const CosNotification::QoSProperties & qos
+    TAO_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
   ));
 
 protected:
@@ -109,8 +120,8 @@ protected:
 #pragma implementation ("Notify_ProxyConsumer_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined (_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning (pop)
 #endif /* _MSC_VER */
 
 #include "ace/post.h"

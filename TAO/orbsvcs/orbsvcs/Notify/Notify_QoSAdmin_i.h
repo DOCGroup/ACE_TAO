@@ -69,13 +69,21 @@ public:
     CosNotification::UnsupportedQoS
   ));
 
+  // Accessors
+  CORBA::Long     maximum_batch_size (void) const;
+  TimeBase::TimeT pacing_interval (void) const;
+
 protected:
   // = QoS Properties
   CORBA::Short event_reliability_;
+  CORBA::Boolean event_reliability_set_;
+
   CORBA::Short connection_reliability_;
+  CORBA::Boolean connection_reliability_set_;
   // Reliability properties (to be implemented "later").
 
   CORBA::Short priority_;
+  CORBA::Boolean priority_set_;
   // Priority for the event
 
   /*
@@ -87,28 +95,46 @@ protected:
   */
 
   TimeBase::TimeT timeout_;
+  CORBA::Boolean timeout_set_;
   // Expiry time
 
   CORBA::Boolean start_time_supported_;
+  CORBA::Boolean start_time_supported_set_;
+
   CORBA::Boolean stop_time_supported_;
+  CORBA::Boolean stop_time_supported_set_;
   // Are start/stop times supported
 
   CORBA::Long max_events_per_consumer_;
+  CORBA::Boolean max_events_per_consumer_set_;
   // Max events allowed to be queued on behalf of a consumer
 
   CORBA::Short order_policy_;
+  CORBA::Boolean order_policy_set_;
   // Order of events in internal buffers.
 
   CORBA::Short discard_policy_;
+  CORBA::Boolean discard_policy_set_;
   // Policy to discard when buffers are full.
 
   CORBA::Long maximum_batch_size_;
+  CORBA::Boolean maximum_batch_size_set_;
   // Batch size for sequences of structured events.
 
   TimeBase::TimeT pacing_interval_;
+  CORBA::Boolean pacing_interval_set_;
   // Max. period of time that events are collected before delivering
   // them as a sequence of structured events.
+
+  // TAO Specific QoS Properties
+  TimeBase::TimeT blocking_timeout_;
+  CORBA::Boolean blocking_timeout_set_;
+  //
 };
+
+#if defined (__ACE_INLINE__)
+#include "Notify_QoSAdmin_i.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /* TAO_NOTIFY_QOSADMIN_I_H */

@@ -4,6 +4,7 @@
 #include "Notify_SequenceProxyPushConsumer_i.h"
 #include "Notify_Event_Manager.h"
 #include "Notify_SupplierAdmin_i.h"
+#include "Notify_StructuredEvents.h"
 
 ACE_RCSID(Notify, Notify_SequenceProxyPushConsumer_i, "$Id$")
 
@@ -96,21 +97,15 @@ TAO_Notify_SequenceProxyPushConsumer_i::push_structured_events (const CosNotific
       ACE_THROW (CosEventComm::Disconnected ());
   }
 
-  CosNotification::StructuredEvent *notification_copy;
-  for (CORBA::ULong i = 0; i < notifications.length (); ++i)
-    {
-      ACE_NEW_THROW_EX (notification_copy,
-                        CosNotification::StructuredEvent (notifications[i]),
-                        CORBA::NO_MEMORY ());
+  // Pack up the nofications in a TAO_Notify_StructuredEvents
+  TAO_Notify_StructuredEvents* notify_events =
+    new TAO_Notify_StructuredEvents (notifications);
 
-      TAO_Notify_StructuredEvent* notify_event =
-        new TAO_Notify_StructuredEvent(notification_copy);
+  // Send 'em out
+  this->event_manager_->process_event (notify_events, this TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-      this->event_manager_->process_event (notify_event, this TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      notify_event->_decr_refcnt ();
-    }
+  notify_events->_decr_refcnt ();
 }
 
 void

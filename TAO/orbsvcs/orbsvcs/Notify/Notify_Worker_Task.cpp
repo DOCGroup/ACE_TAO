@@ -2,6 +2,8 @@
 
 #include "Notify_Worker_Task.h"
 #include "Notify_Command.h"
+#include "Notify_AdminProperties.h"
+#include "Notify_QoSAdmin_i.h"
 
 ACE_RCSID(Notify, Notify_Worker_Task, "$Id$")
 
@@ -14,7 +16,8 @@ TAO_Notify_Worker_Task::~TAO_Notify_Worker_Task ()
 }
 
 int
-TAO_Notify_Worker_Task::init_task (TAO_Notify_AdminProperties* const)
+TAO_Notify_Worker_Task::init_task (TAO_Notify_AdminProperties* const,
+                                   TAO_Notify_QoSAdmin_i* const)
 {
   return 0;
 }
@@ -33,3 +36,14 @@ TAO_Notify_Worker_Task::process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DECL, 
   ACE_Message_Block::release (mb);
   return result;
 }
+
+void
+TAO_Notify_Worker_Task::update_admin (TAO_Notify_AdminProperties& /*admin*/)
+{
+}
+
+void
+TAO_Notify_Worker_Task::update_qos (TAO_Notify_QoSAdmin_i& /*qos_admin*/)
+{
+}
+

@@ -7,6 +7,8 @@
 #include "Notify_Event_Manager_Objects_Factory.h"
 #include "Notify_Update_Dispatch_Command.h"
 #include "Notify_AdminProperties.h"
+#include "Notify_QoSAdmin_i.h"
+#include "Notify_EventChannel_i.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Notify_Event_Manager.i"
@@ -31,7 +33,7 @@ TAO_Notify_Event_Manager::~TAO_Notify_Event_Manager ()
   delete this->lock_;
   delete this->admin_properties_;
 
-  emo_factory_->destroy_updates_task (this->updates_dispatching_task_);
+  this->emo_factory_->destroy_updates_task (this->updates_dispatching_task_);
 }
 
 void
@@ -61,12 +63,19 @@ TAO_Notify_Event_Manager::init (TAO_ENV_SINGLE_ARG_DECL)
   this->event_map_->init (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->event_processor_->init (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Notify_QoSAdmin_i* qos_admin =
+       (TAO_Notify_QoSAdmin_i*)&(this->event_channel_->qos_admin ());
+
+  this->event_processor_->init (qos_admin TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // @@ check return value
-  this->updates_dispatching_task_->init_task (this->admin_properties_);
-  // The updates task doesn't really use admin properties but this makes it future proof.
+  if (this->updates_dispatching_task_->init_task (
+                                         this->admin_properties_,
+                                         qos_admin) != 0)
+    {
+      // Some error has ocurred.
+      ACE_THROW (CORBA::UNKNOWN ());
+    }
 }
 
 void
@@ -118,6 +127,12 @@ TAO_Notify_Event_Manager::update_publication_list (const CosNotification::EventT
   if (added_list.is_empty () == 0 || removed_list.is_empty () == 0)
     this->dispatch_updates_i (this->event_map_->publication_change_listeners (),
                               added_list, removed_list TAO_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_Notify_Event_Manager::update_task_admins (void)
+{
+  this->updates_dispatching_task_->update_admin (*this->admin_properties_);
 }
 
 void

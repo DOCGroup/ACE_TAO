@@ -32,6 +32,7 @@
 #include "notify_export.h"
 
 class TAO_Notify_AdminProperties;
+class TAO_Notify_QoSAdmin_i;
 
 class TAO_Notify_Export TAO_Notify_Worker_Task
 {
@@ -49,7 +50,8 @@ public:
   virtual ~TAO_Notify_Worker_Task ();
   // Constructor.
 
-  virtual int init_task (TAO_Notify_AdminProperties* const admin_properties);
+  virtual int init_task (TAO_Notify_AdminProperties* const admin_properties,
+                         TAO_Notify_QoSAdmin_i* const qos_properties);
   // Init the task
 
   virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
@@ -57,6 +59,10 @@ public:
 
   virtual int process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DECL, ACE_Time_Value *tv = 0);
   // Process the command.
+
+  virtual void update_admin (TAO_Notify_AdminProperties& admin);
+  virtual void update_qos (TAO_Notify_QoSAdmin_i& qos_admin);
+
 };
 
 #include "ace/post.h"

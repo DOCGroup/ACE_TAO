@@ -32,11 +32,11 @@
 
 class TAO_Notify_Event_Manager;
 
-#if defined(_MSC_VER)
+#if defined (_MSC_VER)
 #if (_MSC_VER >= 1200)
-#pragma warning(push)
+#pragma warning (push)
 #endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
+#pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
 // @@ Pradeep: this is cool, deriving from the template type is really
@@ -81,7 +81,7 @@ public:
     CORBA::SystemException
   ));
 
-virtual void validate_event_qos (
+  virtual void validate_event_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos
     TAO_ENV_ARG_DECL
@@ -98,7 +98,7 @@ virtual void validate_event_qos (
     CORBA::SystemException
   ));
 
-virtual void set_qos (
+  virtual void set_qos (
     const CosNotification::QoSProperties & qos
     TAO_ENV_ARG_DECL
   )
@@ -107,7 +107,7 @@ virtual void set_qos (
     CosNotification::UnsupportedQoS
   ));
 
-virtual void validate_qos (
+  virtual void validate_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos
     TAO_ENV_ARG_DECL
@@ -117,7 +117,7 @@ virtual void validate_qos (
     CosNotification::UnsupportedQoS
   ));
 
-virtual CosNotifyFilter::FilterID add_filter (
+  virtual CosNotifyFilter::FilterID add_filter (
     CosNotifyFilter::Filter_ptr new_filter
     TAO_ENV_ARG_DECL
   )
@@ -125,7 +125,7 @@ virtual CosNotifyFilter::FilterID add_filter (
     CORBA::SystemException
   ));
 
-virtual void remove_filter (
+  virtual void remove_filter (
     CosNotifyFilter::FilterID filter
     TAO_ENV_ARG_DECL
   )
@@ -134,7 +134,7 @@ virtual void remove_filter (
     CosNotifyFilter::FilterNotFound
   ));
 
-virtual CosNotifyFilter::Filter_ptr get_filter (
+  virtual CosNotifyFilter::Filter_ptr get_filter (
     CosNotifyFilter::FilterID filter
     TAO_ENV_ARG_DECL
   )
@@ -143,51 +143,57 @@ virtual CosNotifyFilter::Filter_ptr get_filter (
     CosNotifyFilter::FilterNotFound
   ));
 
-virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
+  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
     TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-virtual void remove_all_filters (
+  virtual void remove_all_filters (
     TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
- protected:
- virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL) = 0;
- // Derived types should implement this to deliver the update.
+  const TAO_Notify_QoSAdmin_i& qos_admin (void) const;
 
- // = Data members
- ACE_Lock* lock_;
- // The locking strategy.
+protected:
+  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL) = 0;
+  // Derived types should implement this to deliver the update.
 
- CORBA::ULong refcount_;
- // The reference count.
+  virtual void setup_qos_policies (TAO_ENV_SINGLE_ARG_DECL);
+  // Derived types may implement this if they need to do something
+  // directly after setting the qos policies.
 
- CosNotifyChannelAdmin::ProxyType proxy_type_;
- // What type are we?
+  // = Data members
+  ACE_Lock* lock_;
+  // The locking strategy.
 
- TAO_Notify_Event_Manager* event_manager_;
- // Our event manager.
+  CORBA::ULong refcount_;
+  // The reference count.
 
- CORBA::Boolean is_connected_;
- // True if we are connected to a consumer.
+  CosNotifyChannelAdmin::ProxyType proxy_type_;
+  // What type are we?
 
- CORBA::Boolean updates_on_;
- // True by default, for subscription/publication updates.
+  TAO_Notify_Event_Manager* event_manager_;
+  // Our event manager.
 
- TAO_Notify_QoSAdmin_i qos_admin_;
- // Handle QoS admin methods.
+  CORBA::Boolean is_connected_;
+  // True if we are connected to a consumer.
 
- TAO_Notify_FilterAdmin_i filter_admin_;
- // Handles the Filter admin methods.
+  CORBA::Boolean updates_on_;
+  // True by default, for subscription/publication updates.
 
- CosNotifyChannelAdmin::ProxyID proxy_id_;
- // The ID assigned to this Proxy.
+  TAO_Notify_QoSAdmin_i qos_admin_;
+  // Handle QoS admin methods.
+
+  TAO_Notify_FilterAdmin_i filter_admin_;
+  // Handles the Filter admin methods.
+
+  CosNotifyChannelAdmin::ProxyID proxy_id_;
+  // The ID assigned to this Proxy.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
@@ -198,8 +204,8 @@ virtual void remove_all_filters (
 #pragma implementation ("Notify_Proxy_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined (_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning (pop)
 #endif /* _MSC_VER */
 
 #include "ace/post.h"

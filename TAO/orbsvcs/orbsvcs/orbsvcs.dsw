@@ -96,7 +96,7 @@ Package=<4>
     Project_Dep_Name CosEvent
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name CosTrading
+    Project_Dep_Name ETCL DLL
     End Project Dependency
 }}}
 
@@ -159,7 +159,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FT_ORB"=.\FT_ORB.dsp - Package Owner=<4>
+Project: "ETCL DLL"=.\ETCL\ETCL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FT ORB"=.\FT_ORB.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

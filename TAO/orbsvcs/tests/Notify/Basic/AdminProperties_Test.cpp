@@ -90,12 +90,12 @@ AdminProperties_Test::parse_args(int argc, char *argv[])
     return 0;
 }
 
-void
+int
 AdminProperties_Test::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
 {
   // init base class
   Notify_Test_Client::init (argc, argv TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -120,7 +120,7 @@ AdminProperties_Test::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
                                          initial_admin_,
                                          id
                                          TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 
@@ -129,15 +129,17 @@ AdminProperties_Test::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
+
+  return 0;
 }
 
 void

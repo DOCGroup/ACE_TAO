@@ -49,7 +49,7 @@ TAO_Notify_AdminProperties::get_admin (TAO_ENV_SINGLE_ARG_DECL)
 
   (*admin)[3].name =
   CORBA::string_dup (CosNotification::RejectNewEvents);
-  (*admin)[3].value <<= CORBA::Any::from_boolean (reject_new_events_);
+  (*admin)[3].value <<= CORBA::Any::from_boolean (this->reject_new_events_);
 
   return admin._retn ();
 }
@@ -91,10 +91,10 @@ TAO_Notify_AdminProperties::set_admin (const CosNotification::AdminProperties & 
 CORBA::Boolean
 TAO_Notify_AdminProperties::queue_full (void)
 {
-  if (this->max_queue_length() == 0)
+  if (this->max_queue_length () == 0)
     return 0;
   else
-    if (this->queue_length ()->value () > this->max_queue_length())
+    if (this->queue_length ()->value () > this->max_queue_length ())
       return 1;
 
   return 0;
@@ -103,7 +103,9 @@ TAO_Notify_AdminProperties::queue_full (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>;
 template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>;
+template class TAO_Notify_Signal_Property<TAO_SYNCH_MUTEX,int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>
 #pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>
+#pragma instantiate TAO_Notify_Signal_Property<TAO_SYNCH_MUTEX,int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

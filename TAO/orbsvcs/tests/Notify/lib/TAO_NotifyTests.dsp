@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_CosNotification.lib TAO_CosNaming.lib TAO_CosEvent.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /dll /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTests.dll" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO_ETCL.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_CosEvent.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /dll /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTests.dll" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none /incremental:yes /debug
 
 !ELSEIF  "$(CFG)" == "TAO_NotifyTests DLL - Win32 Debug"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_CosEventd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTestsd.dll" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_ETCLd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_CosEventd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\..\..\bin\TAO_NotifyTestsd.dll" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 

@@ -1,3 +1,256 @@
+Thu Jan 17 13:40:09 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        Added new features to the Notification Service.  The following items
+        have been implemented: Sequence Push Consumers/Suppliers, Pacing
+        Interval, Maximum Batch Size, Deadline ordering policy,
+        Deadline, Priority and LIFO discarding policies.
+
+        Tests were written by Chip Jones <jones_c@ociweb.com> and Pete
+        Maher <maher_p@ociweb.com>.
+
+        * docs/releasenotes/index.html:
+
+          Update the documentation to reflect the current state of the
+          Notification Service.
+
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/examples/Notify/Filter/Filter.dsp:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+
+          Update Makefiles and project files to use the ETCL library.
+
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.i:
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Command.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Command.i:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Extensions.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.inl:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Signal_Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Signal_Property_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredEvents.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredEvents.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
+
+          Modifications and additions for the new features.
+
+        * orbsvcs/tests/Notify/Makefile:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.h:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.h:
+        * orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.h:
+        * orbsvcs/tests/Notify/Basic/Simple.cpp:
+        * orbsvcs/tests/Notify/Basic/Updates.dsp:
+        * orbsvcs/tests/Notify/Basic/Updates.h:
+        * orbsvcs/tests/Notify/Basic/Updates.cpp:
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+
+          Update the current Nofication tests to allow smooth integration of
+          the new tests.
+
+        * orbsvcs/tests/Notify/Blocking/Blocking.dsw:
+        * orbsvcs/tests/Notify/Blocking/Makefile:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/README:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Blocking/common.h:
+        * orbsvcs/tests/Notify/Blocking/common.cpp:
+        * orbsvcs/tests/Notify/Blocking/go.idl:
+        * orbsvcs/tests/Notify/Blocking/notify.conf:
+        * orbsvcs/tests/Notify/Blocking/run_test.pl:
+        * orbsvcs/tests/Notify/Discarding/Discarding.dsw:
+        * orbsvcs/tests/Notify/Discarding/Makefile:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/README:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/common.h:
+        * orbsvcs/tests/Notify/Discarding/common.cpp:
+        * orbsvcs/tests/Notify/Discarding/go.idl:
+        * orbsvcs/tests/Notify/Discarding/notify.conf:
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+        * orbsvcs/tests/Notify/MT_Dispatching/MT_Dispatching.dsw:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/MT_Dispatching/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/README:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/go.idl:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_mtdispatching.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_mtlistener.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_mtsource.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_nothreads.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+        * orbsvcs/tests/Notify/Ordering/Makefile:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Ordering.dsw:
+        * orbsvcs/tests/Notify/Ordering/README:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/common.h:
+        * orbsvcs/tests/Notify/Ordering/common.cpp:
+        * orbsvcs/tests/Notify/Ordering/go.idl:
+        * orbsvcs/tests/Notify/Ordering/notify.conf:
+        * orbsvcs/tests/Notify/Ordering/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/README:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Multi_ETCL_Filter.dsw:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/go.idl:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/notify.conf:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/README:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Multi_Filter.dsw:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/go.idl:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/notify.conf:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/README:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter.dsw:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/control.idl:
+        * orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.h:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/README:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter.dsw:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/control.idl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Filter.dsw:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/README:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/go.idl:
+        * orbsvcs/tests/Notify/performance-tests/Filter/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl:
+
+          Add many new tests to test the various features of the
+          Notification Service.
 Thu Jan 17 11:03:14 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:

@@ -28,13 +28,16 @@ class TAO_NOTIFY_TEST_Export Notify_Test_Client
   // = DESCRIPTION
   //   Shows how consumers Notify_Test_Client for events.
 
- public:
+public:
   // = Initialization and Termination
   Notify_Test_Client (void);
   virtual ~Notify_Test_Client ();
 
-  virtual void init (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  virtual int init (int argc, char *argv [] TAO_ENV_ARG_DECL);
   // starts the orb and resolves the notify factory via a naming service.
+
+  virtual int parse_args (int argc, char* argv[]);
+  // Allow the user to override this empty method
 
   int ORB_run (void);
   // Call ORB::run to accept requests.
@@ -59,15 +62,15 @@ class TAO_NOTIFY_TEST_Export Notify_Test_Client
 
   CosNotifyChannelAdmin::EventChannel_ptr create_event_channel (
                                               const char* name,
-                                              int resolve    
+                                              int resolve
                                               TAO_ENV_ARG_DECL
                                             );
   // Create an Event Channel.  Ownership is passed to the caller.
 
- protected:
-  void init_ORB (int argc, 
-                 char *argv [] 
-                 TAO_ENV_ARG_DECL);
+protected:
+  int init_ORB (int argc,
+                char *argv []
+                TAO_ENV_ARG_DECL);
   // Initializes the ORB.
 
   void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
