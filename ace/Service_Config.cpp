@@ -635,7 +635,12 @@ ACE_Service_Config::handle_signal (int sig,
                                    siginfo_t *,
                                    ucontext_t *)
 {
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (sig)
+#else  /* ! ACE_NDEBUG */
   ACE_ASSERT (ACE_Service_Config::signum_ == sig);
+#endif /* ! ACE_NDEBUG */
+
   ACE_Service_Config::reconfig_occurred_ = 1;
 }
 
