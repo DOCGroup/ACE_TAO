@@ -261,7 +261,7 @@
 #elif defined (__GNUG__)
 #define ACE_CC_MAJOR_VERSION __GNUC__
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
-#define ACE_CC_BETA_VERSION  __GNUC_(0)
+#define ACE_CC_BETA_VERSION  (0)
 #if __GNUC_MINOR__ >= 90
 #define ACE_CC_NAME "egcs"
 #else
