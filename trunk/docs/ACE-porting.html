@@ -132,6 +132,13 @@ compile ACE and TAO:
 <LI> <B>Multiple inheritance and dynamic binding</B> -- The C++
     compiler must support multiple inheritance and dynamic
     binding. <P>
+
+<LI> <B>Namespaces</B> -- ACE utilizes C++ namespaces, so the C++ compiler
+    must support them.<P>
+
+<LI> <B>ANSI casts</B> -- ACE uses the new ANSI C++ casts, so the C++ compiler
+    must support them.<P>
+
 </UL>
 
 The following is a list of which C++ features that ACE and TAO can
@@ -146,17 +153,11 @@ take advantage of if a compiler supports them:
     TAO can be configured to use C++ exceptions if ACE supports them,
     <EM>i.e.</EM>, if <CODE>ACE_HAS_EXCEPTIONS</CODE> is defined. <P>
 
-<LI> <B>RTTI and ANSI casts</B> -- If the OS platform supports RTTI
-    and the new ANSI
-    C++ casts, <EM>i.e.</EM>, <CODE>ACE_HAS_ANSI_CASTS</CODE> is
-    enabled, then the various <CODE>ACE_*_cast</CODE> macros will
-    utilize these casts.  Otherwise, the macros will default to
-    "C-style" casts. <P>
-
-<LI> <B>Namespaces</B> -- ACE does not utilize namespaces.  However,
-    TAO will automatically take advantage of namespaces if the C++
-    compiler supports them, <EM>i.e.</EM>, if
-    <CODE>ACE_HAS_BROKEN_NAMESPACES</CODE> is <EM>not</EM> enabled. <P>
+<LI> <B>RTTI</B> -- If the OS platform supports RTTI
+    <EM>i.e.</EM>, <CODE>ACE_LACKS_RTTI</CODE> is not
+    enabled, then the various <CODE>ACE_dynamic_cast_*</CODE> macros will
+    utilize the ANSI dynamic_cast.  Otherwise, the macros will default to
+    ANSI static_casts. <P>
 
 <LI> <B>STL</B> -- Unfortunately many of the platforms that ACE
         supports don't have an STL library.  Moreover, different versions
