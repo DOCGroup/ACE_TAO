@@ -37,6 +37,8 @@ TAO_RT_Endpoint_Utils::priority_bands_policy (TAO_GIOP_Invocation *invocation,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return (CORBA::Policy::_nil ());
 }
 
 CORBA::Policy *
@@ -63,8 +65,7 @@ TAO_RT_Endpoint_Utils::client_protocol_policy (TAO_GIOP_Invocation *invocation,
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return retval;
-
 }

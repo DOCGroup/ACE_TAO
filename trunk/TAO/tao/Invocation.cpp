@@ -329,11 +329,12 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc,
 
   if (conn_reg == 0)
     {
-      ACE_THROW (CORBA::INTERNAL (
-                   CORBA_SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
+      ACE_THROW_RETURN (CORBA::INTERNAL (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          EINVAL),
+                        CORBA::COMPLETED_NO),
+                        1);
     }
 
   // Obtain a connection.
@@ -341,7 +342,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc,
                                   this->transport_,
                                   this->max_wait_time_,
                                   ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
 
   if (result == 0)
     {
