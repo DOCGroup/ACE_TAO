@@ -19,11 +19,20 @@ IIOP::Profile::set (const char *h,
   this->iiop_version.minor = IIOP::MY_MINOR;
 
   if (this->host)
-    ACE_OS::free (this->host);
+    {
+      delete [] this->host;
+      this->host = 0;
+    }
 
   this->port = p;
 
-  ACE_ALLOCATOR_RETURN (this->host, ACE_OS::strdup (h), -1);
+  if (h)
+    {
+      ACE_NEW_RETURN (this->host,
+                      char[ACE_OS::strlen(h) + 1],
+                      -1);
+      ACE_OS::strcpy (this->host, h);
+    }
 
   this->object_addr (addr);
   return 0;

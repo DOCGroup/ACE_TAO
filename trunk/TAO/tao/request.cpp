@@ -92,6 +92,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 
   args_ = new CORBA::NVList;
   result_ = new CORBA::NamedValue;
+  result_->AddRef();
 }
 
 CORBA_Request::~CORBA_Request (void)

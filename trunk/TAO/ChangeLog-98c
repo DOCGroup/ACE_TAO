@@ -1,3 +1,23 @@
+Mon Nov 17 20:05:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Cleaned up lots of places
+ 	where the allocated stuff wasn't being deallocated.
+
+	* tao/request.cpp: Insured that the CTOR adds a reference for the
+ 	dynamically-allocated NamedValue.
+
+	* tao/orb_core.cpp: Freed the faked service configurator argv.
+
+	* tao/iiopobj.h: Removed anachronistic comments.
+
+	* tao/iiopobj.{i,cpp}: Changed allocation of IIOP::Profile.host to use
+ 	new/delete rather than strdup/free b/c the decoder, which is
+ 	generic, must use new to allocate the space.  Thus, the strdup had
+ 	to go.  Purify now happier.
+
+	* tao/cdr.cpp: Added call to memset bracketed by #if
+ 	defined(TAO_PURIFY) in order to appease the purify gods.
+
 Mon Nov 17 20:13:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_codegen.h, TAO_IDL/be/be_codegen.cpp:
@@ -27,13 +47,13 @@ Mon Nov 17 20:13:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 Mon Nov 17 20:05:16 1997  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orb_core.cpp:
+	* tao/orb_core.cpp:
 	  Modified the init routine to "consume" command line arguments it
 	  recognizes by placing them in the rear of argv, and adjusting
 	  argc. It uses the Arg_Shifter class to accomplish this.
 
-	* arg_shifter.h:
-	* arg_shifter.cpp:
+	* tao/arg_shifter.h:
+	* tao/arg_shifter.cpp:
 	  The Arg_Shifter class is an iterator that, as it iterates over
 	  argv, places consumed arguments at the end of the vector,
 	  ignored ones in their original order at the beginning of the
@@ -41,7 +61,7 @@ Mon Nov 17 20:05:16 1997  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 Mon Nov 17 18:40:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orb_core.i:
+	* tao/orb_core.i: 
 	  Some data was not initialized when used from a thread different
 	  than the one doing ORB_init (even though we choose a global ORB
 	  in the svc.conf file). Chris found a fix for this. The affected

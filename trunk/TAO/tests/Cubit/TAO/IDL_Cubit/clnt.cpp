@@ -241,6 +241,7 @@ Cubit_Client::cube_union_dii (void)
     dmsg ("cube_union_dii ... success!!");
 
   CORBA::release (req);
+  delete u;
 }
 
 // Cube a short.
@@ -582,9 +583,10 @@ Cubit_Client::run (void)
 Cubit_Client::~Cubit_Client (void)
 {
   // Free resources
-  CORBA::release (this->cubit_);
-  CORBA::release (this->factory_);
   CORBA::release (this->orb_ptr_);
+  this->objref_->Release ();
+  this->factory_->Release ();
+  this->cubit_->Release ();
 }
 
 int

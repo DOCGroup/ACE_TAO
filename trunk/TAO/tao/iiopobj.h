@@ -52,8 +52,6 @@ public:
   {
     Version iiop_version;
     TAO_opaque object_key;
-    // @@ These should really be accessors and not public members, but
-    // I'm too chicken to change it right now.
     char *host;
     CORBA::UShort port;
 
