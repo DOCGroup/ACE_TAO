@@ -9,6 +9,7 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 
 /* Author: Daeron Meyer */
 
+#include "ace/OS.h"
 #include <stdio.h>
 #include <X11/Intrinsic.h>
 #include <X11/Shell.h>
@@ -35,7 +36,6 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 #include <Xm/AtomMgr.h>
 #include <Xm/Protocols.h>
 #include <Xm/MwmUtil.h>
-#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

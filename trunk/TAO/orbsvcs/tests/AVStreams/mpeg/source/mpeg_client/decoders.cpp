@@ -29,6 +29,7 @@
  *
  */
 
+#include "ace/OS.h"
 #include <stdio.h>
 #include <assert.h>
 #include "decoders.h"

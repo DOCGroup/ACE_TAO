@@ -24,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+#include "ace/OS.h"
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <unistd.h>

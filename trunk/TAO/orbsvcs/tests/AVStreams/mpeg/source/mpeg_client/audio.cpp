@@ -33,6 +33,7 @@
    
    ################################################################# */
 
+#include "ace/OS.h"
 #include <stdio.h>
 #include <errno.h>
 #include <sys/types.h>

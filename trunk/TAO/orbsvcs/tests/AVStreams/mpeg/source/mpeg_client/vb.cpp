@@ -28,6 +28,7 @@
 extern int vsp[2];
 extern void set_exit_routine_tag(int tag);
 
+#include "ace/OS.h"
 #include "vb.h"
 
 ACE_RCSID(mpeg_client, vb, "$Id$")

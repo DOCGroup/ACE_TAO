@@ -23,11 +23,11 @@
 
 /* This file contains C code to implement an ordered dither. */
 
+#include "ace/OS.h"
 #include <stdlib.h>
 #include "video.h"
 #include "proto.h"
 #include "dither.h"
-#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, ordered2, "$Id$")
 

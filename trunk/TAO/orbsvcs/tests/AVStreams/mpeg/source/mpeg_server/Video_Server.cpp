@@ -25,6 +25,7 @@
  *         email: scen@cse.ogi.edu
  */
 
+#include "ace/OS.h"
 #include "Video_Server.h"
 #include "orbsvcs/CosNamingC.h"
 

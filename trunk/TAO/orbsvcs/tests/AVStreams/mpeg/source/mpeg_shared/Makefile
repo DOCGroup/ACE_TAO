@@ -13,8 +13,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-#TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
-
 IDL_FILES = Video_ControlS Video_ControlC Audio_ControlS Audio_ControlC ReceiverS ReceiverC MMDevice_ExporterC MMDevice_ExporterS
 
 # On non-Windows environment, we should at least define
@@ -29,13 +27,12 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 FILES += com fileio filters routine sendpt 
 
-LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG) -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
 
-LIBS 	+= -lTAO -lACE
+LDLIBS 	= -lTAO 
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.

@@ -23,6 +23,7 @@
 
 /* This file contains C code to do YCrCb -> colormap space. */
 
+#include "ace/OS.h"
 #include <stdlib.h>
 #include <string.h>
 #include "fs4.h"

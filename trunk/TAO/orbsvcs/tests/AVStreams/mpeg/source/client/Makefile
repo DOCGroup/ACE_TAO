@@ -15,7 +15,7 @@ FILES = vcr
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-LIBS 	+= -lTAO -lACE -lorbsvcs
+LDLIBS 	= -lorbsvcs -lTAO
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
 
@@ -45,7 +45,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-LDFLAGS +=  -lmpeg_shared -lmpeg_mib -lmpeg_client -lXm  -lXext -lXt -lSM -lICE  -lX11  -lsocket -lnsl -ldl
+LDLIBS +=  -lmpeg_shared -lmpeg_mib -lmpeg_client -lXm  -lXext -lXt -lSM -lICE  -lX11  -lsocket -lnsl -ldl
 CPPFLAGS += -i -DSH_MEM -DNDEBUG -I/project/doc/pkg/X11/include -L/project/doc/pkg/X11/lib
 
 realclean: clean
