@@ -73,6 +73,10 @@ main (int, char *[])
   if (server.kill () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Kill failed for server.\n"), -1);
 
+  // Since we kill the clerk process, it does not do a graceful
+  // shutdown and the backing store file is left behind.
+  ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);    
+
   ACE_END_TEST;
   return 0;
 }
