@@ -43,12 +43,5 @@ union Bog switch (Agog)
   case Agog3: long bog3;
 };
 
-// #included by reopened modules.idl along with
-// same module in included.idl.
-module Aok
-{
-  struct pug {short leash;};
-};
-
 #endif /* IDL_TEST_INCLUDING_IDL */
 
