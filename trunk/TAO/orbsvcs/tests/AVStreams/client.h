@@ -24,7 +24,7 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
-#include "orbsvcs/AVStreams_i.h"
+#include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/Get_Opt.h"
 #include "tao/tao_util.h"
 

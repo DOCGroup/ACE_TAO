@@ -16,8 +16,8 @@
 //
 // ============================================================================
 
-#include "math.h"
-#include "float.h"
+#include <math.h>
+#include <float.h>
 
 #include "ace/Sched_Params.h"
 

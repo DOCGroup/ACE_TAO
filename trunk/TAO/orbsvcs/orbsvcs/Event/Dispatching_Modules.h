@@ -480,6 +480,7 @@ public:
 #if defined (__ACE_INLINE__)
 #include "Dispatching_Modules.i"
 #endif /* __ACE_INLINE__ */
+
 #endif /* ACE_DISPATCHING_MODULES_H */
 
 

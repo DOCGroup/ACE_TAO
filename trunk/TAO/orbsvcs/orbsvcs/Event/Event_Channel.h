@@ -1295,5 +1295,6 @@ typedef ACE_ES_Array_Iterator <ACE_ES_Consumer_Rep *> ACE_ES_CRSet_Iterator;
 #if defined (__ACE_INLINE__)
 #include "Event_Channel.i"
 #endif /* __ACE_INLINE__ */
+
 #endif /* ACE_EVENT_CHANNEL_H */
 

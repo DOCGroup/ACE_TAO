@@ -1,11 +1,11 @@
 // $Id$
 
+#include "ace/Sched_Params.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "RT_Task.h"
 #include "Debug_Macros.h"
 #include "Event_Channel.h"
 #include "Memory_Pools.h"
-#include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RT_Task.i"

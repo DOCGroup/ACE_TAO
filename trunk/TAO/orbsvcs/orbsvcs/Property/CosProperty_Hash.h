@@ -22,7 +22,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
 #include "CosPropertyServiceS.h"
-#include "tao/any.h"
 
 class EXT_ID 
 {

@@ -11,7 +11,7 @@
 //
 // ============================================================================
 
-#include "NS_CosNaming.h"
+#include "Entries.h"
 
 NS_IntId::NS_IntId (void)
   : type_ (CosNaming::nobject)

@@ -8,7 +8,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Event_Utilities.h"
-#include "Event_Channel.h"
+#include "orbsvcs/Event/Event_Channel.h"
 
 
 
