@@ -15,10 +15,10 @@ BEGIN
         BEGIN
             VALUE "FileDescription", "LoadBalancing\0"
             VALUE "FileVersion", TAO_VERSION "\0"
-            VALUE "InternalName", "TAO_LoadBalancingDLL\0"
+            VALUE "InternalName", "TAO_CosLoadBalancingDLL\0"
             VALUE "LegalCopyright", "\0"
             VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "TAO_LoadBalancing.DLL\0"
+            VALUE "OriginalFilename", "TAO_CosLoadBalancing.DLL\0"
             VALUE "ProductName", "ORBSVCS\0"
             VALUE "ProductVersion", TAO_VERSION "\0"
         END
