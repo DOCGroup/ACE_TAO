@@ -1,9 +1,16 @@
+Fri Nov 17 09:21:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
+        * tests/*/*.bor:
+          examples/*/*.bor:
+          Added to several Borland C++ Builder makefiles the IDLFILES section
+          so that the generated client and server stubs are deleted
+          when doing a clean
+
 Thu Nov 16 23:13:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Param_Test/server.dsp:
 
           Fixed the Win32 Release inclusion of TAO_Strategies.lib.
-          It was missing the ".lib" which made MSVC think that it 
+          It was missing the ".lib" which made MSVC think that it
           was an .obj instead.
 
 Thu Nov 16 19:29:00 2000  Ossama Othman  <ossama@uci.edu>
@@ -37,7 +44,7 @@ Thu Nov 16 19:06:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/Options.cpp:
 
-          Moved orb_argv_pos declaration outside of the for loop because 
+          Moved orb_argv_pos declaration outside of the for loop because
           compilers treat the scoping differently.
 
         * orbsvcs/ImplRepo_Service/README.txt:
