@@ -51,7 +51,7 @@ public:
 private:
   char *name_;
   char *value_;
-  const char *type_;
+  char *type_;
 };
 
 typedef auto_ptr<Name_Binding> Name_Binding_Ptr;
