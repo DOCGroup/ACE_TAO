@@ -53,30 +53,15 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
               ri->operation (),
               this->orb_->object_to_string (ri->target ())));
   
-  // Populate target member of the ClientRequestInfo.
-
-  // MAke the context to send the context to the target
-  IOP::ServiceContext sc;
-  sc.context_id = request_ctx_id;
-
-  CORBA::ULong string_len = ACE_OS::strlen (request_msg) + 1;
-  CORBA::Octet *buf = 0;
-  ACE_NEW (buf,
-           CORBA::Octet [string_len]);
-  ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), request_msg);
-  
-  sc.context_data.replace (string_len, string_len, buf, 1);
-
-  // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0);
- 
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      Dynamic::ParameterList * paramlist = ri->arguments ();
+      Dynamic::ParameterList paramlist = *(ri->arguments ());
       CORBA::Long param;
-      (*paramlist)[0].argument >>= param;
+      (paramlist)[0].argument >>= param;
       
-      cout << "the arg is " << param <<endl;
+      ACE_DEBUG ((LM_DEBUG, 
+                  "the arg is %d\n",
+                  param));
     }
 }
 
@@ -89,26 +74,15 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
               "Echo_Client_Request_Interceptor::receive_reply from \"%s\" on object: %s\n",
               ri->operation (ACE_TRY_ENV),
               this->orb_->object_to_string (ri->target ())));
-
-  // ACE_CHECK;
-  // ServiceID? is hacked and set to 1 for now
-  IOP::ServiceId id = reply_ctx_id;
-  IOP::ServiceContext * sc = ri->get_reply_service_context (id);
-
-  if (sc == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
-  
-  const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
-  ACE_DEBUG ((LM_DEBUG,
-              "  Received reply service context: %s\n",
-              buf));
    if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      Dynamic::ParameterList *paramlist = ri->arguments ();
+      Dynamic::ParameterList paramlist = *(ri->arguments ());
       CORBA::Long param;
-      (*paramlist)[0].argument >>= param;
+      (paramlist)[0].argument >>= param;
       
-      cout << "the arg is " << param <<endl;
+      ACE_DEBUG ((LM_DEBUG, 
+                  "the arg is %d\n",
+                  param));
     }
 
 }
@@ -124,8 +98,22 @@ Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientR
               "Echo_Client_Request_Interceptor::received_exception from \"%s\" on object: %s\n",
               ri->operation (ACE_TRY_ENV),
               this->orb_->object_to_string (ri->target ())));
-  //  ACE_CHECK;
 
+  // As of now, there is no way to extract an exception from an Any in TAO.
+
+  /*  CORBA::Any excp = *(ri->received_exception ());
+  CORBA::Exception *e;
+  excp >>= *e;*/
+
+  CORBA::Exception *e = ri->_received_exception ();
+
+  if (ACE_OS::strcmp (ri->received_exception_id (), e->_id ())== 0)
+    ACE_DEBUG ((LM_DEBUG, 
+                "Exception ID=%s\n", e->_id ()));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ACE_TEXT ("%s\n"),
+              e->_info ().c_str ()));
 }
 
 
@@ -170,44 +158,16 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"",
               ri->operation ()));
   
-
-  // ServiceID? is hacked and set to 1 for now
-  IOP::ServiceId id = request_ctx_id;
-  IOP::ServiceContext *sc = ri->get_request_service_context (id);
-
-  if (sc == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
- 
-  const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
-  ACE_DEBUG ((LM_DEBUG,
-              "  Received service context: %s\n",
-              buf));
-
-  // MAke the context to send the context to the client
-  IOP::ServiceContext scc;
-
-  scc.context_id = reply_ctx_id;
-
-  CORBA::ULong string_len = ACE_OS::strlen (reply_msg) + 1;
-  CORBA::Octet *buff = 0;
-  ACE_NEW (buff,
-           CORBA::Octet [string_len]);
-
-  ACE_OS::strcpy (ACE_reinterpret_cast (char *, buff), reply_msg);
-  
-  scc.context_data.replace (string_len, string_len, buff, 1);
-
-  // Add this context to the service context list.
-  ri->add_reply_service_context (scc, 0);
-  
-  
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      Dynamic::ParameterList *paramlist = ri->arguments ();
+      Dynamic::ParameterList paramlist = *(ri->arguments ());
       CORBA::Long param;
-      (*paramlist)[0].argument >>= param;
-      
-      cout << "the arg is " << param <<endl;
+      (paramlist)[0].argument >>= param;
+
+      ACE_DEBUG ((LM_DEBUG, 
+                  "the arg is %d\n",
+                  param));
+  
      }
    
 }
@@ -221,28 +181,15 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"",
               ri->operation ()));
-
- // ServiceID? is hacked and set to 1 for now
-  IOP::ServiceId id = reply_ctx_id;
-  IOP::ServiceContext *sc = ri->get_reply_service_context (id); 
- 
-  if (sc == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
-
-  const char *buf = ACE_reinterpret_cast (const char *,
-                                          sc->context_data.get_buffer ());
-  ACE_DEBUG ((LM_DEBUG,
-              "  Replying service context: %s\n",
-              buf));
-
  
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-     Dynamic::ParameterList *paramlist = ri->arguments ();
+     Dynamic::ParameterList paramlist = *(ri->arguments ());
       CORBA::Long param;
-      (*paramlist)[0].argument >>= param;
-      
-      cout << "the arg is " << param <<endl;
+      (paramlist)[0].argument >>= param;
+      ACE_DEBUG ((LM_DEBUG, 
+                  "the arg is %d\n",
+                  param));
     }
 }
 
@@ -255,5 +202,18 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_exception from \"%s\"",
               ri->operation ()));
-
+  // As of now, there is no way to extract an exception from an Any in TAO.
+  /*
+  CORBA::Any excp = *(ri->sending_exception ());
+  CORBA::Exception *e;
+  excp >>= *e;
+  */
+  CORBA::Exception *e = ri->_sending_exception ();
+  ACE_DEBUG ((LM_DEBUG, 
+              "Exception ID=%s\n", e->_id ()));
+  
+  ACE_DEBUG ((LM_DEBUG, 
+              ACE_TEXT ("%s\n"),
+              e->_info ().c_str ()));
+ 
 }
