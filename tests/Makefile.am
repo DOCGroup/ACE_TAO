@@ -390,7 +390,7 @@ RB_Tree_Test_SOURCES = RB_Tree_Test.cpp RB_Tree_Test.h Main.cpp
 
 Reactor_Dispatch_Order_Test_SOURCES = Reactor_Dispatch_Order_Test.cpp Main.cpp
 
-Reactor_Exceptions_Test_SOURCES = Reactor_Exceptions_Test.cpp
+Reactor_Exceptions_Test_SOURCES = Reactor_Exceptions_Test.cpp Main.cpp
 
 Reactor_Notify_Test_SOURCES = Reactor_Notify_Test.cpp Main.cpp
 
@@ -442,15 +442,16 @@ Svc_Handler_Test_SOURCES = Svc_Handler_Test.cpp Main.cpp
 TP_Reactor_Test_SOURCES = TP_Reactor_Test.cpp TP_Reactor_Test.h Main.cpp
 
 TSS_Test_SOURCES = TSS_Test.cpp \
-                   TSS_Test_Errno.h
+                   TSS_Test_Errno.h \
+                   Main.cpp
 
-Task_Test_SOURCES = Task_Test.cpp
+Task_Test_SOURCES = Task_Test.cpp Main.cpp
 
-Thread_Manager_Test_SOURCES = Thread_Manager_Test.cpp
+Thread_Manager_Test_SOURCES = Thread_Manager_Test.cpp Main.cpp
 
-Thread_Mutex_Test_SOURCES = Thread_Mutex_Test.cpp
+Thread_Mutex_Test_SOURCES = Thread_Mutex_Test.cpp Main.cpp
 
-Thread_Pool_Reactor_Test_SOURCES = Thread_Pool_Reactor_Test.cpp
+Thread_Pool_Reactor_Test_SOURCES = Thread_Pool_Reactor_Test.cpp Main.cpp
 
 Thread_Pool_Reactor_Resume_Test_SOURCES = Thread_Pool_Reactor_Resume_Test.cpp \
                                           Main.cpp
