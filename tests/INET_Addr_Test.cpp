@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
   ACE_UNUSED_ARG(argc);
   ACE_UNUSED_ARG(argv);
 
-  char *ipv4_addresses[] = {
+  const char *ipv4_addresses[] = {
     "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
   };
 
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
   }
 
 #if defined (ACE_HAS_IPV6)
-  char *ipv6_addresses[] = {
+  const char *ipv6_addresses[] = {
     "1080::8:800:200c:417a", // unicast address
     "ff01::101",       // multicast address
     "::1",                        // loopback address
