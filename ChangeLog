@@ -18,7 +18,6 @@ Mon Aug  9 23:13:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	  are ambiguous on systems where wint_t is in fact an int.  The
 	  same was done for ACE_OS::to_lower(), etc.
 
-
 Mon Aug  9 18:12:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * ace/OS_NS_stdlib.cpp (realpath):
