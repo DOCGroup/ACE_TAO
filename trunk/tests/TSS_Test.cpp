@@ -53,6 +53,9 @@ ACE_Thread_Mutex *Errno::lock_ = 0;
 // This is our thread-specific error handler...
 // See comment below about why it's dynamically allocated.
 static ACE_TSS<Errno> *tss_error;
+// This is for testing/demonstrating ACE_TSS_Type_Adapter.  It's
+// dynamically allocated to avoid static objects, also.
+static ACE_TSS<ACE_TSS_Type_Adapter<u_int> > *u;
 
 // Serializes output.
 static ACE_Thread_Mutex output_lock;
@@ -150,14 +153,14 @@ worker (void *c)
       // class ACE_TSS_Type_Adapter in ace/Synch_T.h for what this
       // should look like.  Unfortunately, some compilers have trouble
       // with the implicit type conversions.
-      ACE_TSS<ACE_TSS_Type_Adapter<u_int> > u;
-      u->operator u_int & () = 37;
-      if (u->operator u_int () != 37)
+      (*u)->operator u_int & () = 37;
+      if ((*u)->operator u_int () != 37)
         {
           // Use the guard to serialize access to errors.
-          ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, 0));
+          ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
+                                    0));
           ACE_DEBUG ((LM_ERROR, "use of ACE_TSS_Type_Adapter failed, value "
-                      "is %u, it should be 37!\n", u->operator u_int ()));
+                      "is %u, it should be 37!\n", (*u)->operator u_int ()));
           ++errors;
         }
 
@@ -242,6 +245,9 @@ main (int, ASYS_TCHAR *[])
   // ACE_Allocator.
   ACE_NEW_RETURN (tss_error, ACE_TSS<Errno>, 1);
 
+  // Similarly, dynamically allocate u.
+  ACE_NEW_RETURN (u, ACE_TSS<ACE_TSS_Type_Adapter<u_int> >, 1);
+
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
@@ -255,7 +261,10 @@ main (int, ASYS_TCHAR *[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
+  delete u;
+  u = 0;
   delete tss_error;
+  tss_error = 0;
 
   Errno::deallocate_lock ();
 #else
