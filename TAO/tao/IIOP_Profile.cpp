@@ -465,10 +465,10 @@ TAO_IIOP_Profile::hash (CORBA::ULong max,
 int
 TAO_IIOP_Profile::addr_to_string(char *buffer, size_t length)
 {
-  int actual_len = ACE_OS::strlen (this->host_) // chars in host name
-                   + sizeof (':')               // delimiter
-                   + ACE_OS::strlen ("65536")    // max port
-                   + sizeof ('\0');
+  size_t actual_len = ACE_OS::strlen (this->host_) // chars in host name
+                    + sizeof (':')               // delimiter
+                    + ACE_OS::strlen ("65536")    // max port
+                    + sizeof ('\0');
   if (length < actual_len)
     return -1;
 
