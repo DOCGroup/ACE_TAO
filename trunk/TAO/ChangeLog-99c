@@ -1,3 +1,11 @@
+Sun Apr 11 19:38:39 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+	* orbsvcs/orbsvcs/Persistent_Naming_Context.{h, cpp}
+	* orbsvcs/orbsvcs/Persistent_Context_Index_T.cpp
+	Changed the use of the <index> variable name to <context_index> to
+	avoid conflict with the macro of the same name.
+
 Sun Apr 11 18:29:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Client):
@@ -13,12 +21,12 @@ Sun Apr 11 15:36:33 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sun Apr 11 11:45:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp: 
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
 	  Added missing template instantiation.
 
 Sat Apr 10 20:55:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Param_Test/multdim_array.cpp: 
+	* tests/Param_Test/multdim_array.cpp:
 	* tests/Param_Test/multdim_array.h
 	* tests/Param_Test/Makefile
 	* tests/Param_Test/driver.cpp
@@ -43,7 +51,7 @@ Fri Apr  9 22:18:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* tao/Servant_Base.cpp:
 	* tao/Server_Request.cpp :
 	* tao/Operation_Table.cpp :
-	
+
 	Reverted the earlier changes related to saving strlen calculation
 	on the critical path.
 
