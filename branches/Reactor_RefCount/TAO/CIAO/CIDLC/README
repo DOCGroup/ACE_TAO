@@ -1,0 +1,58 @@
+A place holder for CIAO's CIDL compiler. 
+
+Please see some infromation about rationale behind naming convention at
+the end of this file.
+
+* Executor mapping can be found at:  Chapter 3.3 of formal/02-06-65
+
+  <filename>E.*
+
+* Templates for generic servants (container glue code) will be
+  available from $CIAO_ROOT/docs/templates/
+
+  These classes should be put into CIAO_GLUE namespace.
+
+  <filename>G.*
+
+* Component descriptors: Chapter 6.4 of formal/02-06-65
+
+  <flatname>.ccd
+
+  How to import this information into GME 2000?
+
+* I think it may be a good thing to do to be able to represent IDL
+  definition in XML format and be able to exchange (import/export) IDL
+  definitions via XML documents.  What is the spec. for this?
+
+* Likewise, it would be cool to have component-aware IfR so we can
+  either import component definitions into GME tools through the XML
+  files, or allow GME tools to query component capabilities via IfR.
+
+* Need to fix the collocated valuetype passed by reference bug.
+
+
+-----------------------------------------------------------------
+Naming Convention.
+
+The CIAO's CIDL compiler directory was called CIDLC which stands for
+CIDL Compiler (like CC stands for C Compiler, etc). This directory
+wasn't called CCIDLC (CIAO's CIDL Compiler) or CIAO_CIDLC because 
+that would incure needless tautology since the directory structure 
+(.../CIAO/tools/CIDLC) already implies that it's CIAO's CIDC.
+
+Now about CIDLC executable name. The logical name of the excutable 
+implied by directory name (CIDLC) would be cidlc (like cc for 
+C Compiler). However there was a concern originally expressed by
+Nanbor that cidlc is too generic name and when installed for 
+example as /usr/bin/cidlc would loose it's CIAO's context.
+
+At the same time recommended by FHS (Filesystem Hierarchy Standard) 
+package installation location is /opt/<package>. Thus if installation 
+directory would be for instance /opt/CIAO then naming CIDLC executable 
+ciao_cidlc would create needless tautology (i.e./opt/CIAO/bin/ciao_cidlc).
+Though in my opinion there is nothing bad in having generic name like 
+cidlc (user always can execute cidlc --version) and as suggested by FHS 
+installations like /usr/bin/ciao_cidl are non-conformant the decision was
+made to call CIAO's CIDLC execuatable ciao_cidlc.
+
+-boris

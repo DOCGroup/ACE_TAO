@@ -1,0 +1,819 @@
+--- orig/IOP_IORC.h	2003-04-27 07:39:11.000000000 -0500
++++ ./IOP_IORC.h	2003-04-27 09:21:56.000000000 -0500
+@@ -33,16 +33,16 @@
+ 
+ #include "ace/pre.h"
+ 
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-
+-#include "TAO_Export.h"
+-
+-#include "OctetSeqC.h"
++#include "tao/TAO_Export.h"
++#include "tao/OctetSeqC.h"
++#include "tao/VarOut_T.h"
++#include "tao/CDR.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+@@ -72,98 +72,98 @@
+ 
+ TAO_NAMESPACE  IOP
+ {
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typedef/typedef_ch.cpp:333
+-  
++
+   typedef CORBA::ULong ProfileId;
+   typedef CORBA::ULong_out ProfileId_out;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProfileId;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ProfileId TAG_INTERNET_IOP = 0U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ProfileId TAG_MULTIPLE_COMPONENTS = 1U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_type.cpp:249
+-  
++
+   struct TaggedProfile;
+-  
++
+   typedef
+     TAO_Var_Var_T<
+         TaggedProfile
+       >
+     TaggedProfile_var;
+-  
++
+   typedef
+     TAO_Out_T<
+         TaggedProfile,
+         TaggedProfile_var
+       >
+     TaggedProfile_out;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_structure/structure_ch.cpp:52
+-  
++
+   struct TAO_Export TaggedProfile
+   {
+     typedef TaggedProfile_var _var_type;
+-    
++
+     static void _tao_any_destructor (void *);
+     IOP::ProfileId tag;
+     CORBA::OctetSeq profile_data;
+   };
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedProfile;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_type.cpp:249
+-  
++
+   struct IOR;
+-  
++
+   typedef
+     TAO_Var_Var_T<
+         IOR
+       >
+     IOR_var;
+-  
++
+   typedef
+     TAO_Out_T<
+         IOR,
+         IOR_var
+       >
+     IOR_out;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_structure/structure_ch.cpp:52
+-  
++
+   struct TAO_Export IOR
+   {
+     typedef IOR_var _var_type;
+-    
++
+     static void _tao_any_destructor (void *);
+     TAO_String_Manager type_id;
+-    
+-    
++
++
+     // TAO_IDL - Generated from
+     // be/be_visitor_sequence/sequence_ch.cpp:89
+ 
+ #if !defined (_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_PROFILES_CH_)
+ #define _IOP_IOR__TAO_SEQ_TAGGEDPROFILE_PROFILES_CH_
+-    
++
+     class TAO_Export _tao_seq_TaggedProfile_profiles
+       : public
+           TAO_Unbounded_Sequence<
+@@ -176,92 +176,92 @@
+       _tao_seq_TaggedProfile_profiles (
+           CORBA::ULong max,
+           CORBA::ULong length,
+-          ACE_NESTED_CLASS (IOP, TaggedProfile)* buffer, 
++          ACE_NESTED_CLASS (IOP, TaggedProfile)* buffer,
+           CORBA::Boolean release = 0
+         );
+       _tao_seq_TaggedProfile_profiles (const _tao_seq_TaggedProfile_profiles &);
+       ~_tao_seq_TaggedProfile_profiles (void);
+-      
++
+       static void _tao_any_destructor (void *);
+-      
+-      
++
++
+     };
+ 
+ #endif /* end #if !defined */
+-    
++
+     // TAO_IDL - Generated from
+     // be/be_visitor_field/field_ch.cpp:453
+-    
++
+     typedef _tao_seq_TaggedProfile_profiles _profiles_seq;
+     _tao_seq_TaggedProfile_profiles profiles;
+   };
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IOR;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typedef/typedef_ch.cpp:333
+-  
++
+   typedef CORBA::ULong ComponentId;
+   typedef CORBA::ULong_out ComponentId_out;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ComponentId;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_type.cpp:249
+-  
++
+   struct TaggedComponent;
+-  
++
+   typedef
+     TAO_Var_Var_T<
+         TaggedComponent
+       >
+     TaggedComponent_var;
+-  
++
+   typedef
+     TAO_Out_T<
+         TaggedComponent,
+         TaggedComponent_var
+       >
+     TaggedComponent_out;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_structure/structure_ch.cpp:52
+-  
++
+   struct TAO_Export TaggedComponent
+   {
+     typedef TaggedComponent_var _var_type;
+-    
++
+     static void _tao_any_destructor (void *);
+     IOP::ComponentId tag;
+     CORBA::OctetSeq component_data;
+   };
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponent;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_sequence/sequence_ch.cpp:89
+ 
+ #if !defined (_IOP_MULTIPLECOMPONENTPROFILE_CH_)
+ #define _IOP_MULTIPLECOMPONENTPROFILE_CH_
+-  
++
+   class MultipleComponentProfile;
+-  
++
+   typedef
+     TAO_VarSeq_Var_T<
+         MultipleComponentProfile,
+         TaggedComponent
+       >
+     MultipleComponentProfile_var;
+-  
++
+   typedef
+     TAO_Seq_Out_T<
+         MultipleComponentProfile,
+@@ -269,7 +269,7 @@
+         TaggedComponent
+       >
+     MultipleComponentProfile_out;
+-  
++
+   class TAO_Export MultipleComponentProfile
+     : public
+         TAO_Unbounded_Sequence<
+@@ -282,39 +282,39 @@
+     MultipleComponentProfile (
+         CORBA::ULong max,
+         CORBA::ULong length,
+-        TaggedComponent* buffer, 
++        TaggedComponent* buffer,
+         CORBA::Boolean release = 0
+       );
+     MultipleComponentProfile (const MultipleComponentProfile &);
+     ~MultipleComponentProfile (void);
+-    
++
+     static void _tao_any_destructor (void *);
+-    
++
+     typedef MultipleComponentProfile_var _var_type;
+   };
+ 
+ #endif /* end #if !defined */
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_MultipleComponentProfile;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_sequence/sequence_ch.cpp:89
+ 
+ #if !defined (_IOP_TAGGEDCOMPONENTLIST_CH_)
+ #define _IOP_TAGGEDCOMPONENTLIST_CH_
+-  
++
+   class TaggedComponentList;
+-  
++
+   typedef
+     TAO_VarSeq_Var_T<
+         TaggedComponentList,
+         TaggedComponent
+       >
+     TaggedComponentList_var;
+-  
++
+   typedef
+     TAO_Seq_Out_T<
+         TaggedComponentList,
+@@ -322,7 +322,7 @@
+         TaggedComponent
+       >
+     TaggedComponentList_out;
+-  
++
+   class TAO_Export TaggedComponentList
+     : public
+         TAO_Unbounded_Sequence<
+@@ -335,39 +335,39 @@
+     TaggedComponentList (
+         CORBA::ULong max,
+         CORBA::ULong length,
+-        TaggedComponent* buffer, 
++        TaggedComponent* buffer,
+         CORBA::Boolean release = 0
+       );
+     TaggedComponentList (const TaggedComponentList &);
+     ~TaggedComponentList (void);
+-    
++
+     static void _tao_any_destructor (void *);
+-    
++
+     typedef TaggedComponentList_var _var_type;
+   };
+ 
+ #endif /* end #if !defined */
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponentList;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_sequence/sequence_ch.cpp:89
+ 
+ #if !defined (_IOP_TAGGEDCOMPONENTSEQ_CH_)
+ #define _IOP_TAGGEDCOMPONENTSEQ_CH_
+-  
++
+   class TaggedComponentSeq;
+-  
++
+   typedef
+     TAO_VarSeq_Var_T<
+         TaggedComponentSeq,
+         TaggedComponent
+       >
+     TaggedComponentSeq_var;
+-  
++
+   typedef
+     TAO_Seq_Out_T<
+         TaggedComponentSeq,
+@@ -375,7 +375,7 @@
+         TaggedComponent
+       >
+     TaggedComponentSeq_out;
+-  
++
+   class TAO_Export TaggedComponentSeq
+     : public
+         TAO_Unbounded_Sequence<
+@@ -388,120 +388,120 @@
+     TaggedComponentSeq (
+         CORBA::ULong max,
+         CORBA::ULong length,
+-        TaggedComponent* buffer, 
++        TaggedComponent* buffer,
+         CORBA::Boolean release = 0
+       );
+     TaggedComponentSeq (const TaggedComponentSeq &);
+     ~TaggedComponentSeq (void);
+-    
++
+     static void _tao_any_destructor (void *);
+-    
++
+     typedef TaggedComponentSeq_var _var_type;
+   };
+ 
+ #endif /* end #if !defined */
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponentSeq;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_ORB_TYPE = 0U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_CODE_SETS = 1U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_POLICIES = 2U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_ALTERNATE_IIOP_ADDRESS = 3U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_COMPLETE_OBJECT_KEY = 5U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_ENDPOINT_ID_POSITION = 6U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_LOCATION_POLICY = 12U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_DCE_STRING_BINDING = 100U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_DCE_BINDING_NAME = 101U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_DCE_NO_PIPES = 102U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typedef/typedef_ch.cpp:333
+-  
++
+   typedef CORBA::ULong ServiceId;
+   typedef CORBA::ULong_out ServiceId_out;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceId;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_type.cpp:249
+-  
++
+   struct ServiceContext;
+-  
++
+   typedef
+     TAO_Var_Var_T<
+         ServiceContext
+       >
+     ServiceContext_var;
+-  
++
+   typedef
+     TAO_Out_T<
+         ServiceContext,
+         ServiceContext_var
+       >
+     ServiceContext_out;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_structure/structure_ch.cpp:52
+-  
++
+   struct TAO_Export ServiceContext
+   {
+     typedef ServiceContext_var _var_type;
+-    
++
+     static void _tao_any_destructor (void *);
+     IOP::ServiceId context_id;
+-    
+-    
++
++
+     // TAO_IDL - Generated from
+     // be/be_visitor_sequence/sequence_ch.cpp:89
+ 
+ #if !defined (_IOP_SERVICECONTEXT__TAO_SEQ_OCTET_CONTEXT_DATA_CH_)
+ #define _IOP_SERVICECONTEXT__TAO_SEQ_OCTET_CONTEXT_DATA_CH_
+-    
++
+     class TAO_Export _tao_seq_Octet_context_data
+       : public
+           TAO_Unbounded_Sequence<
+@@ -514,15 +514,15 @@
+       _tao_seq_Octet_context_data (
+           CORBA::ULong max,
+           CORBA::ULong length,
+-          CORBA::Octet* buffer, 
++          CORBA::Octet* buffer,
+           CORBA::Boolean release = 0
+         );
+       _tao_seq_Octet_context_data (const _tao_seq_Octet_context_data &);
+       ~_tao_seq_Octet_context_data (void);
+-      
++
+       static void _tao_any_destructor (void *);
+-      
+-      
++
++
+ 
+ #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+       _tao_seq_Octet_context_data (
+@@ -534,34 +534,34 @@
+     };
+ 
+ #endif /* end #if !defined */
+-    
++
+     // TAO_IDL - Generated from
+     // be/be_visitor_field/field_ch.cpp:453
+-    
++
+     typedef _tao_seq_Octet_context_data _context_data_seq;
+     _tao_seq_Octet_context_data context_data;
+   };
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceContext;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_sequence/sequence_ch.cpp:89
+ 
+ #if !defined (_IOP_SERVICECONTEXTLIST_CH_)
+ #define _IOP_SERVICECONTEXTLIST_CH_
+-  
++
+   class ServiceContextList;
+-  
++
+   typedef
+     TAO_VarSeq_Var_T<
+         ServiceContextList,
+         ServiceContext
+       >
+     ServiceContextList_var;
+-  
++
+   typedef
+     TAO_Seq_Out_T<
+         ServiceContextList,
+@@ -569,7 +569,7 @@
+         ServiceContext
+       >
+     ServiceContextList_out;
+-  
++
+   class TAO_Export ServiceContextList
+     : public
+         TAO_Unbounded_Sequence<
+@@ -582,117 +582,117 @@
+     ServiceContextList (
+         CORBA::ULong max,
+         CORBA::ULong length,
+-        ServiceContext* buffer, 
++        ServiceContext* buffer,
+         CORBA::Boolean release = 0
+       );
+     ServiceContextList (const ServiceContextList &);
+     ~ServiceContextList (void);
+-    
++
+     static void _tao_any_destructor (void *);
+-    
++
+     typedef ServiceContextList_var _var_type;
+   };
+ 
+ #endif /* end #if !defined */
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_typecode/typecode_decl.cpp:44
+-  
++
+   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceContextList;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId TransactionService = 0U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId CodeSets = 1U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId ChainBypassCheck = 2U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId ChainBypassInfo = 3U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId LogicalThreadId = 4U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId BI_DIR_IIOP = 5U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId SendingContextRunTime = 6U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId INVOCATION_POLICIES = 7U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId UnknownExceptionInfo = 9U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId RTCorbaPriority = 10U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId RTCorbaPriorityRange = 11U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_FT_GROUP = 27U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_FT_PRIMARY = 28U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_FT_HEARTBEAT_ENABLED = 29U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId FT_GROUP_VERSION = 12U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ServiceId FT_REQUEST = 13U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ProfileId TAG_UIPMC = 1413566220U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_GROUP = 1413566211U;
+-  
++
+   // TAO_IDL - Generated from
+   // be/be_visitor_constant/constant_ch.cpp:52
+-  
++
+   const IOP::ComponentId TAG_GROUP_IIOP = 1413566212U;
+ 
+ // TAO_IDL - Generated from
+@@ -917,4 +917,3 @@
+ #endif /* __BORLANDC__ */
+ 
+ #endif /* ifndef */
+-
+--- orig/IOP_IORC.cpp	2003-04-27 07:39:11.000000000 -0500
++++ ./IOP_IORC.cpp	2003-04-27 11:28:07.000000000 -0500
+@@ -1,6 +1,6 @@
+ // -*- C++ -*-
+ //
+-// $Id$
++// $Id$
+ 
+ // ****  Code generated by the The ACE ORB (TAO) IDL Compiler ****
+ // TAO and the TAO IDL Compiler have been developed by:
+@@ -30,16 +30,7 @@
+ 
+ 
+ #include "IOP_IORC.h"
+-#include "tao/Stub.h"
+-#include "tao/Invocation.h"
+-#include "tao/PortableInterceptor.h"
+-
+-#if TAO_HAS_INTERCEPTORS == 1
+-#include "tao/RequestInfo_Util.h"
+-#include "tao/ClientRequestInfo_i.h"
+-#include "tao/ClientInterceptorAdapter.h"
+-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+-
++#include "Any_T.h"
+ 
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

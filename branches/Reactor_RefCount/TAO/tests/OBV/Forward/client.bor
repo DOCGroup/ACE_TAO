@@ -1,0 +1,45 @@
+#
+# $Id$
+#
+
+NAME = client
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\TreeBaseC.obj \
+	$(OBJDIR)\TreeControllerC.obj \
+	$(OBJDIR)\TreeNodeC.obj \
+	$(OBJDIR)\client.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\TreeBase.idl \
+	$(IDLDIR)\TreeController.idl \
+	$(IDLDIR)\TreeNode.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\TreeBaseS.cpp $(IDLDIR)\TreeBaseC.cpp: $(IDLDIR)\TreeBase.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\TreeControllerS.cpp $(IDLDIR)\TreeControllerC.cpp: $(IDLDIR)\TreeController.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\TreeNodeS.cpp $(IDLDIR)\TreeNodeC.cpp: $(IDLDIR)\TreeNode.idl
+	$(TAO_IDL) $**

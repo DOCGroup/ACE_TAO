@@ -1,0 +1,16 @@
+project: server {
+  Source_Files {
+    Server_Worker.cpp
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project: client {
+  Source_Files {
+    testC.cpp
+    Client_Worker.cpp
+    client.cpp
+  }
+}
+
