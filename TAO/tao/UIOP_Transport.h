@@ -10,7 +10,6 @@
 //     UIOP_Transport.h
 //
 // = DESCRIPTION
-//     Unix Domain Socket (UIOP) Transport specific processing
 //
 // = AUTHOR
 //     Fred Kuhns <fredk@cs.wustl.edu>
@@ -39,7 +38,7 @@ class TAO_Export TAO_UIOP_Transport : public TAO_Transport
   //   connection handler (handler_).
   //
   // = DESCRIPTION
-  //   Implements common IIOP methods for the Transport adaptor class.
+  //   Implements common UIOP methods for the Transport adaptor class.
 public:
   TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
                       TAO_ORB_Core *orb_core);
