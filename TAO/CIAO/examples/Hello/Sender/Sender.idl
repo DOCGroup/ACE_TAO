@@ -13,14 +13,14 @@
 
 module Hello
 {
+
   /* This is a Sender specific interface which will be used to get the
    * process start.
    */
-
   interface trigger
   {
     void start ();
-    };
+  };
 
   component Sender supports trigger
   {

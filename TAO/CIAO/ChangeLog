@@ -1,3 +1,12 @@
+Mon Dec  1 02:35:18 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * examples/Hello/Sender/Sender.mpc:
+          Added the empty IDL_Files part in the starter project to get rid
+          of the linking error(MPC generates makefile which links in
+          unnecessary linkage reqirements). Also deleted all the Makefiles
+          in the example. The user should run mwc.pl to regenerate the
+          Makefile before building the project.
+
 Sun Nov 30 20:51:06 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * examples/Hello/Sender/Makefile.Hello_Starter:
