@@ -57,15 +57,13 @@ Fri Jan 29 20:16:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Fri Jan 29 18:07:28 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp:
-	Removed unused variables
-
+	  Removed unused variables
 
 Fri Jan 29 18:04:25 1999  Fred Kuhns <fredk@cs,wustl.edu>
 
-  * Fixed an old style ref to IIOP::MY_MINOR and IIOP::MY_MAJOR
-    to TAO_IIOP_Profile::DEF_IIOP_MAJOR, TAO_IIOP_Profile::DEF_IIOP_MINOR
-    in utils/catior/catior.cpp
-
+        * Fixed an old style ref to IIOP::MY_MINOR and IIOP::MY_MAJOR to
+ 	  TAO_IIOP_Profile::DEF_IIOP_MAJOR,
+ 	  TAO_IIOP_Profile::DEF_IIOP_MINOR in utils/catior/catior.cpp
 
 Fri Jan 29 15:55:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -476,12 +474,12 @@ Sat Jan 23 11:59:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Jan 22 18:45:48 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-        * docs/releasenotes/index.html:
-        Added the information about the generation of skeletons for
-        implementation by the IDL Compiler
+        * docs/releasenotes/index.html: Added the information about the
+ 	generation of servant implementations for implementation by the
+ 	IDL Compiler
 
         * docs/compiler.html:
-        Added the IDL compiler options for generating skeletons for implementation
+        Added the IDL compiler options for generating servant implementations
 
 Fri Jan 22 13:08:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
