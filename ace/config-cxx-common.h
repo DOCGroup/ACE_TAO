@@ -12,6 +12,9 @@
 # define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
+# if defined (linux)
+#   define ACE_LACKS_ACE_IOSTREAM
+# endif /* linux */
 # define DEC_CXX
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
