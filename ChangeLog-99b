@@ -1,3 +1,12 @@
+Mon Jun 21 23:22:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Misc/test_trace.cpp: Improved this test so it will
+	  work more effectively on single-threaded *and* multi-threaded
+ 	  platforms.  Thanks to Hao Ruan <hruan@lucent.com> for reporting
+ 	  this.  Also fixed a warnng in this test caused by failure to
+ 	  return a value on every return path.  Thanks to David Levine for
+ 	  reporting this.
+
 Mon Jun 21 14:17:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Stats.h:
