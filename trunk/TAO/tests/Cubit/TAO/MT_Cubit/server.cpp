@@ -16,7 +16,7 @@
 #include "server.h"
 
 // Global options used to configure various parameters.
-static char *hostname;
+static char hostname[BUFSIZ];
 static char *ior_file = 0;
 static int base_port = ACE_DEFAULT_SERVER_PORT;
 static int num_of_objs = 1;
@@ -32,7 +32,8 @@ Cubit_Task::Cubit_Task (const char *args,
                         u_int num_of_objs,
                         ACE_Barrier *barrier,
                         u_int task_id)
-  : orbname_ ((char *) orbname),
+  : key_ ("Cubit"),
+    orbname_ ((char *) orbname),
     orbargs_ ((char *) args),
     num_of_objs_ (num_of_objs),
     servants_ (0),
@@ -206,6 +207,7 @@ Cubit_Task::initialize_orb (void)
               TAO_TRY_ENV.clear ();
               objref = this->naming_context_->resolve (cubit_context_name,
                                                        TAO_TRY_ENV);
+	      printf("NamingContext::AlreadyBound\n");
             }
           else
             TAO_TRY_ENV.print_exception ("bind() Cubit context object\n");
@@ -220,6 +222,7 @@ Cubit_Task::initialize_orb (void)
       this->mt_cubit_context_ =
         CosNaming::NamingContext::_narrow (objref.in (),
                                            TAO_TRY_ENV);
+
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -247,17 +250,17 @@ Cubit_Task::create_servants ()
   TAO_TRY
     {
       // Create the array of cubit implementations.
-      ACE_NEW_RETURN (servants_,
-                      Cubit_i *[num_of_objs_],
+      ACE_NEW_RETURN (this->servants_,
+                      Cubit_i *[this->num_of_objs_],
                       -1);
 
       // Create the array of strings.
-      ACE_NEW_RETURN (servants_iors_,
-                      CORBA::String [num_of_objs_],
+      ACE_NEW_RETURN (this->servants_iors_,
+                      CORBA::String [this->num_of_objs_],
                       -1);
 
       char *buffer;
-      int l = ACE_OS::strlen (key) + 3;
+      int l = ACE_OS::strlen (this->key_) + 3;
 
       ACE_NEW_RETURN (buffer,
                       char[l],
@@ -266,13 +269,13 @@ Cubit_Task::create_servants ()
       // This loop creates multiple servants, and prints out their
       // IORs.
       for (u_int i = 0;
-           i < num_of_objs_;
+           i < this->num_of_objs_;
            i++)
         {
           ACE_OS::sprintf (buffer,
                            "%s%02d",
-                           (char *) key,
-                           task_id_);
+                           (char *) this->key_,
+                           this->task_id_);
 
           PortableServer::ObjectId_var id =
             PortableServer::string_to_ObjectId (buffer);
@@ -314,7 +317,7 @@ Cubit_Task::create_servants ()
           cubit_name[0].id =
             CORBA::string_dup (buffer);
 
-          if (!CORBA::is_nil (this->mt_cubit_context_.in ()))
+          if (CORBA::is_nil (this->mt_cubit_context_.in ()) == CORBA::B_FALSE)
             {
               this->mt_cubit_context_->bind (cubit_name,
                                              cubit.in (),
@@ -529,8 +532,12 @@ parse_args (int argc, char *argv[])
   ACE_Get_Opt opts (argc, argv, "sh:p:t:f:");
   int c;
 
-  hostname = ACE_OS::strdup ("localhost");
-
+  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
+    {
+      perror ("gethostname");
+      return -1;
+    }
+  
   while ((c = opts ()) != -1)
     switch (c)
       {
@@ -541,7 +548,7 @@ parse_args (int argc, char *argv[])
         ior_file = opts.optarg;
         break;
       case 'h':
-        hostname = opts.optarg;
+        ACE_OS::strcpy (hostname, opts.optarg);
         ACE_DEBUG ((LM_DEBUG, "h\n"));
         break;
       case 'p':
@@ -618,10 +625,8 @@ start_servants (void)
 {
   char *args1;
 
-  // @@ Please change this so it doesn't use a magic number like
-  // 4096...
   ACE_NEW_RETURN (args1,
-                  char[4096],
+                  char[BUFSIZ],
                   -1);
   int i;
 
@@ -685,10 +690,8 @@ start_servants (void)
     {
       char *args;
       
-      // @@ Please change this so it doesn't use a magic number like
-      // 4096...
       ACE_NEW_RETURN (args,
-                      char [4096],
+                      char [BUFSIZ],
                       -1);
 
       ACE_OS::sprintf (args,
@@ -713,10 +716,8 @@ start_servants (void)
 
   char *args;
   
-  // @@ Please change this so it doesn't use a magic number like
-  // 4096...
   ACE_NEW_RETURN (args,
-                  char [4096],
+                  char [BUFSIZ],
                   -1);
 
   ACE_OS::sprintf (args,

@@ -2,46 +2,11 @@
 
 #include "Task_Client.h"
 
-// @@ Shouldn't this be a member function?
-static int 
-stats (int data[], int n)
-{
-    int i, j, key, sum, mean;
-
-    if (n < 2)
-        return 0;
-
-    // Sort the samples.
-    for (j = 1; j < n; j++) 
-      {
-        key = data[j];
-        i = j - 1;
-        while( i >= 0 && data[i] > key ) 
-          {
-            data[i + 1] = data[i];
-            i--;
-          }
-
-        data[i + 1] = key;
-      }
-
-    sum = 0;
-    for(i = 0; i < n; i++) 
-        sum += data[i];
-
-    if (ACE_EVEN (n))
-        mean = (data[n / 2 - 1] + data[n / 2]) / 2;
-    else
-        mean = data[n / 2];
-
-    return sum / n;
-}
-
 Task_State::Task_State (int argc, char **argv)
-  : start_count_ (0),
+  : key_ ("Cubit"),
+    start_count_ (0),
     loop_count_ (5),
     thread_count_ (5),
-    base_port_ (5000),
     datatype_ (CB_OCTET),
     argc_ (argc),
     argv_ (argv),
@@ -53,9 +18,7 @@ Task_State::Task_State (int argc, char **argv)
     use_name_service_ (1),
     ior_file_ (0)
 {
-  server_host_ = ACE_OS::strdup ("localhost");
-
-  ACE_Get_Opt opts (argc, argv, "sh:n:t:p:d:rk:xof:1:2:3:");
+  ACE_Get_Opt opts (argc, argv, "sn:t:d:rk:xof:");
   int c;
   int datatype;
 
@@ -69,15 +32,6 @@ Task_State::Task_State (int argc, char **argv)
       break;
     case 'f':
       ior_file_ = ACE_OS::strdup (opts.optarg);
-      break;
-    case '1':
-      iors_[0] =  ACE_OS::strdup (opts.optarg);
-      break;
-    case '2':
-      iors_[1] =  ACE_OS::strdup (opts.optarg);
-      break;
-    case '3':
-      iors_[2] =  ACE_OS::strdup (opts.optarg);
       break;
     case 'o':
       oneway_ = 1;
@@ -111,12 +65,6 @@ Task_State::Task_State (int argc, char **argv)
           break;
         }
       continue;
-    case 'h':
-      ACE_OS::strcpy (server_host_, opts.optarg);
-      continue;
-    case 'p':
-      base_port_ = ACE_OS::atoi (opts.optarg);
-      continue;
     case 'n':                   // loop count
       loop_count_ = (u_int) ACE_OS::atoi (opts.optarg);
       continue;
@@ -128,8 +76,6 @@ Task_State::Task_State (int argc, char **argv)
       ACE_DEBUG ((LM_DEBUG, "usage:  %s"
                   "[-d datatype Octet=0, Short=1, Long=2, Struct=3]"
                   " [-n num_calls]"
-                  " [-h server_hostname]"
-                  " [-p server_port_num]"
                   " [-t num_threads]"
                   " [-k factory_ior_key]"
                   " [-f ior_file]"
@@ -138,6 +84,10 @@ Task_State::Task_State (int argc, char **argv)
                   " [-s] // makes client *NOT* use the name service"
                   "\n", argv [0]));
     }
+
+  // allocate the array of character pointers.
+  ACE_NEW (iors_, 
+	   char *[thread_count_]);
 
   if (ior_file_ != 0)
     {
@@ -149,7 +99,7 @@ Task_State::Task_State (int argc, char **argv)
       while (ACE_OS::fgets (buf, BUFSIZ, iorFile) != 0)
 	{ 
 	  j = ACE_OS::strlen (buf); 
-	  buf[j - 1] = 0;
+	  buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
           iors_[i] = ACE_OS::strdup (buf); 
 	  i++;  
 	}
@@ -160,7 +110,7 @@ Task_State::Task_State (int argc, char **argv)
   // thread_count_ + 1 because there is one utilization thread also
   // wanting to begin at the same time the clients begin..
   ACE_NEW (barrier_,
-           ACE_Barrier (thread_count_));
+           ACE_Barrier (thread_count_ + 1));
   ACE_NEW (latency_,
            double [thread_count_]);
   ACE_NEW (global_jitter_array_, 
@@ -178,7 +128,7 @@ Client::Client (Task_State *ts)
 void
 Client::put_ave_latency (int ave_latency, u_int thread_id)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *ts_));
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
 
   ts_->ave_latency_[thread_id] = ave_latency;
 }
@@ -186,15 +136,16 @@ Client::put_ave_latency (int ave_latency, u_int thread_id)
 void
 Client::put_latency (double *jitter, double latency, u_int thread_id)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *ts_));
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
 
   ts_->latency_[thread_id] = latency;
+  ts_->global_jitter_array_[thread_id] = jitter;
+
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG, "(%t) My latency was %u\n", latency));
 #else
   ACE_DEBUG ((LM_DEBUG, "(%t) My latency was %f\n", latency));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
-  ts_->global_jitter_array_[thread_id] = jitter;
 }
 
 double
@@ -232,13 +183,7 @@ Client::get_high_priority_jitter (void)
       jitter += difference * difference;
     }
 
-  // @@ This is a *hack*, we need to implement sqrt without double's.
-  // @@ David, can we please ask James for help with this?
-#if defined (ACE_LACKS_FLOATING_POINT)
-  return 1;
-#else  /* ! ACE_LACKS_FLOATING_POINT */
   return sqrt (jitter / (double) (ts_->loop_count_ - 1));
-#endif /* ! ACE_LACKS_FLOATING_POINT */
 }
 
 double
@@ -269,8 +214,6 @@ Client::svc (void)
   CORBA::Object_var naming_obj (0);
   CORBA::Environment env;
 
-  // @@ Please don't use magic #'s here...
-  char ior [1024];
   double frequency = 0.0;
 
   /// Add "-ORBobjrefstyle url" argument to the argv vector for the
@@ -401,12 +344,12 @@ Client::svc (void)
             TAO_CHECK_ENV;
 
             char *buffer;
-            int l = ACE_OS::strlen (key) + 3;
+            int l = ACE_OS::strlen (ts_->key_) + 3;
             ACE_NEW_RETURN (buffer, char[l], -1);
 
             ACE_OS::sprintf (buffer,
                              "%s%02d",
-                             (char *) key,
+                             (char *) ts_->key_,
                              thread_id);
 
             // Construct the key for the name service lookup.
@@ -460,8 +403,17 @@ Client::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "(%t) >>> Factory binding succeeded\n"));
 
-            char *my_ior = ACE_OS::strdup (cb_factory->create_cubit (thread_id,
-                                                                     TAO_TRY_ENV));
+
+	    char * tmp_ior = cb_factory->create_cubit (thread_id, TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
+
+	    if (tmp_ior == 0)
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "create_cubit() returned a null pointer!\n"),
+				 -1);
+
+            char *my_ior = ACE_OS::strdup (tmp_ior);
+                                           
             TAO_CHECK_ENV;
 
             objref = orb->string_to_object (my_ior,
@@ -529,8 +481,11 @@ Client::svc (void)
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) **** USING ONEWAY CALLS ****\n"));
 
-  this->run_tests (cb, ts_->loop_count_, thread_id,
-                   ts_->datatype_, frequency);
+  int result = this->run_tests (cb, ts_->loop_count_, thread_id,
+				ts_->datatype_, frequency);
+
+  if (result == -1)
+    return -1;
 
   if (ts_->shutdown_)
     {
@@ -560,8 +515,8 @@ Client::run_tests (Cubit_ptr cb,
   double *my_jitter_array;
 
   ACE_NEW_RETURN (my_jitter_array,
-                  double [ts_->loop_count_],
-                  1);   // @@ shouldn't failure return -1?
+                  double [loop_count],
+                  -1); 
 
   double latency = 0;
   double sleep_time = (1 / frequency) * (1000 * 1000);
@@ -576,7 +531,6 @@ Client::run_tests (Cubit_ptr cb,
 
   for (i = 0; i < loop_count; i++)
     {
-      //ACE_Profile_Timer timer; Use high resolution timer instead
       ACE_High_Res_Timer timer_;
       ACE_Time_Value tv (0, (long int) (sleep_time - delta));
       ACE_OS::sleep (tv);
@@ -778,23 +732,23 @@ Client::run_tests (Cubit_ptr cb,
       // ACE_OS::ACE_HRTIMER_STOP; not using sysBench when CHORUS defined
       timer_.elapsed_time (delta_t);
 
-      ACE_Profile_Timer::ACE_Elapsed_Time et;
+      double real_time = 0.0;
 
 #if !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT)
       // Store the time in usecs.
-      et.real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
+      real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
         delta_t.usec ();
 
-      delta = ((40 * fabs (et.real_time) / 100) + (60 * delta / 100)); // pow(10,6)
-      latency += et.real_time;
-      my_jitter_array [i] = et.real_time; // in units of microseconds.
+      delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
+      latency += real_time;
+      my_jitter_array [i] = real_time; // in units of microseconds.
 #else
       // Store the time in secs.
-      et.real_time = delta_t.sec ();
+      real_time = delta_t.sec () + (double)delta_t.usec () / ACE_ONE_SECOND_IN_USECS;
 
-      delta = ((40 * fabs (et.real_time * (1000 * 1000)) / 100) + (60 * delta / 100)); // pow(10,6)
-      latency += et.real_time;
-      my_jitter_array [i] = et.real_time * 1000;
+      delta = ((40 * fabs (real_time * (1000 * 1000)) / 100) + (60 * delta / 100)); // pow(10,6)
+      latency += real_time;
+      my_jitter_array [i] = real_time * 1000;
 #endif /* !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT) */
     }
 
@@ -831,6 +785,15 @@ Client::run_tests (Cubit_ptr cb,
                                  thread_id);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
             }
+	  else
+	    {
+	      // still we have to call this function to store a valid array pointer.
+	      this->put_latency (my_jitter_array,
+				 0,
+                                 thread_id);
+	      ACE_DEBUG ((LM_DEBUG,
+			  "*** Warning: Latency is less than or equal to zero.  Precision may have been lost.\n"));
+	    }
         }
       ACE_DEBUG ((LM_DEBUG, 
                   "%d calls, %d errors\n",

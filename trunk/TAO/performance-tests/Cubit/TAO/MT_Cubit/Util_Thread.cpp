@@ -19,6 +19,8 @@ Util_Thread::svc (void)
               "waiting for threads to finish binding\n"));
 
   // @@ Sumedh, please add comments here.
+  // this barrier synchronizes the utilization thread with 
+  // the cubit threads that respond to CORBA requests.
   this->ts_->barrier_->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
