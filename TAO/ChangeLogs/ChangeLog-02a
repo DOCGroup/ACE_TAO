@@ -1,3 +1,31 @@
+Wed Jun 21 17:15:44 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+
+	  Added support for SSLIOP pluggable protocol and Security Service
+	  library.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/Makefile.Security:
+	* orbsvcs/orbsvcs/SECIOP.idl:
+	* orbsvcs/orbsvcs/SSLIOP.idl:
+	* orbsvcs/orbsvcs/Security.idl:
+	* orbsvcs/orbsvcs/SecurityAdmin.idl:
+	* orbsvcs/orbsvcs/SecurityLevel1.idl:
+	* orbsvcs/orbsvcs/SecurityLevel2.idl:
+	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+	* orbsvcs/orbsvcs/Security/security_export.h:
+
+	  Added Security Service related files.
+
 Wed Jun 21 18:35:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/Time_Service/Clerk_i.cpp (Clerk_i): Set the 
