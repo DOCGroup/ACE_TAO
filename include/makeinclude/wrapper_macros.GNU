@@ -89,14 +89,12 @@
 #
 #  Variable     Description
 #  --------     -----------
-#  ACE_HAS_GNUG_PRE_2_8 CXX includes "g++", and the g++ version is
-#                       prior to 2.8.0.  This is automatically determined
-#                       below, but can be overridden in the user's
-#                       platform_macros.GNU or environment.  Three values
-#                       are supported:
-#                         1 for g++ < 2.8.0,
-#                         0 for g++ >= 2.8.0 or egcs,
-#                         undefined for non-g++ compilers.
+#  ACE_HAS_GNUG_PRE_2_8 CXX
+#               includes "g++", and the g++ version is prior to 2.8.0.  This is
+#               automatically determined below, but can be overridden in the
+#               user's platform_macros.GNU or environment.  Three values are
+#               supported: 1 for g++ < 2.8.0, 0 for g++ >= 2.8.0 or egcs,
+#               undefined for non-g++ compilers.
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
 #  CXX          C++ compiler command
@@ -113,8 +111,9 @@
 #  DLD          Name of dynamic linker
 #  LD           Name of linker
 #  IDL          Name of the CORBA IDL compiler
-#  TEMPLATES_FLAG Flag to pass to the compiler to control the instantiation of
-# 		  templates.
+#  TEMPLATES_FLAG
+#               Flag to pass to the compiler to control the instantiation of
+# 		templates.
 #  INSBIN       Binary (executable) installation directory
 #  INSINC       Include file installation directory
 #  INSMAN       Manpage installation directory
@@ -127,18 +126,30 @@
 #  OCCFLAGS     Optimizing C++ compilation flags
 #  PCFLAGS      C compilation flags for profiling
 #  PCCFLAGS     C++ compilation flags for profiling
-#  PLATFORM_XT_CPPFLAGS   Platform CPP options for X11 (some require -I...)
-#  PLATFORM_XT_LDFLAGS    Platform LD options for X11 (some require -L...)
-#  PLATFORM_XT_LIBS       Platform libraries require with X11
-#  PLATFORM_SSL_CPPFLAGS   Platform CPP options for OpenSSL (may need -I...)
-#  PLATFORM_SSL_LDFLAGS    Platform LD options for OpenSSL (may need -L...)
-#  PLATFORM_SSL_LIBS       Platform libraries required with OpenSSL
-#  PLATFORM_RAPI_CPPFLAGS   Platform CPP options for RAPI
-#  PLATFORM_RAPI_LDFLAGS    Platform LD options for RAPI
-#  PLATFORM_RAPI_LIBS       Platform libraries required with RAPI
-#  PLATFORM_SCTP_CPPFLAGS   Platform CPP options required for SCTP
-#  PLATFORM_SCTP_LDFLAGS    Platform LD options required for SCTP
-#  PLATFORM_SCTP_LIBS       Platform libraries required for SCTP
+#  PLATFORM_XT_CPPFLAGS
+#               Platform CPP options for X11 (some require -I...)
+#  PLATFORM_XT_LDFLAGS
+#               Platform LD options for X11 (some require -L...)
+#  PLATFORM_XT_LIBS
+#               Platform libraries require with X11
+#  PLATFORM_SSL_CPPFLAGS
+#               Platform CPP options for OpenSSL (may need -I...)
+#  PLATFORM_SSL_LDFLAGS
+#               Platform LD options for OpenSSL (may need -L...)
+#  PLATFORM_SSL_LIBS
+#               Platform libraries required with OpenSSL
+#  PLATFORM_RAPI_CPPFLAGS
+#               Platform CPP options for RAPI
+#  PLATFORM_RAPI_LDFLAGS
+#               Platform LD options for RAPI
+#  PLATFORM_RAPI_LIBS
+#               Platform libraries required with RAPI
+#  PLATFORM_SCTP_CPPFLAGS
+#               Platform CPP options required for SCTP
+#  PLATFORM_SCTP_LDFLAGS
+#               Platform LD options required for SCTP
+#  PLATFORM_SCTP_LIBS
+#               Platform libraries required for SCTP
 #  PRELINK      Executable to precede linking, such as quantify
 #  PURELINK     If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
@@ -163,50 +174,66 @@
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
-
-# Set the cleanup targets
-ifeq ($(CLEANUP_BIN),)
-  ifneq ($(BIN),)
+# Set the cleanup targets.  These targets are used by realclean even if
+# the component isn't being built, i.e., the decision to build it was based
+# on components built in another makefile and written a file (that might no
+# longer be available) and accessed by $(ACE_ROOT)/bin/ace_components.
+#
+# If a component should always be built, just use the normal BIN, LIB, or
+# SHLIB variables.  If it's dependent on a component, use the BIN2 or
+# BIN_UNCHECKED variety, then assign that to BIN if the required component
+# is available.
+#
+# If you want to include multiple targets in a single Makefile, you must
+# create your own targets, e.g., server and client.  In this case, assign
+# them to BIN, or BIN_UNCHECKED if they depend on other components, do not
+# include rules.bin.GNU.  That way they will still get cleaned up.
+ifndef CLEANUP_BIN
+  ifdef BIN
     CLEANUP_BIN = $(BIN)
   else
-    ifneq ($(BIN2),)
+    ifdef BIN2
       CLEANUP_BIN = $(BIN2)
+      BIN_UNCHECKED = $(BIN2)
     else
       CLEANUP_BIN = $(BIN_UNCHECKED)
     endif
   endif
 endif
 
-ifeq ($(CLEANUP_LIB),)
-  ifneq ($(LIB),)
+ifndef CLEANUP_LIB
+  ifdef LIB
     CLEANUP_LIB = $(LIB)
   else
-    ifneq ($(LIB2),)
+    ifdef LIB2
       CLEANUP_LIB = $(LIB2)
+      LIB_UNCHECKED = $(LIB2)
     else
       CLEANUP_LIB = $(LIB_UNCHECKED)
     endif
   endif
 endif
 
-ifeq ($(CLEANUP_SHLIB),)
-  ifneq ($(SHLIB),)
+ifndef CLEANUP_SHLIB
+  ifdef SHLIB
     CLEANUP_SHLIB = $(SHLIB)
   else
-    ifneq ($(SHLIB2),)
+    ifdef SHLIB2
       CLEANUP_SHLIB = $(SHLIB2)
+      SHLIB_UNCHECKED = $(SHLIB2)
     else
       CLEANUP_SHLIB = $(SHLIB_UNCHECKED)
     endif
   endif
 endif
 
-ifeq ($(CLEANUP_SHLIBA),)
-  ifneq ($(SHLIBA),)
+ifndef CLEANUP_SHLIBA
+  ifdef SHLIBA
     CLEANUP_SHLIBA = $(SHLIBA)
   else
-    ifneq ($(SHLIBA2),)
+    ifdef SHLIBA2
       CLEANUP_SHLIBA = $(SHLIBA2)
+      SHLIBA2_UNCHECKED = $(SHLIBA2)
     else
       CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
     endif
@@ -215,10 +242,10 @@ endif
 
 #### Default to building shared libraries only.  Set it here to give the
 #### platform a chance to override.
-ifeq ($(shared_libs),)
+ifndef shared_libs
   shared_libs = 1
 endif # shared_libs
-ifeq ($(static_libs),)
+ifndef static_libs
   static_libs = 0
 endif # static_libs
 
@@ -296,34 +323,41 @@ endif # versioned_so
 #      Platform-independent macro definitions
 #----------------------------------------------------------------------------
 
+ifndef INCLDIRS
+  INCLDIRS ?=
+endif
+ifndef DEFFLAGS
+  DEFFLAGS ?=
+endif
+
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
 
 # Define default extentions for IDL-generated files
-ifeq ($(IDL_CLIENT_HDR_EXT),)
+ifndef IDL_CLIENT_HDR_EXT
 IDL_CLIENT_HDR_EXT = C.h
 endif
-ifeq ($(IDL_CLIENT_INL_EXT),)
+ifndef IDL_CLIENT_INL_EXT
 IDL_CLIENT_INL_EXT = C.i
 endif
-ifeq ($(IDL_CLIENT_SRC_EXT),)
+ifndef IDL_CLIENT_SRC_EXT
 IDL_CLIENT_SRC_EXT = C.cpp
 endif
-ifeq ($(IDL_SERVER_HDR_EXT),)
+ifndef IDL_SERVER_HDR_EXT
 IDL_SERVER_HDR_EXT = S.h
 endif
-ifeq ($(IDL_SERVER_INL_EXT),)
+ifndef IDL_SERVER_INL_EXT
 IDL_SERVER_INL_EXT = S.i
 endif
-ifeq ($(IDL_SERVER_SRC_EXT),)
+ifndef IDL_SERVER_SRC_EXT
 IDL_SERVER_SRC_EXT = S.cpp
 endif
-ifeq ($(IDL_SERVER_THDR_EXT),)
+ifndef IDL_SERVER_THDR_EXT
 IDL_SERVER_THDR_EXT = S_T.h
 endif
-ifeq ($(IDL_SERVER_TINL_EXT),)
+ifndef IDL_SERVER_TINL_EXT
 IDL_SERVER_TINL_EXT = S_T.i
 endif
-ifeq ($(IDL_SERVER_TSRC_EXT),)
+ifndef IDL_SERVER_TSRC_EXT
 IDL_SERVER_TSRC_EXT = S_T.cpp
 endif
 
@@ -435,6 +469,9 @@ ifneq ($(optimize),)
   CCFLAGS += $(OCCFLAGS)
 endif # optimize
 
+ifndef split
+  split = 0
+endif
 ifeq ($(split),0)
   override split =
 endif # split
@@ -478,6 +515,9 @@ ifneq ($(xt_reactor),)
   ACE_MAKE_OPTIONS += xt_reactor
 endif # xt_reactor
 
+ifndef fl_reactor
+  fl_reactor ?=
+endif
 ifeq ($(fl_reactor),0)
   override fl_reactor =
 endif # fl_reactor
@@ -491,6 +531,9 @@ ifneq ($(fl_reactor),)
   ACE_MAKE_OPTIONS += rl_reactor
 endif # fl_reactor
 
+ifndef tk_reactor
+  tk_reactor ?=
+endif
 ifeq ($(tk_reactor),0)
   override tk_reactor =
 endif # tk_reactor
@@ -503,6 +546,9 @@ ifneq ($(tk_reactor),)
   ACE_MAKE_OPTIONS += tk_reactor
 endif # tk_reactor
 
+ifndef qt_reactor
+  qt_reactor ?=
+endif
 ifeq ($(qt_reactor),0)
   override qt_reactor =
 endif # qt_reactor
@@ -515,12 +561,18 @@ ifneq ($(qt_reactor),)
   ACE_MAKE_OPTIONS += qt_reactor
 endif # qt_reactor
 
+ifndef QTDIR
+  QTDIR ?=
+endif
 ifneq ($(QTDIR),)
   MOC = ${QTDIR}/bin/moc
 else
   MOC = moc
 endif
 
+ifndef gtk_reactor
+  gtk_reactor ?=
+endif
 ifeq ($(gtk_reactor),0)
   override gtk_reactor =
 endif # gtk_reactor
@@ -533,6 +585,9 @@ ifneq ($(gtk_reactor),)
   ACE_MAKE_OPTIONS += gtk_reactor
 endif # gtk_reactor
 
+ifndef rapi
+  rapi ?=
+endif
 ifeq ($(rapi),0)
      override rapi =
 endif #rapi
@@ -544,6 +599,9 @@ ifneq ($(rapi),)
   ACE_MAKE_OPTIONS += rapi
 endif # rapi
 
+ifdef sctp
+  sctp ?=
+endif
 ifeq ($(sctp),0)
      override sctp =
 endif #rapi
@@ -556,6 +614,9 @@ ifneq ($(sctp),)
   ACE_MAKE_OPTIONS += sctp
 endif
 
+ifndef ace_with_gl
+  ace_with_gl ?=
+endif
 ifeq ($(ace_with_gl),0)
   override ace_with_gl =
 endif # ace_with_gl
@@ -568,6 +629,9 @@ ifneq ($(ace_with_gl),)
   ACE_MAKE_OPTIONS += ace_with_gl
 endif # ace_with_gl
 
+ifndef ace_with_xll
+  ace_with_x11 ?=
+endif
 ifeq ($(ace_with_x11),0)
   override ace_with_x11 =
 endif # ace_with_x11
@@ -579,9 +643,14 @@ ifneq ($(ace_with_x11),)
   ACE_MAKE_OPTIONS += ace_with_x11
 endif # ace_with_x11
 
+ifndef ssl
+  ssl ?=
+endif
 ifeq ($(ssl),0)
   override ssl =
-endif # ssl
+else
+  ACE_MAKE_OPTIONS += ssl
+endif
 
 ifeq ($(exceptions),0)
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
@@ -594,6 +663,9 @@ ifeq ($(exceptions),0)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 else  # exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
+  ifndef include_env
+    include_env ?=
+  endif
   ifeq ($(include_env),1)
     CPPFLAGS += -DACE_ENV_BKWD_COMPAT
   endif
@@ -611,6 +683,9 @@ else  # exceptions
   ACE_MAKE_OPTIONS += exceptions
 endif # exceptions
 
+ifndef profile
+  profile ?=
+endif
 ifeq ($(profile),0)
   override profile =
 endif # profile
@@ -620,6 +695,9 @@ ifneq ($(profile),)
   CCFLAGS += $(PCCFLAGS)
 endif # profile
 
+ifndef inline
+  inline ?=
+endif
 ifeq ($(inline),0)
   CPPFLAGS += -DACE_NO_INLINE
 else
@@ -635,9 +713,16 @@ ifeq ($(static_libs),0)
   override static_libs =
 endif # static_libs
 
+ifndef shared_libs_only
+  shared_libs_only ?=
+endif
 ifeq ($(shared_libs_only),0)
   override shared_libs_only =
 endif # shared_libs_only
+
+ifndef static_libs_only
+  static_libs_only ?=
+endif
 ifeq ($(static_libs_only),0)
   override static_libs_only =
 endif # static_libs_only
@@ -665,31 +750,9 @@ ifdef static_libs
   ACE_MAKE_OPTIONS += static_libs
 endif
 
-#### We need to set VBIN here, because it's used in the BUILD
-#### definitions below.
-VBIN = $(BIN:%=%$(VAR))
-
 # These rules are here for backward compatibility, but are overwritten by the
 # new all_in_one.GNU file.
 ifdef shared_libs
-  ifdef static_libs
-    #### Build both shared and static libs.
-    BUILD  = $(IDL_SRC) $(VSHLIB) $(SHLIBA) $(VLIB) $(VBIN)
-  else # ! static_libs
-    #### Build shared libs only.
-    ifeq ($(SHLIB),)
-      #### Makefile only specifies static libs, so only build static libs.
-      BUILD         =  $(IDL_SRC) $(VLIB) $(VBIN)
-    else # ! SHLIB
-      #### Don't build static libs.
-      BUILD         =  $(IDL_SRC) $(VSHLIB) $(SHLIBA) $(VBIN)
-      LIB           =
-#      ifndef VXWORKS
-#        VDIR        =  $(VSHDIR)
-#      endif # ! VXWORKS
-    endif # SHLIB
-  endif # static_libs
-
   ifdef SHLIBA
     LDLIBS := $(LDLIBS:-l%=-l%shr)
     ACE_SHLIBS := $(ACE_SHLIBS:-l%=-l%shr)
@@ -697,15 +760,11 @@ ifdef shared_libs
 else # ! shared_libs
   ifdef static_libs
     #### Don't build shared libs.
-    BUILD           =  $(IDL_SRC) $(VLIB) $(VBIN)
     PIC             =
     SHLIB           =
     SOEXT           = o
     VSHDIR          = $(VDIR)
     VLDLIBS         = $(LDLIBS:%.so=%.o)
-  else # ! static_libs
-    #### Don't build any libs.
-    BUILD           =  $(IDL_SRC) $(VBIN)
   endif # static_libs
 endif # shared_libs
 
@@ -718,6 +777,9 @@ endif # kylix
 
 VLDLIBS = $(LDLIBS) $(ACELIB) $(LIBS)
 
+ifndef probe
+  probe ?=
+endif
 ifeq ($(probe),0)
   override probe =
 endif # probe
@@ -726,14 +788,17 @@ ifeq ($(probe),1)
     CPPFLAGS += -DACE_COMPILE_TIMEPROBES
 endif # probe
 
+ifndef purify
+  purify ?=
+endif
 ifeq ($(purify),0)
   override purify =
 endif # purify
 
+ifdef purify
 PURE_CACHE_BASE_DIR = /tmp/purifycache
 PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
 
-ifdef purify
   #### Pick up Purify directory from the users PATH.
   ACE_PURIFY_DIR := \
     $(shell type purify | sed -e 's/.* is //' -e 's%/purify$$%%')
@@ -747,6 +812,9 @@ ifdef purify
   CPPFLAGS += -DACE_HAS_PURIFY -I$(ACE_PURIFY_DIR)
 endif # purify
 
+ifndef quantify
+  quantify ?=
+endif
 ifeq ($(quantify),0)
   override quantify =
 endif # quantify
@@ -768,6 +836,9 @@ ifdef quantify
   endif # sparc
 endif # quantify
 
+ifndef repo
+  repo ?=
+endif
 ifeq ($(repo),0)
   override repo =
 endif # repo
@@ -781,7 +852,7 @@ ifdef repo
 endif # repo
 
 # If pipes is not set, we default to 0
-ifeq (,$(pipes))
+ifndef pipes
   pipes = 0
 endif
 
@@ -793,21 +864,12 @@ ifeq ($(pipes),1)
 endif # pipes
 
 # RMCast is turned on by default
-ifeq (,$(rmcast))
+ifndef rmcast
   rmcast = 1
 endif
 
 ifeq ($(rmcast),1)
   ACE_MAKE_OPTIONS += rmcast
-endif
-
-# SSL is turned off by default
-ifeq (,$(ssl))
-  ssl = 0
-endif
-
-ifeq ($(ssl),1)
-  ACE_MAKE_OPTIONS += ssl
 endif
 
 #----------------------------------------------------------------------------
@@ -816,6 +878,9 @@ endif
 
 COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+ifndef RC
+  RC ?=
+endif
 COMPILE.rc      = $(RC)
 COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 # 960905 Marius Kjeldahl <marius@funcom.com>

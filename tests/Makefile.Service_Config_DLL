@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #       $Id$
 #
@@ -15,8 +17,6 @@ FILES   = Service_Config_DLL
 LSRC    = $(addsuffix .cpp,$(FILES))
 
 LIBS   += $(ACELIB)
-
-BUILD   = $(VLIB) $(VSHLIB)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

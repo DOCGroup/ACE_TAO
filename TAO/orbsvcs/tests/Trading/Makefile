@@ -39,7 +39,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 LSRC    = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 PSRC    = $(addsuffix .cpp,$(BIN2))
 ACE_SHLIBS = -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny $(TAO_SRVR_LIBS)
-LDLIBS  = -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny $(TAO_SRVR_LIBS)
+LDLIBS  = -lTTest -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny $(TAO_SRVR_LIBS)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -70,15 +70,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .PRECIOUS: TTestS.cpp TTestS.h TTestC.cpp TTestC.h
-
-ifneq ($(BIN),)
-  ifeq ($(SHLIB), $(findstring $(SHLIB), $(BUILD)))
-    $(BIN): $(SHLIB)
-  endif
-  ifeq ($(LIB), $(findstring $(LIB), $(BUILD)))
-    $(BIN): $(LIB)
-  endif
-endif # BIN
 
 .PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 

@@ -9,12 +9,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 TAO_IDLFLAGS +=  -Ge 1 -I$(TAO_ROOT)/orbsvcs/orbsvcs -I$(TAO_ROOT)
-IDL_FILES = NavWeap
-IDL_SRC = NavWeapC.cpp NavWeapS.cpp
-IDL_HDR = NavWeapC.h
-EVENT_TEST_SRCS = Event_Sup.cpp Logging_Sup.cpp DualEC_Sup.cpp Event_Con.cpp DOVE_Supplier.cpp
-
-LSRC = $(IDL_SRC) $(EVENT_TEST_SRCS)
+IDL_FILES = ../NavWeap
 
 EVENT_SUP_OBJS = NavWeapC.o NavWeapS.o Event_Sup.o DOVE_Supplier.o
 EVENT_CON_OBJS = NavWeapC.o NavWeapS.o Event_Con.o
@@ -41,7 +36,6 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
@@ -52,21 +46,17 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) \
             -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-.NOTPARALLEL:
-
-NavWeapC.h: ../NavWeap.idl $(TAO_IDL)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $< -o .
-
 Event_Sup: $(addprefix $(VDIR),$(EVENT_SUP_OBJS))
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 
 Logging_Sup: $(addprefix $(VDIR),$(LOGGING_SUP_OBJS))
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 
 DualEC_Sup: $(addprefix $(VDIR),$(DUALEC_SUP_OBJS))
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 
 Event_Con: $(addprefix $(VDIR),$(EVENT_CON_OBJS))
-
-realclean: clean
-	-$(RM) NavWeap.idl NavWeap[CS].* NavWeap[CS]_T.*
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 
 #----------------------------------------------------------------------------
 #       Dependencies

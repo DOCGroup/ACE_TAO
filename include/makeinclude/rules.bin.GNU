@@ -8,31 +8,53 @@
 #       Requires GNU make
 #----------------------------------------------------------------------------
 
+ifdef BIN
+  VBIN = $(BIN:%=%$(VAR))
+  # VBIN always depends on idl_stubs and libraries, if they exist.
+  ifdef IDL_SRC
+    $(VBIN): $(IDL_SRC)
+  endif
+  ifdef VLIBS
+    $(VBIN): $(VLIBS)
+  endif
+else # !BIN
+  ifndef BIN_UNCHECKED
+    @echo Warning: rules.bin.GNU included, but no BIN targets detected.
+  endif # !BIN_UNCHECKED
+endif # BIN
+
 VOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC))))) 
 
 # Needed for depend.
 PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
 
+ifndef EXEEXT
+  EXEEXT ?=
+endif
+
+CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
+
 ifeq ($(CHORUSLINK),true)
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
-	$(LINK.cc) $(CC_OUTPUT_FLAG) $@ $^   $(VLDLIBS) $(LDFLAGS) $(POSTLINK)
+	$(LINK.cc) $(CC_OUTPUT_FLAG) $@ $(sort $(VDIR)$@.$(OBJEXT) $(VOBJS)) $(VLDLIBS) $(LDFLAGS) $(POSTLINK)
 #	$(MERGEDIR)/dtool/mkctors $@.xp.o > $@.ct.s
 #	$(CXX) -c $@.ct.s
 #	$(RM) $@.ct.s
 #	$(LD) $(LDOPTIONS) -e _start -o $@ $(MERGEDIR)/lib/crt/crth.u.o $(MERGEDIR)/lib/crt/crt0.o $(MERGEDIR)/lib/crt/crti.o $@.xp.o $@.ct.o $(MERGEDIR)/lib/crt/crtn.o -dn -T $(MERGEDIR)/src/act/slots/act_u.ld
 #	$(RM) $@.xp.o
 #	$(RM) $@.ct.o
-else
-ifeq (1,$(using_aix_vacpp))
+else # !CHORUSLINK
+  ifeq (1,$(using_aix_vacpp))
 $(BIN): %: %.icc $(SRC)
 	vacbld_r $< -severitylevel=warning
-else
-ifdef kylix
+  else # !using_aix_vacpp
+    ifdef kylix
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
-else
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $(sort $(VDIR)$@.$(OBJEXT) $(VOBJS)) , $@,,
+    else # !kylix
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(sort $(VDIR)$@.$(OBJEXT) $(VOBJS)) $(VLDLIBS) $(POSTLINK)
+    endif # kylix
+  endif # using_aix_vacpp
 endif
-endif
-endif
+

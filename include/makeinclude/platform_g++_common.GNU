@@ -14,7 +14,7 @@ CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 # If no option has been specified, try to enable templates based on the
 # version of the compiler.
 #
-ifeq ($(templates),)
+ifndef templates
   ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
     templates = automatic
   else
@@ -46,8 +46,11 @@ endif
 # The correct flags to pass to the linker for ELF dynamic shared library
 # versioning. None of this works on OpenBSD's ld.
 # If the platform file didn't already set versioned_so, default to 1.
-ifeq (,$(versioned_so))
+ifndef versioned_so
   versioned_so = 1
+endif
+ifndef with_ld
+  with_ld ?=
 endif
 ifeq ($(versioned_so),1)
   ifeq ($(with_ld),hpux)
@@ -58,6 +61,10 @@ ifeq ($(versioned_so),1)
       SOFLAGS += -Wl,-h -Wl,$(SONAME)
     endif
   endif
+endif
+
+ifndef static_libs_only
+  static_libs_only ?=
 endif
 
 # Add all symbols to the dynamic symbol table.  Needed to enable dynamic_cast
