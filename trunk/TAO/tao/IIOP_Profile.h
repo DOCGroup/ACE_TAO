@@ -20,6 +20,7 @@
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
 
+#include "tao/ORB.h"
 #include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
 #include "tao/GIOP.h"
@@ -28,6 +29,7 @@
 #include "ace/Synch.h"
 #include "ace/INET_Addr.h"
 
+class CORBA::String_var;
 class TAO_IIOP_Client_Connection_Handler;
 
 // TAO IIOP_Profile concrete Profile definitions
@@ -153,7 +155,7 @@ private:
 
 private:
 
-  char *host_;
+  CORBA::String_var host_;
   // String representing the hosts name.
 
   CORBA::UShort port_;
