@@ -323,6 +323,15 @@ project(Hash Map Manager Test) : aceexe {
   }
 }
 
+project(Hash Map Manager RT Test) : aceexe {
+  exename = Hash_Map_Manager_RT_Test
+  Source_Files {
+    Hash_Map_Manager_RT_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
 project(Hash Map Bucket Iterator Test) : aceexe {
   exename = Hash_Map_Bucket_Iterator_Test
   Source_Files {
