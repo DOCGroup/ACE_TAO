@@ -1,3 +1,50 @@
+Mon Jul  3 00:25:44 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/sys/termios.h:
+	  Moved to pace/
+
+	* pace/posix/aio.*:
+	* pace/posix/direnet.*:
+	* pace/posix/fcntl.*:
+	* pace/posix/grp.*:
+	* pace/posix/locale.*:
+	* pace/posix/math.*:
+	* pace/posix/mqueue.*:
+	* pace/posix/pthread.*:
+	* pace/posix/pwd.*:
+	* pace/posix/sched.*:
+	* pace/posix/semaphore.*:
+	* pace/posix/setjmp.*:
+	* pace/posix/signal.*:
+	* pace/stddef.*:
+	* pace/posix/stdio.*:
+	* pace/posix/stdlib.*:
+	* pace/posix/string.*:
+	* pace/posix/types.*:
+	* pace/posix/time.*:
+	  Added many missing typedefs and macros. A bug has been
+	  added in also in types.h. It is harmless but causes a
+	  compiler warning that I could not fix. Files lower in
+	  the alphabet such as utime haven't been finished yet.
+
+	* pace/posix/stdio.*:
+	  Added in the missing functions fgetpos, fsetpos, fwrite,
+	  setvbuf, vfprintf, vprintf, vsprintf. The last three
+	  are empty until passing the macro va_list is resolved.
+
+	* pace/posix/locale.*:
+	  Added localeconv ().
+
+	* pace/posix/signal.*:
+	  Added raise () and signal ().
+
+	* pace/posix/unistd.*:
+	* pace/posix/stdio.*:
+	  Moved ctermid() from stdio to unistd.
+
+	* pace/posix/stdlib.*:
+	  Added abort ().
+
 Fri Jun 30 16:54:41 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/wait.h:
