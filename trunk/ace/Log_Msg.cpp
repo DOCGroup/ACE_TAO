@@ -255,7 +255,7 @@ ACE_Log_Msg::disable_debug_messages()
 {
   default_priority_mask_ &= ~LM_DEBUG;
   ACE_Log_Msg *currentInstance = ACE_Log_Msg::instance();
-  currentInstance->priority_mask(currentInstance->priority_mask() 
+  currentInstance->priority_mask(currentInstance->priority_mask()
                                  & ~LM_DEBUG);
 }
 
@@ -266,7 +266,7 @@ ACE_Log_Msg::enable_debug_messages()
 {
   default_priority_mask_ |= LM_DEBUG;
   ACE_Log_Msg *currentInstance = ACE_Log_Msg::instance();
-  currentInstance->priority_mask(currentInstance->priority_mask() 
+  currentInstance->priority_mask(currentInstance->priority_mask()
                                  | LM_DEBUG);
 }
 
@@ -666,7 +666,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
         }
       else
         {
-          ASYS_TCHAR c;         // high use character
+          ASYS_TCHAR c = '\0';  // high use character
           ASYS_TCHAR *fp;       // local format pointer
           int  wpc;             // width/precision cnt
           const int CONTINUE = 0;
@@ -881,18 +881,18 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   // -Steve Huston, 19-Aug-97
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%u"), thread_self());
 #elif defined (DIGITAL_UNIX)
-		  ACE_OS::sprintf (bp, ASYS_TEXT ("%u"),
-				   pthread_getselfseq_np());
+                  ACE_OS::sprintf (bp, ASYS_TEXT ("%u"),
+                                   pthread_getselfseq_np());
 #else
                   ACE_hthread_t t_id;
                   ACE_Thread::self (t_id);
 
 #  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
-		  // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
-		  // more meaningful, readable, thread ID.  This will match
-		  // the one seen in the debugger as well.
-		  ACE_OS::sprintf (bp, ASYS_TEXT ("%u"),
-				   pthread_getunique_np(&t_id));
+                  // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
+                  // more meaningful, readable, thread ID.  This will match
+                  // the one seen in the debugger as well.
+                  ACE_OS::sprintf (bp, ASYS_TEXT ("%u"),
+                                   pthread_getunique_np(&t_id));
 #  else
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%u"), t_id);
 #  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
