@@ -33,7 +33,7 @@ extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
 # if defined (PACE_HAS_INLINE)
-# include "pace/sys/utsname.inl"
+# include "utsname.inl"
 # endif /* PACE_HAS_INLINE */
 
 
