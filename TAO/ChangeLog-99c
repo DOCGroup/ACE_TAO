@@ -1,3 +1,11 @@
+Sat May  1 23:30:08 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+	  Added the correct implementation of destroy method according to Irfan's suggestion.
+	  Also corrected some TAO_ macros used for exceptions.           
+
 Sat May  1 22:01:41 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
