@@ -168,7 +168,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               *os << "," << be_nl;
             }
 
-          *os << "public virtual CORBA::ValueBase";
+          *os << "public virtual ::Components::EventBase";
         }
     }
   else if (n_inherits == 0)
