@@ -67,8 +67,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
   *os << be_nl << be_nl;
 
-  if (! node->is_nested ()
-      || node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+  if (! node->is_nested ())
     {
       *os << "const ";
 
@@ -91,7 +90,16 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // We are nested inside an interface or a valuetype.
   else 
     {
-      *os << "static const ";
+      if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+        {
+          *os << "extern ";
+        }
+      else
+        {
+          *os << "static ";
+        }
+
+      *os << "const ";
 
       if (node->et () == AST_Expression::EV_enum)
         {
