@@ -1,3 +1,18 @@
+Mon Jan 31 08:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Logging/Trace_Return.cpp:
+        * apps/JAWS/clients/Caching/http_client.cpp:
+          Fixed unicode errors
+
+        * apps/mkcsregdb/mkcsregdb.mpc:
+        * ASNMP/examples/walk/walk.mpc:
+        * ASNMP/examples/trap/trap.mpc:
+        * ASNMP/examples/set/set.mpc:
+        * ASNMP/examples/next/next.mpc:
+        * ASNMP/examples/get/get.mpc:
+          Added avoids += uses_wchar, the code can't be build with wchar
+          enabled
+
 Mon Jan 31 08:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Reactor/Timers.cpp:
