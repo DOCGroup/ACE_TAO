@@ -1,3 +1,11 @@
+Thu Mar 14 12:50:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+        * ace/OS_String.cpp:
+          Fixed a skipping strtok_r_emulation definition when ACE_HAS_WCHAR is
+          defined.
+
 Thu Mar 14 11:26:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Misc/context_switch_time.cpp: Renamed the
