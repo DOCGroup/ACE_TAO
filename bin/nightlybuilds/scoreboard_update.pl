@@ -72,7 +72,7 @@ sub load_build_list ($$)
 
     foreach (@data) {
         chomp;
-    
+
         # Skip blank lines and comments
         if (m/^\s*$/) { next; };
         if (m/^\#/) { next; }
@@ -80,12 +80,12 @@ sub load_build_list ($$)
         # Remove trailing and leading spaces
         s/^\s*//;
         s/\s*$//;
-  
+
         if (m/\[(.*)\]/) {
             $buildname = $1;
-            
+
             # $todo: Could probably check for other bad character (\:) here
-            
+
             if (defined %builds->{$buildname}) {
                 print "ERROR: Build [$buildname] redefined, skipping\n";
                 $buildname = undef;
@@ -94,7 +94,7 @@ sub load_build_list ($$)
                 print "ERROR: Name [$buildname] contains spaces, skipping\n";
                 $buildname = undef;
             }
-            
+
             next;
         }
 
@@ -233,7 +233,7 @@ sub query_latest ()
 #
 # query_status
 #
-# Queries the status links to figure out the latest status and stores in 
+# Queries the status links to figure out the latest status and stores in
 # STATUS
 #
 # Arguments:  Nothing
@@ -249,7 +249,7 @@ sub query_status ()
         my $link = %builds->{$buildname}->{STATUS_LINK};
         if (defined $link) {
             print "    Status [$buildname] from $link\n";
-        
+
             my $ua = LWP::UserAgent->new;
 
             ### We are impatient, so don't wait more than 20 seconds for a
@@ -263,7 +263,7 @@ sub query_status ()
                 print "        ERROR: Could not load status\n";
                 next;
             }
-            
+
             my @contents = split /\n/, $response->content ();
 
             ### Now look for files
@@ -323,7 +323,7 @@ sub load_web_dir ($)
         print "        ERROR: Could not load web dir\n";
         return ();
     }
-    
+
     ### Pull out the contents based on the server type
 
     my $content = $response->content ();
@@ -376,7 +376,7 @@ sub load_web_dir ($)
 ###############################################################################
 sub decode_timestamp ($)
 {
-    my $timestamp = shift; 
+    my $timestamp = shift;
     my $description = '';
 
     if ($timestamp =~ m/(....)(..)(..)(..)(..)/) {
@@ -384,9 +384,9 @@ sub decode_timestamp ($)
                     4 => 'Apr',  5 => 'May',  6 => 'Jun',
                     7 => 'Jul',  8 => 'Aug',  9 => 'Sep',
                    10 => 'Oct', 11 => 'Nov', 12 => 'Dec');
-        $description = 
+        $description =
             sprintf ('%s %s, %s - %s:%s', $mon{int ($2)}, $3, $1, $4, $5);
-        
+
     }
     else {
         warn 'Unable to decode time';
@@ -398,7 +398,7 @@ sub decode_timestamp ($)
 
 ###############################################################################
 #
-# update_cache 
+# update_cache
 #
 # Updates the local cache
 #
@@ -447,18 +447,18 @@ sub update_cache ($)
             }
         }
 
-        my @existing = glob ($directory . '/' . $buildname 
+        my @existing = glob ($directory . '/' . $buildname
                              . '/' . $buildname . '_*');
 
         @existing = reverse sort @existing;
 
         # shift off the ones we want to keep
-        shift @existing;  # for now, just the current one 
+        shift @existing;  # for now, just the current one
 
         foreach my $file (@existing) {
             print "        Removing $file\n";
             unlink $file;
-      
+
         }
     }
 }
@@ -479,7 +479,7 @@ sub update_cache ($)
 ###############################################################################
 sub timestamp_color ($$$)
 {
-    my $timestamp = shift; 
+    my $timestamp = shift;
     my $orange = shift;
     my $red = shift;
 
@@ -496,7 +496,7 @@ sub timestamp_color ($$$)
             return 'orange';
         }
 
-        return 'white'        
+        return 'white'
     }
 
     warn 'Unable to decode time';
@@ -535,11 +535,11 @@ sub determine_type ($)
         }
     }
     $log->close ();
-    
+
     if ($msvc == 1) {
         return 'msvc';
     }
-    else {        
+    else {
         return 'makefile';
     }
 }
@@ -596,7 +596,7 @@ sub get_color ($$)
         }
     }
     $results->close ();
-    
+
     if ($errors > 0) {
         return 'red';
     }
@@ -606,7 +606,7 @@ sub get_color ($$)
     elsif ($found == 1) {
         return 'lime';
     }
-    else {        
+    else {
         return 'white';
     }
 }
@@ -647,7 +647,7 @@ sub found_section ($$)
         }
     }
     $results->close ();
-    
+
     return $found;
 }
 
@@ -690,11 +690,12 @@ sub update_html ($$)
 
     ### Print link to new scoreboard
 
+    print $indexhtml "<h2>Some nightly builds have been moved to the ";
     print $indexhtml "<A HREF=\"http://doc.ece.uci.edu/scoreboard\">New";
-    print $indexhtml "Scoreboard</A><BR><HR>\n";
+    print $indexhtml "Scoreboard</A>.  Don't forget to check it out.</H2>\n";
 
     ### Print tables (first the empty one)
-    
+
     update_html_table ($dir, $script, $indexhtml, undef);
     foreach my $group (sort keys %groups) {
         update_html_table ($dir, $script, $indexhtml, $group);
@@ -734,11 +735,11 @@ sub update_html_table ($$$@)
     my $name = shift;
     my $havestatus = 0;
     my $havemanual = 0;
-    
+
     my @builds;
-    
+
     ### Table
-    
+
     # check to see if we are doing the "NONE" group
     if (!defined $name) {
         print "    Building table for ungrouped\n";
@@ -749,7 +750,7 @@ sub update_html_table ($$$@)
         @builds = sort @{%groups->{$name}};
         print $indexhtml "<A NAME=\"$name\"><H2></A>$name</H2>\n";
     }
-    
+
     foreach my $buildname (@builds) {
         if (defined %builds->{$buildname}->{STATUS}) {
             $havestatus = 1;
@@ -771,7 +772,7 @@ sub update_html_table ($$$@)
         print "        Looking at $buildname\n";
 
         print $indexhtml '<TR><TD>';
-        
+
         if (defined %builds->{$buildname}->{WEB_LINK}) {
             print $indexhtml "<A HREF=\"".%builds->{$buildname}->{WEB_LINK} ."\">" ;
             print $indexhtml $buildname;
@@ -798,7 +799,7 @@ sub update_html_table ($$$@)
             if (!-e $newfile.'.html') {
                 print "            Creating HTML for $time\n";
 
-                my $command = 'perl ' . $script . ' -c ' . determine_type ($log) . 
+                my $command = 'perl ' . $script . ' -c ' . determine_type ($log) .
                               ' -i ' . $log . ' -o ' . $newfile . '.html';
 
                 system ($command);
@@ -806,13 +807,13 @@ sub update_html_table ($$$@)
 
             if (!-e $newfile.'_Brief.html') {
                 print "            Creating HTML Brief for $time\n";
-    
-                my $command = 'perl '.$script.' -b -c ' . determine_type ($log) . 
+
+                my $command = 'perl '.$script.' -b -c ' . determine_type ($log) .
                               ' -i ' . $log . ' -o ' . $newfile . '_Brief.html';
 
                 system ($command);
             }
-           
+
             my $orange = $orange_default;
             my $red = $red_default;
 
@@ -829,7 +830,7 @@ sub update_html_table ($$$@)
             print $indexhtml '>',decode_timestamp ($time);
 
             my $color;
-        
+
             print $indexhtml '<TD>';
             if (found_section ($newfile.'.html', 'config')) {
                 print $indexhtml "[<A HREF=\"".$webfile.".html#config\">Config</A>] ";
@@ -837,7 +838,7 @@ sub update_html_table ($$$@)
             else {
                 print $indexhtml "&nbsp;";
             }
-        
+
             $color = get_color ($newfile.'_Brief.html', 'cvs');
             print $indexhtml "<TD bgcolor=$color>";
             if ($color ne 'gray' && $color ne 'white') {
@@ -874,8 +875,8 @@ sub update_html_table ($$$@)
             print $indexhtml '<TD bgcolor=gray>&nbsp;'; # CVS
             print $indexhtml '<TD bgcolor=gray>&nbsp;'; # Compiler
             print $indexhtml '<TD bgcolor=gray>&nbsp;'; # Tests
-        }       
-                
+        }
+
 
         if ($havemanual) {
             print $indexhtml "<TD align=center>";
@@ -894,7 +895,7 @@ sub update_html_table ($$$@)
             if (defined %builds->{$buildname}->{STATUS}) {
                 print $indexhtml "<A HREF=\"", %builds->{$buildname}->{STATUS_LINK}, "\"\>";
                 print $indexhtml %builds->{$buildname}->{STATUS};
-                print $indexhtml "</A>";                
+                print $indexhtml "</A>";
             }
             else {
                 print $indexhtml "&nbsp;";
@@ -909,13 +910,13 @@ sub update_html_table ($$$@)
 
         # shift off the ones we want to keep
         # shift only twice to keep the last *.html and *_Brief.html
-        shift @existing;  
-        shift @existing;  
+        shift @existing;
+        shift @existing;
 
         foreach my $file (@existing) {
             print "            Removing $file\n";
             unlink $file;
-      
+
         }
     }
 
