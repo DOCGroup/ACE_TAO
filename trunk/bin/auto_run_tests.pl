@@ -14,7 +14,7 @@ use English;
 use Getopt::Std;
 use Cwd;
 
-$ACE_ROOT = $ENV{ACE_ROOT};
+use Env qw(ACE_ROOT PATH);
 
 ################################################################################
 
@@ -37,6 +37,9 @@ if (!getopts ('ac:ds:t') || $opt_h) {
     print "Configs: " . $config_list->list_configs () . "\n";
     exit (1);
 }
+
+# Insures that we search for stuff in the current directory.
+$PATH .= $Config::Config{path_sep} . '.';
 
 foreach $test ($config_list->valid_entries ()) {
     my $directory = ".";
