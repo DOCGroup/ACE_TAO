@@ -51,6 +51,7 @@ TAO_GIOP_ServerRequest::
   : incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (0),
+    sync_with_server_ (0),
     lazy_evaluation_ (0),
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -244,6 +245,7 @@ TAO_GIOP_ServerRequest::
     incoming_ (0),
     outgoing_ (&output),
     response_expected_ (response_expected),
+    sync_with_server_ (0),
     lazy_evaluation_ (0),
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
