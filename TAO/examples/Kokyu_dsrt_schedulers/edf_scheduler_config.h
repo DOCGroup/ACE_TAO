@@ -1,0 +1,7 @@
+/* $Id$ */
+#ifndef EDF_SCHEDULER_CONFIG_H
+#define EDF_SCHEDULER_CONFIG_H
+
+#define CONFIG_DSTREAM_EDF_SCHED
+
+#endif /* EDF_SCHEDULER_CONFIG_H */
