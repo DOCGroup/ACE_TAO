@@ -42,6 +42,7 @@ public:
                               const void *arg)
     // Print out when timeouts occur.
     {
+      ACE_UNUSED_ARG(tv);
       ACE_DEBUG ((LM_DEBUG,
                   "%d timeout occurred for %s.\n",
                   ++count_,
