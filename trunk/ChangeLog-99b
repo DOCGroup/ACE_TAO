@@ -1,9 +1,15 @@
+Mon Feb  1 21:02:26 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/ace_dll.dsp: Some template files were being compiled
+          in the Release/Unicode/Alpha configs.  This is now not the
+          case.
+
 Mon Feb  1 13:49:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-linux-common.h: 
-	  Added a definition for ACE_TIMER_SKEW, apparently it is only
-	  needed in multiple CPU machines (with SMP enabled); but it did
-	  solve the problems with MT_Reactor_Timer_Test.
+        * ace/config-linux-common.h:
+          Added a definition for ACE_TIMER_SKEW, apparently it is only
+          needed in multiple CPU machines (with SMP enabled); but it did
+          solve the problems with MT_Reactor_Timer_Test.
 
 Mon Feb 01 13:08:11 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
