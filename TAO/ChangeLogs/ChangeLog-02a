@@ -1,3 +1,11 @@
+Sat Nov 10 19:08:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Factory.cpp (init): 
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp (init): 
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp (init):
+	  Added some more fixes for the "const" changes to
+	  ACE_Arg_Shifter.  Thanks to Craig Rodrigues for providing these.
+
 Sat Nov 10 16:31:10 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp (init): 
