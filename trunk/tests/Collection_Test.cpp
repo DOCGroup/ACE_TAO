@@ -24,13 +24,30 @@ ACE_RCSID(tests, Collection_Test, "$Id$")
 #include "ace/Containers.h"
 
 typedef int DATA;
+typedef ACE_Unbounded_Set<DATA> UNBOUNDED_SET;
+typedef ACE_Unbounded_Set_Iterator<DATA> UNBOUNDED_SET_ITERATOR;
+typedef ACE_Unbounded_Set_Const_Iterator<DATA> UNBOUNDED_SET_CONST_ITERATOR;
+typedef ACE_Array<DATA> ARRAY;
+typedef ACE_Array_Iterator<DATA> ARRAY_ITERATOR;
+
+void iterate_const(const UNBOUNDED_SET& set)
+{
+  {
+    UNBOUNDED_SET_CONST_ITERATOR iterator (set);
+    while (!iterator.done ())
+    {
+      DATA *data = 0;
+      iterator.next (data);
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
+                  (*data)));
+      iterator.advance ();
+    }
+  }
+}
 
 int main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Collection_Test"));
-
-  typedef ACE_Unbounded_Set<DATA> UNBOUNDED_SET;
-  typedef ACE_Unbounded_Set_Iterator<DATA> UNBOUNDED_SET_ITERATOR;
 
   {
     UNBOUNDED_SET unbounded_set;
@@ -59,10 +76,8 @@ int main (int, ACE_TCHAR *[])
           iterator.advance ();
         }
     }
+    iterate_const (unbounded_set);
   }
-
-  typedef ACE_Array<DATA> ARRAY;
-  typedef ACE_Array_Iterator<DATA> ARRAY_ITERATOR;
 
   {
     ARRAY array;
@@ -123,9 +138,10 @@ int main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Set<DATA>;
 template class ACE_Unbounded_Set_Iterator<DATA>;
+template class ACE_Unbounded_Set_Const_Iterator<DATA>;
 
 #if (ACE_SIZEOF_INT != 4)
-// These might be already instantiated in ace/stats.cpp 
+// These might be already instantiated in ace/stats.cpp
 // (if ACE_INT32 == int)
 template class ACE_Node<DATA>;
 #endif /* ACE_SIZEOF_INT != 4 */
@@ -136,6 +152,7 @@ template class ACE_Array_Iterator<DATA>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Unbounded_Set<DATA>
 #pragma instantiate ACE_Unbounded_Set_Iterator<DATA>
+#pragma instantiate ACE_Unbounded_Set_Const_Iterator<DATA>
 #pragma instantiate ACE_Node<DATA>
 #pragma instantiate ACE_Array<DATA>
 #pragma instantiate ACE_Array_Base<DATA>

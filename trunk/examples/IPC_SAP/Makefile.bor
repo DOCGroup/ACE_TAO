@@ -3,6 +3,11 @@
 #
 
 DIRS = \
-        Sock_Sap
+        ATM_SAP \
+        FIFO_SAP \
+        FILE_SAP \
+        Sock_Sap \
+        SPIPE_SAP \
+        UPIPE_SAP
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
