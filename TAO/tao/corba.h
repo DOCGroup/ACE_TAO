@@ -179,6 +179,8 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/Server_Request.h"
 #include "tao/Typecode.h"
 
+#include "tao/PolicyC.h"
+
 // Marshaling
 #include "tao/Marshal.h"
 #include "tao/CDR.h"

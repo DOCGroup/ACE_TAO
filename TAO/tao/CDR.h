@@ -108,7 +108,7 @@ public:
   static void mb_align (ACE_Message_Block* mb);
 
   static int grow (ACE_Message_Block*& mb, size_t minsize);
-  // Increase the capacity of mb to contain at least <minsize> bytes. 
+  // Increase the capacity of mb to contain at least <minsize> bytes.
   // If <minsze> is zero the size is increased by an amount at least
   // large enough to contain any of the basic IDL types.
   // Return -1 on failure, 0 on success.
@@ -405,7 +405,7 @@ public:
 				       CORBA::ULong length);
 
   // = TAO specific methods.
-  
+
   CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                            const void *data,
                                            const void *,
@@ -413,6 +413,22 @@ public:
   // Demarshall the contents of the CDR stream into <data> as
   // described by <tc>; returning any errors in <env>.
 
+  // = We have one method per basic IDL type....
+  // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  CORBA_Boolean skip_boolean (void);
+  CORBA_Boolean skip_char (void);
+  CORBA_Boolean skip_wchar (void);
+  CORBA_Boolean skip_octet (void);
+  CORBA_Boolean skip_short (void);
+  CORBA_Boolean skip_ushort (void);
+  CORBA_Boolean skip_long (void);
+  CORBA_Boolean skip_ulong (void);
+  CORBA_Boolean skip_longlong (void);
+  CORBA_Boolean skip_ulonglong (void);
+  CORBA_Boolean skip_float (void);
+  CORBA_Boolean skip_double (void);
+  CORBA_Boolean skip_longdouble (void);
+  CORBA_Boolean skip_wstring (void);
   CORBA_Boolean skip_string (void);
   // The next field must be a string, this method skips it. It is
   // useful in parsing a TypeCode.
@@ -422,8 +438,18 @@ public:
   // Skip <n> bytes in the CDR stream.
   // Return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
 
+  CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
+                                         CORBA::Environment &env);
+  // Skip the contents of the CDR stream based on information
+  // described by <tc>; returning any errors in <env>.
+
   int good_bit (void) const;
   // returns zero if a problem has been detected.
+
+  const ACE_Message_Block* start (void) const;
+  // Return the start of the message block chain for this CDR stream.
+  // NOTE: In the current implementation the chain has length 1, but
+  // we are planning to change that.
 
   char* rd_ptr (void);
   // Returns the current position for the rd_ptr....
@@ -435,7 +461,7 @@ private:
   void rd_ptr (size_t offset);
   char* end (void);
   // short cuts for the underlying message block.
-  
+
   int adjust (size_t size, char*& buf);
   // Returns (in <buf>) the next position in the buffer aligned to
   // <size>, it advances the Message_Block rd_ptr past the data

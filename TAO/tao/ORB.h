@@ -107,6 +107,13 @@ class CORBA_Principal;
 class CORBA_SystemException;
 class CORBA_UserException;
 
+class CORBA_Policy;
+class CORBA_Policy_var;
+class CORBA_Policy_out;
+
+class CORBA_PolicyList;
+class CORBA_PolicyList_var;
+class CORBA_PolicyList_out;
 // forward declarations of system exceptions
 #define TAO_SYSTEM_EXCEPTION(name) class CORBA_ ## name
 
@@ -506,8 +513,7 @@ public:
   typedef CORBA_ServerRequest ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
 
-  typedef CORBA_SystemException
-  SystemException;
+  typedef CORBA_SystemException SystemException;
 
   typedef CORBA_TypeCode TypeCode;
   typedef TypeCode *TypeCode_ptr;
@@ -522,6 +528,16 @@ public:
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
 
   typedef class CORBA_InterfaceDef *InterfaceDef_ptr;
+
+
+  typedef CORBA_Policy Policy;
+  typedef CORBA_Policy *Policy_ptr;
+  typedef CORBA_Policy_var Policy_var;
+  typedef CORBA_Policy_out Policy_out;
+
+  typedef CORBA_PolicyList PolicyList;
+  typedef CORBA_PolicyList_var PolicyList_var;
+  typedef CORBA_PolicyList_out PolicyList_out;
 
   // enum values defined in nvlist.hh, bitwise ORed.
   typedef u_int Flags;
@@ -729,6 +745,14 @@ public:
     IN_COPY_VALUE = 0x08,
     OUT_LIST_MEMORY = 0x10
   };
+
+  static CORBA::TypeCode_ptr _tc_Policy;
+  static CORBA::TypeCode_ptr _tc_PolicyList;
+
+  typedef CORBA::ULong PolicyType;
+  typedef CORBA::ULong_out PolicyType_out;
+  static CORBA::TypeCode_ptr _tc_PolicyType;
+
 };  // end of class (namespace) CORBA
 
 #include "tao/Sequence.h"
