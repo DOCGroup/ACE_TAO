@@ -2,7 +2,7 @@ Mon Apr 15 07:37:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h: Removed support
-	  for preconnects.  Fixed compiler errors with g++.
+	  for preconnects.  Fixed compile errors with g++.
 	
 	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
 	  Forward declared TAO_Profile to avoid compile errors. 
