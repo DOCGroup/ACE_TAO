@@ -17,7 +17,7 @@
 template<class Client> Auto_Disconnect<Client>&
 Auto_Disconnect<Client>::operator= (Client *client)
 {
-  this->Auto_Functor<Client,Disconnect<Client> >::operator= (client);
+  this->reset(client);
   return *this;
 }
 

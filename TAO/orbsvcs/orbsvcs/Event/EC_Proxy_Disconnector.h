@@ -10,7 +10,7 @@
 
 #include /**/ "event_export.h"
 #include "orbsvcs/orbsvcs/RtecEventCommC.h"
-#include "tao/Auto_Functor.h"
+#include "ace/Auto_Functor.h"
 
 /**
  * @struct TAO_EC_Supplier_Proxy_Disconnect_Functor
@@ -33,7 +33,7 @@ struct TAO_RTEvent_Export TAO_EC_Supplier_Proxy_Disconnect_Functor
  *        channel.
  *
  */
-typedef TAO::Utils::Auto_Functor<
+typedef ACE_Utils::Auto_Functor<
             RtecEventComm::PushSupplier,
             TAO_EC_Supplier_Proxy_Disconnect_Functor>
         TAO_EC_Supplier_Proxy_Disconnector;
@@ -61,7 +61,7 @@ struct TAO_RTEvent_Export TAO_EC_Consumer_Proxy_Disconnect_Functor
  *        channel.
  *
  */
-typedef TAO::Utils::Auto_Functor<
+typedef ACE_Utils::Auto_Functor<
             RtecEventComm::PushConsumer,
             TAO_EC_Consumer_Proxy_Disconnect_Functor>
         TAO_EC_Consumer_Proxy_Disconnector;

@@ -1,3 +1,27 @@
+Fri May  7 10:34:24 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp:
+	  Removed, use the ACE_Utils::Auto_Functor<> class template.
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+	  Use reset() instead of the assignment operator for some
+	  Auto_Functor related classes.
+
+	* tao/Utils/ORB_Destroyer.h:
+	* tao/Utils/Implicit_Deactivator.h:
+	* tao/Messaging/Asynch_Invocation.cpp:
+	* tao/Messaging/Asynch_Invocation_Adapter.h:
+	* orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+	* orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+	  Workaround MSVC6 lameness, use ACE_Utils::Auto_Functor
+	  explicitly instead of the type introduced into TAO::Utils.
+
 Fri May  7 08:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.mpc:

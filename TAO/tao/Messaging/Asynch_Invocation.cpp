@@ -9,7 +9,6 @@
 #include "tao/Transport.h"
 #include "tao/Muxed_TMS.h"
 #include "tao/Pluggable_Messaging.h"
-#include "tao/Auto_Functor.h"
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID (tao,
