@@ -479,7 +479,7 @@ Cubit_Client::print_stats (const char *call_name, ACE_Profile_Timer::ACE_Elapsed
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "\tNo time stats printed.\n\tCall count zero or error ocurred.\n"));
+      ACE_ERROR ((LM_ERROR, "\tNo time stats printed.  Call count zero or error ocurred.\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG,
