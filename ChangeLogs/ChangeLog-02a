@@ -1,3 +1,10 @@
+Wed Dec 05 14:47:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	  Removed CORBA_Handler.* and CORBA_Ref.* classes from the project
+	  files.
+
 Wed Dec  5 16:38:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/SString_Test.cpp:
