@@ -1,3 +1,8 @@
+Tue Jun 22 21:49:38 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * IORManipultion.cpp - fixed usage of type_id
+          was if (type_id) now if (type_id.in ()) 
+          This will ensure a const char * is returned for the if.
+
 Tue Jun 22 21:11:56 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/Repository.cpp:Added missing template
