@@ -20,7 +20,9 @@
 #if !defined (TAO_INTERNALS_H)
 #  define TAO_INTERNALS_H
 
+#if 0
 #  include "ace/Synch.h"
+#endif /* 0 */
 
 class TAO_Export TAO_Internal
   // = TITLE
