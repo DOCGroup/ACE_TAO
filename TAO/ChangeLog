@@ -1,3 +1,10 @@
+Thu Nov 21 18:45:23 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* docs\releasenotes\index.html: Updates the section on
+	  Notification Service.
+	* docs\releasenotes\notify.html: Added a detailed feature matrix
+	  of the Cos Notification Service.
+
 Thu Nov 21 13:26:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp: Avoid checks for reactor consistency
