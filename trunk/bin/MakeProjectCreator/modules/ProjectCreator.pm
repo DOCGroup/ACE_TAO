@@ -847,6 +847,11 @@ sub parse_define_custom {
               if (!defined $self->{'generated_exts'}->{$tag}) {
                 $self->{'generated_exts'}->{$tag} = {};
               }
+              ## First try to convert the value into a relative path
+              $value = $self->relative($value);
+
+              ## If that didn't work, try to convert it to the
+              ## right environment variable form.
               if ($value =~ /\$\(.*\)/) {
                 my($envstart, $envend) = $self->get_env_accessor();
                 if (defined $envstart) {
@@ -2160,6 +2165,82 @@ sub update_project_info {
 
   ## Always push the array back onto the project_info
   push(@$pi, $arr);
+
+  return $value;
+}
+
+
+sub relative {
+  my($self)  = shift;
+  my($value) = shift;
+  my($rel)   = $self->get_relative();
+  my(@keys)  = keys %$rel;
+
+  if (defined $value && defined $keys[0]) {
+    if (UNIVERSAL::isa($value, 'ARRAY')) {
+      my(@built) = ();
+      foreach my $val (@$value) {
+        push(@built, $self->relative($val));
+      }
+      $value = \@built;
+    }
+    elsif ($value =~ /\$/) {
+      my($cwd)   = $self->getcwd();
+      my($start) = 0;
+      my($fixed) = 0;
+
+      if ($cwd =~ /[a-z]:[\/\\]/) {
+        substr($cwd, 0, 1) = uc(substr($cwd, 0, 1));
+      }
+
+      while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
+        my($whole)  = $1;
+        my($name)   = $2;
+        my($val)    = $$rel{$name};
+
+        if (defined $val) {
+          if ($^O eq 'cygwin' && !$fixed &&
+              $cwd !~ /[A-Za-z]:/ && $val =~ /[A-Za-z]:/) {
+            my($cyg) = `cygpath -w $cwd`;
+            if (defined $cyg) {
+              $cyg =~ s/\\/\//g;
+              chop($cwd = $cyg);
+              $fixed = 1;
+            }
+          }
+
+          ## Fix up the value for Windows switch the \\'s to /
+          $val =~ s/\\/\//g;
+
+          ## Lowercase everything if we are running on Windows
+          my($icwd) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($cwd) : $cwd);
+          my($ival) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($val) : $val);
+          if (index($icwd, $ival) == 0) {
+            my($count)   = 0;
+            my($current) = $icwd;
+            substr($current, 0, length($ival)) = '';
+            while($current =~ /^\\/) {
+              $current =~ s/^\///;
+            }
+            my($length) = length($current);
+            for(my $i = 0; $i < $length; ++$i) {
+              if (substr($current, $i, 1) eq '/') {
+                ++$count;
+              }
+            }
+            $ival = '../' x $count;
+            $ival =~ s/\/$//;
+            if ($self->convert_slashes()) {
+              $ival = $self->slash_to_backslash($ival);
+            }
+            substr($value, $start) =~ s/\$\([^)]+\)/$ival/;
+            $whole = $ival;
+          }
+        }
+        $start += length($whole);
+      }
+    }
+  }
 
   return $value;
 }
