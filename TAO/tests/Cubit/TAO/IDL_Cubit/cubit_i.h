@@ -75,6 +75,19 @@ public:
   // Shutdown routine.
 };
 
+class Cubit_Shutdown_i : public POA_Cubit_Shutdown
+{
+public:
+  Cubit_Shutdown_i (const char *obj_name = 0);
+  // Constructor
+
+  ~Cubit_Shutdown_i (void);
+  // Destructor
+
+  virtual void shutdown (CORBA::Environment &env);
+  // Shutdown routine.
+};
+
 class Cubit_Factory_i;
 
 typedef Cubit_Factory_i *Cubit_Factory_i_ptr;
