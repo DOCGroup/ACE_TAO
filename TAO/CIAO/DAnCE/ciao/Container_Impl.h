@@ -32,24 +32,16 @@
 
 namespace CIAO
 {
-
-  struct home_installation_info
-  {
-    CORBA::String_var executor_dll_;
-    CORBA::String_var servant_dll_;
-    CORBA::String_var servant_entrypt_;
-  };
-
   /**
    * @class Container_Impl
    *
    * @brief Servant implementation for the interface Deployment::Container
    *
    * This class implements the Deployment::Container
-   * interface as defined by the new CCM DnC specification.  As the interface
-   * implies, this is actually part of the deployment interface and is
-   * used to manage the lifecycle of the installed components and
-   * homes.
+   * interface which is not defined by the CCM DnC specification. 
+   * As the interface implies, this is actually part of the deployment 
+   * interface and is used to manage the lifecycle of the installed 
+   * components and homes.
    */
   class CIAO_SERVER_Export Container_Impl
     : public virtual POA_Deployment::Container,
@@ -64,16 +56,32 @@ namespace CIAO
     /// Destructor
     virtual ~Container_Impl (void);
 
-    /// Get the containing POA.  This operation does *not*
-    /// increase the reference count of the POA.
-    virtual PortableServer::POA_ptr _default_POA (void);
+    /*-------------------------------------------------------------*/
+    /*--------------------  IDL operations (idl) ------------------*/
 
     /// Initialize the container.
-    int init (const ::Deployment::Properties &properties
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Long init (const ::Deployment::Properties &properties
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Deployment::Container defined attributes/operations.
+    /// Install all homes and components
+    Deployment::ComponentInfos * 
+      install (const ::Deployment::ContainerImplementationInfo & container_impl_info
+               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Deployment::UnknownImplId,
+                         Deployment::ImplEntryPointNotFound,
+                         Deployment::InstallationFailure,
+                         Components::InvalidConfiguration,
+                         Components::RemoveFailure));
+
+    /// Remove all homes and components
+    virtual void 
+      remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Components::RemoveFailure));
+
+    /// Deployment::Container interface defined attributes/operations.
     virtual ::Deployment::Properties * 
       properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
@@ -82,17 +90,17 @@ namespace CIAO
       get_node_application (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    Deployment::ComponentInfos * 
-      install (const ::Deployment::ImplementationInfos & impl_infos
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Deployment::UnknownImplId,
-                         Deployment::ImplEntryPointNotFound,
-                         Deployment::InstallationFailure,
-                         Components::InvalidConfiguration));
+    /*-------------------------------------------------------------*/
+    /*-------------------  C++ help methods (c++) -----------------*/
 
+    /// Get the containing POA.  This operation does *not*
+    /// increase the reference count of the POA.
+    virtual PortableServer::POA_ptr _default_POA (void);
+
+
+    // Install the home of this particular component
     virtual ::Components::CCMHome_ptr 
-      install_home (const ::Deployment::ImplementationInfo & impl_info
+      install_home (const ::Deployment::ComponentImplementationInfo & impl_info
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Deployment::UnknownImplId,
@@ -100,20 +108,29 @@ namespace CIAO
                          Deployment::InstallationFailure,
                          Components::InvalidConfiguration));
 
+    /**
+     * @@Note: I don't know how to remove a home right now.
+     *         I assume that user will only call remove instead.
+     *         This is true at least for DnC run time.
+     *
+     * Right now, in this implementation I assumpe that there will be
+     * same number of homes as the components even if the components
+     * are of the same type. I don't think that we have the modeling
+     * side support of this either. So bear me if you think I avoid
+     * the real thinking for easiness.
+     */
+    // Remove the home of this particular component 
     virtual void 
       remove_home (const char * comp_ins_name
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Components::RemoveFailure));
 
+    // Get all homes
     virtual ::Components::CCMHomes * 
       get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void 
-      remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::RemoveFailure));
 
     // ------------------- CIAO Internal Operations ------------------------
     // These below two are helper methods to clean up components
@@ -139,21 +156,6 @@ namespace CIAO
     Deployment::Container_ptr get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
-    /// parse ConfigValues
-  /*
-    We should define a way how the config value should be set up here!
-    The Deployment::Properties IDL data type should be used for this new DnC thing.
-
-    void parse_config_values (const char *exe_id,
-                              const Components::ConfigValues &options,
-                              struct home_installation_info &component_install_info
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::Deployment::UnknownImplId,
-                       Components::Deployment::ImplEntryPointNotFound,
-                       Components::InvalidConfiguration));
-                       */
-
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
