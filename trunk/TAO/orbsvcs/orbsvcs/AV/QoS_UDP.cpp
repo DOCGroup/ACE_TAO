@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "QoS_UDP.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
@@ -486,9 +487,19 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 int
 TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 {
+
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::set_remote_address\n"));
+    {
+        char buf [BUFSIZ];
+	ACE_INET_Addr *remote_addr = ACE_dynamic_cast (ACE_INET_Addr*, address);
+	remote_addr->addr_to_string (buf,
+				     BUFSIZ);
+
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::set_remote_address %s\n",
+		    buf));
+    }
+
 
   ACE_INET_Addr *inet_addr =
     ACE_dynamic_cast (ACE_INET_Addr*,address);
@@ -514,7 +525,13 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
       ACE_INET_Addr local_addr;
       this->get_socket ()->get_local_addr (local_addr);
 
-      this->qos_session_->source_port (local_addr.get_port_number ());
+      ACE_INET_Addr* src_addr;
+      ACE_NEW_RETURN (src_addr,
+		      ACE_INET_Addr (local_addr.get_port_number (),
+				     local_addr.get_host_name ()),
+		      -1);
+
+      this->qos_session_->source_addr (src_addr);
 
       if (helper.activate_qos_handler (this->qos_session_,
                                        this) == -1)
@@ -1154,10 +1171,15 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
   this->flowname_ = entry->flowname ();
 
   ACE_INET_Addr *local_addr;
-  ACE_NEW_RETURN (local_addr,
-                  ACE_INET_Addr ("0"),
-                  -1);
 
+  if (entry->get_peer_addr () != 0)
+    {
+      local_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->get_peer_addr ());
+    }
+  else
+    ACE_NEW_RETURN (local_addr,
+		    ACE_INET_Addr ("0"),
+		    -1);
 
   TAO_AV_Flow_Handler *flow_handler = 0;
 
@@ -1248,7 +1270,15 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
     {
-      this->qos_session_->source_port (local_addr->get_port_number ());
+      //this->qos_session_->source_port (local_addr->get_port_number ());
+      ACE_INET_Addr* src_addr;
+      ACE_NEW_RETURN (src_addr,
+		      ACE_INET_Addr (local_addr->get_port_number (),
+				     local_addr->get_host_name ()),
+		      -1);
+
+      this->qos_session_->source_addr (src_addr);
+
     }
 
   handler->qos_session (this->qos_session_);
