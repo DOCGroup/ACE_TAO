@@ -489,39 +489,52 @@ ctime_r_test (void)
     ACE_OS::gettimeofday ();
 
   time_t secs = cur_time.sec ();
-  ACE_OS::ctime_r (&secs, buf, 26);
-
-  if (buf[0] == '\0')
+  if (ACE_OS::ctime_r (&secs, buf, 26) == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ctime_r with 26 bytes")));
+      result = -1;
+    }
+  else if (buf[0] == '\0')
     {
       result = -1;
 
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Truncated input buffer\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Truncated input buffer\n")));
     }
   else if (buf[26] != 'Z')
     {
       result = -1;
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Wrote past end of input buffer\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Wrote past end of input buffer\n")));
     }
 
-  // test small buffer
+  // test small buffer - should not do anything unless 3rd arg is at least 26.
   if (result == 0)
     {
-      buf[10] = 'Z';
-      ACE_OS::ctime_r (&secs,
-                       buf,
-                       10);
-
-      if ((buf[9] != '\0') ||
-          (buf[10] != 'Z'))
+      ACE_TCHAR bufcheck[27];
+      ACE_OS_String::strcpy (bufcheck, buf);
+      if (ACE_OS::ctime_r (&secs, buf, 10) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ctime_r with short len returned %s\n"),
+                      buf));
+          result = -1;
+        }
+      else if (errno != ERANGE)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ctime_r short; wrong error")));
+          result = -1;
+        }
+      // Make sure it didn't scribble
+      else if (ACE_OS_String::strcmp (buf, bufcheck) != 0)
       {
         result = -1;
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Buffer length limit error\n")));
+                    ACE_TEXT ("ctime_r short; got %s, expected %s\n"),
+                    buf, bufcheck));
       }
     }
-
 
   return result;
 }

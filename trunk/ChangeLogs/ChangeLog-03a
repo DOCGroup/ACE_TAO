@@ -1,3 +1,18 @@
+Tue Oct 15 17:15:41 2002  Steve Huston  <shuston@riverace.com>
+
+        Fixes for Bugzilla #1319:
+
+        * ace/OS.i (ctime_r): For the 2-param ctime_r platforms, restrict
+          buflen to at least 26, just as 3-param platforms do. If less than
+          26, return 0 and errno = ERANGE.
+
+        * ace/OS.cpp (ctime_r): The WinCE implementation of ctime_r already
+          had the 26-char minimum check, but didn't set errno to ERANGE.
+          Now it does.
+
+        * tests/OS_Test.cpp (ctime_r_test): Make sure that ctime_r with length
+          less than 26 fails and doesn't scribble on the buffer.
+
 Tue Oct 15 11:43:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/SPIPE_Connector.cpp (connect): Convert the first argument in
@@ -598,7 +613,7 @@ Fri Oct  4 20:22:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram.{h cpp} (recv, send):
         * ace/SOCK_Dgram_Bcast.{h cpp} (recv, send):
-        * ace/SOCK_Dgram_Mcast.{h i} (send, recv): Change iovcnt from
+        * ace/SOCK_Sgram_Mcast.{h i} (send, recv): Change iovcnt from
           size_t to int to match the args used by other iovcnt-accepting
           methods in ACE.
 
@@ -3945,3 +3960,4 @@ Mon Jul  1 06:21:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * ace/Sock_Connect.cpp (count_interfaces): Added a MacOSX-specific
           value for OSIOCGIFCONF.  Thanks to John Zorko <j.zorko@att.net>
+          for this fix.
