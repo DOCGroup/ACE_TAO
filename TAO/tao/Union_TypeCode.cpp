@@ -37,9 +37,7 @@ TAO::TypeCode::Union<StringType,
   if (!success)
     return false;
 
-  // Note that we handle the default case below, too.  The default
-  // case handling is hidden behind the case_count() and case()
-  // methods.
+  // Note that we handle the default case below, too.
 
   for (unsigned int i = 0; i < count; ++i)
     {
