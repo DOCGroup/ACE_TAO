@@ -1145,6 +1145,8 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           they are not needed.
 
         * tests/TAO_Tests.dsw:
+        * tests/BiDirectional/test_i.cpp:
+        * tests/BiDirectional_NestedUpcall/test_i.cpp:
         * tests/Collocation/Coll_Test_Stubs.bor:
         * tests/Collocation/Coll_Test_Stubs.dsp:
         * tests/Collocation/Coll_Tester.cpp:
