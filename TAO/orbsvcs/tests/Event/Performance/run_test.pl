@@ -9,29 +9,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # are needed
 
 unshift @INC, '../../../../../bin';
-require Process;
+require ACEutils;
 require Uniqueid;
 use Cwd;
 
 $cwd = getcwd();
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }                     
-}
+ACE::checkForTarget($cwd);
 
-$prefix = $EXEPREFIX . "." . $DIR_SEPARATOR;
 $status = 0;
 
 print STDERR "\n\nThroughput/Latency single threaded configuration\n";
-$T = Process::Create ($prefix . "Throughput".$EXE_EXT,
+$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
 		      " -ORBsvcconf $cwd$DIR_SEPARATOR" . "ec.st.conf "
 		      . "-burstsize 2000 -burstcount 1");
 if ($T->TimedWait (60) == -1) {
@@ -42,7 +30,7 @@ if ($T->TimedWait (60) == -1) {
 
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration\n";
-$T = Process::Create ($prefix . "Throughput".$EXE_EXT,
+$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
 		      " -burstsize 2000"
 		      ." -burstcount 1");
 if ($T->TimedWait (60) == -1) {
@@ -53,7 +41,7 @@ if ($T->TimedWait (60) == -1) {
 
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration, 4 consumers\n";
-$T = Process::Create ($prefix . "Throughput".$EXE_EXT,
+$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
 		      " -burstsize 2000"
 		      ." -burstcount 1 -consumers 4");
 if ($T->TimedWait (60) == -1) {
@@ -65,7 +53,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration,",
   " 4 consumers 4 suppliers\n";
-$T = Process::Create ($prefix . "Throughput".$EXE_EXT,
+$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
 		      " -burstsize 2000"
 		      ." -burstcount 1 -consumers 4 -suppliers 4");
 if ($T->TimedWait (60) == -1) {
@@ -77,7 +65,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nThroughput/Latency MT-safe configuration,",
   " 4 consumers 4 suppliers\n";
-$T = Process::Create ($prefix . "Throughput".$EXE_EXT,
+$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
 		      " -burstsize 2000"
 		      ." -burstcount 1 -consumers 4 -suppliers 4"
 		      ." -consumers_tshift 0 -suppliers_tshift 0");
@@ -89,7 +77,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nConnection and disconnection time,",
   " 100 consumers 100 suppliers\n";
-$T = Process::Create ($prefix . "Connect".$EXE_EXT,
+$T = Process::Create ($EXEPREFIX . "Connect".$EXE_EXT,
 		      " -consumers 100 -suppliers 100"
 		      ." -connection_order interleaved");
 if ($T->TimedWait (60) == -1) {
@@ -101,7 +89,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nConnection and disconnection time,",
   " 500 consumers 500 suppliers\n";
-$T = Process::Create ($prefix . "Connect".$EXE_EXT,
+$T = Process::Create ($EXEPREFIX . "Connect".$EXE_EXT,
 		      " -consumers 500 -suppliers 500"
 		      ." -connection_order interleaved");
 if ($T->TimedWait (60) == -1) {

@@ -28,18 +28,7 @@ $persistent_ior_file = "$cwd$DIR_SEPARATOR" . "pns.ior";
 $persistent_log_file = "$cwd$DIR_SEPARATOR" . "test_log";
 $data_file = "$cwd$DIR_SEPARATOR" . "test_run.data";
 
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }                     
-}
+ACE::checkForTarget($cwd);
 
 sub name_server
 {
@@ -83,8 +72,8 @@ sub client
          "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile");
 
 @server_opts = ("", "", "", "", "", "",
-                "-ORBEndpoint iiop://localhost:$ns_orb_port -f $persistent_log_file",
-                "-ORBEndpoint iiop://localhost:$ns_orb_port -f $persistent_log_file");
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file");
 
 @comments = ("Simple Test: \n",
              "Simple Test (using multicast to locate the server): \n",

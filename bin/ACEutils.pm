@@ -2,8 +2,32 @@
 
 require Process;
 $EXEPREFIX = ".".$DIR_SEPARATOR;
+$TARGETHOSTNAME = "localhost";
 
 package ACE;
+
+sub checkForTarget
+{
+  my($cwd) = shift;
+
+  for($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq '-chorus') {  
+      if (defined $ARGV[$i + 1]) {
+        $::TARGETHOSTNAME = $ARGV[$i + 1];
+        $::EXEPREFIX = "rsh $::TARGETHOSTNAME arun $cwd$::DIR_SEPARATOR";
+      }
+      else {
+        print STDERR "The -chorus option requires " .
+                     "the hostname of the target\n";
+        exit(1);
+      }
+      splice(@ARGV, $i, 2);
+      # Don't break from the loop just in case there
+      # is an accidental duplication of the -chorus option
+    }
+  }
+}
+
 
 # Returns a unique id, uid for unix, last digit of IP for NT
 sub uniqueid

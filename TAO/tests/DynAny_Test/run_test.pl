@@ -10,9 +10,7 @@ require ACEutils;
 require Process;
 use Cwd;
 
-$cwd  = getcwd();
 $type = "";
-
 
 sub run_test
 {
@@ -30,6 +28,7 @@ sub run_test
 }
 
 # Parse the arguments
+ACE::checkForTarget(getcwd());
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {
@@ -42,16 +41,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "\n";
       print "-t type             -- runs only one type of dynany test\n";
       exit;
-    }
-    if ($ARGV[$i] eq '-chorus') {
-      $i++;
-      if (defined $ARGV[$i]) {
-        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-      }
-      else {
-        print STDERR "The -chorus option requires the hostname of the target\n";
-        exit(1);
-      }
     }
     if ($ARGV[$i] eq "-t")
     {

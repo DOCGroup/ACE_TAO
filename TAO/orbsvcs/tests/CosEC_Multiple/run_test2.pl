@@ -16,6 +16,8 @@ $ev_count = 8;
 $status = 0;
 $port = ACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
 
+ACE::checkForTarget(getcwd());
+
 sub cosec_multiple_test2
 {
     # first start the Naming service..
@@ -111,18 +113,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
         $sup_count = $ARGV[$i + 1];
         $i++;
         last SWITCH;
-    }
-    if ($ARGV[$i] eq '-chorus') {
-      $i++;
-      if (defined $ARGV[$i]) {
-        $cwd = getcwd();
-        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-      }
-      else {
-        print STDERR "The -chorus option requires the hostname of the target\n";
-        exit(1);
-      }
-      last SWITCH;
     }
   }
 }

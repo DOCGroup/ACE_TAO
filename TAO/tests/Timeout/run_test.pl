@@ -15,18 +15,7 @@ $status = 0;
 $iorfile = "$cwd$DIR_SEPARATOR" . "server.ior";
 unlink $iorfile;
 
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }  
-}
+ACE::checkForTarget($cwd);
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -o $iorfile");

@@ -16,22 +16,13 @@ $debug_level='0';
 $threads='10';
 $status = 0;
 
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }
-  elsif ($ARGV[$i] eq '-tss') {
+ACE::checkForTarget($cwd);
+foreach $i (@ARGV) {
+  if ($i eq '-tss') {
     $client_conf = "$cwd$DIR_SEPARATOR" . "client.tss.conf";
-  } elsif ($ARGV[$i] eq '-debug') {
+  } elsif ($i eq '-debug') {
     $debug_level = '1';
-  } elsif ($ARGV[$i] eq '-creation') {
+  } elsif ($i eq '-creation') {
     $client_process = 'orb_creation';
     $threads='2';
   }
