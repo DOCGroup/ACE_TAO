@@ -1,3 +1,22 @@
+Mon Aug 28 22:46:02 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/Makefile
+	* tests/Makefile.bor:
+
+	  Modified to include RTCORBA subdirectory.
+
+	* tests/RTCORBA/Makefile
+	* tests/RTCORBA/Makefile.bor:
+
+	  Added.
+
+	* tests/RTCORBA/Server_Protocol/client.cpp
+	* tests/RTCORBA/Server_Protocol/server.cpp
+	* tests/RTCORBA/Client_Propagated/client.cpp
+	* tests/RTCORBA/Client_Propagated/server.cpp:
+
+	  Added TAO_HAS_RT_CORBA == 1 guards.
+
 Mon Aug 28 22:14:51 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/README
