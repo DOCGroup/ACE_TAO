@@ -19,24 +19,28 @@ main (int argc, char *argv[])
       // Initialize the ORB
       //
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, ""
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //
       // Get the Root POA.
       //
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in() TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in () 
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //
       // Get a reference to the server.
       //
-      obj = orb->string_to_object ("file://server.ior" TAO_ENV_ARG_PARAMETER);
+      obj = orb->string_to_object ("file://server.ior"
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
@@ -51,7 +55,8 @@ main (int argc, char *argv[])
       // Downcast the IOR to the appropriate object type.
       //
       server_var server_obj =
-        server::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        server::_narrow (obj.in ()
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_obj.in ()))
@@ -64,12 +69,13 @@ main (int argc, char *argv[])
       //
       // Create and activate the client.
       //
-      client_i *theClient = 0;
-      ACE_NEW_RETURN (theClient,
+      client_i *servant = 0;
+      ACE_NEW_RETURN (servant,
                       client_i (server_obj.in ()),
                       -1);
+      PortableServer::ServantBase_var theClient = servant;
 
-      client_var client_ref = theClient->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      client_var client_ref = servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //
@@ -85,7 +91,8 @@ main (int argc, char *argv[])
       //
       // Set the server's callback and invoke the test request.
       //
-      server_obj->set_client (client_ref.in () TAO_ENV_ARG_PARAMETER);
+      server_obj->set_client (client_ref.in ()
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       server_obj->test_request ("first secure callback to client"
@@ -104,13 +111,12 @@ main (int argc, char *argv[])
       server_obj->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1
+                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      delete theClient;
     }
   ACE_CATCHANY
     {
