@@ -19,8 +19,7 @@
 //   <em>reprinted by <a href="http://www.wrs.com/artreqfm.html">Wind River
 //                    Systems</a></em><p>
 //   which in turn is based on Superconducting Super Collider (SSC)
-//   Ping Suspend/Resume Task and Suspend/Resume Task benchmarks.
-//   Laboratory benchmark
+//   Laboratory Ping Suspend/Resume Task and Suspend/Resume Task benchmarks.
 //   It measures two different times:
 //   1) The time to resume a blocked high priority task, which does
 //      nothing other than block immediately.  A lower priority task
@@ -36,11 +35,6 @@
 //   at least on a single-CPU machine, are obtained _without_ creating new
 //   LWPs for new threads (THR_NEW_LWP).  The -n option enables the use of
 //   THR_NEW_LWP for testing.
-//
-//   On Solaris 2.5.1, real-time threads must be bound to LWPs (using the
-//   THR_BOUND flag), so that they can compete for system-wide resources.
-//   In other words, if a thread is bound to an LWP, then the kernel is
-//   aware of it.
 //
 // = CREATION DATE
 //    17 January 1997
@@ -762,10 +756,10 @@ main (int argc, char *argv [])
       ACE_DEBUG ((LM_INFO, "context switch time from yield test is %u.%03u "
                            "microseconds\n",
                   (ACE_UINT32)
-                    (yield_test.elapsed_time () / num_iterations / 2),
+                    (yield_test.elapsed_time () / num_iterations / 2u),
                   (ACE_UINT32)
-                    (yield_test.elapsed_time () % (ACE_UINT32) 2000u) /
-                    (num_iterations / 1000u) / 2u));
+                    (yield_test.elapsed_time () % (num_iterations * 2u)) *
+                      1000u / num_iterations / 2u));
     }
 
   return 0;
