@@ -1,3 +1,17 @@
+Wed Oct 29 10:23:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Object_Proxy_Broker.h:
+        * tao/Remote_Object_Proxy_Broker.h:
+
+          Added #include of orbconf.h to pull in TAO_HAS_MINIMUM_CORBA flag.
+
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+
+          Added TAO_HAS_MINIMUM_POA guards around TAO::Objref_Traits<>
+          specializations, TAO::Arg_Traits<> specializations and
+          associated explicit template instantiations.
+
 Wed Oct 29 09:53:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TypeCodeFactory_Adapter.h: Added a missing inclusion. 
