@@ -1,3 +1,15 @@
+Thu Apr 22 20:18:58 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* man/man7/TAO.7: 
+
+	  Moved `man/man1/TAO.1' to `man/man7/TAO.7' since TAO.1 doesn't
+	  describe a user program.  It seems to fit better in
+	  "Miscellaneous," i.e. man section 7.
+
+	* man/man1/*:
+
+	  Updated to reflect move of TAO.1 to man/man7/TAO.7.
+
 Thu Apr 22 17:24:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.cpp:
