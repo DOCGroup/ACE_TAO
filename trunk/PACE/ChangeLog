@@ -1,3 +1,12 @@
+Fri Jul 28 06:28:26 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/posix/dirent.inl
+	* pace/posix/grp.inl
+	* pace/posix/pwd.inl
+	* pace/posix/signal.inl
+	  Got rid of PACE_HAS_PTHREAD_SEMANTICS not supported code
+	  in favor of platform specific modifications.
+
 Thu Jul 27 15:02:53 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h:
