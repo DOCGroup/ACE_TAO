@@ -1,274 +1,42 @@
-Wed Jun 16 17:54:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/ATM_Addr.h (ACE_ATM_Addr): Added a quick fix to get ACE up
- 	  and running again.  Thanks to John Heitmann <jwh1@cs.wustl.edu>
- 	  for this fix.
-
-Wed Jun 16 16:10:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* bin/Process.pm:
-	* bin/Process_Unix.pm:
-	* bin/Process_Win32.pm:
-	  By default we don't create a new console on Win32, moved the
-	  definition of EXE_EXT to the Process.pm file to be consistent
-	  with the DIR_SEPARATOR stuff. Ditto for $newwindow
-
-Wed Jun 16 15:55:28 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
-
-	* examples/Misc/test_trace.cpp: Cleaned up this example of
- 	  ACE_Trace to work properly with a different number of threads.
-  	  Thanks to Hao Ruan <hruan@lucent.com> for reporting this.
-
-Wed Jun 16 15:54:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/config-win32.h:
-	  Auto-detect if we are using MSVC5.0 or MSVC6.0 and define the
-	  ACE_HAS_WINSOCK_GQOS macro in that case. This macro is used in
-	  the places where the QoS data structure of both compilers are
-	  different.
-
-Wed Jun 16 14:40:01 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/OS.h fixed ACE_Object_Manager_Base comments, and removed
-          spurious public:.  Untabified.
-
-Wed Jun 16 14:27:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-        * ace/ACE.h:
-        * ace/ACE.cpp:
-          Added new ACE::crc32 function that takes a buffer instead of a
-          string.
-
-Wed Jun 16 14:19:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/SOCK_{Acceptor,Connector}.h: Updated the documentation to
-          explain the "asymmetry" between the ACE_SOCK_Acceptor (which
-          inherits from ACE_SOCK) and the ACE_SOCK_Connector (which does
-          not).  Thanks to Narayanan Vidya <CVN065@lmpsil02.comm.mot.com>
-          for motivating this.
-
-Wed Jun 16 13:15:22 1999  Steve Huston  <shuston@riverace.com>
-
-        * ace/Containers_T.i: Fixed compile errors; ACE_Double_Linked_List_
-          Iterator_Base::dllist is a pointer, not a reference/object.
-
-        * ace/Cache_Map_Manager_T.h:
-        * ace/Caching_Strategy_Utility_T.h:
-        * ace/Caching_Strategies_T.h:
-        * ace/Hash_Cache_Map_Manager_T.h:
-          Corrected syntax for #pragma implementation statements.
-
-        * ace/Cache_Map_Manager_T.h: Fully qualified return type on iterator
-          assignment operators.
-
-        * apps/Gateway/Gateway/Event.h: Added ctor initializer on Event to
-          invoke ctor initializer on Event_Header.  IBM C++ 3.6.4 requires it.
-
-        * examples/Connection/non_blocking/Makefile:
-          Added LIBS += $(ACELIB) to include libACE when linking the
-          shared libs.  Removed VLDLIBS lines because they're set in
-          wrapper_macros.GNU, and it knows to do it correctly for AIX.
-
-Wed Jun 16 12:00:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
-
-        * ace/SOCK_Dgram_Mcast.cpp:
-          Changed a -1 to ACE_INVALID_HANDLE.
-
-Wed Jun 16 07:40:05 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * tests/Thread_Manager_Test.cpp: updated comment about not
-          using kill_grp on sun.  It's not due to bugs, but rather
-          thr_self () is not documented as being Async-Signal-Safe.
-          And, removed 5 second sleep on sun because it's no longer
-          needed.
-
-Wed Jun 16 02:07:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/Thread_Manager.cpp (spawn_i):  Fixed possible access before
-          initialization warnings when compiling with egcs with exception
-          enabled.  Thanks to Carlos for pointing this out.
-
-        * ACE-INSTALL.html: Updated FreeBSD and Win32 static library
-          instructions.
-
-Tue Jun 15 23:15:30 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
-
-        * ace/Thread_Manager.cpp: Removed explicit template instantiation
-          for ACE_read_guard <ACE_thread_mutex> since a recent change by
-          Kirthika makes it unnecessary.
-
-Tue Jun 15 17:41:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/SOCK_Dgram_Mcast: Added initial support for the Win2K
-          QoS-enabled multicast features.  The current implementation
-          hasn't been tested, and probably doesn't work, but we're still
-          designing the API at this point.
-
-        * ace/OS: Added a new wrapper for WSASocket(), which is needed for
-          all the new GQoS stuff.
-
-        * ace/SOCK_Dgram_Mcast: The API for many of the methods in this
-          class was broken since it was different for pSoS and for
-          non-pSoS platforms, which violates "The ACE Way."  The fix is to
-          make the API the same, i.e., use ASYS_TCHAR * consistently, and
-          then handle this by converting these into numbers via
-          ACE_OS::atoi() where necessary, e.g., for pSoS.
-
-        * ACE-INSTALL.html: Updated the documentation to recommend
-          building gperf so that TAO's IDL compiler will work optimally.
-          Thanks to Jim Penny <jpenny@universal-fasteners.com> for
-          suggesting this.
-
-Tue Jun 15 22:26:43 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
-
-        * tests/DLL_Test.cpp
-        * tests/Upgradable_RW_Test.h,cpp
-        * ace/Thread_Manager.h,cpp
-        * ace/Template_Instantiations.cpp
-        * ace/Containers_T.h,cpp,i
-        * ace/Containers.h,cpp: Added new classes
-          ACE_Double_Linked_List_Iterator_Base,
-          ACE_Double_Linked_List_Reverse_Iterator and
-          ACE_DLList_Reverse_Iterator. I also had to adjust friend
-          declarations accordingly (as the iterator base and reverse
-          iterators also needed to be declared friend). This change
-          involved moving much of the functionality of the iterators into
-          the base class a la template method. Many thanks to Chris Gill
-          for help with this (M-x all-hail-chris-gill). I fear what this
-          may break in spite of all my tests, so I apologise in advance
-          for any chaos...
-
-Tue Jun 15 17:55:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-        * ace/OS.i:
-          Several fields of the FLOWSPEC structure are not present in the
-          terminal server version of Winsock2, they are only used if
-          ACE_HAS_WINNT5 is defined, the macro is *not* automatically
-          defined because we couldn't figure out a way to automagically
-          determine the OS version.
-
-Tue Jun 15 15:22:53 1999  Steve Huston  <shuston@riverace.com>
-
-        * ace/config-aix-4.x.h: Added ACE_HAS_BROKEN_T_ERROR.
-
-        * ace/ATM_Addr.cpp:
-        * ace/DEV_Addr.cpp:
-        * ace/FILE_Addr.cpp:
-        * ace/INET_Addr.cpp:
-        * ace/SPIPE_Addr.cpp: Initialize base class (ACE_Addr) from alternate
-          constructors. Not always necessary, but safe, and keeps egcs quiet.
-
-        * apps/Gateway/Gateway/Makefile:
-        * apps/Gateway/Peer/Makefile:
-        * examples/ASX/CCM_App/Makefile:
-        * examples/Service_Configurator/IPC-tests/Makefile:
-        * examples/Service_Configurator/Misc/Makefile:
-        * examples/Timer_Queue/Makefile:
-          Added LIBS += $(ACELIB) to include libACE when linking the
-          shared libs.  Removed VLDLIBS lines because they're set in
-          wrapper_macros.GNU, and it knows to do it correctly for AIX.
-
-        * examples/Connection/misc/Connection_Handler.cpp (handle_input):
-          corrected signed/unsigned mismatch.
-
-Tue Jun 15 13:41:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * tests/Thread_Manager_Test.cpp (main): Don't call kill_grp() on
-          Solaris since this seems to trigger occasional panics in the
-          thread library, probably due to the fact that thr_self() isn't
-          async signal safe.
-
-Tue Jun 15 14:32:43 1999  Steve Huston  <shuston@riverace.com>
-
-        * ace/config-hpux-10.x.h: Added ACE_HAS_BROKEN_T_ERROR.
-
-        * ace/config-hpux-10.x-hpc++.h: Added
-          ACE_HAS_STD_TEMPLATE_SPECIALIZATION.
-
-        * ace/OS.i (t_error): Changed naked cast to ACE_const_cast.
-
-        * ace/Containers_T.cpp: Added ACE_TYPENAME where HP-UX aC++ said it
-          was needed.
-
-Tue Jun 15 13:44:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * ace/OS.h: Moved the typedef of ACE_SIGNAL_C_FUNC to after when
-          siginfo_t has been declared and changed siginfo to siginfo_t.
-
-Tue Jun 15 13:17:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-
-        * ace/OS.h:
-        * ace/POSIX_Proactor.h:
-        * ace/POSIX_Proactor.cpp:
-
-          Fixed the warning (Anachronism): Assigning
-          void(*)(int,siginfo*,void*) to extern "C"
-          void(*)(int,siginfo*,void*), came from the sunCC 5.0.
-
-          Defined the macro ACE_SIGNAL_C_FUNC in the OS.h.
-
-Tue Jun 15 12:41:22 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/OS.h,config-qnx-neutrino.h: moved some #includes from
-          config-qnx-neutrino.h to OS.h.
-
-        * include/makeinclude/platform_qnx_neutrino.GNU: enabled -Wall.
-
-        * ACE-INSTALL.html: added QNX Neutrino info.
-
-Tue Jun 15 12:26:06 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-
-        * tests/Map_Manager_Test.cpp: Added template instantiations for
-          ACE_Reference_Pair and ACE_Cache_Map_Reverse_Iterator.
-
-Tue Jun 15 11:59:09 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/config-qnx-neutrino.h: removed a handful of #defines
-          that are in config-g++-common.h.
-
-        * ace/config-g++-common.h: removed the question about whether
-          some of the advanced features work with g++ 2.8.x.  They do
-          (with g++ 2.8.1, at least).
-
-Tue Jun 15 09:28:34 1999  Steve Huston  <shuston@riverace.com>
-
-        * ace/config-aix-4.x.h: Added ACE_HAS_SSIZE_T for egcs.
+Wed Jun 16 18:14:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added ATTRIBUTES to
+	  the template list for the Cached_Connect_Strategy_Ex class to
+	  ward off g++ compiler errors.
 
 Mon Jun 14 22:52:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-        * tests/Map_Manager_Test.cpp: Removed template instantiation
-          regarding ACE_Read_Mutex<Thread_Mutex>. Added template
-          instantiations for ACE_Pair<VALUE, int> and
-          ACE_Reference_Pair<TYPE, VALUE> to make sunc++5.0 happy.
+	* tests/Map_Manager_Test.cpp: Removed template instantiation
+	  regarding ACE_Read_Mutex<Thread_Mutex>. Added template
+	  instantiations for ACE_Pair<VALUE, int> and
+	  ACE_Reference_Pair<TYPE, VALUE> to make sunc++5.0 happy.
 
-        * ace/Caching_Strategy_Utility_T.{h.cpp}: Removed math.h from the
-          include list since it caused problems when native exceptions were
-          enabled.
+	* ace/Caching_Strategy_Utility_T.{h.cpp}: Removed math.h from the
+	  include list since it caused problems when native exceptions were
+	  enabled. 
 
 Mon Jun 14 21:41:40 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-        * ace/Connector.h: Added a comment to clarify that if
-          Connector::connect() fails the close() hook of the Svc_Handler
-          is called to prevent resource leaks.  Thanks to V. Lakshmanan
-          <lakshman@doplight.nssl.noaa.gov> for motivating this.
+	* ace/Connector.h: Added a comment to clarify that if
+ 	  Connector::connect() fails the close() hook of the Svc_Handler
+ 	  is called to prevent resource leaks.  Thanks to V. Lakshmanan
+ 	  <lakshman@doplight.nssl.noaa.gov> for motivating this.
 
 Mon Jun 14 20:54:09 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-        * ace/Synch.cpp: Declared template definitions for
-          ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
-          while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
-          suggesting this.
+	* ace/Synch.cpp: Declared template definitions for
+	  ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
+	  while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
+	  suggesting this. 
 
 Mon Jun 14 19:33:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * ace/SOCK_Acceptor.cpp (accept): Fixed a bizarre problem with
-          Win32 where it's imperative that the third parameter to <accept>
-          must be a NULL pointer if we want to ignore the client address.
+	* ace/SOCK_Acceptor.cpp (accept): Fixed a bizarre problem with
+ 	  Win32 where it's imperative that the third parameter to <accept>
+ 	  must be a NULL pointer if we want to ignore the client address.
 
-        * ace/OS.i: Cleaned up warnings in join_leaf() and ioctl() due to
-          unused args.  Thanks to Marina for reporting this.
+	* ace/OS.i: Cleaned up warnings in join_leaf() and ioctl() due to
+ 	  unused args.  Thanks to Marina for reporting this.
 
 Mon Jun 14 15:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
