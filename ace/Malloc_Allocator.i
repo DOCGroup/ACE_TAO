@@ -140,6 +140,14 @@ ACE_Static_Allocator_Base::calloc (size_t nbytes,
   return (void *) ptr;
 }
 
+ACE_INLINE void *
+ACE_Static_Allocator_Base::calloc (size_t n_elem,
+                                   size_t elem_size,
+                                   char initial_value)
+{
+  return this->calloc (n_elem * elem_size, initial_value);
+}
+
 ACE_INLINE void
 ACE_Static_Allocator_Base::free (void *ptr)
 {
