@@ -407,7 +407,7 @@ public:
   // Called from TAO_IFR_Service_Utils::name_exisits.
 
   static void tmp_name_holder (const char *name);
-  // Accesses the statis member.
+  // Accesses the static member.
 
 protected:
    void store_label (

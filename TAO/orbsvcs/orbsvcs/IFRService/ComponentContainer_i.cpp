@@ -180,7 +180,7 @@ TAO_ComponentContainer_i::create_home_i (
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
     const CORBA::InterfaceDefSeq &supports_interfaces,
-    CORBA::ValueDef_ptr /* primary_key */ // @@@ TODO
+    CORBA::ValueDef_ptr primary_key
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -232,6 +232,9 @@ TAO_ComponentContainer_i::create_home_i (
                                             "supported",
                                             1,
                                             supports_key);
+      this->repo_->config ()->set_integer_value (supports_key,
+                                                 "count",
+                                                 length);
 
       char *supported_path = 0;
       char *stringified = 0;
@@ -247,6 +250,17 @@ TAO_ComponentContainer_i::create_home_i (
                                                     stringified,
                                                     supported_path);
         }
+    }
+
+  char *primary_key_path = 0;
+
+  if (! CORBA::is_nil (primary_key))
+    {
+      primary_key_path = 
+        TAO_IFR_Service_Utils::reference_to_path (primary_key);
+        this->repo_->config ()->set_string_value (this->section_key_,
+                                                  "primary_key",
+                                                  primary_key_path);
     }
 
   // Create the object reference.

@@ -197,14 +197,6 @@ public:
   // Called from TAO_IFR_Service_Utils::name_exists() when we
   // are in a list of supported interfaces.
 
-private:
-  void base_interfaces_recursive (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue
-    );
-  // Depth-first traversal of the inheritance tree to get all
-  // the base interfaces.
-
   void inherited_attributes (
       ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
     );
@@ -216,6 +208,14 @@ private:
     );
   // Depth-first traversal of the inheritance tree to get all the
   // operations.
+
+private:
+  void base_interfaces_recursive (
+      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
+      ACE_Unbounded_Queue<ACE_TString> &path_queue
+    );
+  // Depth-first traversal of the inheritance tree to get all
+  // the base interfaces.
 
   void check_inherited (const char *name,
                         CORBA::DefinitionKind kind
