@@ -249,6 +249,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_GetUserName                     ::GetUserNameW
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryW
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExW
+#define ACE_TEXT_WaitNamedPipe                   ::WaitNamedPipeW
 #define ACE_TEXT_OpenFileMapping                 ::OpenFileMappingW
 #define ACE_TEXT_OpenSCManager                   ::OpenSCManagerW
 #define ACE_TEXT_OpenService                     ::OpenServiceW
@@ -295,6 +296,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_GetUserName                     ::GetUserNameA
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryA
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExA
+#define ACE_TEXT_WaitNamedPipe                   ::WaitNamedPipeA
 #define ACE_TEXT_OpenFileMapping                 ::OpenFileMappingA
 #define ACE_TEXT_OpenSCManager                   ::OpenSCManagerA
 #define ACE_TEXT_OpenService                     ::OpenServiceA

@@ -1,3 +1,13 @@
+Sat Oct 19 16:47:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_wchar.h:
+          Added ACE_TEXT_WaitNamedPipe to the list of Windows functions we use
+          and for which there is an ascii and unicode version.
+
+        * ace/SPIPE_Connector.cpp:
+          Used ACE_TEXT_WaitNamedPipe instead of ::WaitNamedPipe. This fixes
+          the problems in the BCB Unicode build.
+
 Sat Oct 19 10:09:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/C++NPv2/Makefile: Reverted the change "Fri Oct 18
@@ -35,21 +45,21 @@ Fri Oct 18 20:13:29 2002  Steve Huston  <shuston@riverace.com>
 
 Fri Oct 18 17:12:03 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* examples/C++NPv2/display_logfile.cpp: 
+	* examples/C++NPv2/display_logfile.cpp:
 	* examples/C++NPv2/Client_Logging_Daemon.cpp:
 	* examples/C++NPv2/TP_Logging_Server.h:
 	* examples/C++NPv2/TP_Logging_Server.cpp: Fixed compile errors in
 	  single threaded builds. All they needed was the usage of the
 	  right macros like ACE_SYNCH instead of ACE_MT_SYNCH and
-	  ACE_SYNCH_MUTEX instead of ACE_Thread_Mutex. 
+	  ACE_SYNCH_MUTEX instead of ACE_Thread_Mutex.
 
 Fri Oct 18 16:25:09 2002  Yuanfang Zhang <yfzhang@cse.wustl.edu>
 
         * tests/RB_Tree_Test.h:
         * tests/RB_Tree_Test.cpp:
-          
+
           add a new method to test forward and reverse partial tree traversal.
-          
+
 Fri Oct 18 21:01:25 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* examples/C++NPv1/Makefile: Fix comment.
@@ -63,7 +73,7 @@ Fri Oct 18 15:44:19 2002  Priyanka Gontla  <pgontla@ociweb.com>
 	  of fame.
 
 Fri Oct 18 19:37:20 GMT 2002  Craig Rodrigues  <crodrigu@bbn.com>
-	
+
 	* ace/config-macosx.h: Define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 	  for gperf.
 
