@@ -18,6 +18,44 @@ ACE_RCSID (Event_Service,
            "$Id$")
 
 
+class Fault_Event_Service  : public TAO_FTEC_Event_Channel
+{
+public:
+  Fault_Event_Service(CORBA::ORB_var orb,
+    PortableServer::POA_var poa,
+    int fault_no);
+
+private:
+  virtual void push (
+    const FtRtecEventChannelAdmin::ObjectId & oid,
+    const RtecEventComm::EventSet & data
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID));
+  int msg_count_;
+  int fault_no_;
+};
+
+Fault_Event_Service::Fault_Event_Service(CORBA::ORB_var orb, 
+                                         PortableServer::POA_var poa,
+                                         int fault_no)
+: TAO_FTEC_Event_Channel(orb, poa), msg_count_(0), fault_no_(fault_no)
+{
+}
+
+void Fault_Event_Service::push (const FtRtecEventChannelAdmin::ObjectId & oid,
+                                const RtecEventComm::EventSet & data
+                                ACE_ENV_ARG_DECL)
+                                ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID))
+{
+  if (fault_no_ == msg_count_++) {
+    ACE_DEBUG((LM_DEBUG, "FTRT_Event_Service crashing on %d-th message\n", msg_count_-1));
+    exit(1);
+  }
+  TAO_FTEC_Event_Channel::push(oid, data ACE_ENV_ARG_PARAMETER);
+}
+
+
+
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   FT_EventService event_service;
@@ -29,6 +67,7 @@ FT_EventService::FT_EventService()
 , sched_impl_(0)
 , membership_(TAO_FTEC_Event_Channel::NONE)
 , task_(orb_)
+, fault_no_(-1)
 {
 }
 
@@ -95,7 +134,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
 
     // Activate the Event channel implementation
 
-    TAO_FTEC_Event_Channel ec(orb_, root_poa);
+    Fault_Event_Service ec(orb_, root_poa, fault_no_);
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
       ec.activate(membership_
@@ -137,7 +176,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jps:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:jps:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -146,6 +185,9 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     {
     case 'd':
       TAO_FTRTEC::Log::level(ACE_OS::atoi(get_opt.opt_arg ()));
+      break;
+    case 'f':
+      this->fault_no_ = ACE_OS::atoi(get_opt.opt_arg ());
       break;
     case 'j':
       this->membership_ = TAO_FTEC_Event_Channel::BACKUP;

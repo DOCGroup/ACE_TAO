@@ -80,7 +80,7 @@ RtecEventChannelAdmin::EventChannel_ptr
 FtRtEvent_Test_Base::get_event_channel(ACE_ENV_SINGLE_ARG_DECL)
 {
   FtRtecEventChannelAdmin::EventChannel_var channel;
-  if (CORBA::is_nil(channel_.in()))
+  if (CORBA::is_nil(channel.in()))
   {
     /// Find the FTRTEC from the Naming Service
     CosNaming::Name name(1);

@@ -46,6 +46,7 @@ private:
   TAO_FTEC_Event_Channel::MEMBERSHIP membership_;
   CORBA::ORB_var orb_;
   TP_Task task_;
+  int fault_no_;
 };
 
 #endif
