@@ -12,7 +12,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
-class ACE_Scheduler_Factory
+class TAO_ORBSVCS_Export ACE_Scheduler_Factory
   // = TITLE
   //   Factory of scheduler services.
   //
