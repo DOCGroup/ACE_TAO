@@ -1,5 +1,10 @@
 Wed Jan 17 07:44:29 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Log_Msg.h (ACE_Log_Msg): Clarified that only the current message 
+	  is stored in TSS.  Thanks to Pierre Oberson
+ 	  <oberson@nagra-kudelski.ch> for pointing out the need for this
+ 	  clarification.
+
 	* examples/Log_Msg/test_log_msg.cpp (main): Fixed the example by
 	  adding ACE_Log_Msg::PROCESS so that the messages do not print
  	  out (which is the correct behavior for this test).  Thanks to
