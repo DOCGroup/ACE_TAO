@@ -81,9 +81,10 @@ TAO_Machine_Properties::retrieve_stats (void)
 }
 
 CORBA::Any*
-TAO_Machine_Properties::evalDP(const CORBA::Any& extra_info,
-			       CORBA::TypeCode_ptr returned_type,
-			       CORBA::Environment& _env)
+TAO_Machine_Properties::evalDP (const char* prop_name,
+                                CORBA::TypeCode_ptr returned_type,
+                                const CORBA::Any& extra_info,
+                                CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   CORBA::Any* return_value;
@@ -98,12 +99,6 @@ TAO_Machine_Properties::evalDP(const CORBA::Any& extra_info,
 	return return_value;
     }
   
-  char* prop_name = 0;
-  extra_info >>= prop_name;
-
-  if (prop_name == 0)
-    return return_value;
-
   CORBA::String_var prop_name_var (prop_name);
   int elapsed_seconds = this->sample_time_.sec () +
     (this->sample_time_.usec () > 500000) ? 1 : 0;
@@ -136,8 +131,7 @@ TAO_Machine_Properties::evalDP(const CORBA::Any& extra_info,
 
 void
 TAO_Machine_Properties::
-export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
-			   TAO_DP_Dispatcher& dp_disp) const
+export_properties (TAO_Property_Exporter& prop_exporter)
 {
   ACE_DEBUG ((LM_ERROR, "Adding machine properties.\n"));
   for (int i = 0; i < NUM_PROPERTIES; i++)
@@ -146,11 +140,9 @@ export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
       const char* name = PROP_NAMES[i];
       const CORBA::TypeCode_ptr prop_type = CORBA::_tc_float;
 
-      extra_info <<= name;
       CosTradingDynamic::DynamicProp* dp_struct = 
-	dp_disp.construct_dynamic_prop (name, prop_type, extra_info);
-      
-      dp_disp.register_handler (name, (TAO_DP_Evaluation_Handler*) this);
+	this->construct_dynamic_prop (name, prop_type, extra_info);
+     
       prop_exporter.add_dynamic_property (name, dp_struct);
     }
 }

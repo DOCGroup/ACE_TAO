@@ -20,14 +20,14 @@
 #if (! defined TAO_VIDEO_REPOSITORY_H)
 #define TAO_VIDEO_REPOSITORY_H
 
-#include "orbsvcs/Trader/Dynamic_Property.h" 
+#include "orbsvcs/Trader/Trader_Utils.h" 
 
 #include "ace/OS.h"
 #include "Video_RepositoryC.h"
 #include "Property_Exporter.h"
 
 class TAO_Video_Repository :
-  public TAO_DP_Evaluation_Handler,
+  public TAO_Dynamic_Property,
   public TAO_Exportable
 // = DESCRIPTION
 //   When evalDP is invoked by the Dynamic Property Dispatcher, the
@@ -50,13 +50,13 @@ public:
 
   ~TAO_Video_Repository (void);
   
-  virtual CORBA::Any* evalDP (const CORBA::Any& extra_info,
-			      CORBA::TypeCode_ptr returned_type,
+  virtual CORBA::Any* evalDP (const char* name,
+                              CORBA::TypeCode_ptr returned_type,
+                              const CORBA::Any& extra_info,
 			      CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
-  virtual void export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
-					  TAO_DP_Dispatcher& dp_dispatcher) const;
+  virtual void export_properties (TAO_Property_Exporter& prop_exporter);
   
   virtual int define_properties
     (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,

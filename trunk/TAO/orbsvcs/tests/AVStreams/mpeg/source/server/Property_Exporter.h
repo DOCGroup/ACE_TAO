@@ -23,7 +23,7 @@
 
 #include "orbsvcs/CosTradingC.h"
 #include "orbsvcs/CosPropertyServiceC.h"
-#include "orbsvcs/Trader/Dynamic_Property.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
 
 class TAO_Property_Exporter;
 
@@ -35,12 +35,7 @@ class TAO_Exportable
 public:
 
   virtual void
-    export_static_properties (TAO_Property_Exporter& prop_exporter) const {}
-  // Insert exportable properties into the proper_exporter.
-
-  virtual void
-    export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
-			       TAO_DP_Dispatcher& dp_dispatcher) const {}
+    export_properties (TAO_Property_Exporter& prop_exporter) {}
   // Insert exportable properties into the proper_exporter.
 
   virtual int define_properties
@@ -80,7 +75,7 @@ class TAO_Property_Exporter
   
   void add_dynamic_property (const char* name,
 			     const CORBA::Any& intial_value,
-			     TAO_DP_Dispatcher& dp);
+			     TAO_Dynamic_Property& dp);
   // Add a property to the PropSet and a dynamic property to the
   // Offer. Have the dynamic property connect to the PropSet accessor
   // for that name. 
