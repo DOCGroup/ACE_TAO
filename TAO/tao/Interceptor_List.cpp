@@ -4,8 +4,6 @@
 
 #include "tao/Interceptor_List.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 #include "tao/CORBA_String.h"
 
 #if !defined (__ACE_INLINE__)
@@ -86,6 +84,8 @@ TAO_Interceptor_List::add_interceptor_i (
 
 
 // -------------------------------------------------------------------
+
+#if TAO_HAS_INTERCEPTORS == 1
 
 TAO_ClientRequestInterceptor_List::TAO_ClientRequestInterceptor_List (void)
   : interceptors_ ()
@@ -180,6 +180,8 @@ TAO_ServerRequestInterceptor_List::add_interceptor (
     PortableInterceptor::ServerRequestInterceptor::_duplicate (interceptor);
 }
 
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 // -------------------------------------------------------------------
 
 TAO_IORInterceptor_List::TAO_IORInterceptor_List (void)
@@ -230,16 +232,27 @@ TAO_IORInterceptor_List::add_interceptor (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+# if TAO_HAS_INTERCEPTORS == 1
+
 template class ACE_Array_Base<PortableInterceptor::ClientRequestInterceptor_ptr>;
 template class ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_ptr>;
+
+# endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 template class ACE_Array_Base<PortableInterceptor::IORInterceptor_ptr>;
+
+# endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+# if TAO_HAS_INTERCEPTORS == 1
+
 #pragma instantiate ACE_Array_Base<PortableInterceptor::ClientRequestInterceptor_ptr>
 #pragma instantiate ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_ptr>
+
+# endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 #pragma instantiate ACE_Array_Base<PortableInterceptor::IORInterceptor_ptr>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
