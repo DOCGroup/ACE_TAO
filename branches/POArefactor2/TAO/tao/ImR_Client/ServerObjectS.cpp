@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:605
 
 #ifndef _TAO_IDL_ORIG_SERVEROBJECTS_CPP_
@@ -35,6 +35,7 @@
 
 #include "ServerObjectS.h"
 #include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
