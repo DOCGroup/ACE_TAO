@@ -1011,7 +1011,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
     {
       do
         {
-          this_timeout = 
+          this_timeout =
             this->timer_queue_->calculate_timeout (max_wait_time,
                                                    &timer_buf);
           width = (u_long) this->handler_rep_.max_handlep1 ();
@@ -1072,7 +1072,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
     return -1;
   else
     number_of_handlers_dispatched += n;
-    
+
   return this->state_changed_ ? -1 : 0;
 }
 
@@ -1237,7 +1237,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
                 other_handlers_dispatched) == -1)
         // State has changed or a serious failure has occured, so exit
         // loop.
-        break; 
+        break;
 
       // Finally, dispatch the I/O handlers.
       else if (this->dispatch_io_handlers
@@ -1270,7 +1270,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
   ACE_TRACE ("ACE_Select_Reactor_T::handle_events");
 
   // Stash the current time -- the destructor of this object will
-  // automatically compute how much time elpased since this method was
+  // automatically compute how much time elapsed since this method was
   // called.
   ACE_Countdown_Time countdown (max_wait_time);
 
