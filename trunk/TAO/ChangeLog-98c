@@ -1,3 +1,7 @@
+Sun Apr 26 01:09:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.1.16 released.
+
 Sat Apr 25 16:14:02 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
