@@ -56,7 +56,8 @@ DIRS  = CDR \
 	QtTests \
 	Multiple \
 	LongWrites \
-	Crashed_Callback
+	Crashed_Callback \
+	Client_Leaks
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
