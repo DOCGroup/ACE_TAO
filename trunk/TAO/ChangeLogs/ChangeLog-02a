@@ -1,5 +1,6 @@
 2001-04-08  Yamuna Krishnamurthy  <yamuna@macumbo.cs.wustl.edu>
 
+	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h: 
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.h: 
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 	
 	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h: 
