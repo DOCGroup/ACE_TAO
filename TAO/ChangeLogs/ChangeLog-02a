@@ -1,3 +1,16 @@
+Wed Jun 12 13:24:11 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/IIOP_Acceptor.cpp:
+	* tao/Strategies/DIOP_Acceptor.cpp:
+	  Fixed bug 1220 for IIOP and DIOP endpoints.  For other protocols
+	  either the bug does not apply (UIOP and UIPMC) or the problem is
+	  more complicated than what I can handle today.
+
+	* tao/Strategies/SHMIOP_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+	  Documented potential problems with the current collocation
+	  approach.
+
 Wed Jun 12 07:42:00 2002  Michael Kircher <Michael.Kircher@siemens.com>
 
 	* docs/ORBEndpoints.html:
