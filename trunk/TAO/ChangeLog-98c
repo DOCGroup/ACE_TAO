@@ -1,3 +1,8 @@
+Sun Oct 26 00:31:38 1997    <irfan@TWOSTEP>
+
+	* tao/orb_core.i (hash_i): Redid the specialization in view of the
+ 	  new changes.
+
 Sat Oct 25 18:14:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp (be_interface): Fixed yet another
