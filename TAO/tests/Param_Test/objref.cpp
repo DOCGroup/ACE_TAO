@@ -76,7 +76,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
 
   // New environment variable
   char msg_str[256] = "";
-  
+
   ACE_TRY
     {
       ACE_OS::strcpy (msg_str, "make_cofee");
@@ -94,18 +94,18 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref,
       this->in_->description (desc, ACE_TRY_ENV); // set the attribute for the in object
       ACE_TRY_CHECK;
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, msg_str);
       return -1;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-    
+
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
   this->ret_ = Coffee::_nil ();
-  
+
   // DII
   *this->in_courier = ACE_dynamic_cast (CORBA::Object_ptr,
                                         this->in_.in ());
@@ -144,7 +144,7 @@ Test_ObjRef::reset_parameters (void)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-      
+
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
   this->ret_ = Coffee::_nil ();
@@ -227,13 +227,13 @@ Test_ObjRef::check_validity (void)
 
   ACE_TRY
     {
-      Coffee::Desc_var in_desc = 
+      Coffee::Desc_var in_desc =
         this->in_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       in = in_desc->name.in ();
-      
-      Coffee::Desc_var inout_desc = 
+
+      Coffee::Desc_var inout_desc =
         this->inout_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -242,11 +242,19 @@ Test_ObjRef::check_validity (void)
       Coffee::Desc_var out_desc =
         this->out_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
- 
+
       out = out_desc->name.in ();
-      
+
       ret_desc = this->out_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      const char* ret = ret_desc->name.in ();
+
+      // now compare them
+      if (!ACE_OS::strcmp (in, inout) &&
+          !ACE_OS::strcmp (in, out) &&
+          !ACE_OS::strcmp (in, ret))
+        return 1; // success
     }
   ACE_CATCHANY
     {
@@ -254,17 +262,8 @@ Test_ObjRef::check_validity (void)
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
-      
-  const char* ret = ret_desc->name.in ();
 
-  // now compare them
-  if (!ACE_OS::strcmp (in, inout) &&
-      !ACE_OS::strcmp (in, out) &&
-      !ACE_OS::strcmp (in, ret))
-    return 1; // success
-  else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -277,14 +276,14 @@ Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
   // Narrow each checked variable into its _var before
   // calling check_validity().
 
-  ACE_TRY 
+  ACE_TRY
     {
       this->inout_ = Coffee::_narrow (*this->inout_courier, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       this->out_ = Coffee::_narrow (*this->out_courier, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       this->ret_ = Coffee::_narrow (*this->ret_courier, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -294,7 +293,7 @@ Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  
+
   return this->check_validity ();
 }
 
@@ -310,7 +309,7 @@ Test_ObjRef::print_values (void)
   const char *in = 0;
   const char *out = 0;
   const char *inout = 0;
-  ACE_TRY 
+  ACE_TRY
     {
       Coffee::Desc_var in_desc =
         this->in_->description (ACE_TRY_ENV);
@@ -322,13 +321,13 @@ Test_ObjRef::print_values (void)
       ACE_TRY_CHECK;
 
       inout = inout_desc->name.in ();
-      
+
       Coffee::Desc_var out_desc =
         this->out_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-   
+
       out = out_desc->name.in ();
-      
+
       ret_desc = this->out_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
