@@ -1,3 +1,11 @@
+Wed Jan 23 22:00:16 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/IORInfo.cpp
+	  (manager_id, state, current_factory):
+
+	  Fixed code that couldn't possibly work since an exception was
+	  always thrown.  Where's the testing?!
+
 Wed Jan 23 16:40:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
 	* tao/ORB.cpp:
