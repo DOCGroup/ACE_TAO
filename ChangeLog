@@ -27,7 +27,7 @@ Wed Apr 23 15:31:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Apr 23 16:10:07 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\config-win32-msvc-6.h:
+	* ace/config-win32-msvc-6.h:
 
 	  VC 6 does not have support for member templates.  Therefore,
 	  added #define ACE_LACKS_MEMBER_TEMPLATES to the config file.
