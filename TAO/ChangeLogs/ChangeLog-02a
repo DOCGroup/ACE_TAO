@@ -1,3 +1,11 @@
+Tue Apr 15 10:45:16 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+        * tao/Invocation.cpp:
+        * tao/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RT_Endpoint_Utils.cpp:
+          Miscellaneous cleanup that should have been caught before
+          the check in, but somehow wasn't.
+
 Tue May 15 10:43:23 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_helper.cpp:
