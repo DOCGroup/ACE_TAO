@@ -31,7 +31,10 @@
     <!-- we mention this as "reduced latencies" instead of improved -->
     <!-- latencies. I can make the change but thought would discuss -->
     <!-- with you before jumping on to it. - Bala -->
-      <!-- Bala, aren't they the same? In any case Doug wrote this. ;-) -->
+    <!-- Bala, aren't they the same? In any case Doug wrote -->
+    <!-- this. ;-) -->
+
+    <!-- Shouldnt be an issue though :-) -->
       and latency for a variety of applications. </p>
 
      <p>
@@ -67,6 +70,14 @@
            prefer "optimizing" but if the general consensus is that
            "improving" is better than I won't debate the issue.
         -->
+          <!-- Neither am I :-). I dont know why the term Optimizing -->
+          <!-- looks odd to me. I think this way -- the user needs to -->
+          <!-- apply different optimzation strategies that we have -->
+          <!-- offered through different options. Using the strategies -->
+          <!-- that TAO offers the user can optimize applications to -->
+          <!-- get better throughput or reduced latencies, as the case -->
+          <!-- may be. I dont think its a matter worth debating -->
+          <!-- about:-). -->
 
 	<a href="#throughput">Optimizing Throughput</a>
 	<ul>
@@ -137,6 +148,13 @@
           as opposed to using static ORB configurations.
         -->
 
+          <!-- Agreed. With the little I know of users, they try to -->
+          <!-- mix and match. They tend to assume that programming -->
+          <!-- considerations can be mixed and matched with  ORB -->
+          <!-- configurations. Hence my jitters. If we split things as -->
+          <!-- Dr.Schmidt suggests, I guess things could be better -->
+
+
           <!-- 2.For long we have been interchanging the terms, -->
           <!-- "Throughput" and "Latency". AMI is good for -->
           <!-- "Throughput", you could keep the client thread busy by -->
@@ -148,12 +166,23 @@
 	     section is after all about improving throughput not
 	     latency. :-)
          -->
+          <!-- Aahn!! See we interchange the usage of Latency and -->
+          <!-- Throughput which doesnt sound like a good idea. The ORB -->
+          <!-- configuration options that we suggest are mainly for -->
+          <!-- getting low latencies. Throughput is an after effect of -->
+          <!-- it.  -->
 
           <!-- configuration section talks about options that improve -->
           <!-- latencies. IMHO, lower latencies can lead to improved -->
 
 	<!-- If the options I wrote about improve latency and not
 	throughput that should certainly be corrected. -->
+
+       <!-- I guess that is where we need to start working. The -->
+       <!-- strategies that we talk gives lower latencies and hence -->
+       <!-- better throughput. They have been -->
+       <!-- implemented/designed/thought about as options that will -->
+       <!-- give low latencies. Making that change should help a lot. -->
 
           <!-- throughput, but vice-versa may not apply. -->
           <!-- Please correct me if I am wrong. I am willing to stand -->
@@ -241,6 +270,8 @@
 	    <!-- Fine with me Bala.  You know more about the this
                  option than I do.  Go for it!  :-)  -->
 
+              <!-- No problem. I will start changing this once you -->
+              <!-- make your next pass -->
 	    <blockquote>
 	      <code>
 		<a href="Options.html#-ORBClientConnectionHandler">
@@ -288,7 +319,13 @@
                    to improve throughput.  Isn't that incorrect? -->
 
 	      comes at the cost of a smaller number of requests that
-	      may be issued at a given point in time.  To enable this
+	      may be issued at a given point in time.
+
+              <!-- May be I am confused :-). The above statement that -->
+              <!-- says "smaller number of requests"  tries to convey -->
+              <!-- that we will have reduced throughput. What am I -->
+              <!-- missing here? -->
+              To enable this
 	      behaviour, add the following option to the
 	      <code>Client_Strategy_Factory</code> line of your
 	      <code>svc.conf</code> file:
@@ -502,7 +539,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Mon Dec 17 10:28:33 Pacific Standard Time 2001
+Last modified: Mon Dec 17 19:28:23 ESTEDT 2001
 <!-- hhmts end -->
   </body>
 </html>
