@@ -10,10 +10,10 @@
 #include "ace/Task.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) 
+#if defined (ACE_MT_SAFE)
 // Lock the creation of the Singleton.
 ACE_Thread_Mutex ACE_Task_Exit::ace_task_lock_;
-#endif /* defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
+#endif /* defined (ACE_MT_SAFE) */
 
 // NOTE:  this preprocessor directive should match the one in
 // ACE_Task_Base::svc_run () below.  This prevents the two statics
@@ -23,12 +23,6 @@ ACE_Task_Exit *
 ACE_Task_Exit::instance (void)
 {
   ACE_TRACE ("ACE_Task_Exit::instance");
-
-#if defined (ACE_MT_SAFE) && defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) 
-  // Lock the creation of the Singleton.  This should be inside of
-  // ACE_Svc_Handler, but GNU G++ is too lame to handle this...
-  static ACE_Thread_Mutex ace_task_lock_;
-#endif /* defined (ACE_MT_SAFE) && defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
   // Determines if we were dynamically allocated.  
   static ACE_TSS_TYPE (ACE_Task_Exit) *instance_;

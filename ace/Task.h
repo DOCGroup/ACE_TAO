@@ -208,10 +208,10 @@ private:
   // This is used to make sure that an ACE_Task registers and
   // deregisters with the ACE_Thread_Manager correctly.
 
-#if defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+#if defined (ACE_MT_SAFE)
   static ACE_Thread_Mutex ace_task_lock_;
   // Lock the creation of the Singleton.
-#endif /* defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
+#endif /* defined (ACE_MT_SAFE) */
 };
 
 #if defined (__ACE_INLINE__)
