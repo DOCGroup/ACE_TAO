@@ -1436,7 +1436,7 @@ CORBA_Any::operator>>= (const CORBA::Any *&a) const
                 }
               else
                 {
-                  delete a;
+                  delete ACE_const_cast (CORBA::Any *, a);
                   a = 0;
                   return 0;
                 }                                      
