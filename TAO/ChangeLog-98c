@@ -1,27 +1,32 @@
+Mon Apr 20 09:48:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/CDR/growth.cpp (main): cast ACE_ONE_SECOND_IN_USECS
+          to ACE_UINT32 to avoid ambiguity when using ACE_U_LongLong.
+
 Mon Apr 20 06:36:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp: The generated typecode was incorect
-	in its encapsulation length. We were generating the entire
-	TypeCode length as the encapsulation length.
+        * TAO_IDL/be/be_interface.cpp: The generated typecode was incorect
+        in its encapsulation length. We were generating the entire
+        TypeCode length as the encapsulation length.
 
 Sat Apr 18 20:21:24 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/{be_visitor_exception, be_visitor_sequence,
+        * TAO_IDL/be/{be_visitor_exception, be_visitor_sequence,
         be_visitor_structure, be_visitor_union}.cpp: In the generated code
-	for the >>= operators, we were incorrectly passing the address of
-	the pointer to the decode method rather than simply passing the
-	pointer.
+        for the >>= operators, we were incorrectly passing the address of
+        the pointer to the decode method rather than simply passing the
+        pointer.
 
-	* tao/Any.cpp: The value () routine either returns the cdr_ or the
-	value_ field depending on whether the Any owns the data or not.
+        * tao/Any.cpp: The value () routine either returns the cdr_ or the
+        value_ field depending on whether the Any owns the data or not.
 
-	* tao/TypeCode.cpp: In private_equal, we had forgottent to account
-	for the tk_any case.
+        * tao/TypeCode.cpp: In private_equal, we had forgottent to account
+        for the tk_any case.
 
 Sat Apr 18 15:52:20 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* tao/Exception.cpp (CORBA_Exception): Removed a debugging
-	statement assert (1==2) in the destructor of this class.
+        * tao/Exception.cpp (CORBA_Exception): Removed a debugging
+        statement assert (1==2) in the destructor of this class.
 
 Sat Apr 18 12:19:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
