@@ -1,3 +1,11 @@
+Sat Jun  3 13:30:28 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Profile.i (TAO_Profile):
+
+	  Fixed misordered variables in base member initializer list.
+	  This fixes a warning about reordered initialization of class
+	  members.
+
 Sat Jun 03 11:55:23 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Policy_Factory.h
