@@ -21,23 +21,7 @@
  *       -Wb,post_include="ace/post.h"
  *       TAO.pidl
  *
- *   2. Then patch the generated code.  The patch fixes the interface
- *   repository IDs, disables the code under certain configurations,
- *   and eliminates cycles in the include dependencies.
- *
- *   Apply patches using the following commands:
- *
- *   patch < diffs/TAOC.h.diff
- *   patch < diffs/TAOC.i.diff
- *   patch < diffs/TAOC.cpp.diff
- *
- *   @note The diffs were generated with these commands:
- *
- *   * Note: to update the patch file after re-generating the code use:
- *
- *   for i in TAO{C,S,S_T}.{h,i,cpp}; do
- *     diff -uBbw orig/$i $i;
-  *   done > diffs/TAO.diff
+ * 2. The files are ready to use
  */
 // ================================================================
 
