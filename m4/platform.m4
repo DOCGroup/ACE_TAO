@@ -26,40 +26,64 @@ AC_DEFUN(ACE_SET_PLATFORM_MACROS, dnl
 [
 dnl Begin ACE_SET_PLATFORM_MACROS
 
-dnl At some point the below platform specific settings should be automated
-dnl as much as possible!  We set things manually just to get things going
-dnl with the auto{conf,make}/libtool integration into the ACE source tree.
-
-dnl These settings need to be done _after_ the header, function and library
-dnl checks!
+dnl At some point the below platform specific settings should be
+dnl automated as much as possible!  We set things manually just to get
+dnl things going with the auto{conf,make}/libtool integration into the
+dnl ACE source tree.
 
 dnl Platform specific flags
 case "$target" in
   *aix3*)
+    AC_DEFINE(AIX)
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
     ;;
   *aix4.1*)
     AC_DEFINE(AIX)
+    dnl Use BSD 4.4 socket definitions for pre-AIX 4.2.  The _BSD
+    dnl setting also controls the data type used for waitpid(),
+    dnl wait(), and wait3().
+    AC_DEFINE(_BSD, 44)
+    dnl pre-AIX 4.3 requires _BSD_INCLUDES
+    AC_DEFINE(_BSD_INCLUDES)
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
     AC_DEFINE(ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
     ;;
   *aix4.2*)
     AC_DEFINE(AIX)
+    dnl pre-AIX 4.3 requires _BSD_INCLUDES
+    AC_DEFINE(_BSD_INCLUDES)
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
 dnl    AC_DEFINE(ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
     AC_DEFINE(ACE_TLI_TCP_DEVICE, "/dev/xti/tcp")
     ;;
-  *cray*)
+  *aix*)
+    AC_DEFINE(AIX)
+    ;;
+  t3e-cray-unicosmk*)
+    AC_DEFINE(_CRAYMPP)
+    AC_DEFINE(_CRAYT3E)
+    AC_DEFINE(_UNICOS,)
+    ;;
+  t3e-cray*)
+    AC_DEFINE(_CRAYT3E)
+    AC_DEFINE(_UNICOS,)
+    ;;
+  *cray-unicos*)
+    AC_DEFINE(_UNICOS,)
     ;;
   *dgux4.11*)
     AC_DEFINE(ACE_DGUX)
     AC_DEFINE(IP_ADD_MEMBERSHIP, 0x13)
     AC_DEFINE(IP_DROP_MEMBERSHIP, 0x14)
+    AC_DEFINE(_POSIX_SOURCE)
+    AC_DEFINE(_DGUX_SOURCE)
     ;;
   *dgux4*)
     AC_DEFINE(ACE_DGUX)
     AC_DEFINE(IP_ADD_MEMBERSHIP, 0x13)
     AC_DEFINE(IP_DROP_MEMBERSHIP, 0x14)
+    AC_DEFINE(_POSIX4A_DRAFT10_SOURCE)
+    AC_DEFINE(_POSIX4_DRAFT_SOURCE)
     ;;
   *freebsd*)
     ;;
@@ -73,6 +97,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
   *hpux10*)
     AC_DEFINE(HPUX)
     AC_DEFINE(HPUX_10)
+    AC_DEFINE(_HPUX_SOURCE)
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
     AC_DEFINE(ACE_TLI_TCP_DEVICE, "/dev/inet_cots")
     ;;
@@ -99,6 +124,9 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     ;;
   *irix5.3*)
     AC_DEFINE(IRIX5)
+    if test -z "$GXX"; then
+      AC_DEFINE(_BSD_TYPES)
+    fi
     ;;
   *irix6*)
     AC_DEFINE(IRIX6)
@@ -108,6 +136,8 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
       AC_DEFINE(ACE_HAS_IRIX62_THREADS)
     fi
     AC_DEFINE(ACE_TIMER_SKEW, (1000 * 10))
+    AC_DEFINE(_SGI_MP_SOURCE)
+    AC_DEFINE(_MODERN_C_)
     ;;
   *linux*)
     AC_DEFINE(ACE_DEFAULT_MAX_SOCKET_BUFSIZ, 65535)
@@ -118,6 +148,8 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE(ACE_TIMER_SKEW, (1000 * 10))
     ;;
   *lynxos*)
+    AC_DEFINE(_POSIX_THREADS_CALLS)
+    AC_DEFINE(__NO_INCLUDE_WARN__)
     AC_DEFINE(ACE_MALLOC_ALIGN, 8)
     AC_DEFINE(ACE_MAP_PRIVATE, ACE_MAP_SHARED)
     AC_DEFINE(ACE_USE_RCSID, 0)
@@ -131,6 +163,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE(IP_DROP_MEMBERSHIP, 0x14)
     ;;
   *mvs*)
+    AC_DEFINE(_ALL_SOURCE)
     ;;
   *netbsd*)
     AC_DEFINE(ACE_NETBSD)
@@ -196,6 +229,7 @@ dnl Check for _POSIX_C_SOURCE macro
     AC_DEFINE(ACE_DEFAULT_CLOSE_ALL_HANDLES, 0)
     ;;
   *sco5*)
+    AC_DEFINE(_SVID3)
     AC_DEFINE(SCO)
     AC_DEFINE(ACE_DEFAULT_CLOSE_ALL_HANDLES, 0)
     AC_DEFINE(ACE_HAS_BIG_FD_SET) dnl FIXME: We need a test for this!
