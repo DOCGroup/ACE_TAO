@@ -2029,8 +2029,8 @@ ACE_Thread_Manager::num_tasks_in_group (int grp_id)
        iter.advance ())
     {
       if (iter.next ()->grp_id_ == grp_id
-          && this->find_task (iter.next ()->task_, i) ==
-          0)
+          && this->find_task (iter.next ()->task_, i) == 0
+          && iter.next ()->task_ != 0)
         tasks_count++;
 
       i++;
@@ -2057,7 +2057,7 @@ ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
   return threads_count;
 }
 
-// Returns in task_list a list of ACE_Tasks registered with ACE_Thread_Manager. 
+// Returns in task_list a list of ACE_Tasks registered with ACE_Thread_Manager.
 
 int
 ACE_Thread_Manager::task_all_list (ACE_Task_Base *task_list[],
