@@ -90,8 +90,7 @@ ntptime()
 
 ACE_INLINE timeval unixtime()
 {
-  struct timeval tv;
-        ::gettimeofday(&tv, 0);
-        return (tv);
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+        return ((timeval) tv);
 }
 #endif /* TAO_AV_NTP_TIME_H */
