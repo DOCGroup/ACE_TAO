@@ -1,3 +1,32 @@
+Tue Oct  7 16:47:50 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+          add *Config project
+
+        * orbsvcs/tests/FT_App/StubConfig.cpp:
+          New file that drives the unit test for FactoryRegistry.
+
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+          Register with FactoryRegistry.
+          New command line options -l location -i type_id
+
+        * orbsvcs/tests/FT_App/FactoryRegistry_i.h:
+        * orbsvcs/tests/FT_App/FactoryRegistry_i.cpp:
+          FactoryRegistry is working.
+
+        * orbsvcs/tests/FT_App/run_test_registry.pl:
+          Unit test for factory registry.
+
+        * orbsvcs/tests/FT_App/run_test_detector.pl:
+          Add new command line options for ReplicaFactory
+
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h:
+          Conform to ACE coding conventions. No functional changes.
+
+        These changes were made in the oci_haft branch.
+
 Tues Oct  7 08:44:52 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * tao/Utils/Server_Main.h:

@@ -174,7 +174,7 @@ int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
   {
     this->identity_ = "file:";
     this->identity_ += this->ior_output_file_;
-    result = writeIOR (this->ior_output_file_, this->ior_);
+    result = write_ior_file (this->ior_output_file_, this->ior_);
   }
   else
   {
@@ -238,28 +238,16 @@ void FactoryRegistry_i::register_factory (
   METHOD_ENTRY(FactoryRegistry_i::register_factory);
 
   PortableGroup::FactoryInfos * infos;
-  if (this->registry_.find(type_id, infos) == 0)
+  if (this->registry_.find(type_id, infos) != 0)
   {
     ACE_DEBUG(( LM_DEBUG,
-      "register_factory found infos for %s", type_id
-      ));
-  }
-  else
-  {
-    ACE_DEBUG(( LM_DEBUG,
-      "register_factory: no infos for %s\n", type_id
+      "FactoryRegistry: adding new type: %s\n", type_id
       ));
     // Note the 5.  It's a guess about the number of factories
     // that might exist for any particular type of object.
     // todo: make it a parameter.
-    ACE_NEW_NORETURN (infos, PortableGroup::FactoryInfos(5));
-    if (infos == 0)
-    {
-      ACE_ERROR(( LM_ERROR,
-        "Can't allocate infos for type: %s\n" , type_id));
-      ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-        CORBA::COMPLETED_NO));
-    }
+    ACE_NEW_THROW_EX (infos, PortableGroup::FactoryInfos(5),
+      CORBA::NO_MEMORY());
     this->registry_.bind(type_id, infos);
   }
   // at this point infos points to the infos structure
@@ -271,13 +259,22 @@ void FactoryRegistry_i::register_factory (
     if (info.the_location == factory_info.the_location)
     {
       ACE_ERROR(( LM_ERROR,
-        "Found duplicate location for type: %s\n" , type_id));
+        "Attempt to register duplicate location %s for type: %s\n" ,
+          ACE_static_cast(const char *, info.the_location[0].id),
+          type_id));
       ACE_THROW (PortableGroup::MemberAlreadyPresent() );
     }
   }
 
   infos->length(length + 1);
   (*infos)[length] = factory_info;
+
+  ACE_DEBUG(( LM_DEBUG,
+    "FactoryRegistry: Added factory: %s[%d] at %s\n",
+      type_id,
+      ACE_static_cast(int,length + 1),
+      ACE_static_cast(const char *, factory_info.the_location[0].id)
+    ));
 
   METHOD_RETURN(FactoryRegistry_i::register_factory);
 }
@@ -294,9 +291,6 @@ void FactoryRegistry_i::unregister_factory (
   PortableGroup::FactoryInfos * infos;
   if (this->registry_.find(type_id, infos) == 0)
   {
-    ACE_DEBUG(( LM_DEBUG,
-      "register_factory found infos for %s", type_id
-      ));
     // at this point infos points to the infos structure
     // for this type..
 
@@ -308,6 +302,12 @@ void FactoryRegistry_i::unregister_factory (
       if (info.the_location == location)
       {
         found = 1;
+
+        ACE_ERROR(( LM_INFO,
+          "Unregistering  factory %s at location %s\n",
+            type_id,
+            ACE_static_cast(const char *, location[0].id)
+          ));
         if (length > 1)
         {
           while (nInfo + 1 < length)
@@ -329,11 +329,19 @@ void FactoryRegistry_i::unregister_factory (
   else
   {
     ACE_ERROR(( LM_ERROR,
-      "nregister_factory: no infos for %s", type_id
+      "Attempt to unregister factory for unknown type %s\n", type_id
       ));
     ACE_THROW ( PortableGroup::MemberNotFound() );
     infos->length(0);
     this->registry_.bind(type_id, infos);
+  }
+
+  if (registry_.current_size() == 0)
+  {
+    ACE_ERROR(( LM_INFO,
+      "FactoryRegistry is idle\n"
+      ));
+    this->quit_requested_ |= this->quit_on_idle_;
   }
 
   METHOD_RETURN(FactoryRegistry_i::unregister_factory);
@@ -350,7 +358,7 @@ void FactoryRegistry_i::unregister_factory_by_type (
   if (this->registry_.unbind(type_id, infos) )
   {
     ACE_DEBUG(( LM_DEBUG,
-      "unregister_factory_by_type found infos for %s", type_id
+      "Unregistering all factories for type %s\n", type_id
       ));
     // delete the entire set of factories for this location.
     delete infos;
@@ -358,9 +366,18 @@ void FactoryRegistry_i::unregister_factory_by_type (
   else
   {
     ACE_ERROR(( LM_INFO,
-      "Info: unregister_factory_by_type: no infos for %s", type_id
+      "Info: unregister_factory_by_type: unknown type: %s\n", type_id
       ));
   }
+
+  if (registry_.current_size() == 0)
+  {
+    ACE_ERROR(( LM_INFO,
+      "FactoryRegistry is idle\n"
+      ));
+    this->quit_requested_ |= this->quit_on_idle_;
+  }
+
   METHOD_RETURN(FactoryRegistry_i::unregister_factory_by_type);
 }
 
@@ -421,9 +438,19 @@ void FactoryRegistry_i::unregister_factory_by_location (
     else
     {
       ACE_ERROR ((LM_ERROR,
-        "LOGIC ERROR AT " __FILE__ " (%d): Entry to be deleted disappeared", __LINE__));
+        "LOGIC ERROR AT " __FILE__ " (%d): Entry to be deleted disappeared\n", __LINE__));
     }
   }
+  //////////////////////////
+  // If all types are gone...
+  if (registry_.current_size() == 0)
+  {
+    ACE_ERROR(( LM_INFO,
+      "FactoryRegistry is idle\n"
+      ));
+    this->quit_requested_ |= this->quit_on_idle_;
+  }
+
 
   METHOD_RETURN(FactoryRegistry_i::unregister_factory_by_location);
 }
@@ -437,22 +464,19 @@ void FactoryRegistry_i::unregister_factory_by_location (
   METHOD_ENTRY(FactoryRegistry_i::list_factories_by_type);
 
   PortableGroup::FactoryInfos_var infos;
-  ACE_NEW_NORETURN(infos, ::PortableGroup::FactoryInfos() );
-  if (infos.ptr() == 0)
-  {
-    ACE_ERROR(( LM_ERROR,
-      "list_factories_by_type: Can't allocate infos for type: %s\n" , type_id));
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-      CORBA::COMPLETED_NO));
-  }
+  ACE_NEW_THROW_EX (infos, ::PortableGroup::FactoryInfos(),
+    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   PortableGroup::FactoryInfos * typeInfos;
-  if (this->registry_.unbind(type_id, typeInfos) )
+  if (this->registry_.find(type_id, typeInfos) == 0)
   {
-    ACE_DEBUG(( LM_DEBUG,
-      "unregister_factory_by_type found infos for %s", type_id
-      ));
     (*infos) = (*typeInfos);
+  }
+  else
+  {
+    ACE_ERROR(( LM_INFO,
+      "Info: list_factories_by_type: unknown type %s\n", type_id
+      ));
   }
   METHOD_RETURN(FactoryRegistry_i::list_factories_by_type) infos._retn();
 }
@@ -465,14 +489,8 @@ void FactoryRegistry_i::unregister_factory_by_location (
 {
   METHOD_ENTRY(FactoryRegistry_i::list_factories_by_location);
   ::PortableGroup::FactoryInfos_var infos;
-  ACE_NEW_NORETURN(infos, ::PortableGroup::FactoryInfos(this->registry_.current_size()) );
-  if (infos.ptr() == 0)
-  {
-    ACE_ERROR(( LM_ERROR,
-      "list_factories_by_location: Can't allocate infos\n"));
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-      CORBA::COMPLETED_NO));
-  }
+  ACE_NEW_THROW_EX (infos, ::PortableGroup::FactoryInfos(this->registry_.current_size()),
+    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   size_t count = 0;
 
@@ -506,7 +524,7 @@ void FactoryRegistry_i::unregister_factory_by_location (
 //////////////////////////////
 // Implementation methods
 
-int FactoryRegistry_i::writeIOR(const char * outputFile, const char * ior)
+int FactoryRegistry_i::write_ior_file(const char * outputFile, const char * ior)
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (outputFile, "w");

@@ -138,7 +138,7 @@ private:
   /**
    * Write this factory's IOR to a file
    */
-  int writeIOR (const char * outputFile, const char * ior);
+  int write_ior_file (const char * outputFile, const char * ior);
 
   ///////////////
   // Data Members
@@ -161,7 +161,7 @@ private:
   typedef ACE_Guard<ACE_Mutex> InternalGuard;
 
   /**
-   * The orb 
+   * The orb
    */
   CORBA::ORB_var orb_;
 

@@ -48,6 +48,7 @@
 FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   : ior_output_file_(0)
   , factory_registry_ior_file_(0)
+  , registered_(0)
   , ns_name_(0)
   , type_id_(0)
   , location_(0)
@@ -69,8 +70,6 @@ FT_ReplicaFactory_i::~FT_ReplicaFactory_i ()
     // before this object disappears
     shutdown_i ();
   }
-  ACE_DECLARE_NEW_ENV;
-  fini (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ////////////////////////////////////////////
@@ -219,7 +218,7 @@ int FT_ReplicaFactory_i::idle (int & result)
       {
         // give the replica's idle processing a change
         // ignore the return status (the replica should shut itself down
-        // unless result is non-zero.  
+        // unless result is non-zero.
         // non-zero result means panic.
         replica->idle(result);
       }
@@ -249,6 +248,13 @@ int FT_ReplicaFactory_i::idle (int & result)
 
 int FT_ReplicaFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
+static bool hasFinied = false;
+if(hasFinied)
+{
+  ACE_ERROR((LM_ERROR, "******************************************FINI CALLED TWICE!*********************\n"
+    ));
+}
+hasFinied = true;
   if (this->ior_output_file_ != 0)
   {
     ACE_OS::unlink (this->ior_output_file_);
@@ -258,8 +264,28 @@ int FT_ReplicaFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
   {
     this->naming_context_->unbind (this_name_
                             ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
     this->ns_name_ = 0;
   }
+
+  if (registered_)
+  {
+    registered_ = 0;
+    ACE_ERROR (( LM_INFO,
+       "%s Unregistering from factory registry\n",
+       identity()
+       ));
+
+    PortableGroup::Location location(1);
+    location.length(1);
+    location[0].id = CORBA::string_dup(location_);
+    this->factory_registry_->unregister_factory (
+            this->type_id_,
+            location
+      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+  }
+
   return 0;
 }
 
@@ -341,7 +367,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
             this->type_id_,
             info
             ACE_ENV_ARG_PARAMETER);
-                  
+          this->registered_ = 1;
         }
         else
         {
@@ -653,4 +679,3 @@ void FT_ReplicaFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 # pragma instantiate ACE_Vector<FT_TestReplica_i *>
 # pragma ACE_Guard<ACE_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

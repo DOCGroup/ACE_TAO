@@ -9,18 +9,18 @@
 #include <iostream>
 
 StubFaultNotifier::StubFaultNotifier ()
-  : iorOutputFile_(0)
-  , iorDetectorFile_(0)
-  , replicaIorBuffer_(0)
-  , nsName_(0)
+  : ior_output_file_(0)
+  , detector_ior_file_(0)
+  , replica_ior_buffer_(0)
+  , ns_name_(0)
 {
 }
 
 
 StubFaultNotifier::~StubFaultNotifier ()
 {
-  delete [] this->replicaIorBuffer_;
-  this->replicaIorBuffer_ = 0;
+  delete [] this->replica_ior_buffer_;
+  this->replica_ior_buffer_ = 0;
 }
 
 
@@ -31,7 +31,7 @@ StubFaultNotifier::~StubFaultNotifier ()
 
 PortableServer::ObjectId StubFaultNotifier::objectId()const
 {
-  return this->objectId_.in();
+  return this->object_id_.in();
 }
 
 
@@ -49,21 +49,21 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
     {
       case 'r':
       {
-        if (this->replicaIorBuffer_ == 0)
+        if (this->replica_ior_buffer_ == 0)
         {
           const char * repNames = get_opts.opt_arg ();
           size_t repNameLen = ACE_OS::strlen(repNames);
 
           // make a working copy of the string
-          ACE_NEW_NORETURN(this->replicaIorBuffer_,
+          ACE_NEW_NORETURN(this->replica_ior_buffer_,
             char[repNameLen + 1]);
-          if ( this->replicaIorBuffer_ != 0)
+          if ( this->replica_ior_buffer_ != 0)
           {
-            ACE_OS::memcpy(this->replicaIorBuffer_, repNames, repNameLen+1);
+            ACE_OS::memcpy(this->replica_ior_buffer_, repNames, repNameLen+1);
 
             // tokenize the string on ','
             // into iorReplicaFiles_
-            char * pos = this->replicaIorBuffer_;
+            char * pos = this->replica_ior_buffer_;
             while (pos != 0)
             {
               this->iorReplicaFiles_.push_back(pos);
@@ -96,17 +96,17 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
       }
       case 'd':
       {
-        this->iorDetectorFile_ = get_opts.opt_arg ();
+        this->detector_ior_file_ = get_opts.opt_arg ();
         break;
       }
       case 'n':
       {
-        this->nsName_ = get_opts.opt_arg ();
+        this->ns_name_ = get_opts.opt_arg ();
         break;
       }
       case 'o':
       {
-        this->iorOutputFile_ = get_opts.opt_arg ();
+        this->ior_output_file_ = get_opts.opt_arg ();
         break;
       }
 
@@ -121,14 +121,14 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
 
   if(! optionError)
   {
-    if (0 == this->replicaIorBuffer_)
+    if (0 == this->replica_ior_buffer_)
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->iorDetectorFile_)
+    if (0 == this->detector_ior_file_)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -157,7 +157,7 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
  */
 int StubFaultNotifier::fini ()
 {
-  if(this->nsName_ != 0)
+  if(this->ns_name_ != 0)
   {
     ACE_TRY_NEW_ENV
     {
@@ -177,7 +177,7 @@ int StubFaultNotifier::fini ()
 
       CosNaming::Name this_name (1);
       this_name.length (1);
-      this_name[0].id = CORBA::string_dup (this->nsName_);
+      this_name[0].id = CORBA::string_dup (this->ns_name_);
 
       naming_context->rebind (this_name, _this()
                               ACE_ENV_ARG_PARAMETER);
@@ -234,25 +234,25 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   // Register with the POA.
 
-  this->objectId_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
   //////////////////////////////////////////
   // resolve references to detector factory
-  CORBA::String_var factoryIOR;
-  if (read_ior_file(this->iorDetectorFile_, factoryIOR))
+  CORBA::String_var factory_ior;
+  if (read_ior_file(this->detector_ior_file_, factory_ior))
   {
-    CORBA::Object_var obj = this->orb_->string_to_object(factoryIOR);
+    CORBA::Object_var obj = this->orb_->string_to_object(factory_ior);
     this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
     if (CORBA::is_nil(this->factory_))
     {
-      std::cerr << "Can't resolve Detector Factory IOR " << this->iorDetectorFile_ << std::endl;
+      std::cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_file_ << std::endl;
       result = -1;
     }
   }
   else
   {
-    std::cerr << "Can't read " << this->iorDetectorFile_ << std::endl;
+    std::cerr << "Can't read " << this->detector_ior_file_ << std::endl;
     result = -1;
   }
   if (result == 0)
@@ -338,23 +338,23 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
       }
     }
 
-    if (this->iorOutputFile_ != 0)
+    if (this->ior_output_file_ != 0)
     {
       this->identity_ = "file:";
-      this->identity_ += this->iorOutputFile_;
+      this->identity_ += this->ior_output_file_;
       result = write_ior_file();
     }
     else
     {
       // if no IOR file specified,
       // then always try to register with name service
-      this->nsName_ = "FT_FaultNotifier";
+      this->ns_name_ = "FT_FaultNotifier";
     }
 
-    if(this->nsName_ != 0)
+    if(this->ns_name_ != 0)
     {
       this->identity_ = "name:";
-      this->identity_ += this->nsName_;
+      this->identity_ += this->ns_name_;
 
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
@@ -372,7 +372,7 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
       CosNaming::Name this_name (1);
       this_name.length (1);
-      this_name[0].id = CORBA::string_dup (this->nsName_);
+      this_name[0].id = CORBA::string_dup (this->ns_name_);
 
       naming_context->rebind (this_name, _this()
                               ACE_ENV_ARG_PARAMETER);
@@ -409,7 +409,7 @@ int StubFaultNotifier::read_ior_file(const char * fileName, CORBA::String_var & 
 int StubFaultNotifier::write_ior_file()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (this->iorOutputFile_, "w");
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
   if (out)
   {
     ACE_OS::fprintf (out, "%s", ACE_static_cast(const char *, this->ior_));
