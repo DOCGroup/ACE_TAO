@@ -39,11 +39,12 @@ ECMS_Driver::ECMS_Driver (void)
 int
 ECMS_Driver::run (int argc, char* argv[])
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -53,12 +54,12 @@ ECMS_Driver::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -123,35 +124,35 @@ ECMS_Driver::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        naming_context->resolve (name, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
-                                                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      this->connect_suppliers (channel.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->connect_suppliers (channel.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
-      this->activate_suppliers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->activate_suppliers (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
@@ -164,20 +165,20 @@ ECMS_Driver::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "suppliers finished\n"));
 
-      this->disconnect_suppliers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->disconnect_suppliers (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // @@ Deactivate the suppliers (as CORBA Objects?)
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  ACE_CATCH (CORBA::SystemException, sys_ex)
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("NON SYS EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -185,7 +186,8 @@ int
 ECMS_Driver::supplier_task (Test_Supplier *supplier,
                        void* /* cookie */)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       ACE_Time_Value tv (0, this->event_period_);
 
@@ -223,8 +225,8 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       // general the CDR interface is not specified).
       // @@ TODO once the compiled marshalling approach is in place
       // this will read: cdr << info;
-      cdr.encode (ECM_IDLData::_tc_Info, &info, 0, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      cdr.encode (ECM_IDLData::_tc_Info, &info, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Here we marshall a non-IDL type.
       cdr << other;
@@ -263,29 +265,29 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
           // in just one memory allocation;
           event[0].data.payload.replace (mblen, mb);
 
-          supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          supplier->consumer_proxy ()->push(event, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
 
           ACE_OS::sleep (tv);
         }
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  ACE_CATCH (CORBA::SystemException, sys_ex)
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("NON SYS EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
 void
 ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &TAO_IN_ENV)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -298,8 +300,8 @@ ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
                                     this->event_a_,
                                     this->event_b_,
                                     channel,
-                                    TAO_IN_ENV);
-      if (TAO_IN_ENV.exception () != 0) return;
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -313,12 +315,12 @@ ECMS_Driver::activate_suppliers (CORBA::Environment &)
 }
 
 void
-ECMS_Driver::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
+ECMS_Driver::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (TAO_IN_ENV);
-      if (TAO_IN_ENV.exception () != 0) return;
+      this->suppliers_[i]->disconnect (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 

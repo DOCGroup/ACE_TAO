@@ -674,57 +674,6 @@ ACE_ES_Conjunction_Group::add_events (TAO_EC_Event_Array *outbox,
 // ************************************************************
 
 ACE_INLINE int
-ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
-                                  const ACE_Command_Base *act,
-                                  RtecScheduler::Preemption_Priority_t preemption_priority,
-                                  const RtecScheduler::Time &delta,
-                                  const RtecScheduler::Time &interval)
-{
-  if (rt_info != 0)
-    {
-      // Add the timer to the task's dependency list.
-      RtecScheduler::handle_t timer_rtinfo =
-        this->timer_module ()->rt_info (preemption_priority);
-
-      TAO_TRY
-        {
-#if 1
-          this->scheduler_->add_dependency (rt_info,
-                                            timer_rtinfo,
-                                            1,
-                                            RtecScheduler::ONE_WAY_CALL,
-                                            TAO_TRY_ENV);
-#else
-          ACE_Scheduler_Factory::server()->add_dependency
-            (rt_info,
-             timer_rtinfo,
-             1,
-             RtecScheduler::ONE_WAY_CALL,
-             TAO_TRY_ENV);
-#endif
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          ACE_ERROR ((LM_ERROR, "add dependency failed"));
-        }
-      TAO_ENDTRY;
-    }
-
-  // @@ We're losing resolution here.
-  ACE_Time_Value tv_delta;
-  ORBSVCS_Time::TimeT_to_Time_Value (tv_delta, delta);
-
-  ACE_Time_Value tv_interval;
-  ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, interval);
-
-  return this->timer_module ()->schedule_timer (preemption_priority,
-                                                ACE_const_cast(ACE_Command_Base*,act),
-                                                tv_delta,
-                                                tv_interval);
-}
-
-ACE_INLINE int
 ACE_EventChannel::cancel_timer (RtecScheduler::OS_Priority preemption_priority,
                                 int id,
                                 ACE_Command_Base *&act)

@@ -147,7 +147,6 @@ EC_Reconnect::execute_consumer_test (CORBA::Environment& ACE_TRY_ENV)
                                "Expected AlreadyConnected exception");
         }
       ACE_ENDTRY;
-      ACE_TRY_ENV.clear ();
 
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
         this->event_channel_->for_consumers (ACE_TRY_ENV);
@@ -209,7 +208,6 @@ EC_Reconnect::execute_supplier_test (CORBA::Environment& ACE_TRY_ENV)
                                "Expected AlreadyConnected exception");
         }
       ACE_ENDTRY;
-      ACE_TRY_ENV.clear ();
 
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
         this->event_channel_->for_suppliers (ACE_TRY_ENV);

@@ -86,20 +86,22 @@ static_server (void)
                        ACE_Null_Mutex>::instance ()) == 0)
         return 0;
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      server_ = ace_scheduler_factory_data->scheduler_._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      server_ = ace_scheduler_factory_data->scheduler_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "ACE_Scheduler_Factory - configured static server\n"));
     }
-  TAO_CATCHANY
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Scheduler_Factory::config_runtime - "
-                       "cannot allocate server\n"),
-                      0);
-  TAO_ENDTRY;
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "ACE_Scheduler_Factory::config_runtime - "
+                           "cannot allocate server\n");
+    }
+  ACE_ENDTRY;
 
   return server_;
 }
@@ -120,30 +122,30 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
     // config runs.
     return 0;
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup (name);
       CORBA::Object_var objref =
         naming->resolve (schedule_name,
-                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       server_ =
         RtecScheduler::Scheduler::_narrow(objref.in (),
-                                          TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       server_ = 0;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ACE_Scheduler_Factory::use_config - "
-                         " exception while resolving server\n"),
-                        -1);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "ACE_Scheduler_Factory::use_config - "
+                           " exception while resolving server\n");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   status_ = ACE_Scheduler_Factory::CONFIG;
   return 0;
@@ -253,7 +255,7 @@ int ACE_Scheduler_Factory::dump_schedule
 
   // Indicate anomalies encountered during scheduling.
 
-  ACE_OS::fprintf(file, (anomalies.length () > 0 
+  ACE_OS::fprintf(file, (anomalies.length () > 0
                          ? start_anomalies_found
                          : start_anomalies_none));
 
@@ -261,7 +263,7 @@ int ACE_Scheduler_Factory::dump_schedule
     {
       const RtecScheduler::Scheduling_Anomaly& anomaly = anomalies[i];
       switch (anomaly.severity)
-        { 
+        {
           case RtecScheduler::ANOMALY_FATAL:
             ACE_OS::fprintf(file, "FATAL: ");
             break;
@@ -299,7 +301,7 @@ int ACE_Scheduler_Factory::dump_schedule
 
       // Put quotes around the entry point name, exactly as it is stored.
       ACE_OS::sprintf (entry_point,
-                       "\"%s\"", 
+                       "\"%s\"",
                        (const char *) info.entry_point);
 
       // @@ TODO Eventually the TimeT structure will be a 64-bit
@@ -401,7 +403,7 @@ ACE_Scheduler_Factory::set_preemption_priority
   // Probably don't need this, because it should be safe to assume
   // that static_server () was called before this function.  But just
   // in case . . .
-  if (!ace_scheduler_factory_data 
+  if (!ace_scheduler_factory_data
       && (ace_scheduler_factory_data =
           ACE_Singleton<ACE_Scheduler_Factory_Data,
           ACE_Null_Mutex>::instance ()) == 0)

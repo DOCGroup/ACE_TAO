@@ -25,7 +25,7 @@ Reactor_i::be_quiet (int quiet)
 // register...with nothing
 CORBA::Long
 Reactor_i::register_handler (EventHandler_ptr eh,
-                             CORBA::Environment &)
+                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!this->quiet_)
@@ -34,16 +34,16 @@ Reactor_i::register_handler (EventHandler_ptr eh,
 
   CORBA::Long r = 0;
 
-  TAO_TRY
+  ACE_TRY
     {
-      r = eh->peer (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      r = eh->peer (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("getting peer");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "getting peer");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   if (!this->quiet_)
     ACE_DEBUG ((LM_DEBUG,

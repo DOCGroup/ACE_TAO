@@ -372,7 +372,7 @@ void
 ECT_Throughput::connect_consumers
      (RtecScheduler::Scheduler_ptr scheduler,
       RtecEventChannelAdmin::EventChannel_ptr channel,
-      CORBA::Environment &TAO_IN_ENV)
+      CORBA::Environment &ACE_TRY_ENV)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -396,8 +396,8 @@ ECT_Throughput::connect_consumers
                                     start,
                                     this->consumer_type_count_,
                                     channel,
-                                    TAO_IN_ENV);
-      if (TAO_IN_ENV.exception () != 0) return;
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -405,7 +405,7 @@ void
 ECT_Throughput::connect_suppliers
      (RtecScheduler::Scheduler_ptr scheduler,
       RtecEventChannelAdmin::EventChannel_ptr channel,
-      CORBA::Environment &TAO_IN_ENV)
+      CORBA::Environment &ACE_TRY_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -424,8 +424,8 @@ ECT_Throughput::connect_suppliers
                                     start,
                                     this->supplier_type_count_,
                                     channel,
-                                    TAO_IN_ENV);
-      if (TAO_IN_ENV.exception () != 0) return;
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -449,22 +449,22 @@ ECT_Throughput::activate_suppliers (CORBA::Environment &)
 }
 
 void
-ECT_Throughput::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
+ECT_Throughput::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (TAO_IN_ENV);
-      if (TAO_IN_ENV.exception () != 0) return;
+      this->suppliers_[i]->disconnect (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
 void
-ECT_Throughput::disconnect_consumers (CORBA::Environment &TAO_IN_ENV)
+ECT_Throughput::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+      this->consumers_[i]->disconnect (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
