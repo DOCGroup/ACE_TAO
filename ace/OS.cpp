@@ -899,7 +899,11 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
       }
 # else
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
+#   if defined (__BORLANDC__)
+      int fd = _open_osfhandle (long (handle), hmode);
+#   else
       int fd = _open_osfhandle (intptr_t (handle), hmode);
+#   endif /* __BORLANDC__ */
       if (fd != -1)
         {
 #   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
