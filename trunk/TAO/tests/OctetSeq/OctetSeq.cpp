@@ -27,7 +27,7 @@
 
 static int
 test_write_octet (TAO_OutputCDR &cdr,
-		  char* buf, int bufsize,
+		  char* buf, size_t bufsize,
 		  CORBA::Environment& env)
 {
   Test::OctetSeq os (bufsize, bufsize, (CORBA::Octet*)buf);
@@ -40,7 +40,7 @@ test_write_octet (TAO_OutputCDR &cdr,
 
 static int
 test_read_octet (TAO_InputCDR &cdr,
-		 char* buf, int bufsize,
+		 char* buf, size_t bufsize,
 		 CORBA::Environment& env)
 {
   Test::OctetSeq os;
@@ -59,7 +59,7 @@ test_read_octet (TAO_InputCDR &cdr,
 
 static int
 test_write_char (TAO_OutputCDR &cdr,
-		 char* buf, int bufsize,
+		 char* buf, size_t bufsize,
 		 CORBA::Environment& env)
 {
   Test::CharSeq cs (bufsize, bufsize, buf);
@@ -72,7 +72,7 @@ test_write_char (TAO_OutputCDR &cdr,
 
 static int
 test_read_char (TAO_InputCDR &cdr,
-		char* buf, int bufsize,
+		char* buf, size_t bufsize,
 		CORBA::Environment& env)
 {
   Test::CharSeq cs;
@@ -91,26 +91,26 @@ test_read_char (TAO_InputCDR &cdr,
 
 typedef
 int (*Writer)(TAO_OutputCDR& cdr,
-	      char* buf, int bufsize,
+	      char* buf, size_t bufsize,
 	      CORBA::Environment& env);
 typedef
 int (*Reader)(TAO_InputCDR& cdr,
-	      char* buf, int bufsize,
+	      char* buf, size_t bufsize,
 	      CORBA::Environment& env);
 
 int
-run (char* buf, int bufsize,
-     int n, int lo, int s,
+run (char* buf, size_t bufsize,
+     size_t n, size_t lo, size_t s,
      const char* name,
      Writer writer, Reader reader,
      CORBA::Environment& env)
 {
-  for (int x = lo; x <= bufsize; x += s)
+  for (size_t x = lo; x <= bufsize; x += s)
     {
       ACE_High_Res_Timer writing;
       ACE_High_Res_Timer reading;
 
-      for (int i = 0; i < n; ++i)
+      for (size_t i = 0; i < n; ++i)
         {
           writing.start_incr ();
           TAO_OutputCDR output (bufsize + 4);
@@ -212,7 +212,7 @@ main (int argc, char *argv[])
       // Create a "big" buffer and fill it up.
       char* buf = new char[hi];
       CORBA::Long l = 0xdeadbeef;
-      for (int i = 0; i < hi / sizeof (l); ++i)
+      for (size_t i = 0; i < hi / sizeof (l); ++i)
 	{
 	  ACE_OS::memcpy (buf + sizeof (l) * i, &l, sizeof (l));
 	}
