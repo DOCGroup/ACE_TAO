@@ -3,6 +3,7 @@
 // Local_Memory_Pool.cpp
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID(ace, Local_Memory_Pool, "$Id$")
 
