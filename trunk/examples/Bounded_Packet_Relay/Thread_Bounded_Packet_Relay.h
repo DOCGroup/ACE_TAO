@@ -90,7 +90,7 @@ public:
                              int logging = 0);
   // Constructor.
 
-  ~Text_Input_Device_Wrapper (void);
+  virtual ~Text_Input_Device_Wrapper (void);
   // Destructor.
 
   virtual int modify_device_settings (void *logging);
@@ -179,7 +179,7 @@ public:
                    Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
   // Constructor.
 
-  ~User_Input_Task (void);
+  virtual ~User_Input_Task (void);
   // Destructor.
 
   virtual int svc (void);
@@ -382,7 +382,7 @@ public:
   Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);
   // Constructor.
 
-  ~Thread_Bounded_Packet_Relay_Driver (void);
+  virtual ~Thread_Bounded_Packet_Relay_Driver (void);
   // Destructor.
 
   virtual int display_menu (void);

@@ -1,3 +1,9 @@
+Wed Apr 19 21:53:52 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Bounded_Packet_Replay: Added some missing template
+ 	  instantiations and other assorted problems.  Thanks to Aoxiang
+ 	  Xu <axu@cim.mcgill.ca> for reporting these.
+
 Wed Apr 19 07:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Containers_T.cpp (copy_nodes): insert_head() should have
