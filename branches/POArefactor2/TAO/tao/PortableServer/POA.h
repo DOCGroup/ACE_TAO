@@ -578,11 +578,6 @@ public:
   int is_servant_in_map (PortableServer::Servant servant,
                          int &wait_occurred_restart_call);
 protected:
-  int is_user_id_in_map (const PortableServer::ObjectId &user_id,
-                         CORBA::Short priority,
-                         int &priorities_match,
-                         int &wait_occurred_restart_call);
-
   PortableServer::ObjectId *activate_object_i (
       PortableServer::Servant p_servant,
       CORBA::Short priority,

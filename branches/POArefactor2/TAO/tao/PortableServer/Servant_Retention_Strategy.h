@@ -55,13 +55,6 @@ namespace TAO
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                       int &wait_occurred_restart_call);
 
-      virtual
-      int
-      is_user_id_in_map (const PortableServer::ObjectId &id,
-                            CORBA::Short priority,
-                            int &priorities_match,
-                            int &wait_occurred_restart_call);
-
       virtual TAO_Active_Object_Map* get_aom() const;
 
       virtual
@@ -73,6 +66,18 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantAlreadyActive,
                          PortableServer::POA::WrongPolicy));
+
+      virtual
+      void
+      activate_object_with_id (const PortableServer::ObjectId &id,
+                               PortableServer::Servant servant,
+                               CORBA::Short priority,
+                               int &wait_occurred_restart_call
+                               ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::ObjectAlreadyActive,
+                   PortableServer::POA::WrongPolicy));
 
       void deactivate_object (const PortableServer::ObjectId &id
                               ACE_ENV_ARG_DECL);
@@ -151,6 +156,12 @@ namespace TAO
                       PortableServer::POA::WrongPolicy));
 
     protected:
+      int
+      is_user_id_in_map (const PortableServer::ObjectId &id,
+                         CORBA::Short priority,
+                         int &priorities_match,
+                         int &wait_occurred_restart_call);
+
       void
       deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
                             ACE_ENV_ARG_DECL);
@@ -181,6 +192,18 @@ namespace TAO
                          PortableServer::POA::ServantAlreadyActive,
                          PortableServer::POA::WrongPolicy));
 
+      virtual
+      void
+      activate_object_with_id (const PortableServer::ObjectId &id,
+                               PortableServer::Servant servant,
+                               CORBA::Short priority,
+                               int &wait_occurred_restart_call
+                               ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::ObjectAlreadyActive,
+                   PortableServer::POA::WrongPolicy));
+
       virtual void deactivate_object (const PortableServer::ObjectId &id
                                       ACE_ENV_ARG_DECL);
 
@@ -191,13 +214,6 @@ namespace TAO
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                       int &wait_occurred_restart_call);
-
-      virtual
-      int
-      is_user_id_in_map (const PortableServer::ObjectId &id,
-                            CORBA::Short priority,
-                            int &priorities_match,
-                            int &wait_occurred_restart_call);
 
       virtual
       PortableServer::ObjectId *
