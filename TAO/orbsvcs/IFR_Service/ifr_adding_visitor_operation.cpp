@@ -156,7 +156,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           CORBA_OperationDef_var new_def =
             iface->create_operation (node->repoID (),
                                      node->local_name ()->get_string (),
-                                     this->gen_version (node),
+                                     node->version (),
                                      this->ir_current_.in (),
                                      mode,
                                      this->params_,

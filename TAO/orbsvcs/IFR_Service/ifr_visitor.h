@@ -73,6 +73,9 @@ public:
   virtual int visit_valuetype_fwd (AST_InterfaceFwd *node);
   // Visit valuetype_fwd
 
+  virtual int visit_factory (AST_Factory *node);
+  // Visit a OBV factory construct.
+
   virtual int visit_structure (AST_Structure *node);
   // Visit a structure.
 
