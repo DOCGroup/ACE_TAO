@@ -1,3 +1,8 @@
+Sat Mar 30 08:58:57 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.cpp: (handle_accept): Removed a stray ACE_DEBUG() call.
+	  Thanks to Edan Ayal <edanayal@yahoo.com> for reporting this.
+
 Sun Mar 31 01:18:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * apps/FaCE_OS.h:

@@ -179,9 +179,6 @@ template <class HANDLER> void
 ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || defined (ACE_HAS_AIO_CALLS)
-  // @@ Just debugging.
-  ACE_DEBUG ((LM_DEBUG, "%N:%l:handle_accept\n"));
-
   // Variable for error tracking
   int error = 0;
 
