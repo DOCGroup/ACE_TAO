@@ -1,3 +1,10 @@
+Wed Nov 19 12:17:50 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/{OS,stdcpp}.h (ACE_CONFIG_H): Added this macro to protect
+	  config.h from getting included multiple times.
+
+	* ace/stdcpp.h:  Reverted include OS.h back to config.h.
+
 Wed Nov 19 11:38:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* STL/bstring.h: Added a special-case for BorlandC++.  However, I
