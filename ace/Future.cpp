@@ -209,14 +209,14 @@ ACE_Future_Rep<T>::get (T &value,
   if (this->value_ == 0)
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                ACE_const_cast (ACE_Recursive_Thread_Mutex &, this->value_ready_mutex_),
+                                this->value_ready_mutex_,
                                 -1));
       // If the value is not yet defined we must block until the
       // producer writes to it.
 
       while (this->value_ == 0)
         // Perform a timed wait.
-        if ((ACE_const_cast (ACE_Condition_Recursive_Thread_Mutex &, this->value_ready_)).wait (tv) == -1)
+        if (this->value_ready_.wait (tv) == -1)
           return -1;
 
       // Destructor releases the lock.

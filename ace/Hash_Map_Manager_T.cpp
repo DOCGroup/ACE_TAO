@@ -398,14 +398,13 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
       this->index_++;
       return this->forward_i ();
     }
-  else if (this->index_ >= ACE_static_cast (ssize_t, this->map_man_->total_size_))
+  else if (this->index_ >= static_cast<ssize_t> (this->map_man_->total_size_))
     return 0;
 
   this->next_ = this->next_->next_;
   if (this->next_ == &this->map_man_->table_[this->index_])
     {
-      while (++this->index_ < ACE_static_cast (ssize_t,
-                                               this->map_man_->total_size_))
+      while (++this->index_ < static_cast<ssize_t> (this->map_man_->total_size_))
         {
           this->next_ = this->map_man_->table_[this->index_].next_;
           if (this->next_ != &this->map_man_->table_[this->index_])
@@ -413,7 +412,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
         }
     }
 
-  return this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_);
+  return this->index_ < static_cast<ssize_t> (this->map_man_->total_size_);
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
@@ -423,7 +422,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
 
   if (this->map_man_->table_ == 0)
     return -1;
-  else if (this->index_ == ACE_static_cast (ssize_t, this->map_man_->total_size_))
+  else if (this->index_ == static_cast<ssize_t> (this->map_man_->total_size_))
     {
       this->index_--;
       return this->reverse_i ();

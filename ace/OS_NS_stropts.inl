@@ -112,7 +112,7 @@ ACE_OS::ioctl (ACE_HANDLE handle,
   ACE_SOCKET sock = (ACE_SOCKET) handle;
   ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, (unsigned long *) val), int, -1);
 #elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (::ioctl (handle, cmd, ACE_reinterpret_cast (int, val)),
+  ACE_OSCALL_RETURN (::ioctl (handle, cmd, reinterpret_cast<int> (val)),
                      int, -1);
 #elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, (char *) val), int, -1);
@@ -156,12 +156,12 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
   else if (ctl != 0)
     {
       result =  ACE_OS::write (handle, ctl->buf, ctl->len);
-      return ACE_static_cast (int, result);
+      return static_cast<int> (result);
     }
   else if (data != 0)
     {
       result = ACE_OS::write (handle, data->buf, data->len);
-      return ACE_static_cast (int, result);
+      return static_cast<int> (result);
     }
   else
     {
@@ -172,7 +172,7 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
       ACE_OS::memcpy (buf + ctl->len, data->buf, data->len);
       result = ACE_OS::write (handle, buf, ctl->len + data->len);
       delete [] buf;
-      return ACE_static_cast (int, result);
+      return static_cast<int> (result);
     }
 #endif /* ACE_HAS_STREAM_PIPES */
 }

@@ -177,7 +177,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
 {
   // Copy primary address to the first slot of the user-supplied array
   if (size > 0) {
-    addrs[0] = *ACE_reinterpret_cast (sockaddr_in*, this->get_addr());
+    addrs[0] = *reinterpret_cast<sockaddr_in*> (this->get_addr ());
   }
 
   // Copy secondary addresses to remaining slots of the user-supplied
@@ -187,7 +187,8 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
     size - 1 : this->secondaries_.size();
 
   for (size_t i = 0; i < top; ++i) {
-    addrs[i+1] = *ACE_reinterpret_cast (sockaddr_in*, this->secondaries_[i].get_addr());
+    addrs[i+1] =
+      *reinterpret_cast<sockaddr_in*> (this->secondaries_[i].get_addr());
   }
 }
 
@@ -199,9 +200,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
   // Copy primary address to the first slot of the user-supplied array
   if (size > 0)
     {
-      addrs[0] =
-        *ACE_reinterpret_cast (sockaddr_in6*,
-                               this->get_addr ());
+      addrs[0] = *reinterpret_cast<sockaddr_in6*> (this->get_addr ());
     }
 
   // Copy secondary addresses to remaining slots of the user-supplied
@@ -213,8 +212,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
   for (size_t i = 0; i < top; ++i)
     {
       addrs[i+1] =
-        *ACE_reinterpret_cast (sockaddr_in6*,
-                               this->secondaries_[i].get_addr());
+        *reinterpret_cast<sockaddr_in6*> (this->secondaries_[i].get_addr());
     }
 }
 #endif /* ACE_HAS_IPV6 */

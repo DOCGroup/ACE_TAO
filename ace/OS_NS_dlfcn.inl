@@ -109,7 +109,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   ACE_OS_TRACE ("ACE_OS::dlopen");
 
   // Get the correct OS type.
-  ACE_DL_TYPE filename = ACE_const_cast (ACE_DL_TYPE, fname);
+  ACE_DL_TYPE filename = const_cast<ACE_DL_TYPE> (fname);
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   void *handle;
@@ -199,7 +199,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #if defined (ACE_HAS_WINCE)
   const wchar_t *symbolname = sname;
 #elif defined (ACE_HAS_CHARPTR_DL)
-  char *symbolname = ACE_const_cast (char *, sname);
+  char *symbolname = const_cast<char *> (sname);
 #elif !defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   const char *symbolname = sname;
 #endif /* ACE_HAS_CHARPTR_DL */

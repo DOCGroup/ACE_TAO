@@ -11,8 +11,7 @@ ACE_INLINE ACE_thread_mutex_t &
 ACE_Recursive_Thread_Mutex::get_nesting_mutex (void)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
-  return ACE_static_cast (ACE_thread_mutex_t &,
-                          lock_);
+  return static_cast<ACE_thread_mutex_t &> (lock_);
 #else
   return lock_.nesting_mutex_;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */

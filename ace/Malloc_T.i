@@ -1,7 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// Malloc_T.i
 
 #include "ace/OS_NS_string.h"
 
@@ -11,7 +10,7 @@ ACE_Cached_Mem_Pool_Node<T>::addr (void)
   // This should be done using a single reinterpret_cast, but Sun/CC
   // (4.2) gets awfully confused when T is a char[20] (and maybe other
   // types).
-  return ACE_static_cast (T *, ACE_static_cast (void *, this));
+  return static_cast<T *> (static_cast <void *> (this));
 }
 
 template <class T> ACE_INLINE ACE_Cached_Mem_Pool_Node<T> *

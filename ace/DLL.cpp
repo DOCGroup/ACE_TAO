@@ -191,8 +191,8 @@ ACE_DLL::error (void) const
 {
   ACE_TRACE ("ACE_DLL::error");
   if (this->error_)
-    return ACE_const_cast (ACE_TCHAR *,
-                           ACE_LIB_TEXT ("Error: check log for details."));
+    return
+      const_cast<ACE_TCHAR *> (ACE_LIB_TEXT ("Error: check log for details."));
 
   return 0;
 }

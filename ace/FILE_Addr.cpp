@@ -49,8 +49,7 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
       if (ACE_OS::mktemp (this->filename_) == 0)
         return -1;
       this->base_set (AF_FILE,
-                      ACE_static_cast (int,
-                                       ACE_OS::strlen (this->filename_) + 1));
+                      static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
     }
   else
     {
@@ -76,8 +75,7 @@ int
 ACE_FILE_Addr::set (const ACE_TCHAR *filename)
 {
   this->ACE_Addr::base_set (AF_FILE,
-                            ACE_static_cast (int,
-                                             ACE_OS::strlen (filename) + 1));
+                            static_cast<int> (ACE_OS::strlen (filename) + 1));
   (void) ACE_OS::strsncpy (this->filename_,
                            filename,
                            sizeof this->filename_ / sizeof (ACE_TCHAR));

@@ -248,7 +248,7 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
   // can be used, as this is not an issue.
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf,
-                               ACE_static_cast (int, len), flags), int, -1);
+                               static_cast<int> (len), flags), int, -1);
 #else
   int ace_result_;
   ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
@@ -293,7 +293,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                        int, -1);
 #  endif /* defined ACE_PSOS_DIAB_PPC */
 #elif defined (ACE_WIN32)
-  int shortened_len = ACE_static_cast (int, len);
+  int shortened_len = static_cast<int> (len);
   int result = ::recvfrom ((ACE_SOCKET) handle,
                            buf,
                            shortened_len,
@@ -347,7 +347,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
     ACE_OS::set_errno_to_last_error ();
   }
   flags = the_flags;
-  number_of_bytes_recvd = ACE_static_cast (size_t, bytes_recvd);
+  number_of_bytes_recvd = static_cast<size_t> (bytes_recvd);
   return result;
 #else
   ACE_UNUSED_ARG (handle);
@@ -474,7 +474,7 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle,
                                buf,
-                               ACE_static_cast (int, len),
+                               static_cast<int> (len),
                                flags), int, -1);
 #else
   int ace_result_;
@@ -554,8 +554,11 @@ ACE_OS::sendto (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::sendto");
 #if defined (VXWORKS)
-  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf, len, flags,
-                                 ACE_const_cast (struct sockaddr *, addr), addrlen),
+  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf,
+                                 len,
+                                 flags,
+                                 const_cast<struct sockaddr *> (addr),
+                                 addrlen),
                        int, -1);
 #elif defined (ACE_PSOS)
 #  if !defined (ACE_PSOS_DIAB_PPC)
@@ -569,13 +572,20 @@ ACE_OS::sendto (ACE_HANDLE handle,
 #  endif /*defined ACE_PSOS_DIAB_PPC */
 #else
 #  if defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, buf,
-                                 ACE_static_cast (int, len), flags,
-                                 ACE_const_cast (struct sockaddr *, addr), addrlen),
+  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
+                                 buf,
+                                 static_cast<int> (len),
+                                 flags,
+                                 const_cast<struct sockaddr *> (addr),
+                                 addrlen),
                        int, -1);
 #  else
-  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, buf, len, flags,
-                                 ACE_const_cast (struct sockaddr *, addr), addrlen),
+  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
+                                 buf,
+                                 len,
+                                 flags,
+                                 const_cast<struct sockaddr *> (addr),
+                                 addrlen),
                        int, -1);
 #  endif /* ACE_WIN32 */
 #endif /* VXWORKS */
@@ -607,7 +617,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
   if (result != 0) {
     ACE_OS::set_errno_to_last_error ();
   }
-  number_of_bytes_sent = ACE_static_cast (size_t, bytes_sent);
+  number_of_bytes_sent = static_cast<size_t> (bytes_sent);
   return result;
 #else
   ACE_UNUSED_ARG (overlapped);
@@ -620,7 +630,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
   for (int i = 0; i < buffer_count; i++)
     {
        result = ACE_OS::sendto (handle,
-                                ACE_reinterpret_cast (char *ACE_CAST_CONST,
+                                reinterpret_cast<char *ACE_CAST_CONST> (
                                                       buffers[i].iov_base),
                                 buffers[i].iov_len,
                                 flags,

@@ -688,8 +688,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (const char *name,
   NAME_NODE *result =
     new (new_node) NAME_NODE (name,
                               name_ptr,
-                              ACE_reinterpret_cast (char *,
-                                                    pointer),
+                              reinterpret_cast<char *> (pointer),
                               this->cb_ptr_->name_head_);
   this->cb_ptr_->name_head_ = result;
   return 0;

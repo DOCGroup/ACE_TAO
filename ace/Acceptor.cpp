@@ -44,7 +44,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ACE_PEER_ACCEPTOR &
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor (void) const
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor");
-  return ACE_const_cast (ACE_PEER_ACCEPTOR &, this->peer_acceptor_);
+  return const_cast<ACE_PEER_ACCEPTOR &> (this->peer_acceptor_);
 }
 
 // Returns ACE_HANDLE of the underlying Acceptor_Strategy.
@@ -185,7 +185,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_static_cast (int, ACE_OS::strlen (buf));
+  return static_cast<int> (ACE_OS::strlen (buf));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -824,7 +824,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_static_cast (int, ACE_OS::strlen (buf));
+  return static_cast<int> (ACE_OS::strlen (buf));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -1178,7 +1178,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_static_cast (int, ACE_OS::strlen (buf));
+  return static_cast<int> (ACE_OS::strlen (buf));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 // OS_NS_wchar.h is only needed to get the emulation methods.
@@ -19,8 +20,9 @@ ACE_OS::memchr (const void *s, int c, size_t len)
 ACE_INLINE void *
 ACE_OS::memchr (void *s, int c, size_t len)
 {
-  return ACE_const_cast (void *,
-    ACE_OS::memchr (ACE_static_cast (const void *, s), c, len));
+  return const_cast<void *> (ACE_OS::memchr (static_cast<const void *> (s),
+                                             c,
+                                             len));
 }
 
 ACE_INLINE int
@@ -102,8 +104,9 @@ ACE_OS::strchr (char *s, int c)
 ACE_INLINE wchar_t *
 ACE_OS::strchr (wchar_t *s, wint_t c)
 {
-  return ACE_const_cast (wchar_t *,
-    ACE_OS::strchr (ACE_static_cast (const wchar_t *, s), c));
+  return
+    const_cast<wchar_t *> (ACE_OS::strchr (static_cast<const wchar_t *> (s),
+                                           c));
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -210,19 +213,22 @@ ACE_OS::strnchr (char *s, int c, size_t len)
 {
 #if defined ACE_PSOS_DIAB_PPC  /* Compiler problem Diab 4.2b */
   const char *const_char_s = s;
-  return ACE_const_cast (char *,
-                         ACE_OS::strnchr (const_char_s, c, len));
+  return const_cast<char *> (ACE_OS::strnchr (const_char_s, c, len));
 #else
-  return ACE_const_cast (char *,
-    ACE_OS::strnchr (ACE_static_cast (const char *, s), c, len));
+  return const_cast<char *> (ACE_OS::strnchr (static_cast<const char *> (s),
+                                              c,
+                                              len));
 #endif
 }
 
 ACE_INLINE ACE_WCHAR_T *
 ACE_OS::strnchr (ACE_WCHAR_T *s, ACE_WINT_T c, size_t len)
 {
-  return ACE_const_cast (ACE_WCHAR_T *,
-    ACE_OS::strnchr (ACE_static_cast (const ACE_WCHAR_T *, s), c, len));
+  return
+    const_cast<ACE_WCHAR_T *> (ACE_OS::strnchr (
+                                 static_cast<const ACE_WCHAR_T *> (s),
+                                 c,
+                                 len));
 }
 
 ACE_INLINE int
@@ -299,8 +305,11 @@ ACE_OS::strnstr (char *s, const char *t, size_t len)
 ACE_INLINE ACE_WCHAR_T *
 ACE_OS::strnstr (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 {
-  return ACE_const_cast (ACE_WCHAR_T *,
-    ACE_OS::strnstr (ACE_static_cast (const ACE_WCHAR_T *, s), t, len));
+  return
+    const_cast<ACE_WCHAR_T *> (ACE_OS::strnstr (
+                                 static_cast<const ACE_WCHAR_T *> (s),
+                                 t,
+                                 len));
 }
 
 ACE_INLINE const char *
@@ -339,8 +348,8 @@ ACE_OS::strpbrk (char *s1, const char *s2)
 ACE_INLINE wchar_t *
 ACE_OS::strpbrk (wchar_t *s, const wchar_t *t)
 {
-  return ACE_const_cast (wchar_t *,
-    ACE_OS::strpbrk (ACE_static_cast (const wchar_t *, s), t));
+  return const_cast<wchar_t *> (ACE_OS::strpbrk (
+                                  static_cast<const wchar_t *> (s), t));
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -380,8 +389,8 @@ ACE_OS::strrchr (char *s, int c)
 ACE_INLINE wchar_t *
 ACE_OS::strrchr (wchar_t *s, wint_t c)
 {
-  return ACE_const_cast (wchar_t *,
-    ACE_OS::strrchr (ACE_static_cast (const wchar_t *, s), c));
+  return const_cast<wchar_t *> (ACE_OS::strrchr (
+                     static_cast<const wchar_t *> (s), c));
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -492,4 +501,3 @@ ACE_OS::strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts
 #endif  /* ACE_LACKS_WCSTOK */
 }
 #endif  // ACE_HAS_WCHAR
-

@@ -62,7 +62,7 @@ ACE_SOCK_IO::recv (iovec iov[],
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return this->recvv (iov,
-                      ACE_static_cast (int, n),
+                      static_cast<int> (n),
                       timeout);
 }
 
@@ -132,7 +132,7 @@ ACE_SOCK_IO::send (const iovec iov[],
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return this->sendv (iov,
-                      ACE_static_cast (int, n),
+                      static_cast<int> (n),
                       timeout);
 }
 

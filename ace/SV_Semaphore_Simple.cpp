@@ -84,7 +84,7 @@ ACE_SV_Semaphore_Simple::open (key_t k,
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
   union semun ivalue;
 
-  if (k == IPC_PRIVATE || k == ACE_static_cast (key_t, ACE_INVALID_SEM_KEY))
+  if (k == IPC_PRIVATE || k == static_cast<key_t> (ACE_INVALID_SEM_KEY))
     return -1;
 
   ivalue.val = initial_value;
@@ -131,7 +131,7 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
   if (name == 0)
     {
       errno = EINVAL;
-      return ACE_static_cast (key_t, ACE_INVALID_SEM_KEY);
+      return static_cast<key_t> (ACE_INVALID_SEM_KEY);
     }
 
   // Basically "hash" the values in the <name>.  This won't

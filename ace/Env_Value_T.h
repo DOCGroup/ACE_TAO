@@ -113,20 +113,19 @@ ACE_Convert (const ACE_TCHAR *s, const ACE_TCHAR *&v)
 inline void
 ACE_Convert (const ACE_TCHAR *s, short &si)
 {
-  si = ACE_static_cast (short, ACE_OS::strtol (s, 0, 10));
+  si = static_cast<short> (ACE_OS::strtol (s, 0, 10));
 }
 
 inline void
 ACE_Convert (const ACE_TCHAR *s, u_short &us)
 {
-  us = ACE_static_cast (u_short, ACE_OS::strtol (s, 0, 10));
+  us = static_cast <u_short> (ACE_OS::strtol (s, 0, 10));
 }
 
 inline void
 ACE_Convert (const ACE_TCHAR *s, u_int &i)
 {
-  i = ACE_static_cast (u_int,
-                       ACE_OS::strtol (s, 0, 10));
+  i = static_cast<u_int> (ACE_OS::strtol (s, 0, 10));
 }
 
 inline void
@@ -138,7 +137,7 @@ ACE_Convert (const ACE_TCHAR *s, long &l)
 inline void
 ACE_Convert (const ACE_TCHAR *s, int &i)
 {
-  i = ACE_static_cast (int, ACE_OS::strtol (s, 0, 10));
+  i = static_cast<int> (ACE_OS::strtol (s, 0, 10));
 }
 
 inline void

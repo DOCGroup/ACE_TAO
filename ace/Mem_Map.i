@@ -231,7 +231,9 @@ ACE_INLINE int
 ACE_Mem_Map::advise (int behavior, int len)
 {
   ACE_TRACE ("ACE_Mem_Map::advise");
-  size_t advise_len = len < 0 ? this->length_ : ACE_static_cast (size_t, len);
+  const size_t advise_len =
+    len < 0 ? this->length_ : static_cast<size_t> (len);
+
   return ACE_OS::madvise ((caddr_t) this->base_addr_,
                           advise_len,
                           behavior);

@@ -28,7 +28,7 @@ ACE_INLINE long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (void)
 {
 #if defined (WIN32)
-  return ::InterlockedIncrement (ACE_const_cast (long *, &this->value_));
+  return ::InterlockedIncrement (const_cast<long *> (&this->value_));
 #else /* WIN32 */
   return (*increment_fn_) (&this->value_);
 #endif /* WIN32 */
@@ -44,7 +44,7 @@ ACE_INLINE long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- (void)
 {
 #if defined (WIN32)
-  return ::InterlockedDecrement (ACE_const_cast (long *, &this->value_));
+  return ::InterlockedDecrement (const_cast<long *> (&this->value_));
 #else /* WIN32 */
   return (*decrement_fn_) (&this->value_);
 #endif /* WIN32 */
@@ -60,7 +60,7 @@ ACE_INLINE long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator+= (long rhs)
 {
 #if defined (WIN32) && defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
-  return ::InterlockedExchangeAdd (ACE_const_cast (long *, &this->value_),
+  return ::InterlockedExchangeAdd (const_cast<long *> (&this->value_),
                                    rhs) + rhs;
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return (*exchange_add_fn_) (&this->value_, rhs) + rhs;
@@ -71,7 +71,7 @@ ACE_INLINE long
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (long rhs)
 {
 #if defined (WIN32) && defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
-  return ::InterlockedExchangeAdd (ACE_const_cast (long *, &this->value_),
+  return ::InterlockedExchangeAdd (const_cast<long *> (&this->value_),
                                    -rhs) - rhs;
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return (*exchange_add_fn_) (&this->value_, -rhs) - rhs;
@@ -118,7 +118,7 @@ ACE_INLINE void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
 {
 #if defined (WIN32)
-  ::InterlockedExchange (ACE_const_cast (long *, &this->value_), rhs);
+  ::InterlockedExchange (const_cast<long *> (&this->value_), rhs);
 #else /* WIN32 */
   (*exchange_fn_) (&this->value_, rhs);
 #endif /* WIN32 */
@@ -129,7 +129,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (
    const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
 {
 #if defined (WIN32)
-  ::InterlockedExchange (ACE_const_cast (long *, &this->value_), rhs.value_);
+  ::InterlockedExchange (const_cast<long *> (&this->value_), rhs.value_);
 #else /* WIN32 */
   (*exchange_fn_) (&this->value_, rhs.value_);
 #endif /* WIN32 */

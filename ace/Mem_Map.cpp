@@ -127,7 +127,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 #endif /* CHORUS */
 
   // At this point we know <result> is not negative...
-  size_t current_file_length = ACE_static_cast (size_t, result);
+  size_t current_file_length = static_cast<size_t> (result);
 
   // Flag to indicate if we need to extend the back store
   int extend_backing_store = 0;
@@ -170,7 +170,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
       if (requested_file_length > 0)
         // This will make the file size <requested_file_length>
         null_byte_position =
-          ACE_static_cast (off_t, requested_file_length - 1);
+          static_cast<off_t> (requested_file_length - 1);
       else
         // This will make the file size 1
         null_byte_position = 0;

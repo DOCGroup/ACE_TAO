@@ -50,9 +50,9 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 #if defined(ACE_HAS_PENTIUM)
 # if defined(__GNUG__)
   unsigned short a =
-    *ACE_reinterpret_cast(const unsigned short*, orig);
+    *reinterpret_cast<const unsigned short*> (orig);
   asm( "rolw $8, %0" : "=r" (a) : "0" (a) );
-  *ACE_reinterpret_cast(unsigned short*, target) = a;
+  *reinterpret_cast<unsigned short*> (target) = a;
 # elif (defined(_MSC_VER) || defined(__BORLANDC__)) \
        && !defined(ACE_LACKS_INLINE_ASSEMBLY)
   __asm mov ebx, orig;
@@ -66,8 +66,8 @@ ACE_CDR::swap_2 (const char *orig, char* target)
   target[0] = orig[1];
 # endif
 #else
-  register ACE_UINT16 usrc = * ACE_reinterpret_cast(const ACE_UINT16*, orig);
-  register ACE_UINT16* udst = ACE_reinterpret_cast(ACE_UINT16*, target);
+  register ACE_UINT16 usrc = * reinterpret_cast<const ACE_UINT16*> (orig);
+  register ACE_UINT16* udst = reinterpret_cast<ACE_UINT16*> (target);
   *udst = (usrc << 8) | (usrc >> 8);
 #endif /* ACE_HAS_PENTIUM */
 }
@@ -78,9 +78,9 @@ ACE_CDR::swap_4 (const char* orig, char* target)
 #if defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   register unsigned int j =
-    *ACE_reinterpret_cast(const unsigned int*, orig);
+    *reinterpret_cast<const unsigned int*> (orig);
   asm ("bswap %1" : "=r" (j) : "0" (j));
-  *ACE_reinterpret_cast(unsigned int*, target) = j;
+  *reinterpret_cast<unsigned int*> (target) = j;
 #elif defined(ACE_HAS_PENTIUM) \
       && (defined(_MSC_VER) || defined(__BORLANDC__)) \
       && !defined(ACE_LACKS_INLINE_ASSEMBLY)
@@ -90,9 +90,9 @@ ACE_CDR::swap_4 (const char* orig, char* target)
   __asm bswap eax;
   __asm mov [ecx], eax;
 #else
-  register ACE_UINT32 x = * ACE_reinterpret_cast(const ACE_UINT32*, orig);
+  register ACE_UINT32 x = * reinterpret_cast<const ACE_UINT32*> (orig);
   x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
-  * ACE_reinterpret_cast(ACE_UINT32*, target) = x;
+  * reinterpret_cast<ACE_UINT32*> (target) = x;
 #endif
 }
 
@@ -101,13 +101,13 @@ ACE_CDR::swap_8 (const char* orig, char* target)
 {
 #if defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
   register unsigned int i =
-    *ACE_reinterpret_cast(const unsigned int*, orig);
+    *reinterpret_cast<const unsigned int*> (orig);
   register unsigned int j =
-    *ACE_reinterpret_cast(const unsigned int*, orig + 4);
+    *reinterpret_cast<const unsigned int*> (orig + 4);
   asm ("bswap %1" : "=r" (i) : "0" (i));
   asm ("bswap %1" : "=r" (j) : "0" (j));
-  *ACE_reinterpret_cast(unsigned int*, target + 4) = i;
-  *ACE_reinterpret_cast(unsigned int*, target) = j;
+  *reinterpret_cast<unsigned int*> (target + 4) = i;
+  *reinterpret_cast<unsigned int*> (target) = j;
 #elif defined(ACE_HAS_PENTIUM) \
       && (defined(_MSC_VER) || defined(__BORLANDC__)) \
       && !defined(ACE_LACKS_INLINE_ASSEMBLY)
@@ -122,23 +122,23 @@ ACE_CDR::swap_8 (const char* orig, char* target)
 #elif ACE_SIZEOF_LONG == 8
   // 64 bit architecture.
   register unsigned long x =
-    * ACE_reinterpret_cast(const unsigned long*, orig);
+    * reinterpret_cast<const unsigned long*> (orig);
   register unsigned long x84 = (x & 0x000000ff000000ffUL) << 24;
   register unsigned long x73 = (x & 0x0000ff000000ff00UL) << 8;
   register unsigned long x62 = (x & 0x00ff000000ff0000UL) >> 8;
   register unsigned long x51 = (x & 0xff000000ff000000UL) >> 24;
   x = (x84 | x73 | x62 | x51);
   x = (x << 32) | (x >> 32);
-  *ACE_reinterpret_cast(unsigned long*, target) = x;
+  *reinterpret_cast<unsigned long*> (target) = x;
 #else
   register ACE_UINT32 x =
-    * ACE_reinterpret_cast(const ACE_UINT32*, orig);
+    * reinterpret_cast<const ACE_UINT32*> (orig);
   register ACE_UINT32 y =
-    * ACE_reinterpret_cast(const ACE_UINT32*, orig + 4);
+    * reinterpret_cast<const ACE_UINT32*> (orig + 4);
   x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
   y = (y << 24) | ((y & 0xff00) << 8) | ((y & 0xff0000) >> 8) | (y >> 24);
-  * ACE_reinterpret_cast(ACE_UINT32*, target) = y;
-  * ACE_reinterpret_cast(ACE_UINT32*, target + 4) = x;
+  * reinterpret_cast<ACE_UINT32*> (target) = y;
+  * reinterpret_cast<ACE_UINT32*> (target + 4) = x;
 #endif
 }
 

@@ -795,7 +795,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
         }
     }
 
-  return ACE_static_cast (ssize_t, bytes_transferred);
+  return static_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -862,7 +862,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   if (error)
     return result;
   else
-    return ACE_static_cast (ssize_t, bytes_transferred);
+    return static_cast<ssize_t> (bytes_transferred);
 }
 
 #if defined (ACE_HAS_TLI)
@@ -1034,7 +1034,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
         }
     }
 
-  return ACE_static_cast (ssize_t, bytes_transferred);
+  return static_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -1099,7 +1099,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   if (error)
     return result;
   else
-    return ACE_static_cast (ssize_t, bytes_transferred);
+    return static_cast<ssize_t> (bytes_transferred);
 }
 
 // This is basically an interface to ACE_OS::readv, that doesn't use
@@ -1112,7 +1112,7 @@ ssize_t
 ACE::recv (ACE_HANDLE handle, size_t n, ...)
 {
   va_list argp;
-  int total_tuples = ACE_static_cast (int, (n / 2));
+  int total_tuples = static_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -1214,15 +1214,13 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 
       for (bytes_transferred += n;
            s < iovcnt
-             && n >= ACE_static_cast (ssize_t,
-                                      iov[s].iov_len);
+             && n >= static_cast<ssize_t> (iov[s].iov_len);
            s++)
         n -= iov[s].iov_len;
 
       if (n != 0)
         {
-          char *base = ACE_static_cast (char *,
-                                        iov[s].iov_base);
+          char *base = static_cast<char *> (iov[s].iov_base);
           iov[s].iov_base = base + n;
           iov[s].iov_len = iov[s].iov_len - n;
         }
@@ -1289,15 +1287,13 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 
       for (bytes_transferred += n;
            s < iovcnt
-             && n >= ACE_static_cast (ssize_t,
-                                      iov[s].iov_len);
+             && n >= static_cast<ssize_t> (iov[s].iov_len);
            s++)
         n -= iov[s].iov_len;
 
       if (n != 0)
         {
-          char *base = ACE_reinterpret_cast (char *,
-                                             iov[s].iov_base);
+          char *base = reinterpret_cast<char *> (iov[s].iov_base);
           iov[s].iov_base = base + n;
           iov[s].iov_len = iov[s].iov_len - n;
         }
@@ -1343,7 +1339,7 @@ ACE::recv_n (ACE_HANDLE handle,
                 this_chunk_length = ULONG_MAX;
               else
                 this_chunk_length =
-                  ACE_static_cast (u_long, current_message_block_length);
+                  static_cast<u_long> (current_message_block_length);
               // Collect the data in the iovec.
               iov[iovcnt].iov_base = this_rd_ptr;
               iov[iovcnt].iov_len  = this_chunk_length;
@@ -1921,7 +1917,7 @@ ssize_t
 ACE::send (ACE_HANDLE handle, size_t n, ...)
 {
   va_list argp;
-  int total_tuples = ACE_static_cast (int, (n / 2));
+  int total_tuples = static_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -1986,7 +1982,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  iovec *iov = ACE_const_cast (iovec *, i);
+  iovec *iov = const_cast<iovec *> (i);
 
   for (int s = 0;
        s < iovcnt;
@@ -2025,15 +2021,13 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
       for (bytes_transferred += n;
            s < iovcnt
-             && n >= ACE_static_cast (ssize_t,
-                                      iov[s].iov_len);
+             && n >= static_cast<ssize_t> (iov[s].iov_len);
            s++)
         n -= iov[s].iov_len;
 
       if (n != 0)
         {
-          char *base = ACE_reinterpret_cast (char *,
-                                             iov[s].iov_base);
+          char *base = reinterpret_cast<char *> (iov[s].iov_base);
           iov[s].iov_base = base + n;
           iov[s].iov_len = iov[s].iov_len - n;
         }
@@ -2058,7 +2052,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
 
-  iovec *iov = ACE_const_cast (iovec *, i);
+  iovec *iov = const_cast<iovec *> (i);
 
   for (int s = 0;
        s < iovcnt;
@@ -2102,15 +2096,13 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
       for (bytes_transferred += n;
            s < iovcnt
-             && n >= ACE_static_cast (ssize_t,
-                                      iov[s].iov_len);
+             && n >= static_cast<ssize_t> (iov[s].iov_len);
            s++)
         n -= iov[s].iov_len;
 
       if (n != 0)
         {
-          char *base = ACE_reinterpret_cast (char *,
-                                             iov[s].iov_base);
+          char *base = reinterpret_cast<char *> (iov[s].iov_base);
           iov[s].iov_base = base + n;
           iov[s].iov_len = iov[s].iov_len - n;
         }
@@ -2155,7 +2147,7 @@ ACE::write_n (ACE_HANDLE handle,
                 this_chunk_length = ULONG_MAX;
               else
                 this_chunk_length =
-                  ACE_static_cast (u_long, current_message_block_length);
+                  static_cast<u_long> (current_message_block_length);
               // Collect the data in the iovec.
               iov[iovcnt].iov_base = this_block_ptr;
               iov[iovcnt].iov_len  = this_chunk_length;
@@ -2253,7 +2245,7 @@ ACE::send_n (ACE_HANDLE handle,
                 this_chunk_length = ULONG_MAX;
               else
                 this_chunk_length =
-                  ACE_static_cast (u_long, current_message_block_length);
+                  static_cast<u_long> (current_message_block_length);
               // Collect the data in the iovec.
               iov[iovcnt].iov_base = this_block_ptr;
               iov[iovcnt].iov_len  = this_chunk_length;
@@ -2344,15 +2336,13 @@ ACE::readv_n (ACE_HANDLE handle,
 
       for (bytes_transferred += n;
            s < iovcnt
-             && n >= ACE_static_cast (ssize_t,
-                                      iov[s].iov_len);
+             && n >= static_cast<ssize_t> (iov[s].iov_len);
            s++)
         n -= iov[s].iov_len;
 
       if (n != 0)
         {
-          char *base = ACE_reinterpret_cast (char *,
-                                             iov[s].iov_base);
+          char *base = reinterpret_cast<char *> (iov[s].iov_base);
           iov[s].iov_base = base + n;
           iov[s].iov_len = iov[s].iov_len - n;
         }
@@ -2371,7 +2361,7 @@ ACE::writev_n (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  iovec *iov = ACE_const_cast (iovec *, i);
+  iovec *iov = const_cast<iovec *> (i);
 
   for (int s = 0;
        s < iovcnt;
@@ -2385,15 +2375,13 @@ ACE::writev_n (ACE_HANDLE handle,
 
       for (bytes_transferred += n;
            s < iovcnt
-             && n >= ACE_static_cast (ssize_t,
-                                      iov[s].iov_len);
+             && n >= static_cast<ssize_t> (iov[s].iov_len);
            s++)
         n -= iov[s].iov_len;
 
       if (n != 0)
         {
-          char *base = ACE_reinterpret_cast (char *,
-                                             iov[s].iov_base);
+          char *base = reinterpret_cast<char *> (iov[s].iov_base);
           iov[s].iov_base = base + n;
           iov[s].iov_len = iov[s].iov_len - n;
         }
@@ -3392,9 +3380,8 @@ ACE::strndup (const wchar_t *str, size_t n)
 
   wchar_t *s;
   ACE_ALLOCATOR_RETURN (s,
-                        ACE_static_cast (wchar_t *,
-                                         ACE_OS::malloc ((len + 1)
-                                                         * sizeof (wchar_t))),
+                        static_cast<wchar_t *> (
+                          ACE_OS::malloc ((len + 1) * sizeof (wchar_t))),
                         0);
   return ACE_OS::strsncpy (s, str, len + 1);
 }

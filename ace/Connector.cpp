@@ -245,7 +245,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::activate_svc_handler (SVC_HAND
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ACE_PEER_CONNECTOR &
 ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connector (void) const
 {
-  return ACE_const_cast (ACE_PEER_CONNECTOR &, this->connector_);
+  return const_cast<ACE_PEER_CONNECTOR &> (this->connector_);
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
@@ -538,8 +538,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::nonblocking_connect
 
   // If we're starting connection under timer control then we need to
   // schedule a timeout with the ACE_Reactor.
-  tv = ACE_const_cast (ACE_Time_Value *,
-                       synch_options.time_value ());
+  tv = const_cast<ACE_Time_Value *> (synch_options.time_value ());
   if (tv == 0)
     return 0;
 
@@ -731,7 +730,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::info (ACE_TCHAR **strp, size_t
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_static_cast (int, ACE_OS::strlen (buf));
+  return static_cast<int> (ACE_OS::strlen (buf));
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int

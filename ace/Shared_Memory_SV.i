@@ -5,20 +5,20 @@
 
 #include "ace/Global_Macros.h"
 
-ACE_INLINE int 	       
-ACE_Shared_Memory_SV::open (key_t id, 
-			    int length, 
-			    int create, 
-			    int perms, 
-			    void *addr, 
+ACE_INLINE int
+ACE_Shared_Memory_SV::open (key_t id,
+			    int length,
+			    int create,
+			    int perms,
+			    void *addr,
 			    int flags)
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::open");
-  return shared_memory_.open_and_attach (id, length, create, 
+  return shared_memory_.open_and_attach (id, length, create,
 					 perms, addr, flags);
 }
 
-// The overall size of the segment. 
+// The overall size of the segment.
 
 ACE_INLINE int
 ACE_Shared_Memory_SV::get_segment_size (void) const
@@ -26,7 +26,7 @@ ACE_Shared_Memory_SV::get_segment_size (void) const
   ACE_TRACE ("ACE_Shared_Memory_SV::get_segment_size");
   // This cast is ok since the 'open' method for this class allows only
   // an 'int' size. Therefore, this case should not lose information.
-  return ACE_static_cast (int, this->shared_memory_.get_segment_size ());
+  return static_cast<int> (this->shared_memory_.get_segment_size ());
 }
 
 // Removes the shared memory segment.
@@ -38,7 +38,7 @@ ACE_Shared_Memory_SV::remove (void)
   return shared_memory_.remove ();
 }
 
-// Closes (detaches) the shared memory segment. 
+// Closes (detaches) the shared memory segment.
 
 ACE_INLINE int
 ACE_Shared_Memory_SV::close (void)
@@ -69,7 +69,7 @@ ACE_Shared_Memory_SV::ACE_Shared_Memory_SV (void)
   ACE_TRACE ("ACE_Shared_Memory_SV::ACE_Shared_Memory_SV");
 }
 
-ACE_INLINE int  
+ACE_INLINE int
 ACE_Shared_Memory_SV::free (void *p)
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::free");

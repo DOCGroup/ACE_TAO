@@ -122,8 +122,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   // Bind to the specified port.
   if (ACE_OS::bind (this->listen_handle_,
-                    ACE_reinterpret_cast (sockaddr *,
-                                          address.get_addr ()),
+                    reinterpret_cast<sockaddr *> (address.get_addr ()),
                     address.get_size ()) == -1)
     {
       ACE_Errno_Guard g (errno);
@@ -383,17 +382,17 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
   int remote_size = 0;
 
   ::GetAcceptExSockaddrs (message_block.rd_ptr (),
-                          ACE_static_cast (DWORD, this->bytes_to_read_),
-                          ACE_static_cast (DWORD, this->address_size ()),
-                          ACE_static_cast (DWORD, this->address_size ()),
+                          static_cast<DWORD> (this->bytes_to_read_),
+                          static_cast<DWORD> (this->address_size ()),
+                          static_cast<DWORD> (this->address_size ()),
                           &local_addr,
                           &local_size,
                           &remote_addr,
                           &remote_size);
 
-  local_address.set (ACE_reinterpret_cast (sockaddr_in *, local_addr),
+  local_address.set (reinterpret_cast<sockaddr_in *> (local_addr),
                      local_size);
-  remote_address.set (ACE_reinterpret_cast (sockaddr_in *, remote_addr),
+  remote_address.set (reinterpret_cast<sockaddr_in *> (remote_addr),
                       remote_size);
 #else
   // just in case

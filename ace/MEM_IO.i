@@ -61,10 +61,9 @@ ACE_Reactive_MEM_IO::get_buf_len (const off_t off, ACE_MEM_SAP_Node *&buf)
 
   ACE_SEH_TRY
     {
-      buf = ACE_reinterpret_cast (ACE_MEM_SAP_Node *,
-                                  (ACE_static_cast(char *,
-                                                   this->shm_malloc_->base_addr ())
-                                   + off));
+      buf =
+        reinterpret_cast<ACE_MEM_SAP_Node *> (
+          static_cast<char *> (this->shm_malloc_->base_addr ()) + off);
       retv = buf->size ();
     }
   ACE_SEH_EXCEPT (this->shm_malloc_->memory_pool ().seh_selector (GetExceptionInformation ()))

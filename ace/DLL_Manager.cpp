@@ -452,8 +452,8 @@ ACE_DLL_Manager::close (void)
         {
           if (this->handle_vector_[i])
             {
-              ACE_DLL_Handle *s = ACE_const_cast (ACE_DLL_Handle *,
-                                                  this->handle_vector_[i]);
+              ACE_DLL_Handle *s =
+                const_cast<ACE_DLL_Handle *> (this->handle_vector_[i]);
               this->handle_vector_[i] = 0;
               this->unload_dll (s, force_close);
               delete s;
@@ -508,9 +508,9 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
               void *unload_policy_ptr =
                 dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);
               ptrdiff_t temp_p =
-                ACE_reinterpret_cast (ptrdiff_t, unload_policy_ptr);
+                reinterpret_cast<ptrdiff_t> (unload_policy_ptr);
               the_policy =
-                ACE_reinterpret_cast (dll_unload_policy, temp_p);
+                reinterpret_cast<dll_unload_policy> (temp_p);
               if (the_policy != 0)
                 unload = ACE_BIT_DISABLED (the_policy (),
                                            ACE_DLL_UNLOAD_POLICY_LAZY);

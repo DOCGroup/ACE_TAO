@@ -203,8 +203,7 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
 
   // Get the local address.
   if (ACE_OS::getsockname (result.connect_handle (),
-                           ACE_reinterpret_cast (sockaddr *,
-                                                 &local_addr),
+                           reinterpret_cast<sockaddr *> (&local_addr),
                            &local_size) < 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT("%p\n"),
@@ -212,19 +211,16 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
 
   // Get the remote address.
   if (ACE_OS::getpeername (result.connect_handle (),
-                           ACE_reinterpret_cast (sockaddr *,
-                                                 &remote_addr),
+                           reinterpret_cast<sockaddr *> (&remote_addr),
                            &remote_size) < 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT("%p\n"),
                 ACE_LIB_TEXT("ACE_Asynch_Connector::<getpeername> failed")));
 
   // Set the addresses.
-  local_address.set  (ACE_reinterpret_cast (sockaddr_in *,
-                                            &local_addr),
+  local_address.set  (reinterpret_cast<sockaddr_in *> (&local_addr),
                       local_size);
-  remote_address.set (ACE_reinterpret_cast (sockaddr_in *,
-                                            &remote_addr),
+  remote_address.set (reinterpret_cast<sockaddr_in *> (&remote_addr),
                       remote_size);
 
 #if 0

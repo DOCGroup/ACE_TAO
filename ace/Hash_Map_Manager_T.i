@@ -405,7 +405,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::next");
 
   if (this->map_man_->table_ != 0
-      && this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_)
+      && this->index_ < static_cast<ssize_t> (this->map_man_->total_size_)
       && this->index_ >= 0
       && this->next_ != &this->map_man_->table_[this->index_])
     {
@@ -422,7 +422,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::done");
 
   return this->map_man_->table_ == 0
-    || this->index_ >= ACE_static_cast (ssize_t, this->map_man_->total_size_)
+    || this->index_ >= static_cast<ssize_t> (this->map_man_->total_size_)
     || this->index_ < 0;
 }
 

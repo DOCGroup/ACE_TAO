@@ -1,3 +1,162 @@
+Wed May  5 14:14:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Future.h (ACE_Future_Rep):
+	* ace/Map_Manager.h (ACE_Map_Manager):
+	* ace/Refcounted_Auto_Ptr.h:
+
+	  Declare lock members as "mutable" to avoid using a
+	  const_cast<> hack in const methods that modify the lock
+	  member through an ACE_GUARD.
+
+	* ace/Future.cpp (get):
+	* ace/Map_Manager.i (current_size, total_size):
+	* ace/Refcounted_Auto_Ptr.i:
+
+	  Removed const_cast<> around lock member.  It is no longer
+	  needed since the lock member is now declared "mutable".
+
+	* ace/CDR_Stream.h:
+
+	  Minor Doxygen documentation update.
+
+	* ace/ACE.cpp:
+	* ace/ARGV.cpp:
+	* ace/ARGV.i:
+	* ace/ATM_Acceptor.cpp:
+	* ace/ATM_Connector.cpp:
+	* ace/ATM_Stream.cpp:
+	* ace/Acceptor.cpp:
+	* ace/Activation_Queue.cpp:
+	* ace/Arg_Shifter.cpp:
+	* ace/Asynch_Acceptor.cpp:
+	* ace/Asynch_Connector.cpp:
+	* ace/Asynch_IO.cpp:
+	* ace/Atomic_Op.cpp:
+	* ace/Atomic_Op.i:
+	* ace/Base_Thread_Adapter.cpp:
+	* ace/Based_Pointer_T.i:
+	* ace/Basic_Stats.cpp:
+	* ace/Basic_Types.h:
+	* ace/Basic_Types.i:
+	* ace/CDR_Base.cpp:
+	* ace/CDR_Base.inl:
+	* ace/CDR_Stream.cpp:
+	* ace/CDR_Stream.i:
+	* ace/Caching_Utility_T.cpp:
+	* ace/Cleanup.cpp:
+	* ace/Codecs.cpp:
+	* ace/Codeset_IBM1047.cpp:
+	* ace/Condition_T.inl:
+	* ace/Configuration.cpp:
+	* ace/Connector.cpp:
+	* ace/Containers_T.cpp:
+	* ace/DEV_Addr.i:
+	* ace/DEV_IO.cpp:
+	* ace/DEV_IO.i:
+	* ace/DLL.cpp:
+	* ace/DLL_Manager.cpp:
+	* ace/Dev_Poll_Reactor.cpp:
+	* ace/Dynamic_Service.cpp:
+	* ace/Env_Value_T.h:
+	* ace/FIFO_Recv_Msg.i:
+	* ace/FIFO_Send_Msg.cpp:
+	* ace/FIFO_Send_Msg.i:
+	* ace/FILE_Addr.cpp:
+	* ace/FILE_Connector.cpp:
+	* ace/FILE_IO.cpp:
+	* ace/FlReactor.cpp:
+	* ace/Framework_Component.cpp:
+	* ace/Functor_T.i:
+	* ace/Future_Set.cpp:
+	* ace/Get_Opt.cpp:
+	* ace/Global_Macros.h:
+	* ace/Hash_Map_Manager_T.cpp:
+	* ace/Hash_Map_Manager_T.i:
+	* ace/High_Res_Timer.cpp:
+	* ace/INET_Addr.cpp:
+	* ace/INET_Addr.i:
+	* ace/Lib_Find.cpp:
+	* ace/Local_Name_Space.cpp:
+	* ace/Log_Record.i:
+	* ace/MEM_Addr.cpp:
+	* ace/MEM_Connector.cpp:
+	* ace/MEM_IO.i:
+	* ace/MEM_SAP.i:
+	* ace/Malloc_T.cpp:
+	* ace/Malloc_T.i:
+	* ace/Mem_Map.cpp:
+	* ace/Mem_Map.i:
+	* ace/Memory_Pool.i:
+	* ace/Message_Queue.i:
+	* ace/Multihomed_INET_Addr.cpp:
+	* ace/Mutex.inl:
+	* ace/Name_Proxy.cpp:
+	* ace/Name_Request_Reply.cpp:
+	* ace/OS_NS_Thread.inl:
+	* ace/OS_NS_arpa_inet.inl:
+	* ace/OS_NS_dirent.inl:
+	* ace/OS_NS_dlfcn.inl:
+	* ace/OS_NS_math.inl:
+	* ace/OS_NS_netdb.inl:
+	* ace/OS_NS_signal.inl:
+	* ace/OS_NS_stdio.inl:
+	* ace/OS_NS_stdlib.inl:
+	* ace/OS_NS_string.inl:
+	* ace/OS_NS_stropts.inl:
+	* ace/OS_NS_sys_msg.inl:
+	* ace/OS_NS_sys_shm.inl:
+	* ace/OS_NS_sys_socket.inl:
+	* ace/OS_NS_sys_stat.inl:
+	* ace/OS_NS_time.inl:
+	* ace/OS_NS_unistd.inl:
+	* ace/OS_TLI.inl:
+	* ace/Object_Manager.i:
+	* ace/Obstack_T.i:
+	* ace/Process.cpp:
+	* ace/Process_Manager.cpp:
+	* ace/Profile_Timer.cpp:
+	* ace/RB_Tree.i:
+	* ace/Recursive_Thread_Mutex.inl:
+	* ace/Registry.cpp:
+	* ace/SOCK.cpp:
+	* ace/SOCK_Dgram.cpp:
+	* ace/SOCK_Dgram.i:
+	* ace/SOCK_IO.cpp:
+	* ace/SOCK_IO.i:
+	* ace/SPIPE_Addr.cpp:
+	* ace/SPIPE_Stream.cpp:
+	* ace/SString.i:
+	* ace/SUN_Proactor.cpp:
+	* ace/SV_Semaphore_Simple.cpp:
+	* ace/SV_Semaphore_Simple.h:
+	* ace/Select_Reactor_Base.cpp:
+	* ace/Service_Config.cpp:
+	* ace/Service_Manager.cpp:
+	* ace/Service_Object.cpp:
+	* ace/Service_Types.cpp:
+	* ace/Service_Types.i:
+	* ace/Shared_Memory_MM.i:
+	* ace/Shared_Memory_SV.i:
+	* ace/Signal.i:
+	* ace/Stats.cpp:
+	* ace/Strategies_T.cpp:
+	* ace/String_Base.cpp:
+	* ace/String_Base.i:
+	* ace/Svc_Conf.h:
+	* ace/Task.cpp:
+	* ace/Thread_Adapter.cpp:
+	* ace/Thread_Manager.i:
+	* ace/Time_Value.inl:
+	* ace/Typed_SV_Message_Queue.i:
+	* ace/ace_wchar.inl:
+
+	  Converted all uses of ACE cast macros to their corresponding
+	  ANSI C++ equivalent.  The ACE cast macros are deprecated.
+
+	* ace/OS_NS_fcntl.h:
+
+	  Nuked trailing whitespace.
+
 Wed May  5 16:16:33 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/WIN32_Proactor.cpp (post_completion): reinterpret_cast the void*
@@ -75,7 +234,7 @@ Tue May  4 18:16:33 2004  Steve Huston  <shuston@riverace.com>
 Tue May  4 09:51:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:
-	  
+
 	  Fix for [BUG 1798]. Thanks to Johnny for reporting this bug.
 
 Mon May  3 18:12:30 2004  Steve Huston  <shuston@riverace.com>

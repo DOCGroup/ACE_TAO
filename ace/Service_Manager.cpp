@@ -84,7 +84,7 @@ ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_static_cast (int, ACE_OS::strlen (buf));
+  return static_cast<int> (ACE_OS::strlen (buf));
 }
 
 int
@@ -320,7 +320,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     {
       result = client_stream_.recv (offset, remaining);
       error = errno;
-      if (result == 0 && error != EWOULDBLOCK) 
+      if (result == 0 && error != EWOULDBLOCK)
         remaining = 0;
 
       if (result >= 0)

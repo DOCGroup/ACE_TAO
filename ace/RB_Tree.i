@@ -643,11 +643,16 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)");
 
-  // The reinterpret cast is to ensure that when this deprecated method is removed, and
-  // is replaced (as planned) by a find method that takes the same argument signature
-  // but returns an int, that the compiler will cough if this return macro is not
-  // changed to just return an int (whose value will be -1).  Please leave this as is.
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, ACE_reinterpret_cast(INT_ID*, 0L));
+  // The reinterpret cast is to ensure that when this deprecated
+  // method is removed, and is replaced (as planned) by a find method
+  // that takes the same argument signature but returns an int, that
+  // the compiler will cough if this return macro is not changed to
+  // just return an int (whose value will be -1).  Please leave this
+  // as is.
+  ACE_READ_GUARD_RETURN (ACE_LOCK,
+                         ace_mon,
+                         this->lock_,
+                         reinterpret_cast<INT_ID*> (0L));
 
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry;
   int result = this->find_i (k, entry);
@@ -668,7 +673,10 @@ ACE_INLINE INT_ID*
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert (const EXT_ID &k, const INT_ID &t)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, ACE_reinterpret_cast(INT_ID*, 0L));
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK,
+                          ace_mon,
+                          this->lock_,
+                          reinterpret_cast<INT_ID*> (0L));
 
   return this->insert_i (k, t);
 }

@@ -174,7 +174,7 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
 
   // release lock
   ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLK,
-                                    ACE_reinterpret_cast (long, &lock->lock_)),
+                                    reinterpret_cast<long> (&lock->lock_)),
                      int, -1);
 #endif /* ACE_WIN32 */
 }
@@ -200,9 +200,8 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
                           sizeof (ACE_mutex_t));
           if (unlink_file)
             ACE_OS::shm_unlink (lock->lockname_);
-          ACE_OS::free (ACE_static_cast (void *,
-                                         ACE_const_cast (ACE_TCHAR *,
-                                                         lock->lockname_)));
+          ACE_OS::free (
+            static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
         }
       else if (lock->process_lock_)
         // Just unmap the memory.
@@ -213,9 +212,8 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
         {
           if (unlink_file)
             ACE_OS::unlink (lock->lockname_);
-          ACE_OS::free (ACE_static_cast (void *,
-                                         ACE_const_cast (ACE_TCHAR *,
-                                                         lock->lockname_)));
+          ACE_OS::free (
+            static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
         }
 #endif /* CHORUS */
       lock->lockname_ = 0;
@@ -266,7 +264,7 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
   lock->lock_.l_type = F_RDLCK;         // set read lock
   // block, if no access
   ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLKW,
-                                    ACE_reinterpret_cast (long, &lock->lock_)),
+                                    reinterpret_cast<long> (&lock->lock_)),
                      int, -1);
 #endif /* ACE_WIN32 */
 }
@@ -315,7 +313,7 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
   int result = 0;
   // Does not block, if no access, returns -1 and set errno = EBUSY;
   ACE_OSCALL (ACE_OS::fcntl (lock->handle_, F_SETLK,
-                             ACE_reinterpret_cast (long, &lock->lock_)),
+                             reinterpret_cast<long> (&lock->lock_)),
               int, -1, result);
 
 # if ! defined (ACE_PSOS)
@@ -372,7 +370,7 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
   // Does not block, if no access, returns -1 and set errno = EBUSY;
   ACE_OSCALL (ACE_OS::fcntl (lock->handle_,
                              F_SETLK,
-                             ACE_reinterpret_cast (long, &lock->lock_)),
+                             reinterpret_cast<long> (&lock->lock_)),
               int, -1, result);
 
 # if ! defined (ACE_PSOS)
@@ -427,7 +425,7 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
   lock->lock_.l_type = F_WRLCK;         // set write lock
   // block, if no access
   ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLKW,
-                                    ACE_reinterpret_cast (long, &lock->lock_)),
+                                    reinterpret_cast<long> (&lock->lock_)),
                      int, -1);
 #endif /* ACE_WIN32 */
 }

@@ -233,10 +233,9 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
                                ACE_LIB_TEXT ("%s%s%s"),
                                searchpathname,
                                searchfilename,
-                               got_suffix ? ACE_static_cast (ACE_TCHAR *,
-                                                             ACE_LIB_TEXT (""))
-                               : ACE_static_cast (ACE_TCHAR *,
-                                                  dll_suffix));
+                               got_suffix
+                               ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT (""))
+                               : static_cast<ACE_TCHAR *> (dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               ACE_OS::sprintf (pathname,
                                ACE_LIB_TEXT ("%s%s%s"),
@@ -254,10 +253,9 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
                                searchpathname,
                                ACE_DLL_PREFIX,
                                searchfilename,
-                               got_suffix ? ACE_static_cast (ACE_TCHAR *,
-                                                             ACE_LIB_TEXT (""))
-                               : ACE_static_cast (ACE_TCHAR *,
-                                                  dll_suffix));
+                               got_suffix
+                               ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT (""))
+                               : static_cast<ACE_TCHAR *> (dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               ACE_OS::sprintf (pathname,
                                ACE_LIB_TEXT ("%s%s%s%s"),
@@ -277,13 +275,13 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
         {
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
           ACE_TCHAR *file_component = 0;
-          DWORD pathlen = ACE_TEXT_SearchPath (0,
-                                               searchfilename,
-                                               dll_suffix,
-                                               ACE_static_cast (DWORD,
-                                                                maxpathnamelen),
-                                               pathname,
-                                               &file_component);
+          DWORD pathlen =
+            ACE_TEXT_SearchPath (0,
+                                 searchfilename,
+                                 dll_suffix,
+                                 static_cast<DWORD> (maxpathnamelen),
+                                 pathname,
+                                 &file_component);
           if (pathlen >= maxpathnamelen)
           {
               errno = ENOMEM;
@@ -296,13 +294,13 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
           // prefixed
           ACE_OS::strcpy (searchfilename, ACE_DLL_PREFIX);
           ACE_OS::strcat (searchfilename, tempcopy);
-          pathlen = ACE_TEXT_SearchPath (0,
-                                         searchfilename,
-                                         dll_suffix,
-                                         ACE_static_cast (DWORD,
-                                                          maxpathnamelen),
-                                         pathname,
-                                         &file_component);
+          pathlen =
+            ACE_TEXT_SearchPath (0,
+                                 searchfilename,
+                                 dll_suffix,
+                                 static_cast<DWORD> (maxpathnamelen),
+                                 pathname,
+                                 &file_component);
           if (pathlen >= maxpathnamelen)
           {
               errno = ENOMEM;
@@ -399,10 +397,9 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    searchfilename,
-                                   got_suffix ? ACE_static_cast (ACE_TCHAR *,
-                                                                 ACE_LIB_TEXT (""))
-                                   : ACE_static_cast (ACE_TCHAR *,
-                                                      dll_suffix));
+                                   got_suffix
+                                   ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT (""))
+                                   : static_cast<ACE_TCHAR *> (dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   ACE_OS::sprintf (pathname,
                                    ACE_LIB_TEXT ("%s%c%s%s"),
@@ -423,10 +420,9 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    ACE_DLL_PREFIX,
                                    searchfilename,
-                                   got_suffix ? ACE_static_cast (ACE_TCHAR *,
-                                                                 ACE_LIB_TEXT (""))
-                                   : ACE_static_cast (ACE_TCHAR *,
-                                                      dll_suffix));
+                                   got_suffix
+                                   ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT (""))
+                                   : static_cast<ACE_TCHAR *> (dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   ACE_OS::sprintf (pathname,
                                    ACE_LIB_TEXT ("%s%c%s%s%s"),
@@ -525,12 +521,12 @@ ACE_Lib_Find::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 {
   int result;
 #if defined (ACE_WIN32)
-  result = ACE_TEXT_GetTempPath (ACE_static_cast (DWORD, buffer_len),
+  result = ACE_TEXT_GetTempPath (static_cast<DWORD> (buffer_len),
                                  buffer);
 
   // Make sure to return -1 if there is an error
   if (result == 0 && ::GetLastError () != ERROR_SUCCESS
-      || result > ACE_static_cast (int, buffer_len))
+      || result > static_cast<int> (buffer_len))
     result = -1;
 
 #else /* ACE_WIN32 */

@@ -92,7 +92,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
     {
       int maxlen = 0;
       ACE_TCHAR *cmd_line_buf = options.command_line_buf (&maxlen);
-      size_t max_len = ACE_static_cast (size_t, maxlen);
+      size_t max_len = static_cast<size_t> (maxlen);
       size_t curr_len = ACE_OS::strlen (cmd_line_buf);
       ACE_Handle_Set_Iterator h_iter (*set_p);
       // Because the length of the to-be-formatted +H option is not
@@ -931,14 +931,14 @@ ACE_Process_Options::pass_handle (ACE_HANDLE h)
     {
       HANDLE dup_handle;
       if (!DuplicateHandle (GetCurrentProcess (),
-                            ACE_static_cast (HANDLE, h),
+                            static_cast<HANDLE> (h),
                             GetCurrentProcess (),
                             &dup_handle,
                             0,
                             TRUE,   // Inheritable
                             DUPLICATE_SAME_ACCESS))
         return -1;
-      dup_handles_.set_bit (ACE_static_cast (ACE_HANDLE, dup_handle));
+      dup_handles_.set_bit (static_cast<ACE_HANDLE> (dup_handle));
     }
 #  endif /* ACE_HAS_WINCE */
 #endif /* ACE_WIN32 */

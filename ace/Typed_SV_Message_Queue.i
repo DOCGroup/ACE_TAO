@@ -5,9 +5,9 @@
 
 #include "ace/SV_Message_Queue.h"
 
-template <class T> ACE_INLINE int 
-ACE_Typed_SV_Message_Queue<T>::open (key_t external_id, 
-				     int create, 
+template <class T> ACE_INLINE int
+ACE_Typed_SV_Message_Queue<T>::open (key_t external_id,
+				     int create,
 				     int perms)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::open");
@@ -16,7 +16,7 @@ ACE_Typed_SV_Message_Queue<T>::open (key_t external_id,
 
 // What does it mean to close a message queue?!
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_Typed_SV_Message_Queue<T>::close (void)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::close");
@@ -24,16 +24,16 @@ ACE_Typed_SV_Message_Queue<T>::close (void)
 }
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message_Queue<T>::recv (ACE_Typed_SV_Message<T> &mb, 
+ACE_Typed_SV_Message_Queue<T>::recv (ACE_Typed_SV_Message<T> &mb,
 				     int mflags)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::recv");
 
-  int length = this->message_queue_.recv (ACE_reinterpret_cast (ACE_SV_Message &,
-                                                                mb),
-					  mb.max_size (),
-                                          mb.type (),
-                                          mflags);
+  int length =
+    this->message_queue_.recv (reinterpret_cast<ACE_SV_Message &> (mb),
+                               mb.max_size (),
+                               mb.type (),
+                               mflags);
   if (length != -1)
     mb.length (length);
 
@@ -41,16 +41,16 @@ ACE_Typed_SV_Message_Queue<T>::recv (ACE_Typed_SV_Message<T> &mb,
 }
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message_Queue<T>::send (const ACE_Typed_SV_Message<T> &mb, 
+ACE_Typed_SV_Message_Queue<T>::send (const ACE_Typed_SV_Message<T> &mb,
 				     int mflags)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::send");
-  return this->message_queue_.
-    send (ACE_reinterpret_cast (ACE_SV_Message &,
-                                ACE_const_cast (ACE_Typed_SV_Message<T> &,
-                                                mb)),
-          mb.length (),
-          mflags);
+  return
+    this->message_queue_.send (
+      reinterpret_cast<ACE_SV_Message &> (
+        const_cast<ACE_Typed_SV_Message<T> &> (mb)),
+      mb.length (),
+      mflags);
 }
 
 template <class T> ACE_INLINE int
@@ -62,7 +62,7 @@ ACE_Typed_SV_Message_Queue<T>::remove (void)
 }
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message_Queue<T>::control (int option, 
+ACE_Typed_SV_Message_Queue<T>::control (int option,
 					void *arg)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::control");
