@@ -11,7 +11,6 @@ MIF_Task::MIF_Task (int importance,
   this->start_time_ = start_time;
   this->importance_ = importance;
   this->dt_creator_ = dt_creator;
-  
 }
 
 int 
@@ -35,10 +34,10 @@ MIF_Task::perform_task (void)
 			 prime_number / 2);
 	}
       
-      //        ACE_DEBUG ((LM_DEBUG,
-      //  		  "%d\n",
-      //  		  thr_id));
-
+      ACE_DEBUG ((LM_DEBUG,
+		  "%d\n",
+		  count_));
+      
       run_time = ACE_OS::gettimeofday () - *base_time_;
       TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
 				       count_);

@@ -5,23 +5,32 @@
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
-DT::DT (ACE_Thread_Mutex *lock,
+DT::DT (ACE_Thread_Mutex &lock,
 	int guid)
-  : dt_cond_ (*lock),
-    guid_ (guid)
+  : dt_cond_ (lock),
+    guid_ (guid),
+    eligible_ (0),
+    mutex_ (lock)
 {
 }
 
 void
 DT::suspend (void)
 {
-  this->dt_cond_.wait ();
+  mutex_.acquire ();
+  eligible_ = 0;
+  while (!eligible_)
+    this->dt_cond_.wait ();
+  mutex_.release ();
 }
 
 void
 DT::resume (void)
 {
+  mutex_.acquire ();
+  eligible_ = 1;
   this->dt_cond_.signal ();
+  mutex_.release ();
 }
 
 CORBA::Short 
@@ -49,6 +58,7 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
   
+  state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
 }
 
 MIF_Scheduler::~MIF_Scheduler (void)
@@ -84,33 +94,57 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
-  MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param = 
-    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
-  
-  CORBA::Short desired_priority = sched_param->importance ();
-
   int count;
   ACE_OS::memcpy (&count,
 		  this->current_->id ()->get_buffer (),
 		  this->current_->id ()->length ());
-  
-  DT* new_dt;
-  ACE_NEW (new_dt,
-	   DT (&this->lock_,
-	       count));
-  
-  new_dt->msg_priority (desired_priority);
-  
+
+    
   if (count != 1)
     {
+      MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param = 
+	MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
+	
+      CORBA::Short desired_priority = sched_param->importance ();
+      DT* new_dt;
+      ACE_NEW (new_dt,
+	       DT (this->lock_,
+		   count));
+	
+      new_dt->msg_priority (desired_priority);
+	
       //NOT Main Thread
-      ready_que_.enqueue_prio (new_dt);
-      DT* main_dt;
-      ACE_Message_Block* msg;
-      wait_que_.dequeue_head (msg);
-      main_dt = ACE_dynamic_cast (DT*, msg);
-      main_dt->resume ();
-      new_dt->suspend ();
+      if (wait_que_.message_count () > 0)
+	{
+	    
+	  DT* main_dt;
+	  ACE_Message_Block* msg;
+	  wait_que_.dequeue_head (msg);
+	  main_dt = ACE_dynamic_cast (DT*, msg);
+	  main_dt->resume ();
+	}
+      //      ready_que_.enqueue_prio (new_dt);
+      //new_dt->suspend ();
+      else 
+	{
+	  if (ready_que_.message_count() > 0)
+	    {
+	      DT* run_dt;
+	      ACE_Message_Block* msg;
+	      ready_que_.dequeue_head (msg);
+	      run_dt = ACE_dynamic_cast (DT*, msg);
+	      if (run_dt->msg_priority () >= new_dt->msg_priority ())
+		{
+		  run_dt->resume ();
+		  ready_que_.enqueue_prio (new_dt);
+		  new_dt->suspend ();
+		}
+	      else 
+		{
+		  ready_que_.enqueue_prio (run_dt);
+		}
+	    }
+	}
     }
 }
 
@@ -140,7 +174,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &g
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
-  int count;
+  int count ;
   ACE_OS::memcpy (&count,
 		  this->current_->id ()->get_buffer (),
 		  this->current_->id ()->length ());
@@ -149,48 +183,95 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &g
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
   
   CORBA::Short desired_priority = sched_param->importance ();
-
+  
   DT* new_dt;
   ACE_NEW (new_dt,
-	   DT (&this->lock_,
+	   DT (this->lock_,
 	       count));
   
   new_dt->msg_priority (desired_priority);
-  
+
   if (count == 1)
     {
-      wait_que_.enqueue_prio (new_dt);
-      DT* run_dt;
-      ACE_Message_Block* msg;
-      ready_que_.dequeue_head (msg);
-      run_dt = ACE_dynamic_cast (DT*, msg);
-      run_dt->resume ();
-      new_dt->suspend ();
+      if (ready_que_.message_count () > 0)
+	{
+	  wait_que_.enqueue_prio (new_dt);
+	  DT* run_dt;
+	  ACE_Message_Block* msg;
+	  ready_que_.dequeue_head (msg);
+	  run_dt = ACE_dynamic_cast (DT*, msg);
+	  run_dt->resume ();
+	  new_dt->suspend ();
+	}
+      else delete new_dt;
     }
   else
     {
-      ready_que_.enqueue (new_dt);
+      if (wait_que_.message_count () > 0)
+	{
+	  ready_que_.enqueue_prio (new_dt);
+	  DT* run_dt;
+	  ACE_Message_Block* msg;
+	  wait_que_.dequeue_head (msg);
+	  run_dt = ACE_dynamic_cast (DT*, msg);
+	  run_dt->resume ();
+	  new_dt->suspend ();
+	}
+      else 
+	{
+	  if (ready_que_.message_count() > 0)
+	    {
+	      //ready_que_.enqueue_prio (new_dt);
+	      DT* run_dt;
+	      ACE_Message_Block* msg;
+	      ready_que_.dequeue_head (msg);
+	      run_dt = ACE_dynamic_cast (DT*, msg);
+	      if (run_dt->msg_priority () >= new_dt->msg_priority ())
+		{
+		  run_dt->resume ();
+		  ready_que_.enqueue_prio (new_dt);
+		  new_dt->suspend ();
+		}
+	      else 
+		{
+		  ready_que_.enqueue_prio (run_dt);
+		}
+	    }
+	}
+    }
+}
+    
+void 
+MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
+				       const char *
+				       ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  int count;
+  ACE_OS::memcpy (&count,
+		  guid.get_buffer (),
+		  guid.length ());
+  
+  //    ACE_DEBUG ((LM_DEBUG,
+  //  	      "End Scheduling Segment %d\n",
+  //  	      count));
+  
+  if (wait_que_.message_count () > 0)  
+    {
       DT* run_dt;
       ACE_Message_Block* msg;
       wait_que_.dequeue_head (msg);
       run_dt = ACE_dynamic_cast (DT*, msg);
       run_dt->resume ();
-      new_dt->suspend ();
     }
-  //    this->begin_new_scheduling_segment (guid,
-  //  				      name,
-  //  				      sched_param,
-  //  				      implicit_sched_param
-  //  				      ACE_ENV_ARG_PARAMETER);
-  //    ACE_CHECK;
-}
-    
-void 
-MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &,
-				       const char *
-				       ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
+  else if (ready_que_.message_count () > 0)
+    {
+      DT* run_dt;
+      ACE_Message_Block* msg;
+      ready_que_.dequeue_head (msg);
+      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt->resume ();
+    }
 }
 
 void 
