@@ -1419,8 +1419,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1838,10 +1837,10 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- TimeBaseC.i RtecDefaultEventDataC.h RtecDefaultEventDataC.i \
- RtecEventCommC.i RtecBaseC.h RtecBaseC.i RtecEventChannelAdminC.i \
- DsLogAdminC.h Log/log_export.h DsLogAdminC.i RTEventLogAdminC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+ RtecDefaultEventDataC.h RtecDefaultEventDataC.i RtecEventCommC.i \
+ RtecBaseC.h RtecBaseC.i RtecEventChannelAdminC.i DsLogAdminC.h \
+ Log/log_export.h DsLogAdminC.i RTEventLogAdminC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \

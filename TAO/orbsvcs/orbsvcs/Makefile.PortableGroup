@@ -357,7 +357,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/POA.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -382,13 +382,13 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PortableGroup_Loader.h \
  PortableGroup/PortableGroup_Request_Dispatcher.h \
  $(TAO_ROOT)/tao/Request_Dispatcher.h \
@@ -1276,7 +1276,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  PortableGroup/Portable_Group_Map.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1294,13 +1294,13 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PortableGroup_Acceptor_Registry.h \
  $(TAO_ROOT)/tao/Transport_Acceptor.h \
  $(TAO_ROOT)/tao/Transport_Acceptor.inl \
@@ -1522,7 +1522,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1570,13 +1570,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PortableGroup_Acceptor_Registry.h \
  $(TAO_ROOT)/tao/Transport_Acceptor.h \
  $(TAO_ROOT)/tao/Transport_Acceptor.inl \
@@ -1807,7 +1807,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
@@ -1882,13 +1882,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
@@ -2326,7 +2326,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -2344,13 +2344,13 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/UIPMC_Endpoint.h PortableGroup/UIPMC_Endpoint.i \
  PortableGroup/UIPMC_Profile.i \
  $(TAO_ROOT)/tao/MProfile.h \
@@ -3079,7 +3079,7 @@ realclean: clean
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
  $(TAO_ROOT)/tao/Profile.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -3097,13 +3097,13 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/UIPMC_Endpoint.h PortableGroup/UIPMC_Endpoint.i \
  PortableGroup/UIPMC_Profile.i
 
@@ -3692,7 +3692,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -3736,13 +3736,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/UIPMC_Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
@@ -3843,8 +3843,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/miopC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/miopC.i
+ miopC.h \
+ miopC.i
 
 .obj/UIPMC_Transport.o .obj/UIPMC_Transport.so .shobj/UIPMC_Transport.o .shobj/UIPMC_Transport.so: PortableGroup/UIPMC_Transport.cpp \
  PortableGroup/UIPMC_Transport.h \
@@ -4216,7 +4216,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -4234,13 +4234,13 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/UIPMC_Endpoint.h PortableGroup/UIPMC_Endpoint.i \
  PortableGroup/UIPMC_Profile.i PortableGroup/UIPMC_Wait_Never.h \
  $(TAO_ROOT)/tao/Acceptor_Registry.h \
@@ -4569,7 +4569,7 @@ realclean: clean
  PortableGroup/PG_Default_Property_Validator.cpp \
  PortableGroup/PG_Default_Property_Validator.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4751,13 +4751,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PG_Operators.h PortableGroup/portablegroup_export.h
 
 .obj/PG_Factory_Map.o .obj/PG_Factory_Map.so .shobj/PG_Factory_Map.o .shobj/PG_Factory_Map.so: PortableGroup/PG_Factory_Map.cpp \
@@ -4767,7 +4767,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  PortableGroup/PG_Factory_Set.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4946,13 +4946,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
@@ -4994,7 +4994,7 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5173,13 +5173,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp
@@ -5191,7 +5191,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  PortableGroup/PG_Factory_Map.h PortableGroup/PG_Factory_Set.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5370,13 +5370,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
@@ -5415,8 +5415,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  PortableGroup/PG_MemberInfo.h PortableGroup/PG_ObjectGroupManager.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ PortableGroupS.h \
+ CosNamingS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -5430,10 +5430,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ CosNamingS_T.h \
+ CosNamingS_T.i \
+ CosNamingS_T.cpp \
+ CosNamingS.i \
  $(TAO_ROOT)/tao/IOPS.h \
  $(TAO_ROOT)/tao/IOPS_T.h \
  $(TAO_ROOT)/tao/IOPS_T.i \
@@ -5444,10 +5444,10 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOPS_T.i \
  $(TAO_ROOT)/tao/GIOPS_T.cpp \
  $(TAO_ROOT)/tao/GIOPS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.i \
+ PortableGroupS_T.h \
+ PortableGroupS_T.i \
+ PortableGroupS_T.cpp \
+ PortableGroupS.i \
  PortableGroup/PG_ObjectGroup_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -5482,7 +5482,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  PortableGroup/PG_Operators.h PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5661,13 +5661,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ PortableGroupC.h \
+ PortableGroup/portablegroup_export.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PG_Location_Equal_To.inl
 
 .obj/PG_Location_Hash.o .obj/PG_Location_Hash.so .shobj/PG_Location_Hash.o .shobj/PG_Location_Hash.so: PortableGroup/PG_Location_Hash.cpp \
@@ -5676,7 +5676,7 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5855,13 +5855,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PG_Location_Hash.inl
 
 .obj/PG_Location_Map.o .obj/PG_Location_Map.so .shobj/PG_Location_Map.o .shobj/PG_Location_Map.so: PortableGroup/PG_Location_Map.cpp \
@@ -5871,7 +5871,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  PortableGroup/PG_Location_Hash.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -6050,13 +6050,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PG_Location_Hash.inl \
  PortableGroup/PG_Location_Equal_To.h PortableGroup/PG_Operators.h \
  PortableGroup/portablegroup_export.h \
@@ -6102,7 +6102,7 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -6281,21 +6281,21 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PG_Operators.h PortableGroup/portablegroup_export.h
 
 .obj/PG_ObjectGroupManager.o .obj/PG_ObjectGroupManager.so .shobj/PG_ObjectGroupManager.o .shobj/PG_ObjectGroupManager.so: PortableGroup/PG_ObjectGroupManager.cpp \
  PortableGroup/PG_ObjectGroupManager.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ PortableGroupS.h \
+ CosNamingS.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6477,8 +6477,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -6495,10 +6495,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ CosNamingS_T.h \
+ CosNamingS_T.i \
+ CosNamingS_T.cpp \
+ CosNamingS.i \
  $(TAO_ROOT)/tao/IOPS.h \
  $(TAO_ROOT)/tao/IOPS_T.h \
  $(TAO_ROOT)/tao/IOPS_T.i \
@@ -6511,13 +6511,13 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOPS_T.i \
  $(TAO_ROOT)/tao/GIOPS_T.cpp \
  $(TAO_ROOT)/tao/GIOPS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.i \
+ PortableGroupC.h \
+ PortableGroup/portablegroup_export.h \
+ PortableGroupC.i \
+ PortableGroupS_T.h \
+ PortableGroupS_T.i \
+ PortableGroupS_T.cpp \
+ PortableGroupS.i \
  PortableGroup/PG_ObjectGroup_Map.h PortableGroup/PG_MemberInfo.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -6586,7 +6586,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  PortableGroup/PG_MemberInfo.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -6765,13 +6765,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -6831,7 +6831,7 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -7010,8 +7010,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
+ Naming/naming_export.h \
+ CosNamingC.i
 
 .obj/PG_PropertyManager.o .obj/PG_PropertyManager.so .shobj/PG_PropertyManager.o .shobj/PG_PropertyManager.so: PortableGroup/PG_PropertyManager.cpp \
  PortableGroup/PG_PropertyManager.h \
@@ -7020,7 +7020,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  PortableGroup/PG_Default_Property_Validator.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -7199,15 +7199,15 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ PortableGroupC.i \
+ PortableGroupS.h \
+ CosNamingS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -7224,10 +7224,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ CosNamingS_T.h \
+ CosNamingS_T.i \
+ CosNamingS_T.cpp \
+ CosNamingS.i \
  $(TAO_ROOT)/tao/IOPS.h \
  $(TAO_ROOT)/tao/IOPS_T.h \
  $(TAO_ROOT)/tao/IOPS_T.i \
@@ -7238,10 +7238,10 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOPS_T.i \
  $(TAO_ROOT)/tao/GIOPS_T.cpp \
  $(TAO_ROOT)/tao/GIOPS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupS.i \
+ PortableGroupS_T.h \
+ PortableGroupS_T.i \
+ PortableGroupS_T.cpp \
+ PortableGroupS.i \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -7308,7 +7308,7 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ PortableGroupC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -7487,13 +7487,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ PortableGroup/portablegroup_export.h \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ PortableGroupC.i \
  PortableGroup/PG_Operators.h PortableGroup/portablegroup_export.h
 
 .obj/miopS.o .obj/miopS.so .shobj/miopS.o .shobj/miopS.so: miopS.cpp miopS.h \
@@ -7640,8 +7640,7 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOPS_T.h \
  $(TAO_ROOT)/tao/GIOPS_T.i \
  $(TAO_ROOT)/tao/GIOPS_T.cpp \
- $(TAO_ROOT)/tao/GIOPS.i \
- miopC.h \
+ $(TAO_ROOT)/tao/GIOPS.i miopC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -7852,8 +7851,7 @@ realclean: clean
 
 .obj/PortableGroupS.o .obj/PortableGroupS.so .shobj/PortableGroupS.o .shobj/PortableGroupS.so: PortableGroupS.cpp PortableGroupS.h \
  $(ACE_ROOT)/ace/pre.h CosNamingS.h \
- CosNamingC.h \
- $(TAO_ROOT)/tao/corba.h \
+ CosNamingC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8063,10 +8061,10 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOPS_T.h \
  $(TAO_ROOT)/tao/GIOPS_T.i \
  $(TAO_ROOT)/tao/GIOPS_T.cpp \
- $(TAO_ROOT)/tao/GIOPS.i \
- PortableGroupC.h PortableGroup/portablegroup_export.h \
- PortableGroupC.i PortableGroupS_T.h PortableGroupS_T.i \
- PortableGroupS_T.cpp PortableGroupS.i \
+ $(TAO_ROOT)/tao/GIOPS.i PortableGroupC.h \
+ PortableGroup/portablegroup_export.h PortableGroupC.i \
+ PortableGroupS_T.h PortableGroupS_T.i PortableGroupS_T.cpp \
+ PortableGroupS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -8392,8 +8390,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  PortableGroup/portablegroup_export.h \
  $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/GIOPC.i \
- miopC.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/GIOPC.i miopC.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -8698,8 +8696,7 @@ realclean: clean
  PortableGroup/portablegroup_export.h CosNamingC.h \
  Naming/naming_export.h CosNamingC.i \
  $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/GIOPC.i \
- PortableGroupC.i \
+ $(TAO_ROOT)/tao/GIOPC.i PortableGroupC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \

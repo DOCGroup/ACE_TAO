@@ -94,7 +94,8 @@ realclean: clean
  CosEvent/CEC_ConsumerAdmin.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -277,7 +278,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosEvent/event_export.h \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -294,6 +295,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -709,8 +716,7 @@ realclean: clean
  CosEvent/event_export.h CosEvent/CEC_Dispatching.i \
  CosEvent/CEC_ProxyPushSupplier.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
+ CosEventCommS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -727,6 +733,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -735,8 +747,8 @@ realclean: clean
 
 .obj/CEC_EventChannel.o .obj/CEC_EventChannel.so .shobj/CEC_EventChannel.o .shobj/CEC_EventChannel.so: CosEvent/CEC_EventChannel.cpp \
  CosEvent/CEC_EventChannel.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEvent/CEC_Factory.h CosEvent/event_export.h \
+ $(ACE_ROOT)/ace/pre.h CosEvent/CEC_Factory.h \
+ CosEvent/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -926,9 +938,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Object.i \
  CosEvent/CEC_Factory.i \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  CosEvent/event_export.h \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -945,16 +958,20 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
  CosEventChannelAdminS.i \
  CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
- CosEvent/CEC_Dispatching.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEvent/CEC_Dispatching.i CosEvent/CEC_Pulling_Strategy.h \
- CosEvent/CEC_Pulling_Strategy.i CosEvent/CEC_ConsumerAdmin.h \
+ CosEvent/CEC_Dispatching.h CosEvent/CEC_Dispatching.i \
+ CosEvent/CEC_Pulling_Strategy.h CosEvent/CEC_Pulling_Strategy.i \
+ CosEvent/CEC_ConsumerAdmin.h \
  ESF/ESF_Proxy_Admin.h \
  ESF/ESF_Proxy_Collection.h \
  ESF/ESF_Proxy_Collection.i \
@@ -989,8 +1006,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/CEC_Factory.o .obj/CEC_Factory.so .shobj/CEC_Factory.o .shobj/CEC_Factory.so: CosEvent/CEC_Factory.cpp CosEvent/CEC_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEvent/event_export.h \
+ $(ACE_ROOT)/ace/pre.h CosEvent/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1188,7 +1204,8 @@ realclean: clean
  CosEvent/CEC_ProxyPushConsumer.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1371,7 +1388,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosEvent/event_export.h \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1388,6 +1405,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -1431,7 +1454,8 @@ realclean: clean
  CosEvent/CEC_ProxyPullConsumer.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1614,7 +1638,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosEvent/event_export.h \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1631,6 +1655,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -1674,7 +1704,8 @@ realclean: clean
  CosEvent/CEC_ProxyPushSupplier.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1857,7 +1888,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosEvent/event_export.h \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1874,16 +1905,19 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
  CosEventChannelAdminS.i \
  CosEvent/event_export.h CosEvent/CEC_ProxyPushSupplier.i \
- CosEvent/CEC_Dispatching.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEvent/CEC_Dispatching.i CosEvent/CEC_EventChannel.h \
- CosEvent/CEC_Factory.h \
+ CosEvent/CEC_Dispatching.h CosEvent/CEC_Dispatching.i \
+ CosEvent/CEC_EventChannel.h CosEvent/CEC_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -1904,7 +1938,8 @@ realclean: clean
  CosEvent/CEC_ProxyPullSupplier.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2087,7 +2122,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosEvent/event_export.h \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2104,6 +2139,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -2117,11 +2158,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Notification_Strategy.inl \
  $(ACE_ROOT)/ace/Message_Queue.i \
  CosEvent/event_export.h CosEvent/CEC_ProxyPullSupplier.i \
- CosEvent/CEC_Dispatching.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEvent/CEC_Dispatching.i CosEvent/CEC_EventChannel.h \
- CosEvent/CEC_Factory.h \
+ CosEvent/CEC_Dispatching.h CosEvent/CEC_Dispatching.i \
+ CosEvent/CEC_EventChannel.h CosEvent/CEC_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2135,7 +2173,8 @@ realclean: clean
  CosEvent/CEC_SupplierAdmin.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2318,7 +2357,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosEvent/event_export.h \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2335,6 +2374,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -2679,7 +2724,8 @@ realclean: clean
  CosEvent/event_export.h \
  CosEvent/CEC_ProxyPushSupplier.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2789,7 +2835,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2806,6 +2852,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -3055,8 +3107,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  CosEvent/CEC_ProxyPushSupplier.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
+ CosEventCommS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3073,6 +3124,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -3281,8 +3338,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Object.i \
  CosEvent/CEC_Factory.i \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
+ CosEventCommS.h \
+ CosEventCommC.h \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3299,6 +3357,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -3631,8 +3695,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Object.i \
  CosEvent/CEC_Factory.i \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
+ CosEventCommS.h \
+ CosEventCommC.h \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3649,6 +3714,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -3975,8 +4046,9 @@ realclean: clean
  CosEvent/CEC_Reactive_Pulling_Strategy.i \
  CosEvent/CEC_ProxyPullConsumer.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
+ CosEventCommS.h \
+ CosEventCommC.h \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3993,6 +4065,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -4136,8 +4214,8 @@ realclean: clean
 
 .obj/CEC_Default_Factory.o .obj/CEC_Default_Factory.so .shobj/CEC_Default_Factory.o .shobj/CEC_Default_Factory.so: CosEvent/CEC_Default_Factory.cpp \
  CosEvent/CEC_Default_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEvent/CEC_Factory.h CosEvent/event_export.h \
+ $(ACE_ROOT)/ace/pre.h CosEvent/CEC_Factory.h \
+ CosEvent/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4395,8 +4473,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  CosEvent/CEC_ProxyPushSupplier.h \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
+ CosEventCommS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -4413,6 +4490,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -4678,9 +4761,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosEvent/CEC_Factory.i \
  CosEventChannelAdminS.h \
- CosEventChannelAdminC.h \
+ CosEventCommS.h \
+ CosEventCommC.h \
  CosEvent/event_export.h \
- CosEventChannelAdminC.i \
+ CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -4697,6 +4781,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h \
+ CosEventCommS_T.i \
+ CosEventCommS_T.cpp \
+ CosEventCommS.i \
+ CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp \
@@ -4745,8 +4835,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Argv_Type_Converter.inl
 
 .obj/CosEventCommS.o .obj/CosEventCommS.so .shobj/CosEventCommS.o .shobj/CosEventCommS.so: CosEventCommS.cpp CosEventCommS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5090,9 +5179,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
- CosEventChannelAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEventChannelAdminC.h \
+ CosEventChannelAdminS.h $(ACE_ROOT)/ace/pre.h \
+ CosEventCommS.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5274,7 +5362,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- CosEvent/event_export.h CosEventChannelAdminC.i \
+ CosEvent/event_export.h CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -5291,6 +5379,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp \
+ CosEventCommS.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -5739,8 +5829,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.so .shobj/CosEventChannelAdminC.o .shobj/CosEventChannelAdminC.so: CosEventChannelAdminC.cpp \
- CosEventChannelAdminC.h \
- $(ACE_ROOT)/ace/pre.h \
+ CosEventChannelAdminC.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5922,7 +6011,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- CosEvent/event_export.h CosEventChannelAdminC.i \
+ CosEvent/event_export.h CosEventCommC.h CosEventCommC.i \
+ CosEventChannelAdminC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \

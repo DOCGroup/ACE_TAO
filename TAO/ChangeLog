@@ -1,3 +1,9 @@
+Sun Nov 24 00:21:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile*: Made another try in updating
+	  dependencies again. Thanks to Russ Carter and  Dirk Moermans
+	  <dirk.moermans@brutele.be> for pointing out the problem.
+
 Sat Nov 23 10:52:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp: Cosmetic fixes to the debugging
