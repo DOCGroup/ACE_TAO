@@ -1,3 +1,8 @@
+Mon Jan 14 15:03:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp: 
+	  Removed include of IORInfo.h
+
 Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	The following set of changes are wrt to Object Reference Template.
