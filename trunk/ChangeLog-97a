@@ -1,3 +1,9 @@
+Tue Apr 15 23:16:43 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/Map_Manager.cpp: The Map_Manager now explicitly calls the
+ 	  destructors of Map_Entry objects before freeing up the space.
+  	  Not sure why we were not doing this before.
+
 Tue Apr 15 17:09:33 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* examples/Logger: Added MSVC++ makefile to Acceptor-server
