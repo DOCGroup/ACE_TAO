@@ -5668,7 +5668,7 @@ ACE_OS::mmap (void *addr,
 	      ACE_HANDLE file_handle, 
 	      off_t off, 
 	      ACE_HANDLE *file_mapping,
-	      SECURITY_ATTRIBUTES sa)
+	      LPSECURITY_ATTRIBUTES sa)
 {
   // ACE_TRACE ("ACE_OS::mmap");
 #if defined (ACE_WIN32)

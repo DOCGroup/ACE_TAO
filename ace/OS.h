@@ -2109,7 +2109,7 @@ struct ACE_OVERLAPPED
 
 // Add some typedefs and macros to enhance Win32 conformance...
 #if !defined (LPSECURITY_ATTRIBUTES)
-#define LPSECURITY_ATTRIBUTES int;
+#define LPSECURITY_ATTRIBUTES int
 #endif /* !defined LPSECURITY_ATTRIBUTES */
 #if !defined (GENERIC_READ)
 #define GENERIC_READ 0
