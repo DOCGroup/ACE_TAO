@@ -1,3 +1,10 @@
+Tue Jun  1 18:09:19 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/NodeManager/NodeDaemon.mpc
+
+          Modify this to fix linking errors for missing library.
+
+
 Tue Jun  1 17:52:29 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/NodeApplicationManager/NodeApplicationManager.mpc
