@@ -7,7 +7,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
-#include "ace/streams.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 
 
@@ -81,12 +81,10 @@ main (int argc,
       manager.make_merged_iors (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      cout << "Merged IORS" <<endl;
       // Set properties. This is the most important portion of the
       // test
       manager.set_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      cout << "Set prop" <<endl;
 
       // Write IOR to file
       manager.write_to_file ();
