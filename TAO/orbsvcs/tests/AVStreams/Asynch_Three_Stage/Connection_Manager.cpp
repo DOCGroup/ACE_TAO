@@ -72,11 +72,41 @@ Connection_Manager::load_ep_addr (const char* file_name)
 	flowname += addr_tokenizer [0];
       
       if (addr_tokenizer [1] != 0)
-	addr->sender_addr += CORBA::string_dup (addr_tokenizer [1]);
+	{
+	  ACE_CString token (addr_tokenizer [1]);
+
+	  int pos = token.find ('\r');
+	  if (pos != ACE_CString::npos)
+	    {
+	      addr->sender_addr = CORBA::string_dup ((token.substr (0, pos)).c_str ());
+	    }
+	  else addr->sender_addr = CORBA::string_dup (token.c_str());
+
+	  pos = addr->sender_addr.find ('\n');
+	  if (pos != ACE_CString::npos)
+	    {
+	      addr->sender_addr = (addr->sender_addr.substr (0, pos)).c_str ();
+	    }
+	}
 
       if (addr_tokenizer [2] != 0)
-	addr->receiver_addr += CORBA::string_dup (addr_tokenizer [2]);
+	{
+	  ACE_CString token (addr_tokenizer [2]);
 
+	  int pos = token.find ('\r');
+	  if (pos != ACE_CString::npos)
+	    {
+	      addr->receiver_addr = CORBA::string_dup ((token.substr (0, pos)).c_str ());
+	    }
+	  else addr->receiver_addr = CORBA::string_dup (token.c_str());
+
+	  pos = addr->receiver_addr.find ('\n');
+	  if (pos != ACE_CString::npos)
+	    {
+	      addr->sender_addr = (addr->receiver_addr.substr (0, pos)).c_str ();
+	    }
+	}
+      
       int result = ep_addr_.bind (flowname,
 				  addr);
       if (result == 0)
@@ -301,14 +331,18 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
 	{
 	  sender_addr_str = addr->sender_addr;
 	  receiver_addr_str = addr->receiver_addr;
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Address Strings %s %s\n",
+		      sender_addr_str.c_str (),
+		      receiver_addr_str));
+	  
 	}
       else ACE_DEBUG ((LM_DEBUG,
 		       "No endpoint address for flowname %s\n",
 		       flowname.c_str ()));
-
+      
       ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());      
       ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
-
 
       // Create the forward flow specification to describe the flow.
       TAO_Forward_FlowSpec_Entry sender_entry (flowname.c_str (),
@@ -317,9 +351,8 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
                                                "",
                                                "UDP",
                                                &sender_addr);
-      
-      sender_entry.set_peer_addr (&receiver_addr);
 
+      sender_entry.set_peer_addr (&receiver_addr);
 
       // Set the flow specification for the stream between receiver
       // and distributer
@@ -509,10 +542,10 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
 		  sender_addr_str.c_str (),
 		  receiver_addr_str.c_str ()));
     }
-  
-  ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
-  ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
 
+  ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());  
+  ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
+  
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry sender_entry (flowname.c_str (),
                                            "IN",
@@ -520,9 +553,8 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
                                            "",
                                            "UDP",
                                            &sender_addr);
-  
-  sender_entry.set_peer_addr (&receiver_addr);
 
+  sender_entry.set_peer_addr (&receiver_addr);
 
   // Set the flow specification for the stream between sender and
   // receiver.
