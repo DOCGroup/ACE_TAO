@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : valuetype {
+project : portableserver, valuetype {
   after += ObjRefTemplate
   libs  += TAO_ObjRefTemplate
 }
