@@ -320,16 +320,7 @@ FilterClient::send_events (CORBA::Environment &ACE_TRY_ENV)
   // any
   event.remainder_of_body <<= (CORBA::Long)4;
 
-  supplier_1->send_event (event, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  supplier_1->disconnect (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  supplier_1->send_event (event, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  /*  for (int i = 0; i < EVENTS_TO_SEND; i++)
+   for (int i = 0; i < EVENTS_TO_SEND; i++)
     {
       event.filterable_data[0].value <<= (CORBA::Long)i;
 
@@ -342,7 +333,6 @@ FilterClient::send_events (CORBA::Environment &ACE_TRY_ENV)
       supplier_2->send_event (event, ACE_TRY_ENV);
       ACE_CHECK;
     }
-  */
 }
 
 
