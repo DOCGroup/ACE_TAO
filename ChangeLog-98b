@@ -1,3 +1,7 @@
+Mon Oct 26 12:04:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_lib.dsp: Added TP_Reactor into the project.
+
 Mon Oct 26 11:29:55 1998  Darrell E. Brunsch  <brunsch@tango.cs.wustl.edu>
 
 	* tests/Semaphore_Test.cpp: Changed behavior for ACE_HAS_STHREADS
