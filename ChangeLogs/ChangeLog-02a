@@ -1,3 +1,10 @@
+Sun Dec 16 10:33:17 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Select_Reactor_T.h: Improve the documentation of the
+ 	  ACE_Select_Reactor_T() constructor to clarify the mask_signals
+ 	  and disable_notify_pipe parameters.  Thanks to Bob Jolliffe
+ 	  <bjolliffe@cs.up.ac.za> for motivating this.
+
 Sun Dec 16 16:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.{h,cpp}:
@@ -15,7 +22,7 @@ Sun Dec 16 16:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/Log_Msg/test_log_msg.cpp:
         * examples/Log_Msg/test_ostream.cpp:
 
-          Made these examples compiling when ACE_USES_WCHAR is set
+          Made these examples compile when ACE_USES_WCHAR is set
 
 Sun Dec 16 08:04:23 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 

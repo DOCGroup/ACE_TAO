@@ -7,71 +7,84 @@
   </head>
 
   <body>
-    <h1>TAO Performance Tuning</h1>
+  <HR><P>
+    <h3>TAO Performance Tuning</h3>
 
-    <h2>Overview</h2>
+    <h3>Overview</h3>
 
     <p>
-      As is the case with most applications, including compilers,
-      enabling optimizations can often introduce side effects that may
-      not be desirable for all applications.  For this reason, TAO is
-      by default, <i>i.e.</i> "out-of-the-box," configured for
-      stability rather than for speed or scalability.
+      TAO is increasingly being used to support high-performance
+      distributed real-time and embedded (DRE) applications.  DRE
+      applications constitute an important class of distributed
+      systems where predictability and efficiency are essential for
+      success.  This document describes how to configure <a href
+      ="index.html">TAO</a> to enhance its throughput, scalability,
+      and latency for a variety of applications. </p>
+
+     <p>
+      As with most applications, including compilers, enabling
+      optimizations can often introduce side-effects that may not be
+      desirable for all use-cases.  TAO's default configuration
+      therefore emphasizes programming simplicity rather than top
+      speed or scalability.  Our goal is to assure that CORBA
+      applications work correctly ``out-of-the-box,'' while also
+      enabling developers to further optimize their CORBA applications
+      to meet stringent performance requirements. </P>
+      
+    <p>  
+      TAO's performance tuning philosophy reflects the fact that there
+      are trade-offs between speed, size, scalability, and programming
+      simplicity.  For example, certain ORB configurations work well
+      for a large number of clients, whereas others work better for a
+      small number.  Likewise, certain configurations minimize
+      internal ORB synchronization and memory allocation overhead by
+      making assumptions about how applications are designed.
     </p>
 
-    <p>
-      This document describes how to configure
-      <a href ="index.html">TAO</a> for optimum throughput or
-      scalability for a variety of applications.  However, the user
-      should bear in mind that often times trade-offs exist between
-      speed, size and scalability.  For example, it may not be
-      possible to configure both a highly scalable and exceedingly
-      fast ORB.  Specifically, it may boil down to being one or the
-      other, but not both.
-    </p>
-
-    <h2>Optimizing Throughput</h2>
+    <!-- Ossama, can you please add a brief outline of what's
+      described in the document below?! -->
+      
+    <P><HR><P>      
+    <h3>Optimizing Throughput</h3>
 
     <p>
-      "Throughput" refers to the number of events occurring per unit
-      time, where "events" can refer to ORB-mediated method
-      invocations, for example.  This section describes how to
-      optimize throughput on both the client side and the server
-      side.
+      In this context, ``throughput'' refers to the number of events
+      occurring per unit time, where ``events'' can refer to
+      ORB-mediated operation invocations, for example.  This section
+      describes how to optimize client and server throughput.
     </p>
 
     <p>
       It is important to understand that enabling throughput
-      optimizations for one side of an invocation, such as the client
-      side, may not affect how well the server side performs.  This is
-      particularly important when the client side ORB implementation
-      and the server side ORB implementation are developed by
-      different ORB developers or vendors.
+      optimizations for the client may not affect the server
+      performance and vice versa.  In particular, the client and
+      server ORBs may be designed by different ORB suppliers.
     </p>
 
-    <h3>Optimizing Throughput on the Client Side</h3>
+    <h3>Optimizing Client Throughput</h3>
 
     <p>
-      Client side ORB throughput optimizations entail improving the
-      rate at which CORBA requests (method invocations) are sent to
-      the target server.  Depending on the application, various
-      techniques can be employed to improve the rate at which CORBA
-      requests are sent and/or the amount of work the client can
-      perform as requests are sent or replies received.  Such
-      techniques include taking advantage of:
+      Client ORB throughput optimizations improve the rate at which
+      CORBA requests (operation invocations) are sent to the target
+      server.  Depending on the application, various techniques can be
+      employed to improve the rate at which CORBA requests are sent
+      and/or the amount of work the client can perform as requests are
+      sent or replies received.  These techniques consist of:
     </p>
     <ul>
       <li>
 	<b>Run-time features</b> offered by the ORB, such as
 	Asynchronous Method Invocations (AMI)
+        <!-- Ossama, are there other examples you can list here? -->
       </li>
       <li>
 	<b>ORB configurations</b>, such as disabling synchronization
 	of various parts of the ORB in a single-threaded application
       </li>
     </ul>
+    We explore these techniques below.
 
-    <h4>Run-Time Optimizations on the Client Side</h4>
+    <h4>Run-time Client Optimizations</h4>
 
     <p>
       For two-way invocations, i.e. those that expect a reply
@@ -81,7 +94,7 @@
       the target, and the reply is received.
     </p>
 
-    <h4>Client Side Optimization Through ORB Configuration</h4>
+    <h4>Client Optimizations via ORB Configuration</h4>
 
     <p>
       A client side TAO ORB can be optimized for various types of
@@ -171,13 +184,14 @@
       </li>
     </ul>
 
-    <h3>Optimizing Throughput on the Server Side</h3>
+    <h3>Optimizing Server Throughput</h3>
 
     <p>
       FILL IN THE BLANK
     </p>
 
-    <h2>Optimizing Scalability</h2>
+    <P><HR><P>            
+    <h3>Optimizing Scalability</h3>
 
     <p>
       "Scalability" refers to how well an ORB performs as the number
@@ -190,13 +204,13 @@
       than a client will send.
     </p>
 
-    <h3>Optimizing Scalability on the Client Side</h3>
+    <h3>Optimizing Client Scalability</h3>
 
     <p>
       FILL IN THE BLANK
     </p>
 
-    <h3>Optimizing Scalability on the Server Side</h3>
+    <h3>Optimizing Server Scalability</h3>
 
     <p>
       FILL IN THE BLANK
@@ -206,7 +220,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Sat Dec 15 21:11:41 Pacific Standard Time 2001
+Last modified: Sun Dec 16 10:55:27 CST 2001
 <!-- hhmts end -->
   </body>
 </html>
