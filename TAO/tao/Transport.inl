@@ -50,3 +50,17 @@ TAO_Transport::cache_map_entry (
 {
   this->cache_map_entry_ = entry;
 }
+
+ACE_INLINE int
+TAO_Transport::flush_timer_pending (void) const
+{
+  return this->flush_timer_id_ != -1;
+}
+
+ACE_INLINE void
+TAO_Transport::reset_flush_timer (void)
+{
+  this->flush_timer_id_ = -1;
+  this->current_deadline_ = ACE_Time_Value::zero;
+}
+

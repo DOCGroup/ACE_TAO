@@ -64,11 +64,6 @@ class TAO_Export TAO_Queued_Message
 {
 public:
   /// Constructor
-  /**
-   * @param callback A callback interface to signal any waiting
-   * threads about the status of the message.  It is null if there are
-   * no waiting threads.
-   */
   TAO_Queued_Message (void);
 
   /// Destructor

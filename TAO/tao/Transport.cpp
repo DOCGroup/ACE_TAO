@@ -65,6 +65,8 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , head_ (0)
   , tail_ (0)
   , current_deadline_ (ACE_Time_Value::zero)
+  , flush_timer_id_ (-1)
+  , transport_timer_ (this)
   , id_ ((long) this)
 {
   TAO_Client_Strategy_Factory *cf =
@@ -138,7 +140,25 @@ TAO_Transport::handle_output ()
 
       flushing_strategy->cancel_output (this);
 
-      this->current_deadline_ = ACE_Time_Value::zero;
+      if (this->flush_timer_id_ != -1)
+        {
+          ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                                    guard,
+                                    *this->handler_lock_,
+                                    -1));
+
+          ACE_Event_Handler *eh = this->event_handler_i ();
+          if (eh != 0)
+            {
+              ACE_Reactor *reactor = eh->reactor ();
+              if (reactor != 0)
+                {
+                  (void) reactor->cancel_timer (this->flush_timer_id_);
+                }
+            }
+          this->current_deadline_ = ACE_Time_Value::zero;
+          this->flush_timer_id_ = -1;
+        }
       return 0;
     }
 
@@ -849,6 +869,27 @@ TAO_Transport::cancel_output (void)
 }
 
 int
+TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
+                               const void *act)
+{
+  /// This is the only legal ACT in the current configuration....
+  if (act != &this->current_deadline_)
+    return -1;
+
+  if (this->flush_timer_pending ())
+    {
+      // The timer is always a oneshot timer, so mark is as not
+      // pending.
+      this->reset_flush_timer ();
+
+      TAO_Flushing_Strategy *flushing_strategy =
+        this->orb_core ()->flushing_strategy ();
+      (void) flushing_strategy->schedule_output (this);
+    }
+  return 0;
+}
+
+int
 TAO_Transport::drain_queue (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
@@ -1043,13 +1084,34 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
                                                           set_timer,
                                                           new_deadline);
 
-  // ... check if we need to set a timer ...
+  // ... set the new timer, also cancel any previous timers ...
   if (set_timer)
     {
-      this->current_deadline_ = new_deadline;
-      // @@ We need to schedule the timer. We should also be
-      // careful not to schedule one if there is one scheduled
-      // already.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                                guard,
+                                *this->handler_lock_,
+                                -1));
+
+      ACE_Event_Handler *eh = this->event_handler_i ();
+      if (eh != 0)
+        {
+          ACE_Reactor *reactor = eh->reactor ();
+          if (reactor != 0)
+            {
+              this->current_deadline_ = new_deadline;
+              ACE_Time_Value delay =
+                new_deadline - ACE_OS::gettimeofday ();
+
+              if (this->flush_timer_pending ())
+                {
+                  (void) reactor->cancel_timer (this->flush_timer_id_);
+                }
+              this->flush_timer_id_ =
+                reactor->schedule_timer (&this->transport_timer_,
+                                         &this->current_deadline_,
+                                         delay);
+            }
+        }
     }
 
   return constraints_reached;
