@@ -1,30 +1,6 @@
 //--*C++*--
-//==============================================================
-/**
- * @file Execution_Manager.cpp
- *
- * @brief CIAO's Execution Manager implementation
- *
- * $Id$
- *
- * ExecutionManager is the DnC entity which is the starting point for
- * the deployment process. This entity collaborates with other entities
- * including Logging Facility, TargetManager, and
- * DomainApplicationManager entities to facilitate the deployment and
- * launching of components. In our current design, the ExecutionManager
- * is started as an executable on a give host and registered with the
- * name service. The Executor/client obtains this reference and starts
- * the deployment process.
- *
- *
- * @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
- * @author Tao Lu <lu@dre.vanderbilt.edu>
- */
-//===============================================================
-
-#include "ExecutionManager_Impl.h"
-#include "Server_init.h"
-#include "tao/IORTable/IORTable.h"
+// $Id$
+#include "Execution_Manager_Impl.h"
 
 // Include Name Service header
 #include "orbsvcs/CosNamingC.h"
