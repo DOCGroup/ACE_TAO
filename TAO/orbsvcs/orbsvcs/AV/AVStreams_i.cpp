@@ -5127,7 +5127,10 @@ template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
