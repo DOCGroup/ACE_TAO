@@ -1,3 +1,8 @@
+Fri Dec 29 14:21:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_SAP.cpp: Fixed incorrect ACE_RCSID identifier.  Thanks
+	  to Jerry Odenwelder <jerryo@atl.fundtech.com> for noticing this.
+
 Thu Dec 28 16:02:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/sandbox.cpp:
