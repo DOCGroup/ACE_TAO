@@ -73,7 +73,7 @@ chdir $log_directory  ||
 open (EGREP, "egrep -n \'Error|errors|[^a][Ss]top|No rule to make|\(undefined symb\)|[Ww]arn|not exist|core dumped|: #[0-9]|cxx:\' $log_files |")  ||
   die "$0: unable to open egrep\n";
 while (<EGREP>) {
-  push @output, $_;
+  push @output, $_ unless /calls, 0 errors/;
 }
 close EGREP;
 
