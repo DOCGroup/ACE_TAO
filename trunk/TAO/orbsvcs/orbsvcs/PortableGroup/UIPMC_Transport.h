@@ -110,17 +110,12 @@ public:
   //@}
 
 private:
-  /// Process the message that we have read
+  /// Process the message that we have read.
   int process_message (void);
 
-  // @@ Frank : Not needed
-  /*
-  /// Add the listen points in <acceptor> to the <listen_point_list>
-  /// if this connection is in the same interface as that of the
-  /// endpoints in the <acceptor>
-  int get_listen_point (DIOP::ListenPointList &listen_point_list,
-                        TAO_Acceptor *acceptor);
-  */
+  /// Construct and write a unique ID to the MIOP header.
+  void write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long unique);
+
 private:
 
   /// The connection service handler used for accessing lower layer

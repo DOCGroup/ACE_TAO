@@ -62,7 +62,8 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
 {
   if (this->using_mcast_)
     {
-      this->mcast_socket_.unsubscribe ();
+      // Closing a multicast socket automatically unsubscribes us from
+      // the multicast group.
       this->mcast_socket_.close ();
     }
   else

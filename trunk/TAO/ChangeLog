@@ -1,3 +1,26 @@
+Fri Jan 10 08:28:34 2003  Frank Hunleth  <frank@hunleth.com>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+
+	Removed call to unsubscribe from multicast socket as this happens
+	automatically.  Thanks to Don Hinton <dhinton@ieee.org> for
+	pointing this out.
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+
+	Added code to check length of MIOP UniqueID so that it can be
+	properly parsed.  Thanks to Chau Vincent
+	<Vincent.Chau@fr.thalesgroup.com> for finding the problem when
+	performing MIOP interoperability testing.  Also, added code to
+	set the UniqueID and packet length fields properly per update to
+	the MIOP spec and tightened bounds checks on MIOP packets to
+	prevent buffer overruns.
+
+	* orbsvcs/tests/Miop/McastHello/client.cpp:
+
+	Fixed spelling error.
+
 Thu Jan  9 11:01:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/try_macros.h: Removed the file from the repo. This is no
@@ -32,25 +55,25 @@ Mon Jan  6 17:12:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* performance-tests/Memory/IORsize/Test.idl: A simple, again a
 	  very simple test, to measure the memory consumed by the server
 	  for unmarshalling an IOR. This test will not be compiled in all
-	  the builds, but only in the builds where the scripts are run. 
+	  the builds, but only in the builds where the scripts are run.
 
 	* performance-tests/Memory/Makefile: Added the new test to the
 	  list of directories.
-	
+
 Sat Jan 04 12:15:39 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Server.cpp:
 	  Removed extra ACE_CHECK_RETURN causing build errors.
-	
+
 Fri Jan  3 14:43:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
 	* TAO_IDL/include/idl_global.h:
 
 	  Changes to the management of the IDL compiler's stack of prefixes,
-	  to address a problem that appeared when there is a chain of 
+	  to address a problem that appeared when there is a chain of
 	  included IDL files. Thanks to Adee Ran <adeeran@yahoo.com> for
-	  reporting the problem and supplying example IDL files to 
+	  reporting the problem and supplying example IDL files to
 	  reproduce it.
 
 Fri Jan 03 14:22:14 2003  Pradeep Gore  <pradeep@oomworks.com>
@@ -66,36 +89,36 @@ Fri Jan 03 14:22:14 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Container_T.cpp:
 	  Changed the order of destruction of the Notify objects. The tree
 	  is destroyed bottom up. This ensures that proxy objects that
-	  refer to a valid parent during shutdown. 
+	  refer to a valid parent during shutdown.
 
 	* orbsvcs/orbsvcs/Notify/Method_Request.h:
 	* orbsvcs/orbsvcs/Notify/Method_Request.inl:
 	* orbsvcs/orbsvcs/Notify/Refcountable.h:
 	* orbsvcs/orbsvcs/Notify/Refcountable.inl:
 	  Moved the TAO_NS_Refcountable_Guard class from Method_Request.*
-	  files into Refcountable.* files.   
+	  files into Refcountable.* files.
 
 	* orbsvcs/orbsvcs/Notify/Object.cpp:
 	  Moved the <worker_task_> and <proxy_poa_> data member shutdown
 	  from the destructor to the <shutdown> method.
-	
+
 	* orbsvcs/orbsvcs/Notify/Object_T.cpp:
 	  Replaced the TAO_NS_Object_RefCount_Guard with
 	  TAO_NS_Refcountable_Guard.
-	
+
 	* orbsvcs/orbsvcs/Notify/Peer.cpp:
 	  Protect the Peer from being destroyed while it is dispatching
 	  updates by using a TAO_NS_Refcountable_Guard.
-	
+
 	* orbsvcs/orbsvcs/Notify/Types.h:
 	  Removed the TAO_NS_Object_RefCount_Guard class. We use
 	  TAO_NS_Refcountable_Guard instead.
-	
+
 	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
 	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.h:
 	  Modified the <dequeue_available> method to return the number of
 	  pending events.
-	
+
 	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
 	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
 	  + Protect the call to the event batch <push> method with
@@ -105,7 +128,7 @@ Fri Jan 03 14:22:14 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  schedule a timer on an object that is about to be destroyed.
 	  + Schedule a timer in the <handle_timeout> method only if there
 	  are pending events.
-	
+
 Fri Jan  3 07:48:01 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/DynamicAny/DynamicAnyC.h:
