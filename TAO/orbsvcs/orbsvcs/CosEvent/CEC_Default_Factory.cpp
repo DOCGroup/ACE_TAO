@@ -331,6 +331,14 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                       "unknown option <%s>\n",
                       arg));
         }
+      else
+        {
+          arg_shifter.consume_arg ();
+          ACE_DEBUG ((LM_DEBUG,
+                      "CEC_Default_Factory - "
+                      "ignoring option <%s>\n",
+                      arg));
+        }
     }
   return 0;
 }

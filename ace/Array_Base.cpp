@@ -3,8 +3,8 @@
 #ifndef ACE_ARRAY_BASE_C
 #define ACE_ARRAY_BASE_C
 
-#include "ace/Array_Base.h"
 #include "ace/Malloc_Base.h"
+#include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
