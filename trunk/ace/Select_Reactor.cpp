@@ -647,7 +647,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
   if (disable_notify_pipe == 0)
     {
-      this->select_reactor_ = ACE_dynamic_cast (ACE_Select_Reactor, r);
+      this->select_reactor_ = ACE_dynamic_cast (ACE_Select_Reactor *, r);
 
       if (select_reactor_ == 0)
         {
@@ -968,7 +968,7 @@ ACE_Select_Reactor::open (size_t size,
                           ACE_Sig_Handler *sh,
                           ACE_Timer_Queue *tq,
                           int disable_notify_pipe,
-                          ACE_Select_Reactor_Notify *notify)
+                          ACE_Reactor_Notify *notify)
 {
   ACE_TRACE ("ACE_Select_Reactor::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_MUTEX, ace_mon, this->token_, -1));

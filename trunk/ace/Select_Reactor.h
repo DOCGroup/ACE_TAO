@@ -390,7 +390,7 @@ public:
   ACE_Select_Reactor (ACE_Sig_Handler * = 0,
                       ACE_Timer_Queue * = 0,
                       int disable_notify_pipe = 0,
-                      ACE_Select_Reactor *notify = 0);
+                      ACE_Reactor_Notify *notify = 0);
   // Initialize <ACE_Select_Reactor> with the default size.
 
   ACE_Select_Reactor (size_t size,
@@ -398,14 +398,15 @@ public:
                       ACE_Sig_Handler * = 0,
                       ACE_Timer_Queue * = 0,
                       int disable_notify_pipe = 0,
-                      ACE_Select_Reactor *notify = 0);
+                      ACE_Reactor_Notify *notify = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
   virtual int open (size_t size = DEFAULT_SIZE,
                     int restart = 0,
                     ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,
-                    int disable_notify_pipe = 0);
+                    int disable_notify_pipe = 0,
+                    ACE_Reactor_Notify * = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
   virtual int current_info (ACE_HANDLE, size_t & /* size */);

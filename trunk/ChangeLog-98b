@@ -1,5 +1,14 @@
 Sat Jun 20 16:51:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Reactor*: Made a slew of changes to the Reactor and it's
+ 	  associated implementations so that we can integrate it
+ 	  seamlessly with Chorus ClassiX IPC.  Thanks to Wei Chiang for
+ 	  these changes.
+
+	* ace/Acceptor.cpp: Added a flag that keeps track of whether we should
+	  use select() in the Acceptor.  This makes it easier to integrate
+	  this stuff with Chorus IPC.  Thanks to Wei Chiang for this.
+
 	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: Removed the trailing
  	  0 to the send() operation to (1) avoid overload ambiguity and
  	  (2) to use write() rather than send()!  Thanks to Chris Healey
