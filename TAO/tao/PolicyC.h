@@ -32,6 +32,7 @@
 #include "TAO_Export.h"
 #include "Encodable.h"
 #include "Exception.h"
+#include "Environment.h"
 #include "Sequence.h"
 #include "CDR.h"
 #include "Remote_Object_Proxy_Impl.h"
