@@ -1,7 +1,6 @@
 // -*- C++ -*-
 
 #include "ace/Svc_Conf.h"
-#include "ace/Object_Manager.h"
 
 #include "ace/Svc_Conf_Lexer_Guard.h"
 
