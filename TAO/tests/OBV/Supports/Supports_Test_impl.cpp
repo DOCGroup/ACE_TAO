@@ -59,7 +59,7 @@ vt_graph_impl::print (ACE_ENV_SINGLE_ARG_DECL)
 /* vt_graph_init_impl - factory operations */
 
 Supports_Test::vt_graph *
-vt_graph_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+vt_graph_init_impl::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   vt_graph_impl * ret_val = 0;
@@ -68,8 +68,7 @@ vt_graph_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::ValueBase *
-vt_graph_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+vt_graph_init_impl::create_for_unmarshal (void)
 {
   vt_graph_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
@@ -256,7 +255,7 @@ node_impl::print (ACE_ENV_SINGLE_ARG_DECL)
 /* node_init_impl - factory operations */
 
 Supports_Test::Node *
-node_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+node_init_impl::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   node_impl * ret_val = 0;
@@ -265,8 +264,7 @@ node_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::ValueBase *
-node_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+node_init_impl::create_for_unmarshal (void)
 {
   node_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, node_impl, 0);
