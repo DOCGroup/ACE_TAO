@@ -609,7 +609,7 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
 
   return this->map_man_->table_ == 0
-    || this->index_ >= this->map_man_->total_size_
+    || this->index_ >= ACE_static_cast (ssize_t, this->map_man_->total_size_)
     || this->index_ <= -1;
 }
 
@@ -630,7 +630,7 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i (void)
     }
   else if (this->index_ >= ACE_static_cast(ssize_t, this->map_man_->total_size_))
     return 0;
-  
+
   this->next_ = this->next_->next_;
   if (this->next_ == &this->map_man_->table_[this->index_])
     {
@@ -875,7 +875,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Hash_Map_Entry<EXT_ID
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
 
   if (this->map_man_->table_ != 0
-      && this->index_ < this->map_man_->total_size_
+      && this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_)
       && this->next_ != &this->map_man_->table_[this->index_])
     {
       entry = this->next_;
@@ -891,7 +891,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
 
   if (this->map_man_->table_ != 0
-      && this->index_ < this->map_man_->total_size_
+      && this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_)
       && this->next_ != &this->map_man_->table_[this->index_])
     return 0;
   else
@@ -909,7 +909,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void)
   if (this->next_->next_ != &this->map_man_->table_[this->index_])
     this->next_ = this->next_->next_;
   else
-    while (++this->index_ < this->map_man_->total_size_)
+    while (++this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_))
       {
         this->next_ = &this->map_man_->table_[this->index_];
         if (this->next_->next_ != &this->map_man_->table_[this->index_])
@@ -919,7 +919,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void)
           }
       }
 
-  return this->index_ < this->map_man_->total_size_
+  return this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_)
     && this->next_ != &this->map_man_->table_[this->index_];
 }
 
