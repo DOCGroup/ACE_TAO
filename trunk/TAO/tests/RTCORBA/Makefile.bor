@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+	Banded_Connections \
 	Client_Propagated \
 	Client_Protocol \
 	Server_Declared \
