@@ -29,7 +29,7 @@ module Deployment {
   struct SharedResource {
     string name;
     ::CORBA::StringSeq resourceType;
-    ::CORBA::StringSeq nodeRef;
+    ::CORBA::ULongSeq nodeRef;
     SatisfierProperties property;
   };
 
@@ -46,8 +46,8 @@ module Deployment {
   struct Node {
     string name;
     string label;
-    ::CORBA::StringSeq sharedResourceRef;
-    ::CORBA::StringSeq connectionRef;
+    ::CORBA::ULongSeq sharedResourceRef;
+    ::CORBA::ULongSeq connectionRef;
     Resources resource;
   };
 
@@ -56,8 +56,8 @@ module Deployment {
   struct Interconnect {
     string name;
     string label;
-    ::CORBA::StringSeq connectionRef;
-    ::CORBA::StringSeq connectRef;
+    ::CORBA::ULongSeq connectionRef;
+    ::CORBA::ULongSeq connectRef;
     Resources resource;
   };
 
@@ -66,7 +66,7 @@ module Deployment {
   struct Bridge {
     string name;
     string label;
-    ::CORBA::StringSeq connectRef;
+    ::CORBA::ULongSeq connectRef;
     Resources resource;
   };
 
