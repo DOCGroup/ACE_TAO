@@ -1,3 +1,7 @@
+Sun Mar 18 09:46:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/New_Fail_Test.cpp: Fixed warnings in g++.
+
 Sun Mar 18 08:31:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* examples/IPC_SAP/FILE_SAP/client.cpp (main): Added a couple of
