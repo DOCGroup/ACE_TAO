@@ -976,15 +976,15 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
         return 0;
 
       // Get the values for the completed aio.
-
-          // Bytes transfered is what the aio_return gives back.
+      
+      // Bytes transfered is what the aio_return gives back.
       size_t bytes_transferred = nbytes;
 
       // Retrive the result pointer.
       ACE_Asynch_Result *asynch_result = (ACE_Asynch_Result *)
         aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
 
-          // Invalidate entry in the aiocb list.
+      // Invalidate entry in the aiocb list.
       delete this->aiocb_list_[ai];
       this->aiocb_list_[ai] = 0;
       this->aiocb_list_cur_size_--;
