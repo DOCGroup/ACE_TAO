@@ -1,4 +1,0 @@
-project : ifr_client {
-  libs    += TAO_TypeCodeFactory
-  after   += TypeCodeFactory
-}

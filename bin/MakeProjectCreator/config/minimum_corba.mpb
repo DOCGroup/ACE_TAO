@@ -1,3 +1,0 @@
-project {
-  avoids += minimum_corba
-}

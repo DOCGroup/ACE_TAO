@@ -1,3 +1,0 @@
-project(POA Excessive Object Deactivations): taoserver {
-  exename = Excessive_Object_Deactivations
-}

@@ -1,6 +1,0 @@
-project(RTCORBA_Common): taolib_with_idl, portableserver {
-  sharedname   = RTCORBA_Common
-  requires    += rt_corba
-  idlflags    += -Wb,export_macro=RTCORBA_COMMON_Export -Wb,export_include=rtcorba_common_export.h
-  dynamicflags = RTCORBA_COMMON_BUILD_DLL
-}

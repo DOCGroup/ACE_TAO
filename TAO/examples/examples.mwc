@@ -1,6 +1,0 @@
-workspace {
-  exclude {
-   // todo : get the mfc projects working correctly.
-   mfc 
-  }
-}

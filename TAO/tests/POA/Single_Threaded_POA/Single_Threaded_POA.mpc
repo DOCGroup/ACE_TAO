@@ -1,3 +1,0 @@
-project(POA Single Threaded POA): taoserver, minimum_corba {
-  exename = Single_Threaded_POA
-}

@@ -1,6 +1,0 @@
-project : orbsvcsexe, messaging, server, event, naming, svc_utils, iortable {
-  after    += CosEvent_Test_Lib
-  libs     += CECTests
-  includes += ../lib
-  comps    += CosEvent
-}
