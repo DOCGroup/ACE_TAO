@@ -17,7 +17,7 @@ Grid_i::Grid_i (void)
 
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
-                CORBA::Environment &TAO_IN_ENV)
+                CORBA::Environment &ACE_TRY_ENV)
   : width_ (x),
     height_ (y)
 {
@@ -76,27 +76,27 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short 
-Grid_i::width (CORBA::Environment &TAO_IN_ENV)
+Grid_i::width (CORBA::Environment &ACE_TRY_ENV)
 {
   return this->width_;
 }
 
 CORBA::Short 
-Grid_i::height (CORBA::Environment &TAO_IN_ENV)
+Grid_i::height (CORBA::Environment &ACE_TRY_ENV)
 {
   return this->height_;
 }
 
 void 
 Grid_i::width (CORBA::Short x,
-	       CORBA::Environment &TAO_IN_ENV)
+	       CORBA::Environment &ACE_TRY_ENV)
 {
   this->width_ = x;
 }
 
 void 
 Grid_i::height (CORBA::Short y,
-		CORBA::Environment &TAO_IN_ENV)
+		CORBA::Environment &ACE_TRY_ENV)
 {
   this->height_ = y;
 }
@@ -104,7 +104,7 @@ Grid_i::height (CORBA::Short y,
 // Destroy the grid
 
 void 
-Grid_i::destroy (CORBA::Environment &TAO_IN_ENV)
+Grid_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Delete the array.
 
@@ -165,7 +165,7 @@ Grid_Factory_i::~Grid_Factory_i (void)
 Grid_ptr 
 Grid_Factory_i::make_grid (CORBA::Short width,
                            CORBA::Short height,
-                           CORBA::Environment &TAO_IN_ENV)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   Grid_i *grid_ptr = 0;
  

@@ -1,3 +1,9 @@
+Tue Feb  9 13:47:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/try_macros.h: 
+	Changed the definition of TAO_IN_ENV to ACE_TRY_ENV
+	
+
 Mon Feb  8 17:09:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/debug.h: 
