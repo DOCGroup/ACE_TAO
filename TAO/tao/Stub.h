@@ -53,6 +53,14 @@ class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
 class TAO_Policy_Manager_Impl;
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+class TAO_PriorityModelPolicy;
+class TAO_PriorityBandedConnectionPolicy;
+class TAO_ClientProtocolPolicy;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 // Descriptions of parameters.
 
 enum TAO_Param_Type
@@ -180,6 +188,25 @@ public:
     );
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+  
+  TAO_PriorityModelPolicy *exposed_priority_model (void);
+  // Gives the RTCORBA::PriorityModelPolicy associated
+  // to object or null if no priority model policy has
+  // been set.
+  
+  TAO_PriorityBandedConnectionPolicy *exposed_priority_banded_connection (void);
+  // Gives the RTCORBA::PriorityBandedConnectionPolicy associated
+  // to object or null if no priority model policy has
+  // been set.
+
+  TAO_ClientProtocolPolicy *exposed_client_protocol (void);
+  // Gives the RTCORBA::ClientProtocolPolicy associated
+  // to object or null if no priority model policy has
+  // been set.
+  
+# endif /*TAO_HAS_RT_CORBA == 1*/
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -360,7 +387,33 @@ private:
   TAO_Profile *next_forward_profile (void);
   // NON-THREAD-SAFE.  utility method for next_profile.
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 private:
+
+  CORBA::Policy *parse_policy (CORBA::PolicyType ptype);
+  // Helper method used to retrieve a given policy type
+  // from the policy list.
+
+private:
+
+  // The following attribute are used to cache
+  // the different kind of policies and avoid to
+  // parse the MProfile's policy list each time we
+  // are asked about a given policy.
+
+  TAO_PriorityModelPolicy *priority_model_policy_;
+  CORBA::Boolean is_priority_model_policy_parsed_;
+  
+  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_policy_;
+  CORBA::Boolean is_priority_banded_policy_parsed_;
+
+  TAO_ClientProtocolPolicy *client_protocol_policy_;
+  CORBA::Boolean is_client_protocol_policy_parsed_;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+private:
+
   TAO_MProfile base_profiles_;
   // ordered list of profiles for this object.
 
