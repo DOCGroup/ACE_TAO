@@ -316,6 +316,48 @@ public:
   CORBA::OctetSeq *id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+#if (TAO_HAS_MIOP == 1)
+  virtual PortableServer::ObjectId * create_id_for_reference (
+      CORBA::Object_ptr the_ref
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ));
+
+
+  virtual PortableServer::IDs * reference_to_ids (
+      CORBA::Object_ptr the_ref
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ));
+
+  virtual void associate_reference_with_id (
+      CORBA::Object_ptr ref,
+      const PortableServer::ObjectId & oid
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ));
+
+  virtual void disassociate_reference_with_id (
+      CORBA::Object_ptr ref,
+      const PortableServer::ObjectId & oid
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ));
+
+#endif /* TAO_HAS_MIOP == 1 */
+
   /// Accessor for POA policies.
   TAO_POA_Policy_Set &policies (void);
 

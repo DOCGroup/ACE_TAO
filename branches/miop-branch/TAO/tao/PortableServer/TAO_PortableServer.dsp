@@ -240,6 +240,10 @@ SOURCE=.\PolicyS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup_Hooks.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableServer.cpp
 # End Source File
 # Begin Source File
@@ -369,6 +373,10 @@ SOURCE=.\Policy_Validator.h
 # Begin Source File
 
 SOURCE=.\PolicyS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup_Hooks.h
 # End Source File
 # Begin Source File
 
