@@ -1,3 +1,17 @@
+Tue Jun 08 18:08:41 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Added new overridable macro, ACE_LOCALHOST. This allows
+          overriding of the string used to do a loopback IP socket to the
+          local host. Some systems (e.g. PharLap ETS) don't have a host table
+          out of the box, and require an IP address string.
+        * ace/Pipe.cpp: Use the new ACE_LOCALHOST macro instead of a hard
+          "localhost" when using a socket to emulate a pipe.
+
+          Thanks to Bruce Trask <BTRASK@contactsystems.com> for working to
+          get this ironed out for PharLap ETS.
+
+        * README: Added Bruce Trask to the Hall of Fame ;-)
+
 Tue Jun 08 16:57:03 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Connector_Test.cpp: Check for failed host lookup before
