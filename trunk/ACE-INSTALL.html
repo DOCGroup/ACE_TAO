@@ -123,8 +123,8 @@ For information on TAO's platform coverage and support, please also see
         Digital UNIX (Compaq Tru64) 4.0 and 5.0;
         IRIX 6.x; UnixWare 7.1.0; SunOS 4.x and Solaris with SunC++ 4.x;
         Linux on Alpha and PPC; OpenMVS;
-        Tandem; SCO; FreeBSD; NetBSD
-        Chorus, OS/9, PharLap TNT Embedded ToolSuite 9.1,
+        Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
+        Chorus; OS/9; PharLap TNT Embedded ToolSuite 9.1;
         QNX RTP and Neutrino 2.0; VxWorks; LynxOS; RTEMS
     </td>
     <td></td>
@@ -517,6 +517,26 @@ make: *** [libACE.so] Error 8
 
       Like older FreeBSD, NetBSD's <code>ld.so</code> also requires
       versioned .so files.<p>
+
+  <li><b>OpenBSD</b><p>
+
+      ACE has been ported to OpenBSD 3.1 and GNU g++ 2.95.3.<P>
+
+      As with FreeBSD and NetBSD, OpenBSD requires versioned .so
+      files.  This is currently handled by the build files and no
+      additional work is needed.<P>
+
+      ACE has been ported to OpenBSD with and without pthreads
+      enabled.  When using pthreads, though, C++ exceptions must be
+      disabled.  This is a known problem with the current release of
+      OpenBSD (see www.openbsd.org, bug #1750).  ACE emulated
+      exceptions work fine.<P>
+
+      Compiling TAO may require the user data segment size
+      restrictions and possibly other options to be increased.  This
+      is done by modifying the default user class in /etc/login.conf
+      or by adding a new class and modifying the master passwer file
+      accordingly.<P>
 
   <LI><B> UnixWare </B> <P>
 
@@ -2386,15 +2406,15 @@ below.</p>
       <font face="Courier New, Courier, mono">platform_macros.GNU</font>
       file:
     <P><table width="75%" border="0" align="center">
-      <tr> 
+      <tr>
         <td><font face="Courier New, Courier, mono">PLATFORM_SSL_CPPFLAGS</font></td>
         <td>Platform preprocessor options for OpenSSL (e.g. -I...)</td>
       </tr>
-      <tr> 
+      <tr>
         <td><font face="Courier New, Courier, mono">PLATFORM_SSL_LDFLAGS</font></td>
         <td>Platform linker options for OpenSSL (e.g. -L...)</td>
       </tr>
-      <tr> 
+      <tr>
         <td><font face="Courier New, Courier, mono">PLATFORM_SSL_LIBS</font></td>
         <td>Platform libraries required with OpenSSL (e.g. -lssl -lcrypto)</td>
       </tr>
@@ -2734,10 +2754,10 @@ debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 exceptions       Enable exception handling (not supported by all platforms).
 include_env      Support old-style ACE_TRY_ENV declarations in methods.
                  This switch is necessary for compiling TAO applications
-                 in the native exception configuration that were written 
+                 in the native exception configuration that were written
                  for TAO versions before 1.2.2.
                  In TAO 1.2.2, new macros were introduced that supercede
-                 the direct ACE_TRY_ENV declarations. These are the 
+                 the direct ACE_TRY_ENV declarations. These are the
                  ACE_ENV_ARG macros that are defined in ace/CORBA_macros.h
                  and are documented in docs/exceptions.html.
                  This switch only affects the exceptions=1 configuration.

@@ -918,6 +918,57 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 #  endif /* ACE_HAS_PHARLAP */
 # endif /* Winsock 2 && MSVC 5 or later */
 
+#elif defined (ACE_HAS_GETIFADDRS)
+  // Take advantage of the BSD getifaddrs function that simplifies
+  // access to connected interfaces.
+  struct ifaddrs *ifap;
+  struct ifaddrs *p_if;
+
+  if (::getifaddrs (&ifap) != 0)
+    return -1;
+
+  // Count number of interfaces.
+  size_t num_ifs = 0;
+  for (p_if = ifap; p_if != 0; p_if = p_if->ifa_next)
+    ++num_ifs;
+
+  // Now create and initialize output array.
+  ACE_NEW_RETURN (addrs,
+                  ACE_INET_Addr[num_ifs],
+                  -1); // caller must free
+
+  // Pull the address out of each INET interface.  Not every interface
+  // is for IP, so be careful to count properly.  When setting the
+  // INET_Addr, note that the 3rd arg (0) says to leave the byte order
+  // (already in net byte order from the interface structure) as is.
+  count = 0;
+
+  for (p_if = ifap;
+       p_if != 0;
+       p_if = p_if->ifa_next)
+    {
+      if (p_if->ifa_addr &&
+          p_if->ifa_addr->sa_family == AF_INET)
+        {
+          struct sockaddr_in *addr =
+            ACE_reinterpret_cast(sockaddr_in *, p_if->ifa_addr);
+
+          // Sometimes the kernel returns 0.0.0.0 as the interface
+          // address, skip those...
+          if (addr->sin_addr.s_addr != 0)
+            {
+              addrs[count].set ((u_short) 0,
+                                addr->sin_addr.s_addr,
+                                0);
+              count++;
+            }
+        }
+    }
+
+  ::freeifaddrs (ifap);
+
+  return 0;
+
 #elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || defined (__MACOSX__)
   // COMMON (SVR4 and BSD) UNIX CODE
 
@@ -1058,22 +1109,22 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 
   // Now create and initialize output array.
   ACE_NEW_RETURN (addrs,
-                  ACE_INET_Addr[count], 
+                  ACE_INET_Addr[count],
                   -1); // caller must free
   count = 0;
   for (struct in_ifaddr* ia = in_ifaddr; ia != 0; ia = ia->ia_next)
-    { 
+    {
       struct ifnet* ifp = ia->ia_ifa.ifa_ifp;
-      if (ifp != 0) 
+      if (ifp != 0)
         {
           // Get the current interface name
           char interface[64];
           ACE_OS::sprintf(interface, "%s%d", ifp->if_name, ifp->if_unit);
-          
+
           // Get the address for the current interface
           char address [INET_ADDR_LEN];
           STATUS status = ifAddrGet(interface, address);
-          
+
           if (status == OK)
             {
               // Concatenate a ':' at the end. This is because in
@@ -1085,10 +1136,10 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
               addrs[count].set (address);
             }
           else
-            { 
+            {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_LIB_TEXT ("ACE::get_ip_interface failed\n"),
-                                 ACE_LIB_TEXT ("Couldnt get the IP Address\n")), 
+                                 ACE_LIB_TEXT ("Couldnt get the IP Address\n")),
                                  -1);
             }
           ++count;
@@ -1119,6 +1170,24 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
                        ACE_LIB_TEXT ("ioctl - SIOCGIFNUM failed")),
                       -1);
   how_many = (size_t) tmp_how_many;
+  return 0;
+#elif defined (ACE_HAS_GETIFADDRS)
+  ACE_UNUSED_ARG (handle);
+
+  struct ifaddrs *ifap;
+  struct ifaddrs *p_if;
+
+  if (::getifaddrs (&ifap) != 0)
+    return -1;
+
+  // Count number of interfaces.
+  size_t num_ifs = 0;
+  for (p_if = ifap; p_if != 0; p_if = p_if->ifa_next)
+    ++num_ifs;
+
+  ::freeifaddrs (ifap);
+
+  how_many = num_ifs;
   return 0;
 #elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || defined (__MACOSX__)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
@@ -1175,7 +1244,9 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
        i < num_ifs;
        i++)
     {
-      if (p_ifs->ifr_name[0] == '\0')
+      /* In OpenBSD, the length of the list is returned. */
+      ifcfg.ifc_len -= sizeof (struct ifreq);
+      if (ifcfg.ifc_len < 0)
         break;
 
       if_count++;

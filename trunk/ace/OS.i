@@ -287,6 +287,10 @@ extern "C" char *mktemp (char *);
 #   include /**/ <ctype.h>
 # endif /* UNIXWARE */
 
+# if defined (ACE_HAS_GETIFADDRS)
+#   include /**/ <ifaddrs.h>
+# endif /* ACE_HAS_GETIFADDRS */
+
 // Adapt the weird threading and synchronization routines (which
 // return errno rather than -1) so that they return -1 and set errno.
 // This is more consistent with the rest of ACE_OS and enables use to
@@ -8024,6 +8028,12 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::dlsym");
 
+#if defined (ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE)
+  // Check if the handle is valid before making any calls using it.
+  if (handle == ACE_SHLIB_INVALID_HANDLE)
+    return 0;
+#endif /* ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE */
+
   // Get the correct OS type.
 #if defined (ACE_HAS_WINCE)
   const wchar_t *symbolname = sname;
@@ -9891,11 +9901,13 @@ ACE_OS::fgetc (FILE* fp)
   ACE_OSCALL_RETURN (::fgetc (fp), int, -1);
 }
 
+#if !defined (ACE_LACKS_CLEARERR)
 ACE_INLINE void
 ACE_OS::clearerr (FILE* fp)
 {
   ::clearerr(fp);
 }
+#endif /* !ACE_LACKS_CLEARERR */
 
 #if defined (ACE_HAS_WCHAR)
 

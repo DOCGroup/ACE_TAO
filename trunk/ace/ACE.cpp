@@ -57,6 +57,9 @@ ACE::out_of_handles (int error)
       // ENOSYS (libc_r threads) also.
       error == EOPNOTSUPP ||
       error == ENOSYS ||
+#elif defined (__OpenBSD__)
+      // OpenBSD appears to return EBADF.
+      error == EBADF ||
 #elif defined (__sgi) // irix
       error == ENOTSUP ||
 #elif defined (DIGITAL_UNIX) // osf1
