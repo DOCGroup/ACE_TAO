@@ -34,6 +34,7 @@ main (int, ASYS_TCHAR *[])
   ACE_START_TEST (ASYS_TEXT ("SString_Test"));
 
   {
+    ACE_CString empty_string;
     ACE_CString s1 ("hello");
     ACE_CString s2 ("world");
     ACE_CString s3 ("ll");
@@ -58,6 +59,7 @@ main (int, ASYS_TCHAR *[])
   }
 
   {
+    ACE_CString empty_string (0, 0, 0);
     ACE_CString s1 ("hello", 0, 0);
     ACE_CString s2 ("world", 0, 0);
     ACE_CString s3 ("ll", 0, 0);
@@ -82,6 +84,7 @@ main (int, ASYS_TCHAR *[])
   }
 
   {
+    ACE_WString empty_string;
     ACE_WString s1 ("hello");
     ACE_WString s2 ("world");
     ACE_WString s3 ("ll");

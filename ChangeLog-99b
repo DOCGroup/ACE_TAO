@@ -1,3 +1,48 @@
+Sat Jan 23 04:53:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Active_Map_Manager: Added a new associative container (map
+ 	  abstraction) that associates system generated keys with user
+ 	  specified values. Since the key is system generated, searches
+ 	  are very fast and take a constant amount of time.  This map uses
+ 	  a key that keeps information of the index and the generation
+ 	  count of the slot it represents.  Since the index information is
+ 	  part of the key, lookups are super fast and predictable.
+
+	  This performance of this map is truely awesome:
+	  
+	  - inserts O(1)
+	  - lookups O(1)
+	  - deletes O(1)
+
+	* ace/Map_Manager: Completely reworked the internals of the
+ 	  Map_Manager.  A number of problems were addressed:
+
+	  (a) Finding an empty slot took O(n).  New code takes O(1).
+
+	  (b) Resizing was lame as it increased by ACE_DEFAULT_MAP_SIZE
+ 	      everytime.  The new scheme is cool since it grows
+ 	      exponentially up to 64K and after that grow in chunks of
+ 	      32K.
+
+	  (c) Old scheme used a simple but inefficient <is_free_> flag.
+  	      The new scheme uses two doubly linked list to track used and
+ 	      free slots. Note that this scheme still uses an array to
+ 	      manage the search structure but manages the two linked list
+ 	      on top of the array.  Thanks to Carlos for this cool idea.
+
+	  (d) current_size() was broken.  This is fixed in the new code.
+
+	  (e) Inlined a bunch of small functions.
+
+	* tests/SString_Test.cpp: Added empty string test.
+
+	* ace/Containers_T.h (operator=): ACE_Array_Base must be fully
+ 	  qualified: ACE_Array_Base<T>.  Thanks to Susan Liebeskind
+ 	  <shl@janis.gtri.gatech.edu> for pointing this out.
+
+	* tests/Map_Manager_Test.cpp (test_map_manager): Added
+ 	  Active_Map_Manager to the test.
+
 Fri Jan 22 21:27:14 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.h 

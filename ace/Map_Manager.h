@@ -40,9 +40,6 @@ public:
   INT_ID int_id_;
   // The contents of the entry itself.
 
-  int is_free_;
-  // Keeps track whether entry is free or not.
-
 # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   ~ACE_Map_Entry (void);
   // We need this destructor to keep some compilers from complaining.
@@ -54,6 +51,25 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+  //
+  // = These are really private, but unfortunately template friends
+  // don't work too well.
+  //
+
+  size_t next (void) const;
+  void next (size_t n);
+  // Get/Set next entry.
+
+  size_t prev (void) const;
+  void prev (size_t p);
+  // Get/Set prev entry.
+
+  size_t next_;
+  // Keeps track of the next entry.
+
+  size_t prev_;
+  // Keeps track of the previous entry.
 };
 
 // Forward decl.
@@ -122,15 +138,6 @@ public:
   // Close down a <Map_Manager> and release dynamically allocated
   // resources.
 
-  int trybind (const EXT_ID &ext_id,
-               INT_ID &int_id);
-  // Associate <ext_id> with <int_id> if and only if <ext_id> is not
-  // in the map.  If <ext_id> is already in the map then the <int_id>
-  // parameter is overwritten with the existing value in the map
-  // Returns 0 if a new entry is bound successfully, returns 1 if an
-  // attempt is made to bind an existing entry, and returns -1 if
-  // failures occur.
-
   int bind (const EXT_ID &ext_id,
             const INT_ID &int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is already in the
@@ -142,7 +149,7 @@ public:
               const INT_ID &int_id,
               EXT_ID &old_ext_id,
               INT_ID &old_int_id);
-  // Associate <ext_id> with <int_id>.  If <ext_id> is not in the
+  // Reassociate <ext_id> with <int_id>.  If <ext_id> is not in the
   // map then behaves just like <bind>.  Otherwise, store the old
   // values of <ext_id> and <int_id> into the "out" parameters and
   // rebind the new parameters.  This is very useful if you need to
@@ -151,7 +158,22 @@ public:
   // bound successfully, returns 1 if an existing entry was rebound,
   // and returns -1 if failures occur.
 
-  int find (const EXT_ID &ext_id, INT_ID &int_id);
+  int rebind (const EXT_ID &ext_id,
+              const INT_ID &int_id);
+  // Reassociate <ext_id> with <int_id>.  Old values in the map are
+  // ignored.
+
+  int trybind (const EXT_ID &ext_id,
+               INT_ID &int_id);
+  // Associate <ext_id> with <int_id> if and only if <ext_id> is not
+  // in the map.  If <ext_id> is already in the map then the <int_id>
+  // parameter is overwritten with the existing value in the map
+  // Returns 0 if a new entry is bound successfully, returns 1 if an
+  // attempt is made to bind an existing entry, and returns -1 if
+  // failures occur.
+
+  int find (const EXT_ID &ext_id, 
+            INT_ID &int_id);
   // Locate <ext_id> and pass out parameter via <int_id>.  If found,
   // returns and non-negative integer; returns -1 if not found.
 
@@ -164,7 +186,8 @@ public:
   // <int_id>s are *not* dynamically allocated...)  Returns 0 if
   // successful, else -1.
 
-  int unbind (const EXT_ID &ext_id, INT_ID &int_id);
+  int unbind (const EXT_ID &ext_id, 
+              INT_ID &int_id);
   // Break any association of <ext_id>.  Returns the value of <int_id>
   // in case the caller needs to deallocate memory.  Returns 0 if
   // successful, else -1.
@@ -201,36 +224,50 @@ public:
 
 protected:
 
-  void free_search_structure (void);
-  // Explicitly call the destructors and free up the search_structure_.
-
-  ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
-  // Implementation of the Map (should use hashing instead of
-  // array...).
-
   // = The following methods do the actual work.
 
   // These methods assume that the locks are held by the private
   // methods.
 
-  int bind_i (const EXT_ID &ext_id, const INT_ID &int_id);
-  // Performs the binding of <ext_id> to <int_id>.  Must be
-  // called with locks held.
+  int bind_i (const EXT_ID &ext_id, 
+              const INT_ID &int_id);
+  // Performs the binding of <ext_id> to <int_id>.  Must be called
+  // with locks held.
 
-  int rebind_i (const EXT_ID &ext_id, const INT_ID &int_id,
-                EXT_ID &old_ext_id, INT_ID &old_int_id);
+  int shared_bind (const EXT_ID &ext_id, 
+                   const INT_ID &int_id);
+  // Bind an entry (without finding first).  Must be called with locks
+  // held.
+
+  int rebind_i (const EXT_ID &ext_id, 
+                const INT_ID &int_id,
+                EXT_ID &old_ext_id, 
+                INT_ID &old_int_id);
+  // Performs a rebinding of <ext_it> to <int_id>.  Also, recovers old
+  // values.  Must be called with locks held.
+
+  int rebind_i (const EXT_ID &ext_id, 
+                const INT_ID &int_id);
   // Performs a rebinding of <ext_it> to <int_id>.  Must be called
   // with locks held.
 
-  int find_i (const EXT_ID &ext_id, INT_ID &int_id);
+  int trybind_i (const EXT_ID &ext_id, 
+                 INT_ID &int_id);
+  // Performs a conditional bind of <int_id> using <ext_id> as the
+  // key.  Must be called with locks held.
+
+  int find_i (const EXT_ID &ext_id, 
+              INT_ID &int_id);
   // Performs a find of <int_id> using <ext_id> as the key.  Must be
   // called with locks held.
 
-  int find_i (const EXT_ID &ext_id);
+  int find_i (const EXT_ID &ext_id,
+              size_t &index);
   // Performs a find using <ext_id> as the key.  Must be called with
   // locks held.
 
-  int unbind_i (const EXT_ID &ext_id, INT_ID &int_id);
+  int unbind_i (const EXT_ID &ext_id, 
+                INT_ID &int_id);
   // Performs an unbind of <int_id> using <ext_id> as the key.  Must
   // be called with locks held.
 
@@ -238,16 +275,50 @@ protected:
   // Performs an unbind using <ext_id> as the key.  Must be called
   // with locks held.
 
-  int trybind_i (const EXT_ID &ext_id, INT_ID &int_id);
-  // Performs a conditional bind of <int_id> using <ext_id> as the
-  // key.  Must be called with locks held.
+  int unbind_i (const EXT_ID &ext_id,
+                size_t &index);
+  // Performs an unbind using <ext_id> as the key.  Must be called
+  // with locks held.
 
   int resize_i (size_t size);
   // Resize the map.  Must be called with locks held.
 
   int close_i (void);
-  // Close down a <Map_Manager>.  Must be called with
-  // locks held.
+  // Close down a <Map_Manager>.  Must be called with locks held.
+
+  int equal (const EXT_ID &id1, const EXT_ID &id2);
+  // Returns 1 if <id1> == <id2>, else 0.  This is defined as a
+  // separate method to facilitate template specialization.
+
+  virtual size_t new_size (void);
+  // This function returns the new size of the Map Manager.  This
+  // function is called when we run out of room and need to resize.
+
+  void free_search_structure (void);
+  // Explicitly call the destructors and free up the
+  // <search_structure_>.
+
+  size_t free_list_id (void) const;
+  // Id of the free list sentinel.
+
+  size_t occupied_list_id (void) const;
+  // Id of the occupied list sentinel.
+
+  int next_free (size_t &index);
+  // Finds the next free slot.
+
+  void move_from_free_list_to_occupied_list (size_t index);
+  // Move from free list to occupied list.
+
+  void move_from_occupied_list_to_free_list (size_t index);
+  // Move from occupied list to free list.
+
+  void shared_move (size_t index,
+                    ACE_Map_Entry<EXT_ID, INT_ID> &current_list,
+                    size_t current_list_id,
+                    ACE_Map_Entry<EXT_ID, INT_ID> &new_list,
+                    size_t new_list_id);
+  // Move helper.
 
   ACE_Allocator *allocator_;
   // Pointer to a memory allocator.
@@ -255,32 +326,32 @@ protected:
   ACE_LOCK lock_;
   // Synchronization variable for the MT_SAFE <ACE_Map_Manager>.
 
-  int equal (const EXT_ID &id1, const EXT_ID &id2);
-  // Returns 1 if <id1> == <id2>, else 0.  This is defined as a
-  // separate method to facilitate template specialization.
-
-private:
-
-  int shared_find (const EXT_ID &ext_id, int &first_free);
-  // Locate an entry, keeping track of the first free slot.  Must be
-  // called with locks held.
-
-  int shared_find (const EXT_ID &ext_id);
-  // Locate an entry.  Must be called with locks held.
-
-  int shared_bind (const EXT_ID &ext_id, const INT_ID &int_id, int first_free);
-  // Bind an entry.  Must be called with locks held.
-
-  int shared_unbind (const EXT_ID &ext_id);
-  // Unbind (remove) the <ext_id> from the map.  Keeps track of where
-  // the <ext_id> was found so that this->unbind (<ext_id>, <int_id>)
-  // can return it to the caller.  Must be called with locks held.
+  ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
+  // Implementation of the Map (should use hashing instead of
+  // array...).
 
   size_t total_size_;
   // Total number of elements in this->search_structure_.
 
   size_t cur_size_;
-  // Index of highest active elementin this->search_structure_.
+  // Current size of the map.
+
+  ACE_Map_Entry<EXT_ID, INT_ID> free_list_;
+  // Free list.
+
+  ACE_Map_Entry<EXT_ID, INT_ID> occupied_list_;
+  // Occupied list.
+
+  enum
+  {
+    // Grow map exponentially up to 64K
+    MAX_EXPONENTIAL = 64 * 1024,
+
+    // Afterwards grow in chunks of 32K
+    LINEAR_INCREASE = 32 * 1024
+  };
+
+private:
 
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))
@@ -298,8 +369,7 @@ class ACE_Map_Iterator_Base
   //     subclasses.
 public:
   // = Initialization method.
-  ACE_Map_Iterator_Base (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
-                         int head);
+  ACE_Map_Iterator_Base (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
   // Contructor.  If head != 0, the iterator constructed is positioned
   // at the head of the map, it is positioned at the end otherwise.
 
@@ -338,10 +408,10 @@ protected:
   void dump_i (void) const;
   // Dump the state of an object.
 
-  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
+  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &map_man_;
   // Map we are iterating over.
 
-  ssize_t next_;
+  size_t next_;
   // Keeps track of how far we've advanced...
 };
 
@@ -361,7 +431,7 @@ class ACE_Map_Iterator : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 public:
   // = Initialization method.
   ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
-                    int tail = 0);
+                    int pass_end = 0);
 
   // = Iteration methods.
 
@@ -406,7 +476,7 @@ class ACE_Map_Reverse_Iterator : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, AC
 public:
   // = Initialization method.
   ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
-                            int head = 0);
+                            int pass_end = 0);
 
   // = Iteration methods.
 

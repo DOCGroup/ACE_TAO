@@ -11,6 +11,7 @@ SHLIB    = libACE.$(SOEXT)
 FILES    = Log_Msg \
            ACE \
            Activation_Queue \
+           Active_Map_Manager \
            Addr \
            ARGV \
            Arg_Shifter \
@@ -152,6 +153,7 @@ FILES    = Log_Msg \
 
 TEMPLATE_FILES = \
            Acceptor \
+           Active_Map_Manager_T \
            Asynch_Acceptor \
            Auto_Ptr \
            Connector \
