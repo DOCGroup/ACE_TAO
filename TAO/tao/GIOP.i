@@ -63,12 +63,13 @@ TAO_GIOP_Version::operator!= (const TAO_GIOP_Version &src)
 // ****************************************************************
 
 ACE_INLINE void
-TAO_GIOP_Message_State::reset (void)
+TAO_GIOP_Message_State::reset (int reset_contents)
 {
   this->message_size = 0;
   this->current_offset = 0;
   this->more_fragments = 0;
-  this->cdr.reset_contents ();
+  if (reset_contents)
+    this->cdr.reset_contents ();
 }
 
 ACE_INLINE int
