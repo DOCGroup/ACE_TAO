@@ -124,7 +124,7 @@ public:
   // allocated for the returned key.
 
   virtual TAO_Endpoint *endpoint (void);
-  // Return pointer to the head of this profile's endpoints list. 
+  // Return pointer to the head of this profile's endpoints list.
 
   virtual size_t endpoint_count (void);
   // Return how many endpoints this profile contains.
@@ -158,7 +158,7 @@ private:
   // Decode only if RTCORBA is enabled.  Furthermore, we may not find
   // TAO_TAG_ENDPOINTS component, e.g., if we are talking to nonRT
   // version of TAO or some other ORB.  This is not an error, and we
-  // must proceed.
+  // must proceed.  Return 0 on success and -1 on failure.
 
 protected:
 

@@ -143,6 +143,12 @@ TAO_IIOP_Endpoint::next (void)
 TAO_Endpoint *
 TAO_IIOP_Endpoint::duplicate (void)
 {
+  // @@ Bala, we probably need to make sure that the duplicate has the
+  // same priority as the original.  Although it does not matter in
+  // the context this method is currently used, if somebody ends up
+  // using this method for some other purpose later, this will be a
+  // seed for bugs.
+
   TAO_IIOP_Endpoint *endpoint = 0;
 
   ACE_NEW_RETURN (endpoint,
