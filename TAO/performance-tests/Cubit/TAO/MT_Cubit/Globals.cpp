@@ -136,13 +136,16 @@ MT_Priority::get_low_priority (u_int num_low_priority,
                                u_int use_multiple_priority)
 {
 #if !defined (ACE_HAS_THREADS)
+  ACE_UNUSED_ARG (num_low_priority);
+  ACE_UNUSED_ARG (prev_priority);
+  ACE_UNUSED_ARG (use_multiple_priority);
   return -1;
 #else
   ACE_Sched_Priority low_priority = ACE_THR_PRI_FIFO_DEF;
   int policy = ACE_SCHED_FIFO;
 
   if (!ACE_BIT_ENABLED (GLOBALS::instance ()->thr_create_flags,
-			THR_SCHED_FIFO))
+                        THR_SCHED_FIFO))
     {
       low_priority = ACE_THR_PRI_OTHER_DEF;
       policy = ACE_SCHED_OTHER;
