@@ -67,12 +67,12 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
       ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_Singleton<TYPE, LOCK>::singleton_lock_i ()), 0);
 
       if (singleton == 0)
-      {
-	ACE_NEW_RETURN (singleton, TYPE, 0);
+        {
+	  ACE_NEW_RETURN (singleton, TYPE, 0);
 
-        // Register for destruction with ACE_Object_Manager.
-        ACE_Object_Manager::at_exit (singleton, cleanup, 0);
-      }
+          // Register for destruction with ACE_Object_Manager.
+          ACE_Object_Manager::at_exit (singleton, cleanup, 0);
+        }
     }
 
   return singleton;
