@@ -1,3 +1,9 @@
+Fri Mar 12 13:33:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Timeouts.cpp:
+          Added some ACE_UNUSED_ARGs to silence MinGW warnings
+
 Fri Mar 12 13:20:14 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Active_Objects/active_objects.mpc:
