@@ -1,3 +1,11 @@
+Tue Jun 29 13:44:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/IORManipulation/IORManipulation.dsw:
+	* tests/IORManipulation/IORTest.dsp: Added new workspace and
+	  project files.
+
+	* tao/IORC.h: Added a whole bunch of TAO_Export's.
+
 Tue Jun 29 12:20:24 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp
