@@ -155,6 +155,11 @@ public:
   // dispatch the <ACE_Event_Handlers> that are passed in via the
   // notify pipe before breaking out of its <recv> loop.
 
+  virtual int purge_pending_notifications (ACE_Event_Handler * = 0);
+  // Purge any notifications pending in this reactor for the specified
+  // <ACE_Event_Handler> object. Returns the number of notifications
+  // purged. Returns -1 on error.
+
   virtual void dump (void) const;
   // Dump the state of an object.
 
@@ -351,6 +356,11 @@ public:
   
   friend class ACE_Select_Reactor_Notify;
   friend class ACE_Select_Reactor_Handler_Repository;
+
+  virtual int purge_pending_notifications (ACE_Event_Handler * = 0);
+  // Purge any notifications pending in this reactor for the specified
+  // <ACE_Event_Handler> object. Returns the number of notifications
+  // purged. Returns -1 on error.
 
 protected:
   virtual int bit_ops (ACE_HANDLE handle,

@@ -9,6 +9,42 @@ Tue Oct 24 13:54:49 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Updated these lists of sources with the newly added sources.
 
+Tue Oct 24 12:30:47 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h (ACE_Reactor):
+        * ace/Reactor_Impl.h (ACE_Reactor_Notify and ACE_Reactor_Impl):
+        * ace/Select_Reactor_Base.h (ACE_Select_Reactor_Notify and
+          ACE_Select_Reactor_Impl):
+        * ace/WFMO_Reactor.h (ACE_WFMO_Reactor_Notify and ACE_WFMO_Reactor):
+          Added new function, purge_pending_notifications (ACE_Event_Handler *)
+
+        * ace/Reactor.i (ACE_Reactor):
+        * ace/Select_Reactor_Base.i (ACE_Select_Reactor_Impl):
+          Added implementation of purge_pending_notifications that forwards
+          the call on to the proper implementation/handler object.
+
+        * ace/Select_Reactor_Base.cpp (ACE_Select_Reactor_Notify): Added
+          implementation of purge_pending_notifications. Works when
+          ACE_HAS_REACTOR_NOTIFICATION_QUEUE is defined. Else it does
+          ACE_NOTSUP_RETURN.
+
+        * ace/WFMO_Reactor.cpp (ACE_WFMO_Reactor, ACE_WFMO_Reactor_Notify):
+          Added implementation of purge_pending_notifications.
+
+        Thanks to Edan Ayal <edana@bandwiz.com> for supplying the code for
+        this new feature.
+
+        * ace/Reactor.i (notify): Set the event handler's reactor pointer if
+          it doesn't already have one. Enables the event handler to purge
+          its notifications upon destruction.
+
+        * ace/Event_Handler.cpp (~ACE_Event_Handler): Call reactor's
+          purge_pending_notifications function to avoid delivering notifies
+          to a deleted handler.
+
+        * tests/Reactor_Notify_Test.cpp: Added the run_notify_purge_test
+          function to exercise the above new purge_pending_notifications.
+
 Tue Oct 24 12:05:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * ace/OS_String.inl:

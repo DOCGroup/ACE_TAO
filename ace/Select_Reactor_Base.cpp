@@ -472,6 +472,87 @@ ACE_Select_Reactor_Notify::max_notify_iterations (void)
   return this->max_notify_iterations_;
 }
 
+// purge_pending_notifications
+// Removes all entries from the notify_queue_ and each one that
+// matches <eh> is put on the free_queue_. The rest are saved on a
+// local queue and copied back to the notify_queue_ at the end.
+// Returns the number of entries removed. Returns -1 on error.
+// ACE_NOTSUP_RETURN if ACE_HAS_REACTOR_NOTIFICATION_QUEUE is not defined.
+int
+ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
+{
+  ACE_TRACE ("ACE_Select_Reactor_Notify::purge_pending_notifications");
+
+#if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
+
+  if (this->notify_queue_.is_empty ())
+    return 0;
+
+  ACE_Notification_Buffer *temp;
+  ACE_Unbounded_Queue <ACE_Notification_Buffer *> local_queue;
+
+  size_t queue_size = this->notify_queue_.size ();
+  int number_purged = 0;
+  for (size_t index = 0; index < queue_size; ++index)
+    {
+      if (-1 == this->notify_queue_.dequeue_head (temp))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("dequeue_head")),
+                          -1);
+
+      // check
+      if (eh && (eh != temp->eh_))
+        {
+          if (-1 == local_queue.enqueue_head (temp))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("enqueue_head")),
+                              -1);
+        }
+      else
+        {  // deallocate the space...
+          if (-1 == this->free_queue_.enqueue_head (temp))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("enqueue_head")),
+                              -1);
+          ++number_purged;
+        }
+    }
+
+  if (this->notify_queue_.size ())
+    { // should be empty!
+      ACE_ASSERT (0);
+      return -1;
+    }
+
+  // now put it back in the notify queue
+  queue_size = local_queue.size ();
+  for (index = 0; index < queue_size; ++index)
+    {
+      if (-1 == local_queue.dequeue_head (temp))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("dequeue_head")),
+                          -1);
+
+      if (-1 == this->notify_queue_.enqueue_head (temp))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("enqueue_head")),
+                          -1);
+    }
+
+  return number_purged;
+
+#else /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
+  ACE_NOTSUP_RETURN (-1);
+#endif  /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
+}
+
 void
 ACE_Select_Reactor_Notify::dump (void) const
 {
