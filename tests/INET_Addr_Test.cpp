@@ -64,102 +64,104 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int status = 0;     // Innocent until proven guilty
 
-  const char *ipv4_addresses[] = {
+  const char *ipv4_addresses[] = 
+  {
     "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
   };
 
   ACE_INET_Addr addr;
   status |= check_type_consistency (addr);
 
-  for (int i=0; ipv4_addresses[i] != 0; i++) {
-    struct in_addr addrv4;
-    ACE_UINT32 addr32;
+  for (int i=0; ipv4_addresses[i] != 0; i++) 
+    {
+      struct in_addr addrv4;
+      ACE_UINT32 addr32;
 
-    ACE_OS::inet_pton (AF_INET, ipv4_addresses[i], &addrv4);
+      ACE_OS::inet_pton (AF_INET, ipv4_addresses[i], &addrv4);
 
-    ACE_OS::memcpy (&addr32, &addrv4, sizeof (addr32));
+      ACE_OS::memcpy (&addr32, &addrv4, sizeof (addr32));
 
-    addr.set (80, ipv4_addresses[i]);
-    status |= check_type_consistency (addr);
+      addr.set (80, ipv4_addresses[i]);
+      status |= check_type_consistency (addr);
 
-    /*
-    ** Now check to make sure get_ip_address matches and get_host_addr
-    ** matches.
-    */
-    if (addr.get_ip_address () != ACE_HTONL (addr32))
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Error: %s failed get_ip_address() check\n")
-                    ACE_TEXT ("0x%x != 0x%x\n"),
-                    ipv4_addresses[i],
-                    addr.get_ip_address (),
-                    addr32));
-        status = 1;
-      }
+      /*
+      ** Now check to make sure get_ip_address matches and get_host_addr
+      ** matches.
+      */
+      if (addr.get_ip_address () != ACE_HTONL (addr32))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Error: %s failed get_ip_address() check\n")
+                      ACE_TEXT ("0x%x != 0x%x\n"),
+                      ipv4_addresses[i],
+                      addr.get_ip_address (),
+                      addr32));
+          status = 1;
+        }
 
-    if (0 != ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]))
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%s failed get_host_addr() check\n")
-                    ACE_TEXT ("%s != %s\n"),
-                    ipv4_addresses[i],
-                    addr.get_host_addr (),
-                    ipv4_addresses[i]));
-        status = 1;
-      }
+      if (0 != ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%s failed get_host_addr() check\n")
+                      ACE_TEXT ("%s != %s\n"),
+                      ipv4_addresses[i],
+                      addr.get_host_addr (),
+                      ipv4_addresses[i]));
+          status = 1;
+        }
 
-    // Clear out the address by setting it to 1 and check
-    addr.set (0, ACE_UINT32 (1), 1);
-    status |= check_type_consistency (addr);
-    if (addr.get_ip_address () != 1)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to set address to 1\n")));
-        status = 1;
-      }
+      // Clear out the address by setting it to 1 and check
+      addr.set (0, ACE_UINT32 (1), 1);
+      status |= check_type_consistency (addr);
+      if (addr.get_ip_address () != 1)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to set address to 1\n")));
+          status = 1;
+        }
 
-    // Now set the address using a 32 bit number and check that we get
-    // the right string out of get_host_addr().
-    addr.set (80, addr32, 0); // addr32 is already in network byte order
-    status |= check_type_consistency(addr);
+      // Now set the address using a 32 bit number and check that we get
+      // the right string out of get_host_addr().
+      addr.set (80, addr32, 0); // addr32 is already in network byte order
+      status |= check_type_consistency(addr);
 
-    if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]))
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%s failed second get_host_addr() check\n")
-                    ACE_TEXT ("%s != %s\n"),
-                    ipv4_addresses[i],
-                    addr.get_host_addr (),
-                    ipv4_addresses[i]));
-        status = 1;
-      }
+      if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%s failed second get_host_addr() check\n")
+                      ACE_TEXT ("%s != %s\n"),
+                      ipv4_addresses[i],
+                      addr.get_host_addr (),
+                      ipv4_addresses[i]));
+          status = 1;
+        }
 
-    // Test for ACE_INET_Addr::set_addr().
-    struct sockaddr_in sa4;
-    sa4.sin_family = AF_INET;
-    sa4.sin_addr = addrv4;
-    sa4.sin_port = ACE_HTONS(8080);
+      // Test for ACE_INET_Addr::set_addr().
+      struct sockaddr_in sa4;
+      sa4.sin_family = AF_INET;
+      sa4.sin_addr = addrv4;
+      sa4.sin_port = ACE_HTONS (8080);
 
-    addr.set (0, ACE_UINT32 (1), 1);
-    addr.set_addr (&sa4, sizeof(sa4));
-    status |= check_type_consistency (addr);
+      addr.set (0, ACE_UINT32 (1), 1);
+      addr.set_addr (&sa4, sizeof(sa4));
+      status |= check_type_consistency (addr);
     
-    if (addr.get_port_number () != 8080) 
-      {
-	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("ACE_INET_Addr::set_addr() ")
-		    ACE_TEXT ("failed to update port number.\n")));
-	status = 1;
-      }
+      if (addr.get_port_number () != 8080) 
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ACE_INET_Addr::set_addr() ")
+                      ACE_TEXT ("failed to update port number.\n")));
+          status = 1;
+        }
 
-    if (addr.get_ip_address () != ACE_HTONL (addr32))
-      {
-	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("ACE_INET_Addr::set_addr() ")
-		    ACE_TEXT ("failed to update address.\n")));
-	status = 1;
-      }
+      if (addr.get_ip_address () != ACE_HTONL (addr32))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ACE_INET_Addr::set_addr() ")
+                      ACE_TEXT ("failed to update address.\n")));
+          status = 1;
+        }
 
-  }
+    }
 
 #if defined (ACE_HAS_IPV6)
   if (ACE_Sock_Connect::ipv6_enabled ())
