@@ -1,3 +1,11 @@
+Thu Apr 29 15:58:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Pluggable/PP_Test_Server.{h,cpp}:
+	* TAO/performance-tests/Pluggable/server.dsp:
+	  Fixed servant deletion to deactivate under the POA 
+	  before doing so. Also added some files to the server
+	  MSVC project for convenience.
+
 Thu Apr 29 13:57:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Context.cpp:
