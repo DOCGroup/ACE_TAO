@@ -336,7 +336,7 @@ main (int argc, char *argv[])
   ACE_Service_Config svc_conf;
 
   // Initialize the counting file.
-  Counting_Acceptor counting_acceptor ("counting_file");
+  Counting_Acceptor counting_acceptor (__TEXT ("counting_file"));
   
   u_short port = ACE_DEFAULT_SERVER_PORT;
 
