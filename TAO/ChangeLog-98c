@@ -1,3 +1,11 @@
+Thu Jan 22 16:32:56 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/nvlist.cpp (is_nil): Fixed some return lines that were
+ 	probably returning the wrong value by not enclosing a comparison
+ 	in parens.  Fortunately we weren't really checking the return
+ 	value on these, I suspect ;-) Thanks to Frederic Andres
+ 	<andres@rd.nacsis.ac.jp> for turning this in.
+
 Thu Jan 22 16:16:32 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* CosPropertyService_i.cpp, CosPropertyService_i.h, AVStreams_i.cpp, AVStreams_i.h:
