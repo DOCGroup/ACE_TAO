@@ -1,3 +1,8 @@
+Thu Sep 30 13:27:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  More tweaks to fine-tune the name resolution capability.
+
 Thu Sep 30 12:40:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_interface_strategy.cpp,
