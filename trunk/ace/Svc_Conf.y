@@ -142,8 +142,16 @@ module
 
       // Make sure that the Module has the same name as the
       // Module_Type object from the svc.conf file.
-      MT_Module *mp = (MT_Module *) mt->object ();
-      mp->name ($<static_node_>1->name ());
+      const char *module_type_name = $<static_node_>1->name ();
+      ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
+
+      if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "warning: assigning Module_Type name %s to Module %s since names differ\n",
+		      module_type_name, mp->name ()));
+	  mp->name (module_type_name);
+	}
 
       if (mt->init (args.argc (), args.argv ()) == -1
 	  || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
@@ -159,8 +167,16 @@ module
 
       // Make sure that the Module has the same name as the
       // Module_Type object from the svc.conf file.
-      MT_Module *mp = (MT_Module *) mt->object ();
-      mp->name ($<static_node_>1->name ());
+      const char *module_type_name = $<static_node_>1->name ();
+      ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
+
+      if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "warning: assigning Module_Type name %s to Module %s since names differ\n",
+		      module_type_name, mp->name ()));
+	  mp->name (module_type_name);
+	}
 
       if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
 	yyerrno++;
