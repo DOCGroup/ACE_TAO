@@ -38,6 +38,9 @@ public:
   /// Run the experiment
   int svc (void);
 
+  /// Stop the experiment
+  void stop (void);
+
 private:
   int iterations_;
 
@@ -50,6 +53,9 @@ private:
   Servant_var<ECCL_Supplier> supplier_;
 
   ACE_Barrier *barrier_;
+
+  TAO_SYNCH_MUTEX mutex_;
+  int stop_;
 };
 
 

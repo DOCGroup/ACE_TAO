@@ -12,11 +12,12 @@
 ACE_RCSID(EC_Colocated_Latency, Send_Task, "$Id$")
 
 ECCL_Send_Task::ECCL_Send_Task (void)
-  :  iterations_ (0)
+  : iterations_ (0)
   , period_in_usecs_ (0)
   , event_type_ (0)
   , event_source_ (0)
   , barrier_ (0)
+  , stop_ (0)
 {
 }
 
@@ -34,6 +35,13 @@ ECCL_Send_Task::init (int iterations,
   this->event_source_ = event_source;
   this->supplier_ = Servant_var<ECCL_Supplier> (supplier);
   this->barrier_ = barrier;
+}
+
+void
+ECCL_Send_Task::stop (void)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+  this->stop_ = 1;
 }
 
 int
@@ -55,6 +63,11 @@ ECCL_Send_Task::svc (void)
   for (int i = 0; i != this->iterations_; ++i)
     {
       ACE_OS::sleep (period);
+      {
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+        if (this->stop_)
+          return 0;
+      }
       ACE_hrtime_t creation = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      creation);

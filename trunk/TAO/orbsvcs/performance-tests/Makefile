@@ -10,7 +10,8 @@
 
 DIRS  = \
   EC_Scalability \
-  EC_Federated_Scalability
+  EC_Federated_Scalability \
+  RTEvent
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

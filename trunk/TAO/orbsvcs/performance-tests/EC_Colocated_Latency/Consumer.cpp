@@ -11,8 +11,12 @@
 
 ACE_RCSID(EC_Colocated_Latency, Consumer, "$Id$")
 
-ECCL_Consumer::ECCL_Consumer (int iterations)
+ECCL_Consumer::ECCL_Consumer (int iterations,
+                              int workload_in_usecs,
+                              ACE_UINT32 gsf)
   : sample_history_ (iterations)
+  , workload_in_usecs_ (workload_in_usecs)
+  , gsf_ (gsf)
 {
 }
 
@@ -101,7 +105,17 @@ ECCL_Consumer::push (const RtecEventComm::EventSet &events
   ORBSVCS_Time::TimeT_to_hrtime (creation,
                                  events[0].header.creation_time);
 
+  while (this->workload_in_usecs_ > 0)
+    {
+      ACE_hrtime_t elapsed = ACE_OS::gethrtime () - now;
+      if (elapsed > this->gsf_ * this->workload_in_usecs_)
+        break;
+      ACE_OS::sleep (0);
+    }
+
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+  if (this->sample_history_.sample_count () >= this->sample_history_.max_samples ())
+    return;
   this->sample_history_.sample (now - creation);
 }
 
