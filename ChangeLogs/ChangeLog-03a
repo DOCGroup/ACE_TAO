@@ -1,7 +1,17 @@
+Thu Nov 28 07:23:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Typed_SV_Message_Queue.h:
+        * ace/Strategies_T.h:
+        * ace/Framework_Component.h:
+          Improved doxygen documentation.
+
+        * ace/TLI_Connector.i:
+          Made method definition and implementation the same.
+
 Wed Nov 27 22:38:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Connector.h:
-	* ace/Connector.cpp: Fix for BUG 1361. Please see 
+	* ace/Connector.cpp: Fix for BUG 1361. Please see
 	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361 for
 	  more details on the problem.
 
@@ -13,7 +23,7 @@ Wed Nov 27 22:38:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  Reactor. Hence this fix, which essentially implements the
 	  virtual function resume_handler () and prevents itself from
 	  being resumed. Thaks to Irfan for reviewing the fix.
-	  
+
 Wed Nov 27 20:35:49 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_ibm.GNU: Add Visual Age C++ 6 to
