@@ -5531,7 +5531,6 @@ realclean:
   VarOut_T.h \
   VarOut_T.cpp \
   VarOut_T.inl \
-  IIOP_EndpointsA.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -9737,7 +9736,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl \
-  Policy_ForwardA.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -10038,7 +10036,7 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
-  Exception.h PolicyA.h \
+  Exception.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \

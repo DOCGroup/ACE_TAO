@@ -26,13 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Policy_ForwardC.h"
-#include "Policy_ForwardA.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 #include "tao/Any_Basic_Impl_T.h"
 
-// TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -89,8 +88,8 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -148,7 +147,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_enum/any_op_cs.cpp:52
+// be\be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -171,9 +170,11 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<CORBA::SetOverrideType>::extract (
         _tao_any,
         CORBA::_tc_SetOverrideType,
-        _tao_elem 
+        _tao_elem
       );
 }
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -209,5 +210,5 @@ CORBA::Boolean operator>>= (
         CORBA::SetOverrideType \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
