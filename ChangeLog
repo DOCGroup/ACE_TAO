@@ -1,3 +1,9 @@
+Tue Oct 02 15:34:49 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* etc/tao_cosevent.doxygen:
+	* etc/tao_cosnotification.doxygen:
+	  Fixed typos in the tag file names.
+
 Tue Oct  2 15:52:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Sunny Leung to the Hall of Fame.
