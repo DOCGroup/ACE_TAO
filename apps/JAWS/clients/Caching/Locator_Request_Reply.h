@@ -75,7 +75,6 @@ public:
 		    const ACE_URL_Property_Seq &modify = 0);
   // Modify a previously registered offer.
 
-<<<<<<< Locator_Request_Reply.h
   int encode (void);
   // Encode request for network communication.
 
@@ -92,7 +91,6 @@ public:
   ACE_WString &url (void);
   void *buffer (void);
 
-=======
   size_t encode (void);
   // Encode request for network communication.  If succeed,
   // returns the size of the buffer, otherwise, return 0.
