@@ -305,7 +305,7 @@ TAO_Literal_Constraint(CORBA::Any* any)
   CORBA::Environment env;
   CORBA::Any& any_ref = *any;
   CORBA::TCKind corba_type = any_ref.type()->kind(env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   
   switch(this->type_)
     {

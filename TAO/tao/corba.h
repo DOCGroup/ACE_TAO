@@ -312,6 +312,9 @@ if (TAO_TRY_ENV.exception () != 0) \
 #define TAO_CHECK_ENV_RETURN(X, Y) \
 if ( X . exception () != 0) return Y
 
+#define TAO_CHECK_ENV_RETURN_VOID(X) \
+if ( X . exception () != 0) return		 
+			      
 #define TAO_THROW(EXCEPTION) \
 do {\
   _env.exception (new EXCEPTION); \
