@@ -1,7 +1,7 @@
 // $Id$
 
-ACE_RCSID (be_visitor_operation, 
-           proxy_impl_xh, 
+ACE_RCSID (be_visitor_operation,
+           proxy_impl_xh,
            "$Id$")
 
 be_visitor_operation_proxy_impl_xh::be_visitor_operation_proxy_impl_xh (
@@ -40,8 +40,7 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
     }
 
   *os << node->local_name () << " (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Object_out obj_forward," << be_nl
+      << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
       << "int num_args" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl

@@ -1,3 +1,30 @@
+Mon Oct 06 05:04:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_interface.cpp: The collocation code underwent an
+	  interface change. The TAO_Collocated_Skel will now take a
+	  servant instead of the target and the forwarded objects. 
+
+	  The motivation for the change were the following
+
+	  - The object reference need not always have the servant cached. 
+	  - If the ThruPOA policy is in use, it is necessary that the
+	    generated code talk to the POA to activate a servant if
+	    necessary.
+          - With the present setup we will crash if the server tries to
+	    use implicit activation with direct collocation mechanism.
+	 
+	  With the above change, the collocated calls can be handled by
+	  POA's that implicitly activate a servant.
+
+	  There is lot of scope to refactor the generated code for
+	  collocated calls. We will get to that when we start working on the
+	  skeleton changes for Bug 1369.
+
 Sat Oct  4 23:13:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Client_Task.cpp: Cosmetic fix.
