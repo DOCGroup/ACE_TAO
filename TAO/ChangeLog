@@ -1,3 +1,17 @@
+Wed Dec  8 16:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOPC.{h,cpp,i,inl}:
+        * tao/GIOPS.{h,cpp,i,inl}:
+        * tao/GIOPS_T.{h,cpp,i,inl}:
+        * tao/GIOPA.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/diffs/GIOP.*.diff:
+          Removed these files, no diffs are needed anymore
+
 Wed Dec  8 08:00:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
