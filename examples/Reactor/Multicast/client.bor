@@ -10,5 +10,10 @@ OBJFILES = \
 
 CPPDIR = .
 
-!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+LIBFILES = \
+        $(ACE_LIB)
+
+CFLAGS = $(ACE_CFLAGS)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 
