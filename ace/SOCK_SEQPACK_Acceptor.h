@@ -57,7 +57,7 @@ public:
                      int reuse_addr = 0,
                      int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 0);
+                     int protocol = 132);
 
   /// Multihomed version of same
 
@@ -65,7 +65,7 @@ public:
                      int reuse_addr = 0,
                      int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 0);
+                     int protocol = 132);
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
@@ -76,7 +76,7 @@ public:
                      int reuse_addr,
                      int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 0);
+                     int protocol = 132);
 
 
   /**
@@ -90,7 +90,7 @@ public:
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
-            int protocol = 0);
+            int protocol = 132);
 
   /// Multihomed version of same
 
@@ -98,7 +98,7 @@ public:
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
-            int protocol = 0);
+            int protocol = 132);
 
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
@@ -110,7 +110,7 @@ public:
             int reuse_addr,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
-            int protocol = 0);
+            int protocol = 132);
 
   /// Close the socket.  Returns 0 on success and -1 on failure.
   int close (void);
