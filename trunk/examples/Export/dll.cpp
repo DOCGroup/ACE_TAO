@@ -1,6 +1,8 @@
 // $Id$
 #include "dll.h"
 
+int test_variable = 0;
+
 int
 test_function ()
 {

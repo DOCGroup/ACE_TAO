@@ -1,12 +1,26 @@
+Tue Mar 23 07:22:33 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Export/Export.mpc:
+
+          Simplified this mpc file.
+
+        * examples/Export/dll.h:
+        * examples/Export/dll.cpp:
+
+          Fixed a problem with building on Windows with static libraries.
+          Added an extern to the test_variable to stop duplicate symbols
+          when building static libraries.  The extern does not have any
+          adverse effects when building dynamic libraries.
+
 Mon Mar 22 14:23:44 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-sunos5.7.h: Leave Solaris using the AIOCB proactor at
-	  all versions. None of them work very well, so just leave this one
-	  in place, as it imposes no signal restrictions on the application.
-	  The concurrent access of (via aio_suspend(), aiowiat(), etc.) and
-	  use of for I/O, aiocbs is really wreaking havoc with the proactor
-	  implementations, I'm afraid. I believe this is really going to need
-	  some serious work.
+        * ace/config-sunos5.7.h: Leave Solaris using the AIOCB proactor at
+          all versions. None of them work very well, so just leave this one
+          in place, as it imposes no signal restrictions on the application.
+          The concurrent access of (via aio_suspend(), aiowiat(), etc.) and
+          use of for I/O, aiocbs is really wreaking havoc with the proactor
+          implementations, I'm afraid. I believe this is really going to need
+          some serious work.
 
 Mon Mar 22 13:30:53 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -31,9 +45,9 @@ Mon Mar 22 13:30:53 2004  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Mar 22 14:10:12 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/POSIX_Proactor.cpp: Fix "unused argument" warning. The code
-	  that really uses the signal_number argument _may_ need to be
-	  re-enabled again, so the name is left in the signature.
+        * ace/POSIX_Proactor.cpp: Fix "unused argument" warning. The code
+          that really uses the signal_number argument _may_ need to be
+          re-enabled again, so the name is left in the signature.
 
 Mon Mar 22 13:45:19 2004  Steve Huston  <shuston@riverace.com>
 

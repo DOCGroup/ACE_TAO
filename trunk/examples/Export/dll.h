@@ -17,9 +17,10 @@
 Test_Export int test_function ();
 
 // To expose data, put use the *Export at the beginning
-// of the variable declaration.
+// of the variable declaration.  The extern is required when
+// building static libraries.
 
-Test_Export int test_variable;
+extern Test_Export int test_variable;
 
 // To expose a class, put the *_Export between "class"
 // and the class name.
