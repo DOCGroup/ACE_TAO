@@ -6,6 +6,7 @@
 // Modified version of Cubit Example written by Sun Microsystems Inc.
 // Modified by: Brian Mendel
 
+#include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "cubitC.h"
@@ -279,10 +280,15 @@ main (int argc, char *argv[])
   call_count = 0;
   error_count = 0;
 
-  ACE_Time_Value before;
+  //ACE_Time_Value before;
 
   // @@ We should use an ACE_Profile_Timer here...
-  before = ACE_OS::gettimeofday ();
+  //before = ACE_OS::gettimeofday ();
+  ACE_Profile_Timer timer;
+  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+    
+  // We start an ACE_Profile_Timer here...
+  timer.start ();
 
   for (i = 0; i < loop_count; i++)
     {
@@ -401,12 +407,40 @@ main (int argc, char *argv[])
        
     }
     
-  ACE_Time_Value after = ACE_OS::gettimeofday ();
+  // ACE_Time_Value after = ACE_OS::gettimeofday ();
     
+  // We start an ACE_Profile_Timer here...
+  timer.stop ();
+  
   if (call_count > 0) 
     {
       if (error_count == 0)
         {
+
+	  timer.elapsed_time (elapsed_time);
+	  double tmp;
+
+	  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
+	  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
+	  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
+
+	  elapsed_time.real_time /= call_count;
+	  elapsed_time.user_time /= call_count;
+	  elapsed_time.system_time /= call_count;
+
+	  tmp = 1000/(elapsed_time.real_time + elapsed_time.user_time + elapsed_time.system_time);
+
+	  ACE_DEBUG ((LM_DEBUG,
+		      "cube average call:\n\treal_time\t= %0.06f ms, \n\t"
+		      "user_time\t= %0.06f ms, \n\t"
+		      "system_time\t= %0.06f ms\n"
+		      "\t%0.00f calls/second\n",
+		      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
+		      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
+		      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
+		      tmp < 0.0? 0.0 : tmp));
+
+#if 0
           ACE_Time_Value diff = after - before;
           unsigned long us = diff.sec () * 1000 * 1000 + diff.usec ();
           
@@ -418,6 +452,7 @@ main (int argc, char *argv[])
 			"%d calls/second\n",
 			us / 1000, us % 1000,
 			1000000L / us));
+#endif
         }
 
       ACE_DEBUG ((LM_DEBUG, "%d calls, %d errors\n", call_count, error_count));
