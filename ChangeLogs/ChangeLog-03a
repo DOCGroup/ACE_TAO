@@ -1,3 +1,9 @@
+Wed Jan 23 14:01:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-lynxos.h (ACE_LACKS_INET_ATON):
+
+	  LynxOS does not implement the inet_aton() function.
+
 Wed Jan 23 16:37:52 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/NT_Service.cpp (insert): If the CreateService call fails,
