@@ -78,14 +78,13 @@
 
 // Define if your processor does not store words with the most significant
 // byte first.
-#if defined (i386) || defined (__i386) || defined (_M_IX86) || defined (vax) || defined (__alpha)
+#if defined (ACE_LITTLE_ENDIAN)
 #  define TAO_ENCAP_BYTE_ORDER 1  /* little endian encapsulation byte order has
                                      the value = 1 */
-#else
-#  define TAO_WORDS_BIGENDIAN 1
+#else  /* ! ACE_LITTLE_ENDIAN */
 #  define TAO_ENCAP_BYTE_ORDER 0  /* big endian encapsulation byte order has
                                      the value = 1 */
-#endif
+#endif /* ! ACE_LITTLE_ENDIAN */
 
 // Define as the return type of signal handlers (int or void).
 #define RETSIGTYPE void
