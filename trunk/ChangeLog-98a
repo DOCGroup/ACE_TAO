@@ -1,3 +1,8 @@
+1998-02-01  Nanbor Wang  <nanbor@fennec.wolfpack.cs.wustl.edu>
+
+	* ace/OS.h (struct utsname): Separated WCE's definition from
+	  ACE_LACKS_UTSNAME_T bacause VxWorks doesn't have TCHAR type.
+
 Sun Feb 01 12:09:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers.cpp (ACE_Ordered_MultiSet::insert and find):
@@ -12,7 +17,7 @@ Fri Jan 30 15:35:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
           which respectively implement abstractions for containment
           of and iteration over an ordered set that allows multiple
           identical instances of a given item.
-          
+
 Fri Jan 30 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (uname): Made it comform with Unicode.
