@@ -1,7 +1,0 @@
-#
-# Makefile for building the AMH Sink_Server test executables
-#
-
-MAKEFILES = st_server.bor mt_server.bor client.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,6 +1,0 @@
-project(server) : taoexe {
-  depends += PortableServer
-  exename  = server
-  libs    += TAO_PortableServer
-  libpaths += $(TAO_ROOT)/tao/PortableServer
-}

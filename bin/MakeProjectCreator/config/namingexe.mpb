@@ -1,6 +1,0 @@
-project : server, orbsvcsexe {
-  depends += CosNaming Svc_Utils IORTable
-  libs    += TAO_CosNaming TAO_Svc_Utils TAO_IORTable
-  comps   += Naming
-  libpaths += $(TAO_ROOT)/tao/IORTable
-}

@@ -1,6 +1,0 @@
-Most of the tests are typical of the ACE and TAO tests in that no
-output means the test ran successfully. Otherwise, error messages
-are output indicating an error.
-
-Currently the mqueue_test executable requires user input for determing
-the kind of test to run.

@@ -1,5 +1,0 @@
-project : orbsvcsexe, core {
-  depends += CosEvent CosNaming Svc_Utils IORTable Messaging PortableServer
-  exename  = CosEvent_Service
-  libs    += TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_Messaging TAO_PortableServer
-}

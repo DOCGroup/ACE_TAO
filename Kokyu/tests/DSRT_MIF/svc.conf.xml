@@ -1,6 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  -->
- <static id="DSRT_Dispatcher_Impl" params="-schedtype MIF"/>
-</ACE_Svc_Conf>
