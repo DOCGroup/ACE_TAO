@@ -93,7 +93,7 @@ INSTALL: TAO-INSTALL.html
 orbsvcs/README: docs/orbsvcs.html
 	@lynx -dump $^ > $@; chmod a+r $@
 
-.PHONY: release
+.PHONY: release tag
 
 REL = beta
 CHECK =
@@ -102,7 +102,19 @@ CHECK =
 #### If creating a release in /project/adaptive/ACE_wrappers/TAO, it
 #### just updates the VERSION and ChangeLog files, and tags the release.
 #### Then, make releasetao is invoked to actually create the kit.
-release: INSTALL
-	@$(ACE_ROOT)/bin/make_release $(CHECK) -k tao -t $(REL) \
-	   -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" -u  &&  \
-	 cd ..  &&  $(MAKE) releasetao
+release: tag
+	@cd ..  &&  $(MAKE) -s releasetao
+
+tag:
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -k tao -v $(REL) -u
+
+.PHONY: show_controlled_files show_release_files show_release_lib_files
+
+show_controlled_files:
+	@echo $(CONTROLLED_FILES)
+
+show_release_files:
+	@echo $(RELEASE_FILES)
+
+show_release_lib_files:
+	@echo ""
