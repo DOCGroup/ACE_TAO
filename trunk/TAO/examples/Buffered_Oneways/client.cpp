@@ -161,12 +161,41 @@ main (int argc, char **argv)
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Setup the none sync scope policy, i.e., the ORB will buffer
+      // oneways.
+      Messaging::SyncScope sync_none = Messaging::SYNC_NONE;
+
+      // Setup the none sync scope any.
+      CORBA::Any sync_none_any;
+      sync_none_any <<= sync_none;
+
+      // Setup the none sync scope policy list.
+      CORBA::PolicyList sync_none_policy_list (1);
+      sync_none_policy_list.length (1);
+
+      // Setup the none sync scope policy.
+      sync_none_policy_list[0] =
+        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
+                            sync_none_any,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Setup the none sync scope.
+      policy_current->set_policy_overrides (sync_none_policy_list,
+                                            CORBA::ADD_OVERRIDE,
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // We are now done with this policy.
+      sync_none_policy_list[0]->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Start off with no constraints.
       TAO::BufferingConstraint buffering_constraint;
+      buffering_constraint.mode = TAO::BUFFER_FLUSH;
       buffering_constraint.message_count = 0;
       buffering_constraint.message_bytes = 0;
       buffering_constraint.timeout = 0;
-      buffering_constraint.mode = TAO::BUFFER_NONE;
 
       // If valid <message_count>, set the implicit flushing to
       // account for queued messages.
@@ -207,67 +236,41 @@ main (int argc, char **argv)
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Setup the constraints (at the ORB level).
+      // Setup the constraints.
       policy_current->set_policy_overrides (buffering_constraint_policy_list,
                                             CORBA::ADD_OVERRIDE,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // We are done with the policy.
-      buffering_constraint_policy_list[0]->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Setup the none sync scope policy, i.e., the ORB will buffer
-      // oneways.
-      Messaging::SyncScope sync_none = Messaging::SYNC_NONE;
-
-      // Setup the none sync scope any.
-      CORBA::Any sync_none_any;
-      sync_none_any <<= sync_none;
-
-      // Setup the none sync scope policy list.
-      CORBA::PolicyList sync_none_policy_list (1);
-      sync_none_policy_list.length (1);
-
-      // Setup the none sync scope policy.
-      sync_none_policy_list[0] =
-        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            sync_none_any,
-                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Setup the none sync scope (at the ORB level).
-      policy_current->set_policy_overrides (sync_none_policy_list,
-                                            CORBA::ADD_OVERRIDE,
-                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       //
-      // Since we will use the none sync scope policy later, don't
-      // destroy it yet.
+      // We use this policy again later. Therefore, we don't destroy
+      // it right away.
       //
 
-      // Setup the flush sync scope policy, i.e., the ORB will flush
-      // any buffer oneways (explicit flushing).
-      Messaging::SyncScope sync_flush = Messaging::SYNC_FLUSH;
+      // Setup the explicit flushing policy.
+      TAO::BufferingConstraint buffering_flush;
+      buffering_flush.mode = TAO::BUFFER_FLUSH;
+      buffering_flush.message_count = 0;
+      buffering_flush.message_bytes = 0;
+      buffering_flush.timeout = 0;
 
-      // Setup the flush sync scope any.
-      CORBA::Any sync_flush_any;
-      sync_flush_any <<= sync_flush;
+      // Setup the buffering flush any.
+      CORBA::Any buffering_flush_any;
+      buffering_flush_any <<= buffering_flush;
 
-      // Setup the flush sync scope policy list.
-      CORBA::PolicyList sync_flush_policy_list (1);
-      sync_flush_policy_list.length (1);
+      // Setup the buffering flush policy list.
+      CORBA::PolicyList buffering_flush_policy_list (1);
+      buffering_flush_policy_list.length (1);
 
-      // Setup the flush sync scope policy.
-      sync_flush_policy_list[0] =
-        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            sync_flush_any,
+      // Setup the buffering flush policy.
+      buffering_flush_policy_list[0] =
+        orb->create_policy (TAO::BUFFERING_CONSTRAINT_POLICY_TYPE,
+                            buffering_flush_any,
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       //
-      // The default for now is none sync. We will use the flush policy later.
+      // Explicit flushing policy will be used later.
       //
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
@@ -277,7 +280,7 @@ main (int argc, char **argv)
               i % flush_count == 0)
             {
               // Setup explicit flushing.
-              policy_current->set_policy_overrides (sync_flush_policy_list,
+              policy_current->set_policy_overrides (buffering_flush_policy_list,
                                                     CORBA::ADD_OVERRIDE,
                                                     ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -291,7 +294,7 @@ main (int argc, char **argv)
               ACE_TRY_CHECK;
 
               // Reset buffering policy.
-              policy_current->set_policy_overrides (sync_none_policy_list,
+              policy_current->set_policy_overrides (buffering_constraint_policy_list,
                                                     CORBA::ADD_OVERRIDE,
                                                     ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -322,11 +325,12 @@ main (int argc, char **argv)
           ACE_TRY_CHECK;
         }
 
-      // We are now done with these policies.
-      sync_none_policy_list[0]->destroy (ACE_TRY_ENV);
+      // We are done with the policy.
+      buffering_constraint_policy_list[0]->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      sync_flush_policy_list[0]->destroy (ACE_TRY_ENV);
+      // We are done with the policy.
+      buffering_flush_policy_list[0]->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       root_poa->destroy (1,

@@ -270,7 +270,7 @@ TAO_NAMESPACE PortableServer{
     SINGLE_THREAD_MODEL
   };
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ThreadPolicyValue &ThreadPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
@@ -374,7 +374,7 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ThreadPolicy;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   enum LifespanPolicyValue
   {
@@ -709,7 +709,7 @@ TAO_NAMESPACE PortableServer{
     NO_IMPLICIT_ACTIVATION
   };
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue;
@@ -815,7 +815,7 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ImplicitActivationPolicy;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   enum ServantRetentionPolicyValue
   {
@@ -823,7 +823,7 @@ TAO_NAMESPACE PortableServer{
     NON_RETAIN
   };
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ServantRetentionPolicyValue &ServantRetentionPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServantRetentionPolicyValue;
@@ -929,7 +929,7 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServantRetentionPolicy;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   enum RequestProcessingPolicyValue
   {
@@ -938,7 +938,7 @@ TAO_NAMESPACE PortableServer{
     USE_SERVANT_MANAGER
   };
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef RequestProcessingPolicyValue &RequestProcessingPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RequestProcessingPolicyValue;
@@ -1044,7 +1044,7 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RequestProcessingPolicy;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (_PORTABLESERVER_POAMANAGER___PTR_CH_)
 #define _PORTABLESERVER_POAMANAGER___PTR_CH_
@@ -1164,13 +1164,13 @@ TAO_NAMESPACE PortableServer{
 
     virtual void  activate (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual void  discard_requests (CORBA::Boolean wait_for_completion, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual void  deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual State get_state (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -1192,7 +1192,7 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_POAManager;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_
@@ -1586,7 +1586,7 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServantLocator;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
 #define _PORTABLESERVER_POA___PTR_CH_
@@ -1697,7 +1697,7 @@ TAO_NAMESPACE PortableServer{
 
 #endif /* end #if !defined */
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_
@@ -1736,7 +1736,7 @@ TAO_NAMESPACE PortableServer{
 
 #endif /* end #if !defined */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_
@@ -1818,7 +1818,7 @@ TAO_NAMESPACE PortableServer{
 
 #endif /* end #if !defined */
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 #if !defined (_PORTABLESERVER_POA_NOSERVANT___PTR_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT___PTR_CH_
@@ -1857,7 +1857,7 @@ TAO_NAMESPACE PortableServer{
 
 #endif /* end #if !defined */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_
@@ -2085,29 +2085,29 @@ TAO_NAMESPACE PortableServer{
     virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual LifespanPolicy_ptr  create_lifespan_policy (LifespanPolicyValue value, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual IdUniquenessPolicy_ptr  create_id_uniqueness_policy (IdUniquenessPolicyValue value, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual IdAssignmentPolicy_ptr  create_id_assignment_policy (IdAssignmentPolicyValue value, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual char * the_name (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual POA_ptr  the_parent (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual POAManager_ptr  the_POAManager (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual AdapterActivator_ptr  the_activator (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual void the_activator(AdapterActivator_ptr the_activator, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
@@ -2116,7 +2116,7 @@ TAO_NAMESPACE PortableServer{
     virtual Servant  get_servant (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual void  set_servant (Servant p_servant, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual ObjectId * activate_object (Servant p_servant, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual void  activate_object_with_id (const ObjectId &id, Servant p_servant, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
@@ -2298,7 +2298,7 @@ TAO_NAMESPACE_CLOSE
 
 // POA's policies.
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicyValue &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ThreadPolicyValue &);
@@ -2307,7 +2307,7 @@ operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicy_ptr );
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::ThreadPolicy_ptr &);
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::LifespanPolicyValue &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::LifespanPolicyValue &);
@@ -2328,7 +2328,7 @@ operator<< (TAO_OutputCDR &, const PortableServer::IdAssignmentPolicy_ptr );
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::IdAssignmentPolicy_ptr &);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicyValue &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ImplicitActivationPolicyValue &);
@@ -2349,20 +2349,20 @@ operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicy_ptr )
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::RequestProcessingPolicy_ptr &);
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // POA's exceptions.
 TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::AdapterAlreadyExists &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::AdapterAlreadyExists*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::AdapterAlreadyExists *&);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::AdapterInactive &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::AdapterInactive*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::AdapterInactive *&);
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::AdapterNonExistent &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::AdapterNonExistent*); // noncopying version
@@ -2371,13 +2371,13 @@ TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::InvalidPol
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::InvalidPolicy*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::InvalidPolicy *&);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::NoServant &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::NoServant*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::NoServant *&);
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::ObjectAlreadyActive &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::ObjectAlreadyActive*); // noncopying version

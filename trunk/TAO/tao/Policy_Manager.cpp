@@ -161,8 +161,8 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
             if (tmp == 0)
               ACE_THROW (CORBA::INTERNAL ());
 
-            TAO_RelativeRoundtripTimeoutPolicy_i *policy =
-              ACE_dynamic_cast (TAO_RelativeRoundtripTimeoutPolicy_i *, tmp);
+            TAO_RelativeRoundtripTimeoutPolicy *policy =
+              ACE_dynamic_cast (TAO_RelativeRoundtripTimeoutPolicy *, tmp);
 
             if (policy == 0)
               ACE_THROW (CORBA::INTERNAL ());

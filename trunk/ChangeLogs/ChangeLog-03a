@@ -1,3 +1,22 @@
+Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (fcntl): There was a special fcntl() for Win32.
+	  Removed that special version and added ACE_LACKS_FCNTL to
+	  config-win32-common.h.
+
+	* ace/ACE.cpp: Removed the non-"_n" versions of send/recv
+	  functions that deal with message blocks.  Since we deal with
+	  continuation chains and linked messages, we are essentially
+	  dealing with "_n" style functions.  Also, improved the error
+	  handling in case of timeouts.
+
+	* ace/Strategies_T.cpp
+	  (ACE_Cached_Connect_Strategy::connect_svc_handler): If an error
+	  occurs while activating the handler, the <activate_svc_handler>
+	  method will close the handler.  We must set the handler to zero
+	  to make sure that the higher layer doesn't try to close the
+	  handler again!
+
 Thu Jan  6 15:00:56 2000  Ossama Othman  <othman@cs.wustl.edu>
 
 	* aclocal.m4:

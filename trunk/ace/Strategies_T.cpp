@@ -756,13 +756,27 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
   // Note: This activation is outside the scope of the lock of the
   // cached connector.  This is necessary to avoid subtle deadlock
   // conditions with this lock and the Reactor lock.
-  //
-  // @@ If an error occurs on activation, we should try to remove this
-  // entry from the internal table.
 
   if (!found)
-    if (this->activate_svc_handler (sh))
-      return -1;
+    {
+      if (this->activate_svc_handler (sh) == -1)
+        {
+          // If an error occurs while activating the handler, the
+          // <activate_svc_handler> method will close the handler.
+          // This in turn will remove this entry from the internal
+          // table.
+
+          // Synchronization is required here as the setting of the
+          // handler to zero must be done atomically with the users of
+          // the cache.
+          ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
+
+          // Reset handler.
+          sh = 0;
+
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -809,13 +823,27 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
   // Note: This activation is outside the scope of the lock of the
   // cached connector.  This is necessary to avoid subtle deadlock
   // conditions with this lock and the Reactor lock.
-  //
-  // @@ If an error occurs on activation, we should try to remove this
-  // entry from the internal table.
 
   if (!found)
-    if (this->activate_svc_handler (sh))
-      return -1;
+    {
+      if (this->activate_svc_handler (sh) == -1)
+        {
+          // If an error occurs while activating the handler, the
+          // <activate_svc_handler> method will close the handler.
+          // This in turn will remove this entry from the internal
+          // table.
+
+          // Synchronization is required here as the setting of the
+          // handler to zero must be done atomically with the users of
+          // the cache.
+          ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
+
+          // Reset handler.
+          sh = 0;
+
+          return -1;
+        }
+    }
 
   return 0;
 }

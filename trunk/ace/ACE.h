@@ -161,10 +161,6 @@ public:
                           int iovcnt,
                           const ACE_Time_Value *timeout = 0);
 
-  static ssize_t recv (ACE_HANDLE handle,
-                       ACE_Message_Block *message_block,
-                       const ACE_Time_Value *timeout = 0);
-
   static ssize_t recv_n (ACE_HANDLE handle,
                          ACE_Message_Block *message_block,
                          const ACE_Time_Value *timeout = 0);
@@ -216,10 +212,6 @@ public:
                           const iovec *iov,
                           int iovcnt,
                           const ACE_Time_Value *timeout = 0);
-
-  static ssize_t send (ACE_HANDLE handle,
-                       const ACE_Message_Block *message_block,
-                       const ACE_Time_Value *timeout = 0);
 
   static ssize_t send_n (ACE_HANDLE handle,
                          const ACE_Message_Block *message_block,
@@ -638,11 +630,6 @@ private:
                             int iovcnt,
                             const ACE_Time_Value *timeout);
 
-  static ssize_t recv_i (ACE_HANDLE handle,
-                         ACE_Message_Block *message_block,
-                         const ACE_Time_Value *timeout,
-                         int loop);
-
   //
   // = Send_n helpers
   //
@@ -679,11 +666,6 @@ private:
                             const iovec *iov,
                             int iovcnt,
                             const ACE_Time_Value *timeout);
-
-  static ssize_t send_i (ACE_HANDLE handle,
-                         const ACE_Message_Block *message_block,
-                         const ACE_Time_Value *timeout,
-                         int loop);
 
   static u_int init_fini_count_;
   // Counter to match <init>/<fini> calls.  <init> must increment it;

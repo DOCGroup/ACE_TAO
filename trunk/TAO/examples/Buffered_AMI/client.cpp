@@ -155,10 +155,10 @@ setup_buffering_constraints (CORBA::ORB_ptr orb,
 
   // Start off with no constraints.
   TAO::BufferingConstraint buffering_constraint;
+  buffering_constraint.mode = TAO::BUFFER_FLUSH;
   buffering_constraint.message_count = 0;
   buffering_constraint.message_bytes = 0;
   buffering_constraint.timeout = 0;
-  buffering_constraint.mode = TAO::BUFFER_NONE;
 
   // If valid <message_count>, set the implicit flushing to account
   // for queued messages.

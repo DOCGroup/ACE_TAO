@@ -504,6 +504,20 @@ operator - (const ACE_Time_Value &tv1,
   return delta;
 }
 
+ACE_INLINE int
+ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
+{
+  ACE_TRACE ("ACE_OS::fcntl");
+# if defined (ACE_LACKS_FCNTL)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (cmd);
+  ACE_UNUSED_ARG (arg);
+  ACE_NOTSUP_RETURN (-1);
+# else
+  ACE_OSCALL_RETURN (::fcntl (handle, cmd, arg), int, -1);
+# endif /* ACE_LACKS_FCNTL */
+}
+
 #if !defined (ACE_WIN32)
 
 // Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
@@ -587,20 +601,6 @@ ACE_OS::chdir (const char *path)
 #   endif /* VXWORKS */
 }
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
-
-ACE_INLINE int
-ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
-{
-  ACE_TRACE ("ACE_OS::fcntl");
-# if defined (ACE_LACKS_FCNTL)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (cmd);
-  ACE_UNUSED_ARG (arg);
-  ACE_NOTSUP_RETURN (-1);
-# else
-  ACE_OSCALL_RETURN (::fcntl (handle, cmd, arg), int, -1);
-# endif /* ACE_LACKS_FCNTL */
-}
 
 ACE_INLINE int
 ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
@@ -839,17 +839,6 @@ ACE_OS::mktemp (char *s)
 }
 #   endif /* !ACE_LACKS_MKTEMP */
 # endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
-
-ACE_INLINE int
-ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
-{
-  ACE_TRACE ("ACE_OS::fcntl");
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (cmd);
-  ACE_UNUSED_ARG (arg);
-
-  ACE_NOTSUP_RETURN (-1); // We should be able to map this stuff
-}
 
 ACE_INLINE uid_t
 ACE_OS::getgid (void)
@@ -5415,32 +5404,32 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 
 
       if (result == SOCKET_ERROR)
-	  {
-		u_long dwErr = ::WSAGetLastError ();
+          {
+                u_long dwErr = ::WSAGetLastError ();
 
-		if (dwErr == WSAEWOULDBLOCK)
-		{
-			errno = dwErr;
-			return -1;
-		}
-		else
-			if (dwErr != WSAENOBUFS)
-			{
-				errno = dwErr;
-				return -1;
-			}
-	  }
+                if (dwErr == WSAEWOULDBLOCK)
+                {
+                        errno = dwErr;
+                        return -1;
+                }
+                else
+                        if (dwErr != WSAENOBUFS)
+                        {
+                                errno = dwErr;
+                                return -1;
+                        }
+          }
 
     char *qos_buf;
-	ACE_NEW_RETURN (qos_buf,
-					char [dwBufferLen],
-					-1);
+        ACE_NEW_RETURN (qos_buf,
+                                        char [dwBufferLen],
+                                        -1);
 
-	QOS *qos = ACE_reinterpret_cast (QOS*,
-									 qos_buf);
+        QOS *qos = ACE_reinterpret_cast (QOS*,
+                                                                         qos_buf);
 
-	result = ::WSAIoctl ((ACE_SOCKET) socket,
-			           io_control_code,
+        result = ::WSAIoctl ((ACE_SOCKET) socket,
+                                   io_control_code,
                        NULL,
                        0,
                        qos,
@@ -5450,7 +5439,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                        NULL);
 
     if (result == SOCKET_ERROR)
-		return result;
+                return result;
 
     ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
                                     qos->SendingFlowspec.TokenBucketSize,

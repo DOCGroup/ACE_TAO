@@ -1600,32 +1600,9 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 }
 
 ssize_t
-ACE::recv (ACE_HANDLE handle,
-           ACE_Message_Block *message_block,
-           const ACE_Time_Value *timeout)
-{
-  return ACE::recv_i (handle,
-                      message_block,
-                      timeout,
-                      0);
-}
-
-ssize_t
 ACE::recv_n (ACE_HANDLE handle,
              ACE_Message_Block *message_block,
              const ACE_Time_Value *timeout)
-{
-  return ACE::recv_i (handle,
-                      message_block,
-                      timeout,
-                      1);
-}
-
-ssize_t
-ACE::recv_i (ACE_HANDLE handle,
-             ACE_Message_Block *message_block,
-             const ACE_Time_Value *timeout,
-             int loop)
 {
   iovec iov[IOV_MAX];
   int iovcnt = 0;
@@ -1659,19 +1636,15 @@ ACE::recv_i (ACE_HANDLE handle,
               // as 16.
               if (iovcnt == IOV_MAX)
                 {
-                  if (loop)
-                    n = ACE::recvv_n (handle,
-                                      iov,
-                                      iovcnt,
-                                      timeout);
-                  else
-                    n = ACE::recvv (handle,
+                  n = ACE::recvv_n (handle,
                                     iov,
-                                    iovcnt,
-                                    timeout);
+                                    iovcnt);
 
-                  // Errors.
-                  if (n <= 0)
+                  // Errors. Make sure that we don't treat a timeout
+                  // as an error.
+                  if (n == -1 ||
+                      (n == 0 &&
+                       errno != ETIME))
                     return n;
 
                   // Success. Add to total bytes transferred.
@@ -1702,13 +1675,16 @@ ACE::recv_i (ACE_HANDLE handle,
   // IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
-      n = ACE::recvv (handle,
-                      iov,
-                      iovcnt,
-                      timeout);
+      n = ACE::recvv_n (handle,
+                        iov,
+                        iovcnt,
+                        timeout);
 
-      // Errors.
-      if (n <= 0)
+      // Errors. Make sure that we don't treat a timeout
+      // as an error.
+      if (n == -1 ||
+          (n == 0 &&
+           errno != ETIME))
         return n;
 
       // Success. Add to total bytes transferred.
@@ -2255,32 +2231,9 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 }
 
 ssize_t
-ACE::send (ACE_HANDLE handle,
-           const ACE_Message_Block *message_block,
-           const ACE_Time_Value *timeout)
-{
-  return ACE::send_i (handle,
-                      message_block,
-                      timeout,
-                      0);
-}
-
-ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const ACE_Message_Block *message_block,
              const ACE_Time_Value *timeout)
-{
-  return ACE::send_i (handle,
-                      message_block,
-                      timeout,
-                      1);
-}
-
-ssize_t
-ACE::send_i (ACE_HANDLE handle,
-             const ACE_Message_Block *message_block,
-             const ACE_Time_Value *timeout,
-             int loop)
 {
   iovec iov[IOV_MAX];
   int iovcnt = 0;
@@ -2314,19 +2267,16 @@ ACE::send_i (ACE_HANDLE handle,
               // as 16.
               if (iovcnt == IOV_MAX)
                 {
-                  if (loop)
-                    n = ACE::sendv_n (handle,
-                                      iov,
-                                      iovcnt,
-                                      timeout);
-                  else
-                    n = ACE::sendv (handle,
+                  n = ACE::sendv_n (handle,
                                     iov,
                                     iovcnt,
                                     timeout);
 
-                  // Errors.
-                  if (n <= 0)
+                  // Errors. Make sure that we don't treat a timeout
+                  // as an error.
+                  if (n == -1 ||
+                      (n == 0 &&
+                       errno != ETIME))
                     return n;
 
                   // Success. Add to total bytes transferred.
@@ -2357,13 +2307,16 @@ ACE::send_i (ACE_HANDLE handle,
   // IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
-      n = ACE::sendv (handle,
-                      iov,
-                      iovcnt,
-                      timeout);
+      n = ACE::sendv_n (handle,
+                        iov,
+                        iovcnt,
+                        timeout);
 
-      // Errors.
-      if (n <= 0)
+      // Errors. Make sure that we don't treat a timeout
+      // as an error.
+      if (n == -1 ||
+          (n == 0 &&
+           errno != ETIME))
         return n;
 
       // Success. Add to total bytes transferred.

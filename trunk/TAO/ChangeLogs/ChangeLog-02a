@@ -1,3 +1,108 @@
+Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: Minimum CORBA in TAO meant a minimum POA.  This
+	  relationship was changed such that minimum CORBA does not have
+	  to mean a minimum POA.  This will allow the user to use a
+	  minimum CORBA build of TAO with the full functionality of the
+	  POA.  The default, however, remains the same, i.e., minimum
+	  CORBA enables a minimum POA.
+
+	  Added a new variable TAS_HAS_MINIMUM_POA to orbconf.h.
+	  TAS_HAS_MINIMUM_POA support is disabled by default if TAO is not
+	  configured for minimum CORBA.  If TAO is configured for minimum
+	  CORBA, then TAS_HAS_MINIMUM_POA will be enabled by default.
+	  Also, TAO_HAS_MINIMUM_POA_MAPS is now influenced by the value of
+	  TAO_HAS_MINIMUM_POA rather than that of TAO_HAS_MINIMUM_CORBA if
+	  not explicitly set by the user.
+
+	  The following files were involved in this change:
+
+          - POA.cpp
+          - POA.h
+          - POA.i
+          - POA.pidl
+          - POAC.cpp
+          - POAC.h
+          - POAC.i
+          - POAManager.cpp
+          - POAManager.h
+          - POAManager.i
+          - POAS.cpp
+          - POAS.h
+          - POAS.i
+          - Object_Adapter.cpp
+          - Object_Adapter.h
+          - Object_Adapter.i
+
+	* tests/Timed_Buffered_Oneways: New test for oneways with
+	  buffering and timing constraints.  The client sends is setup to
+	  send large requests to the server.  The server is setup to take
+	  a long time to process these requests.  The combination will
+	  cause flow control for the client.  The timing constraints on
+	  the client ORB will prevent the client from blocking because of
+	  flow control.  The request is queued up for later delivery once
+	  the flow control subsides.
+
+	* tao/IIOP_Connect.cpp (handle_timeout):
+	* tao/UIOP_Connect.cpp (handle_timeout):
+
+	  Added code to access the thread or ORB roundtrip timeout
+	  policies.  This allows us to perform a timed send operation
+	  instead of a blocking one. We do not consider the object
+	  roundtrip timeout policy since we do not have access to it.
+
+	* tao/ORB_Core.h (stubless_relative_roundtrip_timeout):  Added a
+	  new method to access the RoundtripTimeoutPolicy policy set on
+	  the thread or on the ORB.  In this method, we do not consider
+	  the stub since we do not have access to it.
+
+	* tao/Sync_Strategies.cpp: Moved the TAO-specific SYNCH_FLUSH
+	  option from the Messaging::SyncScope policy and changed it to
+	  BUFFER_FLUSH as one of the buffering constraint modes in the
+	  TAO-specific BufferingConstraint policy.  Since we now have
+	  BUFFER_FLUSH, we don't need BUFFER_NONE anymore since they both
+	  do the same thing.  Also, we didn't need the
+	  TAO_Flush_Sync_Strategy anymore and the Buffered_Oneway example
+	  was changed to accommodate this change.
+
+	* tao/Pluggable.cpp
+
+	  (send_buffered_messages): The return value of 0 is considered
+	  EOF.  Therefore, changed the return values in the case of
+	  timeouts and empty queues to be 1.  Also, fixed how timeouts are
+	  handled.
+
+	  (reset_message): The resetting of the queued messages was not
+	  correct.  It was deleting excessively. This was fixed.  Also,
+	  the resetting was decoupled from the queue so that it can be
+	  used with independent message blocks.
+
+	* tao/Wait_Strategy.cpp:
+
+	  TAO_Exclusive_Wait_On_Leader_Follower::handle_input: The check
+	  for <expecting_response_> was conflicting with the ability to
+	  buffer asynchronous calls.  If we mark the asynchronous call as
+	  a twoway call, then buffering cannot take place.  If we mark it
+	  as a oneway call, then the check for <expecting_response_>
+	  fails.  For now I have selected to disable the check.  The long
+	  term fix is to separate out the two concerns (a) can the call be
+	  buffered and (b) are we expecting a response.
+
+	* tao/Transport_Mux_Strategy.cpp (dispatch_reply): Once we receive
+	  our reply, we need to mark the transport as being available for
+	  reuse again.
+
+	* tao: Renamed TAO_RelativeRoundtripTimeoutPolicy_i to
+	  TAO_RelativeRoundtripTimeoutPolicy.
+
+	* tao/Messaging_Policy_i.cpp (set_time_value): Factored out common
+	  code in Invocation.cpp and IIOP_Connect.cpp.
+
+	* tao/MessagingS.cpp: Added an overloaded relative_expiry(), which
+	  is a hacky TAO extension to reduce a call to
+	  CORBA::Environment::default_environment () since this method
+	  will never raise exceptions.
+
 Thu Jan 06 21:26:17 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/param_test_i.cpp
@@ -28,7 +133,7 @@ Wed Jan  5 15:54:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 Tue Jan  4 11:46:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
-	*tao/Any.cpp:
+	* tao/Any.cpp:
 	  Added >>= operators to extract to const CORBA::Any *&,
 	  as well as to const char *& and const wchar *&, as outlined in
 	  the CORBA 2.3.1 C++ mapping.
