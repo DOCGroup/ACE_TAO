@@ -15,7 +15,7 @@ $iorfile2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
 
 ACE::checkForTarget($cwd);
 
-print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n\n";
+print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
 
 unlink $iorfile1;
 unlink $iorfile2;
@@ -27,12 +27,12 @@ unlink $iorfile2;
 
 $server_args =
     "-n $iorfile1 -o $iorfile2 -b bands.unix -ORBSvcConf server.conf "
-    ."-p 67 -w 78 "
+    ."-ORBdebuglevel 1 -p 67 -w 78 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=66 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=75 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=80 ";
 
-$client_args = 
+$client_args =
     "-n file://$iorfile1 -o file://$iorfile2 -ORBSvcConf client.conf "
     ."-a 76 -b 80 -c 64";
 
@@ -44,7 +44,7 @@ if ($^O eq "MSWin32")
                 ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
 
-    $client_args = 
+    $client_args =
         "-n file://$iorfile1 -o file://$iorfile2 -ORBSvcConf client.conf "
             ."-a 76 -b 80 -c 64";
 }
