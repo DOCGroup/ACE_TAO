@@ -1,3 +1,15 @@
+Wed Mar  7 06:11:52 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Asynch_IO.h: Removed the unnecessary/improver ';' at the
+	  end of the line.  Thanks to Johnny Willemsen and Chris Kohlhoff
+ 	  for reporting/fixing this.
+
+	* ace/*_Connector.h: Clarified in the comments that the
+	  ACE_Time_Value *timeout represents the *maximum* amount of time
+ 	  to wait.  If the server is not running, however, connect() can
+ 	  return much sooner.  Thanks to Dipti Jain <dijain@hss.hns.com>
+ 	  for motivating this.
+
 Tue Mar  6 14:14:06 2001  Darrell Brunsch <brunsch@uci.edu>
 
         Here are some fixes for MSVC 7 beta.  Note that no project files 

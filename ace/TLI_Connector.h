@@ -45,7 +45,7 @@ public:
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
    * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-   * this is the amount of time to wait before timing out.  If the
+   * this is the maximum amount of time to wait before timing out.  If the
    * time expires before the connection is made <errno == ETIME>.  The
    * <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
@@ -73,7 +73,7 @@ public:
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
    * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-   * this is the amount of time to wait before timing out.  If the
+   * this is the maximum amount of time to wait before timing out.  If the
    * time expires before the connection is made <errno == ETIME>.  The
    * <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
