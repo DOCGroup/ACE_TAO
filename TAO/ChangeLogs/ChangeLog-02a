@@ -1,3 +1,15 @@
+Tue Jan 15 11:50:37 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* utils/nslist/nsdel: There were 2 problems with nsdel:
+	  1. difficult to remove subcontexts
+	  2. not possible to remove contexts where the name.kind is not null
+ 
+          We've now fixe this problem so it's possible to do the following:
+	  usage example nsdel --name com/sun/server/app1.service
+	  usage example nsdel --name com/sun/server.context
+  
+	  Thanks to Paul Caffrey <pcaffrey@iel.ie> for contributing this.
+
 Tue Jan 15 11:43:48 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * docs/releasenotes/index.html:
