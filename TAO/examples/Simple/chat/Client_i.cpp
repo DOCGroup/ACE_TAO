@@ -23,8 +23,8 @@
 #include "ace/Get_Opt.h"
 
 Client_i::Client_i ()
-  : nickname_ ("noname"),
-    ior_file_name_ ("chat.ior")
+  : ior_file_name_ ("chat.ior"),
+  nickname_ ("noname")
 {
 }
 
