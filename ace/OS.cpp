@@ -3148,7 +3148,7 @@ ACE_OS::mktime (struct tm *t)
 #endif /* ACE_HAS_MT_SAFE_MKTIME */
 }
 
-#if !defined (ACE_HAS_THREADS) || !defined (ACE_HAS_STHREADS)
+#if !defined (ACE_HAS_THREADS) || !defined (ACE_HAS_STHREADS) || defined (ACE_LACKS_RWLOCK_T)
 // The ACE_HAS_THREADS and ACE_HAS_STHREADS case is in OS.i
 int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
@@ -3160,7 +3160,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   type = type;
   name = name;
 #if defined (ACE_HAS_THREADS)
-#if !defined (ACE_HAS_STHREADS)
+#if !defined (ACE_HAS_STHREADS) || defined (ACE_LACKS_RWLOCK_T)
   /* NT, POSIX, and VxWorks don't support this natively. */
   ACE_UNUSED_ARG (name);
   int result = -1;
@@ -3208,7 +3208,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
-#endif /* ! ACE_HAS_THREADS || ! ACE_HAS_STHREADS */
+#endif /* ! ACE_HAS_THREADS || ! ACE_HAS_STHREADS || defined (ACE_LACKS_RWLOCK_T) */
 
 #if defined (ACE_PSOS)
 

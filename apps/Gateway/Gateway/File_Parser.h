@@ -59,11 +59,23 @@ protected:
   // Read the next integer.
 
   FP::Return_Type readword (char buf[]);
+  // Read the next "word," which is demarcated by <delimiter>s.  
+  //
+  // @@ This function is inherently flawed since it doesn't take a
+  // count of the size of <buf>...
+
   int delimiter (char ch);
+  // Returns true if <ch> is a delimiter, i.e., ' ', ',', or '\t'.
+
   int comments (char ch);
+  // Returns true if <ch> is the comment character, i.e., '#'.
+
   int skipline (void);
+  // Skips to the remainder of a line, e.g., when we find a comment
+  // character.
 
   FILE *infile_;
+  // Pointer to the file we're reading.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

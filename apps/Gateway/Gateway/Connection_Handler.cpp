@@ -11,9 +11,9 @@ Connection_Handler::id (ACE_INT32 id)
 }
 
 ACE_INT32
-Connection_Handler::id (void)
+Connection_Handler::connection_id (void)
 {
-  return this->id_;
+  return this->connection_id_;
 }
 
 // The total number of bytes sent/received on this Proxy.
@@ -111,11 +111,12 @@ Connection_Handler::max_timeout (void)
 
 int
 Connection_Handler::handle_timeout (const ACE_Time_Value &,
-			       const void *)
+                                    const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
 	     "(%t) attempting to reconnect Connection_Handler %d with timeout = %d\n",
-             this->id (), this->timeout_));
+              this->connection_id (),
+              this->timeout_));
 
   // Delegate the re-connection attempt to the Event Channel.
   this->event_channel_->initiate_connection_connection (this);
@@ -131,7 +132,8 @@ Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) shutting down %s Connection_Handler %d on handle %d\n",
 	      this->connection_role () == 'C' ? "Consumer" : "Supplier",
-	      this->id (), this->get_handle ()));
+	      this->connection_id (), 
+              this->get_handle ()));
 
   // Restart the connection, if possible.
   return this->event_channel_->reinitiate_connection_connection (this);
@@ -179,13 +181,13 @@ Connection_Handler::state (void)
   return this->state_;
 }
 
-ACE_INET_Addr &
+const ACE_INET_Addr &
 Connection_Handler::remote_addr (void)
 {
   return this->remote_addr_;
 }
 
-ACE_INET_Addr &
+const ACE_INET_Addr &
 Connection_Handler::local_addr (void)
 {
   return this->local_addr_;
@@ -205,7 +207,6 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
 
   if (pci.connection_role_ == 'C') // Configure a Consumer_Handler.
     {
-#if defined (ACE_HAS_THREADS)
       // Create a threaded Consumer_Handler.
       if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
 			   Options::OUTPUT_MT))
@@ -215,14 +216,12 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
 
       // Create a reactive Consumer_Handler.
       else
-#endif /* ACE_HAS_THREADS */
 	ACE_NEW_RETURN (connection_handler,
 			Consumer_Handler (pci),
 			0);
     }
   else // connection_role == 'S', so configure a Supplier_Handler.
     {
-#if defined (ACE_HAS_THREADS)
       // Create a threaded Supplier_Handler.
       if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
 			   Options::INPUT_MT))
@@ -232,7 +231,6 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
 
       // Create a reactive Supplier_Handler.
       else
-#endif /* ACE_HAS_THREAD */
 	ACE_NEW_RETURN (connection_handler,
 			Supplier_Handler (pci),
 			0);

@@ -22,7 +22,7 @@
 class Options
 {
   // = TITLE
-  //     Options Singleton for a gatewayd.
+  //     Singleton that consolidates all Options for a gatewayd.
 public:
   // = Options that can be enabled/disabled.
   enum
