@@ -29,9 +29,9 @@ class My_Accept_Handler : public ACE_Event_Handler
   // = Title
   //     A simple event handler
 
-
 public:
   My_Accept_Handler (ACE_INET_Addr &addr);
+  ~My_Accept_Handler ();
   
   int open (ACE_INET_Addr &addr);
 
@@ -48,8 +48,6 @@ private:
   ACE_SOCK_Stream stream_;
 
   ACE_INET_Addr addr_;
-
-};
-  
+};  
 
 #endif  /* ACE_TESTS_MAX_DEFAULT_PORT_TEST */
