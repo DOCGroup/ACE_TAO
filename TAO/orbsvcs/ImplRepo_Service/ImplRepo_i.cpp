@@ -43,11 +43,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                 ACE_dynamic_cast (TAO_IIOP_Profile *,
                                   stub_obj->profile_in_use ());
 
-      TAO_MProfile *mp;
-      ACE_NEW_THROW_EX (mp,
-                        TAO_MProfile (1),
-                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      TAO_MProfile mp(1);
 
       TAO_Profile *new_pfile;
       // @@ Would new_addr->host_ be different from object_addr()?
@@ -56,8 +52,8 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                       TAO_IIOP_Profile (iiop_pfile->object_addr (),
                                         iiop_pfile->object_key ()),
                       CORBA::Object::_nil ());
-      
-      mp->give_profile (new_pfile);
+
+      mp.give_profile (new_pfile);
 
       // create new obj, pfile will be copied!
       new_stub_obj = new TAO_Stub (stub_obj->type_id,
@@ -350,7 +346,7 @@ ImplRepo_i::server_is_running (const char *server,
   ACE_NEW_RETURN (rec.host, ASYS_TCHAR[ACE_OS::strlen (addr.host_.in ()) + 1], 0);
   ACE_OS::strcpy (rec.host, addr.host_.in ());
   rec.port = addr.port_;
-  
+
   ASYS_TCHAR *ping_ior = this->orb_manager_.orb ()->object_to_string (ping, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
