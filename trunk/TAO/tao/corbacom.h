@@ -162,7 +162,7 @@ struct CORBA_SEQUENCE
   ~CORBA_SEQUENCE (void) { }
 };
 
-class ACE_Svc_Export CORBA 
+class TAO_Export CORBA 
   // = TITLE
   //    Provides the CORBA namespace. 
   //
@@ -277,7 +277,7 @@ public:
   static String string_dup (const Char *);
   static void string_free (Char *);
 
-  class ACE_Svc_Export String_var
+  class TAO_Export String_var
     // = TITLE
     //   String var class. Provides automatic deallocation of storage
     //   for the string once it goes out of scope.
@@ -656,23 +656,23 @@ typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
 // signature of a skeleton for every operation of an interface
 
 // COM interface IIDs
-extern "C" ACE_Svc_Export const IID IID_CORBA_Any;
-extern "C" ACE_Svc_Export const IID IID_BOA;
-extern "C" ACE_Svc_Export const IID IID_CORBA_Exception;
-extern "C" ACE_Svc_Export const IID IID_CORBA_UserException;
-extern "C" ACE_Svc_Export const IID IID_CORBA_SystemException;
-extern "C" ACE_Svc_Export const IID IID_CORBA_Request;
-extern "C" ACE_Svc_Export const IID IID_CORBA_Object;
-extern "C" ACE_Svc_Export const IID IID_CORBA_ORB;
-extern "C" ACE_Svc_Export const IID IID_CORBA_NVList;
-extern "C" ACE_Svc_Export const IID IID_CORBA_Principal;
-extern "C" ACE_Svc_Export const IID IID_CORBA_TypeCode;
-extern "C" ACE_Svc_Export const IID IID_CORBA_ServerRequest;
-extern "C" ACE_Svc_Export const IID IID_IIOP_ServerRequest;
-extern "C" ACE_Svc_Export const IID IID_STUB_Object;
-extern "C" ACE_Svc_Export const IID IID_IIOP_Object;
-extern "C" ACE_Svc_Export const IID IID_IIOP_ORB;
-extern "C" ACE_Svc_Export const IID IID_POA;
+extern "C" TAO_Export const IID IID_CORBA_Any;
+extern "C" TAO_Export const IID IID_BOA;
+extern "C" TAO_Export const IID IID_CORBA_Exception;
+extern "C" TAO_Export const IID IID_CORBA_UserException;
+extern "C" TAO_Export const IID IID_CORBA_SystemException;
+extern "C" TAO_Export const IID IID_CORBA_Request;
+extern "C" TAO_Export const IID IID_CORBA_Object;
+extern "C" TAO_Export const IID IID_CORBA_ORB;
+extern "C" TAO_Export const IID IID_CORBA_NVList;
+extern "C" TAO_Export const IID IID_CORBA_Principal;
+extern "C" TAO_Export const IID IID_CORBA_TypeCode;
+extern "C" TAO_Export const IID IID_CORBA_ServerRequest;
+extern "C" TAO_Export const IID IID_IIOP_ServerRequest;
+extern "C" TAO_Export const IID IID_STUB_Object;
+extern "C" TAO_Export const IID IID_IIOP_Object;
+extern "C" TAO_Export const IID IID_IIOP_ORB;
+extern "C" TAO_Export const IID IID_POA;
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.

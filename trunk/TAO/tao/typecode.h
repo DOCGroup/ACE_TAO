@@ -62,7 +62,7 @@ public:
 
 class TC_Private_State;
 
-class ACE_Svc_Export CORBA_TypeCode : public IUnknown
+class TAO_Export CORBA_TypeCode : public IUnknown
   // = TITLE
   //   The CORBA TypeCode class. It maintains the in-memory
   //   representation of any OMG CORBA IDL data type.
@@ -363,7 +363,7 @@ private:
   // the destructor
 };
 
-class ACE_Svc_Export TC_Private_State
+class TAO_Export TC_Private_State
   // = TITLE
   //   Private state of the TypeCode.
   //
@@ -412,32 +412,32 @@ public:
 #if 0
 // =TypeCode constants, which are always accessible in all ORB runtimes.
 
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Null;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Void;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Short;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Long;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_LongLong;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_UShort;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_ULong;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_ULongLong;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Null;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Void;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Short;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Long;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_LongLong;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_UShort;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_ULong;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_ULongLong;
 
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Float;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Double;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_LongDouble;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Float;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Double;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_LongDouble;
 
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Boolean;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Octet;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Boolean;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Octet;
 
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Char;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_String;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_WChar;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_WString;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Char;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_String;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_WChar;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_WString;
 
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Any;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_TypeCode;
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Principal;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Any;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_TypeCode;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Principal;
 
-extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Object;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Object;
 #endif /* 0 */
 
 #endif /* TAO_TYPECODE_H */

@@ -25,7 +25,7 @@
 
 #include "tao/corba.h"
 
-class ACE_Svc_Export CORBA_ORB : public IUnknown
+class TAO_Export CORBA_ORB : public IUnknown
   // = TITLE
   // ORB pseudo-objref.
 {

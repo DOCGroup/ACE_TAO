@@ -19,7 +19,7 @@
 #if !defined (TAO_PRINCIPAL_H)
 #  define TAO_PRINCIPAL_H
 
-class ACE_Svc_Export CORBA_Principal : public IUnknown
+class TAO_Export CORBA_Principal : public IUnknown
   // = TITLE
   //    A "Principal" identifies an authenticated entity in the
   //    network administration framework.  Identities are used to

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    corba.h
 //
@@ -22,7 +22,7 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-// 
+//
 // ============================================================================
 
 #if !defined(TAO_CORBA_H)
@@ -49,6 +49,28 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
+
+#if !defined (TAO_HAS_DLL)
+// Default is to build TAO DLL library on NT.
+#  define TAO_HAS_DLL 1
+#endif /* TAO_HAS_DLL */
+
+// Here are definition for TAO library.
+#if defined (TAO_HAS_DLL) && (TAO_HAS_DLL == 1)
+#  if defined (TAO_BUILD_DLL)
+#    define TAO_Export ACE_Proper_Export_Flag
+#    define TAO_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+#    define TAO_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
+#  else
+#    define TAO_Export ACE_Proper_Import_Flag
+#    define TAO_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+#    define TAO_SINGLETON_INSTANTIATION(T)
+#  endif /* TAO_BUILD_DLL */
+#else /* TAO_HAS_DLL */
+#  define TAO_Export
+#  define TAO_SINGLETON_DECLARATION(T)
+#  define TAO_SINGLETON_INSTANTIATION(T)
+#endif /* TAO_HAS_DLL */
 
 // COM stuff
 #include <objbase.h>
@@ -100,7 +122,7 @@
 #include "tao/optable.h"
 #include "tao/debug.h"
 
-// GIOP - IIOP related includes 
+// GIOP - IIOP related includes
 #include "tao/iiopobj.h"
 #include "tao/iioporb.h"
 #include "tao/giop.h"

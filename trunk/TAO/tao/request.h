@@ -23,7 +23,7 @@
 
 // @@ Please comment everything in this file.
 
-class ACE_Svc_Export CORBA_Request : public IUnknown
+class TAO_Export CORBA_Request : public IUnknown
 {
 public:
   // @@ These inlines should be moved into a *.i file.

@@ -183,7 +183,7 @@ extern CORBA::TypeCode TC_ServiceContextList;
 
 // = Request, Reply headers
 
-class ACE_Svc_Export TAO_GIOP_RequestHeader 
+class TAO_Export TAO_GIOP_RequestHeader 
   // = TITLE
   //   This class embodies the header of a GIOP request.
   //
@@ -273,7 +273,7 @@ struct TAO_GIOP_LocateReplyHeader
   TAO_GIOP_LocateStatusType locate_status;
 };
 
-class ACE_Svc_Export TAO_GIOP_Invocation 
+class TAO_Export TAO_GIOP_Invocation 
   // = TITLE
   //   Invocation: Sends a Request, optionally reads associated Reply.
   //   Uses transport info passed in, doesn't locate anything.
@@ -352,7 +352,7 @@ typedef void (*TAO_GIOP_RequestHandler) (TAO_GIOP_RequestHeader &,
                                          CDR *,
                                          void *,
                                          CORBA::Environment &);
-class ACE_Svc_Export TAO_GIOP
+class TAO_Export TAO_GIOP
   // = TITLE
   //   A namespace for GIOP-related operations.
   //

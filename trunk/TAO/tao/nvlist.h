@@ -16,13 +16,13 @@
 #if !defined (TAO_NVLIST_H)
 #  define TAO_NVLIST_H
 
-// @@ IS it necessary to use ACE_Svc_Export on a forward decl?  I
-// simply did a global replace of _EXPCLASS with ACE_Svc_Export.  I'm
+// @@ IS it necessary to use TAO_Export on a forward decl?  I
+// simply did a global replace of _EXPCLASS with TAO_Export.  I'm
 // not familiar enough with crazy MSVC nuances to know if this is
 // necessary, what it means, etc.  Perhaps Brian can shed some light
 // on the subject? --cjc
 
-class ACE_Svc_Export CORBA_NamedValue
+class TAO_Export CORBA_NamedValue
 {
   // = TITLE
   // NamedValue ... these occur only in "NVList" (named value list) data
@@ -63,7 +63,7 @@ private:
   friend class CORBA_Request;
 };
 
-class ACE_Svc_Export CORBA_NVList
+class TAO_Export CORBA_NVList
   // = TITLE
   //   NVList ... this is used in the (client side) DII (Dynamic
   //   Invocation Interface) to hold parameters, except for the return

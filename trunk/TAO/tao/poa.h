@@ -24,7 +24,7 @@
 class TAO_GIOP_RequestHeader;
 
 // @@ Why does this inherit from IUnknown?
-class ACE_Svc_Export CORBA_POA : public IUnknown
+class TAO_Export CORBA_POA : public IUnknown
   // = TITLE
   //    The <{TAO}> Basic Object Adapter.
 {
