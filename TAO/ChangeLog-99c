@@ -1,3 +1,11 @@
+Mon Nov  8 20:46:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.h: Added a
+	  #pragma warning(disable:4250) so that MSVC++ won't complain
+ 	  about "dominance violations".  Thanks to Jovan Kilibarda
+ 	  <jovank@realtimeinc.com> for reporting this and providing the
+ 	  solution.
+
 Mon Nov  8 19:25:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:

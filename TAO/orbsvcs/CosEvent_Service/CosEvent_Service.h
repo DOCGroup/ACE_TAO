@@ -19,6 +19,10 @@
 #include "orbsvcs/CosEvent_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
 
+#if defined (_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class CosEvent_Service : public CosEC_ServantBase
 {
   // = TITLE
@@ -94,4 +98,9 @@ protected:
   // Flag to indicate if the RtEC is local/remote,
   // 0 => local, 1 => remote, default is local.
 };
+
+#if defined (_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
+
 #endif /* COSEVENT_SERVICE_H */
