@@ -5,6 +5,7 @@
 
 #include "AMH_Servant.h"
 #include "Base_Server.h"
+#include "tao/Strategies/advanced_resource.h"
 
 #include "TestC.h"
 
