@@ -1,3 +1,10 @@
+Tue Jul  6 10:15:11 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp (CIAO):
+	* DAnCE/ExecutionManager/ExecutionManager_Impl.cpp (destroyManager):
+
+	  Deleted some comments which has been addressed already.
+
 Mon Jul  5 08:39:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/Segment_Timer/Segment_Timer.cpp:

@@ -10,9 +10,6 @@ namespace CIAO
   bool operator<< (Deployment::ImplementationInfos & info,
                    const Deployment::DeploymentPlan & plan)
   {
-    // @@ (OO) Since leng is a constant, please declare it as such,
-    //         i.e. "const CORBA::ULong len = ...", to improve "const
-    //         correctness".
     const CORBA::ULong len = plan.instance.length ();
     info.length (len);
 
