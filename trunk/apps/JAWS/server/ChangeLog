@@ -1,5 +1,15 @@
 Mon Jun  2 16:35:18 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
+	* HTTP_Helpers.cpp: Serious bug in base64 decoder routine
+ 	  squashed.  Didn't initialize an array with 0's.  The original
+ 	  source had them declared static.  Also, changed sizeof alphabet_
+ 	  to strlen (alphabet_), because original code had alphabet_ as an
+ 	  array, but my translation has alphabet_ as a pointer.
+
+	* HTTP_Response.cpp: Added some code to check to see if the
+ 	  decoder returns 0.  If it does, flag this as a failed
+ 	  authorization attempt.
+
 	* HTTP_Handler.cpp: Added a "\r\n" to the confirmation message in
 	  receive_file_complete () method.
 
