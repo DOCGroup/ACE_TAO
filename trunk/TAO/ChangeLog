@@ -1,3 +1,9 @@
+Tue Feb  1 12:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor/IORInfoC.{h,cpp,inl}:
+        * tao/IORInterceptor/IORInterceptorC.{h,cpp,inl}:
+          Regenerated
+
 Tue Feb  1 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynamicAnyC.{h,cpp,i,inl}:
