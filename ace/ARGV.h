@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -36,7 +35,8 @@ public:
   // The subscript and argv() operations are not allowed on an
   // ACE_ARGV created this way.
 
-  ACE_ARGV (ASYS_TCHAR *argv[], int substitute_env_args = 1);
+  ACE_ARGV (ASYS_TCHAR *argv[],
+            int substitute_env_args = 1);
   // Converts <argv> into a linear string.  If <substitute_env_args>
   // is enabled then we'll substitute the environment variables for
   // each $ENV encountered in the string.
@@ -58,9 +58,9 @@ public:
 
   ASYS_TCHAR **argv (void);
   // Returns the <argv> array.  Caller should not delete this memory
-  // since the <ARGV> destructor will delete it.  If the caller modifies
-  // the array in the iterative mode, the changes are not saved to the
-  // queue.
+  // since the <ARGV> destructor will delete it.  If the caller
+  // modifies the array in the iterative mode, the changes are not
+  // saved to the queue.
 
   size_t argc (void) const;
   // Returns <argc>. 
