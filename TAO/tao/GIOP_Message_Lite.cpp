@@ -910,10 +910,10 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
                                   sizeof repbuf);
       // This output CDR is not used!
 
-      TAO_ObjectKey tmp_key (locate_request.object_key ().length (),
-                             locate_request.object_key ().length (),
-                             locate_request.object_key ().get_buffer (),
-                             0);
+      TAO::ObjectKey tmp_key (locate_request.object_key ().length (),
+                              locate_request.object_key ().length (),
+                              locate_request.object_key ().get_buffer (),
+                              0);
 
       // Set it to an error state
       parse_error = 1;
@@ -1206,7 +1206,7 @@ TAO_GIOP_Message_Lite::write_request_header (
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
   // anyway.
-  const TAO_ObjectKey *key = spec.object_key ();
+  const TAO::ObjectKey *key = spec.object_key ();
 
   if (key != 0)
     {
@@ -1244,7 +1244,7 @@ TAO_GIOP_Message_Lite::write_locate_request_header (
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
   // anyway.
-  const TAO_ObjectKey *key = spec.object_key ();
+  const TAO::ObjectKey *key = spec.object_key ();
 
   if (key)
     {
@@ -1363,7 +1363,7 @@ TAO_GIOP_Message_Lite::parse_locate_header (
   // Store it in the Locate request classes.
   request.request_id (req_id);
 
-  TAO_ObjectKey &object_key =
+  TAO::ObjectKey &object_key =
     request.object_key ();
 
   // Note that here there are no unions and so no problems.

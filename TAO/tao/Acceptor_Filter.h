@@ -52,7 +52,7 @@ public:
    * selected acceptors (endpoints) from the array delimited by
    * <acceptors_begin> and <acceptors_end>.
    */
-  virtual int fill_profile (const TAO_ObjectKey &object_key,
+  virtual int fill_profile (const TAO::ObjectKey &object_key,
                             TAO_MProfile &mprofile,
                             TAO_Acceptor **acceptors_begin,
                             TAO_Acceptor **acceptors_end,

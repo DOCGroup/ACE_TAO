@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "Messaging_SyncScopeC.h"
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
 
+
+#include "Messaging_SyncScopeC.h"
 #include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
@@ -31,24 +34,27 @@
 #include "Messaging_SyncScopeC.i"
 #endif /* !defined INLINE */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+
 static const CORBA::Long _oc_Messaging_SyncScope[] =
 {
-  TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d657373),
-  ACE_NTOHL (0x6167696e),
-  ACE_NTOHL (0x672f5379),
-  ACE_NTOHL (0x6e635363),
-  ACE_NTOHL (0x6f70653a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d657373), 
+  ACE_NTOHL (0x6167696e), 
+  ACE_NTOHL (0x672f5379), 
+  ACE_NTOHL (0x6e635363), 
+  ACE_NTOHL (0x6f70653a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Messaging/SyncScope:1.0
-  10,
-  ACE_NTOHL (0x53796e63),
-  ACE_NTOHL (0x53636f70),
+    10,
+  ACE_NTOHL (0x53796e63), 
+  ACE_NTOHL (0x53636f70), 
   ACE_NTOHL (0x65000000),  // name = SyncScope
-  CORBA::tk_short,
+    CORBA::tk_short,
 
 };
 
@@ -62,22 +68,10 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_SyncScope (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_SyncScope, &_tc_TAO_tc_Messaging_SyncScope)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_SyncScope,
+    &_tc_TAO_tc_Messaging_SyncScope
+  )
 TAO_NAMESPACE_END
 
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_NONE, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_TRANSPORT, 1)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_SERVER, 2)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_TARGET, 3)
-TAO_NAMESPACE_END

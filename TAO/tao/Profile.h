@@ -107,11 +107,11 @@ public:
   virtual int encode_endpoints (void) = 0;
 
   /// @@ deprecated. return a reference to the Object Key.
-  virtual const TAO_ObjectKey &object_key (void) const = 0;
+  virtual const TAO::ObjectKey &object_key (void) const = 0;
 
   /// Obtain the object key, return 0 if the profile cannot be parsed.
   /// The memory is owned by the caller!
-  virtual TAO_ObjectKey *_key (void) const = 0;
+  virtual TAO::ObjectKey *_key (void) const = 0;
 
   /**
    * Return pointer to this profile's endpoint.  If the profile
@@ -291,8 +291,8 @@ public:
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual int encode_endpoints (void);
-  virtual const TAO_ObjectKey &object_key (void) const;
-  virtual TAO_ObjectKey *_key (void) const;
+  virtual const TAO::ObjectKey &object_key (void) const;
+  virtual TAO::ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);
   virtual size_t endpoint_count (void);
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);

@@ -19,12 +19,16 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
+
 ACE_INLINE
-PortableInterceptor::ObjectReferenceFactory::ObjectReferenceFactory () // default constructor
+PortableInterceptor::ObjectReferenceFactory::ObjectReferenceFactory (void)
 {}
 
 ACE_INLINE
-PortableInterceptor::ObjectReferenceFactory::~ObjectReferenceFactory () // destructor
+PortableInterceptor::ObjectReferenceFactory::~ObjectReferenceFactory (void)
 {}
 
 ACE_INLINE const char* 
@@ -33,12 +37,15 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_static_repository_id ()
   return "IDL:omg.org/PortableInterceptor/ObjectReferenceFactory:1.0";
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
+
 ACE_INLINE
-PortableInterceptor::ObjectReferenceTemplate::ObjectReferenceTemplate () // default constructor
+PortableInterceptor::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
 {}
 
 ACE_INLINE
-PortableInterceptor::ObjectReferenceTemplate::~ObjectReferenceTemplate () // destructor
+PortableInterceptor::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
 {}
 
 ACE_INLINE const char* 
@@ -47,13 +54,16 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
   return "IDL:omg.org/PortableInterceptor/ObjectReferenceTemplate:1.0";
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
 #if !defined (__TAO_UNBOUNDED_VALUETYPE_SEQUENCE_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CI_)
 #define __TAO_UNBOUNDED_VALUETYPE_SEQUENCE_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CI_
 
-ACE_INLINE PortableInterceptor::ObjectReferenceTemplate **
+ACE_INLINE
+PortableInterceptor::ObjectReferenceTemplate **
 PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (CORBA::ULong nelems)
 {
   PortableInterceptor::ObjectReferenceTemplate **buf = 0;
@@ -68,11 +78,15 @@ PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_Objec
   return buf;
 }
 
-ACE_INLINE void 
+ACE_INLINE
+void 
 PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::freebuf (PortableInterceptor::ObjectReferenceTemplate **buffer)
 {
   if (buffer == 0)
-    return;
+    {
+      return;
+    }
+  
   delete[] buffer;
 }
 
@@ -88,142 +102,178 @@ PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_Objec
 }
 
 ACE_INLINE
-PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (CORBA::ULong maximum,
-  CORBA::ULong length,
-  PortableInterceptor::ObjectReferenceTemplate* *value,
-  CORBA::Boolean release)
-: TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (
+    CORBA::ULong maximum,
+    CORBA::ULong length,
+    PortableInterceptor::ObjectReferenceTemplate* *value,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
 {
 }
 
 ACE_INLINE
-PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq(const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs)
+PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq(
+    const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs
+  )
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   if (rhs.buffer_ != 0)
-  {
-    PortableInterceptor::ObjectReferenceTemplate **tmp1 = _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (this->maximum_);
-    PortableInterceptor::ObjectReferenceTemplate ** const tmp2 = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate ** ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      {
-        if (tmp2[i] != 0)
-          tmp2[i]->_add_ref ();
-        tmp1[i] = tmp2 [i];
-      }
-    
-    this->buffer_ = tmp1;
-  }
+    {
+      PortableInterceptor::ObjectReferenceTemplate **tmp1 =
+        _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (this->maximum_);
+      PortableInterceptor::ObjectReferenceTemplate ** const tmp2 =
+        ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        {
+          if (tmp2[i] != 0)
+            {
+              tmp2[i]->_add_ref ();
+            }
+          
+          tmp1[i] = tmp2 [i];
+        }
+      
+      this->buffer_ = tmp1;
+    }
   else
-  {
-    this->buffer_ = 0;
-  }
+    {
+      this->buffer_ = 0;
+    }
 }
 
-ACE_INLINE PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &
-PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::operator= (const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs)
+ACE_INLINE
+PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &
+PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::operator= (
+    const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs
+  )
 {
   if (this == &rhs)
-    return *this;
+    {
+      return *this;
+    }
   
   if (this->release_)
-  {
-    PortableInterceptor::ObjectReferenceTemplate **tmp = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate **, this->buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      if (tmp[i] != 0)
-        tmp[i]->_remove_ref ();
-      tmp[i] = 0;
+      PortableInterceptor::ObjectReferenceTemplate **tmp =
+        ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        {
+          if (tmp[i] != 0)
+            {
+              tmp[i]->_remove_ref ();
+            }
+          
+          tmp[i] = 0;
+        }
+      
+      if (this->maximum_ < rhs.maximum_)
+        {
+          _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::freebuf (tmp);
+          this->buffer_ = _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (rhs.maximum_);
+        }
     }
-    if (this->maximum_ < rhs.maximum_)
-    {
-      _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::freebuf (tmp);
-      this->buffer_ = _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (rhs.maximum_);
-    }
-  }
   else
-    this->buffer_ = _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (rhs.maximum_);
+    {
+      this->buffer_ =
+        _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (rhs.maximum_);
+    }
   
   TAO_Unbounded_Base_Sequence::operator= (rhs);
   
-  PortableInterceptor::ObjectReferenceTemplate **tmp1 = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate **, this->buffer_);
-  PortableInterceptor::ObjectReferenceTemplate ** const tmp2 = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate ** ACE_CAST_CONST, rhs.buffer_);
+  PortableInterceptor::ObjectReferenceTemplate **tmp1 =
+    ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate **, this->buffer_);
+  
+  PortableInterceptor::ObjectReferenceTemplate ** const tmp2 =
+    ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate ** ACE_CAST_CONST, rhs.buffer_);
   
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
       if (tmp2[i] != 0)
-        tmp2[i]->_add_ref ();
+        {
+          tmp2[i]->_add_ref ();
+        }
+      
       tmp1[i] = tmp2 [i];
     }
   
   return *this;
 }
 
-ACE_INLINE TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var>
+ACE_INLINE
+TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var>
 PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::operator[] (CORBA::ULong index) const
-// read-write accessor
 {
   ACE_ASSERT (index < this->maximum_);
-  PortableInterceptor::ObjectReferenceTemplate ** const tmp = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate ** ACE_CAST_CONST, this->buffer_);
+  PortableInterceptor::ObjectReferenceTemplate ** const tmp =
+    ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate ** ACE_CAST_CONST, this->buffer_);
   return TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var> (tmp + index, this->release_);
 }
 
-ACE_INLINE PortableInterceptor::ObjectReferenceTemplate* *
+ACE_INLINE
+PortableInterceptor::ObjectReferenceTemplate* *
 PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::get_buffer (CORBA::Boolean orphan)
 {
   PortableInterceptor::ObjectReferenceTemplate **result = 0;
+  
   if (orphan == 0)
-  {
-    // We retain ownership.
-    if (this->buffer_ == 0)
     {
-      result = _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (this->maximum_);
-      this->buffer_ = result;
-      this->release_ = 1;
+      // We retain ownership.
+      if (this->buffer_ == 0)
+        {
+          result =
+            _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (this->maximum_);
+          this->buffer_ = result;
+          this->release_ = 1;
+        }
+      else
+        {
+          result =
+            ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate**, this->buffer_);
+        }
     }
-    else
-    {
-      result = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate**, this->buffer_);
-    }
-  }
   else // if (orphan == 1)
-  {
-    if (this->release_ != 0)
     {
-      // We set the state back to default and relinquish
-      // ownership.
-      result = ACE_reinterpret_cast(PortableInterceptor::ObjectReferenceTemplate**,this->buffer_);
-      this->maximum_ = 0;
-      this->length_ = 0;
-      this->buffer_ = 0;
-      this->release_ = 0;
+      if (this->release_ != 0)
+        {
+          // We set the state back to default and relinquish ownership.
+          result =
+            ACE_reinterpret_cast(PortableInterceptor::ObjectReferenceTemplate**,this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = 0;
+        }
     }
-  }
+  
   return result;
 }
 
-ACE_INLINE const PortableInterceptor::ObjectReferenceTemplate* *
+ACE_INLINE
+const PortableInterceptor::ObjectReferenceTemplate* *
 PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::get_buffer (void) const
 {
-  return ACE_reinterpret_cast(const PortableInterceptor::ObjectReferenceTemplate ** ACE_CAST_CONST, this->buffer_);
+  return ACE_reinterpret_cast (const PortableInterceptor::ObjectReferenceTemplate ** ACE_CAST_CONST, this->buffer_);
 }
 
-
 #endif /* end #if !defined */
-
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CI_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CI_
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
+
 // *************************************************************
 // Inline operations for class PortableInterceptor::ObjectReferenceTemplateSeq_var
 // *************************************************************
 
 ACE_INLINE
-PortableInterceptor::ObjectReferenceTemplateSeq_var::ObjectReferenceTemplateSeq_var (void) // default constructor
+PortableInterceptor::ObjectReferenceTemplateSeq_var::ObjectReferenceTemplateSeq_var (void)
   : ptr_ (0)
 {}
 
@@ -233,21 +283,26 @@ PortableInterceptor::ObjectReferenceTemplateSeq_var::ObjectReferenceTemplateSeq_
 {}
 
 ACE_INLINE
-PortableInterceptor::ObjectReferenceTemplateSeq_var::ObjectReferenceTemplateSeq_var (const ::PortableInterceptor::ObjectReferenceTemplateSeq_var &p) // copy constructor
+PortableInterceptor::ObjectReferenceTemplateSeq_var::ObjectReferenceTemplateSeq_var (const ::PortableInterceptor::ObjectReferenceTemplateSeq_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::PortableInterceptor::ObjectReferenceTemplateSeq (*p.ptr_));
+    {
+      ACE_NEW (this->ptr_, ::PortableInterceptor::ObjectReferenceTemplateSeq (*p.ptr_));
+    }
   else
-    this->ptr_ = 0;
+    {
+      this->ptr_ = 0;
+    }
 }
 
 ACE_INLINE
-PortableInterceptor::ObjectReferenceTemplateSeq_var::~ObjectReferenceTemplateSeq_var (void) // destructor
+PortableInterceptor::ObjectReferenceTemplateSeq_var::~ObjectReferenceTemplateSeq_var (void)
 {
   delete this->ptr_;
 }
 
-ACE_INLINE PortableInterceptor::ObjectReferenceTemplateSeq_var &
+ACE_INLINE
+PortableInterceptor::ObjectReferenceTemplateSeq_var &
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator= (ObjectReferenceTemplateSeq *p)
 {
   delete this->ptr_;
@@ -255,7 +310,8 @@ PortableInterceptor::ObjectReferenceTemplateSeq_var::operator= (ObjectReferenceT
   return *this;
 }
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq_var &
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq_var &
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator= (const ::PortableInterceptor::ObjectReferenceTemplateSeq_var &p)
 {
   if (this != &p)
@@ -267,8 +323,12 @@ PortableInterceptor::ObjectReferenceTemplateSeq_var::operator= (const ::Portable
         }
       else
         {
-          ObjectReferenceTemplateSeq *deep_copy =
-            new ObjectReferenceTemplateSeq (*p.ptr_);
+          ObjectReferenceTemplateSeq *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              ObjectReferenceTemplateSeq (*p.ptr_),
+              *this
+            );
           
           if (deep_copy != 0)
             {
@@ -283,63 +343,68 @@ PortableInterceptor::ObjectReferenceTemplateSeq_var::operator= (const ::Portable
   return *this;
 }
 
-ACE_INLINE const ::PortableInterceptor::ObjectReferenceTemplateSeq *
+ACE_INLINE
+const ::PortableInterceptor::ObjectReferenceTemplateSeq *
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq *
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq *
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator const ::PortableInterceptor::ObjectReferenceTemplateSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator ::PortableInterceptor::ObjectReferenceTemplateSeq &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator ::PortableInterceptor::ObjectReferenceTemplateSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-// variable-size types only
+// Variable-size types only.
 ACE_INLINE
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator ::PortableInterceptor::ObjectReferenceTemplateSeq *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var>
+ACE_INLINE
+TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var>
 PortableInterceptor::ObjectReferenceTemplateSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const ::PortableInterceptor::ObjectReferenceTemplateSeq &
+ACE_INLINE
+const ::PortableInterceptor::ObjectReferenceTemplateSeq &
 PortableInterceptor::ObjectReferenceTemplateSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq &
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq &
 PortableInterceptor::ObjectReferenceTemplateSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
-// mapping for variable size 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq *&
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq *&
 PortableInterceptor::ObjectReferenceTemplateSeq_var::out (void)
 {
   delete this->ptr_;
@@ -347,7 +412,8 @@ PortableInterceptor::ObjectReferenceTemplateSeq_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq *
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq *
 PortableInterceptor::ObjectReferenceTemplateSeq_var::_retn (void)
 {
   ::PortableInterceptor::ObjectReferenceTemplateSeq *tmp = this->ptr_;
@@ -355,11 +421,15 @@ PortableInterceptor::ObjectReferenceTemplateSeq_var::_retn (void)
   return tmp;
 }
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq *
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq *
 PortableInterceptor::ObjectReferenceTemplateSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
 
 // *************************************************************
 // Inline operations for class PortableInterceptor::ObjectReferenceTemplateSeq_out
@@ -373,7 +443,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq_out::ObjectReferenceTemplateSeq_
 }
 
 ACE_INLINE
-PortableInterceptor::ObjectReferenceTemplateSeq_out::ObjectReferenceTemplateSeq_out (ObjectReferenceTemplateSeq_var &p) // constructor from _var
+PortableInterceptor::ObjectReferenceTemplateSeq_out::ObjectReferenceTemplateSeq_out (ObjectReferenceTemplateSeq_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -381,75 +451,97 @@ PortableInterceptor::ObjectReferenceTemplateSeq_out::ObjectReferenceTemplateSeq_
 }
 
 ACE_INLINE
-PortableInterceptor::ObjectReferenceTemplateSeq_out::ObjectReferenceTemplateSeq_out (const ::PortableInterceptor::ObjectReferenceTemplateSeq_out &p) // copy constructor
+PortableInterceptor::ObjectReferenceTemplateSeq_out::ObjectReferenceTemplateSeq_out (const ::PortableInterceptor::ObjectReferenceTemplateSeq_out &p)
   : ptr_ (ACE_const_cast (ObjectReferenceTemplateSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq_out &
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq_out &
 PortableInterceptor::ObjectReferenceTemplateSeq_out::operator= (const ::PortableInterceptor::ObjectReferenceTemplateSeq_out &p)
 {
   this->ptr_ = ACE_const_cast (ObjectReferenceTemplateSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq_out &
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq_out &
 PortableInterceptor::ObjectReferenceTemplateSeq_out::operator= (ObjectReferenceTemplateSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableInterceptor::ObjectReferenceTemplateSeq_out::operator ::PortableInterceptor::ObjectReferenceTemplateSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq *&
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq *&
 PortableInterceptor::ObjectReferenceTemplateSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::PortableInterceptor::ObjectReferenceTemplateSeq *
+ACE_INLINE
+::PortableInterceptor::ObjectReferenceTemplateSeq *
 PortableInterceptor::ObjectReferenceTemplateSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var>
+ACE_INLINE
+TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var>
 PortableInterceptor::ObjectReferenceTemplateSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
+
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (PortableInterceptor::ObjectReferenceFactory *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (PortableInterceptor::ObjectReferenceFactory *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
+
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
+
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (PortableInterceptor::ObjectReferenceTemplate *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (PortableInterceptor::ObjectReferenceTemplate *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
+
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
 
 #if !defined _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_I_
 #define _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_I_
@@ -458,6 +550,7 @@ CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const PortableInterceptor::ObjectReferenceTemplateSeq &
   );
+
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     PortableInterceptor::ObjectReferenceTemplateSeq &

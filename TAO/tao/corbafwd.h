@@ -309,6 +309,12 @@ enum TAO_SERVANT_LOCATION
   TAO_SERVANT_NOT_FOUND
 };
 
+TAO_NAMESPACE  TAO
+{
+  class ObjectKey;
+}
+TAO_NAMESPACE_CLOSE  // end of class (namespace) TAO
+
 TAO_NAMESPACE CORBA
 {
   // = TITLE
@@ -385,27 +391,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_WString_var WString_var;
   typedef CORBA_WString_out WString_out;
 
-  /// String sequence typedefs
-  typedef CORBA_StringSeq StringSeq;
-  typedef CORBA_StringSeq_var StringSeq_var;
-  typedef CORBA_StringSeq_out StringSeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_StringSeq;
-
-  typedef CORBA_WStringSeq WStringSeq;
-  typedef CORBA_WStringSeq_var WStringSeq_var;
-  typedef CORBA_WStringSeq_out WStringSeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_WStringSeq;
-
-  /// Octet sequence typedef
-  typedef CORBA_OctetSeq OctetSeq;
-  typedef CORBA_OctetSeq_var OctetSeq_var;
-  typedef CORBA_OctetSeq_out OctetSeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_OctetSeq;
-
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_out;
-
   // = various CORBA defined classes.
 
   class Any;
@@ -476,14 +461,8 @@ TAO_NAMESPACE CORBA
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
 
-  typedef CORBA_Current Current;
-  typedef CORBA_Current *Current_ptr;
-  typedef CORBA_Current_var Current_var;
-  typedef CORBA_Current_out Current_out;
-
   class TypeCodeFactory;
   typedef TypeCodeFactory *TypeCodeFactory_ptr;
-//  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TypeCodeFactory;
 
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueBase *ValueBase_ptr;
@@ -1023,10 +1002,6 @@ operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
 
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::TCKind &);
-
-class TAO_ObjectKey;
-class TAO_ObjectKey_var;
-class TAO_ObjectKey_out;
 
 #if defined (__ACE_INLINE__)
 # include "tao/corbafwd.i"

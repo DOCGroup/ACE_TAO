@@ -45,7 +45,8 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
   // anyway.
-  const TAO_ObjectKey *key = spec.object_key ();
+  const TAO::ObjectKey *key = spec.object_key ();
+
   if (key)
     {
       // Put in the object key
@@ -95,7 +96,8 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
   // anyway.
-  const TAO_ObjectKey *key = spec.object_key ();
+  const TAO::ObjectKey *key = spec.object_key ();
+
   if (key)
     {
       // Everything is fine
@@ -367,7 +369,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
 
       request.requesting_principal (principal.in ()); */
 
-      CORBA_OctetSeq oct_seq;
+      CORBA::OctetSeq oct_seq;
       input >> oct_seq;
       request.requesting_principal (oct_seq);
       hdr_status = (CORBA::Boolean) input.good_bit ();

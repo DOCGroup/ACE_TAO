@@ -28,6 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Policy_ForwardC.h"
+#include "tao/Object_KeyC.h"
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
@@ -194,14 +195,14 @@ public:
 
   /// Return the object key as an out parameter.  Caller should release
   /// return value when finished with it.
-  virtual TAO_ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
 
   /**
    * Return a reference to the object key of profile in-use.
    * If there's no in-use profile, then the program will
    * probably crash.  This method does not create a new copy.
    */
-  virtual const TAO_ObjectKey &_object_key (void);
+  virtual const TAO::ObjectKey &_object_key (void);
 
   /// Downcasting this object pointer to some other derived class.
   /// This QueryInterface stuff only work for local object.

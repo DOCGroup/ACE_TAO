@@ -10,7 +10,7 @@ TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter (void)
 }
 
 int
-TAO_Default_Acceptor_Filter::fill_profile (const TAO_ObjectKey &object_key,
+TAO_Default_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
                                            TAO_MProfile &mprofile,
                                            TAO_Acceptor **acceptors_begin,
                                            TAO_Acceptor **acceptors_end,

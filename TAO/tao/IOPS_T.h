@@ -8,7 +8,7 @@
 //       Washington University
 //       St. Louis, MO
 //       USA
-//       http://www.cs.wustl.edu/~schmidt/doc-group.html
+//       http://www.cs.wustl.edu/~schmidt/doc-center.html
 // and
 //       Distributed Object Computing Laboratory
 //       University of California at Irvine
@@ -19,10 +19,14 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
+
 #ifndef _TAO_IDL_IOPS_T_H_
 #define _TAO_IDL_IOPS_T_H_
 
-#include "ace/pre.h"
+
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -31,15 +35,26 @@
 #endif /* _MSC_VER */
 
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
+
+#if defined (ACE_HAS_USING_KEYWORD)
+TAO_NAMESPACE  POA_IOP
+{
+}
+TAO_NAMESPACE_CLOSE // module IOP
+#endif /* ACE_HAS_USING_KEYWORD */
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
+
 #if defined (__ACE_INLINE__)
 #include "IOPS_T.i"
 #endif /* defined INLINE */
 
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "IOPS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("IOPS_T.cpp")
@@ -49,5 +64,4 @@
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* ifndef */

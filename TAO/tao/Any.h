@@ -45,10 +45,11 @@ namespace CORBA
   public:
 
 // ********** TEMPORARY *********************
-    typedef void (*_tao_destructor)(void *);
+//    typedef void (*_tao_destructor)(void *);
     void _tao_replace (CORBA::TypeCode_ptr,
                        int byte_order,
                        const ACE_Message_Block *mb) {}
+/*
     void _tao_replace (CORBA::TypeCode_ptr type,
                        int byte_order,
                        const ACE_Message_Block *mb,
@@ -59,9 +60,8 @@ namespace CORBA
                        CORBA::Boolean any_owns_data,
                        void* value,
                        CORBA::Any::_tao_destructor destructor) {}
-    CORBA::Boolean any_owns_data (void) const { return 0; }
-//    CORBA::Boolean contains_local (void) const { return 0; }
-//    void contains_local (CORBA::Boolean) {}
+*/
+//    CORBA::Boolean any_owns_data (void) const { return 0; }
     CORBA::TypeCode_ptr type_;
     ACE_Message_Block *cdr_;
     void _tao_encode (TAO_OutputCDR &cdr,

@@ -83,7 +83,7 @@ public:
    * in the mprofile that is of the same type.  Currently, this
    * is used when RT CORBA is enabled.
    */
-  virtual int create_profile (const TAO_ObjectKey &object_key,
+  virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority) = 0;
 
@@ -105,7 +105,7 @@ public:
    * encapsulation.
    */
   virtual int object_key (IOP::TaggedProfile &profile,
-                          TAO_ObjectKey &key) = 0;
+                          TAO::ObjectKey &key) = 0;
 
 private:
 

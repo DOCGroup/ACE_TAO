@@ -19,6 +19,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+
+
 #include "PollableC.h"
 
 #if (TAO_HAS_AMI_POLLER == 1)
@@ -33,6 +37,8 @@
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+
+
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -40,6 +46,9 @@
 #if !defined (__ACE_INLINE__)
 #include "PollableC.i"
 #endif /* !defined INLINE */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int CORBA::Pollable::_tao_class_id = 0;
 
@@ -86,13 +95,23 @@ tao_CORBA_Pollable_upcast (
   return *tmp;
 }
 
+CORBA::Boolean
+tao_CORBA_Pollable_marshal (
+    CORBA::Pollable_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+
 // *************************************************************
 // CORBA::Pollable_var
-// TAO_IDL - Generated from
-// be/be_interface.cpp:654
 // *************************************************************
 
-CORBA::Pollable_var::Pollable_var (void) // default constructor
+CORBA::Pollable_var::Pollable_var (void)
   : ptr_ (Pollable::_nil ())
 {}
 
@@ -102,12 +121,12 @@ CORBA::Pollable_var::ptr (void) const
   return this->ptr_;
 }
 
-CORBA::Pollable_var::Pollable_var (const ::CORBA::Pollable_var &p) // copy constructor
+CORBA::Pollable_var::Pollable_var (const ::CORBA::Pollable_var &p)
   : TAO_Base_var (),
     ptr_ (Pollable::_duplicate (p.ptr ()))
 {}
 
-CORBA::Pollable_var::~Pollable_var (void) // destructor
+CORBA::Pollable_var::~Pollable_var (void)
 {
   CORBA::release (this->ptr_);
 }
@@ -136,7 +155,7 @@ CORBA::Pollable_var::operator const ::CORBA::Pollable_ptr &() const // cast
   return this->ptr_;
 }
 
-CORBA::Pollable_var::operator ::CORBA::Pollable_ptr &() // cast
+CORBA::Pollable_var::operator ::CORBA::Pollable_ptr &() // cast 
 {
   return this->ptr_;
 }
@@ -211,10 +230,11 @@ CORBA::Pollable_var::tao_upcast (void *src)
   return *tmp;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+
 // *************************************************************
 // CORBA::Pollable_out
-// TAO_IDL - Generated from
-// be/be_interface.cpp:932
 // *************************************************************
 
 CORBA::Pollable_out::Pollable_out (Pollable_ptr &p)
@@ -223,14 +243,14 @@ CORBA::Pollable_out::Pollable_out (Pollable_ptr &p)
   this->ptr_ = ::CORBA::Pollable::_nil ();
 }
 
-CORBA::Pollable_out::Pollable_out (Pollable_var &p) // constructor from _var
+CORBA::Pollable_out::Pollable_out (Pollable_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = ::CORBA::Pollable::_nil ();
 }
 
-CORBA::Pollable_out::Pollable_out (const ::CORBA::Pollable_out &p) // copy constructor
+CORBA::Pollable_out::Pollable_out (const ::CORBA::Pollable_out &p)
   : ptr_ (ACE_const_cast (Pollable_out &, p).ptr_)
 {}
 
@@ -261,7 +281,7 @@ CORBA::Pollable_out::operator ::CORBA::Pollable_ptr &() // cast
 }
 
 ::CORBA::Pollable_ptr &
-CORBA::Pollable_out::ptr (void) // ptr
+CORBA::Pollable_out::ptr (void)
 {
   return this->ptr_;
 }
@@ -272,9 +292,8 @@ CORBA::Pollable_out::operator-> (void)
   return this->ptr_;
 }
 
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:209
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
 
 CORBA::Pollable::Pollable (void)
 {}
@@ -282,7 +301,8 @@ CORBA::Pollable::Pollable (void)
 CORBA::Pollable::~Pollable (void)
 {}
 
-CORBA::Pollable_ptr CORBA::Pollable::_narrow (
+CORBA::Pollable_ptr
+CORBA::Pollable::_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL
   )
@@ -290,50 +310,68 @@ CORBA::Pollable_ptr CORBA::Pollable::_narrow (
   return Pollable::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::Pollable_ptr
+CORBA::Pollable_ptr 
 CORBA::Pollable::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
-    return Pollable::_nil ();
+    {
+      return Pollable::_nil ();
+    }
+  
   return
-      ACE_reinterpret_cast
-        (
+      ACE_reinterpret_cast (
           Pollable_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptr_arith_t,
-                    &Pollable::_tao_class_id
-                  )
-              )
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptr_arith_t,
+                  &Pollable::_tao_class_id
+                )
+            )
         );
 }
 
 CORBA::Pollable_ptr
 CORBA::Pollable::_duplicate (Pollable_ptr obj)
 {
-  if (!CORBA::is_nil (obj))
-    obj->_add_ref ();
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+  
   return obj;
 }
 
 void *CORBA::Pollable::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, Pollable)::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-
-  if (retv)
-    this->_add_ref ();
+  
+  if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &ACE_NESTED_CLASS (::CORBA, Pollable)::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+  
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+  
   return retv;
 }
 
@@ -341,6 +379,9 @@ const char* CORBA::Pollable::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Pollable:1.0";
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int CORBA::DIIPollable::_tao_class_id = 0;
 
@@ -387,13 +428,23 @@ tao_CORBA_DIIPollable_upcast (
   return *tmp;
 }
 
+CORBA::Boolean
+tao_CORBA_DIIPollable_marshal (
+    CORBA::DIIPollable_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+
 // *************************************************************
 // CORBA::DIIPollable_var
-// TAO_IDL - Generated from
-// be/be_interface.cpp:654
 // *************************************************************
 
-CORBA::DIIPollable_var::DIIPollable_var (void) // default constructor
+CORBA::DIIPollable_var::DIIPollable_var (void)
   : ptr_ (DIIPollable::_nil ())
 {}
 
@@ -403,12 +454,12 @@ CORBA::DIIPollable_var::ptr (void) const
   return this->ptr_;
 }
 
-CORBA::DIIPollable_var::DIIPollable_var (const ::CORBA::DIIPollable_var &p) // copy constructor
+CORBA::DIIPollable_var::DIIPollable_var (const ::CORBA::DIIPollable_var &p)
   : TAO_Base_var (),
     ptr_ (DIIPollable::_duplicate (p.ptr ()))
 {}
 
-CORBA::DIIPollable_var::~DIIPollable_var (void) // destructor
+CORBA::DIIPollable_var::~DIIPollable_var (void)
 {
   CORBA::release (this->ptr_);
 }
@@ -437,7 +488,7 @@ CORBA::DIIPollable_var::operator const ::CORBA::DIIPollable_ptr &() const // cas
   return this->ptr_;
 }
 
-CORBA::DIIPollable_var::operator ::CORBA::DIIPollable_ptr &() // cast
+CORBA::DIIPollable_var::operator ::CORBA::DIIPollable_ptr &() // cast 
 {
   return this->ptr_;
 }
@@ -512,10 +563,11 @@ CORBA::DIIPollable_var::tao_upcast (void *src)
   return *tmp;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+
 // *************************************************************
 // CORBA::DIIPollable_out
-// TAO_IDL - Generated from
-// be/be_interface.cpp:932
 // *************************************************************
 
 CORBA::DIIPollable_out::DIIPollable_out (DIIPollable_ptr &p)
@@ -524,14 +576,14 @@ CORBA::DIIPollable_out::DIIPollable_out (DIIPollable_ptr &p)
   this->ptr_ = ::CORBA::DIIPollable::_nil ();
 }
 
-CORBA::DIIPollable_out::DIIPollable_out (DIIPollable_var &p) // constructor from _var
+CORBA::DIIPollable_out::DIIPollable_out (DIIPollable_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = ::CORBA::DIIPollable::_nil ();
 }
 
-CORBA::DIIPollable_out::DIIPollable_out (const ::CORBA::DIIPollable_out &p) // copy constructor
+CORBA::DIIPollable_out::DIIPollable_out (const ::CORBA::DIIPollable_out &p)
   : ptr_ (ACE_const_cast (DIIPollable_out &, p).ptr_)
 {}
 
@@ -562,7 +614,7 @@ CORBA::DIIPollable_out::operator ::CORBA::DIIPollable_ptr &() // cast
 }
 
 ::CORBA::DIIPollable_ptr &
-CORBA::DIIPollable_out::ptr (void) // ptr
+CORBA::DIIPollable_out::ptr (void)
 {
   return this->ptr_;
 }
@@ -573,9 +625,8 @@ CORBA::DIIPollable_out::operator-> (void)
   return this->ptr_;
 }
 
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:209
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
 
 CORBA::DIIPollable::DIIPollable (void)
 {}
@@ -583,7 +634,8 @@ CORBA::DIIPollable::DIIPollable (void)
 CORBA::DIIPollable::~DIIPollable (void)
 {}
 
-CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
+CORBA::DIIPollable_ptr
+CORBA::DIIPollable::_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL
   )
@@ -591,62 +643,82 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
   return DIIPollable::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::DIIPollable_ptr
+CORBA::DIIPollable_ptr 
 CORBA::DIIPollable::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
-    return DIIPollable::_nil ();
+    {
+      return DIIPollable::_nil ();
+    }
+  
   return
-      ACE_reinterpret_cast
-        (
+      ACE_reinterpret_cast (
           DIIPollable_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptr_arith_t,
-                    &DIIPollable::_tao_class_id
-                  )
-              )
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptr_arith_t,
+                  &DIIPollable::_tao_class_id
+                )
+            )
         );
 }
 
 CORBA::DIIPollable_ptr
 CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
 {
-  if (!CORBA::is_nil (obj))
-    obj->_add_ref ();
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+  
   return obj;
 }
 
 void *CORBA::DIIPollable::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, DIIPollable)::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, Pollable)::_tao_class_id))
-    retv = ACE_reinterpret_cast
-      (
-        void *,
-        ACE_static_cast
-          (
-            CORBA::Pollable_ptr,
-            this
-          )
-      );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-
-  if (retv)
-    this->_add_ref ();
+  
+  if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &ACE_NESTED_CLASS (::CORBA, DIIPollable)::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &ACE_NESTED_CLASS (::CORBA, Pollable)::_tao_class_id)
+            )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (
+                CORBA::Pollable_ptr,
+                this
+              )
+          );
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+  
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+  
   return retv;
 }
 
@@ -654,6 +726,9 @@ const char* CORBA::DIIPollable::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/DIIPollable:1.0";
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int CORBA::PollableSet::_tao_class_id = 0;
 
@@ -700,13 +775,23 @@ tao_CORBA_PollableSet_upcast (
   return *tmp;
 }
 
+CORBA::Boolean
+tao_CORBA_PollableSet_marshal (
+    CORBA::PollableSet_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+
 // *************************************************************
 // CORBA::PollableSet_var
-// TAO_IDL - Generated from
-// be/be_interface.cpp:654
 // *************************************************************
 
-CORBA::PollableSet_var::PollableSet_var (void) // default constructor
+CORBA::PollableSet_var::PollableSet_var (void)
   : ptr_ (PollableSet::_nil ())
 {}
 
@@ -716,12 +801,12 @@ CORBA::PollableSet_var::ptr (void) const
   return this->ptr_;
 }
 
-CORBA::PollableSet_var::PollableSet_var (const ::CORBA::PollableSet_var &p) // copy constructor
+CORBA::PollableSet_var::PollableSet_var (const ::CORBA::PollableSet_var &p)
   : TAO_Base_var (),
     ptr_ (PollableSet::_duplicate (p.ptr ()))
 {}
 
-CORBA::PollableSet_var::~PollableSet_var (void) // destructor
+CORBA::PollableSet_var::~PollableSet_var (void)
 {
   CORBA::release (this->ptr_);
 }
@@ -750,7 +835,7 @@ CORBA::PollableSet_var::operator const ::CORBA::PollableSet_ptr &() const // cas
   return this->ptr_;
 }
 
-CORBA::PollableSet_var::operator ::CORBA::PollableSet_ptr &() // cast
+CORBA::PollableSet_var::operator ::CORBA::PollableSet_ptr &() // cast 
 {
   return this->ptr_;
 }
@@ -825,10 +910,11 @@ CORBA::PollableSet_var::tao_upcast (void *src)
   return *tmp;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+
 // *************************************************************
 // CORBA::PollableSet_out
-// TAO_IDL - Generated from
-// be/be_interface.cpp:932
 // *************************************************************
 
 CORBA::PollableSet_out::PollableSet_out (PollableSet_ptr &p)
@@ -837,14 +923,14 @@ CORBA::PollableSet_out::PollableSet_out (PollableSet_ptr &p)
   this->ptr_ = ::CORBA::PollableSet::_nil ();
 }
 
-CORBA::PollableSet_out::PollableSet_out (PollableSet_var &p) // constructor from _var
+CORBA::PollableSet_out::PollableSet_out (PollableSet_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = ::CORBA::PollableSet::_nil ();
 }
 
-CORBA::PollableSet_out::PollableSet_out (const ::CORBA::PollableSet_out &p) // copy constructor
+CORBA::PollableSet_out::PollableSet_out (const ::CORBA::PollableSet_out &p)
   : ptr_ (ACE_const_cast (PollableSet_out &, p).ptr_)
 {}
 
@@ -875,7 +961,7 @@ CORBA::PollableSet_out::operator ::CORBA::PollableSet_ptr &() // cast
 }
 
 ::CORBA::PollableSet_ptr &
-CORBA::PollableSet_out::ptr (void) // ptr
+CORBA::PollableSet_out::ptr (void)
 {
   return this->ptr_;
 }
@@ -886,9 +972,8 @@ CORBA::PollableSet_out::operator-> (void)
   return this->ptr_;
 }
 
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:209
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
 
 CORBA::PollableSet::PollableSet (void)
 {}
@@ -896,7 +981,8 @@ CORBA::PollableSet::PollableSet (void)
 CORBA::PollableSet::~PollableSet (void)
 {}
 
-CORBA::PollableSet_ptr CORBA::PollableSet::_narrow (
+CORBA::PollableSet_ptr
+CORBA::PollableSet::_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL
   )
@@ -904,50 +990,68 @@ CORBA::PollableSet_ptr CORBA::PollableSet::_narrow (
   return PollableSet::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::PollableSet_ptr
+CORBA::PollableSet_ptr 
 CORBA::PollableSet::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
-    return PollableSet::_nil ();
+    {
+      return PollableSet::_nil ();
+    }
+  
   return
-      ACE_reinterpret_cast
-        (
+      ACE_reinterpret_cast (
           PollableSet_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptr_arith_t,
-                    &PollableSet::_tao_class_id
-                  )
-              )
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptr_arith_t,
+                  &PollableSet::_tao_class_id
+                )
+            )
         );
 }
 
 CORBA::PollableSet_ptr
 CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
 {
-  if (!CORBA::is_nil (obj))
-    obj->_add_ref ();
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+  
   return obj;
 }
 
 void *CORBA::PollableSet::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS (::CORBA, PollableSet)::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-
-  if (retv)
-    this->_add_ref ();
+  
+  if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &ACE_NESTED_CLASS (::CORBA, PollableSet)::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+  
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+  
   return retv;
 }
 
@@ -956,7 +1060,9 @@ const char* CORBA::PollableSet::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/PollableSet:1.0";
 }
 
-// Default constructor.
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
   : CORBA_UserException (
         "IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0",
@@ -965,12 +1071,10 @@ CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
 {
 }
 
-// Destructor - all members are of self managing types.
 CORBA::PollableSet::NoPossiblePollable::~NoPossiblePollable (void)
 {
 }
 
-// Copy constructor.
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (const ::CORBA::PollableSet::NoPossiblePollable &_tao_excp)
   : CORBA_UserException (
         _tao_excp._rep_id (),
@@ -979,7 +1083,6 @@ CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (const ::CORBA::Polla
 {
 }
 
-// Assignment operator.
 CORBA::PollableSet::NoPossiblePollable&
 CORBA::PollableSet::NoPossiblePollable::operator= (const ::CORBA::PollableSet::NoPossiblePollable &_tao_excp)
 {
@@ -988,11 +1091,11 @@ CORBA::PollableSet::NoPossiblePollable::operator= (const ::CORBA::PollableSet::N
 }
 
 CORBA::PollableSet::NoPossiblePollable *
-CORBA::PollableSet::NoPossiblePollable::_downcast (CORBA::Exception *exc)
+CORBA::PollableSet::NoPossiblePollable::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0", _tao_excp->_rep_id ()))
     {
-      return ACE_dynamic_cast (NoPossiblePollable *, exc);
+      return ACE_dynamic_cast (NoPossiblePollable *, _tao_excp);
     }
   else
     {
@@ -1013,13 +1116,13 @@ CORBA::PollableSet::NoPossiblePollable::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      CORBA::PollableSet::NoPossiblePollable (*this),
+      ::CORBA::PollableSet::NoPossiblePollable (*this),
       0
     );
   return result;
 }
 
-void CORBA::PollableSet::NoPossiblePollable::_raise ()
+void CORBA::PollableSet::NoPossiblePollable::_raise (void)
 {
   TAO_RAISE (*this);
 }
@@ -1040,7 +1143,11 @@ void CORBA::PollableSet::NoPossiblePollable::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-// Default constructor.
+
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+
 CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
   : CORBA_UserException (
         "IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0",
@@ -1049,12 +1156,10 @@ CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
 {
 }
 
-// Destructor - all members are of self managing types.
 CORBA::PollableSet::UnknownPollable::~UnknownPollable (void)
 {
 }
 
-// Copy constructor.
 CORBA::PollableSet::UnknownPollable::UnknownPollable (const ::CORBA::PollableSet::UnknownPollable &_tao_excp)
   : CORBA_UserException (
         _tao_excp._rep_id (),
@@ -1063,7 +1168,6 @@ CORBA::PollableSet::UnknownPollable::UnknownPollable (const ::CORBA::PollableSet
 {
 }
 
-// Assignment operator.
 CORBA::PollableSet::UnknownPollable&
 CORBA::PollableSet::UnknownPollable::operator= (const ::CORBA::PollableSet::UnknownPollable &_tao_excp)
 {
@@ -1072,11 +1176,11 @@ CORBA::PollableSet::UnknownPollable::operator= (const ::CORBA::PollableSet::Unkn
 }
 
 CORBA::PollableSet::UnknownPollable *
-CORBA::PollableSet::UnknownPollable::_downcast (CORBA::Exception *exc)
+CORBA::PollableSet::UnknownPollable::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0", exc->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0", _tao_excp->_rep_id ()))
     {
-      return ACE_dynamic_cast (UnknownPollable *, exc);
+      return ACE_dynamic_cast (UnknownPollable *, _tao_excp);
     }
   else
     {
@@ -1097,13 +1201,13 @@ CORBA::PollableSet::UnknownPollable::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      CORBA::PollableSet::UnknownPollable (*this),
+      ::CORBA::PollableSet::UnknownPollable (*this),
       0
     );
   return result;
 }
 
-void CORBA::PollableSet::UnknownPollable::_raise ()
+void CORBA::PollableSet::UnknownPollable::_raise (void)
 {
   TAO_RAISE (*this);
 }
@@ -1124,25 +1228,7 @@ void CORBA::PollableSet::UnknownPollable::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<CORBA::Pollable,CORBA::Pollable_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<CORBA::Pollable,CORBA::Pollable_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<CORBA::DIIPollable,CORBA::DIIPollable_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<CORBA::DIIPollable,CORBA::DIIPollable_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<CORBA::PollableSet,CORBA::PollableSet_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<CORBA::PollableSet,CORBA::PollableSet_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* TAO_HAS_AMI_POLLER == 1 */
+
+
+

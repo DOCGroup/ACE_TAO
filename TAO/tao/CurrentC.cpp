@@ -19,18 +19,26 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/CurrentC.h"
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+
+
+#include "CurrentC.h"
 #include "tao/Sequence_T.h"
+#include "tao/Any_T.h"
 
 #if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/CurrentC.i"
+#include "CurrentC.i"
 #endif /* !defined INLINE */
 
-int CORBA_Current::_tao_class_id = 0;
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+
+int CORBA::Current::_tao_class_id = 0;
 
 CORBA::Current_ptr
 tao_CORBA_Current_duplicate (
@@ -48,21 +56,21 @@ tao_CORBA_Current_release (
   CORBA::release (p);
 }
 
-CORBA_Current_ptr
+CORBA::Current_ptr
 tao_CORBA_Current_nil (
     void
   )
 {
-  return CORBA_Current::_nil ();
+  return CORBA::Current::_nil ();
 }
 
-CORBA_Current_ptr
+CORBA::Current_ptr
 tao_CORBA_Current_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
 {
-  return CORBA_Current::_narrow (p ACE_ENV_ARG_PARAMETER);
+  return CORBA::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -70,264 +78,406 @@ tao_CORBA_Current_upcast (
     void *src
   )
 {
-  CORBA_Current **tmp =
-    ACE_static_cast (CORBA_Current **, src);
+  CORBA::Current **tmp =
+    ACE_static_cast (CORBA::Current **, src);
   return *tmp;
 }
 
+CORBA::Boolean
+tao_CORBA_Current_marshal (
+    CORBA::Current_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+
 // *************************************************************
-// Operations for class CORBA_Current_var
+// CORBA::Current_var
 // *************************************************************
 
-CORBA_Current_var::CORBA_Current_var (void) // default constructor
-  : ptr_ (CORBA_Current::_nil ())
+CORBA::Current_var::Current_var (void)
+  : ptr_ (Current::_nil ())
 {}
 
-::CORBA_Current_ptr
-CORBA_Current_var::ptr (void) const
+::CORBA::Current_ptr
+CORBA::Current_var::ptr (void) const
 {
   return this->ptr_;
 }
 
-CORBA_Current_var::CORBA_Current_var (const ::CORBA_Current_var &p) // copy constructor
+CORBA::Current_var::Current_var (const ::CORBA::Current_var &p)
   : TAO_Base_var (),
-    ptr_ (CORBA_Current::_duplicate (p.ptr ()))
+    ptr_ (Current::_duplicate (p.ptr ()))
 {}
 
-CORBA_Current_var::~CORBA_Current_var (void) // destructor
+CORBA::Current_var::~Current_var (void)
 {
   CORBA::release (this->ptr_);
 }
 
-CORBA_Current_var &
-CORBA_Current_var::operator= (CORBA_Current_ptr p)
+CORBA::Current_var &
+CORBA::Current_var::operator= (Current_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-CORBA_Current_var &
-CORBA_Current_var::operator= (const ::CORBA_Current_var &p)
+CORBA::Current_var &
+CORBA::Current_var::operator= (const ::CORBA::Current_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA_Current::_duplicate (p.ptr ());
+    this->ptr_ = ::CORBA::Current::_duplicate (p.ptr ());
   }
   return *this;
 }
 
-CORBA_Current_var::operator const ::CORBA_Current_ptr &() const // cast
+CORBA::Current_var::operator const ::CORBA::Current_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-CORBA_Current_var::operator ::CORBA_Current_ptr &() // cast
+CORBA::Current_var::operator ::CORBA::Current_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-::CORBA_Current_ptr
-CORBA_Current_var::operator-> (void) const
+::CORBA::Current_ptr
+CORBA::Current_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-::CORBA_Current_ptr
-CORBA_Current_var::in (void) const
+::CORBA::Current_ptr
+CORBA::Current_var::in (void) const
 {
   return this->ptr_;
 }
 
-::CORBA_Current_ptr &
-CORBA_Current_var::inout (void)
+::CORBA::Current_ptr &
+CORBA::Current_var::inout (void)
 {
   return this->ptr_;
 }
 
-::CORBA_Current_ptr &
-CORBA_Current_var::out (void)
+::CORBA::Current_ptr &
+CORBA::Current_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA_Current::_nil ();
+  this->ptr_ = ::CORBA::Current::_nil ();
   return this->ptr_;
 }
 
-::CORBA_Current_ptr
-CORBA_Current_var::_retn (void)
+::CORBA::Current_ptr
+CORBA::Current_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  ::CORBA_Current_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA_Current::_nil ();
+  ::CORBA::Current_ptr val = this->ptr_;
+  this->ptr_ = ::CORBA::Current::_nil ();
   return val;
 }
 
-::CORBA_Current_ptr
-CORBA_Current_var::tao_duplicate (CORBA_Current_ptr p)
+::CORBA::Current_ptr
+CORBA::Current_var::tao_duplicate (Current_ptr p)
 {
-  return ::CORBA_Current::_duplicate (p);
+  return ::CORBA::Current::_duplicate (p);
 }
 
 void
-CORBA_Current_var::tao_release (CORBA_Current_ptr p)
+CORBA::Current_var::tao_release (Current_ptr p)
 {
   CORBA::release (p);
 }
 
-::CORBA_Current_ptr
-CORBA_Current_var::tao_nil (void)
+::CORBA::Current_ptr
+CORBA::Current_var::tao_nil (void)
 {
-  return ::CORBA_Current::_nil ();
+  return ::CORBA::Current::_nil ();
 }
 
-::CORBA_Current_ptr
-CORBA_Current_var::tao_narrow (
+::CORBA::Current_ptr
+CORBA::Current_var::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
 {
-  return ::CORBA_Current::_narrow (p ACE_ENV_ARG_PARAMETER);
+  return ::CORBA::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
-CORBA_Current_var::tao_upcast (void *src)
+CORBA::Current_var::tao_upcast (void *src)
 {
-  CORBA_Current **tmp =
-    ACE_static_cast (CORBA_Current **, src);
+  Current **tmp =
+    ACE_static_cast (Current **, src);
   return *tmp;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+
 // *************************************************************
-// Operations for class CORBA_Current_out
+// CORBA::Current_out
 // *************************************************************
 
-CORBA_Current_out::CORBA_Current_out (CORBA_Current_ptr &p)
+CORBA::Current_out::Current_out (Current_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = ::CORBA_Current::_nil ();
+  this->ptr_ = ::CORBA::Current::_nil ();
 }
 
-CORBA_Current_out::CORBA_Current_out (CORBA_Current_var &p) // constructor from _var
+CORBA::Current_out::Current_out (Current_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA_Current::_nil ();
+  this->ptr_ = ::CORBA::Current::_nil ();
 }
 
-CORBA_Current_out::CORBA_Current_out (const ::CORBA_Current_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_Current_out &, p).ptr_)
+CORBA::Current_out::Current_out (const ::CORBA::Current_out &p)
+  : ptr_ (ACE_const_cast (Current_out &, p).ptr_)
 {}
 
-::CORBA_Current_out &
-CORBA_Current_out::operator= (const ::CORBA_Current_out &p)
+::CORBA::Current_out &
+CORBA::Current_out::operator= (const ::CORBA::Current_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_Current_out&, p).ptr_;
+  this->ptr_ = ACE_const_cast (Current_out&, p).ptr_;
   return *this;
 }
 
-CORBA_Current_out &
-CORBA_Current_out::operator= (const ::CORBA_Current_var &p)
+CORBA::Current_out &
+CORBA::Current_out::operator= (const ::CORBA::Current_var &p)
 {
-  this->ptr_ = ::CORBA_Current::_duplicate (p.ptr ());
+  this->ptr_ = ::CORBA::Current::_duplicate (p.ptr ());
   return *this;
 }
 
-CORBA_Current_out &
-CORBA_Current_out::operator= (CORBA_Current_ptr p)
+CORBA::Current_out &
+CORBA::Current_out::operator= (Current_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-CORBA_Current_out::operator ::CORBA_Current_ptr &() // cast
+CORBA::Current_out::operator ::CORBA::Current_ptr &() // cast
 {
   return this->ptr_;
 }
 
-::CORBA_Current_ptr &
-CORBA_Current_out::ptr (void) // ptr
+::CORBA::Current_ptr &
+CORBA::Current_out::ptr (void)
 {
   return this->ptr_;
 }
 
-::CORBA_Current_ptr
-CORBA_Current_out::operator-> (void)
+::CORBA::Current_ptr
+CORBA::Current_out::operator-> (void)
 {
   return this->ptr_;
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
 
-// default constructor
-CORBA_Current::CORBA_Current (void)
+CORBA::Current::Current (void)
 {}
 
-  // destructor
-  CORBA_Current::~CORBA_Current (void)
-  {}
+CORBA::Current::~Current (void)
+{}
 
-  CORBA_Current_ptr CORBA_Current::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return CORBA_Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
-
-  CORBA_Current_ptr CORBA_Current::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return CORBA_Current::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            CORBA_Current_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &CORBA_Current::_tao_class_id
-                    )
-                )
-          );
+void 
+CORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
+{
+  Current *tmp = ACE_static_cast (Current *, _tao_void_pointer);
+  CORBA::release (tmp);
 }
 
-CORBA_Current_ptr
-CORBA_Current::_duplicate (CORBA_Current_ptr obj)
+CORBA::Current_ptr
+CORBA::Current::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
 {
-  if (!CORBA::is_nil (obj))
-    obj->_add_ref ();
+  return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Current_ptr 
+CORBA::Current::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    {
+      return Current::_nil ();
+    }
+  
+  return
+      ACE_reinterpret_cast (
+          Current_ptr,
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptr_arith_t,
+                  &Current::_tao_class_id
+                )
+            )
+        );
+}
+
+CORBA::Current_ptr
+CORBA::Current::_duplicate (Current_ptr obj)
+{
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+  
   return obj;
 }
 
-void *CORBA_Current::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::Current::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &CORBA_Current::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-
-  if (retv)
-    this->_add_ref ();
+  
+  if (type == ACE_reinterpret_cast (
+              ptr_arith_t,
+              &ACE_NESTED_CLASS (::CORBA, Current)::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptr_arith_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+  
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+  
   return retv;
 }
 
-const char* CORBA_Current::_interface_repository_id (void) const
+const char* CORBA::Current::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Current:1.0";
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+
+static const CORBA::Long _oc_CORBA_Current[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  30,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f4375), 
+  ACE_NTOHL (0x7272656e), 
+  ACE_NTOHL (0x743a312e), 
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/Current:1.0
+    8,
+  ACE_NTOHL (0x43757272), 
+  ACE_NTOHL (0x656e7400),  // name = Current
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Current (
+    CORBA::tk_objref,
+    sizeof (_oc_CORBA_Current),
+    (char *) &_oc_CORBA_Current,
+    0,
+    sizeof (CORBA::Current)
+  );
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_Current,
+    &_tc_TAO_tc_CORBA_Current
+  )
+TAO_NAMESPACE_END
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::Current_ptr _tao_elem
+  )
+{
+  CORBA::Current_ptr _tao_objptr =
+    CORBA::Current::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::Current_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::Current>::insert (
+      _tao_any,
+      CORBA::Current::_tao_any_destructor,
+      CORBA::_tc_Current,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::Current_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::Current>::extract (
+        _tao_any,
+        CORBA::Current::_tao_any_destructor,
+        CORBA::_tc_Current,
+        _tao_elem
+      );
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<CORBA_Current,CORBA_Current_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<CORBA_Current,CORBA_Current_var>
+  template class TAO_Object_Manager<CORBA::Current,CORBA::Current_var>;
+  template class TAO::Any_Impl_T<CORBA::Current>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO_Object_Manager<CORBA::Current, CORBA::Current_var>
+# pragma instantiate TAO::Any_Impl_T<CORBA::Current>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
+
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::Current>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::Current>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+

@@ -211,7 +211,7 @@ CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj
 
 // TAO's extensions
 
-TAO_ObjectKey *
+TAO::ObjectKey *
 CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
@@ -230,7 +230,7 @@ CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
                     0);
 }
 
-const TAO_ObjectKey &
+const TAO::ObjectKey &
 CORBA::Object::_object_key (void)
 {
   return this->_stubobj ()->profile_in_use ()->object_key ();

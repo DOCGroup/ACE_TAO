@@ -31,7 +31,7 @@ TAO_IIOP_Profile::object_key_delimiter (void) const
 
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                                    const TAO_ObjectKey &object_key,
+                                    const TAO::ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_INTERNET_IOP, orb_core, version),
@@ -45,7 +45,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
-                                    const TAO_ObjectKey &object_key,
+                                    const TAO::ObjectKey &object_key,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
@@ -293,7 +293,7 @@ TAO_IIOP_Profile::parse_string (const char *ior
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);
     }
 
-  TAO_ObjectKey::decode_string_to_sequence (this->object_key_, okd + 1);
+  TAO::ObjectKey::decode_string_to_sequence (this->object_key_, okd + 1);
 }
 
 CORBA::Boolean
@@ -377,8 +377,8 @@ char *
 TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   CORBA::String_var key;
-  TAO_ObjectKey::encode_sequence_to_string (key.inout(),
-                                            this->object_key_);
+  TAO::ObjectKey::encode_sequence_to_string (key.inout(),
+                                             this->object_key_);
 
   u_int buflen = (8 /* "corbaloc" */ +
                   1 /* colon separator */ +
