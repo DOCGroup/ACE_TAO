@@ -137,12 +137,15 @@ ECT_Throughput::run (int argc, char* argv[])
             }
         }
 
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      int priority =
+        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
+         + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                  priority);
+      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                                  min_priority,
+                                                  priority,
                                                   ACE_SCOPE_PROCESS)) != 0)
         {
           if (ACE_OS::last_error () == EPERM)
@@ -157,7 +160,7 @@ ECT_Throughput::run (int argc, char* argv[])
                         "%s: ACE_OS::sched_params failed\n", argv[0]));
         }
 
-      if (ACE_OS::thr_setprio (min_priority) == -1)
+      if (ACE_OS::thr_setprio (priority) == -1)
         {
           ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed,"
                       "no real-time features\n"));
@@ -422,13 +425,14 @@ ECT_Throughput::connect_suppliers
 void
 ECT_Throughput::activate_suppliers (CORBA::Environment &)
 {
-  int min_priority =
-    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+  int priority =
+    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
+     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
 
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       if (this->suppliers_[i]->activate (this->thr_create_flags_,
-                                         1, 0, min_priority) == -1)
+                                         1, 0, priority) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Cannot activate thread for supplier %d\n",

@@ -63,9 +63,9 @@ be_valuetype::~be_valuetype (void)
 }
 
 void
-be_valuetype::redefine (be_valuetype *from, UTL_StrList *p)
+be_valuetype::redefine (AST_Interface *from, UTL_StrList *p)
 {
-  this->AST_Interface::redefine (from,p);
+  this->AST_Interface::redefine (from, p);
   abstract_ = from->is_abstract_valuetype();
 }
 

@@ -22,7 +22,8 @@ TAO_EC_Priority_Dispatching::activate (void)
   ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task*[this->ntasks_]);
 
   int priority =
-    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
+     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
   for (int i = 0; i < this->ntasks_; ++i)

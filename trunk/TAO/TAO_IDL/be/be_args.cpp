@@ -84,7 +84,7 @@ BE_prep_arg(char *s, idl_bool)
   const char arg_include[]="export_include=";
 #ifdef IDL_HAS_VALUETYPE
   const char obv_opt_accessor[]="obv_opt_accessor";
-#endif IDL_HAS_VALUETYPE
+#endif /* IDL_HAS_VALUETYPE */
 
   char* last = 0;
   for (char* arg = ACE_OS::strtok_r (s, ",", &last);
@@ -106,7 +106,7 @@ BE_prep_arg(char *s, idl_bool)
         {
           idl_global->obv_opt_accessor (1);
         }
-#  endif IDL_HAS_VALUETYPE
+#  endif /* IDL_HAS_VALUETYPE */
       else
         {
           cerr << idl_global->prog_name ()

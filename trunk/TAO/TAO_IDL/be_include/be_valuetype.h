@@ -52,7 +52,7 @@ public:
   ~be_valuetype (void);
   // dtor
 
-  virtual void redefine (be_valuetype *from, UTL_StrList *p);
+  virtual void redefine (AST_Interface *from, UTL_StrList *p);
 
   idl_bool opt_accessor ();
   // should generate optimized form ?
