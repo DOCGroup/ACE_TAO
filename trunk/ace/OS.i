@@ -1126,8 +1126,14 @@ ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
   return ::strtok_r (s, tokens, lasts);
 #else
-  lasts = lasts;
-  return ::strtok (s, tokens);
+  if (s == NULL) {
+    s = *lasts ;
+  }
+  s = ::strtok (s, tokens);
+  if (s != NULL) {
+    *lasts = s + ACE_OS::strlen (s) + 1 ;
+  }
+  return s ;
 #endif /* (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
 }
 
