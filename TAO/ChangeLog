@@ -1,3 +1,10 @@
+Thu Sep 25 23:15:06 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+
+		  Added CORBA environment variable parameter to constructor
+		  calls.
+
 Thu Sep 25 16:08:50 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\PortableServer\Object_Adapter.cpp (servant_cleanup): 
