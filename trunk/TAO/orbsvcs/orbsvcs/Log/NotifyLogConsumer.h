@@ -26,7 +26,6 @@
 
 #include "orbsvcs/DsNotifyLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
-#include "orbsvcs/Notify/Notify_EventChannel_i.h"
 
 #include "notifylog_export.h"
 
