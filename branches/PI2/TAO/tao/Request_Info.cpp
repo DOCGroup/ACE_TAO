@@ -74,16 +74,16 @@ TAO_ClientRequest_Info::received_exception_id (CORBA::Environment &)
 }
 
 IOP::TaggedComponent *  
-TAO_ClientRequest_Info::get_effective_component (IOP::ComponentId id,
-                                            CORBA::Environment &)
+TAO_ClientRequest_Info::get_effective_component (IOP::ComponentId,
+                                                 CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
  
 CORBA::Policy_ptr  
-TAO_ClientRequest_Info::get_request_policy (CORBA::PolicyType type,
-                                       CORBA::Environment &)
+TAO_ClientRequest_Info::get_request_policy (CORBA::PolicyType,
+                                            CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -91,20 +91,19 @@ TAO_ClientRequest_Info::get_request_policy (CORBA::PolicyType type,
 
 void  
 TAO_ClientRequest_Info::add_request_service_context (const IOP::ServiceContext & service_context,
-                                                CORBA::Boolean replace,
-                                                CORBA::Environment &)
+                                                     CORBA::Boolean,
+                                                     CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException)) 
 {
-
+  // Copy the service context into the list.
   CORBA::ULong length = this->service_context_list_.length ();
   this->service_context_list_.length (length + 1);
 
-  // Hey the service context is passe dby ref, do i haveto worry?
   service_context_list_[length] = service_context;
 }
 
 CORBA::ULong 
-TAO_ClientRequest_Info::request_id (CORBA::Environment &ACE_TRY_ENV)
+TAO_ClientRequest_Info::request_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->request_id_;
@@ -183,8 +182,8 @@ TAO_ClientRequest_Info::forward_reference (CORBA::Environment &)
 }
 
 CORBA::Any * 
-TAO_ClientRequest_Info::get_slot (PortableInterceptor::SlotId id,
-                       CORBA::Environment &)  
+TAO_ClientRequest_Info::get_slot (PortableInterceptor::SlotId,
+                                  CORBA::Environment &)  
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
@@ -193,7 +192,7 @@ TAO_ClientRequest_Info::get_slot (PortableInterceptor::SlotId id,
 
 IOP::ServiceContext * 
 TAO_ClientRequest_Info::get_request_service_context (IOP::ServiceId id,
-                              CORBA::Environment &)  
+                                                     CORBA::Environment &)  
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong size = 0; size < this->service_context_list_.length (); ++size)
@@ -262,7 +261,7 @@ TAO_ServerRequest_Info::TAO_ServerRequest_Info (const char * operation,
 
 
 CORBA::ULong 
-TAO_ServerRequest_Info::request_id (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequest_Info::request_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->request_id_;
@@ -340,8 +339,8 @@ TAO_ServerRequest_Info::forward_reference (CORBA::Environment &)
 }
 
 CORBA::Any * 
-TAO_ServerRequest_Info::get_slot (PortableInterceptor::SlotId id,
-                       CORBA::Environment &)  
+TAO_ServerRequest_Info::get_slot (PortableInterceptor::SlotId,
+                                  CORBA::Environment &)  
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
@@ -350,31 +349,27 @@ TAO_ServerRequest_Info::get_slot (PortableInterceptor::SlotId id,
 
 IOP::ServiceContext * 
 TAO_ServerRequest_Info::get_request_service_context (IOP::ServiceId id,
-                              CORBA::Environment &)  
+                                                     CORBA::Environment &)  
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong size = 0; size < this->service_context_list_.length (); ++size)
-    if (this->service_context_list_[size].context_id == id)
-      {
-         return &(this->service_context_list_[size]);
-        
-      }
+    {
+      if (this->service_context_list_[size].context_id == id)
+        return &(this->service_context_list_[size]);
+    }
 return 0;
 }
 
 IOP::ServiceContext * 
 TAO_ServerRequest_Info::get_reply_service_context (IOP::ServiceId id,
-                            CORBA::Environment &)  
+                                                   CORBA::Environment &)  
   ACE_THROW_SPEC ((CORBA::SystemException)) 
 {
   for (CORBA::ULong size = 0; size < this->service_context_list_.length (); ++size)
-    if (this->service_context_list_[size].context_id == id)
-      {
-        // Will it will get safely destroyed at the
-        // client side when the service context gets back?
+    {
+      if (this->service_context_list_[size].context_id == id)
         return &this->service_context_list_[size];
-        
-      }
+    }
   return 0;
 }
 
@@ -418,17 +413,16 @@ TAO_ServerRequest_Info::get_server_policy (CORBA::PolicyType type,
 }
 
 void 
-TAO_ServerRequest_Info::set_slot (PortableInterceptor::SlotId id,
-                             const CORBA::Any & data,
-                             CORBA::Environment &)
+TAO_ServerRequest_Info::set_slot (PortableInterceptor::SlotId,
+                                  const CORBA::Any &,
+                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
 }
 
-
 CORBA::Boolean 
-TAO_ServerRequest_Info::target_is_a (const char * id,
+TAO_ServerRequest_Info::target_is_a (const char *,
                                 CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -437,17 +431,15 @@ TAO_ServerRequest_Info::target_is_a (const char * id,
 
 void 
 TAO_ServerRequest_Info::add_reply_service_context (const IOP::ServiceContext & service_context,
-                                              CORBA::Boolean replace,
-                                              CORBA::Environment &)
+                                                   CORBA::Boolean,
+                                                   CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong length = this->service_context_list_.length ();
   this->service_context_list_.length (length + 1);
-
-  // Hey the service context is passe dby ref, do i haveto worry?
   service_context_list_[length] = service_context;
-
 }
+
 void
 TAO_ServerRequest_Info::exception (CORBA::Exception *exception)
 {
