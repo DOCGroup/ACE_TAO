@@ -34,7 +34,7 @@ override TAO_IDLFLAGS += \
         -Wb,post_include=ace/post.h
 
 IDL_FILES += CosEventComm CosEventChannelAdmin
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+
 CPP_SRCS += \
         CosEvent/CEC_ConsumerAdmin \
         CosEvent/CEC_ConsumerControl \
@@ -55,7 +55,6 @@ CPP_SRCS += \
         CosEvent/CEC_Reactive_Pulling_Strategy \
         CosEvent/CEC_Default_Factory \
         CosEvent/CEC_Event_Loader
-endif # ACE_HAS_GNUG_PRE_2_8
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \

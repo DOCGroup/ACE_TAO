@@ -39,9 +39,7 @@ endif # rt_corba
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  DIRS += IFR_Client Domain TypeCodeFactory
-endif # ACE_HAS_GNUG_PRE_2_8
+DIRS += IFR_Client Domain TypeCodeFactory
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU

@@ -41,13 +41,11 @@ ifndef TAO_ORBSVCS
 		AV
 
   ifeq ($(minimum_corba),0)
-    ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
       ifneq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
         ifeq ($(LYNXTARGET),)
 	  TAO_ORBSVCS += IFRService
 	endif # LYNXTARGET
       endif # findstring Compilers 4.2
-    endif # ACE_HAS_GNUG_PRE_2_8
   endif # minimum_corba
 
   ifeq ($(minimum_corba),0)
@@ -57,15 +55,13 @@ ifndef TAO_ORBSVCS
     # so don't build them either, with minimum CORBA.
     TAO_ORBSVCS +=
 
-    ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-      TAO_ORBSVCS += LifeCycle
+    TAO_ORBSVCS += LifeCycle
 
     ifeq ($(corba_messaging),1)
       TAO_ORBSVCS += FaultTolerance
       TAO_ORBSVCS += FTORB
       TAO_ORBSVCS += RTCORBAEvent
     endif #corba_messaging
-    endif # ACE_HAS_GNUG_PRE_2_8
 
     # The Load Balancer requires POA ServantLocator support, which
     # Minimum CORBA disables.
@@ -81,9 +77,7 @@ ifndef TAO_ORBSVCS
     TAO_ORBSVCS += Security SSLIOP
   endif # ssl
 
-  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    TAO_ORBSVCS += Notify
-  endif # ACE_HAS_GNUG_PRE_2_8
+  TAO_ORBSVCS += Notify
 
 endif # TAO_ORBSVCS
 

@@ -39,18 +39,11 @@ Service_OBJS=$(addsuffix .o, Service Supplier Consumer)
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  # This example does not compile with g++ 2.7.2.3
-all clean realclean:
-	@echo orbsvcs/examples/RtEC/Schedule is not built with older versions of g++
-else # ! ACE_HAS_GNUG_PRE_2_8
-  include $(ACE_ROOT)/include/makeinclude/macros.GNU
-  include $(TAO_ROOT)/rules.tao.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-endif # ! ACE_HAS_GNUG_PRE_2_8
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # To build multiple executables in the same directory on AIX, it works
 # best to wipe out any previously-created tempinc directory.
