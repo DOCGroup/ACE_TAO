@@ -3,6 +3,7 @@
 #include "tao/Profile.h"
 #include "tao/Stub.h"
 #include "tao/Tagged_Components.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (PortableGroup,
            PG_Utils,
