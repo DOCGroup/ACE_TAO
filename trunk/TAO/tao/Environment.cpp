@@ -155,6 +155,15 @@ CORBA::Environment::exception_type (void) const
   return CORBA::USER_EXCEPTION;
 }
 
+const char*
+CORBA_Environment::exception_id (void) const
+{
+  if (this->exception_ == 0)
+    return 0;
+
+  return this->exception_->_id ();
+}
+
 // Diagnostic utility routine: describe the exception onto the
 // standard I/O stream passed as a parameter.
 
