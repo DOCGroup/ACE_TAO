@@ -4222,7 +4222,7 @@ ACE_OS::gethostbyname2 (const char *name, int family)
   // ACE_TRACE ("ACE_OS::gethostbyname2");
 # if defined (ACE_PSOS)
   ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_IP6)
 #   if defined (ACE_HAS_NONCONST_GETBY)
