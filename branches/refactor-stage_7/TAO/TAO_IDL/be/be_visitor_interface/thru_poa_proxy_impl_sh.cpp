@@ -2,8 +2,8 @@
 // $Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           thru_poa_proxy_impl_sh, 
+ACE_RCSID (be_visitor_interface,
+           thru_poa_proxy_impl_sh,
            "$Id$")
 
 be_visitor_interface_thru_poa_proxy_impl_sh::
@@ -53,19 +53,18 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
               continue;
             }
 
-          *os << "," << be_nl;
-
           be_interface *inherited =
             be_interface::narrow_from_decl (parent);
 
-          *os << "public virtual ";
+          *os << ": public virtual ";
           *os << "::" <<  inherited->full_thru_poa_proxy_impl_name ();
         }
     }
 
+#if 0
   if (node->node_type () == AST_Decl::NT_component)
     {
-      AST_Component *base = 
+      AST_Component *base =
         AST_Component::narrow_from_decl (node)->base_component ();
 
       if (base != 0)
@@ -78,10 +77,11 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
               << "::" << inherited->full_thru_poa_proxy_impl_name ();
         }
     }
+#endif /*if 0*/
 
   *os << be_uidt << be_uidt_nl;
 
-  *os << "{" << be_nl 
+  *os << "{" << be_nl
       << "public:" << be_idt_nl;
 
   // Ctor
@@ -96,15 +96,15 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) thru_poa_proxy_impl_sh::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
-  // Generate static collocated operations for operations of our base 
+  // Generate static collocated operations for operations of our base
   // classes.
   int status =
     node->traverse_inheritance_graph (
-              be_interface::gen_colloc_op_decl_helper, 
+              be_interface::gen_colloc_op_decl_helper,
               os
             );
 
@@ -117,7 +117,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
                         -1);
     }
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << "};" << be_nl;
 
   *os << be_nl
@@ -129,7 +129,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
 
 }
 
-int 
+int
 be_visitor_interface_thru_poa_proxy_impl_sh::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,
@@ -188,5 +188,3 @@ int be_visitor_interface_thru_poa_proxy_impl_sh::visit_component (
 {
   return this->visit_interface (node);
 }
-
-

@@ -1,3 +1,10 @@
+Tue Sep  9 20:00:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+	  Fixed problems with code generation when we have a hierarchy of
+	  interfaces. 
+
 Tue Sep  9 19:52:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any.h:
