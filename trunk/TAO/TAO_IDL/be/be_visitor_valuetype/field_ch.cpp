@@ -713,7 +713,6 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
 int
 be_visitor_valuetype_field_ch::visit_typedef (be_typedef *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->alias (node);
 
   // Make a decision based on the primitive base type.
