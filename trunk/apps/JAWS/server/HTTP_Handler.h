@@ -2,10 +2,23 @@
 // Hey, Emacs!  This is a C++ file!
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    jaws
+// 
+// = FILENAME
+//    HTTP_Handler.h
+//
+// = AUTHOR
+//    James Hu and Irfan Pyarali
+// 
+// ============================================================================
+
 #if !defined (HTTP_HANDLER_H)
 #define HTTP_HANDLER_H
 
-// Forward declarations
+// = Forward declarations
 class Message_Block;
 class HTTP_Handler_Factory;
 
@@ -15,7 +28,6 @@ class HTTP_Handler_Factory;
 #include "IO.h"
 
 class HTTP_Handler : protected JAWS_IO_Handler
-  //
   // = TITLE
   //     
   //     This class is used to implement the HTTP protocol
@@ -69,7 +81,7 @@ protected:
   // Reference to the creating factory.
 
 protected:
-  // Methods inherited from JAWS_IO_Handler
+  // = Completion methods inherited from <JAWS_IO_Handler>.
 
   void read_complete (ACE_Message_Block &data);
   void read_error (void);
@@ -101,18 +113,16 @@ private:
 
   JAWS_IO &io_;
   // IO class used by the handler
-
 };
 
 class HTTP_Handler_Factory
-  //
   // = TITLE
   //     
   //     This class is used to create new HTTP handlers
   //
   // = DESCRIPTION
   //     
-  //     This is an abstract factory for creating new HTTP handlers
+  //     This is an abstract factory for creating new HTTP handlers.
 {
 public:
   virtual ~HTTP_Handler_Factory (void);
@@ -129,14 +139,12 @@ public:
 };
 
 class Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
-  //
   // = TITLE
   //     
   //     This class is used to create new HTTP handlers that will use
   //     Synch IO
   //
   // = DESCRIPTION
-  //     
 {
 public:
   HTTP_Handler *create_http_handler (void);
@@ -152,6 +160,7 @@ public:
 // This only works on Win32
 #if defined (ACE_WIN32)
 class Asynch_HTTP_Handler_Factory : public HTTP_Handler_Factory, public ACE_Service_Handler
+// James, please document this class.
 {
 public:
   void destroy_http_handler (HTTP_Handler &handler,
@@ -164,9 +173,9 @@ public:
 	     ACE_Message_Block &message_block);
   // <open> is called by ACE_Asynch_Acceptor to initialize a new
   // instance of ACE_Service_Handler that has been created after the a
-  // new connection is accepted. 
+  // new connection is accepted.
   //
-  // This will act as a creation point for new handlers
+  // This will act as a creation point for new handlers.
 
 private:
   HTTP_Handler *create_http_handler (void);
@@ -175,5 +184,4 @@ private:
   // new client connections arrive.
 };
 #endif /* ACE_WIN32 */
-
 #endif /* HTTP_HANDLER_H */

@@ -17,7 +17,7 @@ static char* request_strings [] =
 static int total = 2;
 
 int
-main ()
+main (void)
 {
   int index = 0;
   HTTP_Request request;
@@ -28,27 +28,27 @@ main ()
       request.init (r, len);
       request.dump ();
 
-    if (request.type () == HTTP_Request::PUT)
-      {
-	ACE_Mem_Map outfile;
-	ACE_HANDLE handle = ACE_OS::open (request.filename (), 
-					  FILE_FLAG_SEQUENTIAL_SCAN | FILE_FLAG_OVERLAPPED | O_RDWR | O_CREAT);
-	if (outfile.map (handle,
-			 request.content_length (),
-			 PROT_RDWR,
-			 MAP_SHARED) == -1)
-	  ACE_ERROR ((LM_ERROR, "%p: opening %s.\n",
-		      "main",
-		      request.filename ()));
-	else
-	  {
-	    // Write the file.
-	    ACE_OS::memcpy (outfile.addr (), 
-			    request.data (),
-			    request.content_length ());
-	    outfile.sync ();
-	  }
-      }
+      if (request.type () == HTTP_Request::PUT)
+	{
+	  ACE_Mem_Map outfile;
+	  ACE_HANDLE handle = ACE_OS::open (request.filename (), 
+					    FILE_FLAG_SEQUENTIAL_SCAN | FILE_FLAG_OVERLAPPED | O_RDWR | O_CREAT);
+	  if (outfile.map (handle,
+			   request.content_length (),
+			   PROT_RDWR,
+			   MAP_SHARED) == -1)
+	    ACE_ERROR ((LM_ERROR, "%p: opening %s.\n",
+			"main",
+			request.filename ()));
+	  else
+	    {
+	      // Write the file.
+	      ACE_OS::memcpy (outfile.addr (), 
+			      request.data (),
+			      request.content_length ());
+	      outfile.sync ();
+	    }
+	}
     }
  
   return 0;

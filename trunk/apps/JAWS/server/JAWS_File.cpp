@@ -46,15 +46,20 @@ class JAWS_Virtual_Filesystem_Singleton
 {
 public:
   JAWS_Virtual_Filesystem_Singleton (void)
-  { this->singleton_ = JAWS_Virtual_Filesystem::instance (); }
+  { 
+    this->singleton_ = JAWS_Virtual_Filesystem::instance ();
+  }
 
   ~JAWS_Virtual_Filesystem_Singleton (void)
-  { delete this->singleton_; }
+  { 
+    delete this->singleton_; 
+  }
 
 private:
   JAWS_Virtual_Filesystem * singleton_;
 };
 
+// James, please remove reliance on Singletons if possible.
 static JAWS_Virtual_Filesystem_Singleton cvf_singleton;
 
 void
@@ -143,27 +148,32 @@ JAWS_File_Handle::handle (void) const
 int
 JAWS_File_Handle::error (void) const
 {
-  return ((this->file_ == 0) ? -1 : this->file_->error ());
+  if (this->file_ == 0) 
+    return -1;
+  else
+    return this->file_->error ();
 }
 
 size_t
 JAWS_File_Handle::size (void) const
 {
-  return ((this->file_ == 0) ? -1 : this->file_->size ());
+  if (this->file_ == 0)
+    return -1;
+  else
+    return this->file_->size ();
 }
 
 
 JAWS_Virtual_Filesystem *
 JAWS_Virtual_Filesystem::instance (void)
 {
-  // Double check locking pattern
+  // Double check locking pattern.
   if (JAWS_Virtual_Filesystem::cvf_ == 0)
     {
       ACE_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+
       if (JAWS_Virtual_Filesystem::cvf_ == 0)
-        {
-          JAWS_Virtual_Filesystem::cvf_ = new JAWS_Virtual_Filesystem;
-        }
+	JAWS_Virtual_Filesystem::cvf_ = new JAWS_Virtual_Filesystem;
     }
 
   return JAWS_Virtual_Filesystem::cvf_;
@@ -172,6 +182,7 @@ JAWS_Virtual_Filesystem::instance (void)
 JAWS_Virtual_Filesystem::JAWS_Virtual_Filesystem (void)
 {
   this->size_ = DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE;
+
   for (int i = 0; i < this->size_; i++)
     this->table_[i] = 0;
 }
@@ -179,56 +190,63 @@ JAWS_Virtual_Filesystem::JAWS_Virtual_Filesystem (void)
 JAWS_Virtual_Filesystem::~JAWS_Virtual_Filesystem (void)
 {
   for (int i = 0; i < this->size_; i++)
-    {
-      if (this->table_[i] != 0) delete this->table_[i];
-    }
+    if (this->table_[i] != 0)
+      delete this->table_[i];
 }
 
 JAWS_File *
 JAWS_Virtual_Filesystem::fetch (const char * filename)
 {
   int i;
-  JAWS_File * jf = 0;
+  JAWS_File *handle = 0;
 
   {
     ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+
     i = this->fetch_i (filename);
+
     if (i != -1 && ! this->table_[i]->update ())
-      jf = this->table_[i];
+      handle = this->table_[i];
   }
 
   // Considerably slower on misses, but should be faster on hits.
   // This is actually the double check locking pattern.
-  if (jf == 0)
+
+  if (handle == 0)
     {
       ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+
       i = this->fetch_i (filename);
+
       if (i == -1)
-        jf = this->insert_i (new JAWS_File (filename));
+        handle = this->insert_i (new JAWS_File (filename));
       else if (this->table_[i]->update ())
         {
           this->remove_i (i);
-          jf = this->table_[i] = new JAWS_File (filename);
+          handle = this->table_[i] = new JAWS_File (filename);
         }
       else
-        jf = this->table_[i];
+        handle = this->table_[i];
     }
 
-  return jf;
+  return handle;
 }
 
 int
 JAWS_Virtual_Filesystem::fetch_i (const char * filename)
 {
-  int i;
-  int notfound = 1;
-  for (i = 0; i < DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE; i++)
+  for (int i = 0;
+       i < DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE; 
+       i++)
     {
-      if (this->table_[i] == 0) continue;
-      notfound = ACE_OS::strcmp (filename, this->table_[i]->filename ());
-      if (!notfound) break;
+      if (this->table_[i] == 0) 
+	continue;
+
+      if (ACE_OS::strcmp (filename, this->table_[i]->filename ()) == 0)
+	return i;
     }
-  return (notfound ? -1 : i);
+
+  return -1;
 }
 
 JAWS_File *
@@ -237,27 +255,31 @@ JAWS_Virtual_Filesystem::remove (const char * filename)
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
 
   int i = this->fetch_i (filename);
-  return ((i == -1) ? 0 : this->remove_i (i));
+
+  return i == -1 ? 0 : this->remove_i (i);
 }
 
 JAWS_File *
 JAWS_Virtual_Filesystem::remove_i (int index)
 {
-  JAWS_File * jf = 0;
+  JAWS_File * handle = 0;
+
   if (index != -1)
     {
-      jf = this->table_[index];
+      handle = this->table_[index];
       this->table_[index] = 0;
-      jf->release ();
-      if (jf->action () == JAWS_File::IDLE)
+      handle->release ();
+
+      if (handle->action () == JAWS_File::IDLE)
         {
-          delete jf;
-          jf = 0;
+          delete handle;
+          handle = 0;
         }
       else
-        jf->action (JAWS_File::WAITING);
+        handle->action (JAWS_File::WAITING);
     }
-  return jf;
+
+  return handle;
 }
 
 JAWS_File *
@@ -274,6 +296,7 @@ JAWS_Virtual_Filesystem::insert_i (JAWS_File * new_file)
 {
   int i, max;
   size_t maxsize = 0;
+
   for (i = 0; i < DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE; i++)
     {
       if (this->table_[i] != 0)
@@ -285,24 +308,28 @@ JAWS_Virtual_Filesystem::insert_i (JAWS_File * new_file)
       this->table_[i] = new_file;
       break;
     }
+
   if (i == DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
     {
-      // Forced to exercise a replacement policy here.
-      // Let's play nice, and remove the largest object from the cache.
+      // Forced to exercise a replacement policy here.  Let's play
+      // nice, and remove the largest object from the cache.
       this->remove_i (max);
       this->table_[max] = new_file;
     }
+
   new_file->acquire ();
   return new_file;
 }
 
 JAWS_File *
-JAWS_Virtual_Filesystem::replace (JAWS_File * new_file)
+JAWS_Virtual_Filesystem::replace (JAWS_File *new_file)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
 
   int i = this->fetch_i (new_file->filename ());
-  if (i == -1) this->insert_i (new_file);
+
+  if (i == -1)
+    this->insert_i (new_file);
   else
     {
       this->remove_i (i);
@@ -311,8 +338,6 @@ JAWS_Virtual_Filesystem::replace (JAWS_File * new_file)
 
   return new_file;
 }
-
-
 
 void
 JAWS_File::init (void)
@@ -332,9 +357,12 @@ JAWS_File::JAWS_File (void)
   this->init ();
 }
 
-JAWS_File::JAWS_File (const char * filename)
+JAWS_File::JAWS_File (const char *filename)
 {
   this->init ();
+
+  // James, this code is important, yet it lacks documentation.
+  // Please rectify this.
 
   ACE_OS::strcpy (this->filename_, filename);
   this->action (JAWS_File::IDLE);
@@ -344,21 +372,25 @@ JAWS_File::JAWS_File (const char * filename)
       this->error (JAWS_File::ACCESS_FAILED);
       return;
     }
+
   if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
     {
       this->error (JAWS_File::STAT_FAILED);
       return;
     }
+
   this->size_ = this->stat_.st_size;
 
   this->tempname_ = ACE_OS::tempnam (".", "zJAWS");
 
   ACE_HANDLE original = ACE_OS::open (this->filename_, RCOPY_FLAGS, R_MASK);
+
   if (original == ACE_INVALID_HANDLE)
     {
       this->error (JAWS_File::OPEN_FAILED);
       return;
     }
+
   ACE_HANDLE copy = ACE_OS::open (this->tempname_, WCOPY_FLAGS, W_MASK);
   if (copy == ACE_INVALID_HANDLE)
     {
@@ -369,6 +401,7 @@ JAWS_File::JAWS_File (const char * filename)
 
   ACE_Mem_Map original_map (original);
   ACE_Mem_Map copy_map (copy, this->size_, PROT_WRITE, MAP_SHARED);
+
   void *src = original_map.addr ();
   void *dst = copy_map.addr ();
   
@@ -381,7 +414,8 @@ JAWS_File::JAWS_File (const char * filename)
     {
       ACE_OS::memcpy (dst, src, this->size_);
 
-      if (original_map.unmap () == -1 || copy_map.unmap () == -1)
+      if (original_map.unmap () == -1 
+	  || copy_map.unmap () == -1)
 	this->error (JAWS_File::MEMMAP_FAILED);
     }
 
@@ -423,6 +457,7 @@ int
 JAWS_File::acquire (void)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+
   if (this->reference_count_++ == 0)
     {
       if (this->error_ == OKIE_DOKIE)
@@ -431,11 +466,10 @@ JAWS_File::acquire (void)
           {
           case JAWS_File::IDLE:
             this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK);
+
             if (this->handle_ == ACE_INVALID_HANDLE)
-              {
-                this->error (JAWS_File::OPEN_FAILED,
-                             "JAWS_File::acquire: open");
-              }
+	      this->error (JAWS_File::OPEN_FAILED,
+			   "JAWS_File::acquire: open");
             else if (this->mmap_.map (this->handle_, -1,
                                       PROT_READ, MAP_PRIVATE) != 0)
               {
@@ -444,18 +478,23 @@ JAWS_File::acquire (void)
                 ACE_OS::close (this->handle_);
                 this->handle_ = ACE_INVALID_HANDLE;
               }
-            else this->action (JAWS_File::READING);
+
+            else
+	      this->action (JAWS_File::READING);
             break;
 
           case JAWS_File::WRITING:
-            this->handle_ = ACE_OS::open (this->tempname_, WRITE_FLAGS, W_MASK);
+            this->handle_ = ACE_OS::open (this->tempname_,
+					  WRITE_FLAGS,
+					  W_MASK);
+
             if (this->handle_ == ACE_INVALID_HANDLE)
-              {
-                this->error (JAWS_File::OPEN_FAILED,
-                             "JAWS_File::acquire: open");
-              }
-            else if (ACE_OS::lseek (this->handle_, this->size_ - 1, SEEK_SET)
-                     == -1)
+	      this->error (JAWS_File::OPEN_FAILED,
+			   "JAWS_File::acquire: open");
+
+            else if (ACE_OS::lseek (this->handle_,
+				    this->size_ - 1,
+				    SEEK_SET) == -1)
               {
                 this->error (JAWS_File::OPEN_FAILED,
                              "JAWS_File::acquire: lseek");
@@ -492,10 +531,11 @@ int
 JAWS_File::release (void)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+
   if (--this->reference_count_ == 0)
     {
       if (this->error_ == OKIE_DOKIE)
-        // free file from memory if reference count is zero
+        // Free file from memory if reference count is zero.
         switch (this->action ())
           {
           case JAWS_File::READING:
@@ -511,21 +551,17 @@ JAWS_File::release (void)
                 ACE_HANDLE original = ACE_OS::open (this->filename_,
                                                     WRITE_FLAGS, W_MASK);
                 if (original == ACE_INVALID_HANDLE)
-                  {
-                    this->error_ = JAWS_File::OPEN_FAILED;
-                  }
+		  this->error_ = JAWS_File::OPEN_FAILED;
                 else if (ACE_OS::write (original, this->mmap_.addr (),
-                                        this->size_)
-                         == -1)
+                                        this->size_) == -1)
                   {
                     this->error_ = JAWS_File::WRITE_FAILED;
                     ACE_OS::close (original);
                     ACE_OS::unlink (this->filename_);
                   }
                 else if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
-                  {
-                    this->error_ = JAWS_File::STAT_FAILED;
-                  }
+		  this->error_ = JAWS_File::STAT_FAILED;
+
                 this->mmap_.unmap ();
                 ACE_OS::close (this->handle_);
                 this->handle_ = ACE_INVALID_HANDLE;
@@ -569,7 +605,8 @@ JAWS_File::error (int error_value, const char * s)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   ACE_ERROR ((LM_ERROR, "%p.\n", s));
-  return (this->error_ = error_value);
+  this->error_ = error_value;
+  return error_value;
 }
 
 const char *
@@ -608,14 +645,10 @@ JAWS_File::update (void) const
   struct stat statbuf;
 
   if (ACE_OS::stat (this->filename_, &statbuf) == -1)
-    {
-      result = 1;
-    }
+    result = 1;
   else
-    {
-      // non-portable code may follow
+    // non-portable code may follow
       result = (ACE_OS::difftime (this->stat_.st_mtime, statbuf.st_mtime) < 0);
-    }
 
   return result;
 }

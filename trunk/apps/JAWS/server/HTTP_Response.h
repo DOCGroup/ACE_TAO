@@ -5,10 +5,10 @@
 // ============================================================================
 //
 // = LIBRARY
-//    apps
+//    jaws
 // 
 // = FILENAME
-//    HTTP_Response
+//    HTTP_Response.h
 //
 // = AUTHOR
 //    James Hu
@@ -32,17 +32,18 @@ class HTTP_Response
   //     the request.
 {
 public:
-
-  HTTP_Response (JAWS_IO &io, HTTP_Request &request);
+  HTTP_Response (JAWS_IO &io,
+		 HTTP_Request &request);
   HTTP_Response (HTTP_Request &request, JAWS_IO &io);
   ~HTTP_Response (void);
 
   void process_request (void);
   // This is called by the handler to initiate a response.
 
-  void error_response (int status, const char *log_message);
-  // This returns an error response for cases where there is
-  // a problem with the request, logging the log_message.
+  void error_response (int status,
+		       const char *log_message);
+  // This returns an error response for cases where there is a problem
+  // with the request, logging the log_message.
 
 private:
 
@@ -61,6 +62,7 @@ private:
   // creates the appropriate header information for responses.
 
 private:
+  // James, please document this.
 
   JAWS_IO &io_;
   HTTP_Request &request_;

@@ -8,11 +8,17 @@ ACE_STATIC_SVC_REQUIRE(HTTP_Server)
 extern "C"
 {
 
-/* call exit() so that static destructors get called */
+  // call exit() so that static destructors get called 
 static void
-handler (int) { exit (0); } 
+handler (int) 
+{ 
+  ACE_OS::exit (0); 
+}
 
 }
+
+// This is the driver entry point into JAWS.  It is possible to use
+// JAWS as an ACE Service, as well.
 
 int
 main (int argc, char *argv[])

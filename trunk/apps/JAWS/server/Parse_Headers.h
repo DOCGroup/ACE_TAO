@@ -5,10 +5,10 @@
 // ============================================================================
 //
 // = LIBRARY
-//    apps
+//    jaws
 // 
 // = FILENAME
-//    Parse_Headers
+//    Parse_Headers.h
 //
 // = AUTHOR
 //    James Hu
@@ -21,6 +21,7 @@
 #include "ace/OS.h"
 
 class Headers_Map
+// James, please add documentation here.
 {
 public:
   Headers_Map (void);
@@ -29,13 +30,13 @@ public:
   class Map_Item
   {
   public:
-    Map_Item ();
-    ~Map_Item ();
+    Map_Item (void);
+    ~Map_Item (void);
 
     operator const char * (void) const;
-    Map_Item & operator= (char *);
-    Map_Item & operator= (const char *);
-    Map_Item & operator= (const Map_Item &);
+    Map_Item &operator= (char *);
+    Map_Item &operator= (const char *);
+    Map_Item &operator= (const Map_Item &);
 
     const char *header_;
     const char *value_;
@@ -43,16 +44,19 @@ public:
     const char *no_value_;
   };
 
-  Map_Item & operator[] (const char * const header);
-  const Map_Item & operator[] (const char * const header) const;
+  Map_Item &operator[] (const char *const header);
+  const Map_Item &operator[] (const char *const header) const;
 
-  enum { MAX_HEADERS = 100 };
+  enum 
+  { 
+    MAX_HEADERS = 100 
+  };
 
-  int mapped (const char * const header) const;
+  int mapped (const char *const header) const;
 
 private:
-  Map_Item * find (const char * const header) const;
-  Map_Item * place (const char * const header);
+  Map_Item *find (const char *const header) const;
+  Map_Item *place (const char *const header);
   static int compare (const void *item1, const void *item2);
 
 private:
@@ -75,24 +79,27 @@ public:
   Headers (void);
   ~Headers (void);
 
-  void recognize (const char * const header);
+  void recognize (const char *const header);
 
-  void parse_header_line (char * const header_line);
+  void parse_header_line (char *const header_line);
 
-  int complete_header_line (char * const header_line);
+  int complete_header_line (char *const header_line);
   // -1 -> end of line but not complete header line
   //  0 -> no end of line marker
   //  1 -> complete header line
 
   int end_of_headers (void) const;
 
-  enum { MAX_HEADER_LINE_LENGTH = 8192 };
+  enum 
+  { 
+    MAX_HEADER_LINE_LENGTH = 8192 
+  };
 
-  Headers_Map::Map_Item & operator[] (const char * const header);
-  const Headers_Map::Map_Item & operator[] (const char * const header) const;
+  Headers_Map::Map_Item &operator[] (const char *const header);
+  const Headers_Map::Map_Item &operator[] (const char *const header) const;
 
 private:
-  int end_of_line (char * &line, int &offset) const;
+  int end_of_line (char *&line, int &offset) const;
 
 private:
   Headers_Map map_;

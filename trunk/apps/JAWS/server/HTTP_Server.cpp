@@ -7,11 +7,24 @@
 #include "IO.h"
 #include "HTTP_Server.h"
 
-enum { POOL = 0, PER_REQUEST = 1 };
-enum { SYNCH = 0, ASYNCH = 2 };
+// James, please make sure that you don't have "free floating" enums
+// since they will inevitably cause portability problems.
+
+enum 
+{ 
+  POOL = 0,
+  PER_REQUEST = 1 
+};
+
+enum 
+{ 
+  SYNCH = 0,
+  ASYNCH = 2 
+};
 
 void
-HTTP_Server::parse_args (int argc, char *argv[])
+HTTP_Server::parse_args (int argc,
+			 char *argv[])
 {
   int c;
   int thr_strategy = 0;
@@ -25,6 +38,7 @@ HTTP_Server::parse_args (int argc, char *argv[])
   this->throttle_ = 0;
 
   ACE_Get_Opt get_opt (argc, argv, "p:n:t:i:b:");
+
   while ((c = get_opt ()) != -1)
     switch (c) 
       {
@@ -66,16 +80,18 @@ HTTP_Server::parse_args (int argc, char *argv[])
 	break;
       }
   
-  if (this->port_ == 0) this->port_ = 5432;
-  if (this->threads_ == 0) this->threads_ = 5;
-  if (this->backlog_ == 0) this->backlog_ = this->threads_;
+  if (this->port_ == 0)
+    this->port_ = 5432;
+  if (this->threads_ == 0)
+    this->threads_ = 5;
+  if (this->backlog_ == 0)
+    this->backlog_ = this->threads_;
 
   this->strategy_ = thr_strategy + io_strategy;
   
   ACE_DEBUG ((LM_DEBUG,
               "in HTTP_Server::init, %s port = %d, number of threads = %d\n",
               prog, this->port_, this->threads_));
-  
 }
 
 int
@@ -118,18 +134,23 @@ HTTP_Server::synch_thread_pool (void)
   for (int i = 0; i < this->threads_; i++) 
     {
       Synch_Thread_Pool_Task *t;
-      ACE_NEW_RETURN (t, Synch_Thread_Pool_Task (this->acceptor_, this->tm_),
+
+      ACE_NEW_RETURN (t,
+		      Synch_Thread_Pool_Task (this->acceptor_, this->tm_),
                       -1);
+
       if (t->open () != 0) 
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Pool_Task::open"), -1);
     }      
+
   this->tm_.wait ();
   return 0;
 }
 
 Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
                                                 ACE_Thread_Manager &tm)
-  : ACE_Task<ACE_NULL_SYNCH> (&tm), acceptor_ (acceptor)
+  : ACE_Task<ACE_NULL_SYNCH> (&tm),
+    acceptor_ (acceptor)
 {
 }
 
@@ -149,9 +170,11 @@ int
 Synch_Thread_Pool_Task::svc (void)
 {
   Synch_HTTP_Handler_Factory factory;
+
   for (;;) 
     {
       ACE_SOCK_Stream stream;
+
       if (this->acceptor_.accept (stream) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
 
@@ -167,8 +190,8 @@ Synch_Thread_Pool_Task::svc (void)
                   " (%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
     }
   
-  // This stinks, because I am afraid that if I remove this line,
-  // some compiler will issue a warning that this routine could exit
+  // This stinks, because I am afraid that if I remove this line, some
+  // compiler will issue a warning that this routine could exit
   // without returning a value.  But, leaving it in makes the VXWORKS
   // compiler complain about an unreachable statement.
 
@@ -190,6 +213,7 @@ HTTP_Server::thread_per_request (void)
   for (;;) 
     {
       ACE_SOCK_Stream stream;
+
       if (this->acceptor_.accept (stream) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
 
@@ -203,18 +227,19 @@ HTTP_Server::thread_per_request (void)
                            "%p\n", "Thread_Per_Request_Task::open"),
                           -1);
 
-      // Throttling is not allowing too many threads run away
-      // Should really use some sort of condition variable here.
-      if (! this->throttle_) continue;
+      // Throttling is not allowing too many threads run away Should
+      // really use some sort of condition variable here.
+      if (!this->throttle_) 
+	continue;
+
       const ACE_Time_Value wait_time (0,10);
+
       while (this->tm_.num_tasks_in_group (grp_id) > this->threads_)
-        {
-          this->tm_.wait (&wait_time);
-        }
+	this->tm_.wait (&wait_time);
     }
 
-  // This stinks, because I am afraid that if I remove this line,
-  // some compiler will issue a warning that this routine could exit
+  // This stinks, because I am afraid that if I remove this line, some
+  // compiler will issue a warning that this routine could exit
   // without returning a value.  But, leaving it in makes the VXWORKS
   // compiler complain about an unreachable statement.
 
@@ -236,7 +261,8 @@ Thread_Per_Request_Task::open (void *args)
   int status = -1;
   int *grp_id = &status;
 
-  if (args != 0) grp_id = (int *) args;
+  if (args != 0)
+    grp_id = (int *) args;
 
   if (*grp_id == -1)
     status = *grp_id = this->activate ();
@@ -246,7 +272,6 @@ Thread_Per_Request_Task::open (void *args)
   if (*grp_id == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
                       -1);
-
   return 0;
 }
 
@@ -266,7 +291,8 @@ Thread_Per_Request_Task::svc (void)
 int
 Thread_Per_Request_Task::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) Thread_Per_Request_Task::svc, dying\n"));
+  ACE_DEBUG ((LM_DEBUG,
+	      " (%t) Thread_Per_Request_Task::svc, dying\n"));
   delete this;
   return 0;
 }
@@ -291,33 +317,33 @@ HTTP_Server::asynch_thread_pool (void)
 {  
 // This only works on Win32
 #if defined (ACE_WIN32)
-  // Create the appropriate acceptor for this concurrency strategy
-  // and an appropriate handler for this I/O strategy
+  // Create the appropriate acceptor for this concurrency strategy and
+  // an appropriate handler for this I/O strategy
   ACE_Asynch_Acceptor<Asynch_HTTP_Handler_Factory> acceptor;
 
   // Tell the acceptor to listen on this->port_, which makes an
-  // asynchronous I/O request to the OS
+  // asynchronous I/O request to the OS.
   if (acceptor.open (ACE_INET_Addr (this->port_),
 		     HTTP_Handler::MAX_REQUEST_SIZE + 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
                        "ACE_Asynch_Acceptor::open"), -1);
   
-  // Create the thread pool
+  // Create the thread pool.
   for (int i = 0; i < this->threads_; i++) 
     {
-      // Register threads with the proactor and thread manager
+      // Register threads with the proactor and thread manager.
       Asynch_Thread_Pool_Task *t;
-      ACE_NEW_RETURN
-        (t, Asynch_Thread_Pool_Task (*ACE_Service_Config::proactor (),
-                                     this->tm_),
-         -1);
+      ACE_NEW_RETURN (t,
+		      Asynch_Thread_Pool_Task (*ACE_Service_Config::proactor (),
+					       this->tm_),
+		      -1);
       if (t->open () != 0) 
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
                            "Thread_Pool_Task::open"), -1);
-      // The proactor threads are waiting on the I/O Completion Port
+      // The proactor threads are waiting on the I/O Completion Port.
     }   
 
-  // wait for the threads to finish
+  // Wait for the threads to finish.
   return this->tm_.wait ();
 #endif /* ACE_WIN32 */
   return -1;
@@ -328,7 +354,8 @@ HTTP_Server::asynch_thread_pool (void)
 
 Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
                                                   ACE_Thread_Manager &tm)
-  : ACE_Task<ACE_NULL_SYNCH> (&tm), proactor_ (proactor)
+  : ACE_Task<ACE_NULL_SYNCH> (&tm),
+    proactor_ (proactor)
 {
 }
 
