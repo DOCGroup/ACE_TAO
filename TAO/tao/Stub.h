@@ -295,7 +295,8 @@ public:
                TAO_Profile *profile);
   // degenerate case where only one profile is wanted.  This method
   // is depricated and is here ONLY for compatibility with multiple
-  // profile unfriendly code!
+  // profile unfriendly code!  The profile is given to the MProfile
+  // object.  
 
   STUB_Object (char *repository_id,
                TAO_MProfile *profiles);
