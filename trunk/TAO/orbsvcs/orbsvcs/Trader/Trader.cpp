@@ -851,7 +851,7 @@ sequence_type (CORBA::TypeCode* type_code,
   if (type_kind == CORBA::tk_alias
       || type_kind == CORBA::tk_sequence)
     {
-      CORBA::TypeCode_ptr base = type_code;
+      CORBA::TypeCode_var base = CORBA::TypeCode::_duplicate (type_code);
 
       while (base->kind (ACE_TRY_ENV) == CORBA::tk_alias)
         {
