@@ -203,9 +203,7 @@ Notifier_i::market_status (const char *stock_name,
 void
 Notifier_i::shutdown (CORBA::Environment &env)
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "The Callback Quoter server is shutting down..."));
-
+ 
   /* CONSUMERS *consumers;
   for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
        iter!= this->consumer_map_.end ();
@@ -236,9 +234,13 @@ Notifier_i::shutdown (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
   " All consumers  removed!\n"));*/
 
-  if ( this->consumer_map_.close () == -1)
+  if ( this->consumer_map_.close () > 0)
     ACE_ERROR ((LM_ERROR,
 		"Consumer_map_close error!\n"));
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "The Callback Quoter server is shutting down..."));
+
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();

@@ -206,7 +206,7 @@ Consumer_Handler::init (int argc, char **argv)
 		      -1);
 
   // Register the signal event handler for ^C
-  // and for the signal which occurs when a terminal
+  // and for the signal which occurs when a terminal window
   // is changed.
 
    ACE_NEW_RETURN (consumer_signal_handler_,

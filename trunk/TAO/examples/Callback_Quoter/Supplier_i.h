@@ -1,6 +1,5 @@
 // -*- C++ -*-
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -17,11 +16,22 @@
 //    Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
 // ============================================================================
+#ifndef SUPPLIER_I_H
+#define SUPPLIER_I_H
 
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Reactor.h"
 #include "NotifierC.h"
+#include "Supplier_Timer_Handler.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// This class does the job of feeding the Callback Quoter 
+// notifier with stock information.
+class Supplier_Timer_Handler;
 class Supplier
 {
   // = TITLE
@@ -29,7 +39,7 @@ class Supplier
   //
   // = DESCRIPTION
   //     Class wrapper for a daemon which keeps sending
-  //     current stock values to the Callback Quoter server.
+  //     current stock values to the Callback Quoter notifier.
 public:
   // = Initialization and termination methods.
   Supplier (void);
@@ -44,6 +54,14 @@ public:
   int init (int argc, char *argv[]);
   // Initialize the client communication endpoint with Notifier.
 
+  int send_market_status (const char *stock_name,
+                          long value);
+  // Sends the stock name and its value.
+
+  Supplier_Timer_Handler *supplier_timer_handler_;
+  // The timer handler used to send the market status to the
+  // notifier periodically.
+
 private:
   int read_ior (char *filename);
   // Function to read the Notifier IOR from a file.
@@ -54,10 +72,9 @@ private:
   int via_naming_service(void);
   // This method initialises the naming service and registers the
   // object with the POA.
-
-  int send_market_status (const char *stock_name,
-                          long value);
-  // Sends the stock name and its value.
+  
+  ACE_Reactor *reactor_used (void) const;
+  // returns the TAO instance of the singleton Reactor.
 
   int argc_;
   // # of arguments on the command line.
@@ -91,3 +108,5 @@ private:
   int loop_count_;
   // Iteration count.
 };
+
+#endif /*SUPPLIER_I_H */
