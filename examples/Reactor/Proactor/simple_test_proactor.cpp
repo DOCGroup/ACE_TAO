@@ -29,8 +29,8 @@ ACE_RCSID(Proactor, test_proactor, "simple_test_proactor.cpp,v 1.1 1999/05/18 22
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
 
-static char *file = "simple_test_proactor.cpp";
-static char *dump_file = "simple_output";
+static ACE_TCHAR *file = ACE_TEXT("simple_test_proactor.cpp");
+static ACE_TCHAR *dump_file = ACE_TEXT("simple_output");
 
 class Simple_Tester : public ACE_Handler
 {
@@ -66,7 +66,7 @@ private:
 
   ACE_Asynch_Read_File rf_;
   // rf (read file): for writing from the file.
-  
+
   ACE_Asynch_Write_File wf_;
   // ws (write File): for writing to the file.
 
@@ -114,7 +114,7 @@ Simple_Tester::open (void)
                                    0644);
   if (this->dump_file_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
-  
+
   // Open ACE_Asynch_Read_File
   if (this->rf_.open (*this, this->input_file_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Read_File::open"), -1);
@@ -123,10 +123,10 @@ Simple_Tester::open (void)
   if (this->wf_.open (*this, this->dump_file_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Write_File::open"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Simple_Tester::open: Files and Asynch Operations opened sucessfully\n"));
 
-  
+
   // Start an asynchronous read file
   if (this->initiate_read_file () == -1)
     return -1;
@@ -147,7 +147,7 @@ Simple_Tester::initiate_read_file (void)
 		      mb->size () - 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Read_File::read"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Simple_Tester:initiate_read_file: Asynch Read File issued sucessfully\n"));
 
   return 0;
@@ -194,12 +194,12 @@ void
 Simple_Tester::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 {
   ACE_DEBUG ((LM_DEBUG, "handle_write_File called\n"));
-  
+
   // Reset pointers
   result.message_block ().rd_ptr (result.message_block ().rd_ptr () - result.bytes_transferred ());
 
   result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
-  
+
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
@@ -221,9 +221,9 @@ Simple_Tester::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:d:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:d:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -247,7 +247,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
     return -1;
@@ -256,7 +256,7 @@ main (int argc, char *argv[])
 
   if (Simple_Tester.open () == -1)
     return -1;
-  
+
   int success = 1;
 
   // dispatch events

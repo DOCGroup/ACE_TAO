@@ -38,16 +38,16 @@ ACE_RCSID(Proactor, test_proactor, "$Id$")
   // POSIX aio calls.
 
 // Host that we're connecting to.
-static char *host = 0;
+static ACE_TCHAR *host = 0;
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // File that we're sending.
-static char *file = "test_proactor.cpp";
+static ACE_TCHAR *file = ACE_TEXT("test_proactor.cpp");
 
 // Name of the output file.
-static char *dump_file = "output";
+static ACE_TCHAR *dump_file = ACE_TEXT("output");
 
 // Keep track of when we're done.
 static int done = 0;
@@ -315,7 +315,7 @@ class Sender : public ACE_Handler
 public:
   Sender (void);
   ~Sender (void);
-  int open (const char *host,
+  int open (const ACE_TCHAR *host,
             u_short port);
   ACE_HANDLE handle (void) const;
 
@@ -394,7 +394,7 @@ Sender::handle (void) const
 }
 
 int
-Sender::open (const char *host,
+Sender::open (const ACE_TCHAR *host,
                u_short port)
 {
   // Initialize stuff
@@ -631,9 +631,9 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "h:p:f:d:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("h:p:f:d:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -664,7 +664,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
     return -1;

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_timeout_st.cpp
 //
@@ -16,7 +16,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali and Alexander Babu Arulanthu
-// 
+//
 // ============================================================================
 
 #include "ace/Proactor.h"
@@ -31,38 +31,38 @@ class Timeout_Handler : public ACE_Handler
 {
   // = TITLE
   //     Generic timeout handler.
-  
+
 public:
   Timeout_Handler (void)
-    : count_ (0), 
+    : count_ (0),
       start_time_ (ACE_OS::gettimeofday ())
-    { 
+    {
     }
 
   virtual void handle_time_out (const ACE_Time_Value &tv,
 				const void *arg)
     {
       // Print out when timeouts occur.
-      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n", 
+      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
 		  ++count_,
 		  (char *) arg,
 		  (tv - this->start_time_).sec ()));
     }
-  
+
 private:
   int count_;
   // Sequence number for the timeouts.
-  
+
   ACE_Time_Value start_time_;
   // Starting time of the test.
 };
 
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Timeout_Handler handler;
-  
+
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
   if (ACE_Proactor::instance ()->schedule_timer (handler,
@@ -70,7 +70,7 @@ main (int, char *[])
                                                  ACE_Time_Value::zero,
                                                  foo_tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
-  
+
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
   if (ACE_Proactor::instance ()->schedule_timer (handler,
@@ -81,17 +81,17 @@ main (int, char *[])
 
   // Handle events for 13 seconds.
   ACE_Time_Value run_time (13);
-  
+
   ACE_DEBUG ((LM_DEBUG, "Starting event loop\n"));
-  
+
   // Run the event loop.
   if (ACE_Proactor::run_event_loop(run_time) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t):%p.\n", "Worker::svc"),
                       1);
-  
+
   ACE_DEBUG ((LM_DEBUG, "Ending event loop\n"));
-  
+
   return 0;
 }
 

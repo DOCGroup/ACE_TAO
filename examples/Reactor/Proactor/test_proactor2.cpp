@@ -61,7 +61,7 @@ int PrintSigMask ();
 #define  COUT(X)  cout << X ; cout.flush ();
 
 // Host that we're connecting to.
-static char *host = 0;
+static ACE_TCHAR *host = 0;
 
 // duplex mode: ==0 half-duplex
 //              !=0 full duplex
@@ -370,7 +370,7 @@ class Sender : public ACE_Handler
 public:
 Sender (void);
 ~Sender (void);
-int open (const char *host, u_short port);
+int open (const ACE_TCHAR *host, u_short port);
 void close ();
 ACE_HANDLE handle (void) const;
 
@@ -430,7 +430,7 @@ ACE_HANDLE Sender::handle (void) const
   return this->stream_.get_handle ();
 }
 
-int Sender::open (const char *host, u_short port)
+int Sender::open (const ACE_TCHAR *host, u_short port)
 {
   // Initialize stuff
   // Connect to remote host
@@ -627,9 +627,9 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 //--------------------------------------------------------------------------
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:p:d:h:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:p:d:h:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -661,7 +661,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (initial_read_size);
 

@@ -9,7 +9,7 @@
 //     Proactor. It also shows the how to specify the particular
 //     real-time signals to post completions. The Real-time signal
 //     based completion strategy is implemented with
-//     ACE_POSIX_SIG_PROACTOR. 
+//     ACE_POSIX_SIG_PROACTOR.
 //     (So, it can be used only if ACE_HAS_AIO_CALLS is defined and
 //      ACE_POSIX_AIOCB_PROACTOR is not defined)
 //     Since it is faking results, you have to pay by knowing and
@@ -57,12 +57,12 @@ static ACE_Atomic_Op <ACE_Thread_Mutex, size_t> Completions_To_Go;
 class My_Result : public RESULT_CLASS
 {
   // = TITLE
-  // 
+  //
   //     Result Object that we will post to the Proactor.
   //
   // = DESCRIPTION
   //
-  
+
 public:
   My_Result (ACE_Handler &handler,
              const void *act,
@@ -78,11 +78,11 @@ public:
       sequence_number_ (sequence_number)
     {}
   // Constructor.
-  
+
   virtual ~My_Result (void)
     {}
   // Destructor.
-  
+
   void complete (u_long,
                  int success,
                  const void *completion_key,
@@ -100,13 +100,13 @@ public:
 
       // Print the completion details.
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Completion sequence number %d, success : %d, error : %d, signal_number : %d, %u more to go\n", 
+                  "(%t) Completion sequence number %d, success : %d, error : %d, signal_number : %d, %u more to go\n",
                   this->sequence_number_,
                   this->success_,
                   this->error_,
                   this->signal_number (),
                   to_go));
-      
+
       // Sleep for a while.
       ACE_OS::sleep (4);
     }
@@ -115,20 +115,20 @@ private:
   size_t sequence_number_;
   // Sequence number for the result object.
 };
- 
+
 class My_Handler : public  ACE_Handler
 {
   // = TITLE
   //
-  //     Handler class for faked completions. 
+  //     Handler class for faked completions.
   //
   // = DESCRIPTION
   //
-  
+
 public:
   My_Handler (void) {}
   // Constructor.
-  
+
   virtual ~My_Handler (void) {}
   // Destructor.
 };
@@ -136,14 +136,14 @@ public:
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
   // = TITLE
-  //   
-  //     Contains thread functions which execute event loops. Each 
+  //
+  //     Contains thread functions which execute event loops. Each
   //     thread waits for a different signal.
   //
 public:
   My_Task (void) {}
   // Constructor.
-  
+
   virtual ~My_Task (void) {}
   // Destructor.
 
@@ -151,7 +151,7 @@ public:
     {
       // Store the proactor.
       this->proactor_ = (ACE_Proactor *) proactor;
-      
+
       // Activate the Task.
       this->activate (THR_NEW_LWP, 5);
       return 0;
@@ -161,14 +161,14 @@ public:
     {
       // Handle events for 13 seconds.
       ACE_Time_Value run_time (13);
-      
+
       ACE_DEBUG ((LM_DEBUG, "(%t):Starting svc routine\n"));
-      
+
       if (this->proactor_->handle_events (run_time) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "(%t):%p.\n", "Worker::svc"), -1);
-      
+
       ACE_DEBUG ((LM_DEBUG, "(%t) work complete\n"));
-      
+
       return 0;
     }
 
@@ -178,7 +178,7 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
@@ -187,8 +187,8 @@ main (int argc, char *argv[])
               "(%P | %t):Test starts \n"));
 
   // = Get two POSIX_SIG_Proactors, one with SIGRTMIN and one with
-  //   SIGRTMAX.  
-  
+  //   SIGRTMAX.
+
   ACE_Proactor  proactor1;
   // Proactor1. SIGRTMIN Proactor. (default).
 
@@ -196,10 +196,10 @@ main (int argc, char *argv[])
 #if defined (ACE_HAS_AIO_CALLS) && !defined (ACE_POSIX_AIOCB_PROACTOR)
 
   ACE_DEBUG ((LM_DEBUG, "Using ACE_POSIX_SIG_Proactor\n"));
-  
+
   sigset_t signal_set;
   // Signal set that we want to mask.
-  
+
   // Clear the signal set.
   if (sigemptyset (&signal_set) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -230,9 +230,9 @@ main (int argc, char *argv[])
 
   // Handler for completions.
   My_Handler handler;
-  
+
   // = Create a few MyResult objects and post them to Proactor.
-  const size_t NrCompletions (10);  
+  const size_t NrCompletions (10);
   My_Result *result_objects [NrCompletions];
   int signal_number = ACE_SIGRTMAX;
   size_t ri;
@@ -256,7 +256,7 @@ main (int argc, char *argv[])
                                  ri),
                       1);
     }
-  ACE_OS::sleep(5);  
+  ACE_OS::sleep(5);
   // Post all the result objects.
   ACE_Proactor *proactor;
   for (ri = 0; ri < NrCompletions; ri++)
@@ -265,7 +265,7 @@ main (int argc, char *argv[])
       // completions.
       if (ri % 2)
         proactor = &proactor1;
-      else 
+      else
         proactor = &proactor2;
       if (result_objects [ri]->post_completion (proactor->implementation ())
           == -1)
@@ -273,7 +273,7 @@ main (int argc, char *argv[])
                            "Test failed\n"),
                           1);
     }
-  
+
   ACE_Thread_Manager::instance ()->wait ();
 
   int status = 0;
@@ -303,7 +303,7 @@ template class ACE_Atomic_Op_Ex <ACE_Thread_Mutex, size_t>;
 
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
 
-int 
+int
 main (int, char *[])
 {
   ACE_DEBUG ((LM_DEBUG,
