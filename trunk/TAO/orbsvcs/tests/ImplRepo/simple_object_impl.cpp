@@ -25,6 +25,7 @@ Simple_i::simple_method (CORBA::Long l, CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG, "Simple Method\n"));
   ACE_UNUSED_ARG (env);
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
   return l * l * l;
 }
 

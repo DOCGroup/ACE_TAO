@@ -17,13 +17,12 @@ CFG=ImplRepoTest ImplRepo - Win32 Release
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ImplRepoTest ImplRepo - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "ImplRepoTest ImplRepo - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "ImplRepoTest ImplRepo - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "ImplRepoTest ImplRepo - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -131,12 +130,22 @@ SOURCE=.\Impl_Repo.idl
 
 !IF  "$(CFG)" == "ImplRepoTest ImplRepo - Win32 Release"
 
-# Begin Custom Build
+USERDEP__IMPL_="..\..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Impl_Repo.idl
 InputName=Impl_Repo
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -159,12 +168,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "ImplRepoTest ImplRepo - Win32 Debug"
 
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__IMPL_="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Impl_Repo.idl
 InputName=Impl_Repo
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

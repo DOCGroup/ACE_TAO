@@ -68,8 +68,8 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
    
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa ("server",
-                                                 &this->server_impl,
-                                                 TAO_TRY_ENV);
+                                                     &this->server_impl,
+                                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (TAO_debug_level > 0)
@@ -78,13 +78,6 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
       // Talk to the Implementation Repository
       
       this->read_ir_ior ();
-
-      if (this->ior_output_file_)
-        {
-          ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
-          ACE_OS::fclose (this->ior_output_file_);
-        }
-
 
       CORBA::Object_var implrepo_object =
         this->orb_manager_.orb ()->string_to_object (this->ir_server_key_, TAO_TRY_ENV);
@@ -101,7 +94,17 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
                           -1);
 
       Implementation_Repository::INET_Addr addr;
-      ImplRepo->server_is_running ("Simple_Server", addr, TAO_TRY_ENV);
+
+      CORBA::Object_var server_object =  
+        this->orb_manager_.orb ()->string_to_object (str, env);
+      
+      ImplRepo->server_is_running ("Simple_Server", server_object, addr, TAO_TRY_ENV);
+
+      if (this->ior_output_file_)
+        {
+          ACE_OS::fprintf (this->ior_output_file_, "%s", server_object.in ());
+          ACE_OS::fclose (this->ior_output_file_);
+        }
 
     }
   TAO_CATCHANY

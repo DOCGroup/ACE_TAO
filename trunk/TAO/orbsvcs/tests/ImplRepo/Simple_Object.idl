@@ -11,6 +11,6 @@ interface simple_object
   long simple_method (in long l);
   // cube a long
 
-  oneway void shutdown ();
+  void shutdown ();
   // shutdown the application.
 };
