@@ -27,7 +27,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   CORBA::Environment &ACE_TRY_ENV)
 {
   if (CORBA::is_nil (policy_factory))
-    ACE_THROW (CORBA::INV_OBJREF (
+    ACE_THROW (CORBA::BAD_PARAM (
                  CORBA_SystemException::_tao_minor_code (
                    TAO_DEFAULT_MINOR_CODE,
                    EINVAL),

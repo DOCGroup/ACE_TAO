@@ -1,3 +1,12 @@
+Wed Mar 21 11:23:31 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PolicyFactory_Registry.cpp (register_policy_factory):
+
+	  Throw a CORBA::BAD_PARAM exception instead of a
+	  CORBA::INV_OBJREF exception if the policy reference is nil.  A
+	  nil reference is perfectly valid, so CORBA::INV_OBJREF isn't
+	  appropriate in this case.
+
 Wed Mar 21 11:04:27 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp (key_to_stub_i):
