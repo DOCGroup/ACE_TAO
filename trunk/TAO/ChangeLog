@@ -1,3 +1,15 @@
+Tue Aug  3 13:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AMH_Response_Handler.{h,cpp}:
+          Corrected the method name for decrementing the reference count
+          from decr_refcount to _remove_ref. The AMH Response Handler is 
+          derived from TAO_Local_RefCounted_Object and this defines the
+          virtual method _remove_ref, we now had two methods where the 
+          base method didn't know anything of the allocator. By overruling
+          we also get the derived _remove_ref and use the allocator
+          when needed. This fixes the crashing of the AMH Sink_Server
+          example in our daily builds.
+
 Tue Aug  3 08:34:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/be_extern.h:
