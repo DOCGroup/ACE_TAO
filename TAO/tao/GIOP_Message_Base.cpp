@@ -387,7 +387,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                                                 ACE_Message_Block &incoming)
 {
   // Set the upcall thread
-
   orb_core->lf_strategy ().set_upcall_thread (orb_core->leader_follower ());
 
   // Reset the output CDR stream.
@@ -398,7 +397,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   size_t rd_pos = 0;
   size_t wr_pos = 0;
   ACE_Data_Block *data = 0;
-
+  size_t len = 0;
+  char *ptr = 0;
   // At this point we have data in the queue or in the <incoming>
   // message block. If we have data in the queue we process that
   // first. At this point we are just assuming that (and it is a
@@ -412,10 +412,12 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       data =
         this->message_queue_.get_current_message (byte_order);
 
+      ptr = data->base ();
       // Set the read and write pointer positions
       // @@ What do we if we get Fragmented messages?
       rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
-      wr_pos = data->size ();
+      len = wr_pos = data->size ();
+
     }
   else
     {
@@ -427,16 +429,19 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       byte_order = this->message_state_.byte_order_;
 
       data = incoming.data_block ()->duplicate ();
+
+      len = incoming.length ();
+      ptr = incoming.rd_ptr ();
       // Duplicate the data block
       // @@Do we need to ??
       //      ACE_Data_Block *data =
       //incoming.data_block ()->duplicate ();
     }
 
-  char *ptr = incoming.rd_ptr ();
+
   this->dump_msg ("recv",
                   ACE_reinterpret_cast (u_char *, ptr),
-                  incoming.length ());
+                  len);
 
   // Create a input CDR stream.
   // NOTE: We use the same data block in which we read the message and
@@ -445,7 +450,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   TAO_InputCDR input_cdr (data,
                           rd_pos,
                           wr_pos,
-                          this->message_state_.byte_order_,
+                          byte_order,
                           orb_core);
 
   // Reset the message handler to receive upcalls if any
@@ -483,22 +488,53 @@ TAO_GIOP_Message_Base::process_reply_message (
     ACE_Message_Block &incoming
   )
 {
-  // Get the read and write positions before we steal data.
-  // @@ Bala:Need to change this
-  size_t rd_pos = incoming.rd_ptr () - incoming.base ();
-  size_t wr_pos = incoming.wr_ptr () - incoming.base ();
+  CORBA::Octet byte_order = 0;
+  size_t rd_pos = 0;
+  size_t wr_pos = 0;
+  ACE_Data_Block *data = 0;
+  size_t len = 0;
+  char *ptr = 0;
+  // At this point we have data in the queue or in the <incoming>
+  // message block. If we have data in the queue we process that
+  // first. At this point we are just assuming that (and it is a
+  // pretty good assumption) that the data in <incoming>  has already
+  // been copied.
+  if (this->message_queue_.queue_length ())
+    {
+      // As we have a message in the queue let us process that. We do
+      // that by taking the data block off the queue and sticking it
+      // in the <incoming> message block..
+      data =
+        this->message_queue_.get_current_message (byte_order);
 
-  rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+      ptr = data->base ();
+      // Set the read and write pointer positions
+      // @@ What do we if we get Fragmented messages?
+      rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+      len = wr_pos = data->size ();
+    }
+  else
+    {
+      // Get the read and write positions before we steal data.
+      // @@ Bala:Need to change this
+      rd_pos = incoming.rd_ptr () - incoming.base ();
+      wr_pos = incoming.wr_ptr () - incoming.base ();
+      rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+      byte_order = this->message_state_.byte_order_;
 
-  // Duplicate the data block
-  ACE_Data_Block *data =
-    incoming.data_block ()->duplicate ();
-
-  char *ptr = incoming.rd_ptr ();
+      data = incoming.data_block ()->duplicate ();
+      len = incoming.length ();
+      ptr = incoming.rd_ptr ();
+      // Duplicate the data block
+      // @@Do we need to ??
+      //      ACE_Data_Block *data =
+      //incoming.data_block ()->duplicate ();
+    }
 
   this->dump_msg ("recv",
                   ACE_reinterpret_cast (u_char *, ptr),
-                  incoming.length ());
+                  len);
+
   // Create a input CDR stream.
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
@@ -506,7 +542,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   TAO_InputCDR input_cdr (data,
                           rd_pos,
                           wr_pos,
-                          this->message_state_.byte_order_);
+                          byte_order);
 
 
   // Reset the message state. Now, we are ready for the next nested
