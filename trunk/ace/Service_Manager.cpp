@@ -181,7 +181,7 @@ ACE_Service_Manager::list_services (void)
 
       if (len > 0)
         {
-          ssize_t n = this->client_stream_.send_n (ASYS_MULTIBYTE_STRING (buf),
+          ssize_t n = this->client_stream_.send_n (ASYS_ONLY_MULTIBYTE_STRING (buf),
                                                    len);
 
           if (n != len || (n == -1 && errno != EPIPE))
