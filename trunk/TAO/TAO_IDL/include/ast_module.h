@@ -109,6 +109,10 @@ public:
   // ix is not null.
   int be_add_interface (AST_Interface *i, AST_Interface *ix = 0);
 
+  // The first time 'module CORBA' is seen, add predefined types
+  // TypeCode, TCKind and ValueBase to its scope.
+  void add_CORBA_members (void);
+
 private:
   friend void fe_populate(AST_Module *m);
   friend int tao_yyparse();
@@ -127,7 +131,7 @@ private:
   virtual AST_Enum              *fe_add_enum(AST_Enum                   *e);
   virtual AST_EnumVal           *fe_add_enum_val(AST_EnumVal            *v);
   virtual AST_Typedef           *fe_add_typedef(AST_Typedef             *t);
-  virtual AST_Native            *fe_add_native (AST_Native      *n);
+  virtual AST_Native            *fe_add_native (AST_Native              *n);
 
   idl_bool pd_has_nested_valuetype;
 };
