@@ -3,6 +3,7 @@ Sat Sep 03 00:13:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* tao/append.cpp,
 	  tao/decode.cpp,
 	  tao/encode.cpp,
+	  tao/deep_free.cpp,
 	  tao/skip.cpp: 
 	  Fixed a compilation ambiguity by using "in ()" on 
 	  the "vars" assigned to "ptrs".
