@@ -224,7 +224,7 @@ void StubFaultConsumer::push_structured_event(
       "FaultConsumer:   Property Name: %s\n",
       ACE_static_cast (const char *, property.name)
       ));
-    int todo_finish_decode;
+//    int todo_finish_decode;
   }
 
 }

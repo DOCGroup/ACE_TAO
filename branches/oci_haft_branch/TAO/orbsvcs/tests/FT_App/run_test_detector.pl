@@ -99,6 +99,8 @@ if ( $verbose > 1) {
 
 
 #define temp files
+my($factory1_ior) = PerlACE::LocalFile ("factory1.ior");
+my($factory2_ior) = PerlACE::LocalFile ("factory2.ior");
 my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
 my($replica2_ior) = PerlACE::LocalFile ("replica2.ior");
 my($detector_ior) = PerlACE::LocalFile ("detector.ior");
@@ -106,6 +108,8 @@ my($notifier_ior) = PerlACE::LocalFile ("notifier.ior");
 my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
 #discard junk from previous tests
+unlink $factory1_ior;
+unlink $factory2_ior;
 unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
@@ -114,8 +118,8 @@ unlink #client_data
 
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $replica1_ior -r 1");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $replica2_ior -r 2");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -r 1 -q");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -r 2 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process (".$build_directory/ft_notifier", "-o $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
 my($CL);
@@ -209,12 +213,14 @@ if ($notifier != 0) {
 }
 
 print "\nTEST: releasing scratch files.\n" if ($verbose);
+unlink $factory1_ior;
+unlink $factory2_ior;
 unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
 unlink $notifier_ior;
 
 #client's work file
-unlink $client_data;
+unlink #client_data;
 
 exit $status;
