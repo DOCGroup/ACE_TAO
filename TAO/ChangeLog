@@ -1,3 +1,33 @@
+Thu Mar 10 15:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/AMH_Single_Threaded/Roundtrip.h:
+        * performance-tests/Latency/AMI/Roundtrip.h:
+        * performance-tests/Latency/AMI/Roundtrip_Handler.h:
+        * performance-tests/Latency/Collocation/Roundtrip.h:
+        * performance-tests/Latency/DII/Roundtrip.h:
+        * performance-tests/Latency/DSI/Roundtrip.h:
+        * performance-tests/Latency/Deferred/Roundtrip.h:
+        * performance-tests/Latency/Single_Threaded/Roundtrip.h:
+        * performance-tests/Latency/Thread_Per_Connection/Roundtrip.h:
+        * performance-tests/Latency/Thread_Pool/Roundtrip.h:
+        * performance-tests/Memory/IORsize/Foo_i.h:
+        * performance-tests/Memory/IORsize/Memory_Growth.h:
+        * performance-tests/Memory/Single_Threaded/Memory_Growth.h:
+        * performance-tests/POA/Implicit_Activation/Factory.h:
+        * performance-tests/POA/Implicit_Activation/Simple.h:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Roundtrip.h:
+        * performance-tests/Sequence_Latency/AMI/Roundtrip.h:
+        * performance-tests/Sequence_Latency/AMI/Roundtrip_Handler.h:
+        * performance-tests/Sequence_Latency/DII/Roundtrip.h:
+        * performance-tests/Sequence_Latency/DSI/Roundtrip.h:
+        * performance-tests/Sequence_Latency/Deferred/Roundtrip.h:
+        * performance-tests/Sequence_Latency/Single_Threaded/Roundtrip.h:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Roundtrip.h:
+        * performance-tests/Sequence_Latency/Thread_Pool/Roundtrip.h:
+        * performance-tests/Throughput/Receiver.h:
+        * performance-tests/Throughput/Receiver_Factory.h:
+          Removed checks for _MSC_VER >= 1200, just check for _MSC_VER
+
 Thu Mar 10 14:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Buffering_Constraint_Policy.h:
