@@ -212,7 +212,11 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
       ctx.state (TAO_CodeGen::TAO_SEQUENCE_CS);
       break;
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_ANY_OP_CH);
+      break;
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_ANY_OP_CS);
+      break;
     case TAO_CodeGen::TAO_TYPEDEF_SH:
     case TAO_CodeGen::TAO_TYPEDEF_SI:
     case TAO_CodeGen::TAO_TYPEDEF_SS:
