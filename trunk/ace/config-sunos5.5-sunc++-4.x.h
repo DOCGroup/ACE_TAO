@@ -188,6 +188,10 @@
 // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
+// Enable this if 
+#if !defined (ACE_HAS_STHREADS)
+#define ACE_LACKS_RWLOCK_T
+#endif /* ACE_HAS_STHREADS */
 /* End of threading #defines */
 
 #define ACE_HAS_PRIOCNTL
