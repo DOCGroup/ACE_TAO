@@ -1,49 +1,42 @@
 Fri Jun 11 11:42:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/DynAny_Test/test_wrapper.cpp: Added #include "ace/OS.h" so
-	that they compile on aCC compiler on HP_UX
+ 	  that they compile on aCC compiler on HP_UX
 
 Thu Jun 10 23:17:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_enum.h:
-	* TAO_IDL/be/be_enum.cpp:
-	  Added a method to convert a numerical value to an
-	  enum's string name for it. When generating code for
-	  the _default() method for a union, if the 
-	  discriminator is an enum, some compilers (MSVC among
-	  them) will complain about assigning a numeric
-	  constant to the discriminator in _default(). This
-	  method and the changes below enable the assignment
-	  of the enum label identifier instead.
+	* TAO_IDL/be/be_enum.cpp: Added a method to convert a numerical
+ 	  value to an enum's string name for it. When generating code for
+ 	  the _default() method for a union, if the discriminator is an
+ 	  enum, some compilers (MSVC among them) will complain about
+ 	  assigning a numeric constant to the discriminator in
+ 	  _default(). This method and the changes below enable the
+ 	  assignment of the enum label identifier instead.
 
 	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
-	* TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
-	  Moved generation of code for the _default() 
-	  method from the union visitor to the discriminant
-	  visitor, so it would be a little easier to get at
-	  the enum labels. Thanks to
-	  Kristopher Johnson <kjohnson@gardnersys.com> for
-	  pointing out the problem and supplying an IDL
-	  file for a test case.
+	* TAO_IDL/be/be_visitor_union/discriminant_ci.cpp: Moved
+ 	  generation of code for the _default() method from the union
+ 	  visitor to the discriminant visitor, so it would be a little
+ 	  easier to get at the enum labels. Thanks to Kristopher Johnson
+ 	  <kjohnson@gardnersys.com> for pointing out the problem and
+ 	  supplying an IDL file for a test case.
 
 Thu Jun 10 23:10:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/UIOP_Profile.cpp:
-	  Fixed bug in UIOP_Profile enconding.
+	* tao/UIOP_Profile.cpp: Fixed bug in UIOP_Profile enconding.
 
 Thu Jun 10 21:32:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added the new files
+	* tao/TAO_Static.dsp: Added the new files
 
 Thu Jun 10 21:20:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Tagged_Components.h:
 	* tao/Tagged_Components.i:
-	* tao/Tagged_Components.cpp:
-	  New class to manipulate and query tagged components
-	  efficiently.
+	* tao/Tagged_Components.cpp: New class to manipulate and query
+ 	  tagged components efficiently.
 
 	* tao/IIOP_Profile.h:
 	* tao/IIOP_Profile.i:
@@ -52,22 +45,20 @@ Thu Jun 10 21:20:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/UIOP_Profile.h:
 	* tao/UIOP_Profile.i:
 	* tao/UIOP_Profile.cpp:
-	* tao/UIOP_Acceptor.cpp:
-	  The IIOP and UIOP profiles use the TAO_Tagged_Components class
-	  to implement the tagged_components field in GIOP/IIOP 1.1
-	  The Acceptors generate the standard IOP::TAG_ORB_TYPE and IOP
+	* tao/UIOP_Acceptor.cpp: The IIOP and UIOP profiles use the
+ 	  TAO_Tagged_Components class to implement the tagged_components
+ 	  field in GIOP/IIOP 1.1 The Acceptors generate the standard
+ 	  IOP::TAG_ORB_TYPE and IOP
 
 	* tao/iopfwd.h:
-	* tao/MessagingC.h:
-	  Removed "tao/iopfwd.h" the contents are in IOPC.h
+	* tao/MessagingC.h: Removed "tao/iopfwd.h" the contents are in
+ 	  IOPC.h
 
-	* tao/corbafwd.h:
-	  Added several magic numbers that we use for the tagged
-	  components and the codeset support, I tried to describe the
-	  source for each one.
+	* tao/corbafwd.h: Added several magic numbers that we use for the
+ 	  tagged components and the codeset support, I tried to describe
+ 	  the source for each one.
 
-	* tao/ORB.cpp:
-	  Fixed demarshaling of TC_opaque (again!)
+	* tao/ORB.cpp: Fixed demarshaling of TC_opaque (again!)
 
 	* tao/CONV_FRAME.pidl:
 	* tao/CONV_FRAMEC.cpp:
@@ -78,9 +69,8 @@ Thu Jun 10 21:20:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/CONV_FRAMES.i:
 	* tao/CONV_FRAMES_T.cpp:
 	* tao/CONV_FRAMES_T.h:
-	* tao/CONV_FRAMES_T.i:
-	  Implement the the CONV_FRAME module in CORBA 2.2, it is just a
-	  bunch of types, no interfaces.
+	* tao/CONV_FRAMES_T.i: Implement the the CONV_FRAME module in
+ 	  CORBA 2.2, it is just a bunch of types, no interfaces.
 
 	* tao/IOPC.h:
 	* tao/IOPC.i:
@@ -90,153 +80,142 @@ Thu Jun 10 21:20:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/IOPS.cpp:
 	* tao/IOPS_T.h:
 	* tao/IOPS_T.i:
-	* tao/IOPS_T.cpp:
-	  Added the complete (as of CORBA 2.2) IOP module definition.
+	* tao/IOPS_T.cpp: Added the complete (as of CORBA 2.2) IOP module
+ 	  definition.
 
-	* tao/Makefile:
-	  Added the new files.
+	* tao/Makefile: Added the new files.
 
 	* tao/orbconf.h:
 	* tao/ORB_Core.cpp:
 	* tao/params.h:
 	* tao/params.i:
-	* tao/params.cpp:
-	  New option (-ORBStdProfileComponents 0/1) to control the
-	  generation of the standard tagged components on each
-	  profile. They are optional, i.e. we are not required to generate
-	  them, and take some space (in the IORs). Notice that they do
-	  *not* affect the critical path (unless you are sending a lot of
-	  object references).
+	* tao/params.cpp: New option (-ORBStdProfileComponents 0/1) to
+ 	  control the generation of the standard tagged components on each
+ 	  profile. They are optional, i.e. we are not required to generate
+ 	  them, and take some space (in the IORs). Notice that they do
+ 	  *not* affect the critical path (unless you are sending a lot of
+ 	  object references).
 
-	* docs/Options.html:
-	  Documented the new -ORBStdProfileComponents option
+	* docs/Options.html: Documented the new -ORBStdProfileComponents
+ 	  option
 
-	* utils/catior/catior.cpp:
-	  Added support for GIOP 1.1 tagged components in both IIOP and
-	  UIOP profiles
+	* utils/catior/catior.cpp: Added support for GIOP 1.1 tagged
+ 	  components in both IIOP and UIOP profiles
 
-	* tao/GIOP.cpp:
-	  Removed unused variable
+	* tao/GIOP.cpp: Removed unused variable
 
 	* tao/orbconf.h:
 	* tao/corbafwd.h:
 	* tao/ORB.h:
 	* tao/Exception.h:
-	* tao/Exception.cpp:
-	  Removed the last use of TAO_CONST
+	* tao/Exception.cpp: Removed the last use of TAO_CONST
 
-	* TAO_IDL/driver/drv_args.cpp:
-	  If the temporary directory cannot be open we print an Error, not 
-	  a Warning (it would be confusing otherwise). Thanks to Jim
-	  Rogers <jrogers@viasoft.com> for pointing this out.
+	* TAO_IDL/driver/drv_args.cpp: If the temporary directory cannot
+ 	  be open we print an Error, not a Warning (it would be confusing
+ 	  otherwise). Thanks to Jim Rogers <jrogers@viasoft.com> for
+ 	  pointing this out.
 
 Thu Jun 10 17:15:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Exception.cpp:
-	  Added include and modified identifier related to the
-	  codeset translator implemented for IBM1047. Thanks to
-	  Jim Rogers jrogers@viasoft.com for pointing this out.
+	* tao/Exception.cpp: Added include and modified identifier related
+ 	  to the codeset translator implemented for IBM1047. Thanks to Jim
+ 	  Rogers jrogers@viasoft.com for pointing this out.
 
 Thu Jun 10 16:51:02 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* examples/Simple/chat/Server_i.h:
-	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
-	  fixed sunc++ 5.0 warning for initializing a non const char*
-	  with a string literal.
+	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp: fixed sunc++ 5.0 warning
+ 	  for initializing a non const char* with a string literal.
 
 Thu Jun 10 15:24:21 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Added the inclusion of ace/Object_Manager.h
-	  because of the use of ACE_Static_Object_Lock.  Thanks to
-	  J. Russell Noseworthy <rnosewor@objectsciences.com> for
-	  reporting this.
+ 	  because of the use of ACE_Static_Object_Lock.  Thanks to
+ 	  J. Russell Noseworthy <rnosewor@objectsciences.com> for
+ 	  reporting this.
 
 Thu Jun 10 15:27:39 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Consumer_Handler.h (class
-	  Consumer_Handler):
-	  Made the stock_name_ member const char* from char* to take care
-	  of Sun C++ 5.0 compiler warnings.
+ 	  Consumer_Handler): Made the stock_name_ member const char* from
+ 	  char* to take care of Sun C++ 5.0 compiler warnings.
 
 Thu Jun 10 14:54:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp
 	* TAO_DIL/be/be_visitor_sequence/sequence_cs.cpp : Fix for scoped
-	names on NT. NT does not accept scoped names in header files.
-
+ 	  names on NT. NT does not accept scoped names in header files. 
 
 Thu Jun 10 14:19:02 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_poa):
-	  Removed typecast warning and changed the return value to 0 from
-	  -1.
+ 	  Removed typecast warning and changed the return value to 0 from
+ 	  -1.
 
-	* examples/POA/On_Demand_Loading/README:
-	  Explicitly mentioned that by default Generic_Servant is used and
-	  hence needs to be built before running this example using
-	  run_test.pl.
+	* examples/POA/On_Demand_Loading/README: Explicitly mentioned that
+ 	  by default Generic_Servant is used and hence needs to be built
+ 	  before running this example using run_test.pl.
 
 Thu Jun 10 14:13:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
-	  be_visitor_typedef_ch::visit_array() had numerous
-	  problems, such as the generation of "static" where
-	  "ACE_INLINE" should have been in a couple of places,
-	  and multiple calls from the same be_typedef object to
-	  nested_type_name() in the same stream output statement.
-	  This generates incorrect code because nested_type_name()
-	  contains static buffers, and the order of evaluations
-	  within a chained stream output statement is not guaranteed,
-	  only the order of output. Thanks to Carlos for explaining
-	  why my fix to this last worked, and to
-	  Schuderer Christian <Christian.Schuderer@erl9.siemens.de>
-	  for supplying the IDL file that caused the problem.
+ 	  be_visitor_typedef_ch::visit_array() had numerous problems, such
+ 	  as the generation of "static" where "ACE_INLINE" should have
+ 	  been in a couple of places, and multiple calls from the same
+ 	  be_typedef object to nested_type_name() in the same stream
+ 	  output statement.  This generates incorrect code because
+ 	  nested_type_name() contains static buffers, and the order of
+ 	  evaluations within a chained stream output statement is not
+ 	  guaranteed, only the order of output. Thanks to Carlos for
+ 	  explaining why my fix to this last worked, and to Schuderer
+ 	  Christian <Christian.Schuderer@erl9.siemens.de> for supplying
+ 	  the IDL file that caused the problem.
 
 Thu Jun 10 13:53:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Simple/Simple_util.cpp: Fixed improper use of return
-	  values from the ORB Manager.  Since the ORB Manager duplicates
-	  the data members before returning them, we must store them in
-	  vars.
+ 	  values from the ORB Manager.  Since the ORB Manager duplicates
+ 	  the data members before returning them, we must store them in
+ 	  vars.
 
 	* examples/Simple/chat/Client_i.cpp (run): Changed the use of ORB
-	  to ORB Manager to simplify the activatation of the POA Manager.
-	  The POA Manager must be activated before incoming calls can
-	  reach the servants registered with the POAs that the POA Manager
-	  manages.  Thanks to Bill Tovrea <gwtovrea@west.raytheon.com> for
-	  pointing out this problem.
+ 	  to ORB Manager to simplify the activatation of the POA Manager.
+  	  The POA Manager must be activated before incoming calls can
+ 	  reach the servants registered with the POAs that the POA Manager
+ 	  manages.  Thanks to Bill Tovrea <gwtovrea@west.raytheon.com> for
+ 	  pointing out this problem.
 
 Thu Jun 10 13:18:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Request.h: Inline functions must be included *before*
-	  RequestSeq to avoid inline functions being used before declared
-	  inline warnings.
+ 	  RequestSeq to avoid inline functions being used before declared
+ 	  inline warnings.
 
 	* tao/Request.{i,cpp} (release): Re-inlined release method.
 
 Thu Jun 10 13:03:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Connect.cpp (handle_input): Must return from
-	  handle_input if TAO_GIOP::handle_input() returns -1.
+ 	  handle_input if TAO_GIOP::handle_input() returns -1.
 
 	* tao/ORB_Core.cpp: Added inclusion of POA.h since I removed it
-	  from default_resources.h.
+ 	  from default_resources.h.
 
 	* tao/default_resource.cpp (init): Removed the -ORBPOA option.
-	  Code for parsing this option was still there but this option has
-	  not been used in a long time.  Thanks to Phil Mesnier
-	  <mesnier_p@ociweb.com> for reporting this.
+  	  Code for parsing this option was still there but this option has
+ 	  not been used in a long time.  Thanks to Phil Mesnier
+ 	  <mesnier_p@ociweb.com> for reporting this.
 
 	* tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
-	  Removed <poa_mgr_lock_type_>.  It is no longer used.  Also, in
-	  parse_args(), changed -ORBEventLock to -ORBEventLoopLock and
-	  fixed the code associated with its parsing (previously it was
-	  setting <poa_mgr_lock_type_>, yikes!).
+ 	  Removed <poa_mgr_lock_type_>.  It is no longer used.  Also, in
+ 	  parse_args(), changed -ORBEventLock to -ORBEventLoopLock and
+ 	  fixed the code associated with its parsing (previously it was
+ 	  setting <poa_mgr_lock_type_>, yikes!).
 
 	  Note that -ORBEventLoopLock should probably remain undocumented
-	  for now since its utility is still in question and the default
-	  of null lock seems reasonable in many cases.
+ 	  for now since its utility is still in question and the default
+ 	  of null lock seems reasonable in many cases.
 
 Thu Jun 10 11:07:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -244,76 +223,71 @@ Thu Jun 10 11:07:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Fixed a problem
-	in NT. Thanks to Chris & Andy for pointing this out.
-
+ 	  in NT. Thanks to Chris & Andy for pointing this out.
+	 
 Thu Jun 10 09:41:06 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/Sequence_T.{i, cpp}:
-
-	  Fixed incorrect number of parameters passed to templates.
+	* tao/Sequence_T.{i, cpp}: Fixed incorrect number of parameters
+ 	  passed to templates.
 
 Thu Jun 10 08:12:14 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/MessageC.cpp:
+	* tao/MessageC.cpp: There were serveral instances where the
+ 	  CORBA::Environment parameter was declared as "env", but we were
+ 	  using the ACE_THROW_* macros which need the ACE_TRY_ENV
+ 	  variable. This is now fixed.
 
-	  There were serveral instances where the CORBA::Environment
-	  parameter was declared as "env", but we were using the
-	  ACE_THROW_* macros which need the ACE_TRY_ENV variable. This is
-	  now fixed.
-
-	* tao/Pluggable.cpp (start_request, start_locate):
-
-	  The header file was using ACE_THROW_SPEC to indicate all
-	  possible exceptions these operations can throw. The *.cpp file
-	  was, however, using the TAO_THROW_SPEC macro which is a NO-OP
-	  and will soon be deprecated. With exceptions enabled, the
-	  compiler was giving errors. We now use ACE_THROW_SPEC.
+	* tao/Pluggable.cpp (start_request, start_locate): The header file
+ 	  was using ACE_THROW_SPEC to indicate all possible exceptions
+ 	  these operations can throw. The *.cpp file was, however, using
+ 	  the TAO_THROW_SPEC macro which is a NO-OP and will soon be
+ 	  deprecated. With exceptions enabled, the compiler was giving
+ 	  errors. We now use ACE_THROW_SPEC.
 
 Wed Jun 09 23:16:21 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/orbconf.h: Without Minimum CORBA, the user will get regular
 	  (no locality constraints) policies by default.  With Minimum
-	  CORBA, the user will get locality constraint policies by
-	  default.
+ 	  CORBA, the user will get locality constraint policies by
+ 	  default.
 
 	  If #define TAO_HAS_REMOTE_POLICIES 0, then the user will always
-	  get locality constraint policies (regardless of Minimum CORBA).
+ 	  get locality constraint policies (regardless of Minimum CORBA).
 
 	  If #define TAO_HAS_REMOTE_POLICIES 1, then the user will always
-	  get regular policies (regardless of Minimum CORBA).
+ 	  get regular policies (regardless of Minimum CORBA).
 
 	  Thanks to Nanbor for helping with this.
 
 	* tao/Servant_Base.cpp (_dispatch): Added a non-op, exception
-	  throwing _dispatch().
+ 	  throwing _dispatch().
 
 	* tao/Servant_Base.h: TAO_Local_ServantBase should virtually
-	  inherit from TAO_ServantBase.
+ 	  inherit from TAO_ServantBase.
 
 	* tao/POAS:
 	* tao/DynAnyS:
-	* tao/Current:
-
-	  Removed the _dispatch() method from all locality constraint
-	  classes.  Also for the policy classes, moved the _dispatch()
-	  method into the TAO_HAS_LOCALITY_CONSTRAINT_POLICIES defines.
+	* tao/Current: Removed the _dispatch() method from all locality
+ 	  constraint classes.  Also for the policy classes, moved the
+ 	  _dispatch() method into the TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
+ 	  defines.
 
 	* tao/Policy: Made the Policy stub and skeleton classes aware of
-	  TAO_HAS_LOCALITY_CONSTRAINT_POLICIES, and moved the extra
-	  methods not required for locality constraint policies under the
-	  TAO_HAS_LOCALITY_CONSTRAINT_POLICIES #defines.
+ 	  TAO_HAS_LOCALITY_CONSTRAINT_POLICIES, and moved the extra
+ 	  methods not required for locality constraint policies under the
+ 	  TAO_HAS_LOCALITY_CONSTRAINT_POLICIES #defines.
 
 	* tao/Messaging_Policy_i (RelativeRoundtripTimeoutPolicy): Made
-	  inheritance virtual and removed extra copy constructor.
+ 	  inheritance virtual and removed extra copy constructor.
 
 	* tao/MessagingC (all policies): Since the policies are locality
-	  constrained, we can make the stub methods pure virtual and make
-	  sure that the _narrow method does not create the stub class.
+ 	  constrained, we can make the stub methods pure virtual and make
+ 	  sure that the _narrow method does not create the stub class.
 
 	* tao/POA.h (all policies): Removed unnecessary copy constructors.
 
 	* tao/POA_CORBA: Made the CORBA::Current, PolicyManager, and
-	  PolicyCurrent classes locality constrained to match the spec.
+ 	  PolicyCurrent classes locality constrained to match the spec.
 
 Wed Jun  9 22:18:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
