@@ -194,10 +194,13 @@ main (int, ASYS_TCHAR *[])
   ACE_Time_Value tv4 (1, 1000000);
   ACE_Time_Value tv5 (2UL);
   ACE_Time_Value tv6 (1, -1000000);
-  ACE_Time_Value tv7 (2.0);
+  ACE_Time_Value tv7 (ACE_static_cast (long, 2.0));
 
-  // Beware!  2.5 gets truncated to a long with value 2!
-  ACE_Time_Value tv8 (2.5);
+  // Beware!  2.5 gets truncated to 2!
+  // NOTE:  this is intended to show what happens with
+  // ACE_Time_Value (2.5).  Some compilers, such as g++ 2.7.2.3,
+  // actually warn about it without the case.
+  ACE_Time_Value tv8 (ACE_static_cast (long, 2.5));
 
   ACE_ASSERT (tv1 == ACE_Time_Value (0));
   ACE_ASSERT (tv2 < tv3);
