@@ -435,8 +435,6 @@ template class ACE_Hash_Map_Iterator<ACE_CString, CORBA::Object_var, ACE_Null_Mu
 template class ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_CString, CORBA::Object_var, ACE_Null_Mutex>;
-template class ACE_Hash<ACE_CString>;
-template class ACE_Equal_To<ACE_CString>;
 template class ACE_Hash_Map_Entry<ACE_CString, CORBA::Object_var>;
 
 template class ACE_DLList<ACE_CString>;
@@ -459,8 +457,6 @@ template class ACE_Auto_Basic_Ptr<Object_Group_i>;
 #pragma instantiate  ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Manager<ACE_CString, CORBA::Object_var, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash<ACE_CString>
-#pragma instantiate  ACE_Equal_To<ACE_CString>
 #pragma instantiate  ACE_Hash_Map_Entry<ACE_CString, CORBA::Object_var>
 
 #pragma instantiate  ACE_DLList<ACE_CString>

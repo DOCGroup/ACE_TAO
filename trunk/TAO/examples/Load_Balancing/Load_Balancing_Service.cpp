@@ -134,7 +134,7 @@ Load_Balancing_Service::~Load_Balancing_Service (void)
 int
 main (int argc, char *argv[])
 {
-  int result;
+  int result = 0;
   Load_Balancing_Service factory;
 
   if (factory.init (argc, argv) == -1)

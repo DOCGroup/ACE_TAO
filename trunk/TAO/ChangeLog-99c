@@ -1,14 +1,27 @@
+Tue Aug 24 00:47:47 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* TAO/examples/Load_Balancing/Identity_Client.cpp
+	* TAO/examples/Load_Balancing/Identity_Server.cpp
+	* TAO/examples/Load_Balancing/Load_Balancing_Service.cpp:
+	  Fixed some compilation warnings.
+
+	* TAO/examples/Load_Balancing/Identity_i.cpp:
+	  Fixed warning regarding unused arg.
+
+	* TAO/examples/Load_Balancing/Load_Balancer_i.cpp:
+	  Took out duplicate explicit template instantiation.
+
 Mon Aug 23 21:33:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/UIOP_Connector.cpp:
 	* tao/IIOP_Connector.cpp:
-	  Use ACE_Auto_Basic_Array_Ptr<> for the arrays and fixed template 
+	  Use ACE_Auto_Basic_Array_Ptr<> for the arrays and fixed template
 	  instantiations too.
 
 Mon Aug 23 18:57:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/IDL_Test/reopened_modules.idl:
-	  Took long .idl file sent in by 
+	  Took long .idl file sent in by
 	  Duane Binder <dbinder@globalmt.com>, cut it down to
 	  one of 10 lines or so that reproduced the problem,
 	  and added it to our IDL_Test Rogues Gallery.
