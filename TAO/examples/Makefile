@@ -15,8 +15,7 @@ DIRS  = Callback_Quoter \
 	Logging \
 	Simple \
 	Event_Comm \
-	OBV \
-	AMI
+	OBV
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
