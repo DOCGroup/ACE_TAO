@@ -1,4 +1,8 @@
-Mon Aug 02 16:48:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Aug 02 17:17:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (dlsym): GetProcAddress is defined differently on
+	  Windows CE and other Win32 platforms so we need to treat them
+	  differently.
 
 	* ace/Malloc.h (ACE_Malloc_Header): Added a dummy member function
 	  to prevent egcs from complaining "all member functions are
