@@ -4,6 +4,7 @@
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Random,
