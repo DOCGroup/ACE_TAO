@@ -26,6 +26,7 @@
 
 #include "OctetSeqC.h"
 #include "ace/Synch_T.h"
+#include "Pseudo_VarOut_T.h"
 
 namespace CORBA
 {

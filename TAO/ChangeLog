@@ -1,3 +1,51 @@
+Fri Aug  1 17:28:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Adapter.h: Forward declared CORBA::Exception.
+	* tao/Adapter.cpp: #included Exception.h
+	
+	* tao/Any_Basic_Impl_T.cpp:
+	* tao/Any_Dual_Impl_T.cpp:
+	* tao/Any_Impl_T.cpp:
+	* tao/Any_SystemException.cpp: #included ace/Auto_Ptr.h
+
+	* tao/Codeset_Manager.h: #included ace/Unbounded_Set.h
+
+	* tao/Exception.cpp: #included ace/Malloc.h
+
+        * tao/LocalObject.h:
+	* tao/Fault_Tolerance_Service.h: #included ace/Synch.h
+
+	* tao/Object.h: Forward declared ACE_Lock;
+
+	* tao/PI_ForwardC.cpp: #included "Typecode.h"
+	* tao/Principal.h: #included "Pseudo_VarOut_T.h"
+
+	* tao/Refcounted_ObjectKey.cpp: #included "ace/Log_Msg.h".
+
+	* tao/Sequence_T.cpp:
+	* tao/Sequence_T.i:	
+	* tao/Sequence.cpp:
+	* tao/Sequence.h:
+	* tao/Sequence.i: Removed dependency on Log_Msg.h ie. files
+	  including Sequence.h wouldnt get Log_msg.h free. Log_Msg.h was 
+	  included just to get ACE_ASSERT. 
+
+	  Added a new method check_bounds () which is used for checking
+	  the bounds of the sequence.
+	
+	* tao/Typecode.h: #included "ace/Hash_Map_Manager.h" and
+	  "ace/Unbounded_Queue.h".
+
+	* tao/PortableServer/Key_Adapters.cpp:
+	* tao/RTScheduling/Current.cpp:
+	* tao/Transport_Cache_Manager.cpp: #included "ace/ACE.h".	
+
+	* tao/Strategies/advanced_resource.cpp: #included "ace/Malloc.h".
+
+	  Thanks to Carlos for providing the patches. These patches
+	  improve the compilation times by removing unwanted dependencies
+	  that take up compilation time for TAO's applications. 
+	
 Fri Aug  1 17:04:49 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp: 

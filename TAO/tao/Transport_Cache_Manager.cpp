@@ -8,6 +8,7 @@
 #include "ace/Synch_T.h"
 #include "ace/Containers_T.h"
 #include "ace/Handle_Set.h"
+#include "ace/ACE.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Cache_Manager.inl"

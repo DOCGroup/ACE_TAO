@@ -29,6 +29,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+namespace CORBA
+{
+  class Exception;
+};
+
 class TAO_ORB_Core;
 class TAO_Stub;
 class TAO_MProfile;
