@@ -233,7 +233,6 @@ else  # ! egcs
   LD = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
        -C $(COMPILE.c) -traditional -- \
        -m munch -n nm$(TOOLENV) ld$(TOOLENV)
-
 endif # ! egcs
 
 
