@@ -200,7 +200,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 #else
 
       // Call bind
-      size_t name_len = (sizeof sockaddr_in) * num_addresses;
+      size_t name_len = (sizeof (sockaddr_in)) * num_addresses;
       if (ACE_OS::bind (new_association.get_handle (),
                         ACE_reinterpret_cast (sockaddr *,
                                               local_inet_addrs),

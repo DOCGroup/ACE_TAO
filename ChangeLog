@@ -1,3 +1,9 @@
+Thu Apr 29 14:35:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/SOCK_SEQPACK_Connector.cpp (shared_connect_start): Corrected
+	  sizeof() usage; error introduced at:
+	  Thu Apr 29 11:25:49 2004  Steve Huston  <shuston@riverace.com>
+
 Thu Apr 29 11:37:12 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/SSL_Context.cpp: Add #include "ace/Guard_T.h" so AIX Visual
@@ -40,18 +46,6 @@ Thu Apr 29 11:25:49 2004  Steve Huston  <shuston@riverace.com>
 	* ace/UUID.cpp (to_string): Change UUID_STRING_LENGTH from int to
 	  size_t to match string handling length types.
 
-=======
-=======
-=======
-=======
-=======
-=======
-Thu Apr 22 07:58:20 2004  Chad Elliott  <elliott_c@ociweb.com>
-=======
-=======
-=======
-=======
-=======
 Thu Apr 29 06:13:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadSafety/Tokens_Deadlock.cpp:
