@@ -1,3 +1,16 @@
+Sun Mar 04 03:12:17 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_export_file.pl: ACE_AS_STATIC_LIBS was incorrectly
+	  typed in as ACE_STATIC_LIBS.
+
+	* ace/svc_export.h:
+	* ace/RMCast/RMCast_Export.h:
+	* ace/SSL/SSL_Export.h:
+	* websvcs/lib/websvcs_export.h: These files didn't check for
+	  ACE_AS_STATIC_LIBS to determine if they should define their
+	  export macros for static build.  Thanks to Chris Kohlhoff
+	  <chris@kohlhoff.com> for reporting this.       [Bug 813]
+
 Sat Mar  3 19:07:31 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* ace/QoS/QoS_Session_Impl.cpp:
@@ -134,18 +147,18 @@ Fri Mar 02 17:50:40 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 Fri Mar 02 15:35:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ MEM_Acceptor.cpp:
-	* ace/ MEM_Acceptor.h:
-	* ace/ MEM_Addr.cpp:
-	* ace/ MEM_Addr.h:
-	* ace/ MEM_Connector.cpp:
-	* ace/ MEM_Connector.h:
-	* ace/ MEM_IO.cpp:
-	* ace/ MEM_IO.h:
-	* ace/ MEM_SAP.cpp:
-	* ace/ MEM_SAP.h:
-	* ace/ MEM_Stream.cpp:
-	* ace/ MEM_Stream.h: Disabled MEM_Stream support if one chooses
+	* ace/MEM_Acceptor.cpp:
+	* ace/MEM_Acceptor.h:
+	* ace/MEM_Addr.cpp:
+	* ace/MEM_Addr.h:
+	* ace/MEM_Connector.cpp:
+	* ace/MEM_Connector.h:
+	* ace/MEM_IO.cpp:
+	* ace/MEM_IO.h:
+	* ace/MEM_SAP.cpp:
+	* ace/MEM_SAP.h:
+	* ace/MEM_Stream.cpp:
+	* ace/MEM_Stream.h: Disabled MEM_Stream support if one chooses
 	  not to support position independent pointers.
 
 Fri Mar 02 13:17:36 2001  Steve Huston  <shuston@riverace.com>
