@@ -1,3 +1,12 @@
+Tue Feb 24 17:31:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Reactor/Client.cpp: Fixed manipulation and iterations_
+	  count and way that memory is copied into a new ACE_Message_Block.
+	  Thanks to Karen L. Regner <karen.regner@swri.org> for reporting
+	  these problems.
+
+	* THANKS: Added Karen Regner to the Hall of Fame.
+
 Tue Feb 24 17:22:45 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Message_Block.h: Fixed up some of the documentation; clarified
