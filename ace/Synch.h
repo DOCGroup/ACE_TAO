@@ -545,7 +545,7 @@ class ACE_Export ACE_RW_Process_Mutex : public ACE_Process_Mutex
 {
 public:
   ACE_RW_Process_Mutex (LPCTSTR name = 0,
-                        void *arg = 0);
+                        int flags = O_CREAT|O_RDWR);
   // Create a readers/writer <Process_Mutex>, passing in the optional
   // <name>.
 
