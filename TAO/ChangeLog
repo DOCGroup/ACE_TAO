@@ -14,7 +14,7 @@ Fri May 23 05:31:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  This checkin basically decouples the thread-per-connection
 	  handler and the handler that has protocol specific code. When
-	  the client crahses only the protocol specific handler would get
+	  the client crashes only the protocol specific handler would get
 	  cleaned up, leaving the thread-per-connection handler to be
 	  cleaned when the thread created exits. 
 
