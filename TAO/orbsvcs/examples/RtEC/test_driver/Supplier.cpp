@@ -9,6 +9,7 @@ ACE_RCSID(EC_Examples, Supplier, "$Id$")
 Supplier::Supplier (void)
   : timeoutconsumer(this)
   , _supplier(this)
+  , _ready (0)
 {
 }
 
@@ -21,7 +22,8 @@ Supplier::update(ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG((LM_DEBUG,"Supplier %d (%P|%t) received update\n",this->_supplier_id));
 
-  if (this->_num_sent < this->_to_send)
+  //only react to update if ready=1
+  if (*this->_ready == 1 && this->_num_sent < this->_to_send)
     {
       //@BT INSTRUMENT with event ID: EVENT_PUSH Measure time
       //when event is pushed by client.
@@ -47,7 +49,8 @@ Supplier::update(ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Supplier::connect (ACE_RW_Mutex* done,
+Supplier::connect (int *ready,
+                   ACE_RW_Mutex* done,
                    RtecScheduler::Scheduler_ptr scheduler,
                    const char *entry_prefix,
                    TimeBase::TimeT period,
@@ -59,6 +62,7 @@ Supplier::connect (ACE_RW_Mutex* done,
                    RtecEventChannelAdmin::EventChannel_ptr ec
                    ACE_ENV_ARG_DECL)
 {
+  this->_ready = ready;
   this->_supplier_id = supplier_id;
   this->_to_send = to_send;
   this->_num_sent = 0;
