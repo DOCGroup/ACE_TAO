@@ -677,12 +677,14 @@ TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
 }
 
 template<typename T>
-TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (CORBA::TypeCode_ptr tc,
+TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
+                                          CORBA::TypeCode_ptr tc,
                                           const T & val)
   : Any_Impl (0,
               tc)
 {
-  *this->value_ = val;
+  ACE_NEW (this->value_,
+           T (val));
 }
 
 template<typename T>
@@ -715,12 +717,14 @@ TAO::Any_Dual_Impl_T<T>::insert (CORBA::Any & any,
 template<typename T>
 void
 TAO::Any_Dual_Impl_T<T>::insert_copy (CORBA::Any & any,
+                                      _tao_destructor destructor,
                                       CORBA::TypeCode_ptr tc,
                                       const T & value)
 {
   Any_Dual_Impl_T<T> *new_impl = 0;
   ACE_NEW (new_impl,
-           Any_Dual_Impl_T (tc,
+           Any_Dual_Impl_T (destructor,
+                            tc,
                             value));
   any.replace (new_impl);
 }
@@ -757,11 +761,15 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
           return 1;
         }
 
+      T *empty_value = 0;
+      ACE_NEW_RETURN (empty_value,
+                      T,
+                      0);
       TAO::Any_Dual_Impl_T<T> *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       TAO::Any_Dual_Impl_T<T> (destructor,
                                                any_tc,
-                                               0),
+                                               empty_value),
                       0);
                       
       auto_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);

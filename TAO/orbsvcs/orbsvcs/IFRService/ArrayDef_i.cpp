@@ -211,12 +211,12 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
   this->destroy_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::String_var new_element_path =
+  char *new_element_path =
     this->reference_to_path (element_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "element_path",
-                                            new_element_path.in ());
+                                            new_element_path);
 }
 
 void

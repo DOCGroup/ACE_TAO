@@ -1318,10 +1318,13 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
   TAO_OutputCDR maker2;
   maker2.write_ulong (3);  // THREE
-  CORBA::Any any2 (d_type.in (),
-                   0,
-                   TAO_ENCAP_BYTE_ORDER,
-                   maker2.begin ());
+  TAO::Unknown_IDL_Type *impl2 = 0;
+  ACE_NEW (impl2,
+           TAO::Unknown_IDL_Type (d_type.in (),
+                                  maker2.begin (),
+                                  TAO_ENCAP_BYTE_ORDER));
+  CORBA::Any any2;
+  any2.replace (impl2);
   u_members[0].label = any2;
 
   u_members[1].name = CORBA::string_dup ("longval");
@@ -1331,10 +1334,13 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
   u_members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
   TAO_OutputCDR maker0;
   maker0.write_ulong (2);  // TWO
-  CORBA::Any any0 (d_type.in (),
-                   0,
-                   TAO_ENCAP_BYTE_ORDER,
-                   maker0.begin ());
+  TAO::Unknown_IDL_Type *impl0 = 0;
+  ACE_NEW (impl0,
+           TAO::Unknown_IDL_Type (d_type.in (),
+                                  maker0.begin (),
+                                  TAO_ENCAP_BYTE_ORDER));
+  CORBA::Any any0;
+  any0.replace (impl0);
   u_members[1].label = any0;
 
   u_members[2].name = CORBA::string_dup ("structval");
@@ -1343,10 +1349,13 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_OutputCDR maker1;
   maker1.write_ulong (0); // ZERO
-  CORBA::Any any1 (d_type.in (),
-                   0,
-                   TAO_ENCAP_BYTE_ORDER,
-                   maker1.begin ());
+  TAO::Unknown_IDL_Type *impl1 = 0;
+  ACE_NEW (impl1,
+           TAO::Unknown_IDL_Type (d_type.in (),
+                                  maker1.begin (),
+                                  TAO_ENCAP_BYTE_ORDER));
+  CORBA::Any any1;
+  any1.replace (impl1);
   u_members[2].label = any1;
 
   u_members[3].name = CORBA::string_dup ("stringval");

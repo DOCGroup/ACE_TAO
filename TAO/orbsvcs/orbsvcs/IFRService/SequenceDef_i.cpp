@@ -210,11 +210,11 @@ TAO_SequenceDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
   this->destroy_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::String_var element_path = reference_to_path (element_type_def);
+  char *element_path = reference_to_path (element_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "element_path",
-                                            element_path.in ());
+                                            element_path);
 }
 
 void

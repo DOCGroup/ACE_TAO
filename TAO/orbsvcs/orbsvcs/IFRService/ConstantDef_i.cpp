@@ -159,11 +159,11 @@ TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var type_path = this->reference_to_path (type_def);
+  char *type_path = this->reference_to_path (type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "type_path",
-                                            type_path.in ());
+                                            type_path);
 }
 
 CORBA::Any *
@@ -204,13 +204,20 @@ TAO_ConstantDef_i::value_i (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Any *retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::Any (tc.in (),
-                                0,
-                                TAO_ENCAP_BYTE_ORDER,
-                                &mb),
+                    CORBA::Any,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  TAO::Unknown_IDL_Type *impl = 0;
+  ACE_NEW_THROW_EX (impl,
+                    TAO::Unknown_IDL_Type (tc._retn (),
+                                           &mb,
+                                           TAO_ENCAP_BYTE_ORDER,
+                                           1),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  retval->replace (impl);
   safety.release ();
   return retval;
 }

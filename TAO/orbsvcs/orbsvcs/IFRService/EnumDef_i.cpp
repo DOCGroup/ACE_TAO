@@ -94,9 +94,8 @@ TAO_EnumDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   for (u_int i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      CORBA::String_var section_name = this->int_to_string (i);
       this->repo_->config ()->open_section (this->section_key_,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             0,
                                             member_key);
 
@@ -142,13 +141,12 @@ TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
  for (CORBA::ULong i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      CORBA::String_var section_name = this->int_to_string (i);
       this->repo_->config ()->open_section (this->section_key_,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             1,
                                             member_key);
 
-      ACE_TString member_name (members[i]);
+      ACE_TString member_name (members[i].in ());
       this->repo_->config ()->set_string_value (member_key,
                                                 "name",
                                                 member_name);

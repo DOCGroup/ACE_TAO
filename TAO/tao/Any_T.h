@@ -217,7 +217,8 @@ namespace TAO
     Any_Dual_Impl_T (_tao_destructor destructor,
                      CORBA::TypeCode_ptr,
                      T * const);
-    Any_Dual_Impl_T (CORBA::TypeCode_ptr,
+    Any_Dual_Impl_T (_tao_destructor destructor,
+                     CORBA::TypeCode_ptr,
                      const T &);
     Any_Dual_Impl_T (CORBA::TypeCode_ptr);
     virtual ~Any_Dual_Impl_T (void);
@@ -227,6 +228,7 @@ namespace TAO
                         CORBA::TypeCode_ptr,
                         T * const);
     static void insert_copy (CORBA::Any &, 
+                             _tao_destructor destructor,
                              CORBA::TypeCode_ptr,
                              const T &);
     static CORBA::Boolean extract (const CORBA::Any &,

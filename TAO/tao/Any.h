@@ -332,12 +332,13 @@ namespace TAO
     TAO_SYNCH_MUTEX * refcount_lock_;
   };
 
-  class Unknown_IDL_Type : public Any_Impl
+  class TAO_Export Unknown_IDL_Type : public Any_Impl
   {
   public:
     Unknown_IDL_Type (CORBA::TypeCode_ptr,
-                      ACE_Message_Block *,
-                      int byte_order);
+                      const ACE_Message_Block *,
+                      int byte_order,
+                      CORBA::Boolean release_tc = 0);
     virtual ~Unknown_IDL_Type (void);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
@@ -350,6 +351,7 @@ namespace TAO
   private:
     ACE_Message_Block *cdr_;
     int byte_order_;
+    CORBA::Boolean release_tc_;
   };
 };
 

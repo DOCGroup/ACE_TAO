@@ -860,7 +860,7 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
       // typecode kinds are same
       return rcvr->private_equal (tcvar.in (),
                                   equiv_only
-                                   ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
     }
 
   CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -2427,7 +2427,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
       int retval =
         TAO_Marshal_Object::perform_skip (disc_tc,
                                           &temp
-                                           ACE_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -2465,7 +2465,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
           retval =
             TAO_Marshal_Object::perform_skip (disc_tc,
                                               &stream
-                                               ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -2481,7 +2481,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
             TAO_Marshal_Object::perform_append (label_tc,
                                                 &stream,
                                                 &out
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -2490,13 +2490,23 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
             }
         }
 
-      ACE_NEW_THROW_EX (label_list[i],
-                        CORBA::Any (label_tc,
-                                    0,
-                                    ACE_CDR_BYTE_ORDER,
-                                    out.begin ()),
+      TAO::Unknown_IDL_Type *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO::Unknown_IDL_Type (
+                            CORBA::TypeCode::_duplicate (label_tc),
+                            out.begin (),
+                            ACE_CDR_BYTE_ORDER,
+                            1
+                          ),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
+
+      ACE_NEW_THROW_EX (label_list[i],
+                        CORBA::Any,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      label_list[i]->replace (impl);
 
       if (stream.skip_string () == 0
           || this->skip_typecode (stream) == 0)

@@ -13587,6 +13587,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ValueMember>::insert_copy (
       _tao_any,
+      CORBA::ValueMember::_tao_any_destructor,
       CORBA::_tc_ValueMember,
       _tao_elem
     );
@@ -13644,6 +13645,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ValueMemberSeq>::insert_copy (
       _tao_any,
+      CORBA::ValueMemberSeq::_tao_any_destructor,
       CORBA::_tc_ValueMemberSeq,
       _tao_elem
     );
@@ -13805,6 +13807,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ValueDef::FullValueDescription>::insert_copy (
       _tao_any,
+      CORBA::ValueDef::FullValueDescription::_tao_any_destructor,
       CORBA::ValueDef::_tc_FullValueDescription,
       _tao_elem
     );
@@ -13862,6 +13865,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ValueDescription>::insert_copy (
       _tao_any,
+      CORBA::ValueDescription::_tao_any_destructor,
       CORBA::_tc_ValueDescription,
       _tao_elem
     );
@@ -13961,7 +13965,7 @@ operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -14004,7 +14008,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -14070,7 +14074,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -14113,7 +14117,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -14156,7 +14160,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

@@ -67,8 +67,11 @@ private:
   CORBA::Repository_var repo_;
   // Storage of the IFR reference.
 
-  CORBA::AliasDef_var tdef_;
+//  CORBA::AliasDef_var tdef_;
   // Storage of the typedef definition that we will query.
+
+  CORBA::AttributeDef_var attr_;
+  // Storage of the attribute definition we will query.
 };
 
 #endif /* LATENCY_QUERY_CLIENT_H */

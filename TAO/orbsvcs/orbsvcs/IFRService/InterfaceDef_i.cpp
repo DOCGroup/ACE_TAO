@@ -122,7 +122,7 @@ TAO_InterfaceDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::RepositoryIdSeq repo_ids (length);
   repo_ids.length (length);
 
-  CORBA::String_var base_path;
+  char *base_path = 0;
   ACE_Configuration_Section_Key base_key;
 
   for (i = 0; i < length; ++i)
@@ -130,7 +130,7 @@ TAO_InterfaceDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
       base_path = this->reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           base_path.in (),
+                                           base_path,
                                            base_key,
                                            0);
 
@@ -288,7 +288,8 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
                                         1,
                                         inherited_key);
 
-  CORBA::String_var name, inherited_path, section_name;
+  CORBA::String_var name;
+  char *inherited_path = 0;
   PortableServer::ObjectId_var oid;
   ACE_Configuration_Section_Key base_key;
 
@@ -297,7 +298,7 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
       inherited_path = this->reference_to_path (base_interfaces[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           inherited_path.in (),
+                                           inherited_path,
                                            base_key,
                                            0);
 
@@ -313,11 +314,9 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
           return;
         }
 
-      section_name = this->int_to_string (i);
-
       this->repo_->config ()->set_string_value (inherited_key,
-                                                section_name.in (),
-                                                inherited_path.in ());
+                                                this->int_to_string (i),
+                                                inherited_path);
     }
 }
 
@@ -362,7 +361,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id
   CORBA::ULong length = bases->length ();
 
   PortableServer::ObjectId_var oid;
-  CORBA::String_var base_path;
+  char *base_path = 0;
   ACE_Configuration_Section_Key base_key;
 
   for (CORBA::ULong i = 0; i < length; ++i)
@@ -370,7 +369,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id
       base_path = this->reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           base_path.in (),
+                                           base_path,
                                            base_key,
                                            0);
 
@@ -455,10 +454,9 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       for (u_int j = 0; j < count; ++j)
         {
           ACE_Configuration_Section_Key op_key;
-          CORBA::String_var section_name = this->int_to_string (j);
           status =
             this->repo_->config ()->open_section (ops_key,
-                                                  section_name.in (),
+                                                  this->int_to_string (j),
                                                   0,
                                                   op_key);
 
@@ -506,10 +504,9 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       for (u_int j = 0; j < count; ++j)
         {
           ACE_Configuration_Section_Key attr_key;
-          CORBA::String_var section_name = this->int_to_string (j);
           status =
             this->repo_->config ()->open_section (attrs_key,
-                                                  section_name.in (),
+                                                  this->int_to_string (j),
                                                   0,
                                                   attr_key);
 
@@ -547,7 +544,7 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
   repo_ids.length (length);
 
   PortableServer::ObjectId_var oid;
-  CORBA::String_var base_path;
+  char *base_path = 0;
   ACE_Configuration_Section_Key base_key;
 
   for (i = 0; i < length; ++i)
@@ -555,7 +552,7 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       base_path = this->reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           base_path.in (),
+                                           base_path,
                                            base_key,
                                            0);
 
@@ -648,11 +645,11 @@ TAO_InterfaceDef_i::create_attribute_i (
                                           CORBA::dk_Attribute);
 
   // Store the path to the attribute's type definition.
-  CORBA::String_var type_path = this->reference_to_path (type);
+  char *type_path = this->reference_to_path (type);
 
   this->repo_->config ()->set_string_value (new_key,
                                             "type_path",
-                                            type_path.in ());
+                                            type_path);
 
   // Store the attribute's mode.
   this->repo_->config ()->set_integer_value (new_key,
@@ -683,18 +680,17 @@ TAO_InterfaceDef_i::create_attribute_i (
                                             "get_excepts",
                                             1,
                                             get_excepts_key);
+      char *get_except_path = 0;
 
       // Store the paths to the 'get' exceptions.
       for (i = 0; i < length; ++i)
         {
-          CORBA::String_var get_except_path =
+          get_except_path =
             this->reference_to_path (get_exceptions[i]);
 
-          CORBA::String_var section_name = this->int_to_string (i);
-
           this->repo_->config ()->set_string_value (get_excepts_key,
-                                                    section_name.in (),
-                                                    get_except_path.in ());
+                                                    this->int_to_string (i),
+                                                    get_except_path);
         }
     }
 
@@ -708,18 +704,17 @@ TAO_InterfaceDef_i::create_attribute_i (
                                             "put_excepts",
                                             1,
                                             put_excepts_key);
+      char *put_except_path = 0;
 
       // Store the paths to the 'put' exceptions.
       for (i = 0; i < length; ++i)
         {
-          CORBA::String_var put_except_path =
+          put_except_path =
             this->reference_to_path (put_exceptions[i]);
 
-          CORBA::String_var section_name = this->int_to_string (i);
-
           this->repo_->config ()->set_string_value (put_excepts_key,
-                                                    section_name.in (),
-                                                    put_except_path.in ());
+                                                    this->int_to_string (i),
+                                                    put_except_path);
         }
     }
 
@@ -810,9 +805,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
                                           CORBA::dk_Operation);
 
   // Get the TypeCode for the return type.
-  CORBA::String_var tmp = this->reference_to_path (result);
-
-  ACE_TString result_path (tmp.in ());
+  ACE_TString result_path (this->reference_to_path (result));
   TAO_IDLType_i *result_impl = this->path_to_idltype (result_path);
 
   CORBA::TypeCode_var rettype = 
@@ -855,6 +848,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
+      char *type_path = 0;
 
       for (i = 0; i < length; ++i)
         {
@@ -867,22 +861,20 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
             }
 
           ACE_Configuration_Section_Key param_key;
-          CORBA::String_var section_name = this->int_to_string (i);
-
           this->repo_->config ()->open_section (params_key,
-                                                section_name.in (),
+                                                this->int_to_string (i),
                                                 1,
                                                 param_key);
 
           this->repo_->config ()->set_string_value (param_key,
                                                     "name",
                                                     params[i].name.in ());
-          CORBA::String_var type_path =
+          type_path =
             this->reference_to_path (params[i].type_def.in ());
 
           this->repo_->config ()->set_string_value (param_key,
                                                     "type_path",
-                                                    type_path.in ());
+                                                    type_path);
 
           this->repo_->config ()->set_integer_value (param_key,
                                                      "mode",
@@ -909,17 +901,16 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
                                             "excepts",
                                             1,
                                             excepts_key);
+      char *type_path = 0;
 
       for (i = 0; i < length; ++i)
         {
-          CORBA::String_var type_path = 
+          type_path = 
             this->reference_to_path (exceptions[i]);
 
-          CORBA::String_var section_name = this->int_to_string (i);
-
           this->repo_->config ()->set_string_value (excepts_key,
-                                                    section_name.in (),
-                                                    type_path.in ());
+                                                    this->int_to_string (i),
+                                                    type_path);
         }
     }
 
@@ -937,10 +928,8 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
 
       for (i = 0; i < length; ++i)
         {
-          CORBA::String_var section_name = this->int_to_string (i);
-
           this->repo_->config ()->set_string_value (contexts_key,
-                                                    section_name.in (),
+                                                    this->int_to_string (i),
                                                     contexts[i].in ());
         }
     }

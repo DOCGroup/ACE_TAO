@@ -78,7 +78,7 @@ public:
   // Plug in the section key.
 
 protected:
-  char *int_to_string (CORBA::ULong number) const;
+  char *int_to_string (CORBA::ULong number);
   // Convert an unsigned int to a string of its hex form.
 
   void update_key (ACE_ENV_SINGLE_ARG_DECL)
@@ -121,6 +121,10 @@ protected:
 
   ACE_Configuration_Section_Key tmp_key_;
   // To hold a key created by one method for another method to use.
+
+private:
+  char *oid_to_string (PortableServer::ObjectId &oid);
+  // Used by a couple of the above methods.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

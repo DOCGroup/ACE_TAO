@@ -349,13 +349,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   cdr << id;
 
-  this->string_pad (cdr,
-                    ACE_OS::strlen (id) + 1);
-
   cdr << name;
-
-  this->string_pad (cdr,
-                    ACE_OS::strlen (name) + 1);
 
   CORBA::ULong len = members.length ();
 
@@ -377,9 +371,6 @@ TAO_TypeCodeFactory_i::create_enum_tc (
         }
 
       cdr << members[index].in ();
-
-      this->string_pad (cdr,
-                        ACE_OS::strlen (members[index].in ()) + 1);
     }
 
   ACE_Message_Block consolidated_block;
@@ -443,13 +434,7 @@ TAO_TypeCodeFactory_i::create_alias_tc (
 
   cdr << id;
 
-  this->string_pad (cdr,
-                    ACE_OS::strlen (id) + 1);
-
   cdr << name;
-
-  this->string_pad (cdr,
-                    ACE_OS::strlen (name) + 1);
 
   cdr << original_type;
 
@@ -1094,13 +1079,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   cdr << id;
 
-  this->string_pad (cdr,
-                    ACE_OS::strlen (id) + 1);
-
   cdr << name;
-
-  this->string_pad (cdr,
-                    ACE_OS::strlen (name) + 1);
 
   // Number of members..
   CORBA::ULong len = members.length ();
@@ -1149,9 +1128,6 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
         }
 
       cdr << member_name;
-
-      this->string_pad (cdr,
-                        ACE_OS::strlen (member_name) + 1);
 
       cdr << tc_holder;
     }
@@ -1419,18 +1395,6 @@ TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc
     }
 
   return 0;
-}
-
-void
-TAO_TypeCodeFactory_i::string_pad (TAO_OutputCDR &cdr,
-                                   CORBA::ULong slen)
-{
-  CORBA::ULong padlen = (4 - (slen % 4)) % 4;
-
-  for (CORBA::ULong i = 0; i < padlen; ++i)
-    {
-      cdr.write_char ('\0');
-    }
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

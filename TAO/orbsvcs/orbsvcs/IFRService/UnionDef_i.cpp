@@ -171,12 +171,12 @@ TAO_UnionDef_i::discriminator_type_def_i (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var disc_path = 
+  char *disc_path = 
     this->reference_to_path (discriminator_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "disc_path",
-                                            disc_path.in ());
+                                            disc_path);
 }
 
 CORBA::UnionMemberSeq *
@@ -211,10 +211,8 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   for (u_int i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      CORBA::String_var section_name = this->int_to_string (i);
-
       if (this->repo_->config ()->open_section (refs_key,
-                                                section_name.in (),
+                                                this->int_to_string (i),
                                                 0,
                                                 member_key)
            == 0)
@@ -326,15 +324,15 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members
   this->repo_->config ()->set_integer_value (refs_key,
                                              "count",
                                              count);
+  char *member_path = 0;
 
   // Create a section for each member. We store the member
   // name, its label value, and the path to its database entry.
   for (CORBA::ULong i = 0; i < count; i++)
     {
       ACE_Configuration_Section_Key member_key;
-      char *section_name = this->int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            section_name,
+                                            this->int_to_string (i),
                                             1,
                                             member_key);
 
@@ -342,12 +340,12 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members
                                                 "name",
                                                 members[i].name.in ());
 
-      CORBA::String_var member_path = 
+      member_path = 
         this->reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "path",
-                                                member_path.in ());
+                                                member_path);
 
       this->store_label (member_key,
                          members[i].label
@@ -423,9 +421,13 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
     {
       TAO_OutputCDR cdr;
       cdr.write_ulong (ACE_static_cast (CORBA::ULong, value));
-      member.label._tao_replace (tc.in (),
-                                 TAO_ENCAP_BYTE_ORDER,
-                                 cdr.begin ());
+      TAO::Unknown_IDL_Type *impl = 0;
+      ACE_NEW (impl,
+               TAO::Unknown_IDL_Type (tc._retn (),
+                                      cdr.begin (),
+                                      TAO_ENCAP_BYTE_ORDER,
+                                      1));
+      member.label.replace (impl);
       break;
     }
     default:

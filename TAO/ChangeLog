@@ -1,3 +1,49 @@
+Sat Dec 14 19:56:13 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.h:
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any_T.cpp:
+        * tao/Any_T.h:
+        * tao/Any_T.inl:
+        * tao/Typecode.cpp:
+        * tao/Typecode.i:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+	  Debugging the interaction of the optimized IFR and the new
+	  Any implementation.
+
 Fri Dec 13 14:30:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:

@@ -252,7 +252,7 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound
                                     "count",
                                     count);
 
-  CORBA::String_var name = this->int_to_string (count++);
+  char *name = this->int_to_string (count++);
   this->config_->set_integer_value (this->strings_key_,
                                     "count",
                                     count);
@@ -260,7 +260,7 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound
   // Make new database entry.
   ACE_Configuration_Section_Key new_key;
   this->config_->open_section (this->strings_key_,
-                               name.in (),
+                               name,
                                1,
                                new_key);
 
@@ -274,11 +274,11 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound
 
   this->config_->set_string_value (new_key,
                                    "name",
-                                   name.in ());
+                                   name);
 
   // Create the object reference.
   ACE_TString obj_id ("strings\\");
-  obj_id += name.in ();
+  obj_id += name;
 
   CORBA::Object_var obj = this->create_objref (CORBA::dk_String,
                                                obj_id.c_str ()
@@ -310,7 +310,7 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound
                                     "count",
                                     count);
 
-  CORBA::String_var name = this->int_to_string (count++);
+  char *name = this->int_to_string (count++);
   this->config_->set_integer_value (this->wstrings_key_,
                                     "count",
                                     count);
@@ -318,7 +318,7 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound
   // Make new database entry.
   ACE_Configuration_Section_Key new_key;
   this->config_->open_section (this->wstrings_key_,
-                               name.in (),
+                               name,
                                1,
                                new_key);
 
@@ -332,11 +332,11 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound
 
   this->config_->set_string_value (new_key,
                                    "name",
-                                   name.in ());
+                                   name);
 
   // Create the object reference.
   ACE_TString obj_id ("wstrings\\");
-  obj_id += name.in ();
+  obj_id += name;
 
   CORBA::Object_var obj = this->create_objref (CORBA::dk_Wstring,
                                                obj_id.c_str ()
@@ -371,7 +371,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
                                     "count",
                                     count);
 
-  CORBA::String_var name = this->int_to_string (count++);
+  char *name = this->int_to_string (count++);
   this->config_->set_integer_value (this->sequences_key_,
                                     "count",
                                     count);
@@ -379,7 +379,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
   // Make new database entry.
   ACE_Configuration_Section_Key new_key;
   this->config_->open_section (this->sequences_key_,
-                               name.in (),
+                               name,
                                1,
                                new_key);
 
@@ -396,19 +396,19 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
   // Set the "name" for destroy to use.
   this->config_->set_string_value (new_key,
                                    "name",
-                                   name.in ());
+                                   name);
 
-  CORBA::String_var element_path =
+  char *element_path =
     this->reference_to_path (element_type);
 
   // To get key to element type.
   this->config_->set_string_value (new_key,
                                    "element_path",
-                                   element_path.in ());
+                                   element_path);
 
   // Create the object reference.
   ACE_TString obj_id ("sequences\\");
-  obj_id += name.in ();
+  obj_id += name;
 
   CORBA::Object_var obj = this->create_objref (CORBA::dk_Sequence,
                                                obj_id.c_str ()
@@ -443,7 +443,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
                                     "count",
                                     count);
 
-  CORBA::String_var name = this->int_to_string (count++);
+  char *name = this->int_to_string (count++);
   this->config_->set_integer_value (this->arrays_key_,
                                     "count",
                                     count);
@@ -451,7 +451,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
   // Make new database entry.
   ACE_Configuration_Section_Key new_key;
   this->config_->open_section (this->arrays_key_,
-                               name.in (),
+                               name,
                                1,
                                new_key);
 
@@ -468,19 +468,19 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
   // Set the "name" for destroy to use.
   this->config_->set_string_value (new_key,
                                    "name",
-                                   name.in ());
+                                   name);
 
-  CORBA::String_var element_path =
+  char *element_path =
     this->reference_to_path (element_type);
 
   // To get key to element type.
   this->config_->set_string_value (new_key,
                                    "element_path",
-                                   element_path.in ());
+                                   element_path);
 
   // Create the object reference.
   ACE_TString obj_id ("arrays\\");
-  obj_id += name.in ();
+  obj_id += name;
 
   CORBA::Object_var obj = this->create_objref (CORBA::dk_Array,
                                                obj_id.c_str ()

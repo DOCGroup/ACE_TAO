@@ -123,9 +123,8 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   for (u_int i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      CORBA::String_var section_name = this->int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             0,
                                             member_key);
 
@@ -245,15 +244,15 @@ TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members
                                         "refs",
                                         1,
                                         refs_key);
+  char *path = 0;
 
   // Create a section for each new member. We just store the
   // member name and the path to its database entry.
   for (CORBA::ULong i = 0; i < count; ++i)
     {
-      CORBA::String_var section_name = this->int_to_string (i);
       ACE_Configuration_Section_Key member_key;
       this->repo_->config ()->open_section (refs_key,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             1,
                                             member_key);
 
@@ -261,12 +260,12 @@ TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members
                                                 "name",
                                                 members[i].name.in ());
 
-      CORBA::String_var path = 
+      path = 
         this->reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "path",
-                                                path.in ());
+                                                path);
     }
 
   this->repo_->config ()->set_integer_value (refs_key,

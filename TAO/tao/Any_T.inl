@@ -123,6 +123,6 @@ TAO::Any_Dual_Impl_T<T>::demarshal_value (TAO_InputCDR &cdr)
 template<typename T> ACE_INLINE const void *
 TAO::Any_Dual_Impl_T<T>::value (void) const
 {
-  return &this->value_;
+  return this->value_;
 }
 

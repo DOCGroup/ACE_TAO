@@ -120,10 +120,10 @@ TAO_ValueBoxDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var boxed_type = this->reference_to_path (original_type_def);
+  char *boxed_type = this->reference_to_path (original_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "boxed_type",
-                                            boxed_type.in ());
+                                            boxed_type);
 }
 

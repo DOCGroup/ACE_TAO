@@ -138,11 +138,11 @@ TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var result_path = this->reference_to_path (result_def);
+  char *result_path = this->reference_to_path (result_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "result",
-                                            result_path.in ());
+                                            result_path);
 }
 
 CORBA::ParDescriptionSeq *
@@ -181,12 +181,10 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
 
       for (i = 0; i < count; ++i)
         {
-          CORBA::String_var section_name = this->int_to_string (i);
-
           ACE_Configuration_Section_Key param_key;
           status =
             this->repo_->config ()->open_section (params_key,
-                                                  section_name.in (),
+                                                  this->int_to_string (i),
                                                   0,
                                                   param_key);
 
@@ -294,26 +292,25 @@ TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params
   this->repo_->config ()->set_integer_value (params_key,
                                              "count",
                                              length);
+  char *type_path = 0;
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       ACE_Configuration_Section_Key param_key;
-      CORBA::String_var section_name = this->int_to_string (i);
-
       this->repo_->config ()->open_section (params_key,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             1,
                                             param_key);
 
       this->repo_->config ()->set_string_value (param_key,
                                                 "name",
                                                 params[i].name.in ());
-      CORBA::String_var type_path = 
+      type_path = 
         this->reference_to_path (params[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (param_key,
                                                 "type_path",
-                                                type_path.in ());
+                                                type_path);
 
       this->repo_->config ()->set_integer_value (param_key,
                                                  "mode",
@@ -398,7 +395,6 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
   if (status == 0)
     {
       int index = 0;
-      CORBA::String_var field_name = this->int_to_string (index);
       ACE_TString context;
 
       // Don't have to worry about gaps here - contexts are not
@@ -406,12 +402,11 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
       // make a change one has to call the mutator version of this
       // function and make a completely new list.
       while (this->repo_->config ()->get_string_value (contexts_key,
-                                                       field_name.in (),
+                                                       this->int_to_string (index++),
                                                        context)
               == 0)
         {
           context_queue.enqueue_tail (context);
-          field_name = this->int_to_string (++index);
         }
     }
 
@@ -472,10 +467,8 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      CORBA::String_var section_name = this->int_to_string (i);
-
       this->repo_->config ()->set_string_value (contexts_key,
-                                                section_name.in (),
+                                                this->int_to_string (i),
                                                 contexts[i].in ());
     }
 }
@@ -597,16 +590,14 @@ TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions
                                         "excepts",
                                         1,
                                         excepts_key);
+  char *type_path = 0;
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      CORBA::String_var type_path = this->reference_to_path (exceptions[i]);
-
-      CORBA::String_var section_name = this->int_to_string (i);
-
+      type_path = this->reference_to_path (exceptions[i]);
       this->repo_->config ()->set_string_value (excepts_key,
-                                                section_name.in (),
-                                                type_path.in ());
+                                                this->int_to_string (i),
+                                                type_path);
     }
 
 }
