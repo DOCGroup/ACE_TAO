@@ -5,6 +5,7 @@
 #include "ace/Synch_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Dynamic.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.i"
