@@ -320,7 +320,7 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
           (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
                                                    &cdr,
                                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_CHECK;
         }
     }
   else

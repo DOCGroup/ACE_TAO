@@ -2143,7 +2143,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
   (void) TAO_Marshal_Object::perform_skip (disc_tc,
                                            &cdr,
                                            ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   CORBA::ULong count = any.type ()->member_count (ACE_TRY_ENV);
   ACE_CHECK;
