@@ -2967,7 +2967,7 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
 
-class ACE_Cleanup
+class ACE_Export ACE_Cleanup
   // = TITLE
   //    Base class for objects that are cleaned by ACE_Object_Manager.
 {
