@@ -4,7 +4,7 @@
 #include "tao/Stub.h"
 #include "FT_Policy_i.h"
 #include "tao/Invocation.h"
-
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "FT_Service_Callbacks.i"
@@ -12,14 +12,41 @@
 
 ACE_RCSID(FaultTolerance, FT_Service_Callbacks, "$Id$")
 
+TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (
+    TAO_ORB_Core *orb_core)
+
+  : orb_core_ (orb_core),
+    profile_lock_ (0),
+    primary_failed_ (0),
+    secondary_set_ (0),
+    group_component_ (),
+    group_component_flag_ (0)
+{
+  this->profile_lock_ =
+    this->orb_core_->client_factory ()->create_profile_lock ();
+}
+
 TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
 {
+  // Delete the memeory for the lock
+  delete this->profile_lock_;
 }
+
 
 CORBA::Boolean
 TAO_FT_Service_Callbacks::select_profile (TAO_MProfile *mpfile,
                                           TAO_Profile *&pfile)
 {
+  // Note: We are grabbing the lock very early. We can still delay
+  // that. I will address this when I get around for the next round of
+  // improvements.
+
+  // Grab the lock
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->profile_lock_,
+                            0));
+
   // If we know that the primary has failed just return
   if (this->primary_failed_)
     return 0;
@@ -72,6 +99,16 @@ CORBA::Boolean
 TAO_FT_Service_Callbacks::reselect_profile (TAO_Stub *stub,
                                             TAO_Profile *&pfile)
 {
+  // Note: We are grabbing the lock very early. We can still delay
+  // that. I will address this when I get around for the next round of
+  // improvements.
+
+  // Grab the lock
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->profile_lock_,
+                            0));
+
   // This method is essentially called before the Stub Object gives up
   // on invocation. We should only do this
   // 1) Check whether the first in the list or the profile_in_use ()
@@ -113,6 +150,11 @@ TAO_FT_Service_Callbacks::reselect_profile (TAO_Stub *stub,
 void
 TAO_FT_Service_Callbacks::reset_profile_flags (void)
 {
+  // Grab the lock
+  ACE_MT (ACE_GUARD (ACE_Lock,
+                     guard,
+                     *this->profile_lock_));
+
   // Reset the flags that we may have
   this->primary_failed_ = 0;
   this->secondary_set_ = 0;

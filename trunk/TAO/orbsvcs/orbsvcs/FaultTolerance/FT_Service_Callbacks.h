@@ -29,6 +29,7 @@
 
 class TAO_Profile;
 class TAO_MProfile;
+class TAO_ORB_Core;
 
 class TAO_FT_Export TAO_FT_Service_Callbacks : public TAO_Service_Callbacks
 {
@@ -40,7 +41,7 @@ class TAO_FT_Export TAO_FT_Service_Callbacks : public TAO_Service_Callbacks
   //   An implementation of the service callbacks that allows the
   //   loading of the FT ORB level library in to the ORB
 public:
-  TAO_FT_Service_Callbacks (void);
+  TAO_FT_Service_Callbacks (TAO_ORB_Core *orb_core);
   // Constructor
 
   virtual ~TAO_FT_Service_Callbacks (void);
@@ -116,6 +117,13 @@ private:
                                        const TAO_Profile *profile);
   // Check whether the right flags are available so that we can issue a
   // restart.
+
+private:
+  TAO_ORB_Core *orb_core_;
+  // The ORB core in which we have been activated
+
+  ACE_Lock* profile_lock_;
+  // Mutex to protect access to the profile that gets passed along
 
   CORBA::Boolean primary_failed_;
   // A flag that indicates that the primary has already failed. So any

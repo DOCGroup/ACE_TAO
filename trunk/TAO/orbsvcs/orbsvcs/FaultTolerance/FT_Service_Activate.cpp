@@ -1,42 +1,32 @@
 #include "FT_Service_Activate.h"
 #include "FT_Service_Callbacks.h"
+#include "tao/Service_Callbacks.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(FaultTolerance, FT_Service_Activate, "$Id$")
 
 TAO_FT_Service_Activate::TAO_FT_Service_Activate (void)
-  :orb_core_ (0)
 {
-
 }
 
 TAO_FT_Service_Activate::~TAO_FT_Service_Activate (void)
 {
-
 }
 
 TAO_Service_Callbacks *
 TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
   ACE_THROW_SPEC (())
 {
-  // @@ We have a problem here. Multiple ORBs can use this and we will
-  // @@ be stuck badly. Let me get the basic stuff to work and then I
-  // @@ will iterate over this again..
-
-  this->orb_core_ = orb_core;
-
   TAO_FT_Service_Callbacks *ft_service_callback = 0;
 
   // Construct service callback object
   ACE_NEW_RETURN (ft_service_callback,
-                  TAO_FT_Service_Callbacks (),
+                  TAO_FT_Service_Callbacks (orb_core),
                   0);
 
   return ft_service_callback;
-  // @@ All the other things that we may need, will be added from time
-  // @@ to time..
-
 }
+
 
 int
 TAO_FT_Service_Activate::Initializer (void)
