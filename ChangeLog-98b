@@ -17,6 +17,9 @@ Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/RB_Tree.i (clear): removed extraneous ";" following the
           function definition.
 
+        * ace/Process.cpp (spawn): added an ACE_DEBUG printout before each
+          call to ACE_OS::exit ().
+
 Fri Jun 12 17:04:14 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * ace/OS.h: Moved the #define's and typedef's (related to Proactor
