@@ -412,15 +412,14 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
 			       CORBA::Environment &_env)
 {
   ACE_TIMEPROBE ("  enter Push_Supplier_Proxy::push");
-  if (!this->connected ())
-    TAO_THROW (RtecEventComm::Disconnected);
 
   // @@ TOTAL HACK
   ACE_hrtime_t ec_recv = ACE_OS::gethrtime ();
   for (CORBA::ULong i = 0; i < event.length (); ++i)
     {
-      ACE_OS::memcpy (ACE_const_cast(void*,&event[i].ec_recv_time_), &ec_recv,
-		      sizeof (RtecEventComm::Time));
+      ACE_OS::memcpy
+	(ACE_const_cast(void*,&event[i].ec_recv_time_),
+	 &ec_recv, sizeof (RtecEventComm::Time));
     }
   supplier_module_->push (this, event, _env);
 }
@@ -1134,8 +1133,10 @@ ACE_ES_Correlation_Module::push (ACE_ES_Consumer_Rep *consumer,
 int
 ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consumer)
 {
-  RtecEventComm::Time &interval = consumer->dependency ()->event_.creation_time_;
-  RtecEventComm::Time &delay = consumer->dependency ()->event_.creation_time_;
+  RtecEventComm::Time &interval =
+    consumer->dependency ()->event_.creation_time_;
+  RtecEventComm::Time &delay =
+    consumer->dependency ()->event_.creation_time_;
 
   // Store the preemption priority so we can cancel the correct timer.
   // The priority values may change during the process lifetime (e.g.,
@@ -1184,8 +1185,10 @@ ACE_ES_Correlation_Module::reschedule_timeout (ACE_ES_Consumer_Rep_Timeout *cons
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "ACE_ES_Disjunction_Group::reschedule_deadline"), -1);
   else
     {
-      RtecEventComm::Time &interval = consumer->dependency ()->event_.creation_time_;
-      RtecEventComm::Time &delay = consumer->dependency ()->event_.creation_time_;
+      RtecEventComm::Time &interval =
+	consumer->dependency ()->event_.creation_time_;
+      RtecEventComm::Time &delay =
+	consumer->dependency ()->event_.creation_time_;
 
       // Store the preemption priority so we can cancel the correct timer.
       // The priority values may change during the process lifetime (e.g.,
@@ -1515,14 +1518,11 @@ ACE_ES_Consumer_Correlation::get_consumer_rep (RtecEventChannelAdmin::Dependency
   // Step through all existing consumer reps.
   for (int x=0; x < crep_index; x++)
     {
+      RtecEventComm::Event& e = consumer_reps_[x]->dependency ()->event_;
       // If <dependency> matches any previously subscribed consumer
       // reps, we'll reuse it.
-      if (consumer_reps_[x]->dependency ()->event_.type_ == dependency.event_.type_
-#if defined(ACE_ES_LACKS_ORB)
-	  && consumer_reps_[x]->dependency ()->event_.source_ ==
-	  dependency.event_.source_
-#endif /* ACE_ES_LACKS_ORB */
-)
+      if (e.type_ == dependency.event_.type_
+	  && e.source_ == dependency.event_.source_ )
 	{
 	  rep = consumer_reps_[x];
 	  break;
@@ -1752,7 +1752,8 @@ ACE_ES_Consumer_Rep_Timeout::execute (void)
     {
       CORBA::Environment __env;
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
-      timeout_event_->creation_time_ = tv.sec () * 10000000 + tv.usec () * 10;
+      timeout_event_->creation_time_ =
+	tv.sec () * 10000000 + tv.usec () * 10;
       correlation_->correlation_module_->push (this, timeout_event_, __env);
       if (__env.exception () != 0)
 	ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Rep_Timeout::execute: unexpected exception.\n"));
@@ -1818,7 +1819,8 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 	  }
 #endif
 
-	RtecEventComm::EventType &event_type = publications[index].event_.type_;
+	RtecEventComm::EventType &event_type =
+	  publications[index].event_.type_;
 
 	// Check to make sure a type was specified.
 	if (event_type == ACE_ES_EVENT_ANY)
@@ -2242,7 +2244,9 @@ ACE_ES_Subscription_Module::subscribe (ACE_ES_Consumer_Rep *consumer)
       if (event.type_ == ACE_ES_EVENT_ANY)
 	result = this->subscribe_source (consumer, event.source_);
       else
-	result = this->subscribe_source_type (consumer, event.source_, event.type_);
+	result = this->subscribe_source_type (consumer,
+					      event.source_,
+					      event.type_);
     }
 
   return result;
@@ -2264,13 +2268,15 @@ ACE_ES_Subscription_Module::unsubscribe (ACE_ES_Consumer_Rep *consumer)
     {
       // Remove the consumer from the global type-based subscription list.
       if (ACE_ES_Subscription_Info::remove (type_subscribers_,
-					    consumer, event.type_) == 0)
+					    consumer,
+					    event.type_) == 0)
 	consumer->_release ();
     }
   else
     // Remove the consumer from the global source-based subscription list.
     if (ACE_ES_Subscription_Info::remove (source_subscribers_,
-					  consumer, event.source_) == 0)
+					  consumer,
+					  event.source_) == 0)
       consumer->_release ();
 
   return 0;
@@ -2578,12 +2584,6 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 	  up_->push (proxy, event_copy, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	}
-    }
-  TAO_CATCH (RtecEventComm::Disconnected, d)
-    {
-      ACE_ERROR ((LM_ERROR, "%p Disconnected.\n",
-		  "ACE_ES_Supplier_Module::push"));
-      TAO_RETHROW;
     }
   TAO_CATCH (RtecEventChannelAdmin::TypeError, t)
     {

@@ -32,7 +32,7 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
 {
   // create compound name to be resolved
   // (<name> - last component)
-  CORBA::Environment IT_env;
+  CORBA::Environment _env;
   CORBA::ULong len = name.length ();
   CosNaming::Name comp_name (name);
   comp_name.length (len - 1);
@@ -40,13 +40,13 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
   // resolve
   CORBA::Object_ptr cont_ref;
 
-  cont_ref = resolve (comp_name, IT_env);
+  cont_ref = resolve (comp_name, _env);
 
   // Deal with exceptions in resolve: basicly, add the last component
   // of the name to <rest_of_name> and rethrow.
-  if (IT_env.exception () != 0)
+  if (_env.exception () != 0)
     {
-      IT_env.print_exception ("NS_NamingContext::get_context");
+      _env.print_exception ("NS_NamingContext::get_context");
       return 0;
     }
 
@@ -55,10 +55,10 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
 
   // Try narrowing object reference to a context type.
   CosNaming::NamingContext_ptr c;
-  c = CosNaming::NamingContext::_narrow (cont_ref, IT_env);
-  if (IT_env.exception () != 0)
+  c = CosNaming::NamingContext::_narrow (cont_ref, _env);
+  if (_env.exception () != 0)
     {
-      IT_env.print_exception ("NS_NamingContext::get_context - _narrow");
+      _env.print_exception ("NS_NamingContext::get_context - _narrow");
       return 0;
     }
 
@@ -80,9 +80,9 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
 void
 NS_NamingContext::bind (const CosNaming::Name& n,
 			CORBA::Object_ptr obj,
-			CORBA::Environment &IT_env)
+			CORBA::Environment &_env)
 {
-  IT_env.clear ();
+  _env.clear ();
 
   // get the length of the name
   CORBA::ULong len = n.length ();
@@ -90,8 +90,8 @@ NS_NamingContext::bind (const CosNaming::Name& n,
   // Check for invalid name.
   if (len == 0)
     {
-      IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::InvalidName);
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::InvalidName);
       return;
     }
 
@@ -104,7 +104,7 @@ NS_NamingContext::bind (const CosNaming::Name& n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
-      cont->bind (simple_name, obj, IT_env);
+      cont->bind (simple_name, obj, _env);
     }
 
   // If we received a simple name, we need to bind it in this context.
@@ -116,20 +116,19 @@ NS_NamingContext::bind (const CosNaming::Name& n,
       // Try binding the name.
       if (context_.bind (name, entry) == -1)
 	{
-	  IT_env.clear ();
-	  IT_env.exception (new CosNaming::NamingContext::AlreadyBound);
+	  _env.clear ();
+	  _env.exception (new CosNaming::NamingContext::AlreadyBound);
 	  return;
 	}
-        /**///	throw CosNaming::NamingContext::AlreadyBound ();
-      // May need to add case dealing with -1. (Maybe throw cannot
-      // proceed).
+      ACE_DEBUG ((LM_DEBUG, "bound: <%s,%s>\n",
+		  n[0].id.in (), n[0].kind.in ()));
     }
 }
 
 void
 NS_NamingContext::rebind (const CosNaming::Name& n,
 			  CORBA::Object_ptr obj,
-			  CORBA::Environment &IT_env)
+			  CORBA::Environment &_env)
 {
   // get the length of the name
   CORBA::ULong len = n.length ();
@@ -137,8 +136,8 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
   // check for invalid name.
   if (len == 0)
     {
-      IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::InvalidName);
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::InvalidName);
       return;
     }
 
@@ -151,7 +150,7 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
-      cont->rebind (simple_name, obj, IT_env);
+      cont->rebind (simple_name, obj, _env);
     }
   // If we received a simple name, we need to rebind it in this context.
   else
@@ -171,7 +170,7 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
 void
 NS_NamingContext::bind_context (const CosNaming::Name &n,
 				CosNaming::NamingContext_ptr nc,
-				CORBA::Environment &IT_env)
+				CORBA::Environment &_env)
 {
   // Get the length of the name.
   CORBA::ULong len = n.length ();
@@ -179,8 +178,8 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
   // Check for invalid name.
   if (len == 0)
     {
-      IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::InvalidName);
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::InvalidName);
       return;
     }
 
@@ -193,7 +192,7 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
-      cont->bind_context (simple_name, nc, IT_env);
+      cont->bind_context (simple_name, nc, _env);
     }
 
   // If we received a simple name, we need to bind it in this context.
@@ -206,8 +205,8 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
       // Try binding the name.
       if (context_.bind (name, entry) == 1)
 	{
-	  IT_env.clear ();
-	  IT_env.exception (new CosNaming::NamingContext::AlreadyBound);
+	  _env.clear ();
+	  _env.exception (new CosNaming::NamingContext::AlreadyBound);
 	  return;
 	}
 
@@ -218,7 +217,7 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
 void
 NS_NamingContext::rebind_context (const CosNaming::Name &n,
 				  CosNaming::NamingContext_ptr nc,
-				  CORBA::Environment &IT_env)
+				  CORBA::Environment &_env)
 {
   // Get the length of the name.
   CORBA::ULong len = n.length ();
@@ -226,8 +225,8 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
   // Check for invalid name.
   if (len == 0)
     {
-      IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::InvalidName);
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::InvalidName);
       return;
     }
 
@@ -240,7 +239,7 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
-      cont->rebind_context (simple_name, nc, IT_env);
+      cont->rebind_context (simple_name, nc, _env);
     }
 
   // if we received a simple name, we need to rebind it in this context.
@@ -260,7 +259,7 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
 
 CORBA::Object_ptr
 NS_NamingContext::resolve (const CosNaming::Name& n,
-			   CORBA::Environment &IT_env)
+			   CORBA::Environment &_env)
 {
   // get the length of the name
   CORBA::ULong len = n.length ();
@@ -268,19 +267,22 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
   // check for invalid name.
   if (len == 0)
     {
-      IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::InvalidName);
-      return 0;
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::InvalidName);
+      return CORBA::Object::_nil ();
     }
+
+  ACE_DEBUG ((LM_DEBUG, "Trying to resolve <%s,%s>\n",
+	      n[0].id.in (), n[0].kind.in ()));
 
   // resolve the first component of the name
   NS_ExtId name (n[0].id, n[0].kind);
   NS_IntId entry;
   if (context_.find (name, entry) == -1)
     {
-      IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n));
-      return 0;
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n));
+      return CORBA::Object::_nil ();
     }
 
   CORBA::Object_ptr item = entry.ref_;
@@ -292,27 +294,31 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
       CosNaming::NamingContext_var cont;
       if (entry.type_ == CosNaming::ncontext)
 	{
-	  cont = CosNaming::NamingContext::_narrow (item, IT_env);
-	  if (IT_env.exception () != 0)
+	  cont = CosNaming::NamingContext::_narrow (item, _env);
+	  if (_env.exception () != 0)
 	    {
-	      IT_env.print_exception ("NS_NamingContext::resolve");
-	      return 0;
+	      _env.print_exception ("NS_NamingContext::resolve");
+	      return CORBA::Object::_nil ();
 	    }
 	}
       else
 	{
-	  IT_env.clear ();
-	  IT_env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context, n));
-	  return 0;
+	  _env.clear ();
+	  _env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context, n));
+	  return CORBA::Object::_nil ();
 	}
 
-      CosNaming::Name rest_of_name;
+      CosNaming::Name rest_of_name (len - 1);
       rest_of_name.length (len - 1);
       for (CORBA::ULong i = 1; i < len; i++)
 	rest_of_name[i-1] = n[i];
 
-      return (cont->resolve (rest_of_name, IT_env));
+      return (cont->resolve (rest_of_name, _env));
     }
+
+  ACE_DEBUG ((LM_DEBUG, "Resolved <%s,%s> to %08.8x\n",
+	      n[0].id.in (), n[0].kind.in (),
+	      item));
 
   // if the name we had to resolve was simple, we just need
   // to return the result.
@@ -321,7 +327,7 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
 
 void
 NS_NamingContext::unbind (const CosNaming::Name& n,
-			  CORBA::Environment &IT_env)
+			  CORBA::Environment &_env)
 {
   // if (do_operation (n, CORBA::_nil (), NS_NamingContext::unbind) == 0)
 
@@ -331,8 +337,8 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
   // check for invalid name.
   if (len == 0)
     {
-      IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::InvalidName);
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::InvalidName);
       return;
     }
 
@@ -345,7 +351,7 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
-      cont->unbind (simple_name, IT_env);
+      cont->unbind (simple_name, _env);
     }
   else
   // If we received a simple name, we need to unbind it in this
@@ -355,8 +361,8 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
       // try unbinding the name.
       if (context_.unbind (name) == -1)
 	{
-	  IT_env.clear ();
-	  IT_env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n));
+	  _env.clear ();
+	  _env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n));
 	  return;
 	}
     }
@@ -365,7 +371,6 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
 CosNaming::NamingContext_ptr 
 NS_NamingContext::new_context (CORBA::Environment &_env) 
 {
-
   NS_NamingContext *c = new NS_NamingContext;
 
   return c->_this (_env);
@@ -390,12 +395,12 @@ NS_NamingContext::bind_new_context (const CosNaming::Name& n,
 }
 
 void
-NS_NamingContext::destroy (CORBA::Environment &IT_env)
+NS_NamingContext::destroy (CORBA::Environment &_env)
 {
   if (context_.current_size () != 0)
     {
-      IT_env.clear ();
-      IT_env.exception (new CosNaming::NamingContext::NotEmpty);
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::NotEmpty);
       return;
     }
 
@@ -479,10 +484,10 @@ NS_BindingIterator::~NS_BindingIterator (void)
 
 CORBA::Boolean
 NS_BindingIterator::next_one (CosNaming::Binding_out b,
-			      CORBA::Environment &IT_env)
+			      CORBA::Environment &_env)
 {
   // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (IT_env);
+  ACE_UNUSED_ARG (_env);
 
   if (hash_iter_->done ()) {
     b = new CosNaming::Binding;
@@ -511,10 +516,10 @@ NS_BindingIterator::next_one (CosNaming::Binding_out b,
 CORBA::Boolean
 NS_BindingIterator::next_n (CORBA::ULong how_many,
 			    CosNaming::BindingList_out bl,
-			    CORBA::Environment &IT_env)
+			    CORBA::Environment &_env)
 {
   // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (IT_env);
+  ACE_UNUSED_ARG (_env);
 
   if (hash_iter_->done ()) {
     bl = new CosNaming::BindingList;
@@ -559,10 +564,10 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-NS_BindingIterator::destroy (CORBA::Environment &IT_env)
+NS_BindingIterator::destroy (CORBA::Environment &_env)
 {
   // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (IT_env);
+  ACE_UNUSED_ARG (_env);
 
   //  CORBA::release (tie_ref_);
 }

@@ -11,6 +11,7 @@
 DIRS  =	Simple_Naming \
 	Logger \
 	Event_Latency \
+	EC_Multiple \
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -24,7 +24,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 <A HREF="#idl">IDL Compiler</A></LI>
 
 <LI>
-<A HREF="#eventchannel">Event Channel</A></LI>
+<A HREF="ec.html">Event Channel</A></LI>
 
 <LI>
 <A HREF="#apps">Test &amp; Example Applications</A></LI>
@@ -44,7 +44,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 <a href="#vc">How to add IDL files into your Visual C++ projects</a>
 </UL>
 
-<!--#include virtual="/~schmidt/ACE_wrappers/TAO/docs/releasenotes/orbcore.html" -->
+<!--#include virtual="orbcore.html" -->
 
     <HR>
 
@@ -221,95 +221,8 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
       </UL>
 
 <HR>
-<H3>
-<A NAME="eventchannel"></A>Real-time Event Channel</H3>
-Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
 
-<P>Current status:
-<UL>
-<LI>
-The current Event Channel is working on TAO,
-the Scheduling Service still has some problems,
-apparently related to sequences of variable sized structures as out
-parameters.</LI>
-
-<LI>
-The configuration runs can be done even on the distributed scenario, using
-the Real-time "Scheduling Service", which now has an IDL interface.</LI>
-
-<LI>
-At run-time (no config runs) there is no need to use the Real-time Scheduling
-Service, a faster, collocated implementation for the service is available.
-Obviously the information is generated on the config runs and linked into
-the program.
-Unfortunately the schedule information cannot be
-downloaded from the service right now.</LI>
-
-<LI>
-TAO <A HREF="#nservices">Naming Service</A> is used to locate the various
-services: the Event Channel itself, the Scheduling Service, etc.</LI>
-
-</UL>
-Future work:
-<UL>
-
-<LI>
-When several suppliers are consumers are distributed over the network
-it could be nice to exploit locality and have a separate Event
-Channel on each process (or host).
-Only when an event is required by some remote consumer we need to send
-it through the network.
-
-The basic architecture to achieve this seems very simple,
-each Event Channel connects as another supplier to its peers,
-providing a "merge" of its (local) suppliers QoS as its own QoS
-specification,
-the channel also registers as a consumer,
-using an analogous QoS, this time looking at its consumers.
-
-It is not clear how to avoid event looping and how to propagate the
-QoS yet,
-we plan to build some experiments on this scenario,
-hand crafting the QoS if necessary and evolve from there.</LI>
-
-<LI>
-We should be able to download the schedule to the interested parties,
-without need for a separate link phase. This will simplify and
-speed up the developing cycle,
-but requires a (small) amount of dynamic memory allocation.
-It could be interesting to "save" the schedule computation in some
-persistent form, so startup cost are lower too.</LI>
-
-<LI>
-The user should have complete control of services collocation,
-ACE services for dynamically loaded objects should help in this area,
-but we need to add support for NT DLLs in the IDL compiler.</LI>
-
-</UL>
-<P>For general documentation on the Event Service please read
-<A HREF="http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz">
-The Design and Performance of a Real-time CORBA Event Service</A>.
-
-The current distribution has just one test program for the Event
-Service, below are the basic instructions to run it:</P>
-
-<OL>
-<LI> Compile everything under <CODE>$TAO_ROOT/orbsvcs</CODE>, this
-	needs, obviously, <CODE>$TAO_ROOT/tao</CODE> and
-	the IDL compiler in <CODE>$TAO_ROOT/TAO_IDL</CODE>.</LI>
-
-<LI> Run the naming service, the scheduling service, the event service
-	and the test in
-	<CODE>$TAO_ROOT/TAO/orbsvcs/tests/Event_Latency</CODE>;
-	remember to give a different port to each one,
-	using the <CODE>-ORBport</CODE> option.</LI>
-
-<LI> If you want real-time behavior on Solaris you may need to run
-	these programs as root; on the other hand, this particular
-	example really has no priority inversion, since only one
-	thread runs at a time.</LI>
-
-</OL>
+<!--#include virtual="ec.html" -->
 
 <HR>
 <H3>

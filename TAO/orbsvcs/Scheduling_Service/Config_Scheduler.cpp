@@ -16,7 +16,7 @@
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)
   : impl(new Scheduler_Generic)
 {
-  impl->output_level (10);
+  // impl->output_level (10);
 }
 
 ACE_Config_Scheduler::~ACE_Config_Scheduler (void)

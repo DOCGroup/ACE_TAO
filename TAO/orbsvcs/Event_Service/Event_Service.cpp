@@ -12,6 +12,36 @@
 
 
 
+const char* service_name = "EventService";
+
+int
+parse_args (int argc, char *argv [])
+{
+  ACE_Get_Opt get_opt (argc, argv, "n:");
+  int opt;
+
+  while ((opt = get_opt ()) != EOF)
+    {
+      switch (opt)
+	{
+	case 'n':
+	  service_name = get_opt.optarg;
+	  break;
+	case '?':
+	default:
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Usage: %s "
+		      "-n service_name "
+		      "\n",
+		      argv[0]));
+	  return -1;
+	}
+    }
+
+  return 0;
+}
+
+
 int main (int argc, char *argv[])
 {
   TAO_TRY
@@ -20,6 +50,9 @@ int main (int argc, char *argv[])
       CORBA::ORB_var orb = 
 	CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      if (parse_args (argc, argv) == -1)
+	return 1;
 
       CORBA::Object_var poa_object = 
 	orb->resolve_initial_references("RootPOA");
@@ -63,7 +96,7 @@ int main (int argc, char *argv[])
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
-      channel_name[0].id = CORBA::string_dup ("EventService");
+      channel_name[0].id = CORBA::string_dup (service_name);
       naming_context->bind (channel_name, ec.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
