@@ -1,5 +1,8 @@
 Sun Feb  7 20:01:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao/Stub.i (STUB_Object): Fixed warnings about repository_id
+ 	  being unused.  Thanks to David for reporting this.
+
 	* tao/IIOP_ORB.cpp: Added some checks for failed memory
 	  allocation.
 
