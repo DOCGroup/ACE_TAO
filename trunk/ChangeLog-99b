@@ -1,3 +1,7 @@
+Thu Aug 26 16:33:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Log_Msg.cpp: removed unnecessary #include "ace/Synch_T.h".
+
 Thu Aug 26 13:49:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Threads/Makefile: removed process_manager from BIN.
