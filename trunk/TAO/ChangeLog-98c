@@ -98,6 +98,7 @@ Tue May 12 16:53:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
           Added missing forward declaration for ACE_Scheduler.
 
+	
 Tue May 12 16:48:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * tao/corba.h:
@@ -109,6 +110,12 @@ Tue May 12 15:22:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * tests/Param_Test/driver.cpp:
         * tests/Param_Test/tmplinst.cpp:
           Added missing template instantiations.
+
+Tue May 12 13:45:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp,h}:
+          Fixed compile problem when using ACE_Scheduler
+          instead of ACE_DynScheduler
 
 1998-05-12  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
@@ -132,6 +139,29 @@ Mon May 11 18:11:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           sequences of Any, Typecode and others. We know that some of this
           tests still do not work. Thanks to Rob E. Thornton
           <ret1@cec.wustl.edu> for his collaboration on this.
+
+Mon May 11 17:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/ace_dll.dsp
+          orbsvcs/orbsvcs/RtecScheduler.idl
+          orbsvcs/orbsvcs/orbsvcs.dsp
+          orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp,h}
+          orbsvcs/orbsvcs/Sched/DynSched.{cpp,h}
+          orbsvcs/orbsvcs/Sched/Scheduler.h
+          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp,h}
+
+          Integrated strategized scheduler with off-line scheduling
+          interface in Config_Scheduler.{cpp,h}.  To use the
+          strategized scheduler, define the following symbols
+          in ace/config.h (you can substitute RMS, etc for MUF,
+          and can choose a different value for the minimum critical
+          priority - more on this in the release notes, once the
+          dynamic portion is integrated):
+
+          #define TAO_USES_STRATEGY_SCHEDULER
+          #define TAO_USES_MUF_SCHEDULING
+          #define TAO_MIN_CRITICAL_PRIORITY 0
+
 
 Mon May 11 07:57:47 1998  David L. Levine  <levine@cs.wustl.edu>
 

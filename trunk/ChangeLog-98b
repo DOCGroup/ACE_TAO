@@ -9,21 +9,15 @@ Wed May 13 09:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue May 12 15:16:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/config-WinCE.h:
-        * ace/OS.h: Stopped using non-static object manager for CE.  This
-          is causing some problem at process shutdown.
-
-        * ace/Acceptor.cpp: Made CE friendly.
-
-        * ace/Process.cpp ([~]ACE_Process_Options): Moved things around to
-          avoid compilation errors on CE.  Secret: CE doesn't have
-          environment variables.
-
-Tue May 12 13:45:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp,h}:
-          Fixed compile problem when using ACE_Scheduler
-          instead of ACE_DynScheduler
+	* ace/config-WinCE.h:
+	* ace/OS.h: Stopped using non-static object manager for CE.  This
+	  is causing some problem at process shutdown.
+	
+	* ace/Acceptor.cpp: Made CE friendly.
+	
+	* ace/Process.cpp ([~]ACE_Process_Options): Moved things around to
+	  avoid compilation errors on CE.  Secret: CE doesn't have
+	  environment variables.
 
 Tue May 12 13:28:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -136,28 +130,6 @@ Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * WindozeCE/WindozeCEDlg.cpp: Updated the initial message after the
           display window but before ACE console progrm started.
-
-Mon May 11 17:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
-
-        * ace/ace_dll.dsp
-          orbsvcs/orbsvcs/RtecScheduler.idl
-          orbsvcs/orbsvcs/orbsvcs.dsp
-          orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp,h}
-          orbsvcs/orbsvcs/Sched/DynSched.{cpp,h}
-          orbsvcs/orbsvcs/Sched/Scheduler.h
-          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp,h}
-
-          Integrated strategized scheduler with off-line scheduling
-          interface in Config_Scheduler.{cpp,h}.  To use the
-          strategized scheduler, define the following symbols
-          in ace/config.h (you can substitute RMS, etc for MUF,
-          and can choose a different value for the minimum critical
-          priority - more on this in the release notes, once the
-          dynamic portion is integrated):
-
-          #define TAO_USES_STRATEGY_SCHEDULER
-          #define TAO_USES_MUF_SCHEDULING
-          #define TAO_MIN_CRITICAL_PRIORITY 0
 
 
 Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
