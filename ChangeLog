@@ -1,3 +1,9 @@
+Thu Dec 12 12:50:34 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.cpp: Changed a cast of unique_name to &unique_name to
+	  fix a bug on pSoS.  Thanks to Dieter Knueppel
+ 	  <dknueppel@datus.com> for reporting this.
+
 Thu Dec 12 12:55:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Add missing snprintf() method declaration for ACE_HAS_WCHAR
