@@ -19,11 +19,6 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-// ********************************************************
-// uncomment next line if you are using FreeBSD 2.1.x[R]
-// #define FreeBSD_2_1
-// ********************************************************
-
 // Platform specific directives
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
@@ -45,7 +40,7 @@
 #define ACE_LACKS_MALLOC_H
 
 // This is for 2.1.x only.  By default, gcc defines __FreeBSD__ automatically
-#if defined(FreeBSD_2_1)
+#if (__FreeBSD_version < 220000)
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
@@ -81,7 +76,7 @@ ange */
 // I guess it is ok.
 #define ACE_HAS_BROKEN_TIMESPEC_MEMBERS
 
-#endif /* defined FreeBSD_2_1 */
+#endif /* __FreeBSD_version < 220000 */
 
 // Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
@@ -171,7 +166,9 @@ ange */
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_NONCONST_MSGSND
 
+#if (__FreeBSD_version >= 228000)
 #define ACE_HAS_SIGWAIT
+#endif /* __FreeBSD_version >= 22800 */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
