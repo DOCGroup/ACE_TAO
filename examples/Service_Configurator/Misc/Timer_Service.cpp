@@ -7,14 +7,14 @@ ACE_RCSID(Misc, Timer_Service, "$Id$")
 Timer_Service_1::Timer_Service_1 (void)
 {
   ACE_OS::strcpy (this->name_,
-                  "Timer_Service_1");
+                  ASYS_TEXT ("Timer_Service_1"));
 }
- 
+
 int
-Timer_Service_1::init (int argc, char *argv[])
+Timer_Service_1::init (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("in Timer_Service::init, argv[0] = %s, argc == %d\n"), 
+  ACE_DEBUG ((LM_DEBUG,
+	      ASYS_TEXT ("in Timer_Service::init, argv[0] = %s, argc == %d\n"),
 	      argv[0], argc));
 
   // Printout the <argv> values for sanity's sake.
@@ -57,7 +57,7 @@ Timer_Service_1::init (int argc, char *argv[])
 
   // Register the timer to go off in 1 second, and then to go off
   // every <interval> seconds.
-  if (ACE_Reactor::instance ()->schedule_timer 
+  if (ACE_Reactor::instance ()->schedule_timer
       (this,
        0,
        ACE_Time_Value (1),
@@ -71,7 +71,7 @@ int
 Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
                                  const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      ASYS_TEXT ("(%x) in %s::handle_timeout sec = %d, usec = %d")
 	      ASYS_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
               this,
@@ -103,13 +103,13 @@ Timer_Service_1::handle_close (ACE_HANDLE,
 Timer_Service_2::Timer_Service_2 (void)
 {
   ACE_OS::strcpy (this->name_,
-                  "Timer_Service_2");
+                  ASYS_TEXT ("Timer_Service_2"));
 }
 
 Timer_Service_3::Timer_Service_3 (void)
 {
   ACE_OS::strcpy (this->name_,
-                  "Timer_Service_3");
+                  ASYS_TEXT ("Timer_Service_3"));
 }
 
 // Define the object that describes the service.

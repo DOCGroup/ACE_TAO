@@ -21,8 +21,7 @@ ACE_Service_Type_Impl::name (const ASYS_TCHAR *n)
   ACE_TRACE ("ACE_Service_Type_Impl::name");
 
   delete [] (ASYS_TCHAR *) this->name_;
-  ACE_NEW (this->name_, ASYS_TCHAR[ACE_OS::strlen (n) + 1]);
-  ACE_OS::strcpy ((ASYS_TCHAR *) this->name_, n);
+  this->name_ = ACE::strnew (n);
 }
 
 ACE_INLINE

@@ -40,7 +40,7 @@ ACE_Control_Block::dump (void) const
   ACE_TRACE ("ACE_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "Name Node:\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Name Node:\n")));
   for (ACE_Name_Node *nextn = this->name_head_;
        nextn != 0;
        nextn = nextn->next_)
@@ -49,13 +49,13 @@ ACE_Control_Block::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
   this->base_.dump ();
 
-  ACE_DEBUG ((LM_DEBUG, "\nMalloc Header:\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nMalloc Header:\n")));
   for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
        nexth != 0 && nexth != &this->base_;
        nexth = nexth->next_block_)
     nexth->dump ();
 
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

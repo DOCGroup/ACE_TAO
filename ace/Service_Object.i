@@ -57,7 +57,7 @@ ACE_Service_Type::name (const ASYS_TCHAR *n)
   ACE_TRACE ("ACE_Service_Type::name");
 
   delete [] (ASYS_TCHAR *) this->name_;
-  this->name_ = ACE_OS::strcpy (new ASYS_TCHAR [ACE_OS::strlen (n) + 1], n);
+  this->name_ = ACE::strnew (n);
 #if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
   delete [] (char *) this->chname_;
   this->chname_ = ACE_OS_WString (this->name_).char_rep ();

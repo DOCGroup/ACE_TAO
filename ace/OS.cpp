@@ -957,7 +957,7 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);
 #   if defined (ACE_HAS_WINCE)
-  return handle;
+  return (handle == ACE_INVALID_HANDLE ? NULL : handle);
 #   else
   if (handle != ACE_INVALID_HANDLE)
     {
