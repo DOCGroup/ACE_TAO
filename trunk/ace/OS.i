@@ -1822,7 +1822,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 }
 
 ACE_INLINE int
-ACE_OS::mutex_lock (ACE_mutex_t *m, 
+ACE_OS::mutex_lock (ACE_mutex_t *m,
                     int &abandoned)
 {
   // ACE_TRACE ("ACE_OS::mutex_lock");
@@ -2369,7 +2369,26 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 }
 #endif /* !ACE_LACKS_COND_T */
 
-ACE_INLINE int 
+ACE_INLINE int
+ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
+{
+#if defined (ACE_HAS_PTHREADS)
+# if defined (pthread_equal)
+  // If it's a macro we can't say "::pthread_equal"...
+  return pthread_equal (t1, t2);
+# else
+  return ::pthread_equal (t1, t2);
+# endif /* pthread_equal */
+#elif defined (VXWORKS)
+  return ! ACE_OS::strcmp (t1, t2);
+#else /* For both STHREADS and WTHREADS... */
+  // Hum, Do we need to treat WTHREAD differently?
+  // levine 13 oct 98 % I don't think so, ACE_thread_t is a DWORD.
+  return t1 == t2;
+#endif /* Threads variety case */
+}
+
+ACE_INLINE int
 ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
                               LPCTSTR name,
                               void *arg,
@@ -2382,7 +2401,7 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
     return -1;
   else if (ACE_OS::cond_init (&m->lock_available_, USYNC_THREAD, name, arg) == -1)
     return -1;
-  else 
+  else
     {
       m->nesting_level_ = 0;
       m->owner_id_ = ACE_OS::NULL_thread;
@@ -2391,7 +2410,7 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_OS::recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
@@ -2406,7 +2425,7 @@ ACE_OS::recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m)
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
@@ -2450,7 +2469,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
                               int &abandoned)
 {
@@ -2462,7 +2481,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m,
                                  int &abandoned)
 {
@@ -2474,7 +2493,7 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m,
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
@@ -2512,7 +2531,7 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
@@ -5658,25 +5677,6 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
-}
-
-ACE_INLINE int
-ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
-{
-#if defined (ACE_HAS_PTHREADS)
-# if defined (pthread_equal)
-  // If it's a macro we can't say "::pthread_equal"...
-  return pthread_equal (t1, t2);
-# else
-  return ::pthread_equal (t1, t2);
-# endif /* pthread_equal */
-#elif defined (VXWORKS)
-  return ! ACE_OS::strcmp (t1, t2);
-#else /* For both STHREADS and WTHREADS... */
-  // Hum, Do we need to treat WTHREAD differently?
-  // levine 13 oct 98 % I don't think so, ACE_thread_t is a DWORD.
-  return t1 == t2;
-#endif /* Threads variety case */
 }
 
 ACE_INLINE int
