@@ -1,3 +1,5 @@
+#### $Id$
+
 include orbixsol2s4.mk
 
 all:	client server
@@ -24,7 +26,7 @@ ifdef quantify
 #QDIR    = /pkg/purify/quantify-2.1-solaris2
 QDIR    = /pkg/purify/quantify-3.0-solaris2
 QUANTIFY	= $(QDIR)/quantify -cache-dir=/project/mambo/gokhale/cache -record-register-window-traps
-C++FLAGS += -g -DUSE_QUANTIFY -I$(QDIR)
+C++FLAGS += -DUSE_QUANTIFY -I$(QDIR)
 #CLIENT_OBJS    += $(QDIR)/quantify_stubs.a
 #SERVER_OBJS    += $(QDIR)/quantify_stubs.a
 LDFLAGS         += -L$(QDIR) -lquantify_stubs
@@ -34,8 +36,8 @@ QUANTIFY	= purify -cache-dir=/project/mambo/gokhale/cache
 else
 ifdef debug
 QUANTIFY	=
-C++FLAGS	+= -g
-LDFLAGS		+= -g
+C++FLAGS	+=
+LDFLAGS		+=
 else
 QUANTIFY	=
 C++FLAGS += -O4
