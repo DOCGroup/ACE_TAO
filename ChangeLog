@@ -1,3 +1,13 @@
+Fri Jan  9 16:55:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Timers/Alarm.cpp:
+	* examples/APG/ThreadManagement/Coop_Cancel.cpp:
+	* examples/APG/ThreadManagement/Signals.cpp:
+	* examples/APG/ThreadManagement/Signals2.cpp:
+	* examples/APG/Sockets/Server.cpp:
+	* examples/APG/Reactor/Timers.cpp: Added ACE_NOTREACHED to
+	  unreachable statements to kill compile warnings.
+
 Fri Jan  9 16:27:33 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Streams/Answerer.cpp: Removed unnecessary template

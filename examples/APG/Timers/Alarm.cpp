@@ -51,7 +51,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   
   while (1)      // Don't let the main thread exit.
     ACE_OS::sleep (2);
-  return 0;     // Not reached.
+  ACE_NOTREACHED (return 0);     // Not reached.
 }
 // Listing 2
 
