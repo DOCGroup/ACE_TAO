@@ -1,3 +1,9 @@
+Tue Apr  1 21:44:47 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Param_Test/helper.cpp (gen_wstring): Fix the evaluation of
+          the upper bound for wchar value assignment so that ending up
+          with a limit of 0 isn't possible.
+
 Tue Apr  1 07:20:15 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/CodeSets/simple/client.cpp (main): Put ACE_HAS_WCHAR guard
