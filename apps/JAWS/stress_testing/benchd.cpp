@@ -148,12 +148,18 @@ Handle_Events::Handle_Events (u_short udp_port,
 // http_tester arguments
 
 int
-Handle_Events::serve(char *buf) {
+Handle_Events::serve(char *buf)
+{
   ACE_ARGV arguments(buf);
-  if(ACE_OS::strcmp(arguments[0],TESTER) == 0) {
-    ACE_Process p(arguments.argv(), ACE_INVALID_HANDLE, OUTPUT_FILE, OUTPUT_FILE);
-    return 0;
-  }
+  if(ACE_OS::strcmp(arguments[0],TESTER) == 0)
+    {
+      ACE_Process p(arguments.argv(), ACE_INVALID_HANDLE, OUTPUT_FILE, OUTPUT_FILE);
+      return 0;
+    }
+  else
+    {
+      reutrn -1;
+    }
 }
 
 static void
