@@ -20,16 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
-#include "ace/Local_Tokens.h"
-typedef ACE_Select_Reactor_Token_T<ACE_Local_Mutex> ACE_Select_Reactor_Token;
-#else
-typedef ACE_Select_Reactor_Token_T<ACE_Token> ACE_Select_Reactor_Token;
-#endif /* ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION */
-#else
-typedef ACE_Select_Reactor_Token_T<ACE_Noop_Token> ACE_Select_Reactor_Token;
-#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+typedef ACE_Select_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
 
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
 ACE_TEMPLATE_SPECIALIZATION

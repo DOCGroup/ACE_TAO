@@ -1,7 +1,19 @@
+Mon Feb 25 17:17:37 2002 UTC Don Hinton <dhinton@ieee/org>
+
+	* ace/Select_Reactor.h:
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_T.h: Added a new typedef, ACE_SELECT_TOKEN, to
+	  Select_Reactor_Base.h so that the choice of TOKEN type can be made
+	  prior to typedefing the class.  This allows the use of the TOKEN
+	  type within the paramaterized class, i.e., ACE_Select_Reactor_Token_T
+	  and ACE_Select_Reactor_T.  Otherwise you get an error on some compilers,
+	  e.g., M$VC, that complain about generic types.  
+
 Mon Feb 25 15:53:56 2002 UTC Don Hinton <dhinton@ieee.org>
 
 	* ace/Synch.i (queueing_strategy): Added ACE_UNUSED_ARG for unused
-	  queueing_strategy parameter.
+	  queueing_strategy parameter, thanks to Craig Rodrigues <crodrigu@bbn.com>
+	  for pointing this out.
 
 Mon Feb 25 09:17:39 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 

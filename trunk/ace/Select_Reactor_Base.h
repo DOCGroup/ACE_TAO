@@ -35,6 +35,17 @@
 typedef void (ACE_Handle_Set::*ACE_FDS_PTMF) (ACE_HANDLE);
 typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
+#include "ace/Local_Tokens.h"
+typedef ACE_Local_Mutex ACE_SELECT_TOKEN;
+#else
+typedef ACE_Token ACE_SELECT_TOKEN;
+#endif /* ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION */
+#else
+typedef ACE_Noop_Token ACE_SELECT_TOKEN;
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
 
