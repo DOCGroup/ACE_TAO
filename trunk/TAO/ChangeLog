@@ -2344,10 +2344,6 @@ Tue Dec 23 22:39:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           Added the Any operator descaration so that the generated code in
           $TAO_ROOT/orbsvcs/orbsvcs can use this declaration.
 
-Tue Dec 23 22:31:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-        * tao/PortableInterce
-
 Tue Dec 23 22:02:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/PortableInterceptorC.h:
