@@ -30,6 +30,8 @@
 
 #define ACE_USES_WINCE_SEMA_SIMULATION
 
+#define ACE_LACKS_IOSTREAM_TOTALLY
+
 #if defined (ACE_HAS_STRICT)
 # undef ACE_HAS_STRICT
 #endif /* ACE_HAS_STRICT */
@@ -148,6 +150,6 @@ typedef long off_t;
 #define ACE_HAS_STRDUP_EMULATION
 
 // @@ This needs to be defined and initialized as a static. (Singleton?)
-#define ACE_CE_DEFAULT_LOG_STREAM 0
+#define ACE_DEFAULT_LOG_STREAM 0
 
 #endif /* ACE_CONFIG_WINCE_H */

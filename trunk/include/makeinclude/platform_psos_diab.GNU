@@ -5,27 +5,30 @@
 # pSOS sTUFF
 # ================================================================
 
-PSS_SYS_DIR	= $(PSS_ROOT)/sys/os
 PSS_LIBC_DIR	= $(PSS_ROOT)/sys/libc
+PSS_SYS_DIR	= $(PSS_ROOT)/sys/os
 
-PSOS_SYS_OBJS = $(PSS_SYS_DIR)/prepc.o $(PSS_SYS_DIR)/psos.o \
-                $(PSS_SYS_DIR)/pna.o  $(PSS_SYS_DIR)/phile.o
-
-# PSOS_SYS_OBJS = $(PSS_SYS_DIR)/psos.o \
-#                 $(PSS_SYS_DIR)/pna.o  $(PSS_SYS_DIR)/phile.o
+PSOS_LIBS = -L $(PSS_LIBC_DIR) -lprepc -lcxxsp \
+            -L $(PSS_SYS_DIR) -lsysxx -lsys
 
 PSS_BSP_LIB	= -L $(PSS_BSP) -lbsp
 
-DIAB_LIBS = -L $(DIABLIB)/MC60F -li -lchar -lg -limpl -lram -ld \
-            -L $(DIABLIB)/MC60FS -lcfp -lm -limpfp -lcomplex -lios \
-            -L $(DIABLIB)/MC60F/psos -lpsos \
-            -L $(PSS_ROOT)/sys/libc -lprepc
+# DIAB_LIBS = -L $(DIABLIB)/MC60FS/psos -lpsos
+
+# DIAB_LIBS = -L $(DIABLIB)/MC60FS -li -lchar -lg -limpl -lram -ld \
+#            -L $(DIABLIB)/MC60FS -lcfp -lm -limpfp -lcomplex -lios \
+#            -L $(DIABLIB)/MC60FS/psos -lpsos \
+#            -L $(PSS_ROOT)/sys/libc -lprepc
 
 # DIAB_LIBS = -L $(DIABLIB)/MC60FS -limpfp \
 #            -L $(DIABLIB)/MC60F -limpl \
 #            -L $(DIABLIB)/MC60F/psos -lpsos
 
-# DIAB_LIBS = -L $(DIABLIB)/MC60F/psos -lc
+
+#DIAB_LIBS = -L $(DIABLIB)/MC60F/psos -lc \
+#            -L $(PSS_ROOT)/sys/libc -lprepc
+#            -L $(DIABLIB)/MC60F -lchar -lg -limpl -lram -ld \
+#            -L $(DIABLIB)/MC60FS -lcfp -lm -limpfp -lcomplex -lios -li
 
 PSOSINCL = -I$(PSS_ROOT)/include -I$(PSS_BSP)
 # PSOSINCL = -Y I,$(PSS_ROOT)/include -I$(PSS_BSP)
@@ -59,7 +62,7 @@ CC              = dcc -tMC68060FS:psos
 # -D<name>[=<value>] defines symbol to preprocessor
 # -U<name> undefine preprocessor symbol
 # -I<path> adds a directory path to the include file search path
-# -V[V] display the current version number of D-C++ (this could be 
+# -V[V] display the current version number of D-C++ (this could be
 #       useful for crafting a single pSOS config.h file)
 # -W is used to pass arguments to specific tools (compiler, linker, etc),
 #    to change which tool is used, etc
@@ -99,8 +102,9 @@ CFLAGS += -D__DIAB -D__DIAB_42p0 -Xkill-opt=0x400 -Xno-old-style -Xlint $(PSOSIN
 #    -Xstop-on-warning treats warnings like errors and stops compilation
 #    -Xinit-locals[=<mask>] initializes memory pattern for local variables
 #    -Xno-optimized-debug turns off optimizations for debugging
-DCFLAGS         += -g -w
-#DCFLAGS         += -g -w -H
+DCFLAGS         += -g -w -Ws
+#DCFLAGS         += -g -w -Ws -P -o precomp.out
+#DCFLAGS         += -g -w -Ws -H
 
 # C Compiler Optimization Flags (passed iff optimize == 1)
 # -O
@@ -109,7 +113,7 @@ DCFLAGS         += -g -w
 
 # C++ Compiler
 CXX             = dplus -tMC68060FS:psos
-### This (without the above -t option cannot resolve DOBJECT, etc.) 
+### This (without the above -t option cannot resolve DOBJECT, etc.)
 # CXX             = dplus
 
 # C++ Compiler Flags
@@ -125,19 +129,19 @@ CXX             = dplus -tMC68060FS:psos
 #CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xno-implicit-templates
 #CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xno-implicit-templates=3
 #CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xno-implicit-templates=2
-CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xcomdat
-#CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS)
+#CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS) -Xcomdat
+CCFLAGS         += $(CFLAGS) $(DIAB_PSOS_HACKS)
 
 # C++ Compiler Debug Flags  (passed iff debug == 1)
 DCCFLAGS         +=  $(DCFLAGS)
 
 # Dynamic Linker
 # DLD             = dld
-DLD             = dplus -tMC68060FS:psos
+DLD             = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/app.lnk
 
 # Static Linker
 # LD              = dld
-LD              = dplus -tMC68060FS:psos
+LD              = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/app.lnk
 
 # Static Linker Flags
 # -L<path> adds a directory path to the linker search path
@@ -148,19 +152,19 @@ LD              = dplus -tMC68060FS:psos
 # -r performs incremental link
 # -r2 add relocation tables, treat unresolved symbols as errors
 # -r3 add relocation tables, treat unresolved symbols as warnings
-# -Xcheck-overlap checks for overlap of output sections and sections that wrap around 
+# -Xcheck-overlap checks for overlap of output sections and sections that wrap around
 #     32 bit address boundary
 # -Xdont-die forces the linker to continue after errors
 # -Xexpl-instantiations causes linker to write source lines of explicit template
 #    instantiations to stdout
-#LDFLAGS         += -Xdont-die -Xexpl-instantiations $(PSOS_SYS_OBJS)
-#LDFLAGS         += -Xdont-die $(PSOS_SYS_OBJS)
-LDFLAGS         += $(PSOS_SYS_OBJS)
+#LDFLAGS         += -Xdont-die -Xexpl-instantiations
+#LDFLAGS         += -Xdont-die
 #LDFLAGS         += -Xdont-die
 #LDFLAGS         += -Xdont-die -Xexpl-instantiations
 
 # Additional libraries used by the linker
-LIBS            +=  $(PSS_BSP_LIB) $(DIAB_LIBS)
+LIBS            +=  $(PSOS_LIBS) $(PSS_BSP_LIB)
+#LIBS            +=  $(PSOS_LIBS) $(PSS_BSP_LIB) $(DIAB_LIBS)
 
 # position independent code flag (do we need this ?)
 # PIC             = -fpic
@@ -170,8 +174,8 @@ AR              = dar
 
 # Archive Utility Flags
 # -d[lv] delete the named files from the archive
-# -m[abiv] move the named files 
-# -r[abciluv] replace the named files in the archive 
+# -m[abiv] move the named files
+# -r[abciluv] replace the named files in the archive
 ARFLAGS         = -r
 
 RANLIB          = echo

@@ -1,3 +1,32 @@
+Sun Dec 06 16:05:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        Changes for pSOS port: ACE now compiles for pSOSystem 68k targets using
+        the Diab D-C++ 4.2a compiler release, and links with all but the
+        following ACE tests: Conn_Test, Handle_Set_Test, OrdMultiSet_Test,
+        Priority_Reactor_Test, Process_Strategy_Test, Reactor_Performance_Test,
+        and TSS_Test.
+
+        * ace/Log_Msg.cpp
+          ace/Log_Record.{cpp, h}
+          ace/streams.h
+          ace/SString.cpp
+          ace/config-WinCE.h
+          ace/config-psos-diab.h
+          tests/test_config.h: Rearranged log print methods so that logging
+          can still be done on platforms where iostreams are not sufficiently
+          supported. Added ACE_LACKS_IOSTREAMS_TOTALLY to select this
+          behavior, and defined it in pSOS Diab config header (also added to
+          Windows CE config header, to simplify factoring out Win CE specific
+          logging methods).
+
+        * include/makeinclude/platform_psos_diab.GNU
+          ace/OS.{cpp, h, i}: Removed Diab supplied library calls so ACE now
+          links directly to pSOSystem libraries.
+
+        * ace/Parse_Node.cpp
+          ace/Stats.cpp: Modifications to circumvent bugs in the Diab 4.2a
+          compiler's handling of conditional operators.
+
 Sun Dec 06 08:32:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers_T.cpp,Local_Name_Space_T.cpp,

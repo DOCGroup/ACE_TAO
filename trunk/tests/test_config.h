@@ -221,11 +221,11 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
   ACE_OS::unlink (temp);
 #endif /* ! VXWORKS */
 
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
 #define OFSTREAM FILE
 #else
 #define OFSTREAM ofstream
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
 class ACE_Test_Output
 {
@@ -245,20 +245,22 @@ typedef ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> ace_file_stream;
 ACE_Test_Output::ACE_Test_Output (void)
   : output_file_ (0)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_ = new OFSTREAM;
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
 }
 
 ACE_Test_Output::~ACE_Test_Output (void)
 {
+#if !defined (ACE_PSOS)
   ACE_LOG_MSG->msg_ostream (&cerr);
+#endif /* !defined (ACE_PSOS) */
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   delete this->output_file_;
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
 int
@@ -303,7 +305,7 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   ACE_OS::mkdir (ACE_LOG_DIRECTORY_A);
 #endif /* ! VXWORKS */
 
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   int flags = ios::out;
   if (append)
     flags |= ios::app;
@@ -315,14 +317,14 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
     {
       return -1;
     }
-#else /* when ACE_HAS_WINCE */
+#else /* when ACE_LACKS_IOSTREAM_TOTALLY */
   ASYS_TCHAR *fmode = 0;
   if (append)
     fmode = ASYS_TEXT ("a");
   else
     fmode = ASYS_TEXT ("w");
   this->output_file_ = ACE_OS::fopen (temp, fmode);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->msg_ostream (this->output_file ());
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
@@ -340,13 +342,13 @@ ACE_Test_Output::output_file (void)
 void
 ACE_Test_Output::close (void)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_->flush ();
   this->output_file_->close ();
 #else
   ACE_OS::fflush (this->output_file_);
   ACE_OS::fclose (this->output_file_);
-#endif /* !ACE_HAS_WINCE */
+#endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
 #if 0 /* old WinCE stuff */

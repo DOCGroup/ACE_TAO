@@ -551,11 +551,11 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
       ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::OSTREAM);
       // Only set this to cerr if it hasn't already been set.
       if (this->msg_ostream () == 0)
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
         this->msg_ostream (&cerr);
 #else
-        this->msg_ostream (ACE_CE_DEFAULT_LOG_STREAM);
-#endif /* !ACE_HAS_WINCE */
+        this->msg_ostream (ACE_DEFAULT_LOG_STREAM);
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     }
   if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::SILENT))
     ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT);
@@ -1078,7 +1078,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
           && this->msg_ostream () != 0)
         log_record.print (ACE_Log_Msg::local_host_,
                           ACE_Log_Msg::flags_,
-#if !defined (ACE_HAS_WINCE)
+#if ! defined (ACE_LACKS_IOSTREAM_TOTALLY)
                           *this->msg_ostream ());
 #else
                           this->msg_ostream ());
