@@ -2,10 +2,12 @@
 
 #include "tao/corba.h"
 #include "cubit_i.h"
+#include "Task_Client.h"
 
 ACE_RCSID(MT_Cubit, cubit_i, "$Id$")
 
-Cubit_i::Cubit_i (void)
+Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
+  :orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -55,10 +57,10 @@ Cubit_i::noop (CORBA::Environment &)
 void Cubit_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) Calling TAO_ORB_Core_instance ()->orb ()->shutdown ()\n"));
+	      "(%t) Calling orb ()->shutdown ()\n"));
 
   // @@ Naga, can you please revise this so that it doesn't use
   // TAO-specific features?  Please see how Irfan fixed IDL_Cubit's
   // shutdown () so that it wasn't TAO-specific!
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+  this->orb_->shutdown ();
 }
