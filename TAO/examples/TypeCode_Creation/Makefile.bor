@@ -1,0 +1,27 @@
+
+#
+# Makefile for building the TypeCode_Creation example
+#
+
+NAME = create_tc
+
+OBJFILES = \
+	$(OBJDIR)\testC.obj \
+	$(OBJDIR)\main.obj
+
+IDLFILES = \
+        $(IDLDIR)\test.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\TestC.cpp : $(IDLDIR)\test.idl
+	$(TAO_IDL) $**
+
