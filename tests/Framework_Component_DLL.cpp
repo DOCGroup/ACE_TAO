@@ -31,7 +31,7 @@ Simple_Service::name (void)
 /// This is just a simple server that can be loaded via the ACE
 /// Service Configuration framework and uses the singleton that
 /// also lives in this library.
-template <int>
+template <int which>
 class Server_T : public ACE_Service_Object
 {
 public:
