@@ -664,7 +664,7 @@ namespace
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}"
          << "ACE_THROW_RETURN (CORBA::INTERNAL (), 0);" << endl
-         << "}";
+         << "}" << endl;
 
       // Close the CIAO_GLUE namespace.
       os << "}";
@@ -1400,6 +1400,25 @@ namespace
       }
     };
 
+    struct NavigationGetFacetExecEmitter : Traversal::ProviderData,
+                                           EmitterBase
+    {
+      NavigationGetFacetExecEmitter (Context& c)
+        : EmitterBase (c)
+      {}
+
+      virtual void
+      traverse (Type& t)
+      {
+        os << "if (ACE_OS::strcmp (name, \""
+           << t.name () << "\") == 0)" << endl
+           << "{"
+           << "return this->executor_->get_" << t.name ()
+           << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}";
+      }
+    };
+
     struct PublishesEmitter : Traversal::PublisherData,
                               EmitterBase
     {
@@ -1895,6 +1914,7 @@ namespace
         os << "::_duplicate (this->provide_" << p.name () << "_.in ());"
            << "}";
 
+        /*
         Traversal::ProviderData::belongs (p, enclosing_belongs_);
 
         os << "::CCM_";
@@ -1919,7 +1939,7 @@ namespace
 
         os << "::_nil ());" << endl
            << "}";
-
+        */
         os << "::CORBA::Object_var obj =" << endl
            << "this->provide_" << p.name () << "_i ("
            << STRS[ENV_SNGL_ARG] << ");"
@@ -1929,43 +1949,11 @@ namespace
 
         os << "::_nil ());" << endl;
 
-        Traversal::ProviderData::belongs (p, servant_belongs_);
-
-        os << " *svt = 0;" << endl
-           << "ACE_NEW_RETURN (" << endl
-           << "svt," << endl;
-
-        Traversal::ProviderData::belongs (p, servant_belongs_);
-
-        os << " (" << endl
-           << "fexe.in ()," << endl
-           << "this->context_)," << endl;
-
-        Traversal::ProviderData::belongs (p, belongs_);
-
-        os << "::_nil ());" << endl
-           << "PortableServer::ServantBase_var safe_servant (svt);"
-           << endl
-           << "PortableServer::ObjectId_var oid =" << endl
-           << "PortableServer::string_to_ObjectId (\"";
-
         ScopedName scoped (scope_.scoped_name ());
         Name stripped (scoped.begin () + 1, scoped.end ());
         string unique_obj_name =
           regex::perl_s (stripped.str (), "/::/_/") + "_" + p.name ().str ();
 
-        os << unique_obj_name << "\");" << endl;
-
-        os << "this->container_->the_POA ()->activate_object_with_id ("
-           << endl
-           << "oid.in ()," << endl
-           << "svt" << endl
-           << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
-
-        Traversal::ProviderData::belongs (p, belongs_);
-
-        os << "::_nil ());" << endl;
 
         Traversal::ProviderData::belongs (p, belongs_);
 
@@ -2006,13 +1994,57 @@ namespace
            << "return ret;"
            << "}";
 
+        os << "CIAO::Port_Activator_T< " ;
+        Traversal::ProviderData::belongs (p, servant_belongs_);
+        os << "," << endl;
+        Traversal::ProviderData::belongs (p, enclosing_belongs_);
+
+        os << "::CCM_";
+
+        Traversal::ProviderData::belongs (p, simple_belongs_);
+
+        os << "," <<endl
+           << " ::Components::CCMContext," << endl
+           << scope_.name () << "_Servant"
+           << " > *tmp = 0;" << endl
+           << "typedef  CIAO::Port_Activator_T<" << endl;
+
+        Traversal::ProviderData::belongs (p, servant_belongs_);
+        os << "," << endl;
+        Traversal::ProviderData::belongs (p, enclosing_belongs_);
+        os << "::CCM_";
+        Traversal::ProviderData::belongs (p, simple_belongs_);
+        os << "," <<endl
+           << " ::Components::CCMContext," << endl
+           << scope_.name () << "_Servant"
+           << " >" << endl
+           << " MACRO_MADNESS_TYPEDEF;"
+           << endl << endl;
+
+        os << "ACE_NEW_THROW_EX ( " << endl
+           << "  tmp," << endl
+           << "  MACRO_MADNESS_TYPEDEF (" << endl
+           << "\"" << unique_obj_name << "\"," << endl
+           << "\"" << p.name () << "\"," << endl
+           << "CIAO::Port_Activator::Facet," << endl
+           << "0," << endl
+           << "this->context_," << endl
+           << "this)," << endl
+           << "CORBA::NO_MEMORY ());" << endl << endl;
+
+        os << "CIAO::Servant_Activator *sa = " << endl
+           << "this->container_->ports_servant_activator ();" <<endl
+           << "if (!sa->register_port_activator (tmp))" << endl
+           << "return 0;" <<endl;
+
         os << "::CORBA::Object_var obj =" << endl
            << "this->container_->generate_reference (" << endl
            << "\"" << unique_obj_name << "\"," << endl;
 
         Traversal::ProviderData::belongs (p, repo_id_belongs_);
 
-        os << endl
+        os << "," << endl
+           << "CIAO::Container::Facet_Consumer" << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK_RETURN (";
 
@@ -2202,50 +2234,10 @@ namespace
 
         os << "Consumer::_nil ());" << endl;
 
-        os << scope_.name  () << "_Servant::";
-
-        Traversal::ConsumerData::belongs (c, simple_belongs_);
-
-        os << "Consumer_" << c.name ()
-           << "_Servant *svt = 0;"
-           << "ACE_NEW_RETURN (" << endl
-           << "svt," << endl
-           << scope_.name  ()
-           << "_Servant::";
-
-        Traversal::ConsumerData::belongs (c, simple_belongs_);
-
-        os << "Consumer_" << c.name ()
-           << "_Servant (" << endl
-           << "this->executor_.in ()," << endl
-           << "this->context_)," << endl;
-
-        Traversal::ConsumerData::belongs (c, belongs_);
-
-        os << "Consumer::_nil ());" << endl;
-
-        os << "PortableServer::ServantBase_var safe_servant (svt);" << endl;
-
-        os << "PortableServer::ObjectId_var oid =" << endl
-           << "PortableServer::string_to_ObjectId (\"";
-
         ScopedName scoped (scope_.scoped_name ());
         Name stripped (scoped.begin () + 1, scoped.end ());
         string unique_obj_name =
           regex::perl_s (stripped.str (), "/::/_/") + "_" + c.name ().str ();
-
-        os << unique_obj_name << "\");" << endl;
-
-        os << "this->container_->the_POA ()->activate_object_with_id ("
-           << endl
-           << "oid.in ()," << endl
-           << "svt" << endl
-           << STRS[ENV_ARG] << ");"
-           << "ACE_CHECK_RETURN (";
-
-        Traversal::ConsumerData::belongs (c, belongs_);
-
-        os << "Consumer::_nil ());" << endl;
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -2286,13 +2278,67 @@ namespace
            << "return ret;"
            << "}";
 
+        os << "CIAO::Port_Activator_T<" << endl;
+
+        os << scope_.name  () << "_Servant::";
+
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+
+        os << "Consumer_" << c.name ()
+           << "_Servant," << endl
+           << c.scoped_name ().scope_name ().scope_name ()
+           << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name ()
+           << "," << endl
+           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name ()
+           << "_Context," << endl
+           << scope_.name () << "_Servant"
+           << " > *tmp = 0;" << endl
+           << "typedef  CIAO::Port_Activator_T<" << endl;
+
+        os << scope_.name  () << "_Servant::";
+
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+
+        os << "Consumer_" << c.name ()
+           << "_Servant," << endl
+           << c.scoped_name ().scope_name ().scope_name ()
+           << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name ()
+           << "," << endl
+           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name ()
+           << "_Context, " << endl
+           << scope_.name () << "_Servant"
+           << " > " << endl
+           << " MACRO_MADNESS_TYPEDEF;"
+           << endl << endl;
+
+        os << "ACE_NEW_THROW_EX ( " << endl
+           << "  tmp," << endl
+           << "  MACRO_MADNESS_TYPEDEF (" << endl
+           << "\"" << unique_obj_name << "\"," << endl
+           << "\"" << c.name () << "\"," << endl
+           << "CIAO::Port_Activator::Sink," << endl
+           << "this->executor_.in ()," << endl
+           << "this->context_," << endl
+           << "this)," << endl
+           << "CORBA::NO_MEMORY ());" << endl << endl;
+
+        os << "CIAO::Servant_Activator *sa = " << endl
+           << "this->container_->ports_servant_activator ();" <<endl
+           << "if (!sa->register_port_activator (tmp))" << endl
+           << "return 0;" << endl;
+
         os << "::CORBA::Object_var obj =" << endl
            << "this->container_->generate_reference (" << endl
            << "\"" << unique_obj_name << "\"," << endl;
 
         Traversal::ConsumerData::belongs (c, repo_id_belongs_);
 
-        os << endl
+        os << "," << endl
+           << "CIAO::Container::Facet_Consumer" << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK_RETURN (";
 
@@ -3057,6 +3103,39 @@ namespace
          << "// CIAO to-do" << endl
          << "}";
 
+      os << "CORBA::Object_ptr" << endl
+         << t.name ()
+         << "_Servant::get_facet_executor (const char *name" << endl
+         << STRS[ENV_SRC] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "))" << endl
+         << "{"
+         << "if (name == 0)" << endl
+         << "{"
+         << "ACE_THROW_RETURN (" << endl
+         << "::CORBA::BAD_PARAM ()," << endl
+         << "::CORBA::Object::_nil ());" << endl
+         << "}";
+
+      // Generate an IF block for each facet inside provide_facet().
+      {
+        Traversal::Component component_emitter;
+
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+
+        Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        NavigationGetFacetExecEmitter navigation_facet_exec_emitter (ctx);
+        defines.node_traverser (navigation_facet_exec_emitter);
+
+        component_emitter.traverse (t);
+      }
+
+      os << " return CORBA::Object::_nil ();"
+         << "}";
       os << "// Supported operations." << endl << endl;
 
       // Generate operations for all supported interfaces.
@@ -4163,7 +4242,9 @@ ServantSourceEmitter::pre (TranslationUnit& u)
                              + "/");
 
   os << "#include \"" << file_name << "\"" << endl
-     << "#include \"Cookies.h\"" << endl << endl;
+     << "#include \"Cookies.h\"" << endl
+     << "#include \"ciao/Servant_Activator.h\"" << endl
+     << "#include \"ciao/Port_Activator_T.h\"" << endl << endl;
 }
 
 void
