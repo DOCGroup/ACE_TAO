@@ -46,7 +46,7 @@ TAO_Unbounded_Sequence<T>::operator=
   else
     {
       this->buffer_ =
-	TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
+	TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
     }
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -110,7 +110,8 @@ TAO_Bounded_Sequence (const TAO_Bounded_Sequence<T,MAX> &rhs)
 }
 
 template <class T, CORBA::ULong MAX> TAO_Bounded_Sequence<T,MAX> &
-TAO_Bounded_Sequence<T,MAX>::operator= (const TAO_Bounded_Sequence<T,MAX> &rhs)
+TAO_Bounded_Sequence<T,MAX>::
+operator= (const TAO_Bounded_Sequence<T,MAX> &rhs)
 {
   if (this == &rhs)
     return *this;
@@ -133,7 +134,7 @@ TAO_Bounded_Sequence<T,MAX>::operator= (const TAO_Bounded_Sequence<T,MAX> &rhs)
   else
     {
       this->buffer_ =
-	TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
+	TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
     }
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
@@ -272,7 +273,7 @@ operator= (const TAO_Unbounded_Object_Sequence<T> &rhs)
   else
     {
       this->buffer_ =
-	TAO_Unbounded_Object_Sequence<T>::allocbuf (this->maximum_);
+	TAO_Unbounded_Object_Sequence<T>::allocbuf (rhs.maximum_);
     }
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -424,7 +425,7 @@ TAO_Bounded_Object_Sequence<T,MAX>::operator=
   else
     {
       this->buffer_ =
-	TAO_Bounded_Object_Sequence<T,MAX>::allocbuf (this->maximum_);
+	TAO_Bounded_Object_Sequence<T,MAX>::allocbuf (rhs.maximum_);
     }
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
@@ -546,7 +547,7 @@ TAO_Bounded_String_Sequence<MAX>::operator=
   else
     {
       this->buffer_ =
-	TAO_Bounded_String_Sequence<T>::allocbuf (this->maximum_);
+	TAO_Bounded_String_Sequence<T>::allocbuf (rhs.maximum_);
     }
   TAO_Bounded_Base_Sequence::operator= (rhs); 
   
