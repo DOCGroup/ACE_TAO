@@ -98,10 +98,16 @@ sub collect_line {
 
 
 sub generate_default_input {
-  my($self) = shift;
-  $self->parse_line(undef, "$self->{'grammar_type'} {");
-  $self->parse_line(undef, '}');
-  return 1;
+  my($self)   = shift;
+  my($status) = 0;
+  my($error)  = '';
+
+  ## We are throwing away the error string.  In both Workspace and
+  ## Project creators, we don't care about this error string just the
+  ## status.
+  ($status, $error) = $self->parse_line(undef, "$self->{'grammar_type'} {");
+  ($status, $error) = $self->parse_line(undef, '}');
+  return $status;
 }
 
 
