@@ -88,7 +88,7 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
 
   // allocate_buffer
   *os << "void " << be_nl
-      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
+      << full_class_name << "::_allocate_buffer (CORBA::ULong /* length */)" << be_nl
       << "// allocate a buffer of the requested length. The buffer is allocated for the" << be_nl
       << "// right type" << be_nl
       << "{" << be_idt_nl
