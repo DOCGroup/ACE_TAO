@@ -95,6 +95,8 @@ ORB_CORE_FILES = \
   Typecode_Constants \
   TAO
 
+DYNAMIC_ANY_FILES =
+
 ifeq ($(minimum_corba),0)
 
 POA_FILES += \
@@ -117,15 +119,6 @@ DYNAMIC_ANY_FILES += \
 
 endif # minimum_corba
 
-FILES += \
-  $(POA_FILES) \
-  $(PLUGGABLE_PROTOCOLS_FILES) \
-  $(DEFAULT_RESOURCES_FILES) \
-  $(INTERPRETIVE_MARSHALING_FILES) \
-  $(IDL_COMPILER_FILES) \
-  $(ORB_CORE_FILES) \
-  $(DYNAMIC_ANY_FILES)
-
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
@@ -133,7 +126,6 @@ endif
 BIN = # t-sizes
 
 DEFS    = $(addsuffix .h,$(PUB_HDRS))
-LSRC    = $(addsuffix .cpp,$(FILES))
 
 LDLIBS = -lACE
 LIBS = -lACE
@@ -162,33 +154,35 @@ endif # TAO_COMPONENTS
 ####
 #### TAO_COMPONENTS support.
 ####
-ifneq (,$(findstring POA,$(ACE_COMPONENTS)))
+ifneq (,$(findstring POA,$(TAO_COMPONENTS)))
   FILES += $(POA_FILES)
 endif # POA
 
-ifneq (,$(findstring Pluggable_Protocols,$(ACE_COMPONENTS)))
+ifneq (,$(findstring Pluggable_Protocols,$(TAO_COMPONENTS)))
   FILES += $(PLUGGABLE_PROTOCOLS_FILES)
 endif # Pluggable_Protocols
 
-ifneq (,$(findstring Default_Resources,$(ACE_COMPONENTS)))
+ifneq (,$(findstring Default_Resources,$(TAO_COMPONENTS)))
   FILES += $(DEFAULT_RESOURCES_FILES)
 endif # Default_Resources
 
-ifneq (,$(findstring Interpretive_Marshaling,$(ACE_COMPONENTS)))
+ifneq (,$(findstring Interpretive_Marshaling,$(TAO_COMPONENTS)))
   FILES += $(INTERPRETIVE_MARSHALING_FILES)
 endif # Interpretive_Marshaling
 
-ifneq (,$(findstring IDL_Compiler,$(ACE_COMPONENTS)))
+ifneq (,$(findstring IDL_Compiler,$(TAO_COMPONENTS)))
   FILES += $(IDL_COMPILER_FILES)
 endif # IDL_Compiler
 
-ifneq (,$(findstring ORB_Core,$(ACE_COMPONENTS)))
+ifneq (,$(findstring ORB_Core,$(TAO_COMPONENTS)))
   FILES += $(ORB_CORE_FILES)
 endif # ORB_Core
 
-ifneq (,$(findstring Dynamic_Any,$(ACE_COMPONENTS)))
+ifneq (,$(findstring Dynamic_Any,$(TAO_COMPONENTS)))
   FILES += $(DYNAMIC_ANY_FILES)
 endif # Dynamic_Any
+
+LSRC    = $(addsuffix .cpp,$(FILES))
 
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
