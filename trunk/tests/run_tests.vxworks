@@ -11,6 +11,7 @@
 #  SV_Shared_Memory_Test
 #  MM_Shared_Memory_Test
 #  Reactor_Exceptions_Test
+#  Notify_Performance_Test (fcntl)
 #  SPIPE_Test
 #  UPIPE_SAP_Test
 #  Time_Service_Test
