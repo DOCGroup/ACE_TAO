@@ -49,7 +49,7 @@ sub airplane_ir_test
 
   ACE::waitforfile ($implrepo_ior);
 
-  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add plane -c \"airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add plane -c \"$airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
   $SV = Process::Create ($airplane_server,
                          "-o $airplane_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
@@ -87,7 +87,7 @@ sub nestea_ir_test
 
   ACE::waitforfile ($implrepo_ior);
 
-  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea_server -c \"nestea_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea_server -c \"$nestea_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
   $SV = Process::Create ($nestea_server,
                          "-o $nestea_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
@@ -112,8 +112,8 @@ sub both_ir_test
 
   ACE::waitforfile ($implrepo_ior);
 
-  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add plane -c \"airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
-  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea -c \"nestea_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add plane -c \"$airplane_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
+  system ($tao_ir." -ORBInitRef ImplRepoService=file://$implrepo_ior add nestea -c \"$nestea_server -i -ORBInitRef ImplRepoService=file://$implrepo_ior\"");
 
   $ASV = Process::Create ($nestea_server,
                          "-o $nestea_ior -i -ORBObjRefStyle URL -ORBInitRef ImplRepoService=file://$implrepo_ior");
