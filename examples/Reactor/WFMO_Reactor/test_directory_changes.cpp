@@ -46,10 +46,10 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
 
   int change_notification_flags = FILE_NOTIFY_CHANGE_FILE_NAME;
 
-  this->handle_ = ::FindFirstChangeNotification (directory,  // pointer to name of directory to watch
-                                                 FALSE, // flag for monitoring directory or directory tree
-                                                 change_notification_flags // filter conditions to watch for
-                                                 );
+  this->handle_ = ACE_TEXT_FindFirstChangeNotification (directory,  // pointer to name of directory to watch
+                                                        FALSE, // flag for monitoring directory or directory tree
+                                                        change_notification_flags // filter conditions to watch for
+                                                        );
   if (this->handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR, "FindFirstChangeNotification could not be setup\n"));
 

@@ -59,49 +59,49 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 't':
-	run_tokenizer = 1;
-	break;
+        run_tokenizer = 1;
+        break;
       case 's':
-	run_setenv = 1;
-	break;
+        run_setenv = 1;
+        break;
       case 'a':
-	run_all = 1;
-	break;
+        run_all = 1;
+        break;
       case 'd':
-	run_date = 1;
-	break;
+        run_date = 1;
+        break;
       case 'l':
-	run_ls = 1;
-	break;
+        run_ls = 1;
+        break;
       case 'x':
-	executable = get_opt.optarg;
-	break;
+        executable = get_opt.optarg;
+        break;
       case 'p':
-	print_file = get_opt.optarg;
-	break;
+        print_file = get_opt.optarg;
+        break;
       case 'e':
-	environment_string = get_opt.optarg;
-	break;
+        environment_string = get_opt.optarg;
+        break;
       case 'g':
-	get_env = 1;
-	break;
+        get_env = 1;
+        break;
       case 'w':
-	run_wait = 1;
-	break;
+        run_wait = 1;
+        break;
       case 'u':
       default:
-	ACE_ERROR_RETURN ((LM_ERROR, "Usage:\n"
-			   "-d print date\n"
-			   "-l run ls\n"
-			   "-x <executable=more.com>\n"
-			   "-p print <file_name>\n"
-			   "-e <env variable message>\n"
-			   "-s setenv ACE_PROCESS_ENV and spawn -g\n"
-			   "-g get_env ACE_PROCESS_ENV\n"
-			   "-t test tokenizer\n"
-			   "-w test wait functions\n"
-			   "-a run all (d,l,e \"running\")\n"), -1);
-	break;
+        ACE_ERROR_RETURN ((LM_ERROR, "Usage:\n"
+                           "-d print date\n"
+                           "-l run ls\n"
+                           "-x <executable=more.com>\n"
+                           "-p print <file_name>\n"
+                           "-e <env variable message>\n"
+                           "-s setenv ACE_PROCESS_ENV and spawn -g\n"
+                           "-g get_env ACE_PROCESS_ENV\n"
+                           "-t test tokenizer\n"
+                           "-w test wait functions\n"
+                           "-a run all (d,l,e \"running\")\n"), -1);
+        break;
       }
     }
 
@@ -130,7 +130,7 @@ test_more (void)
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   "%p errno = %d.\n",
-		  "test_more",
+                  "test_more",
                   error));
     }
 
@@ -160,7 +160,7 @@ test_date (void)
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   "%p errno = %d.\n",
-		  "test_date",
+                  "test_date",
                   error));
       return;
     }
@@ -186,7 +186,7 @@ test_ls (void)
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   "%p errno = %d.\n",
-		  "test_ls",
+                  "test_ls",
                   error));
     }
 
@@ -209,7 +209,7 @@ test_wait (void)
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   "%p errno = %d.\n",
-		  "test_ls",
+                  "test_ls",
                   error));
     }
 
@@ -239,7 +239,7 @@ test_wait (void)
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   "%p errno = %d.\n",
-		  "test_ls",
+                  "test_ls",
                   error));
     }
 
@@ -269,12 +269,12 @@ static void
 win32_test_ls (void)
 {
   PROCESS_INFORMATION process_info;
-  STARTUPINFO startup_info;
+  ACE_TEXT_STARTUPINFO startup_info;
   ACE_OS::memset ((void *) &startup_info,
-		  0,
+                  0,
                   sizeof startup_info);
   ACE_OS::memset ((void *) &process_info,
-		  0,
+                  0,
                   sizeof process_info);
   startup_info.cb = sizeof startup_info;
   startup_info.dwFlags = STARTF_USESTDHANDLES;
@@ -282,12 +282,12 @@ win32_test_ls (void)
   ACE_HANDLE std_out = ACE_STDOUT;
 
   if (!::DuplicateHandle (::GetCurrentProcess (),
-			  std_out,
-			  ::GetCurrentProcess (),
-			  &startup_info.hStdOutput,
-			  NULL,
-			  TRUE,
-			  DUPLICATE_SAME_ACCESS))
+                          std_out,
+                          ::GetCurrentProcess (),
+                          &startup_info.hStdOutput,
+                          NULL,
+                          TRUE,
+                          DUPLICATE_SAME_ACCESS))
     {
       ACE_ERROR ((LM_ERROR,
                   "%p duplicate failed.\n",
@@ -296,16 +296,16 @@ win32_test_ls (void)
     }
 
   BOOL fork_result =
-    ::CreateProcess ("c:\\Utils\\bin\\ls.exe",
-		     "-a",
-		     NULL, // No process attributes.
-		     NULL, // No thread attributes.
-		     TRUE, // Allow handle inheritance.
-		     NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
-		     NULL,
-		     0, // Current directory to start in.
-		     &startup_info,
-		     &process_info);
+    ACE_TEXT_CreateProcess ("c:\\Utils\\bin\\ls.exe",
+                                   "-a",
+                            NULL, // No process attributes.
+                            NULL, // No thread attributes.
+                            TRUE, // Allow handle inheritance.
+                            NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
+                            NULL,
+                            0, // Current directory to start in.
+                            &startup_info,
+                            &process_info);
 
   ::CloseHandle (startup_info.hStdOutput);
 
@@ -331,12 +331,12 @@ static void
 win32_spawn_environment_process (void)
 {
   PROCESS_INFORMATION process_info;
-  STARTUPINFO startup_info;
+  ACE_TEXT_STARTUPINFO startup_info;
   ACE_OS::memset ((void *) &startup_info,
-		  0,
+                  0,
                   sizeof startup_info);
   ACE_OS::memset ((void *) &process_info,
-		  0,
+                  0,
                   sizeof process_info);
   startup_info.cb = sizeof (startup_info);
   startup_info.dwFlags = STARTF_USESTDHANDLES;
@@ -346,12 +346,12 @@ win32_spawn_environment_process (void)
   ACE_HANDLE std_err = ACE_STDERR;
 
   if (!::DuplicateHandle (::GetCurrentProcess(),
-			  std_out,
-			  ::GetCurrentProcess(),
-			  &startup_info.hStdOutput,
-			  NULL,
-			  TRUE,
-			  DUPLICATE_SAME_ACCESS))
+                          std_out,
+                          ::GetCurrentProcess(),
+                          &startup_info.hStdOutput,
+                          NULL,
+                          TRUE,
+                          DUPLICATE_SAME_ACCESS))
     {
       ACE_ERROR ((LM_ERROR,
                   "%p duplicate failed.\n", "spawn_environment_process"));
@@ -359,12 +359,12 @@ win32_spawn_environment_process (void)
     }
 
   if (!::DuplicateHandle (::GetCurrentProcess(),
-			  std_err,
-			  ::GetCurrentProcess(),
-			  &startup_info.hStdError,
-			  NULL,
-			  TRUE,
-			  DUPLICATE_SAME_ACCESS))
+                          std_err,
+                          ::GetCurrentProcess(),
+                          &startup_info.hStdError,
+                          NULL,
+                          TRUE,
+                          DUPLICATE_SAME_ACCESS))
     {
       ACE_ERROR ((LM_ERROR,
                   "%p duplicate failed.\n",
@@ -373,12 +373,12 @@ win32_spawn_environment_process (void)
     }
 
   if (!::DuplicateHandle (::GetCurrentProcess(),
-			  std_in,
-			  ::GetCurrentProcess(),
-			  &startup_info.hStdInput,
-			  NULL,
-			  TRUE,
-			  DUPLICATE_SAME_ACCESS))
+                          std_in,
+                          ::GetCurrentProcess(),
+                          &startup_info.hStdInput,
+                          NULL,
+                          TRUE,
+                          DUPLICATE_SAME_ACCESS))
     {
       ACE_ERROR ((LM_ERROR,
                   "%p duplicate failed.\n",
@@ -386,34 +386,36 @@ win32_spawn_environment_process (void)
       return;
     }
 
-  char *existing_environment = ::GetEnvironmentStrings ();
+  // Normally, this would be just GetEnvironmentStrings, but it
+  // doesn't follow the same rules as the rest of the Win32 API
+  char *existing_environment = ACE_OS::getenvstrings ();
   char environment[10240];
   ACE_OS::sprintf (environment,
                    "ACE_PROCESS_TEST=%s",
-		   environment_string);
+                   environment_string);
 
   int size = 0;
   while (existing_environment[size] != '\0')
     size += ACE_OS::strlen (existing_environment + size) + 1;
 
   ACE_OS::memcpy (environment + (ACE_OS::strlen (environment) + 1),
-		  existing_environment,
-		  size);
+                  existing_environment,
+                  size);
 
-  ::FreeEnvironmentStrings (existing_environment);
+  ACE_TEXT_FreeEnvironmentStrings (existing_environment);
 
   BOOL fork_result =
-    ::CreateProcess ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe",
-		     "process -g",
-		     NULL, // No process attributes.
-		     NULL, // No thread attributes.
-		     TRUE, // Allow handle inheritance.
-		     NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
-		     environment, // Environment.
-		     //"d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\",
-		     0,
-		     &startup_info,
-		     &process_info);
+    ACE_TEXT_CreateProcess ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe",
+                            "process -g",
+                            NULL, // No process attributes.
+                            NULL, // No thread attributes.
+                            TRUE, // Allow handle inheritance.
+                            NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
+                            environment, // Environment.
+                            //"d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\",
+                            0,
+                            &startup_info,
+                            &process_info);
 
   ::CloseHandle (startup_info.hStdOutput);
   ::CloseHandle (startup_info.hStdError);
@@ -471,7 +473,7 @@ tokenize (char *buffer)
     {
       temp = parser.next ();
       if (temp == 0)
-	break;
+        break;
       ACE_DEBUG ((LM_DEBUG,
                   temp));
       ACE_DEBUG ((LM_DEBUG,
@@ -499,7 +501,7 @@ main (int argc, char *argv[])
                             argv[0]);
       ACE_Process process;
       if (process.spawn (options) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "%p.\n",
                            "main"),
                           -1);
@@ -523,9 +525,9 @@ main (int argc, char *argv[])
       char *value2 = ACE_OS::getenv ("ACE_PROCESS_TEST2");
       ACE_DEBUG ((LM_DEBUG,
                   "ACE_PROCESS_TEST = %s.\n"
-		  "ACE_PROCESS_TEST2 = %s.\n",
-		  value == 0 ? "no value" : value,
-		  value2 == 0 ? "no value" : value2));
+                  "ACE_PROCESS_TEST2 = %s.\n",
+                  value == 0 ? "no value" : value,
+                  value2 == 0 ? "no value" : value2));
     }
 
   if (run_ls)

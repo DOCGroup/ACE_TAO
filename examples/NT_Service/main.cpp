@@ -31,11 +31,11 @@ public:
   Process (void);
   ~Process (void);
 
-  int run(int argc, char* argv[]);
+  int run(int argc, ACE_TCHAR* argv[]);
 
 private:
   void parse_args (int argc,
-                   char* argv[]);
+                   ACE_TCHAR* argv[]);
   void print_usage_and_die (void);
 
 private:
@@ -90,9 +90,9 @@ Process::print_usage_and_die (void)
 }
 
 void 
-Process::parse_args (int argc, char* argv[])
+Process::parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:rskt:d");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:rskt:d"));
   int c; 
 
   while ((c = get_opt ()) != -1)
@@ -125,7 +125,7 @@ Process::parse_args (int argc, char* argv[])
     default:
       // -i can also be given without a value - if so, it defaults
       // to defined value.
-      if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], "-i") == 0)
+      if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT ("-i")) == 0)
       {
         opt_install = 1;
         opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
@@ -149,13 +149,13 @@ ConsoleHandler (DWORD ctrlType)
 
 ACE_NT_SERVICE_DEFINE (Beeper,
                        Service,
-                       "Annoying Beeper Service");
+                       ACE_TEXT ("Annoying Beeper Service"));
 
 int 
-Process::run (int argc, char* argv[])
+Process::run (int argc, ACE_TCHAR* argv[])
 {
-  SERVICE::instance ()->name ("Beeper",
-                              "Annoying Beeper Service");
+  SERVICE::instance ()->name (ACE_TEXT ("Beeper"),
+                              ACE_TEXT ("Annoying Beeper Service"));
 
   parse_args (argc, argv);
 
@@ -200,7 +200,7 @@ Process::run (int argc, char* argv[])
 }
 
 int 
-main (int argc, char* argv[])
+main (int argc, ACE_TCHAR* argv[])
 {
   return PROCESS::instance ()->run (argc, argv);
 }
