@@ -17,7 +17,7 @@ Sat Jul 31 14:39:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  IPPROTO_TCP with ACE_IPPROTO_TCP to deal with differences
  	  between PHARLAP and other platforms.
 
-Sat Jul 31 16:02:49 1999  coryan  <coryan@cs.wustl.edu>
+Sat Jul 31 16:02:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO version 1.0 released.
 
