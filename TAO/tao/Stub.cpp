@@ -150,6 +150,10 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
 
   // make sure we start at the beginning of mprofiles
   this->forward_profiles_->rewind ();
+
+  // Since we have been forwarded, we must set profile_success_ to 0
+  // since we are starting a new with a new set of profiles!
+  profile_success_ = 0;
 }
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
