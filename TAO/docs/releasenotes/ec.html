@@ -14,17 +14,41 @@
     <H3>New on this release</H3>
 
     <UL>
-	<LI>
-	  Added a prototype Consumer and Supplier that can send events
-	  though multicast groups (or regular UDP sockets).
-	</LI>
-	<LI>
-	  The Event Channel can be configured using a Factory that
-	  constructs the right modules (like changing the dispatching
-	  module),
-	  in the current release only the default Factory is
-	  implemented.
-	</LI>
+      <LI><P>Continued work on the multicast support for the EC,
+	  we added a new server that helps in mapping the event types
+	  (and supplier ids) into the right mcast group.
+	  Usually this server is collocated with the helper classes
+	  that send the events through multicast,
+	  so using a CORBA interface for this mapping is not
+	  expensive,
+	  further it adds the flexibility of using a global service
+	  with complete knowledge of the traffic in the system,
+	  that could try to optimize multicast group usage.
+	</P>
+      </LI>
+      <LI><P>The subscriptions and publications on a particular EC can
+	  be remotely observed by instances of the
+	  <CODE>RtecChannelAdmin::Observer</CODE> class.
+	  Once more using CORBA for this interface cost us little or
+	  nothing because it is usually used by objects collocated
+	  with the EC.
+	</P>
+      </LI>
+      <LI><P><CODE>TAO_EC_UDP_Receiver</CODE> is a helper class that
+	  receives events from multicast groups and dispatches them as
+	  a supplier to some event channel.
+	  This class has to <B>join</B> the right multicast groups,
+	  using the <CODE>Observer</CODE> described above and the
+	  <CODE>RtecUDPAdmin</CODE> to map the subscriptions into
+	  multicast groups it can do this dynamically,
+	  as consumers join or leave its Event Channel.
+	</P>
+      </LI>
+      <LI><P>When sending Events through multicast all the
+	  <CODE>TAO_EC_UDP_Sender</CODE> objects can shared the same
+	  socket.
+	</P>
+      </LI>
     </UL>
 
     <H3>Known issues:</H3>
@@ -84,16 +108,36 @@
       <DT><EM>Users have no control over service
 	  collocations</EM></DT>
       <DD>
-	The user should have complete control of services collocation,
-	using ACE Service Configurator;
-	currently the services must be explicitly instantiated by the
-	user.
+	<P>The user should have complete control of services collocation,
+	  using ACE Service Configurator;
+	  currently the services must be explicitly instantiated by the
+	  user.
+	</P>
+      </DD>
+
+      <DT><EM>The <CODE>TAO_EC_Gateway_IIOP</CODE> objects publish
+	  events coming from multiple suppliers</EM></DT>
+      <DD><P>This objects receive the events from a "remote" EC and
+	  pushes them into a "local" EC,
+	  it subscribes to the disjunction of the events in the local
+	  consumers and it uses the same event
+	  types/<CODE>supplier_ids</CODE> to
+	  connect as a local supplier.
+	  This list may potentially include several different
+	  subscriptions based on different supplier ids,
+	  so the <CODE>Gateway</CODE> may end up with an invalid
+	  publication.
+	  We need to have different local suppliers for each remote
+	  <CODE>supplier_id</CODE> potentially shared between all the
+	  local <CODE>Gateways</CODE>.
+	</P>
       </DD>
 
       <DT><EM>Further details:</EM></DT>
       <DD>
-	Many lower level issues and tasks can be found in the
-	<A HREF="TODO.html">TODO list</A>.
+	<P>Many lower level issues and tasks can be found in the
+	  <A HREF="TODO.html">TODO list</A>.
+	</P>
       </DD>
 
     </DL>
@@ -164,6 +208,18 @@ $ cd tests/Event_Latency ; ./Event_Latency -ORBport 0 -m 20 -j &
     <H3>Features in previous releases</H3>
 
     <UL>
+      <LI><P>
+	  Added a prototype Consumer and Supplier that can send events
+	  though multicast groups (or regular UDP sockets).
+	</P>
+      </LI>
+      <LI><P>The Event Channel can be configured using a Factory that
+	  constructs the right modules (like changing the dispatching
+	  module),
+	  in the current release only the default Factory is
+	  implemented.
+	</P>
+      </LI>
       <LI>
 	<P>
 	When several suppliers are consumers are distributed over the
