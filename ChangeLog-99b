@@ -1,3 +1,10 @@
+Tue Aug 17 06:33:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* bin: Added a new shell script called update-ace+tao.sh
+	  that updates the ACE/TAO source tree to the latest
+ 	  numeric-assigned version.  Thanks to Loren Rittle
+ 	  <rittle@comm.mot.com> for contributing this.
+
 Mon Aug 16 20:09:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.h:
