@@ -40,11 +40,11 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 
 // If the platform supports position-independent malloc, choose
-// another base address that's 64k higher so that <ACE_Malloc> will be
+// another base address that's 1M higher so that <ACE_Malloc> will be
 // mapped into a different address in the child's virtual memory.
 static const void *CHILD_BASE_ADDR =
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-       64 * 1024 +
+       1024 * 1024 +
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
        ACE_DEFAULT_BASE_ADDR;
 
@@ -236,11 +236,14 @@ main (int argc, ASYS_TCHAR *[])
 
 #if 0
       cout << "Sizeof header padding: " << ACE_MALLOC_PADDING << endl
-           << "Sizeof header pointer: " << sizeof (ACE_MALLOC_HEADER_PTR) << endl
            << "Sizeof size_t: " << sizeof (size_t) << endl
            << "Sizeof long: " << sizeof (long) << endl
+           << "Sizeof double: " << sizeof (double) << endl
+           << "Sizeof ACE_MALLOC_HEADER_SIZE: " << ACE_MALLOC_HEADER_SIZE << endl
            << "Sizeof (Malloc Header): " << sizeof (ACE_Malloc_Header) << endl
-        //           << "Sizeof padding size: " << ACE_MALLOC_PADDING_SIZE << endl
+           << "Sizeof (control align long: " << ACE_CONTROL_BLOCK_ALIGN_LONGS << endl
+           << "Sizeof (Control Block): " << sizeof (ACE_Control_Block) << endl
+           << "Sizeof padding size: " << ACE_MALLOC_PADDING_SIZE << endl
         ;
 #endif
       // No arguments means we're the parent process.
