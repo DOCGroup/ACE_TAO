@@ -1,3 +1,11 @@
+Wed Dec 18 08:22:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp
+	  (tao_lb_random_init_routine):
+
+	  Fixed compile-time problem on platforms that do not support for
+	  the Pthread standard.  This function should always be visible.
+
 Tue Dec 17 09:53:02 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/Transport_Cache_Manager.*: 
