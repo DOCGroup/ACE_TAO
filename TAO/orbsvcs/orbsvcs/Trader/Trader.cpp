@@ -893,6 +893,7 @@ sequence_type (CORBA::TypeCode* type_code,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 template class TAO_Offer_Database<ACE_RW_Thread_Mutex>;
 template class TAO_Service_Offer_Iterator<ACE_RW_Thread_Mutex>;
@@ -903,7 +904,6 @@ template class TAO_Admin<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
 template class TAO_Link<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
 template class TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
 template class TAO_Register_Offer_Iterator<ACE_RW_Thread_Mutex>;
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,CosTrading::Link::LinkInfo>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_RW_Thread_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_RW_Thread_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_RW_Thread_Mutex>;
@@ -977,7 +977,9 @@ template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_Offer_Database<A
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #pragma instantiate TAO_Register_Offer_Iterator<ACE_RW_Thread_Mutex>
 #pragma instantiate TAO_Offer_Database<ACE_RW_Thread_Mutex>
@@ -988,7 +990,6 @@ template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Offer_Data
 #pragma instantiate TAO_Admin<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
 #pragma instantiate TAO_Link<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
 #pragma instantiate TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Link::LinkInfo>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_RW_Thread_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_RW_Thread_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_RW_Thread_Mutex>
@@ -1062,4 +1063,5 @@ template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Offer_Data
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
