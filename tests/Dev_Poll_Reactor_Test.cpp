@@ -419,6 +419,20 @@ public:
     return result;
   }
 
+  virtual int connect_svc_handler (
+    CONNECTOR::handler_type *& handler,
+    CONNECTOR::handler_type *& sh_copy,
+    const CONNECTOR::addr_type &remote_addr,
+    ACE_Time_Value *timeout,
+    const CONNECTOR::addr_type &local_addr,
+    int reuse_addr,
+    int flags,
+    int perms) {
+    sh_copy = handler;
+    return this->connect_svc_handler (handler, remote_addr, timeout,
+                                      local_addr, reuse_addr, flags,
+                                      perms);
+  }
 };
 
 // ----------------------------------------------------
