@@ -1,3 +1,28 @@
+Mon Oct 18 10:29:48 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.inl:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/RT_Builder.inl:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.inl:
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.inl:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.inl:
+        * orbsvcs/orbsvcs/Notify/RT_Properties.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.inl:
+          .inl's should not include their own .h
+
 Mon Oct 18 10:11:47 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Bit_Vector.h:
