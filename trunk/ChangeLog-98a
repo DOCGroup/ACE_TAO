@@ -1,25 +1,32 @@
-Sat Dec 13 15:09:48 1997  David L. Levine  <levine@cs.wustl.edu>
+Fri Dec 12 21:48:38 1997  Torbjorn Lindgren <tl@funcom.com>
 
-        * ace/config-linux{,-common,-pthread,-lxpthread}.h:
-          incorporated Torbjorn's unified Linux configs.  Thanks,
-          Torbjorn!
+        * ace/config-linux*.h: All Linux platform files except the
+          Linux-KCC modified to use the upgraded common Linux
+          configuration file. Linux-KCC looks reasonably easy to do,
+          if no-one that actually have KCC takes care of it I can do
+          this one later.
+
+        * ace/config-linux-common.h: Modernized and updated the common
+          Linux configuration file to handle more of the common
+          configuration stuff. Also added the beginning of proper
+          glibc and egcs support for Linux.
 
 Sat Dec 13 14:22:28 1997    <irfan@TWOSTEP>
 
-	* ace/Basic_Types.h: Changed _M_IX386 to _M_IX86.
+        * ace/Basic_Types.h: Changed _M_IX386 to _M_IX86.
 
 Fri Dec 12 19:41:42 1997    <irfan@TWOSTEP>
 
-	* ace, tests, version_tests: Updated Win32 makefiles (VC4.2 and
- 	  VC5.0) to include new Basic_Types_Tests.
+        * ace, tests, version_tests: Updated Win32 makefiles (VC4.2 and
+          VC5.0) to include new Basic_Types_Tests.
 
-	* tests/Basic_Types_Test.cpp (main): Updated to use
- 	  ACE_OS::getpagesize().
+        * tests/Basic_Types_Test.cpp (main): Updated to use
+          ACE_OS::getpagesize().
 
-	* ace/ACE.cpp (round_to_pagesize): Updated to use
- 	  ACE_OS::getpagesize().
+        * ace/ACE.cpp (round_to_pagesize): Updated to use
+          ACE_OS::getpagesize().
 
-	* ace/OS.i (getpagesize): Added this to ACE_OS.
+        * ace/OS.i (getpagesize): Added this to ACE_OS.
 
 Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -94,37 +101,37 @@ Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Dec 12 03:00:21 1997  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/config-sunos5.5-egcs-1.0.h: Fundamemntally identical to g++
-	  version, except added ACE_HAS_STDCPP_STL_INCLUDES, which is
-	  taken to mean that the Standard C++ STL include files are
-	  supported.
+        * ace/config-sunos5.5-egcs-1.0.h: Fundamemntally identical to g++
+          version, except added ACE_HAS_STDCPP_STL_INCLUDES, which is
+          taken to mean that the Standard C++ STL include files are
+          supported.
 
-	* IOStream.h: Added #if's to handle the case where
-	  ACE_HAS_STRING_CLASS, but if ACE_HAS_STDCPP_STL_INCLUDES, then
-	  the string class is found in <string>.  Otherwise, it looks for
-	  it in <String.h>.
+        * IOStream.h: Added #if's to handle the case where
+          ACE_HAS_STRING_CLASS, but if ACE_HAS_STDCPP_STL_INCLUDES, then
+          the string class is found in <string>.  Otherwise, it looks for
+          it in <String.h>.
 
-	* ace/OS.i: Re-implemented strcasecmp methods.  Thought bad
-	  implementations were related to a JAWS bug, but the hand
-	  implementations are not used on Solaris.
+        * ace/OS.i: Re-implemented strcasecmp methods.  Thought bad
+          implementations were related to a JAWS bug, but the hand
+          implementations are not used on Solaris.
 
 Thu Dec 11 23:20:57 1997    <irfan@TWOSTEP>
 
-	* ace/Strategies_T.cpp (activate_svc_handler): Changed the
- 	  parameter that was been passed into the open routine of
- 	  Svc_Handler.  The <arg> that was passed to us is passed through
- 	  to open, rather than passing <this>.  Thanks to Mats Nilsson
- 	  <mats.nilsson@xware.se> for pointing this out.
+        * ace/Strategies_T.cpp (activate_svc_handler): Changed the
+          parameter that was been passed into the open routine of
+          Svc_Handler.  The <arg> that was passed to us is passed through
+          to open, rather than passing <this>.  Thanks to Mats Nilsson
+          <mats.nilsson@xware.se> for pointing this out.
 
-	* ace/Connector.cpp (activate_svc_handler): Made sure that we pass
- 	  the connector pointer as the void* parameter to the svc_handler.
+        * ace/Connector.cpp (activate_svc_handler): Made sure that we pass
+          the connector pointer as the void* parameter to the svc_handler.
 
 Thu Dec 11 23:35:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i. The code was always calling dlsum for the _init()
- 	  hook, even if dlopen() failed.  In addition to fixing this, I
- 	  also removed a potential handle leak. Thanks to Patrick
- 	  J. McNerthney <pat@thememedia.com> for reporting this.
+        * ace/OS.i. The code was always calling dlsum for the _init()
+          hook, even if dlopen() failed.  In addition to fixing this, I
+          also removed a potential handle leak. Thanks to Patrick
+          J. McNerthney <pat@thememedia.com> for reporting this.
 
 Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -177,27 +184,27 @@ Wed Dec 10 23:57:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Wed Dec 10 16:24:09 1997    <irfan@TWOSTEP>
 
-	* ace/Auto_Ptr.i: Apparently, the standard states that in order to
- 	  access members of a templated superclass from a templated
- 	  subclass, then the member name must be fully qualified.
-  	  Therefore, changed access to p_ to ACE_Auto_Basic_Ptr<X>::p_.
-  	  Thanks to Stephen Coy <stevec@magna.com.au> for reporting this.
+        * ace/Auto_Ptr.i: Apparently, the standard states that in order to
+          access members of a templated superclass from a templated
+          subclass, then the member name must be fully qualified.
+          Therefore, changed access to p_ to ACE_Auto_Basic_Ptr<X>::p_.
+          Thanks to Stephen Coy <stevec@magna.com.au> for reporting this.
 
 Tue Dec 09 13:05:00 1997    <nw1@CHA-CHA>
 
-	* ace/Containers.cpp (copy_all_nodes): Added a temporary
- 	  ACE_Node<T> pointer to get around the macro side effects.
+        * ace/Containers.cpp (copy_all_nodes): Added a temporary
+          ACE_Node<T> pointer to get around the macro side effects.
 
 Sun Dec  7 10:20:46 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Config.cpp (parse_args): Added an appropriate macro
- 	  to switch from char * to UNICODE.  Thanks to Timothy A. Brown
- 	  <tabrown@montana.com> for reporting this.
+        * ace/Service_Config.cpp (parse_args): Added an appropriate macro
+          to switch from char * to UNICODE.  Thanks to Timothy A. Brown
+          <tabrown@montana.com> for reporting this.
 
-	* ace/config-linux-*.h: Added ACE_HAS_GETRUSAGE_PROTO to all
-	  the linux config files.  Hopefully, this will help ACE to work
-	  better with glibc.  Thanks to Ernie Makris <emakris@ziplink.net>
-	  and Torbjorn Lindgren <tl@funcom.no> for their help.
+        * ace/config-linux-*.h: Added ACE_HAS_GETRUSAGE_PROTO to all
+          the linux config files.  Hopefully, this will help ACE to work
+          better with glibc.  Thanks to Ernie Makris <emakris@ziplink.net>
+          and Torbjorn Lindgren <tl@funcom.no> for their help.
 
 Sat Dec 06 13:30:11 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -205,32 +212,32 @@ Sat Dec 06 13:30:11 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Dec  6 12:02:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/IOStream: Revised both the client and server to
- 	  demonstrate the ACE_IOStream functionality correctly.  Also
- 	  added a README file explaining how to run the examples.  Thanks
- 	  to James Johnson and Dustin Laurence
- 	  <laurence@alice.wonderland.caltech.edu> for suggesting this.
+        * examples/IOStream: Revised both the client and server to
+          demonstrate the ACE_IOStream functionality correctly.  Also
+          added a README file explaining how to run the examples.  Thanks
+          to James Johnson and Dustin Laurence
+          <laurence@alice.wonderland.caltech.edu> for suggesting this.
 
-	* ace/IOStream_T: Added a new method eof() to the ACE_IOStream_T<>
- 	  class.  This returns 1 if we've reached the end of the socket
- 	  stream, else 0.
+        * ace/IOStream_T: Added a new method eof() to the ACE_IOStream_T<>
+          class.  This returns 1 if we've reached the end of the socket
+          stream, else 0.
 
 Fri Dec  5 16:58:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Addr.h: Added a const ACE_Addr & instead of const ACE_Addr.
-  	  This will avoid an extra copy.  Thanks to Irfan for noticing
- 	  this.
+        * ace/Addr.h: Added a const ACE_Addr & instead of const ACE_Addr.
+          This will avoid an extra copy.  Thanks to Irfan for noticing
+          this.
 
-	* examples/Reactor/Dgram/CODgram.cpp: Also updated the CODgram
- 	  test to be just like the Dgram test.
+        * examples/Reactor/Dgram/CODgram.cpp: Also updated the CODgram
+          test to be just like the Dgram test.
 
-	* examples/Reactor/Dgram/Dgram.cpp (main): Fixed a bug where it
- 	  was sending a huge buffer instead of just the string size.
-  	  Also, exit once we've finished the send.  Finally, revised the
- 	  test so that it is easier to understand and so that it exits
- 	  properly.  Thanks to Michael Hoffman
- 	  <Hoffman_Michael@mac-mailserver.atc.ll.mit.edu> for reporting
- 	  this.
+        * examples/Reactor/Dgram/Dgram.cpp (main): Fixed a bug where it
+          was sending a huge buffer instead of just the string size.
+          Also, exit once we've finished the send.  Finally, revised the
+          test so that it is easier to understand and so that it exits
+          properly.  Thanks to Michael Hoffman
+          <Hoffman_Michael@mac-mailserver.atc.ll.mit.edu> for reporting
+          this.
 
 Fri Dec 05 13:20:09 1997    David L. Levine  <levine@cs.wustl.edu>
 
@@ -256,51 +263,51 @@ Fri Dec 05 13:20:09 1997    David L. Levine  <levine@cs.wustl.edu>
 
 Fri Dec  5 12:15:49 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* ace/Select_Reactor.cpp: Made error messages on open failure more
- 	  verbose.  Having these in place straightaway would have helped
- 	  track down some problems at Boeing much more effectively.
+        * ace/Select_Reactor.cpp: Made error messages on open failure more
+          verbose.  Having these in place straightaway would have helped
+          track down some problems at Boeing much more effectively.
 
 Fri Dec  5 11:15:17 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Log_Msg.h (callers.): Added documentation for %I and %D
-	  flags.  Thanks to John Morey <jmorey@tbi.com> for reosting
-	  this.
+        * ace/Log_Msg.h (callers.): Added documentation for %I and %D
+          flags.  Thanks to John Morey <jmorey@tbi.com> for reosting
+          this.
 
-	* ace/Dynamic.h:
-	* ace/CORBA_Ref.h:
-	* ace/Token_Invariants.h:
-	* ace/Token_Collection.h:
-	* ace/Local_Tokens.h:
-	* ace/Remote_Name_Space.h:
-	* ace/Registry_Name_Space.h:
-	* ace/Strategies.h:
-	* ace/Name_Space.h:
-	* ace/Name_Request_Reply.h:
-	* ace/Naming_Context.h:
-	* ace/Name_Proxy.h:
-	* ace/Local_Name_Space.h:
-	* ace/Local_Name_Space_T.h: Corrected erroneous comments.  These
-	  files all contain incorrect filename info in the preambles which
-	  make erroneous auto-generated man pages.
+        * ace/Dynamic.h:
+        * ace/CORBA_Ref.h:
+        * ace/Token_Invariants.h:
+        * ace/Token_Collection.h:
+        * ace/Local_Tokens.h:
+        * ace/Remote_Name_Space.h:
+        * ace/Registry_Name_Space.h:
+        * ace/Strategies.h:
+        * ace/Name_Space.h:
+        * ace/Name_Request_Reply.h:
+        * ace/Naming_Context.h:
+        * ace/Name_Proxy.h:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Name_Space_T.h: Corrected erroneous comments.  These
+          files all contain incorrect filename info in the preambles which
+          make erroneous auto-generated man pages.
 
 Fri Dec 05 00:00:53 1997    <irfan@TWOSTEP>
 
-	* ace/OS.h: If the user wants minimum IOStream inclusion, i.e.,
- 	  they have defined ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, we will
- 	  just include the forward declarations, i.e., ace/iosfwd.h.  Else
- 	  they will get all the stream header files, i.e., ace/streams.h.
-  	  The positive thing about this change is that if your code was
- 	  using stream classes and you were depending on OS.h to provide
- 	  you the stream header files, you will not have to change your
- 	  code, unless you have defined
- 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.  Thanks to Dr. Schmidt for
- 	  suggesting this and thanks to David Levine for suggesting it to
- 	  Dr. Schmidt ;-).
+        * ace/OS.h: If the user wants minimum IOStream inclusion, i.e.,
+          they have defined ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, we will
+          just include the forward declarations, i.e., ace/iosfwd.h.  Else
+          they will get all the stream header files, i.e., ace/streams.h.
+          The positive thing about this change is that if your code was
+          using stream classes and you were depending on OS.h to provide
+          you the stream header files, you will not have to change your
+          code, unless you have defined
+          ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.  Thanks to Dr. Schmidt for
+          suggesting this and thanks to David Levine for suggesting it to
+          Dr. Schmidt ;-).
 
-	* ace/config-vxworks5.x-g++.h: Restored
- 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
+        * ace/config-vxworks5.x-g++.h: Restored
+          ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
 
-	* ace/Asynch_IO.cpp (open): Fixed typo.
+        * ace/Asynch_IO.cpp (open): Fixed typo.
 
 Thu Dec 04 21:20:47 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -308,88 +315,88 @@ Thu Dec 04 21:20:47 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Dec  4 19:45:04 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Object_Manager.cpp (ACE_Object_Manager_Destroyer): Fixed a
- 	  bug in the
- 	  ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer
- 	  thread comparison routine.  Thanks to Steven Coy for this.  Also
- 	  renamed _saved_main_thread_id to saved_main_thread_id_, which is
- 	  proper ACE style.
+        * ace/Object_Manager.cpp (ACE_Object_Manager_Destroyer): Fixed a
+          bug in the
+          ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer
+          thread comparison routine.  Thanks to Steven Coy for this.  Also
+          renamed _saved_main_thread_id to saved_main_thread_id_, which is
+          proper ACE style.
 
         * Updated the ACE-INSTALL.html file to explain why you don't need
- 	  to build everything all the time.  Thanks to Dustin Laurence
- 	  <laurence@alice.wonderland.caltech.edu> for suggesting this.
+          to build everything all the time.  Thanks to Dustin Laurence
+          <laurence@alice.wonderland.caltech.edu> for suggesting this.
 
-	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
- 	  Added a check for ENETUNREACH.  Thanks to Dustin Laurence
- 	  <laurence@alice.wonderland.caltech.edu> for reporting this.
+        * tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
+          Added a check for ENETUNREACH.  Thanks to Dustin Laurence
+          <laurence@alice.wonderland.caltech.edu> for reporting this.
 
-	* ace/Asynch_Acceptor.cpp (open): Changed the local variable named
- 	  sap_any to sa to avoid conflicts with the new sap_any macro.
+        * ace/Asynch_Acceptor.cpp (open): Changed the local variable named
+          sap_any to sa to avoid conflicts with the new sap_any macro.
 
-	* ace/Asynch_IO: Made the ACE_Service_Hanlder::open() method
- 	  non-virtual to work around bugs with Borland C++.  Thanks to
- 	  Valik Solorzano Barboza <valik@geodan.nl> for suggesting this.
+        * ace/Asynch_IO: Made the ACE_Service_Hanlder::open() method
+          non-virtual to work around bugs with Borland C++.  Thanks to
+          Valik Solorzano Barboza <valik@geodan.nl> for suggesting this.
 
-	* ace/ACE.cpp (COMPUTE): Put parens around elements the COMPUTE
- 	  macros so that it will work on Borland C++.  Thanks to Valik
- 	  Solorzano Barboza <valik@geodan.nl> for suggesting this.
+        * ace/ACE.cpp (COMPUTE): Put parens around elements the COMPUTE
+          macros so that it will work on Borland C++.  Thanks to Valik
+          Solorzano Barboza <valik@geodan.nl> for suggesting this.
 
-	* ace/config-win32-common.h: Added ACE_HAS_BROKEN_SAP_ANY to deal
- 	  with Borland C++ bugs.  Thanks to Valik Solorzano Barboza
- 	  <valik@geodan.nl> for suggesting this.
+        * ace/config-win32-common.h: Added ACE_HAS_BROKEN_SAP_ANY to deal
+          with Borland C++ bugs.  Thanks to Valik Solorzano Barboza
+          <valik@geodan.nl> for suggesting this.
 
-	* ace/Addr: Added a workaround for the Borland C++ problems.  This
- 	  introduces a new global macro called sap_any.  However, this is
- 	  only used for Borland, so it should be ok.  Thanks to Valik
- 	  Solorzano Barboza <valik@geodan.nl> for suggesting this.
+        * ace/Addr: Added a workaround for the Borland C++ problems.  This
+          introduces a new global macro called sap_any.  However, this is
+          only used for Borland, so it should be ok.  Thanks to Valik
+          Solorzano Barboza <valik@geodan.nl> for suggesting this.
 
-	* ace/LSOCK.cpp (recv_handle): Make the code smarter if we've got
- 	  both STREAMS and 4_4BSD_SENDMSG_RECVMSG.
+        * ace/LSOCK.cpp (recv_handle): Make the code smarter if we've got
+          both STREAMS and 4_4BSD_SENDMSG_RECVMSG.
 
-	* Reran "make depend" over all of ACE.
+        * Reran "make depend" over all of ACE.
 
-	* netsvcs/clients/Logger/indirect_logging.cpp (main): Changed
-	  LOGGING to LOGGER.  Thanks to Irfan for noticing this.
+        * netsvcs/clients/Logger/indirect_logging.cpp (main): Changed
+          LOGGING to LOGGER.  Thanks to Irfan for noticing this.
 
-	* netsvcs/lib/Client_Logging_Handler: Changed "rendezvous" to
- 	  "logger."
+        * netsvcs/lib/Client_Logging_Handler: Changed "rendezvous" to
+          "logger."
 
-	* netsvcs/clients/Logger/indirect_logging.cpp,
-	  netsvcs/lib/Client_Logging_Handler: Changed DEFAULT_RENDEZVOUS
- 	  to DEFAULT_LOGGER_KEY.  Thanks to Steven Coy for pointing out
- 	  this inconsistency.
+        * netsvcs/clients/Logger/indirect_logging.cpp,
+          netsvcs/lib/Client_Logging_Handler: Changed DEFAULT_RENDEZVOUS
+          to DEFAULT_LOGGER_KEY.  Thanks to Steven Coy for pointing out
+          this inconsistency.
 
-	* ace/OS.h: Renamed ACE_LOGGER_KEY to ACE_DEFAULT_LOGGER_KEY to
-	  make it consistent with other ACE_DEFAULT_* names.
+        * ace/OS.h: Renamed ACE_LOGGER_KEY to ACE_DEFAULT_LOGGER_KEY to
+          make it consistent with other ACE_DEFAULT_* names.
 
-	* ace/OS.h: Changed the definition for ACE_LOGGER_KEY so that it
- 	  defaults to "localhost:10015" on platforms that don't support
- 	  ACE STREAM Pipes.  Thanks to Steven Coy for suggesting this.
+        * ace/OS.h: Changed the definition for ACE_LOGGER_KEY so that it
+          defaults to "localhost:10015" on platforms that don't support
+          ACE STREAM Pipes.  Thanks to Steven Coy for suggesting this.
 
-	* ace/Service_Config.cpp: Added the -k option to parse_args() so
- 	  that the user can set the logger key.  Thanks to Steven Coy for
- 	  suggesting this.
+        * ace/Service_Config.cpp: Added the -k option to parse_args() so
+          that the user can set the logger key.  Thanks to Steven Coy for
+          suggesting this.
 
-	* ace/Service_Config: Added the logger_key as a parameter to the
- 	  other open() method, as well.  Thanks to Steve Coy for being
- 	  picky ;-).
+        * ace/Service_Config: Added the logger_key as a parameter to the
+          other open() method, as well.  Thanks to Steve Coy for being
+          picky ;-).
 
-	* netsvcs/clients/Logger/direct_logging.cpp (main): Modified the
- 	  code to use the new framing scheme.
+        * netsvcs/clients/Logger/direct_logging.cpp (main): Modified the
+          code to use the new framing scheme.
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp
- 	  (handle_logging_record): Updated the code to take advantage of
- 	  our new framing scheme.
+        * netsvcs/lib/Server_Logging_Handler_T.cpp
+          (handle_logging_record): Updated the code to take advantage of
+          our new framing scheme.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (send): We can be smarter
- 	  now about sending the ACE_Log_Record across the network since
- 	  the length field is now fixed and it's guaranteed to be in the
- 	  first 4 bytes.  Thanks to Steve Coy for suggesting this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (send): We can be smarter
+          now about sending the ACE_Log_Record across the network since
+          the length field is now fixed and it's guaranteed to be in the
+          first 4 bytes.  Thanks to Steve Coy for suggesting this.
 
-	* ace/Log_Record.h (ACE_Log_Record): Replaced the horribly
- 	  non-portable "long length_" field with the "ACE_INT32 length_"
- 	  field, which is nice because it is portable across platforms
- 	  with different long-word sizes.
+        * ace/Log_Record.h (ACE_Log_Record): Replaced the horribly
+          non-portable "long length_" field with the "ACE_INT32 length_"
+          field, which is nice because it is portable across platforms
+          with different long-word sizes.
 
 Thu Dec 04 09:57:40 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -401,161 +408,161 @@ Thu Dec 04 09:57:40 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
 
-	* ace/Makefile (Svc_Conf_l.cpp): Changed the sed macros to produce
- 	  OS.h include instead of stdcpp.h.
+        * ace/Makefile (Svc_Conf_l.cpp): Changed the sed macros to produce
+          OS.h include instead of stdcpp.h.
 
         * ace/Svc_Conf_l.cpp: Updated after code was regenerated using the
- 	  new sed changes in the Makefiles.  Currently there are two
- 	  inclusions of OS.h in this file and an extra stdlib.h.  Maybe
- 	  someone more experienced in sed can take these out by updating
- 	  the Makefile.
+          new sed changes in the Makefiles.  Currently there are two
+          inclusions of OS.h in this file and an extra stdlib.h.  Maybe
+          someone more experienced in sed can take these out by updating
+          the Makefile.
 
-	* ace/IOStream_T.h (stdcpp.h): Removed inclusion of stdcpp.h.  It
- 	  is redundant because IOStream.h includes it.
+        * ace/IOStream_T.h (stdcpp.h): Removed inclusion of stdcpp.h.  It
+          is redundant because IOStream.h includes it.
 
-	* ace/streams.h: New file.  This files tries to reduce the
- 	  differences between the old and new stream libraries for the
- 	  user.  This is done by automatically selecting the correct
- 	  includes depending on the ACE_HAS_STANDARD_CPP_LIBRARY variable.
-  	  This file also helps out by making commonly used classes (e.g.,
- 	  ios, ostream, iostream, cin, cout, etc) available in the global
- 	  name space when used with the Standard C++ Library. Use this
- 	  file where you would usually include <iostream.h> or <iostream>.
+        * ace/streams.h: New file.  This files tries to reduce the
+          differences between the old and new stream libraries for the
+          user.  This is done by automatically selecting the correct
+          includes depending on the ACE_HAS_STANDARD_CPP_LIBRARY variable.
+          This file also helps out by making commonly used classes (e.g.,
+          ios, ostream, iostream, cin, cout, etc) available in the global
+          name space when used with the Standard C++ Library. Use this
+          file where you would usually include <iostream.h> or <iostream>.
 
-	* ace/iosfwd.h: New file. This files deals with forward
- 	  declaration for the stream classes.  Remember that since the new
- 	  Standard C++ Library uses templates for the implementation of
- 	  the streams, simple forward declaration will not work.  Classes
- 	  forward declared by this class include:
+        * ace/iosfwd.h: New file. This files deals with forward
+          declaration for the stream classes.  Remember that since the new
+          Standard C++ Library uses templates for the implementation of
+          the streams, simple forward declaration will not work.  Classes
+          forward declared by this class include:
 
-	  ios
-	  streambuf
-	  istream
-	  ostream
-	  iostream
-	  filebuf
-	  ifstream
-	  ofstream
-	  fstream
+          ios
+          streambuf
+          istream
+          ostream
+          iostream
+          filebuf
+          ifstream
+          ofstream
+          fstream
 
-	  Use this file where you would usually forward declare the
- 	  classes listed above.
+          Use this file where you would usually forward declare the
+          classes listed above.
 
-	* ace/stdcpp.h: Removed this file from the repository.  This file
- 	  was trying to do too much.  All the inclusion of the C Library
- 	  headers were unnecessary.  This is because the new C++ standard
- 	  preserves the old C library include files.  The functions from
- 	  those files will still be in the global namescape.  The new
- 	  header files (e.g., cstdio), provides the same prototypes as the
- 	  old files (e.g., stdio.h), except that all prototypes are in the
- 	  std namespace.  Since we want the old behavior and global
- 	  prototypes (for backward compatibility), inclusion of the new
- 	  header files was incorrect.
+        * ace/stdcpp.h: Removed this file from the repository.  This file
+          was trying to do too much.  All the inclusion of the C Library
+          headers were unnecessary.  This is because the new C++ standard
+          preserves the old C library include files.  The functions from
+          those files will still be in the global namescape.  The new
+          header files (e.g., cstdio), provides the same prototypes as the
+          old files (e.g., stdio.h), except that all prototypes are in the
+          std namespace.  Since we want the old behavior and global
+          prototypes (for backward compatibility), inclusion of the new
+          header files was incorrect.
 
-	  stdcpp.h was included by OS.h.  This caused almost all files to
- 	  force the inclusion of the stream header files.  This was
- 	  changed so that OS.h only includes the ace/iosfwd.h file.  This
- 	  means that if your code was using stream classes and you were
- 	  depending on OS.h to provide you the stream header files, you
- 	  will have to change your code to either include iostream.h or
- 	  iostream, or more portably ace/streams.h.
+          stdcpp.h was included by OS.h.  This caused almost all files to
+          force the inclusion of the stream header files.  This was
+          changed so that OS.h only includes the ace/iosfwd.h file.  This
+          means that if your code was using stream classes and you were
+          depending on OS.h to provide you the stream header files, you
+          will have to change your code to either include iostream.h or
+          iostream, or more portably ace/streams.h.
 
-	* ace/OS.h: Removed stdcpp.h. Moved the standard C library
- 	  includes from stdcpp.h to OS.h.  Also added ace/iosfwd.h to give
- 	  forward declaration for the stream classes.
+        * ace/OS.h: Removed stdcpp.h. Moved the standard C library
+          includes from stdcpp.h to OS.h.  Also added ace/iosfwd.h to give
+          forward declaration for the stream classes.
 
-	* ACE: Added explicit inclusion of ace/streams.h to the following
- 	  files:
+        * ACE: Added explicit inclusion of ace/streams.h to the following
+          files:
 
-	  ace/IOStream.cpp
-	  ace/Log_Record.cpp
-	  ace/OS.cpp
-	  ace/SString.cpp
-	  ace/Log_Msg.cpp
-	  tests/test_config.h
-	  examples/Log_Msg/test_log_msg.cpp
-	  examples/Reactor/Misc/test_time_value.cpp
-	  examples/Threads/task_three.cpp
-	  netsvcs/lib/Logging_Strategy.cpp
-	  examples/Logger/Acceptor-server/server_loggerd.cpp
-	  examples/ASX/UPIPE_Event_Server/event_server.cpp
-	  examples/Reactor/Ntalker/ntalker.cpp
-	  examples/Shared_Malloc/test_persistence.cpp
-	  examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp
-	  examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp
-	  examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp
-	  examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp
+          ace/IOStream.cpp
+          ace/Log_Record.cpp
+          ace/OS.cpp
+          ace/SString.cpp
+          ace/Log_Msg.cpp
+          tests/test_config.h
+          examples/Log_Msg/test_log_msg.cpp
+          examples/Reactor/Misc/test_time_value.cpp
+          examples/Threads/task_three.cpp
+          netsvcs/lib/Logging_Strategy.cpp
+          examples/Logger/Acceptor-server/server_loggerd.cpp
+          examples/ASX/UPIPE_Event_Server/event_server.cpp
+          examples/Reactor/Ntalker/ntalker.cpp
+          examples/Shared_Malloc/test_persistence.cpp
+          examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp
+          examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp
+          examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp
+          examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp
 
-	* Updated makefile dependencies throughout ACE to reflect the
- 	  removal of stdcpp.h and the addition of streams.h.
+        * Updated makefile dependencies throughout ACE to reflect the
+          removal of stdcpp.h and the addition of streams.h.
 
-	* examples/Threads/barrier2.cpp: Removed inclusion of stdcpp.h.
+        * examples/Threads/barrier2.cpp: Removed inclusion of stdcpp.h.
 
-	* ace/IOStream_T.cpp: Reorganized include files so that inclusion
- 	  of config.h is not necessary.
+        * ace/IOStream_T.cpp: Reorganized include files so that inclusion
+          of config.h is not necessary.
 
-	* ace/IOStream.cpp: Changed inclusion of config.h to OS.h.
+        * ace/IOStream.cpp: Changed inclusion of config.h to OS.h.
 
-	* ace: Removed config.h from the following files.  It was
- 	  redundant.
+        * ace: Removed config.h from the following files.  It was
+          redundant.
 
-	  Timer_Hash.cpp
-	  Timer_Heap.cpp
-	  Timer_List.cpp
-	  Timer_Queue.cpp
-	  Timer_Wheel.cpp
+          Timer_Hash.cpp
+          Timer_Heap.cpp
+          Timer_List.cpp
+          Timer_Queue.cpp
+          Timer_Wheel.cpp
 
-	* ace: Added code to protect against multiple inclusions of
- 	  config.h.  Following files were effected:
+        * ace: Added code to protect against multiple inclusions of
+          config.h.  Following files were effected:
 
-	  Trace.cpp
-	  Log_Msg.cpp
+          Trace.cpp
+          Log_Msg.cpp
 
-	* ace/config-win32-common.h: Removed redundant definitions of
- 	  ACE_HAS_TYPENAME_KEYWORD and ACE_HAS_SIG_ATOMIC_T.  Thanks to
- 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing this out.
+        * ace/config-win32-common.h: Removed redundant definitions of
+          ACE_HAS_TYPENAME_KEYWORD and ACE_HAS_SIG_ATOMIC_T.  Thanks to
+          Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing this out.
 
 Wed Dec  3 21:37:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* Added the new ACE-inheritance.ps and pdf files, which show the
- 	  class structure of ACE.  Thanks to John Lindal
- 	  <jafl@cheshire-cat.caltech.edu> for generating this.
+        * Added the new ACE-inheritance.ps and pdf files, which show the
+          class structure of ACE.  Thanks to John Lindal
+          <jafl@cheshire-cat.caltech.edu> for generating this.
 
-	* ace/Service_Config: Removed the static logger_key_ member and
- 	  replaced it with a (defaulted) parameter to open().  This is
- 	  more flexible.  Thanks to Steve Coy for the suggestion.
+        * ace/Service_Config: Removed the static logger_key_ member and
+          replaced it with a (defaulted) parameter to open().  This is
+          more flexible.  Thanks to Steve Coy for the suggestion.
 
-	* ace/Service_Config.h: Addressed all the "@@" questions.
+        * ace/Service_Config.h: Addressed all the "@@" questions.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (main): Fixed a
- 	  subtle bug in the "quit" logic.  Thanks to Michael Hoffman
- 	  <Hoffman_Michael@mac-mailserver.atc.ll.mit.edu> for reporting
- 	  this.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (main): Fixed a
+          subtle bug in the "quit" logic.  Thanks to Michael Hoffman
+          <Hoffman_Michael@mac-mailserver.atc.ll.mit.edu> for reporting
+          this.
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record),
-	  netsvcs/lib/Client_Logging_Handler.cpp (send):
-	  Changed the code so that we now always send ACE_UINT32 bytes
- 	  worth of data for the length field.  This ensures we're portable
- 	  across platforms.  Thanks to Steven Coy for noticing this.
+        * netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record),
+          netsvcs/lib/Client_Logging_Handler.cpp (send):
+          Changed the code so that we now always send ACE_UINT32 bytes
+          worth of data for the length field.  This ensures we're portable
+          across platforms.  Thanks to Steven Coy for noticing this.
 
 Wed Dec 03 18:02:09 1997    <irfan@TWOSTEP>
 
-	* performance-tests/Synch-Benchmarks/Benchmark.cpp: Added template
- 	  instantiations for Atomic_Op.
+        * performance-tests/Synch-Benchmarks/Benchmark.cpp: Added template
+          instantiations for Atomic_Op.
 
 Wed Dec  3 10:29:58 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/ACE.cpp:
-	  Use ACE_UINT32 to compute the 32-bit CRC, on Alphas (and
-	  probably other 64 bit machines) u_long seems to be longer than
-	  that.
+        * ace/ACE.cpp:
+          Use ACE_UINT32 to compute the 32-bit CRC, on Alphas (and
+          probably other 64 bit machines) u_long seems to be longer than
+          that.
 
 Wed Dec 03 07:39:15 1997  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux.GNU:
- 	* include/makeinclude/platform_hpux_gcc.GNU: Moved some compile options
-	  from the DCFLAGS to the CCFLAGS to compile correctly with or without
-	  debugging.
+        * include/makeinclude/platform_hpux.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU: Moved some compile options
+          from the DCFLAGS to the CCFLAGS to compile correctly with or without
+          debugging.
 
 Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -581,60 +588,60 @@ Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 
-	* tests/test_config.h: Removed code for
- 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, as this option is no longer
- 	  necessary.
+        * tests/test_config.h: Removed code for
+          ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, as this option is no longer
+          necessary.
 
-	* ace/stdcpp.h: Removed code for
- 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, as this option is no longer
- 	  necessary.
+        * ace/stdcpp.h: Removed code for
+          ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, as this option is no longer
+          necessary.
 
-	* ace/config-vxworks5.x-g++.h: Removed
- 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.  This flag is no longer
- 	  required.
+        * ace/config-vxworks5.x-g++.h: Removed
+          ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.  This flag is no longer
+          required.
 
-	* ace/IOStream_T.cpp: Removed ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
- 	  from #if defined.
+        * ace/IOStream_T.cpp: Removed ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
+          from #if defined.
 
         * ACE: Removed the explicit iostream.h inclusion from these:
 
-	  examples/ASX/UPIPE_Event_Server/event_server.cpp
-	  examples/Log_Msg/test_log_msg.cpp
-	  examples/Logger/Acceptor-server/server_loggerd.cpp
-	  examples/Reactor/Misc/test_time_value.cpp
-	  examples/Shared_Malloc/test_persistence.cpp
-	  examples/Threads/task_three.cpp
-	  netsvcs/lib/Logging_Strategy.cpp
+          examples/ASX/UPIPE_Event_Server/event_server.cpp
+          examples/Log_Msg/test_log_msg.cpp
+          examples/Logger/Acceptor-server/server_loggerd.cpp
+          examples/Reactor/Misc/test_time_value.cpp
+          examples/Shared_Malloc/test_persistence.cpp
+          examples/Threads/task_three.cpp
+          netsvcs/lib/Logging_Strategy.cpp
 
-	* ace/IOStream.h: Darrell missed removing this explicit iostream.h
- 	  inclusion.
+        * ace/IOStream.h: Darrell missed removing this explicit iostream.h
+          inclusion.
 
-	* ace/Future.cpp: Removed template instantiation of Atomic_Op
- 	  since Atomic_Op is not used by Future.
+        * ace/Future.cpp: Removed template instantiation of Atomic_Op
+          since Atomic_Op is not used by Future.
 
 Fri Dec 02 11:46:17 1997    <nw1@CHA-CHA>
 
-	* ace/Proactor.cpp (ACE_Proactor): Reenabled Proactor's thread
-	  manager to wait on its Timer_Handler thread.
+        * ace/Proactor.cpp (ACE_Proactor): Reenabled Proactor's thread
+          manager to wait on its Timer_Handler thread.
 
-	* ace/Thread_Manager.cpp (close_singleton): Removed Win32 specific
-	  codes.  This is no longer necessary with above changes.
-	  (wait): Close down thread handles when removing detached
-	  threads.  Avoid performing wait when the program is shutting
-	  down.
-	  (remove_thr_all):  Extracted out this protected member function.
-	  (close): Changed to use the new remove_thr_all function.
+        * ace/Thread_Manager.cpp (close_singleton): Removed Win32 specific
+          codes.  This is no longer necessary with above changes.
+          (wait): Close down thread handles when removing detached
+          threads.  Avoid performing wait when the program is shutting
+          down.
+          (remove_thr_all):  Extracted out this protected member function.
+          (close): Changed to use the new remove_thr_all function.
 
-	* ace/Proactor.cpp (handle_events): Changed the magic number 258
- 	  to WAIT_TIMEOUT.  Thanks to Mark Rabotnikov
- 	  <mark@netmanage.co.il> for pointing this out.
+        * ace/Proactor.cpp (handle_events): Changed the magic number 258
+          to WAIT_TIMEOUT.  Thanks to Mark Rabotnikov
+          <mark@netmanage.co.il> for pointing this out.
 
 Tue Dec 02 14:13:15 1997  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: Moved some compile options
-	  from the DCFLAGS to the CCFLAGS to compile correctly with or without
-	  debugging.  Thanks to Istvan Buki <ibuki@fedex.com> for reporting
-	  the problem.
+        * include/makeinclude/platform_hpux_aCC.GNU: Moved some compile options
+          from the DCFLAGS to the CCFLAGS to compile correctly with or without
+          debugging.  Thanks to Istvan Buki <ibuki@fedex.com> for reporting
+          the problem.
 
 Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
