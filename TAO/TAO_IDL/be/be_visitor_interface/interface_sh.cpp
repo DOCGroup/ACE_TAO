@@ -62,11 +62,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (!node->is_nested ())
     {
       // we are outermost
-      ACE_OS::sprintf (namebuf, "POA_%s", node->local_name ()->get_string ());
+      ACE_OS::sprintf (namebuf, "POA_%s", node->local_name ());
     }
   else
     {
-      ACE_OS::sprintf (namebuf, "%s", node->local_name ()->get_string ());
+      ACE_OS::sprintf (namebuf, "%s", node->local_name ());
     }
 
   *os << "class " << namebuf << ";" << be_nl;
@@ -149,7 +149,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << ");\n" << be_uidt_nl;
 
   // Print out the _this() method.
-  *os << node->name () << " *_this (" << be_idt << be_idt_nl
+  *os << node->full_name () << " *_this (" << be_idt << be_idt_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl
@@ -180,16 +180,19 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                         -1);
     }
 
-
   *os << be_uidt_nl << "};\n\n";
+
 
   be_visitor_context ctx (*this->ctx_);
   be_visitor *visitor = 0;
-
+  
   // generate the collocated class
   if (idl_global->gen_thru_poa_collocation ())
     {
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CH)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CH);
+      else
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
@@ -200,12 +203,17 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                              "codegen for thru_poa_collocated class failed\n"),
                             -1);
         }
+      delete visitor;
+      visitor = 0;
     }
 
   if (idl_global->gen_direct_collocation ())
     {
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CH)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_CH);
+      else
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
@@ -216,6 +224,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                              "codegen for direct_collocated class failed\n"),
                             -1);
         }
+      delete visitor;
+      visitor = 0;
     }
 
   // generate the TIE class.
@@ -231,6 +241,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                          "codegen for TIE class failed\n"),
                         -1);
     }
+  delete visitor;
 
   *os << "\n";
   ctx.stream (tao_cg->server_template_header ());

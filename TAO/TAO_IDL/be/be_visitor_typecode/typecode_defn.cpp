@@ -101,6 +101,11 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+  char *flat_name = 0;
+  node->compute_flat_name ("AMI_", 
+                           "_Handler", 
+                           flat_name);
+
   // reset the queue
   this->queue_reset (this->tc_queue_);
   this->tc_offset_ = 0;
@@ -127,9 +132,9 @@ be_visitor_typecode_defn::visit_type (be_type *node)
     
   // Flat name generation.
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    *os << node->compute_flatname ("AMI_", "_Handler");
+    *os << flat_name;
   else
-    *os << node->flatname ();
+    *os << node->flat_name ();
 
   *os << "[] =" << be_nl;
   *os << "{" << be_idt << "\n";
@@ -161,9 +166,9 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 
   // Flat name generation.
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    *os << node->compute_flatname ("AMI_", "_Handler");
+    *os << flat_name;
   else
-    *os << node->flatname ();
+    *os << node->flat_name ();
   
   *os << " (";
   
@@ -201,17 +206,17 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   
   // Flat name generation.
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    *os <<  node->compute_flatname ("AMI_", "_Handler");
+    *os << flat_name;
   else
-    *os <<  node->flatname ();
+    *os <<  node->flat_name ();
   
   *os << "), (char *) &_oc_";
 
   // Flat name generation.
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN) 
-    *os <<  node->compute_flatname ("AMI_", "_Handler");
+    *os << flat_name;
   else
-    *os <<  node->flatname ();
+    *os <<  node->flat_name ();
   
   // Name generation.
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
@@ -246,9 +251,9 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 
       // Flat name generation.
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << node->compute_flatname ("AMI_", "_Handler");
+        *os << flat_name;
       else
-        *os << node->flatname ();
+        *os << node->flat_name ();
 
       *os << ")" << be_nl;
       
@@ -275,12 +280,14 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 
       // Flat name generation.
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN) 
-        *os <<  node->compute_flatname ("AMI_", "_Handler");
+        *os << flat_name;
       else
-        *os <<  node->flatname ();
+        *os <<  node->flat_name ();
       
       *os << ";\n\n";
     }
+
+  delete [] flat_name;
   return 0;
 }
 
@@ -2839,6 +2846,11 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
   TAO_OutStream *os = this->ctx_->stream ();
   int flag = 0;
 
+  char *repoID = 0;
+  node->compute_repoID ("AMI_", 
+                        "_Handler", 
+                        repoID);
+
   // check if we want to generate optimized typecodes. In such a case, there is
   // no need to generate the repoID (unless we are an object reference or an
   // exception in which case it is mandatory to have the repository ID)
@@ -2878,7 +2890,7 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       
       // repoID generation.
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << node->compute_repoID ("AMI_", "_Handler");
+        *os << repoID;
       else
         *os << node->repoID ();
       
@@ -2890,14 +2902,14 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       // Unoptimized case.
       
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << (ACE_OS::strlen (node->compute_repoID ("AMI_", "_Handler")) + 1) << ", ";
+        *os << (ACE_OS::strlen (repoID) + 1) << ", ";
       else
         *os << (ACE_OS::strlen (node->repoID ()) + 1) << ", ";
       
       ACE_CDR::ULong *arr, i, arrlen;
 
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        (void) this->tc_name2long (node->compute_repoID ("AMI_", "_Handler"), arr, arrlen);
+        (void) this->tc_name2long (repoID, arr, arrlen);
       else
         (void) this->tc_name2long (node->repoID (), arr, arrlen);
 
@@ -2908,7 +2920,7 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       
       // Comment.
       if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << " // repository ID = " << node->compute_repoID ("AMI_", "_Handler");
+        *os << " // repository ID = " << repoID;
       else
         *os << " // repository ID = " << node->repoID ();
 
@@ -2916,6 +2928,9 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
     }
   *os << "\n";
+
+  delete repoID;
+
   return;
 }
 
@@ -3136,8 +3151,8 @@ queue_lookup (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
       iter.next (addr);
       item = *addr;
 
-      if (!ACE_OS::strcmp (item->node->fullname (),
-                           node->fullname ()))
+      if (!ACE_OS::strcmp (item->node->full_name (),
+                           node->full_name ()))
         {
           // found
           return item;

@@ -64,12 +64,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   // Collocation function pointer initializer.
-  *os << node->name () << "_ptr _TAO_collocation_POA_"
-      << node->flatname () << "_Stub_Factory (" << be_idt << be_idt_nl
+  *os << node->full_name () << "_ptr _TAO_collocation_POA_"
+      << node->flat_name () << "_Stub_Factory (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_uidt_nl
-      << ")\n";
+      << ")" << be_uidt_nl;
 
-  os->incr_indent (0);
   *os << "{" << be_idt_nl
       << "TAO_Stub *stub = obj->_stubobj ();" << be_nl << be_nl
       << "switch (stub->servant_orb_var ()->orb_core"
@@ -100,26 +99,22 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "return 0;" << be_uidt_nl
       << "}\n\n";
 
-  *os << "int _TAO_collocation_POA_" << node->flatname ()
+  *os << "int _TAO_collocation_POA_" << node->flat_name ()
       << "_Stub_Factory_Initializer"
       << " (long dummy)" << be_nl
       << "{" << be_idt_nl
       << "ACE_UNUSED_ARG (dummy);" << be_nl << be_nl
-      << "_TAO_collocation_" << node->flatname ()
+      << "_TAO_collocation_" << node->flat_name ()
       << "_Stub_Factory_function_pointer = " << be_idt_nl
-      << "_TAO_collocation_POA_" << node->flatname ()
+      << "_TAO_collocation_POA_" << node->flat_name ()
       << "_Stub_Factory;" << be_uidt_nl << be_nl
-      << "return 0;" << be_uidt_nl << "}\n\n";
+      << "return 0;" << be_uidt_nl << "}" << be_nl << be_nl;
 
-  *os << "static int _TAO_collocation_POA_" << node->flatname ()
+  *os << "static int _TAO_collocation_POA_" << node->flat_name ()
       << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
-      << "_TAO_collocation_POA_" << node->flatname ()
-      << "_Stub_Factory_Initializer (ACE_reinterpret_cast "
-      << "(long, _TAO_collocation_POA_"
-      << node->flatname () << "_Stub_Factory_Initializer));"
-      << be_uidt_nl;
-
-  os->incr_indent (0);
+      << "_TAO_collocation_POA_" << node->flat_name ()
+      << "_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_"
+      << node->flat_name () << "_Stub_Factory_Initializer));" << be_uidt_nl << be_nl;
 
   // constructor
   *os << "// skeleton constructor" << be_nl;
@@ -138,9 +133,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << "{" << be_idt_nl
-      << "this->optable_ = &tao_" << node->flatname ()
+      << "this->optable_ = &tao_" << node->flat_name ()
       << "_optable;" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   *os << "// copy ctor" << be_nl;
   // find if we are at the top scope or inside some module
@@ -166,7 +161,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                        "be_visitor_interface_ss::visit_interface - "
                        " copy ctor generation failed\n"), -1);
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
-      << "{}\n" << be_nl;
+      << "{}" << be_nl << be_nl;
 
   *os << "// skeleton destructor" << be_nl;
 
@@ -182,7 +177,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       *os << node->full_skel_name () << "::~" << node->local_name () <<
         " (void)" << be_nl;
     }
-  *os << "{\n";
+  *os << "{" << be_nl;
   *os << "}\n\n";
 
 
@@ -220,11 +215,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
   *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
 
   // generate code for the _non_existent skeleton
-  os->indent ();
   *os << "void " << node->full_skel_name ()
       << "::_non_existent_skel (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &_tao_server_request, " << be_nl
@@ -242,10 +236,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
   *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-
-  os->indent ();
   *os << "CORBA::Boolean " << node->full_skel_name ()
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* value," << be_nl
@@ -268,15 +260,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << be_idt_nl << "return 1;" << be_uidt_nl
       << "else" << be_idt_nl
       << "return 0;" << be_uidt << be_uidt << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   // the downcast method.
-  os->indent ();
   *os << "void* " << node->full_skel_name ()
       << "::_downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
       << ")" << be_uidt_nl
-      << "{" << be_idt_nl;
+      << "{\n" << be_idt;
 
   if (node->traverse_inheritance_graph (be_interface::downcast_helper, os) == -1)
     {
@@ -287,22 +278,20 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
+  os->indent ();
   *os << "if (ACE_OS::strcmp (logical_type_id, "
       << "\"IDL:omg.org/CORBA/Object:1.0\") == 0)" << be_idt_nl
       << "return ACE_static_cast(PortableServer::Servant, this);"
       << be_uidt_nl;
 
   *os << "return 0;" << be_uidt_nl
-      << "}\n\n";
-
+      << "}" << be_nl << be_nl;
 
   // now the dispatch method
-  os->indent ();
   *os << "void " << node->full_skel_name () <<
     "::_dispatch (CORBA::ServerRequest &req, " <<
     "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
+  *os << "{" << be_idt_nl;
   *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
   *os << "const char *opname = req.operation (); // retrieve operation name"
       << be_nl;
@@ -317,22 +306,17 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "}" << be_nl;
   *os << "else" << be_idt_nl;
   *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "const char* " << node->full_skel_name ()
       << "::_interface_repository_id (void) const"
       << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "return \"" << node->repoID () << "\";\n";
-  os->decr_indent ();
-  *os << "}\n\n";
-
-  *os << "\n";
+  *os << "{" << be_idt_nl;
+  *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // the _this () operation
-  *os << node->name () << "*" << be_nl
+  *os << node->full_name () << "*" << be_nl
       << node->full_skel_name ()
       << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
       << "{" << be_idt_nl
@@ -365,13 +349,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // the _create_collocated_objref method.  If the idl compiler does
   // not generate the type of collocated stub but the orb is asking
   // for it, simply return null so a remote stub will be used.
-  os->indent ();
-
   // generate the collocated class impl
   if (idl_global->gen_thru_poa_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CS)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CS);
+      else
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
@@ -396,7 +381,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (idl_global->gen_direct_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CS)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CS);
+      else
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {

@@ -57,7 +57,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   os->indent (); // start with whatever indentation level we are at
 
   
-  ACE_OS::sprintf (namebuf, "%s", node->flatname ());
+  ACE_OS::sprintf (namebuf, "%s", node->flat_name ());
   
   *os << "//Class " << idl_global->impl_class_prefix ()<<namebuf << idl_global->impl_class_suffix ()<< be_nl;
   // now generate the class definition
@@ -73,12 +73,12 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       *os << "public virtual ";
      
       intf = be_interface::narrow_from_decl (node->inherits ()[0]);
-      *os << idl_global->impl_class_prefix () << intf->flatname () << idl_global->impl_class_suffix ();//intf->relative_skel_name (node->full_skel_name ());
+      *os << idl_global->impl_class_prefix () << intf->flat_name () << idl_global->impl_class_suffix ();//intf->relative_skel_name (node->full_skel_name ());
       for (i = 1; i < node->n_inherits (); i++)
         {
           *os << ", public virtual ";
           intf = be_interface::narrow_from_decl (node->inherits ()[i]);
-          *os << idl_global->impl_class_prefix () <<intf->flatname () << idl_global->impl_class_suffix ();//intf->relative_skel_name (node->full_skel_name ());
+          *os << idl_global->impl_class_prefix () <<intf->flat_name () << idl_global->impl_class_suffix ();//intf->relative_skel_name (node->full_skel_name ());
         }  // end of for loop
 
       //inherit from the base skeleton file

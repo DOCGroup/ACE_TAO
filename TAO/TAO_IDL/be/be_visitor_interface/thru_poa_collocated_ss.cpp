@@ -44,32 +44,26 @@ be_visitor_interface_thru_poa_collocated_ss::~be_visitor_interface_thru_poa_coll
 
 int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = tao_cg->server_skeletons ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   this->ctx_->node (node);
 
+  os->indent ();
   *os << node->full_coll_name (be_interface::THRU_POA) << "::"
       << node->local_coll_name (be_interface::THRU_POA) << " (" << be_idt_nl
       << "TAO_Stub *stub" << be_uidt_nl
-      << ")\n";
-  os->decr_indent (0);
-
-  os->incr_indent ();
+      << ")" << be_idt_nl;
 
   if (node->is_nested ())
     {
-      be_decl* scope =
-	be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-      *os << ": ACE_NESTED_CLASS ("
-	  << scope->name () << ","
-	  << node->local_name ()
-	  << ") ()," << be_nl;
+      *os << ": ACE_NESTED_CLASS (" << scope->full_name () << ","
+          << node->local_name () << ") ()," << be_nl;
     }
   else
     {
-      *os << ": " << node->name ()
-	  << " ()," << be_nl;
+      *os << ": " << node->full_name () << " ()," << be_nl;
     }
 
   // @@ We should call the constructor for all base classes, since we
@@ -85,13 +79,10 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
                         -1);
     }
 
-  *os << "  CORBA_Object (stub, 0, 1)\n";
+  *os << "  CORBA_Object (stub, 0, 1)" << be_uidt_nl;
 
-  os->decr_indent ();
-  *os << "{\n";
-  *os << "}\n\n";
-
-  os->indent ();
+  *os << "{" << be_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Generate _is_a implementation.
   *os << "CORBA::Boolean " << node->full_coll_name (be_interface::THRU_POA) << "::"
@@ -119,9 +110,7 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
       << "\"" << node->repoID ()  << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")->_is_a (logical_type_id, ACE_TRY_ENV);" << be_uidt << be_uidt_nl
-      << "}\n\n" << be_uidt_nl;
-
-  os->indent ();
+      << "}" << be_uidt_nl << be_nl << be_nl;
 
   // Generate _non_existent implementation.
   *os << "CORBA::Boolean " << node->full_coll_name (be_interface::THRU_POA) << "::"
@@ -148,7 +137,7 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
       << "\"" << node->repoID ()  << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")->_non_existent (ACE_TRY_ENV);" << be_uidt << be_uidt_nl
-      << "}\n\n" << be_uidt_nl;
+      << "}" << be_uidt_nl << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
     {
@@ -176,7 +165,7 @@ be_visitor_interface_thru_poa_collocated_ss::collocated_ctor_helper (be_interfac
     {
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
-      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ","
+      *os << "  ACE_NESTED_CLASS (POA_" << scope->full_name () << ","
           << base->local_coll_name (be_interface::THRU_POA) << ") (stub)," << be_nl;
     }
   else

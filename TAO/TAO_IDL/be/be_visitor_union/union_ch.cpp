@@ -58,7 +58,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       os = this->ctx_->stream ();
 
       // generate the ifdefined macro for the union type
-      os->gen_ifdef_macro (node->flatname ());
+      os->gen_ifdef_macro (node->flat_name ());
       os->indent (); // start with the current indentation level
       *os << "class " << idl_global->export_macro () << " "
           << node->local_name () << ": public TAO_Base_Union " << be_nl
@@ -199,7 +199,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       os->gen_endif ();
 
       // generate the ifdefined macro for the _var type
-      os->gen_ifdef_macro (node->flatname (), "_var");
+      os->gen_ifdef_macro (node->flat_name (), "_var");
       // generate var defn
       if (node->gen_var_defn () == -1)
         {
@@ -211,7 +211,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       os->gen_endif ();
 
       // generate the ifdefined macro for the array type
-      os->gen_ifdef_macro (node->flatname (), "_out");
+      os->gen_ifdef_macro (node->flat_name (), "_out");
       // a class is generated for an out defn only for a variable length struct
       if (node->size_type () == be_decl::VARIABLE)
         {

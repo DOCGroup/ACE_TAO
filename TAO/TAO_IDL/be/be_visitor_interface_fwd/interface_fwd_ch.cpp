@@ -55,7 +55,7 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       *os << "class " << node->local_name () << ";" << be_nl;
 
       // generate the ifdefined macro for the _ptr type
-      os->gen_ifdef_macro (node->flatname (), "_ptr");
+      os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
       // generate the _ptr declaration
       *os << "typedef " << node->local_name () << " *" << node->local_name ()
@@ -64,7 +64,7 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       os->gen_endif ();
 
       // enclose under an ifdef macro
-      os->gen_ifdef_macro (node->flatname (), "_var");
+      os->gen_ifdef_macro (node->flat_name (), "_var");
 
       // generate the _var declaration
       if (node->gen_var_defn () == -1)
@@ -78,7 +78,7 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       os->gen_endif ();
 
       // enclose under an ifdef macro
-      os->gen_ifdef_macro (node->flatname (), "_out");
+      os->gen_ifdef_macro (node->flat_name (), "_out");
 
       // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
       if (node->gen_out_defn () == -1)

@@ -162,7 +162,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // end of instantiation
 
   // generate the ifdefined macro for the sequence type
-  os->gen_ifdef_macro (node->flatname ());
+  os->gen_ifdef_macro (node->flat_name ());
 
   os->indent (); // start with the current indentation level
 

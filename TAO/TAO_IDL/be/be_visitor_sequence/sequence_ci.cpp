@@ -63,7 +63,7 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
   // end of instantiation
 
   // generate the ifdefined macro for the sequence type
-  os->gen_ifdef_macro (node->flatname ());
+  os->gen_ifdef_macro (node->flat_name ());
 
   // all we do is generate the _var and _out implementations
   if (this->gen_var_impl (node) == -1)
@@ -180,7 +180,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
 
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", node->fullname ());
+  ACE_OS::sprintf (fname, "%s_var", node->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_var", node->local_name ()->get_string ());
@@ -420,7 +420,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
 
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_out", node->fullname ());
+  ACE_OS::sprintf (fname, "%s_out", node->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_out", node->local_name ()->get_string ());
