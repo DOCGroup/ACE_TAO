@@ -1,3 +1,17 @@
+Thu Jun 15 16:23:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+
+	  In the _tao_QueryInterface() function, we had two cases
+	  for generating the address of the ancestor's _narrow()
+	  function - if the ancestor was defined in the root scope,
+	  we used it's local name, and otherwise we used the
+	  ACE_NESTED_CLASS macro. However, the macro doesn't work
+	  when the ancestor is defined in a different scope from
+	  that of the derived class. In this case, we now use the
+	  fully scoped name. Thanks to Irfan for coming up with
+	  this use case.
+
 Thu Jun 15 12:44:55 2000  Ossama Othman  <ossama@uci.edu>
 	  
 	* tao/Any.h (type_):
