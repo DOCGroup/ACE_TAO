@@ -40,7 +40,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS += -lmpeg_server -lmpeg_shared -lmpeg_mib
-CPPFLAGS += -DSH_MEM -DNDEBUG -DSunOS -DSTAT -I../include -I../mpeg_shared
+CPPFLAGS += -DSH_MEM -DNDEBUG -DSunOS -DSTAT
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
 
 clean:

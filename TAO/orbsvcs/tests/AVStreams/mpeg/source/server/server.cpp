@@ -1,7 +1,6 @@
 // $Id$
 
 #include "server.h"
-#include "Video_Server.h"
 
 // creates a svc handler by passing "this", i.e.  a reference to the
 // acceptor that created it this is needed by the svc_handler to

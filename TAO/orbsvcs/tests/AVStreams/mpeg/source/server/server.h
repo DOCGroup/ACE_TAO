@@ -29,12 +29,12 @@
 #include "ace/SOCK_CODgram.h"
 #include "ace/Select_Reactor.h"
 
-#include "common.h"
-#include "server_proto.h"
-#include "fileio.h"
-#include "routine.h"
-#include "com.h"
-#include "Video_Control_i.h"
+#include "include/common.h"         
+#include "mpeg_server/server_proto.h"   
+#include "mpeg_shared/fileio.h"         
+#include "mpeg_shared/routine.h"        
+#include "mpeg_shared/com.h"            
+#include "mpeg_shared/Video_Control_i.h"
 #include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
 
 #if defined (NATIVE_ATM)
