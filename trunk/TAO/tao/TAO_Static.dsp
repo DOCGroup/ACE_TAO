@@ -351,10 +351,6 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Lite.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Locate_Header.h
 # End Source File
 # Begin Source File
@@ -1055,10 +1051,6 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Lite.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Locate_Header.i
 # End Source File
 # Begin Source File
@@ -1680,10 +1672,6 @@ SOURCE=.\GIOP_Message_Generator_Parser_12.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Generator_Parser_Impl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Lite.cpp
 # End Source File
 # Begin Source File
 
