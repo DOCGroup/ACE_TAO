@@ -71,6 +71,12 @@ CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
 // is responsible for releasing any storage owned by the exception.
 // It can do this because it's got the typecode.
 
+CORBA_Exception::CORBA_Exception (void)
+  :  type_ (0),
+     refcount_ (1)
+{
+}
+
 CORBA_Exception::~CORBA_Exception (void)
 {
   assert (this->refcount_ == 0);
@@ -108,7 +114,13 @@ CORBA_Exception::_type (void) const
 int
 CORBA_Exception::_is_a (const char* repository_id) const
 {
-  return (ACE_OS::strcmp (repository_id, "IDL:CORBA/Exception:1.0")==0);
+  return (ACE_OS::strcmp (repository_id, "IDL:omg.org/CORBA/Exception:1.0")==0);
+}
+
+void
+CORBA_Exception::_raise (void)
+{
+  // @@ TODO this method should be defined on each Exception.
 }
 
 CORBA::ULong
@@ -136,6 +148,10 @@ CORBA_Exception::_decr_refcnt (void)
 
 // Avoid zillions of not-quite-inlined copies of utilities.
 
+CORBA_UserException::CORBA_UserException (void)
+{
+}
+
 CORBA_UserException::CORBA_UserException (CORBA::TypeCode_ptr tc)
   : CORBA_Exception (tc)
 {
@@ -160,14 +176,14 @@ int
 CORBA_UserException::_is_a (const char* interface_id) const
 {
   return ACE_OS::strcmp (interface_id,
-                         "IDL:CORBA/UserException:1.0") == 0
+                         "IDL:omg.org/CORBA/UserException:1.0") == 0
     || CORBA_Exception::_is_a (interface_id);
 }
 
 CORBA_UserException*
 CORBA_UserException::_narrow (CORBA_Exception* exception)
 {
-  if (exception->_is_a ("IDL:CORBA/UserException:1.0"))
+  if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
     return ACE_dynamic_cast (CORBA_UserException *, exception);
   return 0;
 }
@@ -211,20 +227,98 @@ int
 CORBA_SystemException::_is_a (const char* interface_id) const
 {
   return ACE_OS::strcmp (interface_id,
-                         "IDL:CORBA/SystemException:1.0") == 0
+                         "IDL:omg.org/CORBA/SystemException:1.0") == 0
     || CORBA_Exception::_is_a (interface_id);
 }
 
 CORBA_SystemException*
 CORBA_SystemException::_narrow (CORBA_Exception* exception)
 {
-  if (exception->_is_a ("IDL:CORBA/SystemException:1.0"))
+  if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
     return ACE_dynamic_cast (CORBA_SystemException*,exception);
+  return 0;
+}
+
+// ****************************************************************
+
+CORBA_UnknownUserException::CORBA_UnknownUserException (void)
+  : CORBA_UserException (CORBA::_tc_UnknownUserException),
+    exception_ (0)
+{
+}
+
+CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
+{
+  this->exception_ = new CORBA_Any (ex);
+}
+
+CORBA_UnknownUserException::~CORBA_UnknownUserException (void)
+{
+  if (this->exception_ != 0)
+    delete this->exception_;
+}
+
+CORBA_Any&
+CORBA_UnknownUserException::exception (void)
+{
+  return *this->exception_;
+}
+
+int
+CORBA_UnknownUserException::_is_a (const char* interface_id) const
+{
+  return ((ACE_OS::strcmp (interface_id,
+			   "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
+	  || CORBA_UserException::_is_a (interface_id));
+}
+
+CORBA_UnknownUserException*
+CORBA_UnknownUserException::_narrow (CORBA_Exception *ex)
+{
+  if (ex->_is_a ("IDL:omg.org/CORBA/UnknownUserException:1.0"))
+    return ACE_dynamic_cast (CORBA_UnknownUserException*, ex);
   return 0;
 }
 
 // Note that "buffer" holds the (unscoped) name originally, and is
 // then overwritten.
+
+void
+TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
+					    CORBA::Environment &env)
+{
+  // Create the TypeCode for the CORBA_UnknownUserException
+  TAO_OutputCDR stream;
+
+  const char* interface_id =
+    "IDL:omg.org/CORBA/UnknownUserException:1.0";
+  const char* name = "UnknownUserException";
+  const char* field_name = "exception";
+
+  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != CORBA::B_TRUE
+      || stream.encode (CORBA::_tc_string,
+			&interface_id, 0,
+			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (CORBA::_tc_string,
+			&name, 0,
+			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.write_ulong (1L) != CORBA::B_TRUE
+      || stream.encode (CORBA::_tc_string,
+			&field_name, 0,
+			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (CORBA::_tc_TypeCode,
+			&CORBA::_tc_any, 0,
+			env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    {
+      env.exception (new CORBA_INITIALIZE (CORBA::COMPLETED_NO));
+      return;
+    }
+
+  tcp = new CORBA::TypeCode (CORBA::tk_except,
+                             stream.length (),
+                             stream.buffer (),
+                             CORBA::B_TRUE);
+}
 
 void
 TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
@@ -345,8 +439,23 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
+CORBA::TypeCode_ptr CORBA::_tc_UnknownUserException = 0;
+
 //    static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except);
 //    CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
+
+#define POA_EXCEPTION_LIST \
+  POA_EXCEPTION (AdapterAlreadyExists) \
+  POA_EXCEPTION (AdapterInactive) \
+  POA_EXCEPTION (AdapterNonExistent) \
+  POA_EXCEPTION (InvalidPolicy) \
+  POA_EXCEPTION (NoServant) \
+  POA_EXCEPTION (ObjectAlreadyActive) \
+  POA_EXCEPTION (ObjectNotActive) \
+  POA_EXCEPTION (ServantAlreadyActive) \
+  POA_EXCEPTION (ServantNotActive) \
+  POA_EXCEPTION (WrongAdapter) \
+  POA_EXCEPTION (WrongPolicy ) \
 
 void
 TAO_Exceptions::init (CORBA::Environment &env)
@@ -365,18 +474,60 @@ TAO_Exceptions::init (CORBA::Environment &env)
   // Register POA exceptions as system exceptions
   TAO_Exceptions::system_exceptions->add (PortableServer::_tc_ForwardRequest);
   TAO_Exceptions::system_exceptions->add (PortableServer::POAManager::_tc_AdapterInactive);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_AdapterAlreadyExists);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_AdapterInactive);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_AdapterNonExistent);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_InvalidPolicy);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_NoServant);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ObjectAlreadyActive);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ObjectNotActive);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ServantAlreadyActive);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ServantNotActive);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_WrongAdapter);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_WrongPolicy );
   TAO_Exceptions::system_exceptions->add (PortableServer::Current::_tc_NoContext);
+
+#define POA_EXCEPTION(name) \
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ ## name);
+POA_EXCEPTION_LIST
+#undef POA_EXCEPTION
+
+  if (env.exception () == 0)
+    TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException,
+						env);
+}
+
+CORBA_Exception*
+TAO_Exceptions::create_system_exception (const char* id,
+					 CORBA::Environment& env)
+{
+#define TAO_SYSTEM_EXCEPTION(name) \
+  { \
+    const char* xid = CORBA::_tc_ ## name ->id (env); \
+    if (ACE_OS::strcmp (id, xid) == 0) \
+      return new CORBA:: name; \
+  }
+  STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+#define POA_EXCEPTION(name) \
+  { \
+    env.clear (); \
+    const char* xid = PortableServer::POA::_tc_ ## name ->id (env); \
+    if (env.exception () == 0 && ACE_OS::strcmp (id, xid) == 0) \
+      return new PortableServer::POA:: name; \
+  }
+POA_EXCEPTION_LIST
+#undef POA_EXCEPTION
+
+  {
+    env.clear ();
+    const char* xid = PortableServer::_tc_ForwardRequest->id (env);
+    if (env.exception () == 0 && ACE_OS::strcmp (id, xid) == 0)
+      return new PortableServer::ForwardRequest;
+  }
+  {
+    env.clear ();
+    const char* xid = PortableServer::POAManager::_tc_AdapterInactive->id (env);
+    if (env.exception () == 0 && ACE_OS::strcmp (id, xid) == 0)
+      return new PortableServer::POAManager::AdapterInactive;
+  }
+  {
+    env.clear ();
+    const char* xid = PortableServer::Current::_tc_NoContext->id (env);
+    if (env.exception () == 0 && ACE_OS::strcmp (id, xid) == 0)
+      return new PortableServer::Current::NoContext;
+  }
+
+  return 0;
 }
 
 void
@@ -389,13 +540,14 @@ TAO_Exceptions::fini (void)
   STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
+  delete CORBA::_tc_UnknownUserException;
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 int \
 CORBA_##name ::_is_a (const char* interface_id) const \
 { \
-  return ((ACE_OS::strcmp (interface_id, "IDL:CORBA/" #name "1.0")==0) \
+  return ((ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/" #name ":1.0")==0) \
           || CORBA_SystemException::_is_a (interface_id)); \
 }
 STANDARD_EXCEPTION_LIST
@@ -405,14 +557,25 @@ STANDARD_EXCEPTION_LIST
 CORBA_##name * \
 CORBA_##name ::_narrow (CORBA_Exception* exception) \
 { \
-  if (exception->_is_a ("IDL:CORBA/" #name "1.0")) \
+  if (exception->_is_a ("IDL:omg.org/CORBA/" #name ":1.0")) \
     return ACE_dynamic_cast (CORBA_##name *, exception); \
   return 0; \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
-#undef  STANDARD_EXCEPTION_LIST
+#define TAO_SYSTEM_EXCEPTION(name) \
+CORBA_##name :: CORBA_##name (void) \
+  :  CORBA_SystemException (CORBA::_tc_ ## name, \
+			    0xffff0000L, \
+			    CORBA::COMPLETED_NO) \
+{ \
+}
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#undef POA_EXCEPTION_LIST
+#undef STANDARD_EXCEPTION_LIST
 
 // Convenience -- say if the exception is a system exception or not.
 

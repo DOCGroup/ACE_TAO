@@ -72,7 +72,8 @@ Test_Any::init_parameters (Param_Test_ptr objref,
       {
         CORBA::Short s;
         s = gen->gen_short ();
-        ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
+	if (TAO_debug_level > 0)
+	  ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
         this->in_ <<= s;
         this->inout_ <<= s;
       }
@@ -80,7 +81,8 @@ Test_Any::init_parameters (Param_Test_ptr objref,
     case 1:
       {
         char *str = gen->gen_string ();
-        ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
+	if (TAO_debug_level > 0)
+	  ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
         this->in_ <<= str;
         this->inout_ <<= str;
       }

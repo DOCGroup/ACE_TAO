@@ -1,3 +1,40 @@
+Wed Aug 19 15:06:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h: 
+	* tao/Exception.h: 
+	* tao/Exception.cpp: 
+	* tao/Invocation.cpp: 
+	  Added the new CORBA::UnknownUserException, that is used with DII
+	  when a user exception is raised.
+	  User and system exceptions are created using the right dynamic
+	  type.
+	  Minimized code size by using a factory method for the system
+	  exceptions in the TAO_Exceptions class.
+
+	* tao/Typecode.h: 
+	* tao/Typecode.cpp: 
+	  Completed the implementation for the Bounds and BadKind
+	  exceptions.
+
+	* tests/Param_Test/Makefile: 
+	* tests/Param_Test/README: 
+	* tests/Param_Test/driver.cpp: 
+	* tests/Param_Test/options.cpp: 
+	* tests/Param_Test/options.h: 
+	* tests/Param_Test/param_test.idl: 
+	* tests/Param_Test/param_test_i.cpp: 
+	* tests/Param_Test/param_test_i.h: 
+	* tests/Param_Test/run_test.pl: 
+	* tests/Param_Test/tests.h: 
+	  Added a new test for exceptions, it verifies that user
+	  exceptions are properly transmitted and demarshaled and that
+	  unexpected exceptions are converted into CORBA::UNKNOWN.
+
+	* tests/Param_Test/any.cpp: 
+	* tests/Param_Test/ub_any_seq.cpp: 
+	  The tests (specially the server side) are silent unless the
+	  TAO_debug_level is greater than 0.
+
 Wed Aug 19 14:24:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.2.5 released.
