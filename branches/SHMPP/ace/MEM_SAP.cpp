@@ -40,25 +40,12 @@ ACE_MEM_SAP::create_shm_malloc (const char *name,
   if (this->shm_malloc_ != 0)
     return -1;                  // already initialized.
 
-  int delete_options = 0;
-
-  if (options == 0)
-    {
-      delete_options = 1;
-      ACE_NEW_RETURN (options,
-                      MALLOC_OPTIONS (),
-                      -1);
-    }
-  auto_ptr<MALLOC_OPTIONS> safe_options (options);
-
   ACE_NEW_RETURN (this->shm_malloc_,
                   MALLOC (name,
-                          name,
+                          0,
                           options),
                   -1);
 
-  if (delete_options == 0)
-    safe_options.release ();
   return 0;
 }
 

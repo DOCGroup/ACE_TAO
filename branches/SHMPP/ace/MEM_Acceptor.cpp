@@ -21,8 +21,15 @@ ACE_MEM_Acceptor::dump (void) const
 // Do nothing routine for constructor.
 
 ACE_MEM_Acceptor::ACE_MEM_Acceptor (void)
+  : mmap_prefix_ (0)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
+}
+
+ACE_MEM_Acceptor::~ACE_MEM_Acceptor (void)
+{
+  ACE_TRACE ("ACE_MEM_Acceptor::~ACE_MEM_Acceptor");
+  delete[] this->mmap_prefix_;
 }
 
 // General purpose routine for performing server ACE_SOCK creation.
@@ -31,6 +38,7 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const u_short local_port,
                                     int reuse_addr,
                                     int backlog,
                                     int protocol)
+  : mmap_prefix_ (0)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
   if (this->open (local_port,
@@ -64,7 +72,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                           u_short *remote_port,
                           ACE_Time_Value *timeout,
                           int restart,
-                          int reset_new_handle) const
+                          int reset_new_handle)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::accept");
 
@@ -96,15 +104,27 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                                   reset_new_handle) == -1)
     return -1;
 
-  char buf [MAXPATHLEN];
+  ASYS_TCHAR buf [MAXPATHLEN];
   ACE_INET_Addr local_addr;
   if (new_stream.get_local_addr (local_addr) == -1)
     return -1;
 
-  // @@ Need to make the filename prefix configurable.  Perhaps we
-  // should have something like ACE_MEM_Addr?
-  ACE_OS::sprintf (buf, "MEM_Acceptor_%d_", local_addr.get_port_number ());
-  char unique [MAXPATHLEN];
+  if (this->mmap_prefix_ != 0)
+    {
+      ACE_OS::sprintf (buf,
+                       ASYS_TEXT ("%s_%d_"),
+                       this->mmap_prefix_,
+                       local_addr.get_port_number ());
+    }
+  else
+    {
+      ACE_OS::sprintf (buf,
+                       ASYS_TEXT ("%s%cMEM_Acceptor_%d_"),
+                       ACE_OS::getenv (ASYS_TEXT (ACE_DEFAULT_TEMP_DIR_ENV)),
+                       ACE_DIRECTORY_SEPARATOR_CHAR,
+                       local_addr.get_port_number ());
+    }
+  ASYS_TCHAR unique [MAXPATHLEN];
   ACE_OS::unique_name (&new_stream, unique, MAXPATHLEN);
   ACE_OS::strcat (buf, unique);
 
@@ -112,7 +132,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   ACE_OS::unlink (buf);
 
   // Now set up the shared memory malloc pool.
-  if (new_stream.create_shm_malloc (buf) == -1)
+  if (new_stream.create_shm_malloc (buf, &this->malloc_options_) == -1)
     return -1;
 
   // @@ Need to handle timeout here.
