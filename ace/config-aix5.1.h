@@ -21,11 +21,14 @@
 // set it. Then check for 0 after including config-aix-4.x.h and remove it
 // if so.
 #if !defined (ACE_HAS_AIO_CALLS)
-#  define ACE_HAS_AIO_CALLS 0
+#  define _ACE_DISABLE_AIO_CALLS_
 #endif
 #include "ace/config-aix-4.x.h"
-#if defined (ACE_HAS_AIO_CALLS) && (ACE_HAS_AIO_CALLS == 0)
-#  undef ACE_HAS_AIO_CALLS
+#if defined (_ACE_DISABLE_AIO_CALLS_)
+#  if defined (ACE_HAS_AIO_CALLS)
+#    undef ACE_HAS_AIO_CALLS
+#  endif
+#  undef _ACE_DISABLE_AIO_CALLS_
 #endif
 
 // I think this is correct, but needs to be verified...   -Steve Huston
