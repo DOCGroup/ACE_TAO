@@ -29,18 +29,18 @@ ACE_INLINE PortableServer::POA **
 PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::allocbuf (CORBA::ULong nelems)
 {
   PortableServer::POA **buf = 0;
-  
+
   ACE_NEW_RETURN (buf, PortableServer::POA*[nelems], 0);
-  
+
   for (CORBA::ULong i = 0; i < nelems; i++)
     {
       buf[i] = PortableServer::POA::_nil ();
     }
-  
+
   return buf;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::freebuf (PortableServer::POA **buffer)
 {
   if (buffer == 0)
@@ -76,12 +76,12 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_TAO_Unbo
   {
     PortableServer::POA **tmp1 = _TAO_Unbounded_Object_Sequence_PortableServer_POAList::allocbuf (this->maximum_);
     PortableServer::POA ** const tmp2 = ACE_reinterpret_cast (PortableServer::POA ** ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
       {
         tmp1[i] = PortableServer::POA::_duplicate (tmp2[i]);
       }
-    
+
     this->buffer_ = tmp1;
   }
   else
@@ -95,11 +95,11 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::operator=
 {
   if (this == &rhs)
     return *this;
-  
+
   if (this->release_)
   {
     PortableServer::POA **tmp = ACE_reinterpret_cast (PortableServer::POA **, this->buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       CORBA::release (tmp[i]);
@@ -113,17 +113,17 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::operator=
   }
   else
     this->buffer_ = _TAO_Unbounded_Object_Sequence_PortableServer_POAList::allocbuf (rhs.maximum_);
-  
+
   TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
+
   PortableServer::POA **tmp1 = ACE_reinterpret_cast (PortableServer::POA **, this->buffer_);
   PortableServer::POA ** const tmp2 = ACE_reinterpret_cast (PortableServer::POA ** ACE_CAST_CONST, rhs.buffer_);
-  
+
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
       tmp1[i] = PortableServer::POA::_duplicate (tmp2[i]);
     }
-  
+
   return *this;
 }
 
@@ -180,7 +180,7 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::get_buffe
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_PORTABLESERVER_POALIST_CI_)
 #define _PORTABLESERVER_POALIST_CI_
@@ -236,7 +236,7 @@ PortableServer::POAList_var::operator= (const ::PortableServer::POAList_var &p)
         {
           POAList *deep_copy =
             new POAList (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               POAList *tmp = deep_copy;
@@ -246,7 +246,7 @@ PortableServer::POAList_var::operator= (const ::PortableServer::POAList_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -262,27 +262,27 @@ PortableServer::POAList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::POAList_var::operator const ::PortableServer::POAList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::POAList_var::operator ::PortableServer::POAList &() // cast 
+ACE_INLINE
+PortableServer::POAList_var::operator ::PortableServer::POAList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::POAList_var::operator ::PortableServer::POAList &() const // cast 
+ACE_INLINE
+PortableServer::POAList_var::operator ::PortableServer::POAList &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableServer::POAList_var::operator ::PortableServer::POAList *&() // cast 
+PortableServer::POAList_var::operator ::PortableServer::POAList *&() // cast
 {
   return this->ptr_;
 }
@@ -305,7 +305,7 @@ PortableServer::POAList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::PortableServer::POAList *&
 PortableServer::POAList_var::out (void)
 {
@@ -366,7 +366,7 @@ PortableServer::POAList_out::operator= (POAList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::POAList_out::operator ::PortableServer::POAList *&() // cast
 {
   return this->ptr_;
@@ -455,7 +455,7 @@ PortableServer::ObjectId_var::operator= (const ::PortableServer::ObjectId_var &p
         {
           ObjectId *deep_copy =
             new ObjectId (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               ObjectId *tmp = deep_copy;
@@ -465,7 +465,7 @@ PortableServer::ObjectId_var::operator= (const ::PortableServer::ObjectId_var &p
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -493,20 +493,20 @@ PortableServer::ObjectId_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::ObjectId_var::operator const ::PortableServer::ObjectId &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::ObjectId_var::operator ::PortableServer::ObjectId &() // cast 
+ACE_INLINE
+PortableServer::ObjectId_var::operator ::PortableServer::ObjectId &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::ObjectId_var::operator ::PortableServer::ObjectId &() const // cast 
+ACE_INLINE
+PortableServer::ObjectId_var::operator ::PortableServer::ObjectId &() const // cast
 {
   return *this->ptr_;
 }
@@ -535,7 +535,7 @@ PortableServer::ObjectId_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::PortableServer::ObjectId *&
 PortableServer::ObjectId_var::out (void)
 {
@@ -596,7 +596,7 @@ PortableServer::ObjectId_out::operator= (ObjectId *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::ObjectId_out::operator ::PortableServer::ObjectId *&() // cast
 {
   return this->ptr_;
@@ -682,10 +682,10 @@ PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::_TAO_Unbounded_Seque
   {
     PortableServer::ObjectId *tmp1 = _TAO_Unbounded_Sequence_PortableServer_IDs::allocbuf (this->maximum_);
     PortableServer::ObjectId * const tmp2 = ACE_reinterpret_cast (PortableServer::ObjectId * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     this->buffer_ = tmp1;
   }
   else
@@ -700,7 +700,7 @@ PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::operator= (const _TA
 {
   if (this == &rhs)
     return *this;
-  
+
   if (this->release_)
   {
     if (this->maximum_ < rhs.maximum_)
@@ -713,15 +713,15 @@ PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::operator= (const _TA
   }
   else
     this->buffer_ = _TAO_Unbounded_Sequence_PortableServer_IDs::allocbuf (rhs.maximum_);
-  
+
   TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
+
   PortableServer::ObjectId *tmp1 = ACE_reinterpret_cast (PortableServer::ObjectId *, this->buffer_);
   PortableServer::ObjectId * const tmp2 = ACE_reinterpret_cast (PortableServer::ObjectId * ACE_CAST_CONST, rhs.buffer_);
-  
+
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     tmp1[i] = tmp2[i];
-  
+
   return *this;
 }
 
@@ -806,7 +806,7 @@ CORBA::Boolean release)
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_PORTABLESERVER_IDS_CI_)
 #define _PORTABLESERVER_IDS_CI_
@@ -862,7 +862,7 @@ PortableServer::IDs_var::operator= (const ::PortableServer::IDs_var &p)
         {
           IDs *deep_copy =
             new IDs (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               IDs *tmp = deep_copy;
@@ -872,7 +872,7 @@ PortableServer::IDs_var::operator= (const ::PortableServer::IDs_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -888,27 +888,27 @@ PortableServer::IDs_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::IDs_var::operator const ::PortableServer::IDs &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::IDs_var::operator ::PortableServer::IDs &() // cast 
+ACE_INLINE
+PortableServer::IDs_var::operator ::PortableServer::IDs &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::IDs_var::operator ::PortableServer::IDs &() const // cast 
+ACE_INLINE
+PortableServer::IDs_var::operator ::PortableServer::IDs &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableServer::IDs_var::operator ::PortableServer::IDs *&() // cast 
+PortableServer::IDs_var::operator ::PortableServer::IDs *&() // cast
 {
   return this->ptr_;
 }
@@ -937,7 +937,7 @@ PortableServer::IDs_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::PortableServer::IDs *&
 PortableServer::IDs_var::out (void)
 {
@@ -998,7 +998,7 @@ PortableServer::IDs_out::operator= (IDs *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::IDs_out::operator ::PortableServer::IDs *&() // cast
 {
   return this->ptr_;
@@ -1157,7 +1157,7 @@ tao_PortableServer_IdUniquenessPolicy_nil (
 
 ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
 tao_PortableServer_IdUniquenessPolicy_narrow (
-    CORBA::Object *p TAO_ENV_ARG_PARAMETER
+    CORBA::Object *p TAO_ENV_ARG_DECL
   )
 {
   return PortableServer::IdUniquenessPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
@@ -1859,12 +1859,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Thread
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::ThreadPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1880,12 +1880,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Lifesp
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::LifespanPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1899,12 +1899,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdUniq
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::IdUniquenessPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1918,12 +1918,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdAssi
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::IdAssignmentPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1939,12 +1939,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Implic
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::ImplicitActivationPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1958,12 +1958,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Servan
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::ServantRetentionPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1977,12 +1977,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Reques
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::RequestProcessingPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
