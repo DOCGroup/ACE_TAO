@@ -60,14 +60,14 @@ int main (int argc, char *argv[])
        */
 
       ACE_INET_Addr local ((u_short) 0);
-      ACE_SOCK_Dgram client;
-      if (client.open (local) == -1)
+      ACE_SOCK_Dgram peer;
+      if (peer.open (local) == -1)
       {
          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "response open"), -1);
       }
 
       sprintf (buf, "I am here");
-      if (client.send (buf, strlen (buf) + 1, remote) == -1)
+      if (peer.send (buf, strlen (buf) + 1, remote) == -1)
       {
          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "response send"), -1);
       }

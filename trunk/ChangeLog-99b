@@ -1,3 +1,30 @@
+Thu Jan 21 20:45:09 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+        * docs/tutorials/006/client_acceptor.h
+        * docs/tutorials/006/client_handler.cpp
+        * docs/tutorials/006/client_handler.h
+        * docs/tutorials/006/page01.html
+        * docs/tutorials/006/page02.html
+        * docs/tutorials/006/page03.html
+        * docs/tutorials/006/page04.html
+        * docs/tutorials/006/page05.html
+	  Integrated changes from Vishal and Kirthika
+	
+        * docs/tutorials/008/combine.shar
+        * docs/tutorials/008/page02.html
+        * docs/tutorials/008/page03.html
+        * docs/tutorials/008/page04.html
+        * docs/tutorials/009/combine.shar
+        * docs/tutorials/009/directed_client.cpp
+        * docs/tutorials/009/page01.html
+        * docs/tutorials/009/page02.html
+        * docs/tutorials/009/page03.html
+        * docs/tutorials/009/page04.html
+        * docs/tutorials/009/page05.html
+        * docs/tutorials/009/server.cpp
+	  Changes from Kirthika plus colorization.
+
+
 Thu Jan 21 16:01:50 1999  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/007/Makefile:
