@@ -73,15 +73,22 @@ public:
   // Returns reference to Any for extraction using >>=.
   CORBA_Any &return_value (void);
 
-  void invoke (CORBA::Environment &);
+  void invoke (CORBA::Environment &ACE_TRY_ENV =
+               CORBA::Environment::default_environment ());
   // Perform method resolution and invoke an appropriate method. If
   // the method returns successfully, its result is placed in the
   // result argument specified on <create_request>. The behavior is
   // undefined if this <Request> has already been used with a previous
   // call to <invoke>, <send>, or <send_multiple_requests>.
 
-  void send_oneway (CORBA::Environment &);
+  // A default argument is set, but please note that this not recommended
+  // as the user may not be able to propagate the exceptions
+
+  void send_oneway (CORBA::Environment &ACE_TRY_ENV =
+                    CORBA::Environment::default_environment ());
   // Send a oneway request.
+  // A default argument is set, but please note that this not recommended
+  // as the user may not be able to propagate the exceptions
 
   // Pseudo object methods
   static CORBA_Request* _duplicate (CORBA_Request*);
