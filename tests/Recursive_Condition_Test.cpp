@@ -110,6 +110,39 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   mutex_.release ();
   ACE_Thread_Manager::instance ()->wait ();
 
+  // Test #2 - Sleep 2 seconds before releasing mutex
+  if (ACE_Thread_Manager::instance()->spawn (waiter) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
+
+  ACE_OS::sleep (2);
+  if (mutex_.acquire () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("mutex acquire")),
+                      1);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) signaling condition...\n")));
+  if (condition_.signal () == -1)
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("signal")));
+  }
+  ACE_OS::sleep(2);
+  mutex_.release ();
+  ACE_Thread_Manager::instance ()->wait ();
+
+  // Test #3 - One main thread - 4 subthreads
+  if (ACE_Thread_Manager::instance()->spawn_n (4,waiter) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
+
+  ACE_OS::sleep (2);
+  if (mutex_.acquire () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("mutex acquire")),
+                      1);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) signaling condition...\n")));
+  if (condition_.signal () == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("signal")));
+  mutex_.release ();
+  ACE_Thread_Manager::instance ()->wait ();
+
 #else
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE doesn't support recursive condition variables on this platform\n")));
