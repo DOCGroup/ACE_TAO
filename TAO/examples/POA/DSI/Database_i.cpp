@@ -72,14 +72,14 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list);
 
-  CORBA::Any any_1 (CORBA::_tc_string);
-
   ACE_TRY
     {
-      CORBA::NamedValue_ptr named_value_1 = list->add_value ("value",
-                                                             any_1,
-                                                             CORBA::ARG_IN,
-                                                             ACE_TRY_ENV);
+      CORBA::Any any_1 (CORBA::_tc_string);
+
+      list->add_value ("value",
+                       any_1,
+                       CORBA::ARG_IN,
+                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
       ACE_UNUSED_ARG (named_value_1);
