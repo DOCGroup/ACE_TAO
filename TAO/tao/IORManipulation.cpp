@@ -88,7 +88,8 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
       // If the object type_is's differ then raise an exception.
       if (type_id.in () && iors[i]->_stubobj ()->type_id.in () &&
-          ACE_OS::strcmp (type_id, iors[i]->_stubobj ()->type_id))
+          ACE_OS::strcmp (type_id.in (),
+                          iors[i]->_stubobj ()->type_id.in ()))
         ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                           CORBA::Object::_nil ());
 
@@ -168,7 +169,8 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // First verify they are the same type!
   CORBA::String_var type_id = ior1->_stubobj ()->type_id;
   if (type_id.in () && ior2->_stubobj ()->type_id.in () &&
-      ACE_OS::strcmp (type_id, ior2->_stubobj ()->type_id))
+      ACE_OS::strcmp (type_id.in (),
+                      ior2->_stubobj ()->type_id.in ()))
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
