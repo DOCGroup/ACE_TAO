@@ -1,3 +1,8 @@
+Sat Oct  5 17:04:38 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Memory_Pool.cpp (ACE_Pagefile_Memory_Pool::acquire): Remove
+          casts on comparisons, allowing size_t values to compare directly.
+
 Sat Oct  5 12:30:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Manager.cpp (list_services): Remove extra right paren.
