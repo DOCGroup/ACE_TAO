@@ -69,22 +69,41 @@ void
 ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &rusage)
 {
   ACE_TRACE ("ACE_Profile_Timer::elapsed_rusage");
-  rusage.pr_lwpid = this->end_usage_.pr_lwpid - this->last_usage_.pr_lwpid;
-  rusage.pr_count = this->end_usage_.pr_count - this->last_usage_.pr_count;
-  rusage.pr_minf  = this->end_usage_.pr_minf - this->last_usage_.pr_minf;
-  rusage.pr_majf  = this->end_usage_.pr_majf - this->last_usage_.pr_majf;
-  rusage.pr_inblk = this->end_usage_.pr_inblk - this->last_usage_.pr_inblk;
-  rusage.pr_oublk = this->end_usage_.pr_oublk - this->last_usage_.pr_oublk;
-  rusage.pr_msnd  = this->end_usage_.pr_msnd - this->last_usage_.pr_msnd;
-  rusage.pr_mrcv  = this->end_usage_.pr_mrcv - this->last_usage_.pr_mrcv;
-  rusage.pr_sigs  = this->end_usage_.pr_sigs - this->last_usage_.pr_sigs;
-  this->subtract (rusage.pr_wtime, this->end_usage_.pr_wtime, this->last_usage_.pr_wtime);
-  this->subtract (rusage.pr_ltime, this->end_usage_.pr_ltime, this->last_usage_.pr_ltime);
-  this->subtract (rusage.pr_slptime, this->end_usage_.pr_slptime, this->last_usage_.pr_slptime);
-  rusage.pr_vctx  = this->end_usage_.pr_vctx - this->last_usage_.pr_vctx;
-  rusage.pr_ictx  = this->end_usage_.pr_ictx - this->last_usage_.pr_ictx;
-  rusage.pr_sysc  = this->end_usage_.pr_sysc - this->last_usage_.pr_sysc;
-  rusage.pr_ioch  = this->end_usage_.pr_ioch - this->last_usage_.pr_ioch;
+  rusage.pr_lwpid =
+    this->end_usage_.pr_lwpid - this->last_usage_.pr_lwpid;
+  rusage.pr_count =
+    this->end_usage_.pr_count - this->last_usage_.pr_count;
+  rusage.pr_minf  =
+    this->end_usage_.pr_minf - this->last_usage_.pr_minf;
+  rusage.pr_majf  =
+    this->end_usage_.pr_majf - this->last_usage_.pr_majf;
+  rusage.pr_inblk =
+    this->end_usage_.pr_inblk - this->last_usage_.pr_inblk;
+  rusage.pr_oublk =
+    this->end_usage_.pr_oublk - this->last_usage_.pr_oublk;
+  rusage.pr_msnd =
+    this->end_usage_.pr_msnd - this->last_usage_.pr_msnd;
+  rusage.pr_mrcv =
+    this->end_usage_.pr_mrcv - this->last_usage_.pr_mrcv;
+  rusage.pr_sigs =
+    this->end_usage_.pr_sigs - this->last_usage_.pr_sigs;
+  this->subtract (rusage.pr_wtime,
+                  this->end_usage_.pr_wtime,
+                  this->last_usage_.pr_wtime);
+  this->subtract (rusage.pr_ltime,
+                  this->end_usage_.pr_ltime,
+                  this->last_usage_.pr_ltime);
+  this->subtract (rusage.pr_slptime,
+                  this->end_usage_.pr_slptime,
+                  this->last_usage_.pr_slptime);
+  rusage.pr_vctx  =
+    this->end_usage_.pr_vctx - this->last_usage_.pr_vctx;
+  rusage.pr_ictx  =
+    this->end_usage_.pr_ictx - this->last_usage_.pr_ictx;
+  rusage.pr_sysc  =
+    this->end_usage_.pr_sysc - this->last_usage_.pr_sysc;
+  rusage.pr_ioch  =
+    this->end_usage_.pr_ioch - this->last_usage_.pr_ioch;
 }
 
 // Compute the elapsed time.
@@ -136,36 +155,50 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
   ACE_TRACE ("ACE_Profile_Timer::elapsed_rusage");
 #    if !defined (ACE_WIN32) && !defined (ACE_HAS_LIMITED_RUSAGE_T)
   // integral shared memory size
-  usage.ru_ixrss = this->end_usage_.ru_ixrss - this->last_usage_.ru_ixrss;
+  usage.ru_ixrss =
+    this->end_usage_.ru_ixrss - this->last_usage_.ru_ixrss;
   // integral unshared data "
-  usage.ru_idrss = this->end_usage_.ru_idrss - this->last_usage_.ru_idrss;
+  usage.ru_idrss =
+    this->end_usage_.ru_idrss - this->last_usage_.ru_idrss;
   // integral unshared stack "
-  usage.ru_isrss = this->end_usage_.ru_isrss - this->last_usage_.ru_isrss;
+  usage.ru_isrss =
+    this->end_usage_.ru_isrss - this->last_usage_.ru_isrss;
   // page reclaims - total vmfaults
-  usage.ru_minflt = this->end_usage_.ru_minflt - this->last_usage_.ru_minflt;
+  usage.ru_minflt =
+    this->end_usage_.ru_minflt - this->last_usage_.ru_minflt;
   // page faults
-  usage.ru_majflt = this->end_usage_.ru_majflt - this->last_usage_.ru_majflt;
+  usage.ru_majflt =
+    this->end_usage_.ru_majflt - this->last_usage_.ru_majflt;
   // swaps
-  usage.ru_nswap = this->end_usage_.ru_nswap - this->last_usage_.ru_nswap;
+  usage.ru_nswap =
+    this->end_usage_.ru_nswap - this->last_usage_.ru_nswap;
   // block input operations
-  usage.ru_inblock = this->end_usage_.ru_inblock -
-                       this->last_usage_.ru_inblock;
+  usage.ru_inblock =
+    this->end_usage_.ru_inblock - this->last_usage_.ru_inblock;
   // block output operations
-  usage.ru_oublock = this->end_usage_.ru_oublock -
-                       this->last_usage_.ru_oublock;
+  usage.ru_oublock =
+    this->end_usage_.ru_oublock - this->last_usage_.ru_oublock;
   // messages sent
-  usage.ru_msgsnd = this->end_usage_.ru_msgsnd - this->last_usage_.ru_msgsnd;
+  usage.ru_msgsnd =
+    this->end_usage_.ru_msgsnd - this->last_usage_.ru_msgsnd;
   // messages received
-  usage.ru_msgrcv = this->end_usage_.ru_msgrcv - this->last_usage_.ru_msgrcv;
+  usage.ru_msgrcv =
+    this->end_usage_.ru_msgrcv - this->last_usage_.ru_msgrcv;
   // signals received
-  usage.ru_nsignals = this->end_usage_.ru_nsignals -
-                        this->last_usage_.ru_nsignals;
+  usage.ru_nsignals =
+    this->end_usage_.ru_nsignals - this->last_usage_.ru_nsignals;
   // voluntary context switches
-  usage.ru_nvcsw = this->end_usage_.ru_nvcsw - this->last_usage_.ru_nvcsw;
+  usage.ru_nvcsw =
+    this->end_usage_.ru_nvcsw - this->last_usage_.ru_nvcsw;
   // involuntary context switches
-  usage.ru_nivcsw = this->end_usage_.ru_nivcsw - this->last_usage_.ru_nivcsw;
-  this->subtract (usage.ru_utime, this->end_usage_.ru_utime, this->last_usage_.ru_utime);
-  this->subtract (usage.ru_stime, this->end_usage_.ru_stime, this->last_usage_.ru_stime);
+  usage.ru_nivcsw =
+    this->end_usage_.ru_nivcsw - this->last_usage_.ru_nivcsw;
+  this->subtract (usage.ru_utime,
+                  this->end_usage_.ru_utime,
+                  this->last_usage_.ru_utime);
+  this->subtract (usage.ru_stime,
+                  this->end_usage_.ru_stime,
+                  this->last_usage_.ru_stime);
 #    else
   ACE_UNUSED_ARG(usage);
 #    endif /* ACE_WIN32 */
@@ -305,8 +338,10 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
   ACE_TRACE ("ACE_Profile_Timer::elapsed_rusage");
 
 #  if defined (ACE_HAS_GETRUSAGE)
-  usage.ru_utime = this->end_usage_.ru_utime - this->begin_usage_.ru_utime;
-  usage.ru_stime = this->end_usage_.ru_stime - this->begin_usage_.ru_stime;
+  usage.ru_utime =
+    this->end_usage_.ru_utime - this->begin_usage_.ru_utime;
+  usage.ru_stime =
+    this->end_usage_.ru_stime - this->begin_usage_.ru_stime;
 #  else /* ACE_HAS_GETRUSAGE */
   usage = 0;
 #  endif /* ACE_HAS_GETRUSAGE */
@@ -371,6 +406,5 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
 
   return 0;
 }
-
 
 #endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
