@@ -1,3 +1,7 @@
+Wed Jan 07 14:31:34 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.16, released Wed Jan 07 14:31:34 1998.
+
 Wed Jan  7 13:38:28 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/test_config.h (set_output): Added an environment variable
