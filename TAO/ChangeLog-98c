@@ -1,3 +1,29 @@
+Wed Jan  7 13:55:26 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the assignment of
+ 	default port number to fetch the value from the environment
+ 	similar to what is done in orb_core.cpp.
+
+	* tao/poa.{h,cpp} (handle_request): Moved functionality to
+ 	TAO_Server_Connection_Handler in connect.*.
+
+	* tao/orb_core.cpp: Added the ability to specify the default
+ 	server port via an environment variable using the ACE_Env_Value
+ 	template.  The name of the environment variable is the same as the
+ 	preprocessor #define: TAO_DEFAULT_SERVER_PORT.
+
+	* tao/giop.* (TAO_GIOP_LocateRequest): Added a CTOR and init
+ 	method similar to TAO_GIOP_Request.
+
+	* tao/connect.{h,cpp} (handle_locate): Added to handle the
+ 	LocateRequest CORBA request.  Also moved handle_request() method
+ 	from the poa to here.
+
+	* tao/Makefile: Added "fakesvcconf" variable check so that if
+ 	somebody wants to build with faked svc config entries on a
+ 	platform, they can simply do "make fakesvcconf=1".  The CHORUS and
+ 	VXWORKS sections now override the value of this variable to be 1.
+
 Wed Jan  7 12:00:14 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tao/corbacom.h: Added forward declarations for
@@ -72,8 +98,8 @@ Tue Jan  6 19:48:45 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 Tue Jan  6 17:25:57 1998  Nanbor Wang  <nw1@lindy.cs.wustl.edu>
 
-	* MT_Cubit.dsw, client.dsp, server.dsp:
-	Update workspace and project files to reflect the change in directory structure.
+	* MT_Cubit.dsw,client.dsp,server.dsp: Update workspace and
+ 	project files to reflect the change in directory structure.
 
 Mon Jan 05 23:54:13 1998    <coryan@MILONGA>
 

@@ -65,10 +65,17 @@ public:
 
   // = Template Methods Called by <handle_input>
 
-  virtual int recv_request (CDR &msg, CORBA::Environment &env);
+  enum RequestStatus
+  {
+    Error = -1,
+    Request,                    // A CORBA Request was received
+    LocateRequest               // A CORBA LocateRequest was received
+  };
+
+  virtual RequestStatus recv_request (CDR &msg, CORBA::Environment &env);
   // Extract a message from the stream associated with <peer()> and
-  // place it into <msg>.  Return 0 if success, -1 with <errno> and
-  // <env> set if problems.
+  // place it into <msg>.  Return either <Request> or <LocateRequest>
+  // if success, <Error> with <errno> and <env> set if problems.
 
   virtual int handle_message (CDR &msg, int &response_required,
                               CDR &response, CORBA::Environment &env);
@@ -78,6 +85,23 @@ public:
   // response (including errors).  In case of errors, -1 is returned
   // and additional information carried in <env>.
 
+  virtual int handle_locate (CDR &msg, int &response_required,
+                             CDR &response, CORBA::Environment &env);
+  // Handle processing of the location request residing in <msg>,
+  // setting <response_required> to one if no errors are encountered.
+  // The LocateRequestReply is placed into <response>.  In case of
+  // errors, -1 is returned and additional information carried in
+  // <env>.
+
+  virtual void handle_request (TAO_GIOP_RequestHeader hdr,
+                               CDR &request_body,
+                               CDR &response,
+                               TAO_Dispatch_Context *some_info,
+                               CORBA::Environment &env);
+  // Once a request is found in a message, this finds the appropriate
+  // POA and dispatches it, then takes care to properly format any
+  // response.
+  
   virtual void send_response (CDR &response);
   // Send <response> to the client on the other end.
 
