@@ -46,8 +46,7 @@ Consumer::Consumer (void)
 Consumer::~Consumer (void)
 {
   // Allow the handlers to clean up.
-  this->ih_.handle_close ();
-  this->ch_.handle_close ();
+  this->ih_.handle_close ();  
 }
 
 int

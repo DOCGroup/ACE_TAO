@@ -101,9 +101,17 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
     ACE_ALLOCATOR (compile_buffer,
 		   ACE_OS::strdup (""));
   else
+  {
+	#if defined (ACE_HAS_REGEX)	  
     // Compile the regular expression (the 0's cause ACE_OS::compile
     // to allocate space).
     compile_buffer = ACE_OS::compile (filtering_criteria, 0, 0);
+	#else 
+	// Win32 does not support regular expression functions such as compile.
+	ACE_ALLOCATOR (compile_buffer,
+		   ACE_OS::strdup (""));
+	#endif // #if defined (ACE_HAS_REGEX)
+  }
 
   // Should throw an exception here!
   ACE_ASSERT (compile_buffer != 0);
@@ -331,9 +339,13 @@ Notifier_i::push (const Event_Comm::Event &event,
       const char *criteria = me->int_id_->criteria ();
       ACE_ASSERT (criteria);
 
-      // Do a regular expression comparison to determine matching.
+	#if defined (ACE_HAS_REGEX)	
+	  // Do a regular expression comparison to determine matching.
       if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
 	  || ACE_OS::step (event.tag_, regexp) != 0)
+	#endif // #if defined (ACE_HAS_REGEX)	
+	  // if ACE_HAS_REGEX	has not been defined, 
+	  // let everything through. 
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       "string %s matched regexp \"%s\" for client %x\n",
