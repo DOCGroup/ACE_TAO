@@ -1,3 +1,11 @@
+Tue Feb  1 20:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+          Regenerated with the latest version of the TAO_IDL compiler
+
 Tue Feb  1 19:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServerObjectC.cpp:
