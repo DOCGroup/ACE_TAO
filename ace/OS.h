@@ -2939,7 +2939,14 @@ extern "C"
 #undef map
 #endif
 
+#ifdef ACE_HAS_STL_MAP_CONFLICT
+#define queue _Queue_
+#endif
 #include /**/ <netinet/in.h>
+#ifdef ACE_HAS_STL_MAP_CONFLICT
+#undef queue
+#endif
+  
 #if defined(VXWORKS) && defined(ghs)
 // Works around a lack of proper prototypes for these functions on VxWorks
 unsigned long inet_addr(const char *);
@@ -3638,7 +3645,13 @@ typedef int ucontext_t;
 #endif /* SA_RESTART */
 
 #if defined (ACE_HAS_TIMOD_H)
+#ifdef ACE_HAS_STL_MAP_CONFLICT
+#define queue _Queue_
+#endif
 #include /**/ <sys/timod.h>
+#ifdef ACE_HAS_STL_MAP_CONFLICT
+#undef queue
+#endif
 #elif defined (ACE_HAS_OSF_TIMOD_H)
 #include /**/ <tli/timod.h>
 #endif /* ACE_HAS_TIMOD_H */
