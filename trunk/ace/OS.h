@@ -4329,6 +4329,29 @@ public:
 // be an extern "C" to make certain compilers happy...
 extern "C" ACE_Export void *ace_thread_adapter (void *args);
 
+class ACE_OS_Thread_Descriptor
+{
+  // = TITLE
+  //     Parent class of all ACE_Thread_Descriptor classes.
+  //
+  // =
+  //     Container for ACE_Thread_Descriptor members that are
+  //     used in ACE_OS.
+public:
+  long flags (void) const;
+  // Get the thread creation flags.
+
+protected:
+  ACE_OS_Thread_Descriptor (long flags = 0);
+  // For use by ACE_Thread_Descriptor.
+
+  long flags_;
+  // Keeps track of whether this thread was created "detached" or not.
+  // If a thread is *not* created detached then if someone calls
+  // <ACE_Thread_Manager::wait>, we need to join with that thread (and
+  // close down the handle).
+};
+
 // Forward decl.
 class ACE_Thread_Manager;
 class ACE_Thread_Descriptor;
@@ -4394,7 +4417,7 @@ private:
   ACE_Thread_Manager *thr_mgr_;
   // Optional thread manager.
 
-  ACE_Thread_Descriptor *thr_desc_;
+  ACE_OS_Thread_Descriptor *thr_desc_;
   // Optional thread descriptor.  Passing this pointer in will force
   // the spawned thread to cache this location in <Log_Msg> and wait
   // until <Thread_Manager> fills in all information in thread
