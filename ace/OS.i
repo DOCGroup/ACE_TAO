@@ -2367,8 +2367,9 @@ ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 
 #   elif defined (ACE_HAS_STHREADS)
   attributes.type = 0;
-  return 0;
 #   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
+  return 0;
+# else
   ACE_UNUSED_ARG (attributes);
   return 0;
 # endif /* ACE_HAS_THREADS */

@@ -1,3 +1,10 @@
+Wed Aug 18 13:11:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i:
+	  The new methods to manipulate condition variable attributes
+	  were not compiling on single threaded platforms.
+
 Wed Aug 18 13:09:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Makefile: don't add libDLL_Test.$(SOEXT) to BUILD
