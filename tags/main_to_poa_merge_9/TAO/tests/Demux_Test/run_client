@@ -1,0 +1,17 @@
+#!/bin/sh
+client_${1}_${2} -o ${1} -m ${2} -t r -i $3
+sleep 5
+client_${1}_${2} -o ${1} -m ${2} -t w -i $3
+sleep 5
+client_${1}_${2} -o ${1} -m ${2} -t r -i $3
+sleep 5
+client_${1}_${2} -o ${1} -m ${2} -t w -i $3
+sleep 5
+client_${1}_${2} -o ${1} -m ${2} -t r -i $3
+sleep 5
+client_${1}_${2} -o ${1} -m ${2} -t w -i $3
+sleep 5
+client_${1}_${2} -o ${1} -m ${2} -t r -i $3
+sleep 5
+client_${1}_${2} -o ${1} -m ${2} -t w -i $3
+sleep 5

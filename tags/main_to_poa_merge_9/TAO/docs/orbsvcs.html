@@ -1,0 +1,56 @@
+<html>
+  <!-- $Id$ -->
+  <head>
+    <title>TAO Services Documentation</title>
+  </head>
+
+  <body>
+   <H1>TAO Services Directory Hierarchy</H1>
+
+    <P>The file and directory organization for TAO services can be
+      confusing at first glance (and even on subsequent ones to be
+      honest),
+      so we felt like some rationale and explanation of the directory
+      hierarchy was needed.</P>
+
+    <P>For general sanity all TAO services files are located under 
+      <CODE>$TAO_ROOT/orbsvcs</CODE>.
+      The current structure for this directory emphasizes the
+      decoupling from the interfaces (stubs) and their
+      implementation;
+      for this reason the services implementations are each on a
+      separate directory,
+      for instance <B>Naming Service</B> is in
+      <CODE>$TAO_ROOT/orbsvcs/Naming_Service</CODE>.</P>
+
+    <P>It is expected that clients use more
+      than one service at the same time
+      (in fact some of the services already do, for instance the
+      <B>Event Service</B> uses the <B>Naming Service</B> and the
+      <B>Scheduling Service</B>);
+      for this reason all the services stubs are grouped in one
+      library;
+      this library is located in
+      <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE>.
+      Usually the include path is only <CODE>$TAO_ROOT/orbsvcs</CODE>,
+      so files are included like in:</P>
+
+<P><CODE>
+#include "orbsvcs/CosNamingC.h"
+</CODE></P>
+
+    <P>To simplify the IDL generation the skeletons are also on the
+      library,
+      this is not a problem for client programs and most services need
+      to link the library anyway
+      (since they use other services.)</P>
+
+    <P>Finally some test are located in
+      <CODE>$TAO_ROOT/orbsvcs/tests</CODE>,
+      since most tests require several files each one has its own
+      directory.</P>
+
+    <hr>
+    <address><a href="mailto:coryan@macarena.cs.wustl.edu">Carlos O'Ryan</a></address>
+  </body>
+</html>
