@@ -1231,8 +1231,8 @@ main (int argc, char *argv [])
                               num_iterations,
                           (double) ACE_UINT64_DBLCAST_ADAPTER (
                             ping_suspend_resume_test.elapsed_time () -
-                            suspend_resume_test.elapsed_time () /
-                              num_iterations / 2u)));
+                            suspend_resume_test.elapsed_time ()) /
+                              num_iterations / 2u));
             }
           else
             {
