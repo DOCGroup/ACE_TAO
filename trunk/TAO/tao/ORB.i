@@ -5,19 +5,6 @@
 // String_var type
 // ----------------------------------------------------------------------
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::ORB_ptr obj)
-{
-  return obj == 0;
-}
-
-ACE_INLINE void
-CORBA::release (CORBA::ORB_ptr obj)
-{
-  if (obj)
-    obj->_decr_refcnt ();
-}
-
 ACE_INLINE
 CORBA_String_var::CORBA_String_var (void)
 {
@@ -333,6 +320,23 @@ ACE_INLINE TAO_ORB_Core *
 CORBA_ORB::orb_core (void) const
 {
   return this->orb_core_;
+}
+
+// ************************************************************
+// These are in CORBA namespace
+// ************************************************************
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::ORB_ptr obj)
+{
+  return obj == 0;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::ORB_ptr obj)
+{
+  if (obj)
+    obj->_decr_refcnt ();
 }
 
 // *************************************************************
