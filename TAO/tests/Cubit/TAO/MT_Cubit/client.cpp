@@ -108,7 +108,7 @@ do_priority_inversion_test (Task_State &ts)
                         priority);
 
   // Now activate the high priority client.
-  priority = ACE_THR_PRI_FIFO_DEF;
+  priority = ACE_THR_PRI_FIFO_DEF + 25;
 
   if (high_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
                                      1,
@@ -138,6 +138,10 @@ do_priority_inversion_test (Task_State &ts)
 
   for (i = 0; i < ts.thread_count_ - 1; i++)
     {
+  ACE_DEBUG ((LM_DEBUG,
+              "Creating servant with low priority %d\n",
+              priority));
+
       // The first thread starts at the lowest priority of all the low
       // priority clients.
       if (low_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
