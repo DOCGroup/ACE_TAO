@@ -1,3 +1,11 @@
+Fri Feb 08 22:20:38 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Environment.cpp (operator=):
+
+	  Carlos doesn't know how to swap two variables.  We need to have
+	  a generic version.  Fixes a seg fault in emulated exception
+	  builds.
+
 Fri Feb 08 21:27:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Environment.cpp (exception_type):

@@ -39,7 +39,7 @@ CORBA_Environment::operator= (const CORBA_Environment& rhs)
   CORBA_Environment tmp (rhs);
   {
     CORBA_Exception *tmp_ex = this->exception_;
-    this->exception_ = rhs.exception_;
+    this->exception_ = tmp.exception_;
     tmp.exception_ = tmp_ex;
   }
   {
