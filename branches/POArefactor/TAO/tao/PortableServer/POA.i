@@ -154,7 +154,7 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Lock access for the duration of this transaction.
-  TAO::POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
+  TAO::Portable_Server::POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
   ACE_CHECK;
   ACE_UNUSED_ARG (poa_guard);
 

@@ -664,7 +664,7 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   this->root_->_add_ref ();
 
   // Lock access for the duration of this transaction.
-  TAO::POA_Guard poa_guard (*this->root_ ACE_ENV_ARG_PARAMETER);
+  TAO::Portable_Server::POA_Guard poa_guard (*this->root_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Iterate over the registered IOR interceptors so that they may be
