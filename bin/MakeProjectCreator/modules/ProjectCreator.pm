@@ -2173,9 +2173,17 @@ sub write_output_file {
   my($status)   = 0;
   my($error)    = undef;
   my($tover)    = $self->get_template_override();
-  my($template) = (defined $tover ? $tover : $self->get_template()) .
-                  ".$TemplateExtension";
-  my($tfile)    = $self->search_include_path($template);
+  my($template) = (defined $tover ? $tover : $self->get_template());
+
+  if (! ($template =~ /$TemplateExtension/)) {
+    $template = $template . ".$TemplateExtension";
+  }
+  my($tfile) = "";
+  if ($template =~ /^\//) {
+    $tfile = $template;
+  } else { 
+    $tfile = $self->search_include_path($template);
+  }
 
   if (defined $tfile) {
     ## Read in the template values for the

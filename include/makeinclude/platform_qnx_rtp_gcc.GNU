@@ -16,12 +16,14 @@ else
   LDLAGS += -fno-exceptions
 endif # ! exceptions
 
+pipes ?= 1
+
 CC      = gcc
 CXX     = g++
 
 DCFLAGS += -gstabs
 
-CFLAGS  += -pipe -W -Wall -Wpointer-arith
+CFLAGS  += -W -Wall -Wpointer-arith
 
 DLD     = $(CXX)
 LD      = $(CXX)
