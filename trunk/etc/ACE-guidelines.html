@@ -305,13 +305,16 @@ to Graham for providing the OSE tools!
           }
         </pre><p>
 
-    <li>If a cast is necessary, avoid use of ANSI-style casts,
+    <li>If a cast is necessary, avoid use of function-style casts,
         <em>e.g.</em>, <code>int (foo)</code>.  Instead, use
-        the ACE_static_cast macro:
+        one of the ACE cast macros:
 
         <pre>
         return ACE_static_cast(size_t, this-&gt;count_) &gt; that-&gt;size_;
         </pre><p>
+
+        Not the with ANSI casts, reinterpret_cast can not be used
+        to cast away constness.  That must be done with const_cast.<p>
 
     <li>In general, if instances of a class should not be copied,
         then a private copy constructor and assignment operator should
