@@ -1,3 +1,8 @@
+Mon Oct 09 03:23:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_export_file.pl: Changed the script so we can define
+	  a single macro to switch multiple *_HAS_DLL default definition.
+
 Sat Oct  7 000:50:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.cpp:
@@ -1359,7 +1364,7 @@ Thu Sep 07 18:10:00 2000  Darrell Brunsch  <brunsch@uci.edu>
           ACE_HAS_WINSOCK2 is turned on by default for all of Win32.
           Windows 98 and Windows ME should have Winsock2, and NT/2000
           also does.  For Windows 95, this requires that the Winsock 2
-          library for Windows 95 is added or ACE_HAS_WINSOCK2 defined to 
+          library for Windows 95 is added or ACE_HAS_WINSOCK2 defined to
           0 in config.h before including config-win32.h (overriding it).
 
           Thanks to Giovanni Zito <gzito@mbox.thunder.it> for inquiring
