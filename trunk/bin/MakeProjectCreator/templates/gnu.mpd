@@ -108,9 +108,6 @@ TEMPINCDIR := $(TEMPINCDIR)/<%project_name%>
 
 all: $(TEMPINCDIR)
 
-$(TEMPINCDIR):
-	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
-
 endif
 <%if(exename)%>
 OUTPUT_DIRECTORY = <%if(install)%><%install%><%else%>.<%endif%>
