@@ -500,6 +500,13 @@ public:
   // returns a pointer to the file, else it returns a NULL
   // pointer. <type> specifies how the file should be open.
 
+  static ACE_TCHAR *ldname (const ACE_TCHAR *entry_point);
+  // Transforms <entry_point> into a form that can be located in a
+  // dynamic library using <dlsym>. For example, with Win32/Borland
+  // extern "C" functions which use the default calling convention
+  // have a '_' prepended. Always returns a buffer that has been
+  // dynamically allocated using <operator new>.
+
   static int get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len);
   // Returns the temporary directory including the trailing slash in
   // <buffer>.  Returns -1 for an error or if the buffer_len is not
