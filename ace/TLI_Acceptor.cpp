@@ -22,7 +22,7 @@ class ACE_TLI_Request_Queue
 public:
   ACE_TLI_Request_Queue (void);
 
-  ACE_HANDLE open (ACE_HANDLE fd, int size); 
+  ACE_HANDLE open (ACE_HANDLE fd, int size);
   int close (void);
 
   int enqueue (const char device[], int restart, int rwflag);
@@ -42,7 +42,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_HANDLE handle_; 
+  ACE_HANDLE handle_;
   int size_;
   int current_count_;
   ACE_TLI_Request *base_;
@@ -148,7 +148,7 @@ open_new_endpoint (ACE_HANDLE listen_handle,
      }
 
   if (fd == ACE_INVALID_HANDLE
-      || ACE_OS::t_bind (fd, rep_p, 0) == -1)
+      || ACE_OS::t_bind (fd, req_p, 0) == -1)
     fd = ACE_INVALID_HANDLE;
 #if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
   else if (rwf != 0 && ACE_OS::ioctl (fd,
@@ -179,7 +179,7 @@ ACE_TLI_Request_Queue::close (void)
       item.handle_ = ACE_INVALID_HANDLE;
       if (ACE_OS::t_free ((char *) item.callp_,
                           T_CALL) != 0)
-        res = -1; 
+        res = -1;
     }
 
   delete [] this->base_;
@@ -242,12 +242,12 @@ ACE_TLI_Request_Queue::enqueue (const char device[],
 
   do
     res = ACE_OS::t_listen (this->handle_, req.callp_);
-  while (res == -1  
-         && restart 
-         && t_errno == TSYSERR 
+  while (res == -1
+         && restart
+         && t_errno == TSYSERR
          && errno == EINTR);
 
-  if (res != -1) 
+  if (res != -1)
     {
       req.handle_ = open_new_endpoint (this->handle_,
                                        device,
@@ -265,7 +265,7 @@ ACE_TLI_Request_Queue::enqueue (const char device[],
 
   // Something must have gone wrong, so free up allocated space.
   this->free (temp);
-  return -1; 
+  return -1;
 }
 
 // Locate and remove SEQUENCE_NUMBER from the list of pending
@@ -309,7 +309,7 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
                         const char dev[])
 {
   ACE_TRACE ("ACE_TLI_Acceptor::open");
-  ACE_HANDLE res = 0; 
+  ACE_HANDLE res = 0;
   int one = 1;
 
   this->disp_ = 0;
@@ -331,7 +331,7 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
            && this->set_option (SOL_SOCKET,
                                 SO_REUSEADDR,
                                 &one,
-                                sizeof one) == -1) 
+                                sizeof one) == -1)
     res = ACE_INVALID_HANDLE;
 #endif /* ACE_HAS_FORE_ATM_XTI */
   else if ((this->disp_ =
@@ -364,14 +364,14 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
           req.addr.len = remote_sap.get_size ();
         }
 
-      res = (ACE_HANDLE) ACE_OS::t_bind (this->get_handle (), 
+      res = (ACE_HANDLE) ACE_OS::t_bind (this->get_handle (),
                                          &req,
                                          0);
       if (res != ACE_INVALID_HANDLE)
         {
           ACE_NEW_RETURN (this->queue_,
                           ACE_TLI_Request_Queue,
-                          ACE_INVALID_HANDLE); 
+                          ACE_INVALID_HANDLE);
           res = this->queue_->open (this->get_handle (),
                                     this->backlog_);
         }
@@ -474,13 +474,13 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
       do
         res = ACE_OS::t_listen (this->get_handle (),
                                     req->callp_);
-      while (res == -1  
+      while (res == -1
              && restart
              && errno == EINTR);
 
-      if (res != -1) 
+      if (res != -1)
       {
-        req->handle_ = open_new_endpoint (this->get_handle (), 
+        req->handle_ = open_new_endpoint (this->get_handle (),
                                           this->device_,
                                           req->callp_,
                                           rwf
@@ -506,7 +506,7 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
                     (void *) opt,
                     sizeof *opt);
 
-  while (res != -1) 
+  while (res != -1)
     {
       res = ACE_OS::t_accept (this->get_handle (),
                               req->handle_,
@@ -519,7 +519,7 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
         res = 0;
     }
 
-  if (res == -1) 
+  if (res == -1)
     {
       if (errno != EWOULDBLOCK)
         {
