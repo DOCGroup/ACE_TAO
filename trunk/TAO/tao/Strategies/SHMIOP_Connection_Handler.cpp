@@ -234,7 +234,7 @@ TAO_SHMIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 int
 TAO_SHMIOP_Connection_Handler::close (u_long)
 {
-  this->destroy ();
+  this->decr_ref_count ();
 
   return 0;
 }

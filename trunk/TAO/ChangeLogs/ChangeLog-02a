@@ -1,3 +1,13 @@
+Tue Jan  9 13:28:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed an
+	  error that showed up only when the thread-per-connection is
+	  used. The closing of the handlers left the connection cache
+	  unstable which was doing bad things at shutdown.
+
 Tue Jan  9 11:32:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:

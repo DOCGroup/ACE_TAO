@@ -53,7 +53,6 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
-
   // If the socket has not already been closed.
   if (this->get_handle () != ACE_INVALID_HANDLE)
     {
@@ -230,7 +229,7 @@ TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 int
 TAO_IIOP_Connection_Handler::close (u_long)
 {
-  this->destroy ();
+  this->decr_ref_count ();
 
   return 0;
 }
