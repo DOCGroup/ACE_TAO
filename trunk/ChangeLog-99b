@@ -1,13 +1,24 @@
+Tue Sep 21 11:35:57 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Threads/tss1.cpp (main): Need to rearrange where the
+	  explicit template instantiations are to make certain compilers
+ 	  happy.  Thanks to Jeffrey Franks <Jeffrey_Franks@i-o.com> for
+ 	  reporting the problem.
+
+	* tests/Makefile.bor: Updated ACE tests makefile to build (almost)
+ 	  all of the tests.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for this fix.
+
+	* examples/Reactor/Misc/test_signals_2.cpp (main),
+	* examples/Reactor/WFMO_Reactor/test_talker.cpp (STDIN_Handler):
+	  Preemptively fixed a couple more potential problems that might
+ 	  trigger the type of problem reported in the next entry below.
+	
 Tue Sep 21 11:41:33 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Event_Channel.cpp (open):
-
 	  Changed cast style to make gcc 2.95.1 happy.  Thanks to Jeffrey
-	  Franks <Jeffrey_Franks@i-o.com> for reporting the problems.
-
-	* THANKS:
-
-	  Added Jeffrey to the list of contributors.
+ 	  Franks <Jeffrey_Franks@i-o.com> for reporting the problems.
 
 Tue Sep 21 11:25:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

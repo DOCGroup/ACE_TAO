@@ -28,6 +28,8 @@ TESTS = \
 	Hash_Map_Manager_Test \
 	Hash_Map_Bucket_Iterator_Test \
 	IOStream_Test \
+	Lazy_Map_Manager_Test \
+	Malloc_Test \
 	Map_Manager_Test \
 	Map_Test \
 	Mem_Map_Test \
@@ -41,6 +43,7 @@ TESTS = \
 	Naming_Test \
 	New_Fail_Test \
 	Notify_Performance_Test \
+	Object_Manager_Test \
 	OrdMultiSet_Test \
 	Pipe_Test \
 	Priority_Buffer_Test \
