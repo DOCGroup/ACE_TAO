@@ -34,10 +34,14 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 // Parents <ACE_Malloc> base address in shared memory.
 static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 
-// Choose another base address that's 32k higher so that <ACE_Malloc>
-// will be mapped into a different address in the child's virtual
-// memory.
-static const void *CHILD_BASE_ADDR = ACE_DEFAULT_BASE_ADDR + 32 * 1024;
+// If the platform supports position-independent malloc, choose
+// another base address that's 32k higher so that <ACE_Malloc> will be
+// mapped into a different address in the child's virtual memory.
+static const void *CHILD_BASE_ADDR =
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+       32 * 1024 + 
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+       ACE_DEFAULT_BASE_ADDR;
 
 // Shared memory allocator.  Hide the allocator inside this function
 // so that it doesn't get constructed until after the
@@ -252,6 +256,8 @@ main (int argc, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
+template class ACE_Write_Guard<ACE_Process_Mutex>;
+template class ACE_Read_Guard<ACE_Process_Mutex>;
 template class ACE_Based_Pointer<Test_Data>;
 template class ACE_Based_Pointer_Basic<Test_Data>;
 template class ACE_Based_Pointer_Basic<long>;
@@ -259,6 +265,8 @@ template class ACE_Based_Pointer_Basic<Long_Test>;
 template class ACE_Based_Pointer<Long_Test>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>
+#pragma instantiate ACE_Write_Guard<ACE_Process_Mutex>
+#pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
 #pragma instantiate ACE_Based_Pointer<Test_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<Test_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<long>
