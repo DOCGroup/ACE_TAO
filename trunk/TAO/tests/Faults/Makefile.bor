@@ -2,11 +2,6 @@
 # Makefile for building the Faults test executables
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = server.bor middle.bor client.bor ping.bor pong.bor
 
-all:
-	$(MAKE) -f server.bor $(MAKE_FLAGS)
-	$(MAKE) -f middle.bor $(MAKE_FLAGS)
-	$(MAKE) -f client.bor $(MAKE_FLAGS)
-	$(MAKE) -f ping.bor $(MAKE_FLAGS)
-	$(MAKE) -f pong.bor $(MAKE_FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

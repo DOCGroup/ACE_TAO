@@ -16,7 +16,7 @@
 //     exchange data.
 //
 // = AUTHOR
-//    Prashant Jain and Doug Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -29,11 +29,6 @@
 #include "ace/Handle_Set.h"
 
 ACE_RCSID(tests, SOCK_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static void *
 client (void *arg)

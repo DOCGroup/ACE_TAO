@@ -35,6 +35,24 @@ OBJFILES = \
 	$(OBJDIR)\BasicLog_i.obj \
 	$(OBJDIR)\BasicLogFactory_i.obj \
 	$(OBJDIR)\BCU.obj \
+	$(OBJDIR)\CEC_ConsumerAdmin.obj \
+	$(OBJDIR)\CEC_ConsumerControl.obj \
+	$(OBJDIR)\CEC_Default_Factory.obj \
+	$(OBJDIR)\CEC_Dispatching.obj \
+	$(OBJDIR)\CEC_Dispatching_Task.obj \
+	$(OBJDIR)\CEC_EventChannel.obj \
+	$(OBJDIR)\CEC_Factory.obj \
+	$(OBJDIR)\CEC_MT_Dispatching.obj \
+	$(OBJDIR)\CEC_ProxyPullConsumer.obj \
+	$(OBJDIR)\CEC_ProxyPullSupplier.obj \
+	$(OBJDIR)\CEC_ProxyPushConsumer.obj \
+	$(OBJDIR)\CEC_ProxyPushSupplier.obj \
+	$(OBJDIR)\CEC_Pulling_Strategy.obj \
+	$(OBJDIR)\CEC_Reactive_ConsumerControl.obj \
+	$(OBJDIR)\CEC_Reactive_Pulling_Strategy.obj \
+	$(OBJDIR)\CEC_Reactive_SupplierControl.obj \
+	$(OBJDIR)\CEC_SupplierAdmin.obj \
+	$(OBJDIR)\CEC_SupplierControl.obj \
 	$(OBJDIR)\Config_Scheduler.obj \
 	$(OBJDIR)\Constraint_Interpreter.obj \
 	$(OBJDIR)\Constraint_l.obj \
@@ -72,8 +90,10 @@ OBJFILES = \
 	$(OBJDIR)\DsLogAdminC.obj \
 	$(OBJDIR)\DsLogAdminS.obj \
 	$(OBJDIR)\DynSched.obj \
+	$(OBJDIR)\EC_And_Filter.obj \
 	$(OBJDIR)\EC_Basic_Factory.obj \
 	$(OBJDIR)\EC_Basic_Filter_Builder.obj \
+	$(OBJDIR)\EC_Bitmask_Filter.obj \
 	$(OBJDIR)\EC_Busy_Lock.obj \
 	$(OBJDIR)\EC_Conjunction_Filter.obj \
 	$(OBJDIR)\EC_ConsumerAdmin.obj \
@@ -88,16 +108,17 @@ OBJFILES = \
 	$(OBJDIR)\EC_Filter_Builder.obj \
 	$(OBJDIR)\EC_Gateway.obj \
 	$(OBJDIR)\EC_Gateway_UDP.obj \
+	$(OBJDIR)\EC_Masked_Type_Filter.obj \
 	$(OBJDIR)\EC_MT_Dispatching.obj \
 	$(OBJDIR)\EC_Negation_Filter.obj \
 	$(OBJDIR)\EC_Null_Factory.obj \
 	$(OBJDIR)\EC_Null_Scheduling.obj \
 	$(OBJDIR)\EC_ObserverStrategy.obj \
 	$(OBJDIR)\EC_Per_Supplier_Filter.obj \
+	$(OBJDIR)\EC_Prefix_Filter_Builder.obj \
 	$(OBJDIR)\EC_Priority_Dispatching.obj \
 	$(OBJDIR)\EC_Priority_Scheduling.obj \
 	$(OBJDIR)\EC_ProxyConsumer.obj \
-	$(OBJDIR)\EC_ProxyPushSupplier_Set.obj \
 	$(OBJDIR)\EC_ProxySupplier.obj \
 	$(OBJDIR)\EC_QOS_Info.obj \
 	$(OBJDIR)\EC_Reactive_ConsumerControl.obj \

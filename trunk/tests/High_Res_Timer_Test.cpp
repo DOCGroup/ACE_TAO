@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -12,7 +12,7 @@
 //    Simple test of ACE_High_Res_Timer.
 //
 // = AUTHOR
-//    David L. Levine
+//    David L. Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -23,11 +23,6 @@
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(tests, High_Res_Timer_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static
 u_int
@@ -41,17 +36,15 @@ check (const u_int interval, const u_int measured)
   const u_int percentage_difference = difference * 100 / interval;
 
   if (percentage_difference < threshold)
-    {
-      return 0;
-    }
+    return 0;
   else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("The measured time of %u differs from ")
-                  ASYS_TEXT ("the interval of %u by %u percent.\n"),
-                  measured, interval, percentage_difference));
-      return 1;
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("The measured time of %u differs from ")
+                       ASYS_TEXT ("the interval of %u by %u percent.\n"),
+                       measured,
+                       interval,
+                       percentage_difference),
+                      1);
 }
 
 static
@@ -78,8 +71,9 @@ main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("High_Res_Timer_Test"));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("The ACE_High_Res_Timer scale factor is %u ")
-                        ASYS_TEXT ("1/microsecond\n"),
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("The ACE_High_Res_Timer scale factor is %u ")
+              ASYS_TEXT ("1/microsecond\n"),
               ACE_High_Res_Timer::global_scale_factor ()));
 
   u_int errors = 0;
@@ -105,7 +99,8 @@ main (int argc, ASYS_TCHAR *argv[])
         {
           const ACE_Time_Value interval (0, intervals[i]);
           const ACE_Time_Value measured = time_interval (interval);
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("interval: %u usec, measured: %u usec%s\n"),
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("interval: %u usec, measured: %u usec%s\n"),
                       interval.sec () * 1000000 + interval.usec (),
                       measured.sec () * 1000000 + measured.usec (),
                       intervals[i] <= TIMER_RESOLUTION  ?

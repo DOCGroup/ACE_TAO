@@ -14,7 +14,7 @@
 //     sigismember().
 //
 // = AUTHOR
-//    Nanbor Wang
+//    Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,11 +22,6 @@
 #include "ace/OS.h"
 
 ACE_RCSID(tests, Sigset_Ops_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 void
 siglistset(sigset_t x, int *sigset)

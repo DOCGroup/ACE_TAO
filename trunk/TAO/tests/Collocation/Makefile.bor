@@ -2,9 +2,6 @@
 # Makefile for building the Collocation test executables and libraries
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = Coll_Test_Stubs.bor Diamond.bor Collocation.bor
 
-all:
-	$(MAKE) -f Coll_Test_Stubs.bor $(MAKE_FLAGS)
-	$(MAKE) -f Diamond.bor $(MAKE_FLAGS)
-	$(MAKE) -f Collocation.bor $(MAKE_FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

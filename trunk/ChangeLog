@@ -1,3 +1,22 @@
+Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com> 
+  
+        * ace/Makefile.bor: Added new files.  
+  
+	* tests/*.cpp, tests/test_config.h: Removed macros that had been
+	  used by C++Builder 3.  
+  
+        * include/makeinclude/compiler.bor: Added support for C++Builder 5
+	  VCL libs. 
+    
+        * include/makeinclude/recurse.bor, lots of Makefile.bor files:
+	  Added support for makefile recursion.
+    
+Mon Feb 21 14:35:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/compiler.bor: Increased the limit of
+	  LIB_LFLAGS from 2048 to 4096.  Thanks to Mogens Hansen
+ 	  <mogens_h@dk-online.dk> for reporting this.
+
 Mon Feb 21 15:43:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_SAP.h:

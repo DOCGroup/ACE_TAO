@@ -2,9 +2,7 @@
 # Makefile for building the Time example
 # 
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = Time_Client.bor Time_Server.bor
 
-all:
-	$(MAKE) -f Time_Client.bor $(FLAGS)
-	$(MAKE) -f Time_Server.bor $(FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 

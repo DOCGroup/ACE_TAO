@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = FILENAME
@@ -12,8 +13,8 @@
 //     features further.
 //
 // = AUTHOR
-//    Programming for the Real World. Bill O. GallMeister.
-//    Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//    Programming for the Real World. Bill O. GallMeister.  Modified
+//    by Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // =====================================================================
 
@@ -21,11 +22,6 @@
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(tests, Aio_Platform_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (_POSIX_ASYNCHRONOUS_IO)
 static int do_sysconf (void)

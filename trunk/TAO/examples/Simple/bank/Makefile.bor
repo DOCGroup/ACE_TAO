@@ -3,9 +3,6 @@
 # Makefile for building the Bank example
 # 
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+MAKEFILES = Bank_Client.bor Bank_Server.bor
 
-all:
-	$(MAKE) -f Bank_Client.bor $(MAKE_FLAGS)
-	$(MAKE) -f Bank_Server.bor $(MAKE_FLAGS)
-
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

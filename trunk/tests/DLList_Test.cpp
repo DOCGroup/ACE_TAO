@@ -12,7 +12,7 @@
 //      This test illustrates the use of <ACE_DLList>.
 //
 // = AUTHOR
-//    James Hu and Douglas C. Schmidt
+//    James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -36,11 +36,6 @@ template class ACE_Static_Allocator<8192>;
 #pragma instantiate ACE_DLList_Reverse_Iterator<ACE_STRING>
 #pragma instantiate ACE_Static_Allocator<8192>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static ACE_Static_Allocator<8192> alloc;
 

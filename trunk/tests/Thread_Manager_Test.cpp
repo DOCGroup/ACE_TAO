@@ -26,11 +26,6 @@
 
 ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #if defined (ACE_HAS_THREADS)
 
 // Each thread keeps track of whether it has been signalled by using a

@@ -27,11 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 ACE_RCSID(tests, Purgable_Map_Manager_Test, "$Id$")
 
 class Entry_ID 
@@ -41,33 +36,32 @@ class Entry_ID
   //
   //= DESCRIPTION
   //   This class is used as an KEY and VALUE of the map entry.
-  
 public:
   Entry_ID (int val = 0)
     : val_ (val)
-    {
-    }
+  {
+  }
   
   ~Entry_ID (void)
-    {
-    }
+  {
+  }
 
   // Obtain the value stored.
   int get_val (void)
-    {
-      return this->val_;
-    }
+  {
+    return this->val_;
+  }
 
   // Hashing needed to access an entry in the map.
   u_long hash (void) const
-    {
-      return this->val_;
-    } 
+  {
+    return this->val_;
+  } 
   // Needed since every entry KEY has to be checked on a lookup.
-   friend int operator== (const Entry_ID &lhs, const Entry_ID &rhs) 
-    {
-      return (&lhs == &rhs) ? 0 : 1;
-    }
+  friend int operator== (const Entry_ID &lhs, const Entry_ID &rhs) 
+  {
+    return (&lhs == &rhs) ? 0 : 1;
+  }
   
 private:   
   int val_;
@@ -83,7 +77,8 @@ void display_map (PURGE_MAP &map)
   // The Hash_Map entry without the purgable feature.
   typedef ACE_Hash_Map_Entry<Entry_ID, Entry_ID> *ENTRY;
 
-  // The derived class from Hash_Map_Entry which facilitates purging thru its purge_tag member.
+  // The derived class from Hash_Map_Entry which facilitates purging
+  // thru its purge_tag member.
   typedef ACE_Hash_Purgable_Map_Entry<Entry_ID, Entry_ID> *PURGABLE_ENTRY;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -99,16 +94,17 @@ void display_map (PURGE_MAP &map)
     {      
       purgable_entry = (PURGABLE_ENTRY) entry;
 
-     ACE_DEBUG ((LM_DEBUG,
-                 "%d:%d purge_tag:%d\n",
-                 (purgable_entry->ext_id_).get_val (),
-                 (purgable_entry->int_id_).get_val (),
-                 purgable_entry->get_purge_tag ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "%d:%d purge_tag:%d\n",
+                  (purgable_entry->ext_id_).get_val (),
+                  (purgable_entry->int_id_).get_val (),
+                  purgable_entry->get_purge_tag ()));
       
     }
 }
 
-int main (int argc, char *argv[])
+int 
+main (int argc, char *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

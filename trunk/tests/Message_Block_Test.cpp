@@ -10,11 +10,11 @@
 //
 // = DESCRIPTION
 //      This test program is a torture test that illustrates how
-//      ACE_Message_Block reference counting works in multi-threaded
+//      <ACE_Message_Block> reference counting works in multi-threaded
 //      code.
 //
 // = AUTHOR
-//    Doug Schmidt and Nanbor Wang
+//    Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -25,11 +25,6 @@
 #include "ace/Free_List.h"
 
 ACE_RCSID(tests, Message_Block_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;

@@ -1,9 +1,3 @@
+DIRS = Gateway Peer
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
-all:
-        cd $(ACE_ROOT)\apps\Gateway\Gateway
-        $(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-        cd $(ACE_ROOT)\apps\Gateway\Peer
-        $(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -13,7 +13,7 @@
 //      correctly in the face of C++ exceptions and threads.
 //
 // = AUTHOR
-//    Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt
+//    Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,11 +24,6 @@
 #include "test_config.h"
 
 ACE_RCSID(tests, Reactor_Exceptions_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_EXCEPTIONS)
 

@@ -15,7 +15,7 @@
 //      this seems like a reasonable place to test it.
 //
 // = AUTHOR
-//    Prashant Jain and David Levine
+//    Prashant Jain <pjain@cs.wustl.edu> and David Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -47,11 +47,6 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 
 #include "test_config.h"
 #include "ace/ACE.h"
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
 static

@@ -1,48 +1,33 @@
-
 #
 # Makefile for building ACE and TAO 
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+!ifndef BUILDALL
 
-ace_tao:
-	cd $(ACE_ROOT)\ace
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tao
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\tao_idl
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\apps\gperf\src
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\orbsvcs\orbsvcs
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\orbsvcs\Naming_Service
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\orbsvcs\Trading_Service
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\orbsvcs\Event_Service
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\orbsvcs\CosEvent_Service
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+# By default we build a smaller set of libraries and executables.
+DIRS = \
+	..\ace \
+	..\apps\gperf\src \
+	tao \
+	tao_idl \
+	orbsvcs \
+	utils
 
-examples:
-	cd $(ACE_ROOT)\TAO\examples\simple\echo
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\examples\simple\chat
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\examples\simple\bank
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\examples\simple\grid
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\examples\simple\time
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\TAO\examples\Callback_Quoter
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+!else
 
-utils:
-	cd $(ACE_ROOT)\tao\utils\catior
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\tao\utils\IOR-parser
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\tao\utils\nslist
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+# When BUILDALL is defined we will make everything that can be built.
+DIRS = \
+	..\ace \
+	..\apps \
+	..\netsvcs \
+	..\tests \
+	tao \
+	TAO_IDL \
+	orbsvcs \
+	examples \
+	tests \
+	utils
+
+!endif
+	
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

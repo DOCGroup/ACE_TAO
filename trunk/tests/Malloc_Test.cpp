@@ -25,11 +25,6 @@
 
 ACE_RCSID(tests, SV_Shared_Memory_Test, "Malloc_Test.cpp,v 4.22 1999/12/13 22:24:42 nanbor Exp")
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 #if !defined (__Lynx__) && (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32))
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)

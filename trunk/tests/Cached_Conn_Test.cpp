@@ -300,11 +300,6 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #endif /* CACHED_CONNECT_TEST */
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 static int debug = 0;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *t)

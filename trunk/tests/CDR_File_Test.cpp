@@ -15,6 +15,7 @@
 // = AUTHORS
 //    Giga Giguashvili <gregoryg@ParadigmGeo.com> and
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//
 // ============================================================================
 
 #include "ace/CDR_Stream.h"
@@ -24,11 +25,6 @@
 #include "test_config.h"
 
 ACE_RCSID(tests, CDR_File_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 

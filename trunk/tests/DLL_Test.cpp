@@ -29,12 +29,6 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
 // Considering UNIX OS to be default. On Win32 platforms, the symbols
 // are got form the .exe as one cant have .exe and .dll for the same
 // .cpp. Also, on Win32 platforms one cant use the .obj to obtain
@@ -48,24 +42,26 @@ USELIB("..\ace\aced.lib");
 #  define OBJ_PREFIX "./" ACE_DLL_PREFIX
 #endif /*ACE_WIN32*/
 
-
 char const *
-cdecl_decoration(char const * func_name)
+cdecl_decoration (char const *func_name)
 {
-#if defined(__BORLANDC__)
+#if defined (__BORLANDC__)
   static char decorated_func_name[10*1024];
-  ACE_OS::sprintf(decorated_func_name, "_%s", func_name);
+  ACE_OS::sprintf (decorated_func_name,
+                   "_%s",
+                   func_name);
   return decorated_func_name;
 #else
   return func_name;
-#endif
+#endif /* __BORLANDC__ */
 }
 
 // This function returns the Hello object pointer.
 
 extern "C" ACE_Svc_Export Hello *get_hello (void);
 
-Hello *get_hello (void)
+Hello *
+get_hello (void)
 {
   Hello *hello = 0;
 
@@ -100,11 +96,12 @@ main (int argc, ASYS_TCHAR *argv[])
 		       dll.error ()),
                       -1);
 
-  // Just becos the ANSI C++ spec says you can no longer cast a void* to a
-  // function pointer. Doesnt allow:TC f = (TC) dll.symbol ("get_hello");
-  void * foo;
+  // Just because the ANSI C++ spec says you can no longer cast a
+  // void* to a function pointer. Doesn't allow:
+  // TC f = (TC) dll.symbol ("get_hello");
+  void *foo;
 
-  char const *cdecl_str = cdecl_decoration("get_hello");
+  char const *cdecl_str = cdecl_decoration ("get_hello");
   foo = dll.symbol (cdecl_str);
 
   // Cast the void* to long first.
@@ -130,7 +127,6 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_ptr <Hello>;

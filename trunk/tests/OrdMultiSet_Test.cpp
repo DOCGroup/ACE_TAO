@@ -9,12 +9,13 @@
 //    OrdMultiSet_Test.cpp
 //
 // = DESCRIPTION
-//    This is a simple test of the ACE_Ordered_MultiSet and
-//    ACE_Ordered_MultiSet_Iterator class templates, instantiating them with
-//    type int.  No command line arguments are needed to run the test.
+//    This is a simple test of the <ACE_Ordered_MultiSet> and
+//    <ACE_Ordered_MultiSet_Iterator> class templates, instantiating
+//    them with type int.  No command line arguments are needed to run
+//    the test.
 //
 // = AUTHOR
-//    Chris Gill
+//    Chris Gill <cdgill@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -25,11 +26,6 @@
 #include "ace/Containers.h"
 
 ACE_RCSID(tests, OrdMultiSet_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 int
 main (int, ASYS_TCHAR *[])

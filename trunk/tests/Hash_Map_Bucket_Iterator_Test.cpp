@@ -12,7 +12,7 @@
 //     This is a simple test of the <Hash_Map_Bucket_Iterator>.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -23,13 +23,6 @@
 #include "ace/Functor.h"
 
 ACE_RCSID(tests, Hash_Map_Bucket_Iterator_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
-////////////////////////////////////////////////////////////////////////////////
 
 static ACE_UINT32 iterations = ACE_MAX_ITERATIONS * 10;
 static ACE_UINT32 table_size = ACE_MAX_ITERATIONS;

@@ -12,7 +12,7 @@
 //    Tests the construction of multiple pipes in a process.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,11 +22,6 @@
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(tests, Pipe_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if !defined (ACE_LACKS_FORK)
 static int close_pipe = 1;

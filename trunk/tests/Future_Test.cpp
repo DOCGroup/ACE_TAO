@@ -16,8 +16,9 @@
 //    are prime.
 //
 // = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch>, Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu>, and Per Andersson <pera@ipso.se>
+//    Andres Kruse <Andres.Kruse@cern.ch>,
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
+//    and Per Andersson <pera@ipso.se>
 //
 // ============================================================================
 
@@ -32,11 +33,6 @@
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tests, Future_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
 
