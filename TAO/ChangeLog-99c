@@ -1,3 +1,9 @@
+Tue Feb  9 16:52:41 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_exception.cpp (gen_typecode): Thanks to
+	Carlos. Fixed the problem with the typecode generation for the
+	exceptions.
+
 Tue Feb  9 16:39:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_decl.h: 
