@@ -1054,13 +1054,15 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 }
 
 ACE_INLINE void
-ACE_OS::swab (const unsigned char *src,
-              unsigned char *dest,
+ACE_OS::swab (const void *src,
+              void *dest,
               ssize_t length)
 {
 #if defined (ACE_LACKS_SWAB)
-  const unsigned char *from = src;
-  unsigned char *to = dest;
+  const char *from = ACE_static_cast (const char*,
+		                      src);
+  char *to = ACE_static_cast (char *,
+		              dest);
   ssize_t ptr = 0;
   for (ptr = 1; ptr < length; ptr += 2)
     {

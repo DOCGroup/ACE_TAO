@@ -1,3 +1,11 @@
+Mon Feb  2 07:16:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_unistd.h:
+	* ace/OS_NS_unistd.inl:
+
+	  Changed the parameters to void * instead of char * since most of
+	  the platforms take a void *.
+
 Mon Feb  2 06:56:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Makefile.ace:
