@@ -1,3 +1,9 @@
+Thu Feb 28 13:15:39 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+        * tests/DLL_ORB/Makefile.Test_Client_Module:
+        * tests/DLL_ORB/Makefile.Test_Server_Module:
+	  updated the Makefile dependencies.
+
 Thu Feb 28 11:55:39 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
         * orbsvcs/examples/CosEC/Factory/Makefile:
