@@ -1,3 +1,24 @@
+Fri Nov 15 14:51:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Asynch_Queued_Message.cpp:
+	* tao/Asynch_Queued_Message.h:
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Synch_Queued_Message.h:
+	* tao/Queued_Message.cpp:
+	* tao/Queued_Message.h: Added an extra default argument to the
+	  constructor that indicates whether the class is heap allocated
+	  or not.  
+	
+	* tao/Transport.cpp: Changed the places where the
+	  Asynch_Queued_Message was allocated on the heap to pass the
+	  right value for the flag that indicates the status of creation
+	  of the class. 
+
+	  Thanks to Chad Elliott for pinting out that if the
+	  Asynch_Queued_Message was allocated on the heap, it may not get
+	  destroyed if TAO_Asynch_Queued_Message::destroy () was
+	  called. 
+
 Fri Nov 15 20:52:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
