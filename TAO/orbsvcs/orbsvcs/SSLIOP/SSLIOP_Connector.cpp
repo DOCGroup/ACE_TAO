@@ -263,17 +263,20 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
 
       if (result == -1)
         {
-          char buffer [MAXHOSTNAMELEN + 6 + 1];
-          ssl_endpoint->addr_to_string (buffer,
-                                        sizeof (buffer) - 1);
-          ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                      ACE_TEXT ("%s, SSL port %d failed (%p)\n"),
-                      __FILE__,
-                      __LINE__,
-                      buffer,
-                      remote_address.get_port_number (),
-                      ACE_TEXT ("errno")));
+          if (TAO_debug_level > 0)
+            {
+              char buffer [MAXHOSTNAMELEN + 6 + 1];
+              ssl_endpoint->addr_to_string (buffer,
+                                            sizeof (buffer) - 1);
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                          ACE_TEXT ("%s, SSL port %d failed (%p)\n"),
+                          __FILE__,
+                          __LINE__,
+                          buffer,
+                          remote_address.get_port_number (),
+                          ACE_TEXT ("errno")));
+            }
 
           return -1;
         }

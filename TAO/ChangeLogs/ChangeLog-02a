@@ -1,3 +1,10 @@
+Fri Jun  8 15:26:38 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+
+	  Only print debugging output if an ORB debug level was set by the
+	  user.  Reduces needless output.
+
 Fri Jun  8 13:45:54 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp (get_attributes):
