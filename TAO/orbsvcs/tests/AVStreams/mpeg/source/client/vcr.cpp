@@ -421,7 +421,7 @@ int main(int argc, char ** argv)
   setsignal(SIGPIPE, SIG_IGN);
 
 
-  atexit(on_exit_routine);
+  atexit (on_exit_routine);
   
   if (rmsemFlag) {
     if (geteuid() == 0) { /* root, refuse to remove shm and sem ids */
