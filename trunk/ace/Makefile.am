@@ -141,6 +141,8 @@ libACE_Utils_la_SOURCES = \
   Active_Map_Manager.cpp \
   Arg_Shifter.cpp \
   ARGV.cpp \
+  Capabilities.cpp \
+  Configuration.cpp \
   Containers.cpp \
   Dirent.cpp \
   Dynamic.cpp \
@@ -389,6 +391,7 @@ ACE_TEMPLATE_FILES = \
   Acceptor.cpp \
   Active_Map_Manager_T.cpp \
   Asynch_Acceptor.cpp \
+  Auto_IncDec_T.cpp \
   Auto_Ptr.cpp \
   Based_Pointer_T.cpp \
   Connector.cpp \
@@ -486,6 +489,8 @@ pkginclude_HEADERS = \
   Asynch_IO_Impl.h \
   Asynch_IO_Impl.i \
   Atomic_Op.i \
+  Auto_IncDec_T.h \
+  Auto_IncDec_T.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Based_Pointer_Repository.h \
@@ -508,9 +513,13 @@ pkginclude_HEADERS = \
   Caching_Strategies_T.i \
   Caching_Utility_T.h \
   Caching_Utility_T.i \
+  Capabilities.h \
+  Capabilities.i \
   Cleanup_Strategies_T.h \
   Cleanup_Strategies_T.i \
   Codeset_IBM1047.h \
+  Configuration.h \
+  Configuration.i \
   Connector.h \
   Connector.i \
   Containers.h \
