@@ -1,6 +1,11 @@
 // -*- C++ -*-
 // $Id$
 
+#ifndef INTERFACEREPO_IDL3_TEST
+#define INTERFACEREPO_IDL3_TEST
+
+#include <Components.idl>
+
 module help
 {
   exception doh {};
@@ -11,15 +16,15 @@ module help
 {
   interface c_supp1 {};
   interface c_supp2 {};
-  component c_base {};
+  component c_base supports c_supp1, c_supp2 {};
   valuetype v_base_base {};
   valuetype v_base : v_base_base {};
   interface v_supp1 {};
   abstract interface v_supp2 {};
-  home h_base manages c_base {};
   valuetype h_key {};
   interface h_supp1 {};
   interface h_supp2 {};
+  home h_base supports h_supp1, h_supp2 manages c_base {};
 };
 
 module help
@@ -34,8 +39,7 @@ module help
 
 module mod
 {
-  component test_component 
-    : help::c_base supports help::c_supp1, help::c_supp2
+  component test_component : help::c_base
   {
     attribute long c_attr1 
       getraises (help::doh) 
@@ -75,7 +79,7 @@ module mod
       raises (help::whups, help::doh);
   };
 
-  home test_home : help::h_base supports help::h_supp1, help::h_supp2 
+  home test_home : help::h_base
     manages test_component primarykey help::h_key 
   {
     factory create_tc (in string set_uid)
@@ -110,4 +114,5 @@ module mod
 
 };
 
+#endif /* INTERFACEREPO_IDL3_TEST */
 

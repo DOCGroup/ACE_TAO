@@ -3,7 +3,9 @@
 
 #include "test_i.h"
 
-ACE_RCSID(Application_Test, test_i, "$Id$")
+ACE_RCSID (Application_Test, 
+           test_i,
+           "$Id$")
 
 CORBA::Boolean
 inventory_i::getCDinfo (const char * artist,
@@ -29,7 +31,7 @@ inventory_i::getCDinfo (const char * artist,
 
           price = 13.49f;
 
-          in_stock = 1;
+          in_stock = TRUE;
         }
       else
         {
