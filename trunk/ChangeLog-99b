@@ -1,3 +1,8 @@
+Fri Jan 15 03:45:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/exceptions.html: Rewrote the exception handling guildlines
+	  based on ACE's try macros.
+
 Fri Jan 15 01:32:55 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.14 released.
@@ -22,6 +27,9 @@ Thu Jan 14 21:50:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  macro in $TAO_ROOT/TAO/try_macros.h because those macros will
 	  soon be *DEPRICATED* once we finished convert TAO to use the new
 	  macros.
+
+	  Please see ACE_wrappers/docs/exceptions.html for guidelines and
+	  rules of using ACE's try macros.
 
 Thu Jan 14 20:41:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
