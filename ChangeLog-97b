@@ -9,6 +9,16 @@ Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
           ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
           with ACE_HAS_THREADS.
 
+        * ace/{Naming_Context.cpp,Service_Config.cpp,Object_Manager.cpp}:
+          moved ACE_Naming_Service and ACE_Service_Manager static service
+          objects to ACE_Object_Manager.
+
+          With this change, the ACE library no longer has any static
+          objects that require destruction.
+
+        * ace/Object_Manager.h: added documenation of
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER config #define.
+
 Mon Nov  3 01:30:52 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/UNIX_Addr.i (operator ==):
