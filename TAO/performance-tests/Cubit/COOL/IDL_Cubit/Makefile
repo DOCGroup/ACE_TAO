@@ -16,6 +16,7 @@ SVR_OBJS = cubit_i.o server.o cubit.o tmplinst.o
 
 CLT_OBJS = client.o cubit.o tmplinst.o
 
+TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
