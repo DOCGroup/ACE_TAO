@@ -1,3 +1,38 @@
+Sat Mar 10 02:09:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Client_Leaks/README:
+          Add new test to check that clients do not leak handle
+          resources.
+
+        * tests/Client_Leaks/Test.idl:
+          Define the IDL interfaces used in the test
+
+        * tests/Client_Leaks/child.cpp:
+        * tests/Client_Leaks/Process.h:
+        * tests/Client_Leaks/Process.cpp:
+          Implement the Process interface
+
+        * tests/Client_Leaks/server.cpp:
+        * tests/Client_Leaks/Process_Factory.h:
+        * tests/Client_Leaks/Process_Factory.cpp:
+          Implement the Process_Factory interface, create instances of the
+          child program as requested by the client.
+
+        * tests/Client_Leaks/client.cpp:
+          Invoke create_new_process() and shutdown() on the returned
+          process multiple times (1000 by default).
+
+        * tests/Client_Leaks/run_test.pl:
+          One button script
+
+        * tests/Client_Leaks/Makefile:
+        * tests/Client_Leaks/Client_Leaks.dsw:
+        * tests/Client_Leaks/child.dsp:
+        * tests/Client_Leaks/client.dsp:
+        * tests/Client_Leaks/server.dsp:
+          Project files and Makefile for the new test
+
 Fri Mar 09 23:52:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/README:

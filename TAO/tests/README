@@ -30,6 +30,12 @@ how to run the following tests:
           This directory contains several tests for the CDR stream
           class.
 
+	. Client_Leaks
+
+	  TAO-1.1.12 leaked handles, this test tries to verify that
+	  the problem does not happen any longer by connecting a
+	  client to 1000 servers. 
+
         . Codec
 
           This test verifies that CodecFactory and CDR encapsulation
