@@ -208,7 +208,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
 {
   // This will make sure we get the host information correct.
   ACE_INET_Addr remote_addr (server_addr.get_port_number (),
-                             ACE_DEFAULT_SERVER_HOST);
+                             ACE_LOCALHOST);
 
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.
