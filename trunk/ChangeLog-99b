@@ -1,7 +1,8 @@
 Wed Mar 10 10:13:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Message_Block.i (reference_count): Made sure the inline
-	  function is defined before used.
+	  function is defined before used.  Thanks to David for noticing
+	  this.
 
 Wed Mar 10 08:52:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
