@@ -1,3 +1,13 @@
+Fri Aug 29 13:41:40 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified the template to avoid including wrapper_macros.GNU more
+          than once.  Instead of setting SHLIB_UNCHECKED and then checking
+          for the feature and setting SHLIB if it's enabled, I set SHLIB,
+          check for the feature and then reset SHLIB if the feature isn't
+          enabled.
+
 Fri Aug 29 13:21:01 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
