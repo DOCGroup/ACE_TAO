@@ -35,3 +35,9 @@ TAO_NS_Object::has_shutdown (void)
 {
   return this->shutdown_;
 }
+
+ACE_INLINE TAO_NS_Event_Manager*
+TAO_NS_Object::event_manager (void)
+{
+  return this->event_manager_;
+}

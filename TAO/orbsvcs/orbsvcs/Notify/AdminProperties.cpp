@@ -11,12 +11,12 @@ ACE_RCSID(Notify, TAO_NS_AdminProperties, "$id$")
 #include "orbsvcs/CosNotificationC.h"
 
 TAO_NS_AdminProperties::TAO_NS_AdminProperties (void)
-  : max_global_queue_length_ (CosNotification::MaxQueueLength, 0),
-    max_consumers_ (CosNotification::MaxConsumers, 0),
-    max_suppliers_ (CosNotification::MaxSuppliers, 0),
-    reject_new_events_ (CosNotification::RejectNewEvents, 0),
-    global_queue_length_ (0),
-    global_queue_not_full_condition_ (global_queue_lock_)
+  : max_global_queue_length_ (CosNotification::MaxQueueLength, 0)
+  , max_consumers_ (CosNotification::MaxConsumers, 0)
+  , max_suppliers_ (CosNotification::MaxSuppliers, 0)
+  , reject_new_events_ (CosNotification::RejectNewEvents, 0)
+  , global_queue_length_ (0)
+  , global_queue_not_full_condition_ (global_queue_lock_)
 {
 }
 

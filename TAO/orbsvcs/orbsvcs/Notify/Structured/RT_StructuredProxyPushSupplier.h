@@ -39,11 +39,17 @@ public:
   /// Activate this object and obtain the Event_Forwarder interface.
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
 
-  /// Override TAO_NS_ProxySupplier::push
-  virtual void push (const TAO_NS_Event_var &event);
+  /// Dispatch Event to consumer
+  virtual void push (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+
+  /// Dispatch Event to consumer
+  virtual void push (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer, no filtering
-  virtual void push_no_filtering (const TAO_NS_Event_var &event);
+  virtual void push_no_filtering (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+
+  /// Dispatch Event to consumer, no filtering
+  virtual void push_no_filtering (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
 
 private:
   /// Our ref.

@@ -2,7 +2,7 @@
 
 #include "CosNotify_Initializer.h"
 
-ACE_RCSID(Notify, TAO_NS_CosNotify_Initializer, "$id$")
+ACE_RCSID(Notify, TAO_NS_CosNotify_Initializer, "$Id$")
 
 #include "CosNotify_Service.h"
 

@@ -51,46 +51,18 @@ TAO_NS_Proxy::subscribed_types (TAO_NS_EventTypeSeq& subscribed_types ACE_ENV_AR
 }
 
 void
-TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed ACE_ENV_ARG_DECL_NOT_USED)
+TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Updates request (added, removed, this);
+  TAO_NS_Method_Request_Updates_No_Copy request (added, removed, this);
 
   if (TAO_NS_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.
     {
-      this->worker_task ()->exec (request);
+      this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
     }
   else // execute in the current thread context.
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
       request.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-      }
-}
-
-CORBA::Boolean
-TAO_NS_Proxy::check_filters (const TAO_NS_Event_var &event
-                             , TAO_NS_FilterAdmin& parent_filter_admin
-                             , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
-                             ACE_ENV_ARG_DECL)
-{
-  // check if it passes the parent filter.
-  CORBA::Boolean parent_val =
-    parent_filter_admin.match (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  CORBA::Boolean val = 0;
-
-  if (filter_operator == CosNotifyChannelAdmin::AND_OP)
-    {
-      val = parent_val && this->filter_admin_.match (event ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
     }
-  else
-    {
-      val = parent_val || this->filter_admin_.match (event ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-    }
-
-  return val;
 }
 
 CosNotification::EventTypeSeq*

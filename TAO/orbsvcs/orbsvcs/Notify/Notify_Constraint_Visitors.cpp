@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /* $Id$ */
 
 #include "Notify_Constraint_Visitors.h"
@@ -246,9 +245,17 @@ TAO_NS_Constraint_Visitor::visit_union_pos (
                     {
                       TAO_OutputCDR cdr;
                       cdr.write_ulong ((CORBA::ULong) disc_val);
-                      disc_any._tao_replace (disc_tc.in (),
-                                             TAO_ENCAP_BYTE_ORDER,
-                                             cdr.begin ());
+
+                      TAO::Unknown_IDL_Type *unk = 0;
+                      ACE_NEW_RETURN (unk,
+                                      TAO::Unknown_IDL_Type (
+                                          disc_tc.in (),
+                                          cdr.begin (),
+                                          TAO_ENCAP_BYTE_ORDER
+                                        ),
+                                      -1);
+
+                      disc_any.replace (unk);
                       break;
                     }
                   // @@@ (JP) I don't think ETCL handles 64-bit

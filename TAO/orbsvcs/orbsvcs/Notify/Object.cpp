@@ -13,7 +13,7 @@
 #include "Object.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Object, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Object, "$Id$")
 
 TAO_NS_Object::TAO_NS_Object (void)
   : event_manager_ (0)
@@ -36,6 +36,9 @@ TAO_NS_Object::~TAO_NS_Object ()
 {
   if (TAO_debug_level > 2 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
+
+  this->shutdown_proxy_poa ();
+  this->shutdown_object_poa ();
 }
 
 void
@@ -66,7 +69,21 @@ TAO_NS_Object::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 void
 TAO_NS_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
+  ACE_TRY
+    {
+      this->poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 2)
+	{
+	  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t)\n");
+	  ACE_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
+	}
+      // Do not propagate any exceptions
+    }
+  ACE_ENDTRY;
 }
 
 int
@@ -84,7 +101,6 @@ TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   this->shutdown_worker_task ();
-  this->shutdown_proxy_poa ();
 
   return 0;
 }
@@ -117,7 +133,7 @@ TAO_NS_Object::shutdown_proxy_poa (void)
         {
           this->proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
+          
           delete this->proxy_poa_;
         }
       ACE_CATCHANY

@@ -9,7 +9,7 @@
 #include "Seq_Worker_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Seq_Worker_T, "$id$")
+ACE_RCSID(Notify, TAO_NS_Seq_Worker_T, "$Id$")
 
 template <class T>
 TAO_NS_Seq_Worker_T<T>::TAO_NS_Seq_Worker_T (void)

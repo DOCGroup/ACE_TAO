@@ -1,7 +1,8 @@
 // $Id$
 
 ACE_INLINE int
-TAO_NS_PropertySeq::find (const ACE_CString& name, CosNotification::PropertyValue& value) const
+TAO_NS_PropertySeq::find (const char* name, CosNotification::PropertyValue& value) const
 {
-  return this->property_map_.find (name, value);
+  ACE_CString str_name (name);
+  return this->property_map_.find (str_name, value);
 }

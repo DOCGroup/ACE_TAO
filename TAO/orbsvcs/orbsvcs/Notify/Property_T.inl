@@ -25,22 +25,6 @@ TAO_NS_PropertyBase_T<TYPE>::operator!= (const TYPE &rhs) const
 }
 
 template <class TYPE> ACE_INLINE TAO_NS_PropertyBase_T<TYPE>&
-TAO_NS_PropertyBase_T<TYPE>::operator= (const TAO_NS_PropertyBase_T<TYPE>& rhs)
-{
-  if (this == &rhs)
-    return *this;
-
-  if (rhs.is_valid ())
-  {
-    this->name_ = rhs.name_;
-    this->value_ = rhs.value_;
-    this->valid_ = rhs.valid_;
-  }
-
-  return *this;
-}
-
-template <class TYPE> ACE_INLINE TAO_NS_PropertyBase_T<TYPE>&
 TAO_NS_PropertyBase_T<TYPE>::operator=(const TYPE& value)
 {
   this->value_ = value;

@@ -6,7 +6,7 @@
 #include "Event.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Event, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Event, "$Id$")
 
 #include "tao/debug.h"
 #include "orbsvcs/CosNotificationC.h"
@@ -15,14 +15,14 @@ TAO_NS_Event::TAO_NS_Event (void)
   :priority_ (CosNotification::Priority, CosNotification::DefaultPriority),
    timeout_ (CosNotification::Timeout)
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
+  //  if (TAO_debug_level > 0)
+  //  ACE_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
 }
 
 TAO_NS_Event::~TAO_NS_Event ()
 {
-  if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
+  // if (TAO_debug_level > 1)
+  //  ACE_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
 }
 
 void

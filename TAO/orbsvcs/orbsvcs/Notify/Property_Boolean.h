@@ -35,10 +35,10 @@ class TAO_Notify_Export TAO_NS_Property_Boolean
 {
 public:
   /// Constuctor
-  TAO_NS_Property_Boolean (const ACE_CString& name, CORBA::Boolean initial);
+  TAO_NS_Property_Boolean (const char* name, CORBA::Boolean initial);
 
   /// Constuctor
-  TAO_NS_Property_Boolean (const ACE_CString& name);
+  TAO_NS_Property_Boolean (const char* name);
 
   /// Assignment from TAO_NS_Property_Boolean
   TAO_NS_Property_Boolean& operator= (const TAO_NS_Property_Boolean& rhs);
@@ -64,7 +64,7 @@ public:
 
 protected:
   /// The Property name.
-  ACE_CString name_;
+  const char* name_;
 
   /// The value
   CORBA::Boolean value_;
