@@ -2107,7 +2107,7 @@ be_interface::queryinterface_helper (be_interface *derived,
   // Emit the comparison code.
   *os << "(type == ACE_reinterpret_cast ("
       << be_idt << be_idt <<be_idt << be_idt << be_idt << be_idt_nl
-      << "ptr_arith_t," << be_nl;
+      << "ptrdiff_t," << be_nl;
 
   be_decl *scope =
     be_scope::narrow_from_scope (ancestor->defined_in ())->decl ();

@@ -88,7 +88,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << node->full_name () << " *," << be_nl
       << "_tao_valuetype" << be_uidt_nl
       << ")," << be_uidt_nl
-      << "(ptr_arith_t) &" << node->full_name () <<"::_downcast" 
+      << "(ptrdiff_t) &" << node->full_name () <<"::_downcast" 
       << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;

@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 tao.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao"
+# ADD LINK32 TAO_Valuetype.lib tao.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\Valuetype"
 
 !ELSEIF  "$(CFG)" == "Forward Client - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 taod.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao"
+# ADD LINK32 TAO_Valuetyped.lib taod.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\Valuetype"
 
 !ENDIF 
 
@@ -139,7 +139,7 @@ InputPath=.\TreeBase.idl
 InputName=TreeBase
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -177,7 +177,7 @@ InputPath=.\TreeBase.idl
 InputName=TreeBase
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -223,7 +223,7 @@ InputPath=.\TreeController.idl
 InputName=TreeController
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -261,7 +261,7 @@ InputPath=.\TreeController.idl
 InputName=TreeController
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -307,7 +307,7 @@ InputPath=.\TreeNode.idl
 InputName=TreeNode
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -345,7 +345,7 @@ InputPath=.\TreeNode.idl
 InputName=TreeNode
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

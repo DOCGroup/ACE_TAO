@@ -1,3 +1,44 @@
+Fri May  2 000:42:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * rules.tao.GNU:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_global.h
+        * tests/OBV/Any/Makefile:
+        * tests/OBV/Any/client.bor:
+        * tests/OBV/Any/client.dsp:
+        * tests/OBV/Any/server.bor:
+        * tests/OBV/Any/server.dsp:
+        * tests/OBV/Factory/Makefile:
+        * tests/OBV/Factory/client.bor:
+        * tests/OBV/Factory/client.dsp:
+        * tests/OBV/Factory/server.bor:
+        * tests/OBV/Factory/server.dsp:
+        * tests/OBV/Forward/Makefile:
+        * tests/OBV/Forward/client.bor:
+        * tests/OBV/Forward/client.dsp:
+        * tests/OBV/Forward/server.bor:
+        * tests/OBV/Forward/server.dsp:
+        * tests/OBV/TC_Alignment/Makefile:
+        * tests/OBV/TC_Alignment/client.bor:
+        * tests/OBV/TC_Alignment/client.dsp:
+        * tests/OBV/TC_Alignment/server.bor:
+        * tests/OBV/TC_Alignment/server.dsp:
+
+	  Updated rules.tao.GNU and the tests in the 
+	  TAO/tests/OBV directory to work with the
+	  new Valuetype library. Also substituted ptrdiff_t
+	  for ptr_arith_t in TAO_IDL.
+
 Thu May  1 20:24:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_helper.h:

@@ -419,23 +419,23 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return " << node->local_name () << "::_nil ();" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "return (" << node->local_name ()
-          << "_ptr) abs->_tao_obv_narrow ((ptr_arith_t) &_downcast);"
+          << "_ptr) abs->_tao_obv_narrow ((ptrdiff_t) &_downcast);"
           << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       *os << "\n#if defined (_MSC_VER)" << be_nl
           << "void *" << be_nl
           << node->name () << "::" << node->flat_name ()
-          << "_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
+          << "_tao_obv_narrow (ptrdiff_t type_id)" << be_nl
           << "{" << be_idt_nl
           << "return this->_tao_obv_narrow (type_id);" << be_uidt_nl
           << "}"
           << "\n#endif /* _MSC_VER */" << be_uidt_nl << be_nl
           << "void *" << be_nl
           << node->full_name ()
-          << "::_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
+          << "::_tao_obv_narrow (ptrdiff_t type_id)" << be_nl
           << "{" << be_idt_nl
-          << "if (type_id == (ptr_arith_t) &_downcast)" << be_idt_nl
+          << "if (type_id == (ptrdiff_t) &_downcast)" << be_idt_nl
           << "{" << be_idt_nl
           << "return this;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
@@ -563,7 +563,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // Generating _tao_QueryInterface method.
   *os << "void *" << node->full_name ()
-      << "::_tao_QueryInterface (ptr_arith_t type)" << be_nl
+      << "::_tao_QueryInterface (ptrdiff_t type)" << be_nl
       << "{" << be_idt_nl
       << "void *retv = 0;" << be_nl << be_nl
       << "if ";
@@ -582,7 +582,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << "(type == ACE_reinterpret_cast ("
       << be_idt << be_idt << be_idt << be_idt << be_idt << be_idt_nl
-      << " ptr_arith_t," << be_nl;
+      << " ptrdiff_t," << be_nl;
 
   if (node->is_abstract ())
     {
@@ -875,7 +875,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       << node->local_name () << "_ptr," << be_nl
       << "obj->_tao_QueryInterface (" << be_idt << be_idt_nl
       << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << "ptr_arith_t," << be_nl
+      << "ptrdiff_t," << be_nl
       << "&" << node->local_name () << "::_tao_class_id" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl

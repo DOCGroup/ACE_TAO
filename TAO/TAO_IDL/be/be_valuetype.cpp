@@ -25,6 +25,7 @@
 #include "ast_module.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (be,
@@ -47,6 +48,7 @@ be_valuetype::be_valuetype (void)
 
   // Always the case.
   this->has_constructor (I_TRUE);
+  be_global->valuetype_seen (I_TRUE);
 }
 
 // Constructor used to build the AST.
@@ -116,6 +118,11 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
           this->supports_abstract_ = I_TRUE;
           break;
         }
+    }
+
+  if (! idl_global->imported ())
+    {
+      be_global->valuetype_seen (I_TRUE);
     }
 }
 
