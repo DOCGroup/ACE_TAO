@@ -5,7 +5,8 @@
 
 NAMES = \
         NamespaceSupport_Test \
-        Transcoder_Test
+        Transcoder_Test \
+        HttpCharStream_Test
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 

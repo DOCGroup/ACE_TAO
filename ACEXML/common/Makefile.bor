@@ -19,7 +19,10 @@ OBJFILES = \
         $(OBJDIR)\StrCharStream.obj \
         $(OBJDIR)\Transcode.obj \
         $(OBJDIR)\Validator.obj \
-        $(OBJDIR)\XMLFilterImpl.obj
+        $(OBJDIR)\XMLFilterImpl.obj \
+        $(OBJDIR)\Mem_Map_Stream.obj \
+        $(OBJDIR)\HttpCharStream.obj \
+        $(OBJDIR)\URL_Addr.obj
 
 CFLAGS = \
         $(ACE_CFLAGS) \

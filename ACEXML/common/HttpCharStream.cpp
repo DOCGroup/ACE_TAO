@@ -2,8 +2,9 @@
 
 #include "ace/ACE.h"
 #include "ace/Auto_Ptr.h"
-
 #include "ACEXML/common/HttpCharStream.h"
+
+ACE_RCSID (common, HttpCharStream, "$Id$")
 
 /* Header FSM states. */
 static const int HDST_LINE1_PROTOCOL = 0;
@@ -25,17 +26,6 @@ ACEXML_HttpCharStream::ACEXML_HttpCharStream (void)
 {
 
 }
-
-ACEXML_HttpCharStream::ACEXML_HttpCharStream (const ACEXML_Char *url)
-  : url_(0),
-    url_addr_(0),
-    stream_(0),
-    connector_(0),
-    size_(0)
-{
-  this->open (url);
-}
-
 
 ACEXML_HttpCharStream::~ACEXML_HttpCharStream (void)
 {
@@ -86,7 +76,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 {
   int header_state = HDST_LINE1_PROTOCOL;
   int status = 0;
-  size_t b;
+  size_t b = 0;
   ACEXML_Char* buf = 0;
   size_t buflen = BUFSIZ;
   for (;;)

@@ -4,7 +4,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ACEXML/common/Mem_Map_Stream.h"
 
-ACE_RCSID(common, Mem_Map_Stream, "$Id$");
+ACE_RCSID(common, Mem_Map_Stream, "$Id$")
 
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream (void)
 {
