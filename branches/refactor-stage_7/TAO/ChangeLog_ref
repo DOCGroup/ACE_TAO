@@ -19,6 +19,10 @@ Wed Sep 24 20:02:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           MSVC) see someting consistent. The guards will all be
           there the next time we regenerate the hand-crafted files.
 
+        * TAOACE.dsw:
+
+          Added dependencies to the RTScheduler project.
+
 Wed Sep 24 17:33:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
