@@ -1,3 +1,14 @@
+Thu Jan 28 18:04:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile: 
+	  Minor cosmetic changes.
+
+	* tao/IIOP_Profile.h: 
+	* tao/IIOP_Profile.cpp: 
+	* tao/IIOP_Transport.cpp: 
+	  Fixed warnings about out of order initialization of members and
+	  about signed/unsigned comparisons.
+
 Thu Jan 28 16:47:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AVStreams_Full.idl: 
@@ -5,7 +16,7 @@ Thu Jan 28 16:47:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/CosEventComm.idl: 
 	* orbsvcs/orbsvcs/RtecScheduler.idl: 
 	* orbsvcs/orbsvcs/TimeService.idl: 
-	  
+	  Fixed some problems with #pragma prefix
 
 Thu Jan 28 16:34:14 1999 Fred Kuhns <fredk@cs.wustl.edu>
 

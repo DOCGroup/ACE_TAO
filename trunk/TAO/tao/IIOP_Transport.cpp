@@ -16,8 +16,8 @@
 #include "tao/corba.h"
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base* handler)
-  : tag_(TAO_IOP_TAG_INTERNET_IOP),
-    handler_(handler)
+  : handler_(handler),
+    tag_(TAO_IOP_TAG_INTERNET_IOP)
 {
 }
 
@@ -152,7 +152,7 @@ TAO_IIOP_Transport::do_sendv (const iovec *iov, int iovcnt, int total_bytes)
   iovec *tmp_iov = ACE_const_cast(iovec *, iov);
   writelen = n;
   int s = 0;
-  ssize_t offset = n;
+  size_t offset = n;
   
   // iovcnt > 0, iov{0] ... iov[iovcnt-1]
   while ( writelen < total_bytes )

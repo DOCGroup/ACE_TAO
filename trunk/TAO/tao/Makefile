@@ -47,11 +47,11 @@ ORBCORE_SRCS = \
 	Request \
 	Sequence \
 	Server_Request \
-  Pluggable \
-  IIOP_Profile \
-  IIOP_Transport \
-  IIOP_Connector \
-  IIOP_Acceptor \
+	Pluggable \
+	IIOP_Profile \
+	IIOP_Transport \
+	IIOP_Connector \
+	IIOP_Acceptor \
 	Stub \
 	Typecode \
 	Union \
