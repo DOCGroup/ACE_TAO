@@ -8,24 +8,35 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-class Ping_i: public POA_Ping_Object
+class ServerObject_i: public POA_ImplementationRepository::ServerObject
   // = TITLE
-  //    Ping Object Implementation
+  //    IR Server Object Implementation
   //
   // = DESCRIPTION
-  //    Implementation Repository uses this to check to see if the server
-  //    is still running.
+  //    Implementation Repository uses this to communicate with the IR
+  //    registered server.
 {
 public:
-  Ping_i (int debug = 0) : debug_ (debug) {}
+  ServerObject_i (CORBA::ORB_ptr orb, int debug = 0) : orb_ (orb), debug_ (debug) {}
 
-  virtual void ping (CORBA::Environment &)
+  virtual void ping (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC (())
     {
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG, "Pong!\n"));
     }
+
+  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC (())
+    {
+      if (this->debug_)
+        ACE_DEBUG ((LM_DEBUG, "ServerObject_i::Shutdown\n"));
+ 
+      this->orb_->shutdown ();
+    }
 private:
+  CORBA::ORB_var orb_;
+
   int debug_;
 };
 
@@ -34,9 +45,8 @@ IR_Helper::IR_Helper (char *server_name,
                       CORBA::ORB_ptr orb,
                       int debug)
   : name_ (ACE::strnew (server_name)),
-    ir_key_ (0),
     ir_addr_ (0),
-    ping_ (new Ping_i (debug)),
+    server_object_ (new ServerObject_i (orb, debug)),
     implrepo_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
     orb_ (CORBA::ORB::_duplicate (orb)),
@@ -47,40 +57,40 @@ IR_Helper::IR_Helper (char *server_name,
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      exception_message = "While read_ir_ior";
-      this->read_ir_ior (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Resolve the IR.
-      exception_message = "While string_to_object of ImplRepo";
       CORBA::Object_var implrepo_object =
-        this->orb_->string_to_object (this->ir_key_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;;
+        orb_->resolve_initial_references ("ImplRepoService");
 
       if (CORBA::is_nil (implrepo_object.in ()))
-        ACE_ERROR ((LM_ERROR,
-                    "invalid implrepo key <%s>\n",
-                    this->ir_key_));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Unable to resolve the Implementation Repository.\n"));
+		  ACE_OS::exit (-1);
+        }
 
       exception_message = "While narrowing ImplRepo";
       this->implrepo_ =
-        Implementation_Repository::_narrow (implrepo_object.in(), ACE_TRY_ENV);
+        ImplementationRepository::Administration::_narrow (implrepo_object.in(), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Now register the Ping Object
-       PortableServer::ObjectId_var ping_id =
-      PortableServer::string_to_ObjectId ("ping");
+      PortableServer::ObjectId_var server_object_id =
+        PortableServer::string_to_ObjectId ("server_object");
 
-      exception_message = "While activating ping object";
-      this->poa_->activate_object_with_id (ping_id.in (),
-                                           this->ping_,
+      exception_message = "While activating server object";
+      this->poa_->activate_object_with_id (server_object_id.in (),
+                                           this->server_object_,
                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       exception_message = "While creating reference to ping object";
-      this->ping_ptr_ =
-        this->poa_->id_to_reference (ping_id.in (),
+      CORBA::Object_ptr svr_obj = 
+        this->poa_->id_to_reference (server_object_id.in (),
                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    
+      this->server_object_ptr_ = 
+        ImplementationRepository::ServerObject::_narrow (svr_obj,
+                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -95,7 +105,6 @@ IR_Helper::IR_Helper (char *server_name,
 IR_Helper::~IR_Helper ()
 {
   delete this->name_;
-  delete this->ir_key_;
 
   // @@ Delete the two objects
 }
@@ -109,26 +118,31 @@ IR_Helper::register_server (const char *comm_line,
   ACE_TRY
     {
       CORBA::Object_var implrepo_object =
-        this->orb_->string_to_object (this->ir_key_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        orb_->resolve_initial_references ("ImplRepoService");
 
-      Implementation_Repository *ImplRepo =
-        Implementation_Repository::_narrow (implrepo_object.in(), ACE_TRY_ENV);
+      if (CORBA::is_nil (implrepo_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to resolve the Implementation Repository.\n"),
+                          -1);
+
+      ImplementationRepository::Administration *ImplRepo =
+        ImplementationRepository::Administration::_narrow (implrepo_object.in(), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (implrepo_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid implrepo key <%s>\n",
-                           this->ir_key_),
+                           "IR_Helper::register_server - Could not narrow IR::Admin\n"),
                           -1);
 
-      Implementation_Repository::Process_Options proc_opts;
+      ImplementationRepository::StartupOptions startup_options;
 
-      proc_opts.command_line_ = CORBA::string_dup (comm_line);
-      proc_opts.environment_ = CORBA::string_dup (environment);
-      proc_opts.working_directory_ = CORBA::string_dup (working_dir);
+      startup_options.command_line = CORBA::string_dup (comm_line);
+      // @@ Implement Environment
+      //      startup_options.environment = CORBA::string_dup (environment);
+      startup_options.working_directory = CORBA::string_dup (working_dir);
 
-      ImplRepo->reregister_server (this->name_, proc_opts, ACE_TRY_ENV);
+      ImplRepo->reregister_server (this->name_, startup_options, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -138,33 +152,6 @@ IR_Helper::register_server (const char *comm_line,
   ACE_ENDTRY;
   return 0;
 }
-
-int
-IR_Helper::read_ir_ior (CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
-  // Open the file for reading.
-  // @@ Hard-coded name is bad.  Need to fix.
-  ACE_HANDLE f_handle_ = ACE_OS::open ("implrepo.ior", 0);
-
-  if (f_handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: implrepo.ior\n"),
-                      -1);
-
-  ACE_Read_Buffer ior_buffer (f_handle_);
-  this->ir_key_ = ior_buffer.read ();
-
-  if (this->ir_key_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
-                      -1);
-
-  ACE_OS::close (f_handle_);
-  return 0;
-}
-
 
 void
 IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
@@ -193,16 +180,17 @@ IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
   // Get our host and port and convert it to something we can use.
   const ACE_INET_Addr& my_addr  = iiop_acceptor->address ();
 
-  Implementation_Repository::INET_Addr my_ir_addr;
-  my_ir_addr.port_ = my_addr.get_port_number ();
-  my_ir_addr.host_ = CORBA::string_dup (my_addr.get_host_name ());
+  ImplementationRepository::Address my_ir_addr;
+  my_ir_addr.port = my_addr.get_port_number ();
+  my_ir_addr.host = CORBA::string_dup (my_addr.get_host_name ());
 
   ACE_TRY
     {
       delete this->ir_addr_;
+
       this->ir_addr_ = this->implrepo_->server_is_running (this->name_,
                                                            my_ir_addr,
-                                                           this->ping_ptr_,
+                                                           ACE_dynamic_cast (ImplementationRepository::ServerObject *, this->server_object_ptr_),
                                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
