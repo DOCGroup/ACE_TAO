@@ -1,3 +1,9 @@
+Sat Feb 12 15:58:54 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Add the new files to the MSVC projects.
+
 Sat Feb 12 13:37:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
