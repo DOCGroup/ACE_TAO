@@ -12,6 +12,10 @@ Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
           avoid signed/unsigned comparison in main.  Thanks to Gonzo for
           reporting this.
 
+        * ace/config-vxworks5.x.h: merged the two VxWorks configs (g++ and
+          ghs) into this new config for easier maintenance.  Added
+          ACE_THR_PRI_FIFO_DEF, set to 6.
+
 Sun Jan 11 23:02:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/SString_Test.cpp (main): Removed the "silly" strings from
@@ -20,7 +24,7 @@ Sun Jan 11 23:02:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 Sun Jan 11 22:16:28 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Peer/Peer.{h,cpp} (transmit): Changed the function
- 	  to return the result of transmission.  
+ 	  to return the result of transmission.
 	  (transmit_stdin): Make sure the function returns proper results
  	  of transmission.
 
@@ -65,7 +69,7 @@ Sat Jan 10 18:17:06 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  const member functions and also added accessors for the
  	  Event_Channel * so this can be set by the
  	  Connection_Handler_Acceptor::accept_svc_handler() method.
-	  
+
 	* apps/Gateway/Gateway/Connection_Handler: Added mutators so that
  	  we can set the local and remote addresses outside of the
  	  constructor.
@@ -85,7 +89,7 @@ Sat Jan 10 22:37:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Jan 10 14:57:01 1998    <coryan@MILONGA>
 
-	* ace/Env_Value_T.h: 
+	* ace/Env_Value_T.h:
 	  The return value for the assignment operator had no template
 	  parameter, ditto for the arguments of the copy constructor and
 	  the already mentioned operator.
