@@ -282,9 +282,6 @@ private:
   CORBA::Boolean any_owns_data_;
   // Flag that indicates the ORB is responsible for deleting the data.
 
-  CORBA::ULong refcount_;
-  // Reference count the <Any> to reduce copying costs.
-
   // 94-9-14 hides unsigned char insert/extract
   void operator<<= (unsigned char);
   CORBA::Boolean operator>>= (unsigned char&) const;

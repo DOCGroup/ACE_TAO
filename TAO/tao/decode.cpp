@@ -169,18 +169,23 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
         {
           end = temp.rd_ptr ();
 
-          ACE_NEW_RETURN (any->cdr_, ACE_Message_Block (end - begin),
+	  ACE_Message_Block* cdr;
+          ACE_NEW_RETURN (cdr, ACE_Message_Block (end - begin),
                           CORBA::TypeCode::TRAVERSE_STOP);
-          TAO_OutputCDR out (any->cdr_);
+          TAO_OutputCDR out (cdr);
 
           retval = out.append (elem_tc, stream, env);
           if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
             {
-              any->any_owns_data_ = 1;
-              any->value_ = 0;
-              any->type_ = elem_tc;
-              // now skip the value
-              //      retval = stream->skip (elem_tc, env);
+	      ACE_Message_Block::release (any->cdr_);
+	      if (any->any_owns_data_ && any->value_ != 0)
+		DEEP_FREE (any->type_, any->value_, 0, env);
+	      if (env.exception () != 0)
+		return CORBA::TypeCode::TRAVERSE_STOP;
+	      any->cdr_ = cdr;
+	      any->value_ = 0;
+	      any->type_ = elem_tc;
+	      any->any_owns_data_ = CORBA::B_TRUE;
             }
         }
     }

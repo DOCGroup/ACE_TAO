@@ -1,3 +1,11 @@
+Fri Jul 31 15:10:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Any.h: 
+	* tao/Any.cpp: 
+	* tao/decode.cpp: 
+	  When decoding Any's the ORB was not releasing the memory already
+	  held by the Any.
+
 Fri Jul 31 13:51:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
