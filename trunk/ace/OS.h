@@ -804,13 +804,13 @@ private:
 #else /* TEMPLATES are broken in some form or another (i.e., most C++ compilers) */
 
 // Handle ACE_Message_Queue.
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
 #define ACE_SYNCH_1 class _ACE_SYNCH_MUTEX_T, class _ACE_SYNCH_SEMAPHORE_T
 #define ACE_SYNCH_2 _ACE_SYNCH_MUTEX_T, _ACE_SYNCH_SEMAPHORE_T
 #else
 #define ACE_SYNCH_1 class _ACE_SYNCH_MUTEX_T, class _ACE_SYNCH_CONDITION_T
 #define ACE_SYNCH_2 _ACE_SYNCH_MUTEX_T, _ACE_SYNCH_CONDITION_T
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 #define ACE_SYNCH_MUTEX_T _ACE_SYNCH_MUTEX_T
 #define ACE_SYNCH_CONDITION_T _ACE_SYNCH_CONDITION_T
 #define ACE_SYNCH_SEMAPHORE_T _ACE_SYNCH_SEMAPHORE_T

@@ -541,6 +541,9 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+  void reset (void);
+  // Reset the <ACE_Unbounded_Set> to be empty.
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 

@@ -1087,6 +1087,14 @@ ACE_Unbounded_Set<T>::insert_tail (const T &item)
 }
 
 template <class T> void
+ACE_Unbounded_Set<T>::reset (void)
+{
+  ACE_TRACE ("reset");
+
+  this->delete_nodes ();
+}
+
+template <class T> void
 ACE_Unbounded_Set<T>::dump (void) const
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::dump");

@@ -14,8 +14,8 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_MESSAGE_LIST_H)
-#define ACE_MESSAGE_LIST_H
+#if !defined (ACE_MESSAGE_QUEUE_H)
+#define ACE_MESSAGE_QUEUE_H
 
 #include "ace/Message_Block.h"
 #include "ace/IO_Cntl_Msg.h"
@@ -236,7 +236,7 @@ protected:
   ACE_SYNCH_MUTEX_T lock_;
   // Protect queue from concurrent access.
 
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   ACE_SYNCH_SEMAPHORE_T not_empty_cond_;
   // Used to make threads sleep until the queue is no longer empty.
 
@@ -254,7 +254,7 @@ protected:
 
   ACE_SYNCH_CONDITION_T not_full_cond_;
   // Used to make threads sleep until the queue is no longer full.
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 };
 
 template <ACE_SYNCH_1>
@@ -342,4 +342,4 @@ private:
 #pragma implementation ("Message_Queue.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#endif /* ACE_MESSAGE_LIST_H */
+#endif /* ACE_MESSAGE_QUEUE_H */
