@@ -1471,7 +1471,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   pthread_mutexattr_t l_attributes;
   if (attributes == 0)
     attributes = &l_attributes;
-  int result = -1;
+  int result = 0;
 
   // Only do these initializations if the <attributes> parameter
   // wasn't originally set.
@@ -1493,15 +1493,16 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         result = 0;
       else
         result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+
+      // Only do the deletions if the <attributes> parameter wasn't
+      // originally set and we successfully created the attributes.
+      if (attributes == &l_attributes)
+        ::pace_pthread_mutexattr_destroy (&l_attributes);
     }
+
   ACE_UNUSED_ARG (sa);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (type);
-
-  // Only do the deletions if the <attributes> parameter wasn't
-  // originally set.
-  if (attributes == &l_attributes)
-    ::pace_pthread_mutexattr_destroy (&l_attributes);
 
   return result;
 
@@ -1514,7 +1515,8 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   pthread_mutexattr_t l_attributes;
   if (attributes == 0)
     attributes = &l_attributes;
-  int result = -1;
+  int result = 0;
+  int attr_init = 0;  // have we initialized the local attributes.
 
   // Only do these initializations if the <attributes> parameter
   // wasn't originally set.
@@ -1527,7 +1529,10 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #   else /* draft 6 */
       if (::pthread_mutexattr_init (attributes) == 0)
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-        result = 0;
+        {
+          result = 0;
+          attr_init = 1; // we have initialized these attributes
+        }
       else
         result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
     }
@@ -1569,7 +1574,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
   // Only do the deletions if the <attributes> parameter wasn't
   // originally set.
-  if (attributes == &l_attributes)
+  if (attributes == &l_attributes && attr_init)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
     ::pthread_mutexattr_delete (&l_attributes);
 #   else
