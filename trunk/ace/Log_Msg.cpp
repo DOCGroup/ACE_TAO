@@ -74,14 +74,16 @@ class ACE_Log_Msg_Manager
 public:
   static ACE_Thread_Mutex *get_lock (void);
 
+  static int open ();
+
 #if defined (VXWORKS)
   // For keeping track of the number of tasks, so we know when to
   // add or delete the task delete hook.
   static u_int task_count_;
 
-  static void atexit (WIND_TCB *);
+  static void close (WIND_TCB *);
 #else
-  static void atexit (void);
+  static void close (void);
 
   static void insert (ACE_Log_Msg *);
   static int remove (ACE_Log_Msg *);
@@ -97,17 +99,26 @@ private:
   // requires global construction/destruction.  If that's a problem,
   // could change it to a pointer and allocate it dynamically when
   // lock_ is allocated.
-  static ACE_Log_Msg_Set instances_;
+  static ACE_Log_Msg_Set *instances_;
 #endif /* ! VXWORKS */
 };
 
-#if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void 
-ace_log_msg_atexit (void)
+int
+ACE_Log_Msg_Manager::open ()
 {
-  ACE_Log_Msg_Manager::atexit ();
+  ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::instances_, ACE_Log_Msg_Set, 0);
+  return 1;
 }
-#endif /* ACE_HAS_SIG_C_FUNC */
+
+void
+ACE_Log_Msg::close ()
+{
+  // Please note that this will be called by a statement that is
+  // harded coded into the ACE_Object_Manager's shutdown sequence,
+  // in its destructor.
+
+  ACE_Log_Msg_Manager::close ();
+}
 
 ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 
@@ -128,7 +139,7 @@ ACE_Log_Msg_Manager::get_lock (void)
 u_int ACE_Log_Msg_Manager::task_count_ = 0;
 
 void
-ACE_Log_Msg_Manager::atexit (WIND_TCB *tcb)
+ACE_Log_Msg_Manager::close (WIND_TCB *tcb)
 {
   // The task is exiting, so delete its ACE_Log_Msg instance.
   delete (ACE_Log_Msg *) tcb->spare1;
@@ -137,7 +148,7 @@ ACE_Log_Msg_Manager::atexit (WIND_TCB *tcb)
   // delete hook. Also, delete the global lock_.
   if (--task_count_ == 0)
     {
-      ::taskDeleteHookDelete ((FUNCPTR) ACE_Log_Msg_Manager::atexit);
+      ::taskDeleteHookDelete ((FUNCPTR) ACE_Log_Msg_Manager::close);
 
       // Ugly, ugly, but don't know a better way.
       delete ACE_Log_Msg_Manager::lock_;
@@ -145,41 +156,48 @@ ACE_Log_Msg_Manager::atexit (WIND_TCB *tcb)
     }
 }
 #else
-ACE_Log_Msg_Set ACE_Log_Msg_Manager::instances_;
+ACE_Log_Msg_Set *ACE_Log_Msg_Manager::instances_ = 0;
 
 void
 ACE_Log_Msg_Manager::insert (ACE_Log_Msg *log_msg)
 {
-  ACE_Log_Msg_Manager::instances_.insert (log_msg);
+  ACE_Log_Msg_Manager::instances_->insert (log_msg);
 }
 
 int
 ACE_Log_Msg_Manager::remove (ACE_Log_Msg *log_msg)
 {
-  ACE_Log_Msg_Manager::instances_.remove (log_msg);
+  ACE_Log_Msg_Manager::instances_->remove (log_msg);
 
-  return ACE_Log_Msg_Manager::instances_.size ();
+  return ACE_Log_Msg_Manager::instances_->size ();
 }
 
 void
-ACE_Log_Msg_Manager::atexit (void)
+ACE_Log_Msg_Manager::close (void)
 {
-  // The program is exiting, so delete all ACE_Log_Msg instances.
-  ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i 
-    (ACE_Log_Msg_Manager::instances_);
-
-  for (ACE_Log_Msg **log_msg;
-       i.next (log_msg) != 0;
-       )
+  if (ACE_Log_Msg_Manager::instances_ != 0)
     {
-      // Advance the iterator first because it needs to read the next
-      // field of the ACE_Node that will be deleted as a result of
-      // the following call to remove the node.
-      i.advance ();
 
-      // Causes a call to <ACE_Log_Msg_Manager::remove> via the
-      // destructor of <ACE_Log_Msg>.
-      delete *log_msg;
+      // The program is exiting, so delete all ACE_Log_Msg instances.
+      ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i 
+        (*ACE_Log_Msg_Manager::instances_);
+
+      for (ACE_Log_Msg **log_msg;
+           i.next (log_msg) != 0;
+           )
+        {
+          // Advance the iterator first because it needs to read the next
+          // field of the ACE_Node that will be deleted as a result of
+          // the following call to remove the node.
+          i.advance ();
+
+          // Causes a call to <ACE_Log_Msg_Manager::remove> via the
+          // destructor of <ACE_Log_Msg>.
+          delete *log_msg;
+        }
+
+      delete ACE_Log_Msg_Manager::instances_;
+      ACE_Log_Msg_Manager::instances_ = 0;
     }
 
   ACE_OS::thr_keyfree (key_);
@@ -188,6 +206,7 @@ ACE_Log_Msg_Manager::atexit (void)
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
 }
+
 #endif /* ! VXWORKS */
 
 /* static */
@@ -258,8 +277,10 @@ ACE_Log_Msg::instance (void)
       if (ACE_Log_Msg_Manager::task_count_++ == 0)
         {
           // Register cleanup handler, just once, for all tasks.
-          ::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::atexit);
+          ::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::close);
         }
+
+      if (! ACE_Log_Msg_Manager::open ()) return 0;
 
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage, i.e., in the task control block.
@@ -297,12 +318,6 @@ ACE_Log_Msg::instance (void)
 	      }
 	  }
 
-	  // Register cleanup handler.
-#if defined (ACE_HAS_SIG_C_FUNC)
-	  ::atexit (ace_log_msg_atexit);
-#else
-	  ::atexit (ACE_Log_Msg_Manager::atexit);
-#endif /* ACE_HAS_SIG_C_FUNC */
 	  key_created_ = 1;
 	}
       ACE_OS::thread_mutex_unlock (&lock);
@@ -324,9 +339,11 @@ ACE_Log_Msg::instance (void)
       // Must protect access to lock managers list
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), 0));
 
-      // Stop heap checking, the memory will always be freed in
-      // atexit. This prevents from getting these blocks reported as
-      // memory leaks
+      if (! ACE_Log_Msg_Manager::open ()) return 0;
+
+      // Stop heap checking, the memory will always be freed by the
+      // ACE_Object_Manager. This prevents from getting these blocks
+      // reported as memory leaks.
       {
 	ACE_NO_HEAP_CHECK;
 
@@ -384,8 +401,8 @@ ACE_Log_Msg::sync (const char *prog_name)
       // Must free if already allocated!!!
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
 
-      // Stop heap checking, block will be freed in <atexit>.  Heap
-      // checking state will be restored when the block is left.
+      // Stop heap checking, block will be freed by the ACE_Object_Manager.
+      // Heap checking state will be restored when the block is left.
       {
 	ACE_NO_HEAP_CHECK;
       
@@ -536,7 +553,7 @@ ACE_Log_Msg::open (const char *prog_name,
     {
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
 
-      // Stop heap checking, block will be freed in <atexit>.
+      // Stop heap checking, block will be freed by the ACE_Object_Manager.
       {
 	ACE_NO_HEAP_CHECK;
      
