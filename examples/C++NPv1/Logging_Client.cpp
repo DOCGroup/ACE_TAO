@@ -111,7 +111,7 @@ int main (int argc, char *argv[])
 
   for (;;) {
     std::string user_input;
-    getline (cin, user_input, '\n');
+    std::getline (cin, user_input, '\n');
 
     if (!cin || cin.eof ()) break;
 
