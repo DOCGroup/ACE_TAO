@@ -19,6 +19,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/GIOP.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
 
@@ -103,11 +104,40 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   ACE_INET_Addr addr (address.c_str ());
 
+  return this->open_i (orb_core, addr);
+}
+
+int
+TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
+{
+  // @@ Until we can support multihomed machines correctly we must
+  //    pick the "default interface" and only listen on that IP
+  //    address.
+
+  ACE_INET_Addr addr;
+  char buffer[MAXHOSTNAMELEN + 1];
+  if (addr.get_host_name (buffer, sizeof(buffer)) != 0)
+    return -1;
+
+  addr.set (u_short(0), buffer, 1);
+
+  return this->open_i (orb_core, addr);
+}
+
+int
+TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
+                           const ACE_INET_Addr& addr)
+{
   if (this->base_acceptor_.open (orb_core, addr) == -1)
     return -1;
 
-  char tmp_host[MAXHOSTNAMELEN+1];
-  this->port_ = addr.get_port_number ();
+  ACE_INET_Addr address;
+
+  // @@ Should this be a catastrophic error???
+  if (this->base_acceptor_.acceptor ().get_local_addr (address) != 0)
+    return -1;
+
+  this->port_ = address.get_port_number ();
   if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
       const char *tmp;
@@ -117,14 +147,21 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     }
   else
     {
-       if (addr.get_host_name (tmp_host, MAXHOSTNAMELEN + 1) != 0)
+      char tmp_host[MAXHOSTNAMELEN+1];
+       if (addr.get_host_name (tmp_host, sizeof(tmp_host)) != 0)
          return -1;
        this->host_ = tmp_host;
     }
 
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) listening on: <%s:%u>\n",
+                  this->host_.c_str (), this->port_));
+    }
+
   return 0;
 }
-
 
 CORBA::ULong
 TAO_IIOP_Acceptor::endpoint_count (void)
@@ -146,4 +183,3 @@ template class TAO_Acceptor_Impl<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTO
 #pragma instantiate TAO_Acceptor_Impl<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

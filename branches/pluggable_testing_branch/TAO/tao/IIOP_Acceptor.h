@@ -46,6 +46,9 @@ public:
   int open (TAO_ORB_Core *orb_core, ACE_CString &address);
   // initialize acceptor for this address.
 
+  virtual int open_default (TAO_ORB_Core *orb_core);
+  // Open an acceptor on the default endpoint for this protocol
+
   int create_mprofile (const TAO_ObjectKey &object_key,
                        TAO_MProfile &mprofile);
   // create profile objects for this Acceptor using the SAP
@@ -61,6 +64,11 @@ public:
   // return the number of profiles this will generate
 
   typedef TAO_Acceptor_Impl<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
+
+private:
+  int open_i (TAO_ORB_Core* orb_core,
+              const ACE_INET_Addr& addr);
+  // Implement the common part of the open*() methods
 
 private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
