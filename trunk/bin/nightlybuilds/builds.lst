@@ -114,6 +114,11 @@ TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/amrod_ImplicitTemplates/
 WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?amrod_ImplicitTemplates
 
+[SunOS_FORTE_UP_1]
+TYPE = TIMEONLY
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_FORTE_6_1/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_FORTE_6_1
+
 [SunOS_SunCC5]
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC5/
