@@ -22,7 +22,11 @@
 #define FALSE 0
 
 #define MY_DEFPORT 5001
+
+#if defined (ACE_HAS_WINSOCK2_GQOS)
+#else
 #define QOS_NOT_SPECIFIED 0
+#endif
 
 #define SERVICETYPE_NOTRAFFIC        0x00000000  // No data in this direction.
 #define SERVICETYPE_CONTROLLEDLOAD   0x00000002  // Controlled Load.
