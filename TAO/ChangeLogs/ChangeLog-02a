@@ -1,3 +1,11 @@
+Thu Jul 13 13:03:57 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+	* orbsvcs/orbsvcs/Security.dsp:
+
+	  Removed dependency on TAO_Svc_Utils{d}.lib.  It isn't needed.
+	  Added appropriate export header file to list of header files.
+
 Thu Jul 13 07:21:05 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.SSLIOP:
@@ -28,7 +36,7 @@ Thu Jul 13 03:55:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Current.pidl: Made CORBA::Current interface local per CMM
+	* tao/Current.pidl: Made CORBA::Current interface local per CCM
 	  spec.  Generated diff files.  CurrentS.cpp is no longer needed.
 	
 	* tao/Policy.pidl: Marked Current, Policy_Manager, and
