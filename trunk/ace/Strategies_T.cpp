@@ -511,13 +511,13 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
             // Actively establish the connection.  This is a timed
             // blocking connect.
-            if (CONNECT_STRATEGY::connect_svc_handler (sh,
-                                                       remote_addr,
-                                                       timeout,
-                                                       local_addr,
-                                                       reuse_addr,
-                                                       flags,
-                                                       perms) == -1)
+            if (this->CONNECT_STRATEGY::connect_svc_handler (sh,
+                                                             remote_addr,
+                                                             timeout,
+                                                             local_addr,
+                                                             reuse_addr,
+                                                             flags,
+                                                             perms) == -1)
               {
                 // If connect() failed because of timeouts, we have to
                 // reject the connection entirely. This is necessary

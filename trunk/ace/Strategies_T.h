@@ -784,15 +784,15 @@ public:
   // Checks to see if there is already a <SVC_HANDLER> in the cache
   // connected to the <remote_addr>.  If so, we return this pointer.
   // Otherwise we establish the connection, put it into the cache, and
-  // return the <SVC_HANDLER> pointer.
-  // <[NOTE]>: the <{reuse_addr}> argument does NOT control re-use of
-  // addresses in the cache.  Rather, if the underlying protocol
-  // requires a "dead time" prior to re-use of its addresses (TCP
-  // is a classic example of this), <{and}> the protocol provides a means
-  // by which to defeat the dead time, setting this argument to non-zero
-  // will defeat the dead-time requirement.  <{Dev. Note: We might want
-  // to consider enhancing the interface at some point so that this also
-  // controls re-use of the cache.}>
+  // return the <SVC_HANDLER> pointer.  <[NOTE]>: the <{reuse_addr}>
+  // argument does NOT control re-use of addresses in the cache.
+  // Rather, if the underlying protocol requires a "dead time" prior
+  // to re-use of its addresses (TCP is a classic example of this),
+  // <{and}> the protocol provides a means by which to defeat the dead
+  // time, setting this argument to non-zero will defeat the dead-time
+  // requirement.  <{Dev. Note: We might want to consider enhancing
+  // the interface at some point so that this also controls re-use of
+  // the cache.}>
 
   virtual int purge (const void *recycling_act);
   // Remove from cache.
@@ -801,21 +801,29 @@ public:
   // Add to cache.
 
 private:
-
   // = Define some useful typedefs.
-  typedef ACE_Creation_Strategy<SVC_HANDLER> CREATION_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
-  typedef ACE_Recycling_Strategy<SVC_HANDLER> RECYCLING_STRATEGY;
+  typedef ACE_Creation_Strategy<SVC_HANDLER> 
+          CREATION_STRATEGY;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> 
+          CONCURRENCY_STRATEGY;
+  typedef ACE_Recycling_Strategy<SVC_HANDLER> 
+          RECYCLING_STRATEGY;
 
   // = Super class
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> CONNECT_STRATEGY;
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+          CONNECT_STRATEGY;
 
   // = Typedefs for managing the map
-  typedef ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> ADDRESS;
-  typedef ACE_Hash_Recyclable<ADDRESS> RECYCLABLE_ADDRESS;
-  typedef ACE_Hash_Map_Manager <RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP;
-  typedef ACE_Hash_Map_Iterator <RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> CONNECTION_MAP_ITERATOR;
-  typedef ACE_Hash_Map_Entry<RECYCLABLE_ADDRESS, SVC_HANDLER *> CONNECTION_MAP_ENTRY;
+  typedef ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> 
+          ADDRESS;
+  typedef ACE_Hash_Recyclable<ADDRESS> 
+          RECYCLABLE_ADDRESS;
+  typedef ACE_Hash_Map_Manager <RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
+          CONNECTION_MAP;
+  typedef ACE_Hash_Map_Iterator <RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex> 
+          CONNECTION_MAP_ITERATOR;
+  typedef ACE_Hash_Map_Entry<RECYCLABLE_ADDRESS, SVC_HANDLER *> 
+          CONNECTION_MAP_ENTRY;
 
   CONNECTION_MAP connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.

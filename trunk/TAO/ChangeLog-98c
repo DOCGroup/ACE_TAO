@@ -1,3 +1,9 @@
+Sun Aug  9 08:51:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader.cpp: Added a #include of
+ 	  Offer_Iterators_T.h so that the code will compile on VxWorks.
+  	  Thanks to Sergio for reporting this.
+
 Sun Aug  9 000:45:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* Param_Test/client.dsp:
