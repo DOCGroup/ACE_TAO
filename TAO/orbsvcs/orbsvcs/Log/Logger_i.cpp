@@ -7,23 +7,95 @@
 
 ACE_RCSID(Log, Logger_i, "$Id$")
 
+
+  
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+#define TAO_Logger_Hash \
+  ACE_Hash_Map_Manager<const char *, Logger_i *, ACE_Null_Mutex>
+#define TAO_Logger_Hash_Entry \
+        ACE_Hash_Map_Entry<const char *, Logger_i *>
+
+long unsigned int
+TAO_Logger_Hash::hash (const char *const &ext_id)
+{
+  return ACE::hash_pjw (ext_id);
+}
+
+int
+TAO_Logger_Hash::equal (const char *const &id1, const char *const &id2)
+{
+  return ACE_OS::strcmp (id1, id2) == 0;
+}
+
+
+TAO_Logger_Hash_Entry::ACE_Hash_Map_Entry (const char *const &ext_id,
+					   Logger_i *const &int_id,
+					   TAO_Logger_Hash_Entry *next,
+					   TAO_Logger_Hash_Entry *prev)
+  : ext_id_ (ext_id ? ACE_OS::strdup (ext_id) : ACE_OS::strdup ("")),
+    int_id_ (int_id),
+    next_ (next),
+    prev_ (prev)
+{
+}
+
+TAO_Logger_Hash_Entry::ACE_Hash_Map_Entry (TAO_Logger_Hash_Entry *next,
+					   TAO_Logger_Hash_Entry *prev)
+  : ext_id_ (0),
+    next_ (next),
+    prev_ (prev)
+{
+}
+
+TAO_Logger_Hash_Entry::~ACE_Hash_Map_Entry (void)
+{
+  ACE_OS::free ((void *) ext_id_);
+}
+
+
+#undef TAO_Logger_Hash
+#undef TAO_Logger_Hash_Entry
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+
+Logger_Factory_i::Logger_Factory_i (void)
+  :hash_map_ ()
+{
+  //Do nothing?
+  //hash_map_.open (void);
+}
+
+Logger_Factory_i::~Logger_Factory_i (void)
+{
+  // Do nothing?
+  //hash_map_.close (void);
+}
+
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
                                CORBA::Environment &_env)
 {
-  Logger_i *l;
-
-  ACE_NEW_RETURN (l,
-		  Logger_i (name),
-		  0);
-
-  return l->_this (_env);
+  Logger_i  *result;
+  // If name is already in the map, find() will assign <result> to the 
+  // appropriate value
+  if (hash_map_.find (name, result) != 0)
+    {
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "\nMaking a new logger"));
+      ACE_NEW_RETURN (result,
+		      Logger_i (name),
+		      0);
+      hash_map_.bind (name, result);
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "\nLogger name already bound"));
+    }
+  return result->_this (_env);
 }
 
-Logger_Factory_i::Logger_Factory_i (void)
-{
-  // Do nothing.
-}
+
 
 Logger_i::Logger_i (const char *name)
   : name_ (ACE_OS::strdup (name)),
