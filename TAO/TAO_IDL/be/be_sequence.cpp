@@ -842,43 +842,46 @@ be_sequence::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "}\n\n";
 
-      // freebuf method
-      cs->indent ();
-      *cs << "void" << nl;
-      *cs << this->name () << "::freebuf (";
-      if (s->gen_code (bt, this) == -1)
+      // extra freebuf method for managed types
+      if (this->managed_type () != MNG_NONE)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_sequence::"
-                             "gen_client_inline - "
-                             "state based codegen failed\n"),
-                            -1);
-        }
+          cs->indent ();
+          *cs << "void" << nl;
+          *cs << this->name () << "::freebuf (";
+          if (s->gen_code (bt, this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_sequence::"
+                                 "gen_client_inline - "
+                                 "state based codegen failed\n"),
+                                -1);
+            }
 
-      *cs << " *seq, CORBA::ULong nelems)" << nl;
-      *cs << "{\n";
-      cs->incr_indent ();
-      *cs << "if (!seq) return; // null sequence" << nl;
-      // the managed types must be individually freed. The others will have
-      // their destructors called.
-      switch (this->managed_type ())
-        {
-        case be_sequence::MNG_OBJREF:
-          {
-            *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
-            *cs << "\tCORBA::release (seq[i]);" << nl;
-          }
-          break;
-        case be_sequence::MNG_STRING:
-          {
-            *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
-            *cs << "\tCORBA::string_free (seq[i]);" << nl;
-          }
-          break;
+          *cs << " *seq, CORBA::ULong nelems)" << nl;
+          *cs << "{\n";
+          cs->incr_indent ();
+          *cs << "if (!seq) return; // null sequence" << nl;
+          // the managed types must be individually freed. The others will have
+          // their destructors called.
+          switch (this->managed_type ())
+            {
+            case be_sequence::MNG_OBJREF:
+              {
+                *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
+                *cs << "\tCORBA::release (seq[i]);" << nl;
+              }
+              break;
+            case be_sequence::MNG_STRING:
+              {
+                *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
+                *cs << "\tCORBA::string_free (seq[i]);" << nl;
+              }
+              break;
+            }
+          *cs << this->name () << "::freebuf (seq);\n";
+          cs->decr_indent ();
+          *cs << "}\n\n";
         }
-      *cs << this->name () << "::freebuf (seq);";
-      cs->decr_indent ();
-      *cs << "}\n\n";
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
@@ -1060,6 +1063,7 @@ be_sequence::gen_client_inline (void)
                             -1);
         }
 
+      *ci << nl;
       *ci << this->name () << "::operator[] (CORBA::ULong index) // read/write"
          << nl;
       *ci << "{\n";
@@ -1091,6 +1095,7 @@ be_sequence::gen_client_inline (void)
                             -1);
         }
 
+      *ci << nl;
       *ci << this->name () << "::operator[] (CORBA::ULong index) const // read"
          << nl;
       *ci << "{\n";
@@ -1501,6 +1506,7 @@ be_sequence::gen_var_impl (void)
       *ci << " &";
     }
 
+  *ci << nl;
   *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1842,6 +1848,7 @@ be_sequence::gen_out_impl (void)
       *ci << " &";
     }
 
+  *ci << nl;
   *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
