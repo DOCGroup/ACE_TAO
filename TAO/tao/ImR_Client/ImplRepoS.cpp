@@ -45,6 +45,7 @@
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
 #include "tao/PortableServer/TypeCode_SArg_Traits.h"
 #include "tao/PortableServer/Object_SArg_Traits.h"
+#include "tao/PortableServer/get_arg.h"
 #include "tao/Special_Basic_Arguments.h"
 #include "tao/UB_String_Arguments.h"
 #include "tao/TAO_Server_Request.h"
@@ -272,68 +273,6 @@ namespace TAO
 }
 
 
-// Stub/skeleton argument selection function templates.
-// TAO_IDL - Generated from be\be_visitor_root/root.cpp:111
-
-namespace
-{
-  template<typename T>
-  typename TAO::SArg_Traits<T>::ret_arg_type
-  get_ret_arg (TAO_Operation_Details const * details,
-               TAO::Argument * const * skel_args)
-  {
-    return
-      details
-      ? static_cast<typename TAO::Arg_Traits<T>::ret_val *> (
-          details->args ()[0])->arg ()
-      : static_cast<typename TAO::SArg_Traits<T>::ret_val *> (
-          skel_args[0])->arg ();
-  }
-  
-  template<typename T>
-  typename TAO::SArg_Traits<T>::in_arg_type
-  get_in_arg (TAO_Operation_Details const * details,
-              TAO::Argument * const * skel_args,
-              size_t i)
-  {
-    return
-      details
-      ? static_cast<typename TAO::Arg_Traits<T>::in_arg_val *> (
-          details->args ()[i])->arg ()
-      : static_cast<typename TAO::SArg_Traits<T>::in_arg_val *> (
-          skel_args[i])->arg ();
-  }
-  
-  template<typename T>
-  typename TAO::SArg_Traits<T>::inout_arg_type
-  get_inout_arg (TAO_Operation_Details const * details,
-                 TAO::Argument * const * skel_args,
-                 size_t i)
-  {
-    return
-      details
-      ? static_cast<typename TAO::Arg_Traits<T>::inout_arg_val *> (
-          details->args ()[i])->arg ()
-      : static_cast<typename TAO::SArg_Traits<T>::inout_arg_val *> (
-          skel_args[i])->arg ();
-  }
-  
-  template<typename T>
-  typename TAO::SArg_Traits<T>::out_arg_type
-  get_out_arg (TAO_Operation_Details const * details,
-               TAO::Argument * const * skel_args,
-               size_t i)
-  {
-    return
-      details
-      ? static_cast<typename TAO::Arg_Traits<T>::out_arg_val *> (
-          details->args ()[i])->arg ()
-      : static_cast<typename TAO::SArg_Traits<T>::out_arg_val *> (
-          skel_args[i])->arg ();
-  }
-}
-
-
 // TAO_IDL - Generated from
 // be\be_interface.cpp:1535
 
@@ -541,7 +480,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:832
+// be\be_visitor_interface/interface_ss.cpp:978
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -682,18 +621,18 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
-        get_in_arg< ::CORBA::ULong> (
+        TAO::Portable_Server::get_in_arg< ::CORBA::ULong, TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
         
       TAO::SArg_Traits< ImplementationRepository::ServerInformationList>::out_arg_type arg_2 =
-        get_out_arg< ImplementationRepository::ServerInformationList> (
+        TAO::Portable_Server::get_out_arg< ImplementationRepository::ServerInformationList, TAO::SArg_Traits< ImplementationRepository::ServerInformationList>::out_arg_type> (
           this->operation_details_,
           this->args_,
           2);
@@ -869,12 +808,12 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -967,7 +906,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
@@ -1105,7 +1044,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-        get_ret_arg< ::CORBA::Object> (
+        TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
@@ -1188,7 +1127,7 @@ const char* POA_ImplementationRepository::ServerInformationIterator::_interface_
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:780
+// be\be_visitor_interface/interface_ss.cpp:926
 
 void POA_ImplementationRepository::ServerInformationIterator::_dispatch (
     TAO_ServerRequest & req,
@@ -1203,7 +1142,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:731
+// be\be_visitor_interface/interface_ss.cpp:877
 
 ImplementationRepository::ServerInformationIterator *
 POA_ImplementationRepository::ServerInformationIterator::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -1451,7 +1390,7 @@ POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker::disp
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:832
+// be\be_visitor_interface/interface_ss.cpp:978
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -1770,7 +1709,7 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -1868,13 +1807,13 @@ void POA_ImplementationRepository::Administration::register_server_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
         
       TAO::SArg_Traits< ImplementationRepository::StartupOptions>::in_arg_type arg_2 =
-        get_in_arg< ImplementationRepository::StartupOptions> (
+        TAO::Portable_Server::get_in_arg< ImplementationRepository::StartupOptions, TAO::SArg_Traits< ImplementationRepository::StartupOptions>::in_arg_type> (
           this->operation_details_,
           this->args_,
           2);
@@ -1975,13 +1914,13 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
         
       TAO::SArg_Traits< ImplementationRepository::StartupOptions>::in_arg_type arg_2 =
-        get_in_arg< ImplementationRepository::StartupOptions> (
+        TAO::Portable_Server::get_in_arg< ImplementationRepository::StartupOptions, TAO::SArg_Traits< ImplementationRepository::StartupOptions>::in_arg_type> (
           this->operation_details_,
           this->args_,
           2);
@@ -2082,7 +2021,7 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -2179,7 +2118,7 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -2276,19 +2215,19 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
         
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_2 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           2);
         
       TAO::SArg_Traits< ImplementationRepository::ServerObject>::in_arg_type arg_3 =
-        get_in_arg< ImplementationRepository::ServerObject> (
+        TAO::Portable_Server::get_in_arg< ImplementationRepository::ServerObject, TAO::SArg_Traits< ImplementationRepository::ServerObject>::in_arg_type> (
           this->operation_details_,
           this->args_,
           3);
@@ -2391,7 +2330,7 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -2488,13 +2427,13 @@ void POA_ImplementationRepository::Administration::find_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
         
       TAO::SArg_Traits< ImplementationRepository::ServerInformation>::out_arg_type arg_2 =
-        get_out_arg< ImplementationRepository::ServerInformation> (
+        TAO::Portable_Server::get_out_arg< ImplementationRepository::ServerInformation, TAO::SArg_Traits< ImplementationRepository::ServerInformation>::out_arg_type> (
           this->operation_details_,
           this->args_,
           2);
@@ -2594,19 +2533,19 @@ void POA_ImplementationRepository::Administration::list_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
-        get_in_arg< ::CORBA::ULong> (
+        TAO::Portable_Server::get_in_arg< ::CORBA::ULong, TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
         
       TAO::SArg_Traits< ImplementationRepository::ServerInformationList>::out_arg_type arg_2 =
-        get_out_arg< ImplementationRepository::ServerInformationList> (
+        TAO::Portable_Server::get_out_arg< ImplementationRepository::ServerInformationList, TAO::SArg_Traits< ImplementationRepository::ServerInformationList>::out_arg_type> (
           this->operation_details_,
           this->args_,
           2);
         
       TAO::SArg_Traits< ImplementationRepository::ServerInformationIterator>::out_arg_type arg_3 =
-        get_out_arg< ImplementationRepository::ServerInformationIterator> (
+        TAO::Portable_Server::get_out_arg< ImplementationRepository::ServerInformationIterator, TAO::SArg_Traits< ImplementationRepository::ServerInformationIterator>::out_arg_type> (
           this->operation_details_,
           this->args_,
           3);
@@ -2706,12 +2645,12 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -2804,7 +2743,7 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
@@ -2942,7 +2881,7 @@ void POA_ImplementationRepository::Administration::_component_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-        get_ret_arg< ::CORBA::Object> (
+        TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
@@ -3025,7 +2964,7 @@ const char* POA_ImplementationRepository::Administration::_interface_repository_
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:780
+// be\be_visitor_interface/interface_ss.cpp:926
 
 void POA_ImplementationRepository::Administration::_dispatch (
     TAO_ServerRequest & req,
@@ -3040,7 +2979,7 @@ void POA_ImplementationRepository::Administration::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:731
+// be\be_visitor_interface/interface_ss.cpp:877
 
 ImplementationRepository::Administration *
 POA_ImplementationRepository::Administration::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -3072,7 +3011,7 @@ POA_ImplementationRepository::Administration::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1674
+// be\be_visitor_root/root.cpp:1575
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

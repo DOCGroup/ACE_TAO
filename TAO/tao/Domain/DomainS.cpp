@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_codegen.cpp:609
 
 #ifndef _TAO_IDL_ORIG_DOMAINS_CPP_
@@ -34,8 +34,8 @@
 
 
 #include "DomainS.h"
-#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Basic_SArguments.h"
@@ -44,6 +44,7 @@
 #include "tao/PortableServer/UB_String_SArguments.h"
 #include "tao/PortableServer/TypeCode_SArg_Traits.h"
 #include "tao/PortableServer/Object_SArg_Traits.h"
+#include "tao/PortableServer/get_arg.h"
 #include "tao/Special_Basic_Arguments.h"
 #include "tao/UB_String_Arguments.h"
 #include "tao/TAO_Server_Request.h"
@@ -80,7 +81,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__SARG_TRAITS_SS_)
 #define _CORBA_POLICY__SARG_TRAITS_SS_
-
+  
   template<>
   class TAO_Domain_Export SArg_Traits<CORBA::Policy>
     : public
@@ -96,7 +97,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__SARG_TRAITS_SS_)
 #define _CORBA_INTERFACEDEF__SARG_TRAITS_SS_
-
+  
   template<>
   class TAO_Domain_Export SArg_Traits<CORBA::InterfaceDef>
     : public
@@ -121,7 +122,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_SS_)
 #define _CORBA_POLICY__ARG_TRAITS_SS_
-
+  
   template<>
   class TAO_Domain_Export Arg_Traits<CORBA::Policy>
     : public
@@ -138,7 +139,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_SS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_SS_
-
+  
   template<>
   class TAO_Domain_Export Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -152,68 +153,6 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-}
-
-
-// Stub/skeleton argument selection function templates.
-// TAO_IDL - Generated from be\be_visitor_root/root.cpp:111
-
-namespace
-{
-  template<typename T>
-  typename TAO::SArg_Traits<T>::ret_arg_type
-  get_ret_arg (TAO_Operation_Details const * details,
-               TAO::Argument * const * skel_args)
-  {
-    return
-      details
-      ? static_cast<typename TAO::Arg_Traits<T>::ret_val *> (
-          details->args ()[0])->arg ()
-      : static_cast<typename TAO::SArg_Traits<T>::ret_val *> (
-          skel_args[0])->arg ();
-  }
-
-  template<typename T>
-  typename TAO::SArg_Traits<T>::in_arg_type
-  get_in_arg (TAO_Operation_Details const * details,
-              TAO::Argument * const * skel_args,
-              size_t i)
-  {
-    return
-      details
-      ? static_cast<typename TAO::Arg_Traits<T>::in_arg_val *> (
-          details->args ()[i])->arg ()
-      : static_cast<typename TAO::SArg_Traits<T>::in_arg_val *> (
-          skel_args[i])->arg ();
-  }
-
-  template<typename T>
-  typename TAO::SArg_Traits<T>::inout_arg_type
-  get_inout_arg (TAO_Operation_Details const * details,
-                 TAO::Argument * const * skel_args,
-                 size_t i)
-  {
-    return
-      details
-      ? static_cast<typename TAO::Arg_Traits<T>::inout_arg_val *> (
-          details->args ()[i])->arg ()
-      : static_cast<typename TAO::SArg_Traits<T>::inout_arg_val *> (
-          skel_args[i])->arg ();
-  }
-  
-  template<typename T>
-  typename TAO::SArg_Traits<T>::out_arg_type
-  get_out_arg (TAO_Operation_Details const * details,
-               TAO::Argument * const * skel_args,
-               size_t i)
-  {
-    return
-      details
-      ? static_cast<typename TAO::Arg_Traits<T>::out_arg_val *> (
-          details->args ()[i])->arg ()
-      : static_cast<typename TAO::SArg_Traits<T>::out_arg_val *> (
-          skel_args[i])->arg ();
-  }
 }
 
 
@@ -283,7 +222,7 @@ TAO_CORBA_DomainManager_Perfect_Hash_OpTable::hash (const char *str, unsigned in
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
-const struct TAO_operation_db_entry *
+const TAO_operation_db_entry *
 TAO_CORBA_DomainManager_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
@@ -298,7 +237,7 @@ TAO_CORBA_DomainManager_Perfect_Hash_OpTable::lookup (const char *str, unsigned 
       WORDLIST_SIZE = 10
     };
 
-  static const struct TAO_operation_db_entry  wordlist[] =
+  static const TAO_operation_db_entry  wordlist[] =
     {
       {"",0,0},{"",0,0},{"",0,0},{"",0,0},{"",0,0},
       {"_is_a", &POA_CORBA::DomainManager::_is_a_skel, 0},
@@ -424,7 +363,7 @@ POA_CORBA::_TAO_DomainManager_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:832
+// be\be_visitor_interface/interface_ss.cpp:978
 
 TAO::Collocation_Proxy_Broker *
 CORBA__TAO_DomainManager_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -542,12 +481,12 @@ void POA_CORBA::DomainManager::get_domain_policy_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Policy>::ret_arg_type retval =
-        get_ret_arg< CORBA::Policy> (
+        TAO::Portable_Server::get_ret_arg< CORBA::Policy, TAO::SArg_Traits< CORBA::Policy>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
       TAO::SArg_Traits< ::CORBA::PolicyType>::in_arg_type arg_1 =
-        get_in_arg< ::CORBA::PolicyType> (
+        TAO::Portable_Server::get_in_arg< ::CORBA::PolicyType, TAO::SArg_Traits< ::CORBA::PolicyType>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -643,12 +582,12 @@ void POA_CORBA::DomainManager::_is_a_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -741,7 +680,7 @@ void POA_CORBA::DomainManager::_non_existent_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
@@ -879,7 +818,7 @@ void POA_CORBA::DomainManager::_component_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-        get_ret_arg< ::CORBA::Object> (
+        TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
@@ -962,7 +901,7 @@ const char* POA_CORBA::DomainManager::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:780
+// be\be_visitor_interface/interface_ss.cpp:926
 
 void POA_CORBA::DomainManager::_dispatch (
     TAO_ServerRequest & req,
@@ -977,7 +916,7 @@ void POA_CORBA::DomainManager::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:731
+// be\be_visitor_interface/interface_ss.cpp:877
 
 CORBA::DomainManager *
 POA_CORBA::DomainManager::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -1074,7 +1013,7 @@ TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::hash (const char *str, unsign
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
-const struct TAO_operation_db_entry *
+const TAO_operation_db_entry *
 TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
@@ -1089,7 +1028,7 @@ TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::lookup (const char *str, unsi
       WORDLIST_SIZE = 12
     };
 
-  static const struct TAO_operation_db_entry  wordlist[] =
+  static const TAO_operation_db_entry  wordlist[] =
     {
       {"",0,0},{"",0,0},{"",0,0},{"",0,0},
       {"copy", &POA_CORBA::ConstructionPolicy::copy_skel, &POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::copy},
@@ -1220,7 +1159,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:832
+// be\be_visitor_interface/interface_ss.cpp:978
 
 TAO::Collocation_Proxy_Broker *
 CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -1339,13 +1278,13 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::InterfaceDef>::in_arg_type arg_1 =
-        get_in_arg< CORBA::InterfaceDef> (
+        TAO::Portable_Server::get_in_arg< CORBA::InterfaceDef, TAO::SArg_Traits< CORBA::InterfaceDef>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
         
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_2 =
-        get_in_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type> (
           this->operation_details_,
           this->args_,
           2);
@@ -1442,12 +1381,12 @@ void POA_CORBA::ConstructionPolicy::_is_a_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        get_in_arg< CORBA::Char *> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
@@ -1540,7 +1479,7 @@ void POA_CORBA::ConstructionPolicy::_non_existent_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        get_ret_arg< ::ACE_InputCDR::to_boolean> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
@@ -1678,7 +1617,7 @@ void POA_CORBA::ConstructionPolicy::_component_skel (
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-        get_ret_arg< ::CORBA::Object> (
+        TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
           this->operation_details_,
           this->args_);
       
@@ -1765,7 +1704,7 @@ const char* POA_CORBA::ConstructionPolicy::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:780
+// be\be_visitor_interface/interface_ss.cpp:926
 
 void POA_CORBA::ConstructionPolicy::_dispatch (
     TAO_ServerRequest & req,
@@ -1780,7 +1719,7 @@ void POA_CORBA::ConstructionPolicy::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:731
+// be\be_visitor_interface/interface_ss.cpp:877
 
 CORBA::ConstructionPolicy *
 POA_CORBA::ConstructionPolicy::_this (ACE_ENV_SINGLE_ARG_DECL)
