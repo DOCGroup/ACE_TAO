@@ -591,7 +591,6 @@ sequence_does_contain (CORBA::Any* sequence,
 
 	if (extracter.extract (*sequence, long_seq))
 	  return_value = ::TAO_find (*long_seq, (CORBA::Long) element);
-
       }
       break;
     case CORBA::tk_ulong:
@@ -641,7 +640,7 @@ sequence_does_contain (CORBA::Any* sequence,
           extracter (CosTradingSequences::_tc_StringSeq);
 
 	if (extracter.extract (*sequence, string_seq))
-	  return_value = ::TAO_find (*string_seq, (const char *) element);
+	  return_value = ::TAO_find_string (*string_seq, (const char *) element);
       }
       break;
     }
