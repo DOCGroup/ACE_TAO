@@ -891,6 +891,14 @@ typedef int ACE_thread_key_t;
 #undef sigismember
 #endif /* SCO */
 
+// This must come after signal.h is #included.  It's to counteract
+// the sigemptyset and sigfillset #defines, which only happen
+// when __OPTIMIZE__ is #defined (really!) on Linux.
+#if defined (linux) && defined (__OPTIMIZE__)
+#undef sigemptyset
+#undef sigfillset
+#endif /* linux && __OPTIMIZE__ */
+
 #if defined (ACE_HAS_BROKEN_SENDMSG)
 typedef struct msghdr ACE_SENDMSG_TYPE;
 #else
