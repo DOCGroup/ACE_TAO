@@ -73,4 +73,6 @@ unlink $iorfile_1;
 unlink $iorfile_2;
 unlink $iorfile_3;
 
+$SV->Wait ();
+
 exit $status;

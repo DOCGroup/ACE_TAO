@@ -9,7 +9,6 @@ use lib "../../../bin";
 require ACEutils;
 require Process;
 
-$port = 0;
 $iorfile = "server.ior";
 $invocation = "sii";
 $num = 5;
@@ -22,8 +21,7 @@ sub run_test
   my $type = shift(@_);
 
   $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
-                         "$debug -ORBport $port -o ".
-                         $iorfile);
+                         "$debug -o $iorfile");
 
   ACE::waitforfile ($iorfile);
 
