@@ -16,6 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/ACE_export.h"
+#include "ace/OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
