@@ -40,7 +40,7 @@ template <class T> class ACE_Future;
  * @brief Implementation of object which has holds ACE_Future.
  */
 template <class T>
-class ACE_Export ACE_Future_Holder
+class ACE_Future_Holder
 {
 public:
   ACE_Future_Holder (const ACE_Future<T> &future);
