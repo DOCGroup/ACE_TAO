@@ -1,3 +1,15 @@
+Mon Jul 12 16:15:20 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	  Removed the flowname from the flowspec for start and stop and
+	  made use of the "empty flowspec will start all flows" feature of
+	  the Streamctrl.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	  Fixed the empty flowspec case for StreamCtrl::start,stop and
+	  destroy operations. Now the user can specify an empty flowspec
+	  and the operation will be done for all the flows.
+
 Sun Jul 11 20:10:13 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
