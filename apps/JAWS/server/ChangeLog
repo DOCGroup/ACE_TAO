@@ -1,3 +1,8 @@
+Thu Jul  3 15:34:30 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* HTTP_Response.cpp (HTTP_Response): Moved a call to delete out of
+	  constructor into the destructor where it belongs.
+
 Thu Jul  3 12:28:44 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* Parse_Headers.cpp: Line 137, Changed pt to ptr (it was a typo)

@@ -9,6 +9,8 @@
 #include "HTTP_Config.h"
 #include "IO.h"
 
+static const char * EMPTY_HEADER = "";
+
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
   : io_(io), request_(request)
 {
@@ -17,11 +19,12 @@ HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
 HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
   : io_(io), request_(request)
 {
-  delete this->HTTP_HEADER;
 }
 
 HTTP_Response::~HTTP_Response (void)
 {
+  if (this->HTTP_HEADER != EMPTY_HEADER)
+    delete this->HTTP_HEADER;
 }
 
 void
@@ -143,9 +146,7 @@ HTTP_Response::normal_response (void)
 
       this->build_headers ();
       this->io_.transmit_file (this->request_.path (), 
-                               this->HTTP_HEADER
-                               ? this->HTTP_HEADER
-                               : "",
+                               this->HTTP_HEADER,
                                this->HTTP_HEADER_LENGTH,
                                this->HTTP_TRAILER, 
                                this->HTTP_TRAILER_LENGTH);
@@ -153,9 +154,7 @@ HTTP_Response::normal_response (void)
 
     case HTTP_Request::HEAD :
       this->build_headers ();
-      this->io_.send_confirmation_message (this->HTTP_HEADER
-                                           ? this->HTTP_HEADER
-                                           : "",
+      this->io_.send_confirmation_message (this->HTTP_HEADER,
                                            this->HTTP_HEADER_LENGTH);
       break;
 
@@ -315,7 +314,7 @@ HTTP_Response::build_headers (void)
   if (this->request_.version () == 0
       || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     {
-      HTTP_HEADER = 0;
+      HTTP_HEADER = EMPTY_HEADER;
       HTTP_HEADER_LENGTH = 0;
     }
   else
