@@ -1,3 +1,14 @@
+Fri Jun 18 11:56:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/Update_Plan.cpp:
+        * DnC/RepositoryManager/Update_Plan.h:
+
+          Helper files to update the deployment plan from the package
+          configuration IDL data structure.
+
+          Made changes to follow DOC group standard of never a function
+          more than a page.
+
 Fri Jun 18 09:36:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
