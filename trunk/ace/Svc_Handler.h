@@ -45,8 +45,8 @@ class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_2>
 public:
   // = Initialization and termination methods.
   ACE_Svc_Handler (ACE_Thread_Manager * = 0, 
-		   ACE_Message_Queue<ACE_SYNCH_2> * = 0,
-		   ACE_Reactor * = ACE_Reactor::instance ());
+                   ACE_Message_Queue<ACE_SYNCH_2> * = 0,
+                   ACE_Reactor * = ACE_Reactor::instance ());
 
   virtual ~ACE_Svc_Handler (void); 
 
@@ -73,14 +73,14 @@ public:
   // = Demultiplexing hooks.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform termination activities on the SVC_HANDLER.  The default
   // behavior is to close down the <peer_> (to avoid descriptor leaks)
   // and to delete this (to avoid memory leaks)!  If you don't want
   // this behavior make sure you override this method...
 
   virtual int handle_timeout (const ACE_Time_Value &time,
-			      const void *);
+                              const void *);
   // Default behavior when timeouts occur is to close down the
   // <Svc_Handler> by calling <handle_close>.
 
@@ -137,11 +137,6 @@ private:
   char closing_;
   // Keeps track of whether we are in the process of closing (required
   // to avoid circular calls to <handle_close>).
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  static ACE_Thread_Mutex ace_svc_handler_lock_;
-  // Lock the creation of the Singleton.
-#endif /* defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 };
 
 #if defined (__ACE_INLINE__)

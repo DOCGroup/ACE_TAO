@@ -16,12 +16,6 @@
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) 
-// Lock the creation of the Singleton.
-template <PR_ST_1, ACE_SYNCH_1>
-ACE_Thread_Mutex ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ace_svc_handler_lock_;
-#endif /* defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
-
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
 ACE_Svc_Handler_cleanup (void *object, void *)
@@ -48,12 +42,6 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::instance (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::allocated");
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) 
-  // Lock the creation of the Singleton.  This should be inside of
-  // ACE_Svc_Handler, but GNU G++ is too lame to handle this...
-  static ACE_Thread_Mutex ace_svc_handler_lock_;
-#endif /* defined (ACE_MT_SAFE) && defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
-
   static ACE_TSS_TYPE (ACE_Dynamic) *instance_;
   // Determines if we were dynamically allocated.  Note that this
   // should be inside of ACE_Svc_Handler, but G++ is too lame to
@@ -63,10 +51,13 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::instance (void)
 
   if (instance_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_svc_handler_lock_, 0));
+      ACE_MT (ACE_Thread_Mutex *lock =
+        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_SVC_HANDLER_LOCK);
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
       if (instance_ == 0)
-	ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Dynamic), 0);
+        ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Dynamic), 0);
 
       // Register for destruction with ACE_Object_Manager.
 #if defined (ACE_HAS_SIG_C_FUNC)
@@ -118,8 +109,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::operator delete (void *obj)
 
 template <PR_ST_1, ACE_SYNCH_1> 
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
-							ACE_Message_Queue<ACE_SYNCH_2> *mq,
-							ACE_Reactor *reactor)
+                                                        ACE_Message_Queue<ACE_SYNCH_2> *mq,
+                                                        ACE_Reactor *reactor)
   : ACE_Task<ACE_SYNCH_2> (tm, mq)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler");
@@ -156,16 +147,16 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::open (void *)
     
   if (client_addr.addr_to_string (buf, sizeof buf) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
-		      "can't obtain peer's address"), -1);
+                      "can't obtain peer's address"), -1);
 
   ACE_DEBUG ((LM_DEBUG, "connected to %s on fd %d\n", 
-	     buf, this->peer_.get_handle ()));
+             buf, this->peer_.get_handle ()));
 #endif /* DEBUGGING */
   if (this->reactor () 
       && this->reactor ()->register_handler 
           (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p", 
-		      "unable to register client handler"), -1);
+                      "unable to register client handler"), -1);
   return 0;
 }
 
@@ -180,7 +171,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::shutdown (void)
   if (this->reactor ())
     {
       ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK |
-			      ACE_Event_Handler::DONT_CALL;
+                              ACE_Event_Handler::DONT_CALL;
 
       // Make sure there are no timers.
       this->reactor ()->cancel_timer (this);
@@ -241,7 +232,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::~ACE_Svc_Handler (void)
 
 template <PR_ST_1, ACE_SYNCH_1> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::handle_close (ACE_HANDLE, 
-						     ACE_Reactor_Mask)
+                                                     ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::handle_close");
 
@@ -251,7 +242,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::handle_close (ACE_HANDLE,
 
 template <PR_ST_1, ACE_SYNCH_1> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::handle_timeout (const ACE_Time_Value &,
-						       const void *)
+                                                       const void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::handle_timeout");
   return this->handle_close ();
