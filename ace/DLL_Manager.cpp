@@ -164,7 +164,7 @@ ACE_DLL_Handle::close (int unload)
 
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE_DLL_Handle::close error: \"%s\"."),
+                       ACE_LIB_TEXT ("ACE_DLL_Handle::close error: \"%s\".\n"),
                        this->error ()->c_str ()),
                       retval);
   return retval;
@@ -191,7 +191,7 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   // won't do us much good anyway, let's still report an error.
   if (!sym && ignore_errors != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE_DLL_Handle::symbol (\"%s\") \"%s\"."),
+                       ACE_LIB_TEXT ("ACE_DLL_Handle::symbol (\"%s\") \"%s\".\n"),
                        auto_name.get (), this->error ()->c_str ()),
                       0);
 
