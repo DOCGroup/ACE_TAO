@@ -4,6 +4,13 @@ Thu Oct 02 11:21:37 1997  Steve Huston  <shuston@riverace.com>
 	  shared_libs_only = 0 and static_libs = 1 settings since C Set++
 	  builds the shared libs from the static.
 
+	* ace/OS.h: Removed spaces around '##' in ACE_DES_FREE_TEMPLATE macro.
+
+	* ace/Strategies_T.cpp: added #include "ace/Thread_Manager.h"
+
+	* ace/Managed_Object.h: Added <TYPE> template arg in the "unimplemented
+	  function" section.
+
 Thu Oct 02 10:46:18 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Malloc.h: added some comments on rationale and use of
