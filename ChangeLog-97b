@@ -1,3 +1,10 @@
+Wed Oct 29 22:17:03 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/config-hpux-10.x-hpc++.h (ACE_HAS_TEMPLATE_SPECIALIZATION):
+	  Moved to C++ section.  Restored ACE_TEMPLATE_REQUIRE_SOURCE in
+	  C++ section.  Thanks to Stephen Coy <stevec@magna.com.au> for
+	  providing the fix (patiently.)
+
 Wed Oct 29 21:12:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS: Changed the tolower() method to to_lower() so that it
