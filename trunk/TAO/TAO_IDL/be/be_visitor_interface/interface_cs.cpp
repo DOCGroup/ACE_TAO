@@ -65,15 +65,18 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // Global functions to allow non-defined forward declared interfaces
   // access to some methods in the full definition.
   *os << node->full_name () << "_ptr" << be_nl
-      << "tao_" << node->flat_name () << "_duplicate (" << be_idt << be_idt_nl
+      << "tao_" << node->flat_name () 
+      << "_duplicate (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return " << node->full_name () << "::_duplicate (p);" << be_uidt_nl
+      << "return " << node->full_name () 
+      << "::_duplicate (p);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
-      << "tao_" << node->flat_name () << "_release (" << be_idt << be_idt_nl
+      << "tao_" << node->flat_name () 
+      << "_release (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -81,31 +84,36 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}" << be_nl << be_nl;
 
   *os << node->full_name () <<  "_ptr" << be_nl
-      << "tao_" << node->flat_name () << "_nil (" << be_idt << be_idt_nl
+      << "tao_" << node->flat_name () 
+      << "_nil (" << be_idt << be_idt_nl
       << "void" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl
+      << "return " << node->full_name () 
+      << "::_nil ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << node->full_name () << "_ptr" << be_nl
-      << "tao_" << node->flat_name () << "_narrow (" << be_idt << be_idt_nl
+      << "tao_" << node->flat_name () 
+      << "_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object *p," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return " << node->full_name () << "::_narrow (p, ACE_TRY_ENV);" 
+      << "return " << node->full_name () 
+      << "::_narrow (p, ACE_TRY_ENV);" 
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "CORBA::Object *" << be_nl
-      << "tao_" << node->flat_name () << "_upcast (" << be_idt << be_idt_nl
+      << "tao_" << node->flat_name () 
+      << "_upcast (" << be_idt << be_idt_nl
       << "void *src" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << node->full_name () << " **tmp =" << be_idt_nl
-      << "ACE_static_cast (" << node->full_name () << " **, src);" 
-      << be_uidt_nl
+      << "ACE_static_cast (" << node->full_name () 
+      << " **, src);" << be_uidt_nl
       << "return *tmp;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -230,8 +238,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "else" << be_idt_nl
           << "this->the" << node->base_proxy_broker_name ()
           << "_ =" << be_idt_nl
-          << "::" << node->full_remote_proxy_broker_name () << "::"
-          << "the" << node->remote_proxy_broker_name ()
+          << "::" << node->full_remote_proxy_broker_name () 
+          << "::the" << node->remote_proxy_broker_name ()
           << " ();" << be_uidt << be_uidt;
 
       // Now we setup the immediate parents.
@@ -355,7 +363,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_idt_nl   // 1 idt
           << "ACE_NEW_RETURN (" << be_idt_nl  // 2 idt
           << "default_proxy," << be_nl
-          << "::" <<  bt->name () << " (" << be_idt_nl  // 3 idt
+          << "::" <<  bt->name () 
+          << " (" << be_idt_nl  // 3 idt
           << "stub," << be_nl
           << "1," << be_nl
           << "obj->_servant ())," << be_nl
@@ -401,7 +410,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "ACE_reinterpret_cast" << be_idt_nl
       << "(" << be_idt_nl
       << "ptr_arith_t," << be_nl
-      << "&" << node->local_name () << "::_narrow" << be_uidt_nl
+      << "&" << node->local_name () 
+      << "::_narrow" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl
       << ");\n" << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt;
@@ -424,11 +434,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (! node->is_local ())
     {
       os->indent ();
-      *os << "CORBA::Boolean " << node->full_name () << "::_is_a (" <<
-        "const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)" << be_nl
+      *os << "CORBA::Boolean " << node->full_name () 
+          << "::_is_a (" 
+          << "const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)" 
+          << be_nl
           << "{\n";
+
       os->incr_indent ();
+
       *os << "if (\n";
+
       os->incr_indent (0);
 
       if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
@@ -478,7 +493,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "::_interface_repository_id (void) const"
       << be_nl
       << "{" << be_idt_nl
-      << "return \"" << node->repoID () << "\";" << be_uidt_nl
+      << "return \"" << node->repoID () 
+      << "\";" << be_uidt_nl
       << "}\n\n";
 
   os->decr_indent (0);
