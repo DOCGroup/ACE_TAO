@@ -648,13 +648,6 @@ ACE_LACKS_FCNTL                         Platform lacks POSIX-style fcntl ().
 ACE_LACKS_FSYNC                         Platform lacks fsync().
 ACE_LACKS_INLINE_FUNCTIONS              Platform can't handle "inline"
                                         keyword correctly.
-ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
-                                        reentrant netdb functions
-                                        (getprotobyname_r,
-                                        getprotobynumber_r,
-                                        gethostbyaddr_r,
-                                        gethostbyname_r,
-                                        getservbyname_r).
 ACE_LACKS_EXEC                          Platform lacks the exec()
                                         family of system calls (e.g.,
                                         Win32, VxWorks, Chorus)
@@ -721,6 +714,8 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
                                         gethostbyaddr_r,
                                         gethostbyname_r,
                                         getservbyname_r).
+ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
+                                        for ::pthread_join ().
 ACE_LACKS_PARAM_H                       Platform lacks <sys/param.h>
                                         (e.g., MVS)
 ACE_LACKS_POSIX_PROTOTYPES              Platform lacks POSIX
