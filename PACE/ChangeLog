@@ -1,3 +1,14 @@
+Sat Jul 22 09:24:34 2000  Ossama Othman  <ossama@uci.edu>
+
+	* pace/Makefile.am (DESTDIRS):
+
+	  Added missing line continuation backslash `\'.
+
+	* pace/posix/Makefile.am (noinst_LTLIBRARIES):
+
+	  Rename libtool convenience library to `libPACE_POSIX.la' to
+	  avoid name clash with the actual `libPACE.la' library.
+
 Fri Jul 21 20:41:04 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/unistd.inl:
