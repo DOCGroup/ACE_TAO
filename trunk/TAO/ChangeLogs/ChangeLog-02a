@@ -237,11 +237,6 @@ Thu Mar  1 14:14:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Updated to use PerlACE::Run_Test.
 
-Tue Feb 27 17:45:55 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-
-	* orbsvcs/tests/AVStreams/Latency/control.cpp:
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
-
 Thu Mar  1 15:21:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCode.cpp:
