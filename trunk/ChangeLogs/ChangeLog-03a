@@ -1,5 +1,9 @@
 Tue Feb 20 06:34:26 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* include/makeinclude/platform_sunos5_g++.GNU: Make sure to explicitly
+	  set ACE_HAS_GNUG_PRE_2_8.  Thanks to Christian von Mueffling
+ 	  <cvm@aiss.de> for reporting this.
+
 	* ace/Thread_Manager.cpp (cancel_grp): Fixed a typo in
 	  the ACE_TRACE macro.  Thanks to Mike Curtis for reporting this.
 
