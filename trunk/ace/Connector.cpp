@@ -747,7 +747,8 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
   else if (this->creation_strategy_ == 0)
     {
       ACE_NEW_RETURN (this->creation_strategy_,
-                      CREATION_STRATEGY, -1);
+                      CREATION_STRATEGY,
+                      -1);
       this->delete_creation_strategy_ = 1;
     }
 
@@ -768,10 +769,10 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
     else if (this->connect_strategy_ == 0)
       {
         ACE_NEW_RETURN (this->connect_strategy_,
-                        CONNECT_STRATEGY, -1);
+                        CONNECT_STRATEGY,
+                        -1);
         this->delete_connect_strategy_ = 1;
       }
-
 
   // Initialize the concurrency strategy.
 
@@ -789,7 +790,8 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
   else if (this->concurrency_strategy_ == 0)
     {
       ACE_NEW_RETURN (this->concurrency_strategy_,
-                      CONCURRENCY_STRATEGY, -1);
+                      CONCURRENCY_STRATEGY,
+                      -1);
       this->delete_concurrency_strategy_ = 1;
     }
 
