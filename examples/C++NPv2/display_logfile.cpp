@@ -21,7 +21,7 @@ template <class TASK>
 class Logrec_Module : public ACE_Module<ACE_MT_SYNCH>
 {
 public:
-  Logrec_Module (ACE_TCHAR *name)
+  Logrec_Module (const ACE_TCHAR *name)
     : ACE_Module<ACE_MT_SYNCH>
                     (name,
                      &task_, // Initialize writer-side task.
