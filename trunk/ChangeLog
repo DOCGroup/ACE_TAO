@@ -1,3 +1,9 @@
+Thu Feb 3 12:43:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          Added build rule for .rc files in a static build. Thanks to
+          Arto <ajalkane at gmail dot com> for reporting this.
+
 Thu Feb 3 10:36:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
