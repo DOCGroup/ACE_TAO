@@ -1,3 +1,24 @@
+Thu Mar 27 18:30:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+
+          Added declarations in the header file for template specializations
+          in the source file, and moved the necessary file include to the
+          header file so the declarations will be recognized.
+
+        * orbsvcs/orbsvcs/IFRService/PrimaryKeyDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PrimaryKeyDef_i.h:
+
+          Removed these files that didn't get removed somehow when the 
+          dyn_corba branch was merged.
+
+        * orbsvcs/orbsvcs/IFRService.bor:
+
+          Updated the makefile, another thing that was overlooked when the
+          branch was merged.
+
+
 Thu Mar 27 14:25:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
