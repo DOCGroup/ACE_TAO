@@ -1,3 +1,19 @@
+Sun Sep 28 17:01:27 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/multiCubit: Added a multi-threaded version of Cubit.
+
+	* tao/orbobj.cpp: At long last, Andy has his wish for not having
+ 	to provide a "-ORBhost <me>" argument to a server.  It now uses
+ 	ACE_OS::hostname() to determine the canonical hostname, and
+ 	listens on that address.
+
+	* tao/singletons.h: Changed the ORB Core singleton to be a TSS
+ 	singleton; this will eventually be conditionally compiled in
+ 	(before release).  Also added comments and "safety defines".
+
+	* tao/except.cpp: Changed some usage of fputs() in
+ 	print_exception() to use ACE_DEBUG.
+
 Sun Sep 28 03:18:24 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tests/Cubit/TAO/cubitC.h (Object): Changed references of base

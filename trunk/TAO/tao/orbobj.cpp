@@ -299,10 +299,21 @@ CORBA::ORB_init (int &argc,
 #endif	/* DEBUG */
 
   ACE_INET_Addr rendezvous;
+  char hbuf[128];
   // create a INET_Addr
+  if (ACE_OS::strlen (host) == 0)
+    {
+      // hostname not provided, so use the default
+      if (ACE_OS::hostname (hbuf, sizeof(hbuf)-1) == -1)
+        ACE_DEBUG ((LM_ERROR, "(%P|%t) %p, unable to obtain host name\n"));
+
+      host = &hbuf[0];
+    }
+
+  // The conditional catches errors in hbuf
   if (ACE_OS::strlen (host) > 0)
     rendezvous.set (port, host);
-  else 
+  else
     rendezvous.set (port);
   
   // On Win32, we should be collecting information from the Registry
