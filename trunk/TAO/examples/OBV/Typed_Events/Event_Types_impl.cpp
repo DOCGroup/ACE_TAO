@@ -265,8 +265,8 @@ Event_List_impl::store_event (Event* e ACE_ENV_ARG_DECL_NOT_USED)
   // guard against the access to the list from another thread.
   // But this is omitted in this example.
 
-  Event_List_Link_var new_link (ACE_static_cast(Event_List_Link*,
-                                                new Event_List_Link_impl (e)));
+  Event_List_Link_var new_link (ACE_static_cast (Event_List_Link*,
+                                                 new Event_List_Link_impl (e)));
 
    // We need a new link to store the reference to the event e.
    // But if we'd had assigned the newly created instance directly through
@@ -295,7 +295,7 @@ Event_List_impl::store_event (Event* e ACE_ENV_ARG_DECL_NOT_USED)
   else
     {
       last_link_cache_->attach_next_link (new_link);
-      last_link_cache_ = new_link;
+      last_link_cache_ = new_link.in ();
     }
 }
 

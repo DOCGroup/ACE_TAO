@@ -125,15 +125,15 @@ Param_Test_i::test_unbounded_string (const char *s1,
 // the in string. For the inout, we append the same string to itself and send
 // it back
 char *
-Param_Test_i::test_bounded_string (const char *s1,
-                                   char *&s2,
-                                   CORBA::String_out s3
+Param_Test_i::test_bounded_string (const Param_Test::short_string s1,
+                                   Param_Test::short_string &s2,
+                                   Param_Test::short_string_out s3
                                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  char *retstr = CORBA::string_dup (s1);
+  Param_Test::short_string retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
+  Param_Test::short_string tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
   ACE_OS::sprintf (tmp, "%s%s", s2, s2);
   CORBA::string_free (s2);
   s2 = tmp;
@@ -167,9 +167,9 @@ Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
 // the in string. For the inout, we append the same string to itself and send
 // it back
 CORBA::WChar *
-Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
-                                    CORBA::WChar *&ws2,
-                                    CORBA::WString_out ws3
+Param_Test_i::test_bounded_wstring (const Param_Test::short_wstring ws1,
+                                    Param_Test::short_wstring &ws2,
+                                    Param_Test::short_wstring_out ws3
                                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
