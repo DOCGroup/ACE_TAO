@@ -1,3 +1,9 @@
+Mon Jul 22 06:22:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/Options.html: Fixed a typo in the documentation of
+	  -ORBConnectStrategy. Thanks to Colin Weaver
+	  <colin.weaver@invensys.com> for pointing this out. 
+
 Sat Jul 20 09:19:15 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_constant.cpp:
