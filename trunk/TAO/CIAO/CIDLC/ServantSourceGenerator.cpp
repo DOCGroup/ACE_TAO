@@ -225,7 +225,7 @@ namespace
     post (OperationDeclPtr const& d)
     {
       bool void_return_type = d->type ()->is_a<IDL2::SyntaxTree::VoidDecl> ();
-      
+
       // @@@ (JP) Must add support for user exceptions.
       os << endl
          << (d->begin () == d->end () ? STRS[ENV_SNGL_SRC] : STRS[ENV_SRC])
