@@ -103,23 +103,23 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
   // hand over the encoding to the TAO's internal engine
   //  *os << "CORBA::Environment env;" << be_nl;
-  *os << "TAO_TRY" << be_nl
+  *os << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl;
   // resolve the nastiness created due to casting to void* and then to
   // CORBA::Object_ptr
   *os << "CORBA::Object_ptr _tao_corba_obj = _tao_objref;" << be_nl;
   *os << "if (TAO_MARSHAL_OBJREF::instance ()->" << be_nl
-      << "        encode (0, &_tao_corba_obj, 0, &strm, TAO_TRY_ENV) == "
+      << "        encode (0, &_tao_corba_obj, 0, &strm, ACE_TRY_ENV) == "
       << be_nl
       << "        CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_idt_nl
       << "return 1;" << be_uidt_nl
-      << "TAO_CHECK_ENV;" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_CATCHANY" << be_nl
+      << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_nl
+      << "ACE_ENDTRY;" << be_nl
       << "return 0;" << be_uidt_nl;
   *os << "}\n\n";
 
@@ -135,28 +135,28 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
   // hand over to the TAO's internal marshaling engine
   //  *os << "CORBA::Environment env;" << be_nl;
-  *os << "TAO_TRY" << be_nl
+  *os << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl;
   *os << "CORBA::Object_ptr obj;" << be_nl;
   *os << "if (TAO_MARSHAL_OBJREF::instance ()->" << be_nl
-      << "        decode (0, &obj, 0, &strm, TAO_TRY_ENV) == " << be_nl
+      << "        decode (0, &obj, 0, &strm, ACE_TRY_ENV) == " << be_nl
       << "        CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
       << "{" << be_idt_nl;
-  *os << "TAO_CHECK_ENV;" << be_nl;
+  *os << "ACE_TRY_CHECK;" << be_nl;
   *os << "// narrow to the right type" << be_nl;
   *os << "_tao_objref = " << node->name ()
-      << "::_narrow (obj, TAO_TRY_ENV);" << be_nl;
-  *os << "TAO_CHECK_ENV;" << be_nl;
+      << "::_narrow (obj, ACE_TRY_ENV);" << be_nl;
+  *os << "ACE_TRY_CHECK;" << be_nl;
   *os << "CORBA::release (obj);" << be_nl;
   *os << "return 1;" << be_uidt_nl;
   *os << "}" << be_uidt_nl;
   *os << "}" << be_nl
-      << "TAO_CATCHANY" << be_nl
+      << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_nl
-      << "return 0; // error" << be_uidt_nl;
+      << "ACE_ENDTRY;" << be_nl
+      << "ACE_NOTREACHED (return 0);" << be_uidt_nl;
   *os << "}\n\n";
 
   node->cli_stub_cdr_op_gen (1);

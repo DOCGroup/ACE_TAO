@@ -114,12 +114,12 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
   *os << "CORBA::Boolean " << node->full_coll_name ()
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
-      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return this->servant_->_is_a (" << be_idt << be_idt_nl
       << "logical_type_id," << be_nl
-      << "_tao_environment" << be_uidt_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}\n\n";
 
