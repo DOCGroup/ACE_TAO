@@ -1,3 +1,26 @@
+Tue Feb 25 11:17:47 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_BaseC.h:
+	* tao/IFR_Client/IFR_BaseC.i:
+	* tao/IFR_Client/IFR_BasicC.cpp:
+	* tao/IFR_Client/IFR_BasicC.h:
+	* tao/IFR_Client/IFR_BasicC.i:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.h:
+	* tao/IFR_Client/IFR_ComponentsC.i:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.h:
+	* tao/IFR_Client/IFR_ExtendedC.i:
+
+	  Regenerated these stubs to pull in the latest CORBA namespace
+	  fixes.
+
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+
+	  "CORBA_" -> "CORBA::".
+
 Tue Feb 25 08:02:36 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.mpc:
