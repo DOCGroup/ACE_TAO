@@ -1,3 +1,9 @@
+Fri Mar 18 09:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+          Print out whether we get an exception in the client or in the server
+
 Thu Mar 17 11:00:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

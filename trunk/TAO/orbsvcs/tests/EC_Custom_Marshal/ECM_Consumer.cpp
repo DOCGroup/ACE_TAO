@@ -174,11 +174,11 @@ Driver::run (int argc, char* argv[])
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {
-      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
+      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX in Consumer");
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX in Consumer");
     }
   ACE_ENDTRY;
   return 0;
