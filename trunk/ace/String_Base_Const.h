@@ -16,6 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/ACE_export.h"
+#include "ace/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +32,7 @@
 class ACE_Export ACE_String_Base_Const
 {
 public:
-  static int npos;
+  static ssize_t npos;
 };
 
 #include "ace/post.h"

@@ -7107,11 +7107,11 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
  * @param alignment the required alignment
  */
 #define ACE_align_binary(ptr, alignment) \
-    ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))
+    ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptrdiff_t)((alignment)-1))))
 
 /// Return the next address aligned to a required boundary
 #define ACE_ptr_align_binary(ptr, alignment) \
-        ((char *) ACE_align_binary (((ptr_arith_t) (ptr)), (alignment)))
+        ((char *) ACE_align_binary (((ptrdiff_t) (ptr)), (alignment)))
 //@}
 
 // Defining POSIX4 real-time signal range.

@@ -114,7 +114,7 @@ public:
                ACE_Time_Value *tv = 0);
 
   /// Get the current number of method objects in the queue.
-  int method_count (void) const;
+  size_t method_count (void) const;
 
   /// Returns 1 if the queue is empty, 0 otherwise.
   int is_empty (void) const;

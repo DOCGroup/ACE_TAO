@@ -30,7 +30,7 @@ ACE_Base64::encode (const ACE_Byte* input,
   ACE_Byte* result = 0;
 
   size_t length = ((input_len + 2) / 3) * 4;
-  int num_lines = length / ACE_Base64::max_columns_ + 1;
+  size_t num_lines = length / ACE_Base64::max_columns_ + 1;
   length += num_lines + 1;
   ACE_NEW_RETURN (result, ACE_Byte[length], 0);
 
@@ -201,7 +201,7 @@ ACE_Base64::init ()
 {
   if (!ACE_Base64::init_)
     {
-      for (size_t i = 0; i < sizeof (ACE_Base64::alphabet_); ++i)
+      for (ACE_Byte i = 0; i < sizeof (ACE_Base64::alphabet_); ++i)
         {
           ACE_Base64::decoder_[ACE_Base64::alphabet_[i]] = i;
           ACE_Base64::member_[ACE_Base64::alphabet_[i]] = 1;

@@ -99,7 +99,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
   if (argv == 0 || argv[0] == 0)
     return;
 
-  int buf_len = 0;
+  size_t buf_len = 0;
 
   // Determine the length of the buffer.
 
@@ -184,17 +184,18 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
   // Add the number of arguments in both the argvs.
   this->argc_ = first_argc + second_argc;
 
-  int buf_len = ACE_OS::strlen (first_buf) + ACE_OS::strlen (second_buf) + 1;
+  size_t buf_len =
+    ACE_OS::strlen (first_buf) + ACE_OS::strlen (second_buf) + 1;
 
   // Allocate memory to the lenght of the combined argv string.
   ACE_NEW (this->buf_,
            ACE_TCHAR[buf_len + 1]);
 
   // copy the first argv string to the buffer
-  ACE_OS::strcpy (this->buf_,first_buf);
+  ACE_OS::strcpy (this->buf_, first_buf);
 
   // concatenate the second argv string to the buffer
-  ACE_OS::strcat (this->buf_,second_buf);
+  ACE_OS::strcat (this->buf_, second_buf);
 
   //   Delete the first and second buffers
 

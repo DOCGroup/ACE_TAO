@@ -171,7 +171,7 @@ ACE_String_Base<CHAR>::substr (size_t offset,
 // Return the <slot'th> character in the string.
 
 template <class CHAR> ACE_INLINE const CHAR &
-ACE_String_Base<CHAR>::operator[] (int slot) const
+ACE_String_Base<CHAR>::operator[] (size_t slot) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator[]");
   return this->rep_[slot];
@@ -180,7 +180,7 @@ ACE_String_Base<CHAR>::operator[] (int slot) const
 // Return the <slot'th> character in the string by reference.
 
 template <class CHAR> ACE_INLINE CHAR &
-ACE_String_Base<CHAR>::operator[] (int slot)
+ACE_String_Base<CHAR>::operator[] (size_t slot)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator[]");
   return this->rep_[slot];
@@ -343,8 +343,8 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
   }
 }
 
-template <class CHAR> ACE_INLINE int
-ACE_String_Base<CHAR>::find (const CHAR *s, int pos) const
+template <class CHAR> ACE_INLINE ssize_t
+ACE_String_Base<CHAR>::find (const CHAR *s, size_t pos) const
 {
   CHAR *substr = this->rep_ + pos;
   size_t len = ACE_OS::strlen (s);
@@ -359,8 +359,8 @@ ACE_String_Base<CHAR>::find (const CHAR *s, int pos) const
   }
 }
 
-template <class CHAR> ACE_INLINE int
-ACE_String_Base<CHAR>::find (CHAR c, int pos) const
+template <class CHAR> ACE_INLINE ssize_t
+ACE_String_Base<CHAR>::find (CHAR c, size_t pos) const
 {
   CHAR *substr = this->rep_ + pos;
   CHAR *pointer = ACE_OS::strnchr (substr, c, this->len_ - pos);
@@ -374,13 +374,13 @@ ACE_String_Base<CHAR>::find (CHAR c, int pos) const
   }
 }
 
-template <class CHAR> ACE_INLINE int
-ACE_String_Base<CHAR>::find (const ACE_String_Base<CHAR> &str, int pos) const
+template <class CHAR> ACE_INLINE ssize_t
+ACE_String_Base<CHAR>::find (const ACE_String_Base<CHAR>&str, size_t pos) const
 {
   return this->find (str.rep_, pos);
 }
 
-template <class CHAR> ACE_INLINE int
+template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::strstr");
@@ -388,19 +388,19 @@ ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
   return this->find (s.rep_);
 }
 
-template <class CHAR> ACE_INLINE int
-ACE_String_Base<CHAR>::rfind (CHAR c, int pos) const
+template <class CHAR> ACE_INLINE ssize_t
+ACE_String_Base<CHAR>::rfind (CHAR c, size_t pos) const
 {
-  if (pos == ACE_String_Base<CHAR>::npos)
+  if (pos > this->len_)
   {
     pos = this->len_;
   }
 
-  for (int i = pos - 1; i >= 0; i--)
+  for (size_t i = pos - 1; i >= 0; i--)
   {
     if (this->rep_[i] == c)
     {
-      return i;
+      return ACE_static_cast (ssize_t, i);
     }
   }
 

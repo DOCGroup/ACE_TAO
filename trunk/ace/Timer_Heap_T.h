@@ -240,7 +240,7 @@ private:
 
   /// Copy <moved_node> into the <slot> slot of <heap_> and move
   /// <slot> into the corresponding slot in the <timer_id_> array.
-  void copy (int slot, ACE_Timer_Node_T<TYPE> *moved_node);
+  void copy (size_t slot, ACE_Timer_Node_T<TYPE> *moved_node);
 
   /**
    * Returns a timer id that uniquely identifies this timer.  This id
@@ -287,7 +287,7 @@ private:
    * indications of free timer IDs, whereas positive values are
    * "pointers" into the <heap_> array for assigned timer IDs.
    */
-  long *timer_ids_;
+  ssize_t *timer_ids_;
 
   /// "Pointer" to the element in the <timer_ids_> array that was
   /// last given out as a timer ID.

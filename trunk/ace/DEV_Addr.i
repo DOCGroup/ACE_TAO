@@ -8,7 +8,8 @@ ACE_DEV_Addr::set (const ACE_TCHAR *devname)
 {
   ACE_TRACE ("ACE_DEV_Addr::set");
 
-  this->ACE_Addr::base_set (AF_DEV, ACE_OS::strlen (devname));
+  this->ACE_Addr::base_set
+    (AF_DEV, ACE_static_cast (int, ACE_OS::strlen (devname)));
   ACE_OS::strsncpy (this->devname_, devname, MAXNAMLEN);
 }
 

@@ -1398,7 +1398,16 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
       // variant since fstat always returns an error on socket FDs.
       rd_mask.set_bit (handle);
 
-      if (ACE_OS::select (int (handle) + 1,
+      int select_width;
+#  if defined (ACE_WIN64)
+      // This arg is ignored on Windows and causes pointer truncation
+      // warnings on 64-bit compiles.
+      select_width = 0;
+#  else
+      select_width = int (handle) + 1;
+#  endif /* ACE_WIN64 */
+
+      if (ACE_OS::select (select_width,
                           rd_mask, 0, 0,
                           &time_poll) < 0)
         {

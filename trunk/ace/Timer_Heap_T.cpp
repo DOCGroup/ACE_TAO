@@ -155,7 +155,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
 
   // Create the parallel array.
   ACE_NEW (this->timer_ids_,
-           long[this->max_size_]);
+           ssize_t[this->max_size_]);
 
   // Initialize the "freelist," which uses negative values to
   // distinguish freelist elements from "pointers" into the <heap_>
@@ -328,7 +328,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::copy (int slot,
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::copy (size_t slot,
                                                  ACE_Timer_Node_T<TYPE> *moved_node)
 {
   // Insert <moved_node> into its new location in the heap.
@@ -488,21 +488,21 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
   // Grow the array of timer ids.
 
-  long *new_timer_ids = 0;
+  ssize_t *new_timer_ids = 0;
 
   ACE_NEW (new_timer_ids, 
-           long[new_size]);
+           ssize_t[new_size]);
 
   ACE_OS::memcpy (new_timer_ids,
                   this->timer_ids_,
-                  this->max_size_ * sizeof (long));
+                  this->max_size_ * sizeof (ssize_t));
 
   delete [] timer_ids_;
   this->timer_ids_ = new_timer_ids;
 
   // And add the new elements to the end of the "freelist".
   for (size_t i = this->max_size_; i < new_size; i++)
-    this->timer_ids_[i] = -((long) (i + 1));
+    this->timer_ids_[i] = -(i + 1);
 
    // Grow the preallocation array (if using preallocation)
   if (this->preallocated_nodes_ != 0)
@@ -664,7 +664,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
       || (size_t) timer_id > this->max_size_)
     return 0;
 
-  long timer_node_slot = this->timer_ids_[timer_id];
+  ssize_t timer_node_slot = this->timer_ids_[timer_id];
 
   // Check to see if timer_id is still valid.
   if (timer_node_slot < 0) 
@@ -709,7 +709,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id,
       || (size_t) timer_id > this->max_size_)
     return -1;
 
-  long timer_node_slot = this->timer_ids_[timer_id];
+  ssize_t timer_node_slot = this->timer_ids_[timer_id];
 
   // Check to see if timer_id is still valid.
   if (timer_node_slot < 0) 
