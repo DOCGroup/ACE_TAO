@@ -1,4 +1,7 @@
-Sat Jun  6 18:34:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sat Jun  6 22:00:54 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Message_Queue.cpp: Added code so that advance() is more
+	  thread-safe.
 
 	* apps/gperf/src/Options.cpp (operator): Changed ACE_OS::exit()
 	  to ACE_OS::_exit() so we'll leave no trace...
