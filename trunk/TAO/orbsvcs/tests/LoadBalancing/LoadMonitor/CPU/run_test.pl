@@ -16,7 +16,7 @@ unlink $lm_ior;
 
 $status = 0;
 
-$init_ref = "-ORBInitRef LoadManager=file://lm.ior";
+$init_ref = "-ORBInitRef LoadManager=file://" . $lm_ior;
 
 $location = "MyLocation";
 
@@ -30,7 +30,7 @@ $MON = new PerlACE::Process ("../../../../LoadBalancer/LoadMonitor",
 
 $CL = new PerlACE::Process ("client",
 			    $init_ref
-			   . " -l " . $location);
+			    . " -l " . $location);
 
 $LM->Spawn ();
 
