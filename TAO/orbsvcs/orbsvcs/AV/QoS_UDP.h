@@ -185,6 +185,7 @@ protected:
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
   ACE_QoS_Session *qos_session_;
   ACE_QoS_Manager qos_manager_;
+  ACE_INET_Addr qos_acceptor_addr_;
 };
 
 class TAO_AV_UDP_QoS_Connector

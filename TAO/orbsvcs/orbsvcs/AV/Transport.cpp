@@ -11,9 +11,9 @@
 #include "FlowSpec_Entry.h"
 #include "AV_Core.h"
 
-#ifdef ACE_HAS_RAPI
+#if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 #include "QoS_UDP.h"
-#endif /*ACE_HAS_RAPI*/
+#endif /* defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS) */
 
 #include "tao/debug.h"
 

@@ -20,6 +20,7 @@ OBJFILES = \
 	$(OBJDIR)\AVStreamsC.obj \
 	$(OBJDIR)\AVStreamsS.obj \
 	$(OBJDIR)\Endpoint_Strategy.obj \
+	$(OBJDIR)\Fill_ACE_QoS.obj \
 	$(OBJDIR)\FlowSpec_Entry.obj \
 	$(OBJDIR)\MCast.obj \
         $(OBJDIR)\md5c.obj \
@@ -27,6 +28,7 @@ OBJFILES = \
 	$(OBJDIR)\Null_MediaCtrlC.obj \
 	$(OBJDIR)\Null_MediaCtrlS.obj \
 	$(OBJDIR)\Policy.obj \
+	$(OBJDIR)\QoS_UDP.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\RTCP.obj \
         $(OBJDIR)\RTCP_Channel.obj \

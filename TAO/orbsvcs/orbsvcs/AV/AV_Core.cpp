@@ -11,9 +11,9 @@
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/default_resource.h"
 
-#ifdef ACE_HAS_RAPI
+#if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 #include "orbsvcs/AV/QoS_UDP.h"
-#endif /*ACE_HAS_RAPI*/
+#endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -252,7 +252,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                     if (entry->handler () != 0)
                       {
                         //Yamuna:PLEASE CHECK THIS LATER
-#ifndef ACE_HAS_RAPI
+#if defined ACE_HAS_RAPI || defined (ACE_HAS_WINSOCK2_GQOS)
                         // For IN flows on the A side we should remove the handlers from the reactor.
                         ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
                         result = event_handler->reactor ()->remove_handler (event_handler,
@@ -261,7 +261,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                             if (TAO_debug_level > 0)
                               ACE_DEBUG ((LM_DEBUG,
                                           "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
-#endif /*ACE_HAS_RAPI*/
+#endif /*ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
                       }
                   }
@@ -717,7 +717,7 @@ TAO_AV_Core::load_default_transport_factories (void)
 
   this->transport_factories_.insert (tcp_item);
 
-#ifdef ACE_HAS_RAPI
+#if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
   const char *udp_qos_factory_str = "UDP_QoS_Factory";
 
   TAO_AV_Transport_Factory *udp_qos_factory = 0;
@@ -746,7 +746,7 @@ TAO_AV_Core::load_default_transport_factories (void)
   udp_qos_item->factory (udp_qos_factory);
 
   this->transport_factories_.insert (udp_qos_item);
-#endif /*ACE_HAS_RAPI*/
+#endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
   return 0;
 }
@@ -832,7 +832,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 
   this->flow_protocol_factories_.insert (udp_item);
 
-#ifdef ACE_HAS_RAPI
+#if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
   const char *udp_qos_flow = "UDP_QoS_Flow_Factory";
   TAO_AV_Flow_Protocol_Factory *udp_qos_flow_factory = 0;
@@ -859,7 +859,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 
   this->flow_protocol_factories_.insert (udp_qos_flow_item);
 
-#endif /*ACE_HAS_RAPI*/
+#endif /* defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS) */
 
   TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = 0;
   TAO_AV_Flow_Protocol_Item *tcp_item = 0;
