@@ -1,0 +1,68 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/runtime/tc_const.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+static CORBA_TypeCode tc_null();     1    25      18     1     0   0.1   0.0
+const CORBA_TypeCode_ptr _tc_CORBA_  26   26       0     0     0            
+CORBA_TypeCode_ptr CORBA_TypeCode::  28   32       0     4     1 ! *** ! ***
+static CORBA_TypeCode tc_void();     34   34       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  35   35       0     0     0            
+static CORBA_TypeCode tc_short();    37   40       3     0     0   0.0   0.0
+const CORBA_TypeCode_ptr _tc_CORBA_  41   41       0     0     0            
+static CORBA_TypeCode tc_long();     43   43       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  44   44       0     0     0            
+static CORBA_TypeCode tc_longlong()  46   46       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  47   47       0     0     0            
+static CORBA_TypeCode tc_ushort();   49   49       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  50   50       0     0     0            
+static CORBA_TypeCode tc_ulong();    52   52       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  53   53       0     0     0            
+static CORBA_TypeCode tc_ulonglong(  55   55       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  56   56       0     0     0            
+static CORBA_TypeCode tc_float();    58   61       3     0     0   0.0   0.0
+const CORBA_TypeCode_ptr _tc_CORBA_  62   62       0     0     0            
+static CORBA_TypeCode tc_double();   64   64       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  65   65       0     0     0            
+static CORBA_TypeCode tc_longdouble  67   67       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  68   68       0     0     0            
+static CORBA_TypeCode tc_boolean();  70   73       3     0     0   0.0   0.0
+const CORBA_TypeCode_ptr _tc_CORBA_  74   74       0     0     0            
+static CORBA_TypeCode tc_octet();    76   76       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  77   77       0     0     0            
+static CORBA_TypeCode tc_char();     79   84       5     0     0   0.0   0.0
+const CORBA_TypeCode_ptr _tc_CORBA_  85   85       0     0     0            
+static CORBA_TypeCode tc_wchar();    87   87       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  88   88       0     0     0            
+static CORBA_TypeCode tc_string();   90   90       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  91   91       0     0     0            
+static CORBA_TypeCode tc_wstring();  93   93       0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  94   94       0     0     0            
+static CORBA_TypeCode tc_any();      96   100      4     0     0   0.0   0.0
+const CORBA_TypeCode_ptr _tc_CORBA_  101  101      0     0     0            
+static CORBA_TypeCode tc_typecode()  103  103      0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  104  104      0     0     0            
+static CORBA_TypeCode tc_principal(  106  106      0     0     0            
+const CORBA_TypeCode_ptr _tc_CORBA_  107  107      0     0     0            
+static const unsigned char oc_objre  109  128      8    11     0   1.4   0.0
+static CORBA_TypeCode tc_objref();   129  131      0     2     0 ! ***      
+const CORBA_TypeCode_ptr _tc_CORBA_  132  132      0     0     0            
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                44    62     1   1.4   0.0
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

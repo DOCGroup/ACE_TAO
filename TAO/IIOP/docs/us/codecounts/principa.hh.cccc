@@ -1,0 +1,30 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/corba/principa.hh
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+typedef class CORBA_Principal*CORBA  1    8        7     0     0   0.0   0.0
+void CORBA_release();                10   10       0     0     0            
+CORBA_Boolean CORBA_is_nil();        11   11       0     0     0            
+extern const IID IID_CORBA_Principa  13   13       0     0     0            
+class _EXPCLASS CORBA_Principal:pub  15   52      12    17     0   1.4   0.0
+;                                    52   52       0     0     0            
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                19    22     0   1.2   0.0
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

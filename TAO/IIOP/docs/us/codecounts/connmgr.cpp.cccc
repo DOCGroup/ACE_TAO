@@ -1,0 +1,46 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/bridge/connmgr.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+extern int h_errno;                  1    61      31     1     0   0.0   0.0
+extern"int accept(int,void*,int*);   65   65       0     0     0            
+extern"int bind(int,const void*,int  69   69       0     0     0            
+extern"int connect(int,const void*,  73   73       0     0     0            
+extern"int listen(int,int);          77   77       0     0     0            
+extern"int select(int,fd_set*,fd_se  81   81       0     0     0            
+extern"int setsockopt(int,int,int,c  85   85       0     0     0            
+extern"int socket(int,int,int);      89   89       0     0     0            
+static client_endpoint*client_list;  93   120     14     2     0   0.1   0.0
+static server_endpoint*server_list;  121  121      0     0     0            
+static pthread_mutex_t client_lock=  125  131      6     0     0   0.0   0.0
+static pthread_mutex_t server_lock=  132  132      0     0     0            
+static int signal_fd;                134  140      6     0     0   0.0   0.0
+static int signal_in_fd;             142  146      4     0     0   0.0   0.0
+void client_endpoint::release(){}    151  163      3     6     0   2.0   0.0
+client_endpoint*client_endpoint::lo  166  324     74    64 ?  16   0.9   0.2
+void client_endpoint::dump(){}       329  352      6    12     1   2.0   0.2
+void server_endpoint::release(){}    358  388     17     7     0   0.4   0.0
+server_endpoint*server_endpoint::in  391  541     50    72 ?  16   1.4   0.3
+server_endpoint*server_endpoint::bl  544  756     87    95 !  26   1.1   0.3
+void server_endpoint::shutdown_conn  758  779      0    16     2 ! *** ! ***
+void server_endpoint::dump(){}       784  804      3    12     2   4.0   0.7
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                               301   309    63   1.0   0.2
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

@@ -1,0 +1,26 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/bridge/invoke.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+void IIOP_Object::do_call(CORBA_Env  1    193     87    77 !  24   0.9   0.3
+void IIOP_Object::do_dynamic_call(c  196  346     44    85 !  26   1.9   0.6
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                               131   164    50   1.3   0.4
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+
