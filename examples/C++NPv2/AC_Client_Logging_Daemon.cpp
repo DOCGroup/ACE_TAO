@@ -182,7 +182,8 @@ int AC_Output_Handler::open (void *connector) {
   if (reactor ()->register_handler
        (this, ACE_Event_Handler::READ_MASK) == -1)
     return -1;
-  if (thr_count () == 0) {
+  if (msg_queue ()->activate ()
+      == ACE_Message_Queue_Base::WAS_ACTIVATED) {
     msg_queue ()->high_water_mark (QUEUE_MAX);
     return activate (THR_SCOPE_SYSTEM);
   } else return 0;

@@ -186,12 +186,20 @@ ACE_Message_Queue_NT::max_threads (void)
   return this->max_cthrs_;
 }
 
+template <ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_NT<ACE_SYNCH_USE>::state (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT<ACE_SYNCH_USE>::state");
+
+  return this->state_;
+}
+
 ACE_INLINE int
 ACE_Message_Queue_NT::deactivated (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::deactivated");
   // Accessing to int must be atomic.
-  return this->deactivated_;
+  return this->state_ == ACE_Message_Queue_Base::DEACTIVATED;
 }
 
 ACE_INLINE ACE_HANDLE

@@ -428,8 +428,22 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  switch (this->state_) 
+    {
+    case ACE_Message_Queue_Base::ACTIVATED:
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_LIB_TEXT ("state = ACTIVATED\n")));
+      break;
+    case ACE_Message_Queue_Base::DEACTIVATED:
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_LIB_TEXT ("state = DEACTIVATED\n")));
+      break;
+    case ACE_Message_Queue_Base::PULSED:
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_LIB_TEXT ("state = PULSED\n")));
+      break;
+    }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("deactivated = %d\n")
               ACE_LIB_TEXT ("low_water_mark = %d\n")
               ACE_LIB_TEXT ("high_water_mark = %d\n")
               ACE_LIB_TEXT ("cur_bytes = %d\n")
@@ -437,7 +451,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
               ACE_LIB_TEXT ("cur_count = %d\n")
               ACE_LIB_TEXT ("head_ = %u\n")
               ACE_LIB_TEXT ("tail_ = %u\n"),
-              this->deactivated_,
               this->low_water_mark_,
               this->high_water_mark_,
               this->cur_bytes_,
@@ -543,7 +556,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::open (size_t hwm,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::open");
   this->high_water_mark_ = hwm;
   this->low_water_mark_  = lwm;
-  this->deactivated_ = 0;
+  this->state_ = ACE_Message_Queue_Base::ACTIVATED;
   this->cur_bytes_ = 0;
   this->cur_length_ = 0;
   this->cur_count_ = 0;
@@ -560,28 +573,31 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (int pulse)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i");
-  int current_status =
-    this->deactivated_ ? WAS_INACTIVE : WAS_ACTIVE;
+  int previous_state = this->state_;
 
-  // Wakeup all waiters.
+  if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
+    {
+      // Wakeup all waiters.
 #if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-  this->not_empty_cond_.broadcast ();
-  this->not_full_cond_.broadcast ();
+      this->not_empty_cond_.broadcast ();
+      this->not_full_cond_.broadcast ();
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
-  if (pulse == 0)
-    this->deactivated_ = 1;
-  return current_status;
+      if (pulse)
+        this->state_ = ACE_Message_Queue_Base::PULSED;
+      else
+        this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
+    }
+  return previous_state;
 }
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::activate_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::activate_i");
-  int current_status =
-    this->deactivated_ ? WAS_INACTIVE : WAS_ACTIVE;
-  this->deactivated_ = 0;
-  return current_status;
+  int previous_state = this->state_;
+  this->state_ = ACE_Message_Queue_Base::ACTIVATED;
+  return previous_state;
 }
 
 template <ACE_SYNCH_DECL> int
@@ -1094,7 +1110,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
+  if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
       errno = ESHUTDOWN;
       return -1;
@@ -1146,7 +1162,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
           result = -1;
           break;
         }
-      if (this->deactivated_)
+      if (this->state_ != ACE_Message_Queue_Base::ACTIVATED)
         {
           errno = ESHUTDOWN;
           result = -1;
@@ -1194,7 +1210,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX
           result = -1;
           break;
         }
-      if (this->deactivated_)
+      if (this->state_ != ACE_Message_Queue_Base::ACTIVATED)
         {
           errno = ESHUTDOWN;
           result = -1;
@@ -1217,7 +1233,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-    if (this->deactivated_)
+    if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
       {
         errno = ESHUTDOWN;
         return -1;
@@ -1249,7 +1265,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-    if (this->deactivated_)
+    if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
       {
         errno = ESHUTDOWN;
         return -1;
@@ -1280,7 +1296,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-    if (this->deactivated_)
+    if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
       {
         errno = ESHUTDOWN;
         return -1;
@@ -1318,7 +1334,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-    if (this->deactivated_)
+    if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
       {
         errno = ESHUTDOWN;
         return -1;
@@ -1348,7 +1364,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
+  if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
       errno = ESHUTDOWN;
       return -1;
@@ -1371,7 +1387,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio (ACE_Message_Block *&dequeued,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
+  if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
       errno = ESHUTDOWN;
       return -1;
@@ -1394,7 +1410,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail (ACE_Message_Block *&dequeued,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
+  if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
       errno = ESHUTDOWN;
       return -1;
@@ -1417,7 +1433,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline (ACE_Message_Block *&dequeued
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
+  if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
       errno = ESHUTDOWN;
       return -1;
@@ -1618,7 +1634,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
+  if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
       errno = ESHUTDOWN;
       return -1;
