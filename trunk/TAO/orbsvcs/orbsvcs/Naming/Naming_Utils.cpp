@@ -25,8 +25,8 @@
 // Default constructor
 
 TAO_Naming_Server::TAO_Naming_Server (void)
-  :  ior_multicast_ (0),
-     naming_context_name_ ("NameService")
+  : ior_multicast_ (0),
+    naming_context_name_ (CORBA::string_dup ("NameService"))
 {
 }
 

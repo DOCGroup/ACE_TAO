@@ -206,7 +206,7 @@ CORBA_ORB::work_pending (void)
 ACE_INLINE CORBA::Boolean
 CORBA_ORB::orb_free_resources (void)
 {
-  return CORBA_ORB::orb_init_count_;
+  return !CORBA_ORB::orb_init_count_;
 }
 
 // *************************************************************
