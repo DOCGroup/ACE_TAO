@@ -3,8 +3,6 @@
 
 // SSL_SOCK_Connector.i
 
-#if defined (ACE_HAS_SSL)
-
 ASYS_INLINE
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (void)
 {
@@ -30,4 +28,3 @@ ACE_SSL_SOCK_Connector::dump (void) const
   ACE_TRACE ("ACE_SSL_SOCK_Connector::dump");
 }
 
-#endif /* ACE_HAS_SSL */

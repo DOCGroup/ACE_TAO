@@ -4,8 +4,6 @@
 
 #include "ace/SSL/SSL_SOCK.h"
 
-#if defined (ACE_HAS_SSL)
-
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SSL/SSL_SOCK.i"
 #endif
@@ -69,4 +67,3 @@ ACE_SSL_SOCK::disable (int value) const
 }
 
 
-#endif	/* ACE_HAS_SSL */

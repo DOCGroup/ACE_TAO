@@ -21,8 +21,6 @@
 
 #include "ace/SString.h"
 
-#if defined (ACE_HAS_SSL)
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -234,8 +232,6 @@ private:
 #if defined(__ACE_INLINE__)
 #include "ace/SSL/SSL_Context.i"
 #endif /* __ACE_INLINE__ */
-
-#endif	/* ACE_HAS_SSL */
 
 #include "ace/post.h"
 

@@ -4,8 +4,6 @@
 
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-#if defined (ACE_HAS_SSL)
-
 #include <openssl/err.h>
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
@@ -227,4 +225,3 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
 				     reset_new_handle);
 }
 
-#endif /* ACE_HAS_SSL */

@@ -4,8 +4,6 @@
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
 
-#if defined (ACE_HAS_SSL)
-
 #include "ace/INET_Addr.h"
 #include "ace/Synch_T.h"
 
@@ -282,4 +280,3 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
               )));
 }
 
-#endif /* ACE_HAS_SSL */
