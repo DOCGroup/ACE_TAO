@@ -1,3 +1,9 @@
+Thu Aug 14 12:15:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Basic/Timeout.cpp:
+          Increased the timeout and decreased the number of events. Looks that
+          for some build systems we send to many in a short period.
+
 Thu Aug 14 11:53:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Event_Service/Event_Service.{h,cpp}:
