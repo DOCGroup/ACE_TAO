@@ -128,7 +128,7 @@ class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
-class CDR;
+struct CDR;
 
 // enum values defined in nvlist.hh, bitwise ORed.
 typedef u_int CORBA_Flags; 
@@ -228,10 +228,10 @@ public:
   typedef char Char;
   typedef Char *String;
 
-  static ACE_Svc_Export String string_alloc (ULong len);
-  static ACE_Svc_Export String string_copy (const Char *);
-  static ACE_Svc_Export String string_dup (const Char *);
-  static ACE_Svc_Export void string_free (Char *);
+  static String string_alloc (ULong len);
+  static String string_copy (const Char *);
+  static String string_dup (const Char *);
+  static void string_free (Char *);
 
   typedef CORBA_SEQUENCE<Octet> OctetSeq;
 
@@ -294,9 +294,9 @@ public:
 #  endif /* SIZEOF _WCHAR_T < 2 */
   typedef WChar *WString;
   
-  static ACE_Svc_Export WString wstring_alloc (ULong len);
-  static ACE_Svc_Export WString wstring_copy (const WChar *const);
-  static ACE_Svc_Export void wstring_free (WChar *const);
+  static WString wstring_alloc (ULong len);
+  static WString wstring_copy (const WChar *const);
+  static void wstring_free (WChar *const);
 
   // various CORBA defined classes 
   typedef CORBA_Any         Any;
@@ -342,7 +342,7 @@ public:
 
   typedef CORBA_UserException  UserException;
   
-  typedef CORBA_SEQUENCE <CORBA::TypeCode_ptr> ExceptionList;
+  typedef CORBA_SEQUENCE <TypeCode_ptr> ExceptionList;
   typedef ExceptionList *ExceptionList_ptr;
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
@@ -531,10 +531,10 @@ public:
   static TypeCode_ptr         _tc_Bounds;
   static TypeCode_ptr         _tc_BadKind;
 
-  static ORB_ptr ACE_Svc_Export ORB_init (int &argc,
-                                          char *const *argv,
-                                          char *orb_name,
-                                          Environment &env);
+  static ORB_ptr ORB_init (int &argc,
+			   char *const *argv,
+			   char *orb_name,
+			   Environment &env);
   // ORB initialisation, per OMG document 94-9-46.
   
   // Define flags for NVList add methods

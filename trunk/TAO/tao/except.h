@@ -120,11 +120,11 @@ private:
 // class CORBA
 
 #define SYSEX(name) \
-class ACE_Svc_Export CORBA_ ## name : public CORBA::SystemException { \
+class ACE_Svc_Export CORBA_ ## name : public CORBA_SystemException { \
 public: \
   CORBA_ ## name (CORBA::CompletionStatus completed, \
                   CORBA::ULong code = 0xffff0000L) \
-    : CORBA::SystemException (CORBA::_tc_ ## name, code, completed) \
+    : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
 }
 
