@@ -1,3 +1,10 @@
+Mon Nov 13 03:39:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-win32-borland.h:
+
+          It looks like Borland also uses _wcsdup, so added the
+          ACE_WCSDUP_EQUIVALENT here.
+
 Mon Nov 13 01:07:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.cpp:
