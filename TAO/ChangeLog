@@ -1,3 +1,8 @@
+Tue Feb 15 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/performance-tests/RTEvent/lib/Servant_var.h:
+          Replaced ACE_EXPLICIT with explicit
+
 Tue Feb 15 08:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORBInitializer_Registry.cpp:
