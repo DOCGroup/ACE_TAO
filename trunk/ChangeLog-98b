@@ -1,3 +1,13 @@
+Fri Sep 11 09:02:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * ace/OS.{h,i}
+          ace/Containers.{cpp,h}
+          ace/config-psos-diab.h
+          include/makeinclude/platform_psos_diab.GNU:
+          Fixes to compile pSOS - added #if ! defined around new templates
+          as template parameters stuff in Config.* (Diab compiler can't
+          grok these), played with library linkage order platform macros.
+
 Fri Sep 11 08:54:41 EDT 1998  James CE Johnson <jcej@lads.com>
 
         * docs/tutorials/001/logger.h
