@@ -12,6 +12,8 @@ Fri Jul 17 11:47:42 1998  David L. Levine  <levine@cs.wustl.edu>
           fixed supplier id (it was the same for all suppliers) and other
           very minor cleanup.
 
+        * orbsvcs/tests/Event_Latency/run_tests.sh: added.
+
 Fri Jul 17 11:02:29 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * tao/POAC.h: unclosed comments.
