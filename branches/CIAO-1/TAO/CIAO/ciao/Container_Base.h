@@ -124,6 +124,6 @@ namespace CIAO
     (::Components::HomeExecutorBase_ptr p,
      ::CIAO::Session_Container *c
      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-};
+}
 
 #endif /* CIAO_CONTAINER_BASE_H */

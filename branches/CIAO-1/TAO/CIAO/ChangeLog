@@ -1,3 +1,9 @@
+Fri Jan 03 11:27:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/Executor.idl: This pseudo-meta IDL template file
+	  summarizes the standard executor mapping and serves as a
+	  template for CCIDL compiler.
+
 Sun Dec 22 23:12:49 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/RateGen/RateGen.idl:
