@@ -4,8 +4,8 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
 !IF "$(CFG)" == ""
-CFG=Basic_Types_Test - Win32 Debug
-!MESSAGE No configuration specified.  Defaulting to Basic_Types_Test - Win32\
+CFG=OrdMultiSet_Test - Win32 Debug
+!MESSAGE No configuration specified.  Defaulting to OrdMultiSet_Test - Win32\
  Debug.
 !ENDIF 
 
@@ -48,12 +48,13 @@ CFG=Basic_Types_Test - Win32 Debug
  "Notify_Performance_Test - Win32 Debug" && "$(CFG)" !=\
  "Thread_Mutex_Test - Win32 Debug" && "$(CFG)" !=\
  "SOCK_Connector_Test - Win32 Debug" && "$(CFG)" !=\
- "Basic_Types_Test - Win32 Debug"
+ "Basic_Types_Test - Win32 Debug" && "$(CFG)" != "Env_Value_Test - Win32 Debug"\
+ && "$(CFG)" != "OrdMultiSet_Test - Win32 Debug"
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tests4.mak" CFG="Basic_Types_Test - Win32 Debug"
+!MESSAGE NMAKE /f "tests.mak" CFG="OrdMultiSet_Test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -154,6 +155,10 @@ CFG=Basic_Types_Test - Win32 Debug
  "Win32 (x86) Console Application")
 !MESSAGE "Basic_Types_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
+!MESSAGE "Env_Value_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "OrdMultiSet_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 !ERROR An invalid configuration is specified.
 !ENDIF 
@@ -217,10 +222,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Handle_Set_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Handle_Set_Test.exe" 
 LINK32_OBJS= \
@@ -279,10 +282,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Mem_Map_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Mem_Map_Test.exe" 
 LINK32_OBJS= \
@@ -341,10 +342,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Naming_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Naming_Test.exe" 
 LINK32_OBJS= \
@@ -403,10 +402,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactor_Timer_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactor_Timer_Test.exe" 
 LINK32_OBJS= \
@@ -465,10 +462,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactors_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactors_Test.exe" 
 LINK32_OBJS= \
@@ -527,10 +522,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SString_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SString_Test.exe" 
 LINK32_OBJS= \
@@ -589,10 +582,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Time_Value_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Time_Value_Test.exe" 
 LINK32_OBJS= \
@@ -651,10 +642,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Timer_Queue_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Timer_Queue_Test.exe" 
 LINK32_OBJS= \
@@ -713,10 +702,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=wsock32.lib odbc32.lib odbccp32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/UPIPE_SAP_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/UPIPE_SAP_Test.exe" 
 LINK32_OBJS= \
@@ -775,10 +762,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Priority_Buffer_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Priority_Buffer_Test.exe" 
 LINK32_OBJS= \
@@ -837,10 +822,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Time_Service_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Time_Service_Test.exe" 
 LINK32_OBJS= \
@@ -899,10 +882,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SPIPE_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SPIPE_Test.exe" 
 LINK32_OBJS= \
@@ -961,10 +942,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Buffer_Stream_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Buffer_Stream_Test.exe" 
 LINK32_OBJS= \
@@ -1023,10 +1002,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Barrier_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Barrier_Test.exe" 
 LINK32_OBJS= \
@@ -1085,10 +1062,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reader_Writer_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reader_Writer_Test.exe" 
 LINK32_OBJS= \
@@ -1147,10 +1122,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Recursive_Mutex_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Recursive_Mutex_Test.exe" 
 LINK32_OBJS= \
@@ -1209,10 +1182,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Task_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Task_Test.exe" 
 LINK32_OBJS= \
@@ -1271,10 +1242,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Thread_Manager_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Thread_Manager_Test.exe" 
 LINK32_OBJS= \
@@ -1333,10 +1302,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/TSS_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/TSS_Test.exe" 
 LINK32_OBJS= \
@@ -1395,10 +1362,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Thread_Pool_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Thread_Pool_Test.exe" 
 LINK32_OBJS= \
@@ -1457,10 +1422,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Future_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Future_Test.exe" 
 LINK32_OBJS= \
@@ -1519,11 +1482,10 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo\
- /subsystem:console /incremental:yes /pdb:"$(OUTDIR)/Tokens_Test.pdb" /debug\
- /machine:I386 /out:"$(OUTDIR)/Tokens_Test.exe" 
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Tokens_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Tokens_Test.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\Tokens_Test.obj"
 
@@ -1580,10 +1542,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Message_Queue_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Message_Queue_Test.exe" 
 LINK32_OBJS= \
@@ -1642,10 +1602,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Map_Manager_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Map_Manager_Test.exe" 
 LINK32_OBJS= \
@@ -1704,10 +1662,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Pipe_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Pipe_Test.exe" 
 LINK32_OBJS= \
@@ -1766,10 +1722,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Process_Mutex_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Process_Mutex_Test.exe" 
 LINK32_OBJS= \
@@ -1828,10 +1782,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SV_Shared_Memory_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SV_Shared_Memory_Test.exe" 
 LINK32_OBJS= \
@@ -1890,10 +1842,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/MM_Shared_Memory_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/MM_Shared_Memory_Test.exe" 
 LINK32_OBJS= \
@@ -1952,10 +1902,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Service_Config_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Service_Config_Test.exe" 
 LINK32_OBJS= \
@@ -2014,10 +1962,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SOCK_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SOCK_Test.exe" 
 LINK32_OBJS= \
@@ -2076,10 +2022,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Message_Block_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Message_Block_Test.exe" 
 LINK32_OBJS= \
@@ -2138,10 +2082,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactor_Notify_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactor_Notify_Test.exe" 
 LINK32_OBJS= \
@@ -2200,10 +2142,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/IOStream_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/IOStream_Test.exe" 
 LINK32_OBJS= \
@@ -2262,10 +2202,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Process_Strategy_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Process_Strategy_Test.exe" 
 LINK32_OBJS= \
@@ -2324,10 +2262,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Conn_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Conn_Test.exe" 
 LINK32_OBJS= \
@@ -2386,10 +2322,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Simple_Message_Block_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Simple_Message_Block_Test.exe" 
 LINK32_OBJS= \
@@ -2449,10 +2383,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactor_Exceptions_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactor_Exceptions_Test.exe" 
 LINK32_OBJS= \
@@ -2512,10 +2444,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Priority_Task_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Priority_Task_Test.exe" 
 LINK32_OBJS= \
@@ -2574,10 +2504,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Sigset_Ops_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Sigset_Ops_Test.exe" 
 LINK32_OBJS= \
@@ -2636,10 +2564,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Message_Queue_Notifications_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Message_Queue_Notifications_Test.exe" 
 LINK32_OBJS= \
@@ -2699,10 +2625,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Enum_Interfaces_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Enum_Interfaces_Test.exe" 
 LINK32_OBJS= \
@@ -2761,10 +2685,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Hash_Map_Manager_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Hash_Map_Manager_Test.exe" 
 LINK32_OBJS= \
@@ -2823,10 +2745,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Semaphore_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Semaphore_Test.exe" 
 LINK32_OBJS= \
@@ -2885,10 +2805,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
- winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
- uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Atomic_Op_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Atomic_Op_Test.exe" 
 LINK32_OBJS= \
@@ -2944,10 +2862,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/MT_SOCK_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/MT_SOCK_Test.exe" 
 LINK32_OBJS= \
@@ -3003,10 +2919,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Priority_Reactor_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Priority_Reactor_Test.exe" 
 LINK32_OBJS= \
@@ -3065,10 +2979,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Reactor_Performance_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Reactor_Performance_Test.exe" 
 LINK32_OBJS= \
@@ -3125,10 +3037,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Notify_Performance_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Notify_Performance_Test.exe" 
 LINK32_OBJS= \
@@ -3185,10 +3095,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=odbc32.lib odbccp32.lib wsock32.lib aced.lib kernel32.lib\
- user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib\
- ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Thread_Mutex_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Thread_Mutex_Test.exe" 
 LINK32_OBJS= \
@@ -3244,10 +3152,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/SOCK_Connector_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/SOCK_Connector_Test.exe" 
 LINK32_OBJS= \
@@ -3305,16 +3211,126 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Basic_Types_Test.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Basic_Types_Test.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\Basic_Types_Test.obj"
 
 "$(OUTDIR)\Basic_Types_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "Env_Value_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Env_Value_Test\Debug"
+# PROP BASE Intermediate_Dir "Env_Value_Test\Debug"
+# PROP BASE Target_Dir "Env_Value_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "Env_Value_Test\Debug"
+# PROP Intermediate_Dir "Env_Value_Test\Debug"
+# PROP Target_Dir "Env_Value_Test"
+OUTDIR=.\Env_Value_Test\Debug
+INTDIR=.\Env_Value_Test\Debug
+
+ALL : "$(OUTDIR)\Env_Value_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\Env_Value_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\Env_Value_Test.exe"
+	-@erase "$(OUTDIR)\Env_Value_Test.ilk"
+	-@erase "$(OUTDIR)\Env_Value_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MLd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/Env_Value_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Env_Value_Test\Debug/
+CPP_SBRS=.\.
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Env_Value_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Env_Value_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Env_Value_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\Env_Value_Test.obj"
+
+"$(OUTDIR)\Env_Value_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "OrdMultiSet_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "OrdMultiSet_Test\Debug"
+# PROP BASE Intermediate_Dir "OrdMultiSet_Test\Debug"
+# PROP BASE Target_Dir "OrdMultiSet_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "OrdMultiSet_Test"
+OUTDIR=.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\OrdMultiSet_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\OrdMultiSet_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\OrdMultiSet_Test.exe"
+	-@erase "$(OUTDIR)\OrdMultiSet_Test.ilk"
+	-@erase "$(OUTDIR)\OrdMultiSet_Test.pdb"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/OrdMultiSet_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/OrdMultiSet_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/OrdMultiSet_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/OrdMultiSet_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\OrdMultiSet_Test.obj"
+
+"$(OUTDIR)\OrdMultiSet_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -3417,8 +3433,6 @@ DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Handle_Set_Test.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
@@ -3468,8 +3482,6 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Mem_Map_Test.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
@@ -3588,8 +3600,6 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Naming_Test.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
@@ -3677,8 +3687,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Reactor_Timer_Test.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
@@ -3802,8 +3810,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Reactors_Test.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
@@ -3851,8 +3857,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\SString_Test.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
@@ -3900,8 +3904,6 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Time_Value_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
@@ -4001,8 +4003,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Timer_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
@@ -4148,8 +4148,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\UPIPE_SAP_Test.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
@@ -4262,8 +4260,6 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Priority_Buffer_Test.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
@@ -4313,8 +4309,6 @@ DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Time_Service_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_S) "$(INTDIR)"
@@ -4408,8 +4402,6 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\SPIPE_Test.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
@@ -4537,8 +4529,6 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Buffer_Stream_Test.obj" : $(SOURCE) $(DEP_CPP_BUFFE) "$(INTDIR)"
@@ -4619,8 +4609,6 @@ DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Barrier_Test.obj" : $(SOURCE) $(DEP_CPP_BARRI) "$(INTDIR)"
@@ -4703,8 +4691,6 @@ DEP_CPP_READE=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Reader_Writer_Test.obj" : $(SOURCE) $(DEP_CPP_READE) "$(INTDIR)"
@@ -4787,8 +4773,6 @@ DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Recursive_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_RECUR) "$(INTDIR)"
@@ -4912,8 +4896,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Task_Test.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
@@ -4995,8 +4977,6 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Thread_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
@@ -5078,8 +5058,6 @@ DEP_CPP_TSS_T=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\TSS_Test.obj" : $(SOURCE) $(DEP_CPP_TSS_T) "$(INTDIR)"
@@ -5203,8 +5181,6 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Thread_Pool_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
@@ -5332,8 +5308,6 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Future_Test.obj" : $(SOURCE) $(DEP_CPP_FUTUR) "$(INTDIR)"
@@ -5463,8 +5437,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Tokens_Test.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -5577,8 +5549,6 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Message_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
@@ -5683,8 +5653,6 @@ DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_MAP_M) "$(INTDIR)"
@@ -5738,8 +5706,6 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Pipe_Test.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
@@ -5805,8 +5771,6 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Process_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
@@ -5885,8 +5849,6 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\SV_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
@@ -5970,8 +5932,6 @@ DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\MM_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_MM_SH) "$(INTDIR)"
@@ -6066,8 +6026,6 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Service_Config_Test.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
@@ -6167,8 +6125,6 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\SOCK_Test.obj" : $(SOURCE) $(DEP_CPP_SOCK_) "$(INTDIR)"
@@ -6297,8 +6253,6 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Message_Block_Test.obj" : $(SOURCE) $(DEP_CPP_MESSAG) "$(INTDIR)"
@@ -6424,8 +6378,6 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Reactor_Notify_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR) "$(INTDIR)"
@@ -6581,8 +6533,6 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\IOStream_Test.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
@@ -6737,8 +6687,6 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Process_Strategy_Test.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
@@ -6901,8 +6849,6 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Conn_Test.obj" : $(SOURCE) $(DEP_CPP_CONN_) "$(INTDIR)"
@@ -6983,8 +6929,6 @@ DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Simple_Message_Block_Test.obj" : $(SOURCE) $(DEP_CPP_SIMPL)\
@@ -7085,8 +7029,6 @@ DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Reactor_Exceptions_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR_)\
@@ -7213,8 +7155,6 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Priority_Task_Test.obj" : $(SOURCE) $(DEP_CPP_PRIORI) "$(INTDIR)"
@@ -7262,8 +7202,6 @@ DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Sigset_Ops_Test.obj" : $(SOURCE) $(DEP_CPP_SIGSE) "$(INTDIR)"
@@ -7387,8 +7325,6 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Message_Queue_Notifications_Test.obj" : $(SOURCE) $(DEP_CPP_MESSAGE)\
@@ -7441,8 +7377,6 @@ DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Enum_Interfaces_Test.obj" : $(SOURCE) $(DEP_CPP_ENUM_) "$(INTDIR)"
@@ -7540,8 +7474,6 @@ DEP_CPP_HASH_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Hash_Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_HASH_) "$(INTDIR)"
@@ -7624,8 +7556,6 @@ DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Semaphore_Test.obj" : $(SOURCE) $(DEP_CPP_SEMAP) "$(INTDIR)"
@@ -7687,8 +7617,6 @@ DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Atomic_Op_Test.obj" : $(SOURCE) $(DEP_CPP_ATOMI) "$(INTDIR)"
@@ -7788,8 +7716,6 @@ DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\MT_SOCK_Test.obj" : $(SOURCE) $(DEP_CPP_MT_SO) "$(INTDIR)"
@@ -7960,8 +7886,6 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Priority_Reactor_Test.obj" : $(SOURCE) $(DEP_CPP_PRIORIT)\
@@ -8135,8 +8059,6 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Reactor_Performance_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR_P)\
@@ -8268,8 +8190,6 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Notify_Performance_Test.obj" : $(SOURCE) $(DEP_CPP_NOTIF)\
@@ -8351,8 +8271,6 @@ DEP_CPP_THREAD_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Thread_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD_) "$(INTDIR)"
@@ -8415,8 +8333,6 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\SOCK_Connector_Test.obj" : $(SOURCE) $(DEP_CPP_SOCK_C) "$(INTDIR)"
@@ -8464,11 +8380,144 @@ DEP_CPP_BASIC=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\sys\stat.h"\
-	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\Basic_Types_Test.obj" : $(SOURCE) $(DEP_CPP_BASIC) "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "Env_Value_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\Env_Value_Test.cpp
+DEP_CPP_ENV_V=\
+	{$(INCLUDE)}"\.\test_config.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\Basic_Types.h"\
+	{$(INCLUDE)}"\ace\Basic_Types.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Env_Value_T.cpp"\
+	{$(INCLUDE)}"\ace\Env_Value_T.h"\
+	{$(INCLUDE)}"\ace\Env_Value_T.i"\
+	{$(INCLUDE)}"\ace\inc_user_config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Process.h"\
+	{$(INCLUDE)}"\ace\Process.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+!IF  "$(CFG)" == "Env_Value_Test - Win32 Debug"
+
+
+"$(INTDIR)\Env_Value_Test.obj" : $(SOURCE) $(DEP_CPP_ENV_V) "$(INTDIR)"
+
+
+!ENDIF 
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "OrdMultiSet_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\OrdMultiSet_Test.cpp
+DEP_CPP_ORDMU=\
+	{$(INCLUDE)}"\.\test_config.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\Basic_Types.h"\
+	{$(INCLUDE)}"\ace\Basic_Types.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\inc_user_config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\OrdMultiSet_Test.obj" : $(SOURCE) $(DEP_CPP_ORDMU) "$(INTDIR)"
 
 
 # End Source File
