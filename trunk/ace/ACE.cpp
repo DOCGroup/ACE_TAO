@@ -1831,7 +1831,7 @@ ACE::max_handles (void)
   rlimit rl;
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
 #if defined (RLIM_INFINITY)
-  if (rl.rlim_cur = RLIM_INFINITY)
+  if (rl.rlim_cur == RLIM_INFINITY)
 #elif defined (_SC_OPEN_MAX)
     return ACE_OS::sysconf (_SC_OPEN_MAX);
 #elif defined (FD_SETSIZE)
