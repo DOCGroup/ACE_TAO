@@ -114,7 +114,7 @@ private:
     init_factory (ACE_ENV_SINGLE_ARG_DECL);
 
   int
-    parse_args();
+    parse_args(int argc, char *argv[]);
   // command line argument parser
 
   int write_records(CORBA::ULongLong numberOfRecordsToWrite ACE_ENV_ARG_DECL_NOT_USED);
