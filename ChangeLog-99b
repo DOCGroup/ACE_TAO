@@ -1,3 +1,11 @@
+Tue Jun 22 21:17:49 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Cache_Map_Manager_Test.cpp: Tests the Cache_Map_Manager
+	  as well as the Hash_Cache_Map_Manager which has additional
+	  features of caching and purging of entries along with the map
+	  properties.
+	* tests/Makefile: Added Cache_Map_Manager_Test.cpp
+
 Tue Jun 22 15:20:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.cpp (main): removed THR_DETACHED.
