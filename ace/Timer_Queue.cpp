@@ -11,47 +11,8 @@
 #include "ace/Timer_Hash_T.h"
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
-template <class LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::timeout (TIMER_QUEUE &timer_queue,
-                                                        ACE_Event_Handler *handler,
-                                                        const void *act,
-                                                        const ACE_Time_Value &cur_time)
-{
-  // Upcall to the <handler>s handle_timeout method
-  if (handler->handle_timeout (cur_time, act) == -1)
-    timer_queue.cancel (handler, 0); // 0 means "call handle_close()".    
-  
-  return 0;
-}
-
-template <class LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::cancellation (TIMER_QUEUE &timer_queue,
-                                                             ACE_Event_Handler *handler)
-{
-  ACE_UNUSED_ARG (timer_queue);
-
-  // Upcall to the <handler>s handle_close method
-  handler->handle_close (ACE_INVALID_HANDLE, 
-			 ACE_Event_Handler::TIMER_MASK);
-  return 0;
-}
-
-template <class LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<LOCK>::deletion (TIMER_QUEUE &timer_queue,
-                                                         ACE_Event_Handler *handler,
-                                                         const void *arg)
-{
-  ACE_UNUSED_ARG (timer_queue);
-  ACE_UNUSED_ARG (handler);
-  ACE_UNUSED_ARG (arg);
-
-  // Does nothing
-  
-  return 0;
-}
-
-
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if 0
 template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX> *>;
 template class ACE_Node<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX> *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX> *>;
@@ -67,5 +28,5 @@ template class ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler
 template class ACE_Timer_Hash_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
+#endif
 #endif /* ACE_TIMER_QUEUE_C */
