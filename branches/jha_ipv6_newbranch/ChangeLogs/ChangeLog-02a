@@ -1,3 +1,37 @@
+(IPv6 changes) Fri Sep 14 17:36:21 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK.cpp (get_local_addr): After fetching the address, be
+          sure to set the ACE_Addr's type accordingly.
+
+        * ace/INET_Addr.(h i cpp): The underlying sockaddr is now a union
+          of sockaddr_in and sockaddr_in6 if ACE_HAS_IPV6 is defined.
+
+          set (u_short port, char *host) now has an extra address_family
+          argument that defaults to PF_UNSPEC - when compiled with
+          ACE_HAS_IPV6 support, this arg can be used to force IPv4 (specify
+          AF_INET) or IPv6 (specify AF_INET6).
+
+        * ace/OS.(h i): Removed gethostbyname2, replaced with the more
+          "standard" getipnodebyname. Also added getiphostbyaddr.
+
+          Replaced calls to ACE_INET_Addr functions with PF_UNSPEC for
+          default address/protocol families using ACE_USES_IPV4_IPV6_MIGRATION.
+
+        * ace/Sock_Connect.(h cpp): Added ipv6_enabled (void) method.
+          Returns 1/0 if current host has IPv6 running or not, respectively.
+
+        * ace/SOCK_Acceptor.cpp: If instantiating/opening a new object and
+          protocol_family is PF_UNSPEC, pick it up from the local_sap. If
+          that yields no further info, use ACE_Sock_Connect::ipv6_enabled()
+          to decide PF_INET vs. PF_INET6.
+
+        * ace/SOCK_Connector.cpp (connect): Pick up the protocol family
+          from remote_sap, ignoring the protocol_family argument.
+
+        * ace/Synch.h: Removed #include "ace/ACE.h" - not needed here, and
+          ends up with a dependency loop on Sock_Connect.h. Replace it with
+          #include "ace/ACE_export.h".
+
 Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/FIFO_Send_Msg.cpp (send): Fixed another errant use of 
