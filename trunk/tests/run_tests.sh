@@ -106,6 +106,7 @@ echo "Starting ACE version $ace_version tests . . ."
 
 mv -f "$compilation_log" "$compilation_log.bak" > /dev/null 2>&1
 
+
 run Basic_Types_Test
 test $chorus || run Env_Value_Test      # tests Env_Value_T and Process
 run Atomic_Op_Test                      # tests Atomic_Op
@@ -117,6 +118,7 @@ run Time_Value_Test                     # tests Time_Value
 run High_Res_Timer_Test                 # tests High_Res_Timer
 run SString_Test                        # tests ACE_CString and ACE_SString
 run Collection_Test                     # tests ACE Collection classes
+run DLL_Test                            # tests ACE_DLL class
 # Naming_Test: UNICOS fails due to feature not supported
 test $chorus || test $LynxOS || test $Unicos || run Naming_Test # tests ACE_Naming_Context, ACE_WString
 
