@@ -21,11 +21,12 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
 					  int reuse_addr,
 					  int flags,
 					  int perms,
-                                          LPSECURITY_ATTRIBUTES sa)
+            LPSECURITY_ATTRIBUTES sa,
+            int pipe_mode)
 {
   ACE_TRACE ("ACE_SPIPE_Connector::ACE_SPIPE_Connector");
   if (this->connect (new_io, remote_sap, timeout, local_sap,
-		     reuse_addr, flags, perms, sa) == -1
+		     reuse_addr, flags, perms, sa, pipe_mode) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("address %s, %p\n"),
 	       remote_sap.get_path_name (), ACE_LIB_TEXT ("ACE_SPIPE_Connector")));
@@ -50,7 +51,8 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
                               int /* reuse_addr */,
                               int flags,
                               int perms,
-                              LPSECURITY_ATTRIBUTES sa)
+                              LPSECURITY_ATTRIBUTES sa,
+                              int pipe_mode)
 {
   ACE_TRACE ("ACE_SPIPE_Connector::connect");
 
@@ -58,21 +60,93 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
 #if ! defined (ACE_PSOS_DIAB_MIPS)
   ACE_CLR_BITS (flags, O_CREAT);
 # endif /* !ACE_PSOS_DIAB_MIPS */
-  ACE_HANDLE handle = ACE_Handle_Ops::handle_timed_open (timeout,
-                                                         remote_sap.get_path_name (),
-                                                         flags, perms, sa);
+
+  ACE_HANDLE handle;
+
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+  // We need to allow for more than one attempt to connect,
+  // calculate the absolute time at which we give up.
+  ACE_Time_Value absolute_time;
+  if (timeout != 0) 
+    absolute_time = ACE_OS::gettimeofday () + *timeout;
+
+  // Loop until success or failure.
+  for (;;) 
+    {
+      handle = ACE_OS::open (remote_sap.get_path_name(), flags, perms, sa);
+      if (handle != ACE_INVALID_HANDLE) 
+        // Success!
+        break;
+
+      // Check if we have a busy pipe condition.
+      if (::GetLastError() != ERROR_PIPE_BUSY) 
+        // Nope, this is a failure condition.
+        break;
+
+      // This will hold the time out value used in the ::WaitNamedPipe
+      // call.
+      DWORD time_out_value;
+
+      // Check if we are to block until we connect.
+      if (timeout == 0) 
+        // Wait for as long as it takes.
+        time_out_value = NMPWAIT_WAIT_FOREVER;
+      else 
+        {
+          // Calculate the amount of time left to wait.
+          ACE_Time_Value relative_time (absolute_time - ACE_OS::gettimeofday ());
+          // Check if we have run out of time.
+          if (relative_time <= ACE_Time_Value::zero) 
+            {
+              // Mimick the errno value returned by
+              // ACE_Handle_Ops::handle_timed_open.
+              if (*timeout == ACE_Time_Value::zero) 
+                errno = EWOULDBLOCK;
+              else 
+                errno = ETIMEDOUT;
+              // Exit the connect loop with the failure.
+              break;
+            }
+          // Get the amount of time remaining for ::WaitNamedPipe.
+          time_out_value = relative_time.msec ();
+
+        }
+
+      // Wait for the named pipe to become available.
+      ::WaitNamedPipe (remote_sap.get_path_name (), time_out_value);
+
+      // Regardless of the return value, we'll do one more attempt to
+      // connect to see if it is now available and to return
+      // consistent error values.
+    }
+
+  // Set named pipe mode if we have a valid handle.
+  if (handle != ACE_INVALID_HANDLE) 
+    {
+      // Check if we are changing the pipe mode from the default.
+      if (pipe_mode != (PIPE_READMODE_BYTE | PIPE_WAIT)) 
+        {
+          DWORD dword_pipe_mode = pipe_mode;
+          if (!::SetNamedPipeHandleState (handle,
+                                          &dword_pipe_mode,
+                                          0,
+                                          0)) 
+            {
+              // We were not able to put the pipe into the requested
+              // mode.
+              ACE_OS::close (handle);
+              handle = ACE_INVALID_HANDLE;
+            }
+        }
+    }
+#else /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+  handle = ACE_Handle_Ops::handle_timed_open (timeout,
+                                              remote_sap.get_path_name (),
+                                              flags, perms, sa);
+#endif /* !ACE_WIN32 || ACE_HAS_PHARLAP */
+
   new_io.set_handle (handle);
   new_io.remote_addr_ = remote_sap; // class copy.
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
-  DWORD pipe_mode = PIPE_READMODE_MESSAGE | PIPE_WAIT;
-
-  // Set named pipe mode and buffering characteristics.
-  if (handle != ACE_INVALID_HANDLE)
-    return ::SetNamedPipeHandleState (handle,
-                                      &pipe_mode,
-                                      0,
-                                      0);
-#endif
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }

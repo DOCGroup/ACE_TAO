@@ -50,7 +50,8 @@ public:
    * the OS do the binding.  If <reuse_addr> == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    * The <flags> and <perms> arguments are passed down to the <open>
-   * method.
+   * method.  The <pipe_mode> argument is only used in NT and is used to
+   * establish the NT pipe mode.
    */
   ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
                        const ACE_SPIPE_Addr &remote_sap,
@@ -59,7 +60,8 @@ public:
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0,
-                       LPSECURITY_ATTRIBUTES sa = 0);
+                       LPSECURITY_ATTRIBUTES sa = 0,
+                       int pipe_mode = PIPE_READMODE_MESSAGE | PIPE_WAIT);
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
@@ -76,7 +78,8 @@ public:
    * the OS do the binding.  If <reuse_addr> == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    * The <flags> and <perms> arguments are passed down to the <open>
-   * method.
+   * method.  The <pipe_mode> argument is only used in NT and is used to
+   * establish the NT pipe mode.
    */
   int connect (ACE_SPIPE_Stream &new_io,
                const ACE_SPIPE_Addr &remote_sap,
@@ -85,7 +88,8 @@ public:
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0,
-               LPSECURITY_ATTRIBUTES sa = 0);
+               LPSECURITY_ATTRIBUTES sa = 0,
+               int pipe_mode = PIPE_READMODE_MESSAGE | PIPE_WAIT);
 
   /// Resets any event associations on this handle
   int reset_new_handle (ACE_HANDLE handle);

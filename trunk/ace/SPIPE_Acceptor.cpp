@@ -44,7 +44,8 @@ int
 ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap, 
                           int reuse_addr,
                           int perms,
-                          LPSECURITY_ATTRIBUTES sa)
+                          LPSECURITY_ATTRIBUTES sa,
+                          int pipe_mode)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::open");
   ACE_UNUSED_ARG (reuse_addr);
@@ -53,8 +54,10 @@ ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap,
   this->set_handle (ACE_INVALID_HANDLE);
 #if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   this->sa_ = sa;
+  this->pipe_mode_ = pipe_mode;
 #else
   ACE_UNUSED_ARG (sa);
+  ACE_UNUSED_ARG (mode);
 #endif /* ACE_WIN32 */
 
   return this->create_new_instance (perms);
@@ -108,8 +111,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
         this->local_addr_.get_path_name (),
         PIPE_ACCESS_DUPLEX 
         | FILE_FLAG_OVERLAPPED,
-        PIPE_TYPE_MESSAGE 
-        | PIPE_READMODE_MESSAGE,
+        pipe_mode_,
         PIPE_UNLIMITED_INSTANCES,
         1024 * 10,
         1024 * 10,
@@ -176,11 +178,12 @@ ACE_SPIPE_Acceptor::close (void)
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap, 
                                         int reuse_addr,
                                         int perms,
-                                        LPSECURITY_ATTRIBUTES sa)
+                                        LPSECURITY_ATTRIBUTES sa,
+                                        int pipe_mode)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
 
-  if (this->open (local_sap, reuse_addr, perms, sa) == -1)
+  if (this->open (local_sap, reuse_addr, perms, sa, pipe_mode) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SPIPE_Acceptor")));
