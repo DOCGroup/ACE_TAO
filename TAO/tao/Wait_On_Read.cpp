@@ -5,8 +5,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Synch_Reply_Dispatcher.h"
 
-ACE_RCSID (tao, 
-           Wait_On_Read, 
+ACE_RCSID (tao,
+           Wait_On_Read,
            "$Id$")
 
 // Constructor.
@@ -79,4 +79,11 @@ int
 TAO_Wait_On_Read::non_blocking (void)
 {
   return 0;
+}
+
+bool
+TAO_Wait_On_Read::can_process_upcalls (void) const
+{
+  // Just don't think twice..
+  return true;
 }
