@@ -48,7 +48,7 @@ public:
 #if defined (UNICODE)
   virtual int addr_to_string (wchar_t *addr, size_t) const;
   // Transform the current address into string format. 
-#endif
+#endif /* UNICODE */
 
   virtual int addr_to_string (char *addr, size_t) const;
   // Transform the current address into string format. 
