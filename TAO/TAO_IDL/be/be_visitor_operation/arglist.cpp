@@ -60,23 +60,31 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // last argument - is always CORBA::Environment
-  os->indent ();
-  *os << "CORBA::Environment &_tao_environment";
+ 
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+      // last argument - is always CORBA::Environment
+      os->indent ();
+      *os << "CORBA::Environment &_tao_environment";
       *os << " = " << be_idt_nl
 	  << "CORBA::Environment::default_environment ()"
 	  << be_uidt;
       break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+      // last argument - is always CORBA::Environment
+      os->indent ();
+      *os << "CORBA::Environment &TAO_TRY_ENV";
+      break;
     default:
+      *os << "CORBA::Environment &_tao_environment";
       break;
     }
-  *os << be_uidt_nl << " )" << be_uidt;
+  *os << be_uidt_nl << " )" <<be_uidt;
 
   switch (this->ctx_->state ())
     {
@@ -87,6 +95,13 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
       // each method is pure virtual in the server header
       *os << " = 0;\n";
+      break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+      // each method is pure virtual in the server header
+      //*os << "\n\n";
+      break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+      // each method is pure virtual in the server header
       break;
     default:
       *os << "\n";
@@ -140,7 +155,9 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:    
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
       break;

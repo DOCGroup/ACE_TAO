@@ -89,8 +89,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
       break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_IH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
+      break;
     case TAO_CodeGen::TAO_ATTRIBUTE_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_IS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH);
@@ -155,8 +161,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
       break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_IH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
+      break;
     case TAO_CodeGen::TAO_ATTRIBUTE_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_IS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH);

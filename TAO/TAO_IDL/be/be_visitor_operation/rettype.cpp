@@ -45,6 +45,8 @@ be_visitor_operation_rettype::~be_visitor_operation_rettype (void)
 int
 be_visitor_operation_rettype::visit_array (be_array *node)
 {
+
+  
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -63,6 +65,7 @@ be_visitor_operation_rettype::visit_array (be_array *node)
 int
 be_visitor_operation_rettype::visit_enum (be_enum *node)
 {
+ 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -81,6 +84,7 @@ be_visitor_operation_rettype::visit_enum (be_enum *node)
 int
 be_visitor_operation_rettype::visit_interface (be_interface *node)
 {
+ 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -99,6 +103,7 @@ be_visitor_operation_rettype::visit_interface (be_interface *node)
 int
 be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
 {
+ 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -117,6 +122,7 @@ be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
 int
 be_visitor_operation_rettype::visit_native (be_native *node)
 {
+ 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -135,6 +141,7 @@ be_visitor_operation_rettype::visit_native (be_native *node)
 int
 be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
 {
+ 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -164,12 +171,15 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
         *os << bt->name ();
       break;
     }
+
   return 0;
 }
 
 int
 be_visitor_operation_rettype::visit_sequence (be_sequence *node)
 {
+
+
   // we should never directly be here because anonymous sequence return types
   // are not allowed
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
@@ -190,6 +200,7 @@ be_visitor_operation_rettype::visit_sequence (be_sequence *node)
 int
 be_visitor_operation_rettype::visit_string (be_string * /* node*/)
 {
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   *os << "char *";
@@ -199,6 +210,7 @@ be_visitor_operation_rettype::visit_string (be_string * /* node*/)
 int
 be_visitor_operation_rettype::visit_structure (be_structure *node)
 {
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 
@@ -222,6 +234,7 @@ be_visitor_operation_rettype::visit_structure (be_structure *node)
 int
 be_visitor_operation_rettype::visit_typedef (be_typedef *node)
 {
+
   this->ctx_->alias (node); // set the alias node
   if (node->primitive_base_type ()->accept (this) == -1)
     {
@@ -238,6 +251,7 @@ be_visitor_operation_rettype::visit_typedef (be_typedef *node)
 int
 be_visitor_operation_rettype::visit_union (be_union *node)
 {
+
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 

@@ -199,6 +199,48 @@ BE_produce (void)
     }
   // it is our responsibility to free up the visitor
   delete visitor;
+
+  //check if the flags are set for generating the 
+  //the implementation header and skeleton files
+  if(idl_global->gen_impl_files())
+    {
+      // (7) generate implementation skeleton header
+      
+      ctx.reset ();
+      ctx.state (TAO_CodeGen::TAO_ROOT_IH);
+      // create a visitor
+      visitor = tao_cg->make_visitor (&ctx);
+      // generate code for the implementation skeleton header
+      if (root->accept (visitor) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_produce - "
+                      "implementation skeletons for Root failed\n"));
+          BE_abort ();
+        }
+      
+      // it is our responsibility to free up the visitor
+      delete visitor;
+      
+      // (8) generate implementation skeleton header
+      
+      ctx.reset ();
+      ctx.state (TAO_CodeGen::TAO_ROOT_IS);
+      // create a visitor
+      visitor = tao_cg->make_visitor (&ctx);
+      
+      // generate code for the implementation skeleton header
+      if (root->accept (visitor) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_produce - "
+                      "implementation skeletons for Root failed\n"));
+          BE_abort ();
+        }
+      
+      // it is our responsibility to free up the visitor
+      delete visitor;
+    }
 }
 
 /*

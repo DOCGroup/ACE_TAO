@@ -104,7 +104,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "protected:" << be_idt_nl
       << namebuf << " (void);" << be_uidt_nl
       << "public:" << be_idt_nl
-      << namebuf << " (" << namebuf << "& rhs);" << be_nl
+      << namebuf << " (const " << namebuf << "& rhs);" << be_nl
       << "virtual ~" << namebuf << " (void);" << be_nl;
 
   *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
