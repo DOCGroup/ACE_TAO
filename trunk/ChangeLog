@@ -1,3 +1,8 @@
+Fri Mar  11 10:43:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+	  Added additional cleanup target for VxWorks builds.
+
 Thu Mar 10 17:28:38 2005  Steve Huston  <shuston@riverace.com>
 
 	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
@@ -9,7 +14,7 @@ Thu Mar 10 17:28:38 2005  Steve Huston  <shuston@riverace.com>
 
 Wed Mar  9 21:59:24 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Time_Value.inl (ACE_Time_Value): Moved the definition of 
+	* ace/Time_Value.inl (ACE_Time_Value): Moved the definition of
 	  ACE_Time_Value::set (const struct timeval &) to before it is
  	  used by the ACE_Time_Value constructor.  This avoids many
  	  warnings with GCC 3.4.1.  Thanks to Peter Heitman
