@@ -55,6 +55,7 @@ ACE_FILE::get_info (ACE_FILE_Info *finfo)
       finfo->nlink_ = filestatus.st_nlink;
       finfo->size_ = filestatus.st_size;
     }
+
   return result;
 }
 
