@@ -5,6 +5,9 @@ Tue Jul 20 15:12:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  if necesssary. Thanks to Dwayne Burns <dburns@isrglobal.com> for
 	  sending in the IDL file that called for this.
 
+	* TAO/tests/IDL_Test/constants.idl:
+	  Added Dwayne's constants to the test file.
+
 Tue Jul 20 14:08:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
