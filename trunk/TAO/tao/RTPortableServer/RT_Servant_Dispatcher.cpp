@@ -73,15 +73,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
     poa.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-
   if (req.transport ()->tag () == IOP::TAG_INTERNET_IOP)
     {
-      /*
-        int send_buffer_size;
-        int recv_buffer_size;
-        int no_delay;
-        int enable_network_priority;
-      */
       const char protocol [] = "iiop";
       const char *protocol_type = protocol;
 
@@ -89,7 +82,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
         ACE_dynamic_cast (TAO_IIOP_Transport *,
                           req.transport ());
 
-      CORBA::Policy* policy = poa.server_protocol ();
+      CORBA::Policy_var policy = poa.server_protocol ();
 
       int result =
         tph->update_server_protocol_properties (
@@ -100,14 +93,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
       if (result != 0)
         ACE_ERROR((LM_ERROR,
                    "Error in getting the effective protocol properties\n"));
-
-      /*
-        iiop_transport ()->connection_handler ()->update_protocol_properties (send_buffer_size,
-        recv_buffer_size,
-        no_delay,
-        enable_network_priority);
-      */
-  }
+    }
 
   const char *priority_model;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
