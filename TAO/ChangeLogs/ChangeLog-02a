@@ -1,3 +1,10 @@
+Thu Mar 16 13:26:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: Forgot to
+	  checkin the run_test.pl. This will now use the service
+	  configurator file instead of the -ORBGIOPlite command line
+	  option. 
+
 Thu Mar 16 13:22:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* utils/catior/Makefile:
