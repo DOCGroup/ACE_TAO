@@ -1,9 +1,15 @@
+Tue Oct 29 19:20:29 2002  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Service.h: 
+	  
+	  Make the init (int,char**) method abstract.
+
 Tue Oct 29 11:37:37 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.CosNotification: 
 
 	  Generated dependencies. Added the cleanup of the tao_idl
-	  generated files for Notify/Event_Forwarder.idl
+	  generated files for Notify/Event_Forwarder.idl.
 
 Tue Oct 29 09:34:59 CET 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
