@@ -140,7 +140,7 @@ Peer_Handler<ROUTER, KEY>::handle_input (ACE_HANDLE h)
 
   ACE_DEBUG ((LM_DEBUG, "(%t) input arrived on sd %d\n", h));
 //  ACE_Service_Config::reactor ()->remove_handler(h,
-//                                          ACE_Event_Handler::RWE_MASK
+//                                          ACE_Event_Handler::ALL_EVENTS_MASK
 //                                          |ACE_Event_Handler::DONT_CALL);
 // this method should be called only if the peer shuts down
 // so we deactivate our ACE_Message_Queue to awake our svc thread

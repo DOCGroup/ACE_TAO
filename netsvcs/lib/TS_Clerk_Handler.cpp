@@ -74,7 +74,7 @@ public:
   // Return the handle of the message_fifo_;
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
+			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Called when object is removed from the ACE_Reactor
   
   virtual int handle_input (ACE_HANDLE);

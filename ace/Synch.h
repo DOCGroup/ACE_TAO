@@ -29,6 +29,54 @@
 class ACE_Time_Value;
 // template <class ACE_COND_MUTEX> class ACE_Condition;
 
+class ACE_Lock
+  // = TITLE
+  //     This is the abstract base class that contains the uniform
+  //     locking API that is supported by all the ACE synchronization
+  //     mechanisms.
+  //
+  // = DESCRIPTION
+  //     This class is typically used in conjunction with the
+  //     <ACE_Lock_Adapter> in order to provide a polymorphic
+  //     interface to the ACE synchronization mechanisms (e.g.,
+  //     <ACE_Mutex>, <ACE_Semaphore>, <ACE_RW_Lock>, etc).  Note that
+  //     the reason that all of ACE doesn't use polymorphic locks is
+  //     that (1) they add ~20% extra overhead for virtual function
+  //     calls and (2) objects with virtual functions can't be placed
+  //     into shared memory.
+{
+public:
+  virtual int remove (void) = 0;
+  // Explicitly destroy the lock.
+
+  virtual int acquire (void) = 0;
+  // Block the thread until the lock is acquired.
+
+  virtual int tryacquire (void) = 0;
+  // Conditionally acquire the lock (i.e., won't block).
+
+  virtual int release (void) = 0;
+  // Release the lock.
+
+  virtual int acquire_read (void) = 0;
+  // Block until the thread acquires a read lock.  If the locking
+  // mechanism doesn't support read locks then this just calls
+  // <acquire>.
+
+  virtual int acquire_write (void) = 0;
+  // Block until the thread acquires a write lock.  If the locking
+  // mechanism doesn't support read locks then this just calls
+  // <acquire>.
+
+  virtual int tryacquire_read (void) = 0;
+  // Conditionally acquire a read lock.  If the locking mechanism
+  // doesn't support read locks then this just calls <acquire>.
+
+  virtual int tryacquire_write (void) = 0;
+  // Conditionally acquire a write lock.  If the locking mechanism
+  // doesn't support read locks then this just calls <acquire>.
+};
+
 class ACE_Export ACE_File_Lock
   // = TITLE
   //     A wrapper around the UNIX file locking mechanism.
@@ -111,12 +159,12 @@ class ACE_Export ACE_Semaphore
 {
 public:
   // = Initialization and termination.
-  ACE_Semaphore (u_int count, 
+  ACE_Semaphore (u_int count = 1, // By default make this unlocked.
 		 int type = USYNC_THREAD, 
 		 LPCTSTR name = 0, 
 		 void * = 0,
 		 int max = 0x7fffffff);
-  // Initialize the semaphore, with default value of "count".
+  // Initialize the semaphore, with initial value of "count".
 
   ~ACE_Semaphore (void);       
   // Implicitly destroy the semaphore.
@@ -129,12 +177,32 @@ public:
   // greater than 0, then decrement it.
 
   int tryacquire (void);
-  // Conditionally decrement the semaphore if count is greater 
-  // than 0 (i.e., won't block).
+  // Conditionally decrement the semaphore if count is greater than 0
+  // (i.e., won't block).
 
   int release (void);
   // Increment the semaphore, potentially unblocking
   // a waiting thread.
+
+  int acquire_read (void);
+  // Acquire semaphore ownership.  This calls <acquire> and is only
+  // here to make the <ACE_Semaphore> interface consistent with the
+  // other synchronization APIs.
+
+  int acquire_write (void);
+  // Acquire semaphore ownership.  This calls <acquire> and is only
+  // here to make the <ACE_Semaphore> interface consistent with the
+  // other synchronization APIs.
+
+  int tryacquire_read (void);
+  // Conditionally acquire semaphore (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Semaphore>
+  // interface consistent with the other synchronization APIs.
+
+  int tryacquire_write (void);
+  // Conditionally acquire semaphore (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Semaphore>
+  // interface consistent with the other synchronization APIs.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -159,8 +227,10 @@ class ACE_Export ACE_Process_Semaphore
   //     across processes.
 {
 public:
-  ACE_Process_Semaphore (u_int count, LPCTSTR name = 0, 
-			 void * = 0, int max = 0x7FFFFFFF);
+  ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
+			 LPCTSTR name = 0, 
+			 void * = 0, 
+			 int max = 0x7FFFFFFF);
   // Initialize the semaphore, with an initial value of <count> and a
   // maximum value of <max>.
 
@@ -171,16 +241,35 @@ public:
   // Explicitly destroy the semaphore.
 
   int acquire (void);
-  // Block the thread until the semaphore count becomes
-  // greater than 0, then decrement it.
+  // Block the thread until the semaphore count becomes greater than
+  // 0, then decrement it.
 
   int tryacquire (void);
-  // Conditionally decrement the semaphore if count is greater 
-  // than 0 (i.e., won't block).
+  // Conditionally decrement the semaphore if count is greater than 0
+  // (i.e., won't block).
 
   int release (void);
-  // Increment the semaphore, potentially unblocking
-  // a waiting thread.
+  // Increment the semaphore, potentially unblocking a waiting thread.
+
+  int acquire_read (void);
+  // Acquire semaphore ownership.  This calls <acquire> and is only
+  // here to make the <ACE_Process_Semaphore> interface consistent
+  // with the other synchronization APIs.
+
+  int acquire_write (void);
+  // Acquire semaphore ownership.  This calls <acquire> and is only
+  // here to make the <ACE_Process_Semaphore> interface consistent
+  // with the other synchronization APIs.
+
+  int tryacquire_read (void);
+  // Conditionally acquire semaphore (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
+  // interface consistent with the other synchronization APIs.
+
+  int tryacquire_write (void);
+  // Conditionally acquire semaphore (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
+  // interface consistent with the other synchronization APIs.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -233,12 +322,12 @@ public:
   int acquire (void);
   // Note, for interface uniformity with other synchronization
   // wrappers we include the <acquire> method.  This is implemented as
-  // a write-lock to be on the safe-side...
+  // a write-lock to safe...
 
   int tryacquire (void);
   // Note, for interface uniformity with other synchronization
   // wrappers we include the <tryacquire> method.  This is implemented
-  // as a write-lock to be on the safe-side...
+  // as a write-lock to be safe...
 
   int release (void);  
   // Unlock a readers/writer lock.
@@ -263,8 +352,8 @@ private:
 
 class ACE_Export ACE_Mutex
   // = TITLE
-  //     ACE_Mutex wrapper (valid in same process or across processes
-  //     (depending on TYPE flag))
+  //     <ACE_Mutex> wrapper (valid in same process or across
+  //     processes (depending on TYPE flag)).
 {
 public:
   ACE_Mutex (int type = USYNC_THREAD, 
@@ -288,16 +377,24 @@ public:
   // Release lock and unblock a thread at head of priority queue.
 
   int acquire_read (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire mutex ownership.  This calls <acquire> and is only
+  // here to make the <ACE_Mutex> interface consistent with the
+  // other synchronization APIs.
 
   int acquire_write (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire mutex ownership.  This calls <acquire> and is only
+  // here to make the <ACE_Mutex> interface consistent with the
+  // other synchronization APIs.
 
   int tryacquire_read (void);
-  // Conditionally acquire a lock (i.e., won't block).
+  // Conditionally acquire mutex (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Mutex>
+  // interface consistent with the other synchronization APIs.
 
   int tryacquire_write (void);
-  // Conditionally acquire a lock (i.e., won't block).
+  // Conditionally acquire mutex (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Mutex>
+  // interface consistent with the other synchronization APIs.
 
   const ACE_mutex_t &lock (void) const;
   // Return the underlying mutex.
@@ -324,7 +421,8 @@ class ACE_Export ACE_Process_Mutex
   //     processes).
 {
 public:
-  ACE_Process_Mutex (LPCTSTR name = ACE_DEFAULT_MUTEX, void *arg = 0);
+  ACE_Process_Mutex (LPCTSTR name = ACE_DEFAULT_MUTEX, 
+		     void *arg = 0);
   // Create a Process_Mutex, passing in the optional <name>.
 
   ~ACE_Process_Mutex (void);
@@ -669,16 +767,24 @@ public:
   // Release lock and unblock a thread at head of priority queue.
 
   int acquire_read (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire mutex ownership.  This calls <acquire> and is only here
+  // to make the <ACE_Thread_Mutex> interface consistent with the
+  // other synchronization APIs.
 
   int acquire_write (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire mutex ownership.  This calls <acquire> and is only here
+  // to make the <ACE_Thread_Mutex> interface consistent with the
+  // other synchronization APIs.
 
   int tryacquire_read (void);
-  // Conditionally acquire a lock (i.e., won't block).
+  // Conditionally acquire mutex (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Thread_Mutex>
+  // interface consistent with the other synchronization APIs.
 
   int tryacquire_write (void);
-  // Conditionally acquire a lock (i.e., won't block).
+  // Conditionally acquire mutex (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Thread_Mutex>
+  // interface consistent with the other synchronization APIs.
 
   const ACE_thread_mutex_t &lock (void) const;
   // Return the underlying mutex.
@@ -912,8 +1018,10 @@ class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore
   //     only within on process.
 {
 public:
-  ACE_Thread_Semaphore (u_int count, LPCTSTR name = 0,
-			void * = 0, int max = 0x7FFFFFFF);
+  ACE_Thread_Semaphore (u_int count = 1, // By default make this unlocked.
+			LPCTSTR name = 0,
+			void * = 0, 
+			int max = 0x7FFFFFFF);
   // Initialize the semaphore, with an initial value of <count> and a
   // maximum value of <max>.
 

@@ -1,6 +1,6 @@
-#include "Notification_Receiver_Handler.h"
 // $Id$
 
+#include "Notification_Receiver_Handler.h"
 
 #if defined (ACE_HAS_ORBIX)
 
@@ -108,7 +108,7 @@ Notification_Receiver_Handler::notifier (void)
 
 Notification_Receiver_Handler::~Notification_Receiver_Handler (void)
 {
-  this->handle_close (-1, ACE_Event_Handler::RWE_MASK);
+  this->handle_close (-1, ACE_Event_Handler::ALL_EVENTS_MASK);
 }
 
 #endif /* ACE_HAS_ORBIX */

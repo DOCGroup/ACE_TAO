@@ -27,7 +27,7 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_File_Entry &entry,
 	line_number++;
     }
 
-  // Get the logic id.
+  // Get the logical id.
   if ((read_result = this->getint (entry.supplier_id_)) != FP::SUCCESS)
     return read_result;
 
@@ -35,12 +35,12 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_File_Entry &entry,
   if ((read_result = this->getint (entry.type_)) != FP::SUCCESS)
     return read_result;
 
-  // get all the destinations.
-  entry.total_destinations_ = 0;
+  // get all the consumers.
+  entry.total_consumers_ = 0;
 
-  while ((read_result = this->getint (entry.destinations_[entry.total_destinations_]))
+  while ((read_result = this->getint (entry.consumers_[entry.total_consumers_]))
 	 == FP::SUCCESS)
-    ++entry.total_destinations_; // do nothing
+    ++entry.total_consumers_; // do nothing (should check against max...)
 
   if (read_result == FP::EOLINE || read_result == FP::EOFILE)
     return FP::SUCCESS;
@@ -63,8 +63,8 @@ Connection_Config_File_Parser::read_entry (Connection_Config_File_Entry &entry,
     {
       if (read_result == FP::EOFILE) 
 	return FP::EOFILE;
-      else if (read_result == FP::EOLINE || 
-	       read_result == FP::COMMENT) 
+      else if (read_result == FP::EOLINE 
+	       || read_result == FP::COMMENT) 
 	line_number++;
     }
 
@@ -72,19 +72,19 @@ Connection_Config_File_Parser::read_entry (Connection_Config_File_Entry &entry,
   if ((read_result = this->getword (entry.host_)) != FP::SUCCESS)
     return read_result;
 
-  int port;
+  ACE_INT32 port;
 
   // Get the port number.
   if ((read_result = this->getint (port)) != FP::SUCCESS)
     return read_result;
   else
-    entry.remote_poconsumer_ = (u_short) port;
+    entry.remote_port_ = (u_short) port;
 
-  // Get the direction.
+  // Get the proxy role.
   if ((read_result = this->getword (buf)) != FP::SUCCESS)
     return read_result;
   else
-    entry.direction_ = buf[0];
+    entry.proxy_role_ = buf[0];
 
   // Get the max retry delay.
   if ((read_result = this->getint (entry.max_retry_delay_)) != FP::SUCCESS)
@@ -94,7 +94,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_File_Entry &entry,
   if ((read_result = this->getint (port)) != FP::SUCCESS)
     return read_result;
   else
-    entry.local_poconsumer_ = (u_short) port;
+    entry.local_port_ = (u_short) port;
 
   return FP::SUCCESS;
 }
@@ -108,7 +108,7 @@ int main (int argc, char *argv[])
     exit (1);
   }
   FP_RETURN_TYPE result;
-  Connection_Config_File_Entry CCentry;
+  Connection_Config_File_Entry entry;
   Connection_Config_File_Parser CCfile;
   
   CCfile.open (argv[1]);
@@ -118,15 +118,15 @@ int main (int argc, char *argv[])
   printf ("ConnID\tHost\t\tRPort\tDir\tRetry\tLPort\n");
 
   // Read config file line at a time.
-  while ((result = CCfile.read_entry (CCentry, line_number)) != EOF)
+  while ((result = CCfile.read_entry (entry, line_number)) != EOF)
     {
       if (result != FP::SUCCESS)
  //	ACE_DEBUG ((LM_DEBUG, "Error line %d.\n", line_number));
 	cerr << "Error at line " << line_number << endl;
       else 
 	printf ("%d\t%s\t%d\t%c\t%d\t%c\t%d\n",
-	       CCentry.conn_id_, CCentry.host_, CCentry.remote_poconsumer_, CCentry.direction_,
-	       CCentry.max_retry_delay_, CCentry.transform_, CCentry.local_poconsumer_);
+	       entry.conn_id_, entry.host_, entry.remote_port_, entry.proxy_role_,
+	       entry.max_retry_delay_, entry.transform_, entry.local_port_);
     }
   CCfile.close();
 
@@ -148,8 +148,8 @@ int main (int argc, char *argv[])
 	{
 	  printf ("%d\t%d\t%d\t%d\t",
 		  entry.conn_id_, entry.supplier_id_, entry.type_);
-	  while (--entry.total_destinations_ >= 0)
-	    printf ("%d,", entry.destinations_[entry.total_destinations_]);
+	  while (--entry.total_consumers_ >= 0)
+	    printf ("%d,", entry.consumers_[entry.total_consumers_]);
 	  printf ("\n");
 	}
     }

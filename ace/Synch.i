@@ -235,6 +235,86 @@ ACE_Semaphore::release (void)
   return ACE_OS::sema_post (&this->semaphore_);
 }
 
+// Acquire semaphore ownership.  This calls <acquire> and is only
+// here to make the <ACE_Semaphore> interface consistent with the
+// other synchronization APIs.
+
+ACE_INLINE int 
+ACE_Semaphore::acquire_read (void)
+{
+  return this->acquire ();
+}
+
+// Acquire semaphore ownership.  This calls <acquire> and is only
+// here to make the <ACE_Semaphore> interface consistent with the
+// other synchronization APIs.
+
+ACE_INLINE int 
+ACE_Semaphore::acquire_write (void)
+{
+  return this->acquire ();
+}
+
+// Conditionally acquire semaphore (i.e., won't block).  This calls
+// <tryacquire> and is only here to make the <ACE_Semaphore>
+// interface consistent with the other synchronization APIs.
+
+ACE_INLINE int 
+ACE_Semaphore::tryacquire_read (void)
+{
+  return this->tryacquire ();
+}
+
+// Conditionally acquire semaphore (i.e., won't block).  This calls
+// <tryacquire> and is only here to make the <ACE_Semaphore>
+// interface consistent with the other synchronization APIs.
+
+ACE_INLINE int 
+ACE_Semaphore::tryacquire_write (void)
+{
+  return this->tryacquire ();
+}
+
+// Acquire semaphore ownership.  This calls <acquire> and is only here
+// to make the <ACE_Process_Semaphore> interface consistent with the
+// other synchronization APIs.
+
+ACE_INLINE int 
+ACE_Process_Semaphore::acquire_read (void)
+{
+  return this->acquire ();
+}
+
+// Acquire semaphore ownership.  This calls <acquire> and is only here
+// to make the <ACE_Process_Semaphore> interface consistent with the
+// other synchronization APIs.
+
+ACE_INLINE int 
+ACE_Process_Semaphore::acquire_write (void)
+{
+  return this->acquire ();
+}
+
+// Conditionally acquire semaphore (i.e., won't block).  This calls
+// <tryacquire> and is only here to make the <ACE_Process_Semaphore>
+// interface consistent with the other synchronization APIs.
+
+ACE_INLINE int 
+ACE_Process_Semaphore::tryacquire_read (void)
+{
+  return this->tryacquire ();
+}
+
+// Conditionally acquire semaphore (i.e., won't block).  This calls
+// <tryacquire> and is only here to make the <ACE_Process_Semaphore>
+// interface consistent with the other synchronization APIs.
+
+ACE_INLINE int 
+ACE_Process_Semaphore::tryacquire_write (void)
+{
+  return this->tryacquire ();
+}
+
 #if defined (ACE_HAS_THREADS)
 
 ACE_INLINE const ACE_thread_mutex_t &

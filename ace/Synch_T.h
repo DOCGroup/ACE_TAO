@@ -23,6 +23,57 @@
 // Forward decl
 class ACE_Time_Value;
 
+template <class LOCKING_MECHANISM>
+class ACE_Lock_Adapter : public ACE_Lock
+  // = TITLE
+
+  //     This is an adapter that allows applications to transparently
+  //     combine the <ACE_Lock> abstract base class (which contains
+  //     pure virtual methods) with any of the other concrete ACE
+  //     synchronization classes (e.g., <ACE_Mutex>, <ACE_Semaphore>,
+  //     <ACE_RW_Lock>, etc.).
+  //
+  // = DESCRIPTION
+  //     This class uses a form of the Adapter pattern.
+{
+public:
+  typedef LOCKING_MECHANISM LOCK;
+
+  virtual int remove (void);
+  // Explicitly destroy the lock.
+
+  virtual int acquire (void);
+  // Block the thread until the lock is acquired.
+
+  virtual int tryacquire (void);
+  // Conditionally acquire the lock (i.e., won't block).
+
+  virtual int release (void);
+  // Release the lock.
+
+  virtual int acquire_read (void);
+  // Block until the thread acquires a read lock.  If the locking
+  // mechanism doesn't support read locks then this just calls
+  // <acquire>.
+
+  virtual int acquire_write (void);
+  // Block until the thread acquires a write lock.  If the locking
+  // mechanism doesn't support read locks then this just calls
+  // <acquire>.
+
+  virtual int tryacquire_read (void);
+  // Conditionally acquire a read lock.  If the locking mechanism
+  // doesn't support read locks then this just calls <acquire>.
+
+  virtual int tryacquire_write (void);
+  // Conditionally acquire a write lock.  If the locking mechanism
+  // doesn't support read locks then this just calls <acquire>.
+
+private:
+  LOCKING_MECHANISM lock_;
+  // The concrete locking mechanism that all the methods delegate to.
+};
+
 template <class LOCK, class TYPE>
 class ACE_Test_and_Set : public ACE_Event_Handler
 {

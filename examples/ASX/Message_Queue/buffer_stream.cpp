@@ -163,7 +163,7 @@ Consumer::svc (void)
       if (length > 0)
 	ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), length);
 
-      delete mb;
+      mb->release ();
 
       if (length == 0)
 	break;

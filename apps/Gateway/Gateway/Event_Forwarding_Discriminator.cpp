@@ -6,51 +6,49 @@
 
 #include "Event_Forwarding_Discriminator.h"
 
-// Bind the Event_Addr to the INT_ID.
+// Bind the Event_Key to the INT_ID.
 
 int
-Event_Forwarding_Discriminator::bind (Event_Addr event_addr, 
-		    Dispatch_Set *Dispatch_Set)
+Event_Forwarding_Discriminator::bind (Event_Key event_addr, 
+				      Consumer_Dispatch_Set *cds)
 {
-  return this->map_.bind (event_addr, Dispatch_Set);
+  return this->map_.bind (event_addr, cds);
 }
 
-// Find the Dispatch_Set corresponding to the Event_Addr.
+// Find the Consumer_Dispatch_Set corresponding to the Event_Key.
 
 int
-Event_Forwarding_Discriminator::find (Event_Addr event_addr, 
-		    Dispatch_Set *&Dispatch_Set)
+Event_Forwarding_Discriminator::find (Event_Key event_addr, 
+				      Consumer_Dispatch_Set *&cds)
 {
-  return this->map_.find (event_addr, Dispatch_Set);
+  return this->map_.find (event_addr, cds);
 }
 
-// Unbind (remove) the Event_Addr from the map.
+// Unbind (remove) the Event_Key from the map.
 
 int
-Event_Forwarding_Discriminator::unbind (Event_Addr event_addr)
+Event_Forwarding_Discriminator::unbind (Event_Key event_addr)
 {
   return this->map_.unbind (event_addr);
 }
 
-Event_Forwarding_Discriminator_Iterator::Event_Forwarding_Discriminator_Iterator (Event_Forwarding_Discriminator &rt)
-  : map_iter_ (rt.map_)
+Event_Forwarding_Discriminator_Iterator::Event_Forwarding_Discriminator_Iterator 
+  (Event_Forwarding_Discriminator &rt)
+    : map_iter_ (rt.map_)
 {
 }
 
 int
-Event_Forwarding_Discriminator_Iterator::next (Dispatch_Set *&ss)
+Event_Forwarding_Discriminator_Iterator::next (Consumer_Dispatch_Set *&cds)
 {
-  // Loop in order to skip over inactive entries if necessary.
-
-  for (ACE_Map_Entry<Event_Addr, Dispatch_Set *> *temp = 0;
-       this->map_iter_.next (temp) != 0; 
-       this->advance ())
+  ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *> *temp;
+  if (this->map_iter_.next (temp) == 0)
+    return 0;
+  else
     {
-      // Otherwise, return the next item.
-      ss = temp->int_id_;
+      cds = temp->int_id_;
       return 1;
     }
-  return 0;
 }
 
 int

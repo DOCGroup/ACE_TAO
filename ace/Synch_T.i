@@ -199,4 +199,72 @@ ACE_TSS<TYPE>::ts_get (void) const
   return (TYPE *) &this->type_;
 }
 
+// Explicitly destroy the lock.
+template <class LOCKING_MECHANISM> int 
+ACE_Lock_Adapter<LOCKING_MECHANISM>::remove (void)
+{
+  return this->lock_.remove ();
+}
+
+// Block the thread until the lock is acquired.
+template <class LOCKING_MECHANISM> int 
+ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire (void)
+{
+  return this->lock_.acquire ();
+}
+
+// Conditionally acquire the lock (i.e., won't block).
+
+template <class LOCKING_MECHANISM> int 
+ACE_Lock_Adapter<LOCKING_MECHANISM>::tryacquire (void)
+{
+  return this->lock_.tryacquire ();
+}
+
+// Release the lock.
+
+template <class LOCKING_MECHANISM> int 
+ACE_Lock_Adapter<LOCKING_MECHANISM>::release (void)
+{
+  return this->lock_.release ();
+}
+
+// Block until the thread acquires a read lock.  If the locking
+// mechanism doesn't support read locks then this just calls
+// <acquire>.
+
+template <class LOCKING_MECHANISM> int 
+ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire_read (void)
+{
+  return this->lock_.acquire_read ();
+}
+
+// Block until the thread acquires a write lock.  If the locking
+// mechanism doesn't support read locks then this just calls
+// <acquire>.
+
+template <class LOCKING_MECHANISM> int 
+ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire_write (void)
+{
+  return this->lock_.acquire_write ();
+}
+
+// Conditionally acquire a read lock.  If the locking mechanism
+// doesn't support read locks then this just calls <acquire>.
+
+template <class LOCKING_MECHANISM> int 
+ACE_Lock_Adapter<LOCKING_MECHANISM>::tryacquire_read (void)
+{
+  return this->lock_.tryacquire_read ();
+}
+
+// Conditionally acquire a write lock.  If the locking mechanism
+// doesn't support read locks then this just calls <acquire>.
+
+template <class LOCKING_MECHANISM> int 
+ACE_Lock_Adapter<LOCKING_MECHANISM>::acquire_write (void)
+{
+  return this->lock_.acquire_write ();
+}
+
 #endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */
