@@ -1,3 +1,8 @@
+Wed Jul 12 17:30:54 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/posix/types.h
+	  Fixed pace_tchar.
+
 Wed Jul 12 16:31:51 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/types.h:
