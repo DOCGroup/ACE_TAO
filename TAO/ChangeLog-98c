@@ -1,3 +1,11 @@
+Wed Dec 10 19:57:07 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (Cubit_i::cube_sequence):
+ 	Changed to explicitly use the vector_out::ptr() method to get a
+ 	ptr.  It seems that g++ wanted to interpret this expression
+ 	(output == 0) differently from Sun's C++, and this made both
+ 	interpret it in the desired way.
+
 Wed Dec 10 14:23:24 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* TAO_IDL/be/be_state_structure.cpp: 
