@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -11,8 +10,9 @@
 //    Future.h
 //
 // = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
+//    Andres Kruse <Andres.Kruse@cern.ch>, Douglas C. Schmidt
+//    <schmidt@cs.wustl.edu>, and Per Andersson
+//    <Per.Andersson@hfera.ericsson.se>. 
 // 
 // ============================================================================
 
@@ -27,20 +27,22 @@
 template <class T> class ACE_Future;
 
 template <class T> class ACE_Future_Rep
-// = TITLE
-//     
-//     ACE_Future_Rep<T>
-//
-// = DESCRIPTION
-//     An ACE_Future_Rep<T> object encapsules a pointer to an 
-//     object of class T which is the result of an asynchronous
-//     method invocation. It is pointed to by ACE_Future<T> object[s]
-//     and only accessible through them.
+  // = TITLE
+  //     ACE_Future_Rep<T>
+  //
+  // = DESCRIPTION
+  //     An ACE_Future_Rep<T> object encapsules a pointer to an 
+  //     object of class T which is the result of an asynchronous
+  //     method invocation. It is pointed to by ACE_Future<T> object[s]
+  //     and only accessible through them.
 {
   friend class ACE_Future<T>;
 
 private:
-
+  static ACE_Future_Rep<T> *create (void);
+  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *rep);
+  static void detach (ACE_Future_Rep<T> *rep);
+  
   int set (const T &r);
   // Set the result value.
 
@@ -72,7 +74,8 @@ private:
   T *value_;
   // Pointer to the result.
 
-  ACE_Atomic_Op<ACE_Thread_Mutex, int> ref_count_;
+  int ref_count_;
+//  ACE_Atomic_Op<ACE_Thread_Mutex, int> ref_count_;
   // Reference count.
 
   // = Condition variable and mutex that protect the <value_>.
@@ -82,9 +85,10 @@ private:
 
 template <class T> class ACE_Future 
   // = TITLE
-  //     This class implements a ``single write, multiple read'' pattern
-  //     that can be used to return results from asynchronous method
-  //     invocations.
+  //     This class implements a ``single write, multiple read''
+  //     pattern that can be used to return results from asynchronous
+  //     method invocations.
+  //
   // = DESCRIPTION
 {
 public:
@@ -110,6 +114,10 @@ public:
   int cancel (const T &r);
   // Cancel an <ACE_Future> and assign the value <r>.  It is used if a
   // client does not want to wait for <T> to be produced.
+  
+  void cancel (void);
+  // Cancel an <ACE_Future>.  This puts the future into its initial
+  // state.
 
   int operator == (const ACE_Future<T> &r) const;
   // Equality operator that returns 1 if both ACE_Future<T> objects
@@ -146,24 +154,21 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Future_Rep<T> *create_rep_i (void) const;
-  // Create the <ACE_Future_Rep> object.
-
-  void* operator new (size_t nbytes);
+  void *operator new (size_t nbytes);
   // Do not allow new operator.
 
-  void operator delete(void *);
+  void operator delete (void *);
   // Do not allow delete operator
 
   void operator &();
   // Do not allow address-of operator.
 
-  ACE_Future_Rep<T> *future_rep_;
   // the ACE_Future_Rep
+  typedef ACE_Future_Rep<T> Future_Rep;
+  Future_Rep* future_rep_;
 
   ACE_Thread_Mutex mutex_;
   // Protect operations on the <Future>.
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
@@ -173,5 +178,6 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Future.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_FUTURE_H */

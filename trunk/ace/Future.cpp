@@ -24,11 +24,45 @@ ACE_Future_Rep<T>::dump (void) const
     ACE_DEBUG ((LM_DEBUG," (NON-NULL)\n"));
   else
     ACE_DEBUG ((LM_DEBUG," (NULL)\n"));
+
   ACE_DEBUG ((LM_INFO,"value_ready_: \n"));
   this->value_ready_.dump ();
   ACE_DEBUG ((LM_INFO,"value_ready_mutex_: \n"));
   this->value_ready_mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+template <class T> ACE_Future_Rep<T> *
+ACE_Future_Rep<T>::create (void)
+{
+  // Yes set ref count to zero.
+  ACE_NEW_RETURN (((ACE_Future<T> *) this)->future_rep_, ACE_Future_Rep<T>, 0);
+}
+
+template <class T> ACE_Future_Rep<T> * 
+ACE_Future_Rep<T>::attach (ACE_Future_Rep<T> *rep)
+{
+  ACE_ASSERT (rep != 0);
+  // Use value_ready_mutex_ for both condition and ref count management
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, (ACE_Thread_Mutex &) rep->value_ready_mutex_));
+  ++rep->ref_count_;
+  return rep;
+}
+
+template <class T> void 
+ACE_Future_Rep<T>::detach (ACE_Future_Rep<T> *rep)
+{
+  ACE_ASSERT(rep != 0);
+  // Use value_ready_mutex_ for both condition and ref count management
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, (ACE_Thread_Mutex &) rep->value_ready_mutex_));
+  
+  if (rep->ref_count_-- == 0)
+    {
+      r_mon.release ();
+      // We do not need the lock when deleting the representation.
+      // There should be no side effects from deleting rep.
+      delete rep;
+    }
 }
 
 template <class T> 
@@ -43,7 +77,6 @@ template <class T>
 ACE_Future_Rep<T>::~ACE_Future_Rep (void)
 {
   delete this->value_;
-  this->value_ = 0;
 }
 
 template <class T> int
@@ -74,7 +107,8 @@ ACE_Future_Rep<T>::set (const T &r)
 }
 
 template <class T> int
-ACE_Future_Rep<T>::get (T &value, ACE_Time_Value *tv)
+ACE_Future_Rep<T>::get (T &value,
+			ACE_Time_Value *tv)
 {
   // If the value is already produced, return it.
   if (this->value_ == 0)
@@ -85,11 +119,10 @@ ACE_Future_Rep<T>::get (T &value, ACE_Time_Value *tv)
       // producer writes to it.
 
       while (this->value_ == 0) 
-	{
-	  // Perform a timed wait.
-	  if (this->value_ready_.wait (tv) == -1)
-	    return -1;
-	}
+	// Perform a timed wait.
+	if (this->value_ready_.wait (tv) == -1)
+	  return -1;
+
       // Destructor releases the lock.
     }
 
@@ -109,82 +142,47 @@ ACE_Future_Rep<T>::operator T ()
       // If the value is not yet defined we must block until the
       // producer writes to it.
 
+      // Wait ``forever.''
+
       while (this->value_ == 0) 
-	{
-	  // wait forever
-	  if (this->value_ready_.wait () == -1)
-	    // What to do in this case since we've got to indicate
-	    // failure somehow?  Exceptions would be nice, but they're
-	    // not portable...
-	    return 0; 
-	}
+	if (this->value_ready_.wait () == -1)
+	  // What to do in this case since we've got to indicate
+	  // failure somehow?  Exceptions would be nice, but they're
+	  // not portable...
+	  return 0; 
 
       // Destructor releases the mutex
-
     }
 
   return *this->value_;
 }
 
-
 template <class T> 
 ACE_Future<T>::ACE_Future (void)
-  : future_rep_ (0)
+  : future_rep_ (Future_Rep::create ())
 {
 }
 
 template <class T>
 ACE_Future<T>::ACE_Future (const ACE_Future<T> &r)
+  : future_rep_ (Future_Rep::attach (r.future_rep_))
 {
-
-  // copy constructor:
-  //
-  // bind <this> to the same <ACE_Future_Rep> as <r>.
-
-  // @@ not really clear if this is needed... after all this
-  // ACE_Future is just being instantiated...
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_));
-
-  // acquire the mutex on <r>. We have to make sure
-  // that <r> does not delete its future_rep_...
-
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, (ACE_Thread_Mutex &) r.mutex_));
-
-  // Check if 'r' has already a ACE_Future_rep bound to it.
-  if (r.future_rep_ == 0) 
-    this->future_rep_ = r.create_rep_i ();
-  else 
-    // ACE_Future_rep exists already, we can just link to it.
-    this->future_rep_ = r.future_rep_;
-
-  this->future_rep_->ref_count_++;
-
 }
 
 template <class T>
 ACE_Future<T>::ACE_Future (const T &r)
+  : future_rep_ (Future_Rep::create ())
 {
   ACE_DEBUG ((LM_DEBUG," (%t) funny constructor\n"));
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_));
-  this->create_rep_i ()->set (r);
+  this->future_rep_->set (r);
 }
 
 template <class T> 
 ACE_Future<T>::~ACE_Future (void)
 {
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_));
-
-  if (this->future_rep_)
-    {
-      this->future_rep_->ref_count_--;
-
-      if (this->future_rep_->ref_count_ == 0)
-	{
-	  delete this->future_rep_;
-	  this->future_rep_ = 0;
-	}
-    }
-
+  Future_Rep::detach (future_rep_);
 }
 
 template <class T> int 
@@ -202,63 +200,40 @@ ACE_Future<T>::operator!= (const ACE_Future<T> &r) const
 template <class T> int
 ACE_Future<T>::cancel (const T &r)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
+  this->cancel ();
+  return this->future_rep_->set (r);
+}
 
+template <class T> void
+ACE_Future<T>::cancel (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
+  
   // If this ACE_Future is already attached to a ACE_Future_Rep,
   // detach it (maybe delete the ACE_Future_Rep).
-  if (this->future_rep_) 
-    {
-      this->future_rep_->ref_count_--;
-
-      if (this->future_rep_->ref_count_ == 0)
-	delete this->future_rep_;
-    }
-
-  // Make a new ACE_Future_Rep and immediately assign 
-  // the new value to it.
-  this->create_rep_i ();
-  return this->future_rep_->set (r);
+  Future_Rep *new_rep (Future_Rep::create ());
+  Future_Rep *old_rep (this->future_rep_);
+  this->future_rep_ = new_rep;
+  Future_Rep::detach (old_rep);
 }
 
 template <class T> int
 ACE_Future<T>::set (const T &r) 
 {
-  if (this->future_rep_)
-    // Give the pointer to the result to the ACE_Future_Rep.
-    return this->future_rep_->set (r);
-  else
-    // @@ Maybe this should return a special value to indicate that
-    // there's no <ACE_Future_Rep> yet?
-    return 0; 
+  // Give the pointer to the result to the ACE_Future_Rep.
+  return this->future_rep_->set (r);
 }
-
-template <class T> ACE_Future_Rep<T> * 
-ACE_Future<T>::create_rep_i (void) const
-{
-  // Should only be called internally with locks held.
-  ACE_NEW_RETURN (((ACE_Future<T> *) this)->future_rep_, ACE_Future_Rep<T>, 0);
-  this->future_rep_->ref_count_ = 1;
-  return this->future_rep_;
-}
-
 template <class T> int
 ACE_Future<T>::ready (void)
 {
   // We're ready if the ACE_Future_rep is ready...
-  if (this->future_rep_)
-    return this->future_rep_->ready ();
-  else
-    return 0;
+  return this->future_rep_->ready ();
 }
 
 template <class T> int
 ACE_Future<T>::get (T &value, ACE_Time_Value *tv)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
-
-  if (this->future_rep_ == 0) 
-    // Oops, we have to create a ACE_Future_Rep first.
-    this->create_rep_i ();
 
   // We return the ACE_Future_rep.
   return this->future_rep_->get (value, tv);
@@ -289,32 +264,21 @@ ACE_Future<T>::operator = (const ACE_Future<T> &r)
   //
   //  bind <this> to the same <ACE_Future_Rep> as <r>.
 
+  Future_Rep *new_rep = 0;
+  {
+    // This will work if &r == this
+    // and if not it will keep the r.mutex_ locked for as little 
+    // time as possible
+    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, r.mutex_));
+    new_rep = Future_Rep::attach (r.future_rep_);
+  }
+  
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_));
 
-  // if there is already a <ACE_Future_Rep> we have
-  // to disconnect from it...
-  if (this->future_rep_) 
-    {
-      // Disconnect from the <ACE_Future_Rep>.
-      this->future_rep_->ref_count_--;
-
-      if (this->future_rep_->ref_count_ == 0)
-	delete this->future_rep_;
-    }
-
-  // Acquire the mutex on <r>. We have to make sure
-  // that <r> does not delete it's future_rep_...
-
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, (ACE_Thread_Mutex &) r.mutex_));
-
-  // Check if 'r' has already a ACE_Future_rep bound to it.
-  if (r.future_rep_ == 0) 
-    this->future_rep_ = r.create_rep_i ();
-  else 
-    // ACE_Future_rep exists already, we can just link to it.
-    this->future_rep_ = r.future_rep_;
-
-  this->future_rep_->ref_count_++;
+  Future_Rep *old_rep = this->future_rep_;
+  this->future_rep_ = new_rep;
+  // Setup the new rep before detaching old rep for exception safety.
+  Future_Rep::detach (old_rep);
 }
 
 template <class T> void 
@@ -346,6 +310,8 @@ ACE_Future<T>::operator &()
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+// This should probably be moved elsewhere now that ACE_Atomic_Op<>
+// isn't used.
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
