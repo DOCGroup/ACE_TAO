@@ -1,5 +1,5 @@
 // ============================================================================
-// $Id$ 
+// $Id$
 //
 // = FILENAME 
 //    Video_Repository.idl
@@ -28,5 +28,4 @@ module TAO_VR
   };
 
   typedef sequence<Movie> Movie_Info;
-  typedef sequence<string> Movie_Names;
 };

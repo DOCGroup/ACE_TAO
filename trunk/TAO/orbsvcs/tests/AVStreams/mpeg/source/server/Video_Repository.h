@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 
 // ============================================================================
-// $Id$ 
+// $Id$
 //  
 //
 // = FILENAME 
@@ -42,7 +42,6 @@ class TAO_Video_Repository :
 {
 public:
 
-  static const char* MOVIE_NAMES;
   static const char* MOVIE_INFO;
   
   TAO_Video_Repository (const char* filename);
@@ -78,7 +77,6 @@ private:
   // database.
 
   const char* filename_;
-  char** movie_names_;
   TAO_VR::Movie* movie_info_;
   int num_movies_;
   time_t lastchanged_;

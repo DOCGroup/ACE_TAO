@@ -183,7 +183,7 @@ private:
 
   void export_properties (CORBA::Environment& _env);
 
-  void resolve_trader (CORBA::Environment& _env);
+  int resolve_trader (CORBA::Environment& _env);
   
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
