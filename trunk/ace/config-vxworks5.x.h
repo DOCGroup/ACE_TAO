@@ -42,7 +42,7 @@
 #elif defined (ghs)
   // Processor type, if necessary.  GreenHills defines "ppc".
 # if defined (ppc)
-#   define ACE_HAS_POWERPC
+#   define ACE_HAS_POWERPC_TIMER
 # endif /* ppc */
 
 # if defined (i386) || defined (__i386__)
