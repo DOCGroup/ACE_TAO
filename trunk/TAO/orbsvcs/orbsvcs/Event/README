@@ -94,6 +94,17 @@ components:
       each consumer. 
       @@ TODO: how do we match this with the filtering interfaces?
 
+  Another important aspect of dispatching:
+    + If the dispatcher is reactive then there is potential for
+      dead-lock, the consumer may decide to disconnect itself during
+      the upcall or to dispatch another event.
+      The dispatching module will call back the EC_ProxyPushSupplier
+      to handle the final dispatch.
+      With Reactive dispatching the ProxyPushSupplier should use
+      recursive locks, with non-reactive dispatching regular locks
+      could be enough.
+      @@ TODO ensure that only the right people calls this method.
+
 - The ConsumerAdmin module: this object acts as a factory for the
   ProxyPushSupplier objects (i.e. the interface between the event
   channel and its consumers); the object delegates on the event
