@@ -850,59 +850,108 @@ struct cancel_state
 
 #if defined (ACE_HAS_THREADS)
 
-#if defined (ACE_HAS_STHREADS)
-#include /**/ <synch.h>
-#include /**/ <thread.h>
-#define ACE_SCOPE_PROCESS P_PID
-#define ACE_SCOPE_LWP P_LWPID
-#define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
-#else
-#define ACE_SCOPE_PROCESS 0
-#define ACE_SCOPE_LWP 1
-#define ACE_SCOPE_THREAD 2
-#endif /* ACE_HAS_STHREADS */
+#  if defined (ACE_HAS_STHREADS)
+#    include /**/ <synch.h>
+#    include /**/ <thread.h>
+#    define ACE_SCOPE_PROCESS P_PID
+#    define ACE_SCOPE_LWP P_LWPID
+#    define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
+#  else
+#    define ACE_SCOPE_PROCESS 0
+#    define ACE_SCOPE_LWP 1
+#    define ACE_SCOPE_THREAD 2
+#  endif /* ACE_HAS_STHREADS */
 
-#if ! (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS))
-#define ACE_SCHED_OTHER 0
-#define ACE_SCHED_FIFO 1
-#define ACE_SCHED_RR 2
-#endif /* ! (ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS) */
+#  if ! (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS))
+#    define ACE_SCHED_OTHER 0
+#    define ACE_SCHED_FIFO 1
+#    define ACE_SCHED_RR 2
+#  endif /* ! (ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS) */
 
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#define ACE_SCHED_OTHER SCHED_OTHER
-#define ACE_SCHED_FIFO SCHED_FIFO
-#define ACE_SCHED_RR SCHED_RR
+#  if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#    define ACE_SCHED_OTHER SCHED_OTHER
+#    define ACE_SCHED_FIFO SCHED_FIFO
+#    define ACE_SCHED_RR SCHED_RR
 
 // Definitions for mapping POSIX pthreads onto Solaris threads.
 
-#if defined (ACE_HAS_FSU_PTHREADS)
-#define PTHREAD_DETACHED        0x1
-#define PTHREAD_SCOPE_SYSTEM    0x2
-#define PTHREAD_INHERIT_SCHED   0x4
-#define PTHREAD_NOFLOAT         0x8
-#define PTHREAD_CREATE_UNDETACHED       0
-#define PTHREAD_CREATE_DETACHED         PTHREAD_DETACHED
-#define PTHREAD_CREATE_JOINABLE         0
-#define PTHREAD_SCOPE_PROCESS           0
-#define PTHREAD_EXPLICIT_SCHED          0
-#define PTHREAD_MIN_PRIORITY            0
-#define PTHREAD_MAX_PRIORITY            126
-#endif /* ACE_HAS_FSU_PTHREADS */
+#    if defined (ACE_HAS_FSU_PTHREADS)
+#      define PTHREAD_DETACHED        0x1
+#      define PTHREAD_SCOPE_SYSTEM    0x2
+#      define PTHREAD_INHERIT_SCHED   0x4
+#      define PTHREAD_NOFLOAT         0x8
+#      define PTHREAD_CREATE_UNDETACHED       0
+#      define PTHREAD_CREATE_DETACHED         PTHREAD_DETACHED
+#      define PTHREAD_CREATE_JOINABLE         0
+#      define PTHREAD_SCOPE_PROCESS           0
+#      define PTHREAD_EXPLICIT_SCHED          0
+#      define PTHREAD_MIN_PRIORITY            0
+#      define PTHREAD_MAX_PRIORITY            126
+#    endif /* ACE_HAS_FSU_PTHREADS */
 
-#if defined (ACE_HAS_SETKIND_NP)
-#define PRIORITY_MAX                    PTHREAD_MAX_PRIORITY
-#endif /* ACE_HAS_SETKIND_NP */
+#    if defined (ACE_HAS_SETKIND_NP)
+#      define PRIORITY_MAX                    PTHREAD_MAX_PRIORITY
+#    endif /* ACE_HAS_SETKIND_NP */
 
-#if !defined (ACE_HAS_TID_T)
+// Definitions for THREAD- and PROCESS-LEVEL priorities...some
+// implementations define these while others don't.  In order to
+// further complicate matters, we don't redefine the default (*_DEF)
+// values if they've already been defined, which allows individual
+// programs to have their own ACE-wide "default".
+
+// PROCESS-level values
+#    define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
+#    define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
+#    define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
+#    define ACE_PROC_PRI_RR_MAX    (sched_get_priority_min(SCHED_RR))
+#    define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
+#    define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_min(SCHED_OTHER))
+#    if !defined(ACE_PROC_PRI_FIFO_DEF)
+#      define ACE_PROC_PRI_FIFO_DEF (ACE_PROC_PRI_FIFO_MIN + (ACE_PROC_PRI_FIFO_MAX - ACE_PROC_PRI_FIFO_MIN)/2)
+#    endif
+#    if !defined(ACE_PROC_PRI_RR_DEF)
+#      define ACE_PROC_PRI_RR_DEF (ACE_PROC_PRI_RR_MIN + (ACE_PROC_PRI_RR_MAX - ACE_PROC_PRI_RR_MIN)/2)
+#    endif
+#    if !defined(ACE_PROC_PRI_OTHER_DEF)
+#      define ACE_PROC_PRI_OTHER_DEF (ACE_PROC_PRI_OTHER_MIN + (ACE_PROC_PRI_OTHER_MAX - ACE_PROC_PRI_OTHER_MIN)/2)
+#    endif
+
+// THREAD-level values
+#    if defined(PRI_FIFO_MIN) && defined(PRI_FIFO_MAX) && defined(PRI_RR_MIN) && defined(PRI_RR_MAX) && defined(PRI_OTHER_MIN) && defined(PRI_OTHER_MAX)
+#      define ACE_THR_PRI_FIFO_MIN  PRI_FIFO_MIN
+#      define ACE_THR_PRI_FIFO_MAX  PRI_FIFO_MAX
+#      define ACE_THR_PRI_RR_MIN    PRI_RR_MIN
+#      define ACE_THR_PRI_RR_MAX    PRI_RR_MAX
+#      define ACE_THR_PRI_OTHER_MIN PRI_OTHER_MIN
+#      define ACE_THR_PRI_OTHER_MAX PRI_OTHER_MAX
+#    else
+#      define ACE_THR_PRI_FIFO_MIN  ACE_PROC_PRI_FIFO_MIN
+#      define ACE_THR_PRI_FIFO_MAX  ACE_PROC_PRI_FIFO_MAX
+#      define ACE_THR_PRI_RR_MIN    ACE_PROC_PRI_RR_MIN
+#      define ACE_THR_PRI_RR_MAX    ACE_PROC_PRI_RR_MAX
+#      define ACE_THR_PRI_OTHER_MIN ACE_PROC_PRI_OTHER_MIN
+#      define ACE_THR_PRI_OTHER_MAX ACE_PROC_PRI_OTHER_MAX
+#    endif
+#    if !defined(ACE_THR_PRI_FIFO_DEF)
+#      define ACE_THR_PRI_FIFO_DEF  (ACE_THR_PRI_FIFO_MIN + (ACE_THR_PRI_FIFO_MAX - ACE_THR_PRI_FIFO_MIN)/2)
+#    endif
+#    if !defined(ACE_THR_PRI_RR_DEF)
+#      define ACE_THR_PRI_RR_DEF (ACE_THR_PRI_RR_MIN + (ACE_THR_PRI_RR_MAX - ACE_THR_PRI_RR_MIN)/2)
+#    endif
+#    if !defined(ACE_THR_PRI_OTHER_DEF)
+#      define ACE_THR_PRI_OTHER_DEF (ACE_THR_PRI_OTHER_MIN + (ACE_THR_PRI_OTHER_MAX - ACE_THR_PRI_OTHER_MIN)/2)
+#    endif
+
+#    if !defined (ACE_HAS_TID_T)
 typedef pthread_t tid_t;
-#endif /* ACE_HAS_TID_T */
+#    endif /* ACE_HAS_TID_T */
 
 // Typedefs to help compatibility with Windows NT and Pthreads.
-#if defined (ACE_HAS_PTHREAD_T)
+#    if defined (ACE_HAS_PTHREAD_T)
 typedef pthread_t ACE_hthread_t;
-#else /* ACE_HAS_PTHREAD_T */
+#    else /* ACE_HAS_PTHREAD_T */
 typedef tid_t ACE_hthread_t;
-#endif /* ACE_HAS_PTHREAD_T */
+#    endif /* ACE_HAS_PTHREAD_T */
 
 // Make it easier to write portable thread code.
 typedef pthread_t ACE_thread_t;
@@ -911,92 +960,92 @@ typedef pthread_mutex_t ACE_mutex_t;
 typedef pthread_cond_t ACE_cond_t;
 typedef pthread_mutex_t ACE_thread_mutex_t;
 
-#if !defined (PTHREAD_CANCEL_DISABLE)
-#define PTHREAD_CANCEL_DISABLE      0
-#endif /* PTHREAD_CANCEL_DISABLE */
+#    if !defined (PTHREAD_CANCEL_DISABLE)
+#      define PTHREAD_CANCEL_DISABLE      0
+#    endif /* PTHREAD_CANCEL_DISABLE */
 
-#if !defined (PTHREAD_CANCEL_ENABLE)
-#define PTHREAD_CANCEL_ENABLE       0
-#endif /* PTHREAD_CANCEL_ENABLE */
+#    if !defined (PTHREAD_CANCEL_ENABLE)
+#      define PTHREAD_CANCEL_ENABLE       0
+#    endif /* PTHREAD_CANCEL_ENABLE */
 
-#if !defined (PTHREAD_CANCEL_DEFERRED)
-#define PTHREAD_CANCEL_DEFERRED     0
-#endif /* PTHREAD_CANCEL_DEFERRED */
+#    if !defined (PTHREAD_CANCEL_DEFERRED)
+#      define PTHREAD_CANCEL_DEFERRED     0
+#    endif /* PTHREAD_CANCEL_DEFERRED */
 
-#if !defined (PTHREAD_CANCEL_ASYNCHRONOUS)
-#define PTHREAD_CANCEL_ASYNCHRONOUS 0
-#endif /* PTHREAD_CANCEL_ASYNCHRONOUS */
+#    if !defined (PTHREAD_CANCEL_ASYNCHRONOUS)
+#      define PTHREAD_CANCEL_ASYNCHRONOUS 0
+#    endif /* PTHREAD_CANCEL_ASYNCHRONOUS */
 
-#define THR_CANCEL_DISABLE      PTHREAD_CANCEL_DISABLE
-#define THR_CANCEL_ENABLE       PTHREAD_CANCEL_ENABLE
-#define THR_CANCEL_DEFERRED     PTHREAD_CANCEL_DEFERRED
-#define THR_CANCEL_ASYNCHRONOUS PTHREAD_CANCEL_ASYNCHRONOUS
+#    define THR_CANCEL_DISABLE      PTHREAD_CANCEL_DISABLE
+#    define THR_CANCEL_ENABLE       PTHREAD_CANCEL_ENABLE
+#    define THR_CANCEL_DEFERRED     PTHREAD_CANCEL_DEFERRED
+#    define THR_CANCEL_ASYNCHRONOUS PTHREAD_CANCEL_ASYNCHRONOUS
 
-#if !defined (PTHREAD_CREATE_JOINABLE)
-#if defined (PTHREAD_CREATE_UNDETACHED)
-#define PTHREAD_CREATE_JOINABLE PTHREAD_CREATE_UNDETACHED
-#else
-#define PTHREAD_CREATE_JOINABLE 0
-#endif /* PTHREAD_CREATE_UNDETACHED */
-#endif /* PTHREAD_CREATE_JOINABLE */
+#    if !defined (PTHREAD_CREATE_JOINABLE)
+#      if defined (PTHREAD_CREATE_UNDETACHED)
+#        define PTHREAD_CREATE_JOINABLE PTHREAD_CREATE_UNDETACHED
+#      else
+#        define PTHREAD_CREATE_JOINABLE 0
+#      endif /* PTHREAD_CREATE_UNDETACHED */
+#    endif /* PTHREAD_CREATE_JOINABLE */
 
-#if !defined (PTHREAD_CREATE_DETACHED)
-#define PTHREAD_CREATE_DETACHED 1
-#endif /* PTHREAD_CREATE_DETACHED */
+#    if !defined (PTHREAD_CREATE_DETACHED)
+#      define PTHREAD_CREATE_DETACHED 1
+#    endif /* PTHREAD_CREATE_DETACHED */
 
-#if !defined (PTHREAD_PROCESS_PRIVATE)
-#if defined (PTHREAD_MUTEXTYPE_FAST)
-#define PTHREAD_PROCESS_PRIVATE PTHREAD_MUTEXTYPE_FAST
-#else
-#define PTHREAD_PROCESS_PRIVATE 0
-#endif /* PTHREAD_MUTEXTYPE_FAST */
-#endif /* PTHREAD_PROCESS_PRIVATE */
+#    if !defined (PTHREAD_PROCESS_PRIVATE)
+#      if defined (PTHREAD_MUTEXTYPE_FAST)
+#        define PTHREAD_PROCESS_PRIVATE PTHREAD_MUTEXTYPE_FAST
+#      else
+#        define PTHREAD_PROCESS_PRIVATE 0
+#      endif /* PTHREAD_MUTEXTYPE_FAST */
+#    endif /* PTHREAD_PROCESS_PRIVATE */
 
-#if !defined (PTHREAD_PROCESS_SHARED)
-#if defined (PTHREAD_MUTEXTYPE_FAST)
-#define PTHREAD_PROCESS_SHARED PTHREAD_MUTEXTYPE_FAST
-#else
-#define PTHREAD_PROCESS_SHARED 0
-#endif /* PTHREAD_MUTEXTYPE_FAST */
-#endif /* PTHREAD_PROCESS_SHARED */
+#    if !defined (PTHREAD_PROCESS_SHARED)
+#      if defined (PTHREAD_MUTEXTYPE_FAST)
+#        define PTHREAD_PROCESS_SHARED PTHREAD_MUTEXTYPE_FAST
+#      else
+#        define PTHREAD_PROCESS_SHARED 0
+#      endif /* PTHREAD_MUTEXTYPE_FAST */
+#    endif /* PTHREAD_PROCESS_SHARED */
 
-#if defined (ACE_HAS_DCETHREADS)
-#if defined (PTHREAD_PROCESS_PRIVATE)
-#define USYNC_THREAD    PTHREAD_PROCESS_PRIVATE
-#else
-#define USYNC_THREAD    MUTEX_NONRECURSIVE_NP
-#endif /* PTHREAD_PROCESS_PRIVATE */
+#    if defined (ACE_HAS_DCETHREADS)
+#      if defined (PTHREAD_PROCESS_PRIVATE)
+#        define USYNC_THREAD    PTHREAD_PROCESS_PRIVATE
+#      else
+#        define USYNC_THREAD    MUTEX_NONRECURSIVE_NP
+#      endif /* PTHREAD_PROCESS_PRIVATE */
 
-#if defined (PTHREAD_PROCESS_SHARED)
-#define USYNC_PROCESS   PTHREAD_PROCESS_SHARED
-#else
-#define USYNC_PROCESS   MUTEX_NONRECURSIVE_NP
-#endif /* PTHREAD_PROCESS_SHARED */
-#elif !defined (ACE_HAS_STHREADS)
-#define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
-#define USYNC_PROCESS PTHREAD_PROCESS_SHARED
-#endif /* ACE_HAS_DCETHREADS */
+#      if defined (PTHREAD_PROCESS_SHARED)
+#        define USYNC_PROCESS   PTHREAD_PROCESS_SHARED
+#      else
+#        define USYNC_PROCESS   MUTEX_NONRECURSIVE_NP
+#      endif /* PTHREAD_PROCESS_SHARED */
+#    elif !defined (ACE_HAS_STHREADS)
+#      define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
+#      define USYNC_PROCESS PTHREAD_PROCESS_SHARED
+#    endif /* ACE_HAS_DCETHREADS */
 
-#define THR_BOUND               0x00000001
-#define THR_NEW_LWP             0x00000002
-#define THR_DETACHED            0x00000040
-#define THR_SUSPENDED           0x00000080
-#define THR_DAEMON              0x00000100
-#define THR_JOINABLE            0x00010000
-#define THR_SCHED_FIFO          0x00020000
-#define THR_SCHED_RR            0x00040000
-#define THR_SCHED_DEFAULT       0x00080000
-#if defined (ACE_HAS_IRIX62_THREADS)
-#define THR_SCOPE_SYSTEM        0x00100000
-#else
-#define THR_SCOPE_SYSTEM        THR_BOUND
-#endif /* ACE_HAS_IRIX62_THREADS */
-#define THR_SCOPE_PROCESS       0x00200000
-#define THR_INHERIT_SCHED       0x00400000
-#define THR_EXPLICIT_SCHED      0x00800000
+#    define THR_BOUND               0x00000001
+#    define THR_NEW_LWP             0x00000002
+#    define THR_DETACHED            0x00000040
+#    define THR_SUSPENDED           0x00000080
+#    define THR_DAEMON              0x00000100
+#    define THR_JOINABLE            0x00010000
+#    define THR_SCHED_FIFO          0x00020000
+#    define THR_SCHED_RR            0x00040000
+#    define THR_SCHED_DEFAULT       0x00080000
+#    if defined (ACE_HAS_IRIX62_THREADS)
+#      define THR_SCOPE_SYSTEM        0x00100000
+#    else
+#      define THR_SCOPE_SYSTEM        THR_BOUND
+#    endif /* ACE_HAS_IRIX62_THREADS */
+#    define THR_SCOPE_PROCESS       0x00200000
+#    define THR_INHERIT_SCHED       0x00400000
+#    define THR_EXPLICIT_SCHED      0x00800000
 
-#if !defined (ACE_HAS_STHREADS)
-#if !defined (ACE_HAS_POSIX_SEM)
+#    if !defined (ACE_HAS_STHREADS)
+#    if !defined (ACE_HAS_POSIX_SEM)
 // This is used to implement semaphores for POSIX pthreads, but
 // without POSIX semaphores.  It is different than the POSIX sem_t.
 class ACE_sema_t
@@ -1015,70 +1064,70 @@ private:
   u_long waiters_;
   // Number of threads that have called <ACE_OS::sema_wait>.
 };
-#endif /* !ACE_HAS_POSIX_SEM */
+#    endif /* !ACE_HAS_POSIX_SEM */
 
-#else
+#  else
 // If we are on Solaris we can just reuse the existing implementations
 // of these synchronization types.
 typedef rwlock_t ACE_rwlock_t;
-#if !defined (ACE_HAS_POSIX_SEM)
+#    if !defined (ACE_HAS_POSIX_SEM)
 typedef sema_t ACE_sema_t;
-#endif /* !ACE_HAS_POSIX_SEM */
-#endif /* !ACE_HAS_STHREADS */
+#    endif /* !ACE_HAS_POSIX_SEM */
+#  endif /* !ACE_HAS_STHREADS */
 #elif defined (ACE_HAS_STHREADS)
 // Typedefs to help compatibility with Windows NT and Pthreads.
 typedef thread_t ACE_thread_t;
 typedef thread_key_t ACE_thread_key_t;
 typedef mutex_t ACE_mutex_t;
 typedef rwlock_t ACE_rwlock_t;
-#if !defined (ACE_HAS_POSIX_SEM)
+#  if !defined (ACE_HAS_POSIX_SEM)
 typedef sema_t ACE_sema_t;
-#endif /* !ACE_HAS_POSIX_SEM */
+#  endif /* !ACE_HAS_POSIX_SEM */
 typedef cond_t ACE_cond_t;
 typedef ACE_thread_t ACE_hthread_t;
 typedef ACE_mutex_t ACE_thread_mutex_t;
 
-#define THR_CANCEL_DISABLE      0
-#define THR_CANCEL_ENABLE       0
-#define THR_CANCEL_DEFERRED     0
-#define THR_CANCEL_ASYNCHRONOUS 0
+#  define THR_CANCEL_DISABLE      0
+#  define THR_CANCEL_ENABLE       0
+#  define THR_CANCEL_DEFERRED     0
+#  define THR_CANCEL_ASYNCHRONOUS 0
 #elif defined (VXWORKS)
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
-#include /**/ <semLib.h>    
-#include /**/ <taskLib.h>
+#  include /**/ <semLib.h>    
+#  include /**/ <taskLib.h>
 
 // task options:  the other options are either obsolete, internal, or for
 // Fortran or Ada support
-#define VX_UNBREAKABLE	  	0x0002	/* breakpoints ignored */
-#define VX_FP_TASK	   	0x0008	/* floating point coprocessor */
-#define VX_PRIVATE_ENV 		0x0080	/* private environment support */
-#define VX_NO_STACK_FILL	0x0100	/* do not stack fill for checkstack () */
+#  define VX_UNBREAKABLE	0x0002	/* breakpoints ignored */
+#  define VX_FP_TASK	   	0x0008	/* floating point coprocessor */
+#  define VX_PRIVATE_ENV 	0x0080	/* private environment support */
+#  define VX_NO_STACK_FILL	0x0100	/* do not stack fill for checkstack () */
 
-#define THR_CANCEL_DISABLE      0
-#define THR_CANCEL_ENABLE       0
-#define THR_CANCEL_DEFERRED     0
-#define THR_CANCEL_ASYNCHRONOUS 0
-#define THR_BOUND               0
-#define THR_NEW_LWP             0
-#define THR_DETACHED            0
-#define THR_SUSPENDED           0
-#define THR_DAEMON              0
-#define THR_JOINABLE            0
-#define THR_SCHED_FIFO          0
-#define THR_SCHED_RR            0
-#define THR_SCHED_DEFAULT       0
-#define USYNC_THREAD            0
-#define USYNC_PROCESS           1 /* it's all global on VxWorks (without MMU
+#  define THR_CANCEL_DISABLE      0
+#  define THR_CANCEL_ENABLE       0
+#  define THR_CANCEL_DEFERRED     0
+#  define THR_CANCEL_ASYNCHRONOUS 0
+#  define THR_BOUND               0
+#  define THR_NEW_LWP             0
+#  define THR_DETACHED            0
+#  define THR_SUSPENDED           0
+#  define THR_DAEMON              0
+#  define THR_JOINABLE            0
+#  define THR_SCHED_FIFO          0
+#  define THR_SCHED_RR            0
+#  define THR_SCHED_DEFAULT       0
+#  define USYNC_THREAD            0
+#  define USYNC_PROCESS           1 /* it's all global on VxWorks (without MMU
                                      option) */
 
 typedef SEM_ID ACE_mutex_t;
 // implement ACE_thread_mutex_t with ACE_mutex_t sinces there's just one process . . .
 typedef ACE_mutex_t ACE_thread_mutex_t;
-#if !defined (ACE_HAS_POSIX_SEM)
+#  if !defined (ACE_HAS_POSIX_SEM)
 // although ACE_HAS_POSIX_SEM is assumed for VxWorks
 typedef semaphore *ACE_sema_t;
-#endif /* !ACE_HAS_POSIX_SEM */
+#  endif /* !ACE_HAS_POSIX_SEM */
 typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef int ACE_thread_key_t;
@@ -1097,18 +1146,18 @@ typedef struct
 typedef HANDLE ACE_sema_t;
 
 // These need to be different values, neither of which can be 0...
-#define USYNC_THREAD 1
-#define USYNC_PROCESS 2
+#  define USYNC_THREAD 1
+#  define USYNC_PROCESS 2
 
-#define THR_CANCEL_DISABLE      0
-#define THR_CANCEL_ENABLE       0
-#define THR_CANCEL_DEFERRED     0
-#define THR_CANCEL_ASYNCHRONOUS 0
-#define THR_DETACHED    0       /* ?? ignore in most places */
-#define THR_BOUND       0       /* ?? ignore in most places */
-#define THR_NEW_LWP     0       /* ?? ignore in most places */
-#define THR_SUSPENDED   CREATE_SUSPENDED
-#define THR_USE_AFX             0x01000000
+#  define THR_CANCEL_DISABLE      0
+#  define THR_CANCEL_ENABLE       0
+#  define THR_CANCEL_DEFERRED     0
+#  define THR_CANCEL_ASYNCHRONOUS 0
+#  define THR_DETACHED    0       /* ?? ignore in most places */
+#  define THR_BOUND       0       /* ?? ignore in most places */
+#  define THR_NEW_LWP     0       /* ?? ignore in most places */
+#  define THR_SUSPENDED   CREATE_SUSPENDED
+#  define THR_USE_AFX             0x01000000
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 
 #if defined (ACE_LACKS_COND_T)

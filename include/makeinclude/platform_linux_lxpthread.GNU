@@ -8,8 +8,8 @@
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += -w -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
-CCFLAGS         += $(CFLAGS)
+CFLAGS          += -w -O2 -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
+CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DLD             = $(CXX)
 LD		= $(CXX) 
 LIBS            += -ldl -lpthread

@@ -71,30 +71,33 @@ ACE_Sched_Params::priority_min (const Policy policy,
     }
 #elif defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
-#if defined (PRI_FIFO_MIN) && defined (PRI_RR_MIN) && defined (PRI_OTHER_MIN)
-  if (scope == ACE_SCOPE_THREAD)
+  switch (scope)
     {
-      // return the minimal priority of the given policy;
-      // default to ACE_SCHED_OTHER in case of invalid policy value
+    case ACE_SCOPE_THREAD:
       switch (policy)
         {
           case ACE_SCHED_FIFO:
-            return PRI_FIFO_MIN;
+            return ACE_THR_PRI_FIFO_MIN;
           case ACE_SCHED_RR:
-            return PRI_RR_MIN;
+            return ACE_THR_PRI_RR_MIN;
           case ACE_SCHED_OTHER:
           default:
-            return PRI_OTHER_MIN;
+            return ACE_THR_PRI_OTHER_MIN;
+        }
+
+    case ACE_SCOPE_PROCESS:
+    default:
+      switch (policy)
+        {
+          case ACE_SCHED_FIFO:
+            return ACE_PROC_PRI_FIFO_MIN;
+          case ACE_SCHED_RR:
+            return ACE_PROC_PRI_RR_MIN;
+          case ACE_SCHED_OTHER:
+          default:
+            return ACE_PROC_PRI_OTHER_MIN;
         }
     }
-  else
-    {
-      return ::sched_get_priority_min (policy);
-    }
-#else
-  ACE_UNUSED_ARG (scope);
-  return ::sched_get_priority_min (policy);
-#endif /* (PRI_FIFO_MIN && PRI_RR_MIN && PRI_OTHER_MIN */
 
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (policy);
@@ -146,30 +149,33 @@ ACE_Sched_Params::priority_max (const Policy policy,
       : ((rtinfo_t *) pcinfo.pc_clinfo)->rt_maxpri;
 #elif defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
-#if defined (PRI_FIFO_MAX) && defined (PRI_RR_MAX) && defined (PRI_OTHER_MAX)
-  if (scope == ACE_SCOPE_THREAD)
+  switch (scope)
     {
-      // return the maximal priority of the given policy;
-      // default to ACE_SCHED_OTHER in case of invalid policy value
+    case ACE_SCOPE_THREAD:
       switch (policy)
         {
           case ACE_SCHED_FIFO:
-            return PRI_FIFO_MAX;
+            return ACE_THR_PRI_FIFO_MAX;
           case ACE_SCHED_RR:
-            return PRI_RR_MAX;
+            return ACE_THR_PRI_RR_MAX;
           case ACE_SCHED_OTHER:
           default:
-            return PRI_OTHER_MAX;
+            return ACE_THR_PRI_OTHER_MAX;
+        }
+
+    case ACE_SCOPE_PROCESS:
+    default:
+      switch (policy)
+        {
+          case ACE_SCHED_FIFO:
+            return ACE_PROC_PRI_FIFO_MAX;
+          case ACE_SCHED_RR:
+            return ACE_PROC_PRI_RR_MAX;
+          case ACE_SCHED_OTHER:
+          default:
+            return ACE_PROC_PRI_OTHER_MAX;
         }
     }
-  else
-    {
-      return ::sched_get_priority_max (policy);
-    }
-#else
-  ACE_UNUSED_ARG (scope);
-  return ::sched_get_priority_max (policy);
-#endif /* (PRI_FIFO_MAX && PRI_RR_MAX && PRI_OTHER_MAX */
 
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (policy);
