@@ -264,7 +264,7 @@ public:
   // Used to "attach" a negotiator to the endpoint
    
   virtual void set_key (const char *flow_name, 
-                        const encryption_key & the_key,
+                        const AVStreams::encryption_key & the_key,
                         CORBA::Environment &env);
   // Used for public key encryption. 
     
