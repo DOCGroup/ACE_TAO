@@ -1,3 +1,14 @@
+Sun Jul  4 11:14:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/CCM_Core.mpc:
+
+	  Restructured things so that CIAO_DnC_Server doesn't need to be
+	  linked with stub projects. 
+	
+	* DAnCE/ciao/Container_Base.h:
+
+	  Added an include for the xport file. 
+	
 Sun Jul  4 10:17:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/CCM_Core.mpc:
