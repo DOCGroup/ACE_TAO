@@ -9,10 +9,10 @@
 
 // Author: Phil Mesnier
 
-// A Library is a collection of Obj_Modules that define a single shared 
-// library. It is used to manipulate the list of unresolved references by 
+// A Library is a collection of Obj_Modules that define a single shared
+// library. It is used to manipulate the list of unresolved references by
 // removing those that are resolved and adding those brought in by new modules
-// that are required to resolve references.  The Library is responsible 
+// that are required to resolve references.  The Library is responsible
 // for outputting a specialized mpc file to build the reduce footprint library.
 
 #include "Obj_Module.h"
@@ -66,7 +66,7 @@ protected:
 };
 
 // Generates makefiles for libs dependant on TAO.  This has a problem when
-// building libraries in the orbsvcs tree. 
+// building libraries in the orbsvcs tree.
 class MPC_TAO_Dep_Lib : public MPC_TAO_Lib
 {
 public:
@@ -79,11 +79,11 @@ protected:
 
 //----------------------------------------------------------------------------
 
-class Library 
+class Library
 {
 public:
 
-  Library (const ACE_TCHAR *name = 0 ); 
+  Library (const ACE_TCHAR *name = 0 );
   /// Constructor is responsible for loading all of the modules related to the
   /// library
   ~Library ();
@@ -115,11 +115,11 @@ public:
 private:
   ACE_CString name_;
   ACE_CString path_;
-  
+
   int num_modules_;
   int num_exports_;
   int num_extrefs_;
- 
+
   Obj_Module **modules_;
   Sig_List exported_;
   MPC_Generator *mpcfile_;

@@ -49,8 +49,8 @@ MPC_Generator::write_prolog (const ACE_CString& path)
   if (!mpcfile_)
     ACE_DEBUG ((LM_DEBUG,"mpc file open failed\n"));
 
-  mpcfile_ 
-    << "// Generated mpc file for producing a subset of the " 
+  mpcfile_
+    << "// Generated mpc file for producing a subset of the "
     << libname_ << " library " << endl << endl
     << "project(" << libname_ << "_subset)";
 
@@ -155,7 +155,6 @@ MPC_TAO_Dep_Lib::write_projectinfo()
            << "  after       += TAO_subset" << endl
            << "  includes    += $(TAO_ROOT)/orbsvcs" << endl
            << "  idlflags    += -I$(TAO_ROOT)/orbsvcs" << endl;
-             
 }
 
 //-----------------------------------------------------------------------------
