@@ -1,3 +1,16 @@
+Tue Sep  2 10:47:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added separate method for generating include file statements
+          in the skeleton source file, similar to what has already been
+          done for the stub header and source files. Also added
+          inclusion of tao/Object_T.h to the skeleton source file,
+          conditional on AMI being enabled. The reason in that we need
+          to call _unchecked_narrow() in the _this() method body of
+          the reply handler.
+
 Mon Sep  1 19:13:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/BiDir_GIOP/BiDirPolicyC.h: 
