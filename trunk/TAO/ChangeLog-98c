@@ -1,3 +1,16 @@
+Tue Jan 13 15:55:32 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* Makefile (INSTALL): Added a rule to build the INSTALL file from
+ 	TAO-INSTALL.html.  Also added both TAO-INSTALL.html and INSTALL to
+ 	the list of files included in the release.  TAO-INSTALL.html had
+ 	not been included at all.
+
+	* TAO-INSTALL.html: Updated some of the text in the Unix portion
+ 	to be explicit regarding the need for GNU Make.
+
+	* INSTALL: Added this file, which is the output of 'lynx -dump
+ 	TAO-INSTALL.html'.
+
 Mon Jan 12 20:04:32 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* server.cpp: Added comments

@@ -39,7 +39,7 @@ undefined and most likely unpredictable and erroneous results. <P>
 
       <UL>
       <li>Change directory to <code>$ACE_ROOT/ace</code> and execute
-      <code>make</code>.</li> <P>
+      <code><a href="#makenotes">make</a></code>.</li> <P>
       </UL>
 
       <li>Set <code>TAO_ROOT</code> environment variable to
@@ -49,16 +49,27 @@ undefined and most likely unpredictable and erroneous results. <P>
 
       <UL>
       <li>Change directory to <code>$TAO_ROOT/tao</code> and
-      execute <code>make</code>.</li> <P>
+      execute <code><a href="#makenotes">make</a></code>.</li> <P>
       </UL>
 
       <li>Change directory to <code>$TAO_ROOT/tests</code> and
-      execute <code>make</code>.</li> <P>
+      execute <code><a href="#makenotes">make</a></code>.</li> <P>
 
       <li>Follow instructions on executing the various examples under
       <code>$TAO_ROOT/tests</code>.<P>
 
     </ol>
+
+    <h4><strong><a name="makenotes">A Note On Make</a></strong></h4>
+    <p>
+      Since TAO is built atop ACE, TAO re-uses ACE's Makefile
+      structure as well.  Thus, just like ACE requires GNU Make, so
+      too does TAO.  More exactly, versions of <code>make</code> which
+      are known to <em>not</em> work include those from Solaris 4.x
+      and 5.x, HP-UX, the latest BSD, etc.
+    <p>
+      GNU Make can be obtained from various places in source form.
+	      
 
 <HR><P>
 <H3>On Windows NT</H3>
