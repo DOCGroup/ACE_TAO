@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 
 // ============================================================================
@@ -10,7 +9,7 @@
 //    Object_A_Impl.cpp
 //
 // = DESCRIPTION
-//    This class implements the Object A  of the 
+//    This class implements the Object A  of the
 //    Nested Upcalls - Triangle test.
 //
 // = AUTHORS
@@ -59,7 +58,7 @@ Object_A_Impl::foo (Initiator_ptr initiator_ptr,
               "(%P|%t) END Object_A_Impl::foo ()\n"));
 }
 
-void 
+void
 Object_A_Impl::finish (CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,
