@@ -78,18 +78,14 @@ struct ACE_Export ACE_Malloc_Stats
 #define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
 
-// Forward decl.
-class ACE_Malloc_Header;
-class ACE_Name_Node;
-
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-typedef ACE_Based_Pointer<ACE_Malloc_Header> ACE_MALLOC_HEADER_PTR;
-typedef ACE_Based_Pointer<ACE_Name_Node> ACE_NAME_NODE_PTR;
-typedef ACE_Based_Pointer_Basic<char> ACE_CHAR_PTR;
+#define ACE_MALLOC_HEADER_PTR ACE_Based_Pointer<ACE_Malloc_Header>
+typedef ACE_NAME_NODE_PTR ACE_Based_Pointer<ACE_Name_Node>
+typedef ACE_CHAR_PTR ACE_Based_Pointer_Basic<char>
 #else
-typedef ACE_Malloc_Header *ACE_MALLOC_HEADER_PTR;
-typedef ACE_Name_Node *ACE_NAME_NODE_PTR;
-typedef char *ACE_CHAR_PTR;
+typedef ACE_MALLOC_HEADER_PTR ACE_Malloc_Header
+typedef ACE_NAME_NODE_PTR ACE_Name_Node *
+typedef ACE_CHAR_PTR char *
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
 class ACE_Export ACE_Malloc_Header
