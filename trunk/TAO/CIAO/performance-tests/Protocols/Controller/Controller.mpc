@@ -6,4 +6,5 @@ project (perf*) : ciao_client, rtcorba {
   includes += ../Receiver
   libs += Protocols_Sender_stub
   libs += Protocols_Receiver_stub
+  libs += Protocols_stub
 }
