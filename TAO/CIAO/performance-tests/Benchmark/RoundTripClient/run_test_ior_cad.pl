@@ -69,5 +69,6 @@ $DS->Kill ();
 
 #unlink $daemon_ior;
 #unlink $am_ior;
+unlink rtserver.ior;
 
 exit $status;
