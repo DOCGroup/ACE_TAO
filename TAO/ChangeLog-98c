@@ -23,6 +23,9 @@ Mon Jan 05 09:53:51 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/Makefile: add -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP to
           CPPFLAGS on VxWorks.
 
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.{h,cpp} (Util_Thread ctor):
+          rearranged initializers to match declaration order.
+
 Sun Jan 04 17:19:34 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.53, released Sun Jan 04 17:19:34 1998.
