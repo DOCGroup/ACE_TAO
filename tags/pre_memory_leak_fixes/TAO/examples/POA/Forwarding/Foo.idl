@@ -1,0 +1,19 @@
+// $Id$
+
+interface Foo
+{    
+  // = TITLE
+  //   Dummy object, doit just reports number, 
+  //   do not expect any sense. They are constantly increasing
+
+  long doit ();
+
+  // Raised if it cannot be forwarded
+  exception Cannot_Forward {};
+
+  void forward ()
+    raises (Cannot_Forward);
+
+  void shutdown ();
+};
+

@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+HP_WORKLOADS="60 65 70 72 74 76 78 80 81 82 83 84 85 86 87 88 89 90"
+
+
+for w in $HP_WORKLOADS; do
+  echo $w
+  ./histo.pl -k 'Laxity\[LCL,LP' UTL.LCL.${w}.log > UTL.XLCL.${w}.LP.histo
+  ./histo.pl -k 'Laxity\[LCL,HP' UTL.LCL.${w}.log > UTL.XLCL.${w}.HP.histo
+  ./histo.pl -k 'Laxity\[LCL,LP' UTL.ECM1.${w}.log UTL.ECM2.${w}.log > UTL.LCL.${w}.LP.histo
+  ./histo.pl -k 'Laxity\[LCL,HP' UTL.ECM1.${w}.log UTL.ECM2.${w}.log > UTL.LCL.${w}.HP.histo
+done
+
+HP_MSGS=200
+HP_CONSUMERS=1
+
+LP_WORKLOAD=500
+LP_MSGS=50
+LP_CONSUMERS=1
+
+WORK_USEC=118
+
+# awk '{print $1, 100 * ($1 * 200 + 500 * 50) * 118 / $2}' |
+
+grep 'Min' UTL.XLCL.*.LP.histo |
+ sed -e 's/UTL.XLCL.//' -e s'/.LP.histo:Min://' -e 's/,//g' |
+ awk '{print $1, $6, $2, $4}' |
+ sort -n > UTL.XLCL.LP.LAX.data
+
+grep 'Min' UTL.XLCL.*.HP.histo |
+ sed -e 's/UTL.XLCL.//' -e s'/.HP.histo:Min://' -e 's/,//g' |
+ awk '{print $1, $6, $2, $4}' |
+ sort -n > UTL.XLCL.HP.LAX.data
+
+grep 'Min' UTL.LCL.*.LP.histo |
+ sed -e 's/UTL.LCL.//' -e s'/.LP.histo:Min://' -e 's/,//g' |
+ awk '{print $1, $6, $2, $4}' |
+ sort -n > UTL.LCL.LP.LAX.data
+
+grep 'Min' UTL.LCL.*.HP.histo |
+ sed -e 's/UTL.LCL.//' -e s'/.HP.histo:Min://' -e 's/,//g' |
+ awk '{print $1, $6, $2, $4}' |
+ sort -n > UTL.LCL.HP.LAX.data
+
+cat UTL.LCL.LP.LAX.data |
+  awk '{print ($1 * 4 + 500) * 118 / 1000, $2, $3, $4}' > UTL.LCL.LP.data
+cat UTL.XLCL.LP.LAX.data |
+  awk '{print ($1 * 4 + 500) * 118 / 1000, $2, $3, $4}' > UTL.XLCL.LP.data
+cat UTL.LCL.HP.LAX.data |
+  awk '{print ($1 * 4 + 500) * 118 / 1000, $2, $3, $4}' > UTL.LCL.HP.data
+cat UTL.XLCL.HP.LAX.data |
+  awk '{print ($1 * 4 + 500) * 118 / 1000, $2, $3, $4}' > UTL.XLCL.HP.data
+
+exit 0
+
+gnuplot <<_EOF_
+set grid xtics ytics
+set terminal postscript eps color
+set xlabel "CPU Utilization (percentage)"
+
+set ylabel "Minimum laxity for low-priority task"
+set output "UTL.LCL.eps"
+plot 'UTL.LCL.data' w l
+#set terminal x11
+#plot 'UTL.LCL.data' w l
+#pause 2
+
+_EOF_
+
+for i in UTL.*.eps; do
+  b=`basename $i .eps`
+  gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE \
+      -sOutputFile="${b}.jpg" ${b}.eps quit.ps
+done
+
+grep 'Time\[LCL,HP' UTL.LCL.*.log | sed -e 's/UTL.LCL.//' -e s'/.log:Time\[.*\]://' | awk '{if ($1 != 0) {print $2 / $1 / 200}}'
+
