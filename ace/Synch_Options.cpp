@@ -1,4 +1,3 @@
-// Synch_Options.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -19,19 +18,20 @@ ACE_Synch_Options::dump (void) const
 }
 
 // Static initialization.
+// Note: these three objects require static construction and destruction.
 
-/* static */ 
+/* static */
 ACE_Synch_Options ACE_Synch_Options::defaults;
 
-/* static */ 
+/* static */
 ACE_Synch_Options ACE_Synch_Options::synch;
 
-/* static */ 
+/* static */
 ACE_Synch_Options ACE_Synch_Options::asynch (ACE_Synch_Options::USE_REACTOR);
 
 ACE_Synch_Options::ACE_Synch_Options (u_long options,
-				      const ACE_Time_Value &timeout,
-				      const void *arg)
+                                      const ACE_Time_Value &timeout,
+                                      const void *arg)
 {
   // ACE_TRACE ("ACE_Synch_Options::ACE_Synch_Options");
   this->set (options, timeout, arg);
@@ -39,13 +39,17 @@ ACE_Synch_Options::ACE_Synch_Options (u_long options,
 
 void
 ACE_Synch_Options::set (u_long options,
-			const ACE_Time_Value &timeout,
-			const void *arg)
+                        const ACE_Time_Value &timeout,
+                        const void *arg)
 {
   // ACE_TRACE ("ACE_Synch_Options::set");
   this->options_ = options;
   this->timeout_ = (ACE_Time_Value &) timeout;
 
+  // Whoa, possible dependence on static initialization here.  This
+  // function is called during initialization of the statics above.
+  // But, ACE_Time_Value::zero is a static object.  Very fortunately,
+  // its bits have a value of 0.
   if (this->timeout_ != ACE_Time_Value::zero)
     ACE_SET_BITS (this->options_, ACE_Synch_Options::USE_TIMEOUT);
 
@@ -59,7 +63,7 @@ ACE_Synch_Options::operator[] (u_long option) const
   return (this->options_ & option) != 0;
 }
 
-void 
+void
 ACE_Synch_Options::operator= (u_long option)
 {
   ACE_TRACE ("ACE_Synch_Options::operator=");
@@ -73,7 +77,7 @@ ACE_Synch_Options::timeout (void) const
   return this->timeout_;
 }
 
-void 
+void
 ACE_Synch_Options::timeout (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Synch_Options::timeout");
@@ -100,4 +104,3 @@ ACE_Synch_Options::arg (const void *a)
   ACE_TRACE ("ACE_Synch_Options::arg");
   this->arg_ = a;
 }
-
