@@ -1,6 +1,16 @@
+Fri Oct 10 19:55:50 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* examples/ASX/CCM_App/Makefile: 
+	* include/makeinclude/rules.bin.GNU: 
+	  I have applied Steve Huston changes from Oct 01, the change was
+	  (IMHO) useful and made compilation cleaner.
+
+	* examples/ASX/Event_Server/Event_Server/Makefile: 
+	  Fixed problem that made compilation fail.
+
 Fri Oct 10 19:52:44 1997    <nw1@CHA-CHA>
 
-	* ace/OS.H:
+	* ace/OS.h:
 	* ace/Connector.cpp:
 	* ace/SOCK_Connector.cpp: Added constant
 	  ACE_OS::NON_BLOCKING_BUG_DELAY and replace their uses from some
@@ -20,7 +30,7 @@ Fri Oct 10 15:21:07 1997    <irfan@TWOSTEP>
 
 	* examples/Connection/non_blocking/CPP-connector.cpp
  	  (disconnecting): Remove this method. It was not being used. Also
- 	  rewrote some parts of handle_close to make the code simple.		  
+ 	  rewrote some parts of handle_close to make the code simple.
 
 	* ace/Connector.cpp (create_AST): The register_handler() method
  	  now needs to explicitly be given the handle to wait on. This is

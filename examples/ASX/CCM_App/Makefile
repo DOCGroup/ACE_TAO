@@ -1,5 +1,6 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#
+# $Id$
 #
 #	Makefile for CCM tests
 #----------------------------------------------------------------------------
@@ -13,8 +14,6 @@ BIN     = SC_Client \
 
 LSRC	= $(addsuffix .cpp,$(BIN)) \
 	  CCM_App.cpp
-
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD   = $(VSHLIB) $(SHLIBA) $(VBIN)
 
