@@ -1,3 +1,8 @@
+Mon Nov 23 20:29:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/DLL: Cleaned up the comments and also fixed an unnecessary
+ 	  check to see if dll_name == 0.
+
 Mon Nov 23 10:20:22 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* ace/DLL.h: Added a comment which specified that by default the 
 	  library would be closed before the ACE_DLL object gets 
@@ -10,10 +15,10 @@ Mon Nov 23 10:20:22 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 Mon Nov 23 17:14:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor.cpp (open): It is even
-	more neat to do this for faking the result.
-       // <complete> for Accept would have already moved the <wr_ptr>
-      // forward. Update it to the beginning position.
-      duplicate.wr_ptr (duplicate.wr_ptr () - bytes_transferred);
+	  more neat to do this for faking the result.   
+	  // <complete> for Accept would have already moved the <wr_ptr>
+	  // forward. Update it to the beginning position.
+	  duplicate.wr_ptr (duplicate.wr_ptr () - bytes_transferred);
 
 Mon Nov 23 17:16:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
