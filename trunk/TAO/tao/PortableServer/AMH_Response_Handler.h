@@ -113,10 +113,7 @@ private:
   /// Copy of the request-id of the original Server-Request
   CORBA::ULong request_id_;
 
-  /// For AMH, this seems a little redundant
-  // @@ Mayur: it is *NOT* oneways need to be supported via AMH too,
-  //    only sometimes they do not return anything!
-  //  CORBA::Boolean response_expected_;
+  CORBA::Boolean response_expected_;
 
   /// Handle to transport through which the reply will be sent
   /// Copy of transport in original Server_Request
