@@ -12,17 +12,25 @@ debug = 1
 shared_libs_only = 0
 static_libs = 1
 
+# In case anything here or in the config depends on OS version number,
+# grab it here and pass it all to the compiler as well.
+AIX_MAJOR_VERS := $(shell uname -v)
+AIX_MINOR_VERS := $(shell uname -r)
+
 CC	    = xlC
 CXX	    = xlC_r
-CCFLAGS     += $(CFLAGS)
+
+# -qextchk is handy, but produces false type mismatches when linking
+# netsvcs with 3.1.4, so it's disabled.  IBM reports this fixed in 3.6.4.
+CCFLAGS     += $(CFLAGS) -qtempinc -qflag=w:w -qinfo
+CPPFLAGS    += -qlanglvl=ansi -DACE_AIX_MAJOR_VERS=$(AIX_MAJOR_VERS) -DACE_AIX_MINOR_VERS=$(AIX_MINOR_VERS)
+
 # -qinitauto seems useful, but when built with -qinitauto=5F, the
 # Process_Strategy_Test went CPU bound in ostream, so I removed it (S. Huston)
 DCFLAGS     += -g -qcheck=nobounds:div:null
+
 DLD	    = makeC++SharedLib_r
 LD          = $(CXX)
-# -qextchk is handy, but produces false type mismatches when linking
-# netsvcs with 3.1.4, so it's disabled.  IBM reports this fixed in 3.6.4.
-CPPFLAGS    += -qtempinc -qlanglvl=ansi -qflag=w:w -qinfo
 SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
 ifdef SHLIB
 ACELIB      = -lACEshr
