@@ -1002,7 +1002,7 @@ namespace
          << "::CORBA::Object::_nil ());" << endl
          << "}" << endl
          << "}" << endl
-         << "return " << t.name () << "::_duplicate (" << endl
+         << "return " << t.scoped_name () << "::_duplicate (" << endl
          << "this->component_.in ());" << endl
          << "}" << endl;
 

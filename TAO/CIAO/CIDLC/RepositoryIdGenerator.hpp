@@ -9,7 +9,7 @@
 //@@ Don't really need this. just forward declaration of
 //   TranslationUnit would be enough.
 //
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 
 class RepositoryIdGenerator
 {

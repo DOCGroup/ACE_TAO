@@ -553,7 +553,7 @@ namespace
 
         Traversal::UserData::belongs (u, belongs_);
           
-        os << endl
+        os << "_ptr" << endl
            << STRS[ENV_HDR] << ")" << endl
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
@@ -564,7 +564,7 @@ namespace
 
         Traversal::UserData::belongs (u, belongs_);
         
-        os << endl
+        os << "_ptr" << endl
            << "disconnect_" << u.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
            << STRS[EXCP_START] << endl
