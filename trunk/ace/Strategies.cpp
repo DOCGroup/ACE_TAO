@@ -87,10 +87,3 @@ ACE_Connection_Recycling_Strategy::~ACE_Connection_Recycling_Strategy (void)
 }
 
 #endif /* ACE_STRATEGIES_C */
-
-// This is actually used in <ACE_Svc_Handler>
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Message_Queue_Iterator <ACE_NULL_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Message_Queue_Iterator <ACE_NULL_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
