@@ -306,6 +306,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  TimeBaseC.i \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
@@ -558,6 +559,7 @@ realclean: clean
  RtecSchedulerC.h \
  Sched/sched_export.h \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
@@ -804,6 +806,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  TimeBaseC.i \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Utilities.i
@@ -1018,6 +1021,7 @@ realclean: clean
  RtecSchedulerC.h \
  Sched/sched_export.h \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
@@ -1323,6 +1327,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  TimeBaseC.i \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
@@ -1585,6 +1590,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  TimeBaseC.i \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
@@ -1844,6 +1850,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  TimeBaseC.i \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
@@ -1923,8 +1930,7 @@ realclean: clean
  Time_Utilities.i
 
 .obj/SchedEntry.o .obj/SchedEntry.so .shobj/SchedEntry.o .shobj/SchedEntry.so: Sched/SchedEntry.cpp Sched/SchedEntry.h \
- $(ACE_ROOT)/ace/pre.h \
- Sched/sched_export.h \
+ $(ACE_ROOT)/ace/pre.h Sched/sched_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2127,6 +2133,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  TimeBaseC.i \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
@@ -2377,6 +2384,7 @@ realclean: clean
  RtecSchedulerC.h \
  Sched/sched_export.h \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
@@ -2615,6 +2623,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  TimeBaseC.i \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
@@ -2624,8 +2633,7 @@ realclean: clean
 
 .obj/Strategy_Scheduler.o .obj/Strategy_Scheduler.so .shobj/Strategy_Scheduler.o .shobj/Strategy_Scheduler.so: Sched/Strategy_Scheduler.cpp \
  Sched/Strategy_Scheduler.h \
- $(ACE_ROOT)/ace/pre.h \
- Sched/DynSched.h \
+ $(ACE_ROOT)/ace/pre.h Sched/DynSched.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2855,6 +2863,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  TimeBaseC.i \
  RtecBaseC.h \
+ Event/event_export.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
  Event_Service_Constants.h \
@@ -3020,8 +3029,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -3094,10 +3102,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  TimeBaseS_T.h TimeBaseS_T.i TimeBaseS_T.cpp TimeBaseS.i RtecBaseS.h \
- RtecBaseC.h RtecBaseC.i RtecBaseS_T.h RtecBaseS_T.i RtecBaseS_T.cpp \
- RtecBaseS.i RtecSchedulerC.h Sched/sched_export.h RtecSchedulerC.i \
- RtecSchedulerS_T.h RtecSchedulerS_T.i RtecSchedulerS_T.cpp \
- RtecSchedulerS.i \
+ RtecBaseC.h Event/event_export.h RtecBaseC.i RtecBaseS_T.h \
+ RtecBaseS_T.i RtecBaseS_T.cpp RtecBaseS.i RtecSchedulerC.h \
+ Sched/sched_export.h RtecSchedulerC.i RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i RtecSchedulerS_T.cpp RtecSchedulerS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -3428,8 +3436,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- TimeBaseC.i RtecBaseC.h RtecBaseC.i RtecSchedulerC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+ RtecBaseC.h Event/event_export.h RtecBaseC.i RtecSchedulerC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \

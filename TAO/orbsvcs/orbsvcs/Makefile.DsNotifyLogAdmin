@@ -1086,9 +1086,8 @@ realclean: clean
  $(TAO_ROOT)/tao/debug.h
 
 .obj/DsNotifyLogAdminS.o .obj/DsNotifyLogAdminS.so .shobj/DsNotifyLogAdminS.o .shobj/DsNotifyLogAdminS.so: DsNotifyLogAdminS.cpp DsNotifyLogAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- DsEventLogAdminS.h CosEventChannelAdminS.h CosEventCommS.h \
- CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h DsEventLogAdminS.h \
+ CosEventChannelAdminS.h CosEventCommS.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1291,8 +1290,7 @@ realclean: clean
  CosEventCommS.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i DsLogAdminS.h \
- TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
+ TimeBaseS.h $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1311,21 +1309,21 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h svc_utils_export.h TimeBaseC.i TimeBaseS_T.h \
- TimeBaseS_T.i TimeBaseS_T.cpp TimeBaseS.i DsLogAdminC.h \
- Log/log_export.h DsLogAdminC.i DsLogAdminS_T.h DsLogAdminS_T.i \
- DsLogAdminS_T.cpp DsLogAdminS.i DsEventLogAdminC.h \
- Log/eventlog_export.h DsEventLogAdminC.i DsEventLogAdminS_T.h \
- DsEventLogAdminS_T.i DsEventLogAdminS_T.cpp DsEventLogAdminS.i \
- CosNotifyChannelAdminS.h CosNotificationS.h CosNotificationC.h \
- Notify/notify_export.h CosNotificationC.i CosNotificationS_T.h \
- CosNotificationS_T.i CosNotificationS_T.cpp CosNotificationS.i \
- CosNotifyFilterS.h CosNotifyCommS.h CosNotifyCommC.h CosNotifyCommC.i \
- CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
- CosNotifyCommS.i CosNotifyFilterC.h CosNotifyFilterC.i \
- CosNotifyFilterS_T.h CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp \
- CosNotifyFilterS.i CosNotifyChannelAdminC.h CosNotifyChannelAdminC.i \
+ $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+ svc_utils_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
+ TimeBaseS_T.cpp TimeBaseS.i DsLogAdminC.h Log/log_export.h \
+ DsLogAdminC.i DsLogAdminS_T.h DsLogAdminS_T.i DsLogAdminS_T.cpp \
+ DsLogAdminS.i DsEventLogAdminC.h Log/eventlog_export.h \
+ DsEventLogAdminC.i DsEventLogAdminS_T.h DsEventLogAdminS_T.i \
+ DsEventLogAdminS_T.cpp DsEventLogAdminS.i CosNotifyChannelAdminS.h \
+ CosNotificationS.h CosNotificationC.h Notify/notify_export.h \
+ CosNotificationC.i CosNotificationS_T.h CosNotificationS_T.i \
+ CosNotificationS_T.cpp CosNotificationS.i CosNotifyFilterS.h \
+ CosNotifyCommS.h CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
+ CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
+ CosNotifyFilterC.h CosNotifyFilterC.i CosNotifyFilterS_T.h \
+ CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp CosNotifyFilterS.i \
+ CosNotifyChannelAdminC.h CosNotifyChannelAdminC.i \
  CosNotifyChannelAdminS_T.h CosNotifyChannelAdminS_T.i \
  CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminS.i \
  DsNotifyLogAdminC.h Log/notifylog_export.h DsNotifyLogAdminC.i \
@@ -1664,8 +1662,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- TimeBaseC.i DsLogAdminC.i DsEventLogAdminC.i CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+ DsLogAdminC.i DsEventLogAdminC.i CosNotifyChannelAdminC.h \
  Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
  CosNotifyFilterC.h CosNotifyCommC.h CosNotifyCommC.i \
  CosNotifyFilterC.i CosNotifyChannelAdminC.i DsNotifyLogAdminC.i \
