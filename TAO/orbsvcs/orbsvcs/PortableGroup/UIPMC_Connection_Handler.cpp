@@ -421,6 +421,7 @@ TAO_UIPMC_Connection_Handler::handle_cleanup (void)
 
 template class ACE_Concurrency_Strategy<TAO_UIPMC_Connection_Handler>;
 template class ACE_Creation_Strategy<TAO_UIPMC_Connection_Handler>;
+template class ACE_SOCK_Dgram_Mcast_Ex<ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -429,5 +430,5 @@ template class ACE_Creation_Strategy<TAO_UIPMC_Connection_Handler>;
 
 #pragma instantiate ACE_Concurrency_Strategy<TAO_UIPMC_Connection_Handler>
 #pragma instantiate ACE_Creation_Strategy<TAO_UIPMC_Connection_Handler>
-
+#pragma instantiate ACE_SOCK_Dgram_Mcast_Ex<ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
