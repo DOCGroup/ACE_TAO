@@ -5,6 +5,18 @@ configurations = gcc
 soext          = so
 cppflags       = -O
 
+// ***********************************************************************
+// Configuration Section
+// ***********************************************************************
+
+cxx {
+  cxx        = cxx
+  clean      = cxx_repository so_locations
+  tempincopt = "-ptr "
+  tempinc    = cxx_repository
+  platforms  = tru64
+}
+
 gcc {
   cxx       = g++
   pic       = -fPIC
@@ -38,6 +50,16 @@ SGICC {
   platforms = irix
 }
 
+// ***********************************************************************
+// Platform Section
+// ***********************************************************************
+
+tru64 {
+  extraflags = -D__USE_STD_IOSTREAM
+  shflags    = -shared /usr/lib/libcxxstd.a
+  ldlibs     = -ltli -lrt
+}
+
 linux {
   shflags = -shared
   ldlibs  = -ldl -lpthread
@@ -55,11 +77,33 @@ hpux {
 }
 
 aix {
-  soext  = a
+  soext  =
   ldlibs = -ldl
 }
 
 irix {
   shflags = -shared
   ldlibs  = -lsocket -ldl -lnsl -lgen -lpthread
+}
+
+lynxos {
+  soext =
+}
+
+macos {
+  dld     = libtool
+  soext   = dylib
+  shflags = -dynamic
+  ldlibs  = -lcc_dynamic -lstdc++ -lSystem -ldl
+}
+
+unixware {
+  shflags = -G
+  ldlibs  = -lsocket -ldl -lnsl -lgen -lposix4
+}
+
+qnx {
+  shflags    = -shared
+  ldlibs     = -lsocket
+  extraflags = -D__GCC_BUILTIN
 }

@@ -70,14 +70,12 @@ FILES = \
 #       Include macros and targets
 #----------------------------------------------------------------------------
 <%marker(macros)%>
-<%if(libs)%>
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%>  =<%foreach(libs)%> -l<%lib%><%endfor%>
+<%if(exename)%>
+LDLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%><%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
+<%else%>
+<%if(sharedname)%>
+ACE_SHLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%><%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 <%endif%>
-<%if(lit_libs)%>
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
-<%endif%>
-<%if(defaultlibs)%>
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
@@ -295,7 +293,9 @@ ifneq ($(BIN),)
 <%if(sharedname)%>
 ifneq ($(SHLIB),)
 <%else%>
+<%if(staticname)%>
 ifneq ($(LIB),)
+<%endif%>
 <%endif%>
 <%endif%>
 all: idl_stubs
@@ -303,7 +303,17 @@ all: idl_stubs
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
 <%source_files%>: idl_stubs
+<%if(exename)%>
 endif
+<%else%>
+<%if(sharedname)%>
+endif
+<%else%>
+<%if(staticname)%>
+endif
+<%endif%>
+<%endif%>
+<%endif%>
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/macros.GNU

@@ -1,3 +1,33 @@
+Thu Sep 25 12:05:22 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Added the ability to use || in the <%if()%>.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Added support for an empty target within the project, but process
+          targets (such as idl files) that may generate source code.
+
+        * bin/MakeProjectCreator/modules/VC6WorkspaceCreator.pm:
+
+          Commented out shift for $self since it isn't used.
+
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+
+          Removed arbitrary restriction upon duplicate project names.
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+
+          Support versions of make other than GNU and added support for
+          Tru64, LynxOS, MacOS, Unixware and QNX.
+
 Thu Sep 25 09:24:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyEditor.pm:
@@ -15,20 +45,20 @@ Thu Sep 25 09:24:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Sep 25 09:28:47 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* performance-tests/Misc/childbirth_time.cpp (prof_ace_os_thread): Replaced
-	  NULL with 0 to ensure the code compiles on LynxOS.  Thanks to
- 	  Olli Savia <ops@iki.fi> for reporting this.
+        * performance-tests/Misc/childbirth_time.cpp (prof_ace_os_thread): Replaced
+          NULL with 0 to ensure the code compiles on LynxOS.  Thanks to
+          Olli Savia <ops@iki.fi> for reporting this.
 
-	* ace/Pipe.cpp (open): Swapped the order of the SO_RCVBUF and
-	  SO_SNDBUF socket option calls so that the reader sets the RCVBUF
- 	  and the writer sets the SNDBUF.  Thanks to Tomer Amiaz
- 	  <tomer@BANDWIZ.COM> for reporting this.
+        * ace/Pipe.cpp (open): Swapped the order of the SO_RCVBUF and
+          SO_SNDBUF socket option calls so that the reader sets the RCVBUF
+          and the writer sets the SNDBUF.  Thanks to Tomer Amiaz
+          <tomer@BANDWIZ.COM> for reporting this.
 
 Wed Sep 24 15:29:25 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/QtReactor.cpp: Fixed a silly mistake caused by a 
-	  comment being too close to a '*' character!  Thanks to Serge
- 	  Kolgan <skolgan@trigraph.com> for reporting this.
+        * ace/QtReactor.cpp: Fixed a silly mistake caused by a
+          comment being too close to a '*' character!  Thanks to Serge
+          Kolgan <skolgan@trigraph.com> for reporting this.
 
 Wed Sep 24 12:36:21 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -227,9 +257,9 @@ Fri Sep 12 10:56:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Sep 11 12:37:05 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* Second anniversary of the September 11th terrorist attacks on
-	  the USA.  Let us pray that clear heads will prevail in the
- 	  prevention of future conflicts.
+        * Second anniversary of the September 11th terrorist attacks on
+          the USA.  Let us pray that clear heads will prevail in the
+          prevention of future conflicts.
 
 Thu Sep 11 06:39:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -392,10 +422,10 @@ Fri Sep  5 06:56:37 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Sep  4 16:00:18 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.h: Updated the documentation for
-	  current_size() and total_size() to be more accurate.  Thanks to
- 	  Gerard Grant <ggrant@Foxboro.com> for motivating this.
-  
+        * ace/Hash_Map_Manager_T.h: Updated the documentation for
+          current_size() and total_size() to be more accurate.  Thanks to
+          Gerard Grant <ggrant@Foxboro.com> for motivating this.
+
 Thu Sep  4 14:21:33 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
 
         * performance-tests/SCTP/README.SCTP:

@@ -5,11 +5,13 @@
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
 <%endif%>
 
+<%if(exename || sharedname || staticname)%>
 <%if(source_files)%>
 OBJFILES = \
 <%foreach(source_files)%>
 	$(OBJDIR)\<%basenoextension(source_file)%>.obj<%fornotlast(" \\")%>
 <%endfor%>
+<%endif%>
 <%endif%>
 
 LFLAGS = \

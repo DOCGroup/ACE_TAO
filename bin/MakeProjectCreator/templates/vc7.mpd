@@ -61,7 +61,9 @@
 <%if(type_is_binary)%>
 				AdditionalDependencies="<%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%>"
 <%endif%>
+<%if(exename || sharedname || staticname)%>
 				OutputFile="$(OutDir)/<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%>.dll<%else%><%if(type_is_static)%><%staticname%><%lib_modifier%>.lib<%else%><%exename%>.exe<%endif%><%endif%>"
+<%endif%>
 				Version="<%version("1.0")%>"
 				LinkIncremental="<%LinkIncremental("1")%>"
 				SuppressStartupBanner="TRUE"
@@ -104,6 +106,7 @@
 <%endfor%>
 	</Configurations>
 	<Files>
+<%if(exename || sharedname || staticname)%>
 <%if(source_files)%>
 		<Filter
 			Name="Source Files"
@@ -127,6 +130,7 @@
 			</File>
 <%endfor%>
 		</Filter>
+<%endif%>
 <%endif%>
 <%if(header_files)%>
 		<Filter

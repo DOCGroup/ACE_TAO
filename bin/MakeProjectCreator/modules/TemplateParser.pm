@@ -501,7 +501,7 @@ sub handle_if {
   if (!$self->{'if_skip'}) {
     my($true)  = 1;
     push(@{$self->{'sstack'}}, $name);
-    if ($val =~ /^!(.*)/) {
+    if ($val !~ /\|\|/ && $val =~ /^!(.*)/) {
       $val = $1;
       $val =~ s/^\s+//;
       $true = 0;
@@ -511,7 +511,31 @@ sub handle_if {
       $val = $self->get_flag_overrides($1, $2);
     }
     else {
-      $val = $self->get_value($val)
+      if ($val =~ /\|\|/) {
+        my($str) = $val;
+        $val = undef;
+        foreach my $v (split(/\s*\|\|\s*/, $str)) {
+          my($p) = 0;
+          if ($v =~ /^!(.*)/) {
+            $p = $self->get_value($v);
+            if (defined $p) {
+              $p = undef;
+            }
+            else {
+              $p = 'some value';
+            }
+          }
+          else {
+            $p = $self->get_value($v);
+          }
+          if (defined $p && $p ne '') {
+            $val = $p;
+          }
+        }
+      }
+      else {
+        $val = $self->get_value($val)
+      }
     }
 
     if (defined $val) {
