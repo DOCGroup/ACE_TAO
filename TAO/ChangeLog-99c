@@ -1,3 +1,23 @@
+Thu Jun 24 21:03:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h: Guarded the definition of all TAO try macros
+	  with TAO_USES_DEPRECATED_TAO_TRY_MACROS.  This is now defined in
+	  the file.  After we depricate the use of TAO try macros, one
+	  will need to define TAO_USES_DEPRECATED_TAO_TRY_MACROS
+	  explicitly in order to compile their code.
+
+	* Exception.cpp:
+	* Forwarding_Servant.cpp:
+	* GIOP_Server_Request.cpp:
+	* Invocation.cpp:
+	* NVList.cpp:
+	* ORB.cpp:
+	* POAC.cpp:
+	* Request.cpp:
+	* Stub.cpp:
+	* TAO.cpp: Fixed the use of TAO_IN_ENV, and native exception
+	  support.
+
 Thu Jun 24 20:02:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
