@@ -1,3 +1,7 @@
+Fri Sep 10 16:38:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/WinCE/*.dsp: VC 6 changed all the dsp files format.
+
 Fri Sep 10 11:20:47 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SOCK_Acceptor.h,
@@ -13,8 +17,8 @@ Thu Sep  9 16:27:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  greater control over the spawn() behavior.
 
 Fri Sep 10 14:30:17 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
-    	
-	* ace/SOCK_Dgram_Mcast.i: 
+
+	* ace/SOCK_Dgram_Mcast.i:
 	* ace/SOCK_Dgram_Mcast.h:
 
 	  Added two send () functions using overlapped I/O to the
@@ -33,7 +37,7 @@ Thu Sep  9 22:48:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/config-hpux-10.x-hpc++.h:
         * ace/config-hpux-11.x-hpc++.h:
-          Fixed spelling of ACE_PREPROCESSOR_ARGS to 
+          Fixed spelling of ACE_PREPROCESSOR_ARGS to
           ACE_CC_PREPROCESSOR_ARGS.
 
 Thu Sep  9 18:22:21 CDT 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
