@@ -1,7 +1,7 @@
 Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Makefile: build shared library before static library.
-	  This appears to fix a problem with Sun C++ 4.2 possibly
+	  This appears to fix a problem with Sun C++ 4.{1,2} possibly
 	  related to its template instantiation scheme.  If the
 	  static library is built first, then .shobj/Reactor.so
 	  and .shobj/Timer_Hash.so (and possibly others) fail to
