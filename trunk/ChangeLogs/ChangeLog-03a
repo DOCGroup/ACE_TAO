@@ -1,9 +1,16 @@
-Mon Jan  7 19:55:39 2001  Steve Huston  <shuston@riverace.com>
+Tue Jan  8 08:36:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect): Corrected order
+          of operations checking EWOULDBLOCK, and fixed compile errors.
+          Thanks to Vlado Chovanec <Vladimir.CHOVANEC@asset.sk> for this fix.
+
+Mon Jan  7 19:55:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
         * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect): Added extra check
           for SSL_accept/connect status failure to avoid looping on a bad
-          socket if the socket closes during handshake. Thanks for Vlado
+          socket if the socket closes during handshake. Thanks to Vlado
           Chovanec <Vladimir.CHOVANEC@asset.sk> for this fix.
 
           Also added timeout countdown support for SSL_SOCK_Connector, same
