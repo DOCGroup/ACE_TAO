@@ -1,3 +1,9 @@
+Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Barrier_Test.cpp,Message_Block_Test.cpp,Priority_Task_Test.cpp,
+          Reactors_Test.cpp,Thread_Mutex_Test.cpp: (main): changed some local
+          variables from int to size_t to avoid signed/unsigned comparison.
+
 Thu Jan 15 00:00:56 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Message_Queue.cpp (open): The fix from Slawomir Kuzniar was
@@ -5,12 +11,12 @@ Thu Jan 15 00:00:56 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Wed Jan 14 20:41:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Signal.i (is_member): 
+	* ace/Signal.i (is_member):
 	  Fixed typo in new cast, the type is sigset_t not sigset.
 
 Wed Jan 14 20:27:44 1998    <coryan@MILONGA>
 
-	* ace/OS.h: 
+	* ace/OS.h:
 	  The new location for AF_ANY and AF_FILE was in the middle of a
 	  big #if !ACE_WIN32, hence it was not working for NT, I moved it
 	  further down and now NT is happy.
