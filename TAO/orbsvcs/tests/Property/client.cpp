@@ -405,7 +405,7 @@ Client::test_get_number_of_properties (CORBA::Environment &ACE_TRY_ENV)
 // Test delete_property.
 
 int
-Client::test_delete_property (CORBA::String property_name,
+Client::test_delete_property (const char *property_name,
                               CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
@@ -414,7 +414,9 @@ Client::test_delete_property (CORBA::String property_name,
 
   ACE_TRY
     {
-      this->propsetdef_->delete_property (property_name,
+      CORBA::String_var property_name_var (property_name);
+      
+      this->propsetdef_->delete_property (property_name_var.in (),
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
