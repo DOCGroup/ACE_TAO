@@ -262,9 +262,8 @@ public:
   // Block the thread until <tv> times out or until the semaphore
   // count becomes greater than 0 (at which point it is decremented).
   // Note that <tv> is assumed to be in "absolute" rather than
-  // "relative" time.  The value of <tv> is updated upon return, i.e.,
-  // the caller gets the amount of time that has elapsed while waiting
-  // to acquire the semaphore.  
+  // "relative" time.  The value of <tv> is updated upon return to
+  // show the actual (absolute) acquisition time.
   //
   // NOTE: Solaris threads do not support timed semaphores.
   // Therefore, if you're running on Solaris you might want to
@@ -420,10 +419,10 @@ class ACE_Export ACE_Null_Semaphore
   //     no ops.
 public:
   ACE_Null_Semaphore (u_int count = 1, // By default make this unlocked.
-		       int type = USYNC_THREAD,
-		       LPCTSTR name = 0,
-		       void * = 0,
-		       int max = 0x7fffffff);
+                       int type = USYNC_THREAD,
+                       LPCTSTR name = 0,
+                       void * = 0,
+                       int max = 0x7fffffff);
   ~ACE_Null_Semaphore (void);
   int remove (void);
 

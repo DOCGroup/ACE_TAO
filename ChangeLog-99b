@@ -3,11 +3,15 @@ Wed Sep 22 19:30:49 1999  Randall Sharo <rasb@eci.esys.com>
         * ace/OS.i (sema_wait): on VxWorks, update tv to return
           the wait time. [Bug 339]
 
+        * ace/Synch.h (ACE_Semaphore::acquire): updated comment
+          to show that the absolute acquisition time is returned,
+          not the elapsed time while waiting.
+
 Wed Sep 22 16:59:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Added definition of
-	  ACE_AUTO_PTR_LACKS_RESET when ACE_HAS_STANDARD_CPP_LIBRARY is
-	  defined.  Thanks to Ossama for the quick hint.
+        * ace/config-win32-common.h: Added definition of
+          ACE_AUTO_PTR_LACKS_RESET when ACE_HAS_STANDARD_CPP_LIBRARY is
+          defined.  Thanks to Ossama for the quick hint.
 
 Wed Sep 22 13:05:55 1999  Jim Rogers <jrogers@viasoft.com>
 
