@@ -36,6 +36,10 @@ Wed Oct 28 09:13:10 1998  David L. Levine  <levine@cs.wustl.edu>
           (in addition to Diab for PSoS).  Thanks to Doug Anderson
           <doug@clark.net> for suggesting this.
 
+        * ace/config-sunos5.5.h: removed ACE_HAS_TIMER_SKEW.  Thanks
+          to Russ Noseworthy <rnosewor@objectsciences.com> for verifying
+          that it no longer seems to be necessary.
+
         * ace/config-linux-common.h: added ACE_HAS_PROCFS.
 
 Tue Oct 27 22:14:18 1998  David L. Levine  <levine@cs.wustl.edu>
