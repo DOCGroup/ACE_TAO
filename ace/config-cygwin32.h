@@ -166,6 +166,11 @@
 #  define ACE_LACKS_PTHREAD_CANCEL
 #  define ACE_LACKS_THREAD_PROCESS_SCOPING
 #  define ACE_LACKS_MUTEXATTR_PSHARED
+
+// In the 1.5.9 release of Cygwin the pthread_kill gives an access violation
+// so for the time being we say Cygwin doesn't support pthread_kill.
+#  define ACE_LACKS_PTHREAD_KILL
+
 #endif  /* ACE_MT_SAFE */
 
 #include /**/ "ace/post.h"
