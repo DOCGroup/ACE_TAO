@@ -7099,11 +7099,18 @@ ACE_CACHE_CHECK([if generated ACE configuration is usable],
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
 
-#include "ace/OS.cpp"
+// Include ".cpp" files instead of headers so that we can get a more
+// thorough test compile.
+#include "ace/Time_Value.cpp"
+#include "ace/Reactor.cpp"
         ],
         [
          ACE_Time_Value t = ACE_OS::gettimeofday ();
          t++;
+
+	 ACE_Reactor * r = ACE_Reactor::instance ();
+
+         (void) r->close ();
         ],
         [
          ace_cv_configuration_is_usable=yes

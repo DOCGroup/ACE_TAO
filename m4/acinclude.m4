@@ -121,40 +121,30 @@ dnl header when doing an AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[],[]).
 dnl Usage: ACE_USE_TEMP_FILE(TEMP-FILE-TO-CREATE, COMMANDS-THAT-WILL-USE-IT)
 AC_DEFUN([ACE_USE_TEMP_FILE],
 [
- test -d ./$1 && AC_MSG_ERROR([cannot create file: $acetmp is a directory])
+ test -d $1 && AC_MSG_ERROR([cannot create file: $acetmp is a directory])
 
+ dnl Make sure contents of existing file don't override the contents
+ dnl of the temporary one.
  test -f ${srcdir}/$1 && mv ${srcdir}/$1 ${srcdir}/$1.conf
- touch ${srcdir}/$1
 
- if test ${srcdir}/$1 != "./$1"; then
-   test -f ./$1 && mv ./$1 ./$1.conf
-   dnl Create all of the sub-directories (assume "mkdir -p" is not portable).
-   acetmp="."
-   for ace_dir in `echo $1 | [sed -e 's,/[^/][^/]*\$,,' -e 's,/, ,g']`; do
-     acetmp="$acetmp/$ace_dir"
-     test -f $acetmp && AC_MSG_ERROR([cannot create directory: $acetmp])
-     test -d $acetmp || mkdir $acetmp
-   done
-   touch ./$1
+ if test ${srcdir} != "."; then
+   dnl Create all of the sub-directories.
+   AS_MKDIR_P([`AS_DIRNAME(["$1"])`])
  fi
+
+ touch $1
 
  $2
 
  if test -f ${srcdir}/$1.conf; then
    mv ${srcdir}/$1.conf ${srcdir}/$1
- else
-   rm ${srcdir}/$1
  fi
 
- if test ${srcdir}/$1 != "./$1"; then
-   if test -f ./$1.conf; then
-     mv ./$1.conf ./$1
-   else
-     dnl Remove the file.  Any sub-directories will not be removed
-     dnl since we have no way to tell if they existed prior to the
-     dnl creation of this file.
-     rm ./$1
-   fi
+ if test ${srcdir} != "."; then
+   dnl Remove the file.  Any sub-directories will not be removed
+   dnl since we have no way to tell if they existed prior to the
+   dnl creation of this file.
+   rm $1
  fi
 ])
 

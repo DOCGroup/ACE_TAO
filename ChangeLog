@@ -1,3 +1,53 @@
+Wed Jan 21 13:28:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac:
+
+	  Do not rely on "ace/OS.cpp" when performing test that determines
+	  if the generated configuration is usable.  "ace/OS.cpp" has been
+	  superseded by and split off into several other files.  Addresses
+	  bogus ACE usability configure script errors when running a "make
+	  distcheck".
+
+	* ace/Makefile.am:
+
+	  Added missing "-version-number" libtool flag for all subset
+	  libraries.  Fixes problem where the library version for all
+	  these libraries was "0.0.0".  Thanks to Robert Schiele
+	  <robert.schiele@t-online.de> for discovering the problem and for
+	  providing fix.
+
+	  (libACE_Utils_la_SOURCES):
+
+	  Added Template_Instantiations.cpp file to this source list.
+	  Fixes a "missing file" problem revealed by a "distcheck".
+
+	  (HEADER_FILES, INLINE_FILES, TEMPLATE_FILES):
+
+	  Updated these source file lists.  Addresses "missing file"
+	  problems exhibited when performing a "make distcheck".
+
+	* m4/acinclude.m4 (ACE_USE_TEMP_FILE):
+
+	  Fixed problem that prevented the "distcheck" target from passing
+	  due to an attempt to write a file into a read-only directory.
+
+	* tests/Makefile.am (Multihomed_INET_Addr_Test_SOURCES):
+
+	  Removed "Multihomed_INET_Addr_Test.h" from this source file
+	  list.  That file doesn't exist.  Detected when performing a
+	  "make distcheck".
+
+	  (libService_Config_DLL_la_SOURCES, libTest_Output_la_SOURCES):
+
+	  Added missing Service_Config_DLL_Export.h and
+	  Test_Output_Export.h file to these test's source lists,
+	  respectively.  Addresses problem revealed by a "distcheck".
+
+	  (lib_LTLIBRARIES)
+
+	  Added missing Framework_Component_DLL library to the list of
+	  libraries to build.
+
 Wed Jan 21 13:37:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/msvc_mpc_auto_compile.pl:
@@ -8,15 +58,17 @@ Wed Jan 21 13:37:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Wed Jan 21 13:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
-          glibc version 2.3 defines the method isastream, so from this glibc
-          version don't do this anymore in the ACE library by setting then the
-          define ACE_HAS_ISASTREAM_PROTO. On RH9 defining the isastream method
-          within ACE caused errors because there this method has an exception
-          specification. This only appeared when other libraries are used which
-          include stropts.h themselves. Also on SuSE 9 with glibc v2.3 I see
-          that isastream has an exception specification. This fixed [BUGID 1613].
-          Thanks to Jeffrey Graham <jgraham@titan.com> and
-          Akim Boyko <akim@sitech.com.ua> for reporting this.
+
+          glibc version 2.3 defines the method isastream, so from this
+	  glibc version don't do this anymore in the ACE library by
+	  setting then the define ACE_HAS_ISASTREAM_PROTO. On RH9 defining
+	  the isastream method within ACE caused errors because there this
+	  method has an exception specification. This only appeared when
+	  other libraries are used which include stropts.h themselves.
+	  Also on SuSE 9 with glibc v2.3 I see that isastream has an
+	  exception specification. This fixed [BUGID 1613].  Thanks to
+	  Jeffrey Graham <jgraham@titan.com> and Akim Boyko
+	  <akim@sitech.com.ua> for reporting this.
 
 Wed Jan 21 12:58:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
