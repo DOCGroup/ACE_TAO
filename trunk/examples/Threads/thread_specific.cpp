@@ -66,7 +66,7 @@ typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
 typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 
-static void 
+extern "C" void 
 cleanup (void *ptr)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) in cleanup, ptr = %x\n", ptr));
@@ -82,7 +82,7 @@ worker (void *c)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   int count = int (c);
 
-  ACE_thread_key_t key = 0;
+  ACE_thread_key_t key = ACE_OS::NULL_key;
   int *ip = 0;
 
   // Make one key that will be available when the thread exits so that
@@ -131,16 +131,14 @@ worker (void *c)
       tss_error->flags (count);
 
       {
-	// Use the guard to serialize access to cout...
+	// Use the guard to serialize access to printf...
 	ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0);
 
-	cout << "(" << ACE_Thread::self ()
-	     << ") errno = "  << tss_error->error () 
-	     << ", lineno = " << tss_error->line ()
-	     << ", flags = " << tss_error->flags () 
-	     << endl;
+	printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
+		ACE_Thread::self (), tss_error->error (), tss_error->line (),
+		tss_error->flags () );
       }
-      key = 0;
+      key = ACE_OS::NULL_key;
 
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
