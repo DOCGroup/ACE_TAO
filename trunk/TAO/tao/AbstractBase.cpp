@@ -18,6 +18,7 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/ValueFactory.h"
+#include "tao/debug.h"
 
 #if defined (TAO_HAS_VALUETYPE)
 
