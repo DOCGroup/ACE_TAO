@@ -1,3 +1,9 @@
+Thu Oct 22 20:43:06 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/DynAnyC.h:
+          Added 'TAO Export' to the DynAny utility classes
+          AnySeq and NameValuePairSeq so the linker could find them.
+
 Thu Oct 22 14:09:12 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/fe/fe_lookup.cpp:
