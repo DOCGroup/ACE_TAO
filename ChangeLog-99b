@@ -1,3 +1,29 @@
+Mon May 03 15:20:00 1999 Kirthika Parameswaran  <kirthika@bambuca.cs.wustl.edu>
+
+	* examples/HTTP_1.1_Client/main.cpp:
+	* examples/HTTP_1.1_Client/Web_Crawler.{h,cpp}:
+	* examples/HTTP_1.1_Client/Cached_Connect_Strategy_T.{h,i,cpp}:
+	* examples/HTTP_1.1_Client/Caching_Strategies_T.{h,i,cpp}:
+	* examples/HTTP_1.1_Client/Command_Processor.{h,cpp}:
+	* examples/HTTP_1.1_Client/HTTP_URL.{h,cpp}:
+	* examples/HTTP_1.1_Client/Iterators.{h,cpp}:
+	* examples/HTTP_1.1_Client/Mem_Map_Stream.{h,cpp}:
+	* examples/HTTP_1.1_Client/Optimal_Cache_Map_Manager_T.{h,i,cpp}:
+	* examples/HTTP_1.1_Client/Options.{h,cpp}:
+	* examples/HTTP_1.1_Client/URL.{h,cpp}:
+	* examples/HTTP_1.1_Client/URL_Addr.{h,cpp}:
+	* examples/HTTP_1.1_Client/URL_Status.{h,cpp}:
+	* examples/HTTP_1.1_Client/URL_visitor.{h,cpp}:
+	* examples/HTTP_1.1_Client/URL_Visitor_Factory.{h,cpp}:
+	* examples/HTTP_1.1_Client/Makefile
+	* examples/HTTP_1.1_Client/README
+
+	 This example is a HTTP client which crawls over the link provided
+	 and checks whether the links recusively are valid or not.
+	 This example was used to test teh auto-purging feature where the
+	 connections are removed from the connection cache when the process
+	 runs out of file descriptors.
+
 Mon May 03 14:46:28 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/ACE_Init_Test.dsp: Fixed to build on all configurations (for
