@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   EC_Event_Channel.h
+ *  @file   EC_QOS_Info.h
  *
  *  $Id$
  *

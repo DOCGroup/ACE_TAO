@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   EC_trivial_Supplier_Filter.h
+ *  @file   EC_Trivial_Supplier_Filter.h
  *
  *  $Id$
  *

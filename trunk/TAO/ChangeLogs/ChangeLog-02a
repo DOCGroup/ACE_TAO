@@ -1,56 +1,66 @@
+Sat Nov 11 10:19:06 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.h:
+        * orbsvcs/orbsvcs/Event/EC_Busy_Lock.h:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+          Change the @file comments, the Fuzz build detected the problem.
+
 Sat Nov 11 11:33:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Xt_Stopwatch/client.cpp:
-	* tests/Xt_Stopwatch/test_i.cpp:
-	* tests/Xt_Stopwatch/test_i.h:
-	* tests/Xt_Stopwatch/Control.h:
-	* tests/Xt_Stopwatch/Control.cpp:
-	* tests/Xt_Stopwatch/Stopwatch_display.h:
-	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
-	* tests/Xt_Stopwatch/Client.h:
-	* tests/Xt_Stopwatch/timer.cpp:
-	* tests/Xt_Stopwatch/timer.h: 
-	* tests/QtTest/client.cpp:  Added #if defined guards in all these
-	  files so that they compile clean even in default configuration. 
-	
-	* tests/Xt_Stopwatch/Makefile: 
-	* tests/QtTest/Makefile: Updated the library names against which
-	  they are linked.
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/test_i.cpp:
+        * tests/Xt_Stopwatch/test_i.h:
+        * tests/Xt_Stopwatch/Control.h:
+        * tests/Xt_Stopwatch/Control.cpp:
+        * tests/Xt_Stopwatch/Stopwatch_display.h:
+        * tests/Xt_Stopwatch/Stopwatch_display.cpp:
+        * tests/Xt_Stopwatch/Client.h:
+        * tests/Xt_Stopwatch/timer.cpp:
+        * tests/Xt_Stopwatch/timer.h:
+        * tests/QtTest/client.cpp:  Added #if defined guards in all these
+          files so that they compile clean even in default configuration.
+
+        * tests/Xt_Stopwatch/Makefile:
+        * tests/QtTest/Makefile: Updated the library names against which
+          they are linked.
 
 
 Sat Nov 11 07:28:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Propagated the fixes
-	  that was done other protocols.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Propagated the fixes
+          that was done other protocols.
 
 Fri Nov 10 18:24:53 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Declared/server.conf:
-	* tests/RTCORBA/Client_Protocol/svc.conf:
-	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
-	* tests/RTCORBA/Server_Protocol/server_uiop.conf:
-	* tests/RTCORBA/Server_Protocol/server_reverse.conf:
-	* tests/RTCORBA/Server_Protocol/server_shmiop.conf:
-	* tests/RTCORBA/Server_Protocol/server_uiop.conf:
-	* tests/RTCORBA/Server_Protocol/server.conf:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
+        * tests/RTCORBA/Server_Declared/server.conf:
+        * tests/RTCORBA/Client_Protocol/svc.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Server_Protocol/server_uiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_uiop.conf:
+        * tests/RTCORBA/Server_Protocol/server.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
 
-	  Updated to load the advanced strategies dynamically.
+          Updated to load the advanced strategies dynamically.
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile:
-	* tests/RTCORBA/Server_Protocol/Makefile:
-	* tests/RTCORBA/Server_Declared/Makefile :
-	* tests/RTCORBA/Client_Propagated/Makefile :
-	* tests/RTCORBA/Client_Protocol/Makefile:
-	  Updated to link TAO_Strategies.
+        * tests/RTCORBA/MT_Client_Protocol_Priority/Makefile:
+        * tests/RTCORBA/Server_Protocol/Makefile:
+        * tests/RTCORBA/Server_Declared/Makefile :
+        * tests/RTCORBA/Client_Propagated/Makefile :
+        * tests/RTCORBA/Client_Protocol/Makefile:
+          Updated to link TAO_Strategies.
 
 Fri Nov 10 17:28:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Connect.cpp:
-	* tao/Strategies/UIOP_Connect.cpp:
-	* tao/IIOP_Connect.cpp: Fixed a problem with thread-per-connection
-	  case. The event handler was getting destroyed before the ORB
-	  shuts down the Cache. This lead to cache  shutdown problem.
+        * tao/Strategies/SHMIOP_Connect.cpp:
+        * tao/Strategies/UIOP_Connect.cpp:
+        * tao/IIOP_Connect.cpp: Fixed a problem with thread-per-connection
+          case. The event handler was getting destroyed before the ORB
+          shuts down the Cache. This lead to cache  shutdown problem.
 
 Fri Nov 10 13:06:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -123,13 +133,13 @@ Fri Nov 10 12:41:32 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Nov 10 12:06:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Latency/Makefile :
-	* performance-tests/Latency/st_client.conf:
-	* performance-tests/Latency/client-st-exclusive.conf:
-	* performance-tests/Latency/client-mt-exclusive.conf:
-	* performance-tests/Latency/st_server.conf:
-	  Linked TAO_Startegies and dynamically loaded the Advanced
-	  Resource Factory in the service conf files.
+        * performance-tests/Latency/Makefile :
+        * performance-tests/Latency/st_client.conf:
+        * performance-tests/Latency/client-st-exclusive.conf:
+        * performance-tests/Latency/client-mt-exclusive.conf:
+        * performance-tests/Latency/st_server.conf:
+          Linked TAO_Startegies and dynamically loaded the Advanced
+          Resource Factory in the service conf files.
 
 Fri Nov 10 11:54:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -138,30 +148,30 @@ Fri Nov 10 11:54:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Nov 10 12:49:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
-	  Added patch to implement get_all_filters supplied by
-	  Joachim Tremouroux <joachim.tremouroux@microresearch.be>
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+          Added patch to implement get_all_filters supplied by
+          Joachim Tremouroux <joachim.tremouroux@microresearch.be>
 
 Fri Nov 10 10:14:50 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
-      	* TAO/tests/RTCORBA/server_protocol/run_test.pl
-	  Modified the options to not load UIOP and SHMIOP in the case
+        * TAO/tests/RTCORBA/server_protocol/run_test.pl
+          Modified the options to not load UIOP and SHMIOP in the case
           where no config file is used.
 
-	* TAO/tests/Leader_Followers/client.dsp :
-	* TAO/tests/Leader_Followers/server.dsp :
-	* TAO/tests/NestedUpcall/Simple/client.dsp :
-	* TAO/tests/NestedUpcall/Simple/server.dsp :
-	* TAO/tests/Param_Test/anyop.dsp :
-	* TAO/tests/Param_Test/client.dsp :
-	* TAO/tests/Param_Test/server.dsp :
+        * TAO/tests/Leader_Followers/client.dsp :
+        * TAO/tests/Leader_Followers/server.dsp :
+        * TAO/tests/NestedUpcall/Simple/client.dsp :
+        * TAO/tests/NestedUpcall/Simple/server.dsp :
+        * TAO/tests/Param_Test/anyop.dsp :
+        * TAO/tests/Param_Test/client.dsp :
+        * TAO/tests/Param_Test/server.dsp :
         * TAO/tests/RTCORBA/Server_Protocol/client.dsp
-	* TAO/tests/RTCORBA/server_protocol/server.dsp
+        * TAO/tests/RTCORBA/server_protocol/server.dsp
 
-	* TAO/performace_tests/Cubit/TAO/IDL_Cuibt/client.dsp
-	* TAO/performace_tests/Cubit/TAO/IDL_Cuibt/server.dsp
+        * TAO/performace_tests/Cubit/TAO/IDL_Cuibt/client.dsp
+        * TAO/performace_tests/Cubit/TAO/IDL_Cuibt/server.dsp
 
-	  Updated to link TAO_Strategies library.
+          Updated to link TAO_Strategies library.
 
 Fri Nov 10 10:14:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
