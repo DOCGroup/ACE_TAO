@@ -1,4 +1,11 @@
-Sun Dec 13 16:27:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sun Dec 13 16:40:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MT_Reactor_Timer_Test.dsp:
+	* tests/tests.dsw: Added the new project file -
+	  MT_Reactor_Timer_Test.
+
+	* tests/run_tests.bat: Added MT_Reactor_Timer_Test into
+	  one-button test for NT.
 
 	* tests/MT_Reactor_Timer_Test.cpp: Changed the use of
 	  ACE_OS::{read,write} to ACE::{recv,send}.
