@@ -587,7 +587,7 @@ Worker::svc (void)
           sched_param.deadline = sched_param.deadline+period_*10000000-left_work*10000000;
           sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
           oid = ACE_OBJECT_COUNTER->increment();
-	  oid.id = sched_param.task_id;
+	  oid.task_id = sched_param.task_id;
           sched_param.id = oid.id;
           sched_param.tid = oid.tid;
           sched_param.pid = oid.pid;
@@ -612,7 +612,7 @@ Worker::svc (void)
 
       timeval tv;
 
-      ACE_DEBUG((LM_DEBUG,"OBJECT id is %d and thread id is %d\n",oid.id,oid.tid));
+//      ACE_DEBUG((LM_DEBUG,"Task id is %d and thread id is %d\n",oid.task_id,oid.tid));
       DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
       tv.tv_sec = server_load_-1;

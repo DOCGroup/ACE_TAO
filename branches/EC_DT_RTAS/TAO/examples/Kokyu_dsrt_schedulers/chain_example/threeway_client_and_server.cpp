@@ -97,7 +97,7 @@ main (int argc, char *argv[])
 
   task_stats.init (100000);
 
-//  TAO_debug_level =1;
+  TAO_debug_level =1;
 
   ACE_TRY_NEW_ENV
     {

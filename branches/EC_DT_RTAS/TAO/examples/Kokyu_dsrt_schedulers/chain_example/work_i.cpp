@@ -50,6 +50,7 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
   oid.tid=sched_param->tid;
   oid.task_id=sched_param->task_id;
   oid.guid=guid;
+//  ACE_DEBUG((LM_DEBUG,"Task id is %d and TID is %d\n", oid.task_id, oid.tid));
   DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_High_Res_Timer timer;
