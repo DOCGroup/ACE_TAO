@@ -4401,7 +4401,7 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_STHREADS))
 #if defined (ACE_HAS_DCETHREADS)
-  ACE_UNUSED (old_state);
+  ACE_UNUSED_ARG (old_state);
   ACE_OSCALL_RETURN (::pthread_setcancel (new_state), int, -1);
 #else /* ACE_HAS_DCETHREADS */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcancelstate (new_state, old_state), 
@@ -4656,7 +4656,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   // ACE_TRACE ("ACE_OS::thr_kill");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS)
-  ACE_UNUSED (signum);
+  ACE_UNUSED_ARG (signum);
   ACE_OSCALL_RETURN (pthread_cancel (thr_id), int, -1);
 #elif defined (ACE_HAS_PTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_kill (thr_id, signum), 
