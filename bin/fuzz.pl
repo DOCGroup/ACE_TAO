@@ -157,7 +157,7 @@ sub check_for_inline_in_cpp ()
 # be used locally or to check for files
 sub check_for_id_string ()
 {
-    print "Running \$ID\$ string check\n";
+    print "Running \$Id\$ string check\n";
     foreach $file (@files_cpp, @files_inl, @files_h,
                    @files_html, @files_idl, @files_pl) {
         my $found = 0;
@@ -170,7 +170,7 @@ sub check_for_id_string ()
             }
             close (FILE);
             if ($found == 0) {
-                print_error ("No \$Id string found in $file");
+                print_error ("No \$Id\$ string found in $file");
             }
         }
         else {
