@@ -102,7 +102,7 @@ Sun Nov 19 21:20:58 2000  Ossama Othman  <ossama@uci.edu>
 	  conversion problems when RTTI is not supported by the compiler.
 
 	  These methods allow applications to get access to the TAO
-	  extension methods by downcasting
+	  extension methods by downcasting a
 	  PortableInterceptor::ORBInitInfo_ptr reference.
 
 	* tao/ORB_Core.h:
@@ -196,7 +196,7 @@ Sun Nov 19 21:20:58 2000  Ossama Othman  <ossama@uci.edu>
 	  pluggable protocol.
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input_i,
-	  handle_input_i):
+	  handle_input):
 
 	  Place the current SSL state in TSS when handling a request.
 	  This is necessary for the newly added SSLIOP::Current TAO
