@@ -127,4 +127,9 @@
 #  define ACE_HAS_SHM_OPEN
 #endif /* _POSIX_C_SOURCE > 2 */
 
+// The struct msghdr is conditional on SunOS 5.6 based on _XPG4_2
+#if defined(_XPG4_2)
+# define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+#endif /* _XPG4_2 */
+
 #endif /* ACE_CONFIG_H */
