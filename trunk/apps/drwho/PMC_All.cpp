@@ -74,13 +74,13 @@ PMC_All::decode (char *packet, int &packet_length)
 Protocol_Record *
 PMC_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
-  Protocol_Record *frp = PM_Client::insert_protocol_info (protocol_record);
-  int length = ACE_OS::strlen (frp->set_real (ACE::strnew (protocol_record.get_real ())));
+  Protocol_Record *prp = PM_Client::insert_protocol_info (protocol_record);
+  int length = ACE_OS::strlen (prp->set_real (ACE::strnew (protocol_record.get_real ())));
 	
   if (length > this->max_key_length)
     this->max_key_length = length;
 
-  return frp;
+  return prp;
 }
   
 void

@@ -10,23 +10,23 @@
 Protocol_Record *
 PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
 {
-  Protocol_Record *frp = this->ss->insert (protocol_record.get_login ());
+  Protocol_Record *prp = this->ss->insert (protocol_record.get_login ());
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
   Drwho_Node *np = this->get_drwho_node (ACE::strnew (current_node->get_host_name ()),
-                                         frp->drwho_list_);
+                                         prp->drwho_list_);
 
   // Update the active and inactive counts.
   
   if (np->get_active_count () < current_node->get_active_count ())
     {
       np->set_active_count (current_node->get_active_count ());
-      frp->is_active_ = 1;
+      prp->is_active_ = 1;
     }
 
   if (np->get_inactive_count () < current_node->get_inactive_count())
     np->set_inactive_count (current_node->get_inactive_count ());
 
-  return frp;
+  return prp;
 }
 
 // This routine does all the dirty work, and actually prints out the
@@ -54,16 +54,16 @@ PM_Client::process (void)
   // Goes through the queue of all the logged in friends and prints
   // out the associated information.
   
-  for (Protocol_Record *frp = this->Protocol_Manager::get_each_friend ();
-       frp != 0;
-       frp = this->Protocol_Manager::get_each_friend ())
+  for (Protocol_Record *prp = this->Protocol_Manager::get_each_friend ();
+       prp != 0;
+       prp = this->Protocol_Manager::get_each_friend ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%c%-*s [", (frp->is_active_ != 0 ? '*' : ' '), 
+                  "%c%-*s [", (prp->is_active_ != 0 ? '*' : ' '), 
                   this->max_key_length,
-                  (frp->*get_name) ()));
+                  (prp->*get_name) ()));
       
-      for (Drwho_Node *np = frp->get_drwho_list (); ;)
+      for (Drwho_Node *np = prp->get_drwho_list (); ;)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       np->get_host_name (),

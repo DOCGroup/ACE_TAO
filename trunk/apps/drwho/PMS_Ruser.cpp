@@ -17,7 +17,7 @@ PMS_Ruser::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMS_Ruser::encode"));
 
-  Protocol_Record *frp;
+  Protocol_Record *prp;
   char *buf_ptr = packet;
 
   sprintf (buf_ptr,
@@ -28,11 +28,11 @@ PMS_Ruser::encode (char *packet, int &packet_length)
   // We only send back info on hosts that we actually see.
 
   for (;
-       (frp = this->get_next_friend ()) != 0;
+       (prp = this->get_next_friend ()) != 0;
        *buf_ptr++ = '\t')
     buf_ptr = this->handle_protocol_entries (ACE::strecpy (buf_ptr,
-                                                           frp->get_host ()),
-                                             frp->get_drwho_list ());
+                                                           prp->get_host ()),
+                                             prp->get_drwho_list ());
   
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
@@ -74,11 +74,11 @@ Protocol_Record *
 PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
-  Protocol_Record *frp = this->ss->insert (current_node->get_host_name (),
+  Protocol_Record *prp = this->ss->insert (current_node->get_host_name (),
                                            MAXHOSTNAMELEN);
   Drwho_Node *np = this->get_drwho_node (ACE::strnnew (protocol_record.get_login (),
                                                        MAXUSERIDNAMELEN),
-                                         frp->drwho_list_);
+                                         prp->drwho_list_);
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     np->set_real_name ("");
@@ -99,7 +99,7 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   else
     np->active_count_++;
   
-  return frp;
+  return prp;
 }
 
 char *

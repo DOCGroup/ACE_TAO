@@ -11,5 +11,5 @@ SL_Client::SL_Client (const char *usr_name)
 Protocol_Record *
 SL_Client::insert (const char *, int)
 {
-  return this->frp;
+  return this->prp;
 }

@@ -17,7 +17,7 @@ PMS_All::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMS_All::encode"));
 
-  Protocol_Record *frp;
+  Protocol_Record *prp;
   char *buf_ptr = packet;
 
   sprintf (buf_ptr,
@@ -28,12 +28,12 @@ PMS_All::encode (char *packet, int &packet_length)
   // We only send back info on friends that we actually see logged in.
 
   for (;
-       (frp = this->get_next_friend ()) != 0;
+       (prp = this->get_next_friend ()) != 0;
        *buf_ptr++ = '\t')
     buf_ptr = this->handle_protocol_entries (ACE::strecpy (ACE::strecpy (buf_ptr,
-                                                                         frp->get_login ()),
-                                                           frp->get_real ()),
-                                             frp->get_drwho_list ());
+                                                                         prp->get_login ()),
+                                                           prp->get_real ()),
+                                             prp->get_drwho_list ());
   
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
@@ -75,17 +75,17 @@ PMS_All::decode (char *, int &packet_length)
 Protocol_Record *
 PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
-  Protocol_Record *frp = PM_Server::insert_protocol_info (protocol_record);
-  passwd *pwent = getpwnam (frp->get_login ());
-  char *cp = (char *) ACE_OS::strchr (frp->set_real 
+  Protocol_Record *prp = PM_Server::insert_protocol_info (protocol_record);
+  passwd *pwent = getpwnam (prp->get_login ());
+  char *cp = (char *) ACE_OS::strchr (prp->set_real 
                                       (pwent == 0 
-                                       ? frp->get_login () :
+                                       ? prp->get_login () :
                                        ACE::strnew (pwent->pw_gecos)),
                                       ',');
   if (cp != 0)
     *cp = '\0';
 
-  return frp;
+  return prp;
 }
 
 PMS_All::PMS_All (void)

@@ -105,11 +105,11 @@ BS_Server::insert (const char *key_name, int max_len)
 Protocol_Record *
 BS_Server::get_next_entry (void)
 {
-  for (Protocol_Record *frp = Binary_Search::get_next_entry ();
-       frp != 0;
-       frp = Binary_Search::get_next_entry ())
-    if (frp->get_drwho_list () != 0)
-      return frp;
+  for (Protocol_Record *prp = Binary_Search::get_next_entry ();
+       prp != 0;
+       prp = Binary_Search::get_next_entry ())
+    if (prp->get_drwho_list () != 0)
+      return prp;
 
   return 0;
 }

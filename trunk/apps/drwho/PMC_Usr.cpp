@@ -70,8 +70,8 @@ PMC_Usr::decode (char *packet, int &packet_length)
 void
 PMC_Usr::process (void)
 {
-  Protocol_Record *frp = this->get_each_friend ();
-  Drwho_Node *np  = frp->get_drwho_list ();
+  Protocol_Record *prp = this->get_each_friend ();
+  Drwho_Node *np  = prp->get_drwho_list ();
   
   if (np == 0)
     ACE_DEBUG ((LM_DEBUG, 
@@ -91,7 +91,7 @@ PMC_Usr::process (void)
 	      return;
 	  }
       
-      for (np = frp->get_drwho_list ();
+      for (np = prp->get_drwho_list ();
            np != 0;
            np = np->next_)
 	if (np->active_count_ == 0)

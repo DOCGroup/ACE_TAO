@@ -36,9 +36,9 @@ PMC_Flo::encode (char *packet, int &packet_length)
   // Iterate through all the friends, copying them into the packet
   // buffer.
 
-  for (Protocol_Record *frp; (frp = this->get_next_friend ()) != 0; )
+  for (Protocol_Record *prp; (prp = this->get_next_friend ()) != 0; )
     buf_ptr = ACE::strecpy (buf_ptr,
-                            frp->get_login ());
+                            prp->get_login ());
 
   packet_length = buf_ptr - packet;
 
@@ -98,13 +98,13 @@ PMC_Flo::decode (char *packet, int &packet_length)
 Protocol_Record *
 PMC_Flo::insert_protocol_info (Protocol_Record &protocol_record)
 {
-  Protocol_Record *frp = PM_Client::insert_protocol_info (protocol_record);
-  int length	= strlen (frp->get_real ());
+  Protocol_Record *prp = PM_Client::insert_protocol_info (protocol_record);
+  int length	= strlen (prp->get_real ());
 
   if (length > this->max_key_length)
     this->max_key_length = length;
 
-  return frp;
+  return prp;
 }
 
 void

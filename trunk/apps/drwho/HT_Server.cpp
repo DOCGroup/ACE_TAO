@@ -9,28 +9,28 @@
 Protocol_Record *
 HT_Server::insert (const char *key_name, int max_len)
 {
-  Protocol_Record **frpp = 0;
+  Protocol_Record **prpp = 0;
 
   // This is tricky...
 
-  for (frpp = &this->hash_table[ACE::hash_pjw (key_name)];
-       *frpp != 0 && strncmp ((*frpp)->get_login (), key_name, max_len) != 0;
-       frpp = &(*frpp)->next_)
+  for (prpp = &this->hash_table[ACE::hash_pjw (key_name)];
+       *prpp != 0 && strncmp ((*prpp)->get_login (), key_name, max_len) != 0;
+       prpp = &(*prpp)->next_)
     continue;
 
-  if (*frpp == 0)
+  if (*prpp == 0)
     {
       // Remember, the server must be very careful about stuff it
       // receives from the rwho manager, since it may not be
       // NUL-terminated.  That's why we use ACE::strnnew ()...
 
-      ACE_NEW_RETURN (*frpp,
+      ACE_NEW_RETURN (*prpp,
                       Protocol_Record (ACE::strnnew (key_name,
                                                      max_len),
-                                       *frpp),
+                                       *prpp),
                       0);
       this->count_++;
     }
 
-  return *frpp;
+  return *prpp;
 }

@@ -29,18 +29,18 @@ PM_Server::process (void)
 Protocol_Record *
 PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
 {
-  Protocol_Record *frp = this->ss->insert (protocol_record.get_login ());
+  Protocol_Record *prp = this->ss->insert (protocol_record.get_login ());
 
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
 
   if (current_node->get_idle_time () < MAX_USER_TIMEOUT)
         this->increment_total_users ();
 
-  if (frp)
+  if (prp)
     {
       Drwho_Node *np =
         this->get_drwho_node (ACE::strnew (current_node->get_host_name ()),
-                              frp->drwho_list_);
+                              prp->drwho_list_);
 
       if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
 	np->inactive_count_++;
@@ -48,7 +48,7 @@ PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
 	np->active_count_++;
     }
 
-  return frp;
+  return prp;
 }
 
 // Put the inactive and active counts, plus the hostname into the
