@@ -3,30 +3,6 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE dynamic library"="..\..\..\..\ace\ace_dll.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TAO"="..\..\..\tao\TAO.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Time_Date"=".\Time_Date.dsp" - Package Owner=<4>
 
 Package=<5>
