@@ -31,18 +31,17 @@ LFLAGS = \
 	-L$(CORE_BINDIR)
 
 LIBFILES = \
-<%foreach(libs defaultlibs)%>
-	<%lib%>$(LIB_DECORATOR).lib \
-<%endfor%>
 <%foreach(lit_libs)%>
 	<%lit_lib%>.lib \
 <%endfor%>
+<%foreach(libs defaultlibs)%>
+	<%lib%>$(LIB_DECORATOR).lib <%fornotlast(" \\")%>
+<%endfor%>
 
 <%if(idl_files)%>
-
 IDLFILES = \
 <%foreach(idl_files)%>
-	$(IDLDIR)\<%basenoextension(idl_file)%>.idl<%fornotlast(" \\")%>
+        <%idl_file%><%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 <%if(resource_files)%>
@@ -83,11 +82,8 @@ CFLAGS = \
 
 CPPDIR = <%cppdir%>
 CDIR   = <%cppdir%>
-<%if(idl_files)%>
-IDLDIR = .
-<%endif%>
-<%if(header_files || template_files || inline_files || idl_files)%>
 
+<%if(header_files || template_files || inline_files || idl_files)%>
 INCLUDES = \
 <%foreach(header_files template_files inline_files idl_files)%>
 	<%header_file%><%fornotlast(" \\")%>
@@ -162,11 +158,9 @@ BINDIR = <%libout%>
 <%endif%>
 
 <%if(idl_files)%>
-
 #
 # IDL Build rules
 #
-
 idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 
 <%foreach(idl_files)%>
@@ -183,7 +177,7 @@ idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 <%dirname(idl_file)%>\<%basenoextension(idl_file)%>S.cpp <%dirname(idl_file)%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
 <%else%>
-$(IDLDIR)\<%basenoextension(idl_file)%>S.cpp $(IDLDIR)\<%basenoextension(idl_file)%>C.cpp: $(IDLDIR)\<%idl_file%>
+<%basenoextension(idl_file)%>S.cpp <%basenoextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
 <%endif%>
 <%endif%>
