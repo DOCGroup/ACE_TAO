@@ -23,6 +23,8 @@
 #  include "ace/Synch.h"
 #  include "ace/Svc_Handler.h"
 
+#  include "tao/corba.h"
+
 // Forward Decls
 class TAO_OA_Parameters;
 
