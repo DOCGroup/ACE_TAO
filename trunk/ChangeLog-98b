@@ -1,3 +1,10 @@
+Thu Oct 01 01:05:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/tests.dsw:
+	* tests/version_tests/version_tests.dsw: 
+	* tests/Thread_Pool_Reactor_Test.{cpp,dsp}: Added a new test that
+ 	  torture tests the new ACE_TP_Reactor.
+
 Thu Oct 01 00:09:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Conn_Test: Removed template specialization for
