@@ -21,7 +21,7 @@
 #include "ace/SString.h"
 #endif /* ACE_USE_MAPPING_NAME */
 
-ACE_RCSID(ace, Mem_Map, "$Id$")
+ACE_RCSID(ace, Mem_Map, "Mem_Map.cpp,v 4.39 2003/11/01 11:15:13 dhinton Exp")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Mem_Map)
 
@@ -33,8 +33,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Mem_Map)
 
 static void
 to_mapping_name (ACE_TCHAR *mapobjname,
-		 const ACE_TCHAR *filename,
-		 size_t len)
+    const ACE_TCHAR *filename,
+    size_t len)
 {
   --len;
   size_t i = 0;
@@ -215,14 +215,14 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                        max_mapping_name_length + 1);
 
       this->base_addr_ = ACE_OS::mmap (this->base_addr_,
-				       this->length_,
-				       prot,
-				       share,
-				       this->handle_,
-				       offset,
-				       &this->file_mapping_,
-				       sa,
-				       file_mapping_name);
+          this->length_,
+          prot,
+          share,
+          this->handle_,
+          offset,
+          &this->file_mapping_,
+          sa,
+          file_mapping_name);
     }
   else
 #endif /* ACE_USE_MAPPING_NAME */
@@ -250,7 +250,7 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
                     file_name,
                     MAXPATHLEN);
 
-#if defined (CHORUS) || defined(INTEGRITY)
+#if defined (CHORUS) || defined(INTEGRITY)  || defined (__QNXNTO__)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
 #else
   this->handle_ = ACE_OS::open (file_name, flags, mode, sa);
@@ -381,7 +381,7 @@ ACE_Mem_Map::remove (void)
   this->close ();
 
   if (this->filename_[0] != '\0')
-#if defined (CHORUS)
+#if defined (CHORUS) || defined (__QNXNTO__)
   return ACE_OS::shm_unlink (this->filename_);
 #else
   return ACE_OS::unlink (this->filename_);
