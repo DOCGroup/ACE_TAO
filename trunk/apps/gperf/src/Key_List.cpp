@@ -1498,8 +1498,9 @@ Key_List::dump (void)
     ? option.max_keysig_size () 
     : ACE_OS::strlen ("keysig");
 
-  int keyword_width = this->max_key_length () > ACE_OS::strlen ("keysig") 
-    ? this->max_key_length () 
+  u_int max_len = size_t (this->max_key_length ());
+  size_t keyword_width = max_len > ACE_OS::strlen ("keysig") 
+    ? max_len
     : ACE_OS::strlen ("keysig");
 
   ACE_DEBUG ((LM_DEBUG,
