@@ -798,9 +798,9 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
         connection.  <p>
 
         MUXED means that Transport multiplexes more than one request at the
-        same time on a connection. This is very important for getting the
-        Asynchronous Method Invocation model to work. This is not
-        implemented yet. <p>
+        same time on a connection.  This option is often used in
+	conjunction with Asynchronous Method Invocation, because
+	multiple requests can be sent 'in bulk'. <p>
 
         Default for this option is EXCLUSIVE.
 

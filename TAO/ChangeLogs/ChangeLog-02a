@@ -1,78 +1,93 @@
+Wed Nov 22 16:53:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* docs/Options.html:
+	  Fixed documentation for TransportMuxingStrategy, thanks to Jeff
+	  Greif <jmg@trivida.com> for pointing this out.
+
+        * tao/DynamicAny/DynSequence_i.cpp:
+          Fixed current_index_ initialization, it was initialized to an
+          invalid value, even though it was perfectly usable.
+          This fixes the execution problems in the Trading Service tests.
+
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+          Same fix, but this does not affect CosTrading.
+
 Wed Nov 22 16:24:52 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (connect):
 
-	  Fixed IIOP (non-SSL) connection problems due to a dynamic_cast
-	  that was failing.  The TAO_Endpoint pointer obtained from the
-	  Connection_Descriptor is actually a TAO_SSLIOP_Endpoint, so we
-	  need to downcast to a TAO_SSIOP_Endpoint and then access the
-	  non-SSL TAO_IIOP_Endpoint from it.  Previously we were
-	  downcasting straight to a TAO_IIOP_Endpoint, which of course
-	  will not work since the endpoint pointer actually points to
-	  TAO_SSLIOP_Endpoint.
+          Fixed IIOP (non-SSL) connection problems due to a dynamic_cast
+          that was failing.  The TAO_Endpoint pointer obtained from the
+          Connection_Descriptor is actually a TAO_SSLIOP_Endpoint, so we
+          need to downcast to a TAO_SSIOP_Endpoint and then access the
+          non-SSL TAO_IIOP_Endpoint from it.  Previously we were
+          downcasting straight to a TAO_IIOP_Endpoint, which of course
+          will not work since the endpoint pointer actually points to
+          TAO_SSLIOP_Endpoint.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
-	  Corrected typo where base class pointer was checked for
-	  validity instead of the derived class pointer.  This fixes a
-	  potential problem where a failed dynamic_cast would not have
-	  beend etected.
+          Corrected typo where base class pointer was checked for
+          validity instead of the derived class pointer.  This fixes a
+          potential problem where a failed dynamic_cast would not have
+          beend etected.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
-	  (TAO_SSLIOP_Endpoint):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
+          (TAO_SSLIOP_Endpoint):
 
-	  If no SSL tagged component is available, then set the
-	  Security::NoProtection "target_supports" security association
-	  bit.  We can't be sure if the server supports SSL if an SSL
-	  tagged component is available in the IOR, and TAO's SSLIOP
-	  implementation must support IIOP over SSL and plain IIOP.  This
-	  fixes a connection permission problem where the client supported
-	  SSLIOP and the server didn't.  The SSLIOP_Connector was being
-	  too cautious about establishing the connection.
+          If no SSL tagged component is available, then set the
+          Security::NoProtection "target_supports" security association
+          bit.  We can't be sure if the server supports SSL if an SSL
+          tagged component is available in the IOR, and TAO's SSLIOP
+          implementation must support IIOP over SSL and plain IIOP.  This
+          fixes a connection permission problem where the client supported
+          SSLIOP and the server didn't.  The SSLIOP_Connector was being
+          too cautious about establishing the connection.
 
 Wed Nov 22 17:37:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
-	
-	* tests/Multiple/Collocation_Tester.cpp:
-	* tests/Multiple/Makefile:
-	* tests/Multiple/Multiple_Impl.cpp:
-	* tests/Multiple/client.cpp:
-	* tests/Multiple/server.cpp:
-	* tests/Multiple/run_test.pl:
 
-	  Cosmetic changes to some file, plus perl script for automatically
-	  running the test.
-	
+        * tests/Multiple/Collocation_Tester.cpp:
+        * tests/Multiple/Makefile:
+        * tests/Multiple/Multiple_Impl.cpp:
+        * tests/Multiple/client.cpp:
+        * tests/Multiple/server.cpp:
+        * tests/Multiple/run_test.pl:
+
+          Cosmetic changes to some file, plus perl script for automatically
+          running the test.
+
 Wed Nov 22 14:30:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
 
-	  Modified code generated for the proxy broker factory
-	  function. Now the factory is a public static method of the proxy
-	  broker itself.
+          Modified code generated for the proxy broker factory
+          function. Now the factory is a public static method of the proxy
+          broker itself.
 
-	* tao/MessagingC.cpp:
-	* tao/MessagingC.h:
-	* tao/PortableServer/MessagingS.cpp:
-	* tao/PortableServer/MessagingS.h:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.h:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/MessagingS.h:
 
-	  Modified code to reflect the change made in the IDL generated
-	  code.
+          Modified code to reflect the change made in the IDL generated
+          code.
 
-	  Thanks to Andy <gokhale@research.bell-labs.com> for the support,
-	  and hint.
+          Thanks to Andy <gokhale@research.bell-labs.com> for the support,
+          and hint.
 
 Wed Nov 22 10:05:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Latency/server.dsp
-	* performance-tests/Latency/client.dsp
-	* performance-tests/Latency/st_client.dsp
+        * performance-tests/Latency/server.dsp
+        * performance-tests/Latency/client.dsp
+        * performance-tests/Latency/st_client.dsp
 
-	  Updated the Debug and Release configurations.
+          Updated the Debug and Release configurations.
 
 Wed Nov 22 09:49:51 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -83,140 +98,140 @@ Wed Nov 22 09:49:51 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Nov 22 09:23:08 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Benchmark/test.idl:
+        * tests/Portable_Interceptors/Benchmark/test.idl:
 
-	  Added missing "raises" clause to the authenticate() method.
+          Added missing "raises" clause to the authenticate() method.
 
 Tue Nov 21 21:13:18 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
+        * tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
 
-	  Made the Table and Iterator typedefs public.  Some compilers
-	  complain if they are private since they aren't visible at the
-	  file level.
+          Made the Table and Iterator typedefs public.  Some compilers
+          complain if they are private since they aren't visible at the
+          file level.
 
 Tue Nov 21 23:25:57 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
 
-	  Added global scope specifier in the proxy factory function. This
-	  should fix the problem with VxWorks compilers.
+          Added global scope specifier in the proxy factory function. This
+          should fix the problem with VxWorks compilers.
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp (visit_interface):
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp (visit_interface):
 
-	  Added ACE_NESTED_CLASS in the code generated for the method
-	  setup_collocation to fix the problem that some compiler had with
-	  the current implementation.
+          Added ACE_NESTED_CLASS in the code generated for the method
+          setup_collocation to fix the problem that some compiler had with
+          the current implementation.
 
 Tue Nov 21 21:32:30 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
-	  Corrected the logic for rejecting events on buffer overflow when the
-	  RejectNewEvents Admin property is set.
-	  Thanks to Sarabjeet Duhra <sarabjeet_duhra@hp.com> for pointing
-	  this out.
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
+          Corrected the logic for rejecting events on buffer overflow when the
+          RejectNewEvents Admin property is set.
+          Thanks to Sarabjeet Duhra <sarabjeet_duhra@hp.com> for pointing
+          this out.
 
 Tue Nov 21 17:52:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/Nested_Event_Loop/server.dsp:
-	* tests/Nested_Event_Loop/client.dsp:
+        * tests/Nested_Event_Loop/server.dsp:
+        * tests/Nested_Event_Loop/client.dsp:
 
-	  Updated settings to link TAO_Strategies.
+          Updated settings to link TAO_Strategies.
 
 Tue Nov 21 17:37:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/Nested_Event_Loop/Makefile:
+        * tests/Nested_Event_Loop/Makefile:
 
-	  Updated to link TAO_Strategies.
+          Updated to link TAO_Strategies.
 
-	* tests/Nested_Event_Loop/client.cpp:
-	* tests/Nested_Event_Loop/server.cpp:
+        * tests/Nested_Event_Loop/client.cpp:
+        * tests/Nested_Event_Loop/server.cpp:
 
-	  Included tao/Stratgies/advanced_resource.h
+          Included tao/Stratgies/advanced_resource.h
 
-	* tests/Nested_Event_Loop/svc.conf:
-	  Passed -ORBReactorType select_mt as the argument.
+        * tests/Nested_Event_Loop/svc.conf:
+          Passed -ORBReactorType select_mt as the argument.
 
 Tue Nov 21 17:23:45 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Client_Protocol/server.dsp
-	  Updated settings.
+        * tests/RTCORBA/Client_Protocol/server.dsp
+          Updated settings.
 
 Tue Nov 21 19:20:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/Server_Request.cpp:
 
-	  Updated the raising of system exceptions by arguements(),
-	  set_result() and set_exception() to conform to changes in
-	  CORBA 2.4.
+          Updated the raising of system exceptions by arguements(),
+          set_result() and set_exception() to conform to changes in
+          CORBA 2.4.
 
 Tue Nov 21 16:26:03 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Table.cpp (bind):
+        * tao/ORB_Table.cpp (bind):
 
-	  Make sure the ORB table owns the ORB Core by increasing the
-	  reference count on it.
+          Make sure the ORB table owns the ORB Core by increasing the
+          reference count on it.
 
-	* tao/ORB_Core.h (svc_config_argc_, svc_config_argv_):
+        * tao/ORB_Core.h (svc_config_argc_, svc_config_argv_):
 
-	  Removed these attributes.  They are no longer needed since the
-	  Service Configurator is now initialized in the CORBA::ORB_init()
-	  function.
+          Removed these attributes.  They are no longer needed since the
+          Service Configurator is now initialized in the CORBA::ORB_init()
+          function.
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Moved all Service Configurator related option parsing code to
-	  TAO_Internal::open_services(), and moved the code that invokes
-	  open_services() to CORBA::ORB_init().  This is necessary to make
-	  sure that services are loaded prior to invoking the pre_init()
-	  method in registered ORBInitializers.
+          Moved all Service Configurator related option parsing code to
+          TAO_Internal::open_services(), and moved the code that invokes
+          open_services() to CORBA::ORB_init().  This is necessary to make
+          sure that services are loaded prior to invoking the pre_init()
+          method in registered ORBInitializers.
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  The ORB table increases the reference count on the ORB Core so
-	  do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr to
-	  decrease the reference on the ORB Core when it goes out of
-	  scope.
+          The ORB table increases the reference count on the ORB Core so
+          do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr to
+          decrease the reference on the ORB Core when it goes out of
+          scope.
 
-	  Initialize the Service Configurator.  This must occur before the
-	  ORBInitializer::pre_init() method is invoked on each registered
-	  ORB initializer.
+          Initialize the Service Configurator.  This must occur before the
+          ORBInitializer::pre_init() method is invoked on each registered
+          ORB initializer.
 
-	* tao/TAO_Internal.h (open_services, open_services_i):
+        * tao/TAO_Internal.h (open_services, open_services_i):
 
-	  Added new "open_services()" method declaration, and renamed the
-	  existing one to "open_services_i()" since it is invoked by the
-	  former.
+          Added new "open_services()" method declaration, and renamed the
+          existing one to "open_services_i()" since it is invoked by the
+          former.
 
-	* tao/TAO_Internal.cpp (open_services):
+        * tao/TAO_Internal.cpp (open_services):
 
-	  Construct a Service Configurator argument vector from options
-	  extracted from the argument vector passed in from
-	  CORBA::ORB_init().
+          Construct a Service Configurator argument vector from options
+          extracted from the argument vector passed in from
+          CORBA::ORB_init().
 
-	* orbsvcs/examples/Security/Send_File/Makefile (BIN):
+        * orbsvcs/examples/Security/Send_File/Makefile (BIN):
 
-	  Conditionally build the binaries on the "ssl" make variable
-	  instead of the deprecate "ace_components" script.
+          Conditionally build the binaries on the "ssl" make variable
+          instead of the deprecate "ace_components" script.
 
 Tue Nov 21 18:07:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicAny/DynArray_i.cpp:
-	* tao/DynamicAny/DynSequence_i.cpp:
-	* tao/DynamicAny/DynStruct_i.cpp:
-	* tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
 
-	  In the to_any() method, replaced the exception
-	  DynamicAny::TypecodeMismatch with BAD_INV_ORDER,
-	  since to_any() isn't supposed to throw any user
-	  exceptions.
+          In the to_any() method, replaced the exception
+          DynamicAny::TypecodeMismatch with BAD_INV_ORDER,
+          since to_any() isn't supposed to throw any user
+          exceptions.
 
 Tue Nov 21 18:04:00 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/README
-	* tests/RTCORBA/Banded_Connections/README:
+        * tests/RTCORBA/README
+        * tests/RTCORBA/Banded_Connections/README:
 
-	  Added test description and expected output.
+          Added test description and expected output.
 
 Tue Nov 21 15:56:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
