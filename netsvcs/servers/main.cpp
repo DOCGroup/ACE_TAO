@@ -82,6 +82,7 @@ main (int argc, char *argv[])
                         "TS Clerk Processor",
                         1));
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
           char token_port[] = "-p " ACE_DEFAULT_TOKEN_SERVER_PORT_STR;
           l_argv[0] = token_port;
           l_argv[1] = 0;
@@ -92,6 +93,7 @@ main (int argc, char *argv[])
                         "%p\n%a",
                         "Token Service",
                         1));
+#endif /* ACE_HAS_TOKENS_LIBRARY */
 
           char thr_logging_port[] = "-p " ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR;
           l_argv[0] = thr_logging_port;

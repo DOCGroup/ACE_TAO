@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    examples
@@ -29,7 +29,7 @@
 
 ACE_RCSID(collection, collection, "$Id$")
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 static const char *server_host = ACE_DEFAULT_SERVER_HOST;
 static int server_port = ACE_DEFAULT_SERVER_PORT;
@@ -208,4 +208,4 @@ main (int, char *[])
   ACE_ERROR_RETURN ((LM_ERROR, 
 		     "threads not supported on this platform\n"), -1);
 }
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
