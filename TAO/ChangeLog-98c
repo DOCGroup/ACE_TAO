@@ -1,3 +1,36 @@
+Tue Apr 14 13:49:51 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	The following changes are untested.
+
+	* TAO/tao/skip.cpp: Added a new file that can skip values in the
+	CDR stream. We need this functionality so that when an Any is
+	decoded, it will simply hold a pointer to the ACE_Message_Block
+	(which in turn consists the incoming CDR stream). However, we
+	still need to skip past the value. This skipping uses the same
+	interpretive algorithm used by the encoder and decoder.
+
+	* TAO/tao/Any.{h, cpp}: Changed the way constructors, assignment
+	operators, replace method, and destructor worked. The policy is
+	that if the Any owns the value, then it immediately converts the
+	value to a CDR stream and destroys the value.
+
+	* TAO/tao/CDR.{h, i}: Added some more functionality to do the
+	basic "skip" operations.
+
+	* TAO/tao/Marshal.h: Added the skip methods on all the
+	TAO_Marshal_* classes.
+
+	* TAO/tao/decode.cpp: When we decode an Any, the value pointer now
+	points to the CDR stream (represented as a ACE_Message_Block). It
+	is the application's responsibility to use the <<=, >>= operators
+	to retrieve the right type.
+
+	* TAO/tao/Policy{C,S}.{h,i,cpp}: Added these files that have stubs
+	and skeletons for the CORBA::Policy interface.
+
+	* TAO/tao/{ORB, corba}.h: Added definitions for the PolicyType,
+	Policy, and PolicyList.
+
 Tue Apr 14 12:27:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/decode.cpp:
