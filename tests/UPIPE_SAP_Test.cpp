@@ -4,17 +4,17 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    UPIPE_SAP_Test.cpp
 //
 // = DESCRIPTION
 //      This is a test that uses ACE_UPIPE_SAP and ACE_Thread for
-//      intra-process communication. 
+//      intra-process communication.
 //
 // = AUTHOR
 //    Gerhard Lenzer, Douglas C. Schmidt, and Prashant Jain
-// 
+//
 // ============================================================================
 
 #include "ace/Stream.h"
@@ -69,8 +69,8 @@ connector (void *)
 
   ACE_DEBUG ((LM_DEBUG, "(%t) connector sending text\n"));
   if (c_stream.send (mytext, sizeof (mytext)) == -1)
-    ACE_DEBUG ((LM_DEBUG, 
-		"(%t) buffer send from connector failed\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%t) buffer send from connector failed\n"));
 
   char conbuf[BUFSIZ];  // Buffer to receive response.
 
@@ -79,10 +79,10 @@ connector (void *)
   for (char c = ' '; c != '!'; i++)
     {
       if (c_stream.recv (&c, 1) == -1)
-	ACE_DEBUG ((LM_DEBUG, 
-		    "(%t) buffer recv from connector failed\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) buffer recv from connector failed\n"));
       else
-	conbuf[i] = c;
+        conbuf[i] = c;
     }
 
   conbuf[i] = '\0';
@@ -101,8 +101,8 @@ acceptor (void *args)
   ACE_UPIPE_Stream s_stream;
 
   if (acceptor->accept (s_stream) == -1)
-    ACE_DEBUG ((LM_DEBUG, 
-		"(%t) ACE_UPIPE_Acceptor.accept failed\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%t) ACE_UPIPE_Acceptor.accept failed\n"));
 
   ACE_Message_Block *mb = 0;
 
@@ -123,8 +123,8 @@ acceptor (void *args)
   if (s_stream.recv (s_buf, sizeof (s_buf)) == -1)
     ACE_DEBUG ((LM_DEBUG, "(%t) acceptor recv failed\n"));
   else
-    ACE_ASSERT (ACE_OS::strcmp (s_buf, 
-				"This string is sent by connector as a buffer") == 0);
+    ACE_ASSERT (ACE_OS::strcmp (s_buf,
+                                "This string is sent by connector as a buffer") == 0);
 
   const char svr_response[] = "this is the acceptor response!";
   ACE_OS::strcpy (s_buf, svr_response);
@@ -138,7 +138,7 @@ acceptor (void *args)
 }
 #endif /* ACE_HAS_THREADS && defined ACE_HAS_STREAM_PIPES || ACE_WIN32 */
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("UPIPE_SAP_Test");
@@ -149,19 +149,19 @@ main (int, char *[])
   ACE_UPIPE_Acceptor acc (addr);
 
   // Spawn a acceptor thread.
-  if (ACE_Thread::spawn (ACE_THR_FUNC (acceptor), 
-			 (void *) &acc,
-			 THR_NEW_LWP,
-			 0,
-			 &thr_handle_acceptor) == -1)
+  if (ACE_Thread::spawn (ACE_THR_FUNC (acceptor),
+                         (void *) &acc,
+                         THR_NEW_LWP,
+                         0,
+                         &thr_handle_acceptor) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   // Spawn a connector thread.
-  if (ACE_Thread::spawn (ACE_THR_FUNC (connector), 
-			 (void *) 0,
-			 THR_NEW_LWP,
-			 0,
-			 &thr_handle_connector) == -1)
+  if (ACE_Thread::spawn (ACE_THR_FUNC (connector),
+                         (void *) 0,
+                         THR_NEW_LWP,
+                         0,
+                         &thr_handle_connector) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
 
@@ -174,7 +174,7 @@ main (int, char *[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
   else
     ACE_DEBUG ((LM_DEBUG, "(%t) joined with acceptor thread\n"));
-  
+
   // Close the acceptor
   acc.close ();
 
