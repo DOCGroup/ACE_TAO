@@ -15,6 +15,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "AIO_CLD"=".\AIO_CLD.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Configurable_Logging_Server"=".\Configurable_Logging_Server.dsp" - Package Owner=<4>
 
 Package=<5>
