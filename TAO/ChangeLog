@@ -1,3 +1,12 @@
+Thu Jun 26 16:08:03 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO/tests/OBV/Supports/Supports_Test_impl.cpp:
+        * TAO/tests/OBV/Supports/Supports_Test_impl.h:
+        * TAO/tests/OBV/Supports/Client/client.cpp:
+
+        Enhanced valuetype test by including more complex valuetypes and
+        adding more parameter passing scenarios.
+
 Thu Jun 26 14:30:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Objref_VarOut_T.h:
