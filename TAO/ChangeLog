@@ -1,9 +1,17 @@
+Wed Nov  3 07:15:24 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i:
+
+          The _hash method on CORBA::Object_var takes a CORBA::ULong which
+          is always 32 bits.  Use a different macro instead of LONG_MAX
+          which can be 64 bits on some platforms.
+
 Tue Nov  2 12:28:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbvcs/FT_CORBA.idl:
+        * orbsvcs/orbvcs/FT_CORBA.idl:
 
-	  Changed "orbsvcs/orbsvcs/" #include path prefix to "orbsvcs/".
-	  Was missed in earlier refactor.
+          Changed "orbsvcs/orbsvcs/" #include path prefix to "orbsvcs/".
+          Was missed in earlier refactor.
 
 Tue Nov  2 12:23:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -24,32 +32,32 @@ Tue Nov  2 12:23:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Nov  2 09:43:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
 
-	  Changed FT_ReplicationManager project to inherit from core so
-	  that executable is installed.
+          Changed FT_ReplicationManager project to inherit from core so
+          that executable is installed.
 
-	* orbsvcs/FT_ReplicationManager/Makefile.am:
-	* orbsvcs/Fault_Detector/Makefile.am:
-	* orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/FT_ReplicationManager/Makefile.am:
+        * orbsvcs/Fault_Detector/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
 
-	  Updated to install executables.
+          Updated to install executables.
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Updated to omit Log/PersistantStore.cpp.
+          Updated to omit Log/PersistantStore.cpp.
 
 Tue Nov  2 07:24:04 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
 
-	  Added new method log_record_size() which returns the size of
-	  the log record including the contents of the Any field.
+          Added new method log_record_size() which returns the size of
+          the log record including the contents of the Any field.
 
-	  Changed log() and remove() methods to use log_record_size().
-	  The old implementation only counted the size of the LogRecord
-	  struct which seriously underestimates the size.
+          Changed log() and remove() methods to use log_record_size().
+          The old implementation only counted the size of the LogRecord
+          struct which seriously underestimates the size.
 
 Mon Nov  1 15:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -64,9 +72,9 @@ Sun Oct 31 15:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Oct 30 15:28:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/Trading/TT_Info.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
 
-	  Fixed typos.
+          Fixed typos.
 
 Fri Oct 29 13:31:31 2004  Chad Elliott  <elliott_c@ociweb.com>
 
