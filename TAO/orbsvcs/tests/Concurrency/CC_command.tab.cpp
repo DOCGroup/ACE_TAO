@@ -93,13 +93,11 @@ static int ace_cc_yymaxdepth = ACE_CC_YYMAXDEPTH;
 
 # line 115 "CC_command.y"
 
-
-int ace_cc_yyerror(char *s)
+void ace_cc_yyerror(char *s)
 {
   printf("%d: %s at %s in:\n%s\n",
          line_no, s, ace_cc_yytext, line_buf);
   ACE_OS::exit(-1);
-  return 0;
 }
 ace_cc_yytabelem ace_cc_yyexca[] ={
 -1, 1,
