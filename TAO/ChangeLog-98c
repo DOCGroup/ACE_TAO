@@ -1,3 +1,9 @@
+Tue Feb 24 14:58:45 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/orbobj.cpp (run): Added a new run() method that takes an
+ 	ACE_Time_Value & rather than an ACE_Time_Value * so that we don't
+ 	need to pass the address!
+
 Tue Feb 24 14:31:37 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/NestedUpcall/client.cpp (main): Replaced orb->open() with
