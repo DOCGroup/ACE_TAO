@@ -42,10 +42,9 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   // Upcall from the AVStreams when there is data to be received from
   // the sender.
   //
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"Receiver_Callback::receive_frame for frame %d\n",
-		this->frame_count_++));
+  ACE_DEBUG ((LM_DEBUG,
+	      "Receiver_Callback::receive_frame for frame %d\n",
+	      this->frame_count_++));
   
   if (start)
     {
@@ -107,7 +106,7 @@ Receiver_Callback::dump_samples (const char* file)
 		       1);
   //  ACE_High_Res_Timer::global_scale_factor ());
   
-  for (int i = 0; i < stats_index; i++)
+  for (i = 0; i < stats_index; i++)
     {
       ACE_OS::fprintf (stats_file, "%d\n",stats [i]);
     }
