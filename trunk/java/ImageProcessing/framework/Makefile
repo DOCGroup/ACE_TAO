@@ -39,4 +39,7 @@ files =	ImageFilterFactory.java \
 	StatusIndicator.java \
 	GIFHandler.java \
 	ImageSender.java \
-	Tester.java
+	ServerTest.java \
+	ServerHandler.java \
+	Tester.java \
+	TestHandler.java
