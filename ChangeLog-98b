@@ -47,6 +47,9 @@ Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
           old Quantify LINK_COMMANDs.  They don't look like they're used
           anywhere.
 
+        * include/makeinclude/wrapper_macros.GNU: removed -DACE_QUANTIFY
+          and -Dquantify, with quantify=1, because they're no longer used.
+
 Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
