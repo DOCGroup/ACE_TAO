@@ -11,8 +11,8 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (TAO_PERF_RTEC_TCP_Baseline, 
-           server, 
+ACE_RCSID (TAO_PERF_RTEC_TCP_Baseline,
+           server,
            "$Id$")
 
 int use_rt   = 0;
@@ -61,7 +61,7 @@ int main (int argc, char *argv[])
 
 // ****************************************************************
 
-class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>
+class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
   Svc_Handler(ACE_Reactor * reactor = 0);
@@ -73,7 +73,7 @@ public:
 typedef ACE_Acceptor<Svc_Handler,ACE_SOCK_ACCEPTOR> Acceptor;
 
 Svc_Handler::Svc_Handler (ACE_Reactor * reactor)
-  : ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH> (0, 0, reactor)
+  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH> (0, 0, reactor)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Accepted connection\n"));
 }
@@ -101,7 +101,7 @@ Svc_Handler::handle_input(ACE_HANDLE h)
                    h, ""));
         break;
       }
-        
+
       ssize_t k = this->peer().send(buf, n);
       if(k == 0) {
         ACE_ERROR((LM_ERROR,
@@ -206,4 +206,3 @@ parse_args (int argc, char *argv[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

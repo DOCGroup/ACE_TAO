@@ -1,3 +1,18 @@
+Sat May  8 00:41:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
+
+	  Changed "ACE_Thread_Mutex" template argument to
+	  "ACE_SYNCH_MUTEX".  Allows this code to build in single-threaded
+	  builds.
+
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
+
+	  Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Doing so
+	  allows the code to build in a single threaded environment.
+	  Fixes single-threaded build compile-time errors.
+
 Fri May  7 14:58:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/RTCosScheduling/client.cpp:
