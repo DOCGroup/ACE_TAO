@@ -26,59 +26,42 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Default_ORTC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/String_TypeCode.h"
+#include "tao/Value_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/value_typecode.cpp:32
 
-static const CORBA::Long _oc_TAO_Default_ORT_ObjectReferenceTemplate[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x44656661), 
-  ACE_NTOHL (0x756c745f), 
-  ACE_NTOHL (0x4f52542f), 
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63745265), 
-  ACE_NTOHL (0x66657265), 
-  ACE_NTOHL (0x6e636554), 
-  ACE_NTOHL (0x656d706c), 
-  ACE_NTOHL (0x6174653a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0
-    24,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63745265), 
-  ACE_NTOHL (0x66657265), 
-  ACE_NTOHL (0x6e636554), 
-  ACE_NTOHL (0x656d706c), 
-  ACE_NTOHL (0x61746500),  // name = ObjectReferenceTemplate
-    0, // value modifier
-  CORBA::tk_null, // no stateful base valuetype
+static TAO::TypeCode::Value_Field<char const *>  * const _tao_fields_TAO_Default_ORT_ObjectReferenceTemplate = 0;
 
-0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_Default_ORT_ObjectReferenceTemplate (
-    CORBA::tk_value,
-    sizeof (_oc_TAO_Default_ORT_ObjectReferenceTemplate),
-    (char *) &_oc_TAO_Default_ORT_ObjectReferenceTemplate,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Value<char const *,
+                            TAO::TypeCode::Value_Field<char const *> const *,
+                            CORBA::tk_value,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_Default_ORT_ObjectReferenceTemplate (
+    "IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0",
+    "ObjectReferenceTemplate",
+    CORBA::VM_NONE,
+    &CORBA::_tc_null,
+    _tao_fields_TAO_Default_ORT_ObjectReferenceTemplate,
+    0);
+  
 namespace TAO_Default_ORT
 {
   ::CORBA::TypeCode_ptr const _tc_ObjectReferenceTemplate =
-    &_tc_TAO_tc_TAO_Default_ORT_ObjectReferenceTemplate;
+    &_tao_tc_TAO_Default_ORT_ObjectReferenceTemplate;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/any_op_cs.cpp:57
+// be/be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
