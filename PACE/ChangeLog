@@ -1,3 +1,11 @@
+Tue Jun 27 10:11:00 2000 John Heitmann <jwh1@cs.wustl.edu>
+
+        * pace/tests/Posix_SP_Test.c
+        * pace/tests/Stdio_Test.c
+        * pace/pace/posix/time.inl
+          Added more PACE_UNUSED_ARG
+
+
 Tue Jun 27 9:51:43 2000 John Heitmann <jwh1@cs.wustl.edu>
 
         * pace/tests/Makefile
