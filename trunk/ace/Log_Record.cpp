@@ -83,6 +83,8 @@ ACE_Log_Record::print (const char host_name[],
 {
   // ACE_TRACE ("ACE_Log_Record::print");
 
+  int ret;
+
   if (verbose)
     {
       time_t now = this->time_stamp_.sec ();
@@ -100,7 +102,7 @@ ACE_Log_Record::print (const char host_name[],
       if (host_name == 0)
 	host_name = "<local_host>";
 
-      return ACE_OS::fprintf (fp, "%s.%d%s@%s@%d@%d@%s",
+      ret =  ACE_OS::fprintf (fp, "%s.%d%s@%s@%d@%d@%s",
 			      ctp + 4, 
 			      this->time_stamp_.usec () / 1000,
 			      ctp + 20, 
@@ -110,7 +112,11 @@ ACE_Log_Record::print (const char host_name[],
 			      this->msg_data_);
     }
   else
-    return ACE_OS::fprintf (fp, "%s", this->msg_data_);
+    ret =  ACE_OS::fprintf (fp, "%s", this->msg_data_);
+
+  if (ret > 0)
+    ACE_OS::fflush (fp);
+  return ret;
 }
 
 int
