@@ -231,6 +231,9 @@ ACE_Message_Queue_Vx::wait_not_full_cond (ACE_Guard<ACE_Null_Mutex> &mon,
                                           ACE_Time_Value *tv)
 {
   // Always return here, and let the VxWorks message queue handle blocking.
+  ACE_UNUSED_ARG (mon);
+  ACE_UNUSED_ARG (tv);
+
   return 0;
 }
 
@@ -239,6 +242,9 @@ ACE_Message_Queue_Vx::wait_not_empty_cond (ACE_Guard<ACE_Null_Mutex> &mon,
                                            ACE_Time_Value *tv)
 {
   // Always return here, and let the VxWorks message queue handle blocking.
+  ACE_UNUSED_ARG (mon);
+  ACE_UNUSED_ARG (tv);
+
   return 0;
 }
 
@@ -247,6 +253,7 @@ int
 ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
                                          ACE_Time_Value *tv)
 {
+  ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
 }
 #endif /* ! ACE_REQUIRES_FUNC_DEFINITIONS */
