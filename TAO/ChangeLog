@@ -1,14 +1,21 @@
+Wed Apr  9 11:19:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Client_Task.h:
+	* tests/Bug_1482_Regression/Client_Task.cpp: Minor memory
+	  management tweaks to prevent the test from dumping a core during
+	  exit. 
+
 Wed Apr 09 16:41:18 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp: Fixed path to
-	tao_idl in release configuration.
+	  tao_idl in release configuration.
 
 Wed Apr  9 16:00:23 2003  Dave Smith  <dts@prismtechnologies.com>
 
 	* tao/Any_T.cpp:
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
 
-	Fixed compile problems with HPUX and Windows.
+	  Fixed compile problems with HPUX and Windows.
 
 Wed Apr  9 09:40:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
