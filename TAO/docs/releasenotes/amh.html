@@ -46,7 +46,7 @@ with the "-GH" option causes the IDL-Compiler to generate
 AMH-skeletons for all interfaces in the ".idl" file.  The signatures 
 of the AMH-methods differ from the original interfaces as per the 
 rules described in 
-<a href="http://www.cs.wustl.edu/~schmidt/PDF/AMH2.pdf"">AMH-In-Detail. </a>
+<a href="http://www.cs.wustl.edu/~schmidt/PDF/DOA-02.pdf"">AMH-In-Detail. </a>
 Servants derived from the AMH-skeletons are registered with the POA in the usual manner 
 and appear to clients as "normal" servants for the corresponding 
 interfaces; Thus even while being transparent to the client, these 
@@ -71,16 +71,13 @@ and behaviour is undefined if both are used together.
 <li>Changes to ORB for asynchronous upcalls.</li>
 <li>Generation of AMH-skeletons.</li>
 <li>Generation of AMH ResponseHandlers.</li>
-</ul>
-</P>
-
-<P>
-<b>To be done:</b>
-<ul>
-<li>Exception handling in AMH.</li>
-<li>Fix the narrow method bug for AMH skeletons.
+<li>AMH Exceptions.</li>
+<li>Fix the narrow method bug for AMH skeletons : Fixed
 <li>Sending intelligent exception codes back to client in case 
 something nasty happens in the AMH server.</li>
+<li>Example of using AMH available at ACE_wrappers/TAO/examples/AMH/Sink_Server.</li>
+<li>Test for AMH : ACE_wrappers/TAO/performance-tests/Latency/AMH</li>
+<li>Test for AMH Exceptions : ACE_wrappers/TAO/tests/AMH_Exceptions</li>
 </ul>
 </P>
 

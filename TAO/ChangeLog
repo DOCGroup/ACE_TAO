@@ -1,3 +1,21 @@
+Mon Jul 29 11:08:58 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* docs/releasenotes/amh.html:
+	  Updated to add the recent changes including:
+	
+	  - Various fixes to the IDL_Compiler to generate the
+	    correct code for AMH-Exceptions	
+	
+	  - Sending appropriate error-codes to clients in case of
+	    an exception in the AMH server.
+
+	  - Implementing AMH Exceptions.	
+	
+	  - A single button test for AMH Exceptions.
+
+	  - Example use case and implementation of an AMH server.
+	
+
 Mon Jul 29 19:46:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl
 
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/*.bor:
