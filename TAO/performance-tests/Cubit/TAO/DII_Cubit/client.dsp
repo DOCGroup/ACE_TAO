@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_Strategies.lib TAO_DynamicInterface.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao\DynamicInterface" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAO_Strategies.lib TAO_DynamicInterface.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\DynamicInterface" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "DII_Cubit Client - Win32 Debug"
 
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 TAO_DynamicInterfaced.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao\DynamicInterface" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAO_DynamicInterfaced.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\DynamicInterface" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "DII_Cubit Client - Win32 Static Debug"
 
@@ -105,7 +105,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
-# ADD LINK32 TAO_DynamicInterfacesd.lib TAOsd.lib acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao\DynamicInterface" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO_PortableServersd.lib TAO_DynamicInterfacesd.lib TAOsd.lib acesd.lib TAO_ObjRefTemplatesd.lib TAO_Valuetypesd.lib TAO_IORInterceptorsd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao\DynamicInterface" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "DII_Cubit Client - Win32 Static Release"
 
@@ -132,7 +132,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
-# ADD LINK32 TAO_DynamicInterfaces.lib TAOs.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\DynamicInterface" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO_PortableServers.lib TAO_DynamicInterfaces.lib TAOs.lib aces.lib TAO_ObjRefTemplates.lib TAO_Valuetypes.lib TAO_IORInterceptors.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao\DynamicInterface" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\PortableServer"
 
 !ENDIF 
 

@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 user32.lib advapi32.lib acesd.lib TAO_IORTablesd.lib TAO_PortableServersd.lib TAOsd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\iortable" /libpath:"..\..\..\tao\portableserver" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 user32.lib advapi32.lib acesd.lib TAO_IORTablesd.lib TAO_PortableServersd.lib TAOsd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib TAO_ObjRefTemplatesd.lib TAO_Valuetypesd.lib TAO_IORInterceptorsd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao\iortable" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\portableserver" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\tao\Valuetype" /libpath:"..\..\..\tao\IORInterceptor"
 
 !ELSEIF  "$(CFG)" == "Simple Time Client Static - Win32 Static Release"
 
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAO_CosNamings.lib TAO_Svc_Utilss.lib TAO_IORTables.lib TAO_PortableServers.lib TAOs.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao\portableserver" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAO_CosNamings.lib TAO_Svc_Utilss.lib TAO_IORTables.lib TAO_PortableServers.lib TAOs.lib TAO_ObjRefTemplates.lib TAO_Valuetypes.lib TAO_IORInterceptors.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\portableserver" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\tao\Valuetype" /libpath:"..\..\..\tao\IORInterceptor"
 
 !ENDIF 
 
