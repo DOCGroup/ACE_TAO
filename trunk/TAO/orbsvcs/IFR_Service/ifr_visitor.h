@@ -79,6 +79,12 @@ public:
   virtual int visit_component_fwd (AST_ComponentFwd *node);
   // Visit component_fwd
 
+  virtual int visit_eventtype (AST_EventType *node);
+  // Visit valuetype.
+
+  virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
+  // Visit valuetype_fwd
+
   virtual int visit_home (AST_Home *node);
   // Visit component home.
 

@@ -408,6 +408,7 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
 
   // get_buffer
   *os << "ACE_INLINE" << be_nl;
+  *os << "const ";
 
   bt->accept (&visitor);
 

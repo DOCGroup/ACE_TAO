@@ -1186,6 +1186,8 @@ TAO_CodeGen::end_server_template_header (void)
 int
 TAO_CodeGen::end_server_template_inline (void)
 {
+  *this->server_template_inline_ << "\n\n";
+   
   return 0;
 }
 

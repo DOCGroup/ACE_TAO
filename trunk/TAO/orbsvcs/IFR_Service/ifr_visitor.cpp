@@ -97,6 +97,18 @@ ifr_visitor::visit_component_fwd (AST_ComponentFwd *)
   return 0;
 }
 
+int 
+ifr_visitor::visit_eventtype (AST_EventType *)
+{
+  return 0;
+}
+
+int 
+ifr_visitor::visit_eventtype_fwd (AST_EventTypeFwd *)
+{
+  return 0;
+}
+
 int
 ifr_visitor::visit_home (AST_Home *)
 {
