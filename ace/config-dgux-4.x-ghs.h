@@ -137,13 +137,13 @@
 // Platform supports threads.
 #define ACE_HAS_THREADS
 #define ACE_HAS_PTHREADS
-// DG/UX claims to implement draft 10 of the pthreads standard.  They also
-// claim that draft 10 is the final standard.  To get the behavior, some
+// DG/UX claims to implement draft 10 of the pthreads standard (which became
+// (with editorial change only) the final standard.  To get the behavior, some
 // further macros need to be defined which are specific to DG/UX.
 // _POSIX4A_DRAFT10_SOURCE turns on the draft 10 variant of threads.
 // _POSIX4A_DRAFT_SOURCE turns on sched_yield().
 #define _POSIX4A_DRAFT10_SOURCE
-#define ACE_HAS_PTHREADS_1003_DOT_1C
+#define ACE_HAS_PTHREADS_STD
 #define _POSIX4_DRAFT_SOURCE
 // Well, here are some from the standard they don't have...
 #define ACE_LACKS_KEYDELETE

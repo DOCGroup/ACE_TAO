@@ -30,6 +30,10 @@
 # define ACE_MT_SAFE 1
 #endif /* !ACE_MT_SAFE */
 #define ACE_HAS_IRIX62_THREADS
+
+// IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
+#define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_STD
 #define ACE_HAS_PTHREAD_SIGMASK
 
 // Needed for the threading stuff?
@@ -42,9 +46,6 @@
 // even though it supports pthreads! (like Irix 6.2)
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_MUTEXATTR_PSHARED
-
-// IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
-#define ACE_HAS_PTHREADS
 
 // Platforms has pthread_thr_sigsetmask
 #define ACE_HAS_PTHREAD_SIGMASK
