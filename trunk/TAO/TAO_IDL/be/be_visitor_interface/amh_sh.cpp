@@ -1,13 +1,13 @@
 //=============================================================================
 /**
- *  @file   amh_sh.cpp
- *
- *  $Id$
- *
- *  Specialized interface visitor for AMH.
- *
- *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
- */
+*  @file   amh_sh.cpp
+*
+*  $Id$
+*
+*  Specialized interface visitor for AMH and AMH-RH.
+*
+*  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+*/
 //=============================================================================
 
 #include        "idl.h"
@@ -17,7 +17,7 @@
 #include "be_visitor_interface.h"
 
 be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (be_visitor_context *ctx)
-  : be_visitor_interface_sh (ctx)
+: be_visitor_interface_sh (ctx)
 {
 }
 
@@ -25,15 +25,39 @@ be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh (void)
 {
 }
 
-void 
+void
 be_visitor_amh_interface_sh::this_method (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  
-  const char *non_amh_name = node->full_name () + 4;
+TAO_OutStream *os = this->ctx_->stream ();
 
-  // Print out the _this() method.
-  *os << "::" << non_amh_name << " *_this (" << be_idt << be_idt_nl
-      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");\n" << be_uidt_nl;
+ACE_CString non_amh_name = "    ";
+non_amh_name += node->client_enclosing_scope ();
+non_amh_name += node->original_interface ()->local_name ();
+
+// Print out the _this() method.
+*os << "// Special _this method for AMH! \n"
+<< non_amh_name.c_str () << " *_this (" << be_idt << be_idt_nl
+<< "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+<< "TAO_default_environment ()"
+<< be_uidt << be_uidt_nl
+<< ");\n" << be_uidt_nl;
+}
+
+
+
+// ------------------- RH -----------------------------------------
+
+be_visitor_amh_rh_interface_sh::be_visitor_amh_rh_interface_sh (be_visitor_context *ctx)
+: be_visitor_interface_sh (ctx)
+{
+}
+
+be_visitor_amh_rh_interface_sh::~be_visitor_amh_rh_interface_sh (void)
+{
+}
+
+void
+be_visitor_amh_rh_interface_sh::this_method (be_interface *node)
+{
+// No need to generate anything
 }
