@@ -8,6 +8,10 @@ Sat Feb  9 23:40:31 2002  Ossama Othman  <ossama@uci.edu>
 
 Sat Feb  9 23:27:23 2002  Ossama Othman  <ossama@uci.edu>
 
+	* tao/ClientRequestInfo_i.h (rs_pi_current_):
+
+	  New class member that is the request-scope current (RSC).
+
 	* tao/ClientRequestInfo_i.cpp (TAO_ClientRequestInfo_i):
 
 	  Logically copy the thread-scope PICurrent (TSC) object to the
