@@ -7,10 +7,6 @@
 #include "ace/CORBA_Ref.h"
 #include "ace/Log_Msg.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/CORBA_Ref.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(ace, CORBA_Ref, "$Id$")
 
 template<class CORBA_REF>
