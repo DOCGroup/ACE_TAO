@@ -1,6 +1,7 @@
 // $Id$
 
 #include "IDD_Handler.h"
+#include "MDD_Handler.h"
 #include "Property_Handler.h"
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
@@ -57,7 +58,13 @@ namespace CIAO
 
       // @@ MAJO:This is where the MDD should be? Need to look into
       // this later.
-      dest.implementationRef = 0;
+      // ACE_DEBUG ((LM_DEBUG, "string is %s\n", 
+      //            src.implementation ().id ().c_str ()));
+      CORBA::ULong tmp = 0;
+      bool r = MDD_Handler::IDREF.find_ref 
+          (src.implementation ().id ().c_str (), tmp);
+
+      dest.implementationRef = tmp;
 
       InstanceDeploymentDescription::configProperty_const_iterator pend =
         src.end_configProperty ();
