@@ -77,10 +77,10 @@ TAO_SSLIOP_Transport::idle (void)
 ssize_t
 TAO_SSLIOP_Transport::send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
-                            const ACE_Time_Value *timeout = 0)
+                            const ACE_Time_Value *max_wait_time)
 {
-  ssize_t retval = this->service_handler ()->peer ().sendv (iov, iovcnt,
-                                                            max_wait_time);
+  ssize_t retval = this->service_handler ()->peer ().send (iov, iovcnt,
+                                                           max_wait_time);
   if (retval > 0)
     bytes_transferred = retval;
 

@@ -66,14 +66,17 @@ class TAO_Export TAO_Queued_Message
 public:
   /// Constructor
   /**
-   * @param contents The message block chain that must be sent, this
-   * class <B>always</B> assumes ownership of the chain.
+   * @param contents The message block chain that must be sent.
+   *
+   * @param own_contents If this flag is true then this object assumes
+   * ownership of the contents.
    *
    * @param callback A callback interface to signal any waiting
    * threads about the status of the message.  It is null if there are
    * no waiting threads.
    */
   TAO_Queued_Message (ACE_Message_Block *contents,
+                      int own_contents,
                       TAO_Message_Sent_Callback *callback = 0);
 
   /// Destructor
@@ -148,6 +151,9 @@ private:
    * message block connected via the 'cont()' field.
    */
   ACE_Message_Block *contents_;
+
+  /// If not zero the @c contents_ are owned by this object
+  int own_contents_;
 
   /// If not null, this is the object that we signal to indicate that
   /// the message was sent.

@@ -299,8 +299,20 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
       // ... the message was only partially sent, set it as the
       // current message ...
-      queued_message =
-        new TAO_Queued_Message (message_block->clone ());
+      if (twoway_flag)
+        {
+          // ... we are going to block, so there is no need to clone
+          // the message block...
+          queued_message =
+            new TAO_Queued_Message (
+                    ACE_const_cast(ACE_Message_Block*,message_block),
+                    0);
+        }
+      else
+        {
+          queued_message =
+            new TAO_Queued_Message (message_block->clone (), 1);
+        }
       // @@ Revisit message queue allocations
 
       queued_message->bytes_transferred (byte_count);
@@ -310,7 +322,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
     {
       // ... otherwise simply queue the message ...
       queued_message =
-        new TAO_Queued_Message (message_block->clone ());
+        new TAO_Queued_Message (message_block->clone (), 1);
       queued_message->push_back (this->head_, this->tail_);
     }
 
