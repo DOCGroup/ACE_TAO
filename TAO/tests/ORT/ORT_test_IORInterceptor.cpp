@@ -1,7 +1,7 @@
 #include "ORT_test_IORInterceptor.h"
 
 ACE_RCSID (ORT,
-           Server_IORInterceptor,
+           ORT_test_IORInterceptor,
            "$Id$")
 
 
@@ -22,6 +22,9 @@ void
 ORT_test_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_ASSERT (this->establish_count_ > 0
+              && this->components_establish_count_ > 0
+              && this->establish_count_ == this->components_establish_count_);
 }
 
 void

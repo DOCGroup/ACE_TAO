@@ -1,3 +1,14 @@
+Tue Jul 30 10:24:09 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/ORT/ORT_test_IORInterceptor.cpp (destroy):
+
+	  Assert that the establish_components() and
+	  components_established() were actually called, and that they
+	  were called the same number of times.  This test is run in an
+	  automated regression test suite so it is useful to have some
+	  means of determining failure automatically instead of by
+	  inspection.
+
 Tue Jul 30 08:21:36 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/AMH/Sink_Server/Sink_Server.mpc:
