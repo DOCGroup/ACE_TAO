@@ -828,10 +828,10 @@ Enabled the SHMIOP protocol. This protocol uses shared memory as the transport
 mechanism. The protocol is loaded by default.</li>
 
 <li>
-An IIOP over SSL pluggable protocol called "SSLIOP" has been implemented.
+An IIOP over SSL pluggable transport called "SSLIOP" has been implemented.
 It provides secure communication between hosts that support IIOP over SSL,
-and is meant to be a drop-in replacement for the IIOP pluggable protocol.
-TAO's SSLIOP pluggable protocol implementation supports both the standard
+and is meant to be a drop-in replacement for the IIOP pluggable transport.
+TAO's SSLIOP pluggable transport implementation supports both the standard
 IIOP transport protocol and the secure IIOP over SSL transport protocol.</li>
 
 <p>No changes were made to the core TAO sources to provide to this SSL
@@ -1638,8 +1638,8 @@ In particular, it implements the most of the CORBA <a href="../../orbsvcs/orbsvc
 in addition to some of <a
 	href="../../orbsvcs/orbsvcs/SecurityLevel2.idl">SecurityLevel2</a>.
 Of the transport protocols described in the above specification, only
-      SSLIOP is supported.Documentation for TAO's SSLIOP pluggable
-      protocol is available <a href="../Security/index.html">here</a>.
+      SSLIOP is supported.  Documentation for TAO's SSLIOP pluggable
+      transport is available <a href="../Security/index.html">here</a>.
 
 <p>
 The 1.8 specification defines the Common Secure Interoperability version
@@ -1649,31 +1649,32 @@ The 1.8 specification defines the Common Secure Interoperability version
 There are basically two ways to use security in TAO:
 <ol>
 <li>
-Use TAO's SSLIOP pluggable protocol in TAO alone.  This allows one
+Use TAO's SSLIOP pluggable transport in TAO alone.  This allows one
 to secure application requests without modifying the application code.
 This is the easiest approach but is also the least flexible.
 </li>
 <li>
 Use the Security Service API implemented by TAO in conjunction with
-TAO's SSLIOP pluggable protocol.  This provides the benefits of
+TAO's SSLIOP pluggable transport.  This provides the benefits of
 secured application requests with the flexibility of disabling
 security in some requests, if so desired.  This approach also allows
 one to choose at run-time which X.509 certificates will be associated
 with application requests, as opposed to setting configuring only one
 SSL certificate at application start-up-time.  These things are
-basically configured using the SecurityLevel2 defined policies:
+basically configured using the SecurityLevel2 or SecurityLevel3
+defined policies:
 
 <blockquote><code>
-        QOPPolicy<br>
-        InvocationCredentialsPolicy<br>
-        EstablishTrustPolicy<br>
+        SecurityLevel2::QOPPolicy<br>
+        SecurityLevel2::EstablishTrustPolicy<br>
+	SecurityLevel3::ContextEstablishmentPolicy<br>
 </blockquote></code>
 </li>
 </ol>
 
 <h4>Implemented Features</h4>
 IIOP over SSL integration via TAO's <a href="../Security/SSLIOP.html">SSLIOP
-pluggable protocol</a>.
+pluggable transport</a>.
 <ul>
 <li>
 Added an <tt>SSLIOP::Current</tt> implementation that can be used to obtain
@@ -1682,7 +1683,7 @@ for obtaining the SSL peer certificate chain associated with the current
 request, for example.</li>
 
 <li>
-TAO's SSLIOP pluggable protocol now registers a secure invocation server
+TAO's SSLIOP pluggable transport now registers a secure invocation server
 request interceptor. It enforces secure invocation by rejecting requests
 coming in on the insecure port if the server is configured to do so (default
 behavior).</li>
@@ -1702,7 +1703,7 @@ basis.</li>
 <p>This policy makes it possible to, for example, make both secure and
 insecure invocations within the same client process.
 <li>
-TAO's SSLIOP pluggable protocol implementation is now thread-safe.</li>
+TAO's SSLIOP pluggable transport implementation is now thread-safe.</li>
 
 <li>
 The <tt>SecurityLevel2::EstablishTrustPolicy</tt> policy has been implemented.
@@ -1719,27 +1720,34 @@ non-authenticated invocations within the same client process.
 Implemented <tt>SecurityLevel2::PrincipalAuthenticator</tt> support for
 SSLIOP. In particular, a SSLIOP-specific <tt>SecurityReplaceable::Vault</tt>
 implementation is now available.</li>
-
 <li>
-Initial SSLIOP-specific <tt>Credentials</tt> implementation is complete.</li>
+	Implemented basic (stateless) CSIv2 support.  Advanced CSIv2
+	features, such as identity assertion, are currently under
+	development.
+
 </ul>
 </ul>
 <h4>Current Status</h4>
 <ul>
 <li>
-Core <tt>SecurityLevel2</tt> interfaces such as <tt>Credentials</tt>, <tt>SecurityManager</tt>,
-and <tt>PrincipalAuthenticator</tt> are currently under development.</li>
-
+	Began implementation of the interfaces in the
+	<tt>SecurityReplaceable</tt> IDL module. They provide the
+	ability to replace key security components in the ORB with
+	another implementation with ease. Thus, the security
+	components in the ORB become highly extensible.</li>
 <li>
-Began implementation of the interfaces in the <tt>SecurityReplaceable</tt>
-IDL module. They provide the ability to replace key security components
-in the ORB with another implementation with ease. Thus, the security components
-in the ORB become highly extensible.</li>
+	Development of core <tt>SecurityLevel2</tt> interfaces such as
+	<tt>Credentials</tt>, <tt>SecurityManager</tt>, 
+	and <tt>PrincipalAuthenticator</tt> has been halted in favor
+	of Adiron's <tt>SecurityLevel3</tt> interfaces</li>
+<li>
+	Advanced CSIv2 features, such as identity assertion, are
+	currently under testing.</li>
 </ul>
 <h4>Schedule</h4>
 <ul>
 <li>
-<font color="#0000FF">April 2004</font></li>
+<font color="#0000FF">August 2004</font></li>
 
 <ul>
 <li>
@@ -1771,7 +1779,7 @@ in the ORB become highly extensible.</li>
         detailed in the CORBA Security Service specification.  This
         requires the Common Secure Interoperability protocol (CSIv2),
         but initial experiments will be performed via TAO's existing
-        SSLIOP pluggable protocol.
+        SSLIOP pluggable transport.
       </LI>
       <LI>
         Partial implementation of the <CODE>SecurityLevel2</CODE>
