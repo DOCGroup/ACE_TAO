@@ -1,4 +1,9 @@
 Wed Jul 19 14:41:06 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+	* examples/Simple/chat/Makefile:
+	  Added missing Broadcaster.idl to the IDL_FILES declaration
+	  and updates dependencies.
+	
+Wed Jul 19 14:41:06 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* docs/releasenotes/index.html:
 	  updated #notify to reflect recent additions.
 	
