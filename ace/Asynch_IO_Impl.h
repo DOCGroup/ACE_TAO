@@ -558,7 +558,6 @@ protected:
   ACE_Asynch_Read_Dgram_Impl (void);
 };
 
-
 /**
  * @class ACE_Asynch_Read_Dgram_Result_Impl
  *
@@ -592,8 +591,6 @@ protected:
   /// Do-nothing constructor.
   ACE_Asynch_Read_Dgram_Result_Impl (void);
 };
-
-
 
 /**
  * @class ACE_Asynch_Write_Dgram_Impl
@@ -646,7 +643,6 @@ protected:
   /// Do-nothing constructor.
   ACE_Asynch_Write_Dgram_Impl (void);
 };
-
 
 /**
  * @class ACE_Asynch_Write_Dgram_Result_Impl

@@ -197,36 +197,33 @@ ACE_POSIX_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
   return implementation;
 }
 
-
-
 ACE_Asynch_Read_Dgram_Result_Impl *
-ACE_POSIX_Proactor::create_asynch_read_dgram_result(ACE_Handler &handler,
-                                                    ACE_HANDLE handle,
-                                                    ACE_Message_Block *message_block,
-                                                    size_t bytes_to_read,
-                                                    int flags,
-                                                    int protocol_family,
-                                                    const void* act,
-                                                    ACE_HANDLE event ,
-                                                    int priority ,
-                                                    int signal_number)
-
+ACE_POSIX_Proactor::create_asynch_read_dgram_result (ACE_Handler &handler,
+                                                     ACE_HANDLE handle,
+                                                     ACE_Message_Block *message_block,
+                                                     size_t bytes_to_read,
+                                                     int flags,
+                                                     int protocol_family,
+                                                     const void* act,
+                                                     ACE_HANDLE event ,
+                                                     int priority ,
+                                                     int signal_number)
 {
-	ACE_Asynch_Read_Dgram_Result_Impl *implementation=0;
-    ACE_NEW_RETURN (implementation,
-		ACE_POSIX_Asynch_Read_Dgram_Result(handler,
-                                                   handle,		
-                                                   message_block,
-                                                   bytes_to_read,
-                                                   flags,
-                                                   protocol_family,
-                                                   act,
-                                                   event,
-                                                   priority,
-                                                   signal_number),
-                    0);
+  ACE_Asynch_Read_Dgram_Result_Impl *implementation=0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Read_Dgram_Result(handler,
+                                                     handle,		
+                                                     message_block,
+                                                     bytes_to_read,
+                                                     flags,
+                                                     protocol_family,
+                                                     act,
+                                                     event,
+                                                     priority,
+                                                     signal_number),
+                  0);
 
-	return implementation;
+  return implementation;
 }
 
 ACE_Asynch_Write_Dgram_Result_Impl *
@@ -240,20 +237,20 @@ ACE_POSIX_Proactor::create_asynch_write_dgram_result (ACE_Handler &handler,
                                                       int priority ,
                                                       int signal_number) 
 {
-	ACE_Asynch_Write_Dgram_Result_Impl *implementation=0;
-	ACE_NEW_RETURN (implementation,
-		ACE_POSIX_Asynch_Write_Dgram_Result(handler,
-                                                    handle,		
-                                                    message_block,
-                                                    bytes_to_write,
-                                                    flags,
-                                                    act,
-                                                    event,
-                                                    priority,
-                                                    signal_number),
-                        0);
+  ACE_Asynch_Write_Dgram_Result_Impl *implementation=0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Write_Dgram_Result(handler,
+                                                      handle,		
+                                                      message_block,
+                                                      bytes_to_write,
+                                                      flags,
+                                                      act,
+                                                      event,
+                                                      priority,
+                                                      signal_number),
+                  0);
 
-	return implementation;
+  return implementation;
 }
 
 ACE_Asynch_Accept_Result_Impl *
