@@ -1,0 +1,14 @@
+To run the test, use the provided shell scripts (in the repository)
+which run the 4 processes with the correct arguments:
+
+./Node{1,2,3,4}
+
+The order doesn't matter; they will synchronize themselves, but make
+sure you delete all the IOR files between runs or they'll attempt to
+read them before they are updated by the other processes!
+
+Where:
+norbert (Node1)
+hermione (Node2)
+harry (Node3)
+ron (Node4)

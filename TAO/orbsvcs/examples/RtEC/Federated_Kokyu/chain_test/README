@@ -1,0 +1,13 @@
+What: Supplier_EC, Consumer_Supplier_EC, Consumer_EC
+
+How: This test runs a single, 3-subtask task. Each subtask runs in a
+separate process. First run Consumer_EC (for T1_3), then
+Consumer_Supplier_EC (for T1_2), then Supplier_EC (for T1_1).
+
+Note that to run with EDF instead of RMS (the default), you'll need
+the '-s edf' flag just as with the RG test.
+
+Where:
+ron (Server)
+hermione (Middle)
+norbert (Client)
