@@ -318,6 +318,13 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 
   if (CORBA::is_nil (obj))
     {
+      // encode an empty type_id i.e., an empty string
+      stream->put_ulong (1);
+      stream->put_char (0);
+
+      // Number of profiles = 0
+      stream->put_ulong (0);
+
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   else

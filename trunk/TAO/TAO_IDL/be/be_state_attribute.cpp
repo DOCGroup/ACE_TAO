@@ -930,11 +930,12 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               // nothing
             }
-            break;
+           break;
           break;
           case TAO_CodeGen::TAO_ATTRIBUTE_RETVAL_DECL_CS:
             {
-              *os << bt->name () << " *retval = 0;" << nl;
+              *os << bt->name () << " *retval = new " << bt->name () << ";" <<
+                nl;
             }
           break;
           case TAO_CodeGen::TAO_ATTRIBUTE_RETVAL_EXCEPTION_CS:

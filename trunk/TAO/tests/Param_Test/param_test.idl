@@ -29,7 +29,7 @@ interface Coffee
   attribute Desc description; // provides us the coffee object type
 };
 
-typedef sequence<Coffee> ObjSeq;
+//typedef sequence<Coffee> ObjSeq;
 
 interface Param_Test
 {
