@@ -14,13 +14,14 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDLFILES = QuoterC QuoterS
+IDL_FILES = Quoter
+IDL_SRC = QuoterC.cpp QuoterS.cpp
 BIN = client server
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) Handler_i Stock_i Stock_Factory_i)
+SRC =  $(IDL_SRC) $(addsuffix .cpp, $(BIN) Handler_i Stock_i Stock_Factory_i)
 
-CLIENT_OBJS = $(addsuffix .o, client Handler_i $(IDLFILES))
-SERVER_OBJS = $(addsuffix .o, server Stock_i Stock_Factory_i $(IDLFILES))
+CLIENT_OBJS = $(IDL_SRC:.cpp:.o) $(addsuffix .o, client Handler_i)
+SERVER_OBJS = $(IDL_SRC:.cpp:.o) $(addsuffix .o, server Stock_i Stock_Factory_i)
 
 TAO_IDLFLAGS=-GC -in
 

@@ -13,7 +13,8 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
-IDL_SRC	= timeC.cpp timeS.cpp
+IDL_FILES = time
+IDL_SRC = timeC.cpp timeS.cpp
 IDL_HDR = timeC.h timeS.h
 
 PROG_SRCS = \

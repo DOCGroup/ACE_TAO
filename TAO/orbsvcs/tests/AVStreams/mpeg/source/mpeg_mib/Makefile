@@ -63,9 +63,6 @@ LDFLAGS +=  -L/project/doc/pkg/X11/lib/
 LDLIBS += -lXm -lXt -lXext -lSM -lICE -lX11
 CPPFLAGS += -DSH_MEM -DNDEBUG  -I/project/doc/pkg/X11/include
 
-realclean: clean
-	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
-
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

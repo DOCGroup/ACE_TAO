@@ -14,13 +14,14 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDLFILES = testC testS
+IDL_FILES = test
+IDL_SRC = testC.cpp testS.cpp
 BIN = client server
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i client_moc test_i_moc)
+SRC = $(addsuffix .cpp, $(BIN) test_i client_moc test_i_moc) $(IDL_SRC)
 
-CLIENT_OBJS = client.o testC.o client_moc.o 
-SERVER_OBJS = server.o test_i.o test_i_moc.o $(addsuffix .o, $(IDLFILES))
+CLIENT_OBJS = client.o client_moc.o testC.o
+SERVER_OBJS = server.o test_i.o test_i_moc.o $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
 

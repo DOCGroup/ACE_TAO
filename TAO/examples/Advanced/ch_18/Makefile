@@ -13,7 +13,8 @@ ifndef TAO_ROOT
 endif
 
 LDLIBS = -lTAO_CosNaming -lTAO
-IDL_SRC	= CCSC.cpp CCSS.cpp
+IDL_FILES = CCS
+IDL_SRC = CCSC.cpp CCSS.cpp
 IDL_HDR = CCSC.h CCSS.h
 
 PROG_SRCS = \

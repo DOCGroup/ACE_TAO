@@ -14,8 +14,6 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDL_SRC =
-
 PROG_SRCS = IORTest.cpp
 
 SRC = $(PROG_SRCS)
@@ -71,8 +69,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \

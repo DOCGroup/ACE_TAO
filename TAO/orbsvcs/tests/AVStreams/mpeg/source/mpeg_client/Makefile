@@ -85,9 +85,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS +=  -L/project/doc/pkg/X11/lib/ -lXm -lXt -lXext -lSM -lICE -lX11 -L/project/doc/pkg/X11/lib -lsocket -lnsl -ldl
 CPPFLAGS += -i -DSH_MEM -DNDEBUG  -I/project/doc/pkg/X11/include -L/project/doc/pkg/X11/lib
 
-realclean: clean
-	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
-
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

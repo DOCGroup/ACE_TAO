@@ -15,7 +15,8 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO_CosNaming -lTAO
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-IDLFILES = QuoterC QuoterS
+IDL_FILES = Quoter
+IDL_SRC = QuoterC.cpp QuoterS.cpp
 BIN2 = client server
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
@@ -25,10 +26,10 @@ ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Time
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) Stock_i Stock_Factory_i)
+SRC = $(addsuffix .cpp, $(BIN) Stock_i Stock_Factory_i) $(IDL_SRC)
 
 CLIENT_OBJS = $(addsuffix .o, client QuoterC)
-SERVER_OBJS = $(addsuffix .o, server Stock_i Stock_Factory_i $(IDLFILES))
+SERVER_OBJS = $(addsuffix .o, server Stock_i Stock_Factory_i QuoterC QuoterS)
 
 TAO_IDLFLAGS=-in
 
