@@ -1,3 +1,9 @@
+Mon Jan 18 11:20:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Simple/time/server.cpp: 
+	* examples/Simple/time/Time_Client_i.cpp: 
+	  Added missing template instantiations.
+
 Mon Jan 18 01:16:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Connect.cpp:
