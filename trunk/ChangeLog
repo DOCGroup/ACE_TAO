@@ -1,3 +1,9 @@
+Thu May 02 15:53:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Dev_Poll_Reactor_Test.cpp:
+
+	  Added some comments that briefly describe the test.
+
 Thu May  2 15:45:34 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Dev_Poll_Reactor_Test.cpp:
