@@ -1,3 +1,12 @@
+Sat Dec  4 20:40:10 2004 Yan Dai  <dai_y@ociweb.com>
+      
+       * TAO/interop-tests/wchar/server.cpp
+         TAO/interop-tests/wchar/client.cpp
+
+         Merged OCI's changes that have additional test to send seq of 
+         struct containing wstring to the server and fixed compilation 
+         errors with wchar enabled on windows.
+         
 Fri Dec  3 21:54:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Service.cpp:
