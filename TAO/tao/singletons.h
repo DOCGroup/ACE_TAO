@@ -37,14 +37,5 @@ typedef ACE_Singleton<TAO_Marshal_Alias, ACE_SYNCH_MUTEX> TAO_MARSHAL_ALIAS;
 typedef ACE_Singleton<TAO_Marshal_Except, ACE_SYNCH_MUTEX> TAO_MARSHAL_EXCEPT;
 typedef ACE_Singleton<TAO_Marshal_WString, ACE_SYNCH_MUTEX> TAO_MARSHAL_WSTRING;
 
-// Seems like we should also provide the option for having this be
-// just an ACE_Singleton<>
-#if defined(TAO_HAS_TSS_ORBCORE)
-#  define TAO_SINGLETON_TYPE ACE_TSS_Singleton
-#else
-#  define TAO_SINGLETON_TYPE ACE_Singleton
-#endif
-
-typedef TAO_SINGLETON_TYPE<TAO_ORB_Core, ACE_SYNCH_MUTEX> TAO_ORB_CORE;
 
 #endif /* TAO_SINGLETONS_H */

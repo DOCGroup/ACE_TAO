@@ -28,7 +28,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   //    I think it's clear now that we'll have one Reactor "per-ORB"
   //    and we may have multiple ORBs per process (e.g., consider the 
   //    "real-time rate-based ORB" we discussed the other day).
-  connector_.open (TAO_ORB_CORE::instance ()->reactor (),
+  connector_.open (TAO_ORB_Core_instance ()->reactor (),
 		   &null_creation_strategy_,
 		   &caching_connect_strategy_,
 #if defined (TAO_HAS_CLIENT_CONCURRENCY)

@@ -294,26 +294,7 @@ read_buffer (ACE_SOCK_Stream &peer,
 	     size_t len)
 {
   int bytes_read = 0;
-#if 1
   bytes_read = peer.recv_n (buf, len);
-#else
-  while (len != 0) 
-    {
-      int retval;
-
-      retval = peer.recv (buf, len);
-
-#if defined (DEBUG)
-      dmsg_filter (6, "read %d bytes from connection: %d", retval, peer.get_handle ());
-#endif /* DEBUG */
-      if (retval <= 0)			// EOF or error
-	return retval;
-
-      len -= retval;
-      buf += retval;
-      bytes_read += retval;
-    }
-#endif /* 1 */
   return bytes_read;
 }
 
