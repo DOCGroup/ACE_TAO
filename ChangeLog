@@ -1,3 +1,8 @@
+Wed Mar 20 14:26:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/usage-bugzilla.html:
+          Updated the link to the Bugzilla project
+
 Tue Mar 19 15:17:25 2002  Dante J. Cannarozzi  <djc2@cs.wustl.edu>
 
 	* ace/Containers_T.h: with the help of Matt Hampton
@@ -17,7 +22,7 @@ Tue Mar 19 02:40:00 2002  Si Mong Park  <spark@ociweb.com>
 
 Mon Mar 19 08:32:34 2002  Boris Kolpackov  <bosk@ipmce.ru>
 	* THANKS: Added Chen Jian <jchen@huawei.com> to the Hall of fame.
-	
+
 Sun Mar 17 18:22:12 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/platform_freebsd.GNU: Copy lines from
