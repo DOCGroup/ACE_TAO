@@ -1,108 +1,112 @@
+Wed May 13 06:58:38 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile: added Forwarding_Servant.
+
 Wed May 13 00:05:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.i (orb_free_resources): This should return
- 	  !CORBA_ORB::orb_init_count_ instead of simply
- 	  CORBA_ORB::orb_init_count_.  Thanks to Pavel Motuzenko
- 	  (p_motuzenko@hotmail.com) for pointing these two problems out.
+        * tao/ORB.i (orb_free_resources): This should return
+          !CORBA_ORB::orb_init_count_ instead of simply
+          CORBA_ORB::orb_init_count_.  Thanks to Pavel Motuzenko
+          (p_motuzenko@hotmail.com) for pointing these two problems out.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
- 	  Fixed the initialization of naming_context_name_.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
+          Fixed the initialization of naming_context_name_.
 
-	* tests/POA/Forwarding/: Added new test that shows the forwarding
- 	  features in TAO.
+        * tests/POA/Forwarding/: Added new test that shows the forwarding
+          features in TAO.
 
-	* tao/default_server.cpp (concurrency_strategy): Made sure that
- 	  the reactive strategy is returned if no concurrency_strategy has
- 	  been explicitly set by the user.  This should allow servers to
- 	  work without a svc.conf file.
+        * tao/default_server.cpp (concurrency_strategy): Made sure that
+          the reactive strategy is returned if no concurrency_strategy has
+          been explicitly set by the user.  This should allow servers to
+          work without a svc.conf file.
 
-	* tao/Server_Request.cpp (set_result and set_exception): These
- 	  should not raise exceptions if this->exception_ is set.
+        * tao/Server_Request.cpp (set_result and set_exception): These
+          should not raise exceptions if this->exception_ is set.
 
-	* tao/Servant_Base.cpp: Removed implementation for
- 	  TAO_ServantBase::_dispatch() and made it pure virtual.  Also,
- 	  passed the system environment to the DSI implementation class.
+        * tao/Servant_Base.cpp: Removed implementation for
+          TAO_ServantBase::_dispatch() and made it pure virtual.  Also,
+          passed the system environment to the DSI implementation class.
 
-	* tao/POAC.cpp (ForwardRequest): Fixed old IDL code for this
- 	  exception.
+        * tao/POAC.cpp (ForwardRequest): Fixed old IDL code for this
+          exception.
 
-	* tao/Forwarding_Servant: New DSI servant used by the POA for
- 	  forwarding.
+        * tao/Forwarding_Servant: New DSI servant used by the POA for
+          forwarding.
 
-	* tao/POA.cpp (forward_object): Adding forward support to the POA.
+        * tao/POA.cpp (forward_object): Adding forward support to the POA.
 
 Tue May 12 17:34:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/OctetSeq/OctetSeq.cpp: 
-	  Added missing template instantiation.
+        * tests/OctetSeq/OctetSeq.cpp:
+          Added missing template instantiation.
 
-	* tao/Sequence_T.i: 
-	  Fixed typo in Unbounded sequences.
+        * tao/Sequence_T.i:
+          Fixed typo in Unbounded sequences.
 
 Tue May 12 16:53:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/orbconf.h: 
-	* tao/Sequence.h: 
-	* tao/Sequence.i: 
-	* tao/Sequence.cpp: 
-	* tao/Sequence_T.h: 
-	* tao/Sequence_T.i: 
-	* tao/Sequence_T.cpp: 
-	* tao/decode.cpp: 
-	  Unbounded Sequences of octets are specialized so their
-	  demarshalling (and eventually their marshalling) is implemented
-	  by increasing the reference count on the CDR stream message
-	  block and then setting the buffer as a pointer to that stream.
-	  The buffers are copied upon assingment or copy ctor.
-	  The feature is enabled by the macro TAO_NO_COPY_OCTET_SEQUENCES,
-	  by default the macro is defined in $TAO_ROOT/tao/orbconf.h
-	  and only applies if the CDR stream owns its buffer, in other
-	  words the optimization is disabled when the buffer is allocated
-	  on the stack or is not allocated by the CDR stream.
+        * tao/orbconf.h:
+        * tao/Sequence.h:
+        * tao/Sequence.i:
+        * tao/Sequence.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/Sequence_T.cpp:
+        * tao/decode.cpp:
+          Unbounded Sequences of octets are specialized so their
+          demarshalling (and eventually their marshalling) is implemented
+          by increasing the reference count on the CDR stream message
+          block and then setting the buffer as a pointer to that stream.
+          The buffers are copied upon assingment or copy ctor.
+          The feature is enabled by the macro TAO_NO_COPY_OCTET_SEQUENCES,
+          by default the macro is defined in $TAO_ROOT/tao/orbconf.h
+          and only applies if the CDR stream owns its buffer, in other
+          words the optimization is disabled when the buffer is allocated
+          on the stack or is not allocated by the CDR stream.
 
-	* tao/IIOP_Interpreter.h: 
-	* tao/IIOP_Interpreter.cpp: 
-	  If the octet sequence is enabled then the size of a sequence
-	  depends on its basic type.
+        * tao/IIOP_Interpreter.h:
+        * tao/IIOP_Interpreter.cpp:
+          If the octet sequence is enabled then the size of a sequence
+          depends on its basic type.
 
-	* tao/ORB.cpp: 
-	  If the octet sequence optimization is enabled we don't need to
-	  instantiate TAO_Unbounded_Sequence<CORBA::Octet>.
+        * tao/ORB.cpp:
+          If the octet sequence optimization is enabled we don't need to
+          instantiate TAO_Unbounded_Sequence<CORBA::Octet>.
 
-	* tests/Makefile: 
-	* tests/OctetSeq/Makefile: 
-	* tests/OctetSeq/svc.conf: 
-	* tests/OctetSeq/test.idl: 
-	* tests/OctetSeq/OctetSeq.cpp: 
-	  Added a simple test that just writes an octet sequence in a CDR
-	  stream and then reads it back. The test compares the time
-	  against a char sequence.
+        * tests/Makefile:
+        * tests/OctetSeq/Makefile:
+        * tests/OctetSeq/svc.conf:
+        * tests/OctetSeq/test.idl:
+        * tests/OctetSeq/OctetSeq.cpp:
+          Added a simple test that just writes an octet sequence in a CDR
+          stream and then reads it back. The test compares the time
+          against a char sequence.
 
-	* tao/GIOP.cpp: 
-	  Changed several system exceptions from COMPLETED_MAYBE to
-	  COMPLETED_NO.
+        * tao/GIOP.cpp:
+          Changed several system exceptions from COMPLETED_MAYBE to
+          COMPLETED_NO.
 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: 
-	  Added missing forward declaration for ACE_Scheduler.
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+          Added missing forward declaration for ACE_Scheduler.
 
 Tue May 12 16:48:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tao/corba.h:
-	  Added a new macro TAO_CHECK_ENV_RETURN_VOID -- same as
-	  TAO_CHECK_ENV_RETURN, but for methods with no return value.
+        * tao/corba.h:
+          Added a new macro TAO_CHECK_ENV_RETURN_VOID -- same as
+          TAO_CHECK_ENV_RETURN, but for methods with no return value.
 
 Tue May 12 15:22:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/driver.cpp: 
-	* tests/Param_Test/tmplinst.cpp: 
-	  Added missing template instantiations.
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/tmplinst.cpp:
+          Added missing template instantiations.
 
 1998-05-12  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* Reordered initializers and added virtual destructors to
-	  the files orbsvcs/tests/Concurrency/* files.
-	  Updated README files in orbsvcs/tests/Concurrency and
-	  orbsvcs/Concurrency_Service
+        * Reordered initializers and added virtual destructors to
+          the files orbsvcs/tests/Concurrency/* files.
+          Updated README files in orbsvcs/tests/Concurrency and
+          orbsvcs/Concurrency_Service
 
 Mon May 11 18:11:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
