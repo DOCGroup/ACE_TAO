@@ -1,3 +1,10 @@
+Wed Jul 11 08:39:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp (get_thread_CORBA_priority):
+
+          Replace ACE_CHECK with ACE_CHECK_RETURN (-1) - function must
+          return an int.
+
 Wed Jul 11 09:25:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/tests/Makefile.bor:
