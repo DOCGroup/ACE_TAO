@@ -1,3 +1,11 @@
+Wed Oct 29 17:53:12 1997    <irfan@CHA-CHA>
+
+	* tao: Added TAO_HAS_TSS_ORB_CORE to tao and Cubit NT makefiles.
+  	  This probably needs to be added to the other NT makefiles.
+
+	* tests/Cubit/TAO/svc.conf: Updated files to pass the correct
+ 	  options to the factory.
+
 Wed Oct 29 16:07:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/giop.*: Changed most methods that took ACE_SOCK_Stream&
