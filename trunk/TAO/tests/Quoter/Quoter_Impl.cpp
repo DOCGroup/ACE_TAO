@@ -29,8 +29,8 @@ Quoter_Factory_Impl::~Quoter_Factory_Impl (void)
 {
 }
 
-Stock::Quoter_ptr  
-Quoter_Factory_Impl::create_quoter (const char *name,  
+Stock::Quoter_ptr
+Quoter_Factory_Impl::create_quoter (const char *name,
                                     CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -51,12 +51,13 @@ Quoter_Impl::~Quoter_Impl (void)
 {
 }
 
+CORBA::Long
 Quoter_Impl::get_quote (char const *stock_name,
                         class CORBA_Environment &env)
 {
   ACE_UNUSED_ARG (stock_name);
   ACE_UNUSED_ARG (env);
- 
+
   return 42;
 }
 
@@ -66,10 +67,10 @@ void Quoter_Impl::destroy (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "%s",
-	      "I have been asked to shut down "));
-	      
+              "I have been asked to shut down "));
+
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
@@ -78,20 +79,20 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria &the_criteria,
                    CORBA::Environment &_env_there)
 {
-  TAO_TRY 
+  TAO_TRY
     {
       // The name of the Quoter Factory
-      CosLifeCycle::Key factoryKey (1);  // max = 1 
+      CosLifeCycle::Key factoryKey (1);  // max = 1
       factoryKey.length(1);
       factoryKey[0].id = CORBA::string_dup ("Quoter_Factory");
-    
+
       // Find an appropriate factory over there.
-      CosLifeCycle::Factories_ptr factories_ptr = 
+      CosLifeCycle::Factories_ptr factories_ptr =
         there->find_factories (factoryKey, _env_there);
 
       // Only a NoFactory exception might have occured, so if it
       // occured, then go immediately back.
-      if (_env_there.exception() != 0) 
+      if (_env_there.exception() != 0)
         {
           // _env_there contains already the exception.
           return CosLifeCycle::LifeCycleObject::_nil();
@@ -100,7 +101,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       // Now it is known that there is at least one factory.
       Stock::Quoter_var quoter_var;
 
-      for (u_int i = 0; i < factories_ptr->length (); i++) 
+      for (u_int i = 0; i < factories_ptr->length (); i++)
         {
           // Get the first object reference to a factory.
           CORBA::Object_ptr quoter_FactoryObj_ptr = (*factories_ptr)[i];
@@ -111,7 +112,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
                                             TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          if (CORBA::is_nil (quoter_Factory_var.in ())) 
+          if (CORBA::is_nil (quoter_Factory_var.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                         "Quoter::copy: Factory did not create the Quoter properly.\n"),
                         0);
@@ -124,10 +125,10 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
           // @@ mk1: The create_quoter should return an exception
           TAO_CHECK_ENV;
 
-          if (CORBA::is_nil (quoter_var.in ())) 
+          if (CORBA::is_nil (quoter_var.in ()))
             {
               // If we had already our last chance, then give up.
-              if (i == factories_ptr->length ()) 
+              if (i == factories_ptr->length ())
                 {
                   _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
                   return CosLifeCycle::LifeCycleObject::_nil();
@@ -139,7 +140,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
                   // Else tell what's wrong and try the next factory.
                 }
             }
-          else 
+          else
             break;
             // if succeeded in creating a new Quoter over there, then stop trying
         }
@@ -159,11 +160,11 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
 void
 Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria &the_criteria,
-                   CORBA::Environment &_env_there) 
+                   CORBA::Environment &_env_there)
 {
   // for later
   // this->copy (there, the_criteria, _env_there);
-  
+
   // the move operation is not implemented yet, because of the issue,
   // that the object reference has to stay the same. But if it has
   // to stay the same this object. the old object, has to forward
@@ -173,6 +174,6 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
 }
 
 void
-Quoter_Impl::remove (CORBA::Environment &_tao_environment) 
+Quoter_Impl::remove (CORBA::Environment &_tao_environment)
 {
 }

@@ -22,7 +22,7 @@ Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server (void)
 {
 }
 
-Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void) 
+Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
 {
   TAO_TRY
     {
@@ -47,6 +47,7 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
   TAO_ENDTRY;
 }
 
+int
 Quoter_Generic_Factory_Server::init (int argc,
                                      char *argv[],
                                      CORBA::Environment& env)
@@ -54,8 +55,8 @@ Quoter_Generic_Factory_Server::init (int argc,
   if (this->orb_manager_.init (argc,
                                argv,
                                env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
                        "init"),
                       -1);
 
@@ -77,8 +78,8 @@ Quoter_Generic_Factory_Server::init (int argc,
 
   // Failure while activating the Quoter Factory Finder object
   if (str == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
                        "init: Failure while activating the Quoter Generic Factory Impl.\n"),
                       -1);
 
@@ -88,17 +89,17 @@ Quoter_Generic_Factory_Server::init (int argc,
               str.in ()));
 
   // Register the Quoter GenericFactory with the Naming Service.
-  TAO_TRY 
+  TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Trying to get a reference to the Naming Service.\n"));
 
       // Get the Naming Service object reference.
-      CORBA::Object_var namingObj_var = 
+      CORBA::Object_var namingObj_var =
         orb_manager_.orb()->resolve_initial_references ("NameService");
       TAO_CHECK_ENV;
 
-      if (CORBA::is_nil (namingObj_var.in ())) 
+      if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
 
@@ -107,29 +108,29 @@ Quoter_Generic_Factory_Server::init (int argc,
         CosNaming::NamingContext::_narrow (namingObj_var.in (),
                                            TAO_TRY_ENV);
 
-      if (CORBA::is_nil (namingContext_var.in ())) 
+      if (CORBA::is_nil (namingContext_var.in ()))
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
 
-      
+
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "Have a proper reference to the Naming Service.\n"));
 
       // Get the IDL_Quoter naming context.
-      CosNaming::Name quoterContextName (1);  // max = 1 
+      CosNaming::Name quoterContextName (1);  // max = 1
       quoterContextName.length (1);
       quoterContextName[0].id = CORBA::string_dup ("IDL_Quoter");
 
-      CORBA::Object_var quoterNamingObj_var = 
+      CORBA::Object_var quoterNamingObj_var =
         namingContext_var->resolve (quoterContextName,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      quoterNamingContext_var_ = 
+      quoterNamingContext_var_ =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
                                            TAO_TRY_ENV);
-       
+
       ACE_DEBUG ((LM_DEBUG,
                   "Have a proper reference to the Quoter Naming Context.\n"));
 
@@ -147,9 +148,9 @@ Quoter_Generic_Factory_Server::init (int argc,
                   "Bound the Quoter GenericFactory to the Quoter Naming Context.\n"));
 
       // now the Quoter GenericFactory is bound to the Naming Context
-      // the Generic Factory should try to register itself to the closest 
+      // the Generic Factory should try to register itself to the closest
       // Life Cycle Service is order to be called.
-      
+
       /* for now as long as the trading service is not ported to NT we skip this
 
       // get the Quoter_Life_Cycle_Service
@@ -157,38 +158,38 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoter_Life_Cycle_Service_Name.length (1);
       quoter_Life_Cycle_Service_Name[0].id = CORBA::string_dup ("Quoter_Life_Cycle_Service");
 
-      CORBA::Object_var quoter_Life_Cycle_Service_Obj_var = 
+      CORBA::Object_var quoter_Life_Cycle_Service_Obj_var =
         quoterNamingContext_var_->resolve (quoter_Life_Cycle_Service_Name,
-					   TAO_TRY_ENV);
+                                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      Stock::Quoter_Life_Cycle_Service_var  quoter_Life_Cycle_Service_var = 
+      Stock::Quoter_Life_Cycle_Service_var  quoter_Life_Cycle_Service_var =
         Stock::Quoter_Life_Cycle_Service::_narrow (quoter_Life_Cycle_Service_Obj_var.in (),
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
-       
+
       ACE_DEBUG ((LM_DEBUG,
                   "Have a proper reference to the Quoter Life Cycle Service.\n"));
 
       CORBA::Object_var object_var = this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV);
 
       quoter_Life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
-						      "Bryan 503",               // location
-						      "Generic Factory",         // description 
-						      object_var,
-						      TAO_TRY_ENV);
+                                                      "Bryan 503",               // location
+                                                      "Generic Factory",         // description
+                                                      object_var,
+                                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "Registered the Quoter GenericFactory to the Quoter Life Cycle Service.\n"));
 
-		  */
+                  */
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Quoter_Generic_Factory_Server::init: Exception");
     }
   TAO_ENDTRY;
-  
+
 
   return 0;
 }
@@ -215,7 +216,7 @@ Quoter_Generic_Factory_Server::parse_args (void)
   int opt;
 
   while ((opt = get_opt ()) != EOF)
-    switch (opt) 
+    switch (opt)
       {
       case '?':
         ACE_DEBUG ((LM_DEBUG,

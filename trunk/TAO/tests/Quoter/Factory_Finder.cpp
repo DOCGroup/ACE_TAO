@@ -23,7 +23,7 @@ Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server (void)
 {
 }
 
-Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void) 
+Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void)
 {
   TAO_TRY
     {
@@ -48,13 +48,14 @@ Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void)
   TAO_ENDTRY;
 }
 
+int
 Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& env)
 {
   if (this->orb_manager_.init (argc,
                                argv,
                                env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
                        "init"),
                       -1);
 
@@ -76,8 +77,8 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
 
   // Failure while activating the Quoter Factory Finder object
   if (str == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
                        "init: Failure while activating the Quoter Factory Finder Impl.\n"),
                       -1);
 
@@ -87,16 +88,16 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
               str.in ()));
 
   // Register the Quoter Factory Finder with the Naming Service
-  TAO_TRY 
+  TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG,"Trying to get a reference to the Naming Service.\n"));
 
       // Get the Naming Service object reference.
-      CORBA::Object_var namingObj_var = 
+      CORBA::Object_var namingObj_var =
         orb_manager_.orb()->resolve_initial_references ("NameService");
       TAO_CHECK_ENV;
 
-      if (CORBA::is_nil (namingObj_var.in ())) 
+      if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
                     " (%P|%t) Unable get the Naming Service.\n"));
 
@@ -108,18 +109,18 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
       ACE_DEBUG ((LM_DEBUG,"Have a proper reference to the Naming Service.\n"));
 
       // Get the IDL_Quoter naming context.
-      CosNaming::Name quoterContextName (1);  // max = 1 
+      CosNaming::Name quoterContextName (1);  // max = 1
       quoterContextName.length (1);
       quoterContextName[0].id = CORBA::string_dup ("IDL_Quoter");
 
-      CORBA::Object_var quoterNamingObj_var = 
+      CORBA::Object_var quoterNamingObj_var =
         namingContext_var->resolve (quoterContextName, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      quoterNamingContext_var_ = 
+      quoterNamingContext_var_ =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
                                            TAO_TRY_ENV);
-       
+
       ACE_DEBUG ((LM_DEBUG,
                   "Have a proper reference to the Quoter Naming Context.\n"));
 
@@ -141,7 +142,7 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
       TAO_TRY_ENV.print_exception ("SYS_EX");
     }
   TAO_ENDTRY;
-  
+
 
   return 0;
 }
@@ -169,7 +170,7 @@ Quoter_Factory_Finder_Server::parse_args (void)
   int opt;
 
   while ((opt = get_opt ()) != EOF)
-    switch (opt) 
+    switch (opt)
       {
       case '?':
         ACE_DEBUG ((LM_DEBUG,
