@@ -1,3 +1,10 @@
+Mon Oct  2 13:50:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/README: Updated the file.
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp: Made some
+	  cosmetic changes.
+
 Mon Oct  2 13:10:14 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
