@@ -136,50 +136,50 @@ TAO_Active_Demux_OpTable::Entry::~Entry (void)
   this->skel_ptr = 0;  // cannot delete this as we do not own it
 }
 
-OpTable_Parameters::OpTable_Parameters (void)
-  : type_ (OpTable_Parameters::TAO_DYNAMIC_HASH),
+TAO_Operation_Table_Parameters::TAO_Operation_Table_Parameters (void)
+  : type_ (TAO_Operation_Table_Parameters::TAO_DYNAMIC_HASH),
     strategy_ (0)
 {
 }
 
-OpTable_Parameters::~OpTable_Parameters (void)
+TAO_Operation_Table_Parameters::~TAO_Operation_Table_Parameters (void)
 {
 }
 
 void 
-OpTable_Parameters::lookup_strategy (OpTable_Parameters::DEMUX_STRATEGY s)
+TAO_Operation_Table_Parameters::lookup_strategy (TAO_Operation_Table_Parameters::DEMUX_STRATEGY s)
 {
   this->type_ = s;
 }
 
-OpTable_Parameters::DEMUX_STRATEGY OpTable_Parameters::lookup_strategy (void) const
+TAO_Operation_Table_Parameters::DEMUX_STRATEGY TAO_Operation_Table_Parameters::lookup_strategy (void) const
 {
   return this->type_;
 }
 
 void 
-OpTable_Parameters::concrete_strategy (TAO_Operation_Table *ot)
+TAO_Operation_Table_Parameters::concrete_strategy (TAO_Operation_Table *ot)
 {
   this->strategy_ = ot;
 }
 
-TAO_Operation_Table* OpTable_Parameters::concrete_strategy (void)
+TAO_Operation_Table* TAO_Operation_Table_Parameters::concrete_strategy (void)
 {
   return this->strategy_;
 }
 
-OpTable_Factory::OpTable_Factory (void)
+TAO_Operation_Table_Factory::TAO_Operation_Table_Factory (void)
 {
 }
 
-OpTable_Factory::~OpTable_Factory (void)
+TAO_Operation_Table_Factory::~TAO_Operation_Table_Factory (void)
 {
 }
 
 TAO_Operation_Table * 
-OpTable_Factory::opname_lookup_strategy (void)
+TAO_Operation_Table_Factory::opname_lookup_strategy (void)
 {
-  OpTable_Parameters *p = TAO_OP_TABLE_PARAMETERS::instance ();
+  TAO_Operation_Table_Parameters *p = TAO_OP_TABLE_PARAMETERS::instance ();
 
   return p->concrete_strategy ();
 }

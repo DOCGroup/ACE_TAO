@@ -1,3 +1,9 @@
+Mon May 19 10:07:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/lib/optable.cpp: Changed implementation of the operation
+ 	table and the parameters repository so that they use the right
+ 	class names.
+
 Fri May 16 17:30:31 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/lib/svrrqst.*: Corrected some comments, adjusted some
