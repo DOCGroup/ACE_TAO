@@ -1566,7 +1566,7 @@ ACE_OS::strcasecmp (const char *s, const char *t)
   const char *scan1 = s;
   const char *scan2 = t;
 
-  while (*scan1 != 0 
+  while (*scan1 != 0
          && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
     {
       ++scan1;
@@ -1605,7 +1605,7 @@ ACE_OS::strncasecmp (const char *s,
   const wchar_t *scan2 = t
   ssize_t count = ssize_t (n);
 
-  while (--count >= 0 
+  while (--count >= 0
          && *scan1 != 0
          && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
     {
@@ -4591,10 +4591,10 @@ ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
 
    sockaddr_in fake_addr;
    int fake_addrlen;
- 
+
    if (addrlen == 0)
      addrlen = &fake_addrlen;
- 
+
    if (addr == 0)
      {
        addr = (sockaddr *) &fake_addr;
@@ -6963,11 +6963,12 @@ ACE_OS::recvv (ACE_HANDLE handle,
   // to do the recvs piece-by-piece.
 
 # if (ACE_HAS_WINSOCK2 != 0)
+  DWORD flags = 0;
   result = ::WSARecv ((SOCKET) handle,
                       (WSABUF *) buffers,
                       n,
                       &bytes_received,
-                      0,
+                      &flags,
                       0,
                       0);
 # else
@@ -10196,7 +10197,7 @@ ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
   const wchar_t *scan1 = s;
   const wchar_t *scan2 = t;
 
-  while (*scan1 != 0 && *scan1 == *scan2) 
+  while (*scan1 != 0 && *scan1 == *scan2)
     {
       ++scan1;
       ++scan2;
@@ -10251,7 +10252,7 @@ ACE_OS::strcmp (const ACE_USHORT16 *s, const ACE_USHORT16 *t)
   ACE_TRACE ("ACE_OS::strcmp");
 
   while (*s != 0
-         && *t != 0 
+         && *t != 0
          && *s == *t)
     {
       ++s;
@@ -10410,7 +10411,7 @@ ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
   const wchar_t *scan1 = s;
   const wchar_t *scan2 = t;
 
-  while (*scan1 != 0 
+  while (*scan1 != 0
          && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
     {
       ++scan1;
@@ -10446,7 +10447,7 @@ ACE_OS::strncasecmp (const wchar_t *s,
   const wchar_t *scan2 = t
   ssize_t count = ssize_t (n);
 
-  while (--count >= 0 
+  while (--count >= 0
          && *scan1 != 0
          && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
     {
