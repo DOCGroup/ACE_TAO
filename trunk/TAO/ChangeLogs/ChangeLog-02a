@@ -1,3 +1,9 @@
+Sat Feb  9 04:57:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp: Added a template instantiation for
+	  ACE_Array_Base <IOP::ProfileId>. This shold fix link errors in
+	  Sun CC builds. 
+
 Fri Feb  8 21:51:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp: Fixed a redefinition error in
