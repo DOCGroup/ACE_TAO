@@ -72,6 +72,12 @@ ifeq ($(CPU),PPC604)
   CCFLAGS +=
   TOOLENV = ppc
 else
+ifeq ($(CPU),PPC603)
+  BINXSYM_NAME = xsym
+  CFLAGS += -tPPC604EH:tornado -DCPU=PPC603
+  CCFLAGS +=
+  TOOLENV = ppc
+else
 ifeq ($(CPU),PPC860)
   BINXSYM_NAME = xsym
   CFLAGS += -tPPC860EH:tornado -DCPU=PPC860
@@ -91,6 +97,7 @@ else
 endif # I80386
 endif # I80486
 endif # PPC860
+endif # PPC603
 endif # PPC604
 
 #### END target CPU-specific settings
