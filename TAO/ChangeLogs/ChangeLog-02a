@@ -1,3 +1,9 @@
+Wed May 15 17:38:06 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* docs/tutorials/Quoter/On_Demand_Activation/Makefile: 
+	  Shouldnt compile when AMI is disabled. Put in the fix. This will
+	  fix the errors in RedHat_7.1_No_AMI_(beguine)
+
 Wed May 15 16:04:37 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/File_IO/run_test.pl: 
