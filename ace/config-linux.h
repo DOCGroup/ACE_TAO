@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // The following configuration file is designed to work for Linux
@@ -22,6 +23,10 @@
 #define ACE_HAS_THREADS
 // And they're even POSIX pthreads (LinuxThreads implementation)
 #define ACE_HAS_PTHREADS
+
+#if !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+#  define ACE_LACKS_RWLOCK_T 
+#endif  /* !ACE_HAS_PTHREADS_UNIX98_EXT */
 
 // ... and the final standard even!
 #define ACE_HAS_PTHREADS_STD
@@ -64,4 +69,5 @@ extern "C" int pthread_mutex_timedlock (pthread_mutex_t *mutex,
 
 
 #include "ace/post.h"
+
 #endif /* ACE_CONFIG_LINUX_H */

@@ -1,3 +1,35 @@
+Wed Oct  2 10:50:49 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Basic_Types.h:
+	* ace/Basic_Types.cpp:
+
+	  Do not rely on the u_int and u_long typedefs.  They are not
+	  always defined in system headers.  Addresses a compile-time
+	  issue when _XOPEN_SOURCE is explicitly set to 600 on Glibc
+	  platforms, such as Linux.
+
+	* ace/OS.h:
+
+	  Explicitly define the u_{char,short,int,long} typedefs on Glibc
+	  platforms when _BSD_SOURCE is not defined.  Addresses a
+	  compile-time issue when _BSD_SOURCE is not defined.
+
+	* ace/config-linux.h:
+
+	  If ACE_HAS_PTHREADS_UNIX98_EXT is not defined, define
+	  ACE_LACKS_RWLOCK_T.  Addresses a compile-time issue when
+	  _XOPEN_SOURCE is not set to value >= 600.
+
+	* ace/config-linux-common.h:
+
+	  Reverted change that explicitly defined _XOPEN_SOURCE to 600.
+	  Explicitly defining _XOPEN_SOURCE to 600 causes many
+	  compile-time errors and warnings to occur.
+
+	  Moved the check for (_XOPEN_SOURCE >= 600) after the
+	  <features.h> include.  That header may define _XOPEN_SOURCE when
+	  other macros, such as _GNU_SOURCE, are defined.
+
 Wed Oct  2 01:08:51 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/SString.cpp (ACE_NS_WString): Fix the silly off-by-one error

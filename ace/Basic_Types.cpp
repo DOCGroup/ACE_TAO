@@ -28,8 +28,8 @@ ACE_U_LongLong::output (FILE *file) const
 
 ACE_TCHAR *
 ACE_U_LongLong::as_string (ACE_TCHAR *output,
-                           u_int base,
-                           u_int uppercase) const
+                           unsigned int base,
+                           unsigned int uppercase) const
 {
   if (*this == 0)
     {
@@ -41,11 +41,11 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
         {
           case 8:
             {
-              u_int index = 0;
+              unsigned int index = 0;
               int bshift = 31;
               while(bshift >= 1)
                 {
-                  u_int sval = (this->h_ () >> bshift) & 7;
+                  unsigned int sval = (this->h_ () >> bshift) & 7;
                   if (sval > 0 || index != 0)
                     {
                       output[index] = sval + '0';
@@ -56,7 +56,7 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
               bshift = 30;
               while(bshift >= 0)
                 {
-                  u_int sval = (this->l_ () >> bshift) & 7;
+                  unsigned int sval = (this->l_ () >> bshift) & 7;
                   // Combine the last bit of hi with the first 3-bit digit
                   if (bshift == 30)
                     {
