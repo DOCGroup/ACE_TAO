@@ -653,9 +653,15 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
 
   // now generate the typedefs
   os->indent ();
-  // typedef the type and the _slice type
+  // typedef the type
   *os << "typedef " << bt->nested_type_name (scope)
       << " " << tdef->nested_type_name (scope) << ";" << be_nl;
+  if (node->pt () == AST_PredefinedType::PT_pseudo)
+    {
+      // typedef the _ptr
+      *os << "typedef " << bt->nested_type_name (scope, "_ptr")
+          << " " << tdef->nested_type_name (scope, "_ptr") << ";" << be_nl;
+    }
   // typedef the _out
   *os << "typedef " << bt->nested_type_name (scope, "_out")
       << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
