@@ -44,3 +44,5 @@ uses_wchar    = 0
 
 ace_with_motif  = 0
 ace_with_athena = 0
+ace_with_x11    = 0
+ace_with_xt     = 0
