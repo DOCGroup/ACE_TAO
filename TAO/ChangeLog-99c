@@ -1,3 +1,12 @@
+Thu Jul 15 13:00:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+	  Added a check for discriminator types of char, wchar and boolean
+	  in the CDR operator code generation, so that the 
+	  appropriate CORBA_Any::to_* struct can be used. Thanks to
+	  Roger Egbers <regbers@isrglobal.com> for reporting this
+	  bug and sending in an example IDL file.
+
 Thu Jul 15 12:19:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added -u to make_release invocation.
