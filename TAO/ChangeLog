@@ -1,3 +1,10 @@
+Thu Dec  2 13:06:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+
+	  Used VMCID while trying to propogate system exception with minor
+	  code. 
+
 Wed Dec  1 12:00:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:
