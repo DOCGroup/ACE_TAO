@@ -2,12 +2,14 @@
 // $Id$
 
 #include "ace/Framework_Component.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Framework_Component.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
+#include "ace/DLL_Manager.h"
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 
@@ -77,6 +79,8 @@ ACE_Framework_Repository::close (void)
       this->component_vector_ = 0;
       this->current_size_ = 0;
     }
+
+  ACE_DLL_Manager::close ();
 
   return 0;
 }
@@ -190,10 +194,11 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
     if (this->component_vector_[i] &&
         ACE_OS_String::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("AFR::remove_dll_components_i (%s) ")
-                    ACE_LIB_TEXT ("component \"%s\"\n"),
-                    dll_name, this->component_vector_[i]->name_));
+          if (ACE::debug ())
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_LIB_TEXT ("AFR::remove_dll_components_i (%s) ")
+                        ACE_LIB_TEXT ("component \"%s\"\n"),
+                        dll_name, this->component_vector_[i]->name_));
         delete this->component_vector_[i];
         this->component_vector_[i] = 0;
         ++retval;

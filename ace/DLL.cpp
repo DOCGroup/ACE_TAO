@@ -32,11 +32,12 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
   this->close_on_destruction_ = 1;
   this->error_ = 0;
 
-  // This will automatically up the refcount.
-  if (this->open (rhs.dll_name_, rhs.open_mode_, this->close_on_destruction_) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%s\n"),
-                this->error ()));
+  if (rhs.dll_name_)
+    // This will automatically up the refcount.
+    if (this->open (rhs.dll_name_, rhs.open_mode_, this->close_on_destruction_) != 0)
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
+                  this->error ()));
 }
 
 // If the library name and the opening mode are specified than on
@@ -55,7 +56,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 
   if (this->open (dll_name, this->open_mode_, close_on_destruction) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%s\n"),
+                ACE_LIB_TEXT ("ACE_DLL::open: error calling open: %s\n"),
                 this->error ()));
 }
 
@@ -102,7 +103,10 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   this->error_ = 0;
 
   if (!dll_filename)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name: %s\n"),
+                       this->dll_name_),
+                      -1);
 
   if (this->dll_handle_)
     {
