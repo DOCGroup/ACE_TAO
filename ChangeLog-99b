@@ -1,15 +1,19 @@
+Mon May 10 08:26:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/g++dep: added support for our Solaris 7 machines.
+
 Sun May  9 18:07:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
-	* configure.in:
+        * acconfig.h:
+        * configure.in:
 
-	  Added support/tests for ACE_LACKS_CHAR_RIGHT_SHIFTS and
-	  ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS.
+          Added support/tests for ACE_LACKS_CHAR_RIGHT_SHIFTS and
+          ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS.
 
-	* ace/README: 
+        * ace/README:
 
-	  Fixed typo.  ACE_LACKS_LINEBUFFERED_STREAMBUF was used twice.
-	  Corrected the appropriate one to ACE_LACKS_UNBUFFERED_STREAMBUF.
+          Fixed typo.  ACE_LACKS_LINEBUFFERED_STREAMBUF was used twice.
+          Corrected the appropriate one to ACE_LACKS_UNBUFFERED_STREAMBUF.
 
 Sun May 09 11:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -32,11 +36,11 @@ Sun May 09 11:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 Sat May 08 19:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}
-          tests/RB_Tree_Test.cpp: finished implementing all methods for the 
- 	  ACE_Hash_Map_Manager_Ex compliant interface, fixed a bug in the
-	  internal tree search method (thanks to David Levine for pointing 
-	  this out), and added a new section to the test that exercises the
-	  new bind and unbind methods.
+          tests/RB_Tree_Test.cpp: finished implementing all methods for the
+          ACE_Hash_Map_Manager_Ex compliant interface, fixed a bug in the
+          internal tree search method (thanks to David Levine for pointing
+          this out), and added a new section to the test that exercises the
+          new bind and unbind methods.
 
 Sat May 08 17:09:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
