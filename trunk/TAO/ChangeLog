@@ -1,3 +1,8 @@
+Thu Oct 31 13:08:23 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (handle_timeout): Fixed
+	  compile errors in single threaded builds.
+
 Thu Oct 31 12:07:51 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp: 
