@@ -1,3 +1,10 @@
+Wed Jul 19 22:51:42 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (ACE_OS::cond_timedwait): For pSOS, convert absolute
+          time value to relative, expressed in ticks. Account for pSOS
+          behavior on timeout - returns with mutex unlocked. Thanks to
+          Sarmeesha Reddy <sarmeesha@bigfoot.com> for this fix.
+
 Wed Jul 19 19:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Caching_Utility_T.cpp: Rectified a typo made in method
