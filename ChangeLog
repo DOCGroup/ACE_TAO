@@ -1,3 +1,8 @@
+Thu Oct 24 01:52:46 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML\parser\parser\Parser.cpp: Moved out the declaration of
+          variables outside case labels. MSVC doesn't like it.
+
 Wed Oct 23 22:24:59 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/parser/parser/Parser.cpp: Fixed a stupid thinko in array

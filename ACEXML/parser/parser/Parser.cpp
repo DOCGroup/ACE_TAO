@@ -1880,7 +1880,7 @@ ACEXML_Parser::get_quoted_string (ACEXML_Char *&str)
       const ACEXML_String *replace = 0;
       ACEXML_String charval;
       ACEXML_Char buffer[6];
-
+	  size_t i = 0;
       switch (ch)
         {
         case '&':
@@ -1904,7 +1904,7 @@ ACEXML_Parser::get_quoted_string (ACEXML_Char *&str)
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("Undefined reference\n")));
               return -1;
             }
-          for (size_t i = 0; i < replace->length (); ++i)
+          for (i = 0; i < replace->length (); ++i)
             this->obstack_.grow ((*replace)[i]);
           // handle reference here.
           break;
