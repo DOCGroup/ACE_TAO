@@ -190,7 +190,8 @@ public:
 
   size_t thr_count (void) const;
   // Returns the number of threads currently running within a task.
-  // If we're a passive object this value is 0, else it's > 0.
+  // If we're a passive object this value is 0, else it's greater than
+  // 0.
 
   void thr_count_dec (void);
   // Atomically decrement the thread count by 1.  This should only be
@@ -208,9 +209,9 @@ public:
 
   size_t thr_count_;
   // Count of the number of threads running within the task.  If this
-  // value is > 0 then we're an active object and the value of
-  // <thr_count_> is the number of active threads at this instant.  If
-  // the value == 0, then we're a passive object.
+  // value is great than 0 then we're an active object and the value
+  // of <thr_count_> is the number of active threads at this instant.
+  // If the value == 0, then we're a passive object.
 
   ACE_Thread_Manager *thr_mgr_;
   // Multi-threading manager.
