@@ -1,3 +1,10 @@
+Fri Nov  10 09:20:58 2000 Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * */Makefile.bor:
+        Several new makefile.bor files added so that all examples/tests
+        for which Borland makefiles are available will be build in
+        a full build.
+
 Fri Nov  10 08:56:58 2000 Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:
