@@ -1,3 +1,10 @@
+Thu Sep 17 20:01:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/tests.dsw:
+	* tests/version_tests.dsw:
+	* tests/[version_tests/]High_Res_Timer_Test.dsp:
+	* tests/[version_tests/]DLList_Test.dsp: Added new project files.
+
 Thu Sep 17 19:27:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (TSS_base,some ACE_PSOS_Time_t functions):
