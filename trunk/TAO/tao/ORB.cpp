@@ -969,8 +969,8 @@ CORBA::instance (void)
 void
 CORBA::instance (CORBA::ORB_ptr orb)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                            *ACE_Static_Object_Lock::instance (), 0));
+  ACE_MT (ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                     *ACE_Static_Object_Lock::instance ()));
   CORBA::instance_ = orb;
 }
 
