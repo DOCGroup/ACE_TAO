@@ -55,6 +55,9 @@ Sat Apr 05 13:11:04 1997  David L. Levine  <levine@cs.wustl.edu>
 	  strings in the text segment should be passed to its functions!
 	  Again, this change is for VxWorks only.
 
+	* ace/Sched_Params.cpp: moved memsets of pcinfo so that entire
+	  pcinfo structure is zeroed out, to _really_ avoid Purify warnings.
+
 Fri Apr 04 12:28:40 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-mvs.h: removed ACE_HAS_IP_MULTICAST because MVS
