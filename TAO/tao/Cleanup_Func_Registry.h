@@ -14,13 +14,13 @@
 #define TAO_CLEANUP_FUNC_REGISTRY_H
 #include "ace/pre.h"
 
-#include "corbafwd.h"
-#include "ace/Array_Base.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Array_Base.h"
 
 /**
  * @class TAO_Cleanup_Func_Registry

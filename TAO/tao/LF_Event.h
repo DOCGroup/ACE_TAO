@@ -14,15 +14,14 @@
 #define TAO_LF_EVENT_H
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Transport;
 class TAO_LF_Follower;
-class TAO_Leader_Follower;
+
 /**
  * @class TAO_LF_Event
  *

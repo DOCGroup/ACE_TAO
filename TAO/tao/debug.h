@@ -1,5 +1,4 @@
-
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -7,10 +6,7 @@
  *
  *  $Id$
  *
- *   debug/trace support.
- *
- *
- *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ *  @author  DOC Group - Wash U and UCI
  */
 //=============================================================================
 
@@ -19,7 +15,7 @@
 #define TAO_DEBUG_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,10 +28,10 @@
 // such as process initialization.  They're treated as immutable.
 
 // 0 to ??; higher == more
-extern TAO_Export u_int TAO_debug_level;
+extern TAO_Export unsigned int TAO_debug_level;
 
 // debug messages on (1) or off (0)
-extern TAO_Export u_int TAO_orbdebug;
+extern TAO_Export unsigned int  TAO_orbdebug;
 
 #include "ace/post.h"
 #endif /* TAO_DEBUG_H */

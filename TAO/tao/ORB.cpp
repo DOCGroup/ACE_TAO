@@ -1181,11 +1181,6 @@ CORBA_ORB::register_initial_reference (const char * id,
                                        CORBA::Object_ptr obj
                                        ACE_ENV_ARG_DECL)
 {
-  if (id == 0)
-    ACE_THROW (CORBA::ORB::InvalidName ());
-  else if (ACE_OS_String::strlen (id) == 0)
-    ACE_THROW (CORBA::ORB::InvalidName ());
-
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
 
   table.register_initial_reference (id, obj ACE_ENV_ARG_PARAMETER);
