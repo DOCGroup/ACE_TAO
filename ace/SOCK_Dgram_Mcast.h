@@ -68,7 +68,7 @@ public:
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  int reuse_addr = 1,
                  const ACE_TCHAR *net_if = 0,
-                 int protocol_family = PF_INET,
+                 int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                  int protocol = 0);
 
   /**
@@ -85,7 +85,7 @@ public:
    */
   int unsubscribe (const ACE_INET_Addr &mcast_addr,
                    const ACE_TCHAR *net_if = 0,
-                   int protocol_family = PF_INET,
+                   int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                    int protocol = 0);
 
   /// Unsubscribe from a multicast group.  Returns -1 if the call
@@ -125,14 +125,14 @@ private:
 
   /// Not publically visible.
   int open (const ACE_Addr &mcast_addr,
-            int protocol_family = PF_INET,
+            int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             int reuse_addr = 0);
 
   /// Not publically visible.
   int open (const ACE_Addr &mcast_addr,
             const ACE_QoS_Params &qos_params,
-            int protocol_family = PF_INET,
+            int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             ACE_Protocol_Info *protocolinfo = 0,
             ACE_SOCK_GROUP g = 0,
@@ -151,7 +151,7 @@ private:
   /// <subscribe_ifs>.
   int unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
                        const ACE_TCHAR *net_if = 0,
-                       int protocol_family = PF_INET,
+                       int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                        int protocol = 0);
 
   // = Disable public use of <ACE_SOCK_Dgram::send>s
