@@ -143,7 +143,8 @@ private:
 
   virtual void tao_update_object_group (
       const char * iogr,
-      PortableGroup::ObjectGroupRefVersion version
+      PortableGroup::ObjectGroupRefVersion version,
+      CORBA::Boolean is_primary
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));

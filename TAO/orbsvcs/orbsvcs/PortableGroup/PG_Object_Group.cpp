@@ -22,6 +22,7 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
   : member_ (CORBA::Object::_duplicate (member))
   , location_ (location)
   , factory_(PortableGroup::GenericFactory::_nil())
+  , is_primary_ (0)
 {
 }
 
@@ -34,6 +35,7 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
   , factory_ (PortableGroup::GenericFactory::_duplicate (factory))
   , factory_id_ (factory_id)
   , location_ (location)
+  , is_primary_ (0)
 {
 }
 
@@ -94,10 +96,10 @@ TAO::PG_Object_Group::~PG_Object_Group ()
 }
 
 
-void dump_ior (const char * base, unsigned long version, const char * iogr)
+void dump_ior (const char * base, const char * ext, unsigned long version, const char * iogr)
 {
   char filename[1000];
-  sprintf(filename, "%s_%lu.iogr", base, version );
+  sprintf(filename, "%s_%lu.%s", base, version, ext );
 
   FILE * iorfile = fopen(filename, "w");
   fwrite (iogr, 1, strlen(iogr), iorfile);
@@ -124,21 +126,29 @@ void TAO::PG_Object_Group::set_reference (
       ++it)
     {
       MemberInfo const * info = (*it).int_id_;
+      //
+      // Unchecked narrow means the member doesn't have to actually implement the TAO_UpdateObjectGroup interface
+      // PortableGroup::TAO_UpdateObjectGroup_var uog = PortableGroup::TAO_UpdateObjectGroup::_unchecked_narrow ( info->member_);
+      // but it doesn work: error message at replica is:
+      // TAO-FT (2996|976) - Wrong version information within the interceptor [1 | 0]
+      // TAO_Perfect_Hash_OpTable:find for operation 'tao_update_object_group' (length=23) failed
+      // back to using _narrow
       PortableGroup::TAO_UpdateObjectGroup_var uog = PortableGroup::TAO_UpdateObjectGroup::_narrow ( info->member_);
       if (! CORBA::is_nil (uog) )
       {
         ACE_TRY_NEW_ENV
         {
           ACE_DEBUG ((LM_DEBUG,
-            "PG_Object_Group pushing IOGR to member: %s@%s.\n",
+            "PG (%P|%t) -  Object_Group pushing IOGR to  %s member: %s@%s.\n",
+            (info->is_primary_ ? "Primary" : "Backup"),
             this->role_.c_str(),
             ACE_static_cast(const char *, info->location_[0].id)
             ));
-          dump_ior ("group", this->version_, this->IOGR_);
+          dump_ior ("group", "iogr", this->version_, this->IOGR_);
           CORBA::String_var replica_ior = this->orb_->object_to_string(uog.in() ACE_ENV_ARG_PARAMETER);
-          dump_ior ("replica", n_rep++, replica_ior);
+          dump_ior (info->location_[0].id, "ior", (this->version_ * 100) + n_rep++, replica_ior);
 
-          uog->tao_update_object_group (this->IOGR_, this->version_);
+          uog->tao_update_object_group (this->IOGR_, this->version_, info->is_primary_);
         }
         ACE_CATCHANY
         {
@@ -207,9 +217,33 @@ void TAO::PG_Object_Group::group_specific_factories (PortableGroup::FactoryInfos
 }
 
 
-void TAO::PG_Object_Group::set_primary_location (PortableGroup::Location & location)
+void TAO::PG_Object_Group::set_primary_location (
+    const PortableGroup::Location & location 
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((PortableGroup::MemberNotFound))
 {
-  this->primary_location_ = location;
+  MemberInfo * info;
+  if (this->members_.find (location, info) == 0)
+  {
+    int cleared = 0;
+    this->primary_location_ = location;
+    for (MemberMap_Iterator it = this->members_.begin();
+        !cleared && it != this->members_.end();
+        ++it)
+    {
+      cleared = (*it).int_id_->is_primary_;
+      (*it).int_id_->is_primary_ = 0;
+    }
+    info->is_primary_ = 1;
+  }
+  else
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      "TAO-PG (%P|%t) - set_primary_location throwing MemberNotFound.\n"
+      ));
+    ACE_THROW (PortableGroup::MemberNotFound())
+    ACE_CHECK;
+  }
 }
 
 const PortableGroup::Location & TAO::PG_Object_Group::primary_location() const

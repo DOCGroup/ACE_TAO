@@ -121,7 +121,7 @@ namespace TAO
 
     CORBA::ULong object_group_ref_version_;
 
-    bool is_primary_;
+    CORBA::Boolean is_primary_;
 
     CORBA::Object_var iogr_;
 

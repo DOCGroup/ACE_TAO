@@ -300,7 +300,10 @@ module PortableGroup
      *  Pseudo used method to update IOGR in Object Group Members
      *  TAO specific.  The CORBA spec. doesn't address the issue.
      */
-    void tao_update_object_group (in string iogr, in PortableGroup::ObjectGroupRefVersion version);
+    void tao_update_object_group (
+        in string iogr, 
+        in PortableGroup::ObjectGroupRefVersion version,
+        in boolean is_primary);
   };
 
 

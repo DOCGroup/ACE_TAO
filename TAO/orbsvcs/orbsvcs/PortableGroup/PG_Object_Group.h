@@ -66,6 +66,11 @@ namespace TAO
       /// Location where this member exists
       PortableGroup::Location location_;
 
+
+      /// TRUE if this is primary member
+      CORBA::Boolean is_primary_;
+
+
       ///////////////
       // Methods
 
@@ -150,10 +155,21 @@ namespace TAO
      */
     void group_specific_factories (PortableGroup::FactoryInfos & result) const;
 
-    // Note: primary location is a concept from FT CORBA.
-    // It doesn't hurt other PortableGroup-based services to
-    // have these two metods and the underlying member.
-    void set_primary_location (PortableGroup::Location & primary_location_);
+    /**
+     * Set the member at "location" to be primary.
+     *
+     * Note: primary location is a concept from FT CORBA.
+     * It doesn't hurt other PortableGroup-based services to
+     * have these two methods and the underlying members.
+     */
+    void set_primary_location (
+        const PortableGroup::Location & location 
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((PortableGroup::MemberNotFound));
+
+    /**
+     * get location of primary member
+     */
     const PortableGroup::Location & primary_location() const;
 
     /**

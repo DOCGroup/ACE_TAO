@@ -431,6 +431,10 @@ namespace TAO
 
     //@}
 
+    ////////////////
+    // Forbidden methods
+    FT_ReplicationManager (const FT_ReplicationManager & rhs);
+    FT_ReplicationManager & operator = (const FT_ReplicationManager & rhs);
 
     ///////////////
     // Data Members
