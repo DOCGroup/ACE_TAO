@@ -1,18 +1,24 @@
+Tue Nov 17 21:34:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/Makefile:
+	* orbsvcs/tests/ImplRepo/Makefile: New makefiles for UNIX.
+	  Notice that the second makefile depends on the first makefile.
+
 Tue Nov 17 20:10:41 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/Sequence.{h,cpp}:
-          Added get_buffer methods (const and non-const) to 
+          Added get_buffer methods (const and non-const) to
           TAO_Unbounded_String_Sequence.
 
 Tue Nov 17 11:28:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/decode.cpp: 
+	* tao/decode.cpp:
 	  Fixed problems with Any demarshaling, the buffer allocated could
 	  be misaligned and sometimes too small. Thanks to Arturo Montes
 	  <mitosys@colomsat.com.co> for pointing this out.
 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
 	  When dispatching events the push() method may raise an
 	  exception, it is a oneway but it could raise a
 	  CORBA::SystemException.
@@ -22,7 +28,7 @@ Tue Nov 17 11:28:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
 	  for pointing this out.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
 	  Removed a few problems with invocations through nil references.
 
 Tue Nov 17 10:25:25 1998  David L. Levine  <levine@cs.wustl.edu>
