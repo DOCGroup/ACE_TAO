@@ -1,3 +1,14 @@
+Wed Sep  8 14:08:49 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
+	Fixed warnings on HP_UX
+	* orbsvcs/orbsvcs/AV/RTCP.h: 
+	Added the declaration for the fmod method.	
+	* orbsvcs/orbsvcs/AV/RTCP.cpp: 
+	Replaced all the implicit reinterpret casts with
+	ACE_reinterpret_casts. Thanks to Bala to point this out.
+	
+
 Wed Sep  8 14:03:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Latency/TestImpl.java:
