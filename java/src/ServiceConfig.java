@@ -12,6 +12,7 @@
 package ACE.ServiceConfigurator;
 
 import java.io.*;
+import java.net.*;
 import ACE.OS.*;
 import ACE.Misc.*;
 
@@ -55,13 +56,15 @@ public class ServiceConfig
 
     // Set '#' as comment character to be ignored and set '/' as
     // ordinary character (was original comment character) 
-    in.commentChar ('#');
+    //    in.commentChar ('#');
     in.ordinaryChar ('/');
 
-    // Set characters in ASCII range 33 to 47 and ASCII range 91 to 96
-    // as ordinary characters
+    // Set characters in ASCII range 33 to 47, ASCII range 91 to 96,
+    // and ASCII range 123 to 126 as ordinary characters
     in.wordChars ('!', '/');  // ASCII range 33 to 47
+    in.wordChars (':', '@');  // ASCII range 58 to 64
     in.wordChars ('[', '`');  // ASCII range 91 to 96
+    in.wordChars ('{', '~');  // ASCII range 123 to 126
 
     String className = null;
     String classType = null;
@@ -95,7 +98,21 @@ public class ServiceConfig
 	      {
 		args = in.sval;
 		// Load the class
-		Class c = ServiceConfig.svcRep_.load (className);
+		Class c = null;
+
+		// First check if we need to load the class from the
+		// file system or from across the network.
+		if (className.lastIndexOf ("://") != -1)
+		  {
+		    // We need to get the bytes over the network since
+		    // the name specified in the configuration file
+		    // contains a protocol specification
+		    c = ServiceConfig.svcRep_.load (new URL (className));
+		  }
+		else
+		  {
+		    c = ServiceConfig.svcRep_.load (className);
+		  }
 
 		// Note that c should be defined else an exception
 		// would have been thrown by now
