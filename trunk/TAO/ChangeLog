@@ -1,3 +1,13 @@
+Tue Nov 26 23:09:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Makefile:
+	* tests/Makefile.bor: Added the new test to the daily builds. 
+
+	* tests/Bug_1361_Regression/server.bor:
+	* tests/Bug_1361_Regression/client.bor:
+	* tests/Bug_1361_Regression/shutdown.bor: 
+	* tests/Bug_1361_Regression/Makefile.bor: The Borland Makefiles.
+	
 Tue Nov 26 22:32:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1361_Regression/*: A new regression for BUG

@@ -16,6 +16,7 @@ DIRS = \
         Blocking_Sync_None \
         Bug_1020_Basic_Regression \
         Bug_1020_Regression \
+        Bug_1361_Regression \
         Bug_1269_Regression \
         Bug_1270_Regression \
 	CDR \
