@@ -3,6 +3,9 @@ Wed Sep 10 10:25:41 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Thread_Manager.cpp (exit): copy the thread exit hook before
 	  releasing the guard, and call it after releasing the guard.
 
+	* examples/Shared_Malloc/test_malloc.cpp (spawn): added (char *)
+	  cast of slave_name () to avoid compilation warnings on Solaris.
+
 Wed Sep 10 00:43:04 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* ace/Makefile: Added Managed_Object to template sources.
