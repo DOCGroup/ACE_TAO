@@ -1,12 +1,21 @@
+Fri Aug 06 13:39:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: updated VxWorks build information,
+          specifically, the instructions for building on NT host.
+          And, added information about linking libACE.so and libTAO.so
+          into the VxWorks kernel.  Thanks to
+          Erik Johannes <ejohannes@oresis.com> and Stephane Chatre
+          <schatre@oresis.com> for helping to clarify and verify.
+
 Fri Aug 06 12:10:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Added
-	  ACE_HAS_POSITION_INDEPENDENT_MALLOC.
+        * ace/config-win32-common.h: Added
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC.
 
-	* ace/OS.cpp (strptime_getnum): getnum should be strptim_getnum.
+        * ace/OS.cpp (strptime_getnum): getnum should be strptim_getnum.
 
-	* ace/config-win32-common.h: Added ACE_LACKS_STRPTIME.  Thanks to
-	  Andy for pointing this out.
+        * ace/config-win32-common.h: Added ACE_LACKS_STRPTIME.  Thanks to
+          Andy for pointing this out.
 
 Fri Aug 06 11:13:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
