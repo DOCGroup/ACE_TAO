@@ -6,10 +6,10 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt and Prashant Jain
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
+ *          Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SPIPE_ACCEPTOR_H
 #define ACE_SPIPE_ACCEPTOR_H
@@ -89,10 +89,10 @@ private:
   // This allows the get_handle()-obtained handle to be used for
   // registering with the reactor (albeit for signal, not input)
   // to tell when a pipe accept is done.
-  ACE_OVERLAPPED   overlapped_;
+  ACE_OVERLAPPED overlapped_;
   ACE_Manual_Event event_;
-  ACE_HANDLE       pipe_handle_;
-  int              already_connected_;
+  ACE_HANDLE pipe_handle_;
+  int already_connected_;
 #endif /* ACE_WIN32 */
 
 };

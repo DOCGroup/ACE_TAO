@@ -349,11 +349,12 @@ Sat Mar  9 20:02:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  created. Removed creation of a new CDR stream.
 
 	  The above two fixes should solve the problem reported in
-	  tao-users newsgroup under the thread "wide-strings in
-	  exceptions". Thanks to Val Dumitrescu
-	  <val.dumitrescu@am-beo.com> for reporting the problem and Duane
-	  Binder <duane.binder@veritas.com> for helping me to narrow down
-	  the problem.
+ 	  tao-users newsgroup under the thread "wide-strings in
+ 	  exceptions". Thanks to Val Dumitrescu
+ 	  <val.dumitrescu@am-beo.com> and Sorin Iordachescu
+ 	  <sorin.iordachescu@am-beo.com> for reporting the problem and
+ 	  Duane Binder <duane.binder@veritas.com> for helping me to narrow
+ 	  down the problem.
 
 Sat Mar  9 16:22:25 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
