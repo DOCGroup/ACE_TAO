@@ -25,4 +25,3 @@ interface TX_Object
   oneway void shutdown ();
 
 };
-
