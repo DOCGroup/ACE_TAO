@@ -5,6 +5,28 @@ Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
           a compiler warning.  Thanks to Brian Mendel <bmendel@mdc.com>
           for reporting this.
 
+        Thanks to Tom Venturella <tventurell@mdc.com> and Dave Mayerhoefer
+        <davem@lynx.com> (!) for requesting the following three changes:
+
+        * ace/Thread_Manager.cpp: added support for a user-supplied
+          thread (VxWorks task) name.  By itself, that means just passing
+          the ACE_thread_t along to ACE_OS::thr_create ().  The tricky
+          part was then handling the case where the user doesn't supply
+          a name.  It would be cleaner if the ACE_thread_t and ACE_hthread_t
+          typedefs were swapped on VxWorks, because the ACE_Thread_Manager
+          keys off of the ACE_thread_t.  And in addition to being cleaner,
+          it would be safer because ACE_thread_t's currently aren't
+          guaranteed to be unique on VxWorks.
+
+        * ace/OS.cpp (thr_create): on VxWorks only, use the t_id (task
+          name) if supplied.
+
+        * tests/Conn_Test.cpp: on VxWorks, assign thread (VxWorks task)
+          names to server and client threads, to test that feature.
+
+        * ace/OS.cpp (spa [VxWorks only]): use ::taskSpawn () instead
+          of ::sp () so that the task name, ace_main, can be specified.
+
 Wed Jan 21 21:37:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Removed the HPUX_11
