@@ -1,0 +1,45 @@
+
+/**
+ * @file Kokyu_qos.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source to help with the service context
+ *        propagation of dynamic scheduling parameters using Kokyu
+ *
+ *   This file was used to generate the code in Kokyu_qosC.{h,i,cpp}.
+ *   The steps to regenerate the code are as follows:
+ *
+ *   1. Run the tao_idl compiler on the pidl file.  The command used for
+ *   this is:
+ *
+ *     tao_idl -I $TAO_ROOT -Ge 1 Kokyu_qos.pidl
+ *
+ */
+
+#ifndef _KOKYU_DSRT_QOS_PIDL_
+#define _KOKYU_DSRT_QOS_PIDL_
+
+#include <IOP.pidl>
+#include <TimeBase.pidl>
+#include <RTScheduler.pidl>
+#include <RTCORBA.pidl>
+
+#pragma prefix "omg.org"
+
+module Kokyu
+{
+  typedef sequence<octet> GuidType;
+
+  struct Svc_Ctxt_DSRT_QoS
+  {
+    GuidType guid;
+    long importance;
+    long criticality;
+    RTCORBA::Priority desired_priority;
+    TimeBase::TimeT deadline;
+    TimeBase::TimeT estimated_initial_execution_time;
+  };
+};
+
+#endif /* KOKYU_DSRT_QOS_PIDL */
