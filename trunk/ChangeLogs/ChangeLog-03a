@@ -1,3 +1,8 @@
+Thu Apr  5 11:23:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* html/index.html:
+	  Add link to the new QoS library documentation.
+
 Thu Apr 05 03:26:13 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * examples/Makefile:
