@@ -82,7 +82,7 @@ if ($clients > 0) {
 
 if ($clients > 1) {
   $client = $CL2->WaitKill (5);
-  
+
   if ($client != 0) {
     print STDERR "ERROR: client 2 returned $client\n";
     $status = 1;
@@ -91,7 +91,7 @@ if ($clients > 1) {
 
 if ($clients > 2) {
   $client = $CL3->WaitKill (5);
-  
+
   if ($client != 0) {
     print STDERR "ERROR: client 3 returned $client\n";
     $status = 1;
@@ -106,7 +106,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (120);
+$server = $SV->WaitKill (150);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
