@@ -1,3 +1,9 @@
+Thu Mar 13 10:14:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO.dsp:
+
+          Set the template source files to be excluded from the build.
+
 Thu Mar 13 10:09:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
