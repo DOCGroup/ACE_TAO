@@ -21,12 +21,73 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SecurityLevel2C.h"
+#include "SSLIOP_X509.h"
 
+#include "orbsvcs/SecurityLevel2C.h"
 
 /// Forward declarations.
 struct x509_st;
 typedef x509_st X509;
+
+class TAO_SSLIOP_Credentials;
+typedef TAO_SSLIOP_Credentials* TAO_SSLIOP_Credentials_ptr;
+
+class TAO_SSLIOP_Credentials_var : public TAO_Base_var
+{
+public:
+  TAO_SSLIOP_Credentials_var (void); // default constructor
+  TAO_SSLIOP_Credentials_var (TAO_SSLIOP_Credentials_ptr p) : ptr_ (p) {} 
+  TAO_SSLIOP_Credentials_var (const TAO_SSLIOP_Credentials_var &); // copy constructor
+  ~TAO_SSLIOP_Credentials_var (void); // destructor
+  
+  TAO_SSLIOP_Credentials_var &operator= (TAO_SSLIOP_Credentials_ptr);
+  TAO_SSLIOP_Credentials_var &operator= (const TAO_SSLIOP_Credentials_var &);
+  TAO_SSLIOP_Credentials_ptr operator-> (void) const;
+  
+  operator const TAO_SSLIOP_Credentials_ptr &() const;
+  operator TAO_SSLIOP_Credentials_ptr &();
+  // in, inout, out, _retn 
+  TAO_SSLIOP_Credentials_ptr in (void) const;
+  TAO_SSLIOP_Credentials_ptr &inout (void);
+  TAO_SSLIOP_Credentials_ptr &out (void);
+  TAO_SSLIOP_Credentials_ptr _retn (void);
+  TAO_SSLIOP_Credentials_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static TAO_SSLIOP_Credentials_ptr tao_duplicate (TAO_SSLIOP_Credentials_ptr);
+  static void tao_release (TAO_SSLIOP_Credentials_ptr);
+  static TAO_SSLIOP_Credentials_ptr tao_nil (void);
+  static TAO_SSLIOP_Credentials_ptr tao_narrow (
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
+    );
+  static CORBA::Object * tao_upcast (void *);
+
+private:
+  TAO_SSLIOP_Credentials_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  TAO_SSLIOP_Credentials_var (const TAO_Base_var &rhs);
+  TAO_SSLIOP_Credentials_var &operator= (const TAO_Base_var &rhs);
+};
+
+
+class  TAO_SSLIOP_Credentials_out
+{
+public:
+  TAO_SSLIOP_Credentials_out (TAO_SSLIOP_Credentials_ptr &);
+  TAO_SSLIOP_Credentials_out (TAO_SSLIOP_Credentials_var &);
+  TAO_SSLIOP_Credentials_out (const TAO_SSLIOP_Credentials_out &);
+  TAO_SSLIOP_Credentials_out &operator= (const TAO_SSLIOP_Credentials_out &);
+  TAO_SSLIOP_Credentials_out &operator= (const TAO_SSLIOP_Credentials_var &);
+  TAO_SSLIOP_Credentials_out &operator= (TAO_SSLIOP_Credentials_ptr);
+  operator TAO_SSLIOP_Credentials_ptr &();
+  TAO_SSLIOP_Credentials_ptr &ptr (void);
+  TAO_SSLIOP_Credentials_ptr operator-> (void);
+
+private:
+  TAO_SSLIOP_Credentials_ptr &ptr_;
+};
 
 
 /**
@@ -149,6 +210,44 @@ public:
       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  //@{
+  /// Return a pointer to the underlying X.509 certificate.
+  /**
+   * @note Caller owns the returned object.  Use a
+   *       TAO_SSLIOP_X509_var.
+   */
+  X509 *x509 (void);
+  //@}
+
+  //@{
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef TAO_SSLIOP_Credentials_ptr _ptr_type;
+  typedef TAO_SSLIOP_Credentials_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
+  
+  // The static operations.
+  static TAO_SSLIOP_Credentials_ptr _duplicate (TAO_SSLIOP_Credentials_ptr obj);
+  
+  static TAO_SSLIOP_Credentials_ptr _narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  static TAO_SSLIOP_Credentials_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  static TAO_SSLIOP_Credentials_ptr _nil (void)
+    {
+      return (TAO_SSLIOP_Credentials_ptr)0;
+    }
+  
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
+  //@}
+
 protected:
 
   /// Destructor.
@@ -189,12 +288,15 @@ protected:
   /// object when invoking operations on the target object.
   Security::AssociationOptions invocation_options_required_;
 
-  /// The X.509 certificate associated with this SSLIOP Credentials
-  /// object.
-  X509 *x509_;
+  /// Reference to the X.509 certificate associated with this SSLIOP
+  /// Credentials object.
+  TAO_SSLIOP_X509_var x509_;
 
 };
 
+#if defined (__ACE_INLINE__)
+# include "SSLIOP_Credentials.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 

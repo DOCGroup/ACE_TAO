@@ -23,6 +23,9 @@
 
 #include "SSLIOP_Credentials.h"
 
+class TAO_SSLIOP_ReceivedCredentials;
+typedef TAO_SSLIOP_ReceivedCredentials* TAO_SSLIOP_ReceivedCredentials_ptr;
+
 /**
  * @class TAO_SSLIOP_ReceivedCredentials
  *
@@ -79,6 +82,35 @@ public:
   virtual Security::DelegationMode delegation_mode (
       TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+  //@}
+
+  //@{
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef TAO_SSLIOP_ReceivedCredentials_ptr _ptr_type;
+  // typedef TAO_SSLIOP_ReceivedCredentials_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
+  
+  // The static operations.
+  static TAO_SSLIOP_ReceivedCredentials_ptr _duplicate (TAO_SSLIOP_ReceivedCredentials_ptr obj);
+  
+  static TAO_SSLIOP_ReceivedCredentials_ptr _narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  static TAO_SSLIOP_ReceivedCredentials_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  static TAO_SSLIOP_ReceivedCredentials_ptr _nil (void)
+    {
+      return (TAO_SSLIOP_ReceivedCredentials_ptr)0;
+    }
+  
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
   //@}
 
 };
