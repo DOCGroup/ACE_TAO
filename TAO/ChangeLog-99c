@@ -1,3 +1,17 @@
+Wed Apr  7 18:49:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Typecode_Constants.cpp: 
+	  Added missing _tc_ static in the CORBA module.
+
+	* tao/Object_Adapter.cpp: 
+	  Removed duplicate template instantiations.
+
+	* tao/MessagingS_T.i: 
+	  Commented out code for CORBA::Poller and friends.
+
+	* tao/MessagingC.cpp: 
+	  Removed unwanted template instantiations.
+
 Wed Apr  7 17:31:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/sfp.{h,cpp}: Replaced CDR with ACE_CDR.

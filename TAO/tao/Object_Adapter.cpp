@@ -754,11 +754,9 @@ TAO_Object_Adapter::iteratable_poa_name::end (void) const
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class auto_ptr<TAO_Object_Adapter::Hint_Strategy>;
-template class auto_ptr<TAO_Object_Adapter::persistent_poa_name_map>;
 template class auto_ptr<TAO_Object_Adapter::transient_poa_map>;
 
 template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>;
-template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::persistent_poa_name_map>;
 template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>;
 
 // Common typedefs.
@@ -824,11 +822,9 @@ template class ACE_Map_Entry<key, value>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate auto_ptr<TAO_Object_Adapter::Hint_Strategy>
-#pragma instantiate auto_ptr<TAO_Object_Adapter::persistent_poa_name_map>
 #pragma instantiate auto_ptr<TAO_Object_Adapter::transient_poa_map>
 
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::persistent_poa_name_map>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>
 
 // Common typedefs.

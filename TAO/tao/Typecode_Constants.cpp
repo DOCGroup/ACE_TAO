@@ -93,6 +93,7 @@ CORBA::TypeCode_ptr CORBA::_tc_PolicyList = 0;
 CORBA::TypeCode_ptr CORBA::_tc_PolicyTypeSeq = 0;
 CORBA::TypeCode_ptr CORBA::_tc_SetOverrideType = 0;
 CORBA::TypeCode_ptr CORBA::_tc_PolicyManager = 0;
+CORBA::TypeCode_ptr CORBA::_tc_PolicyCurrent = 0;
 
 CORBA::TypeCode_ptr CORBA::_tc_PollableSet = 0;
 CORBA::TypeCode_ptr CORBA::_tc_Pollable = 0;
@@ -455,7 +456,7 @@ TAO_TypeCodes::init (void)
   36, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0x43757272), ACE_NTOHL (0x656e743a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/PolicyCurrent:1.0
   14, ACE_NTOHL (0x506f6c69), ACE_NTOHL (0x63794375), ACE_NTOHL (0x7272656e), ACE_NTOHL (0x74000000),  // name = PolicyCurrent,
  };
- CORBA::TypeCode_ptr _tc_PolicyCurrent =
+ CORBA::_tc_PolicyCurrent =
    new CORBA::TypeCode  (CORBA::tk_objref,
                          sizeof (_oc_CORBA_PolicyCurrent),
                          (char *) &_oc_CORBA_PolicyCurrent,
