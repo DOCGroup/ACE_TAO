@@ -90,7 +90,12 @@ sub write_comps {
   my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
 
-  print $fh "ALL:$crlf";
+  print $fh '!IF "$(CFG)" == ""' . $crlf .
+            'CFG=Win32 Debug' . $crlf .
+            '!MESSAGE No configuration specified. ' .
+            'Defaulting to Win32 Debug.' . $crlf .
+            '!ENDIF' . $crlf . $crlf .
+            'ALL:' . $crlf;
   $self->write_project_targets($fh, 'CFG="$(CFG)"', \@list);
 
   print $fh "$crlf" .

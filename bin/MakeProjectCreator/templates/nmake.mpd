@@ -149,8 +149,8 @@ LINK32_OBJS= \
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
-!IF EXISTS("<%dependency_file("project.dep")%>")
-!INCLUDE "<%dependency_file%>"
+!IF EXISTS("<%noextension(project_file)%>.dep")
+!INCLUDE "<%noextension(project_file)%>.dep"
 !ELSE 
 !MESSAGE Warning: cannot find "<%dependency_file%>"
 !ENDIF 

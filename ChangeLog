@@ -1,3 +1,13 @@
+Tue Dec 17 08:20:22 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+
+          Fixed a problem with generated Makefiles where CFG is defaulted.
+
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+
+          Modified the dependencies file name.
+
 Tue Dec 17 07:03:40 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Array_Base.h:
