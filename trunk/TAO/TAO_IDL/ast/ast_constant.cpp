@@ -87,7 +87,7 @@ ACE_RCSID(ast, ast_constant, "$Id$")
 /*
  * Convert a value from the enum AST_Expression::ExprType to a char *
  */
-static char *
+static const char *
 exprtype_to_string(AST_Expression::ExprType et)
 {
   switch (et) {

@@ -1,4 +1,4 @@
-struct TAO_IDL_CPP_Keyword_Entry { char *keyword_ ; char *mapping_; };
+struct TAO_IDL_CPP_Keyword_Entry { const char *keyword_ ; char *mapping_; };
 %%
 and, "_cxx_and"
 and_eq, "_cxx_and_eq"

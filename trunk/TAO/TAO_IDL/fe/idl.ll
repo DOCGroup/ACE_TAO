@@ -166,7 +166,7 @@ oneway		return IDL_ONEWAY;
 \<\<		return IDL_LEFT_SHIFT;
 \>\>		return IDL_RIGHT_SHIFT;
 \:\:		{
-		  yylval.strval = "::";
+		  yylval.strval = (char *) "::";
 		  return IDL_SCOPE_DELIMITOR;
 		}
 
@@ -343,7 +343,7 @@ idl_parse_line_and_file(char *buf)
     continue;
   *r = 0;
   if (*h == '\0')
-    idl_global->set_filename(new String("standard input"));
+    idl_global->set_filename((const char *) new String("standard input"));
   else
     {
       long i;
@@ -358,7 +358,7 @@ idl_parse_line_and_file(char *buf)
 	  h[i] = h[j];
         }
       h[i] = '\0';
-      idl_global->set_filename(new String(h));
+      idl_global->set_filename((const char *) new String(h));
     }
   int in_main_file = I_FALSE;
   if (idl_global->filename()->compare(idl_global->real_filename())

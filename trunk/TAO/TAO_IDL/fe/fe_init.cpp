@@ -90,7 +90,7 @@ ACE_RCSID(fe, fe_init, "$Id$")
  * Create a scoped name
  */
 static UTL_ScopedName *
-create_scoped_name(char *s)
+create_scoped_name(const char *s)
 {
   return new UTL_ScopedName(new Identifier(s, 1, 0, I_FALSE), NULL);
 }

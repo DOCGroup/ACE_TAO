@@ -226,20 +226,20 @@ public:
   virtual void                  set_lineno(long);       // Set it
 
   virtual String                *filename();            // What file?
-  virtual void                  set_filename(String *); // Set it
+  virtual void                  set_filename(const char *); // Set it
 
   virtual String                *main_filename();       // What's the main
                                                         // file name?
-  virtual void                  set_main_filename(String *);
+  virtual void                  set_main_filename(const char *);
                                                         // Set it
 
   virtual String                *real_filename();       // What's the real
                                                         // file name?
-  virtual void                  set_real_filename(String *);
+  virtual void                  set_real_filename(const char *);
                                                         // Set it
 
   virtual String                *stripped_filename();   // Stripped filename
-  virtual void                  set_stripped_filename(String *);  // Set it
+  virtual void                  set_stripped_filename(const char *);  // Set it
 
   virtual idl_bool              imported();             // Are we imported?
   virtual idl_bool              import();               // Is import on?
@@ -248,20 +248,20 @@ public:
   virtual idl_bool              in_main_file();         // Are we?
   virtual void                  set_in_main_file(idl_bool);     // Set it
 
-  virtual char                  *prog_name();           // Invoked as..
-  virtual void                  set_prog_name(char *);  // Set it
+  virtual const char            *prog_name(void);           // Invoked as..
+  virtual void                  set_prog_name(const char *);  // Set it
 
-  virtual char                  *cpp_location();        // Where's CPP?
-  virtual void                  set_cpp_location(char *);// Set it
+  virtual const char            *cpp_location(void);     // Where's CPP?
+  virtual void                  set_cpp_location(const char *);// Set it
 
-  virtual long                  compile_flags();        // What flags are on?
+  virtual long                  compile_flags(void);   // What flags are on?
   virtual void                  set_compile_flags(long);// Turn some on or off
 
-  virtual char                  *be();                  // Get BE to use
-  virtual void                  set_be(char *);         // Set it
+  virtual const char            *be(void);                  // Get BE to use
+  virtual void                  set_be(const char *);         // Set it
 
-  virtual char                  *local_escapes();       // Get local escapes
-  virtual void                  set_local_escapes(char *);// Set it
+  virtual char                  *local_escapes(void);       // Get local escapes
+  virtual void                  set_local_escapes(const char *);// Set it
 
   virtual UTL_Indenter          *indent();              // Get indenter
   virtual void                  set_indent(UTL_Indenter *);

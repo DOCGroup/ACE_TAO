@@ -86,7 +86,7 @@ public:
   Identifier ();
   // Default Constructor(s)
 
-  Identifier (char *s, long x=1, long y=0, long z=I_FALSE);
+  Identifier (const char *s, long x=1, long y=0, long z=I_FALSE);
   // constructor
 
   virtual ~Identifier ();

@@ -79,7 +79,7 @@ ACE_RCSID(driver, drv_private, "$Id$")
 # define NFILES 1024
 #endif /* ! NFILES */
 
-char            *DRV_files[NFILES];
+const char     *DRV_files[NFILES];
 long            DRV_nfiles = 0;
 long            DRV_file_index = -1;
 IDL_GlobalData *idl_global = NULL;
