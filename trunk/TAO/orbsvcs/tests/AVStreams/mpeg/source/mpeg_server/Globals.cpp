@@ -1944,9 +1944,8 @@ Video_Timer_Global::StopTimer (void)
   val.it_interval.tv_usec = val.it_value.tv_usec = 0;
   setitimer (ITIMER_REAL, &val, NULL);
   timerOn = 0;
-  
-  fprintf (stderr, "VS: timer stopped.\n");
-  
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Timer_Global::StopTimer: timer stopped\n"));
 }
 
 void
