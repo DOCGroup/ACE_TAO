@@ -1,5 +1,6 @@
 #include "GIOP_Message_NonReactive_Base.h"
 #include "tao/Leader_Follower.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_NonReactive_Base.inl"
@@ -40,9 +41,56 @@ TAO_GIOP_Message_NonReactive_Base::read_message (TAO_Transport *transport,
   this->set_state (state.giop_version.major,
                    state.giop_version.minor);
 
+  if (TAO_debug_level > 2)
+    {
+      TAO_InputCDR &cdr =
+        this->message_handler_.input_cdr ();
+
+      char *buf = cdr.rd_ptr ();
+
+      buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
+      size_t len = cdr.length () + TAO_GIOP_MESSAGE_HEADER_LEN;
+
+      this->dump_msg ("Recv",
+                      ACE_reinterpret_cast (u_char *,
+                                            buf),
+                      len);
+
+    }
   // We return 2, it is ugly. But the reactor semantics has made us to
   // limp :(
   return 2;
+}
+
+TAO_Pluggable_Message_Type
+TAO_GIOP_Message_NonReactive_Base::message_type (void)
+{
+  // @@ maybe we should refactor this code and put it in
+  // GIOP_Message_Base.- NB
+  switch (this->message_handler_.message_state ().message_type)
+    {
+    case TAO_GIOP_REQUEST:
+    case TAO_GIOP_LOCATEREQUEST:
+      return TAO_PLUGGABLE_MESSAGE_REQUEST;
+
+    case TAO_GIOP_LOCATEREPLY:
+    case TAO_GIOP_REPLY:
+      return TAO_PLUGGABLE_MESSAGE_REPLY;
+
+    case TAO_GIOP_CLOSECONNECTION:
+      return TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION;
+
+    case TAO_GIOP_CANCELREQUEST:
+    case TAO_GIOP_MESSAGERROR:
+    case TAO_GIOP_FRAGMENT:
+      // Never happens: why??
+    default:
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
+                    ACE_TEXT ("wrong message.\n")));
+    }
+
+  return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
 }
 
 

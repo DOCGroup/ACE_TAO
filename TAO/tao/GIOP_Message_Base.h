@@ -136,6 +136,11 @@ protected:
   void set_state (CORBA::Octet major,
                   CORBA::Octet minor);
 
+  /// Print out a debug messages..
+  void dump_msg (const char *label,
+                 const u_char *ptr,
+                 size_t len);
+
 private:
 
   /// Writes the GIOP header in to <msg>
@@ -169,10 +174,6 @@ private:
                             IOP::ServiceContextList *svc_info,
                             CORBA::Exception *x);
 
-  /// Print out a debug messages..
-  void dump_msg (const char *label,
-                 const u_char *ptr,
-                 size_t len);
 
   /// Write the locate reply header
   virtual int generate_locate_reply_header (
