@@ -14,6 +14,8 @@ Tue Apr 07 10:55:53 1998  David L. Levine  <levine@cs.wustl.edu>
           orbsvcs/tests/Event_Latency/Event_Latency.cpp:
           merged DynSched into liborbsvcs.
 
+        * orbsvcs/tests/Sched/Makefile: added.
+
 Mon Apr  6 14:43:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/Connect.cpp:
