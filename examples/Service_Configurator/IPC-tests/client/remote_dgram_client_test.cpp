@@ -6,6 +6,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(client, remote_dgram_client_test, "$Id$")
 

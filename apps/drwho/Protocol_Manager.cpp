@@ -1,4 +1,7 @@
 // $Id$
+
+#include "ace/Log_Msg.h"
+
 #include "Options.h"
 #include "new.h"
 #include "Protocol_Manager.h"

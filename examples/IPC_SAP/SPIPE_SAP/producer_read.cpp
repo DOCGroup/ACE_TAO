@@ -2,6 +2,7 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(SPIPE_SAP, producer_read, "$Id$")
 

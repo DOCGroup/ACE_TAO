@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -19,6 +19,8 @@
 #include "ace/pre.h"
 
 #include "ace/Addr.h"
+#include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -6,6 +6,7 @@
 #include "ace/Mem_Map.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(client, local_spipe_client_test, "$Id$")
 

@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// DEV_Connector.i
-
 // Creates a Local ACE_DEV. 
 
 ASYS_INLINE

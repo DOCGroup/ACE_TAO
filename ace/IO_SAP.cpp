@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/IO_SAP.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/IO_SAP.i"

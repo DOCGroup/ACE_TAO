@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Time_Request_Reply.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Time_Request_Reply, "$Id$")
 

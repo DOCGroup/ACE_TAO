@@ -6,6 +6,7 @@
 #include "PMC_Usr.h"
 #include "PMC_Ruser.h"
 #include "SMR_Client.h"
+#include "ace/Log_Msg.h"
 
 SMR_Client::SMR_Client (short port_number)
 {

@@ -20,6 +20,7 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/Pipe.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_early_timeouts, "$Id$")
 

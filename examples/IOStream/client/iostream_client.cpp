@@ -2,6 +2,7 @@
 
 #include "ace/SOCK_Connector.h"
 #include "ace/IOStream.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(client, iostream_client, "$Id$")
 

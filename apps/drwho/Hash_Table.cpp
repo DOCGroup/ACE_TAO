@@ -2,6 +2,7 @@
 
 #include "Options.h"
 #include "Hash_Table.h"
+#include "ace/Log_Msg.h"
 
 Hash_Table::Hash_Table (void)
   : current_ptr (0),

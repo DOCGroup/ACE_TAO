@@ -4,6 +4,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+#include "ace/Log_Msg.h"
 #include "Logging_Strategy.h"
 
 ACE_RCSID(lib, Logging_Strategy, "$Id$")

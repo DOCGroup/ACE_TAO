@@ -2,6 +2,7 @@
 
 #include "ace/TLI_Acceptor.h"                             
 #include "ace/ATM_Addr.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(TLI_SAP, CPP_ATM_server, "$Id$")
 

@@ -402,13 +402,13 @@ extern int t_errno;
 #   define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) \
   do \
     RESULT = (TYPE) OP; \
-  while (RESULT == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ())
+  while (RESULT == FAILVALUE && errno == EINTR)
 #   define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) \
   do { \
     TYPE ace_result_; \
     do \
       ace_result_ = (TYPE) OP; \
-    while (ace_result_ == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ()); \
+    while (ace_result_ == FAILVALUE && errno == EINTR); \
     return ace_result_; \
   } while (0)
 # elif defined (ACE_WIN32)

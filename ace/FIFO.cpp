@@ -1,9 +1,8 @@
 // FIFO.cpp
 // $Id$
 
-/* -*- C++ -*- */
-
 #include "ace/FIFO.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/FIFO.i"

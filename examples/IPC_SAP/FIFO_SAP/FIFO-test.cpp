@@ -8,6 +8,7 @@
 
 #include "ace/FIFO_Recv.h"
 #include "ace/FIFO_Send.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(FIFO_SAP, FIFO_test, "$Id$")
 

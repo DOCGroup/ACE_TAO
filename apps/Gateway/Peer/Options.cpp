@@ -3,6 +3,7 @@
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 #include "Options.h"
 
 ACE_RCSID(Peer, Options, "$Id$")

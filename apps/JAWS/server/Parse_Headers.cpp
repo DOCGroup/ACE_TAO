@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Log_Msg.h"
+
 #include "Parse_Headers.h"
 
 ACE_RCSID(server, Parse_Headers, "$Id$")

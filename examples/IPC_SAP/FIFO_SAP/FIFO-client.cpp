@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/FIFO_Send.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(FIFO_SAP, FIFO_client, "$Id$")
 

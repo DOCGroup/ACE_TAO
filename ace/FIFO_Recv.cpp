@@ -1,9 +1,8 @@
 // FIFO_Recv.cpp
 // $Id$
 
-/* -*- C++ -*- */
-
 #include "ace/FIFO_Recv.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FIFO_Recv.i"

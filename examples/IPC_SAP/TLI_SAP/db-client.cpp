@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/TLI_Connector.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(TLI_SAP, db_client, "$Id$")
 

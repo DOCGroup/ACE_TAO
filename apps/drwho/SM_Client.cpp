@@ -6,6 +6,7 @@
 #include "PMC_Usr.h"
 #include "PMC_Ruser.h"
 #include "SM_Client.h"
+#include "ace/Log_Msg.h"
 
 // Call-back function that invokes the appropriate decode function.
 
