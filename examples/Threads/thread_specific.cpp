@@ -120,7 +120,7 @@ worker (void *c)
         // Use the guard to serialize access to printf...
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
-#if defined(linux)
+#if defined(linux) || defined(__OpenBSD__)
         // @@ Normally the platform specific way to print a thread ID
         // is encapsulated in Log_Msg.cpp, but for this small example
         // we cannot (or do not want to) use ACE_Log_Msg.
