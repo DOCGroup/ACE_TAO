@@ -259,7 +259,7 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
   ndb->policy (db->policy ());
   ndb->io_handler (nioh);
   nioh->task (db->task ());
-  nioh->message_block (ndb)
+  nioh->message_block (ndb);
 
   JAWS_Asynch_IO_Handler *aioh =
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, nioh);
