@@ -1,3 +1,9 @@
+Mon Aug  3 17:50:08 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* examples/get/get_async.cpp: 
+	* examples/get/get.cpp: 
+	Added ACE_RCSID to these files.
+
 Fri Jul 31 19:26:07 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* examples/Makefile: 
