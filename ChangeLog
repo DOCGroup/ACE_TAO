@@ -1,3 +1,12 @@
+Thu May  3 14:52:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.h (ACE_InputCDR): 
+	* ace/CDR_Stream.cpp: Removed the method steal_data () as it did
+	  not serve the purpose.  Added a new method exchange_data_blocks
+	  (). This method exchanges data_blocks between two CDR
+	  streams. The write and read pointers are also exchanged. This
+	  method performs no allocation and no releases and is lock free.
+
 Thu May  3 06:58:29 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Acceptor.{h,cpp},
