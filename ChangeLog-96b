@@ -1,3 +1,10 @@
+Wed Dec 18 16:44:47 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Proactor.cpp (dispatch): Changed this method to take an
+	  int error parameter to set errno just before dispatching.  This
+	  allows us to better propagate overlapped I/O errors to the
+	  handlers.
+
 Wed Dec 18 16:21:36 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{h,i} and ace/INET_Addr.cpp:  more VxWorks
