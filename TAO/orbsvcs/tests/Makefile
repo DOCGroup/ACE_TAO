@@ -24,6 +24,7 @@ DIRS += \
   EC_Multiple \
   EC_Throughput \
   EC_Mcast \
+  EC_MT_Mcast \
   EC_Custom_Marshal
 endif # corba_messaging
 
