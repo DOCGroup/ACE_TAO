@@ -162,8 +162,10 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
   usage.ru_nvcsw = this->end_usage_.ru_nvcsw - this->last_usage_.ru_nvcsw;
   // involuntary context switches
   usage.ru_nivcsw = this->end_usage_.ru_nivcsw - this->last_usage_.ru_nivcsw;
+  this->subtract (usage.ru_utime, this->end_usage_.ru_utime, this->last_usage_.ru_utime);
+  this->subtract (usage.ru_stime, this->end_usage_.ru_stime, this->last_usage_.ru_stime);
 #else
-        ACE_UNUSED_ARG(usage);
+  ACE_UNUSED_ARG(usage);
 #endif /* ACE_WIN32 */
 }
 
