@@ -9,23 +9,24 @@
 
 CIAO::DomainApplicationManager_Impl::
 DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
-  	                           PortableServer::POA_ptr poa,
+  	                       PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
-                               Deployment::DeploymentPlan & plan,
-                               const char * deployment_file)
+                               const Deployment::DeploymentPlan & plan,
+                               char * deployment_file)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    target_manager_ (manager),
+    target_manager_ (Deployment::TargetManager::_duplicate (manager)),
     plan_ (plan),
-    deployment_file_ (deployment_file),
+    deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb)
 {
-  // @@ 
+  // @@
 }
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
-  // @@ ?
+  // Delete the uuid
+  CORBA::string_free (this->uuid_);
 }
 
 
@@ -43,40 +44,40 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       // Call get_plan_info() method to get the total number
       // of child plans and list of NodeManager names.
       if ( this->get_plan_info () == false)
-        ACE_THROW ((::Deployment::PlanError ()));
+        ACE_THROW (Deployment::PlanError ());
 
       // Check the validity of the global deployment plan.
       if ( this->check_validity () == false)
-        ACE_THROW ((::Deployment::PlanError ()));
+        ACE_THROW (Deployment::PlanError ());
 
       // Invoke preparePlan for each child deployment plan.
       for (int i = 0; i < this->num_child_plans_; i++)
       {
         // Get the NodeManager reference.
-        ::Deployment::NodeManager_var my_node_manager = 
-          this->deployment_config_.get_node_manager 
+        ::Deployment::NodeManager_var my_node_manager =
+          this->deployment_config_.get_node_manager
             (this->node_manager_names_[i].c_str ());
 
         // Get the child deployment plan reference.
-        ACE_Hash_Map_Entry 
+        ACE_Hash_Map_Entry
           <ACE_CString,
           ::Deployment::DeploymentPlan_var> *entry;
 
-        if (this->child_plans_info_.find (this->node_manager_names_[i], 
+        if (this->child_plans_info_.find (this->node_manager_names_[i],
                                           entry) != 0)
-           ACE_THROW ((::Deployment::PlanError ()));
-                                          
+           ACE_THROW (Deployment::PlanError ());
+
         Deployment::DeploymentPlan_var my_child_plan = entry->int_id_;
 
         // Call preparePlan() method on the NodeManager, which returns
         // a node application manager.
         // @@TODO: Does preparePlan take a _var type variable?
-        ::Deployment::NodeApplicationManager_var my_nam = 
+        ::Deployment::NodeApplicationManager_var my_nam =
           my_node_manager->preparePlan (my_child_plan
                                         ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        // Cache the node_application_manager reference 
+        // Cache the node_application_manager reference
       }
     }
   ACE_CATCHANY
@@ -86,6 +87,19 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_CHECK_RETURN (0);
 
   return;
+}
+
+const char *
+CIAO::DomainApplicationManager_Impl::get_uuid ()
+{
+  return this->uuid_;
+}
+
+void
+CIAO::DomainApplicationManager_Impl::set_uuid (const char * uuid)
+{
+  // Copy this uuid reference
+  this->uuid_ = CORBA::string_dup (uuid);
 }
 
 
@@ -120,12 +134,18 @@ check_validity (void)
   return true;
 }
 
+Deployment::Applications *
+getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return 0;
+}
 
-int 
+int
 CIAO::DomainApplicationManager_Impl::
 split_plan (void)
 {
-  // Initialize the total number of node-level deployment plans specified 
+  // Initialize the total number of node-level deployment plans specified
   // by the global plan.
 
  for (int i = 0; i < this->num_child_plans_; i++)
@@ -145,7 +165,7 @@ split_plan (void)
     this->child_plans_info_.bind (node_manager_names_[i], tmp_plan);
   }
 
-  // (1) Iterate over the <instance> field of the global DeploymentPlan 
+  // (1) Iterate over the <instance> field of the global DeploymentPlan
   //     variabl.
   // (2) Retrieve the necessary information to contruct the node-level
   //     plans one by one.
@@ -155,12 +175,12 @@ split_plan (void)
       // Fill in the child deployment plan in the map.
 
       // Get the instance deployment description
-      ::Deployment::InstanceDeploymentDescription my_instance = 
+      ::Deployment::InstanceDeploymentDescription my_instance =
         (this->plan_.instance)[i];
 
-      // Find the corresponding child deployment plan entry in 
+      // Find the corresponding child deployment plan entry in
       // the hash map for this instance.
-      ACE_Hash_Map_Entry 
+      ACE_Hash_Map_Entry
         <ACE_CString,
         ::Deployment::DeploymentPlan_var> *entry;
 
@@ -174,7 +194,7 @@ split_plan (void)
       // a new "implementation", which is specified by the <implementationRef> field
       // of <my_instance> entry.
       // NOTE: The <artifactRef> field needs to be changed accordingly.
-      ::Deployment::MonolithicDeploymentDescription my_implementation = 
+      ::Deployment::MonolithicDeploymentDescription my_implementation =
         (this->plan_.implementation)[my_instance.implementationRef];
 
       CORBA::ULong index_imp = entry->int_id_->implementation.length ();
@@ -185,30 +205,30 @@ split_plan (void)
       // as the new artifactRef field for the implementation struct.
 
       // Initialize with length.
-      CORBA::ULongSeq ulong_seq (my_implementation.artifactRef.length ()); 
+      CORBA::ULongSeq ulong_seq (my_implementation.artifactRef.length ());
 
       // Append the "ArtifactDeploymentDescriptions artifact" field with
       // some new "artifacts", which is specified by the <artifactRef> sequence
       // of <my_implementation> entry.
-      for (CORBA::ULong iter = 0; 
+      for (CORBA::ULong iter = 0;
            iter < my_implementation.artifactRef.length ();
            iter ++)
       {
         CORBA::ULong artifact_ref = my_implementation.artifactRef[iter];
-        
+
         CORBA::ULong index_art = entry->int_id_->artifact.length ();
         entry->int_id_->artifact.length (index_art++);
-        entry->int_id_->artifact[index_art] = 
+        entry->int_id_->artifact[index_art] =
           (this->plan_.artifact)[artifact_ref];
 
         // @@ The artifactRef starts from 0.
-        ulong_seq[iter] = index_art; 
+        ulong_seq[iter] = index_art;
       }
 
       // Change the <artifactRef> field of the "implementation".
       entry->int_id_->implementation[index_imp].artifactRef = ulong_seq;
 
-      
+
       // Append the "InstanceDeploymentDescription instance" field with
       // a new "instance", which is almost the same as the "instance" in
       // the global plan except the <implementationRef> field.
@@ -253,8 +273,6 @@ startLaunch (const ::Deployment::Properties & configProperty,
   ACE_ENDTRY;
 
   ACE_CHECK_RETURN (0);
-
-  return;
 }
 
 
@@ -280,8 +298,8 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 void
 CIAO::DomainApplicationManager_Impl::
-destroyApplication (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException, 
+destroyApplication ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
 {
   //ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -296,7 +314,7 @@ destroyApplication (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
   //if (this->cs_set_.remove (app) == -1)
   //  ACE_THROW (Deployment::StopError ());
-  return;
+  //return;
 }
 
 
@@ -308,4 +326,13 @@ getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 {
   //@@ Not implemented yet.
   return 0;
+}
+
+Deployment::Applications *
+CIAO::DomainApplicationManager_Impl::
+getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return 0;
+
 }
