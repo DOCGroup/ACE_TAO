@@ -1,3 +1,10 @@
+Mon Nov  6 16:23:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+          Fixed warnings reported by DU/CXX
+
 Sun Nov  5 17:23:55 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * etc/ace.doxygen:

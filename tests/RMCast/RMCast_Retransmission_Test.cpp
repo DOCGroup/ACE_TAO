@@ -128,7 +128,7 @@ public:
    * however we just do brute force instead of trying to optimize the
    * Ack processing
    */
-  int ack (Test_Proxy *proxy, ACE_RMCast::Ack &ack);
+  int proxy_received_ack (Test_Proxy *proxy, ACE_RMCast::Ack &ack);
 
   virtual int data (ACE_RMCast::Data &data);
 
@@ -202,8 +202,8 @@ main (int, ACE_TCHAR *[])
     Tester tester;
     Task task (&tester);
     if (task.activate (THR_NEW_LWP|THR_JOINABLE, 4) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
-                         ACE_TEXT ("Cannot activate the threads\n")), 
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot activate the threads\n")),
                         1);
     ACE_Thread_Manager::instance ()->wait ();
     tester.validate_message_count ();
@@ -287,7 +287,7 @@ Tester::reply_ack_join (Test_Proxy *, ACE_RMCast::Ack_Join &ack_join)
 }
 
 int
-Tester::ack (Test_Proxy *, ACE_RMCast::Ack &)
+Tester::proxy_received_ack (Test_Proxy *, ACE_RMCast::Ack &)
 {
   return this->send_ack ();
 }
@@ -485,7 +485,7 @@ int
 Test_Proxy::ack (ACE_RMCast::Ack &ack)
 {
   (void) this->ACE_RMCast_Proxy::ack (ack);
-  (void) this->tester_->ack (this, ack);
+  (void) this->tester_->proxy_received_ack (this, ack);
   return 0;
 }
 
