@@ -256,6 +256,8 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
   this->receiver_ =
     AVStreams::MMDevice::_duplicate (receiver);
 
+  this->sender_ = 0 ;
+
   CosNaming::Name name (1);
   name.length (1);
 
@@ -453,15 +455,24 @@ Connection_Manager::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   AVStreams::flowSpec stop_spec;
 
-  // Destroy all the stream controls.
-  for (StreamCtrls::iterator iterator = this->streamctrls_.begin ();
-       iterator != this->streamctrls_.end ();
-       ++iterator)
+        
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Connection_Manager::destroy\n"));
+  
+  StreamCtrls::iterator iterator = this->streamctrls_.begin ();
+  int size = this->streamctrls_.current_size ();
+  for (int i = 0 ; i < size; i++)
     {
       (*iterator).int_id_->destroy (stop_spec,
                                     ACE_TRY_ENV);
       ACE_CHECK;
+      iterator.advance ();
     }
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Finished with the destroy\n"));
 }
 
 void
@@ -479,6 +490,164 @@ Connection_Manager::destroy (const ACE_CString &flowname,
   streamctrl->destroy (stop_spec,
                        ACE_TRY_ENV);
   ACE_CHECK;
+}
+
+void
+Connection_Manager::unbind_sender (const ACE_CString &sender_name, 
+				   AVStreams::MMDevice_ptr sender_mmdevice_obj,
+				   CORBA::Environment &ACE_TRY_ENV)
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Connection_Manager::unbind_sender\n"));
+  
+  CosNaming::Name name (1);
+  name.length (1);
+
+  // Try binding the sender context in the NS
+  name [0].id =
+    CORBA::string_dup (sender_name.c_str ());
+  
+  ACE_TRY
+    {
+      CORBA::Object_var object =
+	this->naming_client_->resolve (name,
+				       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      CosNaming::NamingContext_var sender_context =
+	CosNaming::NamingContext::_narrow (object.in ());
+  
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "Sender Context Found\n"));
+      
+      ACE_TRY_EX (Resolve_Sender)
+	{
+	  object =
+	    sender_context->resolve (name,
+				     ACE_TRY_ENV);
+	  ACE_TRY_CHECK_EX (Resolve_Sender);
+
+	  AVStreams::MMDevice_var mmdevice =
+	    AVStreams::MMDevice::_narrow (object.in ());
+
+	  if (mmdevice->_is_equivalent (sender_mmdevice_obj))
+	  {
+	    sender_context->unbind (name,
+				    ACE_TRY_ENV);
+	    ACE_TRY_CHECK_EX (Resolve_Sender);
+	    
+	    if (TAO_debug_level > 0)
+	      ACE_DEBUG ((LM_DEBUG,
+			  "Sender Unbound\n"));
+	  }
+	}
+      ACE_CATCH (CosNaming::NamingContext::NotFound, al_ex)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Sender object not found\n"));
+	  // Do not have to unbind.
+	}
+      ACE_ENDTRY;
+
+    }
+  ACE_CATCH (CosNaming::NamingContext::NotFound, al_ex)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Sender Context Not Found\n"));
+      // Do not have to unbind.
+    }
+  ACE_ENDTRY;
+  
+}
+
+void
+Connection_Manager::unbind_receiver (const ACE_CString &sender_name,
+				     const ACE_CString &receiver_name, 
+				     AVStreams::MMDevice_ptr receiver_mmdevice)
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Connection_Manager::unbind_receiver\n"));
+  
+  CosNaming::Name name (1);
+  name.length (1);
+
+  // Try binding the sender context in the NS
+  name [0].id =
+    CORBA::string_dup (sender_name.c_str ());
+  
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Object_var object =
+	this->naming_client_->resolve (name,
+				       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      CosNaming::NamingContext_var sender_context =
+	CosNaming::NamingContext::_narrow (object.in ());
+      
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "Sender Context Found\n"));
+      
+      ACE_TRY_EX (Resolve_Receiver)
+	{
+	  name [0].id =
+	    CORBA::string_dup ("Receivers");
+	  
+	  object =
+	    sender_context->resolve (name,
+				     ACE_TRY_ENV);
+	  ACE_TRY_CHECK_EX (Resolve_Receiver);
+	
+	  if (TAO_debug_level > 0)  
+	    ACE_DEBUG ((LM_DEBUG,
+			"Receivers Context Found\n"));
+	  
+	  CosNaming::NamingContext_var receivers_context =
+	    CosNaming::NamingContext::_narrow (object.in ());
+	  
+	  name [0].id =
+	    CORBA::string_dup (receiver_name.c_str ());
+	  
+	  object =
+	    receivers_context->resolve (name,
+					ACE_TRY_ENV);
+	  ACE_TRY_CHECK_EX (Resolve_Receiver);
+
+	  AVStreams::MMDevice_var  mmdevice =
+	    AVStreams::MMDevice::_narrow (object.in ());
+	  
+	  if (mmdevice->_is_equivalent (receiver_mmdevice))
+	  {
+	    receivers_context->unbind (name,
+				       ACE_TRY_ENV);
+	    ACE_TRY_CHECK_EX (Resolve_Receiver);
+
+	    if (TAO_debug_level > 0)
+	      ACE_DEBUG ((LM_DEBUG,
+			  "Receiver Unbound\n"));
+	  }
+	}
+      ACE_CATCH (CosNaming::NamingContext::NotFound, al_ex)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Receiver Not found\n"));
+	  // Do not have to unbind.
+	}
+      ACE_ENDTRY;
+      
+    }
+  ACE_CATCH (CosNaming::NamingContext::NotFound, al_ex)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Sender Context Not Found\n"));
+      // Do not have to unbind.
+    }
+  ACE_ENDTRY;
+
 }
 
 Connection_Manager::Receivers &

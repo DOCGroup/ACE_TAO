@@ -23,6 +23,31 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
+class Signal_Handler : public ACE_Event_Handler
+{
+  // TITLE
+  //   This class Handles the SIGINT signal through the Reactor.
+  //   Useful to gracefully release the process
+
+public:
+  
+  Signal_Handler (void);
+
+  Signal_Handler (const ACE_CString &sender_name);
+  // constructor.
+  
+  int handle_signal(int signum, siginfo_t*,ucontext_t*);
+  // Override this method to implement graceful shutdown.
+
+  const ACE_CString& sender_name (void);
+  void sender_name (const ACE_CString &);
+
+private:
+  
+  ACE_CString sender_name_;
+};
+
+
 class Sender_Callback : public TAO_AV_Callback
 {
   // = TITLE
@@ -90,6 +115,11 @@ public:
   Sender (void);
   /// Constructor
 
+  ~Sender (void);
+  /// Destructor
+
+  void shut_down (CORBA::Environment &);
+
   int init (int argc,
             char **argv,
             CORBA::Environment&);
@@ -101,6 +131,11 @@ public:
   Connection_Manager &connection_manager (void);
   /// Accessor to the connection manager.
 
+//    void add_stream (void);
+//    void remove_stream (void);
+//    int stream_alive (void);
+//    ///Methods that allow to keep track of the exisiting streams.
+   
 private:
   int parse_args (int argc, char **argv);
   /// Method to parse the command line arguments.
@@ -129,10 +164,15 @@ private:
   ACE_CString sender_name_;
   /// Name of this sender.
 
-  /// Connection manager.
   Connection_Manager connection_manager_;
+  /// Connection manager.
+  
+  //  int stream_count_;
+  /// Teh count of the number of streams that are active
+  
+  Signal_Handler signal_handler_;
+  
 };
-
 
 
 

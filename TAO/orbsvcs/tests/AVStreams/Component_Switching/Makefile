@@ -11,9 +11,6 @@
 
 LDLIBS     = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
-ifeq ($(rapi),1)
-  LDLIBS += -lACE_QoS
-endif # rapi
 
 SENDER_OBJS = Connection_Manager.o \
 	      sender.o
@@ -57,6 +54,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV \
             -I$(TAO_ROOT)
+
+ifeq ($(rapi),1)
+  LDLIBS += -lACE_QoS
+endif # rapi
 
 sender:$(addprefix $(VDIR),$(SENDER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

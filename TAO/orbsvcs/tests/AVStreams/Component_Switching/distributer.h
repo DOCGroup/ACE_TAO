@@ -170,6 +170,9 @@ public:
   void stream_destroyed (void);
   /// Called when stream destroyed
 
+  void unbind (CORBA::Environment &);
+  ///Unbind the sender and receiver from the Naming Service
+
 protected:
   Connection_Manager connection_manager_;
   /// Connection manager.
