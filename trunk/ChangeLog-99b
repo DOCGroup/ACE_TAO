@@ -1,3 +1,11 @@
+Fri Apr 23 15:48:31 1999  James Hu <jxh@entera.com>
+
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/README:
+        * ace/config-sunos5.5.h:  added support for the memchr
+          library call, and created ACE_HAS_MEMCHR macro.
+
 Fri Apr 23 10:48:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/New_Fail_Test.cpp (main): added uses of the
