@@ -1,4 +1,4 @@
-/* Test program for the INET IPC-SAPs... */
+// Test program for the INET IPC-SAPs...
 // $Id$
 
 
@@ -7,13 +7,13 @@
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
 
-/* Port number to use. */
+// Port number to use. 
 static unsigned short port_number = ACE_DEFAULT_SERVICE_PORT;
 
-/* Name of remote host. */
+// Name of remote host. 
 static char *host_name = ACE_DEFAULT_SERVER_HOST;
 
-/* Trigger a remote reconfiguration */
+// Trigger a remote reconfiguration.
 static int remote_reconfigure = 0;
 
 static void 
@@ -51,6 +51,7 @@ main (int argc, char *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   parse_args (argc, argv);
+  // Default is to ask the server for ``help.''
   static char buf[BUFSIZ] = "help";
   int n;
   ACE_SOCK_Stream   sc;
@@ -60,14 +61,15 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "connect", 1), -1);
 
   if (remote_reconfigure)
+    // Remotely instruct the server to reconfigure itself.
     ACE_OS::strcpy (buf, "reconfigure");
 
-  /* Send the command */
+  // Send the command.
 
   if (sc.send_n (buf, ACE_OS::strlen (buf) + 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "send", 1), -1);
 
-  /* Next, read the response. */
+  // Next, read the response.
 
   while ((n = sc.recv (buf, sizeof buf)) > 0)
     if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
