@@ -34,6 +34,13 @@ static ACE_Message_Block mb2 (BUFSIZ + 1);
 static aiocb aiocb1;
 static aiocb aiocb2;
 static sigset_t completion_signal;
+
+// Function prototypes.
+static int have_asynchio (void);
+static int query_aio_completions (void);
+static int issue_aio_calls (void);
+static int setup_signal_delivery (void);
+static int test_aio_calls (void);
 #endif /* ACE_HAS_AIO_CALLS */
 
 static int
@@ -41,6 +48,7 @@ do_sysconf (void)
 {
 #if !defined (VXWORKS)
   // Call sysconf to find out runtime values.
+
   errno = 0;
 #if defined (_SC_LISTIO_AIO_MAX)
   ACE_DEBUG ((LM_DEBUG,
@@ -58,35 +66,62 @@ do_sysconf (void)
               " do not exist on this platform\n"));
 #endif /* _SC_LISTIO_AIO_MAX */
 
+#if defined (_SC_AIO_MAX)
   errno = 0;
   ACE_DEBUG ((LM_DEBUG,
               "Runtime value of AIO_MAX is %d, errno = %d\n",
               ACE_OS::sysconf (_SC_AIO_MAX),
               errno));
+#else
+  ACE_ERROR ((LM_ERROR,
+              "_SC_AIO_MAX does not exist on this platform\n"));
+#endif /* _SC_AIO_MAX */
 
+#if defined (_SC_ASYNCHRONOUS_IO)
   errno = 0;
   ACE_DEBUG ((LM_DEBUG,
               "Runtime value of _POSIX_ASYNCHRONOUS_IO is %d, errno = %d\n",
               ACE_OS::sysconf (_SC_ASYNCHRONOUS_IO),
               errno));
+#else /* Not _SC_ASYNCHRONOUS_IO */
+  ACE_ERROR ((LM_ERROR,
+              "_SC_ASYNCHRONOUS_IO does not exist on this platform\n"));
+#endif /* _SC_ASYNCHRONOUS_IO */
 
+#if defined (_SC_REALTIME_SIGNALS)
   errno = 0;
   ACE_DEBUG ((LM_DEBUG,
               "Runtime value of _POSIX_REALTIME_SIGNALS is %d, errno = %d\n",
               ACE_OS::sysconf (_SC_REALTIME_SIGNALS),
               errno));
+#else /* Not _SC_REALTIME_SIGNALS */
+  ACE_ERROR ((LM_ERROR,
+              "_SC_REALTIME_SIGNALS does not exist on this platform\n"));
+#endif /* _SC_REALTIME_SIGNALS */
+  
 
+#if defined (_SC_RTSIG_MAX)
   errno = 0;
   ACE_DEBUG ((LM_DEBUG,
               "Runtime value of RTSIG_MAX %d, Errno = %d\n",
               ACE_OS::sysconf (_SC_RTSIG_MAX),
               errno));
+#else /* Not _SC_RTSIG_MAX */
+  ACE_ERROR ((LM_ERROR,
+              "_SC_RTSIG_MAX does not exist on this platform\n"));
+#endif /* _SC_RTSIG_MAX */
 
+#if defined (_SC_SIGQUEUE_MAX)
   errno = 0;
   ACE_DEBUG ((LM_DEBUG,
               "Runtime value of SIGQUEUE_MAX %d, Errno = %d\n",
               ACE_OS::sysconf (_SC_SIGQUEUE_MAX),
               errno));
+#else /* Not _SC_SIGQUEUE_MAX */
+  ACE_ERROR ((LM_ERROR,
+              "_SC_SIGQUEUE_MAX does not exist on this platform\n"));
+#endif /*  _SC_SIGQUEUE_MAX */
+
 #endif /* ! VXWORKS */
 
   return 0;
@@ -343,9 +378,11 @@ have_asynchio (void)
   ACE_DEBUG ((LM_DEBUG,
               "Before do_sysconf : Errno %d\n",
               errno));
+  
   // Check and print the run time values.
   do_sysconf ();
 
+  // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG,
               "After do_sysconf: Errno : %d\n", errno));
 
