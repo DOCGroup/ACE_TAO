@@ -18,6 +18,8 @@
 
 #include "options.h"
 
+// @@ Naga, can you please generalize this so we don't use a fixed
+// sized constant?! 
 #define MAX_IOR_SIZE 512
 
 // Constructor.p
@@ -38,6 +40,7 @@ Options::~Options (void)
 }
 
 // Parses the command line arguments and returns an error status.
+
 int
 Options::parse_args (int argc, char **argv)
 {
@@ -63,8 +66,8 @@ Options::parse_args (int argc, char **argv)
 	  ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
-	result = ACE_OS::fgets (temp_buf,MAX_IOR_SIZE,ior_file);
-	if ( result == 0 )
+	result = ACE_OS::fgets (temp_buf, MAX_IOR_SIZE, ior_file);
+	if (result == 0)
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "Unable to read cubit_factory_ior from file %s: %p\n",
 			     get_opts.optarg), -1);

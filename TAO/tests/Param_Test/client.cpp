@@ -1,4 +1,4 @@
-// $Id:
+// $Id$
 
 // ============================================================================
 //
@@ -43,7 +43,7 @@ Param_Test_Client<T>::~Param_Test_Client (void)
   delete this->test_object_;
 }
 
-// All the individual tests
+// All the individual tests.
 template <class T> int
 Param_Test_Client<T>::run_sii_test (void)
 {
@@ -52,30 +52,24 @@ Param_Test_Client<T>::run_sii_test (void)
   Options *opt = OPTIONS::instance (); // get the options
   const char *opname = this->test_object_->opname (); // operation
 
-  // initialize call count and error count
+  // Initialize call count and error count.
   this->results_.call_count (0);
   this->results_.error_count (0);
   this->results_.iterations (opt->loop_count ());
 
-  // initialize parameters for the test
+  // Initialize parameters for the test.
   if (this->test_object_->init_parameters (this->param_test_, env) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) client.cpp - run_sii_test:"
-                  "init_parameters failed for opname - %s",
-                  opname));
-      return -1;
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) client.cpp - run_sii_test:"
+                       "init_parameters failed for opname - %s",
+                       opname), -1);
 
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
     {
       this->results_.call_count (this->results_.call_count () + 1);
       if (opt->debug ())
-        {
-          ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-          //          this->test_object_->print_values ();
-        }
+        ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
 
       // start the timing
       this->results_.start_timer ();
@@ -112,13 +106,10 @@ Param_Test_Client<T>::run_sii_test (void)
         }
       // reset parameters for the test
       if (this->test_object_->reset_parameters () == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) client.cpp - run_dii_test:"
-                      "init_parameters failed for opname - %s",
-                      opname));
-          return -1;
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) client.cpp - run_dii_test:"
+                           "init_parameters failed for opname - %s",
+                           opname), -1);
     }
 
   // print statistics
@@ -145,13 +136,10 @@ Param_Test_Client<T>::run_dii_test (void)
 
   // initialize parameters for the test
   if (this->test_object_->init_parameters (this->param_test_, env) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) client.cpp - run_dii_test:"
-                  "init_parameters failed for opname - %s",
-                  opname));
-      return -1;
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) client.cpp - run_dii_test:"
+                       "init_parameters failed for opname - %s",
+                       opname), -1);
 
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
@@ -185,17 +173,13 @@ Param_Test_Client<T>::run_dii_test (void)
                                           req,
                                           0, //CORBA::OUT_LIST_MEMORY,
                                           env);
-      // the OUT_LIST_MEMORY is to be used when the ORB assumes that we will
-      // provide the top-level storage. With 0, the returned values for ret,
-      // inout, and out parameters are all owned by the ORB and hence we must
-      // not free them explicitly
-
+      // The OUT_LIST_MEMORY is to be used when the ORB assumes that
+      // we will provide the top-level storage. With 0, the returned
+      // values for ret, inout, and out parameters are all owned by
+      // the ORB and hence we must not free them explicitly.
 
       if (opt->debug ())
-        {
-          ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-          //          this->test_object_->print_values ();
-        }
+        ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
 
       // Make the invocation, verify the result.
       req->invoke ();
