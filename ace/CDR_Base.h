@@ -147,7 +147,8 @@ public:
   static int grow (ACE_Message_Block *mb, size_t minsize);
 
   /// Copy a message block chain into a	single message block,
-  /// preserving the alignment of the original stream.
+  /// preserving the alignment of the first message block of the 
+  /// original stream, not the following message blocks.
   static void consolidate (ACE_Message_Block *dst,
 			  const	ACE_Message_Block *src);
 
