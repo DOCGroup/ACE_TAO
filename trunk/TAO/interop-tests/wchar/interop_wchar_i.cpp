@@ -105,7 +105,7 @@ interop_WChar_Passer_i::wstruct_to_server (const interop::wstruct & test,
     ref_.match_wchar (key,test.st_char) &&
     ref_.match_wstring (key,test.st_string) &&
     ref_.match_warray (key,test.st_array) &&
-    this->any_to_server (test.st_any,key);
+    this->any_to_server (test.st_any,key ACE_ENV_ARG_PARAMETER);
 }
 
 interop::wstruct *
@@ -113,26 +113,29 @@ interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key
                                              ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
-  interop::wstruct *ws = new interop::wstruct ();
-  ws->st_char = this->wchar_from_server(key);
-  ws->st_string = this->wstring_from_server(key);
+  interop::wstruct_var ws = new interop::wstruct ();
+  ws->st_char = this->wchar_from_server(key ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (interop::wstruct.nil ());
+  ws->st_string = this->wstring_from_server(key ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (interop::wstruct.nil ());
   ref_.assign_warray (key, ws->st_array);
   ws->st_any <<= ref_.get_wstring(key);
-  return ws;
+  return ws._retn ();
 }
+
 CORBA::Boolean
 interop_WChar_Passer_i::wstructseq_to_server (const interop::wstructseq & test,
                                               CORBA::Short key
                                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
-  for (CORBA::ULong i = 0; i < test.length(); i++)
+  CORBA::Boolean result = 1;
+  for (CORBA::ULong i = 0; result && i < test.length(); i++)
     {
-      if (!this->wstruct_to_server(test[i], key))
-        return false;
+      result = this->wstruct_to_server(test[i], key);
+      ACE_CHECK_RETURN (0);
     }
-
-  return true;
+  return result;
 }
 
 interop::wstructseq *
@@ -259,7 +262,7 @@ interop_WChar_Passer_i::exception_test ( CORBA::Short key
                    interop::WChar_Passer::WStringException))
 {
   ACE_THROW (interop::WChar_Passer::WStringException(ref_.get_except(key),
-                                             this->wchar_from_server(key)));
+                                             this->wchar_from_server(key ACE_ENV_ARG_PARAMETER)));
 }
 
 void
