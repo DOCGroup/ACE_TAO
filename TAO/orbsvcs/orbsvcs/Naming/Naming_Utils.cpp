@@ -5,6 +5,7 @@
 #include "Naming_Utils.h"
 #include "ace/Arg_Shifter.h"
 #include "Hash_Naming_Context.h"
+#include "Persistent_Context_Index.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
@@ -19,6 +20,7 @@ TAO_Naming_Server::TAO_Naming_Server (void)
 
 TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       PortableServer::POA_ptr poa,
+                                      LPCTSTR persistence_location,
                                       size_t context_size,
                                       ACE_Time_Value *timeout,
                                       int resolve_for_existing_naming_service)
@@ -29,6 +31,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
 {
   if (this->init (orb,
                   poa,
+                  persistence_location,
                   context_size,
                   timeout,
                   resolve_for_existing_naming_service) == -1)
@@ -41,6 +44,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
 int
 TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa,
+                         LPCTSTR persistence_location,
                          size_t context_size,
                          ACE_Time_Value *timeout,
                          int resolve_for_existing_naming_service)
@@ -57,6 +61,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                     "\nNameService not resolved, so we'll become a NameService\n"));
       return this->init_new_naming (orb,
                                     poa,
+                                    persistence_location,
                                     context_size);
     }
   else
@@ -65,24 +70,26 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
         ACE_DEBUG ((LM_DEBUG,
                     "\nNameService found!\n"));
 
-      TAO_TRY
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
         {
           this->naming_context_ =
             CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                               TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                               ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           this->naming_service_ior_ =
             orb->object_to_string (naming_obj.in (),
-                                   TAO_TRY_ENV);
+                                   ACE_TRY_ENV);
 
-          TAO_CHECK_ENV;
+          ACE_TRY_CHECK;
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
-          TAO_TRY_ENV.print_exception ("TAO_Naming_Server::init");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init");
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
     }
   return 0;
 }
@@ -90,63 +97,85 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 int
 TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
+                                    LPCTSTR persistence_location,
                                     size_t context_size)
 {
-  TAO_Naming_Context *c = 0;
-  TAO_Hash_Naming_Context *c_impl = 0;
-
-  ACE_NEW_RETURN (c_impl,
-                  TAO_Hash_Naming_Context (poa,
-                                           "NameService",
-                                           context_size,
-                                           1),
-                  -1);
-  // Put c_impl into the auto pointer temporarily, in case next
-  // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Hash_Naming_Context> impl_temp (c_impl);
-
-  ACE_NEW_RETURN (c,
-                  TAO_Naming_Context (c_impl),
-                  -1);
-  // Allocation succeeded, get rid of auto pointer.
-  impl_temp.release ();
-
-  // Set implementation's pointer to it's abstraction.
-  c_impl->interface (c);
-
-  // Now wrap this pointer into Auto_Ptr until everything succeeds.
-  ACE_Auto_Basic_Ptr<TAO_Naming_Context> c_temp (c);
-
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      PortableServer::ObjectId_var id =
-        PortableServer::string_to_ObjectId ("NameService");
+      if (persistence_location != 0)
+        {
+          TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> *index =
+            new TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> (orb, poa);
 
-      poa->activate_object_with_id (id.in (),
-                                    c,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+          if (index->open (persistence_location) == -1)
+            ACE_DEBUG ((LM_DEBUG, "index->open failed"));
 
-      this->naming_context_ =
-        c->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+          if (index->init() == -1)
+            ACE_DEBUG ((LM_DEBUG, "index->init failed"));
 
-      // Stringify the objref we'll be implementing, and print it to
-      // stdout.  Someone will take that string and give it to a
-      // client.
-      this->naming_service_ior_=
-        orb->object_to_string (this->naming_context_.in (),
-                               TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+          // Set the ior and objref to the root naming context.
+          this->naming_service_ior_= index->root_ior ();
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "NameService IOR is <%s>\n",
-                    this->naming_service_ior_.in ()));
+          CORBA::Object_var obj =
+            orb->string_to_object (this->naming_service_ior_.in (),
+                                   ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-      // everything succeeded, so set the pointer, get rid of Auto_Ptr.
-      this->naming_context_impl_ = c_temp.release ();
+          this->naming_context_ =
+            CosNaming::NamingContext::_narrow (obj.in (),
+                                               ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          TAO_Naming_Context *c = 0;
+          TAO_Hash_Naming_Context *c_impl = 0;
 
+          ACE_NEW_RETURN (c,
+                          TAO_Naming_Context,
+                          -1);
+
+          // Put c_impl into the auto pointer temporarily, in case next
+          // allocation fails.
+          ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
+
+          ACE_NEW_RETURN (c_impl,
+                          TAO_Hash_Naming_Context (c,
+                                                   poa,
+                                                   "NameService",
+                                                   context_size,
+                                                   1),
+                          -1);
+
+          PortableServer::ObjectId_var id =
+           PortableServer::string_to_ObjectId ("NameService");
+
+          poa->activate_object_with_id (id.in (),
+                                        c,
+                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          this->naming_context_ =
+            c->_this (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          // Stringify the objref we'll be implementing, and print it to
+          // stdout.  Someone will take that string and give it to a
+          // client.
+          this->naming_service_ior_=
+            orb->object_to_string (this->naming_context_.in (),
+                                   ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "NameService IOR is <%s>\n",
+                        this->naming_service_ior_.in ()));
+
+          // everything succeeded, so set the pointer, get rid of Auto_Ptr.
+          this->naming_context_impl_ = temp.release ();
+        }
 #if defined (ACE_HAS_IP_MULTICAST)
       // Get reactor instance from TAO.
       ACE_Reactor *reactor =
@@ -194,12 +223,14 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         }
 #endif /* ACE_HAS_IP_MULTICAST */
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Naming Service");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Naming Service");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
@@ -257,7 +288,8 @@ int
 TAO_Naming_Client::init (CORBA::ORB_ptr orb,
                          ACE_Time_Value *timeout)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService", timeout);
@@ -268,15 +300,16 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
                           -1);
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -293,6 +326,8 @@ TAO_Naming_Client::~TAO_Naming_Client (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_Auto_Basic_Ptr<TAO_Naming_Context>;
+  template class TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Naming_Context>
+  #pragma instantiate TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
