@@ -16,9 +16,14 @@
 
 #include "util.h"
 
+
+  // Initialize the ORB, using the supplied command line arguments.
+  // the poa_name is a user-supplied string that is used to name the
+  // POA created.
 int
 TAO_ORB_Manager::init (int argc,
                        char **argv,
+                       char *poa_name,
                        CORBA::Environment &env)
 {
   this->orb_ = CORBA::ORB_init (argc, 
@@ -27,7 +32,7 @@ TAO_ORB_Manager::init (int argc,
                                 env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
-  // Initialize the Object Adapter
+  // Get the POA from the ORB
   CORBA::Object_var poa_object = 
     this->orb_->resolve_initial_references("RootPOA");
   if (CORBA::is_nil(poa_object.in()))
@@ -35,16 +40,19 @@ TAO_ORB_Manager::init (int argc,
                        " (%P|%t) Unable to initialize the POA.\n"),
                       1);
 
+  // Get the POA object
   this->root_poa_ =
     PortableServer::POA::_narrow (poa_object, env);
   
   TAO_CHECK_ENV_RETURN (env, 1);
-  
+
+  // Get the POA_Manager
   this->poa_manager_ =
     this->root_poa_->the_POAManager (env);
 
   TAO_CHECK_ENV_RETURN (env, 1);
 
+  // Create the default policies - user-supplied ID, and persistent objects
   PortableServer::PolicyList policies (2);
   policies.length (2);  
   policies[0] =
@@ -62,7 +70,7 @@ TAO_ORB_Manager::init (int argc,
   // change the object key each time it invokes the server.
   
   this->my_poa_ =
-    this->root_poa_->create_POA ("AVStreams_POA",
+    this->root_poa_->create_POA (poa_name,
                                  this->poa_manager_.in (),
                                  policies,
                                  env);  
