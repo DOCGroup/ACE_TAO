@@ -1519,7 +1519,7 @@ FILE *file;
 #if ACE_YY_NEVER_INTERACTIVE
 	b->ace_yy_is_interactive = 0;
 #else
-	b->ace_yy_is_interactive = file ? (ACE_OS::isatty((ACE_HANDLE) fileno (file) ) > 0) : 0;
+	b->ace_yy_is_interactive = file ? (ACE_OS::isatty( fileno (file) ) > 0) : 0;
 #endif
 #endif
 	}

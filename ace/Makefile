@@ -470,7 +470,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
               -e "s/YY/ACE_YY/g" \
               -e "s/free( ptr );/free( ACE_MALLOC_T (ptr) );/g" \
               -e "s/exit( 1 );/ACE_OS::exit( 1 );/g" \
-              -e "s/isatty( fileno(file)/ACE_OS::isatty((ACE_HANDLE) fileno (file)/g" \
+              -e "s/isatty( fileno(file)/ACE_OS::isatty( fileno (file)/g" \
               -e "s/int isatty/int nop_isatty/g" \
               -e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" \
               -e "s@#include <stdio\.h>@#include \"ace/OS.h\"@" \

@@ -12276,12 +12276,12 @@ ferror (FILE *fp)
 //          **** Warning ****
 
 ACE_INLINE int
-isatty (ACE_HANDLE h)
+isatty (int h)
 {
   return ACE_OS::isatty (h);
 }
 
-ACE_INLINE ACE_HANDLE
+int ACE_HANDLE
 fileno (FILE *fp)
 {
   return fp;
@@ -12320,7 +12320,7 @@ putchar (int c)
 
 #if defined (ACE_PSOS)
 ACE_INLINE int
-isatty (ACE_HANDLE h)
+isatty (int h)
 {
   return ACE_OS::isatty (h);
 }
@@ -12592,19 +12592,14 @@ ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)
 }
 
 ACE_INLINE int
-ACE_OS::isatty (ACE_HANDLE handle)
+ACE_OS::isatty (int handle)
 {
 # if defined (ACE_LACKS_ISATTY)
   ACE_UNUSED_ARG (handle);
   return 0;
 # elif defined (ACE_WIN32)
-#  if !defined (ACE_HAS_WINCE)
   ACE_TRACE ("ACE_OS::isatty");
-  ACE_OSCALL_RETURN (::_isatty ((int) handle), int, -1);
-#  else
-  ACE_UNUSED_ARG (handle);
-  return 0;
-#  endif /* ACE_HAS_WINCE */
+  return ::_isatty (handle);
 # else
   ACE_TRACE ("ACE_OS::isatty");
   ACE_OSCALL_RETURN (::isatty (handle), int, -1);
@@ -12612,6 +12607,15 @@ ACE_OS::isatty (ACE_HANDLE handle)
 }
 
 #if defined (ACE_WIN32)
+# if !defined (ACE_HAS_WINCE)
+ACE_INLINE int
+ACE_OS::isatty (ACE_HANDLE handle)
+{
+  int fd = ::_open_osfhandle ((long) handle, 0);
+  return ::_isatty (fd);
+}
+# endif /* !ACE_HAS_WINCE */
+
 ACE_INLINE void
 ACE_OS::fopen_mode_to_open_mode_converter (char x, int &hmode)
 {
