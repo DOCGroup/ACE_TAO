@@ -1,3 +1,8 @@
+Thu Jun 11 18:22:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Added template instantiations for Write_Guard
+ 	  and Read_Guard.
+
 Thu Jun 11 16:45:11 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_array.cpp: (gen_encapsulation, gen_encap_len):
