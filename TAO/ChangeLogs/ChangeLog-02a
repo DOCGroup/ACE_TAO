@@ -1,7 +1,39 @@
+Fri Sep  1 11:26:54 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/DomainC.cpp:
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.i:
+        * tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/DomainS_T.i:
+          CORBA::ConstructionPolicy should be disabled in minimum CORBA
+          builds.
+
+        * tao/PortableServer/POA.cpp:
+          Now we need the definition of TAO_POA::objectkey_prefix even
+          when compiling with minimum CORBA, this is because the IOR table
+          will be implemented as an alternative object adapter, so it
+          could be present even with minimum CORBA disabled.
+          Fixed warning when compiling with minimum CORBA enabled.
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          When minimum CORBA is enabled the ForwardRequest exception does
+          not exists, so we cannot catch it.
+
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Acceptors.cpp:
+          When using minimum CORBA the ServerRequest class has no params_
+          field, only set it for full CORBA builds.
+
+        * tao/corbafwd.h:
+          Remove references to FieldName, it was part of the old dynamic
+          any interfaces.
+
 Fri Sep  1 11:24:12 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/IFR_Service/TCF_Loader.cpp (create_object): 
-	  Removed declaration of unused parameters (argc and argv).	  
+        * orbsvcs/IFR_Service/TCF_Loader.cpp (create_object):
+          Removed declaration of unused parameters (argc and argv).
 
 Fri Sep  1 13:07:23 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
