@@ -48,17 +48,6 @@ ifeq ($(threads),0)
   CFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
-ifeq ($(mingw32),1)
-CFLAGS += \
-	-I$(MINGW_BASE)/mingw32/include \
-	-I$(MINGW_BASE)/w32api/include \
-	-I$(MINGW_BASE)/include
-LDFLAGS += \
-	-L$(MINGW_BASE)/mingw32/lib \
-	-L$(MINGW_BASE)/w32api/lib \
-	-L$(MINGW_BASE)/lib
-endif
-
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif

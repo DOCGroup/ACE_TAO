@@ -1,3 +1,12 @@
+Sat Jan 25 13:39:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * include/makeinclude/platform_mingw32.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Removed the usage of MINGW_BASE. This is not needed for using MingW.
+          Thankx to Viktor Ransmayr <viktor.ransmayr@t-online.de> for
+          confirming that this is not needed.
+
 Fri Jan 24 07:54:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.h:
