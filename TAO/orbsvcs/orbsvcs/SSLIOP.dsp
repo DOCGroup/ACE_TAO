@@ -99,7 +99,7 @@ SOURCE=.\SSLIOP\IIOP_SSL_Acceptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\IIOP_SSL_Connect.cpp
+SOURCE=.\SSLIOP\IIOP_SSL_Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -115,7 +115,7 @@ SOURCE=.\SSLIOP\SSLIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_Connect.cpp
+SOURCE=.\SSLIOP\SSLIOP_Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -175,6 +175,10 @@ SOURCE=.\SSLIOP\IIOP_SSL_Connect.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\IIOP_SSL_Connection_Handler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\IIOP_SSL_Connector.h
 # End Source File
 # Begin Source File
@@ -188,6 +192,10 @@ SOURCE=.\SSLIOP\SSLIOP_Acceptor.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Connection_Handler.h
 # End Source File
 # Begin Source File
 
@@ -349,6 +357,10 @@ SOURCE=.\SSLIOP\SSLIOP_Acceptor.i
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Connection_Handler.i
 # End Source File
 # Begin Source File
 
