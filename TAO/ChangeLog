@@ -1,3 +1,11 @@
+Fri Feb 21 06:54:45 2003  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp
+	  (gen_marshal_and_invoke):
+
+	  Moved an ending "if" brace to within a TAO_HAS_INTERCEPTORS
+	  block.  Fixes builds with interceptors disabled.
+
 Fri Feb 21 06:22:36 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORBInitializer_Registry.cpp:
