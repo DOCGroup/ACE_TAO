@@ -1156,19 +1156,21 @@ CORBA::ORB_init (int &argc,
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
-  env.clear ();
-
-  // Make sure initialization of TAO globals only occurs once.
-  CORBA_ORB::init_orb_globals (env);
-
-  if (env.exception () != 0)
-    return 0;
 
   // Verify some of the basic implementation requirements.  This test
   // gets optimized away by a decent compiler (or else the rest of the
   // routine does).
   //
   // NOTE:  we still "just" assume that native floating point is IEEE.
+
+  // Get ORB Core
+  // @@ As part of the ORB re-architecture this may be the point where
+  //    we locate the right ORB (from a table) and use that one
+  //    instead of using TAO_ORB_Core_instance ().
+  TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
+
+  // Initialize the ORB Core instance.
+  int result = oc->init (argc, (char **) argv);
 
   if (sizeof (CORBA::Short) != 2
       || sizeof (CORBA::Long) != 4
@@ -1197,14 +1199,13 @@ CORBA::ORB_init (int &argc,
       return 0;
     }
 
-  // Get ORB Core
-  // @@ As part of the ORB re-architecture this may be the point where
-  //    we locate the right ORB (from a table) and use that one
-  //    instead of using TAO_ORB_Core_instance ().
-  TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
+  env.clear ();
 
-  // Initialize the ORB Core instance.
-  int result = oc->init (argc, (char **) argv);
+  // Make sure initialization of TAO globals only occurs once.
+  CORBA_ORB::init_orb_globals (env);
+
+  if (env.exception () != 0)
+    return 0;
 
   // Check for errors and return 0 if error.
   if (result == -1)
