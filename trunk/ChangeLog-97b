@@ -1,6 +1,6 @@
 Sat Nov 22 02:47:09 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/ACE.cpp (set_handle_limit): Removed a duplicate ace_trace
+	* ace/ACE.cpp (set_handle_limit): Removed a duplicated ACE_TRACE
 	  macro.
 
 Sat Nov 22 00:26:11 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
