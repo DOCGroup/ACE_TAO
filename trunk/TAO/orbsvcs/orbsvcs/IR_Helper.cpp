@@ -71,7 +71,7 @@ IR_Helper::IR_Helper (char *server_name,
       exception_message = "While narrowing ImplRepo";
       this->implrepo_ =
         ImplementationRepository::Administration::_narrow (implrepo_object.in(), 
-                                                           ACE_TRY_ENV);,
+                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Now register the Ping Object
