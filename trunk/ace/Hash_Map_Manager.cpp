@@ -71,35 +71,18 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (size_t size)
 
   this->table_ = (ACE_Hash_Map_Entry<EXT_ID, INT_ID> **) ptr;
 
-  ptr = this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>));
-  if (ptr == 0)
-    {
-      this->allocator_->free (this->table_);
-      this->table_ = 0;
-      errno = ENOMEM;
-      return -1;
-    }
-
-  this->sentinel_ = (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *) ptr;
-  new (this->sentinel_) ACE_Hash_Map_Entry<EXT_ID, INT_ID>;
-
-  // This isn't strictly necessary, but we'll do it to make life
-  // easier.
-  this->sentinel_->next_ = this->sentinel_;
-
-
   this->total_size_ = size;
 
-  // Initialize the hash table to point to the sentinel node.
+  // Initialize the hash table to point to 0.
   for (size_t i = 0; i < this->total_size_; i++)
-    this->table_[i] = this->sentinel_;
+    this->table_[i] = 0;
 
   return 0;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
-						  ACE_Allocator *alloc)
+						      ACE_Allocator *alloc)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
@@ -108,10 +91,10 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
 
   this->allocator_ = alloc;
 
-  // This assertion is here to help track a situation that shouldn't happen,
-  // but did with Sun C++ 4.1 (before a change to this class was made:
-  // it used to have an enum that was supposed to be defined to be
-  // ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0.
+  // This assertion is here to help track a situation that shouldn't
+  // happen, but did with Sun C++ 4.1 (before a change to this class
+  // was made: it used to have an enum that was supposed to be defined
+  // to be ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0.
   ACE_ASSERT (size != 0);
 
   // If we need to grow buffer, then remove the existing buffer.
@@ -123,7 +106,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Manager (size_t size,
-								  ACE_Allocator *alloc)
+								      ACE_Allocator *alloc)
   : allocator_ (alloc),
     total_size_ (0),
     cur_size_ (0)
@@ -152,11 +135,12 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
       for (size_t i = 0; i < this->total_size_; i++)
 	{
 	  for (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp_ptr = this->table_[i]; 
-	       temp_ptr != sentinel_;
+	       temp_ptr != 0;
 	       )
 	    {
 	      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
 	      temp_ptr = temp_ptr->next_;
+
 	      // Explicitly call the destructor.
 	      hold_ptr->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
 	      this->allocator_->free (hold_ptr);
@@ -165,10 +149,6 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
 
       this->allocator_->free (this->table_);
       this->table_ = 0;
-
-      this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
-      this->allocator_->free (this->sentinel_);
-      this->sentinel_ = 0;
     }
   return 0;
 }
@@ -342,37 +322,35 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (const EXT_ID &ext_id)
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_find (const EXT_ID &ext_id,
-							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
-							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&prev,
-                                                         u_long &loc)
+							     ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
+							     ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&prev,
+							     u_long &loc)
 {
   loc = this->hash (ext_id) % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 
-  for (this->sentinel_->ext_id_ = ext_id;
-       this->equal (temp->ext_id_, ext_id) == 0;
+  for (;
+       temp != 0 && this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     prev = temp;
 
-  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
-
-  if (temp != this->sentinel_)
-    {
-      entry = temp;
-      return 0;
-    }
-  else
+  if (temp == 0)
     {
       errno = ENOENT;
       return -1;
+    }
+  else
+    {
+      entry = temp;
+      return 0;
     }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_find (const EXT_ID &ext_id,
-							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
-                                                         u_long &loc)
+							     ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
+							     u_long &loc)
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev;
   return this->shared_find (ext_id, entry, prev, loc);
@@ -465,7 +443,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm)
   : map_man_ (mm), 
     index_ (0),
-    next_ (this->map_man_.sentinel_)
+    next_ (0)
 {
   if (this->map_man_.table_ != 0)
     {
@@ -481,7 +459,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Hash_Map_Entry<EXT_ID
 
   if (this->map_man_.table_ != 0 
       && this->index_ < this->map_man_.total_size_
-      && this->next_ != this->map_man_.sentinel_)
+      && this->next_ != 0)
     {
       entry = this->next_;
       return 1;
@@ -497,7 +475,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
 
   if (this->map_man_.table_ != 0 
       && this->index_ < this->map_man_.total_size_
-      && this->next_ != this->map_man_.sentinel_)
+      && this->next_ != 0)
     return 0;
   else
     return 1;
@@ -511,19 +489,17 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void)
   if (this->map_man_.table_ == 0)
     return -1;
 
-  if (this->next_->next_ != this->map_man_.sentinel_)
+  if (this->next_ != 0)
     this->next_ = this->next_->next_;
   else
     while (++this->index_ < this->map_man_.total_size_)
-      if (this->map_man_.table_[this->index_]
-          != this->map_man_.sentinel_)
+      if (this->map_man_.table_[this->index_] != 0)
         {
           this->next_ = this->map_man_.table_[this->index_];
           break;
         }
 
-  return this->index_ < this->map_man_.total_size_
-    && this->next_ != this->map_man_.sentinel_;
+  return this->index_ < this->map_man_.total_size_ && this->next_ != 0;
 }
 
 #endif /* ACE_HASH_MAP_MANAGER_C */

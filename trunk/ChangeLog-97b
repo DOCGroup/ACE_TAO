@@ -3,7 +3,11 @@ Thu Oct 23 17:28:11 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* ace/Mem_Map.i (close_filemapping_handle): Moved this above its
  	  uses in the file so that g++ would de-warn.
 
-Thu Oct 23 13:50:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Hash_Map_Manager.cpp: Removed the sentinel in the
+ 	  Hash_Map_Manager.  Sentinels are evil since they require us to
+ 	  hold write locks, even when we're doing finds!
 
 	* ace/ACE.cpp (max_handles): By default, we now try to use the
  	  getrlimit() function before sysconf() since sysconf() doesn't

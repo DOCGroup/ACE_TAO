@@ -1,3 +1,9 @@
+Thu Oct 23 18:34:02 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/*/Makefile: Fixed the Makefiles so that it has the correct
+ 	files and dependencies.  Thanks to Steven Wohlever
+ 	<wohlever@mitre.org> for reporting this.
+
 Wed Oct 22 20:02:39 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* README.sun: Added an explicit reminder at the top that the
