@@ -6,6 +6,8 @@ Tue Nov 13 20:58:02 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	  Default initialized variables.
 	* orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
 	  Default initialized variable.
+	* orbsvcs/orbsvcs/AV/Transport.cpp: Hide unused variable
+	  with ACE_UNUSED_ARG.
 	* orbsvcs/orbsvcs/AV/UDP.cpp: Removed unused variable.
 
 Tue Nov 13 19:23:24 2001  Krishnakumar B  <kitty@cs.wustl.edu>
