@@ -12,8 +12,6 @@
 #ifndef TAO_ESF_PROXY_LIST_H
 #define TAO_ESF_PROXY_LIST_H
 
-#include "tao/corba.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

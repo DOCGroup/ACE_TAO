@@ -4,6 +4,7 @@
 #include "Kokyu_qosC.h"
 #include "utils.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
+#include "tao/ORB_Constants.h"
 
 MUF_Scheduling::SchedulingParameter
 MUF_Sched_Param_Policy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -296,7 +297,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
       sc.context_data =
         ACE_reinterpret_cast(IOP::ServiceContext::
-                             _tao_seq_Octet_context_data &,
+                             _tao_seq_CORBA_Octet_ &,
                              *codec_->encode (sc_qos_as_any));
       
 #ifdef KOKYU_DSRT_LOGGING
@@ -506,7 +507,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 
       sc.context_data = ACE_reinterpret_cast(
                                              IOP::ServiceContext::
-                                             _tao_seq_Octet_context_data &,
+                                             _tao_seq_CORBA_Octet_ &,
                                              *codec_->encode (sc_qos_as_any));
 
       // Add this context to the service context list.

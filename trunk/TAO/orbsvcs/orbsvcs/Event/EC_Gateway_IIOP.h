@@ -21,9 +21,11 @@
 
 #include /**/ "event_export.h"
 #include "EC_Gateway.h"
+
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients.h"
+
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
 

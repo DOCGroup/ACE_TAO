@@ -5,6 +5,7 @@
 
 #include "tao/RTScheduling/RTScheduler.h"
 #include "../FP_SchedulingC.h"
+#include "tao/LocalObject.h"
 
 class Segment_Sched_Param_Policy:
 public FP_Scheduling::SegmentSchedulingParameterPolicy,

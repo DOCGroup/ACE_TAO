@@ -1,7 +1,11 @@
 // $Id$
 
 #include "Database_i.h"
+
 #include "tao/DynamicInterface/Server_Request.h"
+
+#include "tao/NVList.h"
+#include "tao/Typecode.h"
 
 ACE_RCSID (DSI, 
            Database_i, 

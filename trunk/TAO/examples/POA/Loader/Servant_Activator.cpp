@@ -19,7 +19,9 @@
 
 #include "Servant_Activator.h"
 
-ACE_RCSID(Loader, Servant_Activator, "$Id$")
+ACE_RCSID (Loader, 
+           Servant_Activator, 
+           "$Id$")
 
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and

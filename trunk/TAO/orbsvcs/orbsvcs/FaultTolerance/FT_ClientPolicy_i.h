@@ -23,6 +23,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "tao/LocalObject.h"
 /**
  * @class TAO_FT_Request_Duration_Policy
  *

@@ -7,6 +7,7 @@
 #include "tao/Tagged_Components.h"
 
 #include "ace/Auto_Ptr.h"
+#include "tao/debug.h"
 
 
 ACE_RCSID (FaultTolerance,

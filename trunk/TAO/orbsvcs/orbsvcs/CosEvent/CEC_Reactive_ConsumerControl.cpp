@@ -3,21 +3,27 @@
 #include "CEC_Reactive_ConsumerControl.h"
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerAdmin.h"
+
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEventChannel.h"
 #include "CEC_TypedConsumerAdmin.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_ProxyPullSupplier.h"
+
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
+
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_Reactive_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(CosEvent, CEC_Reactive_ConsumerControl, "$Id$")
+ACE_RCSID (CosEvent, 
+           CEC_Reactive_ConsumerControl, 
+           "$Id$")
 
 TAO_CEC_Reactive_ConsumerControl::
      TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,

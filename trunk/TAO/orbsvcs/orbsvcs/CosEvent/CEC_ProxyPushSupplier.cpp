@@ -6,12 +6,14 @@
 #include "CEC_ConsumerControl.h"
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
+#include "tao/debug.h"
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEvent.h"
 #include "CEC_TypedEventChannel.h"
 #include "tao/DynamicInterface/Request.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+#include "tao/debug.h"
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -769,10 +771,10 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
     }
 
     typed_consumer_obj =
-      CORBA::Object::_duplicate (this->typed_consumer_obj_.in ());    
+      CORBA::Object::_duplicate (this->typed_consumer_obj_.in ());
   }
 
-  // Create the DII request 
+  // Create the DII request
   ACE_TRY
     {
       typed_consumer_obj_->_create_request (0, // ctx

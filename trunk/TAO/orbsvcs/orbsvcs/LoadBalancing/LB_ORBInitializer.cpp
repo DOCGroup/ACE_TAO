@@ -4,11 +4,11 @@
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (LoadBalancing,
            LB_ORBInitializer,
            "$Id$")
-
 
 TAO_LB_ORBInitializer::TAO_LB_ORBInitializer (
   const CORBA::StringSeq & object_groups,

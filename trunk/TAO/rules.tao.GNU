@@ -49,7 +49,7 @@ RT_TAO_SRVR_LIBS=-lTAO_RTPortableServer -lTAO_PortableServer -lTAO_IORIntercepto
 TAO_CLNT_LIBS= $(TAO_BASE_LIBS)
 TAO_CLNT_VT_LIBS=-lTAO_Valuetype $(TAO_CLNT_LIBS)
 RT_TAO_CLNT_LIBS= $(RT_TAO_BASE_LIBS)
-TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface
+TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface -lTAO_Messaging
 
 ####
 #### Macro customization.

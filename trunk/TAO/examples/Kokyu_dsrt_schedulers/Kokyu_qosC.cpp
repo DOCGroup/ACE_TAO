@@ -26,21 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:351
+// be/be_codegen.cpp:302
 
 
 #include "Kokyu_qosC.h"
-#include "tao/Stub.h"
 #include "tao/ORB_Core.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
+#include "tao/Typecode.h"
+#include "tao/Any_Dual_Impl_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -50,8 +42,16 @@
 #include "Kokyu_qosC.i"
 #endif /* !defined INLINE */
 
+// TAO_IDL - Generated from
+// be/be_visitor_arg_traits.cpp:60
+
+// Arg traits specializations.
+namespace TAO
+{
+};
+
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:72
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_KOKYU_GUIDTYPE_CS_)
 #define _KOKYU_GUIDTYPE_CS_
@@ -96,57 +96,10 @@ void Kokyu::GuidType::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {
-  GuidType * tmp =
-    ACE_static_cast (
-        GuidType *,
-        _tao_void_pointer
-      );
-  delete tmp;
+  GuidType * _tao_tmp_pointer =
+    ACE_static_cast (GuidType *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_FixedSeq_Var_T<
-      Kokyu::GuidType,
-      CORBA::Octet
-    >;
-
-template class
-  TAO_Seq_Var_Base_T<
-      Kokyu::GuidType,
-      CORBA::Octet
-    >;
-
-template class
-  TAO_Seq_Out_T<
-      Kokyu::GuidType,
-      Kokyu::GuidType_var,
-      CORBA::Octet
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_FixedSeq_Var_T< \
-      GuidType, \
-      CORBA::Octet \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Var_Base_T< \
-      GuidType, \
-      CORBA::Octet \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Out_T< \
-      GuidType, \
-      GuidType_var, \
-      CORBA::Octet \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* end #if !defined */
 
@@ -186,14 +139,11 @@ static CORBA::TypeCode _tc_TAO_tc_Kokyu_GuidType (
     sizeof (Kokyu::GuidType)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (Kokyu)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_GuidType,
-    &_tc_TAO_tc_Kokyu_GuidType
-  )
-TAO_NAMESPACE_END
+namespace Kokyu
+{
+  ::CORBA::TypeCode_ptr _tc_GuidType =
+    &_tc_TAO_tc_Kokyu_GuidType;
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -344,62 +294,24 @@ static CORBA::TypeCode _tc_TAO_tc_Kokyu_Svc_Ctxt_DSRT_QoS (
     sizeof (Kokyu::Svc_Ctxt_DSRT_QoS)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (Kokyu)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_Svc_Ctxt_DSRT_QoS,
-    &_tc_TAO_tc_Kokyu_Svc_Ctxt_DSRT_QoS
-  )
-TAO_NAMESPACE_END
+namespace Kokyu
+{
+  ::CORBA::TypeCode_ptr _tc_Svc_Ctxt_DSRT_QoS =
+    &_tc_TAO_tc_Kokyu_Svc_Ctxt_DSRT_QoS;
+}
 
 // TAO_IDL - Generated from 
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor (void *_tao_void_pointer)
+void 
+Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor (
+    void *_tao_void_pointer
+  )
 {
-  Svc_Ctxt_DSRT_QoS *tmp = ACE_static_cast (Svc_Ctxt_DSRT_QoS*, _tao_void_pointer);
-  delete tmp;
+  Svc_Ctxt_DSRT_QoS *_tao_tmp_pointer =
+    ACE_static_cast (Svc_Ctxt_DSRT_QoS *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
-
-// TAO_IDL - Generated from
-// be/be_type.cpp:297
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_Var_Var_T<
-      Kokyu::Svc_Ctxt_DSRT_QoS
-    >;
-
-template class TAO_Var_Base_T<
-    Kokyu::Svc_Ctxt_DSRT_QoS
-  >;
-
-template class
-  TAO_Out_T<
-      Kokyu::Svc_Ctxt_DSRT_QoS,
-      Kokyu::Svc_Ctxt_DSRT_QoS_var
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_Var_Var_T< \
-      Kokyu::Svc_Ctxt_DSRT_QoS \
-    >
-
-#pragma instantiate TAO_Var_Base_T<
-    Kokyu::Svc_Ctxt_DSRT_QoS
-  >
-
-# pragma instantiate \
-  TAO_Out_T< \
-      Kokyu::Svc_Ctxt_DSRT_QoS, \
-      Kokyu::Svc_Ctxt_DSRT_QoS_var \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from 
 // be/be_visitor_sequence/any_op_cs.cpp:54
@@ -459,13 +371,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<Kokyu::GuidType>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<Kokyu::GuidType>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from 
 // be/be_visitor_structure/any_op_cs.cpp:54
 
@@ -524,15 +429,8 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<Kokyu::Svc_Ctxt_DSRT_QoS>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<Kokyu::Svc_Ctxt_DSRT_QoS>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:105
+// be/be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_Kokyu_GuidType_CPP_
 #define _TAO_CDR_OP_Kokyu_GuidType_CPP_
@@ -624,4 +522,103 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_Kokyu_GuidType_CPP_ */
+
+// TAO_IDL - Generated from
+// be/be_visitor_root/root.cpp:1702
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO_FixedSeq_Var_T<
+        Kokyu::GuidType,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO_Seq_Var_Base_T<
+        Kokyu::GuidType,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO_Seq_Out_T<
+        Kokyu::GuidType,
+        Kokyu::GuidType_var,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        Kokyu::GuidType
+      >;
+
+  template class
+    TAO_Var_Var_T<
+        Kokyu::Svc_Ctxt_DSRT_QoS
+      >;
+
+  template class
+    TAO_Var_Base_T<
+        Kokyu::Svc_Ctxt_DSRT_QoS
+      >;
+
+  template class
+    TAO_Out_T<
+        Kokyu::Svc_Ctxt_DSRT_QoS,
+        Kokyu::Svc_Ctxt_DSRT_QoS_var
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        Kokyu::Svc_Ctxt_DSRT_QoS
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO_FixedSeq_Var_T< \
+        Kokyu::GuidType, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Var_Base_T< \
+        Kokyu::GuidType, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Out_T< \
+        Kokyu::GuidType, \
+        Kokyu::GuidType_var, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        Kokyu::GuidType \
+      >
+
+# pragma instantiate \
+    TAO_Var_Var_T< \
+        Kokyu::Svc_Ctxt_DSRT_QoS \
+      >
+
+# pragma instantiate \
+    TAO_Var_Base_T< \
+        Kokyu::Svc_Ctxt_DSRT_QoS \
+      >
+
+# pragma instantiate \
+    TAO_Out_T< \
+        Kokyu::Svc_Ctxt_DSRT_QoS, \
+        Kokyu::Svc_Ctxt_DSRT_QoS_var \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        Kokyu::Svc_Ctxt_DSRT_QoS \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

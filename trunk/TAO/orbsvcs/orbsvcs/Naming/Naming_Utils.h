@@ -20,7 +20,7 @@
 #define TAO_NAMING_UTILS_H
 #include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/IOR_Multicast.h"
 #include "Naming_Context_Interface.h"

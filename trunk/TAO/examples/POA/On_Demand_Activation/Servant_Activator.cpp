@@ -20,7 +20,9 @@
 #include "Servant_Activator.h"
 #include "test_i.h"
 
-ACE_RCSID(On_Demand_Activation, Servant_Activator, "$Id$")
+ACE_RCSID (On_Demand_Activation, 
+           Servant_Activator, 
+           "$Id$")
 
 ServantActivator::ServantActivator (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

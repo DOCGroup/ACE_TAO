@@ -13,6 +13,7 @@
 
 #ifndef TAO_CEC_DEFAULT_FACTORY_H
 #define TAO_CEC_DEFAULT_FACTORY_H
+
 #include /**/ "ace/pre.h"
 
 #include "CEC_Factory.h"
@@ -22,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CEC_Defaults.h"
+
 #include "ace/Service_Config.h"
 
 /**
@@ -89,19 +91,27 @@ public:
   virtual TAO_CEC_ProxyPushConsumer_Collection*
       create_proxy_push_consumer_collection (TAO_CEC_EventChannel*);
   virtual void
-      destroy_proxy_push_consumer_collection (TAO_CEC_ProxyPushConsumer_Collection*);
+      destroy_proxy_push_consumer_collection (
+          TAO_CEC_ProxyPushConsumer_Collection*
+        );
   virtual TAO_CEC_ProxyPullConsumer_Collection*
       create_proxy_pull_consumer_collection (TAO_CEC_EventChannel*);
   virtual void
-      destroy_proxy_pull_consumer_collection (TAO_CEC_ProxyPullConsumer_Collection*);
+      destroy_proxy_pull_consumer_collection (
+          TAO_CEC_ProxyPullConsumer_Collection*
+        );
   virtual TAO_CEC_ProxyPushSupplier_Collection*
     create_proxy_push_supplier_collection (TAO_CEC_EventChannel*);
   virtual void
-      destroy_proxy_push_supplier_collection (TAO_CEC_ProxyPushSupplier_Collection*);
+      destroy_proxy_push_supplier_collection (
+          TAO_CEC_ProxyPushSupplier_Collection*
+        );
   virtual TAO_CEC_ProxyPullSupplier_Collection*
     create_proxy_pull_supplier_collection (TAO_CEC_EventChannel*);
   virtual void
-      destroy_proxy_pull_supplier_collection (TAO_CEC_ProxyPullSupplier_Collection*);
+      destroy_proxy_pull_supplier_collection (
+          TAO_CEC_ProxyPullSupplier_Collection*
+        );
 
   virtual ACE_Lock* create_consumer_lock (void);
   virtual void destroy_consumer_lock (ACE_Lock*);
@@ -139,7 +149,9 @@ public:
   virtual TAO_CEC_TypedProxyPushConsumer_Collection*
       create_proxy_push_consumer_collection (TAO_CEC_TypedEventChannel*);
   virtual void
-      destroy_proxy_push_consumer_collection (TAO_CEC_TypedProxyPushConsumer_Collection*);
+      destroy_proxy_push_consumer_collection (
+          TAO_CEC_TypedProxyPushConsumer_Collection*
+        );
   virtual TAO_CEC_ConsumerControl*
       create_consumer_control (TAO_CEC_TypedEventChannel*);
   virtual TAO_CEC_SupplierControl*
@@ -197,4 +209,5 @@ ACE_STATIC_SVC_DECLARE (TAO_CEC_Default_Factory)
 ACE_FACTORY_DECLARE (TAO_Event, TAO_CEC_Default_Factory)
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_CEC_DEFAULT_FACTORY_H */

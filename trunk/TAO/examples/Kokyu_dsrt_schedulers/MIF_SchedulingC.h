@@ -26,34 +26,36 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// be/be_codegen.cpp:150
 
 #ifndef _TAO_IDL_MIF_SCHEDULINGC_H_
 #define _TAO_IDL_MIF_SCHEDULINGC_H_
 
-
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
+#include "tao/Objref_VarOut_T.h"
+#include "tao/VarOut_T.h"
 
-#include "Kokyu_dsrt_schedulers_export.h"
-
-#include "tao/RTScheduling/RTScheduler.h"
-#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTScheduling/RTSchedulerC.h"
+#include "tao/RTCORBA/RTCORBAC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO Kokyu_DSRT_Schedulers_Export
+#define TAO_EXPORT_MACRO 
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO Kokyu_DSRT_Schedulers_Export
+#  define TAO_EXPORT_NESTED_MACRO 
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -67,14 +69,25 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from 
+// be/be_visitor_root/root_ch.cpp:63
+
+namespace TAO
+{
+  class Collocation_Proxy_Broker;
+  
+  template<typename T> class Narrow_Utils;
+  template<typename T> class AbstractBase_Narrow_Utils;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  MIF_Scheduling
+namespace MIF_Scheduling
 {
   
   // TAO_IDL - Generated from
-  // be/be_type.cpp:254
+  // be/be_type.cpp:258
   
   struct SchedulingParameter;
   
@@ -91,7 +104,7 @@ TAO_NAMESPACE  MIF_Scheduling
   // TAO_IDL - Generated from
   // be/be_visitor_structure/structure_ch.cpp:52
   
-  struct Kokyu_DSRT_Schedulers_Export SchedulingParameter
+  struct  SchedulingParameter
   {
     typedef SchedulingParameter_var _var_type;
     
@@ -105,64 +118,40 @@ TAO_NAMESPACE  MIF_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SchedulingParameter;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:584
+  // be/be_interface.cpp:610
 
-#if !defined (_MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY__ODDS_N_ENDS_CH_)
-#define _MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY__VAR_OUT_CH_)
+#define _MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY__VAR_OUT_CH_
   
   class SchedulingParameterPolicy;
   typedef SchedulingParameterPolicy *SchedulingParameterPolicy_ptr;
-  struct tao_SchedulingParameterPolicy_life;
   
   typedef
     TAO_Objref_Var_T<
-        SchedulingParameterPolicy,
-        tao_SchedulingParameterPolicy_life
+        SchedulingParameterPolicy
       >
     SchedulingParameterPolicy_var;
   
   typedef
     TAO_Objref_Out_T<
-        SchedulingParameterPolicy,
-        tao_SchedulingParameterPolicy_life
+        SchedulingParameterPolicy
       >
     SchedulingParameterPolicy_out;
-  
-  struct Kokyu_DSRT_Schedulers_Export tao_SchedulingParameterPolicy_life
-  {
-    static SchedulingParameterPolicy_ptr tao_duplicate (SchedulingParameterPolicy_ptr);
-    static void tao_release (SchedulingParameterPolicy_ptr);
-    static SchedulingParameterPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        SchedulingParameterPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct Kokyu_DSRT_Schedulers_Export tao_SchedulingParameterPolicy_cast
-  {
-    static SchedulingParameterPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY_CH_)
 #define _MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY_CH_
   
-  class Kokyu_DSRT_Schedulers_Export SchedulingParameterPolicy
+  class  SchedulingParameterPolicy
     : public virtual CORBA::Policy
   {
   public:
     typedef SchedulingParameterPolicy_ptr _ptr_type;
     typedef SchedulingParameterPolicy_var _var_type;
-    static int _tao_class_id;
     
     // The static operations.
     static SchedulingParameterPolicy_ptr _duplicate (SchedulingParameterPolicy_ptr obj);
@@ -172,15 +161,10 @@ TAO_NAMESPACE  MIF_Scheduling
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    static SchedulingParameterPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
     static SchedulingParameterPolicy_ptr _nil (void)
-      {
-        return (SchedulingParameterPolicy_ptr)0;
-      }
+    {
+      return (SchedulingParameterPolicy_ptr)0;
+    }
     
     static void _tao_any_destructor (void *);
     
@@ -206,19 +190,26 @@ TAO_NAMESPACE  MIF_Scheduling
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:210
+    // be/be_visitor_interface/interface_ch.cpp:192
     
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
+    // Abstract or local interface only.
     SchedulingParameterPolicy (void);
+    
     virtual ~SchedulingParameterPolicy (void);
   
   private:
+    // Private and unimplemented for concrete interfaces.
     SchedulingParameterPolicy (const SchedulingParameterPolicy &);
+    
     void operator= (const SchedulingParameterPolicy &);
   };
 
@@ -230,64 +221,40 @@ TAO_NAMESPACE  MIF_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SchedulingParameterPolicy;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:584
+  // be/be_interface.cpp:610
 
-#if !defined (_MIF_SCHEDULING_SCHEDULER__ODDS_N_ENDS_CH_)
-#define _MIF_SCHEDULING_SCHEDULER__ODDS_N_ENDS_CH_
+#if !defined (_MIF_SCHEDULING_SCHEDULER__VAR_OUT_CH_)
+#define _MIF_SCHEDULING_SCHEDULER__VAR_OUT_CH_
   
   class Scheduler;
   typedef Scheduler *Scheduler_ptr;
-  struct tao_Scheduler_life;
   
   typedef
     TAO_Objref_Var_T<
-        Scheduler,
-        tao_Scheduler_life
+        Scheduler
       >
     Scheduler_var;
   
   typedef
     TAO_Objref_Out_T<
-        Scheduler,
-        tao_Scheduler_life
+        Scheduler
       >
     Scheduler_out;
-  
-  struct Kokyu_DSRT_Schedulers_Export tao_Scheduler_life
-  {
-    static Scheduler_ptr tao_duplicate (Scheduler_ptr);
-    static void tao_release (Scheduler_ptr);
-    static Scheduler_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        Scheduler_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct Kokyu_DSRT_Schedulers_Export tao_Scheduler_cast
-  {
-    static Scheduler_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_MIF_SCHEDULING_SCHEDULER_CH_)
 #define _MIF_SCHEDULING_SCHEDULER_CH_
   
-  class Kokyu_DSRT_Schedulers_Export Scheduler
+  class  Scheduler
     : public virtual RTScheduling::Scheduler
   {
   public:
     typedef Scheduler_ptr _ptr_type;
     typedef Scheduler_var _var_type;
-    static int _tao_class_id;
     
     // The static operations.
     static Scheduler_ptr _duplicate (Scheduler_ptr obj);
@@ -297,15 +264,10 @@ TAO_NAMESPACE  MIF_Scheduling
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    static Scheduler_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
     static Scheduler_ptr _nil (void)
-      {
-        return (Scheduler_ptr)0;
-      }
+    {
+      return (Scheduler_ptr)0;
+    }
     
     static void _tao_any_destructor (void *);
     
@@ -321,19 +283,26 @@ TAO_NAMESPACE  MIF_Scheduling
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:210
+    // be/be_visitor_interface/interface_ch.cpp:192
     
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
+    // Abstract or local interface only.
     Scheduler (void);
+    
     virtual ~Scheduler (void);
   
   private:
+    // Private and unimplemented for concrete interfaces.
     Scheduler (const Scheduler &);
+    
     void operator= (const Scheduler &);
   };
 
@@ -345,32 +314,81 @@ TAO_NAMESPACE  MIF_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Scheduler;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:67
+// be/be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module MIF_Scheduling
+} // module MIF_Scheduling
+
+// TAO_IDL - Generated from
+// be/be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+
+#if !defined (_MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY__TRAITS_CH_)
+#define _MIF_SCHEDULING_SCHEDULINGPARAMETERPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct  Objref_Traits<MIF_Scheduling::SchedulingParameterPolicy>
+  {
+    static MIF_Scheduling::SchedulingParameterPolicy_ptr tao_duplicate (
+        MIF_Scheduling::SchedulingParameterPolicy_ptr
+      );
+    static void tao_release (
+        MIF_Scheduling::SchedulingParameterPolicy_ptr
+      );
+    static MIF_Scheduling::SchedulingParameterPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        MIF_Scheduling::SchedulingParameterPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_MIF_SCHEDULING_SCHEDULER__TRAITS_CH_)
+#define _MIF_SCHEDULING_SCHEDULER__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct  Objref_Traits<MIF_Scheduling::Scheduler>
+  {
+    static MIF_Scheduling::Scheduler_ptr tao_duplicate (
+        MIF_Scheduling::Scheduler_ptr
+      );
+    static void tao_release (
+        MIF_Scheduling::Scheduler_ptr
+      );
+    static MIF_Scheduling::Scheduler_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        MIF_Scheduling::Scheduler_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+};
 
 // TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_ch.cpp:52
 
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, const MIF_Scheduling::SchedulingParameter &); // copying version
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, MIF_Scheduling::SchedulingParameter*); // noncopying version
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, MIF_Scheduling::SchedulingParameter *&); // deprecated
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, const MIF_Scheduling::SchedulingParameter *&);
+ void operator<<= (CORBA::Any &, const MIF_Scheduling::SchedulingParameter &); // copying version
+ void operator<<= (CORBA::Any &, MIF_Scheduling::SchedulingParameter*); // noncopying version
+ CORBA::Boolean operator>>= (const CORBA::Any &, MIF_Scheduling::SchedulingParameter *&); // deprecated
+ CORBA::Boolean operator>>= (const CORBA::Any &, const MIF_Scheduling::SchedulingParameter *&);
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
 
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, MIF_Scheduling::SchedulingParameterPolicy_ptr); // copying
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, MIF_Scheduling::SchedulingParameterPolicy_ptr *); // non-copying
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, MIF_Scheduling::SchedulingParameterPolicy_ptr &);
+ void operator<<= (CORBA::Any &, MIF_Scheduling::SchedulingParameterPolicy_ptr); // copying
+ void operator<<= (CORBA::Any &, MIF_Scheduling::SchedulingParameterPolicy_ptr *); // non-copying
+ CORBA::Boolean operator>>= (const CORBA::Any &, MIF_Scheduling::SchedulingParameterPolicy_ptr &);
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
 
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, MIF_Scheduling::Scheduler_ptr); // copying
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, MIF_Scheduling::Scheduler_ptr *); // non-copying
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, MIF_Scheduling::Scheduler_ptr &);
+ void operator<<= (CORBA::Any &, MIF_Scheduling::Scheduler_ptr); // copying
+ void operator<<= (CORBA::Any &, MIF_Scheduling::Scheduler_ptr *); // non-copying
+ CORBA::Boolean operator>>= (const CORBA::Any &, MIF_Scheduling::Scheduler_ptr &);
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
@@ -380,8 +398,8 @@ Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, MIF
 // TAO_IDL - Generated from
 // be/be_visitor_structure/cdr_op_ch.cpp:53
 
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const MIF_Scheduling::SchedulingParameter &);
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>> (TAO_InputCDR &, MIF_Scheduling::SchedulingParameter &);
+ CORBA::Boolean operator<< (TAO_OutputCDR &, const MIF_Scheduling::SchedulingParameter &);
+ CORBA::Boolean operator>> (TAO_InputCDR &, MIF_Scheduling::SchedulingParameter &);
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:64
@@ -389,7 +407,7 @@ Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>> (TAO_InputCDR &, MIF_Sche
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1060
+// be/be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
 #include "MIF_SchedulingC.i"

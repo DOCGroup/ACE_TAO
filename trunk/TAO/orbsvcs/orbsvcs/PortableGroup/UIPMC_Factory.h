@@ -12,16 +12,17 @@
 
 #ifndef TAO_UIPMC_FACTORY_H
 #define TAO_UIPMC_FACTORY_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/Protocol_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Protocol_Factory.h"
 #include "ace/Service_Config.h"
+
 #include "portablegroup_export.h"
 
 class TAO_Acceptor;
@@ -63,4 +64,5 @@ ACE_STATIC_SVC_DECLARE (TAO_UIPMC_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_UIPMC_Protocol_Factory)
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_UIPMC_FACTORY_H */

@@ -4,6 +4,7 @@
 #include "PSDL_Struct_Visitor.h"
 #include "PSDL_Stream.h"
 #include "PSDL_y.h"
+#include "tao/CORBA_String.h"
 
 ACE_RCSID (PSS, PSDL_Struct_Visitor, "$Id$")
 

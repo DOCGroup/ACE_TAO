@@ -35,35 +35,35 @@
 namespace TAO
 {
 
-/// Constructor
-RTCosScheduling_ClientScheduler_i::RTCosScheduling_ClientScheduler_i (
-  CORBA::ORB_var orb,
-  char *node_name,
-  char *file)
-{
-  ACE_TRY_NEW_ENV
-    {
-      /// Read the resources and ceilings from the config file
-      /// and put them into the activity_map_
-      if ( !ACE_OS::strcmp(file,"") || file == NULL)
-        {
-          ACE_DEBUG((LM_DEBUG,
-                     "No config supplied to the ServerScheduler, "
-                      "Server will not scheudle object execution "
-                      "(ServerScheduler interceptor not installed)"));
-        }
-      else if (!tasks(node_name, file, &activity_map_))
-        {
-          ACE_DEBUG((LM_DEBUG,"Invalid Filename given, aborting!\n"));
-          ACE_OS::exit(1);
-        }
-      // The tasks were successfully read in, create the client interceptor
-      else
-        {
+  /// Constructor
+  RTCosScheduling_ClientScheduler_i::RTCosScheduling_ClientScheduler_i (
+      CORBA::ORB_var orb,
+      char *node_name,
+      char *file)
+  {
+    ACE_TRY_NEW_ENV
+      {
+        /// Read the resources and ceilings from the config file
+        /// and put them into the activity_map_
+        if ( !ACE_OS::strcmp(file,"") || file == NULL)
+          {
+            ACE_DEBUG((LM_DEBUG,
+                       "No config supplied to the ServerScheduler, "
+                       "Server will not scheudle object execution "
+                       "(ServerScheduler interceptor not installed)"));
+          }
+        else if (!tasks(node_name, file, &activity_map_))
+          {
+            ACE_DEBUG((LM_DEBUG,"Invalid Filename given, aborting!\n"));
+            ACE_OS::exit(1);
+          }
+        // The tasks were successfully read in, create the client interceptor
+        else
+          {
 #ifdef TAO_HAS_INTERCEPTORS
-          ACE_NEW_THROW_EX(this->client_interceptor_,
-                           RTCosScheduling_ClientScheduler_Interceptor(orb),
-                           CORBA::NO_MEMORY());
+            ACE_NEW_THROW_EX (this->client_interceptor_,
+                              RTCosScheduling_ClientScheduler_Interceptor(orb),
+                              CORBA::NO_MEMORY());
           ACE_CHECK;
 
           TAO_ORB_Core *orb_core = orb->orb_core();
@@ -429,8 +429,8 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
       // (that is how service contexts send data)
       sc.context_data =
         ACE_reinterpret_cast(
-          IOP::ServiceContext::_tao_seq_Octet_context_data &,
-          *this->codec_->encode(the_priority_as_any));
+          IOP::ServiceContext::_tao_seq_CORBA_Octet_ &,
+          *this->codec_->encode (the_priority_as_any));
       ACE_TRY_CHECK;
 
       // add the service context

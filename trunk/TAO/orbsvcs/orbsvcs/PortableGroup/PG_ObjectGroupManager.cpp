@@ -4,6 +4,7 @@
 #include "PG_Operators.h"
 
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Reverse_Lock_T.h"

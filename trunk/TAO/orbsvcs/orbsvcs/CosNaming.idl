@@ -81,56 +81,56 @@ module CosNaming
 
       enum NotFoundReason
       {
-	missing_node,
-	not_context,
-	not_object
+	      missing_node,
+	      not_context,
+	      not_object
       };
 
       exception NotFound
-	{
-          // = TITLE
-          //   Indicates that the name does not identify a binding.
+	    {
+        // = TITLE
+        //   Indicates that the name does not identify a binding.
 
-	  NotFoundReason why;
-	  Name rest_of_name;
-	};
+	      NotFoundReason why;
+	      Name rest_of_name;
+	    };
 
       exception CannotProceed
-	{
-          // = TITLE
-          // Implementation may throw this exception if some reason it cannot
-	  // complete the operation.  This is currently not used in TAO.
+	    {
+        // = TITLE
+        // Implementation may throw this exception if some reason it cannot
+	      // complete the operation.  This is currently not used in TAO.
 
-	  NamingContext cxt;
-	  Name rest_of_name;
-	};
+	      NamingContext cxt;
+	      Name rest_of_name;
+	    };
 
       exception InvalidName 
-        {
-          // = TITLE
-          // A name of length 0 is invalid.  Implementations may place
-          // further restrictions. 
-        };
+      {
+        // = TITLE
+        // A name of length 0 is invalid.  Implementations may place
+        // further restrictions. 
+      };
 
       exception AlreadyBound 
-        {
-          // = TITLE
-          // Indicates that the specified name is already bound to
-          // some object.  Only one object can be bound to a
-          // particular name in an context.  To change the binding,
-          // <rebind> and <rebind_context> can be used.
-        };
+      {
+        // = TITLE
+        // Indicates that the specified name is already bound to
+        // some object.  Only one object can be bound to a
+        // particular name in an context.  To change the binding,
+        // <rebind> and <rebind_context> can be used.
+      };
 
       exception NotEmpty 
-        {
-          // = TITLE
-          // Indicates that the context is not empty.
-        };
+      {
+        // = TITLE
+        // Indicates that the context is not empty.
+      };
 
       // = Binding operations.
 
       void bind (in Name n, in Object obj)
-	raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
+	      raises (NotFound, CannotProceed, InvalidName, AlreadyBound);
       // Create a binding for name <n> and object <obj> in the naming
       // context.  Compound names are treated as follows: ctx->bind
       // (<c1; c2; c3; cn>, obj) = (ctx->resolve (<c1; c2;
@@ -141,20 +141,20 @@ module CosNaming
       // resolution later.
 
       void rebind (in Name n, in Object obj)
-	raises(NotFound, CannotProceed, InvalidName);
+	      raises (NotFound, CannotProceed, InvalidName);
       // This is similar to <bind> operation above, except for when
       // the binding for the specified name already exists in the
       // specified context.  In that case, the existing binding is
       // replaced with the new one.
 
       void bind_context (in Name n, in NamingContext nc)
-	raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
+	      raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
       // This is the version of <bind> specifically for binding naming
       // contexts, so that they will participate in name resolution
       // when compound names are passed to be resolved.
 
       void rebind_context (in Name n, in NamingContext nc)
-	raises(NotFound, CannotProceed, InvalidName);
+	      raises (NotFound, CannotProceed, InvalidName);
       // This is a version of <rebind> specifically for naming
       // contexts, so that they can participate in name resolution
       // when compound names are passed.
@@ -162,7 +162,7 @@ module CosNaming
       // = Resolving names.
 
       Object resolve (in Name n)
-	raises(NotFound, CannotProceed, InvalidName);
+	      raises (NotFound, CannotProceed, InvalidName);
       // Return object reference that is bound to the name.  Compound
       // name resolve is defined as follows: ctx->resolve (<c1; c2;
       // cn>) = ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The
@@ -173,7 +173,7 @@ module CosNaming
       // = Unbinding names.
 
       void unbind (in Name n)
-	raises(NotFound, CannotProceed, InvalidName);
+	      raises (NotFound, CannotProceed, InvalidName);
       // Remove the name binding from the context.  When compound
       // names are used, unbind is defined as follows: ctx->unbind
       // (<c1; c2; cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind
@@ -187,7 +187,7 @@ module CosNaming
       // The context is not bound.
 
       NamingContext bind_new_context (in Name n)
-	raises(NotFound, AlreadyBound, CannotProceed, InvalidName);
+	      raises (NotFound, AlreadyBound, CannotProceed, InvalidName);
       // This operation creates a new context and binds it to the name
       // supplied as an argument.  The newly-created context is
       // implemented by the same server as the context in which it was
@@ -196,7 +196,7 @@ module CosNaming
       // = Deleting contexts.
 
       void destroy ()
-	raises (NotEmpty);
+	      raises (NotEmpty);
       // Delete the naming context.  NOTE: the user should <unbind>
       // any bindings in which the given context is bound to some
       // names before invoking <destroy> operation on it. 
@@ -205,7 +205,7 @@ module CosNaming
       // = Listing the naming context.
 
       void list (in unsigned long how_many,
-		 out BindingList bl,
+		             out BindingList bl,
                  out BindingIterator bi);
       // Returns at most the requested number of bindings <how_many>
       // in <bl>.  If the naming context contains additional bindings,
@@ -225,7 +225,7 @@ module CosNaming
       // more bindings false is returned.
 
       boolean next_n (in unsigned long how_many,
-		      out BindingList bl);
+		                  out BindingList bl);
       // This operation returns at most the requested number of
       // bindings.
 
@@ -233,7 +233,7 @@ module CosNaming
       // This operation destroys the iterator.
     };
 
-  interface NamingContextExt:NamingContext 
+  interface NamingContextExt : NamingContext 
     {
       // = TITLE
       // Interface for providing operations required to use URLs and
@@ -286,7 +286,6 @@ module CosNaming
       // a stringified name as an argument instead of a Name.
       
     };
-  
 };
 
 #endif /* TAO_NAMING_IDL */

@@ -39,7 +39,6 @@
 #include "ace/Sched_Params.h"
 
 // TAO includes.
-#include "tao/corba.h"
 #include "tao/PortableServer/ORB_Manager.h"
 
 // MT Cubit application includes.

@@ -26,34 +26,36 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// be/be_codegen.cpp:150
 
 #ifndef _TAO_IDL_FP_SCHEDULINGC_H_
 #define _TAO_IDL_FP_SCHEDULINGC_H_
 
-
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
+#include "tao/Objref_VarOut_T.h"
+#include "tao/VarOut_T.h"
 
-#include "Kokyu_dsrt_schedulers_export.h"
-
-#include "tao/RTScheduling/RTScheduler.h"
-#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTScheduling/RTSchedulerC.h"
+#include "tao/RTCORBA/RTCORBAC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO Kokyu_DSRT_Schedulers_Export
+#define TAO_EXPORT_MACRO 
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO Kokyu_DSRT_Schedulers_Export
+#  define TAO_EXPORT_NESTED_MACRO 
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -67,14 +69,25 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from 
+// be/be_visitor_root/root_ch.cpp:63
+
+namespace TAO
+{
+  class Collocation_Proxy_Broker;
+  
+  template<typename T> class Narrow_Utils;
+  template<typename T> class AbstractBase_Narrow_Utils;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  FP_Scheduling
+namespace FP_Scheduling
 {
   
   // TAO_IDL - Generated from
-  // be/be_type.cpp:254
+  // be/be_type.cpp:258
   
   struct SegmentSchedulingParameter;
   
@@ -91,7 +104,7 @@ TAO_NAMESPACE  FP_Scheduling
   // TAO_IDL - Generated from
   // be/be_visitor_structure/structure_ch.cpp:52
   
-  struct Kokyu_DSRT_Schedulers_Export SegmentSchedulingParameter
+  struct  SegmentSchedulingParameter
   {
     typedef SegmentSchedulingParameter_var _var_type;
     
@@ -105,64 +118,40 @@ TAO_NAMESPACE  FP_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SegmentSchedulingParameter;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:584
+  // be/be_interface.cpp:610
 
-#if !defined (_FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__ODDS_N_ENDS_CH_)
-#define _FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__VAR_OUT_CH_)
+#define _FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__VAR_OUT_CH_
   
   class SegmentSchedulingParameterPolicy;
   typedef SegmentSchedulingParameterPolicy *SegmentSchedulingParameterPolicy_ptr;
-  struct tao_SegmentSchedulingParameterPolicy_life;
   
   typedef
     TAO_Objref_Var_T<
-        SegmentSchedulingParameterPolicy,
-        tao_SegmentSchedulingParameterPolicy_life
+        SegmentSchedulingParameterPolicy
       >
     SegmentSchedulingParameterPolicy_var;
   
   typedef
     TAO_Objref_Out_T<
-        SegmentSchedulingParameterPolicy,
-        tao_SegmentSchedulingParameterPolicy_life
+        SegmentSchedulingParameterPolicy
       >
     SegmentSchedulingParameterPolicy_out;
-  
-  struct Kokyu_DSRT_Schedulers_Export tao_SegmentSchedulingParameterPolicy_life
-  {
-    static SegmentSchedulingParameterPolicy_ptr tao_duplicate (SegmentSchedulingParameterPolicy_ptr);
-    static void tao_release (SegmentSchedulingParameterPolicy_ptr);
-    static SegmentSchedulingParameterPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        SegmentSchedulingParameterPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct Kokyu_DSRT_Schedulers_Export tao_SegmentSchedulingParameterPolicy_cast
-  {
-    static SegmentSchedulingParameterPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY_CH_)
 #define _FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY_CH_
   
-  class Kokyu_DSRT_Schedulers_Export SegmentSchedulingParameterPolicy
+  class  SegmentSchedulingParameterPolicy
     : public virtual CORBA::Policy
   {
   public:
     typedef SegmentSchedulingParameterPolicy_ptr _ptr_type;
     typedef SegmentSchedulingParameterPolicy_var _var_type;
-    static int _tao_class_id;
     
     // The static operations.
     static SegmentSchedulingParameterPolicy_ptr _duplicate (SegmentSchedulingParameterPolicy_ptr obj);
@@ -172,15 +161,10 @@ TAO_NAMESPACE  FP_Scheduling
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    static SegmentSchedulingParameterPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
     static SegmentSchedulingParameterPolicy_ptr _nil (void)
-      {
-        return (SegmentSchedulingParameterPolicy_ptr)0;
-      }
+    {
+      return (SegmentSchedulingParameterPolicy_ptr)0;
+    }
     
     static void _tao_any_destructor (void *);
     
@@ -206,19 +190,26 @@ TAO_NAMESPACE  FP_Scheduling
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:210
+    // be/be_visitor_interface/interface_ch.cpp:192
     
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
+    // Abstract or local interface only.
     SegmentSchedulingParameterPolicy (void);
+    
     virtual ~SegmentSchedulingParameterPolicy (void);
   
   private:
+    // Private and unimplemented for concrete interfaces.
     SegmentSchedulingParameterPolicy (const SegmentSchedulingParameterPolicy &);
+    
     void operator= (const SegmentSchedulingParameterPolicy &);
   };
 
@@ -230,64 +221,40 @@ TAO_NAMESPACE  FP_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SegmentSchedulingParameterPolicy;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:584
+  // be/be_interface.cpp:610
 
-#if !defined (_FP_SCHEDULING_FP_SCHEDULER__ODDS_N_ENDS_CH_)
-#define _FP_SCHEDULING_FP_SCHEDULER__ODDS_N_ENDS_CH_
+#if !defined (_FP_SCHEDULING_FP_SCHEDULER__VAR_OUT_CH_)
+#define _FP_SCHEDULING_FP_SCHEDULER__VAR_OUT_CH_
   
   class FP_Scheduler;
   typedef FP_Scheduler *FP_Scheduler_ptr;
-  struct tao_FP_Scheduler_life;
   
   typedef
     TAO_Objref_Var_T<
-        FP_Scheduler,
-        tao_FP_Scheduler_life
+        FP_Scheduler
       >
     FP_Scheduler_var;
   
   typedef
     TAO_Objref_Out_T<
-        FP_Scheduler,
-        tao_FP_Scheduler_life
+        FP_Scheduler
       >
     FP_Scheduler_out;
-  
-  struct Kokyu_DSRT_Schedulers_Export tao_FP_Scheduler_life
-  {
-    static FP_Scheduler_ptr tao_duplicate (FP_Scheduler_ptr);
-    static void tao_release (FP_Scheduler_ptr);
-    static FP_Scheduler_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        FP_Scheduler_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct Kokyu_DSRT_Schedulers_Export tao_FP_Scheduler_cast
-  {
-    static FP_Scheduler_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_FP_SCHEDULING_FP_SCHEDULER_CH_)
 #define _FP_SCHEDULING_FP_SCHEDULER_CH_
   
-  class Kokyu_DSRT_Schedulers_Export FP_Scheduler
+  class  FP_Scheduler
     : public virtual RTScheduling::Scheduler
   {
   public:
     typedef FP_Scheduler_ptr _ptr_type;
     typedef FP_Scheduler_var _var_type;
-    static int _tao_class_id;
     
     // The static operations.
     static FP_Scheduler_ptr _duplicate (FP_Scheduler_ptr obj);
@@ -297,15 +264,10 @@ TAO_NAMESPACE  FP_Scheduling
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    static FP_Scheduler_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
     static FP_Scheduler_ptr _nil (void)
-      {
-        return (FP_Scheduler_ptr)0;
-      }
+    {
+      return (FP_Scheduler_ptr)0;
+    }
     
     static void _tao_any_destructor (void *);
     
@@ -321,19 +283,26 @@ TAO_NAMESPACE  FP_Scheduling
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:210
+    // be/be_visitor_interface/interface_ch.cpp:192
     
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
+    // Abstract or local interface only.
     FP_Scheduler (void);
+    
     virtual ~FP_Scheduler (void);
   
   private:
+    // Private and unimplemented for concrete interfaces.
     FP_Scheduler (const FP_Scheduler &);
+    
     void operator= (const FP_Scheduler &);
   };
 
@@ -345,32 +314,81 @@ TAO_NAMESPACE  FP_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_FP_Scheduler;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:67
+// be/be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module FP_Scheduling
+} // module FP_Scheduling
+
+// TAO_IDL - Generated from
+// be/be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+
+#if !defined (_FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__TRAITS_CH_)
+#define _FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct  Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>
+  {
+    static FP_Scheduling::SegmentSchedulingParameterPolicy_ptr tao_duplicate (
+        FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
+      );
+    static void tao_release (
+        FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
+      );
+    static FP_Scheduling::SegmentSchedulingParameterPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        FP_Scheduling::SegmentSchedulingParameterPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_FP_SCHEDULING_FP_SCHEDULER__TRAITS_CH_)
+#define _FP_SCHEDULING_FP_SCHEDULER__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct  Objref_Traits<FP_Scheduling::FP_Scheduler>
+  {
+    static FP_Scheduling::FP_Scheduler_ptr tao_duplicate (
+        FP_Scheduling::FP_Scheduler_ptr
+      );
+    static void tao_release (
+        FP_Scheduling::FP_Scheduler_ptr
+      );
+    static FP_Scheduling::FP_Scheduler_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        FP_Scheduling::FP_Scheduler_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+};
 
 // TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_ch.cpp:52
 
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, const FP_Scheduling::SegmentSchedulingParameter &); // copying version
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, FP_Scheduling::SegmentSchedulingParameter*); // noncopying version
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, FP_Scheduling::SegmentSchedulingParameter *&); // deprecated
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, const FP_Scheduling::SegmentSchedulingParameter *&);
+ void operator<<= (CORBA::Any &, const FP_Scheduling::SegmentSchedulingParameter &); // copying version
+ void operator<<= (CORBA::Any &, FP_Scheduling::SegmentSchedulingParameter*); // noncopying version
+ CORBA::Boolean operator>>= (const CORBA::Any &, FP_Scheduling::SegmentSchedulingParameter *&); // deprecated
+ CORBA::Boolean operator>>= (const CORBA::Any &, const FP_Scheduling::SegmentSchedulingParameter *&);
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
 
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, FP_Scheduling::SegmentSchedulingParameterPolicy_ptr); // copying
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, FP_Scheduling::SegmentSchedulingParameterPolicy_ptr *); // non-copying
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, FP_Scheduling::SegmentSchedulingParameterPolicy_ptr &);
+ void operator<<= (CORBA::Any &, FP_Scheduling::SegmentSchedulingParameterPolicy_ptr); // copying
+ void operator<<= (CORBA::Any &, FP_Scheduling::SegmentSchedulingParameterPolicy_ptr *); // non-copying
+ CORBA::Boolean operator>>= (const CORBA::Any &, FP_Scheduling::SegmentSchedulingParameterPolicy_ptr &);
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
 
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, FP_Scheduling::FP_Scheduler_ptr); // copying
-Kokyu_DSRT_Schedulers_Export void operator<<= (CORBA::Any &, FP_Scheduling::FP_Scheduler_ptr *); // non-copying
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, FP_Scheduling::FP_Scheduler_ptr &);
+ void operator<<= (CORBA::Any &, FP_Scheduling::FP_Scheduler_ptr); // copying
+ void operator<<= (CORBA::Any &, FP_Scheduling::FP_Scheduler_ptr *); // non-copying
+ CORBA::Boolean operator>>= (const CORBA::Any &, FP_Scheduling::FP_Scheduler_ptr &);
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
@@ -380,8 +398,8 @@ Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>>= (const CORBA::Any &, FP_
 // TAO_IDL - Generated from
 // be/be_visitor_structure/cdr_op_ch.cpp:53
 
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const FP_Scheduling::SegmentSchedulingParameter &);
-Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>> (TAO_InputCDR &, FP_Scheduling::SegmentSchedulingParameter &);
+ CORBA::Boolean operator<< (TAO_OutputCDR &, const FP_Scheduling::SegmentSchedulingParameter &);
+ CORBA::Boolean operator>> (TAO_InputCDR &, FP_Scheduling::SegmentSchedulingParameter &);
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:64
@@ -389,7 +407,7 @@ Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>> (TAO_InputCDR &, FP_Sched
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1060
+// be/be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
 #include "FP_SchedulingC.i"

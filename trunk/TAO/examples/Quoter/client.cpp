@@ -1,10 +1,14 @@
 // $Id$
 
 #include "ace/Read_Buffer.h"
+
 #include "orbsvcs/CosNamingC.h"
+
 #include "client.h"
 
-ACE_RCSID(Quoter, client, "$Id$")
+ACE_RCSID (Quoter, 
+           client, 
+           "$Id$")
 
 Quoter_Task::Quoter_Task (int argc, char **argv)
   : argc_ (argc), argv_ (argv)

@@ -3,6 +3,7 @@
 #include "FP_Scheduler.h"
 #include "Kokyu_qosC.h"
 #include "utils.h"
+#include "ORB_Constants.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
 FP_Scheduling::SegmentSchedulingParameter
@@ -296,7 +297,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 
       sc.context_data =
         ACE_reinterpret_cast(IOP::ServiceContext::
-                             _tao_seq_Octet_context_data &,
+                             _tao_seq_CORBA_Octet_ &,
                              *codec_->encode (sc_qos_as_any));
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -478,7 +479,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 
       sc.context_data = ACE_reinterpret_cast(
                                              IOP::ServiceContext::
-                                             _tao_seq_Octet_context_data &,
+                                             _tao_seq_CORBA_Octet_ &,
                                              *codec_->encode (sc_qos_as_any));
 
       // Add this context to the service context list.

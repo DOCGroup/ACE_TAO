@@ -14,17 +14,23 @@
 
 #ifndef TAO_EC_CONSUMERCONTROL_H
 #define TAO_EC_CONSUMERCONTROL_H
+
 #include /**/ "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #include /**/ "event_export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
-
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
+
+namespace CORBA
+{
+  class SystemException;
+}
 
 /**
  * @class TAO_EC_ConsumerControl
@@ -69,4 +75,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_CONSUMERCONTROL_H */
