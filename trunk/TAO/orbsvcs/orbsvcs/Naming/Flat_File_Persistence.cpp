@@ -146,7 +146,7 @@ TAO_NS_FlatFileReader::operator >>(
   //char* context_name = 0;
   //ACE_NEW_RETURN(context_name, char[bufSize+1], 0);
   ACE_OS::fgets(context_name, bufSize+1, fin_);
-  fscanf(fin_, "%d\n", &size);
+  fscanf(fin_, "%u\n", &size);
 
   ACE_CString new_cn = ACE_CString(context_name);
   header.context_name(new_cn);

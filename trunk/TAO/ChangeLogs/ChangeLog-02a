@@ -1,3 +1,9 @@
+Fri Mar 15 16:06:10 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator >>): 
+	  Fixed the warning gcc-3.0 was complaining about by correcting the
+	  format specifier used.
+
 Fri Mar 15 07:50:23 2002  Chad Elliott  <elliott_c@ociweb.com>
 
        Committing this change for Yan Dai <dai_y@ociweb.com>.
