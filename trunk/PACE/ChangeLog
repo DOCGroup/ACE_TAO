@@ -1,3 +1,17 @@
+Mon Jun 19 03:57:37 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/ctype.h:
+	* pace/posix/ctype.h:
+	* pace/posix/ctype.inl:
+	* pace/posix/ctype.c:
+
+	* pace/math.h:
+	* pace/posix/math.h:
+	* pace/posix/math.inl:
+	* pace/posix/math.c:
+
+	  Added to repository.
+
 Sat Jun 17 17:24:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/sys/mman.h:
