@@ -3205,7 +3205,8 @@ ACE_OS::event_reset (ACE_event_t *event)
 #define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE)
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+#if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
   do \
   { \
@@ -3221,7 +3222,18 @@ ACE_OS::event_reset (ACE_event_t *event)
         return ace_result_; \
       } \
   } while(0)
-#endif /* defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+#else /* ! (ACE_MT_SAFE && ACE_MT_SAFE != 0) */
+#define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
+  do \
+  { \
+        TYPE ace_result_; \
+        ACE_OSCALL(OP,TYPE,FAILVALUE,ace_result_); \
+	if (ace_result_ != FAILVALUE) \
+          ::memcpy (TARGET, ace_result_, SIZE); \
+        return ace_result_; \
+  } while(0)
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+#endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
 ACE_INLINE ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle, struct sockaddr *addr,
