@@ -44,8 +44,8 @@ Server_ORBInitializer::post_init (
 
   this->server_interceptor_ = interceptor;
 
-  info->add_server_request_interceptor (interceptor
-                                        TAO_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (interceptor,
+                                        ACE_TRY_ENV);
   ACE_CHECK;
 }
 

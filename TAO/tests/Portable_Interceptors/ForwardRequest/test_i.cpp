@@ -15,8 +15,6 @@ test_i::test_i (CORBA::Short num,
 
 test_i::~test_i (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Servant destructor invoked.\n"));
 }
 
 CORBA::Short
