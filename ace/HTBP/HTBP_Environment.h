@@ -11,9 +11,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ace/Configuration.h>
-#include <ace/Configuration_Import_Export.h>
-#include <ace/Singleton.h>
+#include "ace/Configuration.h"
+#include "ace/Configuration_Import_Export.h"
+#include "ace/Singleton.h"
 
 
 namespace ACE

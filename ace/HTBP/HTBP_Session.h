@@ -157,11 +157,11 @@ namespace ACE
       void reconnect_i (Channel *);
 
       typedef ACE_Hash_Map_Manager<Session_Id_t, Session*,
-                                   ACE_Thread_Mutex> Session_Map;
+                                   ACE_SYNCH_MUTEX> Session_Map;
       typedef ACE_Hash_Map_Entry <Session_Id_t, Session*> Map_Entry;
       static Session_Map session_map_;
       static ACE_UINT32 last_session_id_;
-      static ACE_Thread_Mutex session_id_lock_;
+      static ACE_SYNCH_MUTEX session_id_lock_;
 
       ACE_INET_Addr *proxy_addr_;
       int destroy_proxy_addr_;
@@ -179,7 +179,7 @@ namespace ACE
       ACE_Event_Handler *handler_;
       ACE_Reactor *reactor_;
 
-      ACE_Message_Queue<ACE_MT_SYNCH> outbound_queue_;
+      ACE_Message_Queue<ACE_SYNCH> outbound_queue_;
       Stream * stream_;
       int sock_flags_;
     };

@@ -20,9 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ace/INET_Addr.h>
-#include <ace/Synch.h>
-#include <ace/SString.h>
+#include "ace/INET_Addr.h"
+#include "ace/Synch.h"
+#include "ace/SString.h"
 
 namespace ACE
 {

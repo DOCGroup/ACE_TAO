@@ -1,3 +1,24 @@
+Wed Oct 27 07:46:42 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/HTBP/HTBP_Addr.h:
+        * ace/HTBP/HTBP_Channel.cpp:
+        * ace/HTBP/HTBP_Environment.h:
+        * ace/HTBP/HTBP_Stream.cpp:
+
+          Use "" instead of <> in #include.
+
+        * ace/HTBP/HTBP_ID_Requestor.cpp:
+        * ace/HTBP/HTBP_Session.h:
+        * ace/HTBP/HTBP_Session.cpp:
+
+          Use ACE_SYNCH and ACE_SYNCH_MUTEX instead of ACE_MT_SYNCH and
+          ACE_Thread_Mutex for threads=0 builds.
+
+        * ace/OS_NS_Thread.inl:
+
+          ACE_OS::thr_getspecific() was missing an #else clause for the
+          ACE_HAS_THREADS macro.
+
 Wed Oct 27 08:05:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
