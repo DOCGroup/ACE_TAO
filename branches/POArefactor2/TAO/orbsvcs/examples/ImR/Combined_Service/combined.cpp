@@ -9,9 +9,6 @@
 #include <ace/streams.h>
 #include <tao/PortableServer/PortableServer.h>
 
-using namespace CORBA;
-using namespace PortableServer;
-
 class SvcConf
   : public POA_ServiceConfigurator
   , public PortableServer::RefCountServantBase
@@ -43,19 +40,19 @@ int main (int argc, char* argv[])
     ACE_Service_Config config;
     config.open(argc, argv);
 
-    ORB_var orb = ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    Object_var obj = orb->resolve_initial_references("RootPOA");
-    POA_var poa = POA::_narrow(obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
+    PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
     ACE_ASSERT(! is_nil(poa.in()));
-    POAManager_var poaman = poa->the_POAManager();
+    PortableServer::POAManager_var poaman = poa->the_POAManager();
 
     SvcConf svt(config);
 
-    ObjectId_var id = poa->activate_object(&svt);
+    PortableServer::ObjectId_var id = poa->activate_object(&svt);
     obj = poa->id_to_reference(id.in());
     ACE_ASSERT(! is_nil(obj.in()));
-    String_var ior = orb->object_to_string(obj.in());
+    CORBA::String_var ior = orb->object_to_string(obj.in());
 
     poaman->activate();
 

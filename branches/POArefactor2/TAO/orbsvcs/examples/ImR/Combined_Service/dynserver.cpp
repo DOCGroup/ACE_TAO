@@ -2,12 +2,10 @@
 #include "dynserver.h"
 
 #include "tao/IORTable/IORTable.h"
+#include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Task.h"
-
-using namespace CORBA;
-using namespace PortableServer;
 
 DynServer::DynServer()
 : n_(0)
@@ -17,18 +15,18 @@ DynServer::DynServer()
 DynServer::~DynServer() {
 }
 
-Long DynServer::get() ACE_THROW_SPEC ((SystemException)) {
+CORBA::Long DynServer::get() ACE_THROW_SPEC ((CORBA::SystemException)) {
   ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
   return n_;
 }
 
 namespace {
-  POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poaman) {
-    PolicyList policies (2);
+  PortableServer::POA_ptr createPersistPOA(const char* name, PortableServer::POA_ptr root_poa, PortableServer::POAManager_ptr poaman) {
+    CORBA::PolicyList policies (2);
     policies.length (2);
-    policies[0] = root_poa->create_id_assignment_policy(USER_ID);
-    policies[1] = root_poa->create_lifespan_policy(PERSISTENT);
-    POA_var poa = root_poa->create_POA(name, poaman, policies);
+    policies[0] = root_poa->create_id_assignment_policy(PortableServer::USER_ID);
+    policies[1] = root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
+    PortableServer::POA_var poa = root_poa->create_POA(name, poaman, policies);
     policies[0]->destroy();
     policies[1]->destroy();
     return poa._retn();
@@ -37,14 +35,14 @@ namespace {
 
 class DynServer_ORB_Runner : public ACE_Task_Base
 {
-  ORB_var orb_;
+  CORBA::ORB_var orb_;
 public:
-  DynServer_ORB_Runner(ORB_ptr orb)
-    : orb_(ORB::_duplicate(orb))
+  DynServer_ORB_Runner(CORBA::ORB_ptr orb)
+    : orb_(CORBA::ORB::_duplicate(orb))
   {
   }
   void end() {
-    if (! is_nil(orb_.in())) {
+    if (! CORBA::is_nil(orb_.in())) {
       orb_->shutdown(1);
       wait();
     }
@@ -52,7 +50,7 @@ public:
   virtual int svc()
   {
     orb_->run();
-    orb_ = ORB::_nil();
+    orb_ = CORBA::ORB::_nil();
     return 0;
   }
 };
@@ -66,34 +64,34 @@ DynServer_Loader::init (int argc, ACE_TCHAR* argv[] ACE_ENV_ARG_DECL)
 {
   try {
 
-    orb_ = ORB_init(argc, argv, "DynServer");
+    orb_ = CORBA::ORB_init(argc, argv, "DynServer");
 
-    Object_var obj = orb_->resolve_initial_references("RootPOA");
-    root_poa_ = POA::_narrow(obj.in());
-    POAManager_var poaman = root_poa_->the_POAManager();
+    CORBA::Object_var obj = orb_->resolve_initial_references("RootPOA");
+    root_poa_ = PortableServer::POA::_narrow(obj.in());
+    PortableServer::POAManager_var poaman = root_poa_->the_POAManager();
     obj = this->orb_->resolve_initial_references ("IORTable");
     IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in());
     ACE_ASSERT(! is_nil(ior_table.in()));
 
     ACE_DEBUG((LM_DEBUG, "dynserver: creating poas. (Registers with ImR)\n"));
 
-    POA_var poa1 = createPersistPOA("DynObject1", root_poa_.in(), poaman.in());
-    POA_var poa2 = createPersistPOA("DynObject2", root_poa_.in(), poaman.in());
+    PortableServer::POA_var poa1 = createPersistPOA("DynObject1", root_poa_.in(), poaman.in());
+    PortableServer::POA_var poa2 = createPersistPOA("DynObject2", root_poa_.in(), poaman.in());
 
     ACE_DEBUG((LM_DEBUG, "dynserver: activating objects.\n"));
 
     DynServer* svt1 = new DynServer;
-    ServantBase_var scoped_svt1(svt1);
+    PortableServer::ServantBase_var scoped_svt1(svt1);
     DynServer* svt2 = new DynServer;
-    ServantBase_var scoped_svt2(svt2);
+    PortableServer::ServantBase_var scoped_svt2(svt2);
 
-    ObjectId_var id = string_to_ObjectId("myobject");
+    PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId("myobject");
 
     poa1->activate_object_with_id(id.in(), svt1);
     poa2->activate_object_with_id(id.in(), svt2);
 
     obj = poa1->id_to_reference(id.in());
-    String_var ior = orb_->object_to_string(obj.in());
+    CORBA::String_var ior = orb_->object_to_string(obj.in());
     ior_table->bind ("DynObject1", ior.in());
     obj = poa2->id_to_reference(id.in());
     ior = orb_->object_to_string(obj.in());
@@ -106,7 +104,7 @@ DynServer_Loader::init (int argc, ACE_TCHAR* argv[] ACE_ENV_ARG_DECL)
 
     ACE_DEBUG((LM_DEBUG, "dynserver: running.\n"));
 
-  } catch (Exception& e) {
+  } catch (CORBA::Exception& e) {
     ACE_PRINT_EXCEPTION(e, "DynServer::init()");
   }
   return 0;
@@ -130,20 +128,20 @@ DynServer_Loader::fini (void)
 
     return 0;
 
-  } catch (Exception& e) {
+  } catch (CORBA::Exception& e) {
     ACE_PRINT_EXCEPTION(e, "DynServer::fini()");
   }
   return -1;
 }
 
-Object_ptr
-DynServer_Loader::create_object (ORB_ptr,
+CORBA::Object_ptr
+DynServer_Loader::create_object (CORBA::ORB_ptr,
                                  int,
                                  ACE_TCHAR **
                                  ACE_ENV_ARG_DECL)
-                                 ACE_THROW_SPEC ((SystemException))
+                                 ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN(NO_IMPLEMENT(), Object::_nil());
+  ACE_THROW_RETURN(CORBA::NO_IMPLEMENT(), CORBA::Object::_nil());
 }
 
 ACE_FACTORY_DEFINE (DynServer, DynServer_Loader)

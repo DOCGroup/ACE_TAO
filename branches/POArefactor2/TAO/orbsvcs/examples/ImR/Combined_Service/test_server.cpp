@@ -9,9 +9,6 @@
 #include "ace/streams.h"
 #include "ace/ARGV.h"
 
-using namespace CORBA;
-using namespace PortableServer;
-
 class test_i : public virtual POA_test {
   int n_;
 public:
@@ -26,12 +23,12 @@ public:
   }
 };
 
-POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poaman) {
+PortableServer::POA_ptr createPersistPOA(const char* name, PortableServer::POA_ptr root_poa, PortableServer::POAManager_ptr poaman) {
   CORBA::PolicyList policies (2);
   policies.length (2);
-  policies[0] = root_poa->create_id_assignment_policy(USER_ID);
-  policies[1] = root_poa->create_lifespan_policy(PERSISTENT);
-  POA_var poa = root_poa->create_POA(name, poaman, policies);
+  policies[0] = root_poa->create_id_assignment_policy(PortableServer::USER_ID);
+  policies[1] = root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
+  PortableServer::POA_var poa = root_poa->create_POA(name, poaman, policies);
   policies[0]->destroy();
   policies[1]->destroy();
   return poa._retn();
@@ -40,32 +37,32 @@ POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poam
 int main(int argc, char* argv[]) {
 
   try {
- 
-    ORB_var orb = ORB_init(argc, argv);
 
-    Object_var obj = orb->resolve_initial_references("RootPOA");
-    POA_var root_poa = POA::_narrow(obj.in());
-    POAManager_var poaman = root_poa->the_POAManager();
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+
+    CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
+    PortableServer::POA_var root_poa = PortableServer::POA::_narrow(obj.in());
+    PortableServer::POAManager_var poaman = root_poa->the_POAManager();
     obj = orb->resolve_initial_references ("IORTable");
     IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in());
     ACE_ASSERT(! is_nil(ior_table.in()));
 
     ACE_DEBUG((LM_DEBUG, "test_server: creating poas. (Registers with ImR)\n"));
 
-    POA_var poa1 = createPersistPOA("TestObject1", root_poa.in(), poaman.in());
-    POA_var poa2 = createPersistPOA("TestObject2", root_poa.in(), poaman.in());
+    PortableServer::POA_var poa1 = createPersistPOA("TestObject1", root_poa.in(), poaman.in());
+    PortableServer::POA_var poa2 = createPersistPOA("TestObject2", root_poa.in(), poaman.in());
 
     ACE_DEBUG((LM_DEBUG, "test_server: activating objects.\n"));
 
     test_i svt1, svt2;
 
-    ObjectId_var id = string_to_ObjectId("myobject");
+    PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId("myobject");
 
     poa1->activate_object_with_id(id.in(), &svt1);
     poa2->activate_object_with_id(id.in(), &svt2);
 
     obj = poa1->id_to_reference(id.in());
-    String_var ior = orb->object_to_string(obj.in());
+    CORBA::String_var ior = orb->object_to_string(obj.in());
     ior_table->bind ("TestObject1", ior.in());
     obj = poa2->id_to_reference(id.in());
     ior = orb->object_to_string(obj.in());

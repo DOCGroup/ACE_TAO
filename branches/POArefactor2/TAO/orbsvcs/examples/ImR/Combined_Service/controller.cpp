@@ -7,8 +7,6 @@
 #include <ace/SString.h>
 #include <ace/Log_Msg.h>
 
-using namespace CORBA;
-
 namespace {
 
   ACE_CString directive;
@@ -43,7 +41,7 @@ int main(int argc, char* argv[]) {
 
   try {
 
-    ORB_var orb = ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (! parse_args(argc, argv)) {
       showusage();
@@ -52,10 +50,10 @@ int main(int argc, char* argv[]) {
 
     ACE_DEBUG((LM_DEBUG, "Controller: Connecting to combined service...\n"));
 
-    Object_var obj = orb->resolve_initial_references("ServiceConfig");
+    CORBA::Object_var obj = orb->resolve_initial_references("ServiceConfig");
     ServiceConfigurator_var sc = ServiceConfigurator::_narrow(obj.in());
-    ACE_ASSERT(! is_nil(sc.in()));
- 
+    ACE_ASSERT(! CORBA::is_nil(sc.in()));
+
     if (directive.length() > 0) {
       ACE_DEBUG((LM_DEBUG, "Controller: sending directive <%s>...\n", directive.c_str()));
       sc->process_directive(directive.c_str());
