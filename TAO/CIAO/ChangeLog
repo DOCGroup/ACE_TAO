@@ -1,3 +1,11 @@
+Wed May 26 11:33:11 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/Core/CCM_Core.mpc
+
+          Added necessary library (TAO_Valuetype) to the Deployment_stub
+          project. Removed the unnecessary Deployment_CoreC.cpp file which
+          caused linking error.
+
 Wed May 26 11:15:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/Core/NodeApplication_Impl.cpp
