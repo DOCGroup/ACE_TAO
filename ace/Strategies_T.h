@@ -638,47 +638,6 @@ public:
   // This is a no-op.
 };
 
-template <class ADDR_T>
-class ACE_Hash_Addr
-{
-  // = TITLE
-  //     Internal class to compute hash values on addresses in
-  //     <ACE_Cached_Connect_Strategy>.
-  //
-  // = DESCRIPTION
-  //     Intended to be used as a key to an <ACE_Hash_Map_Manager>.
-  //     <ADDR_T> parameter/subclass is typically <ACE_INET_Addr>.  It
-  //     is expected to implement operator==().
-public:
-  // = Initialization methods.
-  ACE_Hash_Addr (void);
-  // Default constructor.
-
-  ACE_Hash_Addr (const ADDR_T &a);
-  // Pre-compute hash value.
-
-  ~ACE_Hash_Addr (void);
-  // Destructor.
-
-  u_long hash (void) const;
-  // Computes and returns hash value.  This "caches" the hash value to
-  // improve performance.
-
-  int operator== (const ACE_Hash_Addr<ADDR_T> &rhs) const;
-  // Compares two hash values.
-
-private:
-  u_long hash_i (const ADDR_T &) const;
-  // This is the method that actually performs the non-cached hash
-  // computation.  It should typically be specialized.
-
-  u_long hash_value_;
-  // Pre-computed hash-value.
-
-  ADDR_T addr_;
-  // The underlying address.
-};
-
 template <class T>
 class ACE_Refcounted_Hash_Recyclable :  public ACE_Refcountable,
                                         public ACE_Hashable,
@@ -721,25 +680,6 @@ class ACE_Cached_Connect_Strategy : public ACE_Connection_Recycling_Strategy, pu
   //     <ACE_Cached_Connect_Strategy> is intended to be used as a
   //     plug-in connection strategy for <ACE_Strategy_Connector>.
   //     It's added value is re-use of established connections.
-  //
-  // = USAGE
-  //     In order to use this appropriately, the user must provide
-  //     a template specialization for <ACE_Hash_Addr::compare_i()> and
-  //     <ACE_Hash_Addr::hash_i()> based on the address type and the
-  //     service handler type.  For example, a specialization using
-  //     <ACE_INET_Addr> and <My_Service_Handler> might be:
-  //     = BEGIN<NOFILL>
-  //     = BEGIN<CODE>
-  //     size_t
-  //     ACE_Hash_Addr<ACE_INET_Addr, My_Service_Handler>::hash_i(const ACE_INET_Addr &a)
-  //     {
-  //       return ...;
-  //     }
-  //     = END<CODE>
-  //     = END<NOFILL>
-  //
-  // = SEE ALSO
-  //     <ACE_Hash_Addr>.
 public:
 
   ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
