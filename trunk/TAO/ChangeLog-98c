@@ -1,3 +1,7 @@
+Mon Sep 14 14:33:41 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* TAOACE.dsw: Added gperf to the projects here.
+
 Mon Sep 14 13:50:25 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/client.cpp: Fixed memory problems
