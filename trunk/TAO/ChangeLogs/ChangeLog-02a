@@ -1,3 +1,8 @@
+Sun Apr 22 19:44:02 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Oneway_Buffering/README:
+          Too much cut & paste in the documentation.
+
 Sun Apr 22 16:44:12 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Pluggable_Messaging_Utils.cpp:
@@ -9,10 +14,10 @@ Sun Apr 22 16:27:20 2001  Ossama Othman  <ossama@uci.edu>
 
         * tao/TAO_Server_Request.i (operation):
 
-	  This method is now basically a wrapper around the
-	  ACE_CString::set() method.  This change makes it easier to
-	  control whether or not the TAO_ServerRequest object should copy
-	  the operation name string. [Bug 870]
+          This method is now basically a wrapper around the
+          ACE_CString::set() method.  This change makes it easier to
+          control whether or not the TAO_ServerRequest object should copy
+          the operation name string. [Bug 870]
 
         * tao/TAO_Server_Request.cpp (TAO_ServerRequest):
 
