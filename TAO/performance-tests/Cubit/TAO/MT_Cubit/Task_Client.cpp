@@ -11,23 +11,31 @@
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
 
 Task_State::Task_State (int argc, char **argv)
-  : key_ ("Cubit"),
+  : barrier_ (0), 
+    key_ ("Cubit"),
     loop_count_ (1000),
     thread_count_ (2),
+    latency_ (0),
+    ave_latency_ (0),
     datatype_ (CB_OCTET),
     argc_ (ACE_static_cast (u_int, argc)),
     argv_ (argv),
     thread_per_rate_ (0),
     global_jitter_array_ (0),
+    count_ (0),
     shutdown_ (0),
     oneway_ (0),
+    one_ior_ (0),
     use_name_service_ (1),
     one_to_n_test_ (0),
     context_switch_test_ (0),
+    iors_ (0),
+    iors_count_ (0),
     ior_file_ (0),
     granularity_ (1),
     use_utilization_test_ (0),
     high_priority_loop_count_ (0),
+    semaphore_ (0),
     use_multiple_priority_ (0),
     utilization_task_started_ (0),
     util_time_ (0),
@@ -202,8 +210,11 @@ Task_State::parse_args (int argc,char **argv)
                   ACE_timer_t [thread_count_],
                   -1);
   ACE_NEW_RETURN (this->global_jitter_array_,
-                  ACE_timer_t *[thread_count_],
+                  JITTER_ARRAY *[this->thread_count_],
                   -1);
+//   ACE_NEW_RETURN (this->global_jitter_iterator_,
+//                   JITTER_ARRAY_ITERATOR *[this->thread_count_],
+//                   -1);
   ACE_NEW_RETURN (this->count_,
                   u_int [thread_count_],
                   -1);
@@ -236,9 +247,17 @@ Client::Client (ACE_Thread_Manager *thread_manager,
   : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thread_manager)),
     cubit_impl_ (0),
     ts_ (ts),
+    num_ (0),
     id_ (id),
+    call_count_ (0),
+    error_count_ (0),
+    my_jitter_array_ (0),// just an arbitrary size.
+    //    my_jitter_iterator_ (my_jitter_array_),
+    timer_ (0),
     frequency_ (0),
-    naming_success_ (0)
+    orb_ (0),
+    naming_success_ (0),
+    latency_ (0)
 {
 }
 
@@ -249,7 +268,7 @@ Client::func (u_int i)
 }
 
 void
-Client::put_latency (ACE_timer_t *jitter,
+Client::put_latency (JITTER_ARRAY *jitter,
                      ACE_timer_t latency,
                      u_int thread_id,
                      u_int count)
@@ -258,6 +277,7 @@ Client::put_latency (ACE_timer_t *jitter,
 
   this->ts_->latency_[thread_id] = latency;
   this->ts_->global_jitter_array_[thread_id] = jitter;
+  //  this->ts_->global_jitter_iterator_ [thread_id] = iterator;
   this->ts_->count_[thread_id] = count;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -311,14 +331,19 @@ Client::get_high_priority_jitter (void)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
+  //  JITTER_ARRAY high_array (*this->ts_->global_jitter_array_ [0]);
   for (u_int i = 0; i < number_of_samples; i ++)
     {
-      ACE_timer_t difference =
-        this->ts_->global_jitter_array_ [0][i] - average;
-
+      //      ACE_timer_t latency = high_array [i];
+      //      ACE_timer_t difference =
+        //        latency - average;
+        //        (*(this->ts_->global_jitter_array_))[i] - average;
+      ACE_timer_t difference = this->ts_->global_jitter_array_ [0][i] -average;
       jitter += difference * difference;
 
-      stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [0][i] * 1000 + 0.5));
+      //      stats.sample ((ACE_UINT32) ((*(this->ts_->global_jitter_array_))[i] * 1000 + 0.5));
+      //      stats.sample ((ACE_UINT32) (high_array [i] * 1000 + 0.5));
+      stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [0][i] *1000 + 0.5));
     }
 
   // Return the square root of the sum of the differences computed
@@ -355,16 +380,23 @@ Client::get_low_priority_jitter (void)
     {
       number_of_samples += this->ts_->count_[j];
 
+      //      JITTER_ARRAY low_array (*this->ts_->global_jitter_array_ [j]);
       for (u_int i = 0;
            i < this->ts_->count_[j] / this->ts_->granularity_;
            i ++)
         {
-          ACE_timer_t difference =
-            this->ts_->global_jitter_array_[j][i] - average;
+          //          ACE_timer_t latency = low_array [i];
+          //          ACE_timer_t difference = latency - average;
+//           ACE_timer_t difference =
+//             (*(this->ts_->global_jitter_array_ + j))[i] - average;
 
+          ACE_timer_t difference =
+            this->ts_->global_jitter_array_ [j][i] - average;
           jitter += difference * difference;
 
-          stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [j][i] * 1000 + 0.5));
+          //          stats.sample ((ACE_UINT32) (*(this->ts_->global_jitter_array_ + j)) [i] * 1000 + 0.5));
+          //          stats.sample ((ACE_UINT32) (low_array [i] * 1000 + 0.5));
+          stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [j][i] *1000 + 0.5));
         }
     }
 
@@ -393,15 +425,21 @@ Client::get_jitter (u_int id)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
-  for (u_int i = 0;
-       i < this->ts_->count_[id] / this->ts_->granularity_;
-       i ++)
-    {
-      ACE_timer_t difference =
-        this->ts_->global_jitter_array_[id][i] - average;
-
+  //      JITTER_ARRAY low_array (*this->ts_->global_jitter_array_ [id]);
+      for (u_int i = 0;
+           i < this->ts_->count_[id] / this->ts_->granularity_;
+           i ++)
+        {
+          //          ACE_timer_t latency = low_array [i];
+          //          ACE_timer_t difference = latency -average;
+//       ACE_timer_t difference =
+//         (*(this->ts_->global_jitter_array_ + id) [i] - average;
+          ACE_timer_t difference = 
+            this->ts_->global_jitter_array_ [id][i] - average;
       jitter += difference * difference;
 
+      //      stats.sample ((ACE_UINT32) (*(this->ts_->global_jitter_array_ + id ))[i] * 1000 + 0.5));
+      //      stats.sample ((ACE_UINT32) (low_array [i] * 1000 + 0.5));
       stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [id][i] * 1000 + 0.5));
     }
 
@@ -520,7 +558,7 @@ Client::init_orb (void)
 
       int result = this->ts_->parse_args (argc,
 					  argv);
-      if (result < 0)
+      if (result != 0)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -628,7 +666,7 @@ Client::get_cubit_from_naming (void)
 }
 
 int
-  Client::get_cubit (void)
+Client::get_cubit (void)
 {
   int result;
   CORBA::Object_var objref (0);
@@ -638,7 +676,7 @@ int
       if (this->ts_->use_name_service_ != 0)
         {
           result = this->get_cubit_from_naming ();
-          if (result < 0)
+          if (result != 0)
             return result;
         }
       else
@@ -717,7 +755,7 @@ int
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Client::get_cubit");
-      return 1;
+      return -1;
     }
   TAO_ENDTRY;
   return 0;
@@ -729,13 +767,13 @@ Client::svc (void)
   int result;
   // initialize the ORB.
   result = this->init_orb ();
-  if (result < 0)
+  if (result != 0)
     return result;
   // find the frequency of CORBA requests based on thread id.
   this->find_frequency ();
   // get the cubit object either from naming service or from the ior file.
   result = this->get_cubit ();
-  if (result < 0)
+  if (result != 0)
     return result;
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Waiting for other threads to "
@@ -751,7 +789,7 @@ Client::svc (void)
 
   // Perform the tests.
   result = this->run_tests ();
-  if (result < 0)
+  if (result != 0)
     return result;
   // release the semaphore
   if (this->ts_->thread_per_rate_ == 1
@@ -981,7 +1019,7 @@ Client::make_request (void)
                              "(%P|%t); %s:%d; unexpected datatype: %d\n",
                              this->ts_->datatype_), -1);
         }
-      if (result < 0)
+      if (result != 0)
         return result;
     }
   else
@@ -1095,7 +1133,7 @@ Client::do_test (void)
       // make a request to the server object depending on the datatype.
       result = this->make_request ();
 
-      if (result < 0)
+      if (result != 0)
         return 2;
 
       // Stop the timer.
@@ -1150,16 +1188,15 @@ int
 Client::run_tests (void)
 {
   int result;
-  // %% Naga, This has to be replaced by ACE_Array .Thanx to Sergio for the idea.
   if (id_ == 0 
       && this->ts_->thread_count_ > 1)
     ACE_NEW_RETURN (this->my_jitter_array_,
-                    ACE_timer_t [(this->ts_->loop_count_/this->ts_->granularity_)*30],
+                    JITTER_ARRAY [(this->ts_->loop_count_/this->ts_->granularity_)*30],
                     -1);
-  else
-    ACE_NEW_RETURN (this->my_jitter_array_,
-                    ACE_timer_t [(this->ts_->loop_count_/this->ts_->granularity_)*15],
-                    -1);
+   else
+     ACE_NEW_RETURN (this->my_jitter_array_,
+                     JITTER_ARRAY [(this->ts_->loop_count_/this->ts_->granularity_)*15],
+                     -1);
 
   // Time to wait for utilization tests to know when to stop.
   ACE_Time_Value max_wait_time (this->ts_->util_time_, 0);
@@ -1186,7 +1223,7 @@ Client::run_tests (void)
     }
   this->print_stats ();
   // Delete the dynamically allocated memory
-  delete [] this->my_jitter_array_;
+  //  delete [] this->my_jitter_array_;
   return 0;
 }
 

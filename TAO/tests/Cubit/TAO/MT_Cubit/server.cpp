@@ -116,10 +116,10 @@ Server::prelim_args_process (void)
                && i - 1 < this->argc_)
         ACE_OS::strcpy (GLOBALS::instance ()->hostname,
                         this->argv_[i+1]);
-      else if (ACE_OS::strcmp (this->argv_[i], "-t") == 0
-               && i - 1 < this->argc_)
-        GLOBALS::instance ()->num_of_objs =
-          ACE_OS::atoi (this->argv_ [i + 1]);
+//       else if (ACE_OS::strcmp (this->argv_[i], "-t") == 0
+//                && i - 1 < this->argc_)
+//         GLOBALS::instance ()->num_of_objs =
+//           ACE_OS::atoi (this->argv_ [i + 1]);
     }
 }
 
@@ -148,10 +148,15 @@ Server::init_low_priority (void)
 
 // Write the ior's to a file so the client can read them.
 
-void
+int
 Server::write_iors (void)
 {
   u_int j;
+
+  // By this time the num of objs should be set properly.
+  ACE_NEW_RETURN (this->cubits_,
+                  CORBA::String [GLOBALS::instance ()->num_of_objs],
+                  -1);
 
   this->cubits_[0] = ACE_OS::strdup (this->high_priority_task_->get_servant_ior (0));
 
@@ -183,6 +188,8 @@ Server::write_iors (void)
 
   if (ior_f != 0)
     ACE_OS::fclose (ior_f);
+
+  return 0;
 }
 
 int
@@ -329,9 +336,9 @@ Server::activate_low_servants (ACE_Thread_Manager *serv_thr_mgr)
 int
 Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
 {
-  ACE_NEW_RETURN (this->cubits_,
-                  CORBA::String [GLOBALS::instance ()->num_of_objs],
-                  -1);
+  int result;
+  // The problem is num of objs is not set here but only after high
+  // priority servant is activated.
 
   // Do the preliminary argument processing for options -p and -h.  
   this->prelim_args_process ();
@@ -362,7 +369,9 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
                       -1);
   // Wait in the barrier.
   GLOBALS::instance ()->barrier_->wait ();
-  this->write_iors ();
+  result = this->write_iors ();
+  if (result != 0)
+    return result;
 
   return 0;
 }

@@ -25,6 +25,7 @@
 #include "ace/ARGV.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Containers.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
@@ -85,6 +86,11 @@ enum Cubit_Datatypes
   CB_LOW_PRIORITY_RATE = 10
 };
 
+//typedef ACE_Array<ACE_timer_t> JITTER_ARRAY;
+//typedef ACE_Array_Iterator<ACE_timer_t> JITTER_ARRAY_ITERATOR;
+
+typedef ACE_timer_t JITTER_ARRAY;
+
 class Task_State
 {
   // = TITLE
@@ -97,16 +103,16 @@ public:
   int parse_args (int argc,char **argv);
   // parses the arguments
 
-  ACE_Barrier *barrier_;
-  // Barrier for the multiple clients to synchronize after binding to
-  // the servants.
-
   Task_State (int argc, char **argv);
   // Constructor. Takes the command line arguments, which are later
   // passed into ORB_init.
 
   ~Task_State (void);
   // Destructor
+
+  ACE_Barrier *barrier_;
+  // Barrier for the multiple clients to synchronize after binding to
+  // the servants.
 
   CORBA::String key_;
   // All cubit objects will have this as prefix to its key.
@@ -137,9 +143,12 @@ public:
   u_int thread_per_rate_;
   // Flag for the thread_per_rate test.
 
-  ACE_timer_t **global_jitter_array_;
+  JITTER_ARRAY **global_jitter_array_;
   // This array stores the latency seen by each client for each
   // request, to be used later to compute jitter.
+
+  //  JITTER_ARRAY_ITERATOR **global_jitter_iterator_;
+  // Iterator for the jitter array.
 
   u_int *count_;
   // This array stores the call count of each thread.  They will not
@@ -297,7 +306,7 @@ private:
   void print_stats (void);
   // prints the latency stats.
 
-  void put_latency (ACE_timer_t *jitter,
+  void put_latency (JITTER_ARRAY *jitter,
                     ACE_timer_t latency,
                     u_int thread_id,
                     u_int count);
@@ -337,8 +346,11 @@ private:
   TAO_Naming_Client my_name_client_;
   // Naming Client intermediary to naming service stuff.
 
-  ACE_timer_t *my_jitter_array_;
+  JITTER_ARRAY *my_jitter_array_;
   // Array holding the jitter values for the latencies.
+
+  //  JITTER_ARRAY_ITERATOR my_jitter_iterator_;
+  //Iterator.
 
   MT_Cubit_Timer *timer_;
   // Timer using pccTimer for chorus and ACE_Timer for other platforms.
