@@ -10,7 +10,7 @@
 #include "CB.h"
 #include "TimerDispatcher.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_Timer_Queue *timer_queue;
 

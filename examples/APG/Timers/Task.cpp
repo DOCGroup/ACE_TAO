@@ -14,7 +14,7 @@ class CB : public ACE_Event_Handler
 public:
   CB (int id) : id_(id) { }
 
-  virtual int handle_timeout (const ACE_Time_Value &tv,
+  virtual int handle_timeout (const ACE_Time_Value &,
                               const void *arg)
   {
     ACE_TRACE (ACE_TEXT ("CB::handle_timeout"));
@@ -32,7 +32,7 @@ private:
 // Listing 2
 
 // Listing 3 code/ch20
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("the main thread %t has started \n")));
@@ -51,14 +51,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const ACE_Time_Value curr_tv = ACE_OS::gettimeofday ();
   ACE_Time_Value interval = ACE_Time_Value (1, 1000);
 
-  long tid1 = atimer.schedule (&cb1,
-                               &arg1,
-                               curr_tv + ACE_Time_Value (3L),
-                               interval);
-  long tid2 = atimer.schedule (&cb2,
-                               &arg2,
-                               curr_tv + ACE_Time_Value (4L),
-                               interval);
+  atimer.schedule (&cb1,
+                   &arg1,
+                   curr_tv + ACE_Time_Value (3L),
+                   interval);
+  atimer.schedule (&cb2,
+                   &arg2,
+                   curr_tv + ACE_Time_Value (4L),
+                   interval);
 
   ACE_Thread_Manager::instance ()->wait ();  // Wait forever.
 
