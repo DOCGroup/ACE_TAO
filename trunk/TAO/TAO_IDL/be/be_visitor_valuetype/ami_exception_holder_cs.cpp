@@ -47,8 +47,16 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (be_valuetype *nod
 
   os = this->ctx_->stream ();
 
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    *os << "OBV_";
+
   *os << node->compute_name ("_tao_", "") << "::"
       << node->compute_local_name ("_tao_", "") << " () { };" << be_nl << be_nl;
+
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    *os << "OBV_";
 
   *os << node->compute_name ("_tao_", "") << "::~"
       << node->compute_local_name ("_tao_", "") << " () { };" << be_nl << be_nl;
@@ -65,15 +73,24 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (be_valuetype *nod
 
   // Create the code for the valuetype factory
   os->indent ();
-  *os << "\n"
-      << node->full_name () << "_factory::~" << node->local_name () << "_factory ()" 
+
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    *os << "OBV_";
+
+  *os << node->full_name () << "_factory::~" << node->local_name () << "_factory ()" 
       << "{ }" << be_nl << be_nl;
 
-  *os << "TAO_OBV_CREATE_RETURN_TYPE (" << node->local_name () << ")" << be_nl
-      << node->full_name () << "_factory::create_for_unmarshal ()" << be_nl
+  *os << "TAO_OBV_CREATE_RETURN_TYPE (" << node->local_name () << ")" << be_nl;
+
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    *os << "OBV_";
+
+  *os << node->full_name () << "_factory::create_for_unmarshal ()" << be_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_nl
-      << "//return new " << node->compute_local_name ("_tao_", "") << ";" << be_uidt_nl
+      << "//return 0;" << be_nl
+      << "return new " << node->compute_local_name ("_tao_", "") << ";" << be_uidt_nl
       << "}" << be_nl
       << "\n";
 

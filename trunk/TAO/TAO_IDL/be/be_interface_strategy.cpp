@@ -445,9 +445,9 @@ be_interface_ami_exception_holder_strategy::next_state (TAO_CodeGen::CG_STATE cu
     { 
       switch (current_state)
         {
-      case TAO_CodeGen::TAO_VALUETYPE_CH:
+      case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
         return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH;
-      case TAO_CodeGen::TAO_VALUETYPE_CS:
+      case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
         return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS;
       default:
         return current_state;
@@ -461,8 +461,8 @@ be_interface_ami_exception_holder_strategy::next_state (TAO_CodeGen::CG_STATE cu
 int 
 be_interface_ami_exception_holder_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
 {
-  if (current_state == TAO_CodeGen::TAO_VALUETYPE_CH
-   || current_state == TAO_CodeGen::TAO_VALUETYPE_CS)
+  if (current_state == TAO_CodeGen::TAO_VALUETYPE_OBV_CH
+   || current_state == TAO_CodeGen::TAO_VALUETYPE_OBV_CS)
     return 1;
   else
     return 0;
