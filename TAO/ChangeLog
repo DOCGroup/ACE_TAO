@@ -1,3 +1,10 @@
+Fri May 09 10:17:47 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * docs/tutorials/Quoter/AMI/client.dsp:
+        * docs/tutorials/Quoter/AMI/server.dsp:
+
+          Added missing libpath for TAO_Valuetype to release config.
+
 Fri May  9 09:00:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/st_server.bor:
