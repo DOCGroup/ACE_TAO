@@ -1955,7 +1955,11 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
   }
 
   this->cur_size_++;
-  *new_position = temp;
+  if (new_position)
+  {
+    *new_position = temp;
+  }
+
   return 0;
 }
 
