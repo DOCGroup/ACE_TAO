@@ -22,350 +22,240 @@ though.
 
 <P>
 <HR WIDTH="100%">
-<BR>&nbsp;
-<BR><FONT FACE="Arial,Helvetica">// $Id: client_handler.cpp,v 1.1 1998/08/30
-23:47:14 schmidt Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<pre><FONT FACE="Arial,Helvetica">
+/*
+   Since this is the third time we've seen most of this, I'm going to strip out almost
+   all of the comments that you've already seen.  That way, you can concentrate on the
+   new items.
+ */
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Since this is the third time
-we've seen most of this, I'm going to strip out almost</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; all of the comments that
-you've already seen.&nbsp; That way, you can concentrate on the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; new items.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
+#include "client_acceptor.h"
+#include "client_handler.h"
 
-<P><FONT FACE="Arial,Helvetica">#include "client_acceptor.h"</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "client_handler.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   We're going to be registering and unregistering a couple of times.  To make sure that
+   we use the same flags every time, I've created these handy macros.
+ */
+#define	REGISTER_MASK	 ACE_Event_Handler::READ_MASK
+#define REMOVE_MASK		(ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL)
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; We're going to be registering
-and unregistering a couple of times.&nbsp; To make sure that</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; we use the same flags every
-time, I've created these handy macros.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">#define REGISTER_MASK&nbsp;&nbsp;&nbsp;
-ACE_Event_Handler::READ_MASK</FONT>
-<BR><FONT FACE="Arial,Helvetica">#define REMOVE_MASK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-(ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL)</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   Our constructor still doesn't really do anything.  We simply initialize the acceptor
+   pointer to "null" and get our current thread id.  The static self() method of ACE_Thread
+   will return you a thread id native to your platform.
+ */
+Client_Handler::Client_Handler (void)
+ : client_acceptor_(0)
+  ,creator_(ACE_Thread::self())
+{
+}
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Our constructor still doesn't
-really do anything.&nbsp; We simply initialize the acceptor</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; pointer to "null" and get
-our current thread id.&nbsp; The static self() method of ACE_Thread</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; will return you a thread
-id native to your platform.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">Client_Handler::Client_Handler (void)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;: client_acceptor_(0)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ,creator_(ACE_Thread::self())</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+Client_Handler::~Client_Handler (void)
+{
+    this->peer().close();
+}
 
-<P><FONT FACE="Arial,Helvetica">Client_Handler::~Client_Handler (void)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   Query our acceptor for the concurrency strategy.  Notice that we don't bother
+   to check that our acceptor pointer is valid.  That is proably a bad idea...
+ */
+int Client_Handler::concurrency(void)
+{
+	return this->client_acceptor()->concurrency();
+}
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Query our acceptor for the
-concurrency strategy.&nbsp; Notice that we don't bother</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; to check that our acceptor
-pointer is valid.&nbsp; That is proably a bad idea...</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">int Client_Handler::concurrency(void)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return this->client_acceptor()->concurrency();</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   And here we ask the acceptor about the thread pool.
+ */
+Thread_Pool * Client_Handler::thread_pool(void)
+{
+	return this->client_acceptor()->thread_pool();
+}
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; And here we ask the acceptor
-about the thread pool.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">Thread_Pool * Client_Handler::thread_pool(void)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return this->client_acceptor()->thread_pool();</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   Back to our open() method.  This is straight out of Tutorial 6.  There's
+   nothing additional here for the thread-pool implementation.
+ */
+int Client_Handler::open (void *_acceptor)
+{
+  client_acceptor( (Client_Acceptor *) _acceptor );
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; The destroy() method hasn't
-changed since we wrote it back in Tutorial 5.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">void Client_Handler::destroy (void)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; this->peer ().close ();</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  if( concurrency() == Client_Acceptor::thread_per_connection_ )
+  {
+  	return this->activate();
+  }
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; this->reactor ()->remove_handler
-(this, REMOVE_MASK );</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  this->reactor (client_acceptor()->reactor ());
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; delete this;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  ACE_INET_Addr addr;
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Back to our open() method.&nbsp;
-This is straight out of Tutorial 6.&nbsp; There's</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; nothing additional here for
-the thread-pool implementation.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">int Client_Handler::open (void *_acceptor)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; client_acceptor( (Client_Acceptor
-*) _acceptor );</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  if (this->peer ().get_remote_addr (addr) == -1)
+    {
+      return -1;
+    }
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; if( concurrency() == Client_Acceptor::thread_per_connection_
-)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; {</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return this->activate();</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  if (this->reactor ()->register_handler (this, REGISTER_MASK) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);
+    }
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; this->reactor (client_acceptor()->reactor
-());</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) connected with %s\n", addr.get_host_name ()));
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; ACE_INET_Addr addr;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  return 0;
+}
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; if (this->peer ().get_remote_addr
-(addr) == -1)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; {</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
--1;</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   The destroy() method will remove us from the reactor (with the
+   DONT_CALL flag set!) and then free our memory.  This allows us to
+   be closed from outside of the reactor context without any danger.
+ */
+void Client_Handler::destroy (void)
+{
+    this->reactor ()->remove_handler (this, REMOVE_MASK );
+    delete this;
+}
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; if (this->reactor ()->register_handler
-(this, REGISTER_MASK) == -1)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; {</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN
-((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+  As mentioned in the header, the typical way to close an object in a
+  threaded context is to invoke it's close() method.  We use the
+  destroy() method to clean up after ourselves.
+*/
+int Client_Handler::close(u_long flags)
+{
+    this->destroy();
+    
+	/*
+	   Don't forward the close() to the baseclass!  handle_close() above has
+	   already taken care of delete'ing.  Forwarding close() would cause that
+	   to happen again and things would get really ugly at that point!
+	 */
+	return 0;
+}
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) connected
-with %s\n", addr.get_host_name ()));</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+  We will be called when handle_input() returns -1.  That's our queue
+  to delete ourselves to prevent memory leaks.
+ */
+int Client_Handler::handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask)
+{
+  ACE_UNUSED_ARG (_handle);
+  ACE_UNUSED_ARG (_mask);
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  delete this;
+  
+  return 0;
+}
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; As mentioned in the header,
-the typical way to close an object in a threaded</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; context is to invoke it's
-close() method.&nbsp; Since we already have a handle_close()</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; method built to cleanup after
-us, we'll just forward the request on to that</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; object.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+/*
+   In the open() method, we registered with the reactor and requested to be
+   notified when there is data to be read.  When the reactor sees that activity
+   it will invoke this handle_input() method on us.  As I mentioned, the _handle
+   parameter isn't useful to us but it narrows the list of methods the reactor
+   has to worry about and the list of possible virtual functions we would have
+   to override. 
 
-<BR><FONT FACE="Arial,Helvetica">int Client_Handler::close(u_long flags)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Down in the depths of our baseclass, this will eventually cause us</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-to be destroyed.&nbsp; Since all of the destructors are virtual, everything</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-gets cleaned up nicely.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-this->handle_close(ACE_INVALID_HANDLE,0);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+   You've read that much before...  Now we have to do some extra stuff in case
+   we're using the thread-pool implementation.  If we're called by our creator
+   thread then we must be in the reactor.  In that case, we arrange to be put
+   into the thread pool.  If we're not in the creator thread then we must be
+   in the thread pool and we can do some work.
+ */
+int Client_Handler::handle_input (ACE_HANDLE _handle)
+{
+  ACE_UNUSED_ARG (_handle);
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Don't forward the close() to the baseclass!&nbsp; handle_close() above
-has</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-already taken care of delete'ing.&nbsp; Forwarding close() would cause
-that</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-to happen again and things would get really ugly at that point!</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT>
+  /*
+     Check our strategy.  If we're using the thread pool and we're in the creation
+	 thread then we know we were called by the reactor.
+   */
+  if( concurrency() == Client_Acceptor::thread_pool_ )
+  {
+	if( ACE_OS::thr_equal(ACE_Thread::self(),creator_) )
+	{
+		/*
+		   Remove ourselves from the reactor and ask to be put into the thread pool's
+		   queue of work.  (You should be able to use suspend_handler() but I've had
+		   problems with that.)
+		 */
+  		this->reactor()->remove_handler( this, REMOVE_MASK );
+		return this->thread_pool()->enqueue(this);
+	}
+  }
 
+  /*
+     Any strategy other than thread-per-connection will eventually get here.  If we're in the
+	 single-threaded implementation or the thread-pool, we still have to pass this way.
+   */
 
+  char buf[128];
+  ACE_OS::memset (buf, 0, sizeof (buf));
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In the open() method, we
-registered with the reactor and requested to be</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; notified when there is data
-to be read.&nbsp; When the reactor sees that activity</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; it will invoke this handle_input()
-method on us.&nbsp; As I mentioned, the _handle</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; parameter isn't useful to
-us but it narrows the list of methods the reactor</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; has to worry about and the
-list of possible virtual functions we would have</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; to override.</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  /*
+     Invoke the process() method to do the work but save it's return value instead
+	 of returning it immediately.
+   */
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; You've read that much before...&nbsp;
-Now we have to do some extra stuff in case</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; we're using the thread-pool
-implementation.&nbsp; If we're called by our creator</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; thread then we must be in
-the reactor.&nbsp; In that case, we arrange to be put</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; into the thread pool.&nbsp;
-If we're not in the creator thread then we must be</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; in the thread pool and we
-can do some work.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">int Client_Handler::handle_input (ACE_HANDLE
-_handle)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_handle);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  int rval = this->process(buf,sizeof(buf));
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Check our strategy.&nbsp;
-If we're using the thread pool and we're in the creation</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-thread then we know we were called by the reactor.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; if( concurrency() == Client_Acceptor::thread_pool_
-)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; {</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-if( ACE_Thread::self() == creator_ )</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Remove ourselves from the reactor and ask to be put into the thread pool's</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-queue of work.&nbsp; (You should be able to use suspend_handler() but I've
-had</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-problems with that.)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-this->reactor()->remove_handler( this, REMOVE_MASK );</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return this->thread_pool()->enqueue(this);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-}</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  /*
+     Now, we look again to see if we're in the thread-pool implementation.  If so then we
+	 need to re-register ourselves with the reactor so that we can get more work when it
+	 is available.  (If suspend_handler() worked then we would use resume_handler() here.)
+   */
+  if( concurrency() == Client_Acceptor::thread_pool_ )
+  {
+	if( rval != -1 )
+	{
+		this->reactor()->register_handler( this, REGISTER_MASK );
+	}
+  }
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Any strategy
-other than thread-per-connection will eventually get here.&nbsp; If we're
-in the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-single-threaded implementation or the thread-pool, we still have to pass
-this way.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  /*
+     Return the result of process()
+   */
+  return(rval);
+}
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; char buf[128];</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; memset (buf, 0, sizeof (buf));</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   Remember that when we leave our svc() method, the framework will take care
+   of calling our close() method so that we can cleanup after ourselves.
+ */
+int Client_Handler::svc(void)
+{
+  char buf[128];
+  ACE_OS::memset (buf, 0, sizeof (buf));
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Invoke the process()
-method to do the work but save it's return value instead</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-of returning it immediately.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  while( 1 )
+  {
+     if( this->process(buf,sizeof(buf)) == -1 )
+	 {
+	   return(-1);
+     }
+  }
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; int rval = this->process(buf,sizeof(buf));</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  return(0);
+}
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Now, we look
-again to see if we're in the thread-pool implementation.&nbsp; If so then
-we</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-need to re-register ourselves with the reactor so that we can get more
-work when it</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-is available.&nbsp; (If suspend_handler() worked then we would use resume_handler()
-here.)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; if( concurrency() == Client_Acceptor::thread_pool_
-)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; {</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-if( rval != -1 )</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-this->reactor()->register_handler( this, REGISTER_MASK );</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-}</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   Once again, we see that the application-level logic has not been at all affected
+   by our choice of threading models.  Of course, I'm not sharing data between threads
+   or anything.  We'll leave locking issues for a later tutorial.
+ */
+int Client_Handler::process (char *_rdbuf, int _rdbuf_len)
+{
+  switch (this->peer ().recv (_rdbuf, _rdbuf_len))
+    {
+    case -1:
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p bad read\n", "client"), -1);
+    case 0:
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) closing daemon (fd = %d)\n", this->get_handle ()), -1);
+    default:
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) from client: %s", _rdbuf));
+    }
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Return the result
-of process()</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; return(rval);</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">int Client_Handler::handle_close (ACE_HANDLE
-_handle, ACE_Reactor_Mask _mask)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_handle);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_mask);</FONT><FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">&nbsp; this->destroy ();</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Remember that when we leave
-our svc() method, the framework will take care</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; of calling our close() method
-so that we can cleanup after ourselves.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">int Client_Handler::svc(void)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; char buf[128];</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; memset (buf, 0, sizeof (buf));</FONT><FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">&nbsp; while( 1 )</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; {</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; if( this->process(buf,sizeof(buf))
-== -1 )</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return(-1);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; }</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">&nbsp; return(0);</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Once again, we see that the
-application-level logic has not been at all affected</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; by our choice of threading
-models.&nbsp; Of course, I'm not sharing data between threads</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; or anything.&nbsp; We'll
-leave locking issues for a later tutorial.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">int Client_Handler::process (char *_rdbuf,
-int _rdbuf_len)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; switch (this->peer ().recv (_rdbuf,
-_rdbuf_len))</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; {</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; case -1:</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN
-((LM_ERROR, "(%P|%t) %p bad read\n", "client"), -1);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; case 0:</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN
-((LM_ERROR, "(%P|%t) closing daemon (fd = %d)\n", this->get_handle ()),
--1);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; default:</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_DEBUG
-((LM_DEBUG, "(%P|%t) from client: %s", _rdbuf));</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
-
-<P><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT>
-
-<P>
+  return 0;
+}
+</pre>
 <HR WIDTH="100%">
 
 <P>Ok, now we've gone and changed handle_input() so that it knows when
