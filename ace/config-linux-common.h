@@ -49,9 +49,6 @@
 # define ACE_HAS_VOIDPTR_SOCKOPT
 # define ACE_LACKS_GETPGID
 # define ACE_LACKS_RPC_H
-  // To avoid compilation warnings about TCP_NODELAY and TCP_MAXSEG
-  // being redefined, because they're defined in linux/socket.h:
-# define ACE_LACKS_TCP_H
 # define ACE_NEEDS_SYSTIME_H
   // The strtok_r declaration is protected in string.h.
   extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
@@ -59,6 +56,10 @@
   // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
 
 #if defined (__alpha)
+  // To avoid compilation warnings about TCP_NODELAY and TCP_MAXSEG
+  // being redefined, because they're defined in linux/socket.h:
+# define ACE_LACKS_TCP_H
+
 // NOTE:  On __alpha only, the assembler doesn't have enough string
 //        space with -g.  You can either SUPPRESS_DASH_G = 1, or patch
 //        your binutils 2.8.1.0.1-g gas/ecoff.c as follows:
