@@ -32,8 +32,11 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
   char buf[20];
   ACE_OS::sprintf (buf, "/proc/%d", ACE_static_cast (int, ACE_OS::getpid ()));
 
-  if ((this->proc_handle_ = ACE_OS::open (buf, O_RDONLY, 0)) == -1)
-    ACE_OS::perror (buf);
+  this->proc_handle_ = ACE_OS::open (buf, O_RDONLY, 0);
+  if (this->proc_handle_ == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\n"),
+                buf));
 #  elif defined (ACE_HAS_GETRUSAGE)
   ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
   ACE_OS::memset (&this->end_time_, 0, sizeof this->end_time_);
@@ -47,7 +50,8 @@ ACE_Profile_Timer::~ACE_Profile_Timer (void)
   ACE_TRACE ("ACE_Profile_Timer::~ACE_Profile_Timer");
 #  if defined (ACE_HAS_PRUSAGE_T)
   if (ACE_OS::close (this->proc_handle_) == -1)
-    ACE_OS::perror ("ACE_Profile_Timer::~ACE_Profile_Timer");
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("ACE_Profile_Timer::~ACE_Profile_Timer")));
 #  endif /* ACE_HAS_PRUSAGE_T */
 }
 
