@@ -1,4 +1,7 @@
-Fri Jul 09 18:48:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Jul 09 19:16:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Conn_Test.cpp (spawn_processes): Only printing reaping
+	  message when result is not -1.
 
 	* ace/Strategies_T.i (ACE_Refcounted_Hash_Recyclable<T>::operator==):
 	  The check should be for "and", not "or".

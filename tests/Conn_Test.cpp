@@ -567,9 +567,10 @@ spawn_processes (ACCEPTOR *acceptor,
   do
     {
       child = ACE_OS::wait ();
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P|%t) reaping %d\n"),
-                  child));
+      if (child != -1)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%P|%t) reaping %d\n"),
+                    child));
     }
   while (child != -1);
 
