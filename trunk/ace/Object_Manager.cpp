@@ -177,6 +177,11 @@ ACE_Object_Manager::init (void)
       // and register with it for chained fini ().
       ACE_OS_Object_Manager::instance ()->next_ = this;
 
+      // Construct the ACE_Service_Config's signal handler.
+      ACE_NEW_RETURN (ace_service_config_sig_handler_,
+        ACE_Sig_Adapter (&ACE_Service_Config::handle_signal), -1);
+      ACE_Service_Config::signal_handler (ace_service_config_sig_handler_);
+
       // Allocate the preallocated (hard-coded) object instances.
       ACE_PREALLOCATE_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
 #     if defined (ACE_HAS_THREADS)
@@ -245,14 +250,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   , singleton_recursive_lock_ (0)
 # endif /* ACE_MT_SAFE */
 {
-  if (instance_ == 0)
-    {
-      // Construct the ACE_Service_Config's signal handler.
-      ACE_NEW (ace_service_config_sig_handler_,
-               ACE_Sig_Adapter (&ACE_Service_Config::handle_signal));
-      ACE_Service_Config::signal_handler (ace_service_config_sig_handler_);
-    }
-  // else Instance_ was not 0, so then another ACE_Object_Manager has
+  // If Instance_ was not 0, then another ACE_Object_Manager has
   // already been instantiated.  Because this might be the non-static
   // instance (with ACE_HAS_NONSTATIC_OBJECT_MANAGER), use it and leak
   // the old one.  We can't destroy it, because the application might
