@@ -1,6 +1,6 @@
 // $Id$
 
-/* -*- c++ -*- */
+/* -*- C++ -*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -130,7 +130,7 @@ protected:
   // Utility method to update ir_current_ for struct members, union
   // members, operation parameters and operation return types.
 
-  CORBA_IDLType_var ir_current_;
+  CORBA::IDLType_var ir_current_;
   // Holder for the IR object most recently created or looked up by
   // the visitor. This makes it accessible by visitor methods that
   // need the result of a call to another visitor method that
@@ -140,8 +140,7 @@ protected:
   // Store the node whose scope (if any) we will be visiting.
 
   CORBA::Boolean in_reopened_;
-  // Are we traversing the scope of a reopened module? 
+  // Are we traversing the scope of a reopened module?
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_H */
-
