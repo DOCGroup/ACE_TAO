@@ -335,6 +335,8 @@ namespace
     virtual void
     traverse (UnconstrainedInterface& i)
     {
+      if (i.context ().count ("facet_hdr_gen")) return;
+    
       ScopedName scoped (i.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
@@ -343,17 +345,17 @@ namespace
          << regex::perl_s (i.scoped_name ().scope_name ().str (),
                            "/::/_/")
          << "{"
-         << "class " << ctx.export_macro () << " " << i.name ()
-         << "_Servant" << endl
+         << "template <typename T>" << endl
+         << "class " << i.name () << "_Servant_T" << endl
          << ": public virtual POA_" << stripped << "," << endl
          << STRS[INH_RCSB] << endl
          << "{"
          << "public:" << endl
-         << i.name () << "_Servant (" << endl
+         << i.name () << "_Servant_T (" << endl
          << i.scoped_name ().scope_name () << "::CCM_" << i.name ()
          << "_ptr executor," << endl
          << "::Components::CCMContext_ptr ctx);" << endl
-         << "virtual ~" << i.name () << "_Servant (void);" << endl;
+         << "virtual ~" << i.name () << "_Servant_T (void);" << endl;
 
       {
         InterfaceEmitter interface_emitter (ctx);
@@ -419,9 +421,15 @@ namespace
          << "// Context object." << endl
          << "::Components::CCMContext_var ctx_;" << endl
          << "};" << endl;
+         
+      os << "typedef " << ctx.export_macro () << " " 
+         << i.name () << "_Servant_T<int> " 
+         << i.name () << "_Servant;";
 
       // Close the CIAO_GLUE namespace.
       os << "}" << endl;
+      
+      i.context ().set ("facet_hdr_gen", true);
     }
   };
 
