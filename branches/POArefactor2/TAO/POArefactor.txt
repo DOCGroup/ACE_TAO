@@ -1,3 +1,12 @@
+Tue Nov 16 14:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{cpp,h}:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/IdAssignmentStrategy*.{h,cpp}:
+          Added has_system_id() to the POA, this calls then the id_assignment
+          strategy and in the places where the id_assignment policy value was
+          checked, call the POA::has_system_id() method
+
 Tue Nov 16 13:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:
