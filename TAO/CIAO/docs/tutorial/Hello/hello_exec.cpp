@@ -2,6 +2,9 @@
 
 #include "hello_exec.h"
 
+#include "ace/OS_NS_string.h"
+
+
 hello_example::HelloWorld_Impl::HelloWorld_Impl ()
 {
 }

@@ -3,6 +3,8 @@
 #include "ciao/CIAO_common.h"
 #include "BMClosedED_exec.h"
 
+#include "ace/OS_NS_string.h"
+
 #define DISPLACEMENT 256
 
 /// Default constructor.
