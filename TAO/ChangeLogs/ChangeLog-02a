@@ -1,3 +1,14 @@
+Mon Mar  5 18:46:42 2001  Fuzz Master D <brunsch@uci.edu>
+
+        * examples/Simple/time-date/run_test.pl:
+
+          Server hard codes ior file so my localfile thing will not
+          work.
+
+        * orbsvcs/tests/Property/run_test.pl:
+
+          Forgot some \n's in prints.
+
 Mon Mar  5 18:40:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/lib/Driver.cpp:
