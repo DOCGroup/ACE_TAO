@@ -67,7 +67,7 @@ PTimer_Dispatcher::reset_interval (long timer_id,
 template class ACE_Singleton <PTimer_Dispatcher, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <PTimer_Dispatcher, ACE_Null_Mutex>
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<PTimer_Dispatcher, ACE_Null_Mutex> *
       ACE_Singleton<PTimer_Dispatcher, ACE_Null_Mutex>::singleton_;
 # endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

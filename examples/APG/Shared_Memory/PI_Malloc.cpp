@@ -95,7 +95,7 @@ int addRecords (void)
 
 // Listing 3 code/ch17
 // Backing file where the data is kept.
-#define BACKING_STORE "backing2.store"
+#define BACKING_STORE ACE_TEXT("backing2.store")
 
 int ACE_TMAIN (int argc, ACE_TCHAR *[])
 {

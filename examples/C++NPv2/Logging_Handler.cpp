@@ -15,6 +15,7 @@
 
 #include "Logging_Handler.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/OS_NS_string.h"
 
 int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record)
 {

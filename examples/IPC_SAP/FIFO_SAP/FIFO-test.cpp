@@ -10,6 +10,9 @@
 #include "ace/FIFO_Send.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_wait.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID(FIFO_SAP, FIFO_test, "$Id$")
 
@@ -23,7 +26,7 @@ static int
 do_child (ACE_FIFO_Recv &fifo_reader)
 {
   // Set child's stdin to read from the fifo.
-  if (ACE_OS::close (ACE_STDIN) == -1 
+  if (ACE_OS::close (ACE_STDIN) == -1
       || ACE_OS::dup (fifo_reader.get_handle ()) == ACE_INVALID_HANDLE)
     return -1;
 
@@ -36,7 +39,7 @@ do_child (ACE_FIFO_Recv &fifo_reader)
   return 0;
 }
 
-static int 
+static int
 do_parent (const char fifo_name[],
 	   char input_filename[])
 {
@@ -61,13 +64,13 @@ do_parent (const char fifo_name[],
 
   if (len == -1)
     return -1;
-    
+
   if (fifo_sender.remove () == -1)
     return -1;
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
@@ -108,7 +111,7 @@ main (int argc, char *argv[])
                     1));
 
       // wait for child to ACE_OS::exit.
-      if (ACE_OS::waitpid (child_pid, (ACE_exitcode *) 0, 0) == -1)    
+      if (ACE_OS::waitpid (child_pid, (ACE_exitcode *) 0, 0) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%n: %p\n%a",
                     "waitpid",

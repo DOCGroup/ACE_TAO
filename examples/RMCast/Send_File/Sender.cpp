@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 #include "ace/RMCast/RMCast_UDP_Reliable_Sender.h"
 #include "ace/INET_Addr.h"
 #include "ace/FILE_IO.h"
@@ -32,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (mcast_group.set (argv[2]) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot setup multicast group <%s>\n", 
+                         "Cannot setup multicast group <%s>\n",
                          argv[2]),
                         1);
     }
