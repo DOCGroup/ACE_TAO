@@ -1,3 +1,9 @@
+Mon Feb 16 08:06:23 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/os_include/sys/os_stat.h: Changed the value of S_IFLNK so
+	  that it's different than S_IFREG.  Thanks to Zvika Ashani
+ 	  <zvika@aspectusvi.com> for reporting this.
+
 Mon Feb 16 13:40:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/openssl.mpb:
