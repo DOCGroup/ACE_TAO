@@ -1,3 +1,11 @@
+Mon May  5 19:06:49 2003  Steve Huston  <shuston@riverace.com>
+
+	* bin/MakeProjectCreator/templates/nmake.mpd: When generating the
+	  REALCLEAN rule, use a separate erase command for the various
+	  exe-related files, else multiple files end up being generated in
+	  a single pair of quotes, making the list appear as a single
+	  filespec and nothing gets deleted.
+
 Mon May  5 13:34:46 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/RMCast/RMCast_Fragment.cpp:
