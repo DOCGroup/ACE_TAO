@@ -487,9 +487,8 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
       << "obj->steal_ior ()," << be_nl
       << "obj->orb_core ()" << be_uidt_nl << ")," << be_uidt_nl
       << bt->nested_type_name (this->ctx_->scope ())
-      << "::_nil ()" << be_uidt_nl << ");"
-      << "return default_proxy;" << be_nl
-      << be_uidt << be_uidt_nl
+      << "::_nil ()" << be_uidt_nl << ");" << be_uidt_nl << be_nl
+      << "return default_proxy;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl << be_nl
@@ -498,9 +497,7 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
       << "stub->_incr_refcnt ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
-
-
-  // If the policy didtates that the proxy be collocated, use the
+  // If the policy dictates that the proxy be collocated, use the
   // function to create one.
   *os << "if (" << be_idt << be_idt_nl
       << "!CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&" << be_nl
@@ -520,9 +517,8 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
       << "obj->_servant ()" << be_uidt_nl << ")," << be_uidt_nl
       <<  bt->nested_type_name (this->ctx_->scope ())
       << "::_nil ()" << be_uidt_nl << ");"
-      << be_uidt << be_uidt_nl;
-
-
+      << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
   // The default proxy will either be returned else be transformed to
   // a smart one!
@@ -550,20 +546,6 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
     {
       *os << "return default_proxy;" << be_uidt_nl;
     }
-
-  *os << "}" << be_nl << be_nl;
-
-  // Lazily evaluated IOR
-  *os << "return" << be_idt_nl
-      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << node->local_name () << "_ptr," << be_nl
-      << "obj->_tao_QueryInterface (" << be_idt << be_idt_nl
-      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << "ptr_arith_t," << be_nl
-      << "&" << node->local_name () << "::_tao_class_id" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
 
   *os << "}" << be_nl << be_nl;
 }
