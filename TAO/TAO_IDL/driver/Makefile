@@ -63,7 +63,7 @@ $(LOBJS): $(LHDRS)
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/drv_init.o .shobj/drv_init.so: drv_init.cpp ../include/idl.h ../include/intlmacros.h \
+drv_init.o: drv_init.cpp ../include/idl.h ../include/intlmacros.h \
  ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
  ../include/idl_bool.h ../include/utl_string.h \
  ../include/utl_identifier.h ../include/ast.h \
@@ -91,7 +91,7 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/drv_private.h ../include/drv_link.h
-.obj/drv_private.o .shobj/drv_private.so: drv_private.cpp ../include/idl.h \
+drv_private.o: drv_private.cpp ../include/idl.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -119,7 +119,7 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/drv_private.h
-.obj/drv_main.o .shobj/drv_main.so: drv_main.cpp ../include/idl.h ../include/intlmacros.h \
+drv_main.o: drv_main.cpp ../include/idl.h ../include/intlmacros.h \
  ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
  ../include/idl_bool.h ../include/utl_string.h \
  ../include/utl_identifier.h ../include/ast.h \
@@ -147,7 +147,7 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/drv_private.h ../include/drv_link.h
-.obj/drv_args.o .shobj/drv_args.so: drv_args.cpp ../include/idl.h ../include/intlmacros.h \
+drv_args.o: drv_args.cpp ../include/idl.h ../include/intlmacros.h \
  ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
  ../include/idl_bool.h ../include/utl_string.h \
  ../include/utl_identifier.h ../include/ast.h \
@@ -175,7 +175,7 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/drv_private.h ../include/drv_link.h
-.obj/drv_fork.o .shobj/drv_fork.so: drv_fork.cpp ../include/idl.h ../include/intlmacros.h \
+drv_fork.o: drv_fork.cpp ../include/idl.h ../include/intlmacros.h \
  ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
  ../include/idl_bool.h ../include/utl_string.h \
  ../include/utl_identifier.h ../include/ast.h \
@@ -203,7 +203,7 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/drv_private.h
-.obj/drv_link.o .shobj/drv_link.so: drv_link.cpp ../include/idl.h ../include/intlmacros.h \
+drv_link.o: drv_link.cpp ../include/idl.h ../include/intlmacros.h \
  ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
  ../include/idl_bool.h ../include/utl_string.h \
  ../include/utl_identifier.h ../include/ast.h \
@@ -231,7 +231,7 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/drv_private.h ../include/drv_link.h
-.obj/drv_preproc.o .shobj/drv_preproc.so: drv_preproc.cpp ../include/idl.h \
+drv_preproc.o: drv_preproc.cpp ../include/idl.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
