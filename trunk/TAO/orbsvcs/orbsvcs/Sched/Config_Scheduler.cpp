@@ -7,8 +7,11 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
-// #include "Scheduler_Generic.h"
+#if defined (TAO_USES_STRATEGY_SCHEDULER)
 #include "Strategy_Scheduler.h"
+#else
+#include "Scheduler_Generic.h"
+#endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
 #include "Config_Scheduler.h"
 
@@ -322,7 +325,6 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate 
   #if defined (TAO_USES_STRATEGY_SCHEDULER)
     #if defined (TAO_USES_MUF_SCHEDULING)
 
@@ -351,6 +353,16 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
     #endif /* defined (TAO_USES_MUF_SCHEDULING) */
   #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 #endif /* defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) */
+
+
+
+
+
+
+
+
+
+
 
 
 

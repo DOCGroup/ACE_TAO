@@ -130,7 +130,7 @@ private:
 #else /* ! defined (TAO_USES_STRATEGY_SCHEDULER) */
 
   // trait for the scheduler implementation base class
-  typedef ACE_DynScheduler BaseSchedImplType;
+  typedef ACE_Scheduler BaseSchedImplType;
 
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
