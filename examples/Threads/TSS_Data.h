@@ -28,7 +28,7 @@ private:
   void *data_;
 };
 
-typedef ACE_TSS_Singleton<TSS_Data> TSS_DATA;
+typedef ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX> TSS_DATA;
 
 
 
