@@ -3,6 +3,10 @@ Mon Aug 21 15:40:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tao/PortableInterceptorC.{h,cpp} (sync_scope):
 	  Added check for Messaging since for cases like Minimum CORBA
 	  Messaging is disabled.
+
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+	  Dynamically casted the request info object to be able to use 
+	  TAO specific exception methods.
 	
 Mon Aug 21 14:17:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
