@@ -143,7 +143,8 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
           && remote_addr != 0)
         {
           remote_addr->set_size (len);
-          remote_addr->set_type (addr->sa_family);
+          if (addr)
+            remote_addr->set_type (addr->sa_family);
         }
     }
 
