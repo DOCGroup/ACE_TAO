@@ -173,23 +173,28 @@ int
 TAO_Exclusive_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
                                                         int two_way)
 {
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                      orb_core->leader_follower ().lock (), -1);
+  //
+  // Note that in previous versions of this code, the assignment of
+  // the following three variables was protected by the
+  // leader/followers lock.  In the case of oneways, these fields are
+  // not used, so this seems excessive. In the case of twoways, this
+  // stuff is done before the request is actually sent, therefore,
+  // there isn't any chance of the leader resetting these fields
+  // simultaneously.  Therefore, the lock has been removed.
+  //
 
-    // The last request may have left this unitialized
-    this->reply_received_ = 0;
+  // The last request may have left this unitialized
+  this->reply_received_ = 0;
 
-    // Set the state so that we know we're looking for a response.
-    this->expecting_response_ = two_way;
+  // Set the state so that we know we're looking for a response.
+  this->expecting_response_ = two_way;
 
-    // remember in which thread the client connection handler was running
-    this->calling_thread_ = ACE_Thread::self ();
+  // remember in which thread the client connection handler was running
+  this->calling_thread_ = ACE_Thread::self ();
 
-    if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - sending request for <%x>\n"),
-                  this->transport_));
-  }
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - sending request for <%x>\n"),
+                this->transport_));
 
   // Register the handler.
   this->transport_->register_handler ();

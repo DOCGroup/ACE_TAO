@@ -1190,26 +1190,6 @@ ACE::recvfrom (ACE_HANDLE handle,
 }
 
 ssize_t
-ACE::recv_n (ACE_HANDLE handle,
-             void *buf,
-             size_t len,
-             int flags,
-             const ACE_Time_Value *timeout)
-{
-  if (timeout == 0)
-    return ACE::recv_n_i (handle,
-                          buf,
-                          len,
-                          flags);
-  else
-    return ACE::recv_n_i (handle,
-                          buf,
-                          len,
-                          flags,
-                          timeout);
-}
-
-ssize_t
 ACE::recv_n_i (ACE_HANDLE handle,
                void *buf,
                size_t len,
@@ -1298,23 +1278,6 @@ ACE::recv_n_i (ACE_HANDLE handle,
     return -1;
   else
     return bytes_transferred;
-}
-
-ssize_t
-ACE::recv_n (ACE_HANDLE handle,
-             void *buf,
-             size_t len,
-             const ACE_Time_Value *timeout)
-{
-  if (timeout == 0)
-    return ACE::recv_n_i (handle,
-                          buf,
-                          len);
-  else
-    return ACE::recv_n_i (handle,
-                          buf,
-                          len,
-                          timeout);
 }
 
 ssize_t
@@ -1470,23 +1433,6 @@ ACE::recvv (ACE_HANDLE handle,
 }
 
 ssize_t
-ACE::recvv_n (ACE_HANDLE handle,
-              iovec *iov,
-              int iovcnt,
-              const ACE_Time_Value *timeout)
-{
-  if (timeout == 0)
-    return ACE::recvv_n_i (handle,
-                           iov,
-                           iovcnt);
-  else
-    return ACE::recvv_n_i (handle,
-                           iov,
-                           iovcnt,
-                           timeout);
-}
-
-ssize_t
 ACE::recvv_n_i (ACE_HANDLE handle,
                 iovec *iov,
                 int iovcnt)
@@ -1619,18 +1565,21 @@ ACE::recv_n (ACE_HANDLE handle,
 
       while (current_message_block != 0)
         {
+          size_t current_message_block_length =
+            current_message_block->length ();
+
           // Check if this block has any space for incoming data.
-          if (current_message_block->length () > 0)
+          if (current_message_block_length > 0)
             {
               // Collect the data in the iovec.
               iov[iovcnt].iov_base = current_message_block->rd_ptr ();
-              iov[iovcnt].iov_len  = current_message_block->length ();
+              iov[iovcnt].iov_len  = current_message_block_length;
 
               // Increment iovec counter.
               iovcnt++;
 
               // Keep track of the number of bytes for this recv.
-              recv_size += current_message_block->length ();
+              recv_size += current_message_block_length;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find IOV_MAX for platforms that do not define it rather
@@ -1819,26 +1768,6 @@ ACE::sendto (ACE_HANDLE handle,
 }
 
 ssize_t
-ACE::send_n (ACE_HANDLE handle,
-             const void *buf,
-             size_t len,
-             int flags,
-             const ACE_Time_Value *timeout)
-{
-  if (timeout == 0)
-    return ACE::send_n_i (handle,
-                          buf,
-                          len,
-                          flags);
-  else
-    return ACE::send_n_i (handle,
-                          buf,
-                          len,
-                          flags,
-                          timeout);
-}
-
-ssize_t
 ACE::send_n_i (ACE_HANDLE handle,
                const void *buf,
                size_t len,
@@ -1927,23 +1856,6 @@ ACE::send_n_i (ACE_HANDLE handle,
     return -1;
   else
     return bytes_transferred;
-}
-
-ssize_t
-ACE::send_n (ACE_HANDLE handle,
-             const void *buf,
-             size_t len,
-             const ACE_Time_Value *timeout)
-{
-  if (timeout == 0)
-    return ACE::send_n_i (handle,
-                          buf,
-                          len);
-  else
-    return ACE::send_n_i (handle,
-                          buf,
-                          len,
-                          timeout);
 }
 
 ssize_t
@@ -2098,23 +2010,6 @@ ACE::sendv (ACE_HANDLE handle,
 }
 
 ssize_t
-ACE::sendv_n (ACE_HANDLE handle,
-              const iovec *iov,
-              int iovcnt,
-              const ACE_Time_Value *timeout)
-{
-  if (timeout == 0)
-    return ACE::sendv_n_i (handle,
-                           iov,
-                           iovcnt);
-  else
-    return ACE::sendv_n_i (handle,
-                           iov,
-                           iovcnt,
-                           timeout);
-}
-
-ssize_t
 ACE::sendv_n_i (ACE_HANDLE handle,
                 const iovec *i,
                 int iovcnt)
@@ -2251,18 +2146,21 @@ ACE::send_n (ACE_HANDLE handle,
 
       while (current_message_block != 0)
         {
+          size_t current_message_block_length =
+            current_message_block->length ();
+
           // Check if this block has any data to be sent.
-          if (current_message_block->length () > 0)
+          if (current_message_block_length > 0)
             {
               // Collect the data in the iovec.
               iov[iovcnt].iov_base = current_message_block->rd_ptr ();
-              iov[iovcnt].iov_len  = current_message_block->length ();
+              iov[iovcnt].iov_len  = current_message_block_length;
 
               // Increment iovec counter.
               iovcnt++;
 
               // Keep track of the number of bytes for this send.
-              send_size += current_message_block->length ();
+              send_size += current_message_block_length;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find IOV_MAX for platforms that do not define it rather

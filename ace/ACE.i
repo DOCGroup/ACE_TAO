@@ -20,6 +20,114 @@ ACE::write_n (ACE_HANDLE handle,
 }
 
 ASYS_INLINE ssize_t
+ACE::recv_n (ACE_HANDLE handle,
+             void *buf,
+             size_t len,
+             int flags,
+             const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::recv_n_i (handle,
+                          buf,
+                          len,
+                          flags);
+  else
+    return ACE::recv_n_i (handle,
+                          buf,
+                          len,
+                          flags,
+                          timeout);
+}
+
+ASYS_INLINE ssize_t
+ACE::recv_n (ACE_HANDLE handle,
+             void *buf,
+             size_t len,
+             const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::recv_n_i (handle,
+                          buf,
+                          len);
+  else
+    return ACE::recv_n_i (handle,
+                          buf,
+                          len,
+                          timeout);
+}
+
+ASYS_INLINE ssize_t
+ACE::recvv_n (ACE_HANDLE handle,
+              iovec *iov,
+              int iovcnt,
+              const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::recvv_n_i (handle,
+                           iov,
+                           iovcnt);
+  else
+    return ACE::recvv_n_i (handle,
+                           iov,
+                           iovcnt,
+                           timeout);
+}
+
+ASYS_INLINE ssize_t
+ACE::send_n (ACE_HANDLE handle,
+             const void *buf,
+             size_t len,
+             int flags,
+             const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::send_n_i (handle,
+                          buf,
+                          len,
+                          flags);
+  else
+    return ACE::send_n_i (handle,
+                          buf,
+                          len,
+                          flags,
+                          timeout);
+}
+
+ASYS_INLINE ssize_t
+ACE::send_n (ACE_HANDLE handle,
+             const void *buf,
+             size_t len,
+             const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::send_n_i (handle,
+                          buf,
+                          len);
+  else
+    return ACE::send_n_i (handle,
+                          buf,
+                          len,
+                          timeout);
+}
+
+ASYS_INLINE ssize_t
+ACE::sendv_n (ACE_HANDLE handle,
+              const iovec *iov,
+              int iovcnt,
+              const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::sendv_n_i (handle,
+                           iov,
+                           iovcnt);
+  else
+    return ACE::sendv_n_i (handle,
+                           iov,
+                           iovcnt,
+                           timeout);
+}
+
+ASYS_INLINE ssize_t
 ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 {
 #if defined (ACE_WIN32) || defined (ACE_PSOS)

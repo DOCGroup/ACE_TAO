@@ -268,11 +268,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       if (this->transport_ != 0)
         this->transport_->idle ();
 
-      countdown.update ();
       int result = conn_reg->connect (this->profile_,
                                       this->transport_,
                                       this->max_wait_time_);
-      countdown.update ();
       if (result == 0)
         break;
 
@@ -293,12 +291,12 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
             TAO_INVOCATION_CONNECT_MINOR_CODE,
             errno),
           CORBA::COMPLETED_NO));
+
+      countdown.update ();
     }
 
   // Obtain unique request id from the RMS.
   this->request_id_ = this->transport_->tms ()->request_id ();
-
-  countdown.update ();
 }
 
 void
@@ -351,7 +349,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
   //    Even for oneways: with AMI it is possible to wait for a
   //    response (empty) for oneways, just to make sure that they
   //    arrive, there are policies to control that.
-  countdown.update ();
 
   int result =
     this->transport_->send_request (this->stub_,
@@ -359,7 +356,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
                                     this->out_stream_,
                                     is_roundtrip,
                                     this->max_wait_time_);
-  countdown.update ();
 
   //
   // @@ highly desirable to know whether we wrote _any_ data; if
