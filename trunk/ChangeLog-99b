@@ -1,19 +1,18 @@
 Wed May 12 12:14:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* COPYING: 
-
-	  Additional updates/clarifications suggested by Richard Stallman.
+	* COPYING: Additional updates/clarifications suggested by Richard
+ 	  Stallman.
 
 Wed May 12 00:25:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.h (ACE_Thread_Manager): Added clarification
-	  for the semantics differences among wait(), wait_grp() and
-	  wait_task().
+ 	  for the semantics differences among wait(), wait_grp() and
+ 	  wait_task().
 
 Tue May 11 18:11:51 1999  James C. Hu <jxh@entera.com>
 
-        * ace/config-sunos5.7.h: SunOS 5.7 (aka Solaris 7) does not
-          have a limited select.
+        * ace/config-sunos5.7.h: SunOS 5.7 (aka Solaris 7) does not have a
+ 	  limited select.
 
 Tue May 11 17:11:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -22,107 +21,106 @@ Tue May 11 17:11:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Tue May 11 15:43:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/OS.h: added ACE_THR_PRI_OTHER_DEF for NT, because
-          MT_Cubit uses it.
+        * ace/OS.h: added ACE_THR_PRI_OTHER_DEF for NT, because MT_Cubit
+ 	  uses it.
 
 Tue May 11 14:45:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tests/Conn_Test.cpp: fixed use of status on platforms that lack fork.
+        * tests/Conn_Test.cpp: fixed use of status on platforms that lack
+	  fork.
 
 Tue May 11 14:10:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/config-osf-4.0.h: added #define of ACE_NEW_THROWS_EXCEPTIONS,
-          if exception handling is enabled.
+        * ace/config-osf-4.0.h: added #define of
+ 	  ACE_NEW_THROWS_EXCEPTIONS, if exception handling is enabled.
 
-        * tests/New_Fail_Test.cpp: removed workaround for DEC cxx,
-          and modified error message to mention ACE_NEW_THROWS_EXCEPTIONS.
+        * tests/New_Fail_Test.cpp: removed workaround for DEC cxx, and
+ 	  modified error message to mention ACE_NEW_THROWS_EXCEPTIONS.
 
 Tue May 11 12:02:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/config-win32-common.h: set __ACE_INLINE__ to 1 if
-          not #defined.  It's scary when I trip over syntax errors
-          on Win32 :-)
+        * ace/config-win32-common.h: set __ACE_INLINE__ to 1 if not
+ 	  #defined.  It's scary when I trip over syntax errors on Win32
+ 	  :-)
 
 Tue May 11 10:00:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/OS.i: fixed name of unused argument for pSOS
 
-        * ace/RB_Tree.{cpp, h}: moved enumerated type from template
-          to non-templatized base class to make old g++ happy.
+        * ace/RB_Tree.{cpp, h}: moved enumerated type from template to
+ 	  non-templatized base class to make old g++ happy.
 
 Mon May 10 22:59:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * include/makeinclude/wrapper_macros.GNU: don't set VDIR
-          to .shobj/ for VxWorks, because it uses the same .o files
-          for static and shared libs.
+        * include/makeinclude/wrapper_macros.GNU: don't set VDIR to
+ 	  .shobj/ for VxWorks, because it uses the same .o files for
+ 	  static and shared libs.
 
-        * include/makeinclude/platform_vxworks5.x_g++.GNU:
-          disable RTTI for egcs, because the Tornado 1.0.x libs
-          don't support it.  No harm in disabling for old g++.
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: disable RTTI
+ 	  for egcs, because the Tornado 1.0.x libs don't support it.  No
+ 	  harm in disabling for old g++.
 
 Mon May 10 15:33:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/INET_Addr.cpp (string_to_addr): Fixed a mistake that
-          occurred when integrating Jerry D. De Master
-          <jdemaste@ipdinc.com> fix.  Thanks to Zoran and Jerry for
-          reporting this.
+ 	  occurred when integrating Jerry D. De Master
+ 	  <jdemaste@ipdinc.com> fix.  Thanks to Zoran and Jerry for
+ 	  reporting this.
 
 Mon May 10 15:00:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ACE-INSTALL.html: Changed to use ACE_NO_INLINE to supress
-          inlining to match with the recent dsp file changes.  Added a
-          link to Barry Hoggard's CORBA page which contains ACE related
-          MSVC setting hints.
+ 	  inlining to match with the recent dsp file changes.  Added a
+ 	  link to Barry Hoggard's CORBA page which contains ACE related
+ 	  MSVC setting hints.
 
         * ace/Select_Reactor_Base.cpp (unbind): We need to make sure the
-          reactor's suspend_set_ also gets cleaned up when unbinding a
-          handler.  Thanks to Casey Lucas <clucas@sabre.com> for pointing
-          this out.
+ 	  reactor's suspend_set_ also gets cleaned up when unbinding a
+ 	  handler.  Thanks to Casey Lucas <clucas@sabre.com> for pointing
+ 	  this out.
 
 Mon May 10 17:08:29 1999  James C. Hu <jxh@entera.com>
 
         * ace/ACE.cpp:
         * ace/config-sunos5.6.h:
         * ace/README: Added support to enter_recv_timedwait,
-          enter_send_timedwait, handle_timed_complete, and
-          handle_timed_accept to use poll() instead of select() if
-          poll() is available and select() is known to have problems.
-          Created ACE_HAS_LIMITED_SELECT macro.  Certain versions of
-          SunOS 5.6 do not correctly select on file descriptors that
-          are larger than 1023.
+ 	  enter_send_timedwait, handle_timed_complete, and
+ 	  handle_timed_accept to use poll() instead of select() if poll()
+ 	  is available and select() is known to have problems.  Created
+ 	  ACE_HAS_LIMITED_SELECT macro.  Certain versions of SunOS 5.6 do
+ 	  not correctly select on file descriptors that are larger than
+ 	  1023.
 
 Mon May 10 13:32:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tests/Conn_Test.cpp (spawn_threads): wait a maximum
-          of 200 seconds.  Carlos reported that the test sometimes
-          hangs on Irix.
+        * tests/Conn_Test.cpp (spawn_threads): wait a maximum of 200
+ 	  seconds.  Carlos reported that the test sometimes hangs on Irix.
 
 Mon May 10 12:14:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.cpp: fixed a dangling pointer bug in
-          RB_Tree::delete_fixup.  Added pointer tests to all
-          dereferences in this piece of code.
+ 	  RB_Tree::delete_fixup.  Added pointer tests to all dereferences
+ 	  in this piece of code.
 
 Mon May 10 11:35:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * COPYING: Made some updates suggested by Richard Stallman
-          <rms@gnu.org> of the Free Software Foundation
+ 	  <rms@gnu.org> of the Free Software Foundation
           (http://www.fsf.org/).
 
 Mon May 10 11:01:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/New_Fail_Test.cpp: DEC cxx catches its default,
-          NoNamedException.  OK, I guess.
+ 	  NoNamedException.  OK, I guess.
 
-        * tests/Upgradable_RW_Test.cpp: added -f option, which
-          enables FIFO thread scheduling.  Some platforms require
-          superuser privilege to use it.  Also, wait a maximum
-          of 1 second per iteration.  And, replaced some u_longs with
-          u_ints.
+        * tests/Upgradable_RW_Test.cpp: added -f option, which enables
+ 	  FIFO thread scheduling.  Some platforms require superuser
+ 	  privilege to use it.  Also, wait a maximum of 1 second per
+ 	  iteration.  And, replaced some u_longs with u_ints.
 
-        * tests/Thread_Manager_Test.cpp (main): wait a maximum of
-          60 seconds, because the test sometimes hangs on SunOS 5.5.1
-          and SunOS 5.7.
+        * tests/Thread_Manager_Test.cpp (main): wait a maximum of 60
+ 	  seconds, because the test sometimes hangs on SunOS 5.5.1 and
+ 	  SunOS 5.7.
 
 Mon May 10 08:26:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -131,20 +129,18 @@ Mon May 10 08:26:44 1999  David L. Levine  <levine@cs.wustl.edu>
 Sun May  9 18:07:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * acconfig.h:
-        * configure.in:
+        * configure.in: Added support/tests for
+ 	  ACE_LACKS_CHAR_RIGHT_SHIFTS and
+ 	  ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS.
 
-          Added support/tests for ACE_LACKS_CHAR_RIGHT_SHIFTS and
-          ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS.
-
-        * ace/README:
-
-          Fixed typo.  ACE_LACKS_LINEBUFFERED_STREAMBUF was used twice.
-          Corrected the appropriate one to ACE_LACKS_UNBUFFERED_STREAMBUF.
+        * ace/README: Fixed typo.  ACE_LACKS_LINEBUFFERED_STREAMBUF was
+ 	  used twice.  Corrected the appropriate one to
+ 	  ACE_LACKS_UNBUFFERED_STREAMBUF.
 
 Sun May 09 11:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * ace/RB_Tree.cpp  added explicit scoping to RB_SearchResult
-          parameter in RB_Tree<...>::find_node ().
+        * ace/RB_Tree.cpp added explicit scoping to RB_SearchResult
+ 	  parameter in RB_Tree<...>::find_node ().
 
 Sun May 09 11:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -157,91 +153,92 @@ Sun May 09 11:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           examples/Service_Configurator/IPC-tests/server/Makefile
           netsvcs/lib/Makefile
           netsvcs/servers/Makefile
-          tests/Makefile: ran make depend after adding new RB_Tree interface.
+          tests/Makefile: ran make depend after adding new RB_Tree
+ 	  interface.
 
 Sat May 08 19:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}
-          tests/RB_Tree_Test.cpp: finished implementing all methods for the
-          ACE_Hash_Map_Manager_Ex compliant interface, fixed a bug in the
-          internal tree search method (thanks to David Levine for pointing
-          this out), and added a new section to the test that exercises the
-          new bind and unbind methods.
+          tests/RB_Tree_Test.cpp: finished implementing all methods for
+ 	  the ACE_Hash_Map_Manager_Ex compliant interface, fixed a bug in
+ 	  the internal tree search method (thanks to David Levine for
+ 	  pointing this out), and added a new section to the test that
+ 	  exercises the new bind and unbind methods.
 
 Sat May 08 17:09:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Gateway/Event_Channel.cpp (bind_proxy,subscribe):
-          wrapped final return statement with ACE_NOTREACHED, to please
-          DU cxx 6.2.
+ 	  wrapped final return statement with ACE_NOTREACHED, to please DU
+ 	  cxx 6.2.
 
 Sat May 08 08:49:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/CDR_Stream.h: only use unsigned long for Boolean
-          with Green Hills 1.8.8 on Chorus, not 1.8.9.
+        * ace/CDR_Stream.h: only use unsigned long for Boolean with Green
+ 	  Hills 1.8.8 on Chorus, not 1.8.9.
 
         * ace/IOStream.h,README: added ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
-          and ACE_LACKS_CHAR_RIGHT_SHIFTS support.
+ 	  and ACE_LACKS_CHAR_RIGHT_SHIFTS support.
 
         * ace/config-chorus.h: added ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
-          #define for g++.
+ 	  #define for g++.
 
         * ace/config-vxworks5.x.h: added ACE_LACKS_CHAR_RIGHT_SHIFTS
-          #define for Green Hills 1.8.9.
+ 	  #define for Green Hills 1.8.9.
 
 Sat May 08 08:44:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}
           tests/RB_Tree_Test.cpp
-          apps/JAWS/PROTOTYPE/HTTPU/http_headers.cpp: Added more implementation
-          code and necessary template instantiations for migration of RB_Tree
-          class templates to conform to the ACE_Hash_Map_Manager API.
+          apps/JAWS/PROTOTYPE/HTTPU/http_headers.cpp: Added more
+ 	  implementation code and necessary template instantiations for
+ 	  migration of RB_Tree class templates to conform to the
+ 	  ACE_Hash_Map_Manager API.
 
 Sat May 08 03:59:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-win32-common.h: Re-ordered __ACE_INLINE__ macro check
-          and definition so users can turn of inlining correctly.
-          However, the right thing to do is to define ACE_NO_INLINE macro.
+ 	  and definition so users can turn of inlining correctly.
+  	  However, the right thing to do is to define ACE_NO_INLINE macro.
 
         * ace/ace_{dll,lib}.dsp: Moved RB_Tree.cpp to template folder and
-          excluded it from being built.
+ 	  excluded it from being built.
 
         * ace/ace_lib.dsp:
         * performance-tests/Misc/basic_perf.dsp:
         * performance-tests/Misc/context_switch_time.dsp:
         * tests/version_tests/*.dsp: We should have used ACE_NO_INLINE
-          instead of defining __ACE_INLINE__=0 to supress the use of
-          inlining.  Thanks to Nick Sawadsky
-          <Nick_Sawadsky@BrooksSoftware.com> for reporting this.
+ 	  instead of defining __ACE_INLINE__=0 to supress the use of
+ 	  inlining.  Thanks to Nick Sawadsky
+ 	  <Nick_Sawadsky@BrooksSoftware.com> for reporting this.
 
 Fri May 07 23:05:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/config-vxworks5.x.h: added
-          ACE_LACKS_LINEBUFFERED_STREAMBUF for Green Hills 1.8.9.
+        * ace/config-vxworks5.x.h: added ACE_LACKS_LINEBUFFERED_STREAMBUF
+ 	  for Green Hills 1.8.9.
 
         * ace/README: added ACE_LACKS_LINEBUFFERED_STREAMBUF.
 
 Fri May  7 19:39:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * ace/Message_Block_T.i:
-          Found little buf in ACE_Locked_Data_Block<> default
-          constructor.
+        * ace/Message_Block_T.i: Found little buf in
+ 	  ACE_Locked_Data_Block<> default constructor.
 
 Fri May 07 16:54:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * ace/RB_Tree.{cpp, h, i}: Reorganized and optimized internal methods,
-          added read and write guards, implemented all public find and unbind
-          methods for the interface comparable to ACE_Hash_Map_Manager_Ex.
+        * ace/RB_Tree.{cpp, h, i}: Reorganized and optimized internal
+ 	  methods, added read and write guards, implemented all public
+ 	  find and unbind methods for the interface comparable to
+ 	  ACE_Hash_Map_Manager_Ex.
 
 Fri May 07 14:40:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_cxx.GNU: added, to support
-          uniform use of cxx across different OS versions.
+ 	  uniform use of cxx across different OS versions.
 
-        * ace/config-osf1-4.0.h: conditionally #define DIGITAL_UNIX,
-          to support definition in CFLAGS.
+        * ace/config-osf1-4.0.h: conditionally #define DIGITAL_UNIX, to
+ 	  support definition in CFLAGS.
 
-        * ace/config-osf1.h: added, to support easy migration to
-          DU 5.0.
+        * ace/config-osf1.h: added, to support easy migration to DU 5.0.
 
 Fri May 07 11:00:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -249,10 +246,10 @@ Fri May 07 11:00:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Fri May 07 08:58:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/OS.{h,i}: added some QNX support.  In OS.i, this
-          mostly consisted of adding a !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-          check to _POSIX_THREAD_PROCESS_SHARED.  Thanks to
-          Alain Magloire <alain@qnx.com> for providing this support.
+        * ace/OS.{h,i}: added some QNX support.  In OS.i, this mostly
+ 	  consisted of adding a !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+ 	  check to _POSIX_THREAD_PROCESS_SHARED.  Thanks to Alain Magloire
+ 	  <alain@qnx.com> for providing this support.
 
 Thu May  6 21:48:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
@@ -267,147 +264,146 @@ Thu May  6 21:48:26 1999  Ossama Othman  <othman@cs.wustl.edu>
         * ace/config-linux-lxpthreads.h:
         * ace/config-osf1-4.0.h:
         * ace/config-sco-5.0.0-mit-pthread.h:
-        * ace/config-sunos5.5.h:
-
-          Removed all references to ACE_HAS_PTHREAD_SIGMASK.  This macro
-          has been deprecated.
+        * ace/config-sunos5.5.h: Removed all references to
+ 	  ACE_HAS_PTHREAD_SIGMASK.  This macro has been deprecated.
 
 Thu May  6 20:12:57 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * acconfig.h:
-        * configure.in:
-
-          Added tests/support for ACE_LACKS_PTHREAD_SIGMASK,
-          ACE_LACKS_TCP_NODELAY and ACE_LACKS_NULL_PTHREAD_STATUS.  Thanks
-          to David for providing a test for ACE_LACKS_NULL_PTHREAD_STATUS.
+        * configure.in: Added tests/support for ACE_LACKS_PTHREAD_SIGMASK,
+ 	  ACE_LACKS_TCP_NODELAY and ACE_LACKS_NULL_PTHREAD_STATUS.  Thanks
+ 	  to David for providing a test for ACE_LACKS_NULL_PTHREAD_STATUS.
 
 Thu May 06 14:26:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/README,ace/Pipe.cpp (open): added support for
-          ACE_LACKS_TCP_NODELAY.  Thanks to Alain Magloire <alain@qnx.com>
-          for providing the patch.
+ 	  ACE_LACKS_TCP_NODELAY.  Thanks to Alain Magloire <alain@qnx.com>
+ 	  for providing the patch.
 
 Thu May  6 14:23:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * ace/Synch_T.cpp:
-          Removed ACE_ALLOC_HOOK_DEFINE macros for the Guard<> objects,
-          they don't need them (because they are allocated on the stack)
-          and the HOOK_DECLARE macros where not used in the header file.
+        * ace/Synch_T.cpp: Removed ACE_ALLOC_HOOK_DEFINE macros for the
+ 	  Guard<> objects, they don't need them (because they are
+ 	  allocated on the stack) and the HOOK_DECLARE macros where not
+ 	  used in the header file.
 
-        * bin/count_lines:
-          Several new file types, fixed computations when multiple modules
-          are used.
+        * bin/count_lines: Several new file types, fixed computations when
+ 	  multiple modules are used.
 
 Thu May 06 12:28:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * docs/ACE-FMM.html: replaced a > with &gt; and added RCS Id string.
+        * docs/ACE-FMM.html: replaced a > with &gt; and added RCS Id
+	  string.
 
         * ACE-INSTALL.html: added link to docs/ACE-FMM.html.
 
 Thu May 06 12:23:51 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (recvv, sendv): Added code to make these functions work
-          on Win32 w/ Winsock 1.1.
+ 	  on Win32 w/ Winsock 1.1.
 
 Wed May 05 15:10:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/OS.h: added ACE_U_ONE_SECOND_IN_*SECS.  They're typed
-          and unsigned.  The old ACE_ONE_SECOND_IN_*SECS macros are
-          retained for backward compatibility.
+        * ace/OS.h: added ACE_U_ONE_SECOND_IN_*SECS.  They're typed and
+ 	  unsigned.  The old ACE_ONE_SECOND_IN_*SECS macros are retained
+ 	  for backward compatibility.
 
 Wed May  5 13:58:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * ace/OS.i:
-          Don't use poll() for the implementation of ACE_OS::sleep(), it
-          has bad resolution and it gives wrong results on Linux.
+        * ace/OS.i: Don't use poll() for the implementation of
+ 	  ACE_OS::sleep(), it has bad resolution and it gives wrong
+ 	  results on Linux.
 
-        * tests/High_Res_Timer_Test.cpp:
-          Added new option to run several iterations of each interval.
+        * tests/High_Res_Timer_Test.cpp: Added new option to run several
+ 	  iterations of each interval.
 
 Wed May 05 13:14:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Removed DllMain - Win32 does not have the gusto to
-          handle the initialization/finalization in this way. It causes
-          DLL dependency problems which result in early detachment of
-          winsock, and possible network data loss in some cases.
+ 	  handle the initialization/finalization in this way. It causes
+ 	  DLL dependency problems which result in early detachment of
+ 	  winsock, and possible network data loss in some cases.
 
-        * ace/OS.cpp, Object_Manager.cpp: Clarified some comments regarding
-          multiple ACE_OS_Object_Manager and ACE_Object_Manager objects in
-          existence and how they're handled.
+        * ace/OS.cpp, Object_Manager.cpp: Clarified some comments
+ 	  regarding multiple ACE_OS_Object_Manager and ACE_Object_Manager
+ 	  objects in existence and how they're handled.
 
-        * tests/ACE_Init_Test.cpp: Always does ACE::init and ACE::fini now.
-          This is one example of how to handle a non-console program in Win32.
+        * tests/ACE_Init_Test.cpp: Always does ACE::init and ACE::fini
+ 	  now.  This is one example of how to handle a non-console program
+ 	  in Win32.
 
 Wed May 05 13:07:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/Makefile: replaced /bin/rm with $(RM) and removed clean
-          pseudotarget.
+ 	  pseudotarget.
 
 Tue May 04 20:38:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/RB_Tree_Test.cpp: Added missing explicit template
-          instantiations for ACE_RB_Tree_Iterator_Base.  Thanks to
-          Carlos O'Ryan for reporting this.
+ 	  instantiations for ACE_RB_Tree_Iterator_Base.  Thanks to Carlos
+ 	  O'Ryan for reporting this.
 
         * include/makeinclude/platform_psos_diab_ppc.GNU: added -g flag
-          back into debug flags since it can easily be deactivated via
-          make debug=0.
+ 	  back into debug flags since it can easily be deactivated via
+ 	  make debug=0.
 
 1999-05-04  Seth Widoff  <swidoff@cs.cmu.edu>
 
-        * ace/Containers_T.cpp (ACE_Array_Base<T>::max_size):
-          When resizing the array to be larger, the max_size method was
-          copying in the contents of the older, smaller array, but not
-          initializing the new elements.
+        * ace/Containers_T.cpp (ACE_Array_Base<T>::max_size): When
+ 	  resizing the array to be larger, the max_size method was copying
+ 	  in the contents of the older, smaller array, but not
+ 	  initializing the new elements.
 
 Tue May  4 17:37:30 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-        * examples/Web_Crawler/Options.cpp (parse_args):
-          Change the default options from "www.cs.wustl.edu" to
-          "tao.cs.wustl.edu".
+        * examples/Web_Crawler/Options.cpp (parse_args): Change the
+ 	  default options from "www.cs.wustl.edu" to "tao.cs.wustl.edu".
 
 Tue May 04 16:24:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * ace/RB_Tree.{cpp, h, i}: Added deprecation comments to methods that
-          are going to be replaced by the new Hash_Map_Manager compliant
-          interface.  Factored out iterator base class, added reverse iterator.
-          Interim checkin since it all compiles and RB_Tree_Test runs clean.
+        * ace/RB_Tree.{cpp, h, i}: Added deprecation comments to methods
+ 	  that are going to be replaced by the new Hash_Map_Manager
+ 	  compliant interface.  Factored out iterator base class, added
+ 	  reverse iterator.  Interim checkin since it all compiles and
+ 	  RB_Tree_Test runs clean.
 
 Tue May 04 15:56:41 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Re-enabled DllMain (see Mon May 3 entry from Chris
-          Gill).
+ 	  Gill).
+
         * ace/OS.cpp, Object_Manager.cpp: In ACE_OS_Object_Manager and
-          ACE_Object_Manager, differentiate between The singleton instance and
-          other instances when allocating and freeing per-process information.
+ 	  ACE_Object_Manager, differentiate between The singleton instance
+ 	  and other instances when allocating and freeing per-process
+ 	  information.
+
         * tests/run_tests.bat: Added ACE_Init_Test.
 
 Mon May  3 18:04:32 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * examples/Reactor/Proactor/test_aiocb_ace.cpp: Added this
-        file. If this test is sucessful, ACE_POSIX_AIOCB_PROACTOR could be
-        defined for a platform.
+ 	  file. If this test is sucessful, ACE_POSIX_AIOCB_PROACTOR could
+ 	  be defined for a platform.
 
 Mon May 03 09:35:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * ace/RB_Tree.cpp: fixed bug in ACE_RB_Tree::RB_delete_fixup in which
-          a null pointer was dereferenced while trying to determine the color
-          of the node that was being pointed to.  Per the RB Tree discussion
-          in Cormen Lieserson and Rivest's "Introduction to Algorithms", after
-          which this implementation is modeled, a nil node is implicity
-          treated as having been colored BLACK.  Thanks to Long Hoang
-          <LHoang@hwdcsaws.cahwnet.gov> for reporting the problem and
-          providing a test program that showed the bug.
+        * ace/RB_Tree.cpp: fixed bug in ACE_RB_Tree::RB_delete_fixup in
+ 	  which a null pointer was dereferenced while trying to determine
+ 	  the color of the node that was being pointed to.  Per the RB
+ 	  Tree discussion in Cormen Lieserson and Rivest's "Introduction
+ 	  to Algorithms", after which this implementation is modeled, a
+ 	  nil node is implicity treated as having been colored BLACK.
+  	  Thanks to Long Hoang <LHoang@hwdcsaws.cahwnet.gov> for reporting
+ 	  the problem and providing a test program that showed the bug.
 
 Mon May 03 15:53:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU,
-          tests/run_tests.vxworks,ACE-INSTALL.html:
-          added support for shared lib builds.  Thanks to
-          Ramiro Penataro Blanco <penataro@ll.iac.es> and
-          James D. Rucker <jdrucker@huey.jpl.nasa.gov> for
-          figuring this out, and providing detailed instructions
-          for others to follow.
+ 	  tests/run_tests.vxworks,ACE-INSTALL.html: added support for
+ 	  shared lib builds.  Thanks to Ramiro Penataro Blanco
+ 	  <penataro@ll.iac.es> and James D. Rucker
+ 	  <jdrucker@huey.jpl.nasa.gov> for figuring this out, and
+ 	  providing detailed instructions for others to follow.
 
 Mon May 03 15:20:00 1999 Kirthika Parameswaran  <kirthika@bambuca.cs.wustl.edu>
 
