@@ -2455,7 +2455,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
                               int &abandoned)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
-  return ACE_OS::thread_mutex_lock (m, abandoned);
+  return ACE_OS::thread_mutex_lock (m);
 #else
   // @@ Irfan, can you please fill in here?
   return 0;
@@ -2467,7 +2467,7 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m,
                                  int &abandoned)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
-  return ACE_OS::thread_mutex_trylock (m, abandoned);
+  return ACE_OS::thread_mutex_trylock (m);
 #else
   // @@ Irfan, can you please fill in here?
   return 0;
