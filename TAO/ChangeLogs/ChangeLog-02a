@@ -1105,7 +1105,6 @@ Mon Oct 22 15:41:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           <wayne@stentor.com> and Chris Hughes <chughes@stentor.com> for
           finding this one out and providing a patch.
 
-
 Mon Oct 22 07:54:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/tests/Security/SecurityLevel1/makefile:
