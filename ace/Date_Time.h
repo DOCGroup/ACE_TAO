@@ -42,7 +42,8 @@ public:
                  long hour = 0,
                  long minute = 0,
                  long second = 0,
-                 long microsec = 0);
+                 long microsec = 0,
+                 long wday = 0);
 
   /// Update to the current time/date.
   void update (void);
@@ -89,6 +90,12 @@ public:
   /// Set microsec.
   void microsec (long microsec);
 
+  /// Get weekday.
+  long weekday (void) const;
+
+  /// Set weekday.
+  void weekday (long wday);
+
 private:
   long day_;
   long month_;
@@ -97,6 +104,7 @@ private:
   long minute_;
   long second_;
   long microsec_;
+  long wday_;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

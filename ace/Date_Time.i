@@ -19,6 +19,7 @@ ACE_Date_Time::update (void)
   this->minute_ = tm_time.tm_min;
   this->second_ = tm_time.tm_sec;
   this->microsec_ = now.usec ();
+  this->wday_ = tm_time.tm_wday;
 }
 
 ASYS_INLINE
@@ -36,14 +37,16 @@ ACE_Date_Time::ACE_Date_Time (long day,
                               long hour,
                               long minute,
                               long second,
-                              long microsec)
+                              long microsec
+                              long wday)
   : day_ (day),
     month_ (month),
     year_ (year),
     hour_ (hour),
     minute_ (minute),
     second_ (second),
-    microsec_ (microsec)
+    microsec_ (microsec),
+    wday_ (wday)
 {
   ACE_TRACE ("ACE_Date_Time::ACE_Date_Time");
 }
@@ -160,4 +163,20 @@ ACE_Date_Time::microsec (long microsec)
 {
   ACE_TRACE ("ACE_Date_Time::microsec");
   microsec_ = microsec;
+}
+
+// get wday
+ASYS_INLINE long
+ACE_Date_Time::weekday (void) const
+{
+  ACE_TRACE ("ACE_Date_Time::weekday");
+  return weekday_;
+}
+
+// set wday
+ASYS_INLINE void
+ACE_Date_Time::weekday (long wday)
+{
+  ACE_TRACE ("ACE_Date_Time::weekday");
+  weekday_ = wday;
 }
