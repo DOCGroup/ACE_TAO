@@ -2112,3 +2112,15 @@ CORBA::ORB::lookup_value_factory (const char *repository_id
 
   return this->orb_core ()->valuetype_adapter ()->vf_map_find (repository_id);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_Pseudo_Var_T<CORBA::ORB>;
+template class TAO_Pseudo_Out_T<CORBA::ORB, CORBA::ORB_var>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Pseudo_Var_T<CORBA::ORB>
+#pragma instantiate TAO_Pseudo_Out_T<CORBA::ORB, CORBA::ORB_var>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

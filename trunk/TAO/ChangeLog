@@ -1,3 +1,9 @@
+Sun Sep  7 14:15:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB.cpp:
+
+          Added explicit template instantiations for ORB_var and ORB_out.
+
 Sun Sep  7 13:59:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
