@@ -5,6 +5,7 @@
 
 #include "ace/Malloc.h"
 #include "ace/Based_Pointer_T.h"
+#include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 #include "test_position_independent_malloc.h"
 
@@ -16,6 +17,15 @@ typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 static void *base_addr = ACE_DEFAULT_BASE_ADDR;
 
 #if 0
+// Some dummy data 
+struct Dummy_Data
+{
+  int i1_;
+  int i2_;
+  int i3_;
+  // ACE_Based_Pointer<Dummy_Data> next_;
+};
+
 struct Long_Test 
 {
   ACE_Based_Pointer<long> bpl_;
@@ -26,6 +36,7 @@ struct Long_Test
 static void
 print (Dummy_Data *data)
 {
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "<<<<\ni1_ = %d, i2_ = %d, i3_ = %d\n",
               data->i1_, 
@@ -37,6 +48,7 @@ print (Dummy_Data *data)
               data->next_->i1_, 
               data->next_->i2_,
               data->next_->i3_));
+#endif 
 }
 
 static void *
@@ -48,16 +60,23 @@ initialize (MALLOC *allocator)
                         0);
   Dummy_Data *data1 = new (ptr) Dummy_Data;
 
+  data1->i1_ = 111;
+  data1->i2_ = 222;
+  data1->i3_ = 333;
+
   void *gap = 0;
   ACE_ALLOCATOR_RETURN (gap,
                         allocator->malloc (sizeof (256)),
                         0);
+
+  allocator->free (gap);
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Dummy_Data)),
                         0);
   Dummy_Data *data2 = new (ptr) Dummy_Data;
 
+#if 0
   data1->next_ = data2;
   data1->next_->i1_ = 111;
   data1->next_->i2_ = 222;
@@ -67,7 +86,6 @@ initialize (MALLOC *allocator)
   data2->next_->i2_ = -222;
   data2->next_->i3_ = -333;
 
-#if 0
   // Test in shared memory using long (array/pointer)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
@@ -101,17 +119,35 @@ initialize (MALLOC *allocator)
   long longCont_lcl4 = lt_lcl->bpl_[4];
 #endif /* 0 */
 
-  allocator->free (gap);
-
   return data1;
+}
+
+static void
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, "a:T");
+
+  for (int c;
+       (c = get_opt ()) != -1;
+       )
+    {
+      switch (c)
+	{
+	case 'a':
+          // Override the default base address.
+          base_addr = (void *) ACE_OS::atoi (get_opt.optarg);
+	  break;
+	case 'T':
+          ACE_Trace::start_tracing ();
+	  break;
+	}
+    }
 }
 
 int 
 main (int argc, char *argv[])
 {
-  if (argc > 1)
-    // Override the default base address.
-    base_addr = (void *) ACE_OS::atoi (argv[1]);
+  parse_args (argc, argv);
 
   ACE_MMAP_Memory_Pool_Options options (base_addr);
 
@@ -129,7 +165,10 @@ main (int argc, char *argv[])
   if (allocator->find ("foo",
                        data) == -1)
     {
-      data = initialize (allocator);
+      // data = initialize (allocator);
+
+      data = allocator->malloc (sizeof (long));
+      *(long *) data = -36;
 
       if (allocator->bind ("foo",
                            data) == -1)
@@ -146,8 +185,10 @@ main (int argc, char *argv[])
   else
     {
       // @@ Add a new print statement...
-      print ((Dummy_Data *) data);
-      
+      // print ((Dummy_Data *) data);
+      ACE_DEBUG ((LM_DEBUG, 
+                  "data = %d\n",
+                  *(long *) data));
       allocator->free (data);
       allocator->remove ();
       ACE_DEBUG ((LM_DEBUG,
@@ -159,6 +200,8 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Based_Pointer<Dummy_Data>;
+template class ACE_Based_Pointer_Basic<Dummy_Data>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Based_Pointer<Dummy_Data>
+#pragma instantiate ACE_Based_Pointer_Basic<Dummy_Data>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

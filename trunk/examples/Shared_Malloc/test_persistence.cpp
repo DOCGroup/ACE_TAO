@@ -12,7 +12,7 @@ typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
 typedef ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_ITERATOR;
 
 // Shared memory manager.
-static MALLOC *shmem_manager = 0;
+static MALLOC *shmem_allocator = 0;
 
 // Backing store name.
 static const char *backing_store = ACE_DEFAULT_BACKING_STORE;
@@ -22,23 +22,26 @@ class Employee
 public:
   Employee (void): name_ (0), id_ (0) {}
 
-  Employee (char* name, u_long id) : id_ (id)
+  Employee (const char *name, u_long id) : id_ (id)
   {
-    this->name_ = (char*) shmem_manager->malloc (ACE_OS::strlen (name) + 1);
-    ACE_OS::strcpy (this->name_, name );
+    size_t len = ACE_OS::strlen (name) + 1;
+    this->name_ = ACE_reinterpret_cast (char *,
+                                        shmem_allocator->malloc (len));
+    ACE_OS::strcpy (this->name_, name);
   }
 
-  ~Employee (void) { shmem_manager->free (this->name_); }
+  ~Employee (void) { shmem_allocator->free (this->name_); }
 
-  char *name (void) const    { return this->name_; }
+  const char *name (void) const { return this->name_; }
 
-  void name (char* name)
+  void name (const char *name)
   {
     if (this->name_)
-      shmem_manager->free (this->name_);
+      shmem_allocator->free (this->name_);
 
-    this->name_ = (char *) shmem_manager->malloc (ACE_OS::strlen (name) + 1);
-
+    size_t len = ACE_OS::strlen (name) + 1;
+    this->name_ = ACE_reinterpret_cast (char *,
+                                        shmem_allocator->malloc (len));
     ACE_OS::strcpy (this->name_, name);
   }
 
@@ -48,10 +51,10 @@ public:
 
   void *operator new (size_t)
   {
-    return shmem_manager->malloc (sizeof (Employee));
+    return shmem_allocator->malloc (sizeof (Employee));
   }
 
-  void operator delete (void *pointer) { shmem_manager->free (pointer); }
+  void operator delete (void *pointer) { shmem_allocator->free (pointer); }
 
 private:
   char *name_;
@@ -68,7 +71,8 @@ public:
 
   ~GUI_Handler (void)
   {
-    MALLOC::MEMORY_POOL &pool = shmem_manager->memory_pool();
+    MALLOC::MEMORY_POOL &pool =
+      shmem_allocator->memory_pool ();
     pool.sync ();
   }
 
@@ -80,7 +84,8 @@ public:
 
     if (::scanf ("%s", option) <= 0)
       {
-        ACE_ERROR ((LM_ERROR, "try again\n"));
+        ACE_ERROR ((LM_ERROR,
+                    "try again\n"));
         return 0;
       }
 
@@ -91,7 +96,8 @@ public:
       case 'i' :
         if (::scanf ("%s %s", buf1, buf2) <= 0)
           break;
-        result = insert_employee (buf1, ACE_OS::atoi (buf2));
+        result = insert_employee (buf1,
+                                  ACE_OS::atoi (buf2));
         break;
       case 'F' :
       case 'f' :
@@ -143,73 +149,109 @@ public:
   }
 
 private:
-  int insert_employee (char* name, u_long id)
-  {
-    if (find_employee (name) == 0)
-      ACE_ERROR_RETURN ((LM_ERROR, "Employee already exists\n"), -1);
-
-    Employee* new_employee = new Employee (name, id);
-    shmem_manager->bind (name, new_employee);
-    return 0;
-  }
-
-  int find_employee (char* name)
-  {
-    void *temp;
-    if (shmem_manager->find (name, temp) == 0)
-      {
-        Employee *employee = (Employee *) temp;
-
-        ACE_DEBUG ((LM_DEBUG, "The following employee was found.......\n\n"));
-        ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
-                    employee->name (), employee->id ()));
-        return 0;
-      }
-
-    return -1;
-  }
-
-  int list_employees (void)
-  {
-    MALLOC_ITERATOR iterator (*shmem_manager);
-
-    ACE_DEBUG ((LM_DEBUG, "The following employees were found.......\n\n"));
-
-    for (void* temp = 0;
-         iterator.next (temp) != 0;
-         iterator.advance ())
-      {
-        Employee *employee = (Employee *) temp;
-        ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
-                    employee->name (), employee->id ()));
-      }
-    return 0;
-  }
-
-  int delete_employee (char* name)
-  {
-    void *temp;
-
-    if (shmem_manager->unbind (name, temp) == 0)
-      {
-        Employee *employee = (Employee *) temp;
-
-        ACE_DEBUG ((LM_DEBUG,
-                    "The following employee was found and deleted.......\n\n"));
-
-        ACE_DEBUG ((LM_DEBUG, "Employee name: %s\nEmployee id:   %d\n",
-                    employee->name (), employee->id ()));
-
-        delete employee;
-        return 0;
-      }
-
-    ACE_DEBUG ((LM_DEBUG,
-                "There is no employee with name %s",
-                name));
-    return -1;
-  }
+  int insert_employee (const char *name,
+                       u_long id);
+  int find_employee (const char *name);
+  int list_employees (void);
+  int delete_employee (const char *name);
 };
+
+int 
+GUI_Handler::insert_employee (const char *name,
+                              u_long id)
+{
+  if (find_employee (name) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Employee already exists\n"),
+                      -1);
+
+  Employee *new_employee = 0;
+
+  ACE_NEW_RETURN (new_employee,
+                  Employee (name, id),
+                  -1);
+
+  if (shmem_allocator->bind (name,
+                           new_employee) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "bind failed\n"),
+                      -1);
+  return 0;
+}
+
+int 
+GUI_Handler::find_employee (const char *name)
+{
+  void *temp;
+
+  if (shmem_allocator->find (name,
+                             temp) == 0)
+    {
+      Employee *employee = ACE_reinterpret_cast (Employee *,
+                                                 temp);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "The following employee was found.......\n\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Employee name: %s\nEmployee id:   %d\n",
+                  employee->name (),
+                  employee->id ()));
+      return 0;
+    }
+
+  return -1;
+}
+
+int 
+GUI_Handler::list_employees (void)
+{
+  MALLOC_ITERATOR iterator (*shmem_allocator);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "The following employees were found.......\n\n"));
+
+  for (void *temp = 0;
+       iterator.next (temp) != 0;
+       iterator.advance ())
+    {
+      Employee *employee = ACE_reinterpret_cast (Employee *,
+                                                 temp);
+      ACE_DEBUG ((LM_DEBUG,
+                  "Employee name: %s\nEmployee id:   %d\n",
+                  employee->name (),
+                  employee->id ()));
+    }
+  return 0;
+}
+
+int 
+GUI_Handler::delete_employee (const char *name)
+{
+  void *temp;
+
+  if (shmem_allocator->unbind (name,
+                               temp) == 0)
+    {
+      Employee *employee = ACE_reinterpret_cast (Employee *,
+                                                 temp);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "The following employee was found and deleted.......\n\n"));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Employee name: %s\nEmployee id:   %d\n",
+                  employee->name (),
+                  employee->id ()));
+
+      delete employee;
+      return 0;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "There is no employee with name %s",
+              name));
+  return -1;
+}
 
 void
 parse_args (int argc, char *argv[])
@@ -223,7 +265,9 @@ main (int argc, char *argv[])
 {
   parse_args (argc, argv);
 
-  shmem_manager = new MALLOC (backing_store);
+  ACE_NEW_RETURN (shmem_allocator,
+                  MALLOC (backing_store),
+                  -1);
 
   GUI_Handler handler;
 

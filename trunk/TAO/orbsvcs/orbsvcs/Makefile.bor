@@ -144,6 +144,8 @@ OBJFILES = \
 	$(OBJDIR)\Trader_Utils.obj \
 	$(OBJDIR)\Transient_Naming_Context.obj
 
+RESOURCE = $(OBJDIR)\orbsvcs.res
+
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_BUILD_CFLAGS) $(ORBSVCS_CFLAGS)
 
 CPPDIR = .;AV;Event;concurrency;Sched;Trader;Naming;CosEvent;Time;Property;Log

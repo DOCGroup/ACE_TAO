@@ -140,11 +140,19 @@ public:
   void name (const char *);
   // Assign a name;
 
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
   ACE_Based_Pointer_Basic<char> name_;
   // Name of the Node.
 
   ACE_Based_Pointer_Basic<char> pointer_;
   // Pointer to the contents.
+#else
+  char *name_;
+  // Name of the Node.
+
+  char *pointer_;
+  // Pointer to the contents.
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
   ACE_Based_Pointer<ACE_Name_Node> next_;
   // Pointer to the next node in the chain.
