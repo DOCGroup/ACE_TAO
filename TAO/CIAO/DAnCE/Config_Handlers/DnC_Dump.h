@@ -29,146 +29,123 @@ namespace Deployment
    * the contents of various IDL data types, which passed as input.
    */
   class Config_Handler_Export DnC_Dump
-    {
-/*
- *  If the compiler has broken nested templates exclude dumping functionality.
- */
-#ifndef ACE_HAS_BROKEN_NESTED_TEMPLATES
+  {
+  public:
+    /// Dump functions for CORBA sequences
+    static void dump (const char* caption,
+                      const ::CORBA::StringSeq &str_seq);
 
-    public:
-      /// Dump functions for CORBA sequences
-      static void dump (const char* caption,
-                        const ::CORBA::StringSeq &str_seq);
+    static void dump (const char* caption, const TAO_String_Manager& str);
 
-      template <typename SEQUENCE>
-        static void dump_sequence (const char* caption, const SEQUENCE &seq);
+    static void dump (const char* caption, const CORBA::Boolean& val);
 
-      template <typename ROOT, typename SEQUENCE,
-                typename DATA_TYPE, typename CLASS>
-        static void dump_ref_seq (const char* caption, SEQUENCE& seq,
-                                  const char* root, DATA_TYPE CLASS::*data);
+    /// A whole slew of overloaded dump routines for different IDL
+    /// data types.
 
-      template <typename ROOT, typename REFERENCE, typename DATA_TYPE,
-                typename CLASS>
-        static void dump_ref (const char* caption, REFERENCE& ref,
-                              const char* root, DATA_TYPE CLASS::*data);
+    static void dump(const Deployment::SatisfierProperty &sp);
 
-      static void dump (const char* caption, const TAO_String_Manager& str);
+    static void dump (const Deployment::SharedResource& sr);
 
-      static void dump (const char* caption, const CORBA::Boolean& val);
+    static void dump (const Deployment::Node& node);
 
-      /// A whole slew of overloaded dump routines for different IDL data types.
+    static void dump (const Deployment::Resource& resource);
 
-      static void dump(const Deployment::SatisfierProperty &sp);
+    static void dump (const Deployment::Interconnect& conn);
 
-      static void dump (const Deployment::SharedResource& sr);
+    static void dump (const Deployment::Bridge& bridge);
 
-      static void dump (const Deployment::Node& node);
+    static void dump (const ::Deployment::Property &property);
 
-      static void dump (const Deployment::Resource& resource);
+    static void dump (const ::Deployment::AssemblyConnectionDescription &acd);
 
-      static void dump (const Deployment::Interconnect& conn);
+    static void dump (const ::Deployment::AssemblyPropertyMapping &apm);
 
-      static void dump (const Deployment::Bridge& bridge);
+    static void dump (const ::Deployment::ComponentPackageDescription
+                      &comppkgdesc);
 
-      static void dump (const ::Deployment::Property &property);
+    static void dump (const ::Deployment::ComponentPortDescription
+                      &compportdesc);
 
-      static void dump (const ::Deployment::AssemblyConnectionDescription &acd);
+    static void dump (const ::Deployment::ComponentPropertyDescription
+                      &comppropdesc);
 
-      static void dump (const ::Deployment::AssemblyPropertyMapping &apm);
+    static void dump (const ::Deployment::MonolithicImplementationDescription
+                      &mid);
 
-      static void dump (const ::Deployment::ComponentPackageDescription
-                             &comppkgdesc);
+    static void dump (const ::Deployment::PackageConfiguration &pc);
 
-      static void dump (const ::Deployment::ComponentPortDescription
-                             &compportdesc);
+    static void dump (const ::Deployment::PackagedComponentImplementation
+                      &pci);
 
-      static void dump (const ::Deployment::ComponentPropertyDescription
-                             &comppropdesc);
+    static void dump (const ::Deployment::SubcomponentPortEndpoint &spe);
 
-      static void dump (const ::Deployment::MonolithicImplementationDescription
-                             &mid);
+    static void dump (const ::Deployment::Requirement &requirement);
 
-      static void dump (const ::Deployment::PackageConfiguration &pc);
+    static void dump (const ::Deployment::ComponentExternalPortEndpoint
+                      &cepe);
 
-      static void dump (const ::Deployment::PackagedComponentImplementation
-                             &pci);
+    static void dump (const ::Deployment::ComponentPackageReference &cpr);
 
-      static void dump (const ::Deployment::SubcomponentPortEndpoint &spe);
-
-      static void dump (const ::Deployment::Requirement &requirement);
-
-      static void dump (const ::Deployment::ComponentExternalPortEndpoint
-                             &cepe);
-
-      static void dump (const ::Deployment::ComponentPackageReference &cpr);
-
-      static void dump (const ::Deployment::ComponentImplementationDescription
+    static void dump (const ::Deployment::ComponentImplementationDescription
                              &cid);
 
-      static void dump (const ::Deployment::SubcomponentInstantiationDescription
+    static void dump (const ::Deployment::SubcomponentInstantiationDescription
                              &sid);
 
-      static void dump (const ::Deployment::NamedImplementationArtifact
-                             &named_implementation);
+    static void dump (const ::Deployment::NamedImplementationArtifact
+                      &named_implementation);
 
-      static void dump (const ::Deployment::ComponentInterfaceDescription &cid);
+    static void dump (const ::Deployment::ComponentInterfaceDescription &cid);
 
-      static void dump (const ::Deployment::SubcomponentPropertyReference
-                             &scpr);
+    static void dump (const ::Deployment::SubcomponentPropertyReference
+                      &scpr);
 
-      static void dump (const ::Deployment::ExternalReferenceEndpoint &ere);
+    static void dump (const ::Deployment::ExternalReferenceEndpoint &ere);
 
-      static void dump (const ::Deployment::Domain &domain);
+    static void dump (const ::Deployment::Domain &domain);
 
-      static void dump (const ::Deployment::Capability &capability);
+    static void dump (const ::Deployment::Capability &capability);
 
-      static void dump (const ::Deployment::ImplementationArtifactDescription
+    static void dump (const ::Deployment::ImplementationArtifactDescription
                              &iad);
 
-      static void dump (const ::Deployment::ImplementationRequirement &ir);
+    static void dump (const ::Deployment::ImplementationRequirement &ir);
 
-      static void dump(const Deployment::ResourceUsageKind &ruk);
+    static void dump(const Deployment::ResourceUsageKind &ruk);
 
-      static void dump(const Deployment::DeploymentPlan &plan);
+    static void dump(const Deployment::DeploymentPlan &plan);
 
-      static void dump(const Deployment::MonolithicDeploymentDescription &mdd);
+    static void dump(const Deployment::MonolithicDeploymentDescription &mdd);
 
-      static void dump(const Deployment::InstanceDeploymentDescription &idd);
+    static void dump(const Deployment::InstanceDeploymentDescription &idd);
 
-      static void dump(const Deployment::PlanConnectionDescription &pcd);
+    static void dump(const Deployment::PlanConnectionDescription &pcd);
 
-      static void dump(const Deployment::PlanPropertyMapping &ppm);
+    static void dump(const Deployment::PlanPropertyMapping &ppm);
 
-      static void dump(const Deployment::ImplementationDependency &id);
+    static void dump(const Deployment::ImplementationDependency &id);
 
-      static void dump(const Deployment::ArtifactDeploymentDescription &add);
+    static void dump(const Deployment::ArtifactDeploymentDescription &add);
 
-      static void dump(const Deployment::InstanceResourceDeploymentDescription
-                             &irdd);
+    static void dump(const Deployment::InstanceResourceDeploymentDescription
+                     &irdd);
 
-      static void dump(const PlanSubcomponentPortEndpoint &pspe);
+    static void dump(const PlanSubcomponentPortEndpoint &pspe);
 
-      static void dump(const ConnectionResourceDeploymentDescription &crdd);
+    static void dump(const ConnectionResourceDeploymentDescription &crdd);
 
-      static void dump(const PlanSubcomponentPropertyReference &pspr);
+    static void dump(const PlanSubcomponentPropertyReference &pspr);
 
-      static void dump(const ResourceDeploymentDescription &rdd);
+    static void dump(const ResourceDeploymentDescription &rdd);
 
-      static void dump (const ::Deployment::ComponentAssemblyDescription& cad);
+    static void dump (const ::Deployment::ComponentAssemblyDescription& cad);
 
-      static void dump (const Deployment::RequirementSatisfier& rs);
+    static void dump (const Deployment::RequirementSatisfier& rs);
 
-    private:
-      static void dump (const ::CORBA::Any &any);
-      // Helper function to print an Any
-
-#else // ACE_HAS_BROKEN_NESTED_TEMPLATES
-    public:
-      static void dump(const Deployment::DeploymentPlan &plan) { }
-
-#endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
-    };
+  private:
+    static void dump (const ::CORBA::Any &any);
+    // Helper function to print an Any
+  };
 }
 
 #include /**/ "ace/post.h"

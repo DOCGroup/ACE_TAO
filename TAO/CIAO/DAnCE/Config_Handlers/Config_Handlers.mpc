@@ -22,6 +22,7 @@ project (Config_Handlers) : ciao_deployment_stub, ifr_client, valuetype, xerces 
     CPK_Handler.cpp
     CPR_Handler.cpp
     DnC_Dump.cpp
+    Dump_Obj.cpp
     Domain_Handler.cpp
     DT_Handler.cpp
     ERE_Handler.cpp
