@@ -904,7 +904,7 @@ namespace Deployment
     Dump_Obj dump_obj("              DEPLOYMENT PLAN");
     ACE_DEBUG ((LM_DEBUG,
                 "===================================-====================\n"));
-    ACE_DEBUG ((LM_DEBUG, "UUID: %s \n", plan.UUID.in ()));
+    ACE_DEBUG ((LM_DEBUG, "\nUUID: %s \n", plan.UUID.in ()));
     ACE_DEBUG ((LM_DEBUG, "Label: %s \n", plan.label.in ()));
     //dump ("label", plan.label);
     //dump ("UUID", plan.UUID);
@@ -953,11 +953,9 @@ namespace Deployment
             ACE_DEBUG ((LM_DEBUG, "       Address: %s \n",
                         plan.instance[i].source[j].in ()));
           }
-        /*
         int value = plan.instance[i].implementationRef;
         ACE_DEBUG ((LM_DEBUG, "     Implementation: %s \n",
                     plan.implementation[value].name.in ()));
-        */
         for (CORBA::ULong j = 0; 
              j < plan.instance[i].configProperty.length (); ++j)
           {
@@ -987,36 +985,34 @@ namespace Deployment
             ACE_DEBUG ((LM_DEBUG, "       Portname: %s \n",
                         plan.connection[i].
                         internalEndpoint[j].portName.in ()));
-            /*
             int value = plan.connection[i].internalEndpoint[j].instanceRef;
             ACE_DEBUG ((LM_DEBUG, "       Instance: %s \n",
                     plan.instance[value].name.in ()));
-            */
-            ACE_DEBUG ((LM_DEBUG, "       PortKind: \n"));
+            ACE_DEBUG ((LM_DEBUG, "       PortKind: "));
             switch (plan.connection[i].internalEndpoint[j].kind)
               {
                 case Facet: 
-                  ACE_DEBUG ((LM_DEBUG, "          Facet\n"));
+                  ACE_DEBUG ((LM_DEBUG, "Facet\n"));
                   break;
 
                 case SimplexReceptacle: 
-                  ACE_DEBUG ((LM_DEBUG, "          SimplexReceptacle\n"));
+                  ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n"));
                   break;
 
                 case MultiplexReceptacle:
-                  ACE_DEBUG ((LM_DEBUG, "          MultiplexReceptacle\n"));
+                  ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n"));
                   break;
 
                 case EventEmitter:
-                  ACE_DEBUG ((LM_DEBUG, "          EventEmitter\n"));
+                  ACE_DEBUG ((LM_DEBUG, "EventEmitter\n"));
                   break;
 
                 case EventPublisher:
-                  ACE_DEBUG ((LM_DEBUG, "          EventPublisher\n"));
+                  ACE_DEBUG ((LM_DEBUG, "EventPublisher\n"));
                   break;
 
                 case EventConsumer:
-                  ACE_DEBUG ((LM_DEBUG, "          EventConsumer\n"));
+                  ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
                   break;
 
               }

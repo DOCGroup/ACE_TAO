@@ -97,7 +97,6 @@ process_refs(DOMNode*& node,
             {
               //index = index + 1;
               idref_map.bind (index, aceattrnodevalue);
-              ACE_DEBUG ((LM_DEBUG, "temp seq is %d \n", index));
             }
         }
     }
@@ -126,7 +125,6 @@ process_ref(DOMNode*& node,
             {
               //index = index + 1;
               idref_map.bind (index, aceattrnodevalue);
-              ACE_DEBUG ((LM_DEBUG, "temp alone  is %d \n", index));
             }
         }
     }
