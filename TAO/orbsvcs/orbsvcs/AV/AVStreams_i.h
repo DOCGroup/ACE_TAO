@@ -234,7 +234,7 @@ public:
 
 class TAO_MCastConfigIf;
 
-class MMDevice_Map_Hash_Key
+class TAO_AV_Export MMDevice_Map_Hash_Key
 {
 public:
   /// default constructor.
