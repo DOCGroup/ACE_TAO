@@ -6,6 +6,7 @@
 // Lexical tokens values defined by YACC.
 #include "ace/Svc_Conf.h"
 #include "ace/Svc_Conf_Tokens.h"
+#include "ace/Svc_Conf_Lexer_Guard.h"
 
 ACE_RCSID (ace,
 	   Svc_Conf_l,
@@ -13,12 +14,6 @@ ACE_RCSID (ace,
 
 // Keeps track of the current line for debugging output.
 int yylineno = 1;
-
-// Array that implements the underlying lexer buffer stack.
-YY_BUFFER_STATE yybuffer_stack[ACE_SERVICE_DIRECTIVE_STACK_DEPTH];
-
-// Array index of the buffer currently in use.
-int yy_stack_index = 0;
 
 #define token(x)  x
 %}
@@ -51,19 +46,20 @@ Service_Object	      { return token (ACE_SVC_OBJ_T); }
 STREAM		      { return token (ACE_STREAM_T); }
 active	              { return token (ACE_ACTIVE); }
 inactive	      { return token (ACE_INACTIVE); }
-":"		      { return token (ACE_COLON); }
-"*"		      { return token (ACE_STAR); }
-"("                   { return token (ACE_LPAREN); }
-")"                   { return token (ACE_RPAREN); }
-"{"                   { return token (ACE_LBRACE); }
-"}"                   { return token (ACE_RBRACE); }
-{string}	      { // Check for first type of string, i.e.,
+":"		      { return token (':'); }
+"*"		      { return token ('*'); }
+"("                   { return token ('('); }
+")"                   { return token (')'); }
+"{"                   { return token ('{'); }
+"}"                   { return token ('}'); }
+{string}	      {
+                        // Check for first type of string, i.e.,
                         // "double quotes" delimited.  
-                        char *s = strrchr (yytext, '"');
+                        ACE_TCHAR *s = ACE_OS::strrchr (yytext, '"');
                         if (s == 0)
                           // Check for second type of string, i.e.,
                           // 'single quotes' delimited.
-                          s = strrchr (yytext, '\'');
+                          s = ACE_OS::strrchr (yytext, '\'');
 
                         ACE_ASSERT (s != 0);
                         // Eliminate the opening and closing double or
@@ -81,10 +77,11 @@ inactive	      { return token (ACE_INACTIVE); }
 			return token (ACE_PATHNAME);
 		      }
 {white_space}+	      ; /* EMPTY */
-{newline}	      { yylineno++; }
-{other}		      { ACE_ERROR ((LM_ERROR,
-                                ACE_LIB_TEXT ("unknown character = (%d"), 
-                                          *yytext));
+{newline}	      { ace_lexer_param->yylineno++; }
+{other}		      {
+                         ACE_ERROR ((LM_ERROR,
+                                     ACE_LIB_TEXT ("unknown character = (%d"), 
+                                                   *yytext));
                         if (ACE_OS::ace_isprint (*yytext))
                           ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("|%c"), *yytext));
                         ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT (")\n")));
@@ -102,62 +99,42 @@ yywrap (void)
 }
 
 void
-yy_push_buffer (FILE *file)
+yy_push_buffer (FILE *file, yy_buffer_state *&buffer)
 {
   // External synchronization is required.
 
-  if (yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) Service Configurator directive ")
-                  ACE_LIB_TEXT ("nesting is too deep.\n")
-                  ACE_LIB_TEXT ("(%P|%t) Consider increasing value of ")
-                  ACE_LIB_TEXT ("ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n")));
+  if (buffer == 0)
+    buffer = yy_create_buffer (file, YY_BUF_SIZE);
 
-      // Not much we can do, so resort to flushing the current buffer
-      // and switch to the supplied stream.
-      yyrestart (file);
-    }
-  else
-    {
-      yybuffer_stack[yy_stack_index++] = YY_CURRENT_BUFFER;
-      yy_switch_to_buffer (yy_create_buffer (file, YY_BUF_SIZE));
-    }
+  yy_switch_to_buffer (buffer);
 }
 
 void
-yy_push_buffer (const ACE_TCHAR *directive)
+yy_push_buffer (const ACE_TCHAR *directive, yy_buffer_state *&buffer)
 {
   // External synchronization is required.
 
-  if (yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) Service Configurator directive ")
-                  ACE_LIB_TEXT ("nesting is too deep.\n")
-                  ACE_LIB_TEXT ("(%P|%t) Consider increasing value of ")
-                  ACE_LIB_TEXT ("ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n")));
+  // yyparse() may invoke yylex() multiple times when parsing
+  // a single directive.  Prevent a new buffer from created during
+  // each call to yylex().
+  if (YY_CURRENT_BUFFER != 0
+      && directive == YY_CURRENT_BUFFER->yy_ch_buf)
+    return;
 
-      // Not much we can do.
+  if (buffer == 0)
+    {
+      // yy_scan_string() already switches the buffer so there is
+      // no need to explicitly make the switch.
+      buffer = yy_scan_string (directive);
     }
   else
-    {
-      yybuffer_stack[yy_stack_index++] = YY_CURRENT_BUFFER;
-
-      // yy_scan_string() already switches the buffer so setting
-      // YY_CURRENT_BUFFER here is a bit redundant.  No biggy.
-      YY_CURRENT_BUFFER = yy_scan_string (directive);
-    }
+    yy_switch_to_buffer (buffer);
 }
 
 void
-yy_pop_buffer (void)
+yy_pop_buffer (yy_buffer_state *buffer)
 {
   // External synchronization is required.
 
-  if (--yy_stack_index >= 0)
-    {
-      yy_delete_buffer (YY_CURRENT_BUFFER);
-      yy_switch_to_buffer (yybuffer_stack[yy_stack_index]);
-    }
+  yy_switch_to_buffer (buffer);
 }
