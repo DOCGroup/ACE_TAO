@@ -2,7 +2,6 @@
 
 #include "Cubit_Client.h"
 #include "tao/Timeprobe.h"
-#include "tests/test_config.h"
 
 ACE_RCSID(IDL_Cubit, client, "$Id$")
 
