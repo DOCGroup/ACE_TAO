@@ -11,11 +11,15 @@
 debug = 1
 optimize = 1
 
+ifeq ($(NO_IMPLICIT_TEMPLATES),)
+      NO_IMPLICIT_TEMPLATES = -fno-implicit-templates
+endif
+
 CC      = gcc
 CXX     = g++
 CFLAGS  += -Wall -pipe \
            -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
-CCFLAGS += $(CFLAGS) -fno-implicit-templates
+CCFLAGS += $(CFLAGS) $(NO_IMPLICIT_TEMPLATES)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
