@@ -2,8 +2,9 @@
 
 // $Id$
 
-ACE_RCSID(LoadBalancer, LoadBalancer_Service, "$Id$")
+#include "LoadBalancer.h"
 
+ACE_RCSID(LoadBalancer, LoadBalancer_Service, "$Id$")
 
 int
 main (int argc, char *argv[])
@@ -13,7 +14,7 @@ main (int argc, char *argv[])
     {
       TAO_LoadBalancer balancer;
 
-      balancer.init (ACE_TRY_ENV);
+      balancer.init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       balancer.run (ACE_TRY_ENV);

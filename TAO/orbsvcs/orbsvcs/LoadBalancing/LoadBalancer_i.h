@@ -30,7 +30,7 @@ typedef ACE_Unbounded_Set<ReplicaProxy_Impl *>
 typedef ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl *>
         ReplicaProxySetIterator;
 
-class LoadBalancer_Impl : public virtual POA_LoadBalancing::LoadBalancer
+class TAO_LoadBalancing_Export LoadBalancer_Impl : public virtual POA_LoadBalancing::LoadBalancer
 {
 public:
   LoadBalancer_Impl (const char *interface_id,
@@ -79,9 +79,8 @@ private:
   // The underlying load balancing strategy.
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "orbsvcs/LoadBalancing/LoadBalancer_i.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#if defined (__ACE_INLINE__)
+#include "LoadBalancer_i.i"
+#endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_LOADBALANCER_I_H */
-

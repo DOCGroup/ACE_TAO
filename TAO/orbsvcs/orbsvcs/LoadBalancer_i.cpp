@@ -7,11 +7,10 @@
 
 ACE_RCSID(orbsvcs, Load_Balancer_i, "$Id$")
 
+#if !defined (__ACE_INLINE__)
+#include "LoadBalancer_i.i"
+#endif /* __ACE_INLINE__ */
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "orbsvcs/LoadBalancing/LoadBalancer_i.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-  
 LoadBalancer_Impl::LoadBalancer_Impl (const char *interface_id,
                                       Load_Balancing_Strategy *strategy)
   : redirector_ (this, interface_id),

@@ -15,7 +15,7 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::String_var balancer_ior;
+      const char *balancer_ior = "file://test.ior";
 
       // Parse the application options after the ORB has been
       // initialized.
@@ -26,7 +26,7 @@ main (int argc, char *argv[])
         switch (c)
           {
           case 'k':
-            IOR = CORBA::string_dup (options.optarg);
+            balancer_ior = options.optarg;
             break;
           default:
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -53,15 +53,20 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_ptr load_balancer =
-        orb->string_to_object (balancer_ior.in ());
+      CORBA::Object_var obj =
+        orb->string_to_object (balancer_ior);
+
+      LoadBalancing::LoadBalancer_ptr load_balancer =
+        LoadBalancing::LoadBalancer::_unchecked_narrow (obj.in (),
+                                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       Hash_ReplicaControl control (load_balancer);
 
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      orb->shutdown (ACE_TRY_ENV);
+      poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);
@@ -72,7 +77,6 @@ main (int argc, char *argv[])
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
     }
   ACE_ENDTRY;
-
 
   return 0;
 }

@@ -1,3 +1,41 @@
+Sat Mar 25 16:31:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/LoadBalancer/Makefile:
+	* orbsvcs/LoadBalancer/LoadBalancer.h:
+	* orbsvcs/LoadBalancer/LoadBalancer.cpp:
+	* orbsvcs/LoadBalancer/LoadBalancer_Service.cpp:
+	* orbsvcs/LoadBalancer/LoadBalancer_Service.dsp:
+	* orbsvcs/LoadBalancer/LoadBalancer_Service.dsw:
+	  Add project files, Makefile and missing header file.
+	  Fixed typos syntax errors and other problems, so at least it
+	  compiles now.
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+	* orbsvcs/orbsvcs/orbsvcs.dsw:
+	* orbsvcs/orbsvcs/LoadBalancing.dsp:
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.i:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	  Fixed numerous typos, errors and configuration problems.
+	  Added the Makefile, updated the project file and inserted the
+	  project file to the orbsvcs workspace.
+
+	* orbsvcs/tests/LoadBalancing/client.cpp:
+	  Implemented a simple client body, still not compiled.
+
+	* orbsvcs/tests/LoadBalancing/server.cpp:
+	  Cosmetic errors.
+
 Fri Mar 24 21:32:30 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* docs/releasenotes/index.html:

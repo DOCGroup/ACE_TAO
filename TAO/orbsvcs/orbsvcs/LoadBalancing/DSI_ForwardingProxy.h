@@ -15,10 +15,10 @@
 //
 // ============================================================================
 
-#include "orbsvcs/LoadBalancingS.h"
-
 #ifndef DSI_FORWARDING_PROXY_H
 #define DSI_FORWARDING_PROXY_H
+
+#include "orbsvcs/LoadBalancingS.h"
 
 // Forward declaration.
 class LoadBalancer_Impl;
@@ -45,7 +45,7 @@ public:
   virtual void invoke (CORBA::ServerRequest_ptr request,
                        CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardingRequest));
+                     PortableServer::ForwardRequest));
 
   virtual CORBA::RepositoryId _primary_interface (
                                    const PortableServer::ObjectId &oid,

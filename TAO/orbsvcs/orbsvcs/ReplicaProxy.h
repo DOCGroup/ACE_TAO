@@ -15,15 +15,22 @@
 //
 // ============================================================================
 
-#include "orbsvcs/LoadBalancingS.h"
-
 #ifndef TAO_REPLICAPROXY_H
 #define TAO_REPLICAPROXY_H
+
+#include "orbsvcs/LoadBalancingS.h"
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 class LoadBalancer_Impl;
 // Forward declaration
 
-class ReplicaProxy_Impl :
+class TAO_LoadBalancing_Export ReplicaProxy_Impl :
   public virtual POA_LoadBalancing::ReplicaProxy,
   public virtual PortableServer::RefCountServantBase
 {
@@ -82,5 +89,9 @@ private:
   // 1 == currently connected to load balancer
   // 0 == currently disconnected from load balancer
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif  /* TAO_REPLICAPROXY_H */

@@ -18,6 +18,7 @@ ifndef TAO_ORBSVCS
   #### TAO_ORBSVCS.
   TAO_ORBSVCS = Naming \
                 Time \
+		LoadBalancing \
                 Property \
                 Sched \
                 Event \
@@ -52,6 +53,9 @@ ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
 endif
 ifneq (,$(findstring  Time, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosTime
+endif
+ifneq (,$(findstring  LoadBalancing, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.LoadBalancing
 endif
 ifneq (,$(findstring  Concurrency, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosConcurrency

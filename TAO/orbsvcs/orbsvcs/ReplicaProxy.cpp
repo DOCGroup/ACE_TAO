@@ -2,8 +2,8 @@
 
 // $Id$
 
-#include "orbsvcs/LoadBalancing/ReplicaProxy.h"
-#include "orbsvcs/LoadBalancing/LoadBalancer_i.h"
+#include "ReplicaProxy.h"
+#include "LoadBalancer_i.h"
 
 ACE_RCSID(orbsvcs, ReplicaProxy, "$Id$")
 
@@ -68,7 +68,7 @@ void ReplicaProxy_Impl::connect (LoadBalancer_Impl *balancer,
     this->control_ =  LoadBalancing::ReplicaControl::_duplicate (control);
   else
     ACE_THROW (LoadBalancing::ReplicaProxy::NilControl ());
-  
+
   if (!CORBA::is_nil (control))
       this->replica_ = CORBA::Object::_duplicate (replica);
   else
