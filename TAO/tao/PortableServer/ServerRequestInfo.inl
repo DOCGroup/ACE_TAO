@@ -11,7 +11,7 @@ TAO::ServerRequestInfo::ServerRequestInfo (
   TAO::Argument * const * args,
   size_t nargs,
   void * servant_upcall,
-  CORBA::TypeCode_ptr const exceptions[],
+  CORBA::TypeCode_ptr const * exceptions,
   size_t nexceptions)
   : server_request_ (server_request)
   , args_ (args)

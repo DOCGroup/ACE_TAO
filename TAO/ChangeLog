@@ -1,3 +1,46 @@
+Tue Feb 22 20:17:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp:
+
+	  If no user exceptions are declared in the IDL, generate a
+	  constant pointer to a constant CORBA::TypeCode_ptr initialized
+	  to zero, instead of constant array of zero length.  MSVC++ 7.1
+	  and Borland C++ cannot handle zero length arrays.
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+
+	  Removed this file.  It was left over from the old interceptor
+	  visitors.
+
+	* TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp (visit):
+
+	  Removed generation of private copy constructor and assignment
+	  operator.  They aren't needed in this case.  Addresses MSVC++
+	  7.1 compile-time warnings regarding unimplemented local class
+	  members.
+
+	* tao/Messaging/MessagingS.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+
+	  Fixed compile time errors regarding zero length arrays.  MSVC++
+	  7.1 and Borland C++ cannot handle them.
+
+	  (Upcall_Command):
+
+	  Removed copy constructor and assignment operator.  MSVC++ 7.1
+	  warns of unimplemented local class members.  They aren't needed
+	  in this case.
+
+	* tao/PortableServer/ServerRequestInfo.h:
+	* tao/PortableServer/ServerRequestInfo.inl:
+	* tao/PortableServer/Upcall_Wrapper.cpp:
+	* tao/PortableServer/Upcall_Wrapper.h:
+
+	  Changed exception TypeCode array parameter to pointer form
+	  instead of array form (e.g. "int foo *" instead of "int
+	  foo[]").  Part of a workaround for C++ compilers that can't
+	  handle zero length arrays.
+
 Tue Feb 22 19:29:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Special_Basic_SArgument_T.cpp
