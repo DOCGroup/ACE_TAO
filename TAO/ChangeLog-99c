@@ -1,3 +1,12 @@
+Mon Jun 21 19:06:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Servant_Base.h (TAO_ServantBase): Change reference count
+	  (again) from ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> to
+	  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>.  This way we can utilize
+	  the InterlockedIncrement / InterlockedDecrement specializations
+	  for Atomic_Op on NT.  Not sure why Nanbor had reverted this
+	  change earlier.
+
 Mon Jun 21 19:07:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:
@@ -15,7 +24,7 @@ Mon Jun 21 19:07:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_structure.cpp:
 	  Removed ACE_ERROR message in in_recursion() method when
 	  a null field pointer is found by field::narrow_from_decl().
-	  Not everything iside a structure is a field, so this 
+	  Not everything iside a structure is a field, so this
 	  could be a legitimate return value.
 
 Mon Jun 21 18:57:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -37,7 +46,7 @@ Mon Jun 21 18:52:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* performance-tests/Pluggable/Makefile:
 	* performance-tests/Thruput/TAO/Makefile:Added -Ge 1 option to
 	  the TAO_IDLFLAGS in these Makefile's
-	
+
 Mon Jun 21 18:35:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Basic/Observer.cpp: Added initialization of
