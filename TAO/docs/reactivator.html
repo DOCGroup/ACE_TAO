@@ -111,9 +111,11 @@ module TAO
   };
   // One environment variable
       
-  typedef sequence<Environment_Variable> Environment;
+  typedef sequence&lt;Environment_Variable&gt; Environment;
+  // Complete environment
 
-  typedef sequence<string> Command_Line_Options;
+  typedef sequence&lt;string&gt; Command_Line_Options;
+  // Command line options
 
   struct Process_Options
     {
@@ -124,8 +126,8 @@ module TAO
       // Command line options
 
       Environment environment_; 
-      // Complete environment
-      
+      // Environment
+
       string working_directory_;  
       // Working directory
 
@@ -139,19 +141,19 @@ module TAO
 	raises (Not_Found);
       // Restart server that will contain this persistent object
       //
-      // The <Not_Found> exception is raised when <obj> is not found
+      // The &lt;Not_Found&gt; exception is raised when &lt;obj&gt; is not found
       // in the Reactivation Service.
 
       void register_object (in Object obj,
                             in Process_Options options)
 	raises (Already_Registered,
                 Object_Not_Persistent);
-      // Restart server process when client is looking for <obj>.
+      // Restart server process when client is looking for &lt;obj&gt;.
       //
-      // The <Already_Registered> exception is raised when <obj> has
+      // The &lt;Already_Registered&gt; exception is raised when &lt;obj&gt; has
       // already been registered with the Reactivation Service.
       // 
-      // The <Object_Not_Persistent> exception is raised when <obj> is
+      // The &lt;Object_Not_Persistent&gt; exception is raised when &lt;obj&gt; is
       // not a Persistent Object Reference.
 
       enum Host_Port_Options
@@ -177,9 +179,9 @@ module TAO
                                               in Host_Port_Options host_port_options)
 	raises (Already_Registered,
                 Object_Not_Persistent);
-      // Restart server process <executable_name> when client is
-      // looking for <obj>. Depending on the <host_port_options>,
-      // information from the <obj> object reference is used to
+      // Restart server process &lt;executable_name&gt; when client is
+      // looking for &lt;obj&gt;. Depending on the &lt;host_port_options&gt;,
+      // information from the &lt;obj&gt; object reference is used to
       // specify (-ORBport) and (-ORBhost) options for the server.
       
       void reregister_object (in Object obj,
@@ -197,9 +199,9 @@ module TAO
 
       void remove_object (in Object obj)
 	raises (Not_Found);
-      // Remove <obj> from the Reactivation Service.
+      // Remove &lt;obj&gt; from the Reactivation Service.
       //
-      // The <Not_Found> exception is raised when <obj> is not found
+      // The &lt;Not_Found&gt; exception is raised when &lt;obj&gt; is not found
       // in the Reactivation Service.
     };
 };
