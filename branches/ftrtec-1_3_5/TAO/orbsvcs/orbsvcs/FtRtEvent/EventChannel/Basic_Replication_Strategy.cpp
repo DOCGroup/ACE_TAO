@@ -43,6 +43,7 @@ Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
       //            client_interceptor_->sequence_num_--;
       FTRT::OutOfSequence exception;
       exception.current = this->sequence_num_;
+      TAO_FTRTEC::Log(3, "Throwing FTRT::OutOfSequence\n");
       ACE_THROW(FTRT::OutOfSequence(exception));
     }
     else
@@ -93,8 +94,10 @@ Basic_Replication_Strategy::replicate_request(
       ACE_ENDTRY;
     }
   }
-  else if (transaction_depth > 1)
+  else if (transaction_depth > 1) {
+    TAO_FTRTEC::Log(3, "Throwing FTRT::OutOfSequence\n");
     ACE_THROW(FTRT::TransactionDepthTooHigh());
+  }
 }
 
 void 
