@@ -1,4 +1,6 @@
+
 // $Id$
+
 
 #define ACE_BUILD_DLL
 #include "ace/OS.h"
@@ -1585,7 +1587,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       // TSS, it should call its destructors when the main thread
       // exits.
       ACE_Log_Msg::close ();
-#endif /* ! ACE_HAS_TSS_EMULATION */
+#endif /* ! ACE_HAS_TSS_EMULATION || ACE_WIN32 */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
       // Remove all TSS_Info table entries.
@@ -3198,6 +3200,197 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 #endif /* ACE_HAS_THREADS */
 }
 #endif /* ! ACE_HAS_THREADS || ! ACE_HAS_STHREADS */
+
+#if defined (ACE_PSOS)
+
+// bit masks and shifts for prying info out of the pSOS time encoding
+const u_long ACE_PSOS_Time_t::year_mask     = 0x0000FFFFul;
+const u_long ACE_PSOS_Time_t::month_mask    = 0x000000FFul;
+const u_long ACE_PSOS_Time_t::day_mask      = 0x000000FFul;
+const u_long ACE_PSOS_Time_t::hour_mask     = 0x0000FFFFul;
+const u_long ACE_PSOS_Time_t::minute_mask   = 0x000000FFul;
+const u_long ACE_PSOS_Time_t::second_mask   = 0x000000FFul;
+const int ACE_PSOS_Time_t::year_shift   = 16;
+const int ACE_PSOS_Time_t::month_shift  = 8;
+const int ACE_PSOS_Time_t::hour_shift   = 16;
+const int ACE_PSOS_Time_t::minute_shift = 8;
+const int ACE_PSOS_Time_t::year_origin = 1900;
+const int ACE_PSOS_Time_t::month_origin = 1;
+
+// maximum number of clock ticks supported
+const u_long ACE_PSOS_Time_t::max_ticks = ~0UL;
+
+
+ACE_PSOS_Time_t::ACE_PSOS_Time_t ()
+  : date_ (0), time_ (0), ticks_ (0)
+{
+}
+  // default ctor: date, time, and ticks all zeroed
+
+ACE_PSOS_Time_t::ACE_PSOS_Time_t (const timespec_t& t)
+{
+  struct tm* tm_struct = ACE_OS::gmtime (&(t.tv_sec));
+
+  // encode date values from tm struct into pSOS date bit array
+
+  date_  = (ACE_PSOS_Time_t::year_mask & 
+            ACE_static_cast (u_long, 
+                             tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
+           ACE_PSOS_Time_t::year_shift;
+
+  date_ |= (ACE_PSOS_Time_t::month_mask & 
+            ACE_static_cast (u_long, 
+                             tm_struct->tm_mon + ACE_PSOS_Time_t::month_origin)) <<
+           ACE_PSOS_Time_t::month_shift;
+
+  date_ |= ACE_PSOS_Time_t::day_mask & 
+           ACE_static_cast (u_long, tm_struct->tm_mday);
+
+
+  // encode time values from tm struct into pSOS time bit array
+
+  time_  = (ACE_PSOS_Time_t::hour_mask  & 
+            ACE_static_cast (u_long, tm_struct->tm_hour)) <<
+           ACE_PSOS_Time_t::hour_shift;
+
+  time_ |= (ACE_PSOS_Time_t::minute_mask & 
+            ACE_static_cast (u_long, tm_struct->tm_min)) << 
+           ACE_PSOS_Time_t::minute_shift;
+
+  time_ |= ACE_PSOS_Time_t::second_mask & 
+           ACE_static_cast (u_int, tm_struct->tm_sec);
+
+  // encode nanoseconds as system clock ticks
+  ticks_ = ACE_static_cast (u_long, 
+                            ((ACE_static_cast (double, t.tv_nsec) * 
+                              ACE_static_cast (double, KC_TICKS2SEC)) /
+                             ACE_static_cast (double, 1000000000)));
+  
+}
+  // ctor from a timespec_t
+
+
+ACE_PSOS_Time_t::operator timespec_t ()
+{
+  struct tm tm_struct;
+  
+  // decode date and time bit arrays and fill in fields of tm_struct
+
+  tm_struct.tm_year = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::year_mask & 
+                           (date_ >> ACE_PSOS_Time_t::year_shift))) -
+    ACE_PSOS_Time_t::year_origin;
+
+  tm_struct.tm_mon = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::month_mask & 
+                           (date_ >> ACE_PSOS_Time_t::month_shift))) -
+    ACE_PSOS_Time_t::month_origin;
+
+  tm_struct.tm_mday = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::day_mask & date_));
+
+  tm_struct.tm_hour = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::hour_mask & 
+                           (time_ >> ACE_PSOS_Time_t::hour_shift)));
+
+  tm_struct.tm_min = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::minute_mask & 
+                           (time_ >> ACE_PSOS_Time_t::minute_shift)));
+
+  tm_struct.tm_sec = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::second_mask & time_));
+
+  // indicate values we don't know as negative numbers
+  tm_struct.tm_wday  = -1;
+  tm_struct.tm_yday  = -1;
+  tm_struct.tm_isdst = -1;
+
+  timespec_t t;
+
+  // convert calendar time to time struct
+  t.tv_sec = ACE_OS::mktime (&tm_struct);
+
+  // encode nanoseconds as system clock ticks
+  t.tv_nsec = ACE_static_cast (long, 
+                               ((ACE_static_cast (double, ticks_) * 
+                                 ACE_static_cast (double, 1000000000)) /
+                                ACE_static_cast (double, KC_TICKS2SEC)));
+
+  return t;
+}
+  // type cast operator (to a timespec_t)
+
+ACE_INLINE u_long 
+ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
+{
+  u_long ret_val = 0;
+
+#if defined (ACE_PSOSIM) /* system time is broken in simulator */
+
+  timeval tv;
+  int result = 0;
+  ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
+  if (result == -1)
+  {
+    return 1;
+  }
+
+  ACE_Time_Value atv (tv);
+  timespec ts = atv;
+  ACE_PSOS_Time_t pt (ts);
+  t.date_ = pt.date_;
+  t.time_ = pt.time_;
+  t.ticks_ = pt.ticks_;
+
+#else
+
+  ret_val = tm_get (&(t.date_), &(t.time_), &(t.ticks_));
+
+#endif  /* ACE_PSOSIM */
+
+  return ret_val;
+}
+  // static member function to get current system time
+
+ACE_INLINE u_long 
+ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
+{
+  u_long ret_val = tm_set (t.date_, t.time_, t.ticks_);
+  return ret_val;
+}
+  // static member function to set current system time
+
+#if defined (ACE_PSOSIM)
+
+ACE_INLINE u_long
+ACE_PSOS_Time_t::init_simulator_time ()
+{
+  // This is a hack using a direct UNIX system call, because the appropriate
+  // ACE_OS method ultimately uses the pSOS tm_get function, which would fail
+  // because the simulator's system time is uninitialized (chicken and egg).
+  timeval t;
+  int result = 0;
+  ACE_OSCALL (::gettimeofday (&t, 0), int, -1, result);
+  if (result == -1)
+  {
+    return 1;
+  }
+  else 
+  {
+    ACE_Time_Value tv (t);
+    timespec ts = tv;
+    ACE_PSOS_Time_t pt (ts);
+    u_long ret_val = ACE_PSOS_Time_t::set_system_time (pt);
+    return ret_val;
+
+  }
+}
+  // static member function to initialize system time, using UNIX calls
+
+#endif /* ACE_PSOSIM */
+
+
+#endif  /* ACE_PSOS */
 
 #if defined (CHORUS)
 extern "C"
