@@ -53,7 +53,12 @@ u_int low_yield = 0;
 // To permit calculation of relative times.
 ACE_hrtime_t starttime;
 
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // class High_Priority_Task
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 class High_Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -141,7 +146,12 @@ High_Priority_Task::print_times () const
     }
 }
 
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // class Low_Priority_Task
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 class Low_Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -214,7 +224,12 @@ Low_Priority_Task::svc (void)
   return 0;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // function get_options
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 static u_int
 get_options (int argc, char *argv[])
@@ -240,7 +255,7 @@ get_options (int argc, char *argv[])
       if (ACE_OS::atoi (get_opt.optarg) > 0)
         read_period = ACE_OS::atoi (get_opt.optarg);
       else
-        ACE_ERROR_RETURN ((LM_ERROR, "%n: read period > 0\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: read period > 0\n"), (u_int) -1);
       break;
     case 'y':
       low_yield = 1;
@@ -270,7 +285,12 @@ get_options (int argc, char *argv[])
 
 #endif /* ACE_HAS_THREADS */
 
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // function main
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int
 main (int argc, char *argv[])
@@ -283,9 +303,11 @@ main (int argc, char *argv[])
     ACE_OS::exit (-1);
 
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                              ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
-                                              ACE_SCOPE_PROCESS)) != 0)
+  if (ACE_OS::sched_params (
+        ACE_Sched_Params (
+          ACE_SCHED_FIFO,
+          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+          ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
         ACE_DEBUG ((LM_MAX, "preempt: user is not superuser, "
@@ -315,8 +337,7 @@ main (int argc, char *argv[])
   // Wait for all threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
-  // Display the time deltas.  They should be about a half second
-  // apart.
+  // Display the time deltas.  They should be about a half second apart.
   for (i = 0; i < high_priority_tasks; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "High priority task %u:\n", i + 1));
