@@ -46,7 +46,7 @@ public:
     GETPARAMS
   };
 
-  struct Serial_Params
+  struct ACE_Export Serial_Params
   {
     Serial_Params (void);
 
