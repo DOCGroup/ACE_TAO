@@ -1,3 +1,13 @@
+Fri Nov 12 16:35:00 2004  Gary Maxey    <gary.maxey@hp.com>
+
+        * ace/config-tandem-nsk-mips-v2.h
+
+          Updated for compatibility with latest repository changes
+
+        * ace/config-tandem-nsk-mips-v3.h
+
+          Added for new compiler version
+
 Fri Nov 12 18:30:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/Makefile.am: Moved HTBP down under '.' to make sure
