@@ -45,8 +45,7 @@ class TAO_MProfile;
 /**
  * @class TAO_IORInfo
  *
- * @brief
- * This class exposes an interface that allows IORInterceptors add
+ * @brief This class exposes an interface that allows IORInterceptors add
  * tagged components to IORs.
  */
 class TAO_PortableServer_Export TAO_IORInfo :
