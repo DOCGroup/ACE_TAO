@@ -9,7 +9,7 @@
 #include "HTTP_Config.h"
 #include "IO.h"
 
-static const char * EMPTY_HEADER = "";
+static char * const EMPTY_HEADER = (char *)"";
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
   : io_(io), request_(request)
@@ -24,7 +24,8 @@ HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
 HTTP_Response::~HTTP_Response (void)
 {
   if (this->HTTP_HEADER != EMPTY_HEADER)
-    delete this->HTTP_HEADER;
+    delete [] this->HTTP_HEADER;
+  // The [] is important.  Without it, there was a huge memory leak!
 }
 
 void
