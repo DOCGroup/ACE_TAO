@@ -144,6 +144,12 @@ private:
 
   virtual AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
 
+  virtual AST_Component *fe_add_component (AST_Component *i);
+
+  virtual AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
+
+  virtual AST_Home *fe_add_home (AST_Home *i);
+
   virtual AST_Constant *fe_add_constant (AST_Constant *c);
 
   virtual AST_Exception *fe_add_exception (AST_Exception *e);

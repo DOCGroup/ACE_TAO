@@ -3,6 +3,8 @@
 //
 #include "be_scope.h"
 #include "be_valuetype.h"
+#include "be_component.h"
+#include "be_home.h"
 #include "be_module.h"
 #include "be_exception.h"
 #include "be_union.h"
@@ -58,6 +60,10 @@ be_scope::decl (void)
       return be_interface::narrow_from_scope (this);
     case AST_Decl::NT_valuetype:
       return be_valuetype::narrow_from_scope (this);
+    case AST_Decl::NT_component:
+      return be_component::narrow_from_scope (this);
+    case AST_Decl::NT_home:
+      return be_home::narrow_from_scope (this);
     case AST_Decl::NT_module:
       return be_module::narrow_from_scope (this);
     case AST_Decl::NT_root:

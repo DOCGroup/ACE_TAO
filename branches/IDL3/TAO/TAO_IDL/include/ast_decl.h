@@ -146,6 +146,7 @@ public:
                                     // language
       , NT_factory                  // Denotes a OBV factory construct
       , NT_component                // Denotes a CORBA component
+      , NT_component_fwd            // Denotes a forward declared component
       , NT_home                     // Denotes a CORBA component home
       , NT_finder                   // Denotes a home finder
       , NT_eventtype                // Denotes a CCM event source or sink

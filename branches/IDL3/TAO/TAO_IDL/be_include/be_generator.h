@@ -117,6 +117,20 @@ public:
   virtual AST_ValueTypeFwd *create_valuetype_fwd (UTL_ScopedName *n,
                                                   idl_bool abstract);
 
+  virtual AST_Component *create_component (UTL_ScopedName *n,
+                                           AST_Component *base_component,
+                                           AST_Interface **supports,
+                                           long n_supports,
+                                           AST_Interface **supports_flat,
+                                           long n_supports_flat);
+
+  virtual AST_ComponentFwd *create_component_fwd (UTL_ScopedName *n);
+
+  virtual AST_Home *create_home (UTL_ScopedName *n,
+                                 AST_Home *base_home,
+                                 AST_Component *managed_component,
+                                 AST_ValueType *primary_key);
+
   virtual AST_Exception *create_exception (UTL_ScopedName *n,
                                            idl_bool local,
                                            idl_bool abstract);

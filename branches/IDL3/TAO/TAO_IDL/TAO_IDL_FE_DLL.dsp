@@ -122,6 +122,10 @@ SOURCE=.\ast\ast_component.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_component_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_concrete_type.cpp
 # End Source File
 # Begin Source File
@@ -159,6 +163,10 @@ SOURCE=.\ast\ast_field.cpp
 # Begin Source File
 
 SOURCE=.\ast\ast_generator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ast\ast_home.cpp
 # End Source File
 # Begin Source File
 
@@ -374,6 +382,10 @@ SOURCE=.\include\ast_component.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\ast_component_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\ast_concrete_type.h
 # End Source File
 # Begin Source File
@@ -415,6 +427,10 @@ SOURCE=.\include\ast_field.h
 # Begin Source File
 
 SOURCE=.\include\ast_generator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_home.h
 # End Source File
 # Begin Source File
 

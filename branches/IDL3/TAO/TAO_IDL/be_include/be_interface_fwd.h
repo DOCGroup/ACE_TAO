@@ -11,7 +11,7 @@
 //
 // = DESCRIPTION
 //    Extension of class AST_InterfaceFwd that provides additional
-//    means for C++ mapping of an interface.
+//    means for C++ mapping of a forward declared interface.
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.

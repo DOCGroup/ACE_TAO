@@ -34,6 +34,9 @@ class be_interface;
 class be_interface_fwd;
 class be_valuetype;
 class be_valuetype_fwd;
+class be_component;
+class be_component_fwd;
+class be_home;
 class be_factory;
 class be_structure;
 class be_structure_fwd;
@@ -101,6 +104,15 @@ public:
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype_fwd
+
+  virtual int visit_component (be_component *node);
+  // visit component
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+  // visit component_fwd
+
+  virtual int visit_home (be_home *node);
+  // visit component home
 
   virtual int visit_factory (be_factory *node);
   // Visit a OBV factory construct.

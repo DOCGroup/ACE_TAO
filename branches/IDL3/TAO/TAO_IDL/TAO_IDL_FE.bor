@@ -9,6 +9,8 @@ OBJFILES = \
 	$(OBJDIR)\ast_array.obj \
 	$(OBJDIR)\ast_attribute.obj \
 	$(OBJDIR)\ast_check.obj \
+	$(OBJDIR)\ast_component.obj \
+	$(OBJDIR)\ast_component_fwd.obj \
 	$(OBJDIR)\ast_concrete_type.obj \
 	$(OBJDIR)\ast_constant.obj \
 	$(OBJDIR)\ast_decl.obj \
@@ -19,6 +21,7 @@ OBJFILES = \
         $(OBJDIR)\ast_factory.obj \
 	$(OBJDIR)\ast_field.obj \
 	$(OBJDIR)\ast_generator.obj \
+	$(OBJDIR)\ast_home.obj \
 	$(OBJDIR)\ast_interface.obj \
 	$(OBJDIR)\ast_interface_fwd.obj \
 	$(OBJDIR)\ast_module.obj \

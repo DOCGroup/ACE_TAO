@@ -34,6 +34,8 @@ FILES = fe/fe_declarator \
         ast/ast_argument \
         ast/ast_attribute \
         ast/ast_check \
+        ast/ast_component \
+        ast/ast_component_fwd \
         ast/ast_concrete_type \
         ast/ast_constant \
         ast/ast_decl \
@@ -43,6 +45,7 @@ FILES = fe/fe_declarator \
         ast/ast_expression \
         ast/ast_factory \
         ast/ast_field \
+        ast/ast_home \
         ast/ast_interface \
         ast/ast_interface_fwd \
         ast/ast_module \
