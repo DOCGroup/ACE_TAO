@@ -650,7 +650,7 @@ void
 ACE_ReactorEx::max_notify_iterations (int iterations)
 {
   ACE_TRACE ("ACE_ReactorEx::max_notify_iterations");
-  ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
+  ACE_GUARD (ACE_Process_Mutex, monitor, this->lock_);
 
   // Must always be > 0 or < 0 to optimize the loop exit condition.
   this->notify_handler_.max_notify_iterations (iterations);
@@ -837,7 +837,7 @@ ACE_ReactorEx::dispatch_handler (int index)
 // ************************************************************
 
 ACE_ReactorEx_Notify::ACE_ReactorEx_Notify (void)
-  : max_notify_iterations (-1)
+  : max_notify_iterations_ (-1)
 {
 }
 
