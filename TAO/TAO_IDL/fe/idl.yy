@@ -926,15 +926,6 @@ type_declarator :
               if (tp == NULL)
 		     continue;
 	      t = idl_global->gen()->create_typedef(tp, d->name(), p);
-              // if this is a sequence, it is a named one and hence we
-	      // set its name to the same as the declarator. However
-	      // @@ (ASG) note that if we had a scenario of the kind
-              // typedef sequence<...> X, Y, Z; then we must make a
-	      // new sequence node for each name. Not handled currently.
-              if (tp->node_type () == AST_Decl::NT_sequence)
-               {
-                 tp->set_name (d->name ());
-               }
 	      (void) s->fe_add_typedef(t);
 	    }
 	    delete l;

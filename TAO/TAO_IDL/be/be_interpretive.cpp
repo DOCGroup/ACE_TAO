@@ -38,6 +38,7 @@
 #include "be_visitor_root.h"
 #include "be_visitor_sequence.h"
 #include "be_visitor_structure.h"
+#include "be_visitor_typecode.h"
 #include "be_visitor_typedef.h"
 #include "be_visitor_union.h"
 #include "be_visitor_union_branch.h"
@@ -209,6 +210,11 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_typedef_any_op_ch (new_ctx);
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
       return new be_visitor_typedef_any_op_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_TYPECODE_DECL:
+      return new be_visitor_typecode_decl (new_ctx);
+    case TAO_CodeGen::TAO_TYPECODE_DEFN:
+      return new be_visitor_typecode_defn (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_CH:
       return new be_visitor_operation_ch (new_ctx);

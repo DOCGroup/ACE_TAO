@@ -164,21 +164,23 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
             () << "_out;\n\n";
         }
 
-      // generate the typecode decl
-      if (node->is_nested ())
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      be_visitor *visitor;
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
         {
-          // we have a scoped name
-          os->indent ();
-          *os << "static CORBA::TypeCode_ptr " << node->tc_name
-            ()->last_component () << ";\n\n";
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_structure_ch::"
+                             "visit_structure - "
+                             "TypeCode declaration failed\n"
+                             ), -1);
         }
-      else
-        {
-          // we are in the ROOT scope
-          os->indent ();
-          *os << "extern CORBA::TypeCode_ptr " << node->tc_name
-            ()->last_component () << ";\n\n";
-        }
+
+
       node->cli_hdr_gen (I_TRUE);
     }
   return 0;
@@ -269,13 +271,22 @@ int be_visitor_structure_cs::visit_structure (be_structure *node)
       os->decr_indent ();
       *os << "};\n\n";
 
-      os->indent ();
-      *os << "static CORBA::TypeCode _tc__tc_" << node->flatname () <<
-        " (CORBA::tk_struct, sizeof (_oc_" <<  node->flatname () <<
-        "), (char *) &_oc_" << node->flatname () <<
-        ", CORBA::B_FALSE);" << be_nl;
-      *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_" <<
-        node->flatname () << ";\n\n";
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      be_visitor *visitor;
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_structure_cs::"
+                             "visit_structure - "
+                             "TypeCode definition failed\n"
+                             ), -1);
+        }
+
 
       // do any code generation required for the scope members
       // all we have to do is to visit the scope
