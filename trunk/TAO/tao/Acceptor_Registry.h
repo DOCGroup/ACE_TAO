@@ -73,7 +73,7 @@ public:
 
   size_t endpoint_count (void);
   // Returns the total number of endpoints, i.e., the number of
-  // profiles that will be created.
+  // profiles that have been created.
 
   int make_mprofile (const TAO_ObjectKey& object_key,
                      TAO_MProfile &mprofile);
