@@ -1,3 +1,33 @@
+Fri Mar 21 16:37:12 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp: Added a new argument to the
+	  constructor of stub objects. This change is made to make sure
+	  that stub objects have constructors similar to the
+	  CORBA::Object. 
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: Added a new
+	  constructor as required by the latest changes to the
+	  CORBA::Object. 
+	
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp: Definition of
+	  the above constructor. 
+	
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: In
+	  _unchecked_narrow () we create a interface pointer object if the
+	  IOR is lazily evaluated by giving it the IOP::IOR and the
+	  ORB_Core. 
+	
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: In the
+	  code generation for operation, initialize the object completely
+	  ie. evaluate the IOR completely and setup collocation if they
+	  have not been setup before (which is possible if the IOR's are
+	  evaluated lazily) proceeding with the operation. 
+	
+	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
+	* TAO_IDL/be/be_visitor_component/component_ci.cpp:
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp: Retrofit the
+	  above changes for components too.  
+
 Wed Mar 19 16:05:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_component/component_cs.cpp:Added a check
