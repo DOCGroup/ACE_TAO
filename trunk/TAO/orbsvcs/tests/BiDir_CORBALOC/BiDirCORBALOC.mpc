@@ -1,0 +1,13 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): namingexe, portableserver,bidir_giop, utils {
+
+  idlflags += -GA
+
+  Source_Files {
+  TimeServer.cpp
+  }
+}
+
+

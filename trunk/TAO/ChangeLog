@@ -1,3 +1,14 @@
+Sat Dec 11 17:10:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/BiDir_CORBALOC/BiDirCORBALOC.mpc:
+	* orbsvcs/tests/BiDir_CORBALOC/README:
+	* orbsvcs/tests/BiDir_CORBALOC/TimeModule.idl:
+	* orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
+	* orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
+
+	  A new test for testing BiDirGIOP with CORBALOC URL's. Wanted to
+	  have a unit test for this for a long time.
+
 Sat Dec 11 16:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LongDoubleSeq.pidl:
