@@ -292,6 +292,18 @@ CORBA_Object::_get_name (CORBA_Environment &env)
   return 0; //otherwise
 }
 
+int
+CORBA_Object::find (const CORBA_String& opname, TAO_Skeleton& skelfunc)
+{
+  return optable_->find (opname, skelfunc);
+}
+
+int
+CORBA_Object::bind (const CORBA_String& opname, const TAO_Skeleton skel_ptr)
+{
+  return optable_->bind (opname, skel_ptr);
+}
+
 // COM's IUnknown support
 
 #if	unix || defined (VXWORKS)

@@ -103,22 +103,21 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 
 // Basic types used in the CORBA 2.0 runtime
 
-#include	"corbacom.h"
-#include	"except.h"
-#include	"object.h"
-#include	"sequence.h"
-#include	"principa.h"
-#include	"typecode.h"
-#include	"any.h"
-#include	"nvlist.h"
-#include	"request.h"
-#include	"svrrqst.h"
+#include "corbacom.h"
+#include "except.h"
+#include "sequence.h"
+#include "principa.h"
+#include "typecode.h"
+#include "any.h"
+#include "nvlist.h"
+#include "request.h"
+#include "svrrqst.h"
+#include "object.h"
 
 #if !defined(__IIOP_BUILD)
-#include        "boa.h"
-
+#  include "boa.h"
 // Bootstrapping, etc
-#include	"orbobj.h"
+#  include "orbobj.h"
 #endif
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included

@@ -1,15 +1,3 @@
-ACE_INLINE int
-CORBA_Object::find (const CORBA_String& opname, TAO_Skeleton& skelfunc)
-{
-  return optable_->find (opname, skelfunc);
-}
-
-ACE_INLINE int
-CORBA_Object::bind (const CORBA_String& opname, const TAO_Skeleton skel_ptr)
-{
-  return optable_->bind (opname, skel_ptr);
-}
-
 ACE_INLINE void *
 CORBA_Object::get_subclass (void)
 {
@@ -45,11 +33,6 @@ ACE_INLINE CORBA_Boolean
 CORBA_is_nil (CORBA_Object_ptr	obj)
 {
   return (CORBA_Boolean) (obj == 0);
-}
-
-ACE_INLINE
-TAO_Operation_Table::~TAO_Operation_Table (void)
-{
 }
 
 // Constructor and destructor are accessible to subclasses
