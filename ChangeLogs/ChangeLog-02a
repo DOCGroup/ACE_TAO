@@ -1,3 +1,8 @@
+Tue Jan  8 11:31:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Makefile: When doing realclean, use the DLL_Test and
+          Service_Config_DLL Makefiles to clean their files up.
+
 Tue Jan  8 08:36:33 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):

@@ -217,7 +217,8 @@ run_test.vxworks: run_test.lst
 endif
 
 realclean: clean
-	-$(RM) libDLL_Test.$(SOEXT) libService_Config_DLL.*
+	-$(MAKE) -f Makefile.DLL_Test realclean
+	-$(MAKE) -f Makefile.Service_Config_DLL realclean
 	-$(RM) log/compilations.log*
 
 #----------------------------------------------------------------------------
