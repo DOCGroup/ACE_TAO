@@ -1,3 +1,9 @@
+Thu Oct 23 05:21:43 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Singleton.cpp (dump): There was a typo in the dump() method
+ 	  for ACE_TSS_Singleton, it should be
+ 	  ACE_TSS_Singleton::instance_i().  I've fixed this.
+
 Wed Oct 22 23:23:29 1997  Nanbor Wang    <nw1@COYOTE>
 
 	* ace/ACE_Library.*, ace_lib.dsp: Made naming convention uniform
