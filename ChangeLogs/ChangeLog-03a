@@ -17,7 +17,7 @@ Wed Jun 19 14:25:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  returnable by the call resume_handler (). 
 	  
 	* ace/Event_Handler.cpp (resume_handler): Instead of returning 0,
-	  returned ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER. 
+	  we return ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER. 
 
 Wed Jun 19 13:42:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
