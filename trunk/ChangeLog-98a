@@ -1,3 +1,8 @@
+Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Future.cpp: restored ACE_Atomic_Op instantiation because
+          it is needed with g++.
+
 Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 
 	* tests/test_config.h: Removed code for
@@ -24,7 +29,7 @@ Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 	  examples/Shared_Malloc/test_persistence.cpp
 	  examples/Threads/task_three.cpp
 	  netsvcs/lib/Logging_Strategy.cpp
-	
+
 	* ace/IOStream.h: Darrell missed removing this explicit iostream.h
  	  inclusion.
 
