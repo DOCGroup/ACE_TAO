@@ -11,17 +11,16 @@
 
 ACE_RCSID(Logger, indirect_logging, "$Id$")
 
-int 
-main (int argc, char *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const char *prog_name  = argv[0];
+  const ACE_TCHAR *prog_name  = argv[0];
   int iterations  = argc < 2 ? 10 : ACE_OS::atoi (argv[1]);
-  const char *logger_key = argc < 3 ? ACE_DEFAULT_LOGGER_KEY : argv[2];
+  const ACE_TCHAR *logger_key = argc < 3 ? ACE_DEFAULT_LOGGER_KEY : argv[2];
 
   ACE_OS::srand ((u_int) ACE_OS::time (0));
 
-  ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER,
-		             ACE_TEXT_CHAR_TO_TCHAR (logger_key));
+  ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER, logger_key);
 
   ACE_DEBUG ((LM_STARTUP, "starting up the test\n"));
 
@@ -29,8 +28,8 @@ main (int argc, char *argv[])
     {
       size_t priority = ACE_OS::rand () % int (LM_MAX);
       ACE_POW (priority);
-      ACE_DEBUG ((ACE_Log_Priority (priority), 
-		  "random message %d...\n", 
+      ACE_DEBUG ((ACE_Log_Priority (priority),
+		  "random message %d...\n",
 		  priority));
     }
 
