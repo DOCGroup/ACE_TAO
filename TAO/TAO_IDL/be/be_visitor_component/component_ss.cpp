@@ -38,6 +38,8 @@ be_visitor_component_ss::~be_visitor_component_ss (void)
 int
 be_visitor_component_ss::visit_component (be_component *node)
 {
-  // TODO
-  return 0;
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_SS);
+  be_visitor_interface_ss visitor (&ctx);
+  return visitor.visit_interface (node);
 }
