@@ -49,12 +49,17 @@ be_visitor_arg_tmplinst::visit_interface (be_interface *node)
 
   this->gen_direction (os);
 
-  *os << "_Object_" << this->S_ << "Argument_T<" << this->linebreak_ 
+  *os << "_Object_" << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
       << node->name () << "_ptr";
 
   switch (this->dir_)
     {
+    case _tao_INOUT:
+        *os << "," << this->linebreak_ << be_nl
+            << "TAO::Objref_Traits<"  << node->name () << ">";
+        break;
+
       case _tao_OUT:
         *os << "," << this->linebreak_ << be_nl
             << node->name () << "_out";
@@ -74,7 +79,7 @@ be_visitor_arg_tmplinst::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_interface_fwd (be_interface_fwd *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -82,7 +87,7 @@ be_visitor_arg_tmplinst::visit_interface_fwd (be_interface_fwd *node)
       return 0;
     }
 
-  be_interface *fd = 
+  be_interface *fd =
     be_interface::narrow_from_decl (node->full_definition ());
 
   if (this->visit_interface (fd) != 0)
@@ -97,7 +102,7 @@ be_visitor_arg_tmplinst::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_valuetype (be_valuetype *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -108,12 +113,12 @@ be_visitor_arg_tmplinst::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::";
 
   this->gen_direction (os);
 
-  *os << "_Object_" << this->S_ << "Argument_T<" << this->linebreak_ 
+  *os << "_Object_" << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
       << node->name () << " *";
 
@@ -138,7 +143,7 @@ be_visitor_arg_tmplinst::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -146,7 +151,7 @@ be_visitor_arg_tmplinst::visit_valuetype_fwd (be_valuetype_fwd *node)
       return 0;
     }
 
-  be_valuetype *fd = 
+  be_valuetype *fd =
     be_valuetype::narrow_from_decl (node->full_definition ());
 
   if (this->visit_valuetype (fd) != 0)
@@ -161,13 +166,13 @@ be_visitor_arg_tmplinst::visit_valuetype_fwd (be_valuetype_fwd *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   return this->visit_valuetype_fwd (node);
@@ -184,12 +189,12 @@ be_visitor_arg_tmplinst::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::";
 
   this->gen_direction (os);
 
-  *os << "_Var_Size_" << this->S_ << "Argument_T<" << this->linebreak_ 
+  *os << "_Var_Size_" << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
       << node->name ();
 
@@ -214,7 +219,7 @@ be_visitor_arg_tmplinst::visit_sequence (be_sequence *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_string (be_string *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -239,12 +244,12 @@ be_visitor_arg_tmplinst::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::";
 
   this->gen_direction (os);
 
-  *os << "_BD_String_" << this->S_ << "Argument_T<" << this->linebreak_ 
+  *os << "_BD_String_" << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
       << "CORBA::" << (wide ? "W" : "") << "Char";
 
@@ -263,9 +268,9 @@ be_visitor_arg_tmplinst::visit_string (be_string *node)
     }
 
   *os << "," << this->linebreak_ << be_nl
-      << "ACE_InputCDR::to_" << (wide ? "w" : "") << "char," 
+      << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string,"
       << this->linebreak_ << be_nl
-      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "char,"
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string,"
       << this->linebreak_ << be_nl
       << bound << this->linebreak_ << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -274,7 +279,7 @@ be_visitor_arg_tmplinst::visit_string (be_string *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_array (be_array *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -286,29 +291,29 @@ be_visitor_arg_tmplinst::visit_array (be_array *node)
   idl_bool fixed = (node->size_type () == AST_Type::FIXED);
 
   *os << be_nl << be_nl
-      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::";
 
   this->gen_direction (os);
 
-  *os << "_" << (fixed ? "Fixed" : "Var") << "_Array_" 
-      << this->S_ << "Argument_T<" << this->linebreak_ 
+  *os << "_" << (fixed ? "Fixed" : "Var") << "_Array_"
+      << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
       << node->name () << "," << this->linebreak_ << be_nl;
 
   switch (this->dir_)
     {
-      case _tao_IN:
+    case _tao_IN:
+    case _tao_INOUT:
         *os << node->name () << "_slice," << this->linebreak_ << be_nl;
         break;
       case _tao_OUT:
+        *os << node->name () << "_slice," << this->linebreak_ << be_nl;
         if (!fixed)
           {
-            *os << node->name () << "_slice," << this->linebreak_ << be_nl
-                << node->name () << "_var," << this->linebreak_ << be_nl
+            *os << node->name () << "_var," << this->linebreak_ << be_nl
                 << node->name () << "_out," << this->linebreak_ << be_nl;
           }
-
         break;
       case _tao_RET:
         *os << node->name () << "_slice," << this->linebreak_ << be_nl
@@ -319,13 +324,15 @@ be_visitor_arg_tmplinst::visit_array (be_array *node)
     }
 
   *os << node->name () << "_forany" << this->linebreak_ << be_uidt_nl
-      << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+      << ">" << this->suffix_ << be_uidt << be_uidt
+      << be_uidt << be_uidt;
 
   this->this_mode_and_dir_generated (node, I_TRUE);
+
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_enum (be_enum *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -336,12 +343,12 @@ be_visitor_arg_tmplinst::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::";
 
   this->gen_direction (os);
 
-  *os << "_Basic_" << this->S_ << "Argument_T<" << this->linebreak_ 
+  *os << "_Basic_" << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
       << node->name () << this->linebreak_ << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -350,7 +357,7 @@ be_visitor_arg_tmplinst::visit_enum (be_enum *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_structure (be_structure *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -362,18 +369,18 @@ be_visitor_arg_tmplinst::visit_structure (be_structure *node)
   idl_bool fixed = (node->size_type () == AST_Type::FIXED);
 
   *os << be_nl << be_nl
-      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::";
 
   this->gen_direction (os);
 
-  *os << "_" << (fixed ? "Fixed" : "Var") << "_Size_" 
-      << this->S_ << "Argument_T<" << this->linebreak_ 
+  *os << "_" << (fixed ? "Fixed" : "Var") << "_Size_"
+      << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
       << node->name ();
-  
+
   if (!fixed)
-    {   
+    {
       switch (this->dir_)
         {
           case _tao_OUT:
@@ -396,7 +403,7 @@ be_visitor_arg_tmplinst::visit_structure (be_structure *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_structure_fwd (be_structure_fwd *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -428,7 +435,7 @@ be_visitor_arg_tmplinst::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arg_tmplinst::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -437,14 +444,14 @@ be_visitor_arg_tmplinst::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arg_tmplinst::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_union (be_union *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -456,18 +463,18 @@ be_visitor_arg_tmplinst::visit_union (be_union *node)
   idl_bool fixed = (node->size_type () == AST_Type::FIXED);
 
   *os << be_nl << be_nl
-      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::";
 
   this->gen_direction (os);
 
-  *os << "_" << (fixed ? "Fixed" : "Var") << "_Size_" 
-      << this->S_ << "Argument_T<" << this->linebreak_ 
+  *os << "_" << (fixed ? "Fixed" : "Var") << "_Size_"
+      << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
       << node->name ();
-  
+
   if (!fixed)
-    {   
+    {
       switch (this->dir_)
         {
           case _tao_OUT:
@@ -490,7 +497,7 @@ be_visitor_arg_tmplinst::visit_union (be_union *node)
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_union_fwd (be_union_fwd *node)
 {
   if (this->this_mode_and_dir_generated (node))
@@ -522,7 +529,7 @@ be_visitor_arg_tmplinst::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arg_tmplinst::"
                          "visit_union_branch - "
-                         "Bad union_branch type\n"), 
+                         "Bad union_branch type\n"),
                         -1);
     }
 
@@ -531,14 +538,14 @@ be_visitor_arg_tmplinst::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arg_tmplinst::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"), 
+                         "codegen for union_branch type failed\n"),
                         -1);
     }
 
   return 0;
 }
 
-int 
+int
 be_visitor_arg_tmplinst::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
@@ -712,4 +719,3 @@ be_visitor_arg_tmplinst::gen_direction (TAO_OutStream *os)
         break;
     }
 }
-

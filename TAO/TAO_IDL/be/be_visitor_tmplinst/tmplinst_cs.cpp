@@ -44,13 +44,14 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
           << ">" << this->suffix_;
 
       *os << be_nl << be_nl
-          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
-          << "TAO::Object_Arg_Traits_T<" << this->linebreak_ 
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::Object_Arg_Traits_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << "_ptr," << this->linebreak_ << be_nl
           << node->name () << "_var," << this->linebreak_ << be_nl
-          << node->name () << "_out" << this->linebreak_ << be_uidt_nl
-          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+          << node->name () << "_out," << this->linebreak_ << be_nl
+          << "TAO::Objref_Traits<" << node->name () << "> " << this->linebreak_
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt << be_uidt;
 
       os->gen_endif ();
     }
@@ -81,14 +82,12 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
   *os << be_nl << be_nl
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO_Objref_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
-      << node->name () << "," << this->linebreak_ << be_nl
-      << "TAO::Objref_Traits<" << node->name () << ">" << this->linebreak_ 
+      << node->name () << be_nl
       << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt_nl << be_uidt_nl
       << this->prefix_<< this->linebreak_ << be_idt << be_idt_nl
       << "TAO_Objref_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
-      << node->name () << "," << this->linebreak_ << be_nl
-      << "TAO::Objref_Traits<" << node->name () << ">" << this->linebreak_ 
+      << node->name () << be_nl
       << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
@@ -97,7 +96,7 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Narrow_Utils<" << node->name () << ">" 
+          << "TAO::Narrow_Utils<" << node->name () << ">"
           << this->suffix_ << be_uidt << be_uidt;
     }
 
@@ -105,7 +104,7 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
     {
       // Its necessary to take care of the nested case.
       // The smart proxy classes are in the same scope as the proxy.
-      be_decl* scope = 
+      be_decl* scope =
         be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
       *os << be_nl << be_nl
@@ -139,7 +138,7 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
 {
   if (this->this_mode_generated (node))
@@ -159,13 +158,14 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
           << ">" << this->suffix_;
 
       *os << be_nl << be_nl
-          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl 
-          << "TAO::Object_Arg_Traits_T<" << this->linebreak_ 
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::Object_Arg_Traits_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << " *," << this->linebreak_ << be_nl
           << node->name () << "_var," << this->linebreak_ << be_nl
-          << node->name () << "_out" << this->linebreak_ << be_uidt_nl
-          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+          << node->name () << "_out," << this->linebreak_ << be_nl
+          << "TAO::Objref_Traits<" << node->name () << "> " << this->linebreak_
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt << be_uidt;
 
       os->gen_endif ();
     }
@@ -185,7 +185,7 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
     }
 
   // For traits template class.
-  // @@@ (JP) This condition may change or go away once we 
+  // @@@ (JP) This condition may change or go away once we
   // regenerate the ORB hand-crafted code.
   if (!node->is_defined ())
     {
@@ -197,16 +197,15 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
   // For _var and _out template classes.
   if (node->is_defined ())
     {
-      *os << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO_Value_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << "," << this->linebreak_ << be_nl
-          << "TAO::Value_Traits<" << node->name () << ">" << this->linebreak_ 
+          << node->name () << this->linebreak_ << be_nl
           << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt_nl << be_uidt_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO_Value_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << "," << this->linebreak_ << be_nl
-          << "TAO::Value_Traits<" << node->name  () << ">" << this->linebreak_
+          << node->name () << this->linebreak_ << be_nl
           << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
@@ -249,7 +248,7 @@ be_visitor_tmplinst_cs::visit_operation (be_operation *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_tmplinst_cs::"
                          "visit_operation - "
-                         "codegen for return type failed\n"), 
+                         "codegen for return type failed\n"),
                         -1);
     }
 
@@ -268,7 +267,7 @@ be_visitor_tmplinst_cs::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_tmplinst_cs::"
                              "visit_operation - "
-                             "codegen for argument failed\n"), 
+                             "codegen for argument failed\n"),
                             -1);
         }
     }
@@ -298,7 +297,7 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Var_Size_Arg_Traits<" << this->linebreak_
+          << "TAO::Var_Size_Arg_Traits_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << alias->name () << "," << this->linebreak_ << be_nl
           << alias->name () << "_var," << this->linebreak_ << be_nl
@@ -337,7 +336,7 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
           nt = td->base_node_type ();
         }
     }
-      
+
   // basic IDL types are in TAO. Sequences of (w)strings in TAO are
   // specializations and so are not template classes.
   if ((nt != AST_Decl::NT_pre_defined
@@ -356,7 +355,7 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
     {
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Any_Dual_Impl_T<" << this->linebreak_ 
+          << "TAO::Any_Dual_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -366,7 +365,7 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
   return 0;
 }
 
-int 
+int
 be_visitor_tmplinst_cs::visit_string (be_string *node)
 {
   if (this->this_mode_generated (node) || !node->seen_in_operation ())
@@ -395,7 +394,7 @@ be_visitor_tmplinst_cs::visit_string (be_string *node)
   os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
   *os << be_nl << be_nl
-      << this->prefix_ << " TAO::Arg_Traits<" << alias->local_name ()
+      << this->prefix_ << " TAO::Arg_Traits<TAO::" << alias->local_name ()
       << "_" << bound << ">" << this->suffix_;
 
   *os << be_nl << be_nl
@@ -408,7 +407,7 @@ be_visitor_tmplinst_cs::visit_string (be_string *node)
   return 0;
 }
 
-int 
+int
 be_visitor_tmplinst_cs::visit_array (be_array *node)
 {
   if (this->this_mode_generated (node))
@@ -425,17 +424,17 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
 
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
 
-      *os << be_nl << be_nl << this->prefix_ << " TAO::Arg_Traits<" 
+      *os << be_nl << be_nl << this->prefix_ << " TAO::Arg_Traits<"
           << node->name () << ">" << this->suffix_;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::" << (variable ? "Var" : "Fixed") << "_Array_Arg_Traits<"
+          << "TAO::" << (variable ? "Var" : "Fixed") << "_Array_Arg_Traits_T<"
           << this->linebreak_ << be_idt << be_idt_nl
           << node->name () << "," << this->linebreak_ << be_nl
           << node->name () << "_slice," << this->linebreak_ << be_nl
           << node->name () << "_var," << this->linebreak_ << be_nl;
-     
+
       if (variable)
         {
           *os << node->name () << "_out," << this->linebreak_ << be_nl;
@@ -455,14 +454,14 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
 
   // To hold the full name, whether anonymous or not.
   char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias ())
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, "%s", 
+      ACE_OS::sprintf (fname, "%s",
                        node->full_name ());
     }
   else
@@ -472,17 +471,17 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
       // our local name. This needs to be inserted after the parents's name.
       if (node->is_nested ())
         {
-          be_decl *parent = 
+          be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
@@ -504,14 +503,10 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
     {
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO_" << (fixed ? "Fixed" : "Var") << "Array_Var_T<" 
+          << "TAO_" << (fixed ? "Fixed" : "Var") << "Array_Var_T<"
           << this->linebreak_ << be_idt << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice," << this->linebreak_ << be_nl
-          << "TAO::Array_Traits<" << this->linebreak_ << be_idt << be_idt_nl
-          << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_uidt_nl
-          << ">" << this->linebreak_ << be_uidt << be_uidt_nl
+          << fname << "_slice" << this->linebreak_ << be_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
@@ -519,23 +514,15 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << "TAO_Array_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
           << fname << "_var," << this->linebreak_ << be_nl
-          << fname << "_slice," << this->linebreak_ << be_nl
-          << "TAO::Array_Traits<" << this->linebreak_ << be_idt << be_idt_nl
-          << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_uidt_nl
-          << ">" << this->linebreak_ << be_uidt << be_uidt_nl
+          << fname << "_slice" << this->linebreak_ << be_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO_Array_Var_Base_T<" << this->linebreak_ << be_idt 
+          << "TAO_Array_Var_Base_T<" << this->linebreak_ << be_idt
           << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice," << this->linebreak_ << be_nl
-          << "TAO::Array_Traits<" << this->linebreak_ << be_idt << be_idt_nl
-          << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_uidt_nl
-          << ">" << this->linebreak_ << be_uidt << be_uidt_nl
+          << fname << "_slice" << this->linebreak_ << be_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
 
@@ -543,11 +530,7 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO_Array_Forany_T<" << this->linebreak_ << be_idt << be_idt_nl
       << fname << "," << this->linebreak_ << be_nl
-      << fname << "_slice," << this->linebreak_ << be_nl
-      << "TAO::Array_Traits<" << this->linebreak_ << be_idt << be_idt_nl
-      << fname << "," << this->linebreak_ << be_nl
-      << fname << "_slice" << this->linebreak_ << be_uidt_nl
-      << ">" << this->linebreak_ << be_uidt << be_uidt_nl
+      << fname << "_slice" << this->linebreak_ << be_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
   // For Any impl template class.
@@ -555,10 +538,10 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
     {
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Any_Array_Impl_T<" << this->linebreak_ 
+          << "TAO::Any_Array_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
-          << node->name () << "_slice," << this->linebreak_ << be_nl
-          << node->name () << "_forany" << this->linebreak_ << be_uidt_nl
+          << fname << "_slice," << this->linebreak_ << be_nl
+          << fname << "_forany" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
 
@@ -566,7 +549,7 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
   return 0;
 }
 
-int 
+int
 be_visitor_tmplinst_cs::visit_enum (be_enum *node)
 {
   if (this->this_mode_generated (node))
@@ -603,7 +586,7 @@ be_visitor_tmplinst_cs::visit_enum (be_enum *node)
     {
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Any_Basic_Impl_T<" << this->linebreak_ 
+          << "TAO::Any_Basic_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -613,7 +596,7 @@ be_visitor_tmplinst_cs::visit_enum (be_enum *node)
   return 0;
 }
 
-int 
+int
 be_visitor_tmplinst_cs::visit_structure (be_structure *node)
 {
   if (this->this_mode_generated (node))
@@ -636,7 +619,7 @@ be_visitor_tmplinst_cs::visit_structure (be_structure *node)
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::" << (variable ? "Var" : "Fixed") << "_Size_Arg_Traits<"
+          << "TAO::" << (variable ? "Var" : "Fixed") << "_Size_Arg_Traits_T<"
           << this->linebreak_ << be_idt << be_idt_nl
           << node->name ();
 
@@ -674,7 +657,7 @@ be_visitor_tmplinst_cs::visit_structure (be_structure *node)
     {
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Any_Dual_Impl_T<" << this->linebreak_ 
+          << "TAO::Any_Dual_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -684,7 +667,7 @@ be_visitor_tmplinst_cs::visit_structure (be_structure *node)
   return 0;
 }
 
-int 
+int
 be_visitor_tmplinst_cs::visit_union (be_union *node)
 {
   if (this->this_mode_generated (node))
@@ -706,7 +689,7 @@ be_visitor_tmplinst_cs::visit_union (be_union *node)
 
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::" << (variable ? "Var" : "Fixed") << "_Size_Arg_Traits<"
+          << "TAO::" << (variable ? "Var" : "Fixed") << "_Size_Arg_Traits_T<"
           << this->linebreak_ << be_idt << be_idt_nl
           << node->name ();
 
@@ -744,7 +727,7 @@ be_visitor_tmplinst_cs::visit_union (be_union *node)
     {
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO::Any_Dual_Impl_T<" << this->linebreak_ 
+          << "TAO::Any_Dual_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -798,24 +781,24 @@ be_visitor_tmplinst_cs::gen_managed_type_tmplinst (be_sequence *node,
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
             << "TAO_Object_Manager<" << this->linebreak_ << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_va," << this->linebreak_ << be_uidt_nl
+            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
             << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
         break;
       case be_sequence::MNG_VALUE:
         *os << be_nl << be_nl
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_Valuetypet_Manager<" << this->linebreak_ 
+            << "TAO_Valuetype_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_va," << this->linebreak_ << be_uidt_nl
+            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
             << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
         break;
       case be_sequence::MNG_PSEUDO:
         *os << be_nl << be_nl
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_Pseudo_Object_Manager<" << this->linebreak_ 
+            << "TAO_Pseudo_Object_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << this->linebreak_ << be_uidt_nl
             << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
@@ -840,10 +823,10 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
             << "TAO_MngSeq_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
-            << "TAO_Object_Manager<" << this->linebreak_ 
+            << "TAO_Object_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var" << this->linebreak_ 
+            << bt->name () << "_var" << this->linebreak_
             << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
             << ">" << this->suffix_
@@ -853,12 +836,12 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
             << "TAO_Seq_Var_Base_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
-            << "TAO_Object_Manager<" << this->linebreak_ 
+            << "TAO_Object_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
             << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
-            << ">" << this->suffix_ 
+            << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
 
         *os << be_nl << be_nl
@@ -866,12 +849,12 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << "TAO_MngSeq_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
             << node->name () << "_var," << this->linebreak_ << be_nl
-            << "TAO_Object_Manager<" << this->linebreak_ 
+            << "TAO_Object_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
             << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
-            << ">" << this->suffix_ 
+            << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
 
         break;
@@ -880,7 +863,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
             << "TAO_MngSeq_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
-            << "TAO_Pseudo_Object_Manager<" << this->linebreak_ 
+            << "TAO_Pseudo_Object_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
@@ -889,10 +872,10 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
 
         *os << be_nl << be_nl
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_Seq_Var_Base_T<" << this->linebreak_ 
+            << "TAO_Seq_Var_Base_T<" << this->linebreak_
             << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
-            << "TAO_Pseudo_Object_Manager<" << this->linebreak_ 
+            << "TAO_Pseudo_Object_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
@@ -904,7 +887,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << "TAO_MngSeq_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
             << node->name () << "_var," << this->linebreak_ << be_nl
-            << "TAO_Pseudo_Object_Manager<" << this->linebreak_ 
+            << "TAO_Pseudo_Object_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
@@ -917,7 +900,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
             << "TAO_MngSeq_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
-            << "TAO_Valuetype_Manager<" << this->linebreak_ 
+            << "TAO_Valuetype_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
             << bt->name () << "_var," << this->linebreak_ << be_uidt_nl
@@ -929,7 +912,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
             << "TAO_Seq_Var_Base_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
-            << "TAO_Valuetype_Manager<" << this->linebreak_ 
+            << "TAO_Valuetype_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
             << bt->name () << "_var," << this->linebreak_ << be_uidt_nl
@@ -942,7 +925,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << "TAO_MngSeq_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
             << node->name () << "_var," << this->linebreak_ << be_nl
-            << "TAO_Valuetype_Manager<" << this->linebreak_ 
+            << "TAO_Valuetype_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
             << bt->name () << "_var," << this->linebreak_ << be_uidt_nl
@@ -962,11 +945,11 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
 
         *os << be_nl << be_nl
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_Seq_Var_Base_T<" << this->linebreak_ 
+            << "TAO_Seq_Var_Base_T<" << this->linebreak_
             << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
             <<"TAO_SeqElem_String_Manager" << this->linebreak_ << be_uidt_nl
-            << ">" << this->suffix_ 
+            << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
 
         *os << be_nl << be_nl
@@ -985,16 +968,16 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << "TAO_MngSeq_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
             <<"TAO_SeqElem_WString_Manager" << this->linebreak_ << be_uidt_nl
-            << ">" << this->suffix_ 
+            << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
 
         *os << be_nl << be_nl
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-            << "TAO_Seq_Var_Base_T<" << this->linebreak_ 
+            << "TAO_Seq_Var_Base_T<" << this->linebreak_
             << be_idt << be_idt_nl
             << node->name () << "," << this->linebreak_ << be_nl
             <<"TAO_SeqElem_WString_Manager" << this->linebreak_ << be_uidt_nl
-            << ">" << this->suffix_ 
+            << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
 
         *os << be_nl << be_nl
@@ -1023,7 +1006,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
 
           *os << be_nl << be_nl
               << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-              << "TAO_Seq_Var_Base_T<" << this->linebreak_ 
+              << "TAO_Seq_Var_Base_T<" << this->linebreak_
               << be_idt << be_idt_nl
               << node->name () << "," << this->linebreak_ << be_nl
               << bt->name () << this->linebreak_ << be_uidt_nl
@@ -1032,7 +1015,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
 
           *os << be_nl << be_nl
               << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-              << "TAO_Seq_Out_T<" << this->linebreak_ 
+              << "TAO_Seq_Out_T<" << this->linebreak_
               << be_idt << be_idt_nl
               << node->name () << "," << this->linebreak_ << be_nl
               << node->name () << "_var," << this->linebreak_ << be_nl
@@ -1052,13 +1035,13 @@ be_visitor_tmplinst_cs::gen_base_class_tmplinst (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->gen_ifdef_macro (node->flat_name ());
+  os->gen_ifdef_macro (node->flat_name (), "explicit");
 
   *os << be_nl << be_nl
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl;
 
-  int status = node->gen_base_class_name (os, 
-                                          this->linebreak_, 
+  int status = node->gen_base_class_name (os,
+                                          this->linebreak_,
                                           idl_global->root ());
 
   // Pass it to the base constructor.
@@ -1107,4 +1090,3 @@ be_visitor_tmplinst_cs::gen_common_tmplinst (be_type *node,
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
 }
-
