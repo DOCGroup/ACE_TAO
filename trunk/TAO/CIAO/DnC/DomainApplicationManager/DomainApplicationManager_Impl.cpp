@@ -242,6 +242,12 @@ split_plan (void)
       const ::Deployment::MonolithicDeploymentDescription & my_implementation =
         (this->plan_.implementation)[my_instance.implementationRef];
 
+      Deployment::DnC_Dump::dump (this->plan_);
+      //Deployment::DnC_Dump::dump ( (this->plan_.implementation)[my_instance.implementationRef]);
+
+      //ACE_DEBUG ((LM_DEBUG, "My implementation"));
+      //Deployment::DnC_Dump::dump (my_implementation);
+
       CORBA::ULong index_imp = child_plan->implementation.length ();
       child_plan->implementation.length (++index_imp);
       child_plan->implementation[index_imp-1] = my_implementation;
@@ -250,7 +256,8 @@ split_plan (void)
       // as the new artifactRef field for the implementation struct.
 
       // Initialize with the correct sequence length.
-      CORBA::ULongSeq ulong_seq (my_implementation.artifactRef.length ());
+      CORBA::ULongSeq ulong_seq;
+      ulong_seq.length (my_implementation.artifactRef.length ());
 
       // Append the "ArtifactDeploymentDescriptions artifact" field
       // with some new "artifacts", which is specified by the
@@ -261,17 +268,30 @@ split_plan (void)
         {
           CORBA::ULong artifact_ref = my_implementation.artifactRef[iter];
 
+          // Fill in the <artifact> field of the child plan
           CORBA::ULong index_art = child_plan->artifact.length ();
           child_plan->artifact.length (++index_art);
           child_plan->artifact[index_art-1] =
             (this->plan_.artifact)[artifact_ref];
 
-          // @@ The artifactRef starts from 0.
-          ulong_seq[iter] = index_art;
+          // Fill in the <artifactRef> field of the MonolithicDeploymentDescription
+          ulong_seq[iter] = index_art-1;
         }
 
       // Change the <artifactRef> field of the "implementation".
       child_plan->implementation[index_imp-1].artifactRef = ulong_seq;
+
+      //ACE_DEBUG ((LM_DEBUG, "artifaceRef length %i", 
+      //           child_plan->implementation[index_imp-1].artifactRef.length ()));
+
+
+      //ACE_DEBUG ((LM_DEBUG, "Implementation field in Child plan"));
+
+      //Deployment::DnC_Dump::dump (child_plan);
+
+
+      // Dump for debug purpose.
+      //Deployment::DnC_Dump::dump (child_plan->implementation[index_imp-1]);
 
       // Append the "InstanceDeploymentDescription instance" field with
       // a new "instance", which is almost the same as the "instance" in
