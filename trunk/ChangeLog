@@ -1,3 +1,9 @@
+Sat Jan 10 17:36:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
+
+	  Fixed warnings with Forte 8.
+
 Sat Jan 10 17:11:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/templates/vc6dsp.mpd:
