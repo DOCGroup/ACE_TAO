@@ -1,13 +1,25 @@
-Wed Apr 16 01:32:31 2003  Ossama Othman  <ossama@uci.edu>
+Wed Apr 16 01:41:20 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl (register_load_monitor):
+
+	  Improved documentation for this method.
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+	* orbsvcs/orbsvcs/Naming/Storable.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+
+	  Include "ace/SString.h" to pull in complete ACE_CString type.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+
+	  Include "ace/ACE.h" to pull in ACE::nibble2hex() function
+	  declaration.
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
 
-	  Include "ace/ACE.h" to pull in ACE::hash_pjw() method
+	  Include "ace/ACE.h" to pull in ACE::hash_pjw() function
 	  declaration.
-
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
-
-	  Include "ace/SString.h" to pull complete ACE_CString type.
 
 Wed Apr 16 00:47:50 2003  Ossama Othman  <ossama@uci.edu>
 

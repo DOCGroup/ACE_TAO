@@ -17,6 +17,8 @@
 #include "Naming_Context_Interface.h"
 #include "naming_export.h"
 
+#include "ace/SString.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)

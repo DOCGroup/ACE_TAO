@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "Naming_Context_Interface.h"
+#include "ace/ACE.h"
 
 TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
   : impl_ (impl)
