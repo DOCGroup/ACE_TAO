@@ -10,7 +10,7 @@
 
 #ifndef TAO_ECG_COMPLEX_ADDRESS_SERVER_H
 #define TAO_ECG_COMPLEX_ADDRESS_SERVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "event_export.h"
 
@@ -107,5 +107,5 @@ private:
 #include "ECG_Complex_Address_Server.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_COMPLEX_ADDRESS_SERVER_H */

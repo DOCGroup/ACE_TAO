@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_MASKED_TYPE_FILTER_H
 #define TAO_EC_MASKED_TYPE_FILTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Filter.h"
 
@@ -90,5 +90,5 @@ private:
 #include "EC_Masked_Type_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_MASKED_TYPE_FILTER_H */

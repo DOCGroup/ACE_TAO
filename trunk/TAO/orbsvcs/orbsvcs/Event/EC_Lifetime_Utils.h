@@ -15,7 +15,7 @@
 
 #ifndef TAO_EC_LIFETIME_UTILS_H
 #define TAO_EC_LIFETIME_UTILS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "event_export.h"
 #include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
@@ -209,5 +209,5 @@ private:
 #include "EC_Lifetime_Utils.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_LIFETIME_UTILS_H */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_SUPPLIERADMIN_H
 #define TAO_EC_SUPPLIERADMIN_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_ProxyConsumer.h"
 
@@ -65,5 +65,5 @@ private:
 #include "EC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_SUPPLIERADMIN_H */

@@ -14,7 +14,7 @@
  */
 #ifndef TAO_ECG_ADAPTERS_H
 #define TAO_ECG_ADAPTERS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "event_export.h"
 #include "orbsvcs/RtecUDPAdminC.h"
@@ -67,5 +67,5 @@ typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown,
   ACE_Null_Mutex> TAO_ECG_Refcounted_Handler;
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_ADAPTERS_H */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_CONJUNCTION_FILTER_H
 #define TAO_EC_CONJUNCTION_FILTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Filter.h"
 #include "event_export.h"
@@ -110,5 +110,5 @@ private:
 #include "EC_Conjunction_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_CONJUNCTION_FILTER_H */

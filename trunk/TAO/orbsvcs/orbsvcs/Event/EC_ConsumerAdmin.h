@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_CONSUMERADMIN_H
 #define TAO_EC_CONSUMERADMIN_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_ProxySupplier.h"
 
@@ -75,5 +75,5 @@ private:
 #include "EC_ConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_CONSUMERADMIN_H */

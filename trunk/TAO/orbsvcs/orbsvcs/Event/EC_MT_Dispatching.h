@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_MT_DISPATCHING_H
 #define TAO_EC_MT_DISPATCHING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Dispatching.h"
 
@@ -89,5 +89,5 @@ private:
 #include "EC_MT_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_MT_DISPATCHING_H */

@@ -12,7 +12,7 @@
 
 #ifndef TAO_ECG_DEFAULTS_H
 #define TAO_ECG_DEFAULTS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Any of the definitions below can be overriden in the config.h file
 // or the compilation line.
@@ -50,5 +50,5 @@
 # define TAO_ECG_DEFAULT_NON_BLOCKING 1 /* write sockets are non-blocking */
 #endif /* TAO_ECG_DEFAULT_NON_BLOCKING */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_DEFAULTS_H */

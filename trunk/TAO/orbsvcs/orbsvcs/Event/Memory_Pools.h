@@ -12,7 +12,7 @@
 
 #ifndef ACE_MEMORY_POOLS_H
 #define ACE_MEMORY_POOLS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -85,5 +85,5 @@ public:
 #include "Memory_Pools.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_MEMORY_POOLS_H */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_PROXYSUPPLIER_H
 #define TAO_EC_PROXYSUPPLIER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event/EC_Filter.h"
@@ -220,5 +220,5 @@ private:
 #include "EC_ProxySupplier.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_PROXYSUPPLIER_H */
