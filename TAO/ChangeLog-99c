@@ -1,3 +1,12 @@
+Thu Aug 26 14:30:38 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/IIOP_Connector.{h,cpp}:
+	* tao/UIOP_Connector.{h,cpp}:
+
+	  Added TAO_ to all the typedefed symbols to avoid conflicts. 
+	  Thanks to JM Strauss <jms97@club-internet.fr> for reporting 
+	  such a conflict for ADDR.
+	
 Thu Aug 26 12:18:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.cpp:
