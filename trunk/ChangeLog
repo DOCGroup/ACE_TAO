@@ -1,3 +1,11 @@
+Wed Dec 10 13:16:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/UUID.cpp (to_string):
+
+	  Fixed incorrect delete() operator call.  Use vector delete[]()
+	  instead of scalar delete() since array was allocated with
+	  new[]().
+
 Wed Dec 10 15:09:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/TMCast/Member/member.cpp:
