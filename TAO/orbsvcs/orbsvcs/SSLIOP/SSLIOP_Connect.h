@@ -74,10 +74,21 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Client_Connection_Handler : public TAO_SSLIOP
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.
 public:
-  // = Initialization method.
-  TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
-                                        TAO_ORB_Core* orb_core = 0,
-                                        CORBA::Boolean flag = 0);
+  // = Initialization methods.
+
+  TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager* t = 0);
+  // This constructor should *never* get called, it is just here to
+  // make the compiler happy: the default implementation of the
+  // Creation_Strategy requires a constructor with that signature, we
+  // don't use that implementation, but some (most?) compilers
+  // instantiate it anyway.
+
+  TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
+                                        TAO_ORB_Core* orb_core,
+                                        CORBA::Boolean flag,
+                                        void *arg);
+  // Constructor. <arg> parameter is used by the Connector to pass the
+  // protocol configuration properties for this connection.
 
   virtual ~TAO_SSLIOP_Client_Connection_Handler (void);
 
@@ -117,6 +128,9 @@ protected:
 
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
+
+  TCP_Properties *tcp_properties_;
+  // TCP configuration for this connection.
 };
 
 // ****************************************************************
