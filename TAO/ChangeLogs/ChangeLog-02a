@@ -1,3 +1,10 @@
+Mon Oct  1 07:49:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Endpoint.i:
+	* tao/Strategies/DIOP_Endpoint.i: Applied the same changes from
+	  this entry "Sat Sep 29 18:07:55 2001  Ossama Othman
+	  <ossama@uci.edu>"  to the above classes.
+
 Mon Oct  1 07:10:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp:
