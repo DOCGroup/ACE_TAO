@@ -153,6 +153,7 @@ class TAO_Notify_Resource_Manager
 
   TAO_Notify_ID_Pool<CORBA::Long> poa_ids_;
   // Id generator for poa's.
+  // These id's are used to generate unique names for child poa's.
 };
 
 #include "ace/post.h"
