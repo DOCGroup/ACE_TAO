@@ -53,7 +53,7 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
 
   *os << node->local_name () << " *object," << be_nl
       << "CORBA_Environment &ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "private:" << be_idt_nl
       << node->remote_proxy_impl_name () << " remote_proxy_impl_;"
