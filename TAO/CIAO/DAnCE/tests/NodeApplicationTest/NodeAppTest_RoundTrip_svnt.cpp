@@ -717,7 +717,7 @@ namespace RoundTrip_Impl
     // Operations for CCMObject interface.
 
     void
-    EC_Servant::component_UUID (
+    NodeAppTest_RoundTrip_Servant::component_UUID (
     const char * new_component_UUID
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -726,7 +726,7 @@ namespace RoundTrip_Impl
     }
 
     CIAO::CONNECTION_ID
-    EC_Servant::component_UUID (
+    NodeAppTest_RoundTrip_Servant::component_UUID (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
