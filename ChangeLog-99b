@@ -1,3 +1,11 @@
+1999-09-05  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  Made the receiver of QOS test portable by removing
+	  Win32-isms from it. Files modified :
+	
+	* examples/QOS/QosEvent.h: 
+	* examples/QOS/server.cpp: 
+
 Sun Sep  5 13:40:18 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* ace/ACE.cpp: Made the status code to be of type 
