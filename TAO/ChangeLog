@@ -1,3 +1,13 @@
+Mon Dec 29 14:36:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+	* tests/POA/Identity/Identity.mpc:
+
+	  For some reason these tests were prevented from compiling if
+	  minimum_corba was enabled. The constraint has been
+	  removed. There is no reason why these tests cannot compile or
+	  work with minimum_corba enabled.
+
 Mon Dec 29 13:57:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
