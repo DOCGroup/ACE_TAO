@@ -1,3 +1,9 @@
+Tue Aug 24 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+          Added todo with activation of ort_adapter because we hold the lock
+          there
+
 Tue Aug 24 10:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         The ORTrefactor branch is now ORTrefactor_2 and the compile archive is

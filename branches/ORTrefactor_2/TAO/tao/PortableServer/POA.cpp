@@ -4105,6 +4105,9 @@ TAO_POA::object_reference_template_adapter (void)
           this->adapter_name_i (ACE_ENV_SINGLE_ARG_PARAMETER)
           ACE_TRY_CHECK;
 
+        // @todo We have to look at this, we activate it but hold the POA lock,
+        // we shouldn't keep the lock here, but then the ort_adapter should be
+        // guarded against multiple activations.
         this->ort_adapter_->activate (this->orb_core_.server_id (),
                                       this->orb_core_.orbid (),
                                       adapter_name,
