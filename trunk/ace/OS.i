@@ -2351,6 +2351,13 @@ ACE_OS::strncpy (char *s, const char *t, size_t len)
 }
 
 ACE_INLINE char *
+ACE_OS::strncat (char *s, const char *t, size_t len)
+{
+  // ACE_TRACE ("ACE_OS::strncat");
+  return ::strncat (s, t, len);
+}
+
+ACE_INLINE char *
 ACE_OS::strtok (char *s, const char *tokens)
 {
   // ACE_TRACE ("ACE_OS::strtok");
@@ -5987,6 +5994,13 @@ ACE_OS::strncpy (wchar_t *s, const wchar_t *t, size_t len)
 {
   // ACE_TRACE ("ACE_OS::strncpy");
   return ::wcsncpy (s, t, len);
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::strncat (wchar_t *s, const wchar_t *t, size_t len)
+{
+  // ACE_TRACE ("ACE_OS::strncat");
+  return ::wcsncat (s, t, len);
 }
 
 ACE_INLINE wchar_t *
