@@ -7,23 +7,20 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This file is for running the run_test.pl scripts listed in 
 # auto_run_tests.lst.
 
-if (!($ACE_ROOT = $ENV{ACE_ROOT})) {
-    my $cd = getcwd ();
-    chdir ('..');
-    $ACE_ROOT = getcwd ().$DIR_SEPARATOR;
-    chdir ($cd);
-    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT";
-}
-
-unshift @INC, "$ACE_ROOT/bin";
-require PerlACE::Run_Test;
-require PerlACE::ConfigList;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::Run_Test;
 
 use English;
 use Getopt::Std;
 use Cwd;
 
+$ACE_ROOT = $ENV{ACE_ROOT};
+
 ################################################################################
+
+$config_list = new PerlACE::ConfigList;
+
+$config_list->load ($ACE_ROOT."/bin/auto_run_tests.lst");
 
 if (!getopts ('ac:ds:t') || $opt_h) {
     print "run_test.pl [-a] [-c config] [-h] [-s sandbox] [-t]\n";
@@ -37,17 +34,8 @@ if (!getopts ('ac:ds:t') || $opt_h) {
     print "    -s sandbox  Runs each program using a sandbox program\n";
     print "    -t          TAO tests only\n";
     print "\n";
-    print "Configs: MSVC\n";
+    print "Configs: " . $config_list->list_configs () . "\n";
     exit (1);
-}
-
-$config_list = new PerlACE::ConfigList;
-
-$config_list->load ($ACE_ROOT."/bin/auto_run_tests.lst");
-
-if ($#CONFIGS < 0) {
-    print "Warning: No configurations selected, defaulting to none.\n";
-    print "         Possible Configs: ", $config_list->list_configs (), "\n";
 }
 
 foreach $test ($config_list->valid_entries ()) {
@@ -80,9 +68,9 @@ foreach $test ($config_list->valid_entries ()) {
     }
 
     ### Genrate the -ExeSubDir and -Config options
-    my $inherited_options = " -ExeSubDir $EXEPREFIX ";
+    my $inherited_options = " -ExeSubDir $PerlACE::Process::ExeSubDir ";
 
-    foreach my $config (@CONFIGS) {
+    foreach my $config ($config_list->my_config_list ()) {
          $inherited_options .= " -Config $config ";
     }
 
