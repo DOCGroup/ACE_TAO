@@ -1,5 +1,6 @@
 ARGV_Test
 Basic_Types_Test
+Bound_Ptr_Test
 chorus/Env_Value_Test
 Capabilities_Test
 Config_Test
