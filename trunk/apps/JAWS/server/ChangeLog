@@ -1,3 +1,10 @@
+Wed Jul  2 14:33:27 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* JAWS_File.cpp: Added double check locking pattern to the fetch
+	  routine of the virtual filesystem.  This slows things down
+	  considerably for files which change frequently and for cache
+	  misses in general, but it should be correct.
+
 Wed Jul  2 14:59:29 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* HTTP_Helpers.cpp (HTTP_decode_string): Added cast from strtol to

@@ -197,16 +197,21 @@ JAWS_Virtual_Filesystem::fetch (const char * filename)
       jf = this->table_[i];
   }
 
+  // Considerably slower on misses, but should be faster on hits.
+  // This is actually the double check locking pattern.
   if (jf == 0)
     {
       ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+      i = this->fetch_i (filename);
       if (i == -1)
         jf = this->insert_i (new JAWS_File (filename));
-      else /* need to update */
+      else if (this->table_[i]->update ())
         {
           this->remove_i (i);
           jf = this->table_[i] = new JAWS_File (filename);
         }
+      else
+        jf = this->table_[i];
     }
 
   return jf;
@@ -454,7 +459,8 @@ JAWS_File::acquire (void)
               {
                 this->error (JAWS_File::OPEN_FAILED,
                              "JAWS_File::acquire: lseek");
-                ACE_DEBUG ((LM_DEBUG, "hey--> %d, %u, %d\n", this->handle_, this->size_, SEEK_SET));
+                ACE_DEBUG ((LM_DEBUG, "hey--> %d, %u, %d\n",
+                            this->handle_, this->size_, SEEK_SET));
                 ACE_OS::close (this->handle_);
               }
             else if (ACE_OS::write (this->handle_, "", 1) != 1)
@@ -540,7 +546,7 @@ JAWS_File::release (void)
 int
 JAWS_File::action (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((JAWS_File *) this)->lock_);
   return this->action_;
 }
 
@@ -554,7 +560,7 @@ JAWS_File::action (int action_value)
 int
 JAWS_File::error (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((JAWS_File *) this)->lock_);
   return this->error_;
 }
 
@@ -569,35 +575,35 @@ JAWS_File::error (int error_value, const char * s)
 const char *
 JAWS_File::filename (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((JAWS_File *) this)->lock_);
   return this->filename_;
 }
 
 size_t
 JAWS_File::size (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((JAWS_File *) this)->lock_);
   return this->size_;
 }
 
 ACE_HANDLE
 JAWS_File::handle (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((JAWS_File *) this)->lock_);
   return this->handle_;
 }
 
 void *
 JAWS_File::address (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((JAWS_File *) this)->lock_);
   return this->mmap_.addr ();
 }
 
 int
 JAWS_File::update (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (((JAWS_File *) this)->lock_);
   int result;
   struct stat statbuf;
 
