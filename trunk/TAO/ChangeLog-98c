@@ -1,3 +1,33 @@
+Sun Jan 18 21:33:21 1998    <coryan@MILONGA>
+
+	* tao/sequence.h: 
+	* tao/sequence.i: 
+	* tao/sequence.cpp: 
+	* tao/sequence_T.h: 
+	* tao/sequence_T.i: 
+	* tao/sequence_T.cpp: 
+	  Added new class for sequences of strings, the approach based on
+	  templates was not worth it.
+	  Also fixed a number of bugs in the unbounded object sequences.
+	  The following items are in the TODO list:
+	  + Bounded sequences of objects
+	  + Bounded sequences of strings.
+
+	* TAO_IDL/be_include/be_helper.h: 
+	* TAO_IDL/be/be_helper.cpp: 
+	  Addded small manipulators to indent and unindent an output
+	  stream.
+	
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	  Synch up with new classes for string and objects.
+
+	* tests/Param_Test/tests.cpp: 
+	  Fixed some problems with the test for sequences of variable
+	  sized structures.
+
+	* orbsvcs/Event_Service/CORBA_Utils_T.cpp: 
+	  Fixed unsigned/signed comparison.
+
 Sun Jan 18 18:30:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/MT_Cubit/*.{dsp.MAK}:

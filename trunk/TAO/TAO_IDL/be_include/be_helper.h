@@ -27,6 +27,40 @@ public:
   TAO_NL (void);
 };
 
+struct TAO_INDENT
+{
+  // = TITLE
+  //   Operates like a manipulator, increasing the indentation level.
+  //
+  // = DESCRIPTION
+  //   Increase the indentation level, if the "do_now" parameter is
+  //   not zero then the <indent> method is called on the stream.
+  //
+  TAO_INDENT (int do_now = 0);
+
+  const int do_now_;
+};
+
+struct TAO_UNINDENT
+{
+  // = TITLE
+  //   Operates like a manipulator, decreasing the indentation level.
+  //
+  // = DESCRIPTION
+  //   Increase the indentation level, if the "do_now" parameter is
+  //   not zero then the <indent> method is called on the stream.
+  //
+  TAO_UNINDENT (int do_now = 0);
+
+  const int do_now_;
+};
+
+extern const TAO_NL be_nl;
+extern const TAO_INDENT be_idt;
+extern const TAO_INDENT be_idt_nl;
+extern const TAO_UNINDENT be_uidt;
+extern const TAO_UNINDENT be_uidt_nl;
+
 class TAO_OutStream
 {
   // =TITLE
@@ -99,7 +133,12 @@ public:
   TAO_OutStream &operator<< (const long num);
   // output the integer and return a reference to ourselves
 
-  TAO_OutStream &operator<< (const TAO_NL nl);
+  // = MANIPULATORS
+
+  TAO_OutStream &operator<< (const TAO_NL& nl);
+  TAO_OutStream &operator<< (const TAO_INDENT& i);
+  TAO_OutStream &operator<< (const TAO_UNINDENT& i);
+
   // The following will be provided by specialized classes
 
   TAO_OutStream &operator<< (Identifier *id);
