@@ -1,3 +1,9 @@
+Sun Mar 15 07:56:02 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_field.cpp
+          (be_visitor_field_cs::visit_sequence): made int return type
+          explicit.
+
 Sun Mar 15 06:18:58 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be_include/{be_codegen, be_visitor_args}.h: Added a new
