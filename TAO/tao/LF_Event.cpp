@@ -59,10 +59,16 @@ TAO_LF_Event::state_changed_i (int new_state)
   else if (this->state_ == TAO_LF_Event::LFS_ACTIVE)
     {
       // From LFS_ACTIVE we can only move to a few states
-      if (new_state != TAO_LF_Event::LFS_IDLE
-          && new_state != TAO_LF_Event::LFS_CONNECTION_CLOSED)
+      if (new_state != TAO_LF_Event::LFS_IDLE)
         {
-          this->state_ = new_state;
+          if (new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)
+            {
+              this->state_ = TAO_LF_Event::LFS_FAILURE;
+            }
+          else
+            {
+              this->state_ = new_state;
+            }
         }
       return;
     }
@@ -93,6 +99,6 @@ int
 TAO_LF_Event::error_detected (void) const
 {
   return (this->state_ == TAO_LF_Event::LFS_FAILURE
-          && this->state_ == TAO_LF_Event::LFS_TIMEOUT
-          && this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED);
+          || this->state_ == TAO_LF_Event::LFS_TIMEOUT
+          || this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED);
 }
