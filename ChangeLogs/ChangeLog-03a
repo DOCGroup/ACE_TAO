@@ -1,3 +1,9 @@
+Tue Jul 10 08:39:04 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-vxworks5.x.h:
+
+          Added the macro ACE_LACKS_UNIX_SYSLOG.
+
 Tue Jul 10 08:26:57 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Log_Msg_UNIX_Syslog.cpp:
