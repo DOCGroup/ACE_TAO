@@ -114,7 +114,7 @@ main (int argc, char *argv[])
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
@@ -129,7 +129,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Exception caught:");
       return 1;
     }
   ACE_ENDTRY;

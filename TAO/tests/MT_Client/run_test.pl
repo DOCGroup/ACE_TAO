@@ -29,6 +29,8 @@ foreach $i (@ARGV) {
 }
 
 $iorfile = "$cwd$DIR_SEPARATOR" ."server.ior";
+
+unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -ORBsvcconf " . "$cwd$DIR_SEPARATOR" ."server.conf ".
                        " -ORBdebuglevel $debug_level"

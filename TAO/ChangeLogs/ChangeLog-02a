@@ -1,50 +1,81 @@
+Wed Sep 13 15:19:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Transport.cpp:
+          Add comment explaining why some obscure code works, or at least
+          why I believe it does.
+
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+          Remove the reset_reply_received() flag, it was used in the
+          generated code to reset the reply_received flag in the reply
+          dispatcher, just before calling Invocation::start()
+          This was error prone and innefficient, and it was causing
+          problems with the implementation of CORBA::Object::_is_a() that
+          did not call the extra function.
+          This fixes some misterious race conditions that showed up when
+          receiving forward locations in a follower thread, there is a
+          regression test for the problem (tests/Forwarding).
+
+        * tests/Forwarding/run_test.pl:
+        * tests/MT_Server/run_test.pl:
+        * tests/MT_Client/run_test.pl:
+          Remote the ior file before running the server to avoid problems
+          with stale files.
+
+        * tests/MT_Client/orb_creation.cpp:
+        * tests/MT_Client/simple-client.cpp:
+        * tests/MT_Server/client.cpp:
+        * tests/MT_Server/server.cpp:
+          Fixed spelling problems in some debug messages.
+
 Wed Sep 13 15:08:23 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/examples/Security/Makefile:
+        * orbsvcs/examples/Security/Makefile:
 
-	  Added this top-level Security example Makefile.
+          Added this top-level Security example Makefile.
 
 Wed Sep 13 15:17:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptor_result.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptor_result.cpp:
 
-	  Made a fix to strip away the typedef (if any) of the
-	  'result' member of the request info class before 
-	  generating code to insert it into an Any. This is
-	  similar to the fix made a few days ago for the request
-	  info class' 'argument' members. Thanks to
-	  Kristopher Johnson <kristopher.johnson@transcore.com>
-	  for sending in the bug report and an example IDL file.
+          Made a fix to strip away the typedef (if any) of the
+          'result' member of the request info class before
+          generating code to insert it into an Any. This is
+          similar to the fix made a few days ago for the request
+          info class' 'argument' members. Thanks to
+          Kristopher Johnson <kristopher.johnson@transcore.com>
+          for sending in the bug report and an example IDL file.
 
 Wed Sep 13 14:31:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
 
-	  An example sent in by Francois Bernier <fbernier@gel.ulaval.ca>
-	  showed that generated code for interceptors fails to compile
-	  when an operation uses an enum that is declared in the same
-	  scope as the operation. Fixed by using the ACE_NESTED_CLASS
-	  macro in generating both the argument list in the request info
-	  class constructor declaration, and in the request info class'
-	  private member list.
+          An example sent in by Francois Bernier <fbernier@gel.ulaval.ca>
+          showed that generated code for interceptors fails to compile
+          when an operation uses an enum that is declared in the same
+          scope as the operation. Fixed by using the ACE_NESTED_CLASS
+          macro in generating both the argument list in the request info
+          class constructor declaration, and in the request info class'
+          private member list.
 
-	  Also made cosmetic changes to the generated code for the
-	  request info class' constructor definition.
+          Also made cosmetic changes to the generated code for the
+          request info class' constructor definition.
 
 Wed Sep 13 14:26:48 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Portable_Interceptors/Benchmark/server.dsp:
         * tests/Portable_Interceptors/Benchmark/client.dsp: Fixed IDL
-	  compilation rules.
+          compilation rules.
 
         * tests/Portable_Interceptors/Benchmark/client.cpp: Fixed unused
-	  argument warnings.
+          argument warnings.
 
 Wed Sep 13 12:26:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 

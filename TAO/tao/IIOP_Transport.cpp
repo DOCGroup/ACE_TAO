@@ -281,6 +281,14 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
                                 this->params_.svc_ctx_,
                                 message_state);
 
+  // @@ Somehow it seems dangerous to reset the state *after*
+  //    dispatching the request, what if another threads receives
+  //    another reply in the same connection?
+  //    My guess is that it works as follows:
+  //    - For the exclusive case there can be no such thread.
+  //    - The the muxed case each thread has its own message_state.
+  //    I'm pretty sure this comment is right.  Could somebody else
+  //    please look at it and confirm my guess?
   if (result == -1)
     {
       if (TAO_debug_level > 0)

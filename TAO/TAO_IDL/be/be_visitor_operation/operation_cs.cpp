@@ -352,7 +352,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
   // Fish out the interceptor from the ORB.
   *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_uidt_nl;
-  *os << "TAO_ClientRequestInterceptor_Adapter _tao_vfr (" 
+  *os << "TAO_ClientRequestInterceptor_Adapter _tao_vfr ("
       << be_idt << be_idt_nl
       << "istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV)"
       << be_uidt_nl
@@ -414,7 +414,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << "_tao_call.service_info ()," << be_nl
       << "this";
 
-  // Generate the formal argument fields which are passed 
+  // Generate the formal argument fields which are passed
   // to the RequestInfo object.
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS);
@@ -456,11 +456,6 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   *os << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
-  if (node->flags () != AST_Operation::OP_oneway)
-     {
-       *os << "_tao_call.reset_reply_received();" << be_nl;
-     }
-
   *os << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
@@ -482,7 +477,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << " _tao_vfr.send_request (" << be_idt << be_idt_nl
       << "&ri," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl 
+      << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt_nl;
 
   if (this->gen_check_interceptor_exception (bt) == -1)
@@ -510,7 +505,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   *os << be_nl
       << "_tao_call.prepare_header (" << be_idt << be_idt_nl
       << "ACE_static_cast (CORBA::Octet, _tao_response_flag)," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl 
+      << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl;
 
   // Check if there is an exception.
@@ -552,9 +547,9 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
           << "))" << be_uidt_nl;
 
       // If marshaling fails, raise exception.
-      if (this->gen_raise_interceptor_exception (bt, 
+      if (this->gen_raise_interceptor_exception (bt,
                                                  "CORBA::MARSHAL",
-                                                 "") 
+                                                 "")
             == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -789,9 +784,9 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
     // Invoke postinvoke interceptor
     *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl;
     *os << "_tao_vfr.receive_reply (" << be_idt << be_idt_nl
-        << "&ri," << be_nl 
+        << "&ri," << be_nl
         << "ACE_TRY_ENV" << be_uidt_nl
-        << ")" << be_uidt << be_uidt_nl 
+        << ")" << be_uidt << be_uidt_nl
         << ");" << be_uidt_nl;
 
     if (this->gen_check_interceptor_exception (bt) == -1)
@@ -805,11 +800,11 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
       }
   } // End of if its not a oneway operation
-  *os << "break;" << be_uidt_nl 
+  *os << "break;" << be_uidt_nl
       << "}\n\n";
 
   // Generate exception occurred interceptor code
-  *os << "#if (TAO_HAS_INTERCEPTORS == 1)"  << be_uidt_nl 
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)"  << be_uidt_nl
       << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl;
@@ -900,7 +895,7 @@ be_visitor_operation_cs::gen_raise_interceptor_exception (be_type *bt,
       else
         {
           *os << "TAO_INTERCEPTOR_THROW (" << be_idt << be_idt_nl
-              << excep << " (" << completion_status 
+              << excep << " (" << completion_status
               << ")" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;
         }
