@@ -1,3 +1,13 @@
+Sat Sep 30 16:17:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Fault_Tolerance_Service.h: Added TAO_Export keyword for the
+	  class.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Added the
+	  right export key word, TAO_FT_Export instead of TAO_Export.
+
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp: Updated the dsp file.
+
 Fri Sep 29 17:17:08 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/corbafwd.cpp (string_dup, wstring_dup):
