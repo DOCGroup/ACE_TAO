@@ -18,12 +18,13 @@
 #define TAO_HASH_REPLICA_I_H
 
 #include "Hash_ReplicaS.h"
-#include "orbsvcs/LoadBalancingC.h"
+
+class Hash_ReplicaControl;
 
 class Hash_Replica_Impl : public virtual POA_Hash_Replica
 {
 public:
-  Hash_Replica_Impl (CORBA::Object_ptr load_balanced_group);
+  Hash_Replica_Impl (Hash_ReplicaControl *control);
   // Constructor
 
   virtual CORBA::ULong do_hash (const char * str,
@@ -37,27 +38,13 @@ public:
   // Inform the Replica that it should or should not accept client
   // requests.  0 == accept requests, ~0 == reject requests
 
-  void set_proxy (LoadBalancing::ReplicaProxy_ptr proxy);
-  // Set the proxy
-
 private:
-  CORBA::Object_var load_balanced_group_;
-  // Reference that represents the collective identity of replicas
-  // being load balanced.
-
-  LoadBalancing::ReplicaProxy_var balancer_proxy_;
-  // Object reference to the load balancer proxy.
+  Hash_ReplicaControl *control_;
+  // The control
 
   int reject_requests_;
   // Flag that indicates whether the servant should reject all client
   // requests.
-
-  CORBA::ULong requests_;
-  // The number of requests since load measurements started.
-
-  ACE_Time_Value start_;
-  // Time when load measurements started.
 };
-
 
 #endif  /* TAO_HASH_REPLICA_I_H */

@@ -15,26 +15,20 @@
 //
 // ============================================================================
 
+#ifndef TAO_LOADBALANCER_I_H
+#define TAO_LOADBALANCER_I_H
+
 #include "orbsvcs/LoadBalancingS.h"
 #include "orbsvcs/LoadBalancing/ReplicaProxy.h"
 #include "orbsvcs/LoadBalancing/DSI_ForwardingProxy.h"
 #include "orbsvcs/LoadBalancing/LoadBalancing_Strategy.h"
 
-
-#ifndef TAO_LOADBALANCER_I_H
-#define TAO_LOADBALANCER_I_H
-
-typedef ACE_Unbounded_Set<ReplicaProxy_Impl *>
-        ReplicaProxySet;
-
-typedef ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl *>
-        ReplicaProxySetIterator;
-
 class TAO_LoadBalancing_Export LoadBalancer_Impl : public virtual POA_LoadBalancing::LoadBalancer
 {
 public:
   LoadBalancer_Impl (const char *interface_id,
-                     Load_Balancing_Strategy *strategy);
+                     Load_Balancing_Strategy *strategy,
+                     PortableServer::POA_ptr poa);
   // Constructor that initializes this Load Balancer for use with a
   // Replica that has the specified interface repository ID.
 
@@ -77,6 +71,12 @@ private:
 
   Load_Balancing_Strategy *strategy_;
   // The underlying load balancing strategy.
+
+  PortableServer::POA_var poa_;
+  // The POA where the forwarding proxy is activated.
+
+  CORBA::Object_var group_identity_;
+  // The group identity
 };
 
 #if defined (__ACE_INLINE__)

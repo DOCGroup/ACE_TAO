@@ -1,70 +1,93 @@
+Sat Mar 25 21:27:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/LoadBalancer/LoadBalancer.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.i:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+          Fixed problems with the implementation, it does not crash
+          anymore.
+
+        * orbsvcs/tests/LoadBalancing/Makefile:
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.h:
+        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+        * orbsvcs/tests/LoadBalancing/client.cpp:
+        * orbsvcs/tests/LoadBalancing/server.cpp:
+          Re-organized the implementation of the Hash_Replica and the
+          Replica Control.  I'm setting up a timer to periodically report
+          the load, instead of on each request.
+
 Sat Mar 25 19:55:24 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
-	  Use explicit cast to generate floating point numbers in the
-	  load.
+        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+          Use explicit cast to generate floating point numbers in the
+          load.
 
-	* orbsvcs/tests/LoadBalancing/LoadBalancing.dsw:
-	* orbsvcs/tests/LoadBalancing/client.dsp:
-	* orbsvcs/tests/LoadBalancing/server.dsp:
-	  Add project files for MSVC
+        * orbsvcs/tests/LoadBalancing/LoadBalancing.dsw:
+        * orbsvcs/tests/LoadBalancing/client.dsp:
+        * orbsvcs/tests/LoadBalancing/server.dsp:
+          Add project files for MSVC
 
 Sat Mar 25 17:52:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/LoadBalancer/Makefile:
-	* orbsvcs/LoadBalancer/LoadBalancer.h:
-	* orbsvcs/LoadBalancer/LoadBalancer.cpp:
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
-	* orbsvcs/tests/LoadBalancing/Hash_Replica.idl:
-	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
-	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
-	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.h:
-	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
-	* orbsvcs/tests/LoadBalancing/Makefile:
-	* orbsvcs/tests/LoadBalancing/client.cpp:
-	* orbsvcs/tests/LoadBalancing/server.cpp:
-	  Now it compiles and links under Linux.
+        * orbsvcs/LoadBalancer/Makefile:
+        * orbsvcs/LoadBalancer/LoadBalancer.h:
+        * orbsvcs/LoadBalancer/LoadBalancer.cpp:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+        * orbsvcs/tests/LoadBalancing/Hash_Replica.idl:
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.h:
+        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+        * orbsvcs/tests/LoadBalancing/Makefile:
+        * orbsvcs/tests/LoadBalancing/client.cpp:
+        * orbsvcs/tests/LoadBalancing/server.cpp:
+          Now it compiles and links under Linux.
 
 Sat Mar 25 16:31:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/LoadBalancer/Makefile:
-	* orbsvcs/LoadBalancer/LoadBalancer.h:
-	* orbsvcs/LoadBalancer/LoadBalancer.cpp:
-	* orbsvcs/LoadBalancer/LoadBalancer_Service.cpp:
-	* orbsvcs/LoadBalancer/LoadBalancer_Service.dsp:
-	* orbsvcs/LoadBalancer/LoadBalancer_Service.dsw:
-	  Add project files, Makefile and missing header file.
-	  Fixed typos syntax errors and other problems, so at least it
-	  compiles now.
+        * orbsvcs/LoadBalancer/Makefile:
+        * orbsvcs/LoadBalancer/LoadBalancer.h:
+        * orbsvcs/LoadBalancer/LoadBalancer.cpp:
+        * orbsvcs/LoadBalancer/LoadBalancer_Service.cpp:
+        * orbsvcs/LoadBalancer/LoadBalancer_Service.dsp:
+        * orbsvcs/LoadBalancer/LoadBalancer_Service.dsw:
+          Add project files, Makefile and missing header file.
+          Fixed typos syntax errors and other problems, so at least it
+          compiles now.
 
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
-	* orbsvcs/orbsvcs/orbsvcs.dsw:
-	* orbsvcs/orbsvcs/LoadBalancing.dsp:
-	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.i:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
-	  Fixed numerous typos, errors and configuration problems.
-	  Added the Makefile, updated the project file and inserted the
-	  project file to the orbsvcs workspace.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.i:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+          Fixed numerous typos, errors and configuration problems.
+          Added the Makefile, updated the project file and inserted the
+          project file to the orbsvcs workspace.
 
-	* orbsvcs/tests/LoadBalancing/client.cpp:
-	  Implemented a simple client body, still not compiled.
+        * orbsvcs/tests/LoadBalancing/client.cpp:
+          Implemented a simple client body, still not compiled.
 
-	* orbsvcs/tests/LoadBalancing/server.cpp:
-	  Cosmetic errors.
+        * orbsvcs/tests/LoadBalancing/server.cpp:
+          Cosmetic errors.
 
 Fri Mar 24 21:32:30 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 

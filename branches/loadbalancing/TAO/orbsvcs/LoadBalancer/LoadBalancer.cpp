@@ -84,7 +84,8 @@ TAO_LoadBalancer::init (int argc,
   // Initialize the LoadBalancer servant.
   ACE_NEW (this->balancer_,
            LoadBalancer_Impl (this->interface_repository_id_,
-                              &this->round_robin_));
+                              &this->round_robin_,
+                              this->root_poa_.in ()));
 
   CORBA::Object_var obj =
     this->balancer_->_this (ACE_TRY_ENV);

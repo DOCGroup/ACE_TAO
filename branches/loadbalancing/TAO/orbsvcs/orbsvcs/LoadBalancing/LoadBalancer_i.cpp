@@ -12,11 +12,30 @@ ACE_RCSID(orbsvcs, Load_Balancer_i, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 LoadBalancer_Impl::LoadBalancer_Impl (const char *interface_id,
-                                      Load_Balancing_Strategy *strategy)
+                                      Load_Balancing_Strategy *strategy,
+                                      PortableServer::POA_ptr poa)
   : redirector_ (this, interface_id),
-    strategy_ (strategy)
+    strategy_ (strategy),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
   // Nothing else
+
+  ACE_TRY_NEW_ENV
+    {
+      PortableServer::ObjectId_var oid =
+        this->poa_->activate_object (&this->redirector_,
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+  
+      this->group_identity_ =
+        this->poa_->id_to_reference (oid.in (),
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
 }
 
 LoadBalancer_Impl::~LoadBalancer_Impl (void)
@@ -53,8 +72,8 @@ LoadBalancer_Impl::connect (LoadBalancing::ReplicaControl_ptr control,
 }
 
 CORBA::Object_ptr
-LoadBalancer_Impl::group_identity (CORBA::Environment &ACE_TRY_ENV)
+LoadBalancer_Impl::group_identity (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->redirector_._this (ACE_TRY_ENV);
+  return CORBA::Object::_duplicate (this->group_identity_.in ());
 }
