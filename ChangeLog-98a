@@ -1,3 +1,9 @@
+Sat Mar 14 06:43:32 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.h,config-win32-common.h,config-irix*.h:
+          moved WIN32 and SGI-specific code out of Basic_Types.h and
+          into their respective config files.
+
 Sat Mar 14 00:13:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Task.h (ACE_Task_Base): Give a default value of 0 for the
