@@ -3,23 +3,20 @@
 //========================================================================
 //
 // = LIBRARY
-//     TAO/tests/IORManipulation
+//   tests/FaultTolerance/IOGRManipulation
 //
 //
 // = FILENAME
-//     IORTest.cpp
+//     IOGRTest.cpp
 //
 // = DESCRIPTION
 //   This program tests the basic functionality FT IOGR implementation
 //
 // = AUTHOR
-//     Fred Kuhns
+//     Bala Natarajan <bala@cs.wustl.edu>
 //
 //=========================================================================
 
-#include "tao/corbafwd.h"
-#include "tao/ORB.h"
-#include "tao/IORManipulation/IORC.h"
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBAC.h"
