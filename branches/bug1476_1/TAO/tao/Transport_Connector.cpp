@@ -258,11 +258,15 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   if (!this->wait_for_connection_completion (r,
                                              base_transport,
                                              timeout))
+    {
       if (TAO_debug_level > 2)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - Transport_Connector::"
                     "connect, "
                     "wait for completion failed\n"));
+
+      return 0;
+    }
 
   if (base_transport->is_connected () &&
       base_transport->wait_strategy ()->register_handler () != 0)
