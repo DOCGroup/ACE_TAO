@@ -329,9 +329,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // Create an ObjectReferenceTemplate for this POA.
-  TAO_ObjectReferenceTemplate *ort_template;
-
-  ACE_NEW_THROW_EX (ort_template,
+  ACE_NEW_THROW_EX (this->def_ort_template_,
                     TAO_ObjectReferenceTemplate (
                       this->orb_core_.server_id (),
                       this->orb_core_.orbid (),
@@ -339,7 +337,10 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  this->ort_template_ = ort_template;
+  this->ort_template_ = this->def_ort_template_;
+
+  // Must increase ref count since this->obj_ref_factory_ will
+  // descrease it upon destruction.
   CORBA::add_ref (this->ort_template_);
   this->obj_ref_factory_ = this->ort_template_;
 
@@ -348,7 +349,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // for this servant.
   this->tao_establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
 }
 
 TAO_POA::~TAO_POA (void)
@@ -769,10 +769,12 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
           tao_poa = poa->_tao_poa_downcast();
           PortableServer::ObjectId_var id =
-            tao_poa->servant_to_id_i (this->server_object_ ACE_ENV_ARG_PARAMETER);
+            tao_poa->servant_to_id_i (this->server_object_
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          tao_poa->deactivate_object_i (id.in ()ACE_ENV_ARG_PARAMETER);
+          tao_poa->deactivate_object_i (id.in ()
+                                        ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -822,7 +824,9 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-
+      // Break all ties between the ObjectReferenceTemplate and this
+      // POA.
+      this->def_ort_template_->poa (0);
     }
   else
     {

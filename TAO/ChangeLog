@@ -1,6 +1,40 @@
+Wed Sep  4 10:44:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/ObjectReferenceTemplate.h (poa):
+
+	  Added this new method.  It allows the caller to set the
+	  underlying TAO_POA pointer.  It is currently only intended for
+	  use by the POA itself.
+
+	* tao/PortableServer/ObjectReferenceTemplate.inl:
+
+	  New file containing the inline poa() mutator method.
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp (adapter_name):
+	  (make_object):
+
+	  Only callback on the POA if the TAO_POA pointer is non-zero.  It
+	  will be set to zero by the POA when the POA is destroyed.  This
+	  prevents a seg fault from occurring if user code keeps a copy of
+	  the ObjectReferenceTemplate around after the POA has been
+	  destroyed.  Thanks to Irfan for suggesting this fix.
+
+	* tao/PortableServer/POA.h:
+
+	  Cache a pointer to the default TAO ObjectReferenceTemplate
+	  implementation.  The POA now needs to call a TAO-specific method
+	  in that implementation during upon destruction.
+
+	* tao/PortableServer/POA.cpp (destroy_i):
+
+	  Set the TAO_POA pointer in the ObjectReferenceTemplate to zero.
+	  This breaks all ties between the POA and the
+	  ObjectReferenceTemplate.  Thanks to Irfan for suggesting this
+	  fix.
+
 Wed Sep 04 09:43:45 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableInterceptorC.cpp (_create_policy): Fixed unused arg
+	* tao/PortableInterceptorC.cpp (_create_policy): Fixed unused arg
 	  warning.	
 
 Tue Sep 03 18:34:51 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
