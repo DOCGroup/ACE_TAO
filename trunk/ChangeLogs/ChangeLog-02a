@@ -1,3 +1,56 @@
+Sun Jul 09 14:00:34 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+		* ace/ace_wchar.h:
+
+		  Added two macros for straight out conversion of strings:
+		  ACE_TEXT_CHAR_TO_WCHAR and ACE_TEXT_WCHAR_TO_CHAR.
+
+		* ace/adapter/README
+		* ace/adapter/ace/ACE.h
+		* ace/adapter/ace/ARGV.h
+		* ace/adapter/ace/Arg_Shifter.h
+		* ace/adapter/ace/ATM_Addr.h
+		* ace/adapter/ace/DEV_Addr.h
+		* ace/adapter/ace/Dirent.h
+		* ace/adapter/ace/DLL.h
+		* ace/adapter/ace/Dynamic_Service.h
+		* ace/adapter/ace/FIFO.h
+		* ace/adapter/ace/FIFO_Recv.h
+		* ace/adapter/ace/FIFO_Recv_Msg.h
+		* ace/adapter/ace/FIFO_Send.h
+		* ace/adapter/ace/FIFO_Send_Msg.h
+		* ace/adapter/ace/FILE_Addr.h
+		* ace/adapter/ace/Functor.h
+		* ace/adapter/ace/High_Res_Timer.h
+		* ace/adapter/ace/INET_Addr.h
+		* ace/adapter/ace/Malloc_T.h
+		* ace/adapter/ace/Memory_Pool.h
+		* ace/adapter/ace/MEM_Addr.h
+		* ace/adapter/ace/OS_Dirent.h
+		* ace/adapter/ace/OS_String.h
+		* ace/adapter/ace/Service_Config.h
+		* ace/adapter/ace/Service_Object.h
+		* ace/adapter/ace/SOCK_Dgram_Bcast.h
+		* ace/adapter/ace/SOCK_Dgram_Mcast.h
+		* ace/adapter/ace/SPIPE_Addr.h
+		* ace/adapter/ace/System_Time.h
+		* ace/adapter/ace/Task_T.h
+		* ace/adapter/ace/Trace.h
+
+		  This is a initial shot at the implementation of an adaptation
+		  layer for ACE that provides a Wide character interface with 
+		  a character library and vice versa.  
+
+		  Right now the above files contain classes ending with _W that
+		  correspond to the actual classes (such as ACE_W).  This class
+		  will have methods that take in wchar_t instead of char, and 
+		  then convert the parameters and return value when calling
+		  the actual char implementation.
+
+		  Note, this is an initial implementation that isn't complete
+		  across all interfaces and there are memory managment issues that
+		  still must be dealt with.
+
 Sat Jul 08 14:50:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * all Makefiles: updated dependencies.
