@@ -1,3 +1,8 @@
+Tue Oct  6 02:58:35 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* docs/compiler.html: Updated documentation for the new Binary
+	Search operation lookup stratetgy.
+
 Tue Oct 06 00:11:11 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.18 released.
