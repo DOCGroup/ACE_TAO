@@ -1,3 +1,13 @@
+Thu Sep 16 13:56:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Added inclusion of ace/streams.h to client header
+	  file, contingent on defintion of
+	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION. This is mainly
+	  for VxWorks to be happy when generating iostream
+	  operators for exceptions. Thanks to David for 
+	  pointing out this problem.
+
 Thu Sep 16 12:51:35 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/ORB.h:
