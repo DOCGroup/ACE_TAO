@@ -1,3 +1,11 @@
+Thu Sep  9 14:49:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+	* orbsvcs/tests/EC_Multiple/run_test.pl:
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_test.pl:
+	  Don't use -ORBNameServiceIOR anymore, replace with -ORBInitRef.
+
 Wed Sep  9 10:35:12 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/Makefile,

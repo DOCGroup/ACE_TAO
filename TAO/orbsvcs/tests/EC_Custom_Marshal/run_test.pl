@@ -29,17 +29,17 @@ $ES = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Event_Service".$DIR_SEPARATOR.
                        "Event_Service".$EXE_EXT,
-		       "-ORBNameServiceIOR file://$NS_ior -t new");
+		       "-ORBInitRef NameService=file://$NS_ior -t new");
 
 sleep $sleeptime;
 
 $C = Process::Create ($EXEPREFIX."ECM_Consumer".$EXE_EXT,
-		      "-ORBNameServiceIOR file://$NS_ior");
+		      "-ORBInitRef NameService=file://$NS_ior");
 
 sleep $sleeptime;
 
 $S = Process::Create ($EXEPREFIX."ECM_Supplier".$EXE_EXT,
-		      "-ORBNameServiceIOR file://$NS_ior");
+		      "-ORBInitRef NameService=file://$NS_ior");
 
 if ($C->TimedWait (60) == -1) {
   $status = 1;
