@@ -280,7 +280,10 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
     {
       //Generate GUID
       this->guid_ = ACE_OS::rand (); //Will be replaced by the ACE guid generator
-      
+
+      ACE_DEBUG ((LM_DEBUG,
+				  "The Guid is %d\n",
+					(const int*) this->guid_.get_buffer ()));
       this->scheduler_->begin_new_scheduling_segment (this->guid_,
 						      name,
 						      sched_param,
@@ -299,6 +302,11 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 	{
 	this->cancel_thread (ACE_ENV_ARG_PARAMETER);
 	ACE_CHECK;
+	}
+	else if (result == 1)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+				  "Entry Exists\n"));
 	}
       
       this->name_ = name;
@@ -491,8 +499,8 @@ TAO_RTScheduler_Current_i::cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::THREAD_CANCELLED))
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "Distributable Thread - %s is cancelled\n",
-	      (const char*) this->guid_.get_buffer ()));
+	      "Distributable Thread - %d is cancelled\n",
+	      (const int*) this->guid_.get_buffer ()));
  
   // Let the scheduler know that the thread has
   // been cancelled.
