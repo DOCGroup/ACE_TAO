@@ -2,6 +2,7 @@
 
 #include "ace/Sched_Params.h"
 #include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "Memory_Pools.h"
 
 #include "Dispatching_Modules.h"
@@ -100,10 +101,16 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
 {
   for (int x=0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
     {
-      RtecScheduler::Period tv = ACE_Scheduler_Rates[x];
+      // @@ Apparently Period is measured in a different unit that the
+      // time, beats me.
+      ACE_hrtime_t nanosecs;
+      ORBSVCS_Time::TimeT_to_hrtime (nanosecs, ACE_Scheduler_Rates[x]);
+
+      RtecScheduler::Period period = nanosecs;
+		  
       queues_[x] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_); 
       if (queues_[x] == 0 ||
-	  queues_[x]->open_queue (tv, threads_per_queue_) == -1)
+	  queues_[x]->open_queue (period, threads_per_queue_) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Priority_Dispatching::initialize_queues"));
 	  return;
@@ -468,11 +475,14 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
     case 0:
       TAO_TRY
 	{// @@ TODO: Handle exceptions...
-	  ACE_Scheduler_Factory::server()->set(rt_info_,
-					       0, 0, 0, 0,
-					       RtecScheduler::VERY_LOW,
-					       RtecScheduler::NO_QUANTUM,
-					       1, TAO_TRY_ENV);
+	  ACE_Scheduler_Factory::server()->set (rt_info_,
+						ORBSVCS_Time::zero,
+						ORBSVCS_Time::zero,
+						ORBSVCS_Time::zero,
+						0,
+						RtecScheduler::VERY_LOW,
+						ORBSVCS_Time::zero,
+						1, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	}
       TAO_CATCHANY
