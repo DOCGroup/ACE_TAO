@@ -1,3 +1,16 @@
+Fri Mar 19 17:55:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/CurrentC.h:
+	* tao/DynAnyC.h:
+	* tao/PolicyC.h:
+	* tao/POAC.h:
+	* tao/Object_KeyC.h:
+	  Added the _ptr_type and _var_type typedefs for these
+	  non-regenerated classes. Thanks to
+	  Carl Grinstead <grinstea@tsunami.com> and
+	  James A. Risinger <james@tsunami.com>
+	  for pointing out the oversight.
+
 Fri Mar 19 14:56:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h:
