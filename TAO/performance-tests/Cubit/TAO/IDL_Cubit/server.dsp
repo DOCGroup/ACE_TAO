@@ -123,7 +123,7 @@ LINK32=link.exe
 # PROP Target_Dir "server"
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D ACE_NO_INLINE /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -210,7 +210,7 @@ InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\..\release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -280,13 +280,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "IDL_Cubit Server - Win32 static Debug"
 
-USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"	
+USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\..\bin\tao_idl_static $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -320,13 +320,13 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
-USERDEP__CUBIT="..\..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__CUBIT="..\..\..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\..\bin\release\tao_idl_static $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
