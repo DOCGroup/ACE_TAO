@@ -1371,17 +1371,7 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members
     CORBA::ULong enum_val;
     CORBA::ULongLong ulonglong_val;
     CORBA::LongLong longlong_val;
-  } s;
-
-  s.char_val = 0;
-  s.bool_val = 0;
-  s.short_val = 0;
-  s.ushort_val = 0;
-  s.long_val = 0;
-  s.ulong_val = 0;
-  s.enum_val = 0;
-  s.ulonglong_val = 0;
-  s.longlong_val = ACE_CDR_LONGLONG_INITIALIZER;
+  } s = {0, 0, 0, 0, 0, 0, 0, 0, ACE_CDR_LONGLONG_INITIALIZER };
 
   // Two cases - one for signed and one for unsigned discriminator types.
   if (disc_kind == CORBA::tk_long
