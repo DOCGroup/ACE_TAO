@@ -6,30 +6,32 @@
  *
  *  $Id$
  *
- *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
 //=============================================================================
-#ifndef _TAO_QTRESOURCE_FACTORY_H
-#define _TAO_QTRESOURCE_FACTORY_H
+#ifndef TAO_QTRESOURCE_FACTORY_H
+#define TAO_QTRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
-#include /**/ <qapplication.h>
-#include /**/ "ace/QtReactor.h"
-#include /**/ "TAO_QtResource_Export.h"
-#include /**/ "GUIResource_Factory.h"
+
+#include "tao/TAO_QtResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include <qapplication.h>
+#include "tao/GUIResource_Factory.h"
 
 namespace TAO
 {
 
   /** TAO_GUI_Resource_Factory for creating QtReactor.
    *
-   * This factory is intended for creating QtReactor for ORB. This factory can be
-   * feed into ORB using TAO_ORB_Core::set_gui_resource_factory method which is
-   * usually done by TAO_QtResource_Loader.
+   * This factory is intended for creating QtReactor for ORB. This
+   * factory can be feed into ORB using
+   * TAO_ORB_Core::set_gui_resource_factory method which is usually
+   * done by TAO_QtResource_Loader.
    */
   class TAO_QtResource_Export QtResource_Factory : public GUIResource_Factory
   {
@@ -43,10 +45,11 @@ namespace TAO
 
     /// Reactor created by this factory.
     ACE_QtReactor *reactor_impl_;
+
     /// QApplication running reactor
     QApplication *qapp_;
   };
 }
 
 #include /**/ "ace/post.h"
-#endif /* _TAO_QTRESOURCE_FACTORY_H */
+#endif /* TAO_QTRESOURCE_FACTORY_H */

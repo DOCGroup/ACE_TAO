@@ -13,22 +13,29 @@
 #ifndef TAO_XTRESOURCE_FACTORY_H
 #define TAO_XTRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
-#include /**/ "ace/XtReactor.h"
-#include /**/ "TAO_XtResource_Export.h"
-#include /**/ "GUIResource_Factory.h"
+
+#include "TAO_XtResource_Export.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/XtReactor.h"
+#include "tao/GUIResource_Factory.h"
+
 namespace TAO
 {
 
-  /** TAO_GUI_Resource_Factory for creating XtReactor.
+  /**
+   * @class XtResource_Factory
    *
-   * This factory is intended for creating XtReactor for ORB. This factory can be
-   * feed into ORB using TAO_ORB_Core::set_gui_resource_factory method which is
-   * usually done by TAO_XtResource_Loader.
+   * @brief TAO_GUI_Resource_Factory for creating XtReactor.
+   *
+   * This factory is intended for creating XtReactor for ORB. This
+   * factory can be feed into ORB using
+   * TAO_ORB_Core::set_gui_resource_factory method which is usually
+   * done by TAO_XtResource_Loader.
    */
   class TAO_XtResource_Export XtResource_Factory : public GUIResource_Factory
   {
