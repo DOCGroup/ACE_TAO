@@ -1,3 +1,9 @@
+Thu Jan  1 09:51:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_orb_tests.lst:
+
+	  Added smart proxies test to the daily builds.
+
 Thu Jan  1 00:35:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
