@@ -22,14 +22,14 @@ include $(TAO_ROOT)/rules.tao.GNU
 #       Define local rules and targets
 #---------------------------------------------------------------------------
 ifneq ($(CROSS-COMPILE),)
-  all debug profile optimize install deinstall:  
+  all debug profile optimize install deinstall:
 	@echo The IFR Service requires a TAO_IDL library which isn\'t be built for CROSS-COMPILE platforms.
 
   clean realclean:
 	@echo Nothing to clean in IFR_Service on CROSS-COMPILE platforms.
 else  # ! CROSS-COMPILE
 ifeq ($(findstring xlC,$(CXX)),xlC)
-  all debug profile optimize install deinstall:  
+  all debug profile optimize install deinstall:
 	@echo The IFR Service requires the using keyword which isn\'t supported by this compiler.
 
   clean realclean:
@@ -38,14 +38,10 @@ else
 MKLIST = Makefile.IFR_Service Makefile.tao_ifr
 
 all debug profile optimize install deinstall clean realclean clobber depend idl_stubs:
-ifeq (Windows,$(findstring Windows,$(OS)))
-	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
-else  # ! Windows
 	@for m in $(MKLIST); do \
 	echo $$m; \
         $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
         done
-endif # ! Windows
 endif # ! aix_build
 endif # ! CROSS-COMPILE
 

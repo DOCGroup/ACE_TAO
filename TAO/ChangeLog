@@ -1,3 +1,12 @@
+Sat Jul 5 13:39:10 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/Makefile:
+        * orbsvcs/PSS/Makefile:
+          Removed windows specific parts from these makefiles. These are not
+          needed and cause problems when using windows and the msys shell.
+          This solves several compile problems in the MinGW build. Thanks to
+          Martin Corino <mcorino@remedy.nl> for finding this.
+
 Sat Jul 5 08:17:54 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:

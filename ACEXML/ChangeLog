@@ -1,3 +1,10 @@
+Sat Jul 5 13:33:36 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Makefile:
+          Removed windows specific rules. They are not needed and only
+          cause problems when using a different command shell then cmd
+          like msys. This solves errors in the MinGW build.
+
 Fri Jun 27 12:55:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * parser/parser/Entity_Manager.h:
