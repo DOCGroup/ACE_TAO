@@ -2951,7 +2951,7 @@ idl_valid_version (char *s)
 
   // Some preprocessors leave trailing whitespace, hence the
   // check for ' '.
-  for (i = 0; tmp[i] != '\0' && tmp[i] != ' '; ++i)
+  for (i = 0; tmp[i] != '\0' && !isspace (tmp[i]); ++i)
     {
       if (!isdigit (tmp[i]))
         {
