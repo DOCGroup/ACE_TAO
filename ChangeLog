@@ -1,3 +1,17 @@
+Fri Sep 17 12:09:27 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/ASX/CCM_App/CCM_App.cpp:
+	* examples/ASX/CCM_App/SC_Server.cpp:
+	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
+	* examples/ASX/Event_Server/Event_Server/Options.{h cpp}:
+	* examples/ASX/Event_Server/Event_Server/Supplier_Router.{h cpp}:
+	* examples/ASX/Event_Server/Event_Server/Event_Analyzer.{h cpp}:
+	* examples/ASX/Event_Server/Event_Server/Consumer_Router.{h cpp}:
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
+	* examples/ASX/Event_Server/Transceiver/transceiver.{h cpp}:
+	* examples/ASX/Message_Queue/buffer_stream.cpp:
+	  Char width fixes to build clean with wide-char.
+
 Fri Sep 17 08:42:50 2004  Steve Totten  <totten_s@ociweb.com>
 
         * bin/PerlACE/Process_Win32.pm (Executable):

@@ -2,6 +2,7 @@
 
 // Main driver program for the event server example.
 
+#include "ace/OS_main.h"
 #include "ace/Stream.h"
 #include "ace/Service_Config.h"
 #include "Options.h"
@@ -69,14 +70,14 @@ Event_Server::Event_Server (void)
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_stdin_handler"));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("register_stdin_handler")));
   // Register to trap the SIGINT signal.
   else if (ACE_Reactor::instance ()->register_handler
            (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_handler"));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("register_handler")));
 }
 
 int
@@ -98,10 +99,10 @@ Event_Server::handle_input (ACE_HANDLE)
   Options::instance ()->stop_timer ();
 
   ACE_DEBUG ((LM_INFO,
-              "(%t) closing down the test\n"));
+              ACE_TEXT ("(%t) closing down the test\n")));
   Options::instance ()->print_results ();
 
-  ACE_Reactor::end_event_loop ();
+  ACE_Reactor::instance ()->end_reactor_event_loop ();
   return -1;
 }
 
@@ -120,7 +121,7 @@ Event_Server::configure_stream (void)
   // Create the <Supplier_Router> module.
   ACE_NEW_RETURN (srm,
                   MT_Module
-                  ("Supplier_Router",
+                  (ACE_TEXT ("Supplier_Router"),
                    new Supplier_Router (src),
                    new Supplier_Router (src)),
                   -1);
@@ -129,7 +130,7 @@ Event_Server::configure_stream (void)
   // Create the <Event_Analyzer> module.
   ACE_NEW_RETURN (eam,
                   MT_Module
-                  ("Event_Analyzer",
+                  (ACE_TEXT ("Event_Analyzer"),
                    new Event_Analyzer,
                    new Event_Analyzer),
                   -1);
@@ -146,7 +147,7 @@ Event_Server::configure_stream (void)
   // Create the <Consumer_Router> module.
   ACE_NEW_RETURN (crm,
                   MT_Module
-                  ("Consumer_Router",
+                  (ACE_TEXT ("Consumer_Router"),
                    new Consumer_Router (crc),
                    new Consumer_Router (crc)),
                   -1);
@@ -155,18 +156,18 @@ Event_Server::configure_stream (void)
 
   if (this->event_server_.push (srm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "push (Supplier_Router)"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (Supplier_Router)")),
                       -1);
   else if (this->event_server_.push (eam) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "push (Event_Analyzer)"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (Event_Analyzer)")),
                       -1);
   else if (this->event_server_.push (crm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "push (Consumer_Router)"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (Consumer_Router)")),
                       -1);
   return 0;
 }
@@ -181,15 +182,15 @@ Event_Server::set_watermarks (void)
 
   if (this->event_server_.control (ACE_IO_Cntl_Msg::SET_LWM,
                                    &wm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "push (setting low watermark)"),
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (setting low watermark)")),
                       -1);
 
   wm = Options::instance ()->high_water_mark ();
   if (this->event_server_.control (ACE_IO_Cntl_Msg::SET_HWM,
                                    &wm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "push (setting high watermark)"),
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (setting high watermark)")),
                       -1);
   return 0;
 }
@@ -203,7 +204,7 @@ Event_Server::run_event_loop (void)
   // Perform the main event loop waiting for the user to type ^C or to
   // enter a line on the ACE_STDIN.
 
-  ACE_Reactor::run_event_loop ();
+  ACE_Reactor::instance ()->run_reactor_event_loop ();
 
   // Close down the stream and call the <close> hooks on all the
   // <ACE_Task>s in the various Modules in the Stream.
@@ -228,7 +229,7 @@ Event_Server::svc (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if defined (ACE_HAS_THREADS)
   Options::instance ()->parse_args (argc, argv);
@@ -239,15 +240,14 @@ main (int argc, char *argv[])
   // Run the event server's event-loop.
   int result = event_server.svc ();
 
-  ACE_DEBUG ((LM_DEBUG,
-              "exiting main\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("exiting main\n")));
 
   return result;
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "threads not supported on this platform\n"),
+                     ACE_TEXT ("threads not supported on this platform\n")),
                     1);
 #endif /* ACE_HAS_THREADS */
 }

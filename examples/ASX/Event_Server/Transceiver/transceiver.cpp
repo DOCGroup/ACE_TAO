@@ -4,6 +4,7 @@
 // role of either Consumer or Supplier.  You can terminate this
 // program by typing ^C....
 
+#include "ace/OS_main.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Service_Config.h"
 #include "ace/SOCK_Connector.h"
@@ -18,19 +19,19 @@ ACE_RCSID(Transceiver, transceiver, "$Id$")
 // Handle the command-line arguments.
 
 int
-Event_Transceiver::parse_args (int argc, char *argv[])
+Event_Transceiver::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "Ch:p:S");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("Ch:p:S"));
 
   this->port_number_ = ACE_DEFAULT_SERVER_PORT;
   this->host_name_ = ACE_DEFAULT_SERVER_HOST;
-  this->role_ = "Supplier";
+  this->role_ = ACE_TEXT ("Supplier");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'C':
-        this->role_ = "Consumer";
+        this->role_ = ACE_TEXT ("Consumer");
         break;
       case 'h':
         this->host_name_ = get_opt.opt_arg ();
@@ -39,11 +40,11 @@ Event_Transceiver::parse_args (int argc, char *argv[])
         this->port_number_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'S':
-        this->role_ = "Supplier";
+        this->role_ = ACE_TEXT ("Supplier");
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %n [-CS] [-h host_name] [-p portnum] \n"),
+                           ACE_TEXT ("usage: %n [-CS] [-h host_name] [-p portnum] \n")),
                           -1);
         /* NOTREACHED */
         break;
@@ -54,7 +55,7 @@ Event_Transceiver::parse_args (int argc, char *argv[])
   // ACE_DEFAULT_SERVER_PORT and the Supplier port to
   // ACE_DEFAULT_SERVER_PORT + 1).  Note that this is kind of a
   // hack...
-  if (ACE_OS::strcmp (this->role_, "Supplier") == 0
+  if (ACE_OS::strcmp (this->role_, ACE_TEXT ("Supplier")) == 0
       && this->port_number_ == ACE_DEFAULT_SERVER_PORT)
     this->port_number_++;
   return 0;
@@ -64,20 +65,18 @@ int
 Event_Transceiver::handle_close (ACE_HANDLE,
                                  ACE_Reactor_Mask)
 {
-  ACE_Reactor::end_event_loop ();
+  ACE_Reactor::instance ()->end_reactor_event_loop ();
   return 0;
 }
 
 // Close down via SIGINT or SIGQUIT.
 
 int
-Event_Transceiver::handle_signal (int signum,
+Event_Transceiver::handle_signal (int,
                                   siginfo_t *,
                                   ucontext_t *)
 {
-  ACE_UNUSED_ARG (signum);
-
-  ACE_Reactor::end_event_loop ();
+  ACE_Reactor::instance ()->end_reactor_event_loop ();
   return 0;
 }
 
@@ -85,12 +84,12 @@ Event_Transceiver::Event_Transceiver (void)
 {
 }
 
-Event_Transceiver::Event_Transceiver (int argc, char *argv[])
+Event_Transceiver::Event_Transceiver (int argc, ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "parse_args"));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("parse_args")));
   else
     {
       ACE_Sig_Set sig_set;
@@ -103,8 +102,8 @@ Event_Transceiver::Event_Transceiver (int argc, char *argv[])
           (sig_set,
            this) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "register_handler"));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("register_handler")));
 
       // We need to register <this> here before we're connected since
       // otherwise <get_handle> will return the connection socket
@@ -113,8 +112,8 @@ Event_Transceiver::Event_Transceiver (int argc, char *argv[])
                                                           ACE_Reactor::instance (),
                                                           ACE_Thread_Manager::instance ()) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "register_stdin_handler"));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("register_stdin_handler")));
 
       // Address of the server.
       ACE_INET_Addr server_addr (this->port_number_,
@@ -131,7 +130,7 @@ Event_Transceiver::Event_Transceiver (int argc, char *argv[])
                              server_addr) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%p\n",
+                      ACE_TEXT ("%p\n"),
                       this->host_name_));
           ACE_Reactor::instance()->remove_handler (sig_set);
           ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance(),
@@ -149,8 +148,8 @@ Event_Transceiver::open (void *)
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "register_handler"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("register_handler")),
                        -1);
   return 0;
 }
@@ -169,7 +168,7 @@ int
 Event_Transceiver::transmitter (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) entering %s transmitter\n",
+              ACE_TEXT ("(%P|%t) entering %s transmitter\n"),
               this->role_));
 
   char buf[BUFSIZ];
@@ -180,7 +179,7 @@ Event_Transceiver::transmitter (void)
     result = -1;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) leaving %s transmitter\n",
+              ACE_TEXT ("(%P|%t) leaving %s transmitter\n"),
               this->role_));
   return result;
 }
@@ -189,7 +188,7 @@ int
 Event_Transceiver::receiver (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) entering %s receiver\n",
+              ACE_TEXT ("(%P|%t) entering %s receiver\n"),
               this->role_));
 
   char buf[BUFSIZ];
@@ -202,19 +201,19 @@ Event_Transceiver::receiver (void)
     result = -1;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) leaving %s receiver\n",
+              ACE_TEXT ("(%P|%t) leaving %s receiver\n"),
               this->role_));
   return result;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_Service_Config::open (argv[0]) == -1
       && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")),
                        -1);
 
   // Create and initialize the transceiver.
@@ -223,14 +222,14 @@ main (int argc, char *argv[])
   // Demonstrate how we can check if a constructor failed...
   if (ACE_LOG_MSG->op_status () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "Event_Transceiver constructor failed"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("Event_Transceiver constructor failed")),
                        -1);
 
 
   // Run event loop until either the event server shuts down or we get
   // a SIGINT.
-  ACE_Reactor::run_event_loop ();
+  ACE_Reactor::instance ()->run_reactor_event_loop ();
   return 0;
 }
 
