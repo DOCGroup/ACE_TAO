@@ -2,6 +2,9 @@
 
 #include "Newsweek.h"
 
+// @@ Kirthika, please see the comments in the Today.cpp file to see
+// my recommendations for simplifying this stuff.
+
 // This declaration necessary to get thi sworking on NT.
 #if defined (ACE_HAS_WIN32)
 
@@ -20,6 +23,7 @@ extern "C" {  // only need to export C interface if
 
 // Implementation of the abstract class method which describes
 // the magazine.
+
 void Newsweek::title (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -27,6 +31,7 @@ void Newsweek::title (void)
 }
 
 // Returns the Newsweek class pointer.
+
 extern "C"
 Magazine *create_magazine (void)
 {
