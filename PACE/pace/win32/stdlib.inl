@@ -124,12 +124,8 @@ PACE_INLINE
 int
 pace_rand_r (unsigned int *seed)
 {
-#if defined (PACE_HAS_REENTRANT)
-  return rand_r (seed);
-#else  /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG (seed);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-#endif /* ! PACE_HAS_REENTRANT */
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
@@ -171,3 +167,7 @@ pace_realloc (void * ptr, size_t size)
   return realloc (ptr, size);
 }
 #endif /* PACE_HAS_POSIX_CLS_UOF */
+
+
+
+

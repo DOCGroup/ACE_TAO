@@ -56,7 +56,7 @@ pace_sigaction (int sig, const pace_sigaction_s * act,
     {
       oact->sa_handler = signal (sig, act->sa_handler);
     }
-  return oact->sa_handler == SIG_ERR ? -1 : 0;
+  return (oact->sa_handler == SIG_ERR ? -1 : 0);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -194,7 +194,7 @@ pace_sigwait (const pace_sigset_t * set, int * sig)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_sigwaitinfo (const pace_sigset_t *set, pace_siginfo_t *info)
+pace_sigwaitinfo (const pace_sigset_t * set, pace_siginfo_t * info)
 {
   PACE_UNUSED_ARG (set);
   PACE_UNUSED_ARG (info);

@@ -42,6 +42,7 @@ PACE_INLINE
 unsigned int
 pace_alarm (unsigned int seconds)
 {
+  PACE_UNUSED_ARG (seconds);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
@@ -60,6 +61,9 @@ PACE_INLINE
 int
 pace_chown (const char * path, uid_t owner, pace_gid_t group)
 {
+  PACE_UNUSED_ARG (path);
+  PACE_UNUSED_ARG (owner);
+  PACE_UNUSED_ARG (group);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);  
 }
 #endif /* PACE_HAS_POSIX_FA_UOF */
@@ -355,7 +359,7 @@ pace_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
     }
     default: {
       errno = EINVAL;
-      return ACE_static_cast (off_t, -1); // rather safe than sorry
+      return (off_t)-1; // rather safe than sorry
     }
   }
   PACE_OSCALL_RETURN (lseek (handle, offset, whence), off_t, -1);
