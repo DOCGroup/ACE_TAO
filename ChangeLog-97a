@@ -7,6 +7,9 @@ Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	  and .shobj/Timer_Hash.so (and possibly others) fail to
 	  build due to ACE_TimeValue::normalize () "relocations remain
 	  against allocatable but non-writable sections".
+	  Thanks to Steve Huston <shuston@riverace.com> and
+	  Satoshi Ueno <satoshi.ueno@gs.com> for reporting this, and
+	  to Satoshi for verifying the fix.
 
 	* ace/ACE.cpp (terminate_process): removed used of ACE_OSCALL_RETURN
 	  macro because its defined in OS.i, and so not available if
