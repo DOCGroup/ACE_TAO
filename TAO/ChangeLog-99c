@@ -1,287 +1,294 @@
+Wed Aug 25 10:16:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/EC_Gateway_UDP.cpp (handle_input):
+          changed local variable "index" to "map_index".
+          egcs 1.1.2 for Neutrino tripped over index.  Thanks
+          to Carlos for quickly spotting the cause.
+
 Tue Aug 24 22:40:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Latency/Makefile:
-	  Fixed the rules to compile the java version
+        * performance-tests/Latency/Makefile:
+          Fixed the rules to compile the java version
 
-	* performance-tests/Latency/scalability.pl:
-	  Added a new driver program to run a scalability test
+        * performance-tests/Latency/scalability.pl:
+          Added a new driver program to run a scalability test
 
-	* performance-tests/Latency/client.cpp:
-	* performance-tests/Latency/st_client.cpp:
-	  Added options to disable the shutdown message when the client
-	  dies.
-	  
-	* performance-tests/Latency/java_server.java:
-	  Visibroker3.4 does not have the ORB.run() method (added in CORBA 
-	  2.3)
+        * performance-tests/Latency/client.cpp:
+        * performance-tests/Latency/st_client.cpp:
+          Added options to disable the shutdown message when the client
+          dies.
 
-	* performance-tests/Latency/run_test.pl:
-	  Minor cosmetic fixes.
+        * performance-tests/Latency/java_server.java:
+          Visibroker3.4 does not have the ORB.run() method (added in CORBA
+          2.3)
+
+        * performance-tests/Latency/run_test.pl:
+          Minor cosmetic fixes.
 
 Tue Aug 24 21:08:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
-	  Had to change the 32-bit enforcing value below to
-	  0x7FFFFFF. Evidently there is at least one version 
-	  of HPUX that doesn't like the 0xFFFFFFFF value. Thanks
-	  to Carlos for pointing this out.
+        * TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+          Had to change the 32-bit enforcing value below to
+          0x7FFFFFF. Evidently there is at least one version
+          of HPUX that doesn't like the 0xFFFFFFFF value. Thanks
+          to Carlos for pointing this out.
 
 Tue Aug 24 19:09:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Latency/client.cpp:
-	  The user can specify a period for all the threads, in
-	  milliseconds, the option is now consistent with the st_client
-	  test
+        * performance-tests/Latency/client.cpp:
+          The user can specify a period for all the threads, in
+          milliseconds, the option is now consistent with the st_client
+          test
 
-	* performance-tests/Latency/Makefile:
-	* performance-tests/Latency/TestImpl.java:
-	* performance-tests/Latency/java_client.java:
-	* performance-tests/Latency/java_server.java:
-	  Added a Java version of the latency test, we should move it to
-	  some other place (like a separate VisiJava directory), but not
-	  right now.
+        * performance-tests/Latency/Makefile:
+        * performance-tests/Latency/TestImpl.java:
+        * performance-tests/Latency/java_client.java:
+        * performance-tests/Latency/java_server.java:
+          Added a Java version of the latency test, we should move it to
+          some other place (like a separate VisiJava directory), but not
+          right now.
 
 Tue Aug 24 18:14:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
-	  Code generation for enums in .h file now
-	  appends an enum value called
-	  <enum name>_TAO_ENUM_32BIT_ENFORCER and sets its
-	  value to 0xFFFFFFFF. All enums in CORBA must be
-	  32 bits in size, and some compilers will try to
-	  use a smaller space if the enum values are 
-	  small enough. Note that this extra member is not
-	  part of the IDL compiler's internal representation
-	  of the enum, so unions that use the enum as a
-	  discriminator won't have incorrect _default()
-	  code generated.
+        * TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+          Code generation for enums in .h file now
+          appends an enum value called
+          <enum name>_TAO_ENUM_32BIT_ENFORCER and sets its
+          value to 0xFFFFFFFF. All enums in CORBA must be
+          32 bits in size, and some compilers will try to
+          use a smaller space if the enum values are
+          small enough. Note that this extra member is not
+          part of the IDL compiler's internal representation
+          of the enum, so unions that use the enum as a
+          discriminator won't have incorrect _default()
+          code generated.
 
 Tue Aug 24 16:38:16 1999  Mike Moran  <mm4@cs.wustl.edu>
 
-	* examples/Advanced/
-	* examples/Advanced/ch_3
-	* examples/Advanced/ch_8_and_10
-	* examples/Advanced/ch_12
-	* examples/Advanced/ch_18
-	
-	  Added code from first four examples from Henning & 
-	  Vinoski's book plus Makefiles, test scripts and readmes.
+        * examples/Advanced/
+        * examples/Advanced/ch_3
+        * examples/Advanced/ch_8_and_10
+        * examples/Advanced/ch_12
+        * examples/Advanced/ch_18
 
-	* examples/README (examples): 
+          Added code from first four examples from Henning &
+          Vinoski's book plus Makefiles, test scripts and readmes.
+
+        * examples/README (examples):
           Added description of examples in directory Advanced/.
 
 Tue Aug 24 15:32:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/Load_Balancing/Load_Balancer_i.cpp:
-	  Added some template instantiations that the Irix linker
-	  had trouble finding.
+        * tests/Load_Balancing/Load_Balancer_i.cpp:
+          Added some template instantiations that the Irix linker
+          had trouble finding.
 
 Tue Aug 24 14:44:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/MessagingC.i:
-	  Fixed typo
+        * tao/MessagingC.i:
+          Fixed typo
 
 Tue Aug 24 12:06:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/included.idl:
-	* tests/IDL_Test/including.idl:
-	  Added example similar to that sent in by
-	  Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com>
-	  to the above two file.
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/including.idl:
+          Added example similar to that sent in by
+          Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com>
+          to the above two file.
 
 Tue Aug 24 12:00:03 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* rules.tao.GNU: Disabled the option that was compiling the
-	  Interface repository files by default. With this change the user
-	  is expected to issue the command gmake interface_repo=1 to
-	  compile the files for the interface repository.
+        * rules.tao.GNU: Disabled the option that was compiling the
+          Interface repository files by default. With this change the user
+          is expected to issue the command gmake interface_repo=1 to
+          compile the files for the interface repository.
 
 Tue Aug 24 11:47:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_enum.cpp:
-	  Modified compute_member_count() to work if the enum is
-	  included from another .idl file. This problem was
-	  causing a union with an enum discriminator, where the
-	  enum is declared in an included file, to have a 
-	  _default() function that won't compile. Thanks to
-	  Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com>
-	  for pointing out the problem and sending in an
-	  example pair if .idl files.
+        * TAO_IDL/be/be_enum.cpp:
+          Modified compute_member_count() to work if the enum is
+          included from another .idl file. This problem was
+          causing a union with an enum discriminator, where the
+          enum is declared in an included file, to have a
+          _default() function that won't compile. Thanks to
+          Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com>
+          for pointing out the problem and sending in an
+          example pair if .idl files.
 
 Tue Aug 24 13:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tao/MessagingC.cpp,
-	  tao/MessagingC.i: 
-	  Put the #if defined TAO_HAS_AMI_CALLBACK .. statements
-	  in the right places.
+        * tao/MessagingC.cpp,
+          tao/MessagingC.i:
+          Put the #if defined TAO_HAS_AMI_CALLBACK .. statements
+          in the right places.
 
-	* docs/releasenotes/index.html:
-	  Added a statement saying that one has to use
-	  TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK
-	  to compile TAO and the IDL compiler AMI enabled. 
+        * docs/releasenotes/index.html:
+          Added a statement saying that one has to use
+          TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK
+          to compile TAO and the IDL compiler AMI enabled.
 
 Tue Aug 24 11:03:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/Makefile:
-	  The IDL compiler did not compile due to outdated dependencies.
+        * TAO_IDL/Makefile:
+          The IDL compiler did not compile due to outdated dependencies.
 
 Tue Aug 24 09:49:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/examples/Load_Balancing/client.dsp:
-	* TAO/examples/Load_Balancing/server.dsp:
-	* TAO/examples/Load_Balancing/service.dsp:
-	  Corrected the project paths.
+        * TAO/examples/Load_Balancing/client.dsp:
+        * TAO/examples/Load_Balancing/server.dsp:
+        * TAO/examples/Load_Balancing/service.dsp:
+          Corrected the project paths.
 
 Tue Aug 24 5:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp,
-	  TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_sh.h
-	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp,	  
-	  TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_ss.h,
-	  TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp,
-	  TAO_IDL/be_include/be_visitor_operation/ami_handler_servant_operation_ss.h:
-	  Introduced these files and removed the corresponding *_{cs,ch}.{h,cpp} 
-	  files because the code is generated in the server header and 
-	  server implementation files.
-	  
-	* TAO_IDL/be/be_codegen.cpp,
-	  TAO_IDL/be/be_interface.cpp,
-	  TAO_IDL/be/be_visitor_factory.cpp,
-	  TAO_IDL/be/be_visitor_interface.cpp,
-	  TAO_IDL/be/be_visitor_operation.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
-	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
-	  TAO_IDL/be_include/be_codegen.h,
-	  TAO_IDL/be_include/be_interface.h,
-	  TAO_IDL/be_include/be_visitor_interface.h,
-	  TAO_IDL/be_include/be_visitor_operation.h:
-	  Made minor adjustments to have AMI callbacks properly working.
+        * TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp,
+          TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_sh.h
+          TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp,
+          TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_ss.h,
+          TAO_IDL/be/be_visitor_operation/ami_handler_servant_operation_ss.cpp,
+          TAO_IDL/be_include/be_visitor_operation/ami_handler_servant_operation_ss.h:
+          Introduced these files and removed the corresponding *_{cs,ch}.{h,cpp}
+          files because the code is generated in the server header and
+          server implementation files.
 
-	* tao/Asynch_Invocation.cpp
-	  tao/Asynch_Invocation.h
-	  tao/Asynch_Invocation.i
-	  tao/MessagingC.cpp
-	  tao/MessagingC.h
-	  tao/MessagingS.cpp
- 	  tao/MessagingS.h
-	  tao/MessagingS_T.cpp
-	  tao/POA_CORBA.h
-	  tao/PollableC.cpp
-	  tao/PollableC.h
-	  tao/PollableS.cpp
-	  tao/PollableS.h
-	  tao/Reply_Dispatcher.cpp
-	  tao/Reply_Dispatcher.h
-	  tao/Typecode_Constants.cpp: Introduced the TAO_HAS_AMI_CALLBACK and
-	  TAO_HAS_AMI_POLLER define. Removed the TAO_POLLER define.
+        * TAO_IDL/be/be_codegen.cpp,
+          TAO_IDL/be/be_interface.cpp,
+          TAO_IDL/be/be_visitor_factory.cpp,
+          TAO_IDL/be/be_visitor_interface.cpp,
+          TAO_IDL/be/be_visitor_operation.cpp,
+          TAO_IDL/be/be_visitor_interface/interface.cpp,
+          TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+          TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
+          TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
+          TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
+          TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+          TAO_IDL/be_include/be_codegen.h,
+          TAO_IDL/be_include/be_interface.h,
+          TAO_IDL/be_include/be_visitor_interface.h,
+          TAO_IDL/be_include/be_visitor_operation.h:
+          Made minor adjustments to have AMI callbacks properly working.
 
-	* tests/AMI/client.cpp,
-	  tests/AMI/client.dsp,
-	  tests/AMI/run_test.pl,
-	  tests/AMI/server.cpp,
-	  tests/AMI/server.dsp,
-	  tests/AMI/test.idl,
-	  tests/AMI/test_i.cpp,
-	  tests/AMI/test_i.h: Revived this test again.
+        * tao/Asynch_Invocation.cpp
+          tao/Asynch_Invocation.h
+          tao/Asynch_Invocation.i
+          tao/MessagingC.cpp
+          tao/MessagingC.h
+          tao/MessagingS.cpp
+          tao/MessagingS.h
+          tao/MessagingS_T.cpp
+          tao/POA_CORBA.h
+          tao/PollableC.cpp
+          tao/PollableC.h
+          tao/PollableS.cpp
+          tao/PollableS.h
+          tao/Reply_Dispatcher.cpp
+          tao/Reply_Dispatcher.h
+          tao/Typecode_Constants.cpp: Introduced the TAO_HAS_AMI_CALLBACK and
+          TAO_HAS_AMI_POLLER define. Removed the TAO_POLLER define.
+
+        * tests/AMI/client.cpp,
+          tests/AMI/client.dsp,
+          tests/AMI/run_test.pl,
+          tests/AMI/server.cpp,
+          tests/AMI/server.dsp,
+          tests/AMI/test.idl,
+          tests/AMI/test_i.cpp,
+          tests/AMI/test_i.h: Revived this test again.
 
 
 Tue Aug 24 00:47:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* examples/Load_Balancing/Makefile:
-	  Removed foreign characters that were introduced during previous
-	  commit by mistake.
+        * examples/Load_Balancing/Makefile:
+          Removed foreign characters that were introduced during previous
+          commit by mistake.
 
 
-	* examples/Load_Balancing/Identity_Client.cpp
-	* examples/Load_Balancing/Identity_Server.cpp
-	* examples/Load_Balancing/Load_Balancing_Service.cpp:
-	  Fixed some compilation warnings.
+        * examples/Load_Balancing/Identity_Client.cpp
+        * examples/Load_Balancing/Identity_Server.cpp
+        * examples/Load_Balancing/Load_Balancing_Service.cpp:
+          Fixed some compilation warnings.
 
-	* examples/Load_Balancing/Identity_i.cpp:
-	  Fixed warning regarding unused arg.
+        * examples/Load_Balancing/Identity_i.cpp:
+          Fixed warning regarding unused arg.
 
-	* examples/Load_Balancing/Load_Balancer_i.cpp:
-	  Took out duplicate explicit template instantiation.
+        * examples/Load_Balancing/Load_Balancer_i.cpp:
+          Took out duplicate explicit template instantiation.
 
 Mon Aug 23 21:33:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* UIOP_Connector.cpp:
-	* IIOP_Connector.cpp:
-	  Use ACE_Auto_Basic_Array_Ptr<> for the arrays and fixed template
-	  instantiations too.
+        * UIOP_Connector.cpp:
+        * IIOP_Connector.cpp:
+          Use ACE_Auto_Basic_Array_Ptr<> for the arrays and fixed template
+          instantiations too.
 
 Mon Aug 23 18:57:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/reopened_modules.idl:
-	  Took long .idl file sent in by
-	  Duane Binder <dbinder@globalmt.com>, cut it down to
-	  one of 10 lines or so that reproduced the problem,
-	  and added it to our IDL_Test Rogues Gallery.
+        * tests/IDL_Test/reopened_modules.idl:
+          Took long .idl file sent in by
+          Duane Binder <dbinder@globalmt.com>, cut it down to
+          one of 10 lines or so that reproduced the problem,
+          and added it to our IDL_Test Rogues Gallery.
 
 Mon Aug 23 18:25:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* examples/Load_Balancing/Load_Balancing.dsw:
-	* examples/Load_Balancing/client.dsp:
-	* examples/Load_Balancing/server.dsp:
-	* examples/Load_Balancing/service.dsp:
-	  New files for MSVC++.
+        * examples/Load_Balancing/Load_Balancing.dsw:
+        * examples/Load_Balancing/client.dsp:
+        * examples/Load_Balancing/server.dsp:
+        * examples/Load_Balancing/service.dsp:
+          New files for MSVC++.
 
-	* examples/Load_Balancing/Identity_Client.cpp:
-	* examples/Load_Balancing/Identity_Server.cpp:
-	  Some _var instantiations needed to be scoped with
-	  their module name to avoid compile errors.
+        * examples/Load_Balancing/Identity_Client.cpp:
+        * examples/Load_Balancing/Identity_Server.cpp:
+          Some _var instantiations needed to be scoped with
+          their module name to avoid compile errors.
 
-	* examples/Load_Balancing/Load_Balancer_i.cpp:
-	  In places where an exception is raised, the exception arg
-	  needed '()' added to make it a function call. This was
-	  causing compile errors on some platforms and warnings
-	  on others.
+        * examples/Load_Balancing/Load_Balancer_i.cpp:
+          In places where an exception is raised, the exception arg
+          needed '()' added to make it a function call. This was
+          causing compile errors on some platforms and warnings
+          on others.
 
-	* examples/Load_Balancing/Makefile:
-	  Cosmetic changes.
+        * examples/Load_Balancing/Makefile:
+          Cosmetic changes.
 
 Mon Aug 23 16:43:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Asynch_Invocation.i:
-	* tao/Asynch_Invocation.cpp:
-	  Fixed compilation problems for AMI code.
+        * tao/Asynch_Invocation.i:
+        * tao/Asynch_Invocation.cpp:
+          Fixed compilation problems for AMI code.
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	  Fixed problem in generated code for AMI.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+          Fixed problem in generated code for AMI.
 
 Mon Aug 23 15:30:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp (preconnect): Chagned to use
-	  ACE_Auto_Array_Ptr to hold the INET_Addr array and
-	  ACE_Auto_Basic_Array_Ptr to hold the array of connection handler
-	  pointers.
+        * tao/IIOP_Connector.cpp (preconnect): Chagned to use
+          ACE_Auto_Array_Ptr to hold the INET_Addr array and
+          ACE_Auto_Basic_Array_Ptr to hold the array of connection handler
+          pointers.
 
 Mon Aug 23 14:12:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include.utl_scope.h:
-	* TAO_IDL/util/utl_scope.cpp:
-	  Changes to lookup_by_name() and
-	  iter_lookup_by_name_local() which cause the lookup
-	  process to exit immediately once the scoped name
-	  argument is completely matched. This removes the problem
-	  of an infinite loop in certain cases where the argument
-	  is a fully scoped name, and has the side effect of making
-	  the lookup process more efficient. Thanks to
-	  Duane Binder <dbinder@globalmt.com> for reporting the
-	  problem and for sending in an .idl file that was
-	  eventally cut down to debuggable size.
+        * TAO_IDL/include.utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+          Changes to lookup_by_name() and
+          iter_lookup_by_name_local() which cause the lookup
+          process to exit immediately once the scoped name
+          argument is completely matched. This removes the problem
+          of an infinite loop in certain cases where the argument
+          is a fully scoped name, and has the side effect of making
+          the lookup process more efficient. Thanks to
+          Duane Binder <dbinder@globalmt.com> for reporting the
+          problem and for sending in an .idl file that was
+          eventally cut down to debuggable size.
 
 Mon Aug 23 11:59:33 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* examples/Load_Balancing/Load_Balancer_i.cpp
-	* examples/Load_Balancing/Identity_Server.cpp
-	* examples/Load_Balancing/Identity_Client.cpp:
-	  Added explicit template instantiations and fixed a few other
-	  compilation warnings.
+        * examples/Load_Balancing/Load_Balancer_i.cpp
+        * examples/Load_Balancing/Identity_Server.cpp
+        * examples/Load_Balancing/Identity_Client.cpp:
+          Added explicit template instantiations and fixed a few other
+          compilation warnings.
 
 Mon Aug 23 08:43:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
