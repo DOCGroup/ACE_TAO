@@ -22,9 +22,8 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
   This is contrary to the behavior of the posix function readdir which treats 
   basename(filename) as a directory to be opened and read. 
 
-  For this reason, the extra trailing "/*" or "\\*" as the case may be is 
-  appended to the supplied filename so the result is that FindFirstFile will
-  do the right thing.
+  For this reason, we append a slash-star or backslash-star to the supplied
+  filename so the result is that FindFirstFile will do what we need.
 
   According to the documentation for FindFirstFile, either a '/' or a '\' may
   be used as a directory name separator.
