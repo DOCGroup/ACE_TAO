@@ -61,14 +61,14 @@ public:
                                    CORBA::Environment &env);
   // Cube a union.
 
-  virtual void cube_sequence (const Cubit::vector &input,
-			      Cubit::vector_out output,
-			      CORBA::Environment &env);
+  virtual void cube_long_sequence (const Cubit::long_seq &input,
+				   Cubit::long_seq_out output,
+				   CORBA::Environment &env);
   // Cube a sequence.
 
-  virtual void cube_raw (const Cubit::Raw &input,
-			 Cubit::Raw_out output,
-			 CORBA::Environment &_env);
+  virtual void cube_octet_sequence (const Cubit::octet_seq &input,
+				    Cubit::octet_seq_out output,
+				    CORBA::Environment &_env);
   // Cube an octet sequence.
 
   virtual void shutdown (CORBA::Environment &env);

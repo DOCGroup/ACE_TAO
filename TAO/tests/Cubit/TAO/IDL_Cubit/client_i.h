@@ -63,11 +63,8 @@ private:
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
   // Prints the time stats.
 
-  void cube_union_stub (void);
+  void cube_union (void);
   // Exercise the union.  Cube a union.
-
-  void cube_union_dii (void);
-  // Exercise the union using DII.
 
   void cube_struct (int i);
   // calculate the cube from a struct.
@@ -81,14 +78,11 @@ private:
   void cube_short (int i);
   // Cube a short.
 
-  void cube_sequence (int i, int l);
+  void cube_long_sequence (int i, int l);
   // Cube a sequence <l> is the length of the sequence.
 
-  void cube_raw (int i, int l);
+  void cube_octet_sequence (int i, int l);
   // Cube a sequence of octets, <l> is the length of the sequence.
-
-  void cube_struct_dii (void);
-  // Cube the numbers in a struct.
 
   int argc_;
   // # of arguments on the command line.

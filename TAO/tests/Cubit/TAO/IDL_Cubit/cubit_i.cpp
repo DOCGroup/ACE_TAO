@@ -38,8 +38,11 @@ static const char *Cubit_i_Timeprobe_Description[] =
   "Cubit_i::cube_union - start",
   "Cubit_i::cube_union - end",
 
-  "Cubit_i::cube_sequence - start",
-  "Cubit_i::cube_sequence - end"
+  "Cubit_i::cube_long_sequence - start",
+  "Cubit_i::cube_long_sequence - end",
+
+  "Cubit_i::cube_octet_sequence - start",
+  "Cubit_i::cube_octet_sequence - end"
 };
 
 enum
@@ -59,8 +62,11 @@ enum
   CUBIT_I_CUBE_UNION_START,
   CUBIT_I_CUBE_UNION_END,
 
-  CUBIT_I_CUBE_SEQUENCE_START,
-  CUBIT_I_CUBE_SEQUENCE_END
+  CUBIT_I_CUBE_LONG_SEQUENCE_START,
+  CUBIT_I_CUBE_LONG_SEQUENCE_END,
+
+  CUBIT_I_CUBE_OCTET_SEQUENCE_START,
+  CUBIT_I_CUBE_OCTET_SEQUENCE_END
 };
 
 #endif /* ACE_ENABLE_TIMEPROBES */
@@ -190,14 +196,14 @@ Cubit_i::cube_union (const Cubit::oneof &values,
 
 // Cube a sequence
 void
-Cubit_i::cube_sequence(const Cubit::vector &input,
-                       Cubit::vector_out output,
-                       CORBA::Environment &)
+Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
+			     Cubit::long_seq_out output,
+			     CORBA::Environment &)
 {
-  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_SEQUENCE_START);
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
   if (output.ptr () == 0)
-    output = new Cubit::vector (input.length ());
+    output = new Cubit::long_seq (input.length ());
 
   output->length (input.length ());
 
@@ -216,19 +222,25 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
 
 // Cube an octet sequence
 void
-Cubit_i::cube_raw (const Cubit::Raw &input,
-                   Cubit::Raw_out output,
-                   CORBA::Environment &)
+Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
+			      Cubit::octet_seq_out output,
+			      CORBA::Environment &)
 {
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_OCTET_SEQUENCE_START);
+
   if (output.ptr () == 0)
     {
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
       ACE_Message_Block mb (input.length ());
       mb.wr_ptr (input.length ());
       TAO_Unbounded_Sequence<CORBA::Octet>* tmp =
         new TAO_Unbounded_Sequence<CORBA::Octet> (&mb);
       // @@ TODO this is a temporary hack until the IDL compiler
       // generates the constructor taking a Message_Block.
-      output = (Cubit::Raw*)tmp;
+      output = (Cubit::octet_seq*)tmp;
+#else
+      output = new Cubit::octet_seq (input.length ());
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
     }
 
   output->length (input.length ());
@@ -240,6 +252,10 @@ Cubit_i::cube_raw (const Cubit::Raw &input,
       output[i] = x * x * x;
     }
 #else
+  // We don't want to cube all the elements on the sequence because
+  // that will take too long and will affect the performance. Further,
+  // we want to show that octet sequences have constant marshalling
+  // time, but making a copy of each element will hide that.
   CORBA::ULong i = 0;
   CORBA::Octet x = input[0];
   output[i] = x * x * x;
