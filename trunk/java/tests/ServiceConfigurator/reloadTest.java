@@ -26,10 +26,7 @@ public class reloadTest
 	daemon.open (args);
 	Thread.sleep (10000);
 
-	// ***** Note: reloading requires the user to remove the
-	// service and prepare for reload!  
 	daemon.remove("TimeService");
-	daemon.prepareForReload();
 
 	daemon.open (args);
       }
