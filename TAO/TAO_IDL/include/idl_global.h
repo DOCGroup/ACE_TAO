@@ -606,6 +606,12 @@ public:
   virtual idl_bool ami_call_back (void);
   // Return the flag.
 
+  virtual void gen_tie_classes (idl_bool value);
+  // Toggle the generation of tie classes and files.
+
+  virtual idl_bool gen_tie_classes (void);
+  // Return the flag.
+
 private:
   // Data
   UTL_ScopeStack             *pd_scopes;             // Store scopes stack
@@ -763,6 +769,10 @@ private:
   // Flag to indicate whether the AMI Call back feature of the
   // Messaging specification should be enabled for the generated files
   // or not.
+
+  idl_bool gen_tie_classes_;
+  // Flag to indicate whether we generate the tie classes and
+  // files or not.
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH
