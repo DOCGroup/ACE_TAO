@@ -17,31 +17,15 @@ bin_SCRIPTS = tao-config
 
 man_MANS = tao-config.1
 
-SUBDIRS = tao \
-          TAO_IDL
-##SUBDIRS = tao \
-##          TAO_IDL \
-##          orbsvcs \
-##          examples \
-##          performance-tests \
-##          tests \
-##          utils
+SUBDIRS = \
+        tao \
+        TAO_IDL \
+        orbsvcs
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
 EXTRA_DIST = BUG-REPORT-FORM VERSION \
              COPYING.sun LICENSE.sun README.sun README.taoconf \
              tao-config.in taoConf.sh.in tao-config.1.in
-
-##EXTRA_DIST = TAO-INSTALL.html \
-##             ChangeLog-98b \
-##             ChangeLog-98a \
-##             ChangeLog-97 \
-##             FAQ \
-##             VERSION \
-##             etc \
-##             includes \
-##             os-patches \
-##             WindozeCE
 
 DISTCLEANFILES = tao-config taoConf.sh tao-config.1
 
@@ -74,8 +58,21 @@ tao-config.1: tao-config.1.in Makefile
               < $(srcdir)/tao-config.1.in > tao-config.1.tmp \
           && mv tao-config.1.tmp tao-config.1
 
+## Directories to include in the distribution but which I am too lazy to
+## create Makefile.am files for.  A Makefile.am for these directories isn't
+## needed anyway.
+TAO_EXTRA_DIST = docs
+
 dist-hook:
-	tar cf - ./docs | (cd $(distdir); tar xfBp -)
+	(cd $(top_srcdir); tar cf - $(TAO_EXTRA_DIST)) | (cd $(distdir); \
+          tar xfBp -)
 	list=`find $(distdir) -type d -name CVS -print`; for p in $$list; do \
           rm -rf $$p; \
         done
+
+## Clean up some additional files/directories possibly created during
+## the configure script tests.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+
