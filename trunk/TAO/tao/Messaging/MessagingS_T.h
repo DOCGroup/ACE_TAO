@@ -35,16 +35,16 @@
 #endif /* _MSC_VER */
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
-TAO_NAMESPACE  POA_Messaging
+namespace POA_Messaging
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
-  
+
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  ReplyHandler_tie : public ReplyHandler
@@ -64,7 +64,7 @@ TAO_NAMESPACE  POA_Messaging
     // ctor with T*, ownership flag and a POA
     ~ReplyHandler_tie (void);
     // dtor
-    
+
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -76,26 +76,26 @@ TAO_NAMESPACE  POA_Messaging
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-    
+
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
-  
+
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-    
+
     // copy and assignment are not allowed
     ReplyHandler_tie (const ReplyHandler_tie &);
     void operator= (const ReplyHandler_tie &);
   };
 }
-TAO_NAMESPACE_CLOSE // module Messaging
+// end module Messaging
 #endif /* ACE_HAS_USING_KEYWORD */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
 
 #if defined (__ACE_INLINE__)

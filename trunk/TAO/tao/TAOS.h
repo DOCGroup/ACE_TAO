@@ -23,10 +23,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_NAMESPACE  POA_TAO
+namespace  POA_TAO
 {
 }
-TAO_NAMESPACE_CLOSE
+
 
 #include "TAOS_T.h"
 
