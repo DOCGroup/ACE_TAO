@@ -1,3 +1,10 @@
+Fri Jul 28 11:27:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynStruct_i.cpp:
+
+	  Fixed an incorrect ACE_CHECK_RETURN value that was
+	  picked up by a VxWorks build.
+
 Thu Jul 27 11:05:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynUnion_i.cpp:
