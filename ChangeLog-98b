@@ -1,3 +1,18 @@
+Wed Oct 21 14:19:11 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+        * docs/tutorials/007/thread_pool.cpp
+	* docs/tutorials/007/thread_pool.h
+	Alison Greig's question caused me to look back at these and
+	I find that an older g++ is unhappy about the close() methods.
+	It seems to confuse the baseclass 'close(u_long flags=0)' with
+	my derived 'close(void)' even though I also have 'close(u_long)'.
+	Anyway, I removed my 'close(void)' and now do all of my work in
+	the other method.
+
+        * docs/tutorials/007/client_handler.cpp:handle_input()
+	Now using ACE_OS::thr_equal() instead of operator==()
+	This fixes Alison's problem.   (Thanks for the solution David!)
+
 Wed Oct 21 07:12:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Pool_Reactor_Test.cpp: moved #include of
