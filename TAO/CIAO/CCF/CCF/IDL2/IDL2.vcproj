@@ -225,6 +225,21 @@
 				<File
 					RelativePath=".\SemanticGraph\ValueType.cpp">
 				</File>
+				<File
+					RelativePath=".\SemanticGraph\ValueTypeMember.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
 			</Filter>
 			<Filter
 				Name="Header Files"
@@ -285,6 +300,9 @@
 				</File>
 				<File
 					RelativePath=".\SemanticGraph\ValueType.hpp">
+				</File>
+				<File
+					RelativePath=".\SemanticGraph\ValueTypeMember.hpp">
 				</File>
 			</Filter>
 			<Filter
@@ -710,6 +728,9 @@
 					RelativePath=".\SemanticAction\ValueType.hpp">
 				</File>
 				<File
+					RelativePath=".\SemanticAction\ValueTypeFactory.hpp">
+				</File>
+				<File
 					RelativePath=".\SemanticAction\ValueTypeMember.hpp">
 				</File>
 			</Filter>
@@ -900,6 +921,9 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath=".\SemanticAction\Impl\ValueTypeFactory.cpp">
+					</File>
+					<File
 						RelativePath=".\SemanticAction\Impl\ValueTypeMember.cpp">
 					</File>
 				</Filter>
@@ -953,6 +977,9 @@
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\ValueType.hpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\ValueTypeFactory.hpp">
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\ValueTypeMember.hpp">
