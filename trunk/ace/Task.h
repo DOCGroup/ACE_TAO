@@ -139,6 +139,9 @@ public:
    * THR_SCHED_RR, THR_SCHED_DEFAULT, THR_EXPLICIT_SCHED,
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
    * = END<INDENT>
+   * If THR_SCHED_INHERIT is not desirable, applications should
+   * specifically pass in THR_EXPLICIT_SCHED.
+   *
    *
    * By default, or if <{priority}> is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
@@ -172,7 +175,7 @@ public:
    *
    *
    */
-  virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
+  virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE |THR_INHERIT_SCHED ,
                         int n_threads = 1,
                         int force_active = 0,
                         long priority = ACE_DEFAULT_THREAD_PRIORITY,

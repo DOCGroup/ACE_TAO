@@ -1,3 +1,25 @@
+Wed Mar 24 22:36:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/POSIX_Proactor.cpp:
+
+	  Fixed warning in g++ builds.
+
+	* ace/Task.h (activate):
+	* ace/Thread_Manager.cpp:
+	* ace/Thread_Manager.h (spawn and spawn_n):
+
+	  Changed the default flags in the above methods. They now include
+	  THR_INHERIT_SCHED. This makes the defaults consistent with C++
+	  NPV1 and C++ NPV2. If a priority other than
+	  ACE_DEFAULT_THREAD_PRIORITY is passed into the <priority>
+	  argument, the THR_INHERIT_SCHED flag is dropped silently. This
+	  takes care of the problems reported by Abhijit Sachdev, which
+	  was basically a bug that prevented the priorities being
+	  inherited in thread-per-connection strategy. 
+
+	  Thanks to Steve Huston for motivating the right fix that would
+	  not affect user code at all.
+
 Wed Mar 24 16:41:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ACE-INSTALL.html: Remove remaining reference to the "soft link"

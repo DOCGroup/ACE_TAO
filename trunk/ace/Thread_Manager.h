@@ -495,7 +495,7 @@ public:
    */
   int spawn (ACE_THR_FUNC func,
              void *args = 0,
-             long flags = THR_NEW_LWP | THR_JOINABLE,
+             long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
              ACE_thread_t * = 0,
              ACE_hthread_t *t_handle = 0,
              long priority = ACE_DEFAULT_THREAD_PRIORITY,
@@ -535,7 +535,7 @@ public:
   int spawn_n (size_t n,
                ACE_THR_FUNC func,
                void *args = 0,
-               long flags = THR_NEW_LWP | THR_JOINABLE,
+               long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
                ACE_Task_Base *task = 0,

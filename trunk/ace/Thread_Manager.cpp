@@ -684,6 +684,9 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
   if (grp_id == -1)
     grp_id = this->grp_id_++; // Increment the group id.
 
+  if (priority != ACE_DEFAULT_THREAD_PRIORITY)
+    ACE_CLR_BITS (flags, THR_INHERIT_SCHED);
+
   if (this->spawn_i (func,
                      args,
                      flags,
