@@ -310,9 +310,12 @@ int
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_vdev (CORBA::Environment &env)
 {
   // Bridge pattern. Allow subclasses to override this behavior
-  this->vdev_ = 0;
-  if (this->make_vdev (this->vdev_) == -1)
+  T_VDev *vdev = 0;
+  if (this->make_vdev (vdev) == -1)
     return -1;
+  this->vdev_ = vdev->_this (env);
+  TAO_CHECK_ENV_RETURN (env, -1);
+
 
   this->orb_manager_->activate_under_child_poa ("VDev",
                                                 this->vdev_,
@@ -412,10 +415,13 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint (CORBA::Environment &env)
 {
-  this->stream_endpoint_a_ = 0;
+  T_StreamEndpoint *stream_endpoint_a = 0;
 
-  if (this->make_stream_endpoint (this->stream_endpoint_a_) == -1)
+  if (this->make_stream_endpoint (stream_endpoint_a) == -1)
     return -1;
+  
+  this->stream_endpoint_a_ = stream_endpoint_a->_this (env);
+  TAO_CHECK_ENV_RETURN (env, -1);
 
   this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_A",
                                                 this->stream_endpoint_a_,
@@ -438,9 +444,13 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint (CORBA::Environment &env)
 {
-  this->stream_endpoint_b_ = 0;
-  if (this->make_stream_endpoint (this->stream_endpoint_b_) == -1)
+  T_StreamEndpoint *stream_endpoint_b = 0;
+
+  if (this->make_stream_endpoint (stream_endpoint_b) == -1)
     return -1;
+  
+  this->stream_endpoint_b_ = stream_endpoint_b->_this (env);
+  TAO_CHECK_ENV_RETURN (env, -1);
 
   this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_B",
                                                 this->stream_endpoint_b_,
@@ -452,8 +462,8 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                                                                                     AVStreams::VDev_ptr &vdev,
-                                                                                     CORBA::Environment &env)
+                                                                                      AVStreams::VDev_ptr &vdev,
+                                                                                      CORBA::Environment &env)
 {
   if (this->activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
