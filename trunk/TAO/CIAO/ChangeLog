@@ -1,3 +1,11 @@
+Fri Feb  4 09:35:00 2005 Emre Turkay <turkaye@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Hello/descriptors/basicNodeDaemon.pl:
+          The perl script to create node daemons created.
+
+        * DAnCE/examples/Hello/step-by-step.html:
+          Step by step tutorial for the DAnCE.
+
 Fri Feb  4 12:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/RTComponentServer/RTConfig_Manager.h:
