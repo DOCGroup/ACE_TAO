@@ -185,11 +185,11 @@ else  # ! CROSS-COMPILE
   endif # !def CPP_LOCATION
 
   realclean:
-	rm -f tao_idl TAGS
+	$(RM) tao_idl TAGS
 endif # ! CROSS-COMPILE
 
 fe/fe_lookup.cpp: fe/keywords.dat
-	rm -f fe/fe_lookup.cpp
+	$(RM) fe/fe_lookup.cpp
 	echo "// \$$Id\$$" > fe/fe_lookup.cpp
 	echo "#include	\"idl.h\"" >> fe/fe_lookup.cpp
 	echo "#include	\"idl_extern.h\"" >> fe/fe_lookup.cpp
@@ -229,24 +229,28 @@ fe/y.tab.cpp:	fe/idl.yy
 
 y.tab: fe/idl.yy
 		$(YACC) -d fe/idl.yy
-		sed -e "s/char \*getenv/char *ace_foo/g" \
-		    -e "s/= getenv/= ACE_OS::getenv/g" \
-		    -e "s/yynewerror://g" \
-		    -e "s/yy/tao_yy/g" \
-		    -e "s/YY/TAO_YY/g" \
-		    -e "s/y\.tab\.c/y.tab.cpp/g" \
-		    -e "s%\(#pragma ident\)%// \1%" < y.tab.c > /tmp/$(USER).Y
-		sed -e "s/yy/tao_yy/g" \
-		    -e "s/YY/TAO_YY/g" < y.tab.h > /tmp/$(USER).YH
+		sed -e 's/char \*getenv/char *ace_foo/g' \
+		    -e 's/= getenv/= ACE_OS::getenv/g' \
+		    -e 's/int yynew_state,/int,/g' \
+		    -e 's/int yyold_state,/int,/g' \
+		    -e 's/int yyrule_num,/int,/g' \
+		    -e 's/\(YYDEBUG_DISCARD_TOKEN.*int\) yytoken_num/\1/g' \
+		    -e 's/yynewerror://g' \
+		    -e 's/yy/tao_yy/g' \
+		    -e 's/YY/TAO_YY/g' \
+		    -e 's/y\.tab\.c/y.tab.cpp/g' \
+		    -e 's%\(#pragma ident\)%// \1%' < y.tab.c > /tmp/$(USER).Y
+		sed -e 's/yy/tao_yy/g' \
+		    -e 's/YY/TAO_YY/g' < y.tab.h > /tmp/$(USER).YH
 		echo '// $$I''d$$' > fe/y.tab.cpp
 		cat /tmp/$(USER).Y >> fe/y.tab.cpp
 		echo '// $$I''d$$' > fe/y.tab.h
 		cat /tmp/$(USER).YH >> fe/y.tab.h
-		$(RM) -f /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h
+		$(RM) /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h
 		(cd fe ; patch < y.tab.cpp.diff)
 
 tags:
-	rm -f TAGS
+	$(RM) TAGS
 	find . -name "*.h" -print | etags -a --c++ -
 	find . -name "*.cpp" -print | etags -a -
 
