@@ -4,6 +4,7 @@
 #include "ace/Proactor_Impl.h"
 #include "ace/Object_Manager.h"
 #include "ace/Task_T.h"
+#include "ace/Service_Config.h"
 
 ACE_RCSID(ace, Proactor, "$Id$")
 
@@ -483,7 +484,7 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
     {
       // Check for end of loop. It is ok to do this without lock,
       // since we care just whether it is zero or non-zero.
-      if (ACE_Proactor::end_event_loop_ != 0 
+      if (ACE_Proactor::end_event_loop_ != 0
           || tv == ACE_Time_Value::zero)
         break;
 
@@ -508,7 +509,7 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
   // Decrement the thread count.
   ACE_Proactor::event_loop_thread_count_ --;
 
-  if (ACE_Proactor::event_loop_thread_count_  > 0 
+  if (ACE_Proactor::event_loop_thread_count_  > 0
       && ACE_Proactor::end_event_loop_ != 0)
     ACE_Proactor::post_wakeup_completions (1);
 
@@ -522,9 +523,9 @@ ACE_Proactor::reset_event_loop(void)
 
   // Obtain the lock in MT environments.
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE !=0)
-  ACE_Thread_Mutex *lock = 
-	  ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
-	  (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
+  ACE_Thread_Mutex *lock =
+          ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif
   ACE_Proactor::end_event_loop_ = 0;
@@ -794,7 +795,7 @@ ACE_Proactor::create_asynch_read_dgram (void)
 {
   return this->implementation ()->create_asynch_read_dgram ();
 }
- 
+
 ACE_Asynch_Write_Dgram_Impl *
 ACE_Proactor::create_asynch_write_dgram (void)
 {
@@ -950,7 +951,7 @@ ACE_Proactor::create_asynch_write_dgram_result (ACE_Handler &handler,
                                                 const void* act,
                                                 ACE_HANDLE event,
                                                 int priority,
-                                                int signal_number) 
+                                                int signal_number)
 {
   return this->implementation()->create_asynch_write_dgram_result (handler,
                                                                    handle,

@@ -7,6 +7,7 @@
 // circular include problems.
 #include "ace/Message_Queue.h"
 
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -15,7 +16,7 @@
 #include "ace/Message_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Strategies.h"     // Need ACE_Notification_Strategy
+#include "ace/Notification_Strategy.h"
 
 ACE_RCSID(ace, Message_Queue_T, "$Id$")
 
@@ -99,7 +100,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::peek_dequeue_head (ACE_ME
 
   if (cur_count != -1)
     first_item  = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
-      
+
   return cur_count;
 }
 
@@ -133,7 +134,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue (ACE_MESSAGE_TYPE
                                                                 ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio");
- 
+
   return this->enqueue_prio (new_item, timeout);
 }
 
@@ -192,7 +193,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head (ACE_MESSAGE
                                                                      ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head");
-  
+
   ACE_Message_Block *mb;
 
   int cur_count = this->queue_.dequeue_head (mb, timeout);
@@ -764,7 +765,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX
 
       if (result == -1 && errno == ETIME)
         {
-          --this->dequeue_waiters_;          
+          --this->dequeue_waiters_;
           errno = EWOULDBLOCK;
         }
 

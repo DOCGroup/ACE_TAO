@@ -36,28 +36,6 @@
 
 class ACE_Timeout_Manager;
 
-/// States of a recyclable object.
-enum ACE_Recyclable_State
-{
-  /// Idle and can be purged.
-  ACE_RECYCLABLE_IDLE_AND_PURGABLE,
-
-  /// Idle but cannot be purged.
-  ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE,
-
-  /// Can be purged, but is not idle (mostly for debugging).
-  ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE,
-
-  /// Busy (i.e., cannot be recycled or purged).
-  ACE_RECYCLABLE_BUSY,
-
-  /// Closed.
-  ACE_RECYCLABLE_CLOSED,
-
-  /// Unknown state.
-  ACE_RECYCLABLE_UNKNOWN
-};
-
 #if !defined (_SC_AIO_MAX)
 #define _SC_AIO_MAX 1
 #endif /* _SC_AIO_MAX */
