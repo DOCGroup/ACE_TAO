@@ -1,3 +1,10 @@
+Fri Oct 16 14:57:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager and Map_Manager: Fixed the operator++ and
+ 	  operator--.  Also, moved the guard from the individual methods
+ 	  to the iterator.  Now, the read guard is held for the life time
+ 	  of the iterator.
+
 Fri Oct 16 14:51:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): Made sure if users don't specify
