@@ -53,7 +53,7 @@ namespace TAO
     static CORBA::Boolean widen (const CORBA::Any &,
                                  _tao_destructor,
                                  CORBA::TCKind,
-                                 const T *&);
+                                 T *&);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
