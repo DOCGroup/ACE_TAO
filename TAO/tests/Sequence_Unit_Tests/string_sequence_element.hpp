@@ -26,6 +26,19 @@ public:
   typedef typename traits::string_var string_var;
   typedef typename traits::string_mgr string_mgr;
 
+private:
+  inline string_sequence_element<traits> & pseudo_copy_swap(
+      string_var & rhs)
+  {
+    if (release())
+    {
+      traits::release(*element_);
+    }
+    *element_ = rhs._retn();
+    return *this;
+  }
+
+public:
   string_sequence_element(
       value_type & e, CORBA::Boolean release)
     : element_(&e)
@@ -46,40 +59,32 @@ public:
 
   string_sequence_element & operator=(const_value_type rhs)
   {
-    if (release())
-    {
-      value_type tmp = traits::duplicate(rhs);
-      traits::release(*element_);
-      *element_ = tmp;
-      return *this;
-    }
-    *element_ = const_cast<value_type>(rhs);
-    return *this;
+    string_var tmp(rhs);
+    return pseudo_copy_swap(tmp);
   }
 
   string_sequence_element & operator=(value_type rhs)
   {
-    if (release())
-    {
-      traits::release(*element_);
-    }
-    *element_ = rhs;
-    return *this;
+    string_var tmp(rhs);
+    return pseudo_copy_swap(tmp);
   }
 
   string_sequence_element & operator=(string_sequence_element const & rhs)
   {
-    return operator=(const_value_type(rhs));
+    string_var tmp(static_cast<const_value_type>(rhs));
+    return pseudo_copy_swap(tmp);
   }
 
   string_sequence_element & operator=(string_var const & rhs)
   {
-    return operator=(rhs.in());
+    string_var tmp(rhs);
+    return pseudo_copy_swap(tmp);
   }
 
   string_sequence_element & operator=(string_mgr const & rhs)
   {
-    return operator=(rhs.in());
+    string_var tmp(rhs.in());
+    return pseudo_copy_swap(tmp);
   }
 
   inline operator const_value_type() const
