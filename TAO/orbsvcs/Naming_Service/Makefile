@@ -47,8 +47,11 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
 .obj/NS_CosNaming.o .shobj/NS_CosNaming.: NS_CosNaming.cpp NS_CosNaming.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -183,7 +186,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/managed_types.h \
  $(TAO_ROOT)/tao/iiopobj.h \
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
@@ -202,7 +204,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/managed_types.i \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/server_factory.i \
  $(TAO_ROOT)/tao/default_client.i \
@@ -216,8 +217,11 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -352,7 +356,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/managed_types.h \
  $(TAO_ROOT)/tao/iiopobj.h \
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
@@ -371,7 +374,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/managed_types.i \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/server_factory.i \
  $(TAO_ROOT)/tao/default_client.i \
@@ -386,8 +388,11 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -522,7 +527,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/managed_types.h \
  $(TAO_ROOT)/tao/iiopobj.h \
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
@@ -541,7 +545,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/managed_types.i \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/server_factory.i \
  $(TAO_ROOT)/tao/default_client.i \
