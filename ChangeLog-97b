@@ -1,3 +1,11 @@
+Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.x-32_sgic++.GNU,
+	  platform_tandem.GNU: added debug = 1, to disable ACE_NDEBUG.
+
+	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
+	  assignments in "if" conditionals to avoid g++ warnings.
+
 Sun Sep 14 10:35:57 1997    <irfan@TWOSTEP>
 
 	* ace/Reactor: The Reactor classes (ACE_Reactor and ACE_ReactorEx)
