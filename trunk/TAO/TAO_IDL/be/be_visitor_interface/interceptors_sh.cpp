@@ -44,6 +44,8 @@ be_visitor_interface_interceptors_sh::~be_visitor_interface_interceptors_sh (voi
 
 int be_visitor_interface_interceptors_sh::visit_interface (be_interface *node)
 {
+  if (node->is_local ())
+    return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
 

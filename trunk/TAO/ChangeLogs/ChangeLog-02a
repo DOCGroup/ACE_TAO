@@ -1,3 +1,12 @@
+Thu Sep 07 01:04:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp
+        (visit_interface): Don't generate interceptor code for local
+          interfaces.  Thanks to Bala for reporting this.
+
 Wed Sep  6 20:15:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/bevisitor_exception/exception_cs.cpp:
@@ -27,7 +36,7 @@ Wed Sep  6 20:15:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  The dump function was reporting an error if the visibility
 	  value was vis_NA (not applicable). This is incorrect - that
-	  value is legitimate if the field does not belong to a 
+	  value is legitimate if the field does not belong to a
 	  valuetype, so the error output was removed.
 
 Wed Sep  6 20:02:25 2000  Marina Spivak  <marina@cs.wustl.edu>
