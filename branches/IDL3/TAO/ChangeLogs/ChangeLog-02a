@@ -1,3 +1,273 @@
+Wed Mar  6 10:15:45 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_enum_val.cpp:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/proxy_brokers_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/proxy_impls_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument_invoke.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument_marshal.cpp:
+        * TAO_IDL/be/be_visitor_operation/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_collocated_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_constant.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_enum_val.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_interface_strategy.h:
+        * TAO_IDL/be_include/be_predefined_type.h:
+        * TAO_IDL/be_include/be_string.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+        * TAO_IDL/be_include/be_visitor_operation/ami_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_reply_stub_operation_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/argument_invoke.h:
+        * TAO_IDL/be_include/be_visitor_operation/argument_marshal.h:
+        * TAO_IDL/be_include/be_visitor_operation/direct_collocated_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/direct_proxy_impl_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/smart_proxy_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/thru_poa_collocated_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_init.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_private.cpp:
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+        * TAO_IDL/fe/idl.ll
+        * TAO_IDL/fe/idl.yy
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:.diff
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp:.diff
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/include/ast.h:
+        * TAO_IDL/include/ast_constant.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_enum.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_extern.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/ast_string.h:
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/include/fe_declarator.h:
+        * TAO_IDL/include/fe_extern.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/idl.h:
+        * TAO_IDL/include/idl_extern.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/util.h:
+        * TAO_IDL/include/utl_decllist.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/include/utl_exceptlist.h:
+        * TAO_IDL/include/utl_identifier.h:
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/include/utl_list.h:
+        * TAO_IDL/include/utl_stack.h:
+        * TAO_IDL/util/utl_decllist.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_labellist.cpp:
+        * TAO_IDL/util/utl_list.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_stack.cpp:
+        * TAO_IDL/util/utl_strlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_idlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_strlist.cpp:
+
+	  - Added tokens corresponding to the new IDL3 keywords.
+
+	  - Added production rules for 'typeid' and 'typeprefix'.
+	    These are the CCM equivalents of #pragma prefix and
+	    #pragma ID.
+
+	  - Replaced nearly 200 heap visitor allocations with
+	    stack allocations. The remaining two dozen or so
+	    heap visitor allocations are all related to AMI or
+ 	    AMH, where the context state is not locally known.
+
+	  - Plugged many memory leaks and reduced memory usage by:
+
+	    + Changing some global variable creations from heap
+	      stack.
+
+	    + Changing most scoped name and identifier class
+	      allocations from heap to stack, especially the cases
+	      where they are passed to a node constructor and
+	      copied.
+
+	    + Expanded the use of the virtual destroy() functions.
+
+	    + Freeing memory that holds the string corresponding
+	      to the current token or identifier before the next 
+	      one is read, in cases where it is either copied or
+	      not referenced.
+
+        * TAO_IDL/be_include/be_visitor_operation/inv_arglist.h:
+        * TAO_IDL/be_be_visitor_operation/inv_arglist.cpp:
+
+  	  Removed files -- no longer used.
+
+	* TAO_IDL/ast/ast_component.cpp:
+	* TAO_IDL/include/ast_component.h:
+
+	  New files.
+
 Wed Mar  6 07:29:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: Correctly push/pop
