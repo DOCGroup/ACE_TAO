@@ -1,5 +1,5 @@
 Wed Jan 22  9:23:47 2004  Scott Harris <harris_s@ociweb.com>
-	* ChangeLog:
+        * ChangeLog:
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
         * orbsvcs/orbsvcs/IFRService/Options.h:
         * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
@@ -7,8 +7,8 @@ Wed Jan 22  9:23:47 2004  Scott Harris <harris_s@ociweb.com>
         * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
-	  Remove tabs and trailing spaces to conform to
-	  coding standards.
+          Remove tabs and trailing spaces to conform to
+          coding standards.
 
 Wed Jan 21 16:35:47 2004  Scott Harris <harris_s@ociweb.com>
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
