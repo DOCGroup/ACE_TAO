@@ -249,17 +249,17 @@ main (int argc,
 
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
-
-  CORBA::Object_var obj
-    = orb->resolve_initial_references ("RootPOA");
-
-  PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj.in ());
-
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj.in ());
+
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);

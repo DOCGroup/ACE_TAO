@@ -180,7 +180,9 @@ AV_Server_Sig_Handler::remove_names (void)
   ACE_TRY_NEW_ENV
     {
   CORBA::Object_var naming_obj =
-    TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
+    TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService", ACE_TRY_ENV);
+  ACE_TRY_CHECK;
+
   if (CORBA::is_nil (naming_obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the Name Service.\n"),

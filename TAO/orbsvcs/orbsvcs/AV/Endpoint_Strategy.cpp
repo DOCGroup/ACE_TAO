@@ -191,7 +191,8 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (CORBA::Environment &AC
         return 0;
 
       CORBA::Object_var naming_obj =
-        TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
+        TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
