@@ -18,8 +18,6 @@
 //
 // ============================================================================
 
-package com.infoglide.util;
-
 import org.omg.CORBA.*;
 import java.net.*;
 import java.io.*;
