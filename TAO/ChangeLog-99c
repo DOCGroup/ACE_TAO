@@ -1,3 +1,13 @@
+Sun Oct 10 01:11:47 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/examples/Log/Client/Makefile:
+	* orbsvcs/examples/Log/Client/TLS_Client.cpp:
+	* orbsvcs/examples/Log/Client/TLS_Client.h:
+	* orbsvcs/examples/Log/Client/main.cpp:
+	  Added a simple example to show how to create a Log object and use it.
+	* orbsvcs/Logging_Service/README:
+	  README to describe the Logging service.
+
 Sat Oct  9 20:36:16 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
