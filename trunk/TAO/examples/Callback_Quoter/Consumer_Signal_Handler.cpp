@@ -29,29 +29,20 @@ Consumer_Signal_Handler:: ~Consumer_Signal_Handler (void)
 {
 }
 
+// Method to handle the ^C signal.
 int
 Consumer_Signal_Handler::handle_signal (int signum,
                                         siginfo_t*,
                                         ucontext_t*)
 {
-  /*switch (signum)
-    {
-    case SIGWINCH:
-      ACE_DEBUG ((LM_DEBUG,
-		  "Signal received on terminal window change!\n"));
-      quit_on_signal ();
-     break;
-
-    case SIGINT:*/
-      ACE_DEBUG ((LM_DEBUG,
-		  " Exiting on receiving ^C\n"));
-      quit_on_signal ();
-    /*  break;
-    }*/
-
+  ACE_DEBUG ((LM_DEBUG,
+              " Exiting on receiving ^C\n"));
+  quit_on_signal ();
+  
   return 0;
 }
 
+// Method called before the Event_Handler dies.
 int
 Consumer_Signal_Handler::handle_close (ACE_HANDLE,
                                        ACE_Reactor_Mask)
