@@ -1,3 +1,12 @@
+Fri Aug  2 16:51:23 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
+
+	  Removed all explicit template instantiations for old style
+	  ACE_Hash_Map_Manager.  They aren't needed.  This may also
+	  address the strange unresolved symbol link-time errors since the
+	  old style hash map templates inherit from the "_Ex" versions.
+
 Fri Aug  2 15:13:28 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* docs/configurations.html: Added a documentation entry for the
