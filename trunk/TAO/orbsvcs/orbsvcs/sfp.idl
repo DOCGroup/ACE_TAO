@@ -47,9 +47,9 @@ module flowProtocol
     char magic_number[4];
     // 'F', 'R', 'A', 'G' 
     octet flags; 
-    // bit 1 = more fragments 
+    // bit 1 = more fragments, %%bit 0 = byteorder 
     unsigned long frag_number; 
-    // 0,..,n 
+    // 1,..,n 
     unsigned long sequence_num;
     unsigned long frag_sz; 
     unsigned long source_id; 

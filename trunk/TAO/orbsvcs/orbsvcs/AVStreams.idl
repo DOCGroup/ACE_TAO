@@ -240,6 +240,9 @@ module AVStreams
       // be used if the streamendpoints have been created independent
       // of a MMDevice
       
+      void unbind_dev(in MMDevice dev, in flowSpec the_spec) 
+        raises (streamOpFailed, noSuchFlow);
+
       void unbind_party (in StreamEndPoint the_ep,
                          in flowSpec the_spec)
         raises (streamOpFailed, noSuchFlow);
@@ -250,6 +253,11 @@ module AVStreams
         raises (streamOpFailed);
       // unbind the stream. Same effect as Basic_StreamCtrl::destroy
       // ()
+
+      VDev get_related_vdev(in MMDevice adev, 
+                            out StreamEndPoint sep) 
+        raises (streamOpFailed);
+
     };
   
   interface MCastConfigIf : CosPropertyService::PropertySet{
@@ -284,7 +292,7 @@ module AVStreams
         raises (PropertyException,
                 streamOpFailed);
       // Multicasting operations are not supported yet.
-    };
+  };
 
   interface StreamEndPoint : CosPropertyService::PropertySet{
       // = DESCRIPTION
@@ -366,7 +374,7 @@ module AVStreams
       void set_source_id (in long source_id);
       // Used to set a unique id for packets sent by this
       // streamendpoint.
-    };
+  };
 
   interface StreamEndPoint_A : StreamEndPoint
     {
@@ -627,16 +635,27 @@ module AVStreams
                              in AVStreams::MCastConfigIf a_mcastconfigif,
                              inout AVStreams::QoS the_qos)
         raises (AVStreams::QoSRequestFailed);
-    };
-
-  interface FlowProducer : FlowEndPoint
-    {
 
       boolean connect_to_peer(inout AVStreams::QoS the_qos,
                               in string address,
                               in string use_flow_protocol) // syntax <flowProtocol>
         raises(failedToConnect,AVStreams::FPError, AVStreams::QoSRequestFailed);
 
+      // Needs to know its peer to choose its protocol correctly
+      // Also to ask for a reverse channel for credit-based flow
+      // control, if one is required
+      string go_to_listen(inout AVStreams::QoS the_qos,
+                          in boolean is_mcast,
+                          in FlowProducer peer,
+                          inout string flowProtocol)// syntax <flowProtocol>
+        // The out value of flowProtocol contains SFP version
+        // supported and all options including "Credit".
+        raises(failedToListen, AVStreams::FPError, 
+               AVStreams::QoSRequestFailed);
+    };
+
+  interface FlowProducer : FlowEndPoint
+    {
       string connect_mcast(inout AVStreams::QoS the_qos,
                            out boolean is_met,
                            in string address,
@@ -654,16 +673,6 @@ module AVStreams
 
   interface FlowConsumer : FlowEndPoint
     {
-
-      // Needs to know its peer to choose its protocol correctly
-      // Also to ask for a reverse channel for credit-based flow
-      // control, if one is required
-      string go_to_listen(inout AVStreams::QoS the_qos,
-                          in boolean is_mcast,
-                          in FlowProducer peer,
-                          inout string flowProtocol)// syntax <flowProtocol>
-        raises(failedToListen, AVStreams::FPError, 
-               AVStreams::QoSRequestFailed);
     };
 
   interface FDev : CosPropertyService::PropertySet {
@@ -750,6 +759,7 @@ module AVStreams
   typedef sequence<StreamEndPoint_A> StreamEndPoint_A_seq;
   typedef sequence<StreamEndPoint_B> StreamEndPoint_B_seq;
   typedef sequence<FlowEndPoint> FlowEndPoint_seq;
+  typedef sequence<Object>  Object_seq;
 };
 
 #endif /* TAO_AV_STREAMS_IDL */
