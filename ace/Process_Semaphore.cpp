@@ -12,10 +12,12 @@ ACE_RCSID(ace, Process_Semaphore, "$Id$")
 void
 ACE_Process_Semaphore::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Process_Semaphore::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,

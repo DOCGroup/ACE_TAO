@@ -1,6 +1,15 @@
+/* -*- C++ -*- */
 // $Id$
 
 // ATM_Acceptor.i
+
+ACE_INLINE void
+ACE_ATM_Acceptor::dump (void) const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_TRACE ("ACE_ATM_Acceptor::dump");
+#endif /* ACE_HAS_DUMP */
+}
 
 ACE_INLINE
 ACE_ATM_Acceptor::ACE_ATM_Acceptor (const ACE_Addr &remote_sap,
@@ -26,5 +35,3 @@ ACE_ATM_Acceptor::close (void)
   return 0;
 #endif // ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM
 }
-
-

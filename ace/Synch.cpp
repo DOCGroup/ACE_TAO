@@ -94,7 +94,9 @@ ACE_Adaptive_Lock::tryacquire_write_upgrade (void)
 void
 ACE_Adaptive_Lock::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   //  return this->lock_->dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_TSS_Adapter::ACE_TSS_Adapter (void *object, ACE_THR_DEST f)
@@ -130,11 +132,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
 void
 ACE_Semaphore::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Semaphore::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Semaphore::ACE_Semaphore (u_int count,
@@ -174,6 +178,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Mutex)
 void
 ACE_Mutex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -183,6 +188,7 @@ ACE_Mutex::dump (void) const
 #endif /* CHORUS */
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
@@ -347,8 +353,10 @@ ACE_Event::reset (void)
 void
 ACE_Event::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Manual_Event::ACE_Manual_Event (int initial_state,
@@ -380,7 +388,9 @@ ACE_Manual_Event::ACE_Manual_Event (int initial_state,
 void
 ACE_Manual_Event::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_Event::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Auto_Event::ACE_Auto_Event (int initial_state,
@@ -412,7 +422,9 @@ ACE_Auto_Event::ACE_Auto_Event (int initial_state,
 void
 ACE_Auto_Event::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_Event::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_THREADS)
@@ -422,9 +434,11 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex_Guard)
 void
 ACE_Thread_Semaphore::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Semaphore::dump");
 
   ACE_Semaphore::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
@@ -440,11 +454,13 @@ ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
 void
 ACE_Thread_Mutex_Guard::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
@@ -561,10 +577,12 @@ ACE_Recursive_Thread_Mutex::tryacquire (void)
 void
 ACE_Recursive_Thread_Mutex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Condition_Thread_Mutex)
@@ -572,6 +590,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Condition_Thread_Mutex)
 void
 ACE_Condition_Thread_Mutex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -582,6 +601,7 @@ ACE_Condition_Thread_Mutex::dump (void) const
               this->cond_.waiters ()));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
@@ -682,6 +702,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Sub_Barrier)
 void
 ACE_Sub_Barrier::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Sub_Barrier::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -689,6 +710,7 @@ ACE_Sub_Barrier::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("running_threads_ = %d"), this->running_threads_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Sub_Barrier::ACE_Sub_Barrier (u_int count,
@@ -708,6 +730,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Process_Barrier)
 void
 ACE_Barrier::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Barrier::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -717,6 +740,7 @@ ACE_Barrier::dump (void) const
   this->sub_barrier_1_.dump ();
   this->sub_barrier_2_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Barrier::ACE_Barrier (u_int count,
@@ -778,8 +802,10 @@ ACE_Thread_Barrier::ACE_Thread_Barrier (u_int count, const ACE_TCHAR *name)
 void
 ACE_Thread_Barrier::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Barrier::dump");
   ACE_Barrier::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 #if 0
@@ -792,16 +818,20 @@ ACE_Process_Barrier::ACE_Process_Barrier (u_int count, const ACE_TCHAR *name)
 void
 ACE_Process_Barrier::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Process_Barrier::dump");
   ACE_Barrier::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class MUTEX> void
 ACE_Process_Condition<MUTEX>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Process_Condition<MUTEX>::dump");
 
   ACE_Condition<MUTEX>::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class MUTEX>
@@ -819,11 +849,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex)
 void
 ACE_Thread_Mutex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Thread_Mutex::~ACE_Thread_Mutex (void)
@@ -849,11 +881,13 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
 void
 ACE_RW_Mutex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_RW_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_RW_Mutex::ACE_RW_Mutex (int type, const ACE_TCHAR *name, void *arg)
@@ -884,8 +918,10 @@ ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (const ACE_TCHAR *name,
 void
 ACE_RW_Thread_Mutex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_RW_Thread_Mutex::dump");
   ACE_RW_Mutex::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 
@@ -899,6 +935,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
 void
 ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -907,6 +944,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
   this->mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION

@@ -488,6 +488,7 @@ ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
 void
 ACE_ATM_Addr::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ATM_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -498,6 +499,7 @@ ACE_ATM_Addr::dump (void) const
                    this->addr_to_string ());
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%s"), s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 #endif /* ACE_HAS_ATM */

@@ -25,6 +25,7 @@ ACE_RCSID (ace,
 template <class TYPE, class ACE_LOCK> void
 ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -32,6 +33,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
               ACE_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK> ACE_Singleton<TYPE, ACE_LOCK> *&
@@ -119,6 +121,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
 template <class TYPE, class ACE_LOCK> void
 ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -126,6 +129,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump (void)
               ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK>
@@ -207,6 +211,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::close (void)
 template <class TYPE, class ACE_LOCK> void
 ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -214,6 +219,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
               ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK> ACE_TSS_Singleton<TYPE, ACE_LOCK> *&
@@ -293,6 +299,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
 template <class TYPE, class ACE_LOCK> void
 ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -300,6 +307,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
               ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK>
@@ -397,6 +405,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::singleton_ = 0;
 template <class TYPE, class ACE_LOCK> void
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -404,6 +413,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump (void)
               ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class ACE_LOCK>

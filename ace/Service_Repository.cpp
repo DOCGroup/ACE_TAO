@@ -23,7 +23,9 @@ int ACE_Service_Repository::delete_svc_rep_ = 0;
 void
 ACE_Service_Repository::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Repository::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Service_Repository::ACE_Service_Repository (void)
@@ -354,7 +356,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository_Iterator)
 void
 ACE_Service_Repository_Iterator::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Repository_Iterator::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Initializes the iterator and skips over any suspended entries at

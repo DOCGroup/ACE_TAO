@@ -34,8 +34,10 @@ ACE_Dumpable_Adapter<Concrete>::operator->() const
 template <class Concrete> void
 ACE_Dumpable_Adapter<Concrete>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dumpable_Adapter<Concrete>::dump");
   this->this_->dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 #endif /* ACE_DUMP_T_C */

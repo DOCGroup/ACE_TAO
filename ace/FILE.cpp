@@ -19,8 +19,10 @@ ACE_ALLOC_HOOK_DEFINE(ACE_FILE)
 void
 ACE_FILE::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FILE::dump");
   ACE_IO_SAP::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 // This is the do-nothing constructor.

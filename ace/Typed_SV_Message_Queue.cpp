@@ -24,7 +24,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Typed_SV_Message_Queue)
 template <class T> void
 ACE_Typed_SV_Message_Queue<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class T>

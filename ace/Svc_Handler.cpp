@@ -226,6 +226,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::cleanup_hint (void **act_holder)
 template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump");
 
   this->peer_.dump ();
@@ -241,6 +242,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
               "recycling_act_ = %d\n",
               this->recycling_act_));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> ACE_PEER_STREAM &
@@ -480,6 +482,7 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush_i (void)
 template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump");
 
   ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump ();
@@ -494,6 +497,7 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
                 "next_timeout_.sec = %d, next_timeout_.usec = %d\n",
                 this->next_timeout_.sec (),
                 this->next_timeout_.usec ()));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> int

@@ -405,13 +405,14 @@ ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key,
   return unbind_result;
 }
 
-
 template <ACE_T1> void
 ACE_Cache_Map_Manager<ACE_T2>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   this->map_.dump ();
 
   this->caching_strategy_.dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 #undef ACE_T1

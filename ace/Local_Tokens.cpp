@@ -17,6 +17,7 @@ ACE_RCSID(ace, Local_Tokens, "$Id$")
 void
 ACE_Tokens::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Tokens::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Tokens::dump:\n")
@@ -26,6 +27,7 @@ ACE_Tokens::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiters_\n")));
   this->waiters_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Tokens::ACE_Tokens (void)
@@ -55,6 +57,7 @@ ACE_Null_Token::~ACE_Null_Token (void)
 void
 ACE_TPQ_Entry::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TPQ_Entry::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
@@ -72,6 +75,7 @@ ACE_TPQ_Entry::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_TPQ_Entry::dump end.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
@@ -157,6 +161,7 @@ ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
 void
 ACE_TSS_TPQ_Entry::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_TPQ_Entry::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
@@ -171,6 +176,7 @@ ACE_TSS_TPQ_Entry::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_TPQ_ENTRY::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_TSS_TPQ_Entry::ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
@@ -245,6 +251,7 @@ ACE_TPQ_Iterator::advance (void)
 void
 ACE_TPQ_Iterator::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TPQ_Iterator::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_TPQ_Iterator::dump:\n")
@@ -252,11 +259,13 @@ ACE_TPQ_Iterator::dump (void) const
               (long) this->current_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("head_ and tail_\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_Token_Proxy_Queue::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Proxy_Queue::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_Token_Proxy_Queue::dump:\n")
@@ -268,6 +277,7 @@ ACE_Token_Proxy_Queue::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_Token_Proxy_Queue::dump end.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Token_Proxy_Queue::ACE_Token_Proxy_Queue (void)
@@ -419,6 +429,7 @@ ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
 void
 ACE_Mutex_Token::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Mutex_Token::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Mutex_Token::dump:\n")));
@@ -428,6 +439,7 @@ ACE_Mutex_Token::dump (void) const
   ACE_Tokens::dump ();
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Mutex_Token::dump end.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Mutex_Token::ACE_Mutex_Token (const ACE_TCHAR *name)
@@ -656,6 +668,7 @@ ACE_Mutex_Token::is_owner (const ACE_TCHAR *id)
 void
 ACE_RW_Token::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_RW_Token::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_RW_Token::dump:\n")
@@ -666,6 +679,7 @@ ACE_RW_Token::dump (void) const
   ACE_Tokens::dump ();
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_RW_Token::dump end.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_RW_Token::ACE_RW_Token (const ACE_TCHAR *name)
@@ -1036,6 +1050,7 @@ ACE_RW_Token::is_owner (const ACE_TCHAR *id)
 void
 ACE_Token_Proxy::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Proxy::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Token_Proxy::dump:\n")
@@ -1051,6 +1066,7 @@ ACE_Token_Proxy::dump (void) const
   this->waiter_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_Token_Proxy::dump end.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 const ACE_TCHAR *
@@ -1416,6 +1432,7 @@ ACE_Token_Name::~ACE_Token_Name ()
 void
 ACE_Token_Name::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Name::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
@@ -1428,6 +1445,7 @@ ACE_Token_Name::dump (void) const
               token_name_ == 0 ? ACE_LIB_TEXT ("no name") : token_name_));
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 

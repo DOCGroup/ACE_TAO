@@ -138,12 +138,14 @@ ACE_MEM_Addr::get_host_name (void) const
 void
 ACE_MEM_Addr::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->external_.dump ();
   this->internal_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

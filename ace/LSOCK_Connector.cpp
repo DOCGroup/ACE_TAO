@@ -17,11 +17,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Connector)
 void
 ACE_LSOCK_Connector::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LSOCK_Connector::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_LSOCK_Connector::ACE_LSOCK_Connector (void)

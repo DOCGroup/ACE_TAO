@@ -15,8 +15,10 @@ ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Recv_Msg)
 void
 ACE_FIFO_Recv_Msg::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Recv_Msg::dump");
   ACE_FIFO_Recv::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 // Note that persistent means "open FIFO for writing, as well as

@@ -12,11 +12,5 @@ ACE_RCSID(ace, ATM_Params, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Params)
 
-void
-ACE_ATM_Params::dump (void) const
-{
-  ACE_TRACE ("ACE_ATM_Params::dump");
-}
-
 #endif /* ACE_HAS_ATM */
 

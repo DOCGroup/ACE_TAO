@@ -387,8 +387,10 @@ ACE_Naming_Context::~ACE_Naming_Context (void)
 void
 ACE_Naming_Context::dump ()
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Naming_Context::dump");
   this->name_space_->dump();
+#endif /* ACE_HAS_DUMP */
 }
 
 int

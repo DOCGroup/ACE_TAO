@@ -26,6 +26,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 void
 ACE_Handle_Set::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Handle_Set::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -45,6 +46,7 @@ ACE_Handle_Set::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // Table that maps bytes to counts of the enabled bits in each value
@@ -249,6 +251,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set_Iterator)
 void
 ACE_Handle_Set_Iterator::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Handle_Set_Iterator::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -260,6 +263,7 @@ ACE_Handle_Set_Iterator::dump (void) const
 #endif
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nword_num_ = %d"), this->word_num_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_HANDLE
