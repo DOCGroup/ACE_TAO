@@ -1,3 +1,0 @@
-project(POA MT Servant Locator): taoserver {
-  exename = MT_Servant_Locator
-}

@@ -1,4 +1,0 @@
-project : ciao_component {
-  after += CIAO_Server
-  libs    += CIAO_Server
-}

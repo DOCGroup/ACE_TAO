@@ -1,7 +1,0 @@
-workspace {
-  parser
-  common
-  apps
-  tests
-  examples
-}

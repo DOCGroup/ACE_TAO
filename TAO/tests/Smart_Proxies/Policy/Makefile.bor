@@ -1,7 +1,0 @@
-#
-# Makefile for building the Smart_Proxies Policy test executables
-#
-
-MAKEFILES = client.bor server.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

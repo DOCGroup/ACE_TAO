@@ -1,4 +1,0 @@
-project : naming {
-  libs     += TAO_PortableGroup
-  after    += PortableGroup
-}
