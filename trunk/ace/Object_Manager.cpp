@@ -608,7 +608,7 @@ ACE_Object_Manager::fini (void)
 
 #if defined (ACE_LACKS_ACE_SVCCONF)
 
-	  ACE_Reactor::close_singleton ();
+      ACE_Reactor::close_singleton ();
 
 #  if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
       ACE_Proactor::close_singleton ();
