@@ -1,188 +1,194 @@
+Tue Feb 22 14:00:38 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (cond_timedwait): added pSOS support.  Thanks
+          to Sarmeesha Reddy <sarmeesha@bigfoot.com> for the
+          implementation.
+
 Tue Feb 22 09:52:50 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-linux-common.h (ACE_HAS_PROC_FS): 
+        * ace/config-linux-common.h (ACE_HAS_PROC_FS):
 
-	  A conflict appears when including both <ucontext.h> and
-	  <sys/procfs.h> with recent glibc headers, so don't define it.
+          A conflict appears when including both <ucontext.h> and
+          <sys/procfs.h> with recent glibc headers, so don't define it.
 
 Tue Feb 22 09:16:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/streams.h: Commented out an inclusion of the file
-	  <iomanip.h> as this was causing problems with Qt. 
+        * ace/streams.h: Commented out an inclusion of the file
+          <iomanip.h> as this was causing problems with Qt.
 
-	* ace/Signal.h: One of the variables for the constructors of
-	  ACE_Sig_Action  was named as "signals". This apparently causes
-	  conflict with the Qt library as the library has a macro by that
-	  name. So it was changed as "signalss". Thanks to James Briggs
-	  <James.Briggs@dsto.defence.gov.au> for reporting this.
+        * ace/Signal.h: One of the variables for the constructors of
+          ACE_Sig_Action  was named as "signals". This apparently causes
+          conflict with the Qt library as the library has a macro by that
+          name. So it was changed as "signalss". Thanks to James Briggs
+          <James.Briggs@dsto.defence.gov.au> for reporting this.
 
 Tue Feb 22 01:52:09 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Block.cpp: Refactored the code in duplicate()
-	  and clone() so that it doesn't have macro within macros.
-	  Thanks to Nanbor for reporting this. 
+        * ace/Message_Block.cpp: Refactored the code in duplicate()
+          and clone() so that it doesn't have macro within macros.
+          Thanks to Nanbor for reporting this.
 
 Tue Feb 22 01:19:40 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.h: Added more comments.
+        * ace/MEM_IO.h: Added more comments.
 
 Tue Feb 22 00:39:03 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.h: Changed method fetch_recv_buf as protected and
-	  added some missing comments.
+        * ace/MEM_IO.h: Changed method fetch_recv_buf as protected and
+          added some missing comments.
 
-	* ace/MEM_Acceptor.h:
-	* ace/MEM_Connector.h: Added some missing comments.
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Connector.h: Added some missing comments.
 
 Mon Feb 21 20:40:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/MEM_*: Minor modifications to formatting here.
+        * ace/MEM_*: Minor modifications to formatting here.
 
-	* tests/Dynamic_Priority_Test.cpp: Only run this test if
- 	  ACE_HAS_TIMED_MESSAGE_BLOCKS is enabled.
+        * tests/Dynamic_Priority_Test.cpp: Only run this test if
+          ACE_HAS_TIMED_MESSAGE_BLOCKS is enabled.
 
-	* ace/Message_Block: By default, the deadline_time_ and execution_time_
-	  data members are now omitted and their accessor/mutator
- 	  operations rendered "no-op"s unless ACE_HAS_TIMED_MESSAGE_BLOCKS
- 	  is enabled.  This is necessary to avoid an unnecessary 16 bytes
- 	  per-Message_Block.  Thanks to Irfan for pointing this out.
+        * ace/Message_Block: By default, the deadline_time_ and execution_time_
+          data members are now omitted and their accessor/mutator
+          operations rendered "no-op"s unless ACE_HAS_TIMED_MESSAGE_BLOCKS
+          is enabled.  This is necessary to avoid an unnecessary 16 bytes
+          per-Message_Block.  Thanks to Irfan for pointing this out.
 
 Mon Feb 21 17:22:33 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in (ACE_LACKS_SETREUID):
+        * configure.in (ACE_LACKS_SETREUID):
 
-	  Fixed typo.
+          Fixed typo.
 
-	  (ACE_HAS_SOCKADDR_MSG_NAME):
+          (ACE_HAS_SOCKADDR_MSG_NAME):
 
-	  Fixed broken test.  A `struct sockaddr' was being cast to a
-	  `struct sockaddr *', which is obviously broken.  This fix has
-	  the side effect of causing ACE_HAS_SOCKADDR_MSG_NAME to be
-	  defined on platforms where the "msg_name" field of the "msghdr"
-	  structure is a `void*', such as Linux and Solaris.  This isn't
-	  necessarily a bad thing since it is perfectly valid.
+          Fixed broken test.  A `struct sockaddr' was being cast to a
+          `struct sockaddr *', which is obviously broken.  This fix has
+          the side effect of causing ACE_HAS_SOCKADDR_MSG_NAME to be
+          defined on platforms where the "msg_name" field of the "msghdr"
+          structure is a `void*', such as Linux and Solaris.  This isn't
+          necessarily a bad thing since it is perfectly valid.
 
-	  (ACE_HAS_VOIDPTR_SOCKOPT, ACE_HAS_CHARPTR_SOCKOPT):
+          (ACE_HAS_VOIDPTR_SOCKOPT, ACE_HAS_CHARPTR_SOCKOPT):
 
-	  Fixed the tests for these two macros.  The fifth "optlen"
-	  argument to setsockopt() was being passed in as a pointer to
-	  some integral type.  The "optlen" argument to setsockopt() is
-	  not a pointer.  Rather, it should be one of the following:
-	  socklen_t, size_t or int.  The appropriate type for "optlen"
-	  will be determined from previous tests, such as the test for
-	  socklen_t.
+          Fixed the tests for these two macros.  The fifth "optlen"
+          argument to setsockopt() was being passed in as a pointer to
+          some integral type.  The "optlen" argument to setsockopt() is
+          not a pointer.  Rather, it should be one of the following:
+          socklen_t, size_t or int.  The appropriate type for "optlen"
+          will be determined from previous tests, such as the test for
+          socklen_t.
 
-	  The test for ACE_HAS_CHARPTR_SOCKOPT will now only be run if the
-	  test for ACE_HAS_VOIDPTR_SOCKOPT fails.
+          The test for ACE_HAS_CHARPTR_SOCKOPT will now only be run if the
+          test for ACE_HAS_VOIDPTR_SOCKOPT fails.
 
 Mon Feb 21 16:23:03 2000  Ossama Othman  <ossama@uci.edu>
 
-	Thanks to Rich Seibel <seibel_r@ociweb.com> for providing the
-	highly detailed feedback that led to the following changes/fixes:
+        Thanks to Rich Seibel <seibel_r@ociweb.com> for providing the
+        highly detailed feedback that led to the following changes/fixes:
 
-	* THANKS:
+        * THANKS:
 
-	  Added Rich Seibel <seibel_r@ociweb.com> to the list of
-	  contributors.
+          Added Rich Seibel <seibel_r@ociweb.com> to the list of
+          contributors.
 
-	* acconfig.h (ACE_HAS_IOMANIP_NO_H):
+        * acconfig.h (ACE_HAS_IOMANIP_NO_H):
 
-	  Removed this macro since it isn't used anywhere.
+          Removed this macro since it isn't used anywhere.
 
-	  (ACE_LACKS_SETREGID_PROTO, ACE_LACKS_SETREUID_PROTO):
+          (ACE_LACKS_SETREGID_PROTO, ACE_LACKS_SETREUID_PROTO):
 
-	  These should have been ACE_LACKS_SETREGID_PROTOTYPE, and
-	  ACE_LACKS_SETREUID_PROTOTYPE, respectively.
+          These should have been ACE_LACKS_SETREGID_PROTOTYPE, and
+          ACE_LACKS_SETREUID_PROTOTYPE, respectively.
 
-	* configure.in (ACE_HAS_IOMANIP_NO_H):
+        * configure.in (ACE_HAS_IOMANIP_NO_H):
 
-	  Removed the test for this macro.  It isn't used anywhere.
+          Removed the test for this macro.  It isn't used anywhere.
 
-	  (ACE_HAS_SIZET_SOCKET_LEN):
+          (ACE_HAS_SIZET_SOCKET_LEN):
 
-	  Only test for this macro if ACE_HAS_SOCKLEN_T isn't defined.
+          Only test for this macro if ACE_HAS_SOCKLEN_T isn't defined.
 
-	  (ACE_LACKS_SETREGID_PROTO, ACE_LACKS_SETREUID_PROTO):
+          (ACE_LACKS_SETREGID_PROTO, ACE_LACKS_SETREUID_PROTO):
 
-	  These should have been ACE_LACKS_SETREGID_PROTOTYPE, and
-	  ACE_LACKS_SETREUID_PROTOTYPE, respectively.
+          These should have been ACE_LACKS_SETREGID_PROTOTYPE, and
+          ACE_LACKS_SETREUID_PROTOTYPE, respectively.
 
-	  Added "-U_BSD_SOURCE" to list of macros to undefine for each of
-	  the tests for these macros.  Defining "_BSD_SOURCE" on some
-	  platforms may make the prototypes corresponding to the above
-	  macros visible, so we need to explicitly undefine it.
+          Added "-U_BSD_SOURCE" to list of macros to undefine for each of
+          the tests for these macros.  Defining "_BSD_SOURCE" on some
+          platforms may make the prototypes corresponding to the above
+          macros visible, so we need to explicitly undefine it.
 
-	* ace/config-linux-common.h (ACE_HAS_PROCFS):
+        * ace/config-linux-common.h (ACE_HAS_PROCFS):
 
-	  Corrected typo.  This macro should have been ACE_HAS_PROC_FS.
+          Corrected typo.  This macro should have been ACE_HAS_PROC_FS.
 
 Mon Feb 21 16:19:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.h:
-	  Protect the definitions of the CDR macros, so users can override
-	  them in their config.h file.  Thanks to Jim Scheller
-	  <csoftware@iname.com> for pointing this out.
+        * ace/OS.h:
+          Protect the definitions of the CDR macros, so users can override
+          them in their config.h file.  Thanks to Jim Scheller
+          <csoftware@iname.com> for pointing this out.
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
-	  Fixed the algorithm to allocate new CDR blocks in the chain.  In
-	  all but a few weird cases it was allocating fixed sized blocks,
-	  while the intention was to grow the size of the blocks to
-	  minimize the number of allocations.  Thanks to Jim Scheller
-	  <csoftware@iname.com> for finding this problem.
-	  Also added a new ACE_CDR::consolidate() method to reduce a
-	  message block chain into a single message block (with proper
-	  alignment).  This is useful in the implementation of the CDR
-	  streams and Anys.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Fixed the algorithm to allocate new CDR blocks in the chain.  In
+          all but a few weird cases it was allocating fixed sized blocks,
+          while the intention was to grow the size of the blocks to
+          minimize the number of allocations.  Thanks to Jim Scheller
+          <csoftware@iname.com> for finding this problem.
+          Also added a new ACE_CDR::consolidate() method to reduce a
+          message block chain into a single message block (with proper
+          alignment).  This is useful in the implementation of the CDR
+          streams and Anys.
 
 Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com>
 
         * ace/Makefile.bor: Added new files.
 
-	* tests/*.cpp, tests/test_config.h: Removed macros that had been
-	  used by C++Builder 3.
+        * tests/*.cpp, tests/test_config.h: Removed macros that had been
+          used by C++Builder 3.
 
         * include/makeinclude/compiler.bor: Added support for C++Builder 5
-	  VCL libs.
+          VCL libs.
 
         * include/makeinclude/recurse.bor, lots of Makefile.bor files:
-	  Added support for makefile recursion.
+          Added support for makefile recursion.
 
 Mon Feb 21 14:35:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/compiler.bor: Increased the limit of
-	  LIB_LFLAGS from 2048 to 4096.  Thanks to Mogens Hansen
- 	  <mogens_h@dk-online.dk> for reporting this.
+        * include/makeinclude/compiler.bor: Increased the limit of
+          LIB_LFLAGS from 2048 to 4096.  Thanks to Mogens Hansen
+          <mogens_h@dk-online.dk> for reporting this.
 
 Mon Feb 21 15:43:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_SAP.h:
-	* ace/MEM_SAP.cpp (create_shm_malloc): Renamed the typedef
-	  <MALLOC> to <MALLOC_TYPE> to avoid name clashing problem on GHS
-	  cross compilers.  Thanks to Bill Tovrea
-	  <gwtovrea@west.raytheon.com> for reporting this and the help in
-	  tracking this down.
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.cpp (create_shm_malloc): Renamed the typedef
+          <MALLOC> to <MALLOC_TYPE> to avoid name clashing problem on GHS
+          cross compilers.  Thanks to Bill Tovrea
+          <gwtovrea@west.raytheon.com> for reporting this and the help in
+          tracking this down.
 
 Mon Feb 21 12:51:52 2000  Ossama Othman  <ossama@uci.edu>
 
-	* Makefile (RELEASE_TAG_FILES):
+        * Makefile (RELEASE_TAG_FILES):
 
-	  Added `man/Makefile.am' to the list of files to be tagged at
-	  release time.
+          Added `man/Makefile.am' to the list of files to be tagged at
+          release time.
 
 Mon Feb 21 08:35:58 2000  Chad Elliott  <elliott_c@ociweb.com>
 
-	* ace/config-hpux-11.00.h
-	  Corrected a build problem with KCC.  Things were lost in the
-	  transition to the new header file.
+        * ace/config-hpux-11.00.h
+          Corrected a build problem with KCC.  Things were lost in the
+          transition to the new header file.
 
 Sun Feb 20 18:31:46 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace: Removed ACED.cpp and ACER.cpp.  These were only
-	  needed by Borland C++Builder 3.0, which is not supported by ACE
-	  (i.e., you need to upgrade to BCB 4.0 or later).  Thanks to
-	  Christopher Kohlhoff <chris@kohlhoff.com> for this fix.
+        * ace: Removed ACED.cpp and ACER.cpp.  These were only
+          needed by Borland C++Builder 3.0, which is not supported by ACE
+          (i.e., you need to upgrade to BCB 4.0 or later).  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for this fix.
 
 Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -193,62 +199,62 @@ Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sun Feb 20 11:33:09 2000  Ossama Othman  <ossama@uci.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Todd Gruhn <tgruhn2@mail.com> to the list of
-	  contributors.
+          Added Todd Gruhn <tgruhn2@mail.com> to the list of
+          contributors.
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Defined ACE_HAS_DIRENT, and undefined ACE_LACKS_SIGSET.  Thanks
-	  to Todd Gruhn <tgruhn2@mail.com> for confirming that these
-	  changes were necessary.
+          Defined ACE_HAS_DIRENT, and undefined ACE_LACKS_SIGSET.  Thanks
+          to Todd Gruhn <tgruhn2@mail.com> for confirming that these
+          changes were necessary.
 
 Sat Feb 19 17:53:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* bin/make_release (create_kit):
+        * bin/make_release (create_kit):
 
-	  Another attempt to fix MD5 checksum generation at release time:
-	  The problem was that an attempt to get the MD5 checksum for a
-	  file in the current directory was being made, but that file had
-	  already been moved to the destination FTP directory.  Prepending
-	  the destination directory to the filename should correct the
-	  problem.  MD5 checksum generation has been re-enabled.
+          Another attempt to fix MD5 checksum generation at release time:
+          The problem was that an attempt to get the MD5 checksum for a
+          file in the current directory was being made, but that file had
+          already been moved to the destination FTP directory.  Prepending
+          the destination directory to the filename should correct the
+          problem.  MD5 checksum generation has been re-enabled.
 
 Sat Feb 19 17:32:28 2000  Ossama Othman  <ossama@uci.edu>
 
-	* Makefile (RELEASE_TAG_FILES):
+        * Makefile (RELEASE_TAG_FILES):
 
-	  Added this new variable.  It contains a list of files that
-	  should be tagged at release time, but shouldn't be listed in any
-	  of the release/controlled file lists.  This is necessary to
-	  prevent multiple instances of the same file from being passed to
-	  the `.zip' file creation command line.  For example,
-	  ACE_wrappers/man, ACE_wrappers/man/man3/Makefile.am and
-	  ACE_wrappers/man/html/Makefile.am were all being passed to the
-	  `.zip' file creation command line, resulting in duplicate file
-	  names on that command line.  Thanks to David for pointing this
-	  out.
+          Added this new variable.  It contains a list of files that
+          should be tagged at release time, but shouldn't be listed in any
+          of the release/controlled file lists.  This is necessary to
+          prevent multiple instances of the same file from being passed to
+          the `.zip' file creation command line.  For example,
+          ACE_wrappers/man, ACE_wrappers/man/man3/Makefile.am and
+          ACE_wrappers/man/html/Makefile.am were all being passed to the
+          `.zip' file creation command line, resulting in duplicate file
+          names on that command line.  Thanks to David for pointing this
+          out.
 
-	  The `bin/make_release' script will use this new list of files
-	  when tagging a release.
+          The `bin/make_release' script will use this new list of files
+          when tagging a release.
 
-	  (show_release_tag_files):
+          (show_release_tag_files):
 
-	  Makefile target that lists files that should be tagged at
-	  release time.
+          Makefile target that lists files that should be tagged at
+          release time.
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Invoke "$make show_release_tag_files" to determine if there are
-	  any additional files to tag at release time.
+          Invoke "$make show_release_tag_files" to determine if there are
+          any additional files to tag at release time.
 
-	  (tag):
+          (tag):
 
-	  Added "$release_tag_files" to list of files to be tagged by CVS
-	  at release time.  This fixes a problem where the man page
-	  Makefile.am files were not being tagged, which also prevented
-	  them from being distributed with the ACE distribution. [Bug 408]
+          Added "$release_tag_files" to list of files to be tagged by CVS
+          at release time.  This fixes a problem where the man page
+          Makefile.am files were not being tagged, which also prevented
+          them from being distributed with the ACE distribution. [Bug 408]
 
 Sat Feb 19 15:33:05 2000  David L. Levine  <levine@cs.wustl.edu>
 
@@ -256,8 +262,8 @@ Sat Feb 19 15:33:05 2000  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Feb 18 20:58:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* bin/auto_compile:
-	  Do not send email if the build completed without errors.
+        * bin/auto_compile:
+          Do not send email if the build completed without errors.
 
 Fri Feb 18 17:30:26 2000  Steve Huston  <shuston@riverace.com>
 
@@ -271,16 +277,16 @@ Fri Feb 18 17:30:26 2000  Steve Huston  <shuston@riverace.com>
 
 Fri Feb 18 10:25:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	  Workaround MSVC5 bug when invoking explicit destructors. Thanks
-	  to Achim Stindt <stindt@conbis.de> for this fix.
+        * ace/OS.h:
+          Workaround MSVC5 bug when invoking explicit destructors. Thanks
+          to Achim Stindt <stindt@conbis.de> for this fix.
 
 Thu Feb 17 18:32:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* OS.h:
-	  Removed the ACE_GLOBAL_COLONS macro I added yesterday.
-	  Found another way to generate code with the IDL compiler
-	  that doesn't need it.
+        * OS.h:
+          Removed the ACE_GLOBAL_COLONS macro I added yesterday.
+          Found another way to generate code with the IDL compiler
+          that doesn't need it.
 
 Thu Feb 17 09:38:06 2000  David L. Levine  <levine@cs.wustl.edu>
 

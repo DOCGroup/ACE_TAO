@@ -2706,6 +2706,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                                                     (timestruc_t*)&ts),
                                 result),
               int, -1, result);
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
+  if (timeout == 0)
+    return (::cv_wait (*cv, *external_mutex, 0)) ? 0 : -1;
+  else
+    return (::cv_wait (*cv, *external_mutex, *timeout)) ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
   if (timeout != 0)
     timeout->set (ts); // Update the time value before returning.
