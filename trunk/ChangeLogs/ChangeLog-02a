@@ -1,8 +1,33 @@
+Mon Feb 26 18:18:38 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SString.i
+          (ACE_CString::find (const char *s, int pos) const):
+          (ACE_CString::find (char c, int pos) const):
+          (ACE_SString::find (const char *s, int pos) const):
+          (ACE_SString::find (char c, int pos) const):
+          (ACE_WString::find (const ACE_WSTRING_TYPE *s, int pos) const):
+          If match is found, return index from start of string, not from
+          'pos'. Matches the C++ string standard, which was the model for
+          these classes.
+
+        * ace/SString.h: Clarified comments on return value for above
+          functions.
+
+        * tests/SString_Test.cpp: Changed to look for the correct return
+          from the npos tests of the functions above.
+
 Mon Feb 26 15:01:55 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/DLL_Test_Impl.dsp:
         * tests/version_tests/DLL_Test_Impl.dsp: (removed)
 
+Mon Feb 26 12:29:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/ARGV.h: Clarify that the int add (const ACE_TCHAR *next_arg)
+	  method assumes ownership of <next_arg>, rather than copying it.
+  	  Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
+	  Fixes [Bug 807].
+  
           The generated version_tests dsp didn't work (since DLL_Test_Impl
           creates a library).  Manually created the configurations in the
           tests/DLL_Test_Impl.dsp version instead.
