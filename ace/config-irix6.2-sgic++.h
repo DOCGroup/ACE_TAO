@@ -3,12 +3,12 @@
 
 // The following configuration file is designed to work for the SGI
 // Indigo2EX running IRIX 6.2 platform using the SGI C++ Compiler.
-// Please note that the following system patches MUST be applied to
-// Irix 6.2 in order to have MT:
-//
-// patchSG0001361
-// patchSG0001367
-// patchSG0001389
+
+// In order to have support for multi-threading, several patches must
+// be applied to the stock Irix 6.2 kernel, involving changes that
+// bring this kernel up to POSIX 1003.c compatibility.  These patches
+// are updated frequently, so you should ask your support contact or
+// search SGI's web site (http://www.sgi.com) for the latest version.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H

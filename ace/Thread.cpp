@@ -40,8 +40,9 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
 		     void *arg, 
 		     long flags, 
 		     u_int priority,
-		     void **stack,
-		     size_t stack_size[])
+		     void *stack[],
+		     size_t stack_size[],
+		     ACE_hthread_t thread_handles[])
 {
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i;
@@ -49,14 +50,21 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
   for (i = 0; i < n; i++)
     {
       ACE_thread_t t_id;
+      ACE_hthread_t t_handle;
 
       int result = ACE_OS::thr_create 
-        (func, arg, flags, &t_id, 0, priority,
+        (func, arg, flags, 
+	 &t_id, &t_handle, 
+	 priority,
          stack == 0 ? 0 : stack[i], 
          stack_size == 0 ? 0 : stack_size[i]);
 
       if (result == 0)
-	thread_ids[i] = t_id;
+	{
+	  thread_ids[i] = t_id;
+	  if (thread_handles != 0)
+	    thread_handles[i] = t_handle;
+	}
       else
         // Bail out if error occurs.
         break;

@@ -23,8 +23,13 @@
 
 #include "ace/Thread.h"
 #include "ace/Synch.h"
-
 #include "ace/Log_Msg.h"
+
+#if defined (ACE_HAS_UNICODE)
+#define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)
+#else
+#define ACE_WSPRINTF(BUF,VALUE) ::sprintf (BUF, "%s", VALUE)
+#endif /* ACE_HAS_UNICODE */
 
 // IPC conduit between sender and client daemon.  This should be
 // included in the <ACE_Log_Msg> class, but due to "order of include"
@@ -433,6 +438,7 @@ ACE_Log_Msg::log (const char *format_str,
 		  break;
 		case 'N':
 		  {
+		    // @@ UNICODE
 		    const char *file = this->file ();
 		    ACE_OS::sprintf (bp, "%s", file ? file : "<unknown file>");
 		    type = SKIP_SPRINTF;
@@ -440,26 +446,27 @@ ACE_Log_Msg::log (const char *format_str,
 		  }
 		case 'n': // Print the name of the program. 
 		  type = SKIP_SPRINTF;
+		  // @@ UNICODE
 		  ACE_OS::strcpy (bp, ACE_Log_Msg::program_name_ ? 
-			    ACE_Log_Msg::program_name_ : "<unknown>");
+				  ACE_Log_Msg::program_name_ : "<unknown>");
 		  break;
-                case 'P': // format the current process id 
+                case 'P': // Format the current process id.
 		  type = SKIP_SPRINTF;
 		  ACE_OS::sprintf (bp, "%d", this->getpid ());
 		  break;
-		case 'p': // format the string assocated with the value of errno. 
+		case 'p': // Format the string assocated with the value of errno. 
 		  {
 		    type = SKIP_SPRINTF;
 		    errno = ACE::map_errno (errno);
 		    if (errno >= 0 && errno < sys_nerr)
 		      ACE_OS::sprintf (bp, "%s: %s", 
-				 va_arg (argp, char *), strerror (errno));
+				       va_arg (argp, char *), strerror (errno));
 		    else
 		      ACE_OS::sprintf (bp, "%s: <unknown error> = %d", 
-				 va_arg (argp, char *), errno);
+				       va_arg (argp, char *), errno);
 		    break;
 		  }
-		case 'R': // format the return status of the operation. 
+		case 'R': // Format the return status of the operation.
 		  this->op_status (va_arg (argp, int));
 		  ACE_OS::sprintf (bp, "%d", this->op_status ());
 		  break;
@@ -498,7 +505,7 @@ ACE_Log_Msg::log (const char *format_str,
 #endif /* ACE_HAS_SYS_SIGLIST */
 		    break;
 		  }
-		case 'T': /* format the timestamp*/
+		case 'T': // Format the timestamp.
 		  {
 		    type = SKIP_SPRINTF;
 		    char day_and_time[35];
@@ -507,7 +514,7 @@ ACE_Log_Msg::log (const char *format_str,
 						     sizeof day_and_time));
 		    break;		  
 		  }
-		case 't': // format thread id. 
+		case 't': // Format thread id. 
 		  type = SKIP_SPRINTF;
 #if defined (ACE_WIN32)
 		  ACE_OS::sprintf (bp, "%u", ACE_Thread::self ());
@@ -520,6 +527,8 @@ ACE_Log_Msg::log (const char *format_str,
 		case 's':
 		  type = 1 + wpc; // 1, 2, 3 
 		  break;
+		case 'W':
+		  // @@ UNICODE
 		case 'd': case 'c': case 'i': case 'o': 
 		case 'u': case 'x': case 'X': 
 		  type = 4 + wpc; // 4, 5, 6 

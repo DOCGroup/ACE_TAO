@@ -118,6 +118,28 @@ public:
   // Returns: on success a unique group id that can be used to control
   // all of the threads in the same group.  On failure, returns -1.
 
+  int spawn_n (ACE_thread_t thread_ids[], 
+	       size_t n, 
+	       ACE_THR_FUNC func, 
+	       void *args,
+	       long flags, 
+	       u_int priority = 0,
+	       int grp_id = -1,
+	       void *stack[] = 0,
+	       size_t stack_size[] = 0,
+	       ACE_hthread_t thread_handles[] = 0);
+  // Spawn N new threads, which execute <func> with argument <arg>.
+  // The thread_ids of successfully spawned threads will be placed
+  // into the <thread_ids> buffer (which must be the same size as
+  // <n>).  If <stack> != 0 it is assumed to be an array of <n>
+  // pointers to the base of the stacks to use for the threads being
+  // spawned.  If <stack_size> != 0 it is assumed to be an array of
+  // <n> values indicating how big each of the corresponding <stack>s
+  // are.  If <thread_handles> != 0 it is assumed to be an array of
+  // <n> thread_handles that will be assigned the values of the thread
+  // handles being spawned.  Returns -1 on failure (<errno> will
+  // explain...), otherwise returns the group id of the threads.
+
   void *exit (void *status, int do_thread_exit = 1);
   // Called to clean up when a thread exits.  If <do_thread_exit> is
   // non-0 then <ACE_Thread::exit> is called to exit the thread, in

@@ -1125,6 +1125,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // is locked!
   cv->waiters_++;
   
+  // We keep the lock held just long enough to increment the count of
+  // waiters by one.  Note that we can't keep it held across the call
+  // to WaitForSingleObject since that will deadlock other calls to
+  // ACE_OS::cond_signal().
   if (ACE_OS::mutex_unlock (external_mutex) != 0)
     return -1;
   
@@ -1146,6 +1150,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       result = ::WaitForSingleObject (cv->sema_, relative_time.msec ());
     }
   
+  // Reacquire the lock before we decrement the count of waiters.
   ACE_OS::mutex_lock (external_mutex);
   
   cv->waiters_--;
@@ -3000,7 +3005,9 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 }
 
 ACE_INLINE int 
-ACE_OS::thr_join (ACE_thread_t waiter_id, ACE_thread_t *thr_id, void **status)
+ACE_OS::thr_join (ACE_thread_t waiter_id, 
+		  ACE_thread_t *thr_id, 
+		  void **status)
 {
 // ACE_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_THREADS)
@@ -3032,13 +3039,18 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle, void **status)
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
+  void *local_status = 0;
+
+  // Make sure that status is non-NULL.
+  if (status == 0)
+    status = &local_status;
+
   if (::WaitForSingleObject (thr_handle, INFINITE) == WAIT_OBJECT_0
       && ::GetExitCodeThread (thr_handle, (LPDWORD) status) != FALSE)
     {
       ::CloseHandle (thr_handle);
       return 0;
     }
-
   ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
 #elif defined (VXWORKS)

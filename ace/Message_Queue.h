@@ -191,16 +191,16 @@ protected:
   ACE_Message_Block *tail_;           
   // Pointer to tail of ACE_Message_Block list.
 
-  int low_water_mark_;  
+  size_t low_water_mark_;  
   // Lowest number before unblocking occurs.
 
-  int high_water_mark_; 
+  size_t high_water_mark_; 
   // Greatest number of bytes before blocking.
 
-  int cur_bytes_;       
+  size_t cur_bytes_;       
   // Current number of bytes in the queue.
 
-  int cur_count_;       
+  size_t cur_count_;       
   // Current number of messages in the queue.
 
   int deactivated_; 

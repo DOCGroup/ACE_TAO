@@ -168,11 +168,15 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
 	  {
 	    // @@ Need to implement WAIT_ABANDONED_0 stuff.
 	    relative_index = wait_status - WAIT_OBJECT_0;
-
-	    if (relative_handlers[relative_index]->handle_signal (0) == -1)
+	    // Assign the ``signaled'' HANDLE so that callers can get
+	    // it.
+	    siginfo_t sig (relative_handles[relative_index]);
+	    
+	    if (relative_handlers[relative_index]->handle_signal 
+		(0, &sig) == -1)
 	      // If we remove a handler, then the index should stay
-	      // the same, since it may have been replaced with the
-	      // end handle by remove_handler.
+	      // the same since it may have been replaced with the end
+	      // handle by remove_handler.
 	      this->remove_handler (relative_handlers[relative_index]);
 	    else
 	      // If we did not remove the handler, then move the index

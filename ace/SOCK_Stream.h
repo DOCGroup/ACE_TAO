@@ -66,6 +66,11 @@ public:
   int close_writer (void);
   // Close down the writer.
 
+  int close (void);
+  // Close down the socket (we need this to make things work correctly
+  // on Win32, which requires use to do a <close_writer> before doing
+  // the close in order to avoid losing data).
+
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
 
