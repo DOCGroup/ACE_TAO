@@ -61,7 +61,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "if (_tao_elem.nocopy ()) // no copy" << be_idt_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem._in (), 1, TAO_TRY_ENV); // consume it" << be_uidt_nl
+      << "_tao_elem.in (), 1, TAO_TRY_ENV); // consume it" << be_uidt_nl
       << "else // copy" << be_idt_nl
       << "_tao_any.replace (" << node->tc_name () << ", " << node->name ()
       << "_dup (_tao_elem.in ()), 1, TAO_TRY_ENV);" << be_uidt_nl
