@@ -1,3 +1,9 @@
+Mon May 24 16:28:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Policy_Manager.cpp (implementation): Moved a couple of
+	  functions from the .i file to the .cpp file so that it compiles
+	  when inlining is turned on.
+
 Mon May 24 16:43:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Dynany_Test/test_dynarray.cpp:
@@ -31,7 +37,7 @@ Mon May 24 16:20:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	    struct foo {
 	      long x;
 	      sequence<foo> offspring;
-	    }; 
+	    };
 
 Mon May 24 16:03:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 

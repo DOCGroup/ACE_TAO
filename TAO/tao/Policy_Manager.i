@@ -69,23 +69,6 @@ TAO_Policy_Current_Impl::set_policy_overrides (
 
 // ****************************************************************
 
-ACE_INLINE TAO_Policy_Current_Impl &
-TAO_Policy_Current::implementation (TAO_Policy_Current_Impl &current)
-{
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
-
-  TAO_Policy_Current_Impl *old = tss->policy_current_;
-  tss->policy_current_ = &current;
-  return *old;
-}
-
-ACE_INLINE TAO_Policy_Current_Impl &
-TAO_Policy_Current::implementation (void)
-{
-  return *TAO_ORB_CORE_TSS_RESOURCES::instance ()->policy_current_;
-}
-
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Current::get_policy (
       CORBA::PolicyType policy,
