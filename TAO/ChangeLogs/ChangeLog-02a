@@ -1,3 +1,8 @@
+Mon Sep 10 20:00:25 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/MCAST_Parser.cpp: 
+	  Fixed the errors on Win.
+
 Mon Sep 10 13:34:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (output_cdr_dblock_allocator): Added a comment
