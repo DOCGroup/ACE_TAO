@@ -243,7 +243,7 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 {
   if (entry == 0)
     return -1;
-  
+
   // First get the entry again (if at all things had changed in the
   // cache map in the mean time)
   HASH_MAP_ENTRY *new_entry = 0;
@@ -281,7 +281,7 @@ TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &reactor_registered,
 
       if ((*iter).int_id_.recycle_state () != ACE_RECYCLABLE_CLOSED)
         {
-#if 0 
+#if 0
           // @@ This code from Connection_Cache_Manager disappeared
           // during the changeover; we need the functional equivalent back.
           // The problem is that with the locking stuff that we're putting
@@ -391,8 +391,8 @@ TAO_Transport_Cache_Manager::cpscmp(const void* a, const void* b)
   const HASH_MAP_ENTRY** right = (const HASH_MAP_ENTRY**)b;
 
   if ((*left)->int_id_.purging_order () > (*right)->int_id_.purging_order ())
-    return 1;                                   
- 
+    return 1;
+
   if ((*left)->int_id_.purging_order () < (*right)->int_id_.purging_order ())
     return -1;
 
@@ -415,7 +415,7 @@ TAO_Transport_Cache_Manager::sort_set (HASH_MAP_ENTRY**& entries,
           HASH_MAP_ENTRY* entry = entries[i];
           for(int j = i; j > 0 &&
                          entries[j - 1]->int_id_.purging_order () >
-                           entry->int_id_.purging_order (); j--)   
+                           entry->int_id_.purging_order (); j--)
             {
               HASH_MAP_ENTRY* holder = entries[j];
               entries[j] = entries[j - 1];
@@ -428,7 +428,7 @@ TAO_Transport_Cache_Manager::sort_set (HASH_MAP_ENTRY**& entries,
                  sizeof (HASH_MAP_ENTRY*), (ACE_COMPARE_FUNC)cpscmp);
 #endif /* ACE_LACKS_QSORT */
 }
- 
+
 
 int
 TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
