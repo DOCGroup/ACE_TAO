@@ -116,9 +116,6 @@ protected:
                  CORBA::Any &any);
   // Determine the primitive type and insert into the Any.
 
-  const char *gen_version (AST_Decl *node);
-  // Defaults to "1.0" for now.
-
   void element_type (AST_Type *base_type
                      TAO_ENV_ARG_DECL);
   // Creates or looks up the element type of an array or sequence,

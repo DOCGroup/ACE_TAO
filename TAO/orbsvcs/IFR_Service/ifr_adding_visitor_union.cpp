@@ -310,7 +310,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
             be_global->repository ()->create_enum (
                                           node->repoID (),
                                           node->local_name ()->get_string (),
-                                          this->gen_version (node),
+                                          node->version (),
                                           members
                                           TAO_ENV_ARG_PARAMETER
                                         );
@@ -440,7 +440,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                 be_global->holding_scope ()->create_union (
                     node->repoID (),
                     node->local_name ()->get_string (),
-                    this->gen_version (node),
+                    node->version (),
                     this->ir_current_.in (),
                     this->members_
                     TAO_ENV_ARG_PARAMETER
@@ -466,7 +466,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                 current_scope->create_union (
                                    node->repoID (),
                                    node->local_name ()->get_string (),
-                                   this->gen_version (node),
+                                   node->version (),
                                    this->ir_current_.in (),
                                    this->members_
                                    TAO_ENV_ARG_PARAMETER

@@ -175,7 +175,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 be_global->holding_scope ()->create_struct (
                     node->repoID (),
                     node->local_name ()->get_string (),
-                    this->gen_version (node),
+                    node->version (),
                     this->members_
                     TAO_ENV_ARG_PARAMETER
                   );
@@ -200,7 +200,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 current_scope->create_struct (
                                    node->repoID (),
                                    node->local_name ()->get_string (),
-                                   this->gen_version (node),
+                                   node->version (),
                                    this->members_
                                    TAO_ENV_ARG_PARAMETER
                                 );
@@ -313,7 +313,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
             be_global->repository ()->create_enum (
                                           node->repoID (),
                                           node->local_name ()->get_string (),
-                                          this->gen_version (node),
+                                          node->version (),
                                           members
                                           TAO_ENV_ARG_PARAMETER
                                         );
