@@ -127,11 +127,13 @@ TAO_ComponentDef_i::is_basic (CORBA::Environment & /* ACE_TRY_ENV */)
 }
 
 IR::ProvidesDef_ptr 
-TAO_ComponentDef_i::create_provides (const char *id,
-                                     const char *name,
-                                     const char *version,
-                                     IR::InterfaceDef_ptr interface_type,
-                                     CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_ComponentDef_i::create_provides (
+    const char * /* id */,
+    const char * /* name */,
+    const char * /* version */,
+    IR::InterfaceDef_ptr  /* interface_type */,
+    CORBA::Environment & /* ACE_TRY_ENV */
+  )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -139,11 +141,11 @@ TAO_ComponentDef_i::create_provides (const char *id,
 }
 
 IR::UsesDef_ptr 
-TAO_ComponentDef_i::create_uses (const char *id,
-                                 const char *name,
-                                 const char *version,
-                                 IR::InterfaceDef_ptr interface_type,
-                                 CORBA::Boolean is_multiple,
+TAO_ComponentDef_i::create_uses (const char * /* id */,
+                                 const char * /* name */,
+                                 const char * /* version */,
+                                 IR::InterfaceDef_ptr  /* interface_type */,
+                                 CORBA::Boolean /* is_multiple */,
                                  CORBA::Environment & /* ACE_TRY_ENV */ )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -152,10 +154,10 @@ TAO_ComponentDef_i::create_uses (const char *id,
 }
 
 IR::EmitsDef_ptr 
-TAO_ComponentDef_i::create_emits (const char *id,
-                                  const char *name,
-                                  const char *version,
-                                  IR::ValueDef_ptr value,
+TAO_ComponentDef_i::create_emits (const char * /* id */,
+                                  const char * /* name */,
+                                  const char * /* version */,
+                                  IR::ValueDef_ptr  /* value */,
                                   CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -164,10 +166,10 @@ TAO_ComponentDef_i::create_emits (const char *id,
 }
 
 IR::PublishesDef_ptr 
-TAO_ComponentDef_i::create_publishes (const char *id,
-                                      const char *name,
-                                      const char *version,
-                                      IR::ValueDef_ptr value,
+TAO_ComponentDef_i::create_publishes (const char * /* id */,
+                                      const char * /* name */,
+                                      const char * /* version */,
+                                      IR::ValueDef_ptr  /* value */,
                                       CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -176,10 +178,10 @@ TAO_ComponentDef_i::create_publishes (const char *id,
 }
 
 IR::ConsumesDef_ptr 
-TAO_ComponentDef_i::create_consumes (const char *id,
-                                     const char *name,
-                                     const char *version,
-                                     IR::ValueDef_ptr value,
+TAO_ComponentDef_i::create_consumes (const char * /* id */,
+                                     const char * /* name */,
+                                     const char * /* version */,
+                                     IR::ValueDef_ptr  /* value */,
                                      CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
