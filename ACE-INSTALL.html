@@ -1186,7 +1186,10 @@ need to do:<P>
 <P><hr align=left width="50%"><P>
 <H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
 
-If you are looking for ACE on Mingw, go <A HREF="#mingw">here</A>. <P>
+If you are looking for instructions on building ACE with Borland
+C++Builder, go <A HREF="#borland">here</A>.  Otherwise, if you are
+looking for instructions on building ACE with Mingw, go <A
+HREF="#mingw">here</A>. <P>
 
 First, if you are upgrading from an older release, clean up everything
 and rebuild from scratch to ensure that everything is rebuilt
@@ -1200,24 +1203,99 @@ ACE contains project files for Microsoft Visual C++ 5.0 or later
 Makefile.bor files to compile ACE, the ACE one-button tests, and TAO
 with Borland C++ Builder. <P>
 
+<P><hr align=left width="50%"><P>
+<H4><A NAME="borland">Building and Installing ACE on Win32 with Borland 
+C++Builder</A></H4>
+
+If you are building for a machine without a network card, you may want
+to check <A HREF="#win32nonic">here</A> first. <P>
+
+<OL>
+  <LI>Uncompress the ACE distribution into a directory, where it will 
+create an
+      ACE_wrappers directory containing the source.  The ACE_wrappers
+      directory will be referred to as ACE_ROOT in the following steps -- so
+      ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
+      root directory.<BR>
+      <BR>
+  <LI>Create a file called <code>config.h</code> in the ACE_ROOT\ace
+      directory that contains: <BR>
+      <BR>
+      <CODE>#include "ace/config-win32.h"</CODE><BR>
+      <BR>
+      If you are building for Windows NT or Windows 2K then you can start
+      without any more changes.  If you are building on Windows 9x/Me,
+      then you should add the line <BR>
+      <BR>
+      <CODE>#define ACE_HAS_WINNT4 0</CODE><BR>
+      <BR>
+      before the #include statement in ACE_ROOT\ace\config.h and it
+      will turn off some WinNT/Win2K-specific code in ACE.<BR>
+      <BR>
+  <LI>Open a Command Prompt (DOS Box).<BR>
+      <BR>
+  <LI>Set the ACE_ROOT environment variable to point to the ACE_wrappers
+      directory. For example:<BR>
+      <BR>
+      <CODE>set ACE_ROOT=C:\ACE_wrappers</CODE><BR>
+      <BR>
+  <LI>Change to the ACE_ROOT\ace directory.<BR>
+      <BR>
+  <LI>Build release DLLs for ACE by going:<BR>
+      <BR>
+      <CODE>make -f Makefile.bor</CODE><BR>
+      <BR>
+  <LI>You can build debug DLLs for ACE by setting the DEBUG environment 
+variable
+      before you run make:<BR>
+      <BR>
+      <CODE>set DEBUG=1<BR>
+      make -f Makefile.bor</CODE><BR>
+      <BR>
+  <LI>Optionally install the ACE header files, libraries and executables 
+for use
+      in your applications. Here we are installing them into C:\ACETAO: <BR>
+      <BR>
+      <CODE>make -f Makefile.bor -DINSTALL_DIR=C:\ACETAO install</CODE><BR>
+      <BR>
+</OL>
+
+These instructions do not cover all possible build configurations. Please 
+see <A
+HREF="http://www.tenermerx.com/tao_bcb/index.html">http://www.tenermerx.com/tao_bcb/index.html</A>
+for more detailed information on building and using ACE+TAO with Borland C++
+Builder. <P>
+
+If you are using C++Builder 4, then the libraries built using the above
+instructions are intended for use with generic console or windows applications
+and they link against the corresponding C++ runtime library. VCL applications
+created using BCB4's RAD environment must link against the VCL-compatible (ie
+pascal-compatible) runtime library.  To tell the difference between these
+libraries the VCL-compatible ones have a 'p' in the suffix (i.e., 'p' for
+pascal).  To build VCL compatible libraries try
+<BLOCKQUOTE><PRE><CODE>set PASCAL=1
+make -f Makefile.bor
+</CODE></PRE></BLOCKQUOTE> <P>
+
 The Borland C++ Builder 4.0/5.0 port has been done by <A
 HREF="mailto:jody@atdesk.com">Jody Hagins</A> and <A
-HREF="mailto:chris@kohlhoff.com">Christopher Kohlhoff</A>.  By
-default, the ACE/TAO libraries built for Borland C++ Builder are
-intended for use with generic console or windows applications and they
-link against the corresponding C++ runtime library. Applications
-created using BCB's RAD environment, such as ChatClient, must link
-against the VCL-compatible (ie pascal-compatible) runtime library.  To
-tell the difference between these libraries the VCL-compatible ones
-have a 'p' in the suffix (i.e., 'p' for pascal).  To build VCL
-compatible libraries try
-<pre><code>
-make -f Makefile.bor -DPASCAL
-</code></pre>
+HREF="mailto:chris@kohlhoff.com">Christopher Kohlhoff</A>. <P>
 
-Please see <A
-HREF="http://www.tenermerx.com/tao_bcb/index.html">http://www.tenermerx.com/tao_bcb/index.html</A>
-for more information on building ACE+TAO with Borland C++ Builder. <P>
+<B>ACE TESTS</B><P>
+
+The tests are located in ACE_ROOT\tests.  You build the tests using the
+Makefile.bor file, that is:<P>
+<BLOCKQUOTE><CODE>
+make -f Makefile.bor
+</CODE></BLOCKQUOTE><P>
+
+Once you build all the tests, you can run a perl script:<P>
+<BLOCKQUOTE><CODE>run_test.pl -ExeSubDir
+Dynamic\Release</CODE></BLOCKQUOTE><P> or the the batch file:<P>
+<BLOCKQUOTE><CODE>run_tests.bat bor</CODE></BLOCKQUOTE><P> in the
+<code>tests</code> directory to try all the tests. You need to make
+sure the ACE bin directory (in this case ACE_ROOT\bin\Dynamic\Release)
+is on the path before you try to run the tests.<p>
 
 <EM>Note concerning MSVC 5.0 and Service Pack 3:</EM> There has been
 confusion regarding MSVC 5 and its Service Pack 3.  Some ACE users

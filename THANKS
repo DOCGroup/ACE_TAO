@@ -1000,7 +1000,7 @@ Dorr H. Clark <dhclark@Lynx.COM>
 Dave McNeely <Dave_McNeely@md.northgrum.com>
 Eric Malenfant <EMalenfant@interstarinc.com>
 Roland Fischer <roli@gugus.com>
-Alexander Libman <alibman@baltimore.com>
+Alexander Libman <alibman@ihug.com.au>
 Roger Larsson <larssoro@hotmail.com>
 Martin Stack <mstack@cambertx.com>
 Michael Ravits <miquel@bitsmart.com>
@@ -1335,6 +1335,7 @@ Tom Wagner <TomW@CoManage.net>
 Kyle Brost <Kyle.Brost@quest.com>
 Nicolas Vincent <Vincent.Nicolas@Radiometer.dk>
 Jon Wackley <jonw@mountaincable.net>
+Jan Kalin <jan.kalin@zag.si>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
