@@ -149,25 +149,31 @@ inline long ace_timezone()
   time_t t1 = mktime(gmtime(&tod));   // convert without timezone
   time_t t2 = mktime(localtime(&tod));   // convert with timezone
   return difftime(t1, t2); // compute difference in seconds
-# elif ( defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY) ) && ( !defined (__linux__) )
+# elif defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) \
+	&& !defined (__linux__)  \
+	&& !defined (__FreeBSD__) \
+	&& !defined (__NetBSD__) \
+	&& !defined (__OpenBSD__)
+  // The XPG/POSIX specification does not require gettimeofday to
+  // set the timezone struct (it leaves the behavior of passing a
+  // non-null struct undefined).  We know gettimeofday() on Linux
+  // *BSD systems does not set the timezone, so we avoid using it
+  // and use the global variable <timezone> instead. 
+  //
+  // @todo It would be better if we had a feature test macro that
+  // could be used instead of a list of operating systems.
   long result = 0;
   struct timeval time;
   struct timezone zone;
   ACE_UNUSED_ARG (result);
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
-# else  /* __Lynx__ || __FreeBSD__ ... */
-# if defined (__linux__)
-  // Under Linux, gettimeofday() does not correctly set the timezone
-  // struct, so we should use the global variable <timezone>.
-  // However, it is initialized by tzset().  I assume other systems
-  // are the same (i.e., tzset() needs to be called to set
-  // <timezone>), but since no one is complaining, I will only make
-  // the change for Linux.
+# else  /* ACE_HAS_TIMEZONE_GETTIMEOFDAY */
+  // The XPG/POSIX specification requires that tzset() be called to
+  // set the global variable <timezone>.
   ::tzset();
-# endif
   return timezone;
-# endif /* __Lynx__ || __FreeBSD__ ... */
+# endif /* ACE_HAS_TIMEZONE_GETTIMEOFDAY */
 #else
   ACE_NOTSUP_RETURN (0);
 #endif /* !ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS */

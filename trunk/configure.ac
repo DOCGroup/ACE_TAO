@@ -4132,9 +4132,6 @@ dnl Check for Unix98 pthreads extensions
 
   if test "$ace_cv_struct_pthread_rwlock_t" = yes &&
      test "$ace_cv_struct_pthread_rwlockattr_t" = yes &&
-     test "$ac_cv_func_pthread_continue" = yes &&
-     test "$ac_cv_func_pthread_continue" = yes &&
-     test "$ac_cv_func_pthread_suspend" = yes &&
      test "$ac_cv_func_pthread_rwlock_init" = yes &&
      test "$ac_cv_func_pthread_rwlock_destroy" = yes &&
      test "$ac_cv_func_pthread_rwlock_rdlock" = yes &&
