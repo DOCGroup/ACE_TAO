@@ -1,3 +1,10 @@
+Sat Jan  5 19:30:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/orbconf.h:
+
+	  Include "ace/Basic_Types.h" to pull in the definition of
+	  ACE_LITTLE_ENDIAN.
+
 Sat Jan  5 17:54:27 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/LF_Strategy.h:
