@@ -4061,14 +4061,12 @@ ACE_OS::inet_addr (const char *name)
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
-#if ! defined (VXWORKS)
 ACE_INLINE char *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   // ACE_TRACE ("ACE_OS::inet_ntoa");
   ACE_OSCALL_RETURN (::inet_ntoa (addr), char *, 0);
 }
-#endif /* ! VXWORKS */
 
 ACE_INLINE int
 ACE_OS::last_error (void)
