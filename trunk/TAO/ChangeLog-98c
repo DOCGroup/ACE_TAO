@@ -1,3 +1,7 @@
+Fri Nov 14 17:10:20 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* cubit_i.cpp: Chaged &d to %d in ACE_ERROR
+
 Fri Nov 14 16:42:21 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/tao_internals.cpp (fake_service_entries_i): Made sure that
