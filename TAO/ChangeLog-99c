@@ -1,3 +1,9 @@
+Fri Feb 05 16:05:00 1999 Chris Gill <cdgill@cs.wustl.edu>
+
+        * TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java:
+	  Added -dualECdemo switch that resolves the appropriate event and
+	  scheduling service names for the DualEC_Sup supplier.
+
 Fri Feb  5 15:56:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.cpp:
