@@ -39,25 +39,34 @@ HOST_DIR	= $(WIND_BASE)/host/sun4-solaris2
 BIN_DIR		= $(HOST_DIR)/bin
 
 
-CC		= g++$(TOOLENV) #### or: $(BIN_DIR)/g++$(TOOLENV)
-CXX		= $(CC)
+CC		= cc$(TOOLENV)
+CXX		= g++$(TOOLENV)
 CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -Wall
-CCFLAGS		+= $(DCFLAGS) $(CFLAGS) -fno-implicit-templates
+#### Note: -f-no-implicit-templates doesn't seem to work well.  Some (inline?)
+####       member functions don't get instantiated.
+CCFLAGS		+= $(DCFLAGS) $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS		+= -g
 INCLDIRS	+=
 LD		= $(CXX)
-LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR) -lgcc
+#### Note: exit.o contains (empty, except for printouts) definitions of
+####       __cleanup and __exit.  For some reason, they're not provided in
+####       Wind River's libraries.  I have a TSR (#44826) open with them to
+####       investigate/solve this.
+LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR) -lgcc .obj/__ctordtor.o $(TARGET_DIR)/config/pc486/temp/exit.o
 PIC		=
 AR		= ar$(TOOLENV)
 ARFLAGS		= rv
 RANLIB		= /bin/true
 PRELIB	= (echo "main() { }" > gcctemp.c && \
 	  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-	  $(LD) $^ $(CFLAGS) $(LDFLAGS) $(LIBS); \
+	  $(LD) $^ $(CFLAGS) -r -L$(WRAPPER_ROOT)/ace -L./ -L$(LIB_DIR) \
+                                -L$(GCCLIB_DIR) -lgcc $(LIBS); \
 	  status=$$?; rm -f gcctemp.* a.out; exit $$status)
+PRELINK		= nm$(TOOLENV) .obj/$@.o $(WRAPPER_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
 
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
 
-COMPILE.cc	=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
-LINK.cc		=$(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+COMPILE.cc	= $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+LINK.cc		= $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PTDIRS)
+
