@@ -100,22 +100,22 @@ public:
   CONCRETE operator * (void) const;
 
   /// Less than operator.
-  int operator < (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator < (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
 
   /// Less than or equal operator.
-  int operator <= (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator <= (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
 
   /// Greater than operator.
-  int operator > (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator > (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
 
   /// Greater than or equal operator.
-  int operator >= (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator >= (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
 
   /// Equality operator.
-  int operator == (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator == (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
 
   /// Inequality operator.
-  int operator != (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator != (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
 
   /// Subscript operator.
   CONCRETE operator [](int index) const;

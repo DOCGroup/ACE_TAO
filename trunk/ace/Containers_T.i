@@ -301,7 +301,7 @@ ACE_Array<T>::operator= (const ACE_Array<T> &s)
 
 // Compare this array with <s> for inequality.
 
-template <class T> ACE_INLINE int
+template <class T> ACE_INLINE bool
 ACE_Array<T>::operator!= (const ACE_Array<T> &s) const
 {
   return !(*this == s);

@@ -2,7 +2,9 @@
 
 #include "ace/Registry.h"
 
-ACE_RCSID(ace, Registry, "$Id$")
+ACE_RCSID (ace,
+           Registry,
+           "$Id$")
 
 #if defined (ACE_WIN32)
 
@@ -26,7 +28,7 @@ ACE_RCSID(ace, Registry, "$Id$")
 /* static */
 const ACE_TCHAR *ACE_Registry::STRING_SEPARATOR = ACE_LIB_TEXT ("\\");
 
-int
+bool
 ACE_Registry::Name_Component::operator== (const Name_Component &rhs) const
 {
   return
@@ -34,7 +36,7 @@ ACE_Registry::Name_Component::operator== (const Name_Component &rhs) const
     rhs.kind_ == this->kind_;
 }
 
-int
+bool
 ACE_Registry::Name_Component::operator!= (const Name_Component &rhs) const
 {
   return !this->operator== (rhs);
@@ -68,7 +70,7 @@ ACE_Registry::Binding::Binding (const ACE_TString &name,
 }
 
 
-int
+bool
 ACE_Registry::Binding::operator== (const Binding &rhs) const
 {
   return
@@ -76,7 +78,7 @@ ACE_Registry::Binding::operator== (const Binding &rhs) const
     rhs.type_ == this->type_;
 }
 
-int
+bool
 ACE_Registry::Binding::operator!= (const Binding &rhs) const
 {
   return !this->operator== (rhs);

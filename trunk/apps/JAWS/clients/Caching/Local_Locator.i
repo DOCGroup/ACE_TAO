@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE
@@ -25,13 +25,13 @@ ACE_URL_Record::~ACE_URL_Record (void)
   delete this->offer_;
 }
 
-ACE_INLINE int 
+ACE_INLINE bool
 ACE_URL_Record::operator== (const ACE_URL_Record &rhs) const
 {
   return this == &rhs || *this->id_ == *rhs.id_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_URL_Record::operator!= (const ACE_URL_Record &rhs) const
 {
   return !(*this == rhs);
@@ -41,4 +41,3 @@ ACE_INLINE
 ACE_URL_Local_Locator::~ACE_URL_Local_Locator (void)
 {
 }
-

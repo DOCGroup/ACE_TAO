@@ -80,10 +80,10 @@ public:
 
 public:
   /// Compare two service descriptors for equality.
-  int operator== (ACE_Static_Svc_Descriptor &) const;
+  bool operator== (ACE_Static_Svc_Descriptor &) const;
 
   /// Compare two service descriptors for inequality.
-  int operator!= (ACE_Static_Svc_Descriptor &) const;
+  bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
 // Maintain a set of the statically linked service descriptors.

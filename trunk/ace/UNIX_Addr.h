@@ -71,10 +71,10 @@ public:
   virtual int string_to_addr (const char addr[]);
 
   /// Compare two addresses for equality.
-  int operator == (const ACE_UNIX_Addr &SAP) const;
+  bool operator == (const ACE_UNIX_Addr &SAP) const;
 
   /// Compare two addresses for inequality.
-  int  operator != (const ACE_UNIX_Addr &SAP) const;
+  bool operator != (const ACE_UNIX_Addr &SAP) const;
 
   /// Return the path name of the underlying rendezvous point.
   const char *get_path_name (void) const;

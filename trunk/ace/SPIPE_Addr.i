@@ -1,11 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// SPIPE_Addr.i
 
 #include "ace/SString.h"
 
-// Transform the current address into string format.
 
 ACE_INLINE int
 ACE_SPIPE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
@@ -26,7 +25,7 @@ ACE_SPIPE_Addr::get_addr (void) const
 
 // Compare two addresses for equality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_SPIPE_Addr::operator == (const ACE_SPIPE_Addr &sap) const
 {
   return ACE_OS::strcmp (this->SPIPE_addr_.rendezvous_,
@@ -35,7 +34,7 @@ ACE_SPIPE_Addr::operator == (const ACE_SPIPE_Addr &sap) const
 
 // Compare two addresses for inequality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_SPIPE_Addr::operator != (const ACE_SPIPE_Addr &sap) const
 {
   return !((*this) == sap);	// This is lazy, of course... ;-)

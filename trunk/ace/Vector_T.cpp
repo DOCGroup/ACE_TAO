@@ -56,19 +56,20 @@ void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
 }
 
 // Compare this vector with <s> for equality.
-template <class T, size_t DEFAULT_SIZE> int
+template <class T, size_t DEFAULT_SIZE> bool
 ACE_Vector<T, DEFAULT_SIZE>::operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const
 {
   if (this == &s)
-    return 1;
+    return true;
   else if (this->size () != s.size ())
-    return 0;
+    return false;
 
-  for (size_t slot = 0; slot < s.size (); slot++)
+  const size_t len = s.size ();
+  for (size_t slot = 0; slot < len; ++slot)
     if ((*this)[slot] != s[slot])
-      return 0;
+      return false;
 
-  return 1;
+  return true;
 }
 
 #if 0

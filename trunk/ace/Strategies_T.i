@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 template<class SVC_HANDLER> ASYS_INLINE
@@ -382,14 +383,15 @@ ACE_Refcounted_Hash_Recyclable<T>::subject (void)
   return this->t_;
 }
 
-template <class T> ASYS_INLINE int
+template <class T> ASYS_INLINE bool
 ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
 {
-  return this->recycle_state () == rhs.recycle_state () &&
-         this->t_ == rhs.t_;
+  return
+    this->recycle_state () == rhs.recycle_state ()
+    && this->t_ == rhs.t_;
 }
 
-template <class T> ASYS_INLINE int
+template <class T> ASYS_INLINE bool
 ACE_Refcounted_Hash_Recyclable<T>::operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
 {
   return !this->operator== (rhs);

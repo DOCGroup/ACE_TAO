@@ -183,7 +183,7 @@ ACE_URL_Addr::hash (void) const
   return result;
 }
 
-int
+bool
 ACE_URL_Addr::operator== (const ACE_URL_Addr &addr) const
 {
   return ACE_OS::strcmp (addr.get_path_name (),
@@ -192,7 +192,7 @@ ACE_URL_Addr::operator== (const ACE_URL_Addr &addr) const
     && addr.get_ip_address () == this->get_ip_address ();
 }
 
-int
+bool
 ACE_URL_Addr::operator!= (const ACE_URL_Addr &addr) const
 {
   return !(*this == addr);

@@ -146,56 +146,56 @@ Condition & Condition::operator= ( value_t _value )
    wants to check for a desired condition.  When the function object
    returns non-zero, the condition is met and we leave.
  */
-int Condition::operator== ( Condition::Compare & _compare )
+bool Condition::operator== ( Condition::Compare & _compare )
 {
     guard_t    guard(mutex_);
 
     while( ! _compare(this->value()) )
         condition().wait();
 
-    return 0;
+    return false;
 }
 
 // As long as the variable equals _value, we wait...
-int Condition::operator== ( value_t _value )
+bool Condition::operator== ( value_t _value )
 {
     guard_t    guard(mutex_);
 
     while( value() == _value )
         condition().wait();
 
-    return 0;
+    return false;
 }
 
 // As long as the variable is not equal to _value, we wait...
-int Condition::operator!= ( value_t _value )
+bool Condition::operator!= ( value_t _value )
 {
     guard_t    guard(mutex_);
 
     while( value() != _value )
         condition().wait();
 
-    return 0;
+    return false;
 }
 
 // As long as the variable is less than or equal to _value, we wait...
-int Condition::operator<= ( value_t _value )
+bool Condition::operator<= ( value_t _value )
 {
     guard_t    guard(mutex_);
 
     while( value() <= _value )
         condition().wait();
 
-    return 0;
+    return false;
 }
 
 // As long as the variable is greater than or equal to _value, we wait...
-int Condition::operator>= ( value_t _value )
+bool Condition::operator>= ( value_t _value )
 {
     guard_t    guard(mutex_);
 
     while( value() >= _value )
         condition().wait();
 
-    return 0;
+    return false;
 }

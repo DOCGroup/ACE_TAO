@@ -132,35 +132,37 @@ public:
   /// Assignment operator that binds <this> and <r> to the same object.
   void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Equality operator that returns 1 if both ACE_Strong_Bound_Ptr
-  /// instances point to the same underlying object.
+  /// Equality operator that returns @c true if both
+  /// ACE_Strong_Bound_Ptr instances point to the same underlying
+  /// object.
   /**
-   * @note It also returns 1 if both objects have just been
+   * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  int operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
 
-  /// Equality operator that returns 1 if the ACE_Strong_Bound_Ptr and
-  /// ACE_Weak_Bound_Ptr objects point to the same underlying object.
+  /// Equality operator that returns true if the ACE_Strong_Bound_Ptr
+  /// and ACE_Weak_Bound_Ptr objects point to the same underlying
+  /// object.
   /**
-   *
-   * @note It also returns 1 if both objects have just been
+   * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  int operator == (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
 
-  /// Equality operator that returns 1 if the ACE_Strong_Bound_Ptr and
-  /// the raw pointer point to the same underlying object.
-  int operator == (X *p) const;
-
-  /// Inequality operator, which is the opposite of equality.
-  int operator != (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  /// Equality operator that returns @c true if the
+  /// ACE_Strong_Bound_Ptr and the raw pointer point to the same
+  /// underlying object.
+  bool operator == (X *p) const;
 
   /// Inequality operator, which is the opposite of equality.
-  int operator != (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  int operator != (X *p) const;
+  bool operator != (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+
+  /// Inequality operator, which is the opposite of equality.
+  bool operator != (X *p) const;
 
   /// Redirection operator
   X *operator-> (void) const;
@@ -239,35 +241,35 @@ public:
   /// Assignment operator that binds <this> and <r> to the same object.
   void operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Equality operator that returns 1 if both ACE_Weak_Bound_Ptr
-  /// objects point to the same underlying object.
+  /// Equality operator that returns @c true if both
+  /// ACE_Weak_Bound_Ptr objects point to the same underlying object.
   /**
-   * @note It also returns 1 if both objects have just been
+   * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  int operator == (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
 
-  /// Equality operator that returns 1 if the ACE_Weak_Bound_Ptr and
-  /// ACE_Strong_Bound_Ptr objects point to the same underlying
+  /// Equality operator that returns @c true if the ACE_Weak_Bound_Ptr
+  /// and ACE_Strong_Bound_Ptr objects point to the same underlying
   /// object.
   /**
-   * @note It also returns 1 if both objects have just been
+   * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  int operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
 
-  /// Equality operator that returns 1 if the ACE_Weak_Bound_Ptr and
-  /// the raw pointer point to the same underlying object.
-  int operator == (X *p) const;
-
-  /// Inequality operator, which is the opposite of equality.
-  int operator != (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  /// Equality operator that returns @c true if the ACE_Weak_Bound_Ptr
+  /// and the raw pointer point to the same underlying object.
+  bool operator == (X *p) const;
 
   /// Inequality operator, which is the opposite of equality.
-  int operator != (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  int operator != (X *p) const;
+  bool operator != (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+
+  /// Inequality operator, which is the opposite of equality.
+  bool operator != (X *p) const;
 
   /// Redirection operator.
   /**

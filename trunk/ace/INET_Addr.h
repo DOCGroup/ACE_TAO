@@ -291,19 +291,19 @@ public:
   ACE_UINT32 get_ip_address (void) const;
 
   /**
-   * Returns true if <this> is less than <rhs>.  In this context,
+   * Returns @c true if @c this is less than @a rhs.  In this context,
    * "less than" is defined in terms of IP address and TCP port
-   * number.  This operator makes it possible to use <ACE_INET_Addr>s
+   * number.  This operator makes it possible to use @c ACE_INET_Addrs
    * in STL maps.
    */
-  int operator < (const ACE_INET_Addr &rhs) const;
+  bool operator < (const ACE_INET_Addr &rhs) const;
 
   /// Compare two addresses for equality.  The addresses are considered
   /// equal if they contain the same IP address and port number.
-  int operator == (const ACE_INET_Addr &SAP) const;
+  bool operator == (const ACE_INET_Addr &SAP) const;
 
   /// Compare two addresses for inequality.
-  int operator != (const ACE_INET_Addr &SAP) const;
+  bool operator != (const ACE_INET_Addr &SAP) const;
 
   /// Computes and returns hash value.
   virtual u_long hash (void) const;

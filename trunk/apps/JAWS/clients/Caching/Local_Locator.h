@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -50,11 +50,12 @@ public:
   ~ACE_URL_Record (void);
   // dtor.
 
-  int operator== (const ACE_URL_Record &rhs) const;
-  // Two records are equal if they have the same offer id.
+  /// Two records are equal if they have the same offer id.
+  bool operator== (const ACE_URL_Record &rhs) const;
 
-  int operator!= (const ACE_URL_Record &rhs) const;
-  // Unequal, complement of equal.
+  /// Unequal, complement of equal.
+  bool operator!= (const ACE_URL_Record &rhs) const;
+
 
 private:
   ACE_URL_Record (void);

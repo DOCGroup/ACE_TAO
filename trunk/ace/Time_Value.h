@@ -255,28 +255,28 @@ public:
                                                   const ACE_Time_Value &tv2);
 
   /// True if @a tv1 < @a tv2.
-  friend ACE_Export int operator < (const ACE_Time_Value &tv1,
-                                       const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator < (const ACE_Time_Value &tv1,
+                                     const ACE_Time_Value &tv2);
 
   /// True if @a tv1 > @a tv2.
-  friend ACE_Export int operator > (const ACE_Time_Value &tv1,
-                                       const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator > (const ACE_Time_Value &tv1,
+                                     const ACE_Time_Value &tv2);
 
   /// True if @a tv1 <= @a tv2.
-  friend ACE_Export int operator <= (const ACE_Time_Value &tv1,
-                                        const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator <= (const ACE_Time_Value &tv1,
+                                      const ACE_Time_Value &tv2);
 
   /// True if @a tv1 >= @a tv2.
-  friend ACE_Export int operator >= (const ACE_Time_Value &tv1,
-                                        const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator >= (const ACE_Time_Value &tv1,
+                                      const ACE_Time_Value &tv2);
 
   /// True if @a tv1 == @a tv2.
-  friend ACE_Export int operator == (const ACE_Time_Value &tv1,
-                                        const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator == (const ACE_Time_Value &tv1,
+                                      const ACE_Time_Value &tv2);
 
   /// True if @a tv1 != @a tv2.
-  friend ACE_Export int operator != (const ACE_Time_Value &tv1,
-                                        const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator != (const ACE_Time_Value &tv1,
+                                      const ACE_Time_Value &tv2);
 
   //@{
   /// Multiplies the time value by @a d

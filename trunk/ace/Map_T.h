@@ -161,8 +161,8 @@ public:
   ACE_Iterator<T> &operator= (const ACE_Iterator<T> &rhs);
 
   /// Comparison operators.
-  int operator== (const ACE_Iterator<T> &rhs) const;
-  int operator!= (const ACE_Iterator<T> &rhs) const;
+  bool operator== (const ACE_Iterator<T> &rhs) const;
+  bool operator!= (const ACE_Iterator<T> &rhs) const;
 
   /// Dereference operator.
   T operator *() const;
@@ -216,9 +216,15 @@ public:
   /// Assignment operator.
   ACE_Reverse_Iterator<T> &operator= (const ACE_Reverse_Iterator<T> &rhs);
 
-  /// Comparison operators.
-  int operator== (const ACE_Reverse_Iterator<T> &rhs) const;
-  int operator!= (const ACE_Reverse_Iterator<T> &rhs) const;
+  /**
+   * @name Comparison Operators
+   *
+   * The usual equality operators.
+   */
+  //@{
+  bool operator== (const ACE_Reverse_Iterator<T> &rhs) const;
+  bool operator!= (const ACE_Reverse_Iterator<T> &rhs) const;
+  //@}
 
   /// Dereference operator.
   T operator *() const;

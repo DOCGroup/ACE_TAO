@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_string.h"
@@ -39,7 +39,7 @@ ACE_DEV_Addr::get_addr (void) const
 
 // Compare two addresses for equality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_DEV_Addr::operator == (const ACE_DEV_Addr &sap) const
 {
   ACE_TRACE ("ACE_DEV_Addr::operator ==");
@@ -49,7 +49,7 @@ ACE_DEV_Addr::operator == (const ACE_DEV_Addr &sap) const
 
 // Compare two addresses for inequality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_DEV_Addr::operator != (const ACE_DEV_Addr &sap) const
 {
   ACE_TRACE ("ACE_DEV_Addr::operator !=");

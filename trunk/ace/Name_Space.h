@@ -54,7 +54,7 @@ public:
   ~ACE_Name_Binding (void);
 
   /// Test for equality.
-  int operator == (const ACE_Name_Binding &s) const;
+  bool operator == (const ACE_Name_Binding &s) const;
 
   /// Name of the binding.
   ACE_NS_WString name_;

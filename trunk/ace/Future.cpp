@@ -308,13 +308,13 @@ ACE_Future<T>::~ACE_Future (void)
   FUTURE_REP::detach (future_rep_);
 }
 
-template <class T> int
+template <class T> bool
 ACE_Future<T>::operator== (const ACE_Future<T> &r) const
 {
   return r.future_rep_ == this->future_rep_;
 }
 
-template <class T> int
+template <class T> bool
 ACE_Future<T>::operator!= (const ACE_Future<T> &r) const
 {
   return r.future_rep_ != this->future_rep_;

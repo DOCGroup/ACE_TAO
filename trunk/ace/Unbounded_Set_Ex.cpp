@@ -16,7 +16,9 @@
 #include "ace/Unbounded_Set_Ex.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Unbounded_Set_Ex, "$Id$")
+ACE_RCSID (ace,
+           Unbounded_Set_Ex,
+           "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Ex)
 
@@ -460,14 +462,14 @@ ACE_Unbounded_Set_Ex_Iterator<T>::operator* (void)
   return *retv;
 }
 
-template <class T> int
+template <class T> bool
 ACE_Unbounded_Set_Ex_Iterator<T>::operator== (const ACE_Unbounded_Set_Ex_Iterator<T> &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T>::operator==");
   return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
 }
 
-template <class T> int
+template <class T> bool
 ACE_Unbounded_Set_Ex_Iterator<T>::operator!= (const ACE_Unbounded_Set_Ex_Iterator<T> &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T>::operator!=");

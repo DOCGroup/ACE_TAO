@@ -100,10 +100,10 @@ public:
   int operator= (int error);
 
   /// Compare <error> with <error_> for equality.
-  int operator== (int error);
+  bool operator== (int error);
 
   /// Compare <error> with <error_> for inequality.
-  int operator!= (int error);
+  bool operator!= (int error);
 
 private:
 #if defined (ACE_MT_SAFE)

@@ -224,39 +224,39 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_L
   this->ptr_ = new_ptr;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const
 {
   return this->ptr_ == r.ptr_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const
 {
   // Use the weak pointer's operator== since it will check for null.
   return r == *this;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator== (X *p) const
 {
   return this->ptr_ == p;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const
 {
   return this->ptr_ != r.ptr_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const
 {
   // Use the weak pointer's operator!= since it will check for null.
   return r != *this;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator!= (X *p) const
 {
   return this->ptr_ != p;
@@ -359,7 +359,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE_L
   this->ptr_ = rhs.ptr_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const
 {
   // A weak pointer must behave as though it is automatically set to null
@@ -370,7 +370,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Weak_Bound_Ptr<X, ACE_LOC
   return this->ptr_ == r.ptr_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const
 {
   // A weak pointer must behave as though it is automatically set to null
@@ -381,7 +381,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Strong_Bound_Ptr<X, ACE_L
   return this->ptr_ == r.ptr_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (X *p) const
 {
   // A weak pointer must behave as though it is automatically set to null
@@ -392,7 +392,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (X *p) const
   return this->ptr_ == p;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const
 {
   // A weak pointer must behave as though it is automatically set to null
@@ -403,7 +403,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Weak_Bound_Ptr<X, ACE_LOC
   return this->ptr_ != r.ptr_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const
 {
   // A weak pointer must behave as though it is automatically set to null
@@ -414,7 +414,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Strong_Bound_Ptr<X, ACE_L
   return this->ptr_ != r.ptr_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (X *p) const
 {
   // A weak pointer must behave as though it is automatically set to null

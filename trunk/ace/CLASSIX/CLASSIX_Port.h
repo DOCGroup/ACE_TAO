@@ -118,11 +118,11 @@ public:
     /* -----------------------------------------------------*/
     // = Comparison
     //
-    int operator == (const ACE_CLASSIX_Port &) const;
+    bool operator == (const ACE_CLASSIX_Port &) const;
     // Compare two addresses for equality.  The addresses are considered
     // equal if they have the same content in the KnUniqueId address structure.
 
-    int operator != (const ACE_CLASSIX_Port &) const;
+    bool operator != (const ACE_CLASSIX_Port &) const;
     // Compare two addresses for inequality.
 
     /* -----------------------------------------------------*/

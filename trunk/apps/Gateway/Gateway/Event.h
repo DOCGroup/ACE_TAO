@@ -91,7 +91,7 @@ public:
   {
   }
 
-  int operator== (const Event_Key &event_addr) const
+  bool operator== (const Event_Key &event_addr) const
   {
     return this->connection_id_ == event_addr.connection_id_
       && this->type_ == event_addr.type_;

@@ -380,7 +380,7 @@ ACE_Local_RLock::type (void) const
 ACE_INLINE ACE_Token_Proxy *
 ACE_Local_RLock::clone (void) const
 {
-  ACE_Token_Proxy *temp = 0; 
+  ACE_Token_Proxy *temp = 0;
   ACE_NEW_RETURN (temp,
                   ACE_Local_RLock (token_->name (),
                                    ignore_deadlock_,
@@ -446,7 +446,7 @@ ACE_Token_Name::operator= (const ACE_Token_Name &rhs)
     this->name (rhs.name ());
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Token_Name::operator== (const ACE_Token_Name &rhs) const
 {
   ACE_TRACE ("ACE_Token_Name::operator==");

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Guard_T.h"
@@ -360,14 +361,14 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void)
   return *this->map_man_;
 }
 
-template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE bool
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
   return (this->map_man_ == rhs.map_man_ &&
           this->next_ == rhs.next_);
 }
 
-template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE bool
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!= (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
   return !this->operator== (rhs);
@@ -467,14 +468,14 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void) const
   return *this->map_man_;
 }
 
-template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE bool
 ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
   return (this->map_man_ == rhs.map_man_ &&
           this->next_ == rhs.next_);
 }
 
-template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE bool
 ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!= (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
   return !this->operator== (rhs);

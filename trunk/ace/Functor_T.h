@@ -21,7 +21,7 @@
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  *  @author and on STL-style functor implementations originally done by
- *  @author Irfan Pyarali  <irfan@cs.wustl.edu> 
+ *  @author Irfan Pyarali  <irfan@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -89,7 +89,7 @@ class ACE_Hash
 {
 public:
   /// Simply calls t.hash ()
-  u_long operator () (const TYPE &t) const;
+  unsigned long operator () (const TYPE &t) const;
 };
 
 /**
@@ -102,7 +102,7 @@ class ACE_Pointer_Hash
 {
 public:
   /// Simply returns t.
-  u_long operator () (TYPE t) const;
+  unsigned long operator () (TYPE t) const;
 };
 
 /**
@@ -116,8 +116,8 @@ class ACE_Equal_To
 {
 public:
   /// Simply calls operator==
-  int operator () (const TYPE &lhs,
-                   const TYPE &rhs) const;
+  bool operator () (const TYPE &lhs,
+                    const TYPE &rhs) const;
 };
 
 /**
@@ -132,8 +132,8 @@ class ACE_Less_Than
 {
 public:
   /// Simply calls operator<
-  int operator () (const TYPE &lhs,
-                   const TYPE &rhs) const;
+  bool operator () (const TYPE &lhs,
+                    const TYPE &rhs) const;
 };
 
 #if defined (__ACE_INLINE__)

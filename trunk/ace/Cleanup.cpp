@@ -39,7 +39,7 @@ ACE_Cleanup_Info::ACE_Cleanup_Info (void)
 {
 }
 
-int
+bool
 ACE_Cleanup_Info::operator== (const ACE_Cleanup_Info &o) const
 {
   return o.object_ == this->object_
@@ -47,7 +47,7 @@ ACE_Cleanup_Info::operator== (const ACE_Cleanup_Info &o) const
     && o.param_ == this->param_;
 }
 
-int
+bool
 ACE_Cleanup_Info::operator!= (const ACE_Cleanup_Info &o) const
 {
   return !(*this == o);
@@ -185,5 +185,3 @@ ACE_OS_Exit_Info::call_hooks ()
         (*info.cleanup_hook_) (info.object_, info.param_);
     }
 }
-
-
