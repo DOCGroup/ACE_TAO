@@ -192,7 +192,8 @@ ACE_Name_Handler::abandon (void)
 {
   ACE_TRACE ("ACE_Name_Handler::abandon");
   int failure_reason = errno;
-  return this->send_reply (ACE_Name_Reply::FAILURE, failure_reason);
+  return
+    this->send_reply (-1, failure_reason);
 }
 
 // Enable clients to limit the amount of time they'll wait
@@ -347,8 +348,9 @@ ACE_Name_Handler::shared_bind (int rebind)
 	result = 0;
     }
   if (result == 0)
-    return this->send_reply (ACE_Name_Reply::SUCCESS);
-  else return this->send_reply (ACE_Name_Reply::FAILURE);
+    return this->send_reply (0);
+  else
+    return this->send_reply (-1);
 }
 
 int
@@ -367,7 +369,8 @@ ACE_Name_Handler::resolve (void)
   if (NAMING_CONTEXT::instance ()->resolve (a_name, avalue, atype) == 0)
     {
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
-			    0, 0,
+			    0,
+                            0,
 			    avalue.rep (),
 			    avalue.length () * sizeof (ACE_USHORT16),
 			    atype, ACE_OS::strlen (atype));
@@ -386,9 +389,11 @@ ACE_Name_Handler::unbind (void)
   ACE_DEBUG ((LM_DEBUG, "request for UNBIND \n"));
   ACE_WString a_name (this->name_request_.name (),
 		      this->name_request_.name_len () / sizeof (ACE_USHORT16));
+
   if (NAMING_CONTEXT::instance ()->unbind (a_name) == 0)
-    return this->send_reply (ACE_Name_Reply::SUCCESS);
-  else return this->send_reply (ACE_Name_Reply::FAILURE);
+    return this->send_reply (0);
+  else 
+    return this->send_reply (-1);
 }
 
 ACE_Name_Request
