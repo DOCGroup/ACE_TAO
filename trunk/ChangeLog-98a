@@ -1,3 +1,9 @@
+Wed Mar 18 09:22:13 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers.cpp,Hash_Map_Manager.cpp,Map_Manager.cpp
+          (operator *): initialize retv to 0 to avoid warning about
+          using it before setting its value.
+
 Tue Mar 17 23:53:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/task_five.cpp (main): Reformatted Detlef's new
