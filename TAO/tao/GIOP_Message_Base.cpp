@@ -262,8 +262,8 @@ TAO_GIOP_Message_Base::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) -"
-                        "TAO_GIOP_Message_Base::handle_input, parse_magic_bytes \n"));
+                        ASYS_TEXT ("TAO (%P|%t) -"),
+                        ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input, parse_magic_bytes \n")));
           return -1;
         }
       
@@ -273,8 +273,8 @@ TAO_GIOP_Message_Base::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t|%N%l) -\n"
-                          "TAO_GIOP_Message_Base::handle_input"));
+                        ASYS_TEXT ("TAO (%P|%t|%N%l) -\n"),
+                        ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
           return -1;
         }
       
@@ -307,16 +307,16 @@ TAO_GIOP_Message_Base::
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - %p\n",
-                    "TAO_GIOP_Message_Base::handle_input, read_buffer[1]"));
+                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
+                    ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input, read_buffer[1]")));
       return -1;
     }
   else if (n == 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - %p\n",
-                    "TAO_GIOP_Message_Base::handle_input, read_buffer[2]"));
+                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
+                    ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input, read_buffer[2]")));
       return -1;
     }
 
