@@ -85,6 +85,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -233,6 +234,9 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Messaging/Messaging.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -248,8 +252,9 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.i \
  $(TAO_ROOT)/tao/Messaging/MessagingC.i \
  $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
  $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \
@@ -341,7 +346,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLoadBalancingS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
- $(TAO_ROOT)/tao/PortableServer/PolicyS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -349,22 +353,15 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/PortableServer/PolicyS_T.h \
- $(TAO_ROOT)/tao/PortableServer/PolicyS_T.i \
- $(TAO_ROOT)/tao/PortableServer/PolicyS_T.cpp \
- $(TAO_ROOT)/tao/PortableServer/PolicyS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/Messaging/MessagingS_T.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS_T.i \
  $(TAO_ROOT)/tao/Messaging/MessagingS_T.cpp \
@@ -481,6 +478,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -629,6 +627,9 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Messaging/Messaging.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -644,8 +645,9 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.i \
  $(TAO_ROOT)/tao/Messaging/MessagingC.i \
  $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
  $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \

@@ -1,3 +1,5 @@
+#include "Signal_Handler.h"
+
 #include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 
 #include "tao/ORB_Core.h"
@@ -113,6 +115,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     default_strategy
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Activate/register the signal handler that (attempts) to
+      // ensure graceful shutdown of the LoadManager so that remote
+      // resources created by the LoadManager can be cleaned up.
+      TAO_LB_Signal_Handler signal_handler (orb.in (), root_poa.in ());
+
+      if (signal_handler.activate () != 0)
+        return -1;
 
       TAO_LB_LoadManager * lm;
       ACE_NEW_THROW_EX (lm,
