@@ -1,3 +1,28 @@
+Mon Jun 18 20:32:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Reply: A new test for testing whether the server ORB
+	  can send large replies to the client without hanging. This test
+	  depicts a situation that is one of the motivating factors for a
+	  need to fix bug 575.
+
+	* tests/Big_Reply/Big_Reply_i.cpp:
+	* tests/Big_Reply/Big_Reply_i.h:
+	* tests/Big_Reply/Client_Task.cpp:
+	* tests/Big_Reply/Client_Task.h:
+	* tests/Big_Reply/Makefile:
+	* tests.Big_Reply/Makefile.bor:
+	* tests/Big_Reply/README:
+	* tests/Big_Reply/Test.idl:
+	* tests/Big_Reply/client.bor:
+	* tests/Big_Reply/client.cpp:
+	* tests/Big_Reply/run_test.pl:
+	* tests/Big_reply/server.bor:
+	* tests/Big_Reply/server.cpp: Files for this test. This test will
+	  not work till we checkin the fix for bug 575. But we wanted to
+	  have this test in the daily builds.
+
+	* tests/Makefile: Added the above test to the Makefile.
+	
 Mon Jun 18 18:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tests/ior_corbaloc/run_test.pl:
