@@ -181,6 +181,10 @@ class ACE_Export ACE_POSIX_AIOCB_Asynch_Operation : public virtual ACE_POSIX_Asy
   //
   // = DESCRIPTION
   //
+public:
+  ACE_POSIX_AIOCB_Proactor *posix_proactor (void) const;
+  // Return the underlying Proactor implementation.
+
 protected:
   ACE_POSIX_AIOCB_Asynch_Operation (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
   // Contructor.
@@ -213,6 +217,10 @@ class ACE_Export ACE_POSIX_SIG_Asynch_Operation : public virtual ACE_POSIX_Async
   //
   // = DESCRIPTION
   //
+public:
+  ACE_POSIX_SIG_Proactor *posix_proactor (void) const;
+  // Return the  underlying Proactor implemetation.
+
 protected:
   ACE_POSIX_SIG_Asynch_Operation (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
   // Contructor.

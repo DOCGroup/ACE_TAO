@@ -10,8 +10,8 @@
 //    Proactor.h
 //
 // = AUTHOR
-//    Irfan Pyarali (irfan@cs.wustl.edu),
-//    Tim Harrison (harrison@cs.wustl.edu) and
+//    Irfan Pyarali <irfan@cs.wustl.edu>,
+//    Tim Harrison <harrison@cs.wustl.edu> and
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
@@ -87,7 +87,7 @@ public:
   virtual int register_handle (ACE_HANDLE handle,
 			       const void *completion_key);
   // This method adds the <handle> to the I/O completion port. This
-  // function is a no-op function for Unix systems.
+  // function is a no-op function for Unix systems and returns 0;
 
   // = Timer management.
   virtual long schedule_timer (ACE_Handler &handler,

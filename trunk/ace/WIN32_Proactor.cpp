@@ -710,7 +710,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 {
   // Grab the event associated with the Proactor
   HANDLE handle = this->get_handle ();
-
+  
   // If Proactor event is valid, signal it
   if (handle != ACE_INVALID_HANDLE &&
       handle != 0)
@@ -718,9 +718,9 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 
   // Post a completion
   if (::PostQueuedCompletionStatus (this->completion_port_, // completion port
-                                    0, // number of bytes tranferred
-                                    0, // completion key
-                                    result // overlapped
+                                    0,            // number of bytes tranferred
+                                    0,            // completion key
+                                    result      // overlapped
                                     ) == FALSE)
     {
       delete result;

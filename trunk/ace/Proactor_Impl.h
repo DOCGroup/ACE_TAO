@@ -105,17 +105,7 @@ public:
   // Block indefinitely until at least one event is dispatched.
   // Return 0 on success, non-zero (-1) on timeouts/errors and errno
   // is set accordingly.
-
-#if 0
-  virtual int post_completion (ACE_Asynch_Result *result) = 0;
-  // Post a result to the completion port of the Proactor.  If errors
-  // occur, the result will be deleted by this method.  If successful,
-  // the result will be deleted by the Proactor when the result is
-  // removed from the completion port.  Therefore, the result should
-  // have been dynamically allocated and should be orphaned by the
-  // user once this method is called.
-#endif /* 0 */
-
+  
   virtual int wake_up_dispatch_threads (void) = 0;
   // Add wakeup dispatch threads (reinit).
 
