@@ -367,6 +367,19 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #  endif  /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif  /* !TAO_HAS_UIOP */
 
+// NSKPW and NSKFS are Pluggable Protocols used on the Tandem
+// platform.  These are disabled by default.
+
+#if defined (TAO_HAS_NSKPW)
+#define TAO_DEF_NSKPW_MAJOR 1
+#define TAO_DEF_NSKPW_MINOR 2
+#endif
+
+#if defined (TAO_HAS_NSKFS)
+#define TAO_DEF_NSKFS_MAJOR 1
+#define TAO_DEF_NSKFS_MINOR 2
+#endif
+
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 # if !defined (TAO_HAS_SHMIOP)
 #   define TAO_HAS_SHMIOP 1

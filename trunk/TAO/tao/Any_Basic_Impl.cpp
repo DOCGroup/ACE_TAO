@@ -54,9 +54,11 @@ namespace TAO
       case CORBA::tk_longlong:
         this->u_.ll = *static_cast<CORBA::LongLong *> (value);
         break;
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
         this->u_.ull = *static_cast<CORBA::ULongLong *> (value);
         break;
+#endif
       case CORBA::tk_longdouble:
         this->u_.ld = *static_cast<CORBA::LongDouble *> (value);
         break;
@@ -193,8 +195,10 @@ namespace TAO
         return cdr << CORBA::Any::from_octet (this->u_.o);
       case CORBA::tk_longlong:
         return cdr << this->u_.ll;
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
         return cdr << this->u_.ull;
+#endif
       case CORBA::tk_longdouble:
         return cdr << this->u_.ld;
       case CORBA::tk_wchar:
@@ -238,8 +242,10 @@ namespace TAO
         return cdr >> CORBA::Any::to_octet (this->u_.o);
       case CORBA::tk_longlong:
         return cdr >> this->u_.ll;
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
         return cdr >> this->u_.ull;
+#endif
       case CORBA::tk_longdouble:
         return cdr >> this->u_.ld;
       case CORBA::tk_wchar:
@@ -346,9 +352,11 @@ namespace TAO
       case CORBA::tk_longlong:
         *static_cast<CORBA::LongLong *> (dest) = src->u_.ll;
         break;
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
         *static_cast<CORBA::ULongLong *> (dest) = src->u_.ull;
         break;
+#endif
       case CORBA::tk_longdouble:
         *static_cast<CORBA::LongDouble *> (dest) = src->u_.ld;
         break;
