@@ -1,3 +1,20 @@
+Tue Jul  1 22:49:58 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Strategies_T.h: Changed the return value of all the hash()
+ 	  methods to be u_long.
+
+	* tests/Map_Manager_Test.cpp (hash): Changed the return value of
+ 	  all the hash() methods to be u_long.
+
+	* ace/SString.cpp: Changed the return value of all the hash()
+	  methods to be u_long.
+
+	* ace/Hash_Map_Manager: Changed the return value of hash()
+	  to return a u_long in order to (1) be consistent with
+	  the return value of hash_pjw() and (2) give the maximal
+	  range for the hash function.  Thanks to Marina Spivak
+	  <marina@cs.wustl.edu> for reporting this.
+
 Tue Jul 01 14:47:22 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/High_Res_Timer.{h,i} (gettime): use gettime () static function

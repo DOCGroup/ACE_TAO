@@ -68,7 +68,7 @@ public:
   size_t length (void) const;
   // Return the length of the string.
 
-  size_t hash (void) const;
+  u_long hash (void) const;
   // Returns a hash value for this string.
 
   char *rep (void) const;
@@ -161,7 +161,7 @@ public:
   size_t length (void) const;
   // Return the length of the string.
 
-  size_t hash (void) const;
+  u_long hash (void) const;
   // Returns a hash value for this string.
 
   void rep (char *s);
@@ -265,7 +265,7 @@ public:
   void operator += (const ACE_WString &);
   // Concat operator (does copy memory).
 
-  size_t hash (void) const;
+  u_long hash (void) const;
   // Returns a hash value for this string.
 
   size_t length (void) const;
