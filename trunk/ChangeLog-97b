@@ -1,3 +1,9 @@
+Mon Sep 22 16:51:44 1997    <irfan@TWOSTEP>
+
+	* ace/OS.i (open): Changed code so that (_O_CREAT | _O_TRUNC)
+ 	  means CREATE_ALWAYS. Thanks to Dave Brackman
+ 	  (dbrackma@OhioEE.com) for pointing this out.
+
 Mon Sep 22 11:01:28 1997  Steve Huston  <shuston@riverace.com>
 
 	* tests/SOCK_Connector_Test.cpp, Makefile, run_tests.sh - added new
