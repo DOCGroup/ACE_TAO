@@ -1,3 +1,13 @@
+Sun Jan 20 00:00:30 2002 UTC  Don Hinton  <dhinton@ieee.org>
+
+	* ace/Vector_T.cpp (dump): Commented out the contents of this
+	  function for the time being.  It assumed that the element
+	  was an object with a dump() method, which won't always be
+	  the case.
+
+	* tests/Vector_Test.cpp: Changed a few data types from signed
+	  to unsigned, size_t, to get rid of compiler warnings. 
+
 Sat Jan 19 17:29:50 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 	* ace/Vector_T.cpp (dump): Fixed problems with this method.  Thanks

@@ -26,15 +26,15 @@ typedef size_t DATA;
 typedef ACE_Vector<DATA> VECTOR;
 typedef ACE_Vector<DATA>::Iterator ITERATOR;
 
-const int TOP = 100;
-const int LEFT = 10;
+const size_t TOP = 100;
+const size_t LEFT = 10;
 
 int main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Vector_Test"));
 
   VECTOR vector;
-  int i;
+  size_t i;
 
   for (i = 0; i < TOP; ++i)
     vector.push_back (i);
@@ -44,7 +44,7 @@ int main (int, ACE_TCHAR *[])
 	      ACE_TEXT ("Size: %d\n"),
 	      vector.size ()));
 
-  for (i = (TOP - 1); i >= 0; --i)
+  for (i = 0; i < TOP; ++i)
     ACE_ASSERT (vector[i] == i);
 
   for (i = 0; i < (TOP - LEFT); ++i)
