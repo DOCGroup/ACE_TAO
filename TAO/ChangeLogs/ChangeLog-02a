@@ -1,7 +1,28 @@
+Sun Jul 15 9:33:34 2001  Balachandran Natarajan <bala@cs.wustl.edu>
+
+	* tao/Sequence.cpp:
+	* tao/Sequence.i: A fix at the places where
+	  ACE_Message_Block::duplicate () is called.  The duplicate ()
+	  call just allocated memory for a new Message block and then
+	  duplicated the exisiting data block -- which just increments the
+	  reference count of the data block. This could be bad for cases
+	  where the incoming message is on a data block on stack. By
+	  incrementing the reference count we get nothing for such
+	  cases. The fix that has been put in does the following
+
+	  - checks whether the data block is on stack, if so does a deep
+	    copy before calling duplicate on the message block.
+	  - if the data block is already on the heap just calls duplicate
+	    () on the message block.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: Added a comment where
+	  duplicate () is used. But the code that uses duplicate () has
+	  been commented out .
+
 Sat Jul 14 20:18:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
-	  dependencies. 
+	  dependencies.
 
 Sat Jul 14 18:59:48 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 

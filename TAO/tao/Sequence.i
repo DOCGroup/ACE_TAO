@@ -354,7 +354,29 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
                                                const ACE_Message_Block* mb)
 {
   this->_deallocate_buffer ();
-  this->mb_ = ACE_Message_Block::duplicate (mb);
+
+  // Get the message block flags.
+  ACE_Message_Block::Message_Flags flg = mb->flags ();
+
+  // If the DONT_DELETE flag is disabled just a duplicate would
+  // help. If the DONT_DELETE flag is enabled a deep copy is needed as
+  // the contents would be on stack. Just incrementing the ref count
+  // on the stack based data block would only crash the program when
+  // the stack unwinds
+  if (ACE_BIT_DISABLED (flg,
+                        ACE_Message_Block::DONT_DELETE))
+    {
+      this->mb_ = ACE_Message_Block::duplicate (mb);
+    }
+  else
+    {
+      // As we are in CORBA mode, all the data blocks would be aligned
+      // on an 8 byte boundary
+      ACE_Message_Block msgb (*mb,
+                              ACE_CDR::MAX_ALIGNMENT);
+
+      this->mb_ = ACE_Message_Block::duplicate (&msgb);
+    }
   this->buffer_ = this->mb_->rd_ptr ();
   this->maximum_ = length;
   this->length_ = length;
