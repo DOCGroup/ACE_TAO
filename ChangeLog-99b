@@ -1,5 +1,9 @@
 Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+        * ace/config-mvs.h: Changed the size of the ACE_SIZEOF_DOUBLE and
+ 	  ACE_SIZEOF_LONG_DOUBLE from 4 and to 8 and 16, respectively.
+  	  Thanks to Jim Rogers for reporting this.
+
         * ace/config-mvs.h: Added ACE_HAS_NONCONST_SELECT_TIMEVAL on the
           advice of Jim Rogers <jrogers@viasoft.com>.
 

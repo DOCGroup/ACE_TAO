@@ -23,6 +23,7 @@
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 // See the README file in this directory
 // for a description of the following ACE_ macros
@@ -103,8 +104,8 @@
 #endif /* ACE_NTRACE */
 
 #define ACE_SIZEOF_FLOAT 4
-#define ACE_SIZEOF_DOUBLE 4
-#define ACE_SIZEOF_LONG_DOUBLE 4
+#define ACE_SIZEOF_DOUBLE 8
+#define ACE_SIZEOF_LONG_DOUBLE 16
 #define ACE_HAS_DIRENT
 #define ACE_LACKS_READDIR_R
 
