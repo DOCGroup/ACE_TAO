@@ -1,3 +1,8 @@
+Thu Jul 22 10:42:06 1999  Clarence M. Weaver  <clarence_m_weaver@md.northgrum.com>
+
+        * ACE-INSTALL.html: added steps for running the ACE tests
+          on VxWorks platforms that lack NFS.
+
 Thu Jul 22 10:25:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Log_Record.cpp,SString.cpp: wrapped #include of
