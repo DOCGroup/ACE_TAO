@@ -520,8 +520,6 @@ private:
 };
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 
-// This must go here to avoid problems with circular includes.
-#include "ace/Strategies.h"
 
 #if defined (__ACE_INLINE__)
 #include "ace/Message_Queue.i"
