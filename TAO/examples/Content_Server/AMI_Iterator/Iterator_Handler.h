@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//     Content_Server
+//     AMI_Iterator
 //
 // = FILENAME
 //     Iterator_Handler.h
@@ -21,8 +21,6 @@
 #ifndef ITERATOR_HANDLER_H
 #define ITERATOR_HANDLER_H
 
-#include "ace/pre.h"
-
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_IO.h"
 #include "Web_ServerS.h"
@@ -31,14 +29,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Dummy class to quiet down a warning.
-class Iterator_Handler_Friend;
 
 class Iterator_Handler
   : public virtual POA_Web_Server::AMI_Content_IteratorHandler,
     public virtual PortableServer::RefCountServantBase
 {
-  friend Iterator_Handler_Friend;
+  // = TITLE
+  //    The AMI reply handler for replies from the Content_Iterator.
+  //
+  // = DESCRIPTION
+  //    This class handles all asynchronously received replies from
+  //    the Content_Iterator on the server side.  Once a reply is
+  //    handled, another asynchronous request is made to the
+  //    Content_Iterator.  This ensures that chunks of data are
+  //    received in the proper order, and also takes advantage of
+  //    asyncronous method invocations.
+
+  friend class Iterator_Handler_Friend;
+  // Dummy friend class declaration to quiet down a warning.
+
 public:
 
   Iterator_Handler (void);
@@ -73,6 +82,7 @@ public:
   // pointer itself) of the <request_count> parameter will be
   // incremented when file retrieval begins, and decremented when file
   // retrieval completes.
+
 private:
   ~Iterator_Handler (void);
   // Destructor (private to ensure that Iterator_Handler is allocated
@@ -125,7 +135,5 @@ private:
   // the pointer itself) of the<pending_data> parameter will be
   // decremented when file retrieval has completed.
 };
-
-#include "ace/post.h"
 
 #endif  /* ITERATOR_HAHNDLER_H */

@@ -6,7 +6,7 @@
 #include "ace/FILE_Connector.h"
 #include "Content_Iterator_i.h"
 
-ACE_RCSID(AMI_Iterator, Content_Iterator_i, "$Id$")
+ACE_RCSID (AMI_Iterator, Content_Iterator_i, "$Id$")
 
 Content_Iterator_i::Content_Iterator_i (const char *pathname,
                                         CORBA::ULong file_size)

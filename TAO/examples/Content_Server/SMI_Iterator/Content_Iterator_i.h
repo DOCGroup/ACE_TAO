@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//     ECE255
+//     SMI_ITERATOR
 //
 // = FILENAME
 //     Content_Iterator_i.h
@@ -29,30 +29,39 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Implement the Web_Server::Content_Iterator interface.
 class Content_Iterator_i :
   public virtual POA_Web_Server::Content_Iterator,
   public virtual PortableServer::RefCountServantBase
 {
+  // = TITLE
+  //    Implement the Web_Server::Content_Iterator interface.
+  //
+  // = DESCRIPTION
+  //    This class implements the Iterator pattern to minimize memory
+  //    requirements when retrieving data from a content server.
+  //    Rather than retrieving one large chunk of data, this class
+  //    iterates on the server so that smaller chunks of data are
+  //    retrieved.
+
   friend class Iterator_Factory_i;
 public:
 
-  // Constructor
   Content_Iterator_i (const char *filename, CORBA::ULong file_size);
+  // Constructor
 
-  // Destructor
   ~Content_Iterator_i (void);
+  // Destructor
 
-  // This operation returns the next <chunk> of the file starting at
-  // <offset>.  If there are no more bindings, false is returned.
   virtual CORBA::Boolean next_chunk (CORBA::ULong offset,
                                      Web_Server::Chunk_Type_out chunk,
                                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
+  // This operation returns the next <chunk> of the file starting at
+  // <offset>.  If there are no more bindings, false is returned.
 
-  // Destroy the iterator.
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
+  // Destroy the iterator.
 
 private:
 
@@ -74,8 +83,5 @@ private:
   // The number of the current chunk of data being sent.  (Used only
   // for debugging purposes.)
 };
-
-
-
 
 #endif  /* CONTENT_ITERATOR_I_H */

@@ -1,7 +1,6 @@
+#
 # $Id$
 #
-# Makefile for ECE 255 Web Server -- Assignment 4
-# Ossama Othman <ossama@uci.edu>
 
 
 #----------------------------------------------------------------------------
@@ -23,7 +22,7 @@ SERVER_FILES = \
 	server
 
 CLIENT_FILES = \
-	Callback \
+	Callback_i \
 	Push_Iterator_Handler \
 	client
 
@@ -1052,7 +1051,7 @@ realclean: clean
  $(ACE_ROOT)/ace/FILE.i \
  $(ACE_ROOT)/ace/FILE_IO.i
 
-.obj/Callback.o .obj/Callback.so .shobj/Callback.o .shobj/Callback.so: Callback.cpp \
+.obj/Callback_i.o .obj/Callback_i.so .shobj/Callback_i.o .shobj/Callback_i.so: Callback_i.cpp \
  $(ACE_ROOT)/ace/FILE_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FILE_IO.h \
@@ -1152,8 +1151,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
- $(ACE_ROOT)/ace/Process_Manager.i Callback.h \
- Push_Web_ServerS.h \
+ $(ACE_ROOT)/ace/Process_Manager.i \
+ Callback_i.h Push_Web_ServerS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -1694,7 +1693,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  Push_Web_ServerC.i Push_Web_ServerS_T.h Push_Web_ServerS_T.i \
- Push_Web_ServerS_T.cpp Push_Web_ServerS.i Callback.h \
+ Push_Web_ServerS_T.cpp Push_Web_ServerS.i Callback_i.h \
  $(ACE_ROOT)/ace/FILE_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \

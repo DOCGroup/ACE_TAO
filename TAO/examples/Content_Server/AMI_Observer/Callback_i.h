@@ -4,10 +4,10 @@
 // ============================================================================
 //
 // = LIBRARY
-//     Content_Server
+//     AMI_Observer
 //
 // = FILENAME
-//     Callback.h
+//     Callback_i.h
 //
 // = DESCRIPTION
 //     Header file for the Web_Server::Callback implementation.
@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
-#ifndef CALLBACK_H
-#define CALLBACK_H
+#ifndef CALLBACK_I_H
+#define CALLBACK_I_H
 
 #include "ace/pre.h"
 
@@ -35,6 +35,27 @@ class Callback_i :
   public virtual POA_Web_Server::Callback,
   public virtual PortableServer::RefCountServantBase
 {
+  // = TITLE
+  //    Implement the Web_Server::Callback interface.
+  //
+  // = DESCRIPTION
+  //    A <Callback> object implements the Observer pattern.  It
+  //    simply "watches" while the Content Server pushes chunks of
+  //    data to itself.  Once the Content Server pushes the last chunk
+  //    of data, the <Callback> object spawns an external viewer to
+  //    display the pushed data based on the data content type
+  //    returned by the Iterator_Factory::register_callback() method.
+  //
+  //    Since the server pushes data to the <Callback> object
+  //    asynchronously, and since instances of this <Callback> class
+  //    are registered with the Content Server asynchronously, there
+  //    is no guarantee that the metadata containing the content type
+  //    will arrive before the content of the file.  As such, this
+  //    class atomically sets and checks the flags that provide the
+  //    current condition of the metadata and content, in case two
+  //    concurrently running threads attempt to update the state
+  //    contained within a given <Callback> object.
+
 public:
   Callback_i (int *request_count);
   // Constructor
@@ -105,4 +126,4 @@ private:
 
 #include "ace/post.h"
 
-#endif  /* CONTENT_ITERATOR_I_H */
+#endif  /* CALLBACK_I_H */

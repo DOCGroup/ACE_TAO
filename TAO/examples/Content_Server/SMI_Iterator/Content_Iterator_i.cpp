@@ -27,11 +27,17 @@ Content_Iterator_i::~Content_Iterator_i (void)
 CORBA::Boolean
 Content_Iterator_i::next_chunk (CORBA::ULong offset,
                                 Web_Server::Chunk_Type_out chunk,
-                                CORBA::Environment &)
+                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initialize/allocate the Chunk_Type sequence
-  chunk = new Web_Server::Chunk_Type;
+  Web_Server::Chunk_Type *tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+                    Web_Server::Chunk_Type,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  chunk = tmp;
 
   if (offset >= this->file_size_)
     return 0;  // Applications shouldn't throw system exceptions.
