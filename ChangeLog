@@ -1,31 +1,46 @@
+Mon Sep 13 15:52:04 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.cpp:
+        * ace/TSS_T.cpp:
+          Bugzilla Bug 1542 TSS Leak revisited.
+          The goal is for each thread's TSS object to be
+          deleted at thread exit time, and for the TSS
+          key itself to be released when:
+            the last thread stops using it, or
+            the ACE_TSS<X> (if any) is deleted
+          which ever comes *last*.
+
+
+
 Mon Sep 13 14:56:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/RB_Tree.h (class ACE_RB_Tree): 
-	* ace/RB_Tree.cpp:
+        * ace/RB_Tree.h (class ACE_RB_Tree):
+        * ace/RB_Tree.cpp:
 
-	  Added a special constructor useful for providing a valid vtable
-	  and allocator if the tree is reconstructed from shared
-	  memory. Thanks to Lothar Werzinger for the patches.
+          Added a special constructor useful for providing a valid vtable
+          and allocator if the tree is reconstructed from shared
+          memory. Thanks to Lothar Werzinger for the patches.
 
 Mon Sep 13 12:49:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-aix-4.x.h: Alter the value of ACE_SIZEOF_WCHAR based
-	  on whether or not __64BIT__ is set (4 if yes, 2 if no). See
-	  /usr/include/sys/types.h for verification.
+        * ace/config-aix-4.x.h: Alter the value of ACE_SIZEOF_WCHAR based
+          on whether or not __64BIT__ is set (4 if yes, 2 if no). See
+          /usr/include/sys/types.h for verification.
 
-	* apps/Gateway/Gateway/Connection_Handler.cpp: Add missing #include
-	  "ace/OS_NS_string.h".
+        * apps/Gateway/Gateway/Connection_Handler.cpp: Add missing #include
+          "ace/OS_NS_string.h".
 
 Mon Sep 13 12:39:11 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/DLL_Manager.cpp: Added explicit template instantiations for
-	  Wed Sep  8 17:13:41 2004  Steve Huston  <shuston@riverace.com>
+        * ace/DLL_Manager.cpp: Added explicit template instantiations for
+          Wed Sep  8 17:13:41 2004  Steve Huston  <shuston@riverace.com>
 
 Mon Sep 13 06:50:46 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/dslogadmin_serv.mpb:
+        * bin/MakeProjectCreator/config/dslogadmin_serv.mpb:
 
-	  Changed to inherit from svc_utils.
+          Changed to inherit from svc_utils.
 
 Mon Sep 13 12:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -65,34 +80,34 @@ Mon Sep 13 09:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Sep 12 17:20:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/rteventlogadmin.mpb
+        * bin/MakeProjectCreator/config/rteventlogadmin.mpb
 
           Update *.mpb files to reflect new libraries.
 
-	* bin/MakeProjectCreator/config/dseventlogadmin.mpb
-	* bin/MakeProjectCreator/config/dseventlogadmin_serv.mpb
-	* bin/MakeProjectCreator/config/dseventlogadmin_skel.mpb
-	* bin/MakeProjectCreator/config/dslogadmin.mpb
-	* bin/MakeProjectCreator/config/dslogadmin_serv.mpb
-	* bin/MakeProjectCreator/config/dslogadmin_skel.mpb
-	* bin/MakeProjectCreator/config/dsnotifylogadmin.mpb
-	* bin/MakeProjectCreator/config/dsnotifylogadmin_serv.mpb
-	* bin/MakeProjectCreator/config/dsnotifylogadmin_skel.mpb
+        * bin/MakeProjectCreator/config/dseventlogadmin.mpb
+        * bin/MakeProjectCreator/config/dseventlogadmin_serv.mpb
+        * bin/MakeProjectCreator/config/dseventlogadmin_skel.mpb
+        * bin/MakeProjectCreator/config/dslogadmin.mpb
+        * bin/MakeProjectCreator/config/dslogadmin_serv.mpb
+        * bin/MakeProjectCreator/config/dslogadmin_skel.mpb
+        * bin/MakeProjectCreator/config/dsnotifylogadmin.mpb
+        * bin/MakeProjectCreator/config/dsnotifylogadmin_serv.mpb
+        * bin/MakeProjectCreator/config/dsnotifylogadmin_skel.mpb
 
           Split Logging, Event Logging, and Notify Logging Services into
-	  client stub, servant skeleton, and service implementation
-	  libraries.
+          client stub, servant skeleton, and service implementation
+          libraries.
 
-	* bin/MakeProjectCreator/config/ec_use_typed_events_serv.mpb:
-	* bin/MakeProjectCreator/config/event_serv.mpb
-	* bin/MakeProjectCreator/config/event_skel.mpb
+        * bin/MakeProjectCreator/config/ec_use_typed_events_serv.mpb:
+        * bin/MakeProjectCreator/config/event_serv.mpb
+        * bin/MakeProjectCreator/config/event_skel.mpb
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* bin/MakeProjectCreator/config/ec_use_typed_events_skel.mpb:
+        * bin/MakeProjectCreator/config/ec_use_typed_events_skel.mpb:
 
-	  Removed file, events skeleton w/typed events does not require
-	  any additional dependencies.  They have been moved to _serv.
+          Removed file, events skeleton w/typed events does not require
+          any additional dependencies.  They have been moved to _serv.
 
 Sun Sep 12 17:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -113,9 +128,9 @@ Sat Sep 11 11:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Fri Sep 10 22:54:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/MakeProjectCreator/config/ciao_server.mpb:
-	* bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
 
-	  Added utils to the list of projects that are inherited.
+          Added utils to the list of projects that are inherited.
 
 Sat Sep 11 00:49:39 2004  Olli Savia  <ops@iki.fi>
 
