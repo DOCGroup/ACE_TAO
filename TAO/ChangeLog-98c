@@ -1,3 +1,9 @@
+Fri Nov 20 19:07:44 1998  Marina Spivak  <marina@cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/Simple_Naming/client.{h,cpp}: added two new
+	tests, MT_Test and Loop_Test for multiclient (concurrent) access
+	to the Naming Service.
+
 Fri Nov 20 17:46:40 1998 Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Typecode.h:
