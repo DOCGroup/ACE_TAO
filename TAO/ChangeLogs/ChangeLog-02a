@@ -1,24 +1,24 @@
 Wed Mar 28 08:18:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-        * orbsvcs/orbsvcs/AV:UDP.h
-        * orbsvcs/orbsvcs/AVStreams_i.h
-        * orbsvcs/orbsvcs/Transport.h
-        * orbsvcs/orbsvcs/TCP.h
-        * orbsvcs/orbsvcs/RTP.h
-        * orbsvcs/orbsvcs/RTCP.h
-        * orbsvcs/orbsvcs/Protocol_Factory.h
-        * orbsvcs/orbsvcs/Policy.h
-        * orbsvcs/orbsvcs/MCast.h
-        * orbsvcs/orbsvcs/Flows_T.h
-        * orbsvcs/orbsvcs/Endpoint_Strategy_T.h
-        * orbsvcs/orbsvcs/Endpoint_Strategy.h
-        * orbsvcs/orbsvcs/AV_Core.h
-        * orbsvcs/orbsvcs/FlowSpec_Entry.h
-	  Converted commenting style to doxygen, added some comments.
+        * orbsvcs/orbsvcs/AV/UDP.h
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h
+        * orbsvcs/orbsvcs/AV/Transport.h
+        * orbsvcs/orbsvcs/AV/TCP.h
+        * orbsvcs/orbsvcs/AV/RTP.h
+        * orbsvcs/orbsvcs/AV/RTCP.h
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.h
+        * orbsvcs/orbsvcs/AV/Policy.h
+        * orbsvcs/orbsvcs/AV/MCast.h
+        * orbsvcs/orbsvcs/AV/Flows_T.h
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.h
+        * orbsvcs/orbsvcs/AV/AV_Core.h
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h
+          Converted commenting style to doxygen, added some comments.
 
 Wed Mar 28 06:15:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/AMI/client.cpp: Fixed a compile error in Windoows build.
+        * tests/AMI/client.cpp: Fixed a compile error in Windoows build.
 
 Tue Mar 27 22:00:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
