@@ -33,6 +33,9 @@ public:
   /// Constuctor
   TAO_Notify_Refcountable_Guard_T (T* t = 0);
 
+  /// Copy constructor
+  TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T> & rhs);
+
   /// Destructor
   ~TAO_Notify_Refcountable_Guard_T ();
 
@@ -44,6 +47,13 @@ public:
 
   T &operator *() const;
 
+  TAO_Notify_Refcountable_Guard_T<T> & operator = (
+    const TAO_Notify_Refcountable_Guard_T<T> & rhs);
+
+private:
+  /// helper for exception safeness
+  /// @throws nothing
+  void swap (TAO_Notify_Refcountable_Guard_T & rhs);
 private:
   T* t_;
 };
