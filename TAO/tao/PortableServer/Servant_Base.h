@@ -106,7 +106,7 @@ protected:
 
   // = Should be protected/private, but a nested class needs it.
 public:
-  ACE_SYNCH_MUTEX &_single_threaded_poa_lock (void);
+  TAO_SYNCH_MUTEX &_single_threaded_poa_lock (void);
   // Access to the single threaded poa lock.
 
 protected:
@@ -120,7 +120,7 @@ protected:
   // The operation table for this servant, it is initialized by the
   // most derived class.
 
-  ACE_SYNCH_MUTEX *single_threaded_poa_lock_;
+  TAO_SYNCH_MUTEX *single_threaded_poa_lock_;
   // Lock for single threaded POAs.
 
   u_long single_threaded_poa_lock_count_;
@@ -186,7 +186,7 @@ protected:
 
 private:
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> ref_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> ref_count_;
   // Reference counter.
 };
 

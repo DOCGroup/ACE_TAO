@@ -30,7 +30,7 @@
 #include "ace/OS.h"
 
 // Forward declarations
-class ACE_Recursive_Thread_Mutex;
+class TAO_SYNCH_RECURSIVE_MUTEX;
 
 // Adapter for cleanup, used to register cleanup function with the
 // ACE_Object_Manager.
@@ -180,7 +180,7 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Lock that is used to guard internal structures.
-  ACE_Recursive_Thread_Mutex *internal_lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
 #endif /* ACE_MT_SAFE */
 };
 

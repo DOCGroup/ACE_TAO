@@ -24,7 +24,7 @@ ACE_RCSID(tao, NVList, "$Id$")
 CORBA::ULong
 CORBA_NamedValue::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
   return this->refcount_++;
 }
 
@@ -32,7 +32,7 @@ CORBA::ULong
 CORBA_NamedValue::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
@@ -57,7 +57,7 @@ CORBA_NamedValue::~CORBA_NamedValue (void)
 CORBA::ULong
 CORBA_NVList::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
   return this->refcount_++;
 }
 
@@ -65,7 +65,7 @@ CORBA::ULong
 CORBA_NVList::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
@@ -283,7 +283,7 @@ CORBA_NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
                          ACE_TRY_ENV);
       return;
     }
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
   if (this->incoming_ != 0)
     {
       delete this->incoming_;
@@ -300,7 +300,7 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
                            int flag,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
   if (this->incoming_ != 0)
     {
       if (this->max_ == 0)
@@ -413,7 +413,7 @@ CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
 ptr_arith_t
 CORBA_NVList::_tao_target_alignment (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_,
                     ACE_CDR::MAX_ALIGNMENT);
   if (this->incoming_ == 0)
     return ACE_CDR::MAX_ALIGNMENT;
@@ -425,7 +425,7 @@ CORBA_NVList::_tao_target_alignment (void)
 void
 CORBA_NVList::evaluate (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
   if (this->incoming_ == 0)
     return;
 

@@ -203,7 +203,7 @@ Server::activate_high_servant (void)
                 this->high_priority_,
                 -1));
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             ready_mon,
                             GLOBALS::instance ()->ready_mtx_,
                             -1));

@@ -117,7 +117,7 @@ public:
           ACE_Time_Value sleep_for_this_thread;
 
           {
-            ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
             this->work_so_far_ += remote_work / number_of_client_threads;
             work_from_this_thread = this->work_so_far_;
@@ -167,7 +167,7 @@ private:
   u_long work_so_far_;
   // Work counter.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Lock for work counter.
 
   u_long sleep_;
@@ -192,7 +192,7 @@ public:
           u_long event_loop_timeout_for_this_thread = 0;
 
           {
-            ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
             this->event_loop_timeout_so_far_ += event_loop_timeout / number_of_event_loop_threads;
             event_loop_timeout_for_this_thread = this->event_loop_timeout_so_far_;
@@ -232,7 +232,7 @@ private:
   u_long event_loop_timeout_so_far_;
   // Event loop timeout counter.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Lock for event loop timeout counter.
 };
 

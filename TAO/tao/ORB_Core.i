@@ -4,7 +4,7 @@
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
   return this->refcount_++;
 }
 
@@ -12,7 +12,7 @@ ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
@@ -484,7 +484,7 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_typecodefactory (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->typecode_factory_))
     {
@@ -504,7 +504,7 @@ TAO_ORB_Core::typecode_factory (const CORBA::Object_ptr tf)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->dynany_factory_))
     {
@@ -517,7 +517,7 @@ TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_ior_manipulation (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->ior_manip_factory_))
     {
@@ -530,7 +530,7 @@ TAO_ORB_Core::resolve_ior_manipulation (CORBA::Environment &ACE_TRY_ENV)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_ior_table (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->ior_table_))
     {
@@ -577,14 +577,14 @@ TAO_ORB_Core::policy_current (void)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::poa_current (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   return CORBA::Object::_duplicate (this->poa_current_.in ());
 }
 
 ACE_INLINE void
 TAO_ORB_Core::poa_current (CORBA::Object_ptr current)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   this->poa_current_ =
     CORBA::Object::_duplicate (current);
 }

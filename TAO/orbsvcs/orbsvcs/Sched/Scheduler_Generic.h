@@ -102,7 +102,7 @@ private:
   // dispatchin configuration info
 
 #if defined (ACE_HAS_THREADS)
-  typedef ACE_Recursive_Thread_Mutex LOCK;
+  typedef TAO_SYNCH_RECURSIVE_MUTEX LOCK;
 #else
   typedef ACE_Null_Mutex LOCK;
 #endif /* ACE_HAS_THREADS */

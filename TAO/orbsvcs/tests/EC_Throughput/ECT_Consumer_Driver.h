@@ -88,7 +88,7 @@ private:
   CORBA::ORB_var orb_;
   // A reference to the ORB, to shut it down properly.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   int active_count_;
   // How many consumers are still receiving events.
 };

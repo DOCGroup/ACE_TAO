@@ -19,7 +19,7 @@ ACE_RCSID(DynamicInterface, Server_Request, "$Id$")
 CORBA::ULong
 CORBA_ServerRequest::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
                     this->lock_,
                     0);
@@ -31,7 +31,7 @@ CORBA::ULong
 CORBA_ServerRequest::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       ace_mon,
                       this->lock_,
                       0);

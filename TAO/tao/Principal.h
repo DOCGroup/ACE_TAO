@@ -73,7 +73,7 @@ private:
 
   /// Protect the reference count, this is OK because we do no
   /// duplicates or releases on the critical path.
-  ACE_SYNCH_MUTEX refcount_mutex_;
+  TAO_SYNCH_MUTEX refcount_mutex_;
 
 #if defined (__GNUG__)
   // G++ (even 2.6.3) stupidly thinks instances can't be created.

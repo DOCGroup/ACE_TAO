@@ -279,26 +279,26 @@ ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
 
-template class ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Lock_Adapter<TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_CString,
                                ACE_Scheduler::RT_Info **,
-                               ACE_SYNCH_MUTEX>;
+                               TAO_SYNCH_MUTEX>;
 template class ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **,
-                                     ACE_SYNCH_MUTEX>;
+                                     TAO_SYNCH_MUTEX>;
 template class ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
-                                ACE_SYNCH_MUTEX>;
+                                TAO_SYNCH_MUTEX>;
 template class ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
-                                        ACE_SYNCH_MUTEX>;
+                                        TAO_SYNCH_MUTEX>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>
 
-#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Manager<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Lock_Adapter<TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Manager<ACE_CString, ACE_Scheduler::RT_Info **, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

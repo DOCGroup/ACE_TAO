@@ -651,7 +651,7 @@ TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel *ec)
     {
       // @@ The lock should also be under control of the user...
       ACE_Lock* lock;
-      ACE_NEW_RETURN (lock, ACE_Lock_Adapter<ACE_SYNCH_MUTEX>, 0);
+      ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, 0);
       return new TAO_EC_Basic_ObserverStrategy (ec, lock);
     }
   return 0;
@@ -699,12 +699,12 @@ TAO_EC_Default_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Chan
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
-      ACE_SYNCH_MUTEX> ();
+      TAO_SYNCH_MUTEX> ();
   else if (this->consumer_collection_ == 0x001)
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
-      ACE_SYNCH_MUTEX> ();
+      TAO_SYNCH_MUTEX> ();
   else if (this->consumer_collection_ == 0x002)
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
@@ -719,12 +719,12 @@ TAO_EC_Default_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Chan
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX> ();
+      TAO_SYNCH_MUTEX> ();
   else if (this->consumer_collection_ == 0x011)
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX> ();
+      TAO_SYNCH_MUTEX> ();
   else if (this->consumer_collection_ == 0x012)
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
@@ -792,12 +792,12 @@ TAO_EC_Default_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Chan
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
-      ACE_SYNCH_MUTEX> ();
+      TAO_SYNCH_MUTEX> ();
   else if (this->supplier_collection_ == 0x001)
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
-      ACE_SYNCH_MUTEX> ();
+      TAO_SYNCH_MUTEX> ();
   else if (this->supplier_collection_ == 0x002)
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
@@ -812,12 +812,12 @@ TAO_EC_Default_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Chan
     return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX> ();
+      TAO_SYNCH_MUTEX> ();
   else if (this->supplier_collection_ == 0x011)
     return new TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX> ();
+      TAO_SYNCH_MUTEX> ();
   else if (this->supplier_collection_ == 0x012)
     return new TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
@@ -884,9 +884,9 @@ TAO_EC_Default_Factory::create_consumer_lock (void)
   if (this->consumer_lock_ == 0)
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;
   else if (this->consumer_lock_ == 1)
-    return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+    return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
   else if (this->consumer_lock_ == 2)
-    return new ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX> ();
+    return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
   return 0;
 }
 
@@ -902,9 +902,9 @@ TAO_EC_Default_Factory::create_supplier_lock (void)
   if (this->supplier_lock_ == 0)
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;
   else if (this->supplier_lock_ == 1)
-    return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+    return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
   else if (this->supplier_lock_ == 2)
-    return new ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX> ();
+    return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
   return 0;
 }
 
@@ -1032,11 +1032,11 @@ template class TAO_ESF_Proxy_RB_Tree_Iterator<TAO_EC_ProxyPushSupplier>;
 template class TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
-      ACE_SYNCH_MUTEX>;
+      TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
      TAO_EC_Consumer_List_Iterator,
-      ACE_SYNCH_MUTEX>;
+      TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
@@ -1078,11 +1078,11 @@ template class TAO_ESF_Shutdown_Command<
 template class TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX>;
+      TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX>;
+      TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
@@ -1125,11 +1125,11 @@ template class TAO_ESF_Shutdown_Command<
 template class TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
-      ACE_SYNCH_MUTEX>;
+      TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
-      ACE_SYNCH_MUTEX>;
+      TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
@@ -1171,11 +1171,11 @@ template class TAO_ESF_Shutdown_Command<
 template class TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX>;
+      TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Read<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
-      ACE_SYNCH_MUTEX>;
+      TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Write<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
@@ -1218,19 +1218,19 @@ template class TAO_ESF_Shutdown_Command<
 template class TAO_ESF_Copy_On_Write_Read_Guard<
     TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
     TAO_EC_Consumer_List_Iterator,
-        ACE_SYNCH_MUTEX>;
+        TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Write_Read_Guard<
     TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
     TAO_EC_Supplier_List_Iterator,
-        ACE_SYNCH_MUTEX>;
+        TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Write_Read_Guard<
     TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>,
     TAO_EC_Consumer_RB_Tree_Iterator,
-        ACE_SYNCH_MUTEX>;
+        TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Write_Read_Guard<
     TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>,
     TAO_EC_Supplier_RB_Tree_Iterator,
-        ACE_SYNCH_MUTEX>;
+        TAO_SYNCH_MUTEX>;
 template class TAO_ESF_Copy_On_Write_Write_Guard<
     TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
     TAO_EC_Consumer_List_Iterator,

@@ -67,7 +67,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
       << "::" << node->full_base_proxy_impl_name () << be_nl
       <<" *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];"
       << be_nl << be_nl
-      << "ACE_SYNCH_MUTEX mutex_;"
+      << "TAO_SYNCH_MUTEX mutex_;"
       << be_uidt_nl;
 
   // Factory Function declaration.

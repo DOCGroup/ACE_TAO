@@ -2412,10 +2412,10 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Entry<ACE_CString, RtecScheduler::RT_Info *>;
-template class ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>;
-template class ACE_Map_Iterator<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>;
+template class ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>;
+template class ACE_Map_Iterator<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>;
 template class ACE_DNode<Dispatch_Entry_Link>;
 template class ACE_DNode<Dispatch_Proxy_Iterator *>;
 template class ACE_DNode<TimeLine_Entry_Link>;
@@ -2441,10 +2441,10 @@ template class ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *>;
 template class ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Map_Entry<ACE_CString, RtecScheduler::RT_Info *>
-#pragma instantiate ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, RtecScheduler::RT_Info *, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_DNode<Dispatch_Entry_Link>
 #pragma instantiate ACE_DNode<Dispatch_Proxy_Iterator *>
 #pragma instantiate ACE_DNode<TimeLine_Entry_Link>

@@ -12,7 +12,7 @@ TAO_Object_Adapter::lock (void)
   return *this->lock_;
 }
 
-ACE_INLINE ACE_SYNCH_MUTEX &
+ACE_INLINE TAO_SYNCH_MUTEX &
 TAO_Object_Adapter::thread_lock (void)
 {
   return this->thread_lock_;

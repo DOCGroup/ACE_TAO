@@ -57,7 +57,7 @@ Worker::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      ACE_SYNCH_MUTEX mutex;
+      TAO_SYNCH_MUTEX mutex;
       int pending_requests = 2;
       Test::AMI_ControllerHandler_var handler;
 
@@ -92,7 +92,7 @@ Worker::svc (void)
           ACE_Time_Value tv (0, 1000 * this->milliseconds_);
           this->orb_->run (tv);
 
-          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, mutex, -1);
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, mutex, -1);
           if (pending_requests == 0)
             break;
         }
@@ -108,7 +108,7 @@ Worker::svc (void)
 
 // ****************************************************************
 
-Controller_Handler::Controller_Handler (ACE_SYNCH_MUTEX *mutex,
+Controller_Handler::Controller_Handler (TAO_SYNCH_MUTEX *mutex,
                                         int *pending_replies)
   :  mutex_ (mutex)
   ,  pending_replies_ (pending_replies)
@@ -119,7 +119,7 @@ void
 Controller_Handler::worker_started (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   (*this->pending_replies_)--;
 }
 
@@ -147,7 +147,7 @@ void
 Controller_Handler::worker_finished (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   (*this->pending_replies_)--;
 }
 

@@ -40,7 +40,7 @@ TAO_Profile::_incr_refcnt (void)
   // lock is automatically acquired (refcount_lock_).  Then when
   // we leave this method the destructir for guard is called which
   // releases the lock!
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
 
   return this->refcount_++;
 }
@@ -49,7 +49,7 @@ ACE_INLINE CORBA::ULong
 TAO_Profile::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;

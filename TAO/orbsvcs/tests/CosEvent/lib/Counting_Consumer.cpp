@@ -243,7 +243,7 @@ CEC_Counting_Consumer_Task::svc ()
 void
 CEC_Counting_Consumer_Task::stop (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->stop_flag_ = 1;
 }
 
@@ -280,7 +280,7 @@ CEC_Counting_Consumer_Task::run (CORBA::Environment &ACE_TRY_ENV)
 
     if (has_event)
       {
-        ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
         this->pull_count_++;
       }
 

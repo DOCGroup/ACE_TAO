@@ -97,7 +97,7 @@ private:
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC using this proxy.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Protect internal state
 
   ACE_hrtime_t throughput_start_;

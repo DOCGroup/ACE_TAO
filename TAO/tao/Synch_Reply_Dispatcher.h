@@ -93,7 +93,7 @@ private:
    * that binds the Reply_Dispatcher to its transport, and then passed
    * to the Waiting_Strategy to do the signalling, if needed.
    */
-  ACE_SYNCH_CONDITION *leader_follower_condition_variable_;
+  TAO_SYNCH_CONDITION *leader_follower_condition_variable_;
 };
 
 #include "ace/post.h"

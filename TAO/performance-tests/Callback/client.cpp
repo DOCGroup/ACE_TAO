@@ -39,7 +39,7 @@ private:
   int remaining_messages_;
 
   /// Synchronize access to remaining_messages_
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 int
@@ -244,7 +244,7 @@ Task::Task (Test::Server_ptr server,
 int
 Task::done (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 1);
   return this->remaining_messages_ == 0;
 }
 
@@ -262,7 +262,7 @@ Task::svc (void)
           // ACE_Time_Value tv (0, 5000);
           // ACE_OS::sleep (tv);
 
-          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
           if (this->remaining_messages_ % 1000 == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Only %d messages to go\n",

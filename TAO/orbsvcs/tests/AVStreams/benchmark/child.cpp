@@ -188,7 +188,7 @@ ttcp_Stream_Handler::handle_input (ACE_HANDLE /* handle */)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Server_Globals,ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<Server_Globals,TAO_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton <Server_Globals,ACE_SYNCH_MUTEX> 
+#pragma instantiate ACE_Singleton <Server_Globals,TAO_SYNCH_MUTEX> 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

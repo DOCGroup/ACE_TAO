@@ -302,7 +302,7 @@ public:
   int init_video (void);
 };
 
-typedef ACE_Singleton <Video_Global, ACE_SYNCH_MUTEX> VIDEO_SINGLETON;
+typedef ACE_Singleton <Video_Global, TAO_SYNCH_MUTEX> VIDEO_SINGLETON;
 
 class Video_Timer_Global
 // A class that holds the static timer variables defined in the middle
@@ -392,7 +392,7 @@ public:
     AudioFeedBackPara * fbpara ;
   };
 
-typedef ACE_Singleton <Audio_Global,ACE_SYNCH_MUTEX> AUDIO_GLOBAL;
+typedef ACE_Singleton <Audio_Global,TAO_SYNCH_MUTEX> AUDIO_GLOBAL;
 
 
 #endif /* define MPEG_GLOBAL_H */

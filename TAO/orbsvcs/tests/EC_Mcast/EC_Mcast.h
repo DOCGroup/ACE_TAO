@@ -496,7 +496,7 @@ private:
   ECM_Federation* all_federations_[MAX_FEDERATIONS];
   // All the federations.
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX,CORBA::ULong> federations_running_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX,CORBA::ULong> federations_running_;
   // Keep track of how many federations are active so we can shutdown
   // once they are all destroyed.
 

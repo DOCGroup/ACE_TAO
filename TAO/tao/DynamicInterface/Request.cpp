@@ -20,7 +20,7 @@ ACE_RCSID(DynamicInterface, Request, "$Id$")
   CORBA::ULong
 CORBA_Request::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
                     this->lock_,
                     0);
@@ -32,7 +32,7 @@ CORBA::ULong
 CORBA_Request::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       ace_mon,
                       this->lock_,
                       0);
@@ -280,7 +280,7 @@ void
 CORBA_Request::send_deferred (CORBA::Environment &ACE_TRY_ENV)
 {
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX,
+    ACE_GUARD (TAO_SYNCH_MUTEX,
                ace_mon,
                this->lock_);
 
@@ -354,7 +354,7 @@ CORBA_Request::get_response (CORBA::Environment &ACE_TRY_ENV)
 CORBA::Boolean
 CORBA_Request::poll_response (CORBA::Environment &)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
                     this->lock_,
                     0);
@@ -384,7 +384,7 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
       ACE_CHECK;
 
       {
-        ACE_GUARD (ACE_SYNCH_MUTEX,
+        ACE_GUARD (TAO_SYNCH_MUTEX,
                    ace_mon,
                    this->lock_);
 

@@ -25,7 +25,7 @@ CORBA_Context::~CORBA_Context (void)
 CORBA::ULong
 CORBA_Context::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
                     ace_mon, 
                     this->refcount_lock_, 
                     0);
@@ -37,7 +37,7 @@ CORBA::ULong
 CORBA_Context::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
                       ace_mon, 
                       this->refcount_lock_, 
                       0);

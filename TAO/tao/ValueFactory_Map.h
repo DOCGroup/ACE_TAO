@@ -63,7 +63,7 @@ private:
                                   CORBA_ValueFactory_ptr,
                                   ACE_Hash<const char *>,
                                   ACE_Equal_To<const char *>,
-                                  ACE_SYNCH_RW_MUTEX>
+                                  TAO_SYNCH_RW_MUTEX>
           FACTORY_MAP_MANAGER;
   FACTORY_MAP_MANAGER map_;
 }; /* TAO_ValueFactory_Map */
@@ -71,7 +71,7 @@ private:
 
 // currently the ValueFactory_Map is a singleton and not per ORB
 // as in the OMG specs
-typedef TAO_Singleton<TAO_ValueFactory_Map, ACE_SYNCH_MUTEX>
+typedef TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>
         TAO_VALUEFACTORY_MAP;
 
 

@@ -188,7 +188,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
       return;
     }
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->recv_count_mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->recv_count_mutex_);
 
   this->recv_count_ += events.length ();
 

@@ -23,7 +23,7 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                            const char* rmt_name,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   this->init_i (rmt_ec, lcl_ec, ACE_TRY_ENV);
   ACE_CHECK;

@@ -22,7 +22,7 @@ TAO_Wait_Strategy::sending_request (TAO_ORB_Core * /* orb_core */,
   return 0;
 }
 
-ACE_SYNCH_CONDITION *
+TAO_SYNCH_CONDITION *
 TAO_Wait_Strategy::leader_follower_condition_variable (void)
 {
   return 0;
@@ -30,7 +30,7 @@ TAO_Wait_Strategy::leader_follower_condition_variable (void)
 
 int
 TAO_Wait_Strategy::reply_dispatched (int &reply_received,
-                                     ACE_SYNCH_CONDITION *)
+                                     TAO_SYNCH_CONDITION *)
 {
   // In most implementations of this strategy there is no need to
   // acquire any mutex to set the reply_received flag.
@@ -40,7 +40,7 @@ TAO_Wait_Strategy::reply_dispatched (int &reply_received,
 
 void
 TAO_Wait_Strategy::connection_closed (int &reply_received,
-                                      ACE_SYNCH_CONDITION*)
+                                      TAO_SYNCH_CONDITION*)
 {
   // In most implementations of this strategy there is no need to
   // acquire any mutex to set the reply_received flag.

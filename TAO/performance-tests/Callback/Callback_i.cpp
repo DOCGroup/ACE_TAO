@@ -11,7 +11,7 @@ ACE_RCSID(Callback, Callback_i, "$Id$")
 int
 Callback_i::done (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->remaining_samples_ == 0;
 }
 
@@ -21,7 +21,7 @@ Callback_i::response (Test::TimeStamp time_stamp,
   ACE_THROW_SPEC (())
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (this->remaining_samples_ == 0)
     return;
   this->remaining_samples_--;

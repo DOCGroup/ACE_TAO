@@ -120,7 +120,7 @@ CORBA_Exception::_tao_any_destructor (void *x)
 CORBA::ULong
 CORBA_Exception::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
   return ++this->refcount_;
 }
 
@@ -128,7 +128,7 @@ CORBA::ULong
 CORBA_Exception::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;

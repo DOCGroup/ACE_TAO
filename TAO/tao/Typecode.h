@@ -436,7 +436,7 @@ private:
 
   /// Protect the reference count, this is OK because we do no
   /// duplicates or releases on the critical path.
-  ACE_SYNCH_MUTEX refcount_lock_;
+  TAO_SYNCH_MUTEX refcount_lock_;
 
   /// TAO's approach differs from the SunSoft IIOP. Constant typecodes
   /// are owned by the ORB and get freed only when the ORB dies.
@@ -488,7 +488,7 @@ public:
   /// destructor
   ~TC_Private_State (void);
 
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 
   /// our kind that will determine what kind of children we may have
   CORBA::TCKind  tc_kind_;

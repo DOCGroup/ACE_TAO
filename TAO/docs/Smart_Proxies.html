@@ -153,7 +153,7 @@ class TAO_Proxy_Factory_Adapter
  // default/smart Proxys.
 public:
 
- friend class ACE_Singleton<TAO_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+ friend class ACE_Singleton<TAO_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
  // Register the factory with the Adaptor.
  register_proxy (TAO_Default_Proxy_Factory *df)
@@ -193,7 +193,7 @@ protected:
  
  TAO_Test_Default_Proxy_Factory *proxy_factory_;
  int delete_proxy_factory_;
- ACE_Recursive_Thread_Mutex lock_;
+ TAO_SYNCH_RECURSIVE_MUTEX lock_;
 
 };
 

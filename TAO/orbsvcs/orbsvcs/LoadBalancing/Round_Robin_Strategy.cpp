@@ -18,7 +18,7 @@ TAO_LB_Round_Robin_Strategy::TAO_LB_Round_Robin_Strategy (void)
 
 TAO_LB_Round_Robin_Strategy::~TAO_LB_Round_Robin_Strategy (void)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
                      this->lock_));
 
@@ -42,7 +42,7 @@ CORBA::Object_ptr
 TAO_LB_Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
                     CORBA::Object::_nil ());
@@ -86,7 +86,7 @@ TAO_LB_Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 int
 TAO_LB_Round_Robin_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
                             this->lock_,
                             -1));
@@ -99,7 +99,7 @@ TAO_LB_Round_Robin_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
 int
 TAO_LB_Round_Robin_Strategy::remove (TAO_LB_ReplicaProxy *proxy)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
                             this->lock_,
                             -1));

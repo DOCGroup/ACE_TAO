@@ -97,7 +97,7 @@ protected:
   void create_EC (CORBA::Environment &ACE_TRY_ENV);
   // Create EC
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> result_count_;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
   // we are waiting for 4 events to happen.
 
   const char* domain_name_;

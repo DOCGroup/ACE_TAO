@@ -32,7 +32,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
   CORBA::ULong start_count_;
   CORBA::ULong finish_count_;
 };

@@ -1395,7 +1395,7 @@ CORBA_TypeCode::private_id (CORBA::Environment &ACE_TRY_ENV) const
     case CORBA::tk_except:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_id_known_)
           return this->private_state_->tc_id_;
@@ -1434,7 +1434,7 @@ CORBA_TypeCode::private_name (CORBA::Environment &ACE_TRY_ENV) const
     case CORBA::tk_except:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_name_known_)
           return this->private_state_->tc_name_;
@@ -1482,7 +1482,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &ACE_TRY_ENV) const
     case CORBA::tk_struct:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_count_known_)
           return this->private_state_->tc_member_count_;
@@ -1506,7 +1506,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &ACE_TRY_ENV) const
     case CORBA::tk_union:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_count_known_)
           return this->private_state_->tc_member_count_;
@@ -1561,7 +1561,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
 
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_type_list_known_)
           if (slot < mcount)
@@ -1617,7 +1617,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
 
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_type_list_known_)
           if (slot < mcount)
@@ -1707,7 +1707,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
   ACE_CHECK_RETURN ((char *)0);
 
   // Double checked locking...
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                     this->private_state_->mutex_, 0);
 
   if (this->private_state_->tc_member_name_list_known_)
@@ -1875,7 +1875,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
     }
 
   // Double checked locking...
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                     this->private_state_->mutex_, 0);
   if (this->private_state_->tc_member_label_list_known_)
     if (n < member_count)
@@ -1980,7 +1980,7 @@ CORBA_TypeCode::private_discriminator_type (
   ) const
 {
   // Double checked locking...
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                     this->private_state_->mutex_, 0);
 
   return this->private_discriminator_type_i (ACE_TRY_ENV);
@@ -2017,7 +2017,7 @@ CORBA::Long
 CORBA_TypeCode::private_default_index (CORBA::Environment &ACE_TRY_ENV) const
 {
   // Double checked locking...
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                     this->private_state_->mutex_, 0);
   if (this->private_state_->tc_default_index_used_known_)
     return this->private_state_->tc_default_index_used_;
@@ -2048,7 +2048,7 @@ CORBA_TypeCode::private_length (CORBA::Environment &ACE_TRY_ENV) const
     case CORBA::tk_array:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_length_known_)
           return this->private_state_->tc_length_;
@@ -2069,7 +2069,7 @@ CORBA_TypeCode::private_length (CORBA::Environment &ACE_TRY_ENV) const
     case CORBA::tk_wstring:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_length_known_)
           return this->private_state_->tc_length_;
@@ -2101,7 +2101,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &ACE_TRY_ENV) const
     case CORBA::tk_array:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_content_type_known_)
           return this->private_state_->tc_content_type_;
@@ -2121,7 +2121,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &ACE_TRY_ENV) const
     case CORBA::tk_alias:
       {
         // Double checked locking...
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_content_type_known_)
           return this->private_state_->tc_content_type_;

@@ -128,6 +128,6 @@ private:
   // server shutdown flag.
 };
 
-typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
+typedef ACE_Singleton<Options, TAO_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 
 #endif /* OPTIONS_H */

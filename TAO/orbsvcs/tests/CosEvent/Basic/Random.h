@@ -64,7 +64,7 @@ protected:
   CosEventChannelAdmin::ProxyPushSupplier_var proxy_;
   // The supplier.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Synch
 };
 
@@ -127,7 +127,7 @@ private:
   CosEventChannelAdmin::ProxyPushConsumer_var proxy_;
   // The supplier.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Synch
 };
 

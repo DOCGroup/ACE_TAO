@@ -102,7 +102,7 @@ private:
 
 private:
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Mutex used to ensure access ReplicaProxy state is atomic.
 
   CORBA::Object_var replica_;

@@ -28,7 +28,7 @@ public:
 
 private:
   /// Synchronize access to the history data during testing
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 
   /// Save the history of the latency values
   ACE_Sample_History history_;

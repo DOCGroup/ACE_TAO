@@ -35,7 +35,7 @@
 #endif /* _MSC_VER */
 
 typedef ACE_Allocator_Adapter <ACE_Malloc<ACE_MMAP_MEMORY_POOL,
-  ACE_SYNCH_MUTEX> > ALLOCATOR;
+  TAO_SYNCH_MUTEX> > ALLOCATOR;
 
 typedef ACE_Hash_Map_With_Allocator<char *, char *> HASH_MAP;
   

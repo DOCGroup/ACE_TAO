@@ -125,7 +125,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
       return;
     }
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   // We start the timer as soon as we receive the first event...
   if (this->recv_count_ == 0)

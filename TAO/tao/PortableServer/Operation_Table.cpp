@@ -367,7 +367,7 @@ template class ACE_Hash_Map_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<con
 template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<const char *, TAO_Skeleton>;
-template class TAO_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_GNU_REPO)
 // This is necessary with g++ 2.91.66 to avoid a couple of strange
 // unresolved ACE_Hash_Map_Entry symbols.  (Strange because c++filt
@@ -379,5 +379,5 @@ template class ACE_Hash_Map_Entry<char const *, void (*)(CORBA_ServerRequest &, 
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<const char *, TAO_Skeleton>
-#pragma instantiate TAO_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

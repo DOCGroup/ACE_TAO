@@ -163,7 +163,7 @@ TAO_Notify_Default_CO_Factory::create_event_channel_lock (CORBA::Environment &AC
 {
   ACE_Lock* lock;
   ACE_NEW_THROW_EX (lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
+                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
                     CORBA::NO_MEMORY ());
   return lock;
 }

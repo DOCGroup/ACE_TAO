@@ -193,7 +193,7 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 CosNaming::NamingContext_ptr
 TAO_Transient_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
@@ -238,7 +238,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
   ACE_CHECK;
 
   // Obtain a lock before we proceed with the operation.
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());

@@ -193,7 +193,7 @@ public:
    * Wait Strategy. Muxed Leader Follower implementation returns a
    * valid condition variable, others return 0.
    */
-  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
+  virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
 
   /// Queue for buffering transport messages.
   virtual TAO_Transport_Buffering_Queue &buffering_queue (void);

@@ -191,7 +191,7 @@ protected:
 
   /// Mutex used to make sure that only one policy list
   /// is created.
-  ACE_SYNCH_RECURSIVE_MUTEX mutex_;
+  TAO_SYNCH_RECURSIVE_MUTEX mutex_;
 
 protected:
   /// return the complete list of profiles, this object retains

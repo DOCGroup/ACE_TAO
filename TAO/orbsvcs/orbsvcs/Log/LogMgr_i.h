@@ -69,7 +69,7 @@ public:
 
 protected:
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
-    DsLogAdmin::BasicLog_var,ACE_SYNCH_MUTEX> HASHMAP;
+    DsLogAdmin::BasicLog_var,TAO_SYNCH_MUTEX> HASHMAP;
   // Define the HASHMAP.
 
   HASHMAP hash_map_;

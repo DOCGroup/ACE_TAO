@@ -609,7 +609,7 @@ Client_i::start_servant (void)
                  "(%P|%t) %p\n",
                  "\thigh_priority_task->activate failed"));
 
-   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
+   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
 
    // Wait on the condition variable till the high priority cubit_task
    // has finished argument processing.
@@ -649,7 +649,7 @@ Client_i::do_priority_inversion_test (void)
   if (result < 0)
     return result;
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, this->ts_->ready_mtx_,-1));
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_,-1));
 
   // Wait on the condition variable until the high priority thread
   // wakes us up.
@@ -748,7 +748,7 @@ Client_i::do_thread_per_rate_test (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Waiting for argument parsing\n"));
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, this->ts_->ready_mtx_,-1));
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_,-1));
 
   // Wait on the condition variable until the high priority thread
   // wakes us up.

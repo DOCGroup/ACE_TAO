@@ -111,7 +111,7 @@ private:
   void* cookie_;
   // Magic cookie provided by the supplier to identify ourselves
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Protect the internal state
 
   int push_count_;

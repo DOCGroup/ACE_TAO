@@ -43,7 +43,7 @@ ifr_visitor::ifr_visitor (CORBA::Environment &ACE_TRY_ENV)
   if (be_global->enable_locking ())
     {
       ACE_NEW_THROW_EX (this->lock_,
-                        ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
+                        ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
                         CORBA::NO_MEMORY ());
     }
   else
