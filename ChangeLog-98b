@@ -1,6 +1,4 @@
-Mon Jun 15 23:17:27 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * Makefile: added os-patches/ to distribution.
+Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * os-patches/linux-patches.html: added RedHat 5.1 success
           report from Chanaka Liyanaarachchi <chanakal@ittc.ukans.edu>.
@@ -10,6 +8,10 @@ Mon Jun 15 23:17:27 1998  David L. Levine  <levine@cs.wustl.edu>
           added explicit ACE_U64_TO_U32 conversion macro.  WIN32's __int64
           and ACE_U_LongLong need an explicit narrowing to 32 bits.  This
           macro provides a consistent way to do that on all platforms.
+
+Mon Jun 15 23:17:27 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: added os-patches/ to distribution.
 
 Mon Jun 15 23:07:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
