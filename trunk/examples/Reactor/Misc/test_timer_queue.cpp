@@ -13,14 +13,16 @@ public:
 
   virtual int handle_timeout (const ACE_Time_Value &, const void *arg)
   {
+#if defined (ACE_HAS_64BIT_LONGS)
+    int times = long (arg);
+#else /* ! ACE_HAS_64BIT_LONGS */
+    int times = int (arg);
+#endif /* ! ACE_HAS_64BIT_LONGS */
+
     ACE_DEBUG ((LM_DEBUG, 
 		"yow, the time has come and gone %d times %d, Horatio!\n", 
 		this->count_++,
-#if defined (ACE_HAS_64BIT_LONGS)
-                long (arg)));
-#else /* ! ACE_HAS_64BIT_LONGS */
-                int (arg)));
-#endif /* ! ACE_HAS_64BIT_LONGS */
+                times));
     return 0;
   }
 
