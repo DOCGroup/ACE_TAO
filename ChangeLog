@@ -1,3 +1,12 @@
+Sun Jan  9 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Connection/non_blocking/test_lsock_connector.cpp:
+        * examples/Connection/non_blocking/test_spipe_acceptor.cpp:
+        * examples/Connection/non_blocking/test_spipe_connector.cpp:
+        * examples/Connection/non_blocking/test_tli_acceptor.cpp:
+        * examples/Connection/non_blocking/test_tli_connector.cpp:
+          Fixed unicode link errors
+
 Sun Jan  9 11:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Unbounded_Set_Test.cpp:
