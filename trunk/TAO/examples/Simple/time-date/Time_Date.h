@@ -1,7 +1,8 @@
 // $Id$
 
-#include "tao/TAO.h"
 #include "ace/Task.h"
+#include "tao/TAO.h"
+#include "tao/default_resource.h"
 #include "Time_Date_i.h"
 #include "Alt_Resource_Factory.h"
 
