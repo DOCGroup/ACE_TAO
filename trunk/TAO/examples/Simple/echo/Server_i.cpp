@@ -6,7 +6,10 @@ ACE_RCSID(Echo, Server_i, "$Id$")
 // Constructor.
 
 Server_i::Server_i (void)
-  : ior_output_file_ (0)
+  : ior_output_file_ (0),
+    argc_ (0),
+    argv_ (0),
+    using_naming_service_ (1)
 {
   // no-op.
 }
@@ -44,26 +47,17 @@ Server_i::init_naming_service (CORBA::Environment& env)
       Echo_var echo_obj = this->servant_._this (env);
       TAO_CHECK_ENV_RETURN (env, -1);
 
-      // Name the context.
-      CosNaming::Name naming_context_name (1);
-      naming_context_name.length (1);
-      naming_context_name[0].id = CORBA::string_dup ("EchoInterface");
-
       // Name the object.
       CosNaming::Name echo_obj_name (1);
       echo_obj_name.length (1);
       echo_obj_name[0].id = CORBA::string_dup ("Echo");
 
-      // Get the context attached to the server.
-      this->naming_context_ =
-	this->naming_server_->bind_new_context (naming_context_name,
-						env);
       TAO_CHECK_ENV_RETURN (env, -1);
 
       // Now, attach the object name to the context.
-      this->naming_context_->bind (echo_obj_name,
-				   echo_obj.in (),
-				   env);
+      this->naming_server_->bind (echo_obj_name,
+				  echo_obj.in (),
+				  env);
       TAO_CHECK_ENV_RETURN (env, -1);
 
     }

@@ -175,10 +175,9 @@ Client_i::via_naming_service(void)
 			 " (%P|%t) Unable to initialize "
 			 "the TAO_Naming_Client. \n"),
 			 -1);
-      CosNaming::Name echo_ref_name (2);
-      echo_ref_name.length (2);
-      echo_ref_name[0].id = CORBA::string_dup ("EchoInterface");
-      echo_ref_name[1].id = CORBA::string_dup ("Echo");
+      CosNaming::Name echo_ref_name (1);
+      echo_ref_name.length (1);
+      echo_ref_name[0].id = CORBA::string_dup ("Echo");
 
       CORBA::Object_var echo_obj =
 	this->naming_srvs_client_->resolve (echo_ref_name,
