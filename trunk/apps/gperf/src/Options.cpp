@@ -78,9 +78,9 @@ void
 Options::usage (void)
 {
   ACE_ERROR ((LM_ERROR,
-              "Usage: %n [-aBcCdDef[num]gGhH<hashname>i<init>IjJ"
+              "Usage: %n [-abBcCdDef[num]gGhH<hashname>i<init>IjJ"
               "k<keys>K<keyname>lL<language>mMnN<function name>o"
-              "Oprs<size>S<switches>tTvVZ<class name>z].\n"
+              "Oprs<size>S<switches>tTvVZ<class name>].\n"
               "(type %n -h for help)\n"));
 }
 
@@ -223,7 +223,7 @@ Options::parse_args (int argc, char *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt getopt (argc, argv, "aBcCdDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:z");
+  ACE_Get_Opt getopt (argc, argv, "abBcCdDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
   int option_char;
 
   argc_ = argc;
@@ -239,6 +239,12 @@ Options::parse_args (int argc, char *argv[])
             ACE_SET_BITS (option_word_, ANSI);
             break;
           }
+          // Generate code for Linear Search.
+	case 'b':
+	  {
+	    ACE_SET_BITS (option_word_, LINEARSEARCH);
+            break;
+	  }
           // Generate code for Binary Search.
         case 'B':
 	  {
@@ -392,8 +398,7 @@ Options::parse_args (int argc, char *argv[])
                              "-v\tPrints out the current version number and exits with a value of 0\n"
                              "-V\tExits silently with a value of 0.\n"
                              "-Z\tAllow user to specify name of generated C++ class.  Default\n"
-                             "\tname is `Perfect_Hash.'\n"
-			     "-z\tGenerates the code for linear search.\n",
+                             "\tname is `Perfect_Hash.'\n",
                              DEFAULT_JUMP_VALUE,
                              MAX_KEY_POS - 1);
             Options::usage ();
@@ -631,12 +636,6 @@ Options::parse_args (int argc, char *argv[])
             class_name_ = getopt.optarg;
             break;
           }
-	// Generate code for Linear Search.
-	case 'z':
-	  {
-	    ACE_SET_BITS (option_word_, LINEARSEARCH);
-            break;
-	  }
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "%r",

@@ -883,7 +883,7 @@ Key_List::output_binary_search_function (void)
   // Class definition if -M is *not* enabled.
   if ((option[CPLUSPLUS]) && (!option[SKIPCLASS]))
     printf ("class %s {\npublic:\n"
-	    "  static %s%s%s (const char *str, unsigned int len);\n};\n\n",
+	    "  static %s%s%s (const char *str);\n};\n\n",
 	    option.class_name (),
 	    option[CONSTANT] ? "const " : "",
 	    return_type,
@@ -898,8 +898,8 @@ Key_List::output_binary_search_function (void)
     printf ("%s::", option.class_name ());
 
   printf (option[ANSI]
-	  ? "%s (const char *str, unsigned int len)\n{\n"
-	  : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
+	  ? "%s (const char *str)\n{\n"
+	  : "%s (str)\n     char *str;\n{\n",
 	  option.function_name ());
 
 // Use the switch in place of lookup table.
@@ -977,7 +977,7 @@ Key_List::output_linear_search_function (void)
   // Class definition if -M is *not* enabled.
   if ((option[CPLUSPLUS]) && (!option[SKIPCLASS]))
     printf ("class %s {\npublic:\n"
-	    "  static %s%s%s (const char *str, unsigned int len);\n};\n\n",
+	    "  static %s%s%s (const char *str);\n};\n\n",
 	    option.class_name (),
 	    option[CONSTANT] ? "const " : "",
 	    return_type,
@@ -992,8 +992,8 @@ Key_List::output_linear_search_function (void)
     printf ("%s::", option.class_name ());
 
   printf (option[ANSI]
-	  ? "%s (const char *str, unsigned int len)\n{\n"
-	  : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
+	  ? "%s (const char *str)\n{\n"
+	  : "%s (str)\n     char *str;\n{\n",
 	  option.function_name ());
 
 // Use the switch in place of lookup table.
