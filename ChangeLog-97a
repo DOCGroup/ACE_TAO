@@ -1,3 +1,29 @@
+Wed Mar 19 15:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-sunos4.*.h: Added #define ACE_HAS_UNION_WAIT based
+	  on the recommendation of Kumar Neelakantan
+	  <kneelaka@painewebber.com>.
+
+	* ace/Log_Msg.cpp (log_hexdump): Replaced the use of ::sprintf()
+	  with ACE_OS::sprintf() so that the return value would be correct
+	  on SunOS 4.x!
+
+	* ace/OS: Added ACE_HAS_CHARPTR_SPRINTF and ACE_SPRINTF_ADAPTER
+ 	  to ACE_OS::sprintf() for SunOS 4.x platforms.  Thanks to Kumar
+ 	  Neelakantan <kneelaka@painewebber.com> for reporting this.
+
+	* ace/Handle_Set.cpp (ACE_Handle_Set_Iterator): If the bound was
+ 	  reached in the following loop, we should set this->num_ =
+ 	  this->handles_.max_handle_ + 1 rather than go into the 2nd loop.
+  	  Thanks to Michael Newton <michaeln@in.ot.com.au> for reporting
+ 	  this.
+
+	* ace/Handle_Set.cpp (ACE_Handle_Set_Iterator):
+ 	  ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator did not work
+ 	  properly if called with a zero handleset, as there was no bounds
+ 	  check on the first loop therein.  Thanks to Michael Newton
+ 	  <michaeln@in.ot.com.au> for reporting this.
+
 Wed Mar 19 07:33:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_osf1_4.0{,_g++}.GNU:

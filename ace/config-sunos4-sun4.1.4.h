@@ -7,7 +7,9 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_CHARPTR_SPRINTF
 #define ACE_NEEDS_SYSTIME_H
+#define ACE_HAS_UNION_WAIT
 
 // Special addition to handle sunOS 4.1 which is unable to
 // handle POSIX Prototypes !

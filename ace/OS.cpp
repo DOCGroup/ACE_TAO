@@ -421,10 +421,10 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   // the following storage is not thread-specific!
   static char buf[32];
   // assumes that addr is already in network byte order
-  sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
-	   addr.s_addr / (256*256) & 255,
-	   addr.s_addr / 256 & 255,
-	   addr.s_addr & 255);
+  ::sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
+	     addr.s_addr / (256*256) & 255,
+	     addr.s_addr / 256 & 255,
+	     addr.s_addr & 255);
   return buf;
 }
 #endif /* VXWORKS */ 
@@ -497,7 +497,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vsprintf (buf, format, ap), int, -1, result);
+  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vsprintf (buf, format, ap)), int, -1, result);
   va_end (ap);
   return result;
 }
