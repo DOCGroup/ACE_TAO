@@ -9,15 +9,17 @@
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+# define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#define ACE_DEFAULT_THREAD_KEYS 8
 #define ACE_HAS_BROKEN_SENDMSG
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_CPLUSPLUS_HEADERS
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 // Even though the documentation suggests that g++/VxWorks 5.3.1
 // (Tornado 1.0.1) supports long long, Wind River tech support says
@@ -34,9 +36,6 @@
 // include iostream.h only where they need it.
 #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
 
-// Optimize ACE_Handle_Set for select().
-#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
@@ -47,6 +46,7 @@
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
+#define ACE_HAS_TSS_EMULATION
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS_COND_T
 #define ACE_LACKS_EXEC
@@ -80,23 +80,25 @@
 #define ACE_LACKS_SYS_NERR
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
+#define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UTSNAME_T
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 #define ACE_MAIN ace_main
 #define ACE_NEEDS_SYSTIME_H
-#define ACE_TEMPLATES_REQUIRE_SOURCE
+
+#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
+#define ACE_TEMPLATES_REQUIRE_SOURCE
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 #endif /* ACE_CONFIG_H */
