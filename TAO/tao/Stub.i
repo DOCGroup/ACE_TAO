@@ -37,6 +37,9 @@ TAO_Stub::reset_base (void)
   this->reset_first_locate_request ();
   this->profile_success_ = 0;
 
+  // Bala, add a #ifdef for TAO_HAS_FT_CORBA to look for the
+  // FT_TAG_PRIMARY stuff.
+  // Get the tagged components, check for FT_TAG_PRIMARY
   this->set_profile_in_use_i (base_profiles_.get_next ());
 }
 
