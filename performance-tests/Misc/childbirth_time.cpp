@@ -393,7 +393,7 @@ main (int argc, char* argv[])
       if (time > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "Average performance of %d iterations of %s: %.0f usec\n",
-                    iteration * 10, profile_name, time * 1e6));
+                    iteration * MULTIPLY_FACTOR, profile_name, time * 1e6));
     }
   return 0;
 }
