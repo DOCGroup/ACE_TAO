@@ -51,3 +51,30 @@ Naming Service will be restructured for one of the upcoming releases
 (to factor out commonality, get rid of unnecessary generality, etc.),
 at which time more documentation will be available in this README file
 and in the source code.
+
+
+
+TO-DO
+
+- settle templates on all the compilers, check <destroy> test.
+
+- Make binding iterators observers of their corresponding Naming
+  Context, so they die once the Naming Context dies (use either
+  ref. counted locks or delayed death)
+
+- Factor out initialization of a NamingContext into a static function
+  on an appropriate class.
+
+- Factor out Naming_Util initialization code into a factory
+
+- Check for proper destruction of contexts
+
+- code review/comments of Entries, Persistent_Entries,
+  Persistent_Context_Index, Naming_Utils, Bindings_Iterator
+
+- Update README file
+
+- Add example for persistent Naming Service
+- migrate ACE_Shared_Map to ACE and use in ACE Naming Service
+- update Naming Service slides
+- do code review of Simple_Naming
