@@ -20,8 +20,6 @@ CPPFLAGS += -DTRADER_AVAILABLE
 
 endif # trader
 
-BUILD = $(BIN)
-
 
 IDL_SRC	= \
 	QuoterC.cpp QuoterS.cpp
