@@ -1,3 +1,16 @@
+Wed Mar  8 12:03:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP.cpp:
+          The receiving code was checking errno when the recv() call
+          returned 0, this is incorrect as errno is only set if recv()
+          returns -1.  This resulted in connections never getting closed
+          if the errno was set to EWOULDBLOCK before recv() returned 0.
+          Many thanks to Dave Meyer <dmeyer@std.saic.com> and Chris
+          Cleeland <chris@cs.wustl.edu> for tracking down the problem.
+          Some users had reported that when using thread-per-connection
+          the ORB thread will loop forever, consuming a lot of CPU, when
+          the client terminated.  This may have also solved that problem.
+
 Wed Mar  8 08:31:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
@@ -16,17 +29,17 @@ Wed Mar  8 08:31:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed Mar  8 08:59:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.cpp:
-	  Added a missing operation name length argument. Thanks to
-	  Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
-	  pointing this out.
+        * tao/InterfaceC.cpp:
+          Added a missing operation name length argument. Thanks to
+          Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
+          pointing this out.
 
-Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com> 
+Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * TAO/Makefile.bor: Added support for 3 different "levels" of
-	  build: minimal, typical and all.
+          build: minimal, typical and all.
 
-	* TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
+        * TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
 
 Tue Mar 07 15:42:41 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 

@@ -704,8 +704,11 @@ TAO_GIOP::read_header (TAO_Transport *transport,
     {
       n = transport->recv (buf, t, max_wait_time);
       if (n == -1)
-        return -1;
-      else if (n == 0) // @@ TODO && errno != EWOULDBLOCK)
+        {
+          // @@ TODO if (errno == EWOULDBLOCK) return 0;
+          return -1;
+        }
+      else if (n == 0)
         return -1;
       buf += n;
     }
@@ -768,6 +771,7 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
                            max_wait_time);
   if (n == -1)
     {
+      // @@ TODO if (errno == EWOULDBLOCK) return 0;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("TAO (%P|%t) - %p\n"),
@@ -776,8 +780,6 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
     }
   else if (n == 0)
     {
-      if (errno == EWOULDBLOCK)
-        return 0;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("TAO (%P|%t) - %p\n"),
