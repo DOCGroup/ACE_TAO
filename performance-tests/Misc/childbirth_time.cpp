@@ -66,7 +66,7 @@
 #endif
 
 const int MULTIPLY_FACTOR = 10;
-typedef double (*Profiler)(int);
+typedef double (*Profiler)(size_t);
 static int do_exec_after_fork = 0;
 
 static void *
@@ -76,7 +76,7 @@ empty (void*)			// do nothing thread function
 }
 
 static double
-prof_ace_process (int iteration)
+prof_ace_process (size_t iteration)
 {
   if (iteration != 0) 
     {
@@ -119,7 +119,7 @@ prof_ace_process (int iteration)
 }
 
 static double
-prof_fork (int iteration)
+prof_fork (size_t iteration)
 {
 #if !defined (ACE_LACKS_EXEC)
   if (iteration != 0) 
@@ -157,7 +157,7 @@ prof_fork (int iteration)
 }
 
 static double
-prof_native_thread (int iteration)
+prof_native_thread (size_t iteration)
 {
 #if defined (ACE_HAS_THREADS)  && (defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_STHREADS))
   if (iteration != 0) 
@@ -203,7 +203,7 @@ prof_native_thread (int iteration)
 }
 
 static double
-prof_ace_os_thread (int iteration)
+prof_ace_os_thread (size_t iteration)
 {
 #if defined (ACE_HAS_THREADS)
   if (iteration != 0) 
@@ -242,7 +242,7 @@ main (int argc, char* argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "n:pftahe");
   int c;
-  int iteration = 10;
+  size_t iteration = 10;
   Profiler profiler = 0;
   char *profile_name = 0 ;
 
@@ -292,5 +292,3 @@ main (int argc, char* argv[])
     }
   return 0;
 }
-
-
