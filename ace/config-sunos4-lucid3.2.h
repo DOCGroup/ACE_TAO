@@ -7,8 +7,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-// Platform supports pread() and pwrite()
-#define ACE_HAS_P_READ_WRITE
+#define ACE_LACKS_GETPGID
 
 #define ACE_HAS_SYS_ERRLIST
 #define ACE_HAS_CHARPTR_SPRINTF
