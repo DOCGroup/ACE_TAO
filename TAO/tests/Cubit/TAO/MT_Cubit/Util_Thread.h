@@ -17,7 +17,7 @@
 #if !defined (UTIL_THREAD_H)
 #define UTIL_THREAD_H
 
-#include "UTIL_THREAD.h"
+#include "Task_Client.h"
 
 // @@ Please comment me.
 const int CUBIT_ARBIT_NUMBER = 2064885;

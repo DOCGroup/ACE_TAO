@@ -32,11 +32,8 @@ extern "C" STATUS vmeDrv (void);
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* VME_DRIVER */
 
-// Global Variables
-static CORBA::String key = CORBA::String ("Cubit");
-
 // Size of the string for holding the stringified object reference.
-// Sumedh, what is the rationale for a string of size 30?  Can you use
+// @@ Sumedh, what is the rationale for a string of size 30?  Can you use
 // a more general parameter instead?  Perhaps this needs to go into
 // TAO somewhere?
 const u_int OBJECT_STRING_SIZE = 30;
@@ -78,6 +75,9 @@ private:
 
   int create_servants (void);
   // Create the servants
+
+  CORBA::String key_;
+  // All cubit objects will have this as prefix to its key.
 
   char *orbname_;
   // Name of the ORB.
