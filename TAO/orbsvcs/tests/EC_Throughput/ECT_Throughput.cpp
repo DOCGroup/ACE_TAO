@@ -381,7 +381,7 @@ ECT_Throughput::connect_consumers
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02.2d", i);
+      ACE_OS::sprintf (buf, "consumer_%02d", i);
 
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this,
@@ -410,7 +410,7 @@ ECT_Throughput::connect_suppliers
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02.2d", i);
+      ACE_OS::sprintf (buf, "supplier_%02d", i);
 
       ACE_NEW (this->suppliers_[i], Test_Supplier (this));
 
@@ -477,7 +477,7 @@ ECT_Throughput::dump_results (void)
   for (int j = 0; j < this->n_consumers_; ++j)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02.2d", j);
+      ACE_OS::sprintf (buf, "consumer_%02d", j);
 
       this->consumers_[j]->dump_results (buf, gsf);
       this->consumers_[j]->accumulate (consumers);
@@ -488,7 +488,7 @@ ECT_Throughput::dump_results (void)
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02.2d", i);
+      ACE_OS::sprintf (buf, "supplier_%02d", i);
 
       this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (suppliers);

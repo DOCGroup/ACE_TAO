@@ -59,7 +59,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
 
           CosNaming::NamingContext_var xc =
             CosNaming::NamingContext::_narrow (obj.in ());
-          list_context (xc, level + 1);
+          list_context (xc.in (), level + 1);
         }
       // Mark this node as a reference
       else
@@ -78,7 +78,7 @@ list_context (CosNaming::NamingContext_ptr nc,
   const CORBA::ULong CHUNK = 100;
 
   nc->list (CHUNK, bl, it);
-  show_chunk (nc, bl, level);
+  show_chunk (nc, bl.in (), level);
 
   if (!CORBA::is_nil (it.in ()))
     {
@@ -87,7 +87,7 @@ list_context (CosNaming::NamingContext_ptr nc,
       do
         {
           more = it->next_n (CHUNK, bl);
-          show_chunk (nc, bl, level);
+          show_chunk (nc, bl.in (), level);
         }
       while (more);
 

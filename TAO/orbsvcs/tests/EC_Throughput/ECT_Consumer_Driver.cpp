@@ -219,7 +219,7 @@ ECT_Consumer_Driver::connect_consumers
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02.2d", i);
+      ACE_OS::sprintf (buf, "consumer_%02d", i);
 
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this,
@@ -245,7 +245,7 @@ ECT_Consumer_Driver::dump_results (void)
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02.2d", i);
+      ACE_OS::sprintf (buf, "consumer_%02d", i);
 
       this->consumers_[i]->dump_results (buf, gsf);
       this->consumers_[i]->accumulate (throughput);

@@ -684,7 +684,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
         mc = 1;
 
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_supplier_%02.2d@%s", i, this->lcl_name_);
+      ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_);
 
       ACE_NEW (this->suppliers_[i],
                Test_Supplier (this, this->suppliers_ + i));
@@ -707,7 +707,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
         mc = 1;
 
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_supplier_%02.2d@%s",
+      ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
                        i - this->hp_suppliers_, this->lcl_name_);
 
       ACE_NEW (this->suppliers_[i],
@@ -749,7 +749,7 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
             mc = 1;
 
           char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "hp_supplier_%02.2d@%s", i, this->lcl_name_);
+          ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_);
 
           this->suppliers_[i]->activate (buf,
                                          this->hp_interval_ * 10,
@@ -766,7 +766,7 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
             mc = 1;
 
           char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "lp_supplier_%02.2d@%s",
+          ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
                            i - this->hp_suppliers_, this->lcl_name_);
 
           this->suppliers_[i]->activate (buf,
@@ -791,7 +791,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
   for (i = 0; i < this->hp_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_consumer_%02.2d@%s", i, this->lcl_name_);
+      ACE_OS::sprintf (buf, "hp_consumer_%02d@%s", i, this->lcl_name_);
 
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this, this->consumers_ + i));
@@ -810,7 +810,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
   for (; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_consumer_%02.2d@%s",
+      ACE_OS::sprintf (buf, "lp_consumer_%02d@%s",
                        i - this->hp_consumers_, this->lcl_name_);
 
       ACE_NEW (this->consumers_[i],
@@ -1055,12 +1055,12 @@ Test_ECG::dump_results (void)
   int i;
   for (i = 0; i < this->hp_consumers_; ++i)
     {
-      ACE_OS::sprintf (buf, "HP%02.2d", i);
+      ACE_OS::sprintf (buf, "HP%02d", i);
       this->dump_results (buf, this->stats_[i]);
     }
   for (i = 0; i < this->lp_consumers_; ++i)
     {
-      ACE_OS::sprintf (buf, "LP%02.2d", i);
+      ACE_OS::sprintf (buf, "LP%02d", i);
       this->dump_results (buf, this->stats_[i + this->hp_consumers_]);
     }
   CORBA::ULong tmp = ACE_U64_TO_U32 (this->test_stop_ - this->test_start_);

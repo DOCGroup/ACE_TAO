@@ -765,7 +765,7 @@ EC_Driver::dump_results (void)
   char buf[BUFSIZ];
   for (int j = 0; j < this->n_consumers_; ++j)
     {
-      ACE_OS::sprintf (buf, "Consumer [%02.2d]", j);
+      ACE_OS::sprintf (buf, "Consumer [%02d]", j);
 
       this->consumers_[j]->dump_results (buf, gsf);
       this->consumers_[j]->accumulate (throughput);
@@ -775,7 +775,7 @@ EC_Driver::dump_results (void)
   ACE_Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      ACE_OS::sprintf (buf, "Supplier [%02.2d]", i);
+      ACE_OS::sprintf (buf, "Supplier [%02d]", i);
 
       this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (suppliers);

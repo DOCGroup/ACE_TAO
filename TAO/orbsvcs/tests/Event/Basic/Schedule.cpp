@@ -108,7 +108,7 @@ EC_Schedule::build_consumer_qos (
   CORBA::Environment &ACE_TRY_ENV)
 {
   char name[128];
-  ACE_OS::sprintf (name, "EC_Schedule::Consumer::%04.4x", i);
+  ACE_OS::sprintf (name, "EC_Schedule::Consumer::%04x", i);
 
   RtecScheduler::handle_t rt_info =
     this->scheduler_->create (name, ACE_TRY_ENV);
@@ -154,7 +154,7 @@ EC_Schedule::build_supplier_qos (
       CORBA::Environment &ACE_TRY_ENV)
 {
   char name[128];
-  ACE_OS::sprintf (name, "EC_Schedule::Supplier::%04.4x", i);
+  ACE_OS::sprintf (name, "EC_Schedule::Supplier::%04x", i);
 
   RtecScheduler::handle_t rt_info =
     this->scheduler_->create (name, ACE_TRY_ENV);

@@ -218,7 +218,7 @@ ECT_Supplier_Driver::connect_suppliers
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02.2d", i);
+      ACE_OS::sprintf (buf, "supplier_%02d", i);
 
       ACE_NEW (this->suppliers_[i], Test_Supplier (this));
 
@@ -264,7 +264,7 @@ ECT_Supplier_Driver::dump_results (void)
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02.2d", i);
+      ACE_OS::sprintf (buf, "supplier_%02d", i);
 
       this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (throughput);
