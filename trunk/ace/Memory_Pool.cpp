@@ -117,7 +117,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
       // For plaforms that do NOT give the faulting address, let the
       // options decide whether to guess or not.
       if (options)
-	guess_on_fault_ = options->guess_on_fault ();
+	guess_on_fault_ = options->guess_on_fault_;
       else
 	// If no options are specified, default to true.
 	guess_on_fault_ = 1;
