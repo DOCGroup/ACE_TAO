@@ -1,3 +1,11 @@
+Fri Feb 20 15:56:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/server.cpp:
+	  Added missing includes, removed include of stdio.h from client.cpp,
+	  it is not needed.
+
 Fri Feb 20 15:43:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h:
