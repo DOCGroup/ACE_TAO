@@ -21,7 +21,7 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
   : thr_count_ (0),
     thr_mgr_ (thr_man),
     flags_ (0),
-    grp_id_ (0)
+    grp_id_ (-1)
 {
 }
 
@@ -87,7 +87,11 @@ ACE_Task_Base::activate (long flags,
   if (this->thr_count_ > 0 && force_active == 0)
     return 1; // Already active.
   else
-    this->thr_count_ += n_threads;
+    {
+      this->thr_count_ += n_threads;
+      if (grp_id != -1)
+        grp_id = this->grp_id_;
+    }
 
   // Use the ACE_Thread_Manager singleton if we're running as an
   // active object and the caller didn't supply us with a
@@ -95,9 +99,10 @@ ACE_Task_Base::activate (long flags,
   if (this->thr_mgr_ == 0)
     this->thr_mgr_ = ACE_Thread_Manager::instance ();
 
+  int grp_spawned = -1;
   if (thread_names == 0)
     // thread names were not specified
-    this->grp_id_ =
+    grp_spawned =
       this->thr_mgr_->spawn_n (n_threads,
                                ACE_THR_FUNC (&ACE_Task_Base::svc_run),
                                (void *) this,
@@ -110,7 +115,7 @@ ACE_Task_Base::activate (long flags,
                                stack_size);
   else
     // thread names were specified
-    this->grp_id_ =
+    grp_spawned =
       this->thr_mgr_->spawn_n (thread_names,
                                n_threads,
                                ACE_THR_FUNC (&ACE_Task_Base::svc_run),
@@ -121,16 +126,18 @@ ACE_Task_Base::activate (long flags,
                                stack,
                                stack_size,
                                thread_handles);
-  if (this->grp_id_ == -1)
+  if (grp_spawned == -1)
     {
-      // @@ This isn't 100% correct since spawn_n() may have spawned
-      // some threads before it failed.  However, this is better than
-      // nothing...
+      // If spawn_n fails, restore original thread count.
       this->thr_count_ -= n_threads;
       return -1;
     }
   else
-    return 0;
+    {
+      if (this->grp_id_ == -1)
+        this->grp_id_ = grp_spawned;
+      return 0;
+    }
 #else
   {
     // Keep the compiler from complaining.
