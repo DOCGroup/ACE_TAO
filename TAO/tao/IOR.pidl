@@ -10,7 +10,7 @@
 //   XXX
 //
 // = DESCRIPTION
-//   This file was used to generate the code in XXXXXXXXX{C,S,S_T}.{h,i,cpp}
+//   This file was used to generate the code in IOR{C,S,S_T}.{h,i,cpp}
 //   The code is then hand-crafted to compile it inside the ORB, avoid
 //   cyclic dependencies and enforce the locality constraints on
 //   certain objects.
