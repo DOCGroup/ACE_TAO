@@ -1,3 +1,11 @@
+Thu Feb  7 09:12:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Added partial support for the use of 'ValueBase' in
+          IDL files.
+
 Wed Feb  6 18:56:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/ORB.cpp:
