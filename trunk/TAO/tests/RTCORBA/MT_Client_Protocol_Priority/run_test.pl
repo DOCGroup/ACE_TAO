@@ -28,8 +28,8 @@ if ($^O eq "MSWin32")
 ACE::checkForTarget($cwd);
 
 # Clean up leftovers from previous runs.
-unlink $iorfile;
-unlink $data_file;
+#unlink $iorfile;
+#unlink $data_file;
 
 
 $server_args =
@@ -37,9 +37,9 @@ $server_args =
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority1 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority2 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority3 "
-    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=$priority1 "
-    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=$priority2 "
-    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=$priority3 ";
+    ."-ORBendpoint shmiop://0/priority=$priority1 "
+    ."-ORBendpoint shmiop://0/priority=$priority2 "
+    ."-ORBendpoint shmiop://0/priority=$priority3 ";
 
 $client_args =
     "-o file://$iorfile  "
