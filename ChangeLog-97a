@@ -3,6 +3,9 @@ Wed Apr 23 14:27:48 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Timer_Queue.cpp (ACE_Timer_Queue ctor): reordered initializers
 	  to match declaration order.
 
+	* tests/Process_Strategy_Test.cpp: added ACE_Singleton template
+	  specialization.
+
 Wed Apr 23 10:52:45 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): Removed errant preprocessor conditional
