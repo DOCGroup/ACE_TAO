@@ -171,7 +171,10 @@ ACE_INLINE
 ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
 {
   ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
-  // If MASK is 0 then block all signals! 
+
+#if !defined (ACE_WIN32)
+
+  // If MASK is 0 then block all signals!
   if (mask == 0)
     {
       ACE_Sig_Set smask (1);
@@ -192,6 +195,7 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
     ACE_OS::sigprocmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
 			 this->omask_); 
 #endif /* ACE_MT_SAFE */
+#endif /* ACE_WIN32 */
 }
 
 // Restore the signal mask.
