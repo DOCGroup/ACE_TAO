@@ -1,52 +1,58 @@
+Sun Apr 18 09:08:13 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB.cpp: removed ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int>
+          explicit template instantiation.  It duplicated the one
+          in Servant_Base.cpp.
+
 Sun Apr 18 03:34:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Servant_Base.h (class ServantBase_var): Added reference
-	  counting servant auto pointer class (as per CORBA spec).
+        * tao/Servant_Base.h (class ServantBase_var): Added reference
+          counting servant auto pointer class (as per CORBA spec).
 
-	* tao/Servant_Base (class RefCountServantBase): Added reference
-	  counted mix-in class (as per CORBA spec).
+        * tao/Servant_Base (class RefCountServantBase): Added reference
+          counted mix-in class (as per CORBA spec).
 
-	* tao/Servant_Base.cpp (operator= and TAO_ServantBase):
+        * tao/Servant_Base.cpp (operator= and TAO_ServantBase):
 
-	  - Fixed the copy constructor and assignment operator to copy the
-	    optable pointer from the <rhs> object.
+          - Fixed the copy constructor and assignment operator to copy the
+            optable pointer from the <rhs> object.
 
-	  - Made the assignment operator protected (as per CORBA spec).
+          - Made the assignment operator protected (as per CORBA spec).
 
-	  - Also added _remove_ref() and _add_ref() (as per CORBA spec).
+          - Also added _remove_ref() and _add_ref() (as per CORBA spec).
 
-	* tao/Servant_Base.h (TAO_ServantBase): Made _is_a public and add
-	  _non_existent.
+        * tao/Servant_Base.h (TAO_ServantBase): Made _is_a public and add
+          _non_existent.
 
-	* tao/Object.cpp (_non_existent): Added collocation optimization
-	  similar to the ones in _is_a().
+        * tao/Object.cpp (_non_existent): Added collocation optimization
+          similar to the ones in _is_a().
 
-	* TAO_IDL/be/be_visitor_interface/collocated_ss.cpp
-	* TAO_IDL/be/be_visitor_interface/collocated_sh.cpp
-	  (visit_interface): Removed the generation of the _is_a from the
-	  collocated class since there is already a call to the servant
-	  from the object if the object is collocated.
+        * TAO_IDL/be/be_visitor_interface/collocated_ss.cpp
+        * TAO_IDL/be/be_visitor_interface/collocated_sh.cpp
+          (visit_interface): Removed the generation of the _is_a from the
+          collocated class since there is already a call to the servant
+          from the object if the object is collocated.
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
-	  (visit_interface): Removed the incorrect comment that said that
-	  CORBA_Object::_is_a is a remote call.
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+          (visit_interface): Removed the incorrect comment that said that
+          CORBA_Object::_is_a is a remote call.
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
-	  (visit_interface): Changed the _is_a skeleton to use compiled
-	  marshaling.  Also, changed the _non_existent skeleton to use
-	  compiled marshaling and to call the servant instead of simply
-	  returning false.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+          (visit_interface): Changed the _is_a skeleton to use compiled
+          marshaling.  Also, changed the _non_existent skeleton to use
+          compiled marshaling and to call the servant instead of simply
+          returning false.
 
-	* tao/Sequence.cpp (operator==): Moved the comparison of octet
-	  sequences from Stub.cpp to Sequence.cpp.  Also, removed the
-	  comparison of object keys.
+        * tao/Sequence.cpp (operator==): Moved the comparison of octet
+          sequences from Stub.cpp to Sequence.cpp.  Also, removed the
+          comparison of object keys.
 
 Sat Apr 17 17:41:12 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} :
-	* orbsvcs/orbsvcs/AV/AVStreams_i_T.cpp :
-	  Fixed g++ warnings/errors. Thanks to David Levine and JM Strauss
-	  for reporting this.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} :
+        * orbsvcs/orbsvcs/AV/AVStreams_i_T.cpp :
+          Fixed g++ warnings/errors. Thanks to David Levine and JM Strauss
+          for reporting this.
 
 Fri Apr 16 21:57:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
