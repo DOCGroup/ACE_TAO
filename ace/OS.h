@@ -4699,6 +4699,18 @@ public:
                        size_t size,
                        size_t nelems,
                        FILE *fp);
+  static int feof (FILE* fp);
+  static int ferror (FILE* fp);
+
+  static int fgetc (FILE* fp);
+  static void clearerr (FILE* fp);
+  static int ungetc (int c, FILE* fp);
+
+#if defined (ACE_HAS_WCHAR)
+  static wint_t fgetwc (FILE* fp);
+  static wint_t ungetwc (wint_t c, FILE* fp);
+#endif /* ACE_HAS_WCHAR */
+
   static int fseek (FILE *fp,
                     long offset,
                     int ptrname);

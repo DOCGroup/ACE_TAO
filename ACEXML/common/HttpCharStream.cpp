@@ -267,8 +267,8 @@ ACEXML_HttpCharStream::close (void)
 int
 ACEXML_HttpCharStream::get (ACEXML_Char& ch)
 {
-  ch = (unsigned char) this->stream_->get_char();
-  return (((char) ch) == EOF ? -1 :0);
+  ch = (ACEXML_Char) this->stream_->get_char();
+  return (ch == (ACEXML_Char)EOF ? -1 :0);
 }
 
 int
