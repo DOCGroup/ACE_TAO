@@ -1,0 +1,341 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <title>TAO IDL compiler User's Guide</title>
+<!-- $Id$ -->
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#CC0000">
+
+<hr>
+<h3>
+TAO IDL compiler User's Guide</h3>
+
+<h2>
+Scope</h2>
+This document describes the options and features of TAO IDL compiler, it
+is not a reference manual or tutorial on IDL.
+<h2>
+Generated Files</h2>
+The IDL compiler generates 6 files from each <tt>.idl</tt> file, the file
+names are obtained by taking the IDL basename and appending <tt>C.h</tt>,
+<tt>C.i</tt>,
+<tt>C.cpp</tt>,
+<tt>S.h</tt>,
+<tt>S.i</tt>
+and <tt>S.cpp</tt>; the client stubs are declared in the <tt>C.h</tt> file,
+the skeletons in the <tt>S.h</tt> file. Please see the Options list on
+how to get different suffixes for these files.
+<p>Both clients and servers should link against the object files for the
+stubs and skeletons, this is needed to transparently support collocated
+objects.
+<h2>
+Operation Lookup Strategies</h2>
+The server skeleton can make use of different lookup strategies to match
+the incoming operation with the correct operation at the servant.
+<br>Dynamic Hashing and Perfect Hashing are the two different operation
+lookup strategies that are currently supported in tao_idl.
+<br>By default, tao_idl tries to use Perfect Hashing strategy. <a href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf
+</a>generates
+the lookup methods for this strategy.
+<br>ACE_HAS_GPERF has been defined for the platforms where gperf works.
+This includes Solaris and NT.
+<p>To make use of Perfect Hashing:
+<ul>
+<li>
+Build the gperf program at $ACE_ROOT/apps/gperf. (This build also leaves
+a copy/link of the gperf program at the $ACE_ROOT/bin directory).</li>
+
+<li>
+Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin
+to the PATH.</li>
+
+<li>
+Use -g option for the tao_idl or set the PATH accordingly to use gperf
+located at other places other than $ACE_ROOT/bin.</li>
+</ul>
+
+<h2>
+Options</h2>
+The IDL compiler invokes your <tt>C</tt> (or <tt>C++</tt>) preprocessor
+to resolve included IDL files, it receives the common options for preprocessors
+(such as <tt>-D</tt> or <tt>-I</tt>); but also receives other options that
+are specific to it.
+<table BORDER=2 CELLSPACING=2 CELLPADDING=0 >
+<tr>
+<th>Option</th>
+
+<th>Description</th>
+</tr>
+
+<tr NAME="V">
+<td><tt>-V</tt></td>
+
+<td>The compiler printouts its version and exits</td>
+</tr>
+
+<tr NAME="Wb">
+<td><tt>-Wb,</tt><i>option_list</i></EM</TD></td>
+
+<td>Pass options to the backend.</td>
+</tr>
+
+<tr NAME="export_macro">
+<td></td>
+
+<td><tt>export_macro=</tt><i>macro_name</i></td>
+
+<td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
+or <tt>extern</tt> keyword, this is needed for Windows/NT that requires
+special directives to export symbols from DLLs, usually the definition
+is just a space on unix platforms.&nbsp;</td>
+</tr>
+
+<tr NAME="export_include">
+<td></td>
+
+<td><tt>export_include=</tt><i>include_path</i></td>
+
+<td>The compiler will generate code to include <i>include_path</i> at the
+top of the client header, this is usually a good place to define the export
+macro.&nbsp;</td>
+</tr>
+
+<tr NAME="E">
+<td><tt>-E</tt></td>
+
+<td>Only invoke the preprocessor</td>
+</tr>
+
+<tr NAME="Wp">
+<td><tt>-Wp,</tt><i>option_list</i></EM</TD></td>
+
+<td>Pass options to the preprocessor.</td>
+</tr>
+
+<tr NAME="D">
+<td><tt>-D</tt><i>macro_definition</i></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="U">
+<td><tt>-U</tt><i>macro_name</i></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="I">
+<td><tt>-I</tt><i>include_path</i></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="A">
+<td><tt>-A</tt><i>assertion</i></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="Y">
+<td><tt>-Y</tt></td>
+
+<td>It is passed to the preprocessor</td>
+</tr>
+
+<tr NAME="H perfect_hash">
+<td><tt>-H perfect_hash</tt></td>
+
+<td>To specify the IDL compiler to generate skelton code that uses perfect
+hashed operation lookup strategy, which is the default strategy. Perfect
+hashing uses <a href="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf
+</a>program,
+to generate lookup methods.&nbsp;</td>
+</tr>
+
+<tr NAME="H dynamic_hash">
+<td><tt>-H dynamic_hash</tt></td>
+
+<td>To specify the IDL compiler to generate skelton code that uses dynamic
+hashed operation lookup strategy.&nbsp;</td>
+</tr>
+
+<tr NAME="H binary_search">
+<td><tt>-H binary_search</tt></td>
+
+<td>To specify the IDL compiler to generate skelton code that uses binary
+search based operation lookup strategy.&nbsp;</td>
+</tr>
+
+<tr NAME="H linear_search">
+<td><tt>-H linear_search</tt></td>
+
+<td>To specify the IDL compiler to generate skelton code that uses linear
+search based operation lookup strategy.</td>
+</tr>
+
+
+<tr NAME="in">
+<TD><TT>-in</TT></TD>
+<TD> To generate #include statements with <>'s for the standard
+    include files (e.g. tao/corba.h) indicating them as non-changing
+    files</TD> 
+</TR>
+
+
+<TR NAME="ic">
+<TD><TT>-ic</TT></TD>
+<TD> To generate #include statements with ""s for changing
+    standard include files (e.g. tao/corba.h). </TD>
+</TR>
+
+<tr NAME="g">
+<td><tt>-g</tt></td>
+
+<td>To specify the path for the perfect hasing program (GPERF). Default
+is $ACE_ROOT/bin/gperf.&nbsp;</td>
+</tr>
+
+<tr NAME="o">
+<td><tt>-o</tt></td>
+
+<td>To specify the output directory to IDL compiler as to where all the
+IDL-compiler-generated files are to be put. By default, all the files are
+put in the current directory from where&nbsp;<tao_idl>is called.&nbsp;</td>
+</tr>
+
+<tr NAME="hc">
+<td><tt>-hc</tt></td>
+
+<td>Client's header file name ending. Default is "C.h".</td>
+</tr>
+
+<tr NAME="hs">
+<td><tt>-hs</tt></td>
+
+<td>Server's header file name ending. Default is "S.h".</td>
+</tr>
+
+<tr NAME="hT">
+<td><tt>-hT</tt></td>
+
+<td>Server's template header file name ending. Default is "S_T.h".</td>
+</tr>
+
+<tr NAME="cs">
+<td><tt>-cs</tt></td>
+
+<td>Client stub's file name ending. Default is "C.cpp".</td>
+</tr>
+
+<tr NAME="ci">
+<td><tt>-ci</tt></td>
+
+<td>Client inline file name ending. Default is "C.i".</td>
+</tr>
+
+<tr NAME="ss">
+<td><tt>-ss</tt></td>
+
+<td>Server skeleton file name ending. Default is "S.cpp".</td>
+</tr>
+
+<tr NAME="sT">
+<td><tt>-sT</tt></td>
+
+<td>Server template skeleton file name ending. Default is "S_T.cpp".</td>
+</tr>
+
+<tr NAME="si">
+<td><tt>-si</tt></td>
+
+<td>Server inline skeleton file name ending. Default is "S_i.cpp".</td>
+</tr>
+
+<tr NAME="st">
+<td><tt>-st</tt></td>
+
+<td>Server's template inline file name ending. Default is "S_T.i".</td>
+</tr>
+
+<tr NAME="Gc">
+<td><tt>-Gc</tt></td>
+
+<td>Generate stubs and skeletons using compiled marshaling&nbsp;</td>
+</tr>
+
+<tr NAME="Gi">
+<td><tt>-Gi</tt></td>
+
+<td>Generate stubs and skeletons using interpretive marshaling (default
+for now)&nbsp;</td>
+</tr>
+
+<tr NAME="Ge">
+<td><tt>-Ge</tt></td>
+
+<td>Generate code that uses C++ exceptions (unimplemented as yet)</td>
+</tr>
+
+<tr NAME="Gt">
+<td><tt>-Gt</tt></td>
+
+<td>Generate optimized TypeCodes (unimplemented as yet)</td>
+</tr>
+
+<tr>
+<td>-<tt>GI</tt></td>
+
+<td>Generate templates files for the servant implementation </td>
+</tr>
+
+<tr>
+<td><tt>-GIh </tt><i>arg</i></td>
+
+<td>Servant implemenation header file name ending</td>
+</tr>
+
+<tr>
+<td><tt>-GIs </tt><i>arg</i></td>
+
+<td>Servant implemenation skeleton file name ending</td>
+</tr>
+
+<tr>
+<td><tt>-GIb </tt><i>arg</i></td>
+
+<td>Prefix to the implementation class names</td>
+</tr>
+
+<tr>
+<td><tt>-GIe </tt><i>arg</i></td>
+
+<td>Suffix to the implementation class names</td>
+</tr>
+
+<tr>
+<td><tt>-GIc </tt><i>arg</i></td>
+
+<td>Generate copy constructors in the servant implementation template files</td>
+</tr>
+
+<tr NAME="Sa">
+<td><tt>-Sa</tt></td>
+
+<td>Suppress generation of the Any operators</td>
+</tr>
+
+<tr NAME="St">
+<td><tt>-St</tt></td>
+
+<td>Suppress generation of the TypeCodes</td>
+</tr>
+</table>
+
+<hr>
+<address>
+<i><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></i></address>
+
+</body>
+</html>

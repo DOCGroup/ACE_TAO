@@ -1,0 +1,181 @@
+// $Id$
+
+#ifndef TAO_RTEC_EVENTCHANNELADMIN_IDL
+#define TAO_RTEC_EVENTCHANNELADMIN_IDL
+
+#include "RtecEventComm.idl"
+#include "RtecScheduler.idl"
+
+module RtecEventChannelAdmin 
+{
+  exception AlreadyConnected {};
+  exception TypeError {};
+
+  struct Dependency 
+  {
+    RtecEventComm::Event event;
+    RtecScheduler::handle_t rt_info;
+  };
+  typedef sequence<Dependency> DependencySet;
+
+  struct ConsumerQOS 
+  {
+    DependencySet dependencies;
+    boolean is_gateway;
+  };
+
+  struct Publication 
+  {
+    RtecEventComm::Event event;
+    RtecScheduler::Dependency_Info dependency_info;
+  };
+  typedef sequence<Publication> PublicationSet;
+
+  struct SupplierQOS 
+  {
+    PublicationSet publications;
+    boolean is_gateway;
+  };
+
+  interface ProxyPushSupplier: RtecEventComm::PushSupplier 
+    {
+      // = TITLE
+      //   The Proxy Supplier
+      //
+      // = DESCRIPTION
+      //   Consumers receive their events from objects of this type. See
+      //   the interfaces below to see how to gain access to an object
+      //   reference of this type.
+
+      void connect_push_consumer(in RtecEventComm::PushConsumer push_consumer,
+                                 in ConsumerQOS qos)
+        raises(AlreadyConnected, TypeError);
+      // Before receiving any events the consumer must provide its
+      // publication list and QoS information to the Event Channel
+      // through this method.
+
+      void suspend_connection ();
+      // Temporarly suspend reception of events from the Event
+      // Channel. Calling this method is more efficient than dropping
+      // them on the receiving end and less expensive than disconnecting
+      // and connecting again (but it is not free!!)
+
+      void resume_connection ();
+      // Resume the reception of events.
+    };
+
+  interface ProxyPushConsumer: RtecEventComm::PushConsumer 
+    {
+      // = TITLE
+      //   The Proxy Consumer
+      //
+      // = DESCRIPTION
+      //   Suppliers push their events to objects of this type. See the
+      //   interfaces below to see how to gain access to an object
+      //   reference of this type.
+
+      void connect_push_supplier (in RtecEventComm::PushSupplier push_supplier,
+                                  in SupplierQOS qos)
+        raises (AlreadyConnected);
+      // Before pushing events the supplier must provide its
+      // publication list and QoS information to the Event Channel
+      // through this method.
+    };
+
+  // @@ TODO: Find out the exception specs for the following interface's
+  // methods.
+  interface ConsumerAdmin 
+    {
+      // = TITLE
+      //   The Supplier factory
+      //
+      // = DESCRIPTION
+      //   Consumers use this interface to create suppliers they can
+      //   connect to.
+
+      ProxyPushSupplier obtain_push_supplier ();
+      // Obtain a supplier
+    };
+
+  interface SupplierAdmin 
+    {
+      // = TITLE
+      //   The Consumer factory
+      //
+      // = DESCRIPTION
+      //   Suppliers use this interface to create consumers they can
+      //   connect to.
+
+      ProxyPushConsumer obtain_push_consumer ();
+      // Obtain a consumer
+    };
+
+  interface Observer 
+    {
+      // = TITLE
+      //   Observes any changes in the consumer or supplier sets for an
+      //   Event Channel
+      //
+      // = DESCRIPTION
+      //   This object receives updates from Event Channels with any
+      //   changes on set of consumer and or suppliers registered with
+      //   the Event Channel.
+
+      void update_consumer (in ConsumerQOS sub);
+      // A change in the list of consumers has ocurred. The disjunction
+      // of the subscriptions (and its equivalent form ) is
+      // passed to the observer.
+
+      void update_supplier (in SupplierQOS pub);
+      // A change in the list of consumers has ocurred. The disjunction
+      // of the publications (and its equivalent form for suppliers).
+    };
+
+  typedef unsigned long Observer_Handle;
+  // This is used as an opaque ID to control the addition and removal
+  // of handles from an event channel.
+
+  interface EventChannel 
+    {
+      // = TITLE
+      //   The Event Channel class
+      //
+      // = DESCRIPTION
+      //   This class provides the main entry point for the Event
+      //   Channel.  The class follows a protocol similar to the
+      //   COS Event Service as described in the CORBAservices spec.
+      //
+      exception SYNCHRONIZATION_ERROR {};
+      exception QOS_ERROR {};
+      exception SUBSCRIPTION_ERROR {};
+      exception CORRELATION_ERROR {};
+      exception DISPATCH_ERROR {};
+      exception CANT_APPEND_OBSERVER {};
+      exception CANT_REMOVE_OBSERVER {};
+
+      ConsumerAdmin for_consumers ();
+      // Consumers call this method to gain access to the
+      // ProxyPushSupplier factory.
+
+      SupplierAdmin for_suppliers ();
+      // Suppliers call this method to gain access to the
+      // ProxyPushConsumer factory.
+
+      void destroy ();
+      // This method shutdown the Event Channel, destroy any resources
+      // for it and actually shutdown the server where the Event Channel
+      // is running.
+
+      Observer_Handle append_observer (in Observer gw)
+        raises (SYNCHRONIZATION_ERROR,CANT_APPEND_OBSERVER);
+      // Add a gateway to the Event Channel, the handle returned must be
+      // used to remove the gateway from the ORB.
+
+      void remove_observer (in Observer_Handle gw)
+        raises (SYNCHRONIZATION_ERROR,CANT_REMOVE_OBSERVER);
+      // Remove the observer.
+      // @@ TODO: We should raise something if the handle is invalid.
+    };
+};
+
+#endif /* TAO_RTEC_EVENTCHANNELADMIN_IDL */
