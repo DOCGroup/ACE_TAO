@@ -219,7 +219,7 @@ Server<Servant>::register_name (void)
     {
       CORBA::Object_var object = servant_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -402,7 +402,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
 
 
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init");
       return -1;
@@ -436,7 +436,7 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &AC
         naming_client_->resolve (server_name,
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       this->server_ = INTERFACE_OBJECT::_narrow (obj.in (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
