@@ -1,3 +1,11 @@
+Tue Nov 21 21:32:30 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
+	  Corrected the logic for rejecting events on buffer overflow when the
+	  RejectNewEvents Admin property is set.
+	  Thanks to Sarabjeet Duhra <sarabjeet_duhra@hp.com> for pointing
+	  this out.
+
 Tue Nov 21 17:52:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
     
 	* tests/Nested_Event_Loop/server.dsp: 
