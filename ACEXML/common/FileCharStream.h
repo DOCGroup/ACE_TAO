@@ -91,7 +91,7 @@ protected:
   /** Read the next character as a normal character. Return -1 if EOF is
    *  reached, else return 0.
    */
-  virtual int getchar (char& ch);
+  virtual int getchar_i (char& ch);
 
 private:
 

@@ -44,7 +44,7 @@ ACEXML_FileCharStream::determine_encoding (void)
   int retval = 0;
   int i = 0;
   for (; i < 4 && retval != -1; ++i)
-    retval = this->getchar(input[i]);
+    retval = this->getchar_i(input[i]);
   if (i < 4)
     return -1;
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
@@ -64,7 +64,7 @@ ACEXML_FileCharStream::determine_encoding (void)
   char ch;
   for (int j = 0; j < 2; ++j)
     {
-      this->getchar (ch);
+      this->getchar_i (ch);
       if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF')
         continue;
       else
@@ -105,7 +105,7 @@ ACEXML_FileCharStream::close (void)
 
 
 int
-ACEXML_FileCharStream::getchar (char& ch)
+ACEXML_FileCharStream::getchar_i (char& ch)
 {
   ch = ACE_OS::fgetc (this->infile_);
   return (feof(this->infile_) ? -1 : 0);
