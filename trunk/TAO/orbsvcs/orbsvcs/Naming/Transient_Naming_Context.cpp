@@ -307,6 +307,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       ACE_NEW_THROW_EX (bind_iter,
                         ITER_SERVANT (this, hash_iter, this->poa_.in (), this->lock_),
                         CORBA::NO_MEMORY ());
+      ACE_CHECK;
 
       // Release <hash_iter> from auto pointer, and start using
       // reference counting to control our servant.
