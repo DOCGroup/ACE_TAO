@@ -1,20 +1,29 @@
+Mon Mar 24 14:08:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/SOCK_Dgram.cpp (recv): Added a check to make sure that we
+ 	  don't try to copy more into the recv buffer than we've really
+ 	  got.  Thanks to Alan_Cabrera@fp.cibc.com for this fix.
+
+	* ace/OS.cpp (readv): Added a check to make sure that we don't try
+ 	  to copy more into the recv buffer than we've really got.  Thanks
+ 	  to Alan_Cabrera@fp.cibc.com for this fix.
+
+	* ace/Malloc.h: Modified the alignment strategy to define
+ 	  ACE_MALLOC_ALIGN to a number of bytes. (it gets rounded to a
+ 	  number of long's).  This makes it easier to work with more
+ 	  complex buffer alignment strategies (e.g., DMA).  Thanks to Fred
+ 	  LaBar <flabar@fallschurch.esys.com> for this.
+
+	* ace/OS.cpp (readv): Added several more changes for the readv()
+ 	  emulation.  Thanks to Alan Cabrera <Alan_Cabrera@fp.cibc.com>
+ 	  and Adam Porter <aporter@cs.umd.edu> for these fixes.
+
 Mon Mar 24 14:22:17 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): For VxWorks, fixed call to ::taskSpawn ().
 	  ACE's arguments are in an array, not individual arguments.
 	  Also, set flags to VX_FP_TASK if it's 0, to match behavior
 	  of ::sp ().
-
-Mon Mar 24 13:21:31 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
-
-	* ace/High_Res_Timer.cpp (elapsed_time): Added an
-	  ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanosecond)
-	  method that returns the number of elapsed nanoseconds.  This is
-	  accomplished even with the scale factors converting to
-	  microseconds.  It also does not use floating point
-	  calculations.
-
-Mon Mar 24 08:20:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/lib/TS_Clerk_Handler.cpp (handle_close): added
 	  ACE_UNUSED_ARG (mask).  Also, added template specializations.
@@ -25,6 +34,15 @@ Mon Mar 24 08:20:45 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/IOStream/server/iostream_server.cpp,
 	                    client/iostream_client.cpp:
 	  added template specializations.
+
+Mon Mar 24 13:21:31 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/High_Res_Timer.cpp (elapsed_time): Added an
+	  ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanosecond)
+	  method that returns the number of elapsed nanoseconds.  This is
+	  accomplished even with the scale factors converting to
+	  microseconds.  It also does not use floating point
+	  calculations.
 
 Sun Mar 23 13:25:39 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 

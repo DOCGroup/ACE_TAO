@@ -1,7 +1,6 @@
 // SOCK_Dgram.cpp
 // $Id$
 
-
 #define ACE_BUILD_DLL
 #include "ace/SOCK_Dgram.h"
 #include "ace/Synch.h"
@@ -47,10 +46,10 @@ ACE_SOCK_Dgram::recv (iovec *io_vec, ACE_Addr &addr, int flags) const
   else
     return 0; 
 #else
-    flags = flags;
-    addr = addr;
-    io_vec = io_vec;
-    ACE_NOTSUP_RETURN (-1);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (io_vec);
+  ACE_NOTSUP_RETURN (-1);
 #endif /* FIONREAD */
 }
 
@@ -90,6 +89,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
   : ACE_SOCK (SOCK_DGRAM, protocol_family, protocol, reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
+
   if (this->shared_open (local, protocol_family) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_Dgram"));
 }
@@ -244,11 +244,16 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   if (length != -1)
     {
       char *ptr = buf;
-
-      for (i = 0; i < n; i++)
+      int copyn = length;
+     
+      for (i = 0; 
+	   i < n && copyn > 0; 
+	   i++)
 	{
-	  ACE_OS::memcpy (iov[i].iov_base, ptr, iov[i].iov_len);
+	  ACE_OS::memcpy (iov[i].iov_base, ptr,
+			  copyn > iov[i].iov_len ? iov[i].iov_len : copyn);
 	  ptr += iov[i].iov_len;
+	  copyn -= iov[i].iov_len;
 	}
     }
 
