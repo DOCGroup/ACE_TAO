@@ -115,8 +115,10 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
        ACE_ENV_ARG_PARAMETER);
   this->base_exec_->consumers (retval._retn ());
 
+  /*
   this->context_->deactivate_facet ("Hello_Sender_push_message");
   this->context_->update_port_activator ("Hello_Sender_push_message");
+  */
 }
 
 void
