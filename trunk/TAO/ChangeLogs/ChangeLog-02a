@@ -1,3 +1,22 @@
+Sat Apr 29 15:44:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Avoid deadlocks while testing if the peer exists.  We cannot
+          hold the mutex while invoking _non_existent()
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          Add debugging messaging, to be removed once the testing is
+          completed.
+
+        * orbsvcs/tests/Event/Basic/Gateway.cpp:
+          Add new test, removing some subscriptions and verifying that
+          only the remaining events are received.
+
+        * orbsvcs/examples/RtEC/Simple/ec.conf:
+          Enable the reactive control strategies, for testing purposes.
+
 Sat Apr 29 13:48:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Buffering_Constraint_Policy.h:
@@ -35,7 +54,7 @@ Sat Apr 29 15:24:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Stub.cpp: Replaced all occurences of the magic number 131
           with TAO_TWOWAY_RESPONSE_FLAG. This will indicate a regular two
           way operation in TAO.
-        
+
         * tao/corbafwd.h: Added the macro TAO_TWOWAY_RESPONSE_FLAG.
 
 Sat Apr 29 12:54:08 2000  Carlos O'Ryan  <coryan@uci.edu>
@@ -2458,4 +2477,3 @@ Tue Apr 18 10:14:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 Mon Apr 17 20:12:13 2000  Vishal  <vishal@cs.wustl.edu>
 
         * TAO version 1.1.1 released.
-

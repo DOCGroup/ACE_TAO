@@ -144,6 +144,8 @@ TAO_EC_Reactive_SupplierControl::supplier_not_exist (
 {
   ACE_TRY
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Supplier %x does not exists\n", long(proxy)));
       proxy->disconnect_push_consumer (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

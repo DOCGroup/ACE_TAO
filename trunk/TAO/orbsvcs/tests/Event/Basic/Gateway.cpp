@@ -190,6 +190,36 @@ main (int argc, char* argv[])
       tv = ACE_Time_Value (5, 0);
       orb->run (tv);
 
+      expected =
+        supplier_00.event_count
+        + supplier_01.event_count - discarded;
+      consumer_00.dump_results (expected, 5);
+
+      CORBA::ULong last_count = expected;
+      CORBA::ULong last_supplier_00 = supplier_00.event_count;
+
+      // ****************************************************************
+
+      {
+        ACE_ConsumerQOS_Factory consumer_qos;
+        consumer_qos.start_disjunction_group (1);
+        consumer_qos.insert_type (event_type, 0);
+
+        consumer_00.connect (consumer_admin_2.in (),
+                             consumer_qos.get_ConsumerQOS (),
+                             ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+
+      // ****************************************************************
+
+      tv = ACE_Time_Value (5, 0);
+      orb->run (tv);
+
+      expected = last_count +
+        supplier_00.event_count - last_supplier_00;
+      consumer_00.dump_results (expected, 5);
+
       // ****************************************************************
 
       consumer_00.disconnect (ACE_TRY_ENV);
@@ -223,11 +253,6 @@ main (int argc, char* argv[])
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      expected =
-        supplier_00.event_count
-        + supplier_01.event_count - discarded;
-      consumer_00.dump_results (expected, 5);
     }
   ACE_CATCHANY
     {
