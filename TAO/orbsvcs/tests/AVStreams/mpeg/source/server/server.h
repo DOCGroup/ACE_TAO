@@ -47,7 +47,8 @@ class AV_Svc_Handler;
 
 // @@ We should probably try to replace the ACE_Acceptor with the
 // ACE_Strategy_Acceptor using the ACE_Process_Strategy... 
-class AV_Acceptor : public virtual ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR>
+class AV_Acceptor 
+  : public virtual ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR>
 {
   // = TITLE
   //   This defines a AV_Acceptor which is an Acceptor and
@@ -62,7 +63,8 @@ public:
   // handler.
 };
 
-class AV_Svc_Handler : public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+class AV_Svc_Handler 
+  : public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
   // = TITLE
   //   This class defines the service handler for a new connection to
@@ -113,7 +115,8 @@ private:
   Video_Server *vs_;
 };
 
-class AV_Server_Sig_Handler : public virtual ACE_Event_Handler
+class AV_Server_Sig_Handler 
+  : public virtual ACE_Event_Handler
 {
 public:
   AV_Server_Sig_Handler (void);
