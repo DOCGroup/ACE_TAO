@@ -442,6 +442,10 @@ class TAO_RTSched_Export TAO_Reconfig_Sched_Strategy_Base
 {
 public:
 
+  static int comp_tuple_finish_times (const void *first, const void *second);
+  // Ordering function to compare the DFS finish times of
+  // two RT_Info_Tuples
+
   static int comp_entry_finish_times (const void *first, const void *second);
   // Ordering function to compare the DFS finish times of
   // two task entries, so qsort orders these in topological
