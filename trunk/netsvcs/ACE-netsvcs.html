@@ -39,10 +39,13 @@ These services play two roles in ACE:<P>
 <LI> They provide reusable components for common distributed system
      tasks such as logging, naming, locking, and time synchronization.<P>
 <LI> They illustrate how to utilize ACE features such as the <A
-     HREF="ACE-papers.html#ipc">IPC wrappers</A>, <A HREF="ACE-papers.html#reactor">Reactor</A>,
-     <A HREF="ACE-papers.html#config">Service Configurator</A>, <A
-     HREF="ACE-papers.html#initialize">Service Initialization</A>, and <A HREF="ACE-papers.html#concurrency">Concurrency</A> components. <P>
-</UL>
+     HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#ipc">IPC
+wrappers</A>, <A HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#reactor">Reactor</A>,
+     <A HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#config">Service Configurator</A>, <A
+     HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#initialize">Service
+Initialization</A>, and <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#concurrency">Concurrency</A>
+components. <P> </UL>
 
 The heart of the ACE network services is the <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#config">Service
@@ -258,21 +261,22 @@ dynamic Naming_Service_Client Service_Object *
 </OL>
 
 Note:<P>
+
 <UL>
-<LI> These files would vary if the services are run on NT. For
-example, instead of using *.so, we would have to use *.dll.<P>
 <LI> Values for parameters can also be passed in using environment
 variables. For example, instead of specifying absolute hostname or
 port numbers in the config file, we can use $HOST and $PORT,
 respectively, in the file (assuming that these environment variables
 have been set). <P>
+
 <LI> If the environment variable LD_LIBRARY_PATH (in the case of UNIX)
 or PATH (in the case of Win32) contains the path to the shared object
 files or dll, then the config file can be further simplified. Instead
-of specifying an absolute path to the shared object or dll, only the
-name of the shared object or dll would suffice. That is, the Service
-Configurator makes use of LD_LIBRARY_PATH (on UNIX) or PATH (on Win32)
-to look for the shared object files or dlls.
+of specifying a path to the shared object or dll, only the name of the
+shared object or dll would suffice. That is, the Service Configurator
+makes use of LD_LIBRARY_PATH (on UNIX) or PATH (on Win32) to look for
+the shared object files or dlls.
+
 </UL>
 
 </UL>
@@ -417,7 +421,7 @@ have been set). <P>
 <LI> If the environment variable LD_LIBRARY_PATH (in the case of UNIX)
 or PATH (in the case of Win32) contains the path to the shared object
 files or dll, then the config file can be further simplified. Instead
-of specifying an absolute path to the shared object or dll, only the
+of specifying a path to the shared object or dll, only the
 name of the shared object or dll would suffice. That is, the Service
 Configurator makes use of LD_LIBRARY_PATH (on UNIX) or PATH (on Win32)
 to look for the shared object files or dlls.
@@ -538,7 +542,7 @@ The following describes how to configure the Token Server:<P>
 
  <LI> <B>Examples </B><P>
 
-      Here is an example NT svc.conf entry that dynamically loads the
+      Here is an example svc.conf entry that dynamically loads the
       Token Server specifying port number to listen on for client
       connections:<P> 
 
@@ -549,16 +553,6 @@ The following describes how to configure the Token Server:<P>
        </code></pre>
        <P>
 
-      Here is an example UNIX svc.conf entry that dynamically loads the
-      Token Server specifying port number to listen on for client
-      connections.  Notice that only the name of the library file
-      changed:<P>
-
-       <code><pre>
-          dynamic Token_Service Service_Object * 
-            ../lib/netsvcs:_make_ACE_Token_Acceptor() 
-            "-p 10202"
-      </code></pre>
 </UL>
 Note:<P>
 <UL>
@@ -572,7 +566,7 @@ have been set). <P>
 <LI> If the environment variable LD_LIBRARY_PATH (in the case of UNIX)
 or PATH (in the case of Win32) contains the path to the shared object
 files or dll, then the config file can be further simplified. Instead
-of specifying an absolute path to the shared object or dll, only the
+of specifying a path to the shared object or dll, only the
 name of the shared object or dll would suffice. That is, the Service
 Configurator makes use of LD_LIBRARY_PATH (on UNIX) or PATH (on Win32)
 to look for the shared object files or dlls.
@@ -618,7 +612,7 @@ The following describes how to configure the Logging Server:<P>
 
  <LI> <B>Examples </B><P>
 
-      Here is an example NT svc.conf entry that dynamically loads the
+      Here is an example svc.conf entry that dynamically loads the
       Logging Server specifying port number to listen on for client
       connections:<P> 
 
@@ -628,17 +622,6 @@ The following describes how to configure the Logging Server:<P>
         "-p 10202"
       </PRE></CODE>
       <P>
-
-      Here is an example UNIX svc.conf entry that dynamically loads the
-      Logging Server specifying port number to listen on for client
-      connections.  Notice that only the name of the library file
-      changed:<P>
-
-      <PRE> <CODE>
-      dynamic Server_Logging_Service Service_Object * 
-        ../lib/netsvcs:_make_ACE_Server_Logging_Acceptor() 
-        "-p 10202"
-      </PRE></CODE>
 </UL>
 Note:<P>
 <UL>
@@ -652,7 +635,7 @@ have been set). <P>
 <LI> If the environment variable LD_LIBRARY_PATH (in the case of UNIX)
 or PATH (in the case of Win32) contains the path to the shared object
 files or dll, then the config file can be further simplified. Instead
-of specifying an absolute path to the shared object or dll, only the
+of specifying a path to the shared object or dll, only the
 name of the shared object or dll would suffice. That is, the Service
 Configurator makes use of LD_LIBRARY_PATH (on UNIX) or PATH (on Win32)
 to look for the shared object files or dlls.
@@ -737,7 +720,7 @@ ACE_DEFAULT_RENDEZVOUS
 
  <LI> <B>Examples </B><P>
 
-      Here is an example NT svc.conf entry that dynamically loads the
+      Here is an example svc.conf entry that dynamically loads the
       Logging Client specifying host name and port number of the
       Logging Server: <P>
 
@@ -747,17 +730,6 @@ ACE_DEFAULT_RENDEZVOUS
         "-h tango.cs.wustl.edu -p 10202"
       </PRE></CODE>
       <P>
-
-      Here is an example UNIX svc.conf entry that dynamically loads the
-      Logging Client specifying host name and port number of the
-      Logging Server. Notice that only the name of the library file
-      changed:<P>
-
-      <PRE> <CODE>
-      dynamic Client_Logging_Service Service_Object * 
-        ../lib/netsvcs:_make_ACE_Client_Logging_Connector() 
-        "-h tango.cs.wustl.edu -p 10202"
-      </PRE></CODE>
 </UL>
 Note:<P>
 <UL>
@@ -771,7 +743,7 @@ have been set). <P>
 <LI> If the environment variable LD_LIBRARY_PATH (in the case of UNIX)
 or PATH (in the case of Win32) contains the path to the shared object
 files or dll, then the config file can be further simplified. Instead
-of specifying an absolute path to the shared object or dll, only the
+of specifying a path to the shared object or dll, only the
 name of the shared object or dll would suffice. That is, the Service
 Configurator makes use of LD_LIBRARY_PATH (on UNIX) or PATH (on Win32)
 to look for the shared object files or dlls.
@@ -883,7 +855,7 @@ have been set). <P>
 <LI> If the environment variable LD_LIBRARY_PATH (in the case of UNIX)
 or PATH (in the case of Win32) contains the path to the shared object
 files or dll, then the config file can be further simplified. Instead
-of specifying an absolute path to the shared object or dll, only the
+of specifying a path to the shared object or dll, only the
 name of the shared object or dll would suffice. That is, the Service
 Configurator makes use of LD_LIBRARY_PATH (on UNIX) or PATH (on Win32)
 to look for the shared object files or dlls.
