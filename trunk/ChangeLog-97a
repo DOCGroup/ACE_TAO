@@ -1,3 +1,13 @@
+Thu Jan 23 11:51:45 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-sunos5.5-g++.h: commented out ACE_HAS_EXCEPTIONS because
+	  -fhandle-exceptions is broken in g++ 2.7.2 (and is required in order
+	  to use exception handling); also, added ACE_HAS_INLINED_OSCALLS, if
+	   __ACE_INLINE__ is #defined.
+
+	* ace/config-sunos5.5-sunc++-4.1.h: added ACE_HAS_INLINED_OSCALLS,
+	  if __ACE_INLINE__ is #defined.
+
 Wed Jan 22 15:04:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Moved the ACE_TIMER_SKEW macro to below the #inclusion
