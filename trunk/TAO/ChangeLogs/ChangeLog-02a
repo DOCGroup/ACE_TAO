@@ -1,3 +1,10 @@
+Mon Apr 01 07:38:45 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Resource_Factory.h:
+
+	  Forward declare ACE_Lock.  Necessitated by inter-header
+	  dependency reductions below.
+
 Sun Mar 31 21:48:42 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Cache_Entries.h:
