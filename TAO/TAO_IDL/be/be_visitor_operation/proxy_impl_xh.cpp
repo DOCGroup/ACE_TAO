@@ -7,7 +7,7 @@ ACE_RCSID (be_visitor_operation,
 be_visitor_operation_proxy_impl_xh::be_visitor_operation_proxy_impl_xh (
     be_visitor_context *ctx
   )
-  : be_visitor_scope (ctx)
+  : be_visitor_operation (ctx)
 {
 }
 
@@ -45,7 +45,21 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
       << "TAO::Argument ** args," << be_nl
       << "int num_args" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ")";
+
+  if (this->gen_throw_spec (node) != 0)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          "(%N:%l) be_visitor_operation_proxy_impl_xh::"
+          "visit_operation - "
+          "throw spec generation failed\n"
+        ),
+        -1
+      );
+    }
+
+  *os << ";";
 
   return 0;
 }

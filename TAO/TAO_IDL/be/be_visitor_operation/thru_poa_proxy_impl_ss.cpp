@@ -81,10 +81,22 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
   *os << "," << be_nl
       << "int " << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl;
+      << ")";
 
-  *os << be_nl
+  if (this->gen_throw_spec (node) != 0)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
+          "visit_operation - "
+          "throw spec generation failed\n"
+        ),
+        -1
+      );
+    }
+
+  *os << be_uidt_nl
+      << "{" << be_idt_nl
       << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "obj->_stubobj ()"
@@ -181,8 +193,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
     }
 
   *os << be_uidt << be_uidt_nl
-      << "ACE_CHECK;" << be_nl
-      << "ACE_UNUSED_ARG (args); " << be_uidt_nl
+      << "ACE_CHECK;" << be_uidt_nl
       << "}";
 
   return 0;
