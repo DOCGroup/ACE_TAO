@@ -420,7 +420,7 @@ main (int, ASYS_TCHAR *[])
                   Prime_Scheduler (ASYS_TEXT ("matias"),
                                    andres),
                   -1);
-  ACE_ASSERT (matias->open ());
+  ACE_ASSERT (matias->open () != -1);
 
   for (int i = 0; i < n_loops; i++)
     {
