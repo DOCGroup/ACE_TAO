@@ -6,6 +6,12 @@ Mon Oct 30 18:38:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  when adding the include path for orb.idl to the 
 	  command line arglist.
 
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  Found a missing 'delete' for an iterator that was
+	  created on the heap. Instead of adding the 'delete',
+	  just created the iterator on the stack.
+
 Mon Oct 30 10:40:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* docs/tutorials/Quoter/AMI/Makefile: 
