@@ -75,6 +75,14 @@ public:
     TAO_REACTOR_TP
   };
 
+  enum
+  {
+    TAO_LRU, // Use Least Recently Used caching strategy
+    TAO_LFU, // Use Least Frequently Used caching strategy
+    TAO_FIFO, // Use First In First Out caching strategy
+    TAO_NULL // Dont use any strategy.
+  };
+
   int cdr_allocator_source (void);
   // Modify and get the source for the CDR allocators
 
@@ -91,6 +99,8 @@ public:
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
   virtual int init_protocol_factories (void);
 
+  virtual int get_connection_caching_strategy_type (void) const;
+  virtual double get_purge_percentage (void) const;
 protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
@@ -111,6 +121,15 @@ protected:
 
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.
+
+  int connection_caching_type_;
+  // Specifies the typeof caching strategy we should use for 
+  // connection management.
+  
+  double purge_percentage_;
+  // Specifies the percentage of entries which should get purged on
+  // demand.
+
 };
 
 #if defined (__ACE_INLINE__)
