@@ -37,7 +37,7 @@ get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
 {
   if (tag == IOP::TAG_INTERNET_IOP)
       tag_string = "IIOP";
-  else if (tag == TAO_TAG_UIOP_PROFILE)  
+  else if (tag == TAO_TAG_UIOP_PROFILE)
       tag_string = "UIOP";
   else if (tag == TAO_TAG_SHMEM_PROFILE)
       tag_string = "SHMEM";
@@ -53,11 +53,11 @@ get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
 static void
 display_endpoint_info (CORBA::Object_ptr obj)
 {
-  if ( CORBA::Object::is_nil (obj)) 
-     {
-       ACE_DEBUG ((LM_DEBUG, "Nil\n"));
-       return;
-     }
+  if (CORBA::is_nil (obj))
+    {
+      ACE_DEBUG ((LM_DEBUG, "Nil\n"));
+      return;
+    }
 
   TAO_Stub *stub = obj->_stubobj ();
   if (!stub)
@@ -254,7 +254,7 @@ main (int argc, char *argv[])
           else if (ACE_OS::strcmp (*argv, "--ctxior") == 0)
             {
               showCtxIOR = 1;
-            }          
+            }
           else if (ACE_OS::strncmp (*argv, "--", 2) == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Usage: %s [[ --ior ][ --ctxior ] | --nsior ]\n", pname));
