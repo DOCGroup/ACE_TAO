@@ -227,7 +227,7 @@ protected:
     );
   TAO_ImplementationRepository_ServerObject_Default_Proxy_Factory *proxy_factory_;
   int delete_proxy_factory_;
-  ACE_Recursive_Thread_Mutex lock_;
+  ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
   typedef ACE_Singleton<TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_ServerObject_PROXY_FACTORY_ADAPTER;
@@ -1221,7 +1221,7 @@ protected:
     );
   TAO_ImplementationRepository_Administration_Default_Proxy_Factory *proxy_factory_;
   int delete_proxy_factory_;
-  ACE_Recursive_Thread_Mutex lock_;
+  ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
   typedef ACE_Singleton<TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_Administration_PROXY_FACTORY_ADAPTER;
@@ -1512,7 +1512,7 @@ protected:
     );
   TAO_ImplementationRepository_ServerInformationIterator_Default_Proxy_Factory *proxy_factory_;
   int delete_proxy_factory_;
-  ACE_Recursive_Thread_Mutex lock_;
+  ACE_SYNCH_RECURSIVE_MUTEX lock_;
   };
 
   typedef ACE_Singleton<TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_ImplementationRepository_ServerInformationIterator_PROXY_FACTORY_ADAPTER;
