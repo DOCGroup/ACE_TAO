@@ -335,9 +335,4 @@
 // Enables use of POSIX termios struct
 #define ACE_USES_NEW_TERMIOS
 
-// Use new pthread_attr_setstack
-#if defined (__USE_XOPEN2K) && (__GLIBC__ > 2 || ( __GLIBC__ == 2 && __GLIBC_MINOR__ >=2))
-#define ACE_HAS_PTHREAD_SETSTACK
-#endif /* __USE_XOPEN2K && glibc >2.2 */
-
 #endif /* ACE_LINUX_COMMON_H */
