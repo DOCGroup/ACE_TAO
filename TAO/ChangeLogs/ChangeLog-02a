@@ -1,3 +1,15 @@
+Sat Jun 24 17:22:36 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/POA.h:
+
+	  Added #if (TAO_HAS_RT_CORBA == 1) protection to the
+	  Priority_Model_Processing friend declaration.
+
+	* tao/Object_Adapter.cpp (pre_invoke):
+
+	  Fixed Borland warning about comparing signed and unsigned
+	  types.
+
 Fri Jun 23 23:26:09 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Object_Adapter.cpp (pre_invoke):
