@@ -4,7 +4,7 @@
 #include "URL_Visitor_Factory.h"
 #include "Web_Crawler.h"
 
-ACE_RCSID(HTTP_1.1_Client, Web_Crawler, "$Id$")
+ACE_RCSID(Web_Crawler, Web_Crawler, "$Id$")
 
 Web_Crawler::~Web_Crawler (void)
 {

@@ -21,7 +21,7 @@
 #include "Options.h"
 #include "ace/Signal.h"
 
-ACE_RCSID(HTTP_1.1_Client, main, "$Id$")
+ACE_RCSID(Web_Crawler, main, "$Id$")
 
 void sig_handler (int)
 {

@@ -5,7 +5,7 @@
 #include "Options.h"
 #include "HTTP_URL.h"
 
-ACE_RCSID(HTTP_1.1_Client, HTTP_URL, "$Id$")
+ACE_RCSID(Web_Crawler, HTTP_URL, "$Id$")
 
 const ACE_URL_Addr &
 HTTP_URL::url_addr (void) const

@@ -6,7 +6,7 @@
 #include "Command_Processor.h"
 #include "URL_Visitor.h"
 
-ACE_RCSID(HTTP_1.1_Client, Command_Processor, "$Id$")
+ACE_RCSID(Web_Crawler, Command_Processor, "$Id$")
 
 Command::~Command (void)
 {

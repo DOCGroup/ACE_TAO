@@ -3,7 +3,7 @@
 
 #include "URL_Visitor_Factory.h"
 
-ACE_RCSID(HTTP_1.1_Client, URL_Visitor_Factory, "$Id$")
+ACE_RCSID(Web_Crawler, URL_Visitor_Factory, "$Id$")
 
 URL_Visitor *
 URL_Validation_Visitor_Factory::make_visitor (void)
