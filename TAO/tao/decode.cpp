@@ -607,14 +607,11 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   // object reference.
   stream->decode (CORBA::_tc_string, &type_hint, 0, env);
 
-  // Read the profiles, discarding all until an IIOP profile comes by.
-  // Once we see an IIOP profile, ignore any further ones.
-  //
-  // XXX this will need to change someday to let different protocol
-  // code be accessed, not just IIOP.  Protocol modules will be
-  // dynamically loaded from shared libraries via ORB_init (), and we
-  // just need to be able to access such preloaded libraries here as
-  // we unmarshal objrefs.
+  // @@ TODO: Only IIOP profiles are parsed here! We should use the
+  // connector registry to isolate this code from the particulars of
+  // all the protocols.
+  // Also: the connector registry should create a base TAO_Profile if
+  // it does not find the right protocol to handle the current one.
 
   CORBA::ULong profiles;
   STUB_Object *objdata = 0;

@@ -47,14 +47,18 @@ class TAO_ORBSVCS_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
 public:
   TAO_EC_Timeout_Filter (TAO_EC_Event_Channel *event_channel,
                          const TAO_EC_QOS_Info& qos_info,
+                         RtecEventComm::EventType type,
                          RtecEventComm::Time period);
   // Constructor.
-  
+
   virtual ~TAO_EC_Timeout_Filter (void);
   // Destructor.
 
   const TAO_EC_QOS_Info& qos_info (void) const;
   // Return the QOS_Info for this Timeout filter.
+
+  RtecEventComm::EventType type (void) const;
+  // The type of timeout event that we generate.
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -86,6 +90,9 @@ private:
 
   TAO_EC_QOS_Info qos_info_;
   // Events "generated" by this filter use this QOS_Info.
+
+  RtecEventComm::EventType type_;
+  // The type of timeout event...
 
   int id_;
   // The ID of the timeout in the Timeout_Generator, for

@@ -59,13 +59,15 @@ TAO_EC_Basic_Filter_Builder::
         }
       return new TAO_EC_Disjunction_Filter (children, n);
     }
-  else if (e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
+  else if (e.header.type == ACE_ES_EVENT_TIMEOUT
+           || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
            || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
       pos++;
       TAO_EC_QOS_Info qos_info;
       return new TAO_EC_Timeout_Filter (this->event_channel_,
                                         qos_info,
+                                        e.header.type,
                                         e.header.creation_time);
     }
   return new TAO_EC_Type_Filter (e.header);

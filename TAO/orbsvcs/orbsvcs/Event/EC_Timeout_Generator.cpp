@@ -17,9 +17,14 @@ TAO_EC_Timeout_Generator::~TAO_EC_Timeout_Generator (void)
 // ****************************************************************
 
 int
-TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value &,
+TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
                                         const void *vp)
 {
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "TAO_EC_Timeout_Adapter::handle_timeout -"
+  //              " expire at %d:%d\n",
+  //              tv.sec (), tv.usec ()));
+
   TAO_EC_Timeout_Filter *filter =
     ACE_static_cast(TAO_EC_Timeout_Filter*, ACE_const_cast(void*,vp));
 
@@ -29,7 +34,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value &,
   ACE_TRY_NEW_ENV
     {
       RtecEventComm::Event e;
-      e.header.type = ACE_ES_EVENT_TIMEOUT;
+      e.header.type = filter->type ();
       e.header.source = 0;
 
       RtecEventComm::EventSet single_event (1, 1, &e, 0);
