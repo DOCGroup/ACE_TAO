@@ -7918,8 +7918,8 @@ tags:
  be_include/be_visitor_module/any_op.h \
  be_include/be_visitor_module/cdr_op.h be/be_visitor_module/module.cpp \
  be/be_visitor_module/module_ch.cpp be/be_visitor_module/module_sh.cpp \
-be/be_visitor_module/module_ih.cpp \
- be/be_visitor_module/any_op.cpp be/be_visitor_module/cdr_op.cpp
+ be/be_visitor_module/module_ih.cpp be/be_visitor_module/any_op.cpp \
+ be/be_visitor_module/cdr_op.cpp
 .obj/be_visitor_operation.o .obj/be_visitor_operation.so .shobj/be_visitor_operation.o .shobj/be_visitor_operation.so: be/be_visitor_operation.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8192,8 +8192,7 @@ be/be_visitor_module/module_ih.cpp \
  be/be_visitor_root/root_ch.cpp be/be_visitor_root/root_ci.cpp \
  be/be_visitor_root/root_cs.cpp be/be_visitor_root/root_sh.cpp \
  be/be_visitor_root/root_si.cpp be/be_visitor_root/root_ss.cpp \
- be/be_visitor_root/root_is.cpp \
- be/be_visitor_root/root_ih.cpp \
+ be/be_visitor_root/root_is.cpp be/be_visitor_root/root_ih.cpp \
  be/be_visitor_root/any_op.cpp be/be_visitor_root/cdr_op.cpp
 .obj/be_visitor_scope.o .obj/be_visitor_scope.so .shobj/be_visitor_scope.o .shobj/be_visitor_scope.so: be/be_visitor_scope.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \

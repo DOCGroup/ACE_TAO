@@ -65,13 +65,12 @@ Multicast.  This behavior can be overridden in the following ways:
            For example, If a client wants to use the Naming_Service
            from the sample run it could use:
 
-           % client - ORBnameserviceior
-           <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
+           % client -ORBnameserviceior <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
 
         2. Set the environment variable `NameService' (minus the
            quotes), as follows in csh or tcsh:
 
-           % setenv NameService <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
+           % setenv NameServiceIOR <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
 
            and then run the client,
 
