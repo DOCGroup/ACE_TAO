@@ -1,3 +1,9 @@
+Tue Dec 30 12:41:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h:
+          Removed not needed ; after c++ namespace closure.
+
 Tue Dec 30 12:38:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Properties.h:
