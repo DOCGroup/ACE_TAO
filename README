@@ -1,4 +1,4 @@
-[An HTML version of this README file is available at the following URL
+[This document is also available at the following URL:
 
 http://www.cs.wustl.edu/~schmidt/ACE.html.
 
@@ -681,3 +681,4 @@ developing distributed application frameworks.
 Finally, I'd also like to thank Todd L. Montgomery
 <tmont@cerc.wvu.edu>, fellow heavy metal head, for fulfilling his
 quest to get ACE to compile with GCC!
+

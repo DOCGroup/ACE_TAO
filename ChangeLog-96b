@@ -1,3 +1,16 @@
+Tue Dec 24 10:55:20 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Threads/task_three.cpp (main): Changed the use of
+ 	  new-style C++ casts for ACE_Sig_Action to old-style C casts so
+ 	  that more picky compilers like GCC won't complain.  Thanks to
+ 	  Sandro Doro <alex@aureus.sublink.org> for reporting this.
+
+Sun Dec 22 21:16:23 1996  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/OS.cpp (thr_create): added a new ACE_HAS_PTHREADS_XAVIER to
+ 	  deal with the sparam.sched_priority features of the Linux
+ 	  pthreads implementation.  Thanks to James Johnson for this.
+
 Sun Dec 22 21:23:57 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Acceptor.cpp: replaced two statements that looked like this:
@@ -17,6 +30,7 @@ Sun Dec 22 21:16:23 1996  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 	* ace/OS.cpp (thr_create): added a new ACE_HAS_PTHREADS_XAVIER to
  	  deal with the sparam.sched_priority features of the Linux
  	  pthreads implementation.  Thanks to James Johnson for this.
+>>>>>>> 4.124
 
 	* ace/OS.i (thr_setprio): I forgot to define int policy = 0;
 
