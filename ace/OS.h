@@ -3923,6 +3923,8 @@ public:
                      const wchar_t *t);
   static wchar_t *strcpy (wchar_t *s,
                           const wchar_t *t);
+  static int strcasecmp (const wchar_t *s, 
+                         const wchar_t *t);
   static wchar_t *strpbrk (const wchar_t *s1,
                            const wchar_t *s2);
   static size_t strlen (const wchar_t *s);
