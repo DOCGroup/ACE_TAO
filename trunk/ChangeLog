@@ -1,3 +1,8 @@
+Thu Nov  5 14:08:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Added defines ACE_LACKS_TERMIOS_H and ACE_LACKS_NETINET_TCP_H
+
 Thu Nov  5 13:18:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
