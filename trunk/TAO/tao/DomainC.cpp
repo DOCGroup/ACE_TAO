@@ -38,9 +38,8 @@
 #include "Object_Argument_T.h"
 #include "Special_Basic_Arguments.h"
 #include "ORB_Core.h"
-#include "ace/OS_NS_string.h"
+#include "Typecode.h"
 #include "ace/Dynamic_Service.h"
-
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -52,6 +51,7 @@
 
 // TAO_IDL - Generated from
 // be/be_visitor_arg_traits.cpp:62
+
 // TAO specific stuff.
 namespace CORBA
 {
@@ -85,7 +85,6 @@ TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr
 
   return adapter->interfacedef_cdr_insert (cdr, this->x_);
 }
-
 
 // Arg traits specializations.
 namespace TAO
@@ -125,6 +124,7 @@ namespace TAO
 
 #endif /* end #if !defined */
 }
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
@@ -238,6 +238,14 @@ CORBA::DomainManager::CORBA_DomainManager_setup_collocation (int collocated)
 CORBA::DomainManager::~DomainManager (void)
 {}
 
+void
+CORBA::DomainManager::_tao_any_destructor (void *_tao_void_pointer)
+{
+  DomainManager *_tao_tmp_pointer =
+    ACE_static_cast (DomainManager *, _tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
+}
+
 CORBA::DomainManager_ptr
 CORBA::DomainManager::_narrow (
     CORBA::Object_ptr _tao_objref
@@ -316,6 +324,43 @@ CORBA::Boolean
 CORBA::DomainManager::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
+}
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/typecode_defn.cpp:284
+
+static const CORBA::Long _oc_CORBA_DomainManager[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  36,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f446f),
+  ACE_NTOHL (0x6d61696e),
+  ACE_NTOHL (0x4d616e61),
+  ACE_NTOHL (0x6765723a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManager:1.0
+    14,
+  ACE_NTOHL (0x446f6d61),
+  ACE_NTOHL (0x696e4d61),
+  ACE_NTOHL (0x6e616765),
+  ACE_NTOHL (0x72000000),  // name = DomainManager
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManager (
+    CORBA::tk_objref,
+    sizeof (_oc_CORBA_DomainManager),
+    (char *) &_oc_CORBA_DomainManager,
+    0,
+    sizeof (CORBA::DomainManager)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_DomainManager =
+    &_tc_TAO_tc_CORBA_DomainManager;
 }
 
 // TAO_IDL - Generated from
@@ -433,6 +478,14 @@ CORBA::ConstructionPolicy::CORBA_ConstructionPolicy_setup_collocation (int collo
 CORBA::ConstructionPolicy::~ConstructionPolicy (void)
 {}
 
+void
+CORBA::ConstructionPolicy::_tao_any_destructor (void *_tao_void_pointer)
+{
+  ConstructionPolicy *_tao_tmp_pointer =
+    ACE_static_cast (ConstructionPolicy *, _tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
+}
+
 CORBA::ConstructionPolicy_ptr
 CORBA::ConstructionPolicy::_narrow (
     CORBA::Object_ptr _tao_objref
@@ -518,6 +571,46 @@ CORBA::ConstructionPolicy::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
+// be/be_visitor_typecode/typecode_defn.cpp:284
+
+static const CORBA::Long _oc_CORBA_ConstructionPolicy[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  41,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f436f),
+  ACE_NTOHL (0x6e737472),
+  ACE_NTOHL (0x75637469),
+  ACE_NTOHL (0x6f6e506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/ConstructionPolicy:1.0
+    19,
+  ACE_NTOHL (0x436f6e73),
+  ACE_NTOHL (0x74727563),
+  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63790000),  // name = ConstructionPolicy
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstructionPolicy (
+    CORBA::tk_objref,
+    sizeof (_oc_CORBA_ConstructionPolicy),
+    (char *) &_oc_CORBA_ConstructionPolicy,
+    0,
+    sizeof (CORBA::ConstructionPolicy)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_ConstructionPolicy =
+    &_tc_TAO_tc_CORBA_ConstructionPolicy;
+}
+
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_DOMAINMANAGERLIST_CS_)
@@ -562,7 +655,79 @@ CORBA::DomainManagerList::DomainManagerList (
 CORBA::DomainManagerList::~DomainManagerList (void)
 {}
 
+void CORBA::DomainManagerList::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
+{
+  DomainManagerList * _tao_tmp_pointer =
+    ACE_static_cast (DomainManagerList *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
+}
+
 #endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/typecode_defn.cpp:284
+
+static const CORBA::Long _oc_CORBA_DomainManagerList[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  40,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f446f),
+  ACE_NTOHL (0x6d61696e),
+  ACE_NTOHL (0x4d616e61),
+  ACE_NTOHL (0x6765724c),
+  ACE_NTOHL (0x6973743a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManagerList:1.0
+    18,
+  ACE_NTOHL (0x446f6d61),
+  ACE_NTOHL (0x696e4d61),
+  ACE_NTOHL (0x6e616765),
+  ACE_NTOHL (0x724c6973),
+  ACE_NTOHL (0x74000000),  // name = DomainManagerList
+    CORBA::tk_sequence, // typecode kind
+  80, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_objref, // typecode kind
+    64, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      36,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f5242),
+      ACE_NTOHL (0x412f446f),
+      ACE_NTOHL (0x6d61696e),
+      ACE_NTOHL (0x4d616e61),
+      ACE_NTOHL (0x6765723a),
+      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManager:1.0
+            14,
+      ACE_NTOHL (0x446f6d61),
+      ACE_NTOHL (0x696e4d61),
+      ACE_NTOHL (0x6e616765),
+      ACE_NTOHL (0x72000000),  // name = DomainManager
+
+    0U,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManagerList (
+    CORBA::tk_alias,
+    sizeof (_oc_CORBA_DomainManagerList),
+    (char *) &_oc_CORBA_DomainManagerList,
+    0,
+    sizeof (CORBA::DomainManagerList)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_DomainManagerList =
+    &_tc_TAO_tc_CORBA_DomainManagerList;
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/cdr_op_cs.cpp:63
@@ -749,6 +914,12 @@ CORBA::Boolean operator>> (
       >;
 
 #endif /* end #if !defined */
+
+  template class
+    TAO::Ret_Object_Argument_T<
+        CORBA::Policy_ptr,
+        CORBA::Policy_var
+      >;
 
   template class
     TAO::Objref_Traits<

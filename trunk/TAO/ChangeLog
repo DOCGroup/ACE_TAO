@@ -1,3 +1,17 @@
+Tue Dec 23 20:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Bounds.pidl:
+	* tao/CONV_FRAME.pidl:
+	* tao/Current.pidl:
+	* tao/Domain.pidl:
+	* tao/Dynamic_Parameter.pidl:
+	
+	  Updated the documentaion.
+	
+	* tao/DomainC.cpp:
+
+	  Regenerated the file again.
+
 Tue Dec 23 19:56:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TAO.dsp:
