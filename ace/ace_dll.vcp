@@ -434,6 +434,8 @@ DEP_CPP_ACE_C=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -983,6 +985,8 @@ DEP_CPP_ACTIV=\
 	".\ace_wchar.inl"\
 	".\Activation_Queue.h"\
 	".\Activation_Queue.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -1446,6 +1450,8 @@ DEP_CPP_ACTIVE=\
 	".\Active_Map_Manager_T.cpp"\
 	".\Active_Map_Manager_T.h"\
 	".\Active_Map_Manager_T.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -1749,6 +1755,8 @@ DEP_CPP_ADDR_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -1962,6 +1970,8 @@ DEP_CPP_ARG_S=\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
 	".\Arg_Shifter.h"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -2216,6 +2226,8 @@ DEP_CPP_ARGV_=\
 	".\ace_wchar.inl"\
 	".\ARGV.h"\
 	".\ARGV.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -2872,6 +2884,8 @@ DEP_CPP_ASYNC=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -3191,6 +3205,8 @@ DEP_CPP_ASYNCH=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Asynch_IO.h"\
 	".\Asynch_IO_Impl.h"\
 	".\Asynch_IO_Impl.i"\
@@ -3486,6 +3502,8 @@ DEP_CPP_ATOMI=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Atomic_Op.h"\
 	".\Atomic_Op.i"\
 	".\Base_Thread_Adapter.h"\
@@ -3908,6 +3926,8 @@ DEP_CPP_BASED=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -4213,6 +4233,8 @@ DEP_CPP_BASIC=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Stats.h"\
@@ -4845,6 +4867,8 @@ DEP_CPP_BASIC_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -5457,6 +5481,8 @@ DEP_CPP_CAPAB=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -5907,6 +5933,8 @@ DEP_CPP_CDR_B=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -6322,6 +6350,8 @@ DEP_CPP_CDR_S=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -6612,6 +6642,8 @@ DEP_CPP_CE_SC=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -7019,6 +7051,8 @@ DEP_CPP_CONFI=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -7517,6 +7551,8 @@ DEP_CPP_CONFIG=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -7994,6 +8030,8 @@ DEP_CPP_CONTA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -8235,6 +8273,8 @@ DEP_CPP_DIREN=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -8451,6 +8491,8 @@ DEP_CPP_DIRENT=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -8691,6 +8733,8 @@ DEP_CPP_DLL_C=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -8994,6 +9038,8 @@ DEP_CPP_DUMP_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -9327,6 +9373,8 @@ DEP_CPP_DYNAM=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -9582,6 +9630,8 @@ DEP_CPP_DYNAMI=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -9945,6 +9995,8 @@ DEP_CPP_DYNAMIC=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -10424,6 +10476,8 @@ DEP_CPP_EVENT=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -10770,6 +10824,8 @@ DEP_CPP_FILE_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -11093,6 +11149,8 @@ DEP_CPP_FILE_A=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -11428,6 +11486,8 @@ DEP_CPP_FILE_C=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -11767,6 +11827,8 @@ DEP_CPP_FILE_I=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -12054,6 +12116,8 @@ DEP_CPP_FILE_L=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -12270,6 +12334,8 @@ DEP_CPP_FLAG_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -12570,6 +12636,8 @@ DEP_CPP_FRAME=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -12855,6 +12923,8 @@ DEP_CPP_FUNCT=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -13110,6 +13180,8 @@ DEP_CPP_GET_O=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -13402,6 +13474,8 @@ DEP_CPP_HANDL=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -13618,6 +13692,8 @@ DEP_CPP_HANDLE=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -13643,6 +13719,232 @@ DEP_CPP_HANDLE=\
 	".\Global_Macros.h"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hashable.cpp
+
+!IF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
+
+DEP_CPP_HASHA=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
+	".\Hashable.h"\
+	".\Hashable.inl"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
+
+DEP_CPP_HASHA=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
+	".\Hashable.h"\
+	".\Hashable.inl"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86) Debug"
+
+DEP_CPP_HASHA=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
+	".\Hashable.h"\
+	".\Hashable.inl"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
 	".\Log_Msg_Callback.h"\
@@ -13930,6 +14232,8 @@ DEP_CPP_HIGH_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Stats.h"\
@@ -14222,6 +14526,8 @@ DEP_CPP_INET_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -14448,6 +14754,8 @@ DEP_CPP_INIT_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -14681,6 +14989,8 @@ DEP_CPP_IO_SA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -14903,6 +15213,8 @@ DEP_CPP_IPC_S=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -15121,6 +15433,8 @@ DEP_CPP_LIB_F=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -15591,6 +15905,8 @@ DEP_CPP_LOCAL=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -16113,6 +16429,8 @@ DEP_CPP_LOG_M=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -16719,6 +17037,8 @@ DEP_CPP_LOG_MSG_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -17043,6 +17363,8 @@ DEP_CPP_LOG_R=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -17383,6 +17705,8 @@ DEP_CPP_MALLO=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -17731,6 +18055,8 @@ DEP_CPP_MALLOC=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -18178,6 +18504,8 @@ DEP_CPP_MEM_A=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Based_Pointer_Repository.h"\
@@ -18522,6 +18850,8 @@ DEP_CPP_MEM_AD=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -18946,6 +19276,8 @@ DEP_CPP_MEM_C=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Based_Pointer_Repository.h"\
@@ -19423,6 +19755,8 @@ DEP_CPP_MEM_I=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Based_Pointer_Repository.h"\
@@ -19749,6 +20083,8 @@ DEP_CPP_MEM_M=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -20166,6 +20502,8 @@ DEP_CPP_MEM_S=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Based_Pointer_Repository.h"\
@@ -20621,6 +20959,8 @@ DEP_CPP_MEM_ST=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Based_Pointer_Repository.h"\
@@ -21033,6 +21373,8 @@ DEP_CPP_MEMOR=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -21447,6 +21789,8 @@ DEP_CPP_MESSA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -21985,6 +22329,8 @@ DEP_CPP_MESSAG=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -22266,6 +22612,8 @@ DEP_CPP_METHO=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -22657,6 +23005,8 @@ DEP_CPP_NAME_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -23004,6 +23354,8 @@ DEP_CPP_NAME_R=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -23463,6 +23815,8 @@ DEP_CPP_NAME_S=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -24043,6 +24397,8 @@ DEP_CPP_NAMIN=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -24422,6 +24778,8 @@ DEP_CPP_NOTIF=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -24770,6 +25128,8 @@ DEP_CPP_OBCHU=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -25316,6 +25676,8 @@ DEP_CPP_OBJEC=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -25784,6 +26146,8 @@ DEP_CPP_OBSTA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -26340,6 +26704,8 @@ DEP_CPP_PARSE=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -26815,6 +27181,8 @@ DEP_CPP_PI_MA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Based_Pointer_Repository.h"\
@@ -27156,6 +27524,8 @@ DEP_CPP_PIPE_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -27244,6 +27614,478 @@ DEP_CPP_PIPE_=\
 	".\Thread_Hook.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Reactor.cpp
+
+!IF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
+
+DEP_CPP_PRIOR=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\Pipe.h"\
+	".\Pipe.i"\
+	".\post.h"\
+	".\pre.h"\
+	".\Priority_Reactor.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Select_Reactor.h"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Select_Reactor_T.cpp"\
+	".\Select_Reactor_T.h"\
+	".\Select_Reactor_T.i"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Timer_Heap.h"\
+	".\Timer_Heap_T.cpp"\
+	".\Timer_Heap_T.h"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Token.h"\
+	".\Token.i"\
+	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
+
+DEP_CPP_PRIOR=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\Pipe.h"\
+	".\Pipe.i"\
+	".\post.h"\
+	".\pre.h"\
+	".\Priority_Reactor.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Select_Reactor.h"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Select_Reactor_T.cpp"\
+	".\Select_Reactor_T.h"\
+	".\Select_Reactor_T.i"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Timer_Heap.h"\
+	".\Timer_Heap_T.cpp"\
+	".\Timer_Heap_T.h"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Token.h"\
+	".\Token.i"\
+	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86) Debug"
+
+DEP_CPP_PRIOR=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Allocator.h"\
+	".\Malloc_Allocator.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Min_Max.h"\
+	".\Node.cpp"\
+	".\Node.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\Pipe.h"\
+	".\Pipe.i"\
+	".\post.h"\
+	".\pre.h"\
+	".\Priority_Reactor.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Select_Reactor.h"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Select_Reactor_T.cpp"\
+	".\Select_Reactor_T.h"\
+	".\Select_Reactor_T.i"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Timer_Heap.h"\
+	".\Timer_Heap_T.cpp"\
+	".\Timer_Heap_T.h"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Token.h"\
+	".\Token.i"\
+	".\Trace.h"\
+	".\Unbounded_Queue.cpp"\
+	".\Unbounded_Queue.h"\
+	".\Unbounded_Queue.inl"\
+	".\Unbounded_Set.cpp"\
+	".\Unbounded_Set.h"\
+	".\Unbounded_Set.inl"\
 	
 
 !ENDIF 
@@ -27503,6 +28345,8 @@ DEP_CPP_PROCE=\
 	".\ace_wchar.inl"\
 	".\ARGV.h"\
 	".\ARGV.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -27903,6 +28747,8 @@ DEP_CPP_PROCES=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -28267,6 +29113,8 @@ DEP_CPP_PROCESS=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -28587,6 +29435,8 @@ DEP_CPP_PROCESS_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -28867,6 +29717,8 @@ DEP_CPP_PROFI=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -29394,6 +30246,8 @@ DEP_CPP_REACT=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -29576,6 +30430,388 @@ DEP_CPP_REACT=\
 	".\Unbounded_Set.inl"\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Notification_Strategy.cpp
+
+!IF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
+
+DEP_CPP_REACTO=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Notification_Strategy.h"\
+	".\Notification_Strategy.inl"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\Reactor_Notification_Strategy.h"\
+	".\Reactor_Notification_Strategy.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
+
+DEP_CPP_REACTO=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Notification_Strategy.h"\
+	".\Notification_Strategy.inl"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\Reactor_Notification_Strategy.h"\
+	".\Reactor_Notification_Strategy.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86) Debug"
+
+DEP_CPP_REACTO=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\File_Lock.h"\
+	".\File_Lock.inl"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Notification_Strategy.h"\
+	".\Notification_Strategy.inl"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Process_Mutex.h"\
+	".\Process_Mutex.inl"\
+	".\Process_Semaphore.h"\
+	".\Process_Semaphore.inl"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\Reactor_Notification_Strategy.h"\
+	".\Reactor_Notification_Strategy.inl"\
+	".\RW_Process_Mutex.h"\
+	".\RW_Process_Mutex.inl"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\svc_export.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Test_and_Set.cpp"\
+	".\Test_and_Set.h"\
+	".\Test_and_Set.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Trace.h"\
 	
 
 !ENDIF 
@@ -29891,6 +31127,8 @@ DEP_CPP_READ_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -30465,6 +31703,8 @@ DEP_CPP_REGIS=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -30956,6 +32196,8 @@ DEP_CPP_REGIST=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -31469,6 +32711,8 @@ DEP_CPP_REMOT=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -31816,6 +33060,8 @@ DEP_CPP_RW_PR=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -32044,6 +33290,8 @@ DEP_CPP_SCHED=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -32474,6 +33722,8 @@ DEP_CPP_SELEC=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -32930,6 +34180,8 @@ DEP_CPP_SELECT=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -33490,6 +34742,8 @@ DEP_CPP_SERVI=\
 	".\Addr.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -34131,6 +35385,8 @@ DEP_CPP_SERVIC=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -34557,6 +35813,8 @@ DEP_CPP_SERVICE=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -34899,6 +36157,8 @@ DEP_CPP_SERVICE_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -35437,6 +36697,8 @@ DEP_CPP_SERVICE_T=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -35610,11 +36872,541 @@ DEP_CPP_SERVICE_T=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\Shared_Object.cpp
+SOURCE=.\Shared_Memory.cpp
 
 !IF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
 
 DEP_CPP_SHARE=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Shared_Memory.h"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
+
+DEP_CPP_SHARE=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Shared_Memory.h"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86) Debug"
+
+DEP_CPP_SHARE=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Shared_Memory.h"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Shared_Memory_MM.cpp
+
+!IF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
+
+DEP_CPP_SHARED=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Shared_Memory.h"\
+	".\Shared_Memory_MM.h"\
+	".\Shared_Memory_MM.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
+
+DEP_CPP_SHARED=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Shared_Memory.h"\
+	".\Shared_Memory_MM.h"\
+	".\Shared_Memory_MM.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86) Debug"
+
+DEP_CPP_SHARED=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
+	".\Base_Thread_Adapter.h"\
+	".\Base_Thread_Adapter.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Default_Constants.h"\
+	".\Flag_Manip.h"\
+	".\Flag_Manip.i"\
+	".\Global_Macros.h"\
+	".\Handle_Ops.h"\
+	".\Handle_Ops.i"\
+	".\Init_ACE.h"\
+	".\Init_ACE.i"\
+	".\iosfwd.h"\
+	".\Lib_Find.h"\
+	".\Lib_Find.i"\
+	".\Log_Msg.h"\
+	".\Log_Msg_Callback.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Min_Max.h"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\OS_Dirent.h"\
+	".\OS_Dirent.inl"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\OS_Log_Msg_Attributes.h"\
+	".\OS_Log_Msg_Attributes.inl"\
+	".\OS_Memory.h"\
+	".\OS_Memory.inl"\
+	".\OS_String.h"\
+	".\OS_String.inl"\
+	".\OS_TLI.h"\
+	".\OS_TLI.inl"\
+	".\post.h"\
+	".\pre.h"\
+	".\Shared_Memory.h"\
+	".\Shared_Memory_MM.h"\
+	".\Shared_Memory_MM.i"\
+	".\Sock_Connect.h"\
+	".\Sock_Connect.i"\
+	".\streams.h"\
+	".\svc_export.h"\
+	".\Thread_Adapter.h"\
+	".\Thread_Adapter.inl"\
+	".\Thread_Control.h"\
+	".\Thread_Control.inl"\
+	".\Thread_Exit.h"\
+	".\Thread_Hook.h"\
+	".\Trace.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Shared_Object.cpp
+
+!IF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
+
+DEP_CPP_SHARED_=\
 	".\ACE.h"\
 	".\ACE.i"\
 	".\ACE_export.h"\
@@ -35695,7 +37487,7 @@ DEP_CPP_SHARE=\
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
 
-DEP_CPP_SHARE=\
+DEP_CPP_SHARED_=\
 	".\ACE.h"\
 	".\ACE.i"\
 	".\ACE_export.h"\
@@ -35776,12 +37568,14 @@ DEP_CPP_SHARE=\
 
 !ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86) Debug"
 
-DEP_CPP_SHARE=\
+DEP_CPP_SHARED_=\
 	".\ACE.h"\
 	".\ACE.i"\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -36118,6 +37912,8 @@ DEP_CPP_SIGNA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -36421,6 +38217,8 @@ DEP_CPP_SOCK_=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -36753,6 +38551,8 @@ DEP_CPP_SOCK_A=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -37059,6 +38859,8 @@ DEP_CPP_SOCK_C=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -37341,6 +39143,8 @@ DEP_CPP_SOCK_CO=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -37681,6 +39485,8 @@ DEP_CPP_SOCK_CON=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -38017,6 +39823,8 @@ DEP_CPP_SOCK_D=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -38323,6 +40131,8 @@ DEP_CPP_SOCK_DG=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -38605,6 +40415,8 @@ DEP_CPP_SOCK_DGR=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -38883,6 +40695,8 @@ DEP_CPP_SOCK_I=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -39163,6 +40977,8 @@ DEP_CPP_SOCK_S=\
 	".\ace_wchar.inl"\
 	".\Addr.h"\
 	".\Addr.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -39561,6 +41377,8 @@ DEP_CPP_SSTRI=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -39886,6 +41704,8 @@ DEP_CPP_STATS=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Stats.h"\
@@ -40409,6 +42229,8 @@ DEP_CPP_SVC_C=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -40904,6 +42726,8 @@ DEP_CPP_SVC_CO=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -41525,6 +43349,8 @@ DEP_CPP_SVC_CON=\
 	".\ace_wchar.inl"\
 	".\ARGV.h"\
 	".\ARGV.i"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -42156,6 +43982,8 @@ DEP_CPP_SVC_H=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -42570,6 +44398,8 @@ DEP_CPP_SYNCH=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -42844,6 +44674,8 @@ DEP_CPP_SYNCH_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -43188,6 +45020,8 @@ DEP_CPP_SYSTE=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -43733,6 +45567,8 @@ DEP_CPP_TASK_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -44072,6 +45908,8 @@ DEP_CPP_THREA=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -44420,6 +46258,8 @@ DEP_CPP_THREAD=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -44815,6 +46655,8 @@ DEP_CPP_THREAD_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -45160,6 +47002,8 @@ DEP_CPP_THREAD_E=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -45540,6 +47384,8 @@ DEP_CPP_THREAD_M=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Array_Base.cpp"\
 	".\Array_Base.h"\
 	".\Array_Base.inl"\
@@ -45894,6 +47740,8 @@ DEP_CPP_TOKEN=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -46362,6 +48210,8 @@ DEP_CPP_TP_RE=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -46644,6 +48494,8 @@ DEP_CPP_TRACE=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\
@@ -47124,6 +48976,8 @@ DEP_CPP_WFMO_=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -47318,6 +49172,10 @@ SOURCE=.\Framework_Component_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hashable.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Init_ACE.h
 # End Source File
 # Begin Source File
@@ -47350,6 +49208,14 @@ SOURCE=.\Notification_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Reactor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Notification_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Recyclable.h
 # End Source File
 # Begin Source File
@@ -47371,6 +49237,14 @@ SOURCE=.\Remote_Name_Space.h
 # Begin Source File
 
 SOURCE=.\RW_Process_Mutex.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Shared_Memory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Shared_Memory_MM.h
 # End Source File
 # Begin Source File
 
@@ -47479,6 +49353,10 @@ SOURCE=.\RW_Process_Mutex.inl
 # Begin Source File
 
 SOURCE=.\Sample_History.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Shared_Memory_MM.i
 # End Source File
 # Begin Source File
 
@@ -47742,6 +49620,8 @@ DEP_CPP_FRAMEW=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Argv_Type_Converter.h"\
+	".\Argv_Type_Converter.inl"\
 	".\Base_Thread_Adapter.h"\
 	".\Base_Thread_Adapter.inl"\
 	".\Basic_Types.h"\

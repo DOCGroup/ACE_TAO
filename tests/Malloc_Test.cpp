@@ -340,6 +340,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
                             ACE_PLATFORM_EXE_SUFFIX
                             ACE_TEXT (" run_as_test"));
 
+#ifdef ACE_HAS_WINCE
+      // \Windows\Start Menu is where Malloc_Test.exe will be downloaded to.
+      // Check project setting for the directory information if needs to be changed.
+      options.process_name(ACE_TEXT("\\Windows\\Start Menu\\Malloc_Test.exe"));
+#endif
+
       MALLOC *myalloc = myallocator (PARENT_BASE_ADDR);
 
       Test_Data *data = initialize (myalloc);

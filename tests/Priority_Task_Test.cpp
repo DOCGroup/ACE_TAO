@@ -109,11 +109,13 @@ Priority_Task::open (void *arg)
                           1,
                           this->priority_) == -1)
         {
+#if !defined (ACE_HAS_WINCE)
           if (ACE_OS::last_error () == EPERM)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Insufficient privilege to run this test.\n")),
                               -1);
           else
+#endif  // ACE_HAS_WINCE
             ACE_DEBUG ((LM_ERROR,
                         ACE_TEXT ("(%t) task activation at priority %d failed, ")
                         ACE_TEXT ("exiting!\n%a"),
