@@ -10,6 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/High_Res_Timer.h"
 
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecSchedulerC.h"
