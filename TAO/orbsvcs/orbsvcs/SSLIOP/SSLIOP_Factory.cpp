@@ -4,9 +4,15 @@
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_ORBInitializer.h"
+
+#include "orbsvcs/Security/Security_ORBInitializer.h"  // @todo:
+                                                       // should go away
+
 #include "ace/SSL/SSL_Context.h"
 
-ACE_RCSID (TAO_SSLIOP, SSLIOP_Factory, "$Id$")
+ACE_RCSID (TAO_SSLIOP,
+           SSLIOP_Factory,
+           "$Id$")
 
 static const char prefix_[] = "iiop";
 
@@ -162,8 +168,27 @@ TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Register the SSLIOP ORB initializer.
+      // @todo: This hard-coding should be fixed once SECIOP is
+      // supported.
+      // Register the Security ORB initializer.
       PortableInterceptor::ORBInitializer_ptr tmp;
+      ACE_NEW_THROW_EX (tmp,
+                        TAO_Security_ORBInitializer,
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_TRY_CHECK;
+
+      PortableInterceptor::ORBInitializer_var initializer = tmp;
+
+      PortableInterceptor::register_orb_initializer (initializer.in (),
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Register the SSLIOP ORB initializer.
+      // PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
                         TAO_SSLIOP_ORBInitializer (this->no_protection_),
                         CORBA::NO_MEMORY (
@@ -173,7 +198,8 @@ TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;
 
-      PortableInterceptor::ORBInitializer_var initializer = tmp;
+      //PortableInterceptor::ORBInitializer_var initializer = tmp;
+      initializer = tmp;
 
       PortableInterceptor::register_orb_initializer (initializer.in (),
                                                      ACE_TRY_ENV);
@@ -218,5 +244,3 @@ ACE_STATIC_SVC_DEFINE (TAO_SSLIOP_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
-
-ACE_STATIC_SVC_REQUIRE (TAO_SSLIOP_Protocol_Factory)

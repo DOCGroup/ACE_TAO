@@ -354,23 +354,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -418,7 +403,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -470,10 +454,10 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/Transport.h \
  $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
@@ -751,23 +735,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -815,7 +784,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -867,10 +835,10 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/Transport.h \
  $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
@@ -880,6 +848,12 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Transport.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Current.inl \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
@@ -1141,23 +1115,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1205,7 +1164,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -1257,10 +1215,10 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/Transport.h \
  $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
@@ -1540,23 +1498,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1604,15 +1547,19 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Current.inl
 
 .obj/SSLIOP_Current_Impl.o .obj/SSLIOP_Current_Impl.so .shobj/SSLIOP_Current_Impl.o .shobj/SSLIOP_Current_Impl.so: SSLIOP/SSLIOP_Current_Impl.cpp \
  SSLIOP/SSLIOP_Current_Impl.h \
  $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1865,23 +1812,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1929,9 +1861,14 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
  SSLIOP/SSLIOP_Current_Impl.inl
 
 .obj/SSLIOP_Invocation_Interceptor.o .obj/SSLIOP_Invocation_Interceptor.so .shobj/SSLIOP_Invocation_Interceptor.o .shobj/SSLIOP_Invocation_Interceptor.so: \
@@ -2191,23 +2128,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2255,7 +2177,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i
 
@@ -2516,23 +2437,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2580,12 +2486,20 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Current.inl \
  SSLIOP/SSLIOP_Invocation_Interceptor.h \
- $(TAO_ROOT)/tao/ORBInitInfo.h
+ Security/Security_Current.h \
+ Security/Security_Current.inl \
+ $(TAO_ROOT)/tao/ORBInitInfo.h \
+ $(TAO_ROOT)/tao/CodecFactory.h
 
 .obj/SSLIOP_Factory.o .obj/SSLIOP_Factory.so .shobj/SSLIOP_Factory.o .shobj/SSLIOP_Factory.so: SSLIOP/SSLIOP_Factory.cpp SSLIOP/SSLIOP_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2844,23 +2758,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2908,7 +2807,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -2960,10 +2858,10 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/Transport.h \
  $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
@@ -2994,8 +2892,14 @@ realclean: clean
  $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
- SSLIOP/SSLIOP_Current_Impl.h SSLIOP/SSLIOP_Current_Impl.inl \
- SSLIOP/SSLIOP_Connection_Handler.i \
+ SSLIOP/SSLIOP_Current_Impl.h \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
+ SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.i \
  SSLIOP/SSLIOP_Acceptor.i SSLIOP/SSLIOP_Connector.h \
@@ -3010,7 +2914,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Connector_Impl.h \
  $(TAO_ROOT)/tao/Connector_Impl.inl \
  $(TAO_ROOT)/tao/Connector_Impl.cpp \
- SSLIOP/SSLIOP_ORBInitializer.h
+ SSLIOP/SSLIOP_ORBInitializer.h \
+ Security/Security_ORBInitializer.h
 
 .obj/SSLIOP_Profile.o .obj/SSLIOP_Profile.so .shobj/SSLIOP_Profile.o .shobj/SSLIOP_Profile.so: SSLIOP/SSLIOP_Profile.cpp SSLIOP/SSLIOP_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -3267,23 +3172,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -3331,7 +3221,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Endpoint.i \
@@ -3600,23 +3489,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -3664,7 +3538,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Endpoint.i SSLIOP/SSLIOP_Connection_Handler.h \
@@ -3679,15 +3552,7 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
- $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/Svc_Handler.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Task.i \
- $(ACE_ROOT)/ace/Task_T.h \
+ $(TAO_ROOT)/tao/Transport.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -3695,6 +3560,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
@@ -3707,6 +3574,14 @@ realclean: clean
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Task_T.cpp \
  $(ACE_ROOT)/ace/Module.h \
@@ -3719,8 +3594,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
- $(TAO_ROOT)/tao/Transport.h \
- $(TAO_ROOT)/tao/Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
@@ -3739,8 +3612,14 @@ realclean: clean
  $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
- SSLIOP/SSLIOP_Current_Impl.h SSLIOP/SSLIOP_Current_Impl.inl \
- SSLIOP/SSLIOP_Connection_Handler.i \
+ SSLIOP/SSLIOP_Current_Impl.h \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
+ SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i
 
@@ -3848,13 +3727,19 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -3874,6 +3759,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -3887,14 +3782,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
@@ -3911,10 +3798,21 @@ realclean: clean
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/Service_Context.h \
  $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -3922,8 +3820,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/target_specification.h \
@@ -3974,14 +3870,6 @@ realclean: clean
  SSLIOP/SSLIOP_Connection_Handler.h \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
  $(TAO_ROOT)/tao/Connection_Handler.h \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
- $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
- $(TAO_ROOT)/tao/Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
- $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Connection_Handler.inl \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -3999,19 +3887,10 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
- $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Typecode.h \
- $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4082,23 +3961,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -4136,9 +4000,14 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Profile.h SSLIOP/SSLIOP_Endpoint.h \
  SSLIOP/SSLIOP_Endpoint.i \
@@ -4474,23 +4343,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -4535,7 +4389,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -4578,10 +4431,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
  $(TAO_ROOT)/tao/Connection_Handler.h \
- $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/Transport.h \
  $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOPC.h \
  $(TAO_ROOT)/tao/IIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Transport.i \
@@ -4595,9 +4448,16 @@ realclean: clean
  SSLIOP/SSLIOP_Connection_Handler.h SSLIOP/SSLIOP_Transport.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- SSLIOP/SSLIOP_Current_Impl.h SSLIOP/SSLIOP_Current_Impl.inl \
- SSLIOP/SSLIOP_Connection_Handler.i SSLIOP/SSLIOP_Profile.h \
- SSLIOP/SSLIOP_Endpoint.h SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_Current_Impl.h \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
+ SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
+ SSLIOP/SSLIOP_Profile.h SSLIOP/SSLIOP_Endpoint.h \
+ SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
@@ -4863,23 +4723,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -4927,7 +4772,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
@@ -4979,10 +4823,10 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/Transport.h \
  $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
@@ -5013,8 +4857,14 @@ realclean: clean
  $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SSL/SSL_Context.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
- SSLIOP/SSLIOP_Current_Impl.h SSLIOP/SSLIOP_Current_Impl.inl \
- SSLIOP/SSLIOP_Connection_Handler.i \
+ SSLIOP/SSLIOP_Current_Impl.h \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
+ SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.i \
  SSLIOP/SSLIOP_Acceptor.i SSLIOP/SSLIOP_Profile.h \
@@ -5146,6 +4996,15 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -5160,24 +5019,20 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
- $(TAO_ROOT)/tao/Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
- $(TAO_ROOT)/tao/Connection_Handler.inl \
- $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
- $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
@@ -5188,15 +5043,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Task.i \
- $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -5210,6 +5056,14 @@ realclean: clean
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Task_T.cpp \
  $(ACE_ROOT)/ace/Module.h \
@@ -5222,10 +5076,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
- $(TAO_ROOT)/tao/Transport.h \
- $(TAO_ROOT)/tao/Exception.h \
- $(TAO_ROOT)/tao/Exception.i \
- $(TAO_ROOT)/tao/Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
@@ -5251,6 +5101,15 @@ realclean: clean
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/Service_Context.h \
  $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/target_specification.h \
@@ -5279,19 +5138,10 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
- $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/Typecode.h \
- $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -5362,23 +5212,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -5416,9 +5251,14 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
+ Security/Security_Current_Impl.h \
+ SecurityLevel2C.h \
+ Security/security_export.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current.inl \
  SSLIOP/SSLIOP_Endpoint.h SSLIOP/SSLIOP_Endpoint.i \
@@ -5685,23 +5525,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -5749,7 +5574,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
  SSLIOP/ssl_endpoints.i
@@ -5767,6 +5591,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5857,24 +5682,8 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- SecurityS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
@@ -5887,6 +5696,21 @@ realclean: clean
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/IOPS_T.h \
+ $(TAO_ROOT)/tao/IOPS_T.i \
+ $(TAO_ROOT)/tao/IOPS_T.cpp \
+ $(TAO_ROOT)/tao/IOPS.i \
+ SecurityS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -6019,13 +5843,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -6071,7 +5890,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
- Security/security_export.h SecurityC.i \
+ SSLIOP/SSLIOP_Export.h SecurityC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -6087,8 +5906,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  SecurityS_T.h SecurityS_T.i SecurityS_T.cpp SecurityS.i SSLIOPC.h \
- SSLIOP/SSLIOP_Export.h SSLIOPC.i SSLIOPS_T.h SSLIOPS_T.i \
- SSLIOPS_T.cpp SSLIOPS.i \
+ SSLIOPC.i SSLIOPS_T.h SSLIOPS_T.i SSLIOPS_T.cpp SSLIOPS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -6365,23 +6183,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
- $(TAO_ROOT)/tao/RTCORBAS.h \
- $(TAO_ROOT)/tao/IOPS.h \
- $(TAO_ROOT)/tao/IOPS_T.h \
- $(TAO_ROOT)/tao/IOPS_T.i \
- $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.h \
- $(TAO_ROOT)/tao/RTCORBAS_T.i \
- $(TAO_ROOT)/tao/RTCORBAS_T.cpp \
- $(TAO_ROOT)/tao/RTCORBAS.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -6427,8 +6230,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
- SSLIOP/SSLIOP_Export.h SecurityC.h Security/security_export.h \
- SecurityC.i SSLIOPC.i \
+ SSLIOP/SSLIOP_Export.h SecurityC.h SecurityC.i SSLIOPC.i \
  $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
