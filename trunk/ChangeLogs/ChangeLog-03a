@@ -1,3 +1,10 @@
+Mon Apr 15 07:39:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+          Added include of OS.h to get ACE_TMAIN macro
+
 Sun Apr 14 20:33:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Connector.h:
