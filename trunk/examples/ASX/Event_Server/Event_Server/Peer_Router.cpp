@@ -45,8 +45,15 @@ Peer_Router_Context::unbind_peer (ROUTING_KEY key)
 }
 
 void
+Peer_Router_Context::duplicate (void)
+{
+  this->reference_count_++;
+}
+
+void
 Peer_Router_Context::release (void)
 {
+  ACE_ASSERT (this->reference_count_ > 0);
   this->reference_count_--;
 
   if (this->reference_count_ == 0)
@@ -61,7 +68,7 @@ Peer_Router_Context::bind_peer (ROUTING_KEY key,
 }
 
 Peer_Router_Context::Peer_Router_Context (u_short port)
-  : reference_count_ (2) // 1 Consumer + 1 Supplier
+  : reference_count_ (0)
 {
   // Perform initializations.
 
