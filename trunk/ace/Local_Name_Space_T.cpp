@@ -382,8 +382,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 {
   ACE_TRACE ("ACE_Local_Name_Space::create_manager");
   // Get directory name
-  const ACE_ACE_TCHAR *dir = this->name_options_->namespace_dir ();
-  const ACE_ACE_TCHAR *database = this->name_options_->database ();
+  const ACE_TCHAR *dir = this->name_options_->namespace_dir ();
+  const ACE_TCHAR *database = this->name_options_->database ();
 
   // Use process name as the file name.
   size_t len = ACE_OS::strlen (dir);
@@ -412,7 +412,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 
   ACE_TCHAR lock_name_for_local_name_space [MAXNAMELEN + MAXPATHLEN];
   ACE_TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
-  const ACE_ACE_TCHAR *postfix = database;
+  const ACE_TCHAR *postfix = database;
 
   size_t length = 0;
   length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);

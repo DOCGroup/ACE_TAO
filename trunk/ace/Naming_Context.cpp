@@ -458,7 +458,7 @@ ACE_Name_Options::nameserver_port (void)
 }
 
 void
-ACE_Name_Options::namespace_dir (const ACE_ACE_TCHAR *dir)
+ACE_Name_Options::namespace_dir (const ACE_TCHAR *dir)
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
   ACE_OS::free ((void *) this->namespace_dir_ );
@@ -466,10 +466,10 @@ ACE_Name_Options::namespace_dir (const ACE_ACE_TCHAR *dir)
 }
 
 void
-ACE_Name_Options::process_name (const ACE_ACE_TCHAR *pname)
+ACE_Name_Options::process_name (const ACE_TCHAR *pname)
 {
   ACE_TRACE ("ACE_Name_Options::process_name");
-  const ACE_ACE_TCHAR *t = ACE::basename (pname, ACE_DIRECTORY_SEPARATOR_CHAR);
+  const ACE_TCHAR *t = ACE::basename (pname, ACE_DIRECTORY_SEPARATOR_CHAR);
   ACE_OS::free ((void *) this->process_name_ );
   this->process_name_ = ACE_OS::strdup (t);
 }
@@ -489,7 +489,7 @@ ACE_Name_Options::nameserver_host (void)
   return this->nameserver_host_;
 }
 
-const ACE_ACE_TCHAR *
+const ACE_TCHAR *
 ACE_Name_Options::database (void)
 {
   ACE_TRACE ("ACE_Name_Options::database");
@@ -497,7 +497,7 @@ ACE_Name_Options::database (void)
 }
 
 void
-ACE_Name_Options::database (const ACE_ACE_TCHAR *db)
+ACE_Name_Options::database (const ACE_TCHAR *db)
 {
   ACE_TRACE ("ACE_Name_Options::database");
   ACE_OS::free ((void *) this->database_);
@@ -539,14 +539,14 @@ ACE_Name_Options::context (ACE_Naming_Context::Context_Scope_Type context)
   this->context_ = context;
 }
 
-const ACE_ACE_TCHAR *
+const ACE_TCHAR *
 ACE_Name_Options::process_name (void)
 {
   ACE_TRACE ("ACE_Name_Options::process_name");
   return this->process_name_;
 }
 
-const ACE_ACE_TCHAR *
+const ACE_TCHAR *
 ACE_Name_Options::namespace_dir (void)
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
@@ -586,7 +586,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Name_Options::parse_args");
   ACE_LOG_MSG->open (argv[0]);
-  this->process_name (ASYS_ONLY_WIDE_STRING (argv[0]));
+  this->process_name (argv[0]);
 
   // Default is to use the PROC_LOCAL context...
   this->context (ACE_Naming_Context::PROC_LOCAL);
@@ -621,16 +621,16 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->nameserver_host (get_opt.optarg);
         break;
       case 'l':
-        this->namespace_dir (ASYS_ONLY_WIDE_STRING (get_opt.optarg));
+        this->namespace_dir (get_opt.optarg);
         break;
       case 'P':
-        this->process_name (ASYS_ONLY_WIDE_STRING (get_opt.optarg));
+        this->process_name (get_opt.optarg);
         break;
       case 'p':
         this->nameserver_port (ACE_OS::atoi (get_opt.optarg));
         break;
       case 's':
-        this->database (ASYS_ONLY_WIDE_STRING (get_opt.optarg));
+        this->database (get_opt.optarg);
         break;
       case 'b':
         this->base_address ((char *) ACE_OS::atoi (get_opt.optarg));
