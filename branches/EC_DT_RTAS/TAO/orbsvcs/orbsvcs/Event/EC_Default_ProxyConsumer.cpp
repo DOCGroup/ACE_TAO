@@ -14,7 +14,7 @@
 #if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
 #include "ec_dsui_config.h"
 #include "ec_dsui_families.h"
-#include "EC_Event_Counter.h"
+#include <Kokyu/Counter.h>
 #include <dsui.h>
 #endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
 
@@ -110,12 +110,11 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
     return;
 
   RtecEventComm::EventSet &tmp_event = (RtecEventComm::EventSet&)event;
-  EC_Event_Counter::event_id eid = EC_EVENT_COUNTER->increment();
-  tmp_event[0].header.eid.id = eid.id;
-  tmp_event[0].header.eid.tid = eid.tid;
+  kokyu::Object_Counter::object_id oid = kokyu::OBJECT_COUNTER->increment();
+  tmp_event[0].header.eid.id = oid.id;
+  tmp_event[0].header.eid.tid = oid.tid;
 
-  DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
-
+  DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
 
   ace_mon.filter->push (event, this
                         ACE_ENV_ARG_PARAMETER);

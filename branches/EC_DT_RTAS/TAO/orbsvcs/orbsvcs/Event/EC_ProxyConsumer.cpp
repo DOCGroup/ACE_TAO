@@ -11,13 +11,6 @@
 #include "EC_ProxyConsumer.i"
 #endif /* __ACE_INLINE__ */
 
-#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
-#include "ec_dsui_config.h"
-#include "ec_dsui_families.h"
-#include "EC_Event_Counter.h"
-#include <dsui.h>
-#endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
-
 ACE_RCSID (Event,
            EC_ProxyConsumer,
            "$Id$")

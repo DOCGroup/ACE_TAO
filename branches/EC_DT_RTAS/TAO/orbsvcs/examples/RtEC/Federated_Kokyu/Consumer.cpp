@@ -5,10 +5,13 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/ACE.h" //for is_prime()
 #include "orbsvcs/orbsvcs/Time_Utilities.h" //ORBSVCS_Time
-#include "orbsvcs/Event/EC_Event_Counter.h"
+#include <Kokyu/Counter.h>
+
+#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
 #include <dsui.h>
 #include "federated_config.h"
 #include "federated_dsui_families.h"
+#endif /* ! ACE_WIN32 & ACE_HAS_DSUI */
 
 ACE_RCSID(EC_Examples, Consumer, "$Id$")
 
@@ -34,10 +37,10 @@ Consumer::push (const RtecEventComm::EventSet& events
   //@BT INSTRUMENT with event ID: EVENT_WORK_START Measure time
   //when work triggered by event starts.
   //DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, guid, 0, NULL);
-  EC_Event_Counter::event_id eid;
-  eid.id = events[0].header.eid.id;
-  eid.tid = events[0].header.eid.tid;
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+  kokyu::Object_Counter::object_id oid;
+  oid.id = events[0].header.eid.id;
+  oid.tid = events[0].header.eid.tid;
+  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
 
   //TODO: do work on push()
   ACE_High_Res_Timer timer;
@@ -150,7 +153,7 @@ Consumer::push (const RtecEventComm::EventSet& events
       //@BT INSTRUMENT with event ID: EVENT_WORK_DEADLINE_MISSED Measure time when
       //work triggered by event finishes and deadline missed.
       //DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, guid, strlen(extra_info), extra_info);
-      DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+      DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
 
     }
   ACE_Allocator::instance()->free(extra_info);
@@ -158,7 +161,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   //@BT INSTRUMENT with event ID: EVENT_WORK_END Measure time when
   //work triggered by event finishes.
   //DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
 
 }
 

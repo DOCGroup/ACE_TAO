@@ -13,6 +13,7 @@ project(Kokyu) : acelib {
   }
 
   Source_Files {
+    Counter.cpp
     Dispatch_Deferrer.cpp
     Dispatcher_Impl.cpp
     Kokyu.cpp
