@@ -55,10 +55,7 @@ Naming_Service::parse_args (int argc,
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " [-d]"
-                           " [-n] <num of cubit objects>"
                            " [-o] <ior_output_file>"
-                           " [-s]"
                            "\n",
                            argv [0]),
                           -1);
