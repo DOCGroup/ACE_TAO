@@ -109,7 +109,7 @@ main (int argc, char *argv[])
 
   // Create an ORB to obtain Priority Mapping functionality.
   CORBA::ORB_var orb;
-  RTCORBA::PriorityMapping *pm;
+  RTCORBA::PriorityMapping *pm = 0;
 
   ACE_TRY_NEW_ENV
     {
