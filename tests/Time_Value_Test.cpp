@@ -48,6 +48,7 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 
 #include "test_config.h"
 #include "ace/ACE.h"
+#include "ace/Time_Value.h"
 
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
 static

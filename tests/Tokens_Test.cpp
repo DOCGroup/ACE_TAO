@@ -34,6 +34,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
 #include "ace/Barrier.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Tokens_Test, "$Id$")
 
