@@ -298,35 +298,39 @@ ACEXML_Parser::parse_external_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
                          ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
     }
-  ACEXML_Char* uri = this->normalize_systemid (systemId);
-  ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
-  ACEXML_InputSource* ip = 0;
-  if (this->entity_resolver_)
+  if (this->validate_)
     {
-      ip = this->entity_resolver_->resolveEntity (publicId,
-                                                  (uri ? uri : systemId)
-                                                  ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_Char* uri = this->normalize_systemid (systemId);
+      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
+      ACEXML_InputSource* ip = 0;
+      if (this->entity_resolver_)
+        {
+          ip = this->entity_resolver_->resolveEntity (publicId,
+                                                      (uri ? uri : systemId)
+                                                      ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_CHECK_RETURN (-1);
+        }
+      if (ip)
+        {
+          if (this->switch_input (ip, (uri ? uri : systemId), publicId) != 0)
+            return -1;
+        }
+      else
+        {
+          ACEXML_StreamFactory factory;
+          ACEXML_CharStream* cstream = factory.create_stream (uri ?
+                                                              uri: systemId);
+          if (!cstream) {
+            this->fatal_error (ACE_TEXT ("Invalid input source")
+                               ACEXML_ENV_ARG_PARAMETER);
+            ACEXML_CHECK_RETURN (-1);
+          }
+          if (this->switch_input (cstream, systemId, publicId) != 0)
+            return -1;
+        }
+      this->parse_external_subset (ACEXML_ENV_SINGLE_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
     }
-  if (ip)
-    {
-      if (this->switch_input (ip, (uri ? uri : systemId), publicId) != 0)
-        return -1;
-    }
-  else
-    {
-      ACEXML_StreamFactory factory;
-      ACEXML_CharStream* cstream = factory.create_stream (uri ? uri: systemId);
-      if (!cstream) {
-        this->fatal_error (ACE_TEXT ("Invalid input source")
-                           ACEXML_ENV_ARG_PARAMETER);
-        ACEXML_CHECK_RETURN (-1);
-      }
-      if (this->switch_input (cstream, systemId, publicId) != 0)
-        return -1;
-    }
-  this->parse_external_subset (ACEXML_ENV_SINGLE_ARG_PARAMETER);
-  ACEXML_CHECK_RETURN (-1);
   return 0;
 }
 
