@@ -23,7 +23,11 @@ public:
   Client (void);
   // ctor
 
-  void set (int niterations, int id, CORBA::ORB_ptr);
+  void set (int niterations,
+            int id,
+            CORBA::ORB_ptr,
+            ACE_Barrier *before,
+            ACE_Barrier *after);
   // Set the test attributes.
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -49,6 +53,9 @@ private:
 
   ACE_Throughput_Stats throughput_;
   // Keep throughput statistics on a per-thread basis
+
+  ACE_Barrier *before_connection_;
+  ACE_Barrier *after_connection_;
 };
 
 // ****************************************************************
@@ -142,9 +149,16 @@ main (int argc, char *argv[])
       RTCORBA::PriorityMapping *pm =
         orb->orb_core ()->priority_mapping ();
 
+      ACE_Barrier before_connection (nthreads);
+      ACE_Barrier after_connection (nthreads);
+
       for (int i = 0; i != nthreads; ++i)
         {
-          client[i].set (niterations, i, orb.in ());
+          client[i].set (niterations,
+                         i,
+                         orb.in (),
+                         &before_connection,
+                         &after_connection);
 
           CORBA::Short native_priority = 0;
           pm->to_native (priorities[i], native_priority);
@@ -192,11 +206,15 @@ Client::Client (void)
 void
 Client::set (int niterations,
              int id,
-             CORBA::ORB_ptr orb)
+             CORBA::ORB_ptr orb,
+             ACE_Barrier *before,
+             ACE_Barrier *after)
 {
   this->niterations_ = niterations;
   this->id_ = id;
   orb_ = orb;
+  this->before_connection_ = before;
+  this->after_connection_ = after;
 }
 
 int
@@ -213,7 +231,7 @@ Client::svc (void)
               priorities[this->id_],
               native_priority));
 
-  int i;
+  int i = 0;
   ACE_TRY_NEW_ENV
     {
       char ior[100];
@@ -238,6 +256,8 @@ Client::svc (void)
                             1);
         }
 
+      this->before_connection_->wait ();
+
       // Try to make sure every thread gets its own connection.
       for (int j = 0; j < 100; ++j)
         {
@@ -250,6 +270,8 @@ Client::svc (void)
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+      this->after_connection_->wait ();
 
       ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
@@ -272,22 +294,15 @@ Client::svc (void)
 	      ACE_OS::sleep (tv);
 	    }
 
-          // Skip the first sample (prime).
-          if (i != 0)
-            {
-              // Record statistics.
-              this->throughput_.sample (now - throughput_base,
-                                        now - latency_base);
-            }
-          else
-            throughput_base = ACE_OS::gethrtime ();
+          // Record statistics.
+          this->throughput_.sample (now - throughput_base,
+                                    now - latency_base);
         }
 
       char orb_name[50];
       ACE_OS::sprintf (orb_name, "%d", priorities[this->id_]);
       server->shutdown (orb_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
     }
   ACE_CATCHANY
     {
