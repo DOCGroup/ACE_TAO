@@ -93,7 +93,7 @@ public:
   CHAR &operator [] (size_t slot);
 
   /// Assignment operator (does copy memory).
-  ACE_String_Base &operator = (const ACE_String_Base<CHAR> &);
+  ACE_String_Base<CHAR> &operator = (const ACE_String_Base<CHAR> &);
 
   /// Copy @a s into this @a ACE_String_Base.  Memory is _not_
   /// allocated/freed if @a release is 0.

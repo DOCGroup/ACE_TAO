@@ -1,3 +1,16 @@
+Fri Jan  4 15:06:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.h (operator=): Add <CHAR> to ACE_String_Base
+          return type. Fixes compile error on IBM C/C++.
+
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+          If SSL_get_error() returns SSL_ERROR_SYSCALL and it's EWOULDBLOCK,
+          don't blindly set both read and write handles for select. Check
+          if SSL is indicating SSL_want_write() and set the proper handle.
+          Also, don't ACE_ASSERT SSL_pending before return... if there's
+          an SSL handshake screw-up (like someone trying to break in)
+          just report the failure, don't abort/crash.
+
 Wed Jan 02 13:27:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/INET_Addr.h:
