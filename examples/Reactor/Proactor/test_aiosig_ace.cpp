@@ -97,6 +97,8 @@ setup_signal_delivery (void)
 static int
 setup_signal_handler (int signal_number)
 {
+  ACE_UNUSED_ARG (signal_number);
+
   // Setting up the handler(!) for these signals.
   struct sigaction reaction;
   sigemptyset (&reaction.sa_mask);   // Nothing else to mask.

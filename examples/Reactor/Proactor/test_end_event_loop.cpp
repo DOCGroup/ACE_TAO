@@ -111,6 +111,9 @@ private:
 int
 main (int argc, char *argv [])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P | %t):Test starts \n"));
 
