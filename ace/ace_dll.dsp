@@ -254,6 +254,10 @@ SOURCE=.\Configuration_Import_Export.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Recycling_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Containers.cpp
 # End Source File
 # Begin Source File
@@ -379,6 +383,10 @@ SOURCE=.\Handle_Set.cpp
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hashable.cpp
 # End Source File
 # Begin Source File
 
@@ -562,6 +570,10 @@ SOURCE=.\Naming_Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notification_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\NT_Service.cpp
 # End Source File
 # Begin Source File
@@ -666,7 +678,19 @@ SOURCE=.\Reactor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reactor_Notification_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Read_Buffer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Recyclable.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcountable.cpp
 # End Source File
 # Begin Source File
 
@@ -815,10 +839,6 @@ SOURCE=.\SString.cpp
 # Begin Source File
 
 SOURCE=.\Stats.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Strategies.cpp
 # End Source File
 # Begin Source File
 
@@ -1194,6 +1214,10 @@ SOURCE=.\Configuration_Import_Export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Recycling_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector.h
 # End Source File
 # Begin Source File
@@ -1355,6 +1379,10 @@ SOURCE=.\Hash_Map_Manager_T.h
 # Begin Source File
 
 SOURCE=.\Hash_Map_With_Allocator_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hashable.h
 # End Source File
 # Begin Source File
 
@@ -1582,6 +1610,10 @@ SOURCE=.\Naming_Context.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notification_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\NT_Service.h
 # End Source File
 # Begin Source File
@@ -1734,7 +1766,19 @@ SOURCE=.\Reactor_Impl.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reactor_Notification_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Read_Buffer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Recyclable.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcountable.h
 # End Source File
 # Begin Source File
 
@@ -1899,10 +1943,6 @@ SOURCE=.\SString.h
 # Begin Source File
 
 SOURCE=.\Stats.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Strategies.h
 # End Source File
 # Begin Source File
 
@@ -2430,6 +2470,10 @@ SOURCE=.\Hash_Map_With_Allocator_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hashable.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\High_Res_Timer.i
 # End Source File
 # Begin Source File
@@ -2574,6 +2618,10 @@ SOURCE=.\Multiplexor.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notification_Strategy.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\NT_Service.i
 # End Source File
 # Begin Source File
@@ -2682,11 +2730,23 @@ SOURCE=.\Reactor.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reactor_Notification_Strategy.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ReactorEx.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Read_Buffer.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Recyclable.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcountable.inl
 # End Source File
 # Begin Source File
 
@@ -2827,10 +2887,6 @@ SOURCE=.\SString.i
 # Begin Source File
 
 SOURCE=.\Stats.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Strategies.i
 # End Source File
 # Begin Source File
 

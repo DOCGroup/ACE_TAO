@@ -1,3 +1,8 @@
+Mon Dec 10 18:54:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added the new files and removed old ones.
+
 Mon Dec 10 15:39:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	Merged from my branch. This checkin actually splits classes in
