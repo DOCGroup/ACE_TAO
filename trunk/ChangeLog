@@ -1,3 +1,12 @@
+Mon Jan 31 07:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_wchar.h:
+          Added ACE_TEXT_OutputDebugString
+
+        * examples/Log_Msg/Log_Msg_MFC/MFC_Log.cpp:
+          Use ACE_TEXT_OutputDebugString instead of ::OutputDebugString
+          to fix compile errors in wchar builds
+
 Sun Jan 30 08:46:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Filecache.cpp:
