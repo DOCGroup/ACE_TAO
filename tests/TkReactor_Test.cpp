@@ -34,15 +34,28 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if defined (ACE_HAS_TK)
+#if !defined (ACE_HAS_TK)
 
-#include <ace/Event_Handler.h>
-#include <ace/Acceptor.h>
-#include <ace/SOCK_Acceptor.h>
-#include <ace/SOCK_Connector.h>
-#include <ace/Service_Config.h>
-#include <ace/Thread_Manager.h>
-#include <ace/TkReactor.h>
+int main (int, char*[])
+{
+  ACE_START_TEST (ASYS_TEXT ("TkReactor_Test"));
+
+  ACE_ERROR ((LM_ERROR,
+              "Tk not supported on this platform\n"));
+
+  ACE_END_TEST;
+  return 0;
+}
+
+#else
+
+#include "ace/Event_Handler.h"
+#include "ace/Acceptor.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/SOCK_Connector.h"
+#include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
+#include "ace/TkReactor.h"
 
 #include <tcl.h>
 #include <tk.h>
@@ -53,7 +66,7 @@ void eval (const char *s)
   char buf[BUFSIZ];
   strcpy (buf,s);
   int st = Tcl_GlobalEval(tcl_interp,buf);
-  if (st != TCL_OK) 
+  if (st != TCL_OK)
     {
       int n =  strlen(s);
       char* wrk = new char[n + 80];
@@ -246,9 +259,7 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* ACE_HAS_TK */
-
-int 
+int
 init (Tcl_Interp *interp)
 {
   if (Tcl_Init (interp) == TCL_ERROR)
@@ -263,7 +274,6 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("TkReactor_Test"));
 
-#if defined (ACE_HAS_TK)
   tcl_interp   = Tcl_CreateInterp ();
 
   if (init (tcl_interp) != TCL_OK) {
@@ -340,7 +350,7 @@ main (int argc, char *argv[])
   //  eval ("pack .label_for_event_one .goodbye .pressme -side top -anchor w");
   while (!quit)
     {
-      int result = reactor.handle_events (); 
+      int result = reactor.handle_events ();
       switch (result)
         {
         case 0:
@@ -356,12 +366,9 @@ main (int argc, char *argv[])
   //    {
   //      Tk_DoOneEvent (0);
   //    }
-#else
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR,
-              "Tk not supported on this platform\n"));
-#endif /* ACE_HAS_TK */
+
   ACE_END_TEST;
   return 0;
 }
+
+#endif /* ACE_HAS_TK */
