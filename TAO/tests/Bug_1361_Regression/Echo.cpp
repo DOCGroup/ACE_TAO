@@ -21,7 +21,7 @@ Echo::Echo(CORBA::ORB_ptr orb,
 
 void
 Echo::echo_payload(Test::Payload const &
-                   TAO_ENV_ARG_DECL_NOT_USED)
+                   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->abort_counter_--;
@@ -43,7 +43,7 @@ Echo::echo_payload_out (
       ))
 {
   int j = ACE_OS::rand() % 40000;
-  data = new Test::Payload(j); 
+  data = new Test::Payload(j);
   data->length(j);
   ACE_OS::memset(data->get_buffer(), data->length(), 0);
 
