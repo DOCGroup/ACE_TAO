@@ -923,7 +923,7 @@ Charles Meier <cmeier@concentus-tech.com>
 Tim Sim <tim_sim@optusnet.com.au>
 Shalabh Bhatnagar <shalabh_b@hotmail.com>
 Charles Scott <Charles.P.Scott@jpl.nasa.gov>
-Espen Harlinn <espen.harlinn@seamos.no>
+Espen Harlinn <espen@harlinn.no>
 mulder <mul@iitb.fhg.de>
 Richard L. Johnson <Richard.L.Johnson@jpl.nasa.gov>
 Tam Nguyen <tnguyen@viasat.com>
@@ -966,7 +966,9 @@ Ken Weinert <kenw@ihs.com>
 Ferran Boladeres Salvad <salvadof@iis.fhg.de>
 Bill Tonseth <tonseth@shamra.mv.com>
 Steve Vranyes <svranyes1@uswest.net>
+Jim Melton <Jim.Melton@lmco.com>
 Ron Klein <rklein@west.raytheon.com>
+Anuj Singhal <ASinghal@mediasite.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

@@ -85,10 +85,6 @@ private:
   // Address of our rendezvous point.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/LSOCK_Acceptor.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #include "ace/post.h"
 #endif /* ACE_LOCAL_SOCK_ACCEPTOR_H */

@@ -671,9 +671,5 @@ private:
   int default_map_size_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Configuration.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/post.h"
 #endif /* ACE_CONFIGURATION_H */

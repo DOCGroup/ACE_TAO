@@ -217,9 +217,5 @@ protected:
   // Singleton pointer.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Token_Invariants.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/post.h"
 #endif /* ACE_TOKEN_INVARIANTS_H */

@@ -4,15 +4,11 @@
 // ============================================================================
 //
 // = LIBRARY
-//
 //    ace
-//
 // = FILENAME
-//
 //    Asynch_IO.h
 //
 // = DESCRIPTION
-//
 //    This works on Win32 (#if defined (ACE_WIN32) && !defined
 //    (ACE_HAS_WINCE)) platforms and on POSIX4 platforms with <aio_*>
 //    routines (#if defined (ACE_HAS_AIO_CALLS))
@@ -23,7 +19,6 @@
 //    or higher. 
 //
 // = AUTHOR
-//
 //    Irfan Pyarali <irfan@cs.wustl.edu>,
 //    Tim Harrison <harrison@cs.wustl.edu> and
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>
@@ -1107,10 +1102,6 @@ public:
   virtual void act (const void *);
   // Called by ACE_Asynch_Acceptor to pass the act.
 };
-
-#if defined (__ACE_INLINE__)
-#include "ace/Asynch_IO.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
 #include "ace/post.h"

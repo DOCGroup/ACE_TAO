@@ -126,10 +126,6 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Stream_Modules.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Stream_Modules.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

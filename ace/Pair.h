@@ -24,10 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__ACE_INLINE__)
-#include "ace/Pair.i"
-#endif /* __ACE_INLINE__ */
-
 // Include the templates here.
 #include "ace/Pair_T.h"
 
