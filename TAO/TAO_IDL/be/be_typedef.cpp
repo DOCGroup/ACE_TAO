@@ -42,7 +42,7 @@ be_typedef::be_typedef (AST_Type *bt,
     AST_Decl (AST_Decl::NT_typedef, 
               n, 
               p),
-    COMMON_Base (local, 
+    COMMON_Base (bt->is_local () || local, 
                  abstract)
 {
 }
