@@ -103,7 +103,8 @@ public:
     EIDL_LOOKUP_ERROR,          // Identifier not found
     EIDL_INHERIT_FWD_ERROR,     // Cannot inherit from fwd decl interface
     EIDL_CONSTANT_EXPECTED,     // We got something else..
-    EIDL_NAME_CASE_ERROR,       // Spelling differences found
+    EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
+    EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
@@ -130,6 +131,9 @@ public:
 
   // Report a name being used with different spellings
   void  name_case_error(char *n, char *t);
+
+  // Same as above, but don't increment the error count.
+  void  name_case_warning(char *n, char *t);
 
   // Report an unsuccesful coercion attempt
   void  coercion_error(AST_Expression *v, AST_Expression::ExprType t);
