@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "LF_Event.h"
+#include "LF_Invocation_Event.h"
 
 class ACE_Message_Block;
 class ACE_Allocator;
@@ -62,7 +62,7 @@ class ACE_Allocator;
  *        allocating the memory?
  *
  */
-class TAO_Export TAO_Queued_Message : public TAO_LF_Event
+class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 {
 public:
   /// Constructor

@@ -1,3 +1,46 @@
+Tue Nov 12 12:47:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	Fix for [BUG 1020]. Please see details of the bug at 
+	
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1020
+
+        Please see the discussions in the above URL for details on
+        the motivations for these changes. A very brief summary of the 
+        changes alone are mentioned.
+	
+	* tao/Transport.cpp(close_connection_shared): Wait on the
+          leader follower if the handle is registered with the
+          reactor. 
+
+        * tao/LF_Event.h:
+        * tao/LF_Event.cpp:
+        * tao/LF_Event.inl: Made the class TAO_LF_Event as an abstract
+          base class. This helps us to strategize the type of
+          behaviour required in different concrete classes which can
+          in turn be used by other portions of the ORB to wait on LF. 
+
+	* tao/LF_Invocation_Event.h:
+	* tao/LF_Invocation_Event.cpp:
+	* tao/LF_Invocation_Event.inl: Concrete implementation of a
+	  LF_Event class, where the state transitions along the invocation
+	  path are consolidated.
+
+	* tao/LF_CH_Event.h:
+	* tao/LF_CH_Event.cpp: Concrete implementation of a LF_Event
+	  class, where the state transitions of the connection handler are
+	  consolidated. 
+
+	* tao/Queued_Message.h:
+	* tao/Synch_Reply_Dispatcher.h: They now inherit from
+	  TAO_LF_Invocation_Event class.
+
+	* tao/Connection_Handler.h: This class inherits now from the
+	  TAO_LF_CH_Event class. 
+
+	* tao/Makefile.bor: 
+	* tao/Makefile.tao: Added the new files to the list of compilable
+	  files. 
+
 Tue Nov 12 12:37:18 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:

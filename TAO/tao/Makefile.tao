@@ -42,6 +42,8 @@ PUB_HDRS = \
   LF_Follower_Auto_Adder \
   LF_Follower_Auto_Ptr \
   LF_Event \
+  LF_Invocation_Event \
+  LF_CH_Event \
   LF_Event_Binder \
   LF_Event_Loop_Thread_Helper \
   LF_Strategy \
@@ -206,6 +208,8 @@ ORB_CORE_FILES = \
   Leader_Follower \
   Leader_Follower_Flushing_Strategy \
   LF_Event \
+  LF_Invocation_Event \
+  LF_CH_Event \
   LF_Event_Binder \
   LF_Event_Loop_Thread_Helper \
   LF_Strategy \
